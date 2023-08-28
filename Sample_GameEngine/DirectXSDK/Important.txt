@@ -1,0 +1,4 @@
+Require DirectX9 SDK (June10)
+
+you can download at:
+https://www.microsoft.com/en-sg/download/details.aspx?id=6812
