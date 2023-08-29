@@ -17,6 +17,7 @@ namespace Zx_Framework {
             void destroyAllSystem();//destroys all virtual systems
             void initializeAllSystem();//inits all systems
             void initSystem(ParentSystem* system);//initializes one specific system
+            void broadcastMessage(Message* message);
         private:
             bool is_running = false;
             std::vector<ParentSystem> all_systems;

@@ -10,7 +10,7 @@ namespace Zx_Framework {
 
     class ParentSystem {
     public:
-        virtual void sendMessage(Message){};
+        virtual void sendMessage(Message* message){};
         virtual void updateSystem(float time) = 0;
         virtual std::string getName() = 0;
         virtual void initializeSystem() {};
