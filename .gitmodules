@@ -1,0 +1,3 @@
+[submodule "Insight Engine/Insight Engine/libraries/spdlog"]
+	path = Insight Engine/Insight Engine/libraries/spdlog
+	url = https://github.com/gabime/spdlog
