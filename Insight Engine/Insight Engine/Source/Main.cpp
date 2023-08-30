@@ -11,11 +11,12 @@
 #define WIDTH 1280
 #define HEIGHT 720
 #include <GLFW/glfw3.h>
+#include <GL/glew.h>
 
 int main(void)
 {
-    GLFWwindow* window;
-
+    GLFWwindow* window;    
+    
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -27,7 +28,7 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
+    
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
