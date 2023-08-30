@@ -1,3 +1,5 @@
+//pch has to go to the top of every cpp
+#include "Pch.h"
 #include "Graphics.h"
 #include <vector>
 #include <array>

@@ -7,9 +7,19 @@
 //	Copyright 2023, Digipen Institute of Technology
 //
 ///////////////////////////////////////////////////////////////////////////////////////
+//pch has to go to the top of every cpp
+#include "Pch.h"
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+
+#define WIDTH 1280
+#define HEIGHT 720
+
 
 #include "Graphics.h"
-
+#include "Input.h"
 
 
 
@@ -71,6 +81,9 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    //input manager assigned to window
+    InputManager inputManager(window);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
@@ -84,6 +97,15 @@ int main(void)
 
         //engine can run here
         //run engine
+        
+        //test for Input System will make it with held keys etc later
+        if (inputManager.IsKeyPressed(GLFW_KEY_A)) {
+            std::cout << "A IS PRESSED";
+        }
+
+        inputManager.Update();
+
+        
     }
 
     glfwTerminate();

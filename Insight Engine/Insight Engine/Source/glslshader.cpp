@@ -12,6 +12,8 @@ This file contains definitions of member functions of class GLShader.
 Please see the class declaration for information about these functions.
 
 *//*__________________________________________________________________________*/
+//pch has to go to the top of every cpp
+#include "Pch.h"
 #include <glslshader.h>
 
 GLint
