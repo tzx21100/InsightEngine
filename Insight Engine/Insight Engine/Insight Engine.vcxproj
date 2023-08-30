@@ -12,11 +12,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CoreEngine.cpp" />
+    <ClCompile Include="Source\glslshader.cpp" />
+    <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CoreEngine.h" />
+    <ClInclude Include="Source\glslshader.h" />
+    <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Message.h" />
+    <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -53,12 +59,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
