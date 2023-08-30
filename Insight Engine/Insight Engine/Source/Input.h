@@ -10,6 +10,7 @@ and check for keyboard & mouse inputs.
 #include <utility>
 #include <unordered_set>
 
+
 class InputManager {
 public:
     InputManager(GLFWwindow* window);
