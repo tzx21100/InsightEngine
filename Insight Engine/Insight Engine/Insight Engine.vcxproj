@@ -54,11 +54,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\liby</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\liby</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -71,12 +73,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\liby\Release\a64\glew32.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Insight Engine\libraries\glfw\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)Insight Engine\libraries\glew\biny\Release\a64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+copy "$(SolutionDir)Insight Engine\libraries\glew\bin\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,12 +96,12 @@ copy "$(SolutionDir)Insight Engine\libraries\glew\biny\Release\a64\glew32.dll" "
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\liby\Release\a64\glew32.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Insight Engine\libraries\glfw\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)Insight Engine\libraries\glew\biny\Release\a64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+copy "$(SolutionDir)Insight Engine\libraries\glew\bin\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

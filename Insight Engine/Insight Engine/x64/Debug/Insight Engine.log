@@ -1,7 +1,7 @@
 ﻿  CoreEngine.cpp
-C:\Users\Artemissed\source\repos\GAM200\Insight Engine\Insight Engine\Source\System.h(13,43): warning C4100: 'message': unreferenced formal parameter
+C:\Users\tzx87\Documents\GitHub\GAM200\Insight Engine\Insight Engine\Source\System.h(13,43): warning C4100: 'message': unreferenced formal parameter
   Main.cpp
   Generating Code...
-  Insight Engine.vcxproj -> C:\Users\Artemissed\source\repos\GAM200\Insight Engine\x64\Debug\Insight Engine.exe
+  Insight Engine.vcxproj -> C:\Users\tzx87\Documents\GitHub\GAM200\Insight Engine\bin\Debug-x64\Insight Engine.exe
           1 file(s) copied.
           1 file(s) copied.
