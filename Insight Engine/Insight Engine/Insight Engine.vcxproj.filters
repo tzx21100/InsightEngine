@@ -22,22 +22,11 @@
     <ClCompile Include="Source\Input.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="Source\Vector2D.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Matrix3x3.cpp">
       <Filter>Math</Filter>
-=======
-    <ClCompile Include="Source\ISString.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISVector.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISArray.cpp">
-      <Filter>STL</Filter>
->>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +54,6 @@
     <ClInclude Include="Source\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
     <ClInclude Include="Source\Vector2D.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -74,16 +62,6 @@
     </ClInclude>
     <ClInclude Include="Source\Properties.h">
       <Filter>Source</Filter>
-=======
-    <ClInclude Include="Source\ISString.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISVector.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISArray.h">
-      <Filter>STL</Filter>
->>>>>>> Stashed changes
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,16 +74,11 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{aeb2915c-ff43-445f-a90d-fd5beaec6627}</UniqueIdentifier>
     </Filter>
-<<<<<<< Updated upstream
     <Filter Include="Physics">
       <UniqueIdentifier>{e4d5b7dc-d972-4b83-9e14-f84afd59316d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
-=======
-    <Filter Include="STL">
-      <UniqueIdentifier>{34572d6a-6759-4106-875b-95285d2012f5}</UniqueIdentifier>
->>>>>>> Stashed changes
     </Filter>
   </ItemGroup>
 </Project>
