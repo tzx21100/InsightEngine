@@ -5,24 +5,27 @@
 #include "System.h"
 #include <vector>
 
-//the engine that handles all the main functions like loading assets, systems, gameplay loop and destroying them.
-namespace Zx_Framework {
-    //core engine will manage all systems in the game
-    class InsightEngine{
-        public:
-            InsightEngine();//constructor
-            ~InsightEngine();//destructor
-            void addSystem(ParentSystem *system); //adds a system to the game
-            void destroySystem(ParentSystem*system); //removes a system from game
-            void destroyAllSystem();//destroys all virtual systems
-            void initializeAllSystem();//inits all systems
-            void initSystem(ParentSystem* system);//initializes one specific system
-            void broadcastMessage(Message* message);
-        private:
-            bool is_running = false;
-            std::vector<ParentSystem> all_systems;
-            unsigned last_runtime;  
-    
+namespace IS {
+    class InsightEngine {
+    public:
+        InsightEngine();
+        ~InsightEngine();
+        void Run();
+        void AddSystem(ParentSystem* system);
+        void DestroySystem(const std::string& name);
+        void DestroyAllSystems();
+        void InitializeAllSystems();
+        void BroadcastMessage(Message* message);
+        void SetFPS(int num);
+    private:
+        //putting this here as a hard cap to fps, could move it to public as well
+        void LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
+        //this will be the only event manager the system refers to
+        EventManager eventManager;
+        bool is_running;
+        std::unordered_map<std::string, ParentSystem*> all_systems;
+        unsigned last_runtime;
+        int targetFPS{60};
     };
 
 }

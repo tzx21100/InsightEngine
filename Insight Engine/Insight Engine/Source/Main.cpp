@@ -112,6 +112,8 @@ int main(void)
     }
 
     ISGraphics::init();
+    //engine init
+    IS::InsightEngine* engine= new IS::InsightEngine();
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
@@ -142,6 +144,14 @@ int main(void)
 
         
     }
+    engine->AddSystem(InputSys);
+    engine->AddSystem(gwindow);
+    //run engine (GAME LOOP)
+    engine->SetFPS(80);//set fps to wtv
+    engine->Run();
+
+    //engine stops
+    engine->DestroyAllSystems();
 
     glfwTerminate();
     return 0;
