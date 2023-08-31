@@ -79,33 +79,12 @@ int main(void)
     gwindow->Initialize();
 
     //engine init
-    IS::InsightEngine engine;
+    IS::InsightEngine* engine=new IS::InsightEngine();
 
     //input manager assigned to window
     InputManager* InputSys=new InputManager(window);
 
-    engine.AddSystem(InputSys);
-    engine.AddSystem(gwindow);
-    //run engine (GAME LOOP)
-    engine.SetFPS(80);//set fps to wtv
-    engine.Run();
-
-        //grafix draws
-        ISGraphics::draw();
-        glfwSwapBuffers(window); // Swap front and back buffers
-
-        //engine can run here
-        //run engine
-        
-        //test for Input System will make it with held keys etc later
-        if (inputManager.IsKeyPressed(GLFW_KEY_A)) {
-            std::cout << "A IS PRESSED";
-        }
-
-        inputManager.Update();
-
-        
-    }
+   
     engine->AddSystem(InputSys);
     engine->AddSystem(gwindow);
     //run engine (GAME LOOP)
