@@ -11,8 +11,13 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Properties.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include <string>
-
+#include "ISVector.h"
+#include "ISString.h"
+#include "ISArray.h"
+#include <cstddef>          // for size_t
+#include <initializer_list> // for std::initializer_list
 
 
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

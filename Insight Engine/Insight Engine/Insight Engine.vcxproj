@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ISArray.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
@@ -22,9 +23,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="Source\Vector2D.cpp" />
+=======
+    <ClCompile Include="Source\ISString.cpp" />
+    <ClCompile Include="Source\ISVector.cpp" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ISArray.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
@@ -34,8 +41,13 @@
     <ClInclude Include="Source\Pch.h" />
     <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\ISString.h" />
     <ClInclude Include="Source\System.h" />
+<<<<<<< Updated upstream
     <ClInclude Include="Source\Vector2D.h" />
+=======
+    <ClInclude Include="Source\ISVector.h" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
