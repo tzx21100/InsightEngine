@@ -93,6 +93,7 @@ int main(void)
 
     //engine stops
     engine->DestroyAllSystems();
+    delete engine;
 
     glfwTerminate();
     return 0;

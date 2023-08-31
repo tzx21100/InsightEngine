@@ -13,13 +13,14 @@ namespace IS {
     }
 
     void InputManager::Update(float deltaTime) {
-        //other logic
-        m_PressedKeys.clear();
-        m_ReleasedKeys.clear();
+
         //test for Input System will make it with held keys etc later
         if (this->IsKeyPressed(GLFW_KEY_A)) {
             std::cout << "A IS PRESSED";
         }
+        //other logic
+        m_PressedKeys.clear();
+        m_ReleasedKeys.clear();
 
     }
 
