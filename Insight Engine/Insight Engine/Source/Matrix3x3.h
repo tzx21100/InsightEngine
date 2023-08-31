@@ -1,22 +1,8 @@
-/******************************************************************************/
-/*!
-\file		Matrix3x3.h
-\author 	Wu Zekai, zekai.wu, 2201764
-\par    	email: zekai.wu@digipen.edu
-\date   	March 23, 2023
-\brief		This file contains the declaration of functions of matrix basic calculation
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
-
 #pragma once
 
 #include "Vector2D.h"
 
-namespace IE 
+namespace IS
 {
 #ifdef _MSC_VER
 	// Supress warning: nonstandard extension used : nameless struct/union
@@ -70,7 +56,7 @@ namespace IE
 		This function sets the matrix pResult to the identity matrix
 	 */
 	 /**************************************************************************/
-	void Mtx33Identity(Matrix3x3& pResult);
+	void ISMtx33Identity(Matrix3x3& pResult);
 
 	/**************************************************************************/
 	/*!
@@ -78,7 +64,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Translate(Matrix3x3& pResult, float x, float y);
+	void ISMtx33Translate(Matrix3x3& pResult, float x, float y);
 
 	/**************************************************************************/
 	/*!
@@ -86,7 +72,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Scale(Matrix3x3& pResult, float x, float y);
+	void ISMtx33Scale(Matrix3x3& pResult, float x, float y);
 
 	/**************************************************************************/
 	/*!
@@ -94,7 +80,7 @@ namespace IE
 		is in radian. Save the resultant matrix in pResult.
 	 */
 	 /**************************************************************************/
-	void Mtx33RotRad(Matrix3x3& pResult, float angle);
+	void ISMtx33RotRad(Matrix3x3& pResult, float angle);
 
 	/**************************************************************************/
 	/*!
@@ -102,7 +88,7 @@ namespace IE
 		is in degree. Save the resultant matrix in pResult.
 	 */
 	 /**************************************************************************/
-	void Mtx33RotDeg(Matrix3x3& pResult, float angle);
+	void ISMtx33RotDeg(Matrix3x3& pResult, float angle);
 
 	/**************************************************************************/
 	/*!
@@ -110,7 +96,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Transpose(Matrix3x3& pResult, const Matrix3x3& pMtx);
+	void ISMtx33Transpose(Matrix3x3& pResult, const Matrix3x3& pMtx);
 
 	/**************************************************************************/
 	/*!
@@ -119,7 +105,7 @@ namespace IE
 		would be set to NULL.
 	*/
 	/**************************************************************************/
-	void Mtx33Inverse(Matrix3x3* pResult, float* determinant, const Matrix3x3& pMtx);
+	void ISMtx33Inverse(Matrix3x3* pResult, float* determinant, const Matrix3x3& pMtx);
 
 	/**************************************************************************/
 	/*!
@@ -127,5 +113,5 @@ namespace IE
 		Save the resultant matrix in pResult.
 	 */
 	 /**************************************************************************/
-	void Mtx33Concat(Matrix3x3& pResult, Matrix3x3 const& Matrix1, Matrix3x3 const& Matrix2);
+	void ISMtx33Concat(Matrix3x3& pResult, Matrix3x3 const& Matrix1, Matrix3x3 const& Matrix2);
 }

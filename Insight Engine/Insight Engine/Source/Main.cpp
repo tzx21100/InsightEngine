@@ -19,11 +19,10 @@
 
 #include "Graphics.h"
 #include "Input.h"
-#include <stdio.h>
 #include "Matrix3x3.h"
 #include "Vector2D.h"
 
-using namespace IE;
+using namespace IS;
 
 void PrintVector(char* txt, const Vec2& pVec0)
 {
@@ -104,15 +103,6 @@ int main(void)
         return false;
     }
     if (GLEW_VERSION_4_5) {
-        Vec2 v1, v2, v3, result;
-
-        /*printf("Testing Vector2D:\n");
-        printf("-----------------------------\n");*/
-
-        Vec2 v4(1.0f, 2.0f);
-        result.x = 1.0f;	result.y = 3.0f;
-        printf("Vec2Set: \t\t%s\n",
-            (CompareVec2(result, v4) < 0.0001f) ? "Pass" : "---Fail");
         std::cout << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
         std::cout << "Driver supports OpenGL 4.5\n" << std::endl;
     }

@@ -1,22 +1,9 @@
-/******************************************************************************/
-/*!
-\file		Matrix3x3.cpp
-\author 	Wu Zekai, zekai.wu, 2201764
-\par    	email: zekai.wu@digipen.edu
-\date   	March 23, 2023
-\brief		This file contains the definition of functions of matrix basic calculation
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
 
 #include "Pch.h"
 #include "Matrix3x3.h"
 #include "math.h"
 
-namespace IE 
+namespace IS
 {
 	// copy constructor
 	Matrix3x3::Matrix3x3(const float* pArr) :m00(pArr[0]), m01(pArr[1]), m02(pArr[2]), m10(pArr[3]), m11(pArr[4]), m12(pArr[5]), m20(pArr[6]), m21(pArr[7]), m22(pArr[8]) {
@@ -88,7 +75,7 @@ namespace IE
 		This function sets the matrix pResult to the identity matrix
 	 */
 	 /**************************************************************************/
-	void Mtx33Identity(Matrix3x3& pResult) {
+	void ISMtx33Identity(Matrix3x3& pResult) {
 		pResult.m00 = 1.f, pResult.m01 = 0.f, pResult.m02 = 0.f;
 		pResult.m10 = 0.f, pResult.m11 = 1.f, pResult.m12 = 0.f;
 		pResult.m20 = 0.f, pResult.m21 = 0.f, pResult.m22 = 1.f;
@@ -100,7 +87,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Translate(Matrix3x3& pResult, float x, float y) {
+	void ISMtx33Translate(Matrix3x3& pResult, float x, float y) {
 		pResult.m00 = 1.f, pResult.m01 = 0.f, pResult.m02 = x;
 		pResult.m10 = 0.f, pResult.m11 = 1.f, pResult.m12 = y;
 		pResult.m20 = 0.f, pResult.m21 = 0.f, pResult.m22 = 1.f;
@@ -112,7 +99,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Scale(Matrix3x3& pResult, float x, float y) {
+	void ISMtx33Scale(Matrix3x3& pResult, float x, float y) {
 		pResult.m00 = x, pResult.m01 = 0.f, pResult.m02 = 0.f;
 		pResult.m10 = 0.f, pResult.m11 = y, pResult.m12 = 0.f;
 		pResult.m20 = 0.f, pResult.m21 = 0.f, pResult.m22 = 1.f;
@@ -124,7 +111,7 @@ namespace IE
 		is in radian. Save the resultant matrix in pResult.
 	 */
 	 /**************************************************************************/
-	void Mtx33RotRad(Matrix3x3& pResult, float angle) {
+	void ISMtx33RotRad(Matrix3x3& pResult, float angle) {
 		pResult.m00 = cosf(angle), pResult.m01 = -sinf(angle), pResult.m02 = 0.f;
 		pResult.m10 = sinf(angle), pResult.m11 = cosf(angle), pResult.m12 = 0.f;
 		pResult.m20 = 0.f, pResult.m21 = 0.f, pResult.m22 = 1.f;
@@ -136,7 +123,7 @@ namespace IE
 		is in degree. Save the resultant matrix in pResult.
 	 */
 	 /**************************************************************************/
-	void Mtx33RotDeg(Matrix3x3& pResult, float angle) {
+	void ISMtx33RotDeg(Matrix3x3& pResult, float angle) {
 		angle *= (PI / 180);
 
 		float cosAngle = cosf(angle);
@@ -153,7 +140,7 @@ namespace IE
 		and saves it in pResult
 	 */
 	 /**************************************************************************/
-	void Mtx33Transpose(Matrix3x3& pResult, const Matrix3x3& pMtx) {
+	void ISMtx33Transpose(Matrix3x3& pResult, const Matrix3x3& pMtx) {
 		pResult.m00 = pMtx.m00, pResult.m01 = pMtx.m10, pResult.m02 = pMtx.m20;
 		pResult.m10 = pMtx.m01, pResult.m11 = pMtx.m11, pResult.m12 = pMtx.m21;
 		pResult.m20 = pMtx.m02, pResult.m21 = pMtx.m12, pResult.m22 = pMtx.m22;
@@ -166,7 +153,7 @@ namespace IE
 		would be set to NULL.
 	*/
 	/**************************************************************************/
-	void Mtx33Inverse(Matrix3x3* pResult, float* determinant, const Matrix3x3& pMtx) {
+	void ISMtx33Inverse(Matrix3x3* pResult, float* determinant, const Matrix3x3& pMtx) {
 		float det = pMtx.m00 * (pMtx.m11 * pMtx.m22 - pMtx.m21 * pMtx.m12) -
 			pMtx.m01 * (pMtx.m10 * pMtx.m22 - pMtx.m20 * pMtx.m12) +
 			pMtx.m02 * (pMtx.m10 * pMtx.m21 - pMtx.m20 * pMtx.m11);
@@ -193,7 +180,7 @@ namespace IE
 		*pResult = inv;
 	}
 
-	void Mtx33Concat(Matrix3x3& pResult, Matrix3x3 const& Matrix1, Matrix3x3 const& Matrix2) {
+	void ISMtx33Concat(Matrix3x3& pResult, Matrix3x3 const& Matrix1, Matrix3x3 const& Matrix2) {
 		pResult = Matrix1 * Matrix2;
 	}
 }

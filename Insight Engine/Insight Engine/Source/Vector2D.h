@@ -1,20 +1,6 @@
-/******************************************************************************/
-/*!
-\file		Vector2D.h
-\author 	Wu Zekai, zekai.wu, 2201764
-\par    	email: zekai.wu@digipen.edu
-\date   	March 23, 2023
-\brief		This file contains the declaration of functions of vector basic calculation
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
-
 #pragma once
 
-namespace IE
+namespace IS
 {
 #ifdef _MSC_VER
 	// Supress warning: nonstandard extension used : nameless struct/union
@@ -72,21 +58,21 @@ namespace IE
 		In this function, pResult will be the unit vector of pVec0
 	 */
 	 /**************************************************************************/
-	void	Vector2DNormalize(Vector2D& pResult, const Vector2D& pVec0);
+	void ISVector2DNormalize(Vector2D& pResult, const Vector2D& pVec0);
 
 	/**************************************************************************/
 	/*!
 		This function returns the length of the vector pVec0
 	 */
 	 /**************************************************************************/
-	float	Vector2DLength(const Vector2D& pVec0);
+	float ISVector2DLength(const Vector2D& pVec0);
 
 	/**************************************************************************/
 	/*!
 		This function returns the square of pVec0's length. Avoid the square root
 	 */
 	 /**************************************************************************/
-	float	Vector2DSquareLength(const Vector2D& pVec0);
+	float ISVector2DSquareLength(const Vector2D& pVec0);
 
 	/**************************************************************************/
 	/*!
@@ -94,7 +80,7 @@ namespace IE
 		The distance between these 2 2D points is returned
 	 */
 	 /**************************************************************************/
-	float	Vector2DDistance(const Vector2D& pVec0, const Vector2D& pVec1);
+	float ISVector2DDistance(const Vector2D& pVec0, const Vector2D& pVec1);
 
 	/**************************************************************************/
 	/*!
@@ -103,14 +89,14 @@ namespace IE
 		Avoid the square root
 	 */
 	 /**************************************************************************/
-	float	Vector2DSquareDistance(const Vector2D& pVec0, const Vector2D& pVec1);
+	float ISVector2DSquareDistance(const Vector2D& pVec0, const Vector2D& pVec1);
 
 	/**************************************************************************/
 	/*!
 		This function returns the dot product between pVec0 and pVec1
 	 */
 	 /**************************************************************************/
-	float	Vector2DDotProduct(const Vector2D& pVec0, const Vector2D& pVec1);
+	float ISVector2DDotProduct(const Vector2D& pVec0, const Vector2D& pVec1);
 
 	/**************************************************************************/
 	/*!
@@ -118,5 +104,5 @@ namespace IE
 		between pVec0 and pVec1
 	 */
 	 /**************************************************************************/
-	float	Vector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1);
+	float ISVector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1);
 }
