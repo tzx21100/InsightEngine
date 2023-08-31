@@ -19,7 +19,44 @@
 
 #include "Graphics.h"
 #include "Input.h"
+#include <stdio.h>
+#include "Matrix3x3.h"
+#include "Vector2D.h"
 
+using namespace IE;
+
+void PrintVector(char* txt, const Vec2& pVec0)
+{
+    printf("%s:\t%f, %f\n", txt, pVec0.x, pVec0.y);
+}
+
+void PrintMtx33(char* pString, Mtx33& pMtx)
+{
+    printf("%s:\n", pString);
+    printf("%8.5f %8.5f %8.5f\n", pMtx.m00, pMtx.m01, pMtx.m02);
+    printf("%8.5f %8.5f %8.5f\n", pMtx.m10, pMtx.m11, pMtx.m12);
+    printf("%8.5f %8.5f %8.5f\n", pMtx.m20, pMtx.m21, pMtx.m22);
+}
+
+float CompareMtx33(const Mtx33& pSrc, const Mtx33& pDst)
+{
+    float d = 0.0f;
+
+    for (long i = 0; i < 9; i++)
+        d += (float)fabs((double)pSrc.m[i] - (double)pDst.m[i]);
+
+    return d;
+}
+
+float CompareVec2(const Vec2& pSrc, const Vec2& pDst)
+{
+    float d = 0.0f;
+
+    d += (float)fabs((double)pSrc.x - (double)pDst.x);
+    d += (float)fabs((double)pSrc.y - (double)pDst.y);
+
+    return d;
+};
 
 
 int main(void)
@@ -67,6 +104,15 @@ int main(void)
         return false;
     }
     if (GLEW_VERSION_4_5) {
+        Vec2 v1, v2, v3, result;
+
+        /*printf("Testing Vector2D:\n");
+        printf("-----------------------------\n");*/
+
+        Vec2 v4(1.0f, 2.0f);
+        result.x = 1.0f;	result.y = 3.0f;
+        printf("Vec2Set: \t\t%s\n",
+            (CompareVec2(result, v4) < 0.0001f) ? "Pass" : "---Fail");
         std::cout << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
         std::cout << "Driver supports OpenGL 4.5\n" << std::endl;
     }

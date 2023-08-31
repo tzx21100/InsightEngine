@@ -8,6 +8,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #define GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
 
 //we can switch these to our own STL when we finish them
+#include "Properties.h"
 #include <vector>
 #include <iostream>
 #include <string>

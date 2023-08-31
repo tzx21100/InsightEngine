@@ -22,6 +22,12 @@
     <ClCompile Include="Source\Input.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Vector2D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Matrix3x3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -48,6 +54,15 @@
     <ClInclude Include="Source\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Vector2D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matrix3x3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Properties.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -58,6 +73,12 @@
     </Filter>
     <Filter Include="Engine">
       <UniqueIdentifier>{aeb2915c-ff43-445f-a90d-fd5beaec6627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{e4d5b7dc-d972-4b83-9e14-f84afd59316d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
