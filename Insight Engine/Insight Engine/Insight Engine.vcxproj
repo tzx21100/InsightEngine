@@ -11,7 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GLFXWindow.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
+    <ClCompile Include="Source\EventManager.cpp" />
+    <ClCompile Include="Source\Example System Implementation.cpp" />
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -29,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CoreEngine.h" />
+    <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Input.h" />

@@ -37,6 +37,15 @@
     <ClCompile Include="Source\ISVector.cpp">
       <Filter>STL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EventManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Example System Implementation.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GLFXWindow.cpp">
+      <Filter>Engine\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -81,6 +90,12 @@
     <ClInclude Include="Source\ISVector.h">
       <Filter>STL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EventManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GLFXWindow.h">
+      <Filter>Engine\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -100,6 +115,9 @@
     </Filter>
     <Filter Include="STL">
       <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Window">
+      <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
