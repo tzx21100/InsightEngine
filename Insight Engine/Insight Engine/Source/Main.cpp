@@ -22,6 +22,7 @@
 #include "Matrix3x3.h"
 #include "Vector2D.h"
 #include "CoreEngine.h"
+#include "GLFXWindow.h"
 
 using namespace IS;
 
@@ -61,8 +62,8 @@ float CompareVec2(const Vec2& pSrc, const Vec2& pDst)
 
 int main(void)
 {
-    GLFWwindow* window;    
     
+    GLFWwindow* window;
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -74,48 +75,8 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
-    // Before asking GLFW to create an OpenGL context, we specify the minimum constraints
-    // in that context:
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
-    glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
-    glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
-
-    if (!window) {
-        std::cerr << "GLFW unable to create OpenGL context - abort program\n";
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    // this is the default setting ...
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
-    // Part 2: Initialize entry points to OpenGL functions and extensions
-    GLenum err = glewInit();
-    if (GLEW_OK != err) {
-        std::cerr << "Unable to initialize GLEW - error: "
-            << glewGetErrorString(err) << " abort program" << std::endl;
-        return false;
-    }
-    if (GLEW_VERSION_4_5) {
-        std::cout << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
-        std::cout << "Driver supports OpenGL 4.5\n" << std::endl;
-    }
-    else {
-        std::cerr << "Driver doesn't support OpenGL 4.5 - abort program" << std::endl;
-        return false;
-    }
-
-    ISGraphics::init();
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+    glfxWindow* gwindow=new glfxWindow(window);
+    gwindow->Initialize();
 
     //engine init
     IS::InsightEngine engine;
@@ -124,30 +85,11 @@ int main(void)
     InputManager* InputSys=new InputManager(window);
 
     engine.AddSystem(InputSys);
-
+    engine.AddSystem(gwindow);
     //run engine (GAME LOOP)
     engine.SetFPS(80);//set fps to wtv
     engine.Run();
 
-
-
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        // grafix updates
-        glfwPollEvents();
-        ISGraphics::update();
-
-        //grafix draws
-        ISGraphics::draw();
-        glfwSwapBuffers(window); // Swap front and back buffers
-
-
-
-  
-
-        
-    }
 
     glfwTerminate();
     return 0;
