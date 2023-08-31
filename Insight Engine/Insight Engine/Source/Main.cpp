@@ -21,6 +21,7 @@
 #include "Input.h"
 #include "Matrix3x3.h"
 #include "Vector2D.h"
+#include "CoreEngine.h"
 
 using namespace IS;
 
@@ -116,8 +117,19 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    //engine init
+    IS::InsightEngine engine;
+
     //input manager assigned to window
-    InputManager inputManager(window);
+    InputManager* InputSys=new InputManager(window);
+
+    engine.AddSystem(InputSys);
+
+    //run engine (GAME LOOP)
+    engine.SetFPS(80);//set fps to wtv
+    engine.Run();
+
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -130,15 +142,9 @@ int main(void)
         ISGraphics::draw();
         glfwSwapBuffers(window); // Swap front and back buffers
 
-        //engine can run here
-        //run engine
-        
-        //test for Input System will make it with held keys etc later
-        if (inputManager.IsKeyPressed(GLFW_KEY_A)) {
-            std::cout << "A IS PRESSED";
-        }
 
-        inputManager.Update();
+
+  
 
         
     }

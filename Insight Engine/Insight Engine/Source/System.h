@@ -4,16 +4,20 @@
 #include"Message.h"
 #include <string>
 /* create a virtual system class for all systems used in the game
-this class should be the parent class for all systems used E.g. Graphics */
+this class should be the parent class for all systems used E.g. Graphics
+all are virtual so they can be overwritten by the other systems when initing*/
 
-namespace Zx_Framework {
+namespace IS {
 
-    class ParentSystem {
+
+
+    //all systems should be able to listen to messages as well
+    class ParentSystem :MessageListener {
     public:
         virtual void sendMessage(Message* message){};
-        virtual void updateSystem(float time) = 0;
+        virtual void Update(float time) = 0;
         virtual std::string getName() = 0;
-        virtual void initializeSystem() {};
+        virtual void Initialize() {};
         virtual ~ParentSystem(){}
 
     };
