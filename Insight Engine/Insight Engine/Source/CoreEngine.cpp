@@ -1,10 +1,19 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
+#include <iostream>
+#include <thread>
 
-namespace Zx_Framework {
+namespace IS {
 
+    InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {}
 
+    InsightEngine::~InsightEngine() {
+        for (auto& pair : all_systems) {
+            delete pair.second;
+        }
+        all_systems.clear();
+    }
 
     //moved all the engine stuff under this run function
     void InsightEngine::Run() {

@@ -1,9 +1,10 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
 
-
 #include "System.h"
-#include <vector>
+#include <unordered_map>
+#include <chrono>
+#include "EventManager.h"
 
 namespace IS {
     class InsightEngine {
@@ -27,10 +28,6 @@ namespace IS {
         unsigned last_runtime;
         int targetFPS{60};
     };
-
 }
 
-
-
-
-#endif //GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
+#endif // GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
