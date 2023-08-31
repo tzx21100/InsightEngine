@@ -15,6 +15,9 @@
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\ISArray.cpp" />
+    <ClCompile Include="Source\ISString.cpp" />
+    <ClCompile Include="Source\ISVector.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Matrix3x3.cpp" />
     <ClCompile Include="Source\Pch.cpp">
@@ -29,6 +32,9 @@
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\ISArray.h" />
+    <ClInclude Include="Source\ISString.h" />
+    <ClInclude Include="Source\ISVector.h" />
     <ClInclude Include="Source\Matrix3x3.h" />
     <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Pch.h" />

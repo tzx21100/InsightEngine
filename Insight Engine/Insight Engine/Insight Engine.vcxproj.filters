@@ -28,6 +28,15 @@
     <ClCompile Include="Source\Matrix3x3.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ISArray.cpp">
+      <Filter>STL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ISString.cpp">
+      <Filter>STL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ISVector.cpp">
+      <Filter>STL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -63,6 +72,15 @@
     <ClInclude Include="Source\Properties.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ISArray.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ISString.h">
+      <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ISVector.h">
+      <Filter>STL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -79,6 +97,9 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL">
+      <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
