@@ -13,9 +13,6 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CoreEngine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -37,14 +34,17 @@
     <ClCompile Include="Source\ISVector.cpp">
       <Filter>STL</Filter>
     </ClCompile>
+    <ClCompile Include="GLFXWindow.cpp">
+      <Filter>Engine\GLFX Window</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EventManager.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Messaging&amp;Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CoreEngine.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Example System Implementation.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="GLFXWindow.cpp">
-      <Filter>Engine\Window</Filter>
+      <Filter>Engine\System Example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,17 +54,11 @@
     <ClInclude Include="Source\Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CoreEngine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Pch.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shader.h">
       <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Message.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Source\System.h">
       <Filter>Engine</Filter>
@@ -90,11 +84,17 @@
     <ClInclude Include="Source\ISVector.h">
       <Filter>STL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EventManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GLFXWindow.h">
-      <Filter>Engine\Window</Filter>
+      <Filter>Engine\GLFX Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EventManager.h">
+      <Filter>Engine\Messaging&amp;Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Message.h">
+      <Filter>Engine\Messaging&amp;Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CoreEngine.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +116,16 @@
     <Filter Include="STL">
       <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Window">
+    <Filter Include="Engine\Messaging&amp;Event">
+      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\System Example">
+      <UniqueIdentifier>{26be95f9-2ff5-47cb-828f-691b9e323d78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GLFX Window">
       <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
