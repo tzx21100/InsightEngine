@@ -46,6 +46,12 @@
     <ClCompile Include="Source\Example System Implementation.cpp">
       <Filter>Engine\System Example</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Debug\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Logger.cpp">
+      <Filter>Debug\Logging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -96,6 +102,15 @@
     <ClInclude Include="Source\CoreEngine.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Log.h">
+      <Filter>Debug\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Logger.h">
+      <Filter>Debug\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DebugHandler.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -127,6 +142,12 @@
     </Filter>
     <Filter Include="Engine\GLFX Window">
       <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{23331e8a-17f3-4a9c-a892-f9178c7ef7b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Logging">
+      <UniqueIdentifier>{9562c0c5-815a-4760-9667-51a5e8766d7e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
