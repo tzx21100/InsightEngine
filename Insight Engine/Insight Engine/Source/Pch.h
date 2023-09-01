@@ -9,6 +9,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 
 //we can switch these to our own STL when we finish them
 #include "Properties.h"
+#include "Log.h"
 #include <vector>
 #include <iostream>
 #include <string>
@@ -18,7 +19,5 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <cstddef>          // for size_t
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
-
-
 
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

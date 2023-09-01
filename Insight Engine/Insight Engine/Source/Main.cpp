@@ -60,9 +60,10 @@ float CompareVec2(const Vec2& pSrc, const Vec2& pDst)
 };
 
 
-int main(void)
-{
-    
+int main() {
+    // Initialize log
+    Log::init();
+
     GLFWwindow* window;
     /* Initialize the library */
     if (!glfwInit())
@@ -76,7 +77,6 @@ int main(void)
         return -1;
     }
     glfxWindow* gwindow=new glfxWindow(window);
-    gwindow->Initialize();
 
     //engine init
     IS::InsightEngine* engine=new IS::InsightEngine();

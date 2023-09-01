@@ -52,8 +52,8 @@ namespace IS {
             return ;
         }
         if (GLEW_VERSION_4_5) {
-            std::cout << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
-            std::cout << "Driver supports OpenGL 4.5\n" << std::endl;
+            IS_CORE_INFO("Using glew version: ", glewGetString(GLEW_VERSION));
+            IS_CORE_INFO("Driver supports OpenGL 4.5\n");
         }
         else {
             std::cerr << "Driver doesn't support OpenGL 4.5 - abort program" << std::endl;
@@ -69,7 +69,7 @@ namespace IS {
     void glfxWindow::HandleMessage(const Message& message){
         if (message.GetType() == MessageType::Collide) {
             // Handle collision logic here
-            std::cout << "Handling collision in PhysicsSystem." << std::endl;
+            IS_CORE_INFO("Handling collision in PhysicsSystem.");
         }
     }
     glfxWindow::glfxWindow(GLFWwindow* windo) : window(windo) {}

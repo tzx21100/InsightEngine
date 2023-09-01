@@ -21,6 +21,8 @@
     <ClCompile Include="Source\ISArray.cpp" />
     <ClCompile Include="Source\ISString.cpp" />
     <ClCompile Include="Source\ISVector.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
+    <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Matrix3x3.cpp" />
     <ClCompile Include="Source\Pch.cpp">
@@ -32,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CoreEngine.h" />
+    <ClInclude Include="Source\DebugHandler.h" />
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
@@ -40,6 +43,8 @@
     <ClInclude Include="Source\ISArray.h" />
     <ClInclude Include="Source\ISString.h" />
     <ClInclude Include="Source\ISVector.h" />
+    <ClInclude Include="Source\Log.h" />
+    <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Matrix3x3.h" />
     <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Pch.h" />
@@ -95,7 +100,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -111,6 +116,14 @@
       <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
 copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -118,7 +131,7 @@ copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)g
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -134,7 +147,8 @@ copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)g
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
+copy "$(ProjectDir)Logs\*" "$(ProjectDir)Logs" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
