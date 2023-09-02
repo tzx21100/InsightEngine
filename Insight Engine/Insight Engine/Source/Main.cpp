@@ -78,24 +78,23 @@ int main() {
     }
     glfxWindow* gwindow=new glfxWindow(window);
 
-    //engine init
-    IS::InsightEngine* engine=new IS::InsightEngine();
+    //engine get
+    InsightEngine& engine = InsightEngine::Instance();
 
     //input manager assigned to window
     InputManager* InputSys=new InputManager(window);
     ISAudio* AudioSys = new ISAudio();
    
-    engine->AddSystem(InputSys);
-    engine->AddSystem(gwindow);
-    engine->AddSystem(AudioSys);
-    //run engine (GAME LOOP)
-    engine->SetFPS(80);//set fps to wtv
-    engine->Run();
-   
+    engine.AddSystem(InputSys);
+    engine.AddSystem(gwindow);
+    engine.AddSystem(AudioSys);
 
-    //engine stops
-    engine->DestroyAllSystems();
-    delete engine;
+    //run engine (GAME LOOP)
+    engine.SetFPS(80);//set fps to wtv
+    engine.Run();
+   
+    //engine stops technically don't need this since destructor is there and my engine is static
+    engine.DestroyAllSystems();
 
     glfwTerminate();
    

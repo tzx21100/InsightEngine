@@ -7,7 +7,7 @@
 
 namespace IS {
 
-    //this will be the update for the window Shouldn't really need to touch it
+    //this will be the update for the window we can use this to register like people pressing stuff on the window
     void glfxWindow::Update(float time)  {
         // grafix updates
         glfwPollEvents();
@@ -16,6 +16,15 @@ namespace IS {
         //grafix draws
         ISGraphics::draw();
         glfwSwapBuffers(window); // Swap front and back buffers
+
+        //register window closing 
+        if (glfwWindowShouldClose(window)) {
+            Message quit = Message(MessageType::Quit);
+            EventManager::Instance().Broadcast(quit);
+            glfwTerminate();
+        }
+
+
     }
 
     std::string glfxWindow::getName()  {
@@ -23,6 +32,8 @@ namespace IS {
     }
 
     void glfxWindow::Initialize()  {
+        //Subscirbe to messages
+        Subscribe(MessageType::DebugInfo);
 
         // Before asking GLFW to create an OpenGL context, we specify the minimum constraints
         // in that context:

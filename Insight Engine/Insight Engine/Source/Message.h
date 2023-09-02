@@ -24,6 +24,7 @@ namespace IS {
     public:
 	    virtual void HandleMessage(const Message& message) = 0;
 	    virtual ~MessageListener() {}
+
     };
 
 }

@@ -3,7 +3,9 @@
 #define PHYSICS_SYSTEM_H
 
 #include "System.h"
+#include "CoreEngine.h"
 #include <iostream>
+
 
 namespace IS {
 
@@ -21,8 +23,11 @@ namespace IS {
         void Initialize() override {
             // Initialization logic here
             std::cout << "PhysicsSystem initialized." << std::endl;
+            //The system can also subscribe to the message type it wants here
+            Subscribe(MessageType::Collide);
         }
 
+        //this part handles how the messages are handled. Remember you have to subscribe to the messages you want!
         void HandleMessage(const Message& message) override {
             if (message.GetType() == MessageType::Collide) {
                 // Handle collision logic here

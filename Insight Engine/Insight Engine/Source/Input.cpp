@@ -8,8 +8,8 @@ namespace IS {
     }
 
     void InputManager::Initialize() {
-        // Initialization logic here, if any
-        // Likely empty for InputManager, as it gets initialized in the constructor
+        //Subscirbe to messages
+        Subscribe(MessageType::DebugInfo);
     }
 
     void InputManager::Update(float deltaTime) {

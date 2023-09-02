@@ -1,3 +1,6 @@
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_EVENTMANAGER_H_
+#define GAM200_INSIGHT_ENGINE_SOURCE_EVENTMANAGER_H_
+
 #include "Message.h"
 #include <unordered_map>
 #include <vector>
@@ -8,11 +11,21 @@ all subscribed Systems will recieved the message.
 namespace IS {
     class EventManager {
     public:
+        //singleton as well
+        static EventManager& Instance() {
+            static EventManager instance;
+            return instance;
+        }
         void Subscribe(MessageType type, MessageListener* listener);
         void Broadcast(const Message& message);
 
     private:
         //i create an unorderedmap with MessageType as key and it should store an array of a pointer to message listeners (systems)
         std::unordered_map<MessageType, std::vector<MessageListener*>> handlers;
+        //singleton
+        EventManager();
+        ~EventManager();
     };
 }
+
+#endif

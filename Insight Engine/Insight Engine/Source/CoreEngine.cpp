@@ -4,10 +4,20 @@
 #include <iostream>
 #include <thread>
 
+
 namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {}
+
+    //handling messages
+    void InsightEngine::HandleMessage(const Message& message) {
+        //handling quit message
+        if (message.GetType() == MessageType::Quit) {
+            is_running = false;
+        }
+    }
+
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
@@ -22,6 +32,8 @@ namespace IS {
 
         //initialize all systems first
         InitializeAllSystems();
+        //subscirbe to messages
+        Subscribe(MessageType::Quit);
         is_running = true;
         
         //this is the game loop
@@ -46,10 +58,6 @@ namespace IS {
                 pair.second->Update(deltaTime);  // Pass the actual delta time here so all systems can use it
             }
 
-            //Messages can be passed here with the event manager here is an example
-            Message testMessage(MessageType::DebugInfo);
-            //every system that has subscribed to DebugInfo will now recieve this message and do the relavent actions
-            BroadcastMessage(&testMessage);
 
         }
     }
@@ -83,10 +91,6 @@ namespace IS {
         }
     }
 
-    //This will use the Event Manager and broadcast the message to relavent systems that are subscribed to that message
-    void InsightEngine::BroadcastMessage(Message* message) {
-        eventManager.Broadcast(*message);
-    }
 
     //limit fps will return the frameEnd time now so i can use to find delta time
     std::chrono::high_resolution_clock::time_point InsightEngine::LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart) {

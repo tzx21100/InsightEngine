@@ -1,7 +1,14 @@
 #include "Pch.h"
 #include "EventManager.h"
-namespace IS {
 
+namespace IS {
+    EventManager::EventManager() {
+        //empty
+    }
+
+    EventManager::~EventManager() {
+       //empty
+    }
     //adding the key and system to the handler
     void EventManager::Subscribe(MessageType type, MessageListener* listener) {
         handlers[type].push_back(listener);

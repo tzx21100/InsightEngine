@@ -4,29 +4,42 @@
 #include "System.h"
 #include <unordered_map>
 #include <chrono>
-#include "EventManager.h"
 
 namespace IS {
-    class InsightEngine {
+    class InsightEngine: public MessageListener{
     public:
-        InsightEngine();
-        ~InsightEngine();
+
+        //override message handling this way the core engine also will recieve and send messages
+        virtual void HandleMessage(const Message& message) override;
+
+        //this is to instatiate only ONE engine
+        static InsightEngine& Instance() {
+            static InsightEngine instance;
+            return instance;
+        }
         void Run();
         void AddSystem(ParentSystem* system);
         void DestroySystem(const std::string& name);
         void DestroyAllSystems();
         void InitializeAllSystems();
-        void BroadcastMessage(Message* message);
         void SetFPS(int num);
+
+        //eventmanager
+        void sendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
+        void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
+
     private:
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
-        //this will be the only event manager the system refers to
-        EventManager eventManager;
         bool is_running;
         std::unordered_map<std::string, ParentSystem*> all_systems;
         unsigned last_runtime;
         int targetFPS{60};
+        //follow the singleton pattern for only one engine
+        InsightEngine();
+        ~InsightEngine();
+
+
     };
 }
 
