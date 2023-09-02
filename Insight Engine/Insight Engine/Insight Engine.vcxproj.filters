@@ -16,9 +16,6 @@
     <ClCompile Include="Source\Pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vector2D.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -38,7 +35,7 @@
       <Filter>Engine\GLFX Window</Filter>
     </ClCompile>
     <ClCompile Include="Source\EventManager.cpp">
-      <Filter>Engine\Messaging&amp;Event</Filter>
+      <Filter>Engine\Core\Messaging&amp;Event</Filter>
     </ClCompile>
     <ClCompile Include="Source\CoreEngine.cpp">
       <Filter>Engine\Core</Filter>
@@ -53,7 +50,10 @@
       <Filter>Debug\Logging</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Engine\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,12 +68,6 @@
     </ClInclude>
     <ClInclude Include="Source\Shader.h">
       <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector2D.h">
       <Filter>Math</Filter>
@@ -97,10 +91,10 @@
       <Filter>Engine\GLFX Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\EventManager.h">
-      <Filter>Engine\Messaging&amp;Event</Filter>
+      <Filter>Engine\Core\Messaging&amp;Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\Message.h">
-      <Filter>Engine\Messaging&amp;Event</Filter>
+      <Filter>Engine\Core\Messaging&amp;Event</Filter>
     </ClInclude>
     <ClInclude Include="Source\CoreEngine.h">
       <Filter>Engine\Core</Filter>
@@ -115,7 +109,13 @@
       <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Engine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     <Filter Include="STL">
       <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Messaging&amp;Event">
-      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,12 @@
     </Filter>
     <Filter Include="Debug\Logging">
       <UniqueIdentifier>{9562c0c5-815a-4760-9667-51a5e8766d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems">
+      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Messaging&amp;Event">
+      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace IS {
     }
 
     EventManager::~EventManager() {
-       //empty
+        handlers.clear();
     }
     //adding the key and system to the handler
     void EventManager::Subscribe(MessageType type, MessageListener* listener) {
