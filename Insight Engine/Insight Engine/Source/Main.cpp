@@ -91,30 +91,7 @@ int main() {
     //run engine (GAME LOOP)
     engine->SetFPS(80);//set fps to wtv
     engine->Run();
-    
-    // Load a sound effect
-    FMOD::Channel* soundChannel = AudioSys->ISAudioLoadSound("sound.MP3", true);
-
-    // Load music
-    FMOD::Channel* musicChannel = AudioSys->ISAudioLoadMusic("music.MP3", true);
-    
-    FMOD::ChannelGroup* soundGroup = AudioSys->ISAudioCreateGroup();
-    FMOD::ChannelGroup* musicGroup = AudioSys->ISAudioCreateGroup();
-
-    // Check if loading was successful
-    if (!soundChannel || !musicChannel) {
-        // Handle loading errors
-        return 1;
-    }
-
-    // Play the sound effect
-    AudioSys->ISAudioPlay(soundChannel, soundGroup, 1.0f, 1.0f, false);
-
-    // Play the background music
-    AudioSys->ISAudioPlay(musicChannel, musicGroup, 1.0f, 1.0f, true);
-
-    // Release FMOD resources when you're done
-    AudioSys->ISAudioRelease();
+   
 
     //engine stops
     engine->DestroyAllSystems();
