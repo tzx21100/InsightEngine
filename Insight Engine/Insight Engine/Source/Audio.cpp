@@ -20,13 +20,37 @@ namespace IS {
             // Handle initialization error
             return;
         }
+
+
+
+
     }
 
     void ISAudio::Update(float deltaTime) {//every frame
-        if (system) {
-            system->update();
-            std::cout << "dt from audio " << deltaTime;
-        }
+        //update the audio system
+        system->update();
+
+        //these commented codes are an example of how the sound system work
+        
+        //// Load a sound effect
+        //FMOD::Channel* soundChannel = ISAudioLoadSound("sound.mp3", true);
+
+        //// Load music
+        //FMOD::Channel* musicChannel = ISAudioLoadMusic("music.MP3", true);
+
+        //FMOD::ChannelGroup* soundGroup = ISAudioCreateGroup();
+        //FMOD::ChannelGroup* musicGroup = ISAudioCreateGroup();
+
+        //// Check if loading was successful
+        //if (!soundChannel || !musicChannel) {
+        //    // Handle loading errors
+        //    return;
+        //}
+        //// Play the sound effect
+        //ISAudioPlay(soundChannel, soundGroup, 1.0f, 1.0f, false);
+
+        //// Play the background music
+        //ISAudioPlay(musicChannel, musicGroup, 1.0f, 1.0f, true);
     }
 
     void ISAudio::HandleMessage(const Message& message) {
