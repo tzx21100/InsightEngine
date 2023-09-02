@@ -13,7 +13,7 @@ namespace IS {
 	//Basic message is the way information is sent by systems to engine
     class Message {
 	    public:
-		    Message(MessageType id) : type(id) {};
+		    Message(MessageType message) : type(message) {};
 			MessageType GetType() const { return type; }
 	    private:
 			MessageType type;

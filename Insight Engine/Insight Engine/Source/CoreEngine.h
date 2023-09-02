@@ -20,7 +20,7 @@ namespace IS {
         void SetFPS(int num);
     private:
         //putting this here as a hard cap to fps, could move it to public as well
-        void LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
+        std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         //this will be the only event manager the system refers to
         EventManager eventManager;
         bool is_running;
