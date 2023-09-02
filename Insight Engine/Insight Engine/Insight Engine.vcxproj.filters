@@ -52,6 +52,9 @@
     <ClCompile Include="Source\Logger.cpp">
       <Filter>Debug\Logging</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="Source\DebugHandler.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

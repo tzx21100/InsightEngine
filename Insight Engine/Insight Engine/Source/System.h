@@ -9,8 +9,6 @@ all are virtual so they can be overwritten by the other systems when initing*/
 
 namespace IS {
 
-
-
     //all systems should be able to listen to messages as well
     class ParentSystem :MessageListener {
     public:
