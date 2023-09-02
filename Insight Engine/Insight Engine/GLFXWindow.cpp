@@ -7,6 +7,7 @@
 
 namespace IS {
 
+    //this will be the update for the window Shouldn't really need to touch it
     void glfxWindow::Update(float time)  {
         // grafix updates
         glfwPollEvents();

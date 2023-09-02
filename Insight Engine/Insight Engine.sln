@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Insight Engine", "Insight Engine\Insight Engine.vcxproj", "{A1FB79E1-A52C-4D58-9CB3-E993A52DA48A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Insight Engine\libraries\imgui\ImGui\ImGui.vcxproj", "{F9674C13-F1B0-45C5-BE06-3BA287E581CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -19,6 +21,14 @@ Global
 		{A1FB79E1-A52C-4D58-9CB3-E993A52DA48A}.Release|x64.ActiveCfg = Release|x64
 		{A1FB79E1-A52C-4D58-9CB3-E993A52DA48A}.Release|x64.Build.0 = Release|x64
 		{A1FB79E1-A52C-4D58-9CB3-E993A52DA48A}.Release|x86.ActiveCfg = Release|x64
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Debug|x64.ActiveCfg = Debug|x64
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Debug|x64.Build.0 = Debug|x64
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Debug|x86.ActiveCfg = Debug|Win32
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Debug|x86.Build.0 = Debug|Win32
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Release|x64.ActiveCfg = Release|x64
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Release|x64.Build.0 = Release|x64
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Release|x86.ActiveCfg = Release|Win32
+		{F9674C13-F1B0-45C5-BE06-3BA287E581CB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
