@@ -56,8 +56,8 @@
     <ClInclude Include="Source\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="libraries\imgui\ImGui\ImGui.vcxproj">
-      <Project>{756fd70f-90c0-4df1-aec5-a8b7e44b9aca}</Project>
+    <ProjectReference Include="..\ImGui\ImGui.vcxproj">
+      <Project>{1e9ddb85-9171-4335-bab2-caa43c8cecdc}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
