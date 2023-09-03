@@ -12,7 +12,7 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
     }
 
-    void InputManager::Update(float deltaTime) {
+    void InputManager::Update([[maybe_unused]] float deltaTime) {
 
         //test for Input System will make it with held keys etc later
         if (this->IsKeyPressed(GLFW_KEY_A)) {
@@ -60,7 +60,7 @@ namespace IS {
     }
 
 
-    void InputManager::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
             std::cout << "KeyCallback: Key " << key << " Action " << action << std::endl;

@@ -5,12 +5,10 @@
 #include <array>
 #include <string>
 
-
-
-ISGraphics::ISModel ISGraphics::test_model{};
+ISGraphics::ISModel ISGraphics::test_model("Rectangle");
 
 void ISGraphics::init() {
-	glClearColor(1.f, 0.f, 0.f, 1.f); // set color buffer to red
+	glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
 
 	glViewport(0, 0, WIDTH, HEIGHT);
 
@@ -19,7 +17,7 @@ void ISGraphics::init() {
 }
 
 void ISGraphics::update() {
-	glClearColor(1.f, 0.f, 0.f, 1.f); // set color buffer to red
+	glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
 }
 
 void ISGraphics::draw() {
@@ -30,11 +28,16 @@ void ISGraphics::draw() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
     
-	test_model.draw();
+    if (test_model.drawing)
+	    test_model.draw();
 
     // Render imgui window
-    ImGui::Begin("My name is window, ImGui window");
-    ImGui::Text("Hello there adventurer!");
+    ImGui::Begin(test_model.name.c_str());
+    ImGui::Text("Control the attributes of %s.", test_model.name.c_str());
+    std::string label{ "Draw " + test_model.name };
+    ImGui::Checkbox(label.c_str(), &test_model.drawing);
+    ImGui::SliderFloat("Size", &test_model.size, 0.f, 1.f);
+    ImGui::ColorEdit3("Color", test_model.color);
     ImGui::End();
 
     ImGui::Render();
@@ -53,16 +56,15 @@ void ISGraphics::cleanup() {
 void ISGraphics::ISModel::setupVAO() {
     struct Vertex {
         glm::vec2 position;
-        glm::vec3 color;
         glm::vec2 texCoord;
     };
 
     // Define the vertices of the quad
     std::array<Vertex, 4> vertices{
-        Vertex{glm::vec2(-1.0f, -1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f)},
-        Vertex{glm::vec2(1.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 0.0f)},
-        Vertex{glm::vec2(-1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-        Vertex{glm::vec2(1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(1.0f, 1.0f)}
+        Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 0.0f)},
+        Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 0.0f)},
+        Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+        Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 1.0f)}
     };
 
 
@@ -87,9 +89,9 @@ void ISGraphics::ISModel::setupVAO() {
     glVertexArrayAttribBinding(vao_hdl, 0, 0);
 
     // Enable the color attribute
-    glEnableVertexArrayAttrib(vao_hdl, 1);
+    /*glEnableVertexArrayAttrib(vao_hdl, 1);
     glVertexArrayAttribFormat(vao_hdl, 1, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, color));
-    glVertexArrayAttribBinding(vao_hdl, 1, 0);
+    glVertexArrayAttribBinding(vao_hdl, 1, 0);*/
 
     // Enable the texture coordinate attribute
     glEnableVertexArrayAttrib(vao_hdl, 2);
@@ -118,11 +120,9 @@ void ISGraphics::ISModel::setupShaders() {
     {
         "#version 450 core\n"
         "layout(location = 0) in vec2 aVertexPosition;\n"
-        "layout(location = 1) in vec3 aVertexColor;\n"
-        "layout(location = 0) out vec3 vColor;\n"
+        "uniform float uSize;\n\n"
         "void main() {\n"
-        "	gl_Position = vec4(aVertexPosition, 0.0, 1.0);\n"
-        "	vColor = aVertexColor;\n"
+        "	gl_Position = vec4(uSize * aVertexPosition, 0.0, 1.0);\n"
         "}\n"
 
         /*
@@ -143,11 +143,10 @@ void ISGraphics::ISModel::setupShaders() {
     {
         // for colors only, no texture
         "#version 450 core\n"
-        "layout (location=0) in vec3 vInterpColor;\n"
-        "layout (location=0) out vec4 fFragColor;\n\n"
-
+        "layout (location=0) out vec4 fFragColor;\n"
+        "uniform vec3 uColor;"
         "void main() {\n"
-        "	fFragColor = vec4(vInterpColor, 1.0);\n"
+        "	fFragColor = vec4(uColor, 1.0);\n"
         "}\n"
 
         // for texture
@@ -186,6 +185,9 @@ void ISGraphics::ISModel::draw() { // documentation soon
     shader_program.Use();
 
     glBindVertexArray(vao_ID);
+
+    shader_program.SetUniform("uSize", test_model.size);
+    shader_program.SetUniform("uColor", test_model.color[0], test_model.color[1], test_model.color[2]);
 
     glDrawElements(GL_TRIANGLES, draw_count, GL_UNSIGNED_INT, NULL);
 

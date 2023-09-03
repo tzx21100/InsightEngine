@@ -51,7 +51,7 @@ namespace IS {
             duration_cast<std::chrono::microseconds>. Lastly, .count() just turns it into integers
             This gives us how many microseconds that have passed in int terms.
             */
-            int deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count();
+            float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
 
             //looping through the map and updating
             for (const auto& pair : all_systems) {

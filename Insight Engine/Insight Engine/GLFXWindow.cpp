@@ -8,7 +8,7 @@
 namespace IS {
 
     //this will be the update for the window we can use this to register like people pressing stuff on the window
-    void glfxWindow::Update(float time)  {
+    void glfxWindow::Update([[maybe_unused]] float time)  {
         // grafix updates
         glfwPollEvents();
         ISGraphics::update();

@@ -20,10 +20,16 @@ struct ISGraphics {
 		GLuint vao_ID{};
 		GLuint draw_count{};
 
+		// imgui
+		std::string name{ "Model" };
+		float size{ .1f };
+		bool drawing{ true };
+		float color[3]{ 1.f, 0.f, 0.f };
+
+		ISModel(std::string const& model_name) : name(model_name) {}
 		void setupVAO();
 		void setupShaders();
 		void draw();
-
 	};
 
 	static ISModel test_model;
