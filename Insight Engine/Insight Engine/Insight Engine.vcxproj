@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="libraries\imgui\ImGui\ImGui.vcxproj">
-      <Project>{f9674c13-f1b0-45c5-be06-3ba287e581cb}</Project>
+      <Project>{756fd70f-90c0-4df1-aec5-a8b7e44b9aca}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -94,7 +94,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(SolutionDir)Insight Engine\libraries\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib;$(SolutionDir)Insight Engine\libraries\fmod\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
@@ -106,7 +106,7 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(SolutionDir)Insight Engine\libraries\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>

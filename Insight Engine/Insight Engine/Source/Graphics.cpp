@@ -25,11 +25,29 @@ void ISGraphics::update() {
 void ISGraphics::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    
 	test_model.draw();
+
+    // Render imgui window
+    ImGui::Begin("My name is window, ImGui window");
+    ImGui::Text("Hello there adventurer!");
+    ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ISGraphics::cleanup() {
 	// WIP
+
+    // Shutdown imgui
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 }
 
 void ISGraphics::ISModel::setupVAO() {

@@ -21,4 +21,9 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
 
+// for imgui
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
