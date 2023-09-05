@@ -14,12 +14,37 @@ void ISGraphics::init() {
 
 	test_model.setupVAO();
 	test_model.setupShaders();
+
+    test_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
+    test_model.angle = 30.f; // 30 degrees tilted
+    test_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
 }
 
 void ISGraphics::update() {
-	glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
-}
+    glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
 
+    // xform
+    float angle_speed = 30.f; // 30 degrees per second
+    test_model.angle += angle_speed * fakeDT;
+    float angle_rad = glm::radians(test_model.angle);
+
+    float sin_angle = sinf(angle_rad);
+    float cos_angle = cosf(angle_rad);
+
+    glm::mat3 world_to_NDC_xform = { test_model.scaling.x * cos_angle, test_model.scaling.x * -sin_angle, 0,   // column 1
+                                     test_model.scaling.y * sin_angle, test_model.scaling.y * cos_angle,  0,   // column 2
+                                     test_model.worldPosition.x,       test_model.worldPosition.y,        1 }; // column 3
+
+
+    float map_scale_x = 0.00078125f; // 1/1280 (DEPENDANT ON WORLD SIZE)
+    float map_scale_y = 0.00138889f; // 1/720
+
+    glm::mat3 map_scale_xform = { map_scale_x, 0,         0,   // column 1
+                                  0,         map_scale_y, 0,   // column 2
+                                  0,         0,           1 }; // column 3
+
+    test_model.mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
+}
 void ISGraphics::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -119,10 +144,10 @@ void ISGraphics::ISModel::setupShaders() {
     std::string vtx_shdr
     {
         "#version 450 core\n"
-        "layout(location = 0) in vec2 aVertexPosition;\n"
-        "uniform float uSize;\n\n"
+        "layout(location = 0) in vec2 aVertexPosition;\n\n"
+        "uniform mat3 uModel_to_NDC;\n\n"
         "void main() {\n"
-        "	gl_Position = vec4(uSize * aVertexPosition, 0.0, 1.0);\n"
+        "	gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.f)), 0.0, 1.0);\n"
         "}\n"
 
         /*
@@ -186,8 +211,10 @@ void ISGraphics::ISModel::draw() { // documentation soon
 
     glBindVertexArray(vao_ID);
 
-    shader_program.SetUniform("uSize", test_model.size);
+    //shader_program.SetUniform("uSize", test_model.size);
     shader_program.SetUniform("uColor", test_model.color[0], test_model.color[1], test_model.color[2]);
+    shader_program.SetUniform("uModel_to_NDC", test_model.mdl_to_ndl_xform);
+
 
     glDrawElements(GL_TRIANGLES, draw_count, GL_UNSIGNED_INT, NULL);
 

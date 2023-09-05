@@ -7,6 +7,7 @@
 
 #define WIDTH 1280
 #define HEIGHT 720
+#define fakeDT 1/60
 
 struct ISGraphics {
 	static void init();
@@ -30,6 +31,13 @@ struct ISGraphics {
 		void setupVAO();
 		void setupShaders();
 		void draw();
+
+		// transformation
+		glm::vec2 worldPosition{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
+		GLfloat angle{};		   // in degrees couter-clockwise
+		glm::vec2 scaling{};       // *2 twice the size, *1 same size, *0.5 half the size (per axis)
+
+		glm::mat3 mdl_to_ndl_xform{};
 	};
 
 	static ISModel test_model;
