@@ -15,11 +15,11 @@ namespace IS {
 	// Entity is just a number
 	using Entity = std::uint32_t;
 	// Limits how many entities we can have
-	const Entity MAX_ENTITIES = 5000;
+	const Entity MAX_ENTITIES = 20000;
 
 	// Define the component
 	using ComponentType = std::uint8_t;
-	const ComponentType MAX_COMPONENTS = 32;
+	const ComponentType MAX_COMPONENTS = 32; //this decides the signature
 
 	// Set the signature as the max components. In this case 32 so each entity can have up to 32 components
 	using Signature = std::bitset<MAX_COMPONENTS>;

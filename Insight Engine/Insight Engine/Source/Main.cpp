@@ -84,11 +84,10 @@ int main() {
     }
 
 
-    //The following demonstrates the Initialize Part of your systems
+    //The following demonstrates the Initialize() Part of your systems
     
-    //adding the systems to the engine (all these can be moved to initialize in engine later
-    //this is just to show how the new system works evertthing can be deleted
-    //this is a random component
+    //this is just to show how the new system works everthing can be deleted
+    //this is 2 random components
     struct Position {
         Vector2D x, y;
     };
@@ -97,6 +96,7 @@ int main() {
     };
     //register the position component
     engine.RegisterComponent<Position>();
+    engine.RegisterComponent<Velocity>();
     //you can now create entities
     Entity newEntity = engine.CreateEntityWithComponents<Position>();
     //destroy entities
