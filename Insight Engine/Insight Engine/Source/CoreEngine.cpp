@@ -77,6 +77,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
+        std::cout << "Registering system" << systemName;
         all_systems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);

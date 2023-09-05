@@ -143,11 +143,11 @@ int main() {
     }
     */
 
+    //this just loads in the window and audio I will give them their components next time
     Signature signature;
     auto mySystem = std::make_shared<glfxWindow>(window);
+    signature = engine.GenerateSignature<Position, Velocity>();
     engine.AddSystem(mySystem,signature);
-    auto mySystem2= std::make_shared<InputManager>(window);
-    engine.AddSystem(mySystem2,signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3,signature);
     
