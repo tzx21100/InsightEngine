@@ -31,9 +31,6 @@
     <ClCompile Include="Source\ISVector.cpp">
       <Filter>STL</Filter>
     </ClCompile>
-    <ClCompile Include="GLFXWindow.cpp">
-      <Filter>Engine\GLFX Window</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EventManager.cpp">
       <Filter>Engine\Core\Messaging&amp;Event</Filter>
     </ClCompile>
@@ -54,6 +51,12 @@
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
       <Filter>Engine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GLFXWindow.cpp">
+      <Filter>Engine\GLFX Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entities.cpp">
+      <Filter>Engine\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,8 +117,20 @@
     <ClInclude Include="Source\Input.h">
       <Filter>Engine\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entities.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
     <ClInclude Include="Source\System.h">
-      <Filter>Engine\Core</Filter>
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestComponents.h">
+      <Filter>Engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +172,12 @@
     </Filter>
     <Filter Include="Engine\Core\Messaging&amp;Event">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObjects">
+      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ECS">
+      <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

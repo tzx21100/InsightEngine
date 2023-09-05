@@ -10,7 +10,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 //we can switch these to our own STL when we finish them
 #include "Properties.h"
 #include "Log.h"
-#include <vector>
 #include <iostream>
 #include <string>
 #include "ISVector.h"
@@ -20,10 +19,20 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <cstddef>          // for size_t
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
+#include <cstdint>
+#include "Vector2D.h"
+#include <bitset>
+#include <queue>
+#include <deque>
+#include <cassert>
+#include <array>
+#include <set>
+#include <unordered_map>
+#include <vector>
+
 
 // for imgui
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

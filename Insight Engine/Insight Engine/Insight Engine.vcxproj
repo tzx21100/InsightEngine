@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLFXWindow.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
+    <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Example System Implementation.cpp" />
+    <ClCompile Include="Source\GLFXWindow.cpp" />
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -35,9 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\DebugHandler.h" />
+    <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
@@ -53,6 +57,7 @@
     <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
+    <ClInclude Include="Source\TestComponents.h" />
     <ClInclude Include="Source\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>

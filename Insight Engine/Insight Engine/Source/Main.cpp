@@ -23,6 +23,7 @@
 #include "Vector2D.h"
 #include "CoreEngine.h"
 #include "GLFXWindow.h"
+#include "TestComponents.h"
 
 using namespace IS;
 
@@ -60,9 +61,14 @@ float CompareVec2(const Vec2& pSrc, const Vec2& pDst)
 };
 
 
+
 int main() {
+
     // Initialize log
     Log::init();
+
+    //engine get
+    InsightEngine& engine = InsightEngine::Instance();
 
     GLFWwindow* window;
     /* Initialize the library */
@@ -76,18 +82,75 @@ int main() {
         glfwTerminate();
         return -1;
     }
-    glfxWindow* gwindow=new glfxWindow(window);
 
-    //engine get
-    InsightEngine& engine = InsightEngine::Instance();
 
-    //input manager assigned to window
-    InputManager* InputSys=new InputManager(window);
-    ISAudio* AudioSys = new ISAudio();
-   
-    engine.AddSystem(InputSys);
-    engine.AddSystem(gwindow);
-    engine.AddSystem(AudioSys);
+    //The following demonstrates the Initialize Part of your systems
+    
+    //adding the systems to the engine (all these can be moved to initialize in engine later
+    //this is just to show how the new system works evertthing can be deleted
+    //this is a random component
+    struct Position {
+        Vector2D x, y;
+    };
+    struct Velocity {
+        Vector2D x, y;
+    };
+    //register the position component
+    engine.RegisterComponent<Position>();
+    //you can now create entities
+    Entity newEntity = engine.CreateEntityWithComponents<Position>();
+    //destroy entities
+    if (!engine.HasComponent<Position>(newEntity)) {
+        engine.DestroyEntity(newEntity);
+    }
+    else {
+        std::cout << "TYPE DETECTED";
+    }
+
+    /* adding components to the systems
+       your system is going to be made out of different components
+       these components will add together to give you a signature
+       we are using shared pointers for the system */
+    auto InputSys = std::make_shared<InputManager>(window);
+    //this function will give you the signature value (basically what your system contains)
+    Signature signatureValue = engine.GenerateSignature<Position, Velocity>();
+    //this function will let you add the value inside
+    engine.AddSystem(InputSys, signatureValue);
+
+
+    // This is the end of the Initialize() part of your systems
+
+    /*
+    I will now demostrate how a Update loop will be 
+    eg. This is in a physics system's update loop
+    Update( float deltatime ) {
+        //loops through all Entities registered by the System this mEntities map is written in the parent class
+        for (auto const& entity : mEntities) {
+            //if the entity has a certain component do something with it
+            if (InsightEngine::Instance().HasComponent<Position>(entity)) {
+                //do something;
+            }
+            if (InsightEngine::Instance().HasComponent<Velocity>(entity)) {
+                //do something
+            }
+        }
+
+    }
+
+    Of course, you can do something like using InsightEngine& Engine= InsightEngine::Instance() to make life easier.
+    Then it will just be Engine.HasComponent<Position>(entity){
+    
+    }
+    */
+
+    Signature signature;
+    auto mySystem = std::make_shared<glfxWindow>(window);
+    engine.AddSystem(mySystem,signature);
+    auto mySystem2= std::make_shared<InputManager>(window);
+    engine.AddSystem(mySystem2,signature);
+    auto mySystem3 = std::make_shared<ISAudio>();
+    engine.AddSystem(mySystem3,signature);
+    
 
     //run engine (GAME LOOP)
     engine.SetFPS(80);//set fps to wtv
