@@ -115,8 +115,8 @@ namespace IS {
         return new_group;
     }
 
-    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath, bool loop) {
-        FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath) {
+        FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
         FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &sound);
@@ -135,8 +135,8 @@ namespace IS {
         return sound_channel;
     }
 
-    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath, bool loop) {
-        FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) {
+        FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* music = nullptr;
 
         FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &music);
