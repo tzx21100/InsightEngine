@@ -82,8 +82,6 @@ namespace IS {
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-        io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
 
         // Dark mode, of course
         ImGui::StyleColorsDark();

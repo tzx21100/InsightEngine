@@ -23,7 +23,6 @@ struct ISGraphics {
 
 		// imgui
 		std::string name{ "Model" };
-		float size{ .1f };
 		bool drawing{ true };
 		float color[3]{ 1.f, 0.f, 0.f };
 
