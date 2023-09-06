@@ -38,7 +38,7 @@ namespace IS
 		// Unary operators
 		Vector2D operator -() const;
 
-	} Vector2D, Vec2, Point2D, Pt2;
+	} Vector2D;
 
 
 #ifdef _MSC_VER

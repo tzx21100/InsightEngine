@@ -55,6 +55,15 @@
     <ClCompile Include="Source\Input.cpp">
       <Filter>Engine\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Body.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Physics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -117,6 +126,15 @@
     <ClInclude Include="Source\System.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Body.h">
+      <Filter>Physics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Physics\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -157,6 +175,15 @@
     </Filter>
     <Filter Include="Engine\Core\Messaging&amp;Event">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Dynamics">
+      <UniqueIdentifier>{bd2c1bb1-5d7a-4a00-81df-d23557d67474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\System">
+      <UniqueIdentifier>{0ec89c51-2303-4b7c-a402-f467f4028aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Collision">
+      <UniqueIdentifier>{6a340d7b-2d9b-4919-b3f1-13aeb9c8b02f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
