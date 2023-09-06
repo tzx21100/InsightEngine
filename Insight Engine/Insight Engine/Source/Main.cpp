@@ -53,18 +53,24 @@ int main() {
     //this is just to show how the new system works everthing can be deleted
     //this is 2 random components
     struct Position {
-        Vector2D x, y;
+        int x, y;
     };
     struct Velocity {
-        Vector2D x, y;
+        int x, y;
     };
     //register the position component
     engine.RegisterComponent<Position>();
     engine.RegisterComponent<Velocity>();
     //you can now create entities
     Entity newEntity = engine.CreateEntityWithComponents<Position>();
+
     //destroy entities
     if (!engine.HasComponent<Position>(newEntity)) {
+        //get the component Position
+        auto& pos = engine.GetComponent<Position>(newEntity);
+        pos.x += 1;
+        //remove the component for some reason
+        engine.RemoveComponent<Position>(newEntity);
         engine.DestroyEntity(newEntity);
     }
     else {
