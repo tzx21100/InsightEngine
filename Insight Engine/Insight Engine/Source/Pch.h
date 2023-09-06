@@ -19,11 +19,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <cstddef>          // for size_t
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
-#include "Math.h"
-#include "Matrix3x3.h"
-#include "Vector2D.h"
-#include "Physics.h"
-#include "Collision.h"
 #include <cstdint>
 #include <bitset>
 #include <queue>
@@ -33,6 +28,11 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <set>
 #include <unordered_map>
 #include <vector>
+#include "Math.h"
+#include "Matrix3x3.h"
+#include "Vector2D.h"
+#include "Physics.h"
+#include "Collision.h"
 
 
 // for imgui

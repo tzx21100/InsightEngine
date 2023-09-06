@@ -25,13 +25,9 @@ namespace IS
 				if(Vb > 0)
 					case 2
 					case 3
-
 				case 5
-
 		Step 4: Repeat step 3 on the y-axis
-
 		Step 5: Otherwise the rectangles intersect
-
 		*/
 
 		// check static collision

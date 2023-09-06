@@ -58,6 +58,15 @@
     <ClCompile Include="Source\Entities.cpp">
       <Filter>Engine\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Physics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Body.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -132,6 +141,15 @@
     <ClInclude Include="Source\TestComponents.h">
       <Filter>Engine\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Physics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Body.h">
+      <Filter>Physics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -178,6 +196,15 @@
     </Filter>
     <Filter Include="Engine\ECS">
       <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Collision">
+      <UniqueIdentifier>{1167242a-a072-411b-b015-6f8b501c57e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\System">
+      <UniqueIdentifier>{55dd4382-5868-46e8-ab56-823d34a930f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Dynamics">
+      <UniqueIdentifier>{8f9d153c-6f63-4498-a0b1-0e3436fb8d6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
