@@ -18,70 +18,70 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_widgets.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_demo.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_draw.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_tables.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_impl_glfw.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\imgui_stdlib.cpp">
-      <Filter>Misc\String</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imconfig.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imconfig.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui_internal.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_internal.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imstb_rectpack.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_rectpack.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imstb_textedit.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_textedit.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imstb_truetype.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_truetype.h">
       <Filter>Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui_impl_glfw.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3_loader.h">
       <Filter>Backend</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui_impl_opengl3.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_glfw.h">
       <Filter>Backend</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.h">
       <Filter>Backend</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\imgui_stdlib.h">
+    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.h">
       <Filter>Misc\String</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Insight Engine\libraries\imgui\imgui.natstepfilter">
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_demo.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_draw.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_tables.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_widgets.cpp">
+      <Filter>Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_impl_glfw.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.cpp">
+      <Filter>Misc\String</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Insight Engine\libraries\imgui\include\imgui.natstepfilter">
       <Filter>Misc\Debug</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="..\Insight Engine\libraries\imgui\imgui.natvis">
+    <Natvis Include="..\Insight Engine\libraries\imgui\include\imgui.natvis">
       <Filter>Misc\Debug</Filter>
     </Natvis>
   </ItemGroup>
