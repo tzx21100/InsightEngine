@@ -12,6 +12,7 @@ and check for keyboard & mouse inputs.
 #include "System.h"
 
 namespace IS {
+
     class InputManager :public ParentSystem{
     public:
         //override parent
@@ -20,7 +21,6 @@ namespace IS {
         void Initialize() override;
         void HandleMessage(const Message& message) override;
 
-        InputManager(GLFWwindow* window);
         InputManager();
 
         bool IsKeyPressed(int glfwKeyCode) const;
@@ -31,16 +31,17 @@ namespace IS {
         std::pair<double, double> GetMousePosition() const;
 
         //window
-        GLFWwindow* m_Window;
+        GLFWwindow* window;
 
     private:
-        std::unordered_set<int> m_PressedKeys;
-        std::unordered_set<int> m_ReleasedKeys;
+        std::unordered_set<int> pressed_keys;
+        std::unordered_set<int> released_keys;
 
         // GLFW key callback function
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
     };
+
 }
 //didn't include a destructor because theres nothing to free.
 //will make this a child of the System class once its done

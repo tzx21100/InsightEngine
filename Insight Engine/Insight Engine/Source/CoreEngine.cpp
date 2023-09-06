@@ -55,11 +55,11 @@ namespace IS {
         duration_cast<std::chrono::microseconds>. Lastly, .count() just turns it into integers
         This gives us how many microseconds that have passed in int terms.
         */
-        float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
-
+        // float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
+        std::chrono::duration<float> deltaTime = frameEnd - frameStart;
         //looping through the map and updating
         for (const auto& [name, system] : all_systems) {
-            system->Update(deltaTime);  // Pass the actual delta time here so all systems can use it
+            system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
         }
 
 
@@ -77,7 +77,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
-        std::cout << "Registering system" << systemName;
+        IS_CORE_INFO("Registering system... ", systemName);
         all_systems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);

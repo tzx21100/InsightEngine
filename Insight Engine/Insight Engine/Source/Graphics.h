@@ -5,13 +5,9 @@
 #include <glm/glm.hpp>
 #include <glslshader.h>
 
-#define WIDTH 1280
-#define HEIGHT 720
-#define fakeDT 1/60
-
 struct ISGraphics {
 	static void init();
-	static void update();
+	static void update(float delta_time);
 	static void draw();
 	static void cleanup();
 
