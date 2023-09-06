@@ -13,10 +13,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#define WIDTH 1280
-#define HEIGHT 720
-
-
 #include "Graphics.h"
 #include "Input.h"
 #include "CoreEngine.h"
@@ -25,7 +21,6 @@
 
 using namespace IS;
 
-
 int main() {
 
     // Initialize log
@@ -33,19 +28,6 @@ int main() {
 
     //engine get
     InsightEngine& engine = InsightEngine::Instance();
-
-    GLFWwindow* window;
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
 
 
     //The following demonstrates the Initialize() Part of your systems
@@ -68,14 +50,23 @@ int main() {
         engine.DestroyEntity(newEntity);
     }
     else {
-        std::cout << "TYPE DETECTED";
+        IS_CORE_INFO("TYPE DETECTED!");
     }
+
+    //this just loads in the window and audio I will give them their components next time
+    Signature signature;
+    // create window first so other systems can just point to current context
+    auto mySystem = std::make_shared<glfxWindow>(WIDTH, HEIGHT, "Insight Engine");
+    signature = engine.GenerateSignature<Position, Velocity>();
+    engine.AddSystem(mySystem, signature);
+    auto mySystem3 = std::make_shared<ISAudio>();
+    engine.AddSystem(mySystem3, signature);
 
     /* adding components to the systems
        your system is going to be made out of different components
        these components will add together to give you a signature
        we are using shared pointers for the system */
-    auto InputSys = std::make_shared<InputManager>(window);
+    auto InputSys = std::make_shared<InputManager>();
     //this function will give you the signature value (basically what your system contains)
     Signature signatureValue = engine.GenerateSignature<Position, Velocity>();
     //this function will let you add the value inside
@@ -106,14 +97,6 @@ int main() {
     
     }
     */
-
-    //this just loads in the window and audio I will give them their components next time
-    Signature signature;
-    auto mySystem = std::make_shared<glfxWindow>(window);
-    signature = engine.GenerateSignature<Position, Velocity>();
-    engine.AddSystem(mySystem,signature);
-    auto mySystem3 = std::make_shared<ISAudio>();
-    engine.AddSystem(mySystem3,signature);
     
 
     //run engine (GAME LOOP)

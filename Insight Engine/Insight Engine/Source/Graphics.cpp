@@ -20,7 +20,7 @@ void ISGraphics::init() {
     test_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
 }
 
-void ISGraphics::update() {
+void ISGraphics::update(float delta_time) {
     glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
 
     // xform
@@ -31,7 +31,7 @@ void ISGraphics::update() {
         return angle;
     };
     float angle_speed = 30.f; // 30 degrees per
-    test_model.angle += angle_speed * fakeDT;
+    test_model.angle += angle_speed * delta_time;
     test_model.angle = wrap_angle(test_model.angle);
     float angle_rad = glm::radians(test_model.angle);
 

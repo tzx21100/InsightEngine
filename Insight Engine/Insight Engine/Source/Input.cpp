@@ -15,34 +15,32 @@ namespace IS {
     void InputManager::Update(float deltaTime) {
 
         //test for Input System will make it with held keys etc later
-        if (this->IsKeyPressed(GLFW_KEY_A)) {
-            std::cout << "A IS PRESSED";
-        }
         //other logic
-        m_PressedKeys.clear();
-        m_ReleasedKeys.clear();
+        pressed_keys.clear();
+        released_keys.clear();
 
     }
 
     void InputManager::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
-            std::cout << "Handling Debug" << std::endl;
+            IS_CORE_INFO("Handling Debug");
         }
     }
 
 
-    InputManager::InputManager(GLFWwindow* window) : m_Window(window) {
+    InputManager::InputManager() {
+        window = glfwGetCurrentContext();
         glfwSetWindowUserPointer(window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(window, KeyCallback);
     }
 
     bool InputManager::IsKeyPressed(int glfwKeyCode) const {
-        return m_PressedKeys.count(glfwKeyCode) > 0;
+        return pressed_keys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsKeyReleased(int glfwKeyCode) const {
-        return m_ReleasedKeys.count(glfwKeyCode) > 0;
+        return released_keys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsKeyHeld(int glfwKeyCode) const {
@@ -50,12 +48,12 @@ namespace IS {
     }
 
     bool InputManager::IsMouseButtonPressed(int button) const {
-        return glfwGetMouseButton(m_Window, button) == GLFW_PRESS;
+        return glfwGetMouseButton(window, button) == GLFW_PRESS;
     }
 
     std::pair<double, double> InputManager::GetMousePosition() const {
         double xPos, yPos;
-        glfwGetCursorPos(m_Window, &xPos, &yPos);
+        glfwGetCursorPos(window, &xPos, &yPos);
         return { xPos, yPos };
     }
 
@@ -63,12 +61,12 @@ namespace IS {
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
-            std::cout << "KeyCallback: Key " << key << " Action " << action << std::endl;
-            inputManager->m_PressedKeys.insert(key);
+            IS_CORE_TRACE("Key ", key, " Action ", action);
+            inputManager->pressed_keys.insert(key);
         }
         if (action == GLFW_RELEASE) {
-            inputManager->m_PressedKeys.erase(key);
-            inputManager->m_ReleasedKeys.insert(key);
+            inputManager->pressed_keys.erase(key);
+            inputManager->released_keys.insert(key);
         }
     }
 }

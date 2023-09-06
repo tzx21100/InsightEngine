@@ -123,9 +123,9 @@ namespace IS {
             // Write to console
             if (colors_enabled)
                 setColor(level);
+            std::cout << getTimestamp(timestamp_format) << " ";
             if (!logger_name.empty())
                 std::cout << "[" << logger_name << "] ";
-            std::cout << getTimestamp(timestamp_format) << " ";
             if (!colors_enabled)
                 printLogLevel(level);
             (std::cout << ... << args) << RESET << std::endl;

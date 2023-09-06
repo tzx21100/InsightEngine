@@ -7,7 +7,7 @@
 namespace IS {
     class glfxWindow : public ParentSystem {
     public:
-        glfxWindow(GLFWwindow* windo);
+        glfxWindow(int new_width, int new_height, std::string const& new_title);
 
         //override parent
         void Update(float deltaTime) override;
@@ -16,7 +16,9 @@ namespace IS {
         void HandleMessage(const Message& message) override;
 
     private:
-        GLFWwindow* window;
+        GLFWwindow* window = nullptr;
+        int width, height;
+        std::string title;
     };
 
 
