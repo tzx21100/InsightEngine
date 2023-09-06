@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Body.cpp" />
+    <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
     <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
@@ -31,11 +33,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\Body.h" />
+    <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\DebugHandler.h" />
@@ -54,6 +59,7 @@
     <ClInclude Include="Source\Matrix3x3.h" />
     <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Pch.h" />
+    <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />

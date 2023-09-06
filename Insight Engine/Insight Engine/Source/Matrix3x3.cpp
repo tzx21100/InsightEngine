@@ -1,7 +1,6 @@
 
 #include "Pch.h"
 #include "Matrix3x3.h"
-#include "math.h"
 
 namespace IS
 {
