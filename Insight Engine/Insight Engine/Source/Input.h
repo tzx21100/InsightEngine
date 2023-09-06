@@ -21,6 +21,7 @@ namespace IS {
         void HandleMessage(const Message& message) override;
 
         InputManager(GLFWwindow* window);
+        InputManager();
 
         bool IsKeyPressed(int glfwKeyCode) const;
         bool IsKeyReleased(int glfwKeyCode) const;
@@ -29,8 +30,10 @@ namespace IS {
         bool IsMouseButtonPressed(int button) const;
         std::pair<double, double> GetMousePosition() const;
 
-    private:
+        //window
         GLFWwindow* m_Window;
+
+    private:
         std::unordered_set<int> m_PressedKeys;
         std::unordered_set<int> m_ReleasedKeys;
 

@@ -20,8 +20,8 @@ namespace IS {
         bool ISAudioIsValidAudio(FMOD::Sound* audio);
         bool ISAudioIsValidGroup(FMOD::ChannelGroup* group); 
         FMOD::ChannelGroup* ISAudioCreateGroup();
-        FMOD::Channel* ISAudioLoadSound(const char* filePath, bool loop = false); 
-        FMOD::Channel* ISAudioLoadMusic(const char* filePath, bool loop = false);
+        FMOD::Channel* ISAudioLoadSound(const char* filePath); 
+        FMOD::Channel* ISAudioLoadMusic(const char* filePath);
 
         void ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop = false); // Fixed the parameters
         void ISAudioResumeGroup(FMOD::ChannelGroup* group);
