@@ -67,6 +67,9 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Asset.cpp">
+      <Filter>Engine\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Asset.h">
+      <Filter>Engine\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
