@@ -111,9 +111,9 @@ int main() {
    
     //engine stops technically don't need this since destructor is there and my engine is static
     engine.DestroyAllSystems();
-
+    GLFWwindow* window = glfwGetCurrentContext();
+    glfwDestroyWindow(window);
     glfwTerminate();
-   
 
     return 0;
 }

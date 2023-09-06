@@ -39,24 +39,18 @@ namespace IS {
         if (log_file.is_open())
             log_file.close();
 
-        // Create directory if does not exist
-        if (!std::filesystem::exists(log_directory)) {
-            std::filesystem::create_directory(log_directory);
-        }
-
         // Construct log filename with timestamp
         std::ostringstream filepath;
-        filepath << log_directory << "/" << logger_name;
+        filepath << "Logs" << "/" << logger_name;
         if (!std::filesystem::exists(filepath.str())) {
-            std::filesystem::create_directory(filepath.str());
+            std::filesystem::create_directories(filepath.str());
         }
-        filepath << "/" << getTimestamp(log_filename_timestamp_format) << ".txt";
-        log_filepath = filepath.str();
+        filepath << "/" << getTimestamp(log_filename_timestamp_format) << ".log";
 
         // Append logs to log file
-        log_file.open(log_filepath, std::ofstream::app);
+        log_file.open(filepath.str(), std::ios_base::app);
         if (!log_file.is_open())
-            std::cerr << "Error: Failed to open log file at" << log_filepath << std::endl;
+            std::cerr << "Error: Failed to open log file at " << filepath.str() << std::endl;
     }
     
     void Logger::setTimestampFormat(std::string const& new_timestamp_format) {
@@ -67,37 +61,29 @@ namespace IS {
         return timestamp_format;
     }
 
-    void Logger::setLogDirectory(std::string const& new_log_directory) {
-        log_directory = new_log_directory;
-    }
-
-    std::string Logger::getLogDirectory() const {
-        return log_directory;
-    }
-
-    void Logger::printLogLevel(aLogLevel level) {
+    std::string Logger::getLogLevelString(aLogLevel level) {
+        std::ostringstream oss;
         switch (level) {
         case aLogLevel::Trace:
-            std::cout << "[TRACE] ";
+            oss << "[TRACE]";
             break;
         case aLogLevel::Debug:
-            std::cout << "[DEBUG] ";
+            oss << "[DEBUG]";
             break;
         case aLogLevel::Info:
-            std::cout << "[INFO] ";
+            oss << "[INFO]";
             break;
         case aLogLevel::Warning:
-            std::cout << BOLD << "[WARNING] ";
+            oss << BOLD << "[WARNING]";
             break;
         case aLogLevel::Error:
-            std::cout << BOLD << "[ERROR] ";
+            oss << BOLD << "[ERROR]";
             break;
         case aLogLevel::Critical:
-            std::cout << BOLD << "[CRITICAL] ";
-            break;
-        default:
+            oss << BOLD << "[CRITICAL]";
             break;
         }
+        return oss.str();
     }
 
     std::string Logger::getTimestamp(std::string const& ts_format) const {

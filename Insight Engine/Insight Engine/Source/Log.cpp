@@ -10,7 +10,8 @@ namespace IS {
         core_logger = std::make_shared<Logger>("INSIGHT");
         core_logger->setLogLevel(aLogLevel::Trace);
         client_logger = std::make_shared<Logger>("GAME");
-        core_logger->setLogLevel(aLogLevel::Trace);
+        client_logger->setLogLevel(aLogLevel::Trace);
+        enableFileOutput();
     }
 
     void Log::enableFileOutput() {

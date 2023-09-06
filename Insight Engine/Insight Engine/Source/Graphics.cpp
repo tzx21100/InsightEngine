@@ -54,37 +54,13 @@ void ISGraphics::update(float delta_time) {
 }
 void ISGraphics::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
     
     if (test_model.drawing)
 	    test_model.draw();
-
-    // Render imgui window
-    ImGui::Begin(test_model.name.c_str());
-    ImGui::Text("Control the attributes of %s.", test_model.name.c_str());
-    std::string label{ "Draw " + test_model.name };
-    ImGui::Checkbox(label.c_str(), &test_model.drawing);
-    ImGui::SliderFloat("Width", &test_model.scaling.x, 2.f, 2.f * WIDTH);
-    ImGui::SliderFloat("Height", &test_model.scaling.y, 1.f, 2.f * HEIGHT);
-    ImGui::SliderFloat("Rotation", &test_model.angle, 0.f, 360.f);
-    ImGui::ColorEdit3("Color", test_model.color);
-    ImGui::End();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ISGraphics::cleanup() {
 	// WIP
-
-    // Shutdown imgui
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
 }
 
 void ISGraphics::ISModel::setupVAO() {
@@ -203,8 +179,8 @@ void ISGraphics::ISModel::setupShaders() {
     shader_program.Validate();
 
     // Print the active attribute and uniform information
-    shader_program.PrintActiveAttribs();
-    shader_program.PrintActiveUniforms();
+    /*shader_program.PrintActiveAttribs();
+    shader_program.PrintActiveUniforms();*/
 
     // Check if the shader program compilation and linking was successful
     if (GL_FALSE == shader_program.IsLinked())
