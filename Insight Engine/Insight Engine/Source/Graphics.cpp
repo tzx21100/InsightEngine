@@ -24,15 +24,8 @@ void ISGraphics::update() {
     glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to black
 
     // xform
-    auto wrap_angle = [](float angle) {
-        angle = fmod(angle, 360.f);
-        if (angle < 0.f)
-            angle += 360.f;
-        return angle;
-    };
-    float angle_speed = 30.f; // 30 degrees per
+    float angle_speed = 30.f; // 30 degrees per second
     test_model.angle += angle_speed * fakeDT;
-    test_model.angle = wrap_angle(test_model.angle);
     float angle_rad = glm::radians(test_model.angle);
 
     float sin_angle = sinf(angle_rad);
@@ -68,9 +61,7 @@ void ISGraphics::draw() {
     ImGui::Text("Control the attributes of %s.", test_model.name.c_str());
     std::string label{ "Draw " + test_model.name };
     ImGui::Checkbox(label.c_str(), &test_model.drawing);
-    ImGui::SliderFloat("Width", &test_model.scaling.x, 2.f, 2.f * WIDTH);
-    ImGui::SliderFloat("Height", &test_model.scaling.y, 1.f, 2.f * HEIGHT);
-    ImGui::SliderFloat("Rotation", &test_model.angle, 0.f, 360.f);
+    ImGui::SliderFloat("Size", &test_model.size, 0.f, 1.f);
     ImGui::ColorEdit3("Color", test_model.color);
     ImGui::End();
 

@@ -11,12 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GLFXWindow.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Body.cpp" />
+    <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
-    <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Example System Implementation.cpp" />
-    <ClCompile Include="Source\GLFXWindow.cpp" />
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -31,17 +32,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Audio.h" />
-    <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\Body.h" />
+    <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\DebugHandler.h" />
-    <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
-    <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
@@ -54,10 +55,10 @@
     <ClInclude Include="Source\Matrix3x3.h" />
     <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Pch.h" />
+    <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
-    <ClInclude Include="Source\TestComponents.h" />
     <ClInclude Include="Source\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
@@ -99,10 +100,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib</LibraryPath>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(SolutionDir)Insight Engine\libraries\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib;$(SolutionDir)Insight Engine\libraries\fmod\lib</LibraryPath>
+    <OutDir>$(ProjectDir)\bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(IncludePath)</IncludePath>
@@ -112,10 +113,10 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib</LibraryPath>
-    <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
+    <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(SolutionDir)Insight Engine\libraries\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Insight Engine\libraries\glfw\lib;$(SolutionDir)Insight Engine\libraries\glew\lib</LibraryPath>
+    <OutDir>$(ProjectDir)\bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -130,15 +131,13 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.lib;opengl32.lib;$(SolutionDir)Insight Engine\libraries\fmod\lib\fmod_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Insight Engine\libraries\glfw\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(ProjectDir)libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
-copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
-copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
+copy "$(SolutionDir)Insight Engine\libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -166,15 +165,14 @@ copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" 
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3dll.lib;$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.lib;opengl32.lib;$(SolutionDir)Insight Engine\libraries\fmod\lib\fmod_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Insight Engine\libraries\glfw\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(ProjectDir)libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(ProjectDir)libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
-copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
-copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)Insight Engine\libraries\glfw\lib\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)Insight Engine\libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
+copy "$(SolutionDir)Insight Engine\libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

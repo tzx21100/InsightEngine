@@ -1,10 +1,9 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_EVENTMANAGER_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_EVENTMANAGER_H_
 
-#include<vector>
-#include <unordered_map>
 #include "Message.h"
-
+#include <unordered_map>
+#include <vector>
 /*this class is to listen to messages and allow for specific systems to subscribe to specific messages
 It stores who the subscribers are for the specific message and when the engine broadcasts the message,
 all subscribed Systems will recieved the message.

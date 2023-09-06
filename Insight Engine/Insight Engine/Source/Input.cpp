@@ -12,7 +12,7 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
     }
 
-    void InputManager::Update(float deltaTime) {
+    void InputManager::Update([[maybe_unused]] float deltaTime) {
 
         //test for Input System will make it with held keys etc later
         if (this->IsKeyPressed(GLFW_KEY_A)) {
