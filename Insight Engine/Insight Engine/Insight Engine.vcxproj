@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Asset.h" />
+    <ClInclude Include="Source\AssetComponents.h" />
+    <ClInclude Include="Source\AssetUtils.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Collision.h" />

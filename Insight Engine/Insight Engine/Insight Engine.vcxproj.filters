@@ -171,6 +171,12 @@
     <ClInclude Include="Source\EditorLayer.h">
       <Filter>Debug\Editor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AssetComponents.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetUtils.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

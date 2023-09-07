@@ -67,6 +67,10 @@ int main() {
     engine.AddSystem(mySystem, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3, signature);
+    auto mySystem4 = std::make_shared<ISAsset>();
+    engine.AddSystem(mySystem4, signature);
+
+
 
     /* adding components to the systems
        your system is going to be made out of different components
