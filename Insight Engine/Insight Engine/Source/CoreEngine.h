@@ -134,20 +134,25 @@ namespace IS {
             return signature;
         }
 
-
-
-
-
     private:
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         bool is_running;
         //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> all_systems;
+        //make a list of systems and their delta times
+        std::unordered_map<std::string, float>systemDeltas;
+        //list of systems
+        //std::vector<ParentSystem>systemList;
         unsigned last_runtime;
         int targetFPS{ 60 };
         LayerStack layers;
-        
+        std::chrono::duration<float> deltaTime {0.f};
+
+        //get the deltaTime of every engine
+        std::vector<float> listOfDelta{0.f};
+
+
         //follow the singleton pattern for only one engine
         InsightEngine();
         ~InsightEngine();

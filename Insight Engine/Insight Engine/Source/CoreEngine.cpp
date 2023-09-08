@@ -50,8 +50,25 @@ namespace IS {
     }
 
     void InsightEngine::Update() {
+
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
+
+        //looping through the map and updating
+        
+        glfwPollEvents();
+        for (const auto& [name, system] : all_systems) {
+            auto frameStart = std::chrono::high_resolution_clock::now();
+            system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
+            auto frameEnd= std::chrono::high_resolution_clock::now();
+            float delta= std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart).count();
+            systemDeltas[system->getName()] = delta;
+        }
+
+        layers.Update(deltaTime.count());
+
+        GLFWwindow* window = glfwGetCurrentContext();
+        glfwSwapBuffers(window);
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
@@ -60,21 +77,11 @@ namespace IS {
         because frameStart and frameEnd are types std::chrono::high_resolution_clock::time_point
         deducting them will give me a time value which i will then cast it to microseconds with
         duration_cast<std::chrono::microseconds>. Lastly, .count() just turns it into integers
-        This gives us how many microseconds that have passed in int terms.
+        This gives us how many microseconds that have passed in float terms.
         */
         // float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
-        std::chrono::duration<float> deltaTime = frameEnd - frameStart;
-        //looping through the map and updating
-        
-        glfwPollEvents();
-        for (const auto& [name, system] : all_systems) {
-            system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
-        }
+        deltaTime = frameEnd - frameStart;
 
-        layers.Update(deltaTime.count());
-
-        GLFWwindow* window = glfwGetCurrentContext();
-        glfwSwapBuffers(window);
     }
 
     //moved all the engine stuff under this run function
@@ -152,8 +159,8 @@ namespace IS {
         auto frameEnd = std::chrono::high_resolution_clock::now();
         auto frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
 
-        if (frameDuration < targetFrameTime) {
-            std::this_thread::sleep_for(targetFrameTime - frameDuration);
+        while (std::chrono::high_resolution_clock::now() - frameStart < targetFrameTime) {
+            //We just chill LMAO
         }
 
         return std::chrono::high_resolution_clock::now(); // Return the updated frame end time
