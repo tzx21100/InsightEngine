@@ -42,28 +42,28 @@ namespace IS {
     }
 
     void ISAsset::Update([[maybe_unused]] float deltaTime) {//every frame
-        // Example usage:
-        const char* filename = "C:/Users/matth/Documents/GitHub/GAM200/Insight Engine/Insight Engine/Source/sky.jpg"; // Replace with your image file path
+        //// Example usage:
+        //const char* filename = "sky.jpg"; // Replace with your image file path
 
-        ISAsset asset(filename);
-        if (asset.loadImage()) {
-            const ImageData& imageData = asset.getImageData();
+        //ISAsset asset(filename);
+        //if (asset.loadImage()) {
+        //    const ImageData& imageData = asset.getImageData();
 
-            // You can use imageData for any further processing
-            std::cout << "Image loaded successfully. Width: " << imageData.width << ", Height: " << imageData.height << ", Channels: " << imageData.channels << std::endl;
+        //    // You can use imageData for any further processing
+        //    std::cout << "Image loaded successfully. Width: " << imageData.width << ", Height: " << imageData.height << ", Channels: " << imageData.channels << std::endl;
 
-            // Save the image data into Image class
-            Image imageManager;
-            imageManager.saveImageData(imageData);
+        //    // Save the image data into Image class
+        //    Image imageManager;
+        //    imageManager.saveImageData(imageData);
 
-            // Access the saved images
-            const std::vector<ImageData>& savedImages = imageManager.getImages();
+        //    // Access the saved images
+        //    const std::vector<ImageData>& savedImages = imageManager.getImages();
 
-            // Process the saved images as needed
-        }
-        else {
-            std::cerr << "Failed to load image." << std::endl;
-        }
+        //    // Process the saved images as needed
+        //}
+        //else {
+        //    std::cerr << "Failed to load image." << std::endl;
+        //}
         
     }
 
@@ -81,7 +81,9 @@ namespace IS {
     }
 
     // Constructor
+    ISAsset::ISAsset(const char* file_name) : filename(file_name), width(0), height(0), channels(0) {
 
+    }
     // Destructor
     ISAsset::~ISAsset() {
 

@@ -56,9 +56,7 @@ namespace IS {
         std::string getName() override;
         void HandleMessage(const Message& message) override;
 
-        ISAsset(const char* file_name) : filename(file_name), width(0), height(0), channels(0) {
-
-        };
+        ISAsset(const char* file_name);
         ~ISAsset();
 
         bool loadImage();
@@ -87,13 +85,11 @@ namespace IS {
         ~Image();
 
         const std::vector<ImageData>& getImages() const;
-
         void saveImageData(const ImageData& imageData);
 
 
     private:
         std::vector<ImageData> images;
-
     };
 }
 
