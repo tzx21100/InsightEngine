@@ -15,6 +15,10 @@ namespace IS {
         void onRender() const override;
         void Begin() const;
         void End() const;
+
+        void SetDarkThemeColors() const;
+        void EnableDockSpace() const;
+        void RenderInspector() const;
     };
 
 } // end namespace IS

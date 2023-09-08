@@ -214,7 +214,6 @@ void ISGraphics::ISModel::draw() { // documentation soon
 
     glBindVertexArray(vao_ID);
 
-    //shader_program.SetUniform("uSize", test_model.size);
     shader_program.SetUniform("uColor", test_model.color[0], test_model.color[1], test_model.color[2]);
     shader_program.SetUniform("uModel_to_NDC", test_model.mdl_to_ndl_xform);
 

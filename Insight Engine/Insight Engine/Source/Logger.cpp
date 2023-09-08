@@ -88,9 +88,12 @@ namespace IS {
 
     std::string Logger::getTimestamp(std::string const& ts_format) const {
         auto now = std::chrono::system_clock::now();
+        long long milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
         std::time_t current_time = std::chrono::system_clock::to_time_t(now);
         std::ostringstream timestamp;
-        timestamp << "[" << std::put_time(std::localtime(&current_time), ts_format.c_str()) << "]";
+        timestamp << '[' << std::put_time(std::localtime(&current_time), ts_format.c_str())
+                  << '.' << std::setfill('0') << std::setw(3) << milliseconds % 1000 << ']';
+
         return timestamp.str();
     }
 
@@ -98,25 +101,22 @@ namespace IS {
         using enum aLogLevel;
         switch(level) {
         case Trace:
-            std::cout << WHITE;
+            std::clog << WHITE;
             break;
         case Debug:
-            std::cout << CYAN;
+            std::clog << CYAN;
             break;
         case Info:
-            std::cout << GREEN;
+            std::clog << GREEN;
             break;
         case Warning:
-            std::cout << YELLOW_BOLD;
+            std::clog << YELLOW_BOLD;
             break;
         case Error:
-            std::cout << RED_BOLD;
+            std::clog << RED_BOLD;
             break;
         case Critical:
-            std::cout << BOLD_ON_RED;
-            break;
-        default:
-            std::cout << RESET;
+            std::clog << BOLD_ON_RED;
             break;
         }
     }

@@ -52,7 +52,7 @@ namespace IS {
         // Create a windowed mode window and its OpenGL context
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!window) {
-            IS_CORE_ERROR(window, "Failed to create OpneGL context!");
+            IS_CORE_ERROR("Failed to create OpneGL context!");
             glfwTerminate();
         }
 
@@ -64,11 +64,15 @@ namespace IS {
 
         // Initialize entry points to OpenGL functions and extensions        
         if (GLenum err = glewInit(); GLEW_OK != err) {
-            IS_CORE_ERROR("Unable to initialize GLEW - error: ", glewGetErrorString(err), " - abort program");
+            std::ostringstream error;
+            error << glewGetErrorString(err);
+            IS_CORE_ERROR("Unable to initialize GLEW - error: {} - abort program", error.str());
             std::exit(EXIT_FAILURE);
         }
         if (GLEW_VERSION_4_5) {
-            IS_CORE_INFO("Using glew version: ", glewGetString(GLEW_VERSION));
+            std::ostringstream glew_version;
+            glew_version << glewGetString(GLEW_VERSION);
+            IS_CORE_INFO("Using glew version: {}", glew_version.str());
             IS_CORE_INFO("Driver supports OpenGL 4.5");
         } else {
             IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");

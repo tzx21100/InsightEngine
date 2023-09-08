@@ -1,23 +1,24 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
 
+#include <mutex>
 #include <string>
 #include <sstream>
-#include <mutex>
 #include <iostream>
 #include <fstream>
+#include <format>
 
 namespace IS {
 
     // ANSI escape codes for console formatting for color/style
-    const std::string RESET = "\033[m";
-    const std::string BOLD = "\033[1m";
-    const std::string WHITE = "\033[37m";
-    const std::string CYAN = "\033[36m";
-    const std::string GREEN = "\033[32m";
-    const std::string YELLOW_BOLD = "\033[33m\033[1m";
-    const std::string RED_BOLD = "\033[31m\033[1m";
-    const std::string BOLD_ON_RED = "\033[1m\033[41m";
+    const char RESET[] = "\033[m";
+    const char BOLD[] = "\033[1m";
+    const char WHITE[] = "\033[37m";
+    const char CYAN[] = "\033[36m";
+    const char GREEN[] = "\033[32m";
+    const char YELLOW_BOLD[] = "\033[33m\033[1m";
+    const char RED_BOLD[] = "\033[31m\033[1m";
+    const char BOLD_ON_RED[] = "\033[1m\033[41m";
 
     // Severity level of log
     enum class aLogLevel : int{
@@ -38,17 +39,17 @@ namespace IS {
 
         // Log functions
         template<typename... Args>
-        void trace(Args&&... args);
+        void trace(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void debug(Args&&... args);
+        void debug(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void info(Args&&... args);
+        void info(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void warn(Args&&... args);
+        void warn(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void error(Args&&... args);
+        void error(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void critical(Args&&... args);
+        void critical(std::string_view fmt, Args&&... args);
 
         // Getter/setter
         void setLoggerName(std::string const& new_logger_name);
@@ -60,6 +61,7 @@ namespace IS {
         // Additional options
         void enableColors(bool flag);
         void enableFileOutput();
+
     private:
         // Data members
         std::string logger_name;
@@ -72,7 +74,7 @@ namespace IS {
         static std::mutex log_mutex;
 
         template<typename... Args>
-        void log(aLogLevel level, Args&&... args);
+        void log(aLogLevel level, std::string_view fmt, Args&&... args);
 
         std::string getTimestamp(std::string const& ts_format) const;
         void closeFile();
@@ -84,57 +86,57 @@ namespace IS {
 
     // Template implementation
     template<typename... Args>
-    inline void Logger::trace(Args&&... args) {
-        log(aLogLevel::Trace, args...);
+    inline void Logger::trace(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Trace, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::debug(Args&&... args) {
-        log(aLogLevel::Debug, args...);
+    inline void Logger::debug(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Debug, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::info(Args&&... args) {
-        log(aLogLevel::Info, args...);
+    inline void Logger::info(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Info, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::warn(Args&&... args) {
-        log(aLogLevel::Warning, args...);
+    inline void Logger::warn(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Warning, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::error(Args&&... args) {
-        log(aLogLevel::Error, args...);
+    inline void Logger::error(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Error, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::critical(Args&&... args) {
-        log(aLogLevel::Critical, args...);
+    inline void Logger::critical(std::string_view fmt, Args&&... args) {
+        log(aLogLevel::Critical, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::log(aLogLevel level, Args&&... args) {
+    inline void Logger::log(aLogLevel level, std::string_view fmt, Args&&... args) {
         if (level >= log_level) {
             std::scoped_lock lock(log_mutex);
             if (colors_enabled)
                 setColor(level);
             
             // Construct log
-            std::ostringstream oss;
+            std::ostringstream log;
             std::string timestamp = getTimestamp(timestamp_format);
             std::string name = !logger_name.empty() ? '[' + logger_name + ']' : "";
             std::string loglevel = !colors_enabled ? getLogLevelString(level) : "";
-            std::ostringstream all_args;
-            (all_args << ... << args);
-            oss << timestamp << name << loglevel << ' ' << all_args.str();
+            std::string all_args = std::vformat(fmt, std::make_format_args(args...));
+
+            log << timestamp << name << loglevel << ' ' << all_args;
 
             // Print to console
-            std::cout << oss.str() << RESET << std::endl;
+            std::clog << log.str() << RESET << std::endl;
 
             // Write to file
             if (log_file.is_open()) {
-                log_file << timestamp << all_args.str() << std::endl;
+                log_file << timestamp << all_args << std::endl;
             }
         }
     }

@@ -34,6 +34,7 @@ namespace IS {
         void Initialize();
         void Update();
         void Run();
+        void Exit();
 
         // layers
         void PushLayer(Layer* layer);

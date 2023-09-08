@@ -61,7 +61,7 @@ namespace IS {
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
-            IS_CORE_TRACE("Key ", key, " Action ", action);
+            IS_CORE_TRACE("Key {} Action {}", key, action);
             inputManager->pressed_keys.insert(key);
         }
         if (action == GLFW_RELEASE) {

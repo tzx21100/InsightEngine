@@ -31,7 +31,7 @@ namespace IS {
     InsightEngine::~InsightEngine() {
         for (auto& pair : all_systems) {
            // delete pair.second;
-            IS_CORE_INFO(pair.second->getName(), " terminated");
+            IS_CORE_INFO("{} terminated", pair.second->getName());
         }
         all_systems.clear();
         IS_CORE_DEBUG("Insight Engine shutdown");
@@ -81,10 +81,13 @@ namespace IS {
     void InsightEngine::Run() {
         Initialize();
         //this is the game loop
-        GLFWwindow* window = glfwGetCurrentContext();
-        while (is_running = !glfwWindowShouldClose(window)) {
+        while (is_running) {
             Update();
         }
+    }
+
+    void InsightEngine::Exit() {
+        is_running = false;
     }
 
     void InsightEngine::PushLayer(Layer* layer) {
@@ -110,7 +113,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
-        IS_CORE_TRACE("Registering system... ", systemName);
+        IS_CORE_TRACE("Registering system... {}", systemName);
         all_systems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
@@ -129,7 +132,7 @@ namespace IS {
     void InsightEngine::DestroyAllSystems() {
         for (auto& [key, system] : all_systems) {
             //delete pair.second;  // Delete the system object
-            IS_CORE_INFO(system->getName(), " terminated");
+            IS_CORE_INFO("{} terminated", system->getName());
         }
         all_systems.clear();  // Clear the map
     }
@@ -138,7 +141,7 @@ namespace IS {
     void InsightEngine::InitializeAllSystems() {
         for (auto const& [key, system] : all_systems) {
             system->Initialize();
-            IS_CORE_INFO(system->getName(), " initialized");
+            IS_CORE_INFO("{} initialized", system->getName());
         }
     }
 

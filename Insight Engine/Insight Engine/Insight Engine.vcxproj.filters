@@ -76,6 +76,9 @@
     <ClCompile Include="Source\EditorLayer.cpp">
       <Filter>Debug\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Debug\Profiling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -177,6 +180,9 @@
     <ClInclude Include="Source\AssetUtils.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Debug\Profiling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -235,6 +241,9 @@
     </Filter>
     <Filter Include="Debug\Editor">
       <UniqueIdentifier>{830332e5-5a33-498b-8e99-d76092bc6241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Profiling">
+      <UniqueIdentifier>{2dc82fc5-2056-4a90-8188-d1ca8727b7b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

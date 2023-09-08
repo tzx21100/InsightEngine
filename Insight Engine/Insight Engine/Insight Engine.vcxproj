@@ -38,6 +38,7 @@
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +74,7 @@
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\TestComponents.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
