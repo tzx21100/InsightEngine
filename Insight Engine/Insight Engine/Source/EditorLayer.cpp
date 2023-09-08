@@ -67,6 +67,8 @@ namespace IS {
         ImGui::SliderFloat("Rotation", &test_model.angle, 0.f, 360.f);
         ImGui::ColorEdit3("Color", test_model.color);
         ImGui::Checkbox("Another Window", &show_another_window);
+        ImGuiIO& io = ImGui::GetIO();
+        ImGui::Text("Avg: %.3fms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
         ImGui::End();
 
         if (show_another_window) {
