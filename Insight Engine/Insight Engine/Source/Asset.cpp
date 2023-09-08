@@ -42,7 +42,28 @@ namespace IS {
     }
 
     void ISAsset::Update([[maybe_unused]] float deltaTime) {//every frame
-       
+        //// Example usage:
+        //const char* filename = "sky.jpg"; // Replace with your image file path
+
+        //ISAsset asset(filename);
+        //if (asset.loadImage()) {
+        //    const ImageData& imageData = asset.getImageData();
+
+        //    // You can use imageData for any further processing
+        //    std::cout << "Image loaded successfully. Width: " << imageData.width << ", Height: " << imageData.height << ", Channels: " << imageData.channels << std::endl;
+
+        //    // Save the image data into Image class
+        //    Image imageManager;
+        //    imageManager.saveImageData(imageData);
+
+        //    // Access the saved images
+        //    const std::vector<ImageData>& savedImages = imageManager.getImages();
+
+        //    // Process the saved images as needed
+        //}
+        //else {
+        //    std::cerr << "Failed to load image." << std::endl;
+        //}
         
     }
 
@@ -60,23 +81,46 @@ namespace IS {
     }
 
     // Constructor
-    ISAsset::ISAsset() {
+    ISAsset::ISAsset(const char* file_name) : filename(file_name), width(0), height(0), channels(0) {
 
     }
-
     // Destructor
     ISAsset::~ISAsset() {
 
     }
 
-    void ISAsset::ISImageLoad(Image* img, const char* file_name){ //supports png/jpg
+    bool ISAsset::loadImage() {
+        // Use STB image library to load the image
+        unsigned char* img_data = stbi_load(filename, &width, &height, &channels, 0);
+
+        if (img_data) {
+            image.width = width;
+            image.height = height;
+            image.channels = channels;
+            image.data.assign(img_data, img_data + (width * height * channels));
+            stbi_image_free(img_data);
+            return true;
+        }
+        else {
+            std::cerr << "Error loading image: " << stbi_failure_reason() << std::endl;
+            return false;
+        }
+    }
+
+    const ImageData& ISAsset::getImageData() const{
+        return image;
+    }
+
+
+
+    void ISAsset::ISImageLoad(Imageo* img, const char* file_name){ //supports png/jpg
         if ((img->data = stbi_load(file_name, &img->width, &img->height, &img->channels, 0)) != nullptr) {
             img->size = img->width * img->height * img->channels;
             img->allocation_type = allocationType::StbAllocated;
         }
     }
 
-    void ISAsset::ISImageCreate(Image* img, int width, int height, int channels, bool zeroed){
+    void ISAsset::ISImageCreate(Imageo* img, int width, int height, int channels, bool zeroed){
         size_t size = width * height * channels;
 
         if (zeroed) {
@@ -96,7 +140,7 @@ namespace IS {
         }
     }
 
-    void ISAsset::ISImageSave(const Image* img, const char* file_name){
+    void ISAsset::ISImageSave(const Imageo* img, const char* file_name){
         if (stringEndsIn(file_name, ".jpg") || stringEndsIn(file_name, ".JPG") || stringEndsIn(file_name, ".jpeg") || stringEndsIn(file_name, ".JPEG")) {
             stbi_write_jpg(file_name, img->width, img->height, img->channels, img->data, 100);
         }
@@ -104,12 +148,12 @@ namespace IS {
             stbi_write_png(file_name, img->width, img->height, img->channels, img->data, img->width * img->channels);
         }
         else {
-            ON_ERROR_EXIT(false, "");
+            ON_ERROR(false, "");
         }
 
     }
 
-    void ISAsset::ISImageFree(Image* img){
+    void ISAsset::ISImageFree(Imageo* img){
         if (img->allocation_type != allocationType::NoAllocation && img->data != nullptr) {
             if (img->allocation_type == allocationType::StbAllocated) {
                 stbi_image_free(img->data);
@@ -126,10 +170,10 @@ namespace IS {
         }
     }
 
-    void ISAsset::ISImageToGray(const Image* original, Image* gray) {
+    void ISAsset::ISImageToGray(const Imageo* original, Imageo* gray) {
         int channels = original->channels == 4 ? 2 : 1;
         ISImageCreate(gray, original->width, original->height, channels, false);
-        ON_ERROR_EXIT(gray->data == nullptr, "Error creating gray img");
+        ON_ERROR(gray->data == nullptr, "Error creating gray img");
 
         for (unsigned char *p = original->data, *pg = gray->data; p != original->data + original->size; p += original->channels, pg += gray->channels) {
             *pg = static_cast<uint8_t>((*p + *(p + 1) + *(p + 2)) / 3.0);
@@ -139,9 +183,9 @@ namespace IS {
         }
     }
 
-    void ISAsset::ISImageToSepia(const Image* original, Image* sepia) {
+    void ISAsset::ISImageToSepia(const Imageo* original, Imageo* sepia) {
         ISImageCreate(sepia, original->width, original->height, original->channels, false);
-        ON_ERROR_EXIT(sepia->data == nullptr, "Error creating sepia img");
+        ON_ERROR(sepia->data == nullptr, "Error creating sepia img");
 
         for (unsigned char *p = original->data, *pg = sepia->data; p != original->data + original->size; p += original->channels, pg += sepia->channels) {
             *pg = static_cast<uint8_t>(std::min(0.393 * *p + 0.769 * *(p + 1) + 0.189 * *(p + 2), 255.0)); // red
@@ -152,4 +196,20 @@ namespace IS {
             }
         }
     }
+
+    Image::Image() {}
+
+    Image::~Image() {}
+
+    const std::vector<ImageData>& Image::getImages() const
+    {
+        return images;
+    }
+    
+
+    void Image::saveImageData(const ImageData& imageData) {
+        images.push_back(imageData);
+    }
+
+
 }
