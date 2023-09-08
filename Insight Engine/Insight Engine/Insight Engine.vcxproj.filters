@@ -150,9 +150,6 @@
     <ClInclude Include="Source\System.h">
       <Filter>Engine\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TestComponents.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Physics\System</Filter>
     </ClInclude>
@@ -173,12 +170,6 @@
     </ClInclude>
     <ClInclude Include="Source\EditorLayer.h">
       <Filter>Debug\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AssetComponents.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AssetUtils.h">
-      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>

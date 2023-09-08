@@ -71,7 +71,6 @@
     <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
-    <ClInclude Include="Source\TestComponents.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Vector2D.h" />
   </ItemGroup>

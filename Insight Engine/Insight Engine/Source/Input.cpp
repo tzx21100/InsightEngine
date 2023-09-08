@@ -14,10 +14,8 @@ namespace IS {
 
     void InputManager::Update(float deltaTime) {
 
-        //test for Input System will make it with held keys etc later
-        //other logic
-        pressed_keys.clear();
-        released_keys.clear();
+        //this is an example
+        //if (IsKeyHeld(GLFW_KEY_A)) { std::cout << "A"; }
 
     }
 
@@ -44,7 +42,7 @@ namespace IS {
     }
 
     bool InputManager::IsKeyHeld(int glfwKeyCode) const {
-        return IsKeyPressed(glfwKeyCode) && !IsKeyReleased(glfwKeyCode);
+        return held_keys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsMouseButtonPressed(int button) const {
@@ -63,10 +61,13 @@ namespace IS {
         if (action == GLFW_PRESS) {
             IS_CORE_TRACE("Key {} Action {}", key, action);
             inputManager->pressed_keys.insert(key);
+            inputManager->held_keys.insert(key); // Add to held_keys when pressed
         }
         if (action == GLFW_RELEASE) {
             inputManager->pressed_keys.erase(key);
             inputManager->released_keys.insert(key);
+            inputManager->held_keys.erase(key); // Remove from held_keys when released
         }
     }
+
 }

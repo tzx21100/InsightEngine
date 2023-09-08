@@ -37,6 +37,9 @@ namespace IS {
         std::unordered_set<int> pressed_keys;
         std::unordered_set<int> released_keys;
 
+        //this is to store held keys and make it unique
+        std::unordered_set<int> held_keys;
+
         // GLFW key callback function
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 

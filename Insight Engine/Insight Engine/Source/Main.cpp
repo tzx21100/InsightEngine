@@ -17,8 +17,6 @@
 #include "Input.h"
 #include "CoreEngine.h"
 #include "GLFXWindow.h"
-#include "TestComponents.h"
-
 using namespace IS;
 
 int main() {
@@ -45,7 +43,8 @@ int main() {
     engine.RegisterComponent<Velocity>();
     //you can now create entities
     Entity newEntity = engine.CreateEntityWithComponents<Position>();
-
+    //this is how to clone an entity..
+    Entity entity2 = newEntity;
     //destroy entities
     if (!engine.HasComponent<Position>(newEntity)) {
         //get the component Position
