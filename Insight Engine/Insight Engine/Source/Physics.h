@@ -11,17 +11,23 @@ namespace IS
         void sendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
         void Update(float dt) override;
-        std::string GetName() { return "Physics"; }
+        std::string getName() { return "Physics"; }
         void Initialize() override;
+        void setGravity(float g) { Gravity = g; }
+        float getGravity() { return Gravity; }
         ~Physics() {}
 	private:
 
         // gravity of the world
-        Vector2D Gravity;
+        float Gravity;
 
         // max velocity for the game body
         float MaxVelocity;
 	};
+
+    void rigidBodyCallUpdate(RigidBody body, float dt);
+
+    void collisionCallUpdate(Collider collider, float dt, RigidBody rigidBody, auto const& entity, std::set<Entity> mEntities);
 
     extern Physics* PHYSICS;
 }
