@@ -4,13 +4,76 @@
 
 namespace IS
 {
-	struct AABB
-	{
-		Vector2D	min;
-		Vector2D	max;
-	};
+    struct AABB
+    {
+        Vector2D min;
+        Vector2D max;
+    };
+
+    struct Circle
+    {
+        Vector2D center;
+        float    radius;
+
+    };
+
+    struct Line
+    {
+        Vector2D start;
+        Vector2D end;
+        Vector2D normal;
+    };
+
+    enum class ColliderType {AABB, Circle, Line};
+
+    /*union Collider
+    {
+        AABB aabb;
+        Circle circle;
+        Line line;
+    };*/
+
+    struct Collider {
+        ColliderType colliderType;
+        std::variant<AABB, Circle, Line> myCollider;
+    };
+
 
 	// AABB Collision for static and dynamic, return true if they colliding
 	bool CollisionIntersection_RectRect(const AABB& aabb1, const Vector2D& vel1,
 		const AABB& aabb2, const Vector2D& vel2, const float& dt);
+    // AABB Collision for static and dynamic, return true if they colliding
+    //bool CollisionIntersection_RectRect(const Collider& collider1, const Collider& collider2, const float& dt);
+
+    //line segment reference, p0 - start, p1 - end
+    void BuildLineSegment(Line& lineSegment, const Vector2D& p0, const Vector2D& p1);
+
+    //check whether the ball is going to collide with the line segment and check whether the ball is inside or outside of the line segement
+    int CollisionIntersection_CircleLineSegment(
+        const Circle& circle,			                                        //Circle data - input
+        const Vector2D& ptEnd,													//End circle position - input
+        const Line& lineSeg,												    //Line segment - input
+        Vector2D& interPt,														//Intersection point - output
+        Vector2D& normalAtCollision,											//Normal vector at collision time - output
+        float& interTime,														//Intersection time ti - output
+        bool& checkLineEdges);													//The last parameter is for Extra Credits: when true => check collision with line segment edges
+    
+    //moving the ball when it is going to collide with the line edge and reflecting the ball accordingly
+    int CheckMovingCircleToLineEdge(
+        bool withinBothLines,	                            					//Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input
+        const Circle& circle,													//Circle data - input
+        const Vector2D& ptEnd,													//End circle position - input
+        const Line& lineSeg,												    //Line segment - input
+        Vector2D& interPt,														//Intersection point - output
+        Vector2D& normalAtCollision,											//Normal vector at collision time - output
+        float& interTime);														//Intersection time ti - output
+
+    //reflecting the ball according to the hit direction with the line segment based on the normal of V
+    void CollisionResponse_CircleLineSegment(
+        const Vector2D & ptInter,		                                    		//Intersection position of the circle - input
+        const Vector2D & normal,													//Normal vector of reflection on collision time - input
+        Vector2D & ptEnd,															//Final position of the circle after reflection - output
+        Vector2D & reflected);														//Normalized reflection vector direction - output
+
+
 }
