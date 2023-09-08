@@ -4,6 +4,7 @@
 #include "System.h"
 #include "Vector2D.h"
 #include "Component.h"
+#include "LayerStack.h"
 #include <unordered_map>
 #include <chrono>
 
@@ -33,6 +34,12 @@ namespace IS {
         void Initialize();
         void Update();
         void Run();
+
+        // layers
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* overlay);
+        void PopLayer(Layer* layer);
+        void PopOverlay(Layer* overlay);
 
         //eventmanager
         void sendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
@@ -138,6 +145,8 @@ namespace IS {
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> all_systems;
         unsigned last_runtime;
         int targetFPS{ 60 };
+        LayerStack layers;
+        
         //follow the singleton pattern for only one engine
         InsightEngine();
         ~InsightEngine();

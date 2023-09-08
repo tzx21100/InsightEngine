@@ -67,6 +67,15 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Asset.cpp">
+      <Filter>Engine\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LayerStack.cpp">
+      <Filter>Debug\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorLayer.cpp">
+      <Filter>Debug\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\glslshader.h">
@@ -150,6 +159,24 @@
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Asset.h">
+      <Filter>Engine\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Layer.h">
+      <Filter>Debug\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LayerStack.h">
+      <Filter>Debug\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorLayer.h">
+      <Filter>Debug\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetComponents.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetUtils.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -205,6 +232,9 @@
     </Filter>
     <Filter Include="Physics\Dynamics">
       <UniqueIdentifier>{8f9d153c-6f63-4498-a0b1-0e3436fb8d6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Editor">
+      <UniqueIdentifier>{830332e5-5a33-498b-8e99-d76092bc6241}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

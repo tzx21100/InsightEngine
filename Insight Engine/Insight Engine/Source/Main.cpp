@@ -35,18 +35,24 @@ int main() {
     //this is just to show how the new system works everthing can be deleted
     //this is 2 random components
     struct Position {
-        Vector2D x, y;
+        int x, y;
     };
     struct Velocity {
-        Vector2D x, y;
+        int x, y;
     };
     //register the position component
     engine.RegisterComponent<Position>();
     engine.RegisterComponent<Velocity>();
     //you can now create entities
     Entity newEntity = engine.CreateEntityWithComponents<Position>();
+
     //destroy entities
     if (!engine.HasComponent<Position>(newEntity)) {
+        //get the component Position
+        auto& pos = engine.GetComponent<Position>(newEntity);
+        pos.x += 1;
+        //remove the component for some reason
+        engine.RemoveComponent<Position>(newEntity);
         engine.DestroyEntity(newEntity);
     }
     else {
@@ -61,6 +67,10 @@ int main() {
     engine.AddSystem(mySystem, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3, signature);
+    auto mySystem4 = std::make_shared<ISAsset>();
+    engine.AddSystem(mySystem4, signature);
+
+
 
     /* adding components to the systems
        your system is going to be made out of different components
@@ -105,9 +115,9 @@ int main() {
    
     //engine stops technically don't need this since destructor is there and my engine is static
     engine.DestroyAllSystems();
-
+    GLFWwindow* window = glfwGetCurrentContext();
+    glfwDestroyWindow(window);
     glfwTerminate();
-   
 
     return 0;
 }

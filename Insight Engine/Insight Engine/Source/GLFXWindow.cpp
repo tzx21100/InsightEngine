@@ -5,19 +5,15 @@ namespace IS {
 
     //this will be the update for the window we can use this to register like people pressing stuff on the window
     void glfxWindow::Update(float time)  {
-        // grafix updates
-        glfwPollEvents();
         ISGraphics::update(time);
 
         //grafix draws
         ISGraphics::draw();
-        glfwSwapBuffers(window); // Swap front and back buffers
 
         //register window closing 
         if (glfwWindowShouldClose(window)) {
             Message quit = Message(MessageType::Quit);
             EventManager::Instance().Broadcast(quit);
-            glfwTerminate();
         }
     }
 
@@ -29,19 +25,6 @@ namespace IS {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
         ISGraphics::init();
-
-        // Setup Dear ImGui context
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-        // Dark mode, of course
-        ImGui::StyleColorsDark();
-
-        // Setup Platform/Renderer backends
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
-        ImGui_ImplOpenGL3_Init("#version 450");
     }
 
     void glfxWindow::HandleMessage(const Message& message){

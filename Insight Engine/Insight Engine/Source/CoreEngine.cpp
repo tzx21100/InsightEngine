@@ -1,18 +1,22 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
+#include "EditorLayer.h"
 #include <iostream>
 #include <thread>
+#include <GLFW/glfw3.h>
 
 
 namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
+        IS_CORE_TRACE("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
         mSystemManager = std::make_unique<SystemManager>();
+        IS_CORE_DEBUG("Insight Engine started");
     }
 
     //handling messages
@@ -27,8 +31,10 @@ namespace IS {
     InsightEngine::~InsightEngine() {
         for (auto& pair : all_systems) {
            // delete pair.second;
+            IS_CORE_INFO(pair.second->getName(), " terminated");
         }
         all_systems.clear();
+        IS_CORE_DEBUG("Insight Engine shutdown");
     }
 
     void InsightEngine::Initialize() {
@@ -40,6 +46,7 @@ namespace IS {
         //run the game
         is_running = true;
 
+        PushLayer(new EditorLayer());
     }
 
     void InsightEngine::Update() {
@@ -58,26 +65,52 @@ namespace IS {
         // float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
         std::chrono::duration<float> deltaTime = frameEnd - frameStart;
         //looping through the map and updating
+        
+        glfwPollEvents();
         for (const auto& [name, system] : all_systems) {
             system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
         }
 
+        layers.Update(deltaTime.count());
 
+        GLFWwindow* window = glfwGetCurrentContext();
+        glfwSwapBuffers(window);
     }
 
     //moved all the engine stuff under this run function
     void InsightEngine::Run() {
         Initialize();
         //this is the game loop
-        while (is_running) {
+        GLFWwindow* window = glfwGetCurrentContext();
+        while (is_running = !glfwWindowShouldClose(window)) {
             Update();
         }
+    }
+
+    void InsightEngine::PushLayer(Layer* layer) {
+        layers.pushLayer(layer);
+        layer->onAttach();
+    }
+
+    void InsightEngine::PushOverlay(Layer* overlay) {
+        layers.pushOverlay(overlay);
+        overlay->onAttach();
+    }
+
+    void InsightEngine::PopLayer(Layer* layer) {
+        layers.popLayer(layer);
+        layer->onDetach();
+    }
+
+    void InsightEngine::PopOverlay(Layer* overlay) {
+        layers.popOverlay(overlay);
+        overlay->onDetach();
     }
 
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
-        IS_CORE_INFO("Registering system... ", systemName);
+        IS_CORE_TRACE("Registering system... ", systemName);
         all_systems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
@@ -94,16 +127,18 @@ namespace IS {
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& pair : all_systems) {
+        for (auto& [key, system] : all_systems) {
             //delete pair.second;  // Delete the system object
+            IS_CORE_INFO(system->getName(), " terminated");
         }
         all_systems.clear();  // Clear the map
     }
 
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
-        for (const auto& pair : all_systems) {
-            pair.second->Initialize();
+        for (auto const& [key, system] : all_systems) {
+            system->Initialize();
+            IS_CORE_INFO(system->getName(), " initialized");
         }
     }
 
