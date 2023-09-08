@@ -7,7 +7,7 @@
 #include <stdbool.h>
 
 
-#define ON_ERROR_EXIT(condition, msg) \
+#define ON_ERROR(condition, msg) \
 do { \
     if (condition) { \
         std::cerr << "Error in function: " << __func__ << " at line " << __LINE__ << std::endl; \
@@ -23,16 +23,23 @@ static inline bool stringEndsIn(const std::string& str, const std::string& ends)
 }
 
 namespace IS {
-    //img class here
-    //macro and func here
-
     enum class allocationType {
         NoAllocation,
         SelfAllocated,
         StbAllocated
     };
 
-    struct Image {
+    struct ImageData {
+        int width;
+        int height;
+        int channels;
+        std::vector<unsigned char> data;
+     /*   size_t size;
+        uint8_t* data;
+        allocationType allocation_type;*/
+    };
+
+    struct Imageo {
         int width;
         int height;
         int channels;
@@ -49,20 +56,44 @@ namespace IS {
         std::string getName() override;
         void HandleMessage(const Message& message) override;
 
-        ISAsset();
+        ISAsset(const char* file_name) : filename(file_name), width(0), height(0), channels(0) {
+
+        };
         ~ISAsset();
 
-        void ISImageLoad(Image* img, const char* file_name);
-        void ISImageCreate(Image * img, int width, int height, int channels, bool zeroed);
-        void ISImageSave(const Image * img, const char* file_name);
-        void ISImageFree(Image * img);
+        bool loadImage();
 
-        void ISImageToGray(const Image * original, Image * gray);
-        void ISImageToSepia(const Image * original, Image * sepia);
+        const ImageData& getImageData() const;
+
+        void ISImageLoad(Imageo* img, const char* file_name);
+        void ISImageCreate(Imageo * img, int width, int height, int channels, bool zeroed);
+        void ISImageSave(const Imageo * img, const char* file_name);
+        void ISImageFree(Imageo * img);
+
+        void ISImageToGray(const Imageo * original, Imageo * gray);
+        void ISImageToSepia(const Imageo * original, Imageo * sepia);
 
     private:
-        //create a container to store img data
-        //make it able for ppl to get data
+        const char* filename;
+        int width;
+        int height;
+        int channels;
+        ImageData image;
+    };
+
+    class Image {
+    public:
+        Image();
+        ~Image();
+
+        const std::vector<ImageData>& getImages() const;
+
+        void saveImageData(const ImageData& imageData);
+
+
+    private:
+        std::vector<ImageData> images;
+
     };
 }
 
