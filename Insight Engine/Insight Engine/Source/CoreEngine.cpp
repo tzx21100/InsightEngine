@@ -154,16 +154,14 @@ namespace IS {
 
     //limit fps will return the frameEnd time now so i can use to find delta time
     std::chrono::high_resolution_clock::time_point InsightEngine::LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart) {
-        const std::chrono::milliseconds targetFrameTime(1000 / targetFPS);
-        //i used auto for now not sure if its fully allowed
-        auto frameEnd = std::chrono::high_resolution_clock::now();
-        auto frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart);
-
-        while (std::chrono::high_resolution_clock::now() - frameStart < targetFrameTime) {
-            //We just chill LMAO
+        const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / targetFPS);  // Nanosecond-level precision because accurate
+        while (true) { // We chill in this loop until true
+            auto now = std::chrono::high_resolution_clock::now();
+            auto frameDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - frameStart);
+            if (frameDuration >= targetFrameTime) {
+                return now;  // Return the updated frame end time
+            }
         }
-
-        return std::chrono::high_resolution_clock::now(); // Return the updated frame end time
     }
 
     //This is a simple function to set the FPS
@@ -183,3 +181,5 @@ namespace IS {
     }
 
 }
+
+

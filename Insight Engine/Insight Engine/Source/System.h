@@ -21,7 +21,7 @@ namespace IS {
         //override the MessageListener
         //virtual void HandleMessage(const Message& message) override {};
         //sendMessage will use the InsightEngine to broadcast all the messages to everyone
-        void sendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
+        void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
         virtual void Update(float time) = 0;
         virtual std::string getName() = 0;

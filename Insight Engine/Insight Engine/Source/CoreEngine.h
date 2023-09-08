@@ -43,7 +43,7 @@ namespace IS {
         void PopOverlay(Layer* overlay);
 
         //eventmanager
-        void sendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
+        void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
 
         //Entity Creation
@@ -142,8 +142,6 @@ namespace IS {
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> all_systems;
         //make a list of systems and their delta times
         std::unordered_map<std::string, float>systemDeltas;
-        //list of systems
-        //std::vector<ParentSystem>systemList;
         unsigned last_runtime;
         int targetFPS{ 60 };
         LayerStack layers;
