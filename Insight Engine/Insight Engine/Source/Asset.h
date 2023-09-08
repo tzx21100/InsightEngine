@@ -56,6 +56,8 @@ namespace IS {
         std::string getName() override;
         void HandleMessage(const Message& message) override;
 
+        //default constructor
+        ISAsset() = default;
         ISAsset(const char* file_name);
         ~ISAsset();
 
