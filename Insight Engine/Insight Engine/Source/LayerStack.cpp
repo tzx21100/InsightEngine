@@ -3,12 +3,6 @@
 
 namespace IS {
 
-    LayerStack::LayerStack() {
-        //Subscribe(MessageType::Quit);
-    }
-
-    LayerStack::~LayerStack() {}
-
     void LayerStack::pushLayer(value_type layer) {
         layers.emplace(begin() + insert_index, layer);
         ++insert_index;
@@ -40,17 +34,15 @@ namespace IS {
 
     void LayerStack::Update([[maybe_unused]] float delta_time) {
         for (reference layer : layers) {
-            layer->onUpdate();
+            layer->onUpdate(delta_time);
         }
     }
 
-    void LayerStack::HandleMessage(Message const& message) {
-        if (message.GetType() == MessageType::Quit) {
-            clearStack();
+    void LayerStack::Render() {
+        for (reference layer : layers) {
+            layer->onRender();
         }
     }
-
-    std::string LayerStack::getName() { return "LayerStack"; }
 
     LayerStack::reference LayerStack::operator[](size_type index) { return layers[index]; }
     LayerStack::const_reference LayerStack::operator[](size_type index) const { return layers[index]; }

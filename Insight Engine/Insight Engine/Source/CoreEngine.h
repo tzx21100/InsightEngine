@@ -5,11 +5,14 @@
 #include "Vector2D.h"
 #include "Component.h"
 #include "LayerStack.h"
+#include "GUILayer.h"
+#include "EditorLayer.h"
 #include <unordered_map>
 #include <chrono>
 
 namespace IS {
     class InsightEngine : public MessageListener {
+        friend class EditorLayer;
     public:
 
         //override message handling this way the core engine also will recieve and send messages
@@ -135,6 +138,7 @@ namespace IS {
         }
 
     private:
+        unsigned frame_count = 0;
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         bool is_running;
@@ -144,7 +148,10 @@ namespace IS {
         std::unordered_map<std::string, float>systemDeltas;
         unsigned last_runtime;
         int targetFPS{ 60 };
+
+        GUILayer* gui_layer;
         LayerStack layers;
+
         std::chrono::duration<float> deltaTime {0.f};
 
         //get the deltaTime of every engine

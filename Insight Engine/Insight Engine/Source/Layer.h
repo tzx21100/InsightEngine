@@ -1,5 +1,5 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_LAYER_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_LAYER_H
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYER_H
+#define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYER_H
 
 #include <string>
 
@@ -10,10 +10,10 @@ namespace IS {
         explicit Layer(std::string const& name) : debug_name(name) {}
         virtual ~Layer() = default;
 
-        virtual void onAttach() const {}
-        virtual void onDetach() const {}
-        virtual void onUpdate() const {}
-        virtual void onRender() const {}
+        virtual void onAttach() {}
+        virtual void onDetach() {}
+        virtual void onUpdate([[maybe_unused]] float dt) {}
+        virtual void onRender() {}
         inline std::string const& getName() const { return debug_name; }
 
     private:

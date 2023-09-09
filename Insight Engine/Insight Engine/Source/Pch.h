@@ -10,7 +10,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 //we can switch these to our own STL when we finish them
 #include "Properties.h"
 #include "Log.h"
-#include "DebugHandler.h"
+#include "Assertion.h"
 #include <iostream>
 #include <string>
 #include "ISVector.h"

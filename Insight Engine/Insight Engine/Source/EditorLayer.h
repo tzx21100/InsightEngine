@@ -1,24 +1,23 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_EDITORLAYER_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_EDITORLAYER_H
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_EDITORLAYER_H
+#define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_EDITORLAYER_H
 
 #include "Layer.h"
 
 namespace IS {
 
+    // Encapsulate the editor layer
     class EditorLayer : public Layer {
     public:
         EditorLayer();
 
-        void onAttach() const override;
-        void onDetach() const override;
-        void onUpdate() const override;
-        void onRender() const override;
-        void Begin() const;
-        void End() const;
+        void onAttach() override;
+        void onDetach() override;
+        void onUpdate(float dt) override;
+        void onRender() override;
 
-        void SetDarkThemeColors() const;
-        void EnableDockSpace() const;
-        void RenderInspector() const;
+        // Probably a function for each window
+        void RenderInspector();
+        void RenderPerformanceViewer();
     };
 
 } // end namespace IS

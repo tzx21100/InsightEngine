@@ -23,6 +23,7 @@
     <ClCompile Include="Source\GLFXWindow.cpp" />
     <ClCompile Include="Source\glslshader.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
+    <ClCompile Include="Source\GUILayer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\ISArray.cpp" />
     <ClCompile Include="Source\ISString.cpp" />
@@ -48,7 +49,7 @@
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\CoreEngine.h" />
-    <ClInclude Include="Source\DebugHandler.h" />
+    <ClInclude Include="Source\Assertion.h" />
     <ClInclude Include="Source\EditorLayer.h" />
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
+    <ClInclude Include="Source\GUILayer.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\ISArray.h" />
     <ClInclude Include="Source\ISString.h" />

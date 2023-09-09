@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 //
-//	DebugHandler.h
+//	Assertion.h
 //	Error handling and assertions
 //	
 //	Authors:  Guo Yiming
@@ -8,8 +8,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_DEBUGHANDLER_H
-#define GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_DEBUGHANDLER_H
+#ifndef GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H
+#define GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H
 
 // Remove this line to disable asserts
 #define IS_ENABLE_ASSERTS
@@ -31,13 +31,13 @@
 
 // ---------------------------------------------------------------------------
 
-    #define IS_CORE_ASSERT_MESG(x, y, ...) {          \
+    #define IS_CORE_ASSERT_MESG(x, ...) {          \
         if (!x) {                                  \
             IS_CORE_ERROR("IS_CORE_ASSERT: ", #x,  \
                           "\nLine: ", __LINE__,    \
                           "\nFunc: ", __FUNCSIG__, \
                           "\nFile: ", __FILE__);   \
-            IS_CORE_ERROR(y, __VA_ARGS__);            \
+            IS_CORE_ERROR(__VA_ARGS__);            \
             std::exit(EXIT_FAILURE);               \
         }                                          \
     }                                              \
@@ -57,23 +57,23 @@
 
 // ---------------------------------------------------------------------------
 
-#define IS_ASSERT_MESG(x, y, ...)                \
+#define IS_ASSERT_MESG(x, ...)                \
         if (!x) {                             \
             IS_ERROR("IS_ASSERT: ", #x,       \
                      "\nLine: ", __LINE__,    \
                      "\nFunc: ", __FUNCSIG__, \
                      "\nFile: ", __FILE__);   \
-            IS_ERROR(y, __VA_ARGS__);            \
+            IS_ERROR(__VA_ARGS__);            \
             std::exit(EXIT_FAILURE);          \
         }                                     \
     }                                         \
 
 #else
     #define IS_CORE_ASSERT(x) ((void)0)
-    #define IS_CORE_ASSERT_MESG(x, y, ...) ((void)0)
+    #define IS_CORE_ASSERT_MESG(x, ...) ((void)0)
     #define IS_ASSERT(x) ((void)0)
-    #define IS_ASSERT_MESG(x, y, ...) ((void)0)
+    #define IS_ASSERT_MESG(x, ...) ((void)0)
 
 #endif // IS_ENABLE_ASSERTS
 
-#endif // !GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_DEBUGHANDLER_H
+#endif // !GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H

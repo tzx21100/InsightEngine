@@ -19,19 +19,19 @@ namespace IS {
 } // end namespace IS
 
 // Core log macros
-#define IS_CORE_TRACE(x, ...) ::IS::Log::getCoreLogger()->trace(x, __VA_ARGS__)
-#define IS_CORE_DEBUG(x, ...) ::IS::Log::getCoreLogger()->debug(x, __VA_ARGS__)
-#define IS_CORE_INFO(x, ...) ::IS::Log::getCoreLogger()->info(x, __VA_ARGS__)
-#define IS_CORE_WARN(x, ...) ::IS::Log::getCoreLogger()->warn(x, __VA_ARGS__)
-#define IS_CORE_ERROR(x, ...) ::IS::Log::getCoreLogger()->error(x, __VA_ARGS__)
-#define IS_CORE_CRITICAL(x, ...) ::IS::Log::getCoreLogger()->critical(x, __VA_ARGS__)
+#define IS_CORE_TRACE(...) ::IS::Log::getCoreLogger()->trace(__VA_ARGS__)
+#define IS_CORE_DEBUG(...) ::IS::Log::getCoreLogger()->debug(__VA_ARGS__)
+#define IS_CORE_INFO(...) ::IS::Log::getCoreLogger()->info(__VA_ARGS__)
+#define IS_CORE_WARN(...) ::IS::Log::getCoreLogger()->warn(__VA_ARGS__)
+#define IS_CORE_ERROR(...) ::IS::Log::getCoreLogger()->error(__VA_ARGS__)
+#define IS_CORE_CRITICAL(...) ::IS::Log::getCoreLogger()->critical(__VA_ARGS__)
 
 // Client log macros
-#define IS_TRACE(x, ...) ::IS::Log::getClientLogger()->trace(x, __VA_ARGS__)
-#define IS_DEBUG(x, ...) ::IS::Log::getClientLogger()->debug(x, __VA_ARGS__)
-#define IS_INFO(x, ...) ::IS::Log::getClientLogger()->info(x, __VA_ARGS__)
-#define IS_WARN(x, ...) ::IS::Log::getClientLogger()->warn(x, __VA_ARGS__)
-#define IS_ERROR(x, ...) ::IS::Log::getClientLogger()->error(x, __VA_ARGS__)
-#define IS_CRITICAL(x, ...) ::IS::Log::getClientLogger()->critical(x, __VA_ARGS__)
+#define IS_TRACE(...) ::IS::Log::getClientLogger()->trace(__VA_ARGS__)
+#define IS_DEBUG(...) ::IS::Log::getClientLogger()->debug(__VA_ARGS__)
+#define IS_INFO(...) ::IS::Log::getClientLogger()->info(__VA_ARGS__)
+#define IS_WARN(...) ::IS::Log::getClientLogger()->warn(__VA_ARGS__)
+#define IS_ERROR(...) ::IS::Log::getClientLogger()->error(__VA_ARGS__)
+#define IS_CRITICAL(...) ::IS::Log::getClientLogger()->critical(__VA_ARGS__)
 
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOG_H

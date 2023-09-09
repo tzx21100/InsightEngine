@@ -17,6 +17,8 @@
 #include "Input.h"
 #include "CoreEngine.h"
 #include "GLFXWindow.h"
+#include "EditorLayer.h"
+
 using namespace IS;
 
 int main() {
@@ -80,6 +82,7 @@ int main() {
     Signature signatureValue = engine.GenerateSignature<Position, Velocity>();
     //this function will let you add the value inside
     engine.AddSystem(InputSys, signatureValue);
+    engine.PushLayer(new EditorLayer());
 
 
     // This is the end of the Initialize() part of your systems

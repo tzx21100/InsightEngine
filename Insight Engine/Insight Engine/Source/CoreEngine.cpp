@@ -1,7 +1,6 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
-#include "EditorLayer.h"
 #include <iostream>
 #include <thread>
 #include <GLFW/glfw3.h>
@@ -34,6 +33,7 @@ namespace IS {
             IS_CORE_INFO("{} terminated", pair.second->getName());
         }
         all_systems.clear();
+        layers.clearStack();
         IS_CORE_DEBUG("Insight Engine shutdown");
     }
 
@@ -46,7 +46,8 @@ namespace IS {
         //run the game
         is_running = true;
 
-        PushLayer(new EditorLayer());
+        gui_layer = new GUILayer();
+        PushOverlay(gui_layer);
     }
 
     void InsightEngine::Update() {
@@ -57,21 +58,33 @@ namespace IS {
         //looping through the map and updating
         
         glfwPollEvents();
+
+        // Very scuffed way
+        if ((frame_count % 240) == 0)
+            systemDeltas["Engine"] = 0;
         for (const auto& [name, system] : all_systems) {
             auto frameStart = std::chrono::high_resolution_clock::now();
             system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
             auto frameEnd= std::chrono::high_resolution_clock::now();
-            float delta= std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart).count();
-            systemDeltas[system->getName()] = delta;
+            float delta= std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count();
+            if ((frame_count % 240) == 0) {
+                systemDeltas[system->getName()] = delta;
+                systemDeltas["Engine"] += delta;
+            }
         }
 
         layers.Update(deltaTime.count());
+
+        gui_layer->Begin();
+        layers.Render();
+        gui_layer->End();
 
         GLFWwindow* window = glfwGetCurrentContext();
         glfwSwapBuffers(window);
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
+        ++frame_count;
 
         /*This is the delta time I'm explaining it to my future self
         because frameStart and frameEnd are types std::chrono::high_resolution_clock::time_point
@@ -94,7 +107,8 @@ namespace IS {
     }
 
     void InsightEngine::Exit() {
-        is_running = false;
+        Message quit = Message(MessageType::Quit);
+        EventManager::Instance().Broadcast(quit);
     }
 
     void InsightEngine::PushLayer(Layer* layer) {
