@@ -19,14 +19,25 @@ namespace IS {
         test_model.setupVAO();
         test_model.setupShaders();
 
-        test_points_model.setupPoints();
+        test_points_model.primititiveType = GL_POINTS;
+        test_points_model.setupSpecialVAO();
         test_points_model.setupShaders();
+
+        test_lines_model.primititiveType = GL_LINES;
+        test_lines_model.setupSpecialVAO();
+        test_lines_model.setupShaders();
+
+        test_circle_model.primititiveType = GL_TRIANGLE_FAN;
+        test_circle_model.setupSpecialVAO();
+        test_circle_model.setupShaders();
 
         test_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
         test_model.angle = 30.f; // 30 degrees tilted
         test_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
 
-        test_points_model.scaling = glm::vec2(1066.67f, 600.f); // max scaling (fit entire screen x: 1280, y: 720)
+        test_points_model.scaling = glm::vec2(1066.67f, 600.f);
+        test_lines_model.scaling = glm::vec2(1000.00f, 500.f); 
+        test_circle_model.scaling = glm::vec2(300.00f, 300.f);
     }
 
     void ISGraphics::update(float delta_time) {
@@ -34,6 +45,8 @@ namespace IS {
 
         test_model.transform(delta_time);
         test_points_model.transform(delta_time);
+        test_lines_model.transform(delta_time);
+        test_circle_model.transform(delta_time);
     }
 
     void ISGraphics::ISModel::transform(float delta_time) {
@@ -74,6 +87,8 @@ namespace IS {
         if (test_model.drawing)
             test_model.draw();
 
+        test_circle_model.drawSpecial();
+        test_lines_model.drawSpecial();
         test_points_model.drawSpecial();
     }
 
@@ -225,14 +240,35 @@ namespace IS {
     }
 
     // for M1 rubrics (to be removed after!)
-    void ISGraphics::ISModel::setupPoints() {
+    void ISGraphics::ISModel::setupSpecialVAO() {
         // Define the vertices of the quad
-        std::vector<glm::vec2> pos_vtx{
-            glm::vec2(-1.0f, -1.0f),
-            glm::vec2(1.0f, -1.0f),
-            glm::vec2(-1.0f, 1.0f),
-            glm::vec2(1.0f, 1.0f)
-        };
+
+        std::vector<glm::vec2> pos_vtx;
+
+        if (primititiveType == GL_POINTS || primititiveType == GL_LINES) {
+            pos_vtx = {
+                glm::vec2(-1.0f, -1.0f),
+                glm::vec2(1.0f, -1.0f),
+                glm::vec2(-1.0f, 1.0f),
+                glm::vec2(1.0f, 1.0f)
+            };
+            draw_count = static_cast<GLuint>(pos_vtx.size());
+        }
+        else if (primititiveType == GL_TRIANGLE_FAN) {
+            pos_vtx.emplace_back(glm::vec2(0.f, 0.f)); // center of circle
+
+            int slices{ 30 };
+            float angle{ (2 * static_cast<float>(PI) / slices) }; // 15 slices
+
+            for (int i{}; i < slices + 1; ++i) {
+                float x = (cosf(i * angle));
+                float y = (sinf(i * angle));
+
+                pos_vtx.emplace_back(glm::vec2(x, y));
+            }
+            color[0] = 0.f, color[1] = 0.f, color[2] = 1.f;
+            draw_count = static_cast<GLuint>(slices + 2);
+        }
 
         GLuint vbo_hdl;
         glCreateBuffers(1, &vbo_hdl);
@@ -247,10 +283,7 @@ namespace IS {
         glVertexArrayAttribBinding(vao_hdl, 0, 0);
         glBindVertexArray(0);
 
-        // Store the VAO handle in the GLPbo object
-        primititiveType = GL_POINTS;
         vao_ID = vao_hdl;
-        draw_count = static_cast<GLuint>(pos_vtx.size());
     }
 
     void ISGraphics::ISModel::drawSpecial() {
@@ -262,9 +295,20 @@ namespace IS {
         shader_program.setUniform("uColor", color[0], color[1], color[2]); // same colour as test_model for now
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
-        glPointSize(5.f);
-        glDrawArrays(primititiveType, 0, draw_count);
-        glPointSize(1.f);
+        switch (primititiveType) {
+        case GL_POINTS:
+            glPointSize(5.f);
+            glDrawArrays(primititiveType, 0, draw_count);
+            glPointSize(1.f);
+            break;
+        case GL_LINES:
+            glLineWidth(3.f);
+            glDrawArrays(primititiveType, 0, draw_count);
+            glLineWidth(1.f);
+            break;
+        case GL_TRIANGLE_FAN:
+            glDrawArrays(primititiveType, 0, draw_count);
+        }
 
         glBindVertexArray(0);
         shader_program.unUse();

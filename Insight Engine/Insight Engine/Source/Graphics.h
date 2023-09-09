@@ -30,9 +30,7 @@ namespace IS {
 			void draw();
 
 			// for M1 rubrics showcase
-			void setupPoints();
-			void setupLines();
-			void setupCircle();
+			void setupSpecialVAO();
 			void drawSpecial();
 
 			// transformation
