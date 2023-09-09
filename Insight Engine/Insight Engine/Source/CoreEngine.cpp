@@ -1,6 +1,7 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
+#include "JsonSaveLoad.h" // This is for Saving and Loading
 #include <iostream>
 #include <thread>
 #include <GLFW/glfw3.h>
@@ -192,6 +193,49 @@ namespace IS {
         mEntityManager->DestroyEntity(entity);
         mComponentManager->EntityDestroyed(entity);
         mSystemManager->EntityDestroyed(entity);
+    }
+
+    void InsightEngine::SaveToJson(Entity entity, std::string filename) {
+        std::string file_path = "Prefabs/" + filename;
+        std::string signature = mEntityManager->GetSignature(entity).to_string();
+        Json::Value prefab;
+        prefab["Signature"] = signature;
+        if (HasComponent<RigidBody>(entity)) {
+            auto& rigidbody = GetComponent<RigidBody>(entity);
+            prefab["RigidBody"] = rigidbody.Serialize();
+            //prefab["RigidBodyVelocityX"] = rigidbody.velocity.x;
+            //prefab["RigidBodyVelocityY"] = rigidbody.velocity.y;
+            //prefab["RigidBodyAccelerationX"] = rigidbody.acceleration.x;
+            //prefab["RigidBodyAccelerationY"] = rigidbody.acceleration.y;
+            //prefab["RigidBodyPositionX"] = rigidbody.position.x;
+            //prefab["RigidBodyPositionY"] = rigidbody.position.y;
+            //prefab["RigidBodyBodyType"] = static_cast<int>(rigidbody.bodyType);
+            //prefab["RigidBodyGravity"] = rigidbody.gravity;
+            //prefab["RigidBodyMass"] = rigidbody.mass;
+            //prefab["RigidBodyFriction"] = rigidbody.friction;
+            //prefab["RigidBodyRestitution"] = rigidbody.restitution;
+        }
+
+        if (HasComponent<Position>(entity)) {
+            auto& pos = GetComponent<Position>(entity);
+            prefab["POS"] = pos.Serialize();
+        }
+
+        SaveJsonToFile(prefab,file_path);
+    }
+
+    Entity InsightEngine::LoadFromJson(std::string name) {
+        std::string filename = "Prefabs/" + name;
+        Entity entity = CreateEntity();
+        Json::Value loaded;
+        LoadJsonFromFile(loaded, filename);
+        if (loaded.isMember("POS")) {
+            AddComponent<Position>(entity,Position());
+            auto& pos=GetComponent<Position>(entity);
+            pos.Deserialize(loaded["POS"]);
+        }
+        return entity;
+
     }
 
 }

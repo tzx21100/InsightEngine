@@ -33,31 +33,41 @@ int main() {
     //The following demonstrates the Initialize() Part of your systems
     
     //this is just to show how the new system works everthing can be deleted
-    //this is 2 random components
-    struct Position {
-        int x, y;
-    };
-    struct Velocity {
-        int x, y;
-    };
     //register the position component
     engine.RegisterComponent<Position>();
     engine.RegisterComponent<Velocity>();
+    engine.RegisterComponent<RigidBody>();
     //you can now create entities
     Entity newEntity = engine.CreateEntityWithComponents<Position>();
+    auto& pos = engine.GetComponent<Position>(newEntity);
+    pos.x = 1;
+    pos.y = 2;
+    engine.SaveToJson(newEntity, "testentity");
+
     //this is how to clone an entity..
     Entity entity2 = newEntity;
+    //this is loading entity from Json
+    Entity entity3 = engine.LoadFromJson("testentity");
     //destroy entities
     if (!engine.HasComponent<Position>(newEntity)) {
         //get the component Position
         auto& pos = engine.GetComponent<Position>(newEntity);
-        pos.x += 1;
+        pos.x = 3;
+        pos.y = 4;
         //remove the component for some reason
         engine.RemoveComponent<Position>(newEntity);
         engine.DestroyEntity(newEntity);
     }
     else {
         IS_CORE_INFO("TYPE DETECTED!");
+    }
+    
+    //this is to show that entity 3 will give the saved value
+    //can delete after
+    if (engine.HasComponent<Position>(entity3)) {
+        auto& pos = engine.GetComponent<Position>(entity3);
+        std::cout <<"POSX" << pos.x << std::endl;
+        std::cout <<"POSY" << pos.y << std::endl;
     }
 
     //this just loads in the window and audio I will give them their components next time

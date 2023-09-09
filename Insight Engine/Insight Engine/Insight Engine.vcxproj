@@ -53,7 +53,7 @@
     <ClInclude Include="Source\EditorLayer.h" />
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
-    <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\GLFXWindow.h" />
     <ClInclude Include="Source\glslshader.h" />
     <ClInclude Include="Source\Graphics.h" />
