@@ -137,15 +137,33 @@ namespace IS {
     }
 
     void EditorLayer::RenderInspector() {
-        ISGraphics::ISModel& test_model = ISGraphics::test_box_model;
         ImGui::Begin("Inspector");
 
-        std::string label{ "Draw " + test_model.name };
-        ImGui::Checkbox(label.c_str(), &test_model.drawing);
-        ImGui::SliderFloat("Width", &test_model.scaling.x, 2.f, 2.f * WIDTH);
-        ImGui::SliderFloat("Height", &test_model.scaling.y, 1.f, 2.f * HEIGHT);
-        ImGui::SliderFloat("Rotation", &test_model.angle, 0.f, 360.f);
-        ImGui::ColorEdit3("Color", test_model.color);
+        for (auto& model : ISGraphics::models) {
+
+            ImGui::Text("%-6s", model.name.c_str());
+            ImGui::SameLine();
+            ImGui::Checkbox(("##Draw " + model.name).c_str(), &model.drawing);
+            ImGui::Spacing();
+            ImGui::Text("Width ");
+            ImGui::SameLine();
+            ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.scaling.x, 2.f, 2.f * WIDTH);
+            ImGui::Spacing();
+            ImGui::Text("Height");
+            ImGui::SameLine();
+            ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.scaling.y, 1.f, 2.f * HEIGHT);
+            ImGui::Spacing();
+            ImGui::Text("Angle ");
+            ImGui::SameLine();
+            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.angle, 0.f, 360.f);
+            ImGui::Spacing();
+            ImGui::Text("Color ");
+            ImGui::SameLine();
+            ImGui::ColorEdit3(("##Color" + model.name).c_str(), model.color);
+            ImGui::Dummy({ 5.f, 5.f });
+            ImGui::Separator();
+            ImGui::Dummy({ 5.f, 5.f });
+        }
 
         ImGui::End();
     }

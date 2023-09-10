@@ -1,0 +1,8 @@
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_MATH_ISMATH_H
+#define GAM200_INSIGHT_ENGINE_SOURCE_MATH_ISMATH_H
+
+#include "Matrix3x3.h"
+#include "Vector2D.h"
+#include "Random.h"
+
+#endif // !GAM200_INSIGHT_ENGINE_SOURCE_MATH_ISMATH_H

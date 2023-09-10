@@ -8,17 +8,10 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #define GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
 
 //we can switch these to our own STL when we finish them
-//#include "MemoryLeakCheck.h"
-#include "Properties.h"
-#include "Log.h"
-#include "Assertion.h"
+
+// Standard library
 #include <iostream>
 #include <string>
-#include "ISVector.h"
-#include "ISString.h"
-#include "ISArray.h"
-#include "Audio.h"
-#include "Asset.h"
 #include <cstddef>          // for size_t
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
@@ -32,9 +25,16 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <unordered_map>
 #include <vector>
 #include <variant>
-#include "Math.h"
-#include "Matrix3x3.h"
-#include "Vector2D.h"
+#include <cmath>
+
+// Project files
+#include "Properties.h"
+#include "Log.h"
+#include "Assertion.h"
+#include "ISContainers.h"
+#include "Audio.h"
+#include "Asset.h"
+#include "ISMath.h"
 #include "Body.h"
 #include "Collision.h"
 #include "Physics.h"

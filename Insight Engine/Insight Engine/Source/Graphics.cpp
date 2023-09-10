@@ -6,47 +6,31 @@
 #include <string>
 
 namespace IS {
-    ISGraphics::ISModel ISGraphics::test_box_model("Box");
+    /*ISGraphics::ISModel ISGraphics::test_box_model("Box");
     ISGraphics::ISModel ISGraphics::test_points_model("Points");
     ISGraphics::ISModel ISGraphics::test_lines_model("Lines");
-    ISGraphics::ISModel ISGraphics::test_circle_model("Circle");
+    ISGraphics::ISModel ISGraphics::test_circle_model("Circle");*/
+
+    std::vector<ISGraphics::ISModel> ISGraphics::models;
 
     void ISGraphics::init() {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        test_box_model.setupVAO();
-        test_box_model.setupShaders();
-
-        test_points_model.primititiveType = GL_POINTS;
-        test_points_model.setupSpecialVAO();
-        test_points_model.setupShaders();
-
-        test_lines_model.primititiveType = GL_LINES;
-        test_lines_model.setupSpecialVAO();
-        test_lines_model.setupShaders();
-
-        test_circle_model.primititiveType = GL_TRIANGLE_FAN;
-        test_circle_model.setupSpecialVAO();
-        test_circle_model.setupShaders();
-
-        test_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
-        test_model.angle = 30.f; // 30 degrees tilted
-        test_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
-
-        test_points_model.scaling = glm::vec2(1066.67f, 600.f);
-        test_lines_model.scaling = glm::vec2(1000.00f, 500.f); 
-        test_circle_model.scaling = glm::vec2(300.00f, 300.f);
+        initModels();
     }
 
     void ISGraphics::update(float delta_time) {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
-        test_box_model.transform(delta_time);
+        for (ISModel& model : models) {
+            model.transform(delta_time);
+        }
+        /*test_box_model.transform(delta_time);
         test_points_model.transform(delta_time);
         test_lines_model.transform(delta_time);
-        test_circle_model.transform(delta_time);
+        test_circle_model.transform(delta_time);*/
     }
 
     void ISGraphics::ISModel::transform(float delta_time) {
@@ -84,16 +68,55 @@ namespace IS {
     void ISGraphics::draw() {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (test_box_model.drawing)
+        for (ISModel &model : models) {
+            if (model.drawing)
+                model.drawSpecial();
+        }
+
+        /*if (test_box_model.drawing)
             test_box_model.draw();
 
         test_circle_model.drawSpecial();
         test_lines_model.drawSpecial();
-        test_points_model.drawSpecial();
+        test_points_model.drawSpecial();*/
     }
 
     void ISGraphics::cleanup() {
         // WIP
+    }
+
+    void ISGraphics::initModels() {
+        ISModel test_box_model("Box");
+        ISModel test_points_model("Points");
+        ISModel test_lines_model("Lines");
+        ISModel test_circle_model("Circle");
+
+        test_box_model.setupVAO();
+        test_box_model.setupShaders();
+        test_box_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
+        test_box_model.angle = 30.f; // 30 degrees tilted
+        test_box_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+
+        test_points_model.primitive_type = GL_POINTS;
+        test_points_model.setupSpecialVAO();
+        test_points_model.setupShaders();
+        test_points_model.scaling = glm::vec2(1066.67f, 600.f);
+
+        test_lines_model.primitive_type = GL_LINES;
+        test_lines_model.setupSpecialVAO();
+        test_lines_model.setupShaders();
+        test_lines_model.scaling = glm::vec2(1000.00f, 500.f);
+
+        test_circle_model.primitive_type = GL_TRIANGLE_FAN;
+        test_circle_model.setupSpecialVAO();
+        test_circle_model.setupShaders();
+        test_circle_model.scaling = glm::vec2(300.00f, 300.f);
+
+
+        models.emplace_back(test_box_model);
+        models.emplace_back(test_points_model);
+        models.emplace_back(test_lines_model);
+        models.emplace_back(test_circle_model);
     }
 
     void ISGraphics::ISModel::setupVAO() {
@@ -153,7 +176,7 @@ namespace IS {
         glBindVertexArray(0);
 
         // Store the VAO handle in the GLPbo object
-        primititiveType = GL_TRIANGLES;
+        primitive_type = GL_TRIANGLES;
         vao_ID = vao_hdl;
         draw_count = static_cast<GLuint>(indices.size());
     }
@@ -230,10 +253,10 @@ namespace IS {
 
         glBindVertexArray(vao_ID);
 
-        shader_program.setUniform("uColor", test_box_model.color[0], test_box_model.color[1], test_box_model.color[2]);
-        shader_program.setUniform("uModel_to_NDC", test_box_model.mdl_to_ndl_xform);
+        shader_program.setUniform("uColor", color[0], color[1], color[2]);
+        shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
-        glDrawElements(primititiveType, draw_count, GL_UNSIGNED_INT, NULL);
+        glDrawElements(primitive_type, draw_count, GL_UNSIGNED_INT, NULL);
 
         glBindVertexArray(0);
         shader_program.unUse();
@@ -245,7 +268,7 @@ namespace IS {
 
         std::vector<glm::vec2> pos_vtx;
 
-        if (primititiveType == GL_POINTS || primititiveType == GL_LINES) {
+        if (primitive_type == GL_POINTS || primitive_type == GL_LINES) {
             pos_vtx = {
                 glm::vec2(-1.0f, -1.0f),
                 glm::vec2(1.0f, -1.0f),
@@ -254,7 +277,7 @@ namespace IS {
             };
             draw_count = static_cast<GLuint>(pos_vtx.size());
         }
-        else if (primititiveType == GL_TRIANGLE_FAN) {
+        else if (primitive_type == GL_TRIANGLE_FAN) {
             pos_vtx.emplace_back(glm::vec2(0.f, 0.f)); // center of circle
 
             int slices{ 30 };
@@ -266,7 +289,7 @@ namespace IS {
 
                 pos_vtx.emplace_back(glm::vec2(x, y));
             }
-            color[0] = 0.f, color[1] = 0.f, color[2] = 1.f;
+            //color[0] = 0.f, color[1] = 0.f, color[2] = 1.f;
             draw_count = static_cast<GLuint>(slices + 2);
         }
 
@@ -295,19 +318,23 @@ namespace IS {
         shader_program.setUniform("uColor", color[0], color[1], color[2]); // same colour as test_model for now
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
-        switch (primititiveType) {
+        switch (primitive_type) {
+        case GL_TRIANGLES:
+            glDrawElements(primitive_type, draw_count, GL_UNSIGNED_INT, NULL);
+            break;
         case GL_POINTS:
             glPointSize(5.f);
-            glDrawArrays(primititiveType, 0, draw_count);
+            glDrawArrays(primitive_type, 0, draw_count);
             glPointSize(1.f);
             break;
         case GL_LINES:
             glLineWidth(3.f);
-            glDrawArrays(primititiveType, 0, draw_count);
+            glDrawArrays(primitive_type, 0, draw_count);
             glLineWidth(1.f);
             break;
         case GL_TRIANGLE_FAN:
-            glDrawArrays(primititiveType, 0, draw_count);
+            glDrawArrays(primitive_type, 0, draw_count);
+            break;
         }
 
         glBindVertexArray(0);

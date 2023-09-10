@@ -63,29 +63,29 @@ namespace IS {
         // Update System deltas every 6s
         const int update_frequency = 6 * targetFPS;
         if (!(frame_count % update_frequency))
-            systemDeltas["Engine"] = 0;
+            mSystemDeltas["Engine"] = 0;
 
-        for (const auto& [name, system] : all_systems) {
+        for (const auto& [name, system] : mAllSystems) {
             Timer timer(name.c_str());
-            system->Update(deltaTime.count());
+            system->Update(delta_time.count());
             timer.Stop();
 
             if (!(frame_count % update_frequency)) {
-                systemDeltas[name] = timer.GetDeltaTime();
-                systemDeltas["Engine"] += timer.GetDeltaTime();
+                mSystemDeltas[name] = timer.GetDeltaTime();
+                mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
 
         { // Scoped so timer will be destroyed out of scope
             Timer timer("Layers");
             gui_layer->Begin();
-            layers.Update(deltaTime.count());
+            layers.Update(delta_time.count());
             layers.Render();
             gui_layer->End();
             timer.Stop();
             if (!(frame_count % update_frequency)) {
-                systemDeltas["UI"] = timer.GetDeltaTime();
-                systemDeltas["Engine"] += timer.GetDeltaTime();
+                mSystemDeltas["UI"] = timer.GetDeltaTime();
+                mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
 
@@ -96,7 +96,7 @@ namespace IS {
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
 
-        deltaTime = frameEnd - frameStart;
+        delta_time = frameEnd - frameStart;
 
         ++frame_count;
     }
@@ -172,7 +172,7 @@ namespace IS {
 
     // Accessor for system deltas
     std::unordered_map<std::string, float> const& InsightEngine::GetSystemDeltas() const {
-        return systemDeltas;
+        return mSystemDeltas;
     }
 
     // Get frame count
