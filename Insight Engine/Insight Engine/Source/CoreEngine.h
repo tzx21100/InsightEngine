@@ -82,6 +82,10 @@ namespace IS {
         Entity CreateEntity();
         void DestroyEntity(Entity entity);
 
+        //Functions to save and load entities
+        void SaveToJson(Entity entity, std::string filename);
+        Entity LoadFromJson(std::string filename);
+
         //Basic components functions
         template <typename T>
         bool HasComponent(Entity entity) {
@@ -166,9 +170,24 @@ namespace IS {
             return signature;
         }
 
-        //Functions to save and load entities
-        void SaveToJson(Entity entity, std::string filename);
-        Entity LoadFromJson(std::string filename);
+
+        //These are functions to serialize and deserialize components!
+        template<typename T>
+        void SerializeComponent(Entity entity, Json::Value& prefab, const std::string& componentName) {
+            if (HasComponent<T>(entity)) {
+                auto& component = GetComponent<T>(entity);
+                prefab[componentName] = component.Serialize();
+            }
+        }
+
+        template<typename T>
+        void DeserializeComponent(Entity entity, const Json::Value& prefab, const std::string& componentName) {
+            if (prefab.isMember(componentName)) {
+                AddComponent<T>(entity, T());
+                auto& component = GetComponent<T>(entity);
+                component.Deserialize(prefab[componentName]);
+            }
+        }
 
 
     private:
@@ -176,31 +195,27 @@ namespace IS {
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         bool is_running;
-        //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
-        std::unordered_map<std::string, std::shared_ptr<ParentSystem>> mAllSystems;
-        //make a list of systems and their delta times
-        std::unordered_map<std::string, float>mSystemDeltas;
         unsigned last_runtime;
         int targetFPS{ 60 };
-
         GUILayer* gui_layer;
         LayerStack layers;
-
         std::chrono::duration<float> delta_time {0.f};
 
-        //get the delta_time of every engine
-        std::vector<float> mlistOfDelta{0.f};
-
-
-        //follow the singleton pattern for only one engine
+        // Follow the singleton pattern for only one engine
         InsightEngine();
         ~InsightEngine();
 
+        //The containers for the class are listed below
         //For ECS
         std::unique_ptr<ComponentManager> mComponentManager;
         std::unique_ptr<EntityManager> mEntityManager;
         std::unique_ptr<SystemManager> mSystemManager;
-
+        //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
+        std::unordered_map<std::string, std::shared_ptr<ParentSystem>> mAllSystems;
+        //make a list of systems and their delta times
+        std::unordered_map<std::string, float>mSystemDeltas;
+        //get the delta_time of every engine
+        std::vector<float> mlistOfDelta{ 0.f };
 
     };
 

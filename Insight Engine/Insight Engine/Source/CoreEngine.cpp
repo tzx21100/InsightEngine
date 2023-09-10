@@ -213,15 +213,9 @@ namespace IS {
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
         prefab["Signature"] = signature;
-        if (HasComponent<RigidBody>(entity)) {
-            auto& rigidbody = GetComponent<RigidBody>(entity);
-            prefab["RigidBody"] = rigidbody.Serialize();
-        }
-
-        if (HasComponent<Position>(entity)) {
-            auto& pos = GetComponent<Position>(entity);
-            prefab["POS"] = pos.Serialize();
-        }
+        
+        //add in future components
+        SerializeComponent<Position>(entity, prefab, "POS");
 
         SaveJsonToFile(prefab,file_path);
     }
@@ -231,11 +225,9 @@ namespace IS {
         Entity entity = CreateEntity();
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
-        if (loaded.isMember("POS")) {
-            AddComponent<Position>(entity,Position());
-            auto& pos=GetComponent<Position>(entity);
-            pos.Deserialize(loaded["POS"]);
-        }
+
+        //add in future components
+        DeserializeComponent<Position>(entity, loaded, "POS");
         return entity;
 
     }

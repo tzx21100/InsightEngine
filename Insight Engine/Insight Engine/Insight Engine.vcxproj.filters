@@ -34,9 +34,6 @@
     <ClCompile Include="Source\CoreEngine.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Example System Implementation.cpp">
-      <Filter>Engine\System Example</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Debug\Logging</Filter>
     </ClCompile>
