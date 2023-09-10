@@ -10,7 +10,30 @@
 #include <unordered_map>
 #include <chrono>
 
+
 namespace IS {
+
+    class Position :public IComponent {
+    public:
+        int x, y;
+        Json::Value Serialize() override {
+            Json::Value test;
+            test["px"] = x;
+            test["py"] = y;
+            return test;
+        }
+        void Deserialize(Json::Value smth) override {
+            x = smth["px"].asInt();
+            y = smth["py"].asInt();
+        }
+    };
+    class Velocity : public IComponent {
+    public:
+        int x, y;
+    };
+
+
+
 
     class InsightEngine : public MessageListener {
     public:
@@ -143,25 +166,30 @@ namespace IS {
             return signature;
         }
 
+        //Functions to save and load entities
+        void SaveToJson(Entity entity, std::string filename);
+        Entity LoadFromJson(std::string filename);
+
+
     private:
         unsigned frame_count = 0;
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         bool is_running;
         //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
-        std::unordered_map<std::string, std::shared_ptr<ParentSystem>> all_systems;
+        std::unordered_map<std::string, std::shared_ptr<ParentSystem>> mAllSystems;
         //make a list of systems and their delta times
-        std::unordered_map<std::string, float> systemDeltas;
+        std::unordered_map<std::string, float>mSystemDeltas;
         unsigned last_runtime;
         int targetFPS{ 60 };
 
         GUILayer* gui_layer;
         LayerStack layers;
 
-        std::chrono::duration<float> deltaTime {0.f};
+        std::chrono::duration<float> delta_time {0.f};
 
-        //get the deltaTime of every engine
-        std::vector<float> listOfDelta{0.f};
+        //get the delta_time of every engine
+        std::vector<float> mlistOfDelta{0.f};
 
 
         //follow the singleton pattern for only one engine
@@ -172,6 +200,7 @@ namespace IS {
         std::unique_ptr<ComponentManager> mComponentManager;
         std::unique_ptr<EntityManager> mEntityManager;
         std::unique_ptr<SystemManager> mSystemManager;
+
 
     };
 

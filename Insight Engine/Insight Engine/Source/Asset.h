@@ -22,6 +22,14 @@ static inline bool stringEndsIn(const std::string& str, const std::string& ends)
     return (pos != std::string::npos) && (pos + ends_len == str_len);
 }
 
+static std::string getFileName(const std::string& file_path) {
+    size_t last_slash = file_path.find_last_of("/\\");
+    if ((last_slash != std::string::npos)) {
+        return file_path.substr(last_slash + 1);
+    }
+    return file_path;
+}
+
 namespace IS {
     enum class allocationType {
         NoAllocation,
@@ -30,22 +38,30 @@ namespace IS {
     };
 
     struct ImageData {
-        int width;
-        int height;
-        int channels;
-        std::vector<unsigned char> data;
-     /*   size_t size;
-        uint8_t* data;
-        allocationType allocation_type;*/
-    };
-
-    struct Imageo {
+        std::string file_name;
         int width;
         int height;
         int channels;
         size_t size;
         uint8_t* data;
         allocationType allocation_type;
+  
+    };
+
+    class Image {
+    public:
+        Image();
+        ~Image();
+
+        const std::vector<ImageData>& getImages() const;
+        void saveImageData(const ImageData& image_data);
+        void removeImageData(const ImageData& image_data);
+
+        friend std::ostream& operator<<(std::ostream& os, const Image& image);
+
+
+    private:
+        std::vector<ImageData> images;
     };
 
     class ISAsset :public ParentSystem {
@@ -60,18 +76,17 @@ namespace IS {
         ISAsset() = default;
         ISAsset(const char* file_name);
         ~ISAsset();
-
-        bool loadImage();
-
+        
         const ImageData& getImageData() const;
 
-        void ISImageLoad(Imageo* img, const char* file_name);
-        void ISImageCreate(Imageo * img, int width, int height, int channels, bool zeroed);
-        void ISImageSave(const Imageo * img, const char* file_name);
-        void ISImageFree(Imageo * img);
+        void ISImageLoad(Image& image_manager);
+        void ISImageCreate(Image& image_manager, bool zeroed);
+        void ISImageSave(Image& image_manager, const char* file_name);
+        void ISImageFree(Image& image_manager);
+        void ISImageToGray(Image& image_manager);
+        void ISImageToSepia(Image& image_manager);
 
-        void ISImageToGray(const Imageo * original, Imageo * gray);
-        void ISImageToSepia(const Imageo * original, Imageo * sepia);
+
 
     private:
         const char* filename;
@@ -81,18 +96,7 @@ namespace IS {
         ImageData image;
     };
 
-    class Image {
-    public:
-        Image();
-        ~Image();
 
-        const std::vector<ImageData>& getImages() const;
-        void saveImageData(const ImageData& imageData);
-
-
-    private:
-        std::vector<ImageData> images;
-    };
 }
 
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H  

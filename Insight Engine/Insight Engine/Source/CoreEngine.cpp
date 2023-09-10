@@ -1,6 +1,7 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
+#include "JsonSaveLoad.h" // This is for Saving and Loading
 #include <iostream>
 #include <thread>
 #include <GLFW/glfw3.h>
@@ -29,11 +30,11 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
-        for (auto& pair : all_systems) {
+        for (auto& pair : mAllSystems) {
            // delete pair.second;
             IS_CORE_INFO("{} terminated", pair.second->getName());
         }
-        all_systems.clear();
+        mAllSystems.clear();
         layers.clearStack();
         IS_CORE_DEBUG("Insight Engine shutdown");
     }
@@ -138,32 +139,32 @@ namespace IS {
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
         IS_CORE_TRACE("Registering system... {}", systemName);
-        all_systems[systemName] = system;
+        mAllSystems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
     }
 
     //This function is meant to specifically find the individual system in the map and destroy it
     void InsightEngine::DestroySystem(const std::string& name) {
-        auto it = all_systems.find(name);
-        if (it != all_systems.end()) {
+        auto it = mAllSystems.find(name);
+        if (it != mAllSystems.end()) {
             //delete it->second; //delete the object
-            all_systems.erase(it);
+            mAllSystems.erase(it);
         }
     }
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& [key, system] : all_systems) {
+        for (auto& [key, system] : mAllSystems) {
             //delete pair.second;  // Delete the system object
             IS_CORE_INFO("{} terminated", system->getName());
         }
-        all_systems.clear();  // Clear the map
+        mAllSystems.clear();  // Clear the map
     }
 
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
-        for (auto const& [key, system] : all_systems) {
+        for (auto const& [key, system] : mAllSystems) {
             system->Initialize();
             IS_CORE_INFO("{} initialized", system->getName());
         }
@@ -205,6 +206,38 @@ namespace IS {
         mEntityManager->DestroyEntity(entity);
         mComponentManager->EntityDestroyed(entity);
         mSystemManager->EntityDestroyed(entity);
+    }
+
+    void InsightEngine::SaveToJson(Entity entity, std::string filename) {
+        std::string file_path = "Prefabs/" + filename;
+        std::string signature = mEntityManager->GetSignature(entity).to_string();
+        Json::Value prefab;
+        prefab["Signature"] = signature;
+        if (HasComponent<RigidBody>(entity)) {
+            auto& rigidbody = GetComponent<RigidBody>(entity);
+            prefab["RigidBody"] = rigidbody.Serialize();
+        }
+
+        if (HasComponent<Position>(entity)) {
+            auto& pos = GetComponent<Position>(entity);
+            prefab["POS"] = pos.Serialize();
+        }
+
+        SaveJsonToFile(prefab,file_path);
+    }
+
+    Entity InsightEngine::LoadFromJson(std::string name) {
+        std::string filename = "Prefabs/" + name;
+        Entity entity = CreateEntity();
+        Json::Value loaded;
+        LoadJsonFromFile(loaded, filename);
+        if (loaded.isMember("POS")) {
+            AddComponent<Position>(entity,Position());
+            auto& pos=GetComponent<Position>(entity);
+            pos.Deserialize(loaded["POS"]);
+        }
+        return entity;
+
     }
 
 }

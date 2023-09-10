@@ -132,8 +132,8 @@
     <ClInclude Include="Source\Input.h">
       <Filter>Engine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Engine\GameObjects</Filter>
+    <ClInclude Include="Source\JsonSaveLoad.h">
+      <Filter>Engine\Json</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entities.h">
       <Filter>Engine\ECS</Filter>
@@ -215,9 +215,6 @@
     <Filter Include="Engine\Core\Messaging&amp;Event">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObjects">
-      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\ECS">
       <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
     </Filter>
@@ -235,6 +232,9 @@
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Json">
+      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Window">
       <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
