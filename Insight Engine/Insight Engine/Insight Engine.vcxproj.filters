@@ -37,9 +37,6 @@
     <ClCompile Include="Source\CoreEngine.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Example System Implementation.cpp">
-      <Filter>Engine\System Example</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Debug\Logging</Filter>
     </ClCompile>
@@ -202,9 +199,6 @@
     </Filter>
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\System Example">
-      <UniqueIdentifier>{26be95f9-2ff5-47cb-828f-691b9e323d78}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\GLFX Window">
       <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
