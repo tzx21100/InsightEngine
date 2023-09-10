@@ -12,7 +12,7 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
     }
 
-    void InputManager::Update(float deltaTime) {
+    void InputManager::Update([[maybe_unused]] float deltaTime) {
 
         //this is an example
         //if (IsKeyHeld(GLFW_KEY_A)) { std::cout << "A"; }

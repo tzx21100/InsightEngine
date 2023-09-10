@@ -22,16 +22,17 @@ namespace IS {
 			GLuint draw_count{};
 
 			// imgui
-			std::string name{ "Model" };
+			std::string name;
+			glm::vec3 color{};
 			bool drawing{ true };
-			float color[3]{};
 
-			ISModel(std::string const& model_name) : name(model_name) {
+			ISModel(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
 				PRNG prng;
 				for (int i{}; i < 3; ++i) {
 					color[i] = prng.generate();
 				}
 			}
+
 			void setupVAO();
 			void setupShaders();
 			void transform(float delta_time);
@@ -42,10 +43,9 @@ namespace IS {
 			void drawSpecial();
 
 			// transformation
-			glm::vec2 worldPosition{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
-			GLfloat angle{};		   // in degrees couter-clockwise
+			glm::vec2 world_position{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
+			glm::vec2 orientation{};   // x = angle displacement, y = angle speed
 			glm::vec2 scaling{};       // *2 twice the size, *1 same size, *0.5 half the size (per axis)
-
 			glm::mat3 mdl_to_ndl_xform = glm::imat3x3{};
 		};
 

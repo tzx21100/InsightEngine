@@ -140,7 +140,7 @@ namespace IS {
 
     void Shader::setUniform(GLchar const* name, GLfloat val) {
         GLint loc = glGetUniformLocation(pgm_hdl, name);
-        if (loc >= 0) glUniform1i(loc, val);
+        if (loc >= 0) glUniform1f(loc, val);
         else std::cout << "Uniform variable " << name << " doesn't exist.\n";
     }
 

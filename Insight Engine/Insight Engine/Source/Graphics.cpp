@@ -42,17 +42,16 @@ namespace IS {
             return angle;
             };
 
-        float angle_speed = 0.f; // 0 degree rotation per second
-        angle += angle_speed * delta_time;
-        angle = wrap_angle(angle);
-        float angle_rad = glm::radians(angle);
+        orientation.x += orientation.y * delta_time;
+        orientation.x = wrap_angle(orientation.x);
+        float angle_rad = glm::radians(orientation.x);
 
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
 
         glm::mat3 world_to_NDC_xform = { scaling.x * cos_angle, scaling.x * -sin_angle, 0,   // column 1
                                          scaling.y * sin_angle, scaling.y * cos_angle,  0,   // column 2
-                                         worldPosition.x,       worldPosition.y,        1 }; // column 3
+                                         world_position.x,       world_position.y,        1 }; // column 3
 
 
         float map_scale_x = 0.00078125f; // 1/1280 (DEPENDANT ON WORLD SIZE)
@@ -86,32 +85,31 @@ namespace IS {
     }
 
     void ISGraphics::initModels() {
-        ISModel test_box_model("Box");
-        ISModel test_points_model("Points");
-        ISModel test_lines_model("Lines");
-        ISModel test_circle_model("Circle");
+        ISModel test_box_model("Box", GL_TRIANGLES);
+        ISModel test_points_model("Points", GL_POINTS);
+        ISModel test_lines_model("Lines", GL_LINES);
+        ISModel test_circle_model("Circle", GL_TRIANGLE_FAN);
 
         test_box_model.setupVAO();
         test_box_model.setupShaders();
-        test_box_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
-        test_box_model.angle = 30.f; // 30 degrees tilted
+        test_box_model.world_position = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
         test_box_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+        test_box_model.orientation.y = 30.f;
 
-        test_points_model.primitive_type = GL_POINTS;
         test_points_model.setupSpecialVAO();
         test_points_model.setupShaders();
         test_points_model.scaling = glm::vec2(1066.67f, 600.f);
+        test_points_model.orientation.y = 10.f;
 
-        test_lines_model.primitive_type = GL_LINES;
         test_lines_model.setupSpecialVAO();
         test_lines_model.setupShaders();
         test_lines_model.scaling = glm::vec2(1000.00f, 500.f);
+        test_lines_model.orientation.y = -10.f;
 
-        test_circle_model.primitive_type = GL_TRIANGLE_FAN;
         test_circle_model.setupSpecialVAO();
         test_circle_model.setupShaders();
         test_circle_model.scaling = glm::vec2(300.00f, 300.f);
-
+        test_circle_model.orientation.y = -30.f;
 
         models.emplace_back(test_box_model);
         models.emplace_back(test_points_model);
@@ -253,7 +251,7 @@ namespace IS {
 
         glBindVertexArray(vao_ID);
 
-        shader_program.setUniform("uColor", color[0], color[1], color[2]);
+        shader_program.setUniform("uColor", color);
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
         glDrawElements(primitive_type, draw_count, GL_UNSIGNED_INT, NULL);
@@ -315,7 +313,7 @@ namespace IS {
         glBindVertexArray(vao_ID);
 
         //shader_program.SetUniform("uSize", test_model.size);
-        shader_program.setUniform("uColor", color[0], color[1], color[2]); // same colour as test_model for now
+        shader_program.setUniform("uColor", color); // same colour as test_model for now
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
         switch (primitive_type) {

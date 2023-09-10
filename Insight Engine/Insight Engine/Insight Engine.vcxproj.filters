@@ -76,6 +76,9 @@
     <ClCompile Include="Source\GUILayer.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Example System Implementation.cpp">
+      <Filter>Engine\System Example</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -130,7 +133,7 @@
       <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\JsonSaveLoad.h">
-      <Filter>Engine\Json</Filter>
+      <Filter>Engine\JSON</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entities.h">
       <Filter>Engine\ECS</Filter>
@@ -239,14 +242,14 @@
     <Filter Include="Editor">
       <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Json">
-      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Window">
       <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug\Handler">
       <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\JSON">
+      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

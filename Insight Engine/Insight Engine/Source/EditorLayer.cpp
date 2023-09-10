@@ -155,11 +155,11 @@ namespace IS {
             ImGui::Spacing();
             ImGui::Text("Angle ");
             ImGui::SameLine();
-            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.angle, 0.f, 360.f);
+            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.orientation.x, 0.f, 360.f);
             ImGui::Spacing();
             ImGui::Text("Color ");
             ImGui::SameLine();
-            ImGui::ColorEdit3(("##Color" + model.name).c_str(), model.color);
+            ImGui::ColorEdit3(("##Color" + model.name).c_str(), &model.color[0]);
             ImGui::Dummy({ 5.f, 5.f });
             ImGui::Separator();
             ImGui::Dummy({ 5.f, 5.f });

@@ -24,7 +24,7 @@ namespace IS {
 
     }
 
-    void ISAudio::Update(float deltaTime) {//every frame
+    void ISAudio::Update([[maybe_unused]] float deltaTime) {//every frame
         //update the audio system
         system->update();
 
