@@ -6,33 +6,33 @@
 #include <string>
 
 namespace IS {
-    ISGraphics::ISModel ISGraphics::test_model("Rectangle");
+    ISGraphics::ISModel ISGraphics::test_box_model("Box");
     ISGraphics::ISModel ISGraphics::test_points_model("Points");
     ISGraphics::ISModel ISGraphics::test_lines_model("Lines");
     ISGraphics::ISModel ISGraphics::test_circle_model("Circle");
 
     void ISGraphics::init() {
-        glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to white
+        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        test_model.setupVAO();
-        test_model.setupShaders();
+        test_box_model.setupVAO();
+        test_box_model.setupShaders();
 
         test_points_model.setupPoints();
         test_points_model.setupShaders();
 
-        test_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
-        test_model.angle = 30.f; // 30 degrees tilted
-        test_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+        test_box_model.worldPosition = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
+        test_box_model.angle = 30.f; // 30 degrees tilted
+        test_box_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
 
         test_points_model.scaling = glm::vec2(1066.67f, 600.f); // max scaling (fit entire screen x: 1280, y: 720)
     }
 
     void ISGraphics::update(float delta_time) {
-        glClearColor(1.f, 1.f, 1.f, 1.f); // set color buffer to white
+        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
-        test_model.transform(delta_time);
+        test_box_model.transform(delta_time);
         test_points_model.transform(delta_time);
     }
 
@@ -71,8 +71,8 @@ namespace IS {
     void ISGraphics::draw() {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (test_model.drawing)
-            test_model.draw();
+        if (test_box_model.drawing)
+            test_box_model.draw();
 
         test_points_model.drawSpecial();
     }
@@ -215,8 +215,8 @@ namespace IS {
 
         glBindVertexArray(vao_ID);
 
-        shader_program.setUniform("uColor", test_model.color[0], test_model.color[1], test_model.color[2]);
-        shader_program.setUniform("uModel_to_NDC", test_model.mdl_to_ndl_xform);
+        shader_program.setUniform("uColor", test_box_model.color[0], test_box_model.color[1], test_box_model.color[2]);
+        shader_program.setUniform("uModel_to_NDC", test_box_model.mdl_to_ndl_xform);
 
         glDrawElements(primititiveType, draw_count, GL_UNSIGNED_INT, NULL);
 

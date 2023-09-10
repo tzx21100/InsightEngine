@@ -16,12 +16,14 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "CoreEngine.h"
-#include "GLFXWindow.h"
+#include "WindowSystem.h"
 #include "EditorLayer.h"
+#include "MemoryLeakCheck.h"
 
 using namespace IS;
 
 int main() {
+    ENABLE_MEMCHECK;
 
     // Initialize log
     Log::init();
@@ -63,7 +65,7 @@ int main() {
     //this just loads in the window and audio I will give them their components next time
     Signature signature;
     // create window first so other systems can just point to current context
-    auto mySystem = std::make_shared<glfxWindow>(WIDTH, HEIGHT, "Insight Engine");
+    auto mySystem = std::make_shared<WindowSystem>(WIDTH, HEIGHT, "Insight Engine");
     signature = engine.GenerateSignature<Position, Velocity>();
     engine.AddSystem(mySystem, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
@@ -117,9 +119,6 @@ int main() {
    
     //engine stops technically don't need this since destructor is there and my engine is static
     engine.DestroyAllSystems();
-    GLFWwindow* window = glfwGetCurrentContext();
-    glfwDestroyWindow(window);
-    glfwTerminate();
 
     return 0;
 }

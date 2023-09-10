@@ -55,15 +55,16 @@ namespace IS {
         return { xPos, yPos };
     }
 
-
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+        std::string key_name = glfwGetKeyName(key, scancode) ? glfwGetKeyName(key, scancode) : "code: " + std::to_string(key);
         if (action == GLFW_PRESS) {
-            IS_CORE_TRACE("Key {} Action {}", key, action);
+            IS_CORE_TRACE("Key {} Pressed", key_name);
             inputManager->pressed_keys.insert(key);
             inputManager->held_keys.insert(key); // Add to held_keys when pressed
         }
         if (action == GLFW_RELEASE) {
+            IS_CORE_TRACE("Key {} Released", key_name);
             inputManager->pressed_keys.erase(key);
             inputManager->released_keys.insert(key);
             inputManager->held_keys.erase(key); // Remove from held_keys when released

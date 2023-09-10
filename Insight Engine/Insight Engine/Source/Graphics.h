@@ -43,7 +43,7 @@ namespace IS {
 			glm::mat3 mdl_to_ndl_xform = glm::imat3x3{};
 		};
 
-		static ISModel test_model;
+		static ISModel test_box_model;
 		static ISModel test_points_model;
 		static ISModel test_lines_model;
 		static ISModel test_circle_model;

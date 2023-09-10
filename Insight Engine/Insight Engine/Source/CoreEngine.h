@@ -6,13 +6,13 @@
 #include "Component.h"
 #include "LayerStack.h"
 #include "GUILayer.h"
-#include "EditorLayer.h"
+
 #include <unordered_map>
 #include <chrono>
 
 namespace IS {
+
     class InsightEngine : public MessageListener {
-        friend class EditorLayer;
     public:
 
         //override message handling this way the core engine also will recieve and send messages
@@ -30,6 +30,12 @@ namespace IS {
         void DestroyAllSystems();
         void InitializeAllSystems();
 
+        // Accessor to system deltas
+        std::unordered_map<std::string, float> const& GetSystemDeltas() const;
+
+        // Accessor to frame count
+        unsigned FrameCount() const;
+
         //This is FPS
         void SetFPS(int num);
 
@@ -39,7 +45,7 @@ namespace IS {
         void Run();
         void Exit();
 
-        // layers
+        // Push and pop layers
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
         void PopLayer(Layer* layer);
@@ -145,7 +151,7 @@ namespace IS {
         //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> all_systems;
         //make a list of systems and their delta times
-        std::unordered_map<std::string, float>systemDeltas;
+        std::unordered_map<std::string, float> systemDeltas;
         unsigned last_runtime;
         int targetFPS{ 60 };
 

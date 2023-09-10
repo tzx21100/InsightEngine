@@ -5,8 +5,6 @@
 
 namespace IS {
 
-    bool show_another_window = false;
-
     EditorLayer::EditorLayer() : Layer("Editor Layer") {}
 
     void EditorLayer::onAttach() {
@@ -28,7 +26,7 @@ namespace IS {
         static bool opt_fullscreen = false;
         static bool opt_padding = false;
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-
+        
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         if (opt_fullscreen) {
             const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -48,6 +46,8 @@ namespace IS {
 
         if (!opt_padding)
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
+
+        ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("EditorDockSpace", &show_dockspace, window_flags);
         if (!opt_padding)
             ImGui::PopStyleVar();
@@ -68,6 +68,21 @@ namespace IS {
                 // which we can't undo at the moment without finer window depth/z control.
                 ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
                 ImGui::MenuItem("Padding", NULL, &opt_padding);
+                ImGui::Separator();
+                ImGui::MenuItem("New Level");
+                ImGui::MenuItem("Open Level");
+                ImGui::Separator();
+                ImGui::MenuItem("Save Current Level");
+                ImGui::MenuItem("Save Current Level As...");
+                ImGui::MenuItem("Save All");
+                ImGui::Separator();
+                ImGui::MenuItem("Import into Level...");
+                ImGui::MenuItem("Export All...");
+                ImGui::MenuItem("Export Selected...");
+                ImGui::Separator();
+                ImGui::MenuItem("New Project...");
+                ImGui::MenuItem("Open Project...");
+                ImGui::MenuItem("Recent Projects");
                 ImGui::Separator();
                 if (ImGui::MenuItem("Exit"))
                     InsightEngine::Instance().Exit();
@@ -122,40 +137,51 @@ namespace IS {
     }
 
     void EditorLayer::RenderInspector() {
-        ISGraphics::ISModel& test_model = ISGraphics::test_model;
-
+        ISGraphics::ISModel& test_model = ISGraphics::test_box_model;
         ImGui::Begin("Inspector");
+
         std::string label{ "Draw " + test_model.name };
         ImGui::Checkbox(label.c_str(), &test_model.drawing);
         ImGui::SliderFloat("Width", &test_model.scaling.x, 2.f, 2.f * WIDTH);
         ImGui::SliderFloat("Height", &test_model.scaling.y, 1.f, 2.f * HEIGHT);
         ImGui::SliderFloat("Rotation", &test_model.angle, 0.f, 360.f);
         ImGui::ColorEdit3("Color", test_model.color);
-        ImGui::Checkbox("Another Window", &show_another_window);
-        ImGui::End();
 
-        if (show_another_window) {
-            ImGui::Begin("Another Window", &show_another_window);
-            ImGui::Text("Hello from another window!");
-            ImGui::End();
-        }
+        ImGui::End();
     }
 
     void EditorLayer::RenderPerformanceViewer() {
         ImGuiIO& io = ImGui::GetIO();
+
         ImGui::Begin("Performance");
-        ImGui::Text("Framerate: %.0f FPS", io.Framerate);
-        ImGui::Text("Timestep: %.2f ms", 1000.f / io.Framerate);
+        if (ImGui::BeginTable("Engine", 2)) {
+            ImGui::TableNextColumn();
+            ImGui::Text("Framerate:");
+            ImGui::TableNextColumn();
+            ImGui::Text("%5.0f FPS", io.Framerate);
+
+            ImGui::TableNextColumn();
+            ImGui::Text(" Timestep:");
+            ImGui::TableNextColumn();
+            ImGui::Text("%.2f ms", 1000.f / io.Framerate);
+
+            ImGui::EndTable();
+        }
         ImGui::Dummy({ 5.f, 5.f });
         ImGui::Separator();
         ImGui::Dummy({ 5.f, 5.f });
         
-        if (ImGui::BeginTable("Systems", 2, ImGuiTableFlags_Resizable, ImVec2(0.f, 0.f))) {
+        // Create a table for system usage
+        if (ImGui::BeginTable("Systems", 2, ImGuiTableFlags_Resizable)) {
+            // Table headers
             ImGui::TableSetupColumn("System");
             ImGui::TableSetupColumn("Usage %");
             ImGui::TableHeadersRow();
-            for (auto& [system, dt] : InsightEngine::Instance().systemDeltas) {
-                double percent = std::round((dt / InsightEngine::Instance().systemDeltas["Engine"]) * 100.0);
+
+            // Table values
+            for (InsightEngine& engine = InsightEngine::Instance();
+                auto const& [system, dt] : engine.GetSystemDeltas()) {
+                double percent = std::round((dt / engine.GetSystemDeltas().at("Engine")) * 100.0);
                 if (system != "Engine") {
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
@@ -164,13 +190,15 @@ namespace IS {
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
-                    ImGui::Text("%3d%%", static_cast<int>(percent));
+                    ImGui::Text("%6d%%", static_cast<int>(percent));
                     ImGui::Separator();
                 }
             }
+            // End rendering table
             ImGui::EndTable();
         }
 
+        // End rendering window
         ImGui::End();
     }
 

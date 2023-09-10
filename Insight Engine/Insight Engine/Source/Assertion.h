@@ -16,57 +16,49 @@
 
 #ifdef IS_ENABLE_ASSERTS
 
-// Engine side assert
+// Engine-side assert
 // ---------------------------------------------------------------------------
 
-    #define IS_CORE_ASSERT(x) {                    \
-        if (!x) {                                  \
-            IS_CORE_ERROR("IS_CORE_ASSERT: ", #x,  \
-                          "\nLine: ", __LINE__,    \
-                          "\nFunc: ", __FUNCSIG__, \
-                          "\nFile: ", __FILE__);   \
-            std::exit(EXIT_FAILURE);               \
-        }                                          \
-    }                                              \
-
-// ---------------------------------------------------------------------------
-
-    #define IS_CORE_ASSERT_MESG(x, ...) {          \
-        if (!x) {                                  \
-            IS_CORE_ERROR("IS_CORE_ASSERT: ", #x,  \
-                          "\nLine: ", __LINE__,    \
-                          "\nFunc: ", __FUNCSIG__, \
-                          "\nFile: ", __FILE__);   \
-            IS_CORE_ERROR(__VA_ARGS__);            \
-            std::exit(EXIT_FAILURE);               \
-        }                                          \
-    }                                              \
-
-// Client side assert
-// ---------------------------------------------------------------------------
-
-    #define IS_ASSERT(x) {                    \
-        if (!x) {                             \
-            IS_ERROR("IS_ASSERT: ", #x,       \
-                     "\nLine: ", __LINE__,    \
-                     "\nFunc: ", __FUNCSIG__, \
-                     "\nFile: ", __FILE__);   \
-            std::exit(EXIT_FAILURE);          \
-        }                                     \
-    }                                         \
+    #define IS_CORE_ASSERT(x) {                                               \
+        if (!x) {                                                             \
+            IS_CORE_ERROR("IS_CORE_ASSERT: {}\nLine: {}\nFunc: {}\nFile: {}", \
+                           #x, __LINE__, __FUNCSIG__, __FILE__);              \
+            __debugbreak();                                                   \
+        }                                                                     \
+    }                                                                         \
 
 // ---------------------------------------------------------------------------
 
-#define IS_ASSERT_MESG(x, ...)                \
-        if (!x) {                             \
-            IS_ERROR("IS_ASSERT: ", #x,       \
-                     "\nLine: ", __LINE__,    \
-                     "\nFunc: ", __FUNCSIG__, \
-                     "\nFile: ", __FILE__);   \
-            IS_ERROR(__VA_ARGS__);            \
-            std::exit(EXIT_FAILURE);          \
-        }                                     \
-    }                                         \
+    #define IS_CORE_ASSERT_MESG(x, ...) {                                     \
+        if (!x) {                                                             \
+            IS_CORE_ERROR("IS_CORE_ASSERT: {}\nLine: {}\nFunc: {}\nFile: {}", \
+                           #x, __LINE__, __FUNCSIG__, __FILE__);              \
+            IS_CORE_ERROR(__VA_ARGS__);                                       \
+            __debugbreak();                                                   \
+        }                                                                     \
+    }                                                                         \
+
+// Client-side assert
+// ---------------------------------------------------------------------------
+
+    #define IS_ASSERT(x) {                                               \
+        if (!x) {                                                        \
+            IS_ERROR("IS_CORE_ASSERT: {}\nLine: {}\nFunc: {}\nFile: {}", \
+                      #x, __LINE__, __FUNCSIG__, __FILE__);              \
+            __debugbreak();                                              \
+        }                                                                \
+    }                                                                    \
+
+// ---------------------------------------------------------------------------
+
+#define IS_ASSERT_MESG(x, ...) {                                         \
+        if (!x) {                                                        \
+            IS_ERROR("IS_CORE_ASSERT: {}\nLine: {}\nFunc: {}\nFile: {}", \
+                      #x, __LINE__, __FUNCSIG__, __FILE__);              \
+            IS_ERROR(__VA_ARGS__);                                       \
+            __debugbreak();                                              \
+        }                                                                \
+    }                                                                    \
 
 #else
     #define IS_CORE_ASSERT(x) ((void)0)

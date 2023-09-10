@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\glslshader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -52,8 +49,8 @@
     <ClCompile Include="Source\Input.cpp">
       <Filter>Engine\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GLFXWindow.cpp">
-      <Filter>Engine\GLFX Window</Filter>
+    <ClCompile Include="Source\WindowSystem.cpp">
+      <Filter>Engine\Window</Filter>
     </ClCompile>
     <ClCompile Include="Source\Entities.cpp">
       <Filter>Engine\ECS</Filter>
@@ -84,9 +81,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\glslshader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -114,8 +108,8 @@
     <ClInclude Include="Source\ISVector.h">
       <Filter>STL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GLFXWindow.h">
-      <Filter>Engine\GLFX Window</Filter>
+    <ClInclude Include="Source\WindowSystem.h">
+      <Filter>Engine\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\EventManager.h">
       <Filter>Engine\Core\Messaging&amp;Event</Filter>
@@ -174,11 +168,14 @@
     <ClInclude Include="Source\LayerStack.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Assertion.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GUILayer.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assertion.h">
+      <Filter>Debug\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemoryLeakCheck.h">
+      <Filter>Debug\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +202,6 @@
     </Filter>
     <Filter Include="Engine\System Example">
       <UniqueIdentifier>{26be95f9-2ff5-47cb-828f-691b9e323d78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\GLFX Window">
-      <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{23331e8a-17f3-4a9c-a892-f9178c7ef7b3}</UniqueIdentifier>
@@ -236,14 +230,17 @@
     <Filter Include="Physics\Dynamics">
       <UniqueIdentifier>{8f9d153c-6f63-4498-a0b1-0e3436fb8d6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Debug\Editor">
-      <UniqueIdentifier>{830332e5-5a33-498b-8e99-d76092bc6241}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug\Profiling">
       <UniqueIdentifier>{2dc82fc5-2056-4a90-8188-d1ca8727b7b3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Window">
+      <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Handler">
+      <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include <GLFW/glfw3.h>
+#include "Timer.h"
 
 
 namespace IS {
@@ -51,7 +52,6 @@ namespace IS {
     }
 
     void InsightEngine::Update() {
-
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
@@ -59,42 +59,45 @@ namespace IS {
         
         glfwPollEvents();
 
-        // Very scuffed way
-        if ((frame_count % 240) == 0)
+        // Update System deltas every 6s
+        const int update_frequency = 6 * targetFPS;
+        if (!(frame_count % update_frequency))
             systemDeltas["Engine"] = 0;
+
         for (const auto& [name, system] : all_systems) {
-            auto frameStart = std::chrono::high_resolution_clock::now();
-            system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
-            auto frameEnd= std::chrono::high_resolution_clock::now();
-            float delta= std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count();
-            if ((frame_count % 240) == 0) {
-                systemDeltas[system->getName()] = delta;
-                systemDeltas["Engine"] += delta;
+            Timer timer(name.c_str());
+            system->Update(deltaTime.count());
+            timer.Stop();
+
+            if (!(frame_count % update_frequency)) {
+                systemDeltas[name] = timer.GetDeltaTime();
+                systemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
 
-        layers.Update(deltaTime.count());
+        { // Scoped so timer will be destroyed out of scope
+            Timer timer("Layers");
+            gui_layer->Begin();
+            layers.Update(deltaTime.count());
+            layers.Render();
+            gui_layer->End();
+            timer.Stop();
+            if (!(frame_count % update_frequency)) {
+                systemDeltas["UI"] = timer.GetDeltaTime();
+                systemDeltas["Engine"] += timer.GetDeltaTime();
+            }
+        }
 
-        gui_layer->Begin();
-        layers.Render();
-        gui_layer->End();
-
+        // Swap front and back buffers
         GLFWwindow* window = glfwGetCurrentContext();
         glfwSwapBuffers(window);
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
-        ++frame_count;
 
-        /*This is the delta time I'm explaining it to my future self
-        because frameStart and frameEnd are types std::chrono::high_resolution_clock::time_point
-        deducting them will give me a time value which i will then cast it to microseconds with
-        duration_cast<std::chrono::microseconds>. Lastly, .count() just turns it into integers
-        This gives us how many microseconds that have passed in float terms.
-        */
-        // float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
         deltaTime = frameEnd - frameStart;
 
+        ++frame_count;
     }
 
     //moved all the engine stuff under this run function
@@ -164,6 +167,16 @@ namespace IS {
             system->Initialize();
             IS_CORE_INFO("{} initialized", system->getName());
         }
+    }
+
+    // Accessor for system deltas
+    std::unordered_map<std::string, float> const& InsightEngine::GetSystemDeltas() const {
+        return systemDeltas;
+    }
+
+    // Get frame count
+    unsigned InsightEngine::FrameCount() const {
+        return frame_count;
     }
 
     //limit fps will return the frameEnd time now so i can use to find delta time
