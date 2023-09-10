@@ -46,42 +46,35 @@ namespace IS {
             mSystems[systemName] = system;
         }
 
-        void SetSignature(const std::string& systemName, Signature signature)
-        {
+        void SetSignature(const std::string& systemName, Signature signature) {
             assert(mSystems.find(systemName) != mSystems.end() && "System used before registered.");
 
             // Set the signature for this system
             mSignatures[systemName] = signature;
         }
 
-        void EntityDestroyed(Entity entity)
-        {
+        void EntityDestroyed(Entity entity) {
             // Erase a destroyed entity from all system lists
             // mEntities is a set so no check needed
-            for (auto const& pair : mSystems)
-            {
+            for (auto const& pair : mSystems) {
                 auto const& system = pair.second;
                 system->mEntities.erase(entity);
             }
         }
 
-        void EntitySignatureChanged(Entity entity, Signature entitySignature)
-        {
+        void EntitySignatureChanged(Entity entity, Signature entitySignature) {
             // Notify each system that an entity's signature changed
-            for (auto const& pair : mSystems)
-            {
+            for (auto const& pair : mSystems) {
                 auto const& type = pair.first;
                 auto const& system = pair.second;
                 auto const& systemSignature = mSignatures[type];
 
                 //Any component that matches will be added to the system
-                if ((entitySignature & systemSignature).any())
-                {
+                if ((entitySignature & systemSignature).any()) {
                     system->mEntities.insert(entity);
                 }
-                // Entity signature does not match system signature - erase from set
-                else
-                {
+                // Remove thoese that no longer match (even though we have an edge case of HasComponent in each system)
+                else {
                     system->mEntities.erase(entity);
                 }
             }

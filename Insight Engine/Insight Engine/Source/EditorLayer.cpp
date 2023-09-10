@@ -154,8 +154,8 @@ namespace IS {
             ImGui::TableSetupColumn("System");
             ImGui::TableSetupColumn("Usage %");
             ImGui::TableHeadersRow();
-            for (auto& [system, dt] : InsightEngine::Instance().systemDeltas) {
-                double percent = std::round((dt / InsightEngine::Instance().systemDeltas["Engine"]) * 100.0);
+            for (auto& [system, dt] : InsightEngine::Instance().mSystemDeltas) {
+                double percent = std::round((dt / InsightEngine::Instance().mSystemDeltas["Engine"]) * 100.0);
                 if (system != "Engine") {
                     ImGui::TableNextColumn();
                     ImGui::Spacing();

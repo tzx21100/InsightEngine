@@ -29,11 +29,11 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
-        for (auto& pair : all_systems) {
+        for (auto& pair : mAllSystems) {
            // delete pair.second;
             IS_CORE_INFO("{} terminated", pair.second->getName());
         }
-        all_systems.clear();
+        mAllSystems.clear();
         layers.clearStack();
         IS_CORE_DEBUG("Insight Engine shutdown");
     }
@@ -62,19 +62,19 @@ namespace IS {
 
         // Very scuffed way
         if ((frame_count % 240) == 0)
-            systemDeltas["Engine"] = 0;
-        for (const auto& [name, system] : all_systems) {
+            mSystemDeltas["Engine"] = 0;
+        for (const auto& [name, system] : mAllSystems) {
             auto frameStart = std::chrono::high_resolution_clock::now();
-            system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
+            system->Update(delta_time.count());  // Pass the actual delta time here so all systems can use it
             auto frameEnd= std::chrono::high_resolution_clock::now();
             float delta= std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count();
             if ((frame_count % 240) == 0) {
-                systemDeltas[system->getName()] = delta;
-                systemDeltas["Engine"] += delta;
+                mSystemDeltas[system->getName()] = delta;
+                mSystemDeltas["Engine"] += delta;
             }
         }
 
-        layers.Update(deltaTime.count());
+        layers.Update(delta_time.count());
 
         gui_layer->Begin();
         layers.Render();
@@ -94,7 +94,7 @@ namespace IS {
         This gives us how many microseconds that have passed in float terms.
         */
         // float deltaTime = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count());
-        deltaTime = frameEnd - frameStart;
+        delta_time = frameEnd - frameStart;
 
     }
 
@@ -136,32 +136,32 @@ namespace IS {
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
         IS_CORE_TRACE("Registering system... {}", systemName);
-        all_systems[systemName] = system;
+        mAllSystems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
     }
 
     //This function is meant to specifically find the individual system in the map and destroy it
     void InsightEngine::DestroySystem(const std::string& name) {
-        auto it = all_systems.find(name);
-        if (it != all_systems.end()) {
+        auto it = mAllSystems.find(name);
+        if (it != mAllSystems.end()) {
             //delete it->second; //delete the object
-            all_systems.erase(it);
+            mAllSystems.erase(it);
         }
     }
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& [key, system] : all_systems) {
+        for (auto& [key, system] : mAllSystems) {
             //delete pair.second;  // Delete the system object
             IS_CORE_INFO("{} terminated", system->getName());
         }
-        all_systems.clear();  // Clear the map
+        mAllSystems.clear();  // Clear the map
     }
 
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
-        for (auto const& [key, system] : all_systems) {
+        for (auto const& [key, system] : mAllSystems) {
             system->Initialize();
             IS_CORE_INFO("{} initialized", system->getName());
         }
@@ -203,17 +203,6 @@ namespace IS {
         if (HasComponent<RigidBody>(entity)) {
             auto& rigidbody = GetComponent<RigidBody>(entity);
             prefab["RigidBody"] = rigidbody.Serialize();
-            //prefab["RigidBodyVelocityX"] = rigidbody.velocity.x;
-            //prefab["RigidBodyVelocityY"] = rigidbody.velocity.y;
-            //prefab["RigidBodyAccelerationX"] = rigidbody.acceleration.x;
-            //prefab["RigidBodyAccelerationY"] = rigidbody.acceleration.y;
-            //prefab["RigidBodyPositionX"] = rigidbody.position.x;
-            //prefab["RigidBodyPositionY"] = rigidbody.position.y;
-            //prefab["RigidBodyBodyType"] = static_cast<int>(rigidbody.bodyType);
-            //prefab["RigidBodyGravity"] = rigidbody.gravity;
-            //prefab["RigidBodyMass"] = rigidbody.mass;
-            //prefab["RigidBodyFriction"] = rigidbody.friction;
-            //prefab["RigidBodyRestitution"] = rigidbody.restitution;
         }
 
         if (HasComponent<Position>(entity)) {
