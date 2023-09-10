@@ -7,7 +7,7 @@
 
 namespace IS {
     void ISAsset::Initialize() {//call once
-        // Example usage:
+        //Example usage:
        // const char* filename = "sky.jpg"; // Replace with your image file path
        // const char* filename2 = "shapes.png"; // Replace with your image file path
 
@@ -143,13 +143,6 @@ namespace IS {
     }
 
     void ISAsset::ISImageToGray(Image& image_manager) {
-        int channels = image.channels == 4 ? 2 : 1;
-
-        // Check if the current image data is already in grayscale format
-        if (channels == 1) {
-            return;  // Image is already grayscale, no need to convert
-        }
-
         for (unsigned char* p = image.data, *pg = image.data; p != image.data + image.size; p += image.channels, pg += channels) {
             *pg = static_cast<uint8_t>((*p + *(p + 1) + *(p + 2)) / 3.0);
             if (image.channels == 4) {
@@ -159,9 +152,11 @@ namespace IS {
 
         // Update the channels and allocation type of the image
         image.channels = channels;
-        image.allocation_type = allocationType::SelfAllocated;
+        if (image.allocation_type != allocationType::SelfAllocated) {
+            image.allocation_type = allocationType::SelfAllocated;
+        }
 
-        // Optionally, you can save the modified image data to the image_manager
+        // save the modified image data to the image_manager
         image_manager.saveImageData(image);
     }
 
@@ -169,12 +164,12 @@ namespace IS {
         
         for (unsigned char* p = image.data; p != image.data + image.size; p += image.channels) {
             int r = *p, g = *(p + 1), b = *(p + 2);
-            int newR = static_cast<int>((0.393 * r) + (0.769 * g) + (0.189 * b));
-            int newG = static_cast<int>((0.349 * r) + (0.686 * g) + (0.168 * b));
-            int newB = static_cast<int>((0.272 * r) + (0.534 * g) + (0.131 * b));
-            *p = static_cast<uint8_t>(std::min(255, std::max(0, newR)));
-            *(p + 1) = static_cast<uint8_t>(std::min(255, std::max(0, newG)));
-            *(p + 2) = static_cast<uint8_t>(std::min(255, std::max(0, newB)));
+            int new_r = static_cast<int>((0.393 * r) + (0.769 * g) + (0.189 * b));
+            int new_g = static_cast<int>((0.349 * r) + (0.686 * g) + (0.168 * b));
+            int new_b = static_cast<int>((0.272 * r) + (0.534 * g) + (0.131 * b));
+            *p = static_cast<uint8_t>(std::min(255, std::max(0, new_r)));
+            *(p + 1) = static_cast<uint8_t>(std::min(255, std::max(0, new_g)));
+            *(p + 2) = static_cast<uint8_t>(std::min(255, std::max(0, new_b)));
         }
 
         if (image.allocation_type != allocationType::SelfAllocated) {
@@ -211,12 +206,12 @@ namespace IS {
 
     // Overload << for ImageData
     std::ostream& operator<<(std::ostream& os, const ImageData& image_data) {
-        // Customize how you want to print an ImageData object
+        // print an ImageData object
         os << "File Name = " << image_data.file_name << ", Width = " << image_data.width << ", Height = " << image_data.height << ", Channels = " << image_data.channels;
         return os;
     }
 
-    // Define the overloaded << operator for Image
+    // overloaded << operator for Image
     std::ostream& operator<<(std::ostream& os, const Image& image) {
         const std::vector<ImageData>& imageVector = image.getImages();
 
