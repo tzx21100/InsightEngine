@@ -1,7 +1,7 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "CoreEngine.h" // Include the header file
-#include "EditorLayer.h"
+#include "JsonSaveLoad.h" // This is for Saving and Loading
 #include <iostream>
 #include <thread>
 #include <GLFW/glfw3.h>
@@ -34,6 +34,7 @@ namespace IS {
             IS_CORE_INFO("{} terminated", pair.second->getName());
         }
         all_systems.clear();
+        layers.clearStack();
         IS_CORE_DEBUG("Insight Engine shutdown");
     }
 
@@ -46,7 +47,8 @@ namespace IS {
         //run the game
         is_running = true;
 
-        PushLayer(new EditorLayer());
+        gui_layer = new GUILayer();
+        PushOverlay(gui_layer);
     }
 
     void InsightEngine::Update() {
@@ -57,21 +59,33 @@ namespace IS {
         //looping through the map and updating
         
         glfwPollEvents();
+
+        // Very scuffed way
+        if ((frame_count % 240) == 0)
+            systemDeltas["Engine"] = 0;
         for (const auto& [name, system] : all_systems) {
             auto frameStart = std::chrono::high_resolution_clock::now();
             system->Update(deltaTime.count());  // Pass the actual delta time here so all systems can use it
             auto frameEnd= std::chrono::high_resolution_clock::now();
-            float delta= std::chrono::duration_cast<std::chrono::milliseconds>(frameEnd - frameStart).count();
-            systemDeltas[system->getName()] = delta;
+            float delta= std::chrono::duration_cast<std::chrono::microseconds>(frameEnd - frameStart).count();
+            if ((frame_count % 240) == 0) {
+                systemDeltas[system->getName()] = delta;
+                systemDeltas["Engine"] += delta;
+            }
         }
 
         layers.Update(deltaTime.count());
+
+        gui_layer->Begin();
+        layers.Render();
+        gui_layer->End();
 
         GLFWwindow* window = glfwGetCurrentContext();
         glfwSwapBuffers(window);
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
+        ++frame_count;
 
         /*This is the delta time I'm explaining it to my future self
         because frameStart and frameEnd are types std::chrono::high_resolution_clock::time_point
@@ -94,7 +108,8 @@ namespace IS {
     }
 
     void InsightEngine::Exit() {
-        is_running = false;
+        Message quit = Message(MessageType::Quit);
+        EventManager::Instance().Broadcast(quit);
     }
 
     void InsightEngine::PushLayer(Layer* layer) {
@@ -178,6 +193,49 @@ namespace IS {
         mEntityManager->DestroyEntity(entity);
         mComponentManager->EntityDestroyed(entity);
         mSystemManager->EntityDestroyed(entity);
+    }
+
+    void InsightEngine::SaveToJson(Entity entity, std::string filename) {
+        std::string file_path = "Prefabs/" + filename;
+        std::string signature = mEntityManager->GetSignature(entity).to_string();
+        Json::Value prefab;
+        prefab["Signature"] = signature;
+        if (HasComponent<RigidBody>(entity)) {
+            auto& rigidbody = GetComponent<RigidBody>(entity);
+            prefab["RigidBody"] = rigidbody.Serialize();
+            //prefab["RigidBodyVelocityX"] = rigidbody.velocity.x;
+            //prefab["RigidBodyVelocityY"] = rigidbody.velocity.y;
+            //prefab["RigidBodyAccelerationX"] = rigidbody.acceleration.x;
+            //prefab["RigidBodyAccelerationY"] = rigidbody.acceleration.y;
+            //prefab["RigidBodyPositionX"] = rigidbody.position.x;
+            //prefab["RigidBodyPositionY"] = rigidbody.position.y;
+            //prefab["RigidBodyBodyType"] = static_cast<int>(rigidbody.bodyType);
+            //prefab["RigidBodyGravity"] = rigidbody.gravity;
+            //prefab["RigidBodyMass"] = rigidbody.mass;
+            //prefab["RigidBodyFriction"] = rigidbody.friction;
+            //prefab["RigidBodyRestitution"] = rigidbody.restitution;
+        }
+
+        if (HasComponent<Position>(entity)) {
+            auto& pos = GetComponent<Position>(entity);
+            prefab["POS"] = pos.Serialize();
+        }
+
+        SaveJsonToFile(prefab,file_path);
+    }
+
+    Entity InsightEngine::LoadFromJson(std::string name) {
+        std::string filename = "Prefabs/" + name;
+        Entity entity = CreateEntity();
+        Json::Value loaded;
+        LoadJsonFromFile(loaded, filename);
+        if (loaded.isMember("POS")) {
+            AddComponent<Position>(entity,Position());
+            auto& pos=GetComponent<Position>(entity);
+            pos.Deserialize(loaded["POS"]);
+        }
+        return entity;
+
     }
 
 }

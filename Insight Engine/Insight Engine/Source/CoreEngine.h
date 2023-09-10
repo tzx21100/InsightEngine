@@ -5,11 +5,38 @@
 #include "Vector2D.h"
 #include "Component.h"
 #include "LayerStack.h"
+#include "GUILayer.h"
+#include "EditorLayer.h"
 #include <unordered_map>
 #include <chrono>
 
+
 namespace IS {
+
+    class Position :public IComponent {
+    public:
+        int x, y;
+        Json::Value Serialize() override {
+            Json::Value test;
+            test["px"] = x;
+            test["py"] = y;
+            return test;
+        }
+        void Deserialize(Json::Value smth) override {
+            x = smth["px"].asInt();
+            y = smth["py"].asInt();
+        }
+    };
+    class Velocity : public IComponent {
+    public:
+        int x, y;
+    };
+
+
+
+
     class InsightEngine : public MessageListener {
+        friend class EditorLayer;
     public:
 
         //override message handling this way the core engine also will recieve and send messages
@@ -134,7 +161,13 @@ namespace IS {
             return signature;
         }
 
+        //Functions to save and load entities
+        void SaveToJson(Entity entity, std::string filename);
+        Entity LoadFromJson(std::string filename);
+
+
     private:
+        unsigned frame_count = 0;
         //putting this here as a hard cap to fps, could move it to public as well
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);
         bool is_running;
@@ -144,7 +177,10 @@ namespace IS {
         std::unordered_map<std::string, float>systemDeltas;
         unsigned last_runtime;
         int targetFPS{ 60 };
+
+        GUILayer* gui_layer;
         LayerStack layers;
+
         std::chrono::duration<float> deltaTime {0.f};
 
         //get the deltaTime of every engine
@@ -159,6 +195,7 @@ namespace IS {
         std::unique_ptr<ComponentManager> mComponentManager;
         std::unique_ptr<EntityManager> mEntityManager;
         std::unique_ptr<SystemManager> mSystemManager;
+
 
     };
 

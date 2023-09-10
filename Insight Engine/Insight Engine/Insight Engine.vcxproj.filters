@@ -70,14 +70,17 @@
     <ClCompile Include="Source\Asset.cpp">
       <Filter>Engine\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LayerStack.cpp">
-      <Filter>Debug\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorLayer.cpp">
-      <Filter>Debug\Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorLayer.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LayerStack.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUILayer.cpp">
+      <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,17 +132,14 @@
     <ClInclude Include="Source\Logger.h">
       <Filter>Debug\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DebugHandler.h">
-      <Filter>Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Audio.h">
       <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input.h">
       <Filter>Engine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Engine\GameObjects</Filter>
+    <ClInclude Include="Source\JsonSaveLoad.h">
+      <Filter>Engine\Json</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entities.h">
       <Filter>Engine\ECS</Filter>
@@ -162,17 +162,23 @@
     <ClInclude Include="Source\Asset.h">
       <Filter>Engine\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Layer.h">
-      <Filter>Debug\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LayerStack.h">
-      <Filter>Debug\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EditorLayer.h">
-      <Filter>Debug\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorLayer.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Layer.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LayerStack.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assertion.h">
+      <Filter>Debug\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUILayer.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +221,6 @@
     <Filter Include="Engine\Core\Messaging&amp;Event">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\GameObjects">
-      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\ECS">
       <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
     </Filter>
@@ -235,6 +238,12 @@
     </Filter>
     <Filter Include="Debug\Profiling">
       <UniqueIdentifier>{2dc82fc5-2056-4a90-8188-d1ca8727b7b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Json">
+      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

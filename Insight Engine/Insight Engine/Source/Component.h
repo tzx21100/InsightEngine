@@ -1,17 +1,19 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_COMPONENT_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_COMPONENT_H_
 #include "Pch.h"
+#include <json/json.h>
 #include "Entities.h"
 
 namespace IS {
 
-	//parent component array this allows for destruction of entites
+	//parent component array this allows for destruction of entites of ANY types
 	class IComponentArray {
 	public:
 		virtual ~IComponentArray() {};
 		virtual void EntityDestroyed(Entity entity) = 0;//informs when an entity is destroyed
 	};
 
+	//This is a templated class so that it can be any component
 	template<typename T>
 	class ComponentArray : public IComponentArray
 	{
@@ -162,6 +164,22 @@ namespace IS {
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[typeName]);
 		}
 	};
+
+	//this is just a parent class for all components
+	class IComponent {
+	public:
+		virtual Json::Value Serialize() {
+			//I give a default intialization so that not all components have to use this
+			Json::Value empty;
+			return empty;
+		}
+
+		virtual void Deserialize(Json::Value) {
+			//This is a empty default init so that not all components have to override
+		}
+
+	};
+
 
 
 }

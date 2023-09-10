@@ -1,13 +1,13 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_LAYERSTACK_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_EDITOR_LAYERSTACK_H
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERSTACK_H
+#define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERSTACK_H
 
 #include "Layer.h"
-#include "System.h"
 #include <vector>
 
 namespace IS {
 
-    class LayerStack : ParentSystem {
+    // Encapsulate a stack (container) of layers
+    class LayerStack {
     public:
         using container = std::vector<Layer*>;
         using value_type = container::value_type;
@@ -17,8 +17,8 @@ namespace IS {
         using iterator = container::iterator;
         using const_iterator = container::const_iterator;
 
-        LayerStack();
-        ~LayerStack();
+        LayerStack() = default;
+        ~LayerStack() = default;
 
         void pushLayer(value_type layer);
         void pushOverlay(value_type overlay);
@@ -26,9 +26,8 @@ namespace IS {
         void popOverlay(value_type overlay);
         void clearStack();
 
-        void Update(float delta_time) override;
-        void HandleMessage(Message const& message) override;
-        std::string getName() override;
+        void Update(float delta_time);
+        void Render();
 
         reference operator[](size_type index);
         const_reference operator[](size_type index) const;
