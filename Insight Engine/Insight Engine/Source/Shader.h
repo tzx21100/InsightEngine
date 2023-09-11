@@ -1,7 +1,4 @@
 #pragma once
-
-// WIP
-
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include <GL/glew.h> // for access to OpenGL API declarations 

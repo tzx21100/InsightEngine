@@ -5,6 +5,9 @@
 #include <array>
 #include <string>
 
+#include "Asset.h"
+#include "../libraries/stb/include/stb_image.h"
+
 namespace IS {
     /*ISGraphics::ISModel ISGraphics::test_box_model("Box");
     ISGraphics::ISModel ISGraphics::test_points_model("Points");
@@ -12,11 +15,13 @@ namespace IS {
     ISGraphics::ISModel ISGraphics::test_circle_model("Circle");*/
 
     std::vector<ISGraphics::ISModel> ISGraphics::models;
+    GLuint ISGraphics::placeholder_tex;
 
     void ISGraphics::init() {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
+        placeholder_tex = initTextures("Assets/placeholder_background.png");
 
         initModels();
     }
@@ -117,6 +122,33 @@ namespace IS {
         models.emplace_back(test_circle_model);
     }
 
+    GLuint ISGraphics::initTextures(std::string const& image_path) {
+        int width{}, height{}, channels{};
+        unsigned char* image_data = stbi_load(image_path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+
+        if (!image_data) {
+            std::cerr << "Failed to load the texture image: " << image_path << std::endl;
+            return 0; // Return 0 to indicate failure
+        }
+
+        GLuint textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+        stbi_image_free(image_data);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        return textureID;
+    }
+
     void ISGraphics::ISModel::setupVAO() {
         struct Vertex {
             glm::vec2 position;
@@ -181,51 +213,43 @@ namespace IS {
 
     void ISGraphics::ISModel::setupShaders() {
         // vertex shader
-        std::string vtx_shdr
-        {
-            "#version 450 core\n"
-            "layout(location = 0) in vec2 aVertexPosition;\n\n"
-            "uniform mat3 uModel_to_NDC;\n\n"
-            "void main() {\n"
-            "	gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.f)), 0.0, 1.0);\n"
-            "}\n"
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2 aVertexPosition;
+            layout(location = 2) in vec2 aTexCoord;
+            out vec2 vTexCoord;
 
-            /*
-            "#version 450 core\n"
-            "layout(location = 0) in vec2 aVertexPosition;\n"
-            "layout(location = 1) in vec2 aTexCoord;\n"
-            "layout(location = 0) out vec2 vTexCoord;\n"
-            "void main()\n"
-            "{\n"
-            "	gl_Position = vec4(aVertexPosition, 0.0, 1.0);\n"
-            "	vTexCoord = aTexCoord;\n"
-            "}\n"
-            */
-        };
+            uniform mat3 uModel_to_NDC;
+
+            void main()
+            {
+                gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+                vTexCoord = aTexCoord;
+            }
+        )";
 
         // fragment shader
-        std::string frag_shdr
-        {
-            // for colors only, no texture
-            "#version 450 core\n"
-            "layout (location=0) out vec4 fFragColor;\n"
-            "uniform vec3 uColor;"
-            "void main() {\n"
-            "	fFragColor = vec4(uColor, 1.0);\n"
-            "}\n"
+        std::string frag_shdr = R"(
+            #version 450 core
 
-            // for texture
-            /*
-            "#version 450 core\n"
-            "layout (location=0) in vec2 vTexCoord;\n"
-            "layout (location=0) out vec4 fFragColor;\n"
-            "uniform sampler2D uTex2d;\n"
-            "void main()\n"
-            "{\n"
-            "	fFragColor = texture(uTex2d, vTexCoord);\n"
-            "}\n"
-            */
-        };
+            layout(location = 0) out vec4 fFragColor;
+            uniform vec3 uColor;
+            uniform sampler2D uTex2d;
+            in vec2 vTexCoord; // Input variable for texture coordinates
+            uniform int uTexture; // Flag to indicate whether to use texture or color
+
+            void main()
+            {
+                if (uTexture == 0)
+                {
+                    fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
+                }
+                else
+                {
+                    fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
+                }
+            }
+        )";
 
         // Compile and link the shaders into a shader program
         shader_program.compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
@@ -250,7 +274,7 @@ namespace IS {
         shader_program.use();
 
         glBindVertexArray(vao_ID);
-
+        
         shader_program.setUniform("uColor", color);
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
@@ -316,6 +340,18 @@ namespace IS {
         shader_program.setUniform("uColor", color); // same colour as test_model for now
         shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
 
+        // Bind the texture to the uniform sampler2D
+        if (this->name == "Box") {
+            GLuint textureUniformLoc = glGetUniformLocation(shader_program.getHandle(), "uTex2d");
+            if (textureUniformLoc != -1) {
+                glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, placeholder_tex);
+            }
+            shader_program.setUniform("uTexture", 1);
+        }
+        else shader_program.setUniform("uTexture", 0);
+
         switch (primitive_type) {
         case GL_TRIANGLES:
             glDrawElements(primitive_type, draw_count, GL_UNSIGNED_INT, NULL);
@@ -335,6 +371,7 @@ namespace IS {
             break;
         }
 
+        glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);
         shader_program.unUse();
     }

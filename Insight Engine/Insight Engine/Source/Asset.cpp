@@ -11,14 +11,17 @@ namespace IS {
        // const char* filename = "sky.jpg"; // Replace with your image file path
        // const char* filename2 = "shapes.png"; // Replace with your image file path
 
-       // ISAsset asset(filename);
+       //const char* filename = "Assets/placeholder_background.png"; // Replace with your image file path
+       //ISAsset asset(filename);
+       //Image image_manager;
+       //asset.ISImageLoad(image_manager);
+       //asset.ISImageCreate(image_manager, false);
+       //asset.ISImageSave(image_manager, "Assets/placeholder_background.png");
+       //asset.ISImageFree(image_manager);
+
        // ISAsset asset2(filename2);
-       // Image image_manager;
-       // asset.ISImageLoad(image_manager);
        // asset2.ISImageLoad(image_manager);
-       ///* asset.ISImageCreate(image_manager, false);
        // asset2.ISImageCreate(image_manager, false);*/
-       // asset.ISImageSave(image_manager, "sky.jpg");
        // asset2.ISImageSave(image_manager, "shapes.jpg");
        // asset.ISImageToGray(image_manager);
        // asset2.ISImageToGray(image_manager);
@@ -29,7 +32,7 @@ namespace IS {
        // asset.ISImageSave(image_manager, "skyse.jpg");
        // asset2.ISImageSave(image_manager, "shapesse.jpg");
        // std::cout << image_manager;
-       // asset.ISImageFree(image_manager);
+       
        // std::cout << image_manager;
        // asset2.ISImageFree(image_manager);
        // std::cout << image_manager;

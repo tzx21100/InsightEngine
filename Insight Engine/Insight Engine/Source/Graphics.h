@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "Shader.h"
+//#include "Asset.h"
 
 namespace IS {
 
@@ -14,6 +15,9 @@ namespace IS {
 		static void cleanup();
 
 		static void initModels();
+
+		static GLuint placeholder_tex;
+		static GLuint initTextures(std::string const& imagePath);
 
 		struct ISModel {
 			GLenum primitive_type{};
