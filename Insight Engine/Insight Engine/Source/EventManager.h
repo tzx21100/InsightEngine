@@ -29,4 +29,6 @@ namespace IS {
     };
 }
 
+#define BROADCAST_MESSAGE(message) ::IS::EventManager::Instance().Broadcast(message)
+
 #endif

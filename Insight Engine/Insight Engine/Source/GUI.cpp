@@ -1,5 +1,6 @@
 #include "Pch.h"
-#include "GUILayer.h"
+#include "GUI.h"
+#include "EditorLayer.h"
 
 // Dependencies
 #include <imgui.h>
@@ -9,9 +10,13 @@
 
 namespace IS {
 
-    GUILayer::GUILayer() : Layer("GUI Layer") {}
+    GUISystem::GUISystem() {}
 
-    void GUILayer::onAttach() {
+    GUISystem::~GUISystem() {
+        Terminate();
+    }
+
+    void GUISystem::Initialize() {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -37,33 +42,40 @@ namespace IS {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        IS_CORE_DEBUG("{} attached", getName());
+        PushLayer(new EditorLayer());
     }
 
-    void GUILayer::onDetach() {
+    void GUISystem::Update(float delta_time) {
+        Begin();
+        layers.Update(delta_time);
+        layers.Render();
+        End();
+    }
+
+    void GUISystem::Terminate() {
+        layers.clearStack();
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-
-        IS_CORE_DEBUG("{} detached", getName());
     }
 
-    void GUILayer::onUpdate([[maybe_unused]] float dt ) {
-
-    }
-
-    void GUILayer::onRender() {
+    void GUISystem::HandleMessage(Message const& message) {
 
     }
 
-    void GUILayer::Begin() {
+    std::string GUISystem::getName() {
+        return "GUI";
+    }
+
+    void GUISystem::Begin() {
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 
-    void GUILayer::End() {
+    void GUISystem::End() {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -77,7 +89,27 @@ namespace IS {
         }
     }
 
-    void GUILayer::SetDarkThemeColors() const {
+    void GUISystem::PushLayer(Layer* layer) {
+        layers.pushLayer(layer);
+        layer->onAttach();
+    }
+
+    void GUISystem::PushOverlay(Layer* overlay) {
+        layers.pushOverlay(overlay);
+        overlay->onAttach();
+    }
+
+    void GUISystem::PopLayer(Layer* layer) {
+        layers.popLayer(layer);
+        layer->onDetach();
+    }
+
+    void GUISystem::PopOverlay(Layer* overlay) {
+        layers.popOverlay(overlay);
+        overlay->onDetach();
+    }
+
+    void GUISystem::SetDarkThemeColors() const {
         auto& style = ImGui::GetStyle();
         auto& colors = style.Colors;
 
@@ -118,8 +150,6 @@ namespace IS {
 
         // Check Mark
         colors[ImGuiCol_CheckMark] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
-
     }
-
 
 } // end namespace IS

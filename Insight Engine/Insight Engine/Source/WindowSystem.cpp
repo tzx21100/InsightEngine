@@ -68,7 +68,7 @@ namespace IS {
         //register window closing 
         if (glfwWindowShouldClose(window)) {
             Message quit = Message(MessageType::Quit);
-            EventManager::Instance().Broadcast(quit);
+            BROADCAST_MESSAGE(quit);
         }
 
         ISGraphics::update(time);

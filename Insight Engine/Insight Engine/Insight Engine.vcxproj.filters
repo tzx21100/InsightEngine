@@ -67,17 +67,17 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EditorLayer.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LayerStack.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GUILayer.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Example System Implementation.cpp">
       <Filter>Engine\System Example</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp">
+      <Filter>Editor\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EditorLayer.cpp">
+      <Filter>Editor\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LayerStack.cpp">
+      <Filter>Editor\Layers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,18 +159,6 @@
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorLayer.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Layer.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LayerStack.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GUILayer.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Assertion.h">
       <Filter>Debug\Handler</Filter>
     </ClInclude>
@@ -185,6 +173,18 @@
     </ClInclude>
     <ClInclude Include="Source\ISContainers.h">
       <Filter>STL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h">
+      <Filter>Editor\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorLayer.h">
+      <Filter>Editor\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Layer.h">
+      <Filter>Editor\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LayerStack.h">
+      <Filter>Editor\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +250,12 @@
     </Filter>
     <Filter Include="Engine\JSON">
       <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\System">
+      <UniqueIdentifier>{cc28fd07-1305-4d66-ab4c-785d75fa5a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Layers">
+      <UniqueIdentifier>{468e4dd2-5b0a-45d8-bbe0-505ecf85fc13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

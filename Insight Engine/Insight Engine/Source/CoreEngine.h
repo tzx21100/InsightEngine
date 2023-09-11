@@ -4,8 +4,6 @@
 #include "System.h"
 #include "Vector2D.h"
 #include "Component.h"
-#include "LayerStack.h"
-#include "GUILayer.h"
 
 #include <unordered_map>
 #include <chrono>
@@ -67,12 +65,6 @@ namespace IS {
         void Update();
         void Run();
         void Exit();
-
-        // Push and pop layers
-        void PushLayer(Layer* layer);
-        void PushOverlay(Layer* overlay);
-        void PopLayer(Layer* layer);
-        void PopOverlay(Layer* overlay);
 
         //eventmanager
         void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
@@ -197,8 +189,6 @@ namespace IS {
         bool is_running;
         unsigned last_runtime;
         int targetFPS{ 60 };
-        GUILayer* gui_layer;
-        LayerStack layers;
         std::chrono::duration<float> delta_time {0.f};
 
         // Follow the singleton pattern for only one engine

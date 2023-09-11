@@ -20,9 +20,9 @@
     <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Example System Implementation.cpp" />
+    <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
-    <ClCompile Include="Source\GUILayer.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\ISArray.cpp" />
     <ClCompile Include="Source\ISString.cpp" />
@@ -52,6 +52,7 @@
     <ClInclude Include="Source\EditorLayer.h" />
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
@@ -59,7 +60,6 @@
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\WindowSystem.h" />
     <ClInclude Include="Source\Graphics.h" />
-    <ClInclude Include="Source\GUILayer.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\ISArray.h" />
     <ClInclude Include="Source\ISString.h" />

@@ -12,7 +12,7 @@ namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
-        IS_CORE_TRACE("Starting Insight Engine...");
+        IS_CORE_DEBUG("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
@@ -30,13 +30,12 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
-        for (auto& pair : mAllSystems) {
+        for (auto& [name, system] : mAllSystems) {
            // delete pair.second;
-            IS_CORE_INFO("{} terminated", pair.second->getName());
+            IS_CORE_INFO("{} terminated", name);
         }
         mAllSystems.clear();
-        layers.clearStack();
-        IS_CORE_DEBUG("Insight Engine shutdown");
+        IS_CORE_DEBUG("Insight Engine terminated");
     }
 
     void InsightEngine::Initialize() {
@@ -47,9 +46,6 @@ namespace IS {
         Subscribe(MessageType::Quit);
         //run the game
         is_running = true;
-
-        gui_layer = new GUILayer();
-        PushOverlay(gui_layer);
     }
 
     void InsightEngine::Update() {
@@ -72,19 +68,6 @@ namespace IS {
 
             if (!(frame_count % update_frequency)) {
                 mSystemDeltas[name] = timer.GetDeltaTime();
-                mSystemDeltas["Engine"] += timer.GetDeltaTime();
-            }
-        }
-
-        { // Scoped so timer will be destroyed out of scope
-            Timer timer("Layers");
-            gui_layer->Begin();
-            layers.Update(delta_time.count());
-            layers.Render();
-            gui_layer->End();
-            timer.Stop();
-            if (!(frame_count % update_frequency)) {
-                mSystemDeltas["UI"] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
@@ -115,26 +98,6 @@ namespace IS {
         EventManager::Instance().Broadcast(quit);
     }
 
-    void InsightEngine::PushLayer(Layer* layer) {
-        layers.pushLayer(layer);
-        layer->onAttach();
-    }
-
-    void InsightEngine::PushOverlay(Layer* overlay) {
-        layers.pushOverlay(overlay);
-        overlay->onAttach();
-    }
-
-    void InsightEngine::PopLayer(Layer* layer) {
-        layers.popLayer(layer);
-        layer->onDetach();
-    }
-
-    void InsightEngine::PopOverlay(Layer* overlay) {
-        layers.popOverlay(overlay);
-        overlay->onDetach();
-    }
-
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
@@ -155,18 +118,18 @@ namespace IS {
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& [key, system] : mAllSystems) {
+        for (auto& [name, system] : mAllSystems) {
             //delete pair.second;  // Delete the system object
-            IS_CORE_INFO("{} terminated", system->getName());
+            IS_CORE_INFO("{} terminated", name);
         }
         mAllSystems.clear();  // Clear the map
     }
 
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
-        for (auto const& [key, system] : mAllSystems) {
+        for (auto const& [name, system] : mAllSystems) {
             system->Initialize();
-            IS_CORE_INFO("{} initialized", system->getName());
+            IS_CORE_INFO("{} initialized", name);
         }
     }
 

@@ -17,7 +17,7 @@
 #include "Input.h"
 #include "CoreEngine.h"
 #include "WindowSystem.h"
-#include "EditorLayer.h"
+#include "GUI.h"
 #include "MemoryLeakCheck.h"
 
 using namespace IS;
@@ -82,6 +82,8 @@ int main() {
     engine.AddSystem(mySystem3, signature);
     auto mySystem4 = std::make_shared<ISAsset>();
     engine.AddSystem(mySystem4, signature);
+    auto gui = std::make_shared<GUISystem>();
+    engine.AddSystem(gui, signature);
 
 
 
@@ -94,7 +96,6 @@ int main() {
     Signature signatureValue = engine.GenerateSignature<Position, Velocity>();
     //this function will let you add the value inside
     engine.AddSystem(InputSys, signatureValue);
-    engine.PushLayer(new EditorLayer());
 
 
     // This is the end of the Initialize() part of your systems
