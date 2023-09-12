@@ -97,9 +97,9 @@ namespace IS {
 
         test_box_model.setupVAO();
         test_box_model.setupShaders();
-        test_box_model.world_position = glm::vec2(-200.f, 300.f); // somewhere top-left (initially)
+        test_box_model.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
         test_box_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
-        test_box_model.orientation.y = 30.f;
+        //test_box_model.orientation.y = 30.f;
 
         test_points_model.setupSpecialVAO();
         test_points_model.setupShaders();
@@ -113,8 +113,8 @@ namespace IS {
 
         test_circle_model.setupSpecialVAO();
         test_circle_model.setupShaders();
-        test_circle_model.scaling = glm::vec2(300.00f, 300.f);
-        test_circle_model.orientation.y = -30.f;
+        test_circle_model.scaling = glm::vec2(100.f, 100.f);
+        //test_circle_model.orientation.y = -30.f;
 
         models.emplace_back(test_box_model);
         models.emplace_back(test_points_model);
