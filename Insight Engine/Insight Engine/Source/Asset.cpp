@@ -71,7 +71,7 @@ namespace IS {
         return image;
     }
 
-    void ISAsset::ISImageLoad(Image & image_manager) {
+    uint8_t* ISAsset::ISImageLoad(Image & image_manager) {
         // Use STB image library to load the image
         unsigned char* img_data = stbi_load(filename, &width, &height, &channels, 0);
 
@@ -86,10 +86,11 @@ namespace IS {
 
             // Save the image data into the provided Image object
             image_manager.saveImageData(this->getImageData());
+            return image.data;
         }
         else {
             std::cerr << "Error loading image: " << stbi_failure_reason() << std::endl;
-            
+            return nullptr;
         }
     }
 

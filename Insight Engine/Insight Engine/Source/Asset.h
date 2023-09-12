@@ -56,7 +56,7 @@ namespace IS {
         const std::vector<ImageData>& getImages() const;
         void saveImageData(const ImageData& image_data);
         void removeImageData(const ImageData& image_data);
-
+        uint8_t* getImageData();
         friend std::ostream& operator<<(std::ostream& os, const Image& image);
 
 
@@ -79,7 +79,7 @@ namespace IS {
         
         const ImageData& getImageData() const;
 
-        void ISImageLoad(Image& image_manager);
+        uint8_t* ISImageLoad(Image& image_manager);
         void ISImageCreate(Image& image_manager, bool zeroed);
         void ISImageSave(Image& image_manager, const char* file_name);
         void ISImageFree(Image& image_manager);
