@@ -1,12 +1,12 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "Graphics.h"
+#include "Asset.h"
+
 #include <vector>
 #include <array>
 #include <string>
-
-#include "Asset.h"
-#include "../libraries/stb/include/stb_image.h"
+#include <stb_image.h>
 
 namespace IS {
     /*ISGraphics::ISModel ISGraphics::test_box_model("Box");

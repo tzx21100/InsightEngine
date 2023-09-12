@@ -7,6 +7,9 @@
     #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
     #define new DEBUG_NEW
     #define ENABLE_MEMCHECK _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
+#else
+    #define ENABLE_MEMCHECK (void(0))
 #endif
+
 
 #endif // !GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_MEMORY_LEAK_CHECK_H
