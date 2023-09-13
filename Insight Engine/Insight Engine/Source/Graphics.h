@@ -9,15 +9,6 @@
 namespace IS {
 
 	struct ISGraphics {
-		static void init();
-		static void update(float delta_time);
-		static void draw();
-		static void cleanup();
-
-		static void initModels();
-
-		static GLuint placeholder_tex;
-		static GLuint initTextures(std::string const& imagePath);
 
 		struct ISModel {
 			GLenum primitive_type{};
@@ -53,10 +44,22 @@ namespace IS {
 			glm::mat3 mdl_to_ndl_xform = glm::imat3x3{};
 		};
 
-		/*static ISModel test_box_model;
-		static ISModel test_points_model;
-		static ISModel test_lines_model;
-		static ISModel test_circle_model;*/
+		static void init();
+		static void update(float delta_time);
+		static void draw();
+		static void cleanup();
+
+		static GLuint initTextures(std::string const& imagePath);
+		static void initModels();
+		static void setupScreenFBO();
+		static void setupQuadVAO();
+		static void setupScreenShaders();
+
+		static GLuint placeholder_tex;
+		static GLuint fbo_id;
+		static GLuint tex_id;
+		static GLuint vao_id;
+		static Shader shader_pgm;
 
 		static std::vector<ISModel> models;
 	};

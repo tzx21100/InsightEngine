@@ -60,7 +60,7 @@ namespace IS {
         ImGui::DestroyContext();
     }
 
-    void GUISystem::HandleMessage(Message const& message) {
+    void GUISystem::HandleMessage([[maybe_unused]] Message const& message) {
 
     }
 

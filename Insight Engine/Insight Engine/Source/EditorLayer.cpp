@@ -23,37 +23,27 @@ namespace IS {
     void EditorLayer::onRender() {
 
         static bool show_dockspace = true;
-        static bool opt_fullscreen = false;
-        static bool opt_padding = false;
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
         
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-        if (opt_fullscreen) {
-            const ImGuiViewport* viewport = ImGui::GetMainViewport();
-            ImGui::SetNextWindowPos(viewport->WorkPos);
-            ImGui::SetNextWindowSize(viewport->WorkSize);
-            ImGui::SetNextWindowViewport(viewport->ID);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f);
-            window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-            window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-        } else {
-            dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
-        }
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->WorkPos);
+        ImGui::SetNextWindowSize(viewport->WorkSize);
+        ImGui::SetNextWindowViewport(viewport->ID);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f);
+        window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
         if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
             window_flags |= ImGuiWindowFlags_NoBackground;
 
-        if (!opt_padding)
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
-
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("EditorDockSpace", &show_dockspace, window_flags);
-        if (!opt_padding)
-            ImGui::PopStyleVar();
+        ImGui::PopStyleVar();
 
-        if (opt_fullscreen)
-            ImGui::PopStyleVar(2);
+        ImGui::PopStyleVar(2);
 
         ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
@@ -66,8 +56,6 @@ namespace IS {
             if (ImGui::BeginMenu("File")) {
                 // Disabling fullscreen would allow the window to be moved to the front of other windows,
                 // which we can't undo at the moment without finer window depth/z control.
-                ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
-                ImGui::MenuItem("Padding", NULL, &opt_padding);
                 ImGui::Separator();
                 ImGui::MenuItem("New Level");
                 ImGui::MenuItem("Open Level");
@@ -132,6 +120,7 @@ namespace IS {
         RenderInspector();
         RenderPerformanceViewer();
         RenderLogConsole();
+        RenderSceneViewer();
 
         ImGui::End();
     }
@@ -145,21 +134,37 @@ namespace IS {
             ImGui::SameLine();
             ImGui::Checkbox(("##Draw " + model.name).c_str(), &model.drawing);
             ImGui::Spacing();
-            ImGui::Text("Width ");
-            ImGui::SameLine();
-            ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.scaling.x, 2.f, 2.f * WIDTH);
-            ImGui::Spacing();
-            ImGui::Text("Height");
-            ImGui::SameLine();
-            ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.scaling.y, 1.f, 2.f * HEIGHT);
-            ImGui::Spacing();
-            ImGui::Text("Angle ");
+
+            if (model.name == "Circle") {
+                ImGui::Text("%-6s", "Radius");
+                ImGui::SameLine();
+                ImGui::SliderFloat(("##Radius " + model.name).c_str(), &model.scaling.x, 2.f, WIDTH);
+                ImGui::Spacing();
+            } else {
+                ImGui::Text("%-6s", "Width");
+                ImGui::SameLine();
+                ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.scaling.x, 2.f, WIDTH);
+                ImGui::Spacing();
+                ImGui::Text("%-6s", "Height");
+                ImGui::SameLine();
+                ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.scaling.y, 2.f, HEIGHT);
+                ImGui::Spacing();
+            }
+            ImGui::Text("%-6s", "Angle");
             ImGui::SameLine();
             ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.orientation.x, 0.f, 360.f);
             ImGui::Spacing();
-            ImGui::Text("Color ");
+            ImGui::Text("%-6s", "Speed");
             ImGui::SameLine();
-            ImGui::ColorEdit3(("##Color" + model.name).c_str(), &model.color[0]);
+            ImGui::SliderFloat(("##Speed" + model.name).c_str(), &model.orientation.y, -180.f, 180.f);
+
+            // Box uses texture so no point changing color
+            if (model.name != "Box") {
+                ImGui::Spacing();
+                ImGui::Text("%-6s", "Color");
+                ImGui::SameLine();
+                ImGui::ColorEdit3(("##Color" + model.name).c_str(), &model.color[0]);
+            }
             ImGui::Dummy({ 5.f, 5.f });
             ImGui::Separator();
             ImGui::Dummy({ 5.f, 5.f });
@@ -245,6 +250,24 @@ namespace IS {
 
         // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
         log.Draw("Log");
+    }
+
+    void EditorLayer::RenderSceneViewer() {
+        ImGui::Begin("SceneView");
+
+        const uint32_t window_width  = static_cast<uint32_t>(ImGui::GetContentRegionAvail().x);
+        const uint32_t window_height = static_cast<uint32_t>(ImGui::GetContentRegionAvail().y);
+        ImVec2 pos = ImGui::GetCursorScreenPos();
+
+        ImGui::GetWindowDrawList()->AddImage(
+            (void*)(static_cast<uintptr_t>(ISGraphics::tex_id)),
+            ImVec2(pos.x, pos.y),
+            ImVec2(pos.x + window_width, pos.y + window_height),
+            ImVec2(0, 1),
+            ImVec2(1, 0)
+        );
+
+        ImGui::End();
     }
 
 } // end namespace IS

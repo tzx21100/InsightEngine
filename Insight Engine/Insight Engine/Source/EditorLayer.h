@@ -25,6 +25,7 @@ namespace IS {
         void RenderInspector();
         void RenderPerformanceViewer();
         void RenderLogConsole();
+        void RenderSceneViewer();
 
         // From imgui demo (for reference)
         struct ExampleAppLog {

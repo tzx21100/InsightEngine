@@ -9,13 +9,13 @@
 #include <stb_image.h>
 
 namespace IS {
-    /*ISGraphics::ISModel ISGraphics::test_box_model("Box");
-    ISGraphics::ISModel ISGraphics::test_points_model("Points");
-    ISGraphics::ISModel ISGraphics::test_lines_model("Lines");
-    ISGraphics::ISModel ISGraphics::test_circle_model("Circle");*/
 
     std::vector<ISGraphics::ISModel> ISGraphics::models;
     GLuint ISGraphics::placeholder_tex;
+    GLuint ISGraphics::fbo_id;
+    GLuint ISGraphics::tex_id;
+    GLuint ISGraphics::vao_id;
+    Shader ISGraphics::shader_pgm;
 
     void ISGraphics::init() {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
@@ -24,22 +24,22 @@ namespace IS {
         placeholder_tex = initTextures("Assets/placeholder_background.png");
 
         initModels();
+        setupScreenFBO();
+        setupQuadVAO();
+        setupScreenShaders();
     }
 
     void ISGraphics::update(float delta_time) {
-        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
-
         for (ISModel& model : models) {
             model.transform(delta_time);
         }
-        /*test_box_model.transform(delta_time);
-        test_points_model.transform(delta_time);
-        test_lines_model.transform(delta_time);
-        test_circle_model.transform(delta_time);*/
     }
 
     void ISGraphics::ISModel::transform(float delta_time) {
         // xform
+        if (name == "Circle")
+            scaling.y = scaling.x;
+
         auto wrap_angle = [](float angle) {
             angle = fmod(angle, 360.f);
             if (angle < 0.f)
@@ -70,23 +70,42 @@ namespace IS {
     }
 
     void ISGraphics::draw() {
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo_id);
+        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // Render scene
         for (ISModel &model : models) {
             if (model.drawing)
                 model.drawSpecial();
         }
 
-        /*if (test_box_model.drawing)
-            test_box_model.draw();
+        // switch back to default framebuffer
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        test_circle_model.drawSpecial();
-        test_lines_model.drawSpecial();
-        test_points_model.drawSpecial();*/
+        glDisable(GL_DEPTH_TEST);
+
+        shader_pgm.use();
+        glBindTexture(GL_TEXTURE_2D, tex_id);
+        glBindVertexArray(vao_id);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glBindVertexArray(0);
+        shader_pgm.unUse();
     }
 
     void ISGraphics::cleanup() {
-        // WIP
+        for (ISModel& model : models) {
+            glDeleteVertexArrays(1, &model.vao_ID);
+        }
+
+        glDeleteFramebuffers(1, &fbo_id);
+        glDeleteVertexArrays(1, &vao_id);
+        glDeleteTextures(1, &tex_id);
+        glDeleteTextures(1, &placeholder_tex);
     }
 
     void ISGraphics::initModels() {
@@ -120,6 +139,129 @@ namespace IS {
         models.emplace_back(test_points_model);
         models.emplace_back(test_lines_model);
         models.emplace_back(test_circle_model);
+    }
+
+    void ISGraphics::setupScreenFBO() {
+        GLuint fbo_hdl, tex_hdl, rbo_hdl;
+
+        // Create framebuffer object
+        glGenFramebuffers(1, &fbo_hdl);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo_hdl);
+
+        // Create texture object (color attachment)
+        glGenTextures(1, &tex_hdl);
+        glBindTexture(GL_TEXTURE_2D, tex_hdl);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        // Allow rescaling
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_hdl, 0);
+
+        // Create renderbuffer object (depth attachment)
+        glGenRenderbuffers(1, &rbo_hdl);
+        glBindRenderbuffer(GL_RENDERBUFFER, rbo_hdl);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, WIDTH, HEIGHT);
+        glFramebufferRenderbuffer(GL_RENDERBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo_hdl);
+
+        // Validate whether framebuffer object is complete
+        GLenum fbo_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        IS_CORE_ASSERT_MESG((fbo_status == GL_FRAMEBUFFER_COMPLETE), "Framebuffer is incomplete!");
+
+        fbo_id = fbo_hdl;
+        tex_id = tex_hdl;
+    }
+
+    void ISGraphics::setupQuadVAO() {
+        struct Vertex {
+            glm::vec2 position;
+            glm::vec2 texCoord;
+        };
+
+        // Define the vertices of the quad
+        std::array<Vertex, 4> vertices{
+            Vertex{ { -1.0f, -1.0f }, { 0.0f, 1.0f } },
+            Vertex{ {  1.0f, -1.0f }, { 1.0f, 1.0f } },
+            Vertex{ { -1.0f,  1.0f }, { 0.0f, 0.0f } },
+            Vertex{ {  1.0f,  1.0f }, { 1.0f, 0.0f } }
+        };
+
+        std::array<GLuint, 6> indices{ 0, 1, 2, 2, 1, 3 };
+
+        // Generate a VAO handle to encapsulate the VBO and EBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
+
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
+
+        // Bind the VBO to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Enable the position attribute
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Enable the texture coordinate attribute
+        glEnableVertexArrayAttrib(vao_hdl, 1);
+        glVertexArrayAttribFormat(vao_hdl, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord));
+        glVertexArrayAttribBinding(vao_hdl, 1, 0);
+
+        // Set up the element buffer object (EBO) for indexing
+        GLuint ebo_hdl;
+        glCreateBuffers(1, &ebo_hdl);
+        glNamedBufferStorage(ebo_hdl, sizeof(GLuint) * indices.size(), indices.data(), 0); // GL_DYNAMIC_STORAGE_BIT removed
+
+        // Bind the EBO to the VAO
+        glVertexArrayElementBuffer(vao_hdl, ebo_hdl);
+
+        // Unbind the VAO (not necessary to unbind buffers individually)
+        glBindVertexArray(0);
+
+        // Store the VAO handle in the GLPbo object
+        vao_id = vao_hdl;
+    }
+
+    void ISGraphics::setupScreenShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout (location = 0) in vec2 aVertexPosition;
+            layout (location = 1) in vec2 aTexCoord;
+            layout (location = 0) out vec2 vTexCoord;
+
+            void main()
+            {
+                gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+                vTexCoord = aTexCoord;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+
+            layout (location = 0) in vec2 vTexCoord;
+            layout (location = 0) out vec4 fFragColor;
+            uniform sampler2D uScreenTex;
+            
+            void main() {
+                fFragColor = texture(uScreenTex, vTexCoord);
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        shader_pgm.compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        shader_pgm.compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        shader_pgm.link();
+        shader_pgm.validate();
+
+        // Check if the shader program compilation and linking was successful
+        IS_CORE_ASSERT_MESG(GL_TRUE == shader_pgm.isLinked(), "Unable to compile/link/validate shader programs {}", shader_pgm.getLog());
+
     }
 
     GLuint ISGraphics::initTextures(std::string const& image_path) {
@@ -157,10 +299,10 @@ namespace IS {
 
         // Define the vertices of the quad
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 0.0f)},
-            Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 1.0f)}
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
+            Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
+            Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, .0f)}
         };
 
 
@@ -256,10 +398,6 @@ namespace IS {
         shader_program.compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
         shader_program.link();
         shader_program.validate();
-
-        // Print the active attribute and uniform information
-        /*shader_program.PrintActiveAttribs();
-        shader_program.PrintActiveUniforms();*/
 
         // Check if the shader program compilation and linking was successful
         if (GL_FALSE == shader_program.isLinked())
