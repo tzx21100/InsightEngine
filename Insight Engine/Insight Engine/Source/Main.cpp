@@ -23,7 +23,7 @@
 using namespace IS;
 
 int main() {
-    //ENABLE_MEMCHECK; its returning an error
+    ENABLE_MEMCHECK;
 
     // Initialize log
     Log::init();
