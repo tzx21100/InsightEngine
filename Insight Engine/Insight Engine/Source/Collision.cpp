@@ -4,13 +4,11 @@
 namespace IS
 {
 
-	/*bool CollisionIntersection_RectRect(const Collider& collider1, const Collider& collider2, const float& dt) {
-
-	}*/
+	// FOR BOX
 
 	// AABB Collision for static and dynamic, return true if they colliding
-	bool CollisionIntersection_RectRect(const AABB& aabb1, const Vector2D& vel1,
-		const AABB& aabb2, const Vector2D& vel2, const float& dt)
+	bool CollisionIntersection_RectRect(const Box& aabb1, const Vector2D& vel1,
+		const Box& aabb2, const Vector2D& vel2, const float& dt)
 	{
 		/*
 		Implement the collision intersection over here.
@@ -118,6 +116,95 @@ namespace IS
 		}
 		return 0;
 	}
+
+	bool Intersection_Polygons(std::vector<Vector2D> trans_verticesA, std::vector<Vector2D> trans_verticesB, Vector2D& normal, float& depth) {
+
+		normal = Vector2D();
+		depth = std::numeric_limits<float>::max();
+		// check for object A
+		for (int i = 0; i < trans_verticesA.size(); i++) {
+			Vector2D va = trans_verticesA[i];
+			Vector2D vb = trans_verticesB[(i + 1) % trans_verticesA.size()]; // modules by the size of the vector to avoid going out of the range
+
+			Vector2D edge = vb - va; // getting the vector 
+			Vector2D axis(-edge.y, edge.x); // getting the left normal
+			Vector2D axisnormalized;
+			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
+
+			// init min & max for Object A & B
+			float minA = std::numeric_limits<float>::max();
+			float maxA = std::numeric_limits<float>::min();
+			float minB = std::numeric_limits<float>::max();
+			float maxB = std::numeric_limits<float>::min();
+
+			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
+			ProjectVertices(trans_verticesB, axisnormalized, minB, maxB);
+
+			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between
+				return false;
+			}
+
+			// calculate the depth of intersection on normal
+			float intersectDepth = std::min(maxB - minA, maxA - minB);
+
+			if (intersectDepth < depth) // updating the depth and normal
+			{
+				depth = intersectDepth;
+				normal = axis;
+			}
+		}
+
+		// check for object B
+		for (int i = 0; i < trans_verticesB.size(); i++) {
+			Vector2D va = trans_verticesB[i];
+			Vector2D vb = trans_verticesB[(i + 1) % trans_verticesB.size()]; // modules by the size of the vector to avoid going out of the range
+
+			Vector2D edge = vb - va; // getting the vector 
+			Vector2D axis(-edge.y, edge.x); // getting the left normal
+			Vector2D axisnormalized;
+			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
+
+			// init min & max for Object A & B
+			float minA = std::numeric_limits<float>::max();
+			float maxA = std::numeric_limits<float>::min();
+			float minB = std::numeric_limits<float>::max();
+			float maxB = std::numeric_limits<float>::min();
+
+			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
+			ProjectVertices(trans_verticesB, axisnormalized, minB, maxB);
+
+			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between
+				return false;
+			}
+
+			// calculate the depth of intersection on normal
+			float intersectDepth = std::min(maxB - minA, maxA - minB);
+
+			if (intersectDepth < depth) // updating the depth and normal
+			{
+				depth = intersectDepth;
+				normal = axis;
+			}
+		}
+
+		return true;
+	}
+
+	void ProjectVertices(std::vector<Vector2D> vertices, Vector2D normal, float& min, float& max)
+	{
+
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			Vector2D v = vertices[i];
+			float proj = ISVector2DDotProduct(v, normal);
+
+			if (proj < min) { min = proj; }
+			if (proj > max) { max = proj; }
+		}
+	}
+
+
+	// FOR CIRCLE
 
 	//line segment reference, p0 - start, p1 - end
 	void BuildLineSegment(Line& lineSegment, const Vector2D& p0, const Vector2D& p1) {

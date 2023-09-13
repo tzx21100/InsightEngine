@@ -33,6 +33,12 @@ namespace IS {
         //window
         GLFWwindow* window;
 
+        //this is to instatiate only ONE engine
+        static InputManager& Instance() {
+            static InputManager instance;
+            return instance;
+        }
+
     private:
         std::unordered_set<int> pressed_keys;
         std::unordered_set<int> released_keys;

@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Pch.h"
+#include "Component.h"
 
 namespace IS
 {
-    struct AABB
+    struct Box
     {
         Vector2D min;
         Vector2D max;
@@ -24,27 +25,24 @@ namespace IS
         Vector2D normal;
     };
 
-    enum class ColliderType {AABB, Circle, Line};
+    enum class Shape {Box, Circle, Line};
 
-    /*union Collider
-    {
-        AABB aabb;
-        Circle circle;
-        Line line;
-    };*/
-
-    struct Collider {
-        ColliderType colliderType;
-        std::variant<AABB, Circle, Line> myCollider;
+    class Collider : public IComponent {
+    public:
+        //Shape colliderType;
+        std::variant<Box, Circle, Line> myCollider;
     };
 
-
+    // FOR BOX 
 	// AABB Collision for static and dynamic, return true if they colliding
-	bool CollisionIntersection_RectRect(const AABB& aabb1, const Vector2D& vel1,
-		const AABB& aabb2, const Vector2D& vel2, const float& dt);
-    // AABB Collision for static and dynamic, return true if they colliding
-    //bool CollisionIntersection_RectRect(const Collider& collider1, const Collider& collider2, const float& dt);
+	bool CollisionIntersection_RectRect(const Box& aabb1, const Vector2D& vel1,
+		const Box& aabb2, const Vector2D& vel2, const float& dt);
 
+    bool Intersection_Polygons(std::vector<Vector2D> trans_verticesA, std::vector<Vector2D> trans_verticesB, Vector2D& normal, float& depth);
+
+    void ProjectVertices(std::vector<Vector2D> vertices, Vector2D normal, float& min, float& max);
+
+    // FOR CIRCLE
     //line segment reference, p0 - start, p1 - end
     void BuildLineSegment(Line& lineSegment, const Vector2D& p0, const Vector2D& p1);
 
