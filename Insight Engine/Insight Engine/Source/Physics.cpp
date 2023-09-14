@@ -8,7 +8,7 @@ namespace IS
 	Physics::Physics() 
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
-		PHYSICS = this;
+		//PHYSICS = this;
 		//Gravity = Vector2D(0, -400);
 		//Gravity = 9.8f;
 		//MaxVelocity = 1000;
@@ -19,7 +19,7 @@ namespace IS
 	{
 		// Initialization logic here
 		//RegisterComponent(Body);
-		InsightEngine::Instance().RegisterComponent<RigidBody>();
+		//InsightEngine::Instance().RegisterComponent<RigidBody>();
 		InsightEngine::Instance().RegisterComponent<Collider>();
 		std::cout << "PhysicsSystem initialized." << std::endl;
 		//The system can also subscribe to the message type it wants here
