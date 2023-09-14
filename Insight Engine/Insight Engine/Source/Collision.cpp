@@ -187,6 +187,8 @@ namespace IS
 			}
 		}
 
+		//calculate norml
+
 		return true;
 	}
 
@@ -205,6 +207,17 @@ namespace IS
 
 
 	// FOR CIRCLE
+	bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB) {
+		float distance = ISVector2DDistance(centerA, centerB);
+		float totalRadius = radiusA + radiusB;
+
+		if (distance >= totalRadius) {
+			return false;
+		}
+		//calculate normal to be done
+
+		return true;
+	}
 
 	//line segment reference, p0 - start, p1 - end
 	void BuildLineSegment(Line& lineSegment, const Vector2D& p0, const Vector2D& p1) {

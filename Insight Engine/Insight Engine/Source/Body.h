@@ -48,7 +48,7 @@ namespace IS
 
         // default and copy constructor
         RigidBody();
-        RigidBody(Vector2D position, BodyType bodyType, float density, float mass, float restitution, float area,
+        RigidBody(Vector2D position, BodyType bodyType, float mass, float restitution,
             float radius, Vector2D dimension,  Shape bodyShape);
 
         // getting all the vertices from a box
@@ -58,11 +58,14 @@ namespace IS
         // calculting the updated vertices by sin & cos
         Vector2D Transform(Vector2D v, BodyTransform transform);
         // move the game object
-        void Move(Vector2D amount);
+        void Move(Vector2D val);
         // rotate the game object
-        void Rotate(float amount);
+        void Rotate(float val);
+        // adding force
+        void AddForce(Vector2D val);
 
-        bool CreateBoxBody(float width, float height, Vector2D position, float density, float restitution);
+        void CreateBoxBody(float width, float height, float mass, float restitution);
+        void CreateCircleBody(float radius, float mass, float restitution);
 
         Json::Value Serialize() override {
             Json::Value prefab;

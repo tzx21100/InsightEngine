@@ -43,6 +43,8 @@ namespace IS
     void ProjectVertices(std::vector<Vector2D> vertices, Vector2D normal, float& min, float& max);
 
     // FOR CIRCLE
+    bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB);
+
     //line segment reference, p0 - start, p1 - end
     void BuildLineSegment(Line& lineSegment, const Vector2D& p0, const Vector2D& p1);
 

@@ -84,6 +84,10 @@ int main() {
     engine.AddSystem(mySystem4, signature);
     auto gui = std::make_shared<GUISystem>();
     engine.AddSystem(gui, signature);
+    auto physicsSystem = std::make_shared<Physics>();
+    signature = engine.GenerateSignature<RigidBody>();
+    engine.AddSystem(physicsSystem, signature);
+    //Signature rigidbody;
 
 
 
