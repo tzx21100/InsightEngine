@@ -3,6 +3,18 @@
 
 
 namespace IS {
+	Transform::Transform() {
+		this->world_position = glm::vec2();
+		this->orientation = glm::vec2();
+		this->scaling = glm::vec2();
+	}
+
+	Transform::Transform(glm::vec2 world_position, glm::vec2 orientation, glm::vec2 scaling) {
+		this->world_position = world_position;
+		this->orientation = orientation;
+		this->scaling = scaling;
+	}
+
 	Vector2D Transform::getWorldPosition() {
 		return Vector2D(world_position.x, world_position.y);
 	}

@@ -28,5 +28,7 @@ namespace IS
     //void collisionCallUpdate(Collider collider, float dt, RigidBody rigidBody, auto const& entity, std::set<Entity> mEntities);
     void collisionCallUpdate(RigidBody rigidBody, float dt,  auto const& entity, std::set<Entity> mEntities);
 
+    void ResolveCollision(RigidBody bodyA, RigidBody bodyB, Vector2D normal, float depth);
+
     extern Physics* PHYSICS;
 }
