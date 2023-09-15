@@ -29,7 +29,6 @@ namespace IS
 	void Physics::Update(float dt)
 	{
 		//const float TimeStep = 1.0f / 60.0f;
-
 		//loops through all Entities registered by the System this mEntities map is written in the parent class
 		for (auto const& entity : mEntities) {
 
@@ -65,8 +64,8 @@ namespace IS
 		case IS::BodyType::Dynamic:
 			//apply force here
 			//setDynamicObject(body)
-			body.velocity.y += gravity.y * dt;
-			body.position = body.position + body.velocity * dt;
+			//body.velocity.y += gravity.y * dt;
+			//body.position = body.position + body.velocity * dt;
 			break;
 		case IS::BodyType::Kinematic:
 			return;
@@ -148,6 +147,26 @@ namespace IS
 		default:
 			break;
 		}
+	}
+
+	void ResolveCollision(RigidBody bodyA, RigidBody bodyB, Vector2D normal, float depth)
+	{
+		Vector2D relativeVelocity = bodyB.velocity - bodyA.velocity;
+
+		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f) //
+		{
+			return;
+		}
+
+		float e = std::min(bodyA.restitution, bodyB.restitution);
+
+		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
+		j /= bodyA.InvMass + bodyB.InvMass;
+
+		Vector2D impulse = j * normal;
+
+		bodyA.velocity -= impulse * bodyA.InvMass;
+		bodyB.velocity += impulse * bodyB.InvMass;
 	}
 
 

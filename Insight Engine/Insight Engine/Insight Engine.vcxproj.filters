@@ -189,6 +189,9 @@
     <ClInclude Include="Source\Transform.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

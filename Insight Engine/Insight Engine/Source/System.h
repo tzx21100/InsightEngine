@@ -23,9 +23,13 @@ namespace IS {
         //sendMessage will use the InsightEngine to broadcast all the messages to everyone
         void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
-        virtual void Update(float time) = 0;
-        virtual std::string getName() = 0;
         virtual void Initialize() {};
+        virtual std::string getName() = 0;
+        virtual void Update(float time) = 0;
+        virtual void Draw() {};
+
+        
+        
         virtual ~ParentSystem(){}
 
         //this is for ECS each system will have their own entities
