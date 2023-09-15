@@ -14,8 +14,8 @@ namespace IS {
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
 
-        glm::mat3 world_to_NDC_xform = { (model_TRS.scaling.x / 2.f) * cos_angle, (model_TRS.scaling.x / 2.f) * -sin_angle, 0,   // column 1
-                                         (model_TRS.scaling.y / 2.f) * sin_angle, (model_TRS.scaling.y / 2.f) * cos_angle,  0,   // column 2
+        glm::mat3 world_to_NDC_xform = { (model_TRS.scaling.x) * cos_angle, (model_TRS.scaling.x) * -sin_angle, 0,   // column 1
+                                         (model_TRS.scaling.y) * sin_angle, (model_TRS.scaling.y) * cos_angle,  0,   // column 2
                                          model_TRS.world_position.x,              model_TRS.world_position.y,               1 }; // column 3
 
 
@@ -69,7 +69,6 @@ namespace IS {
             glDrawArrays(primitive_type, 0, mesh_used.draw_count);
             break;
         }
-        std::cout << "error 2: " << glGetError() << std::endl;
 
         glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);

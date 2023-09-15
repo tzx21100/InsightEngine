@@ -24,6 +24,10 @@ namespace IS {
         Sprite() {
             name = "Box";
             primitive_type = GL_TRIANGLES;
+            PRNG prng;
+            for (int i{}; i < 3; ++i) {
+                color[i] = prng.generate();
+            }
         }
 
         Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {

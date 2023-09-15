@@ -67,18 +67,21 @@ namespace IS {
 
 
 
-        //for (auto& entity : mEntities) {
-        //    auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        //    //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-        //    if (sprite.primitive_type == GL_TRIANGLES) {
-        //        //ISModel ModelCopy = models[static_cast<int>(ModelType::Box)];
-        //        //set the model copy's transform
-        //        //ModelCopy.draw();
-        //        sprite.drawSpecial(quad_mesh, shader_pgm, placeholder_tex);
-        //    }
-        //}
+        for (auto& entity : mEntities) {
+            auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
+            //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            if (sprite.primitive_type == GL_TRIANGLES) {
+                sprite.transform(1 / 60);
+                //ISModel ModelCopy = models[static_cast<int>(ModelType::Box)];
+                //set the model copy's transform
+                //ModelCopy.draw();
+                sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
+                sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+                sprite.drawSpecial(quad_mesh, mesh_shader_pgm);
+            }
+        }
 
-        for (Sprite &sprite : sprites) {
+        //for (Sprite &sprite : sprites) {
             //if (sprite.drawing) {
             //    Mesh meshUsed{};
             //    switch (sprite.primitive_type) {
@@ -97,10 +100,10 @@ namespace IS {
             //    }
             //    //sprite.drawSpecial(meshUsed, mesh_shader_pgm);
             //} 
-        }
+        //}
         //std::cout << "pri type: " << sprites[0].primitive_type << "draw cnt: " << quad_mesh.draw_count << std::endl;
 
-        sprites[0].drawSpecial(quad_mesh, mesh_shader_pgm);
+        //sprites[0].drawSpecial(quad_mesh, mesh_shader_pgm, placeholder_tex);
 
         // switch back to default framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
