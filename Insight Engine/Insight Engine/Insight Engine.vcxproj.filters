@@ -79,6 +79,12 @@
     <ClCompile Include="Source\Transform.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -190,6 +196,9 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sprite.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>

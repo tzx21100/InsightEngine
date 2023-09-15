@@ -117,16 +117,17 @@ namespace IS
 		return 0;
 	}
 
-	bool Intersection_Polygons(std::vector<Vector2D> trans_verticesA, std::vector<Vector2D> trans_verticesB, Vector2D& normal, float& depth) {
+	bool Intersection_Polygons(std::vector<Vector2D> trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
 
+		// init
 		normal = Vector2D();
 		depth = std::numeric_limits<float>::max();
-		// check for object A
+		// check seperating vertices on object A
 		for (int i = 0; i < trans_verticesA.size(); i++) {
 			Vector2D va = trans_verticesA[i];
 			Vector2D vb = trans_verticesB[(i + 1) % trans_verticesA.size()]; // modules by the size of the vector to avoid going out of the range
 
-			Vector2D edge = vb - va; // getting the vector 
+			Vector2D edge = vb - va; // getting the vector of the side
 			Vector2D axis(-edge.y, edge.x); // getting the left normal
 			Vector2D axisnormalized;
 			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
@@ -137,10 +138,11 @@ namespace IS
 			float minB = std::numeric_limits<float>::max();
 			float maxB = std::numeric_limits<float>::min();
 
+			// projecting all the vertices onto the normal
 			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
 			ProjectVertices(trans_verticesB, axisnormalized, minB, maxB);
 
-			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between
+			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between, return false
 				return false;
 			}
 
@@ -150,16 +152,16 @@ namespace IS
 			if (intersectDepth < depth) // updating the depth and normal
 			{
 				depth = intersectDepth;
-				normal = axis;
+				normal = axisnormalized;
 			}
 		}
 
-		// check for object B
+		// check seperating vertices on object B
 		for (int i = 0; i < trans_verticesB.size(); i++) {
 			Vector2D va = trans_verticesB[i];
 			Vector2D vb = trans_verticesB[(i + 1) % trans_verticesB.size()]; // modules by the size of the vector to avoid going out of the range
 
-			Vector2D edge = vb - va; // getting the vector 
+			Vector2D edge = vb - va; // getting the vector of the side
 			Vector2D axis(-edge.y, edge.x); // getting the left normal
 			Vector2D axisnormalized;
 			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
@@ -170,10 +172,11 @@ namespace IS
 			float minB = std::numeric_limits<float>::max();
 			float maxB = std::numeric_limits<float>::min();
 
+			// projecting all the vertices onto the normal
 			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
 			ProjectVertices(trans_verticesB, axisnormalized, minB, maxB);
 
-			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between
+			if (minA >= maxB || minB >= maxA) { // if not interest or leaving gaps between, return false
 				return false;
 			}
 
@@ -183,11 +186,19 @@ namespace IS
 			if (intersectDepth < depth) // updating the depth and normal
 			{
 				depth = intersectDepth;
-				normal = axis;
+				normal = axisnormalized;
 			}
 		}
 
 		//calculate norml
+		Vector2D direction = centerB - centerA;
+
+		// check the direction of direction vector and normal vector, make sure they moving to same direction for collision response
+		if (ISVector2DDotProduct(direction, normal) < 0.f) // => bigger than 90 degree, means moving apart (different direction)
+		{
+			// reverse the direction of normal
+			normal = -normal;
+		}
 
 		return true;
 	}
@@ -198,7 +209,7 @@ namespace IS
 		for (int i = 0; i < vertices.size(); i++)
 		{
 			Vector2D v = vertices[i];
-			float proj = ISVector2DDotProduct(v, normal);
+			float proj = ISVector2DDotProduct(v, normal); // dot product for projecting vertices onto normal
 
 			if (proj < min) { min = proj; }
 			if (proj > max) { max = proj; }

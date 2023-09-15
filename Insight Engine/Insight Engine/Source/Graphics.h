@@ -4,65 +4,68 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "Shader.h"
-#include "Vector2D.h"
 #include "Transform.h"
+#include "Sprite.h"
+#include "Mesh.h"
 
 //#include "Asset.h"
 
 namespace IS {
-
-
 	class ISGraphics : public ParentSystem {
 	public:
-		struct ISModel {
-			Transform model_TRS{};
 
-			GLenum primitive_type{};
-			Shader shader_program{};
-			GLuint vao_ID{};
-			GLuint draw_count{};
+		//struct Mesh {
+		//	GLuint vao_ID{};
+		//	GLuint draw_count{};
 
-			// imgui
-			std::string name;
-			glm::vec3 color{};
-			bool drawing{ true };
+		//	void setupVAO();
+		//	void setupSpecialVAO();
+		//};
 
-			ISModel(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
-				PRNG prng;
-				for (int i{}; i < 3; ++i) {
-					color[i] = prng.generate();
-				}
-			}
+		//struct ISModel {
+		//	Transform model_TRS{};
 
-			void setupVAO();
-			void setupShaders();
-			void transform(float delta_time);
-			void draw();
+		//	
+		//	Shader shader_program{};
+		//	GLuint vao_ID{};
+		//	GLuint draw_count{};
 
-			// for M1 rubrics showcase
-			void setupSpecialVAO();
-			void drawSpecial();
-		};
+		//	// imgui
+		//	std::string name;
+		//	glm::vec3 color{};
+		//	bool drawing{ true };
+
+		//	ISModel(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
+		//		PRNG prng;
+		//		for (int i{}; i < 3; ++i) {
+		//			color[i] = prng.generate();
+		//		}
+		//	}
+
+		//	void setupVAO();
+		//	void setupShaders();
+		//	void transform(float delta_time);
+		//	void draw();
+
+		//	// for M1 rubrics showcase
+		//	void setupSpecialVAO();
+		//	void drawSpecial();
+		//};
 
 		//override parent
-		std::string getName() override;
 		void Initialize() override;
 		void Update(float deltaTime) override;
+		std::string getName() override;
+		void HandleMessage(const Message& msg) override;
 		void Draw() override;
 		
-
-		
-		void HandleMessage(const Message& message) override;
-
-		static void init();
-		static void update(float delta_time);
-		static void draw();
 		static void cleanup();
 
 		static GLuint initTextures(std::string const& imagePath);
-		static void initModels();
+		static void initSprites();
 		static void setupScreenFBO();
-		static void setupQuadVAO();
+		//static void setupQuadVAO();
+		static void setupShaders();
 		static void setupScreenShaders();
 
 		static GLuint placeholder_tex;
@@ -70,19 +73,20 @@ namespace IS {
 		static GLuint tex_id;
 		static GLuint vao_id;
 		static Shader shader_pgm;
+		static Shader mesh_shader_pgm;
+		static Mesh quad_mesh;
 
-		static std::vector<ISModel> models;
+		static std::vector<Sprite> sprites;
 	};
 
 	//enums added
 
-	enum class ModelType {
+	/*enum class ModelType {
 		Box,
 		Point,
 		Line,
 		Circle
-
-	};
+	};*/
 
 
 } // end namespace IS

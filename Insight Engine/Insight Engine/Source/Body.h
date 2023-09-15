@@ -28,7 +28,7 @@ namespace IS
     class RigidBody : public IComponent{
         public:
         Vector2D velocity;
-        Transform bodyTransform;
+        Transform bodyTransform; // position, orientation, scaling
         //Vector2D position;
         BodyType bodyType;
         //float rotation;
@@ -42,8 +42,8 @@ namespace IS
         //float radius; // for circle
         //Vector2D dimension; // for box's width and height
         Shape bodyShape;
-        std::vector<Vector2D> vertices; // vertices for polygon
-        std::vector<Vector2D> transformedVertices;
+        std::vector<Vector2D> vertices; // vertices for polygon (based on origin)
+        std::vector<Vector2D> transformedVertices; // vertices for polygon after transfromation
         bool transformUpdateRequired; // default false, for calculating the transformed vertices when this is true
 
         // default and copy constructor
@@ -51,9 +51,9 @@ namespace IS
         RigidBody(glm::vec2 position, BodyType bodyType, float mass, float restitution,
             float width, float height,  Shape bodyShape);
 
-        // getting all the vertices from a box
+        // calculate all the vertices for a box
         std::vector<Vector2D> CreateBoxVertices(float width, float height);
-        // getting the updated transformed vertices once object moving
+        // calculate all the updated transformed vertices based center position
         std::vector<Vector2D> GetTransformedVertices();
         // calculting the updated vertices by sin & cos
         //Vector2D Transform(Vector2D v, BodyTransform transform);
@@ -67,8 +67,9 @@ namespace IS
         void Rotate(float val);
         // adding force
         void AddForce(Vector2D val);
-
+        // create box rigidbody
         void CreateBoxBody(float width, float height, float mass, float restitution);
+        // create circle rigidbody
         void CreateCircleBody(float radius, float mass, float restitution);
 
         Json::Value Serialize() override {

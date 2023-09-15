@@ -116,42 +116,42 @@ namespace IS {
     void EditorLayer::RenderInspectorPanel() {
         ImGui::Begin("Inspector");
 
-        for (auto& model : ISGraphics::models) {
+        for (auto& sprite : ISGraphics::sprites) {
 
-            ImGui::Text("%-6s", model.name.c_str());
+            ImGui::Text("%-6s", sprite.name.c_str());
             ImGui::SameLine();
-            ImGui::Checkbox(("##Draw " + model.name).c_str(), &model.drawing);
+            ImGui::Checkbox(("##Draw " + sprite.name).c_str(), &sprite.drawing);
             ImGui::Spacing();
 
-            if (model.name == "Circle") {
+            if (sprite.name == "Circle") {
                 ImGui::Text("%-6s", "Radius");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Radius " + model.name).c_str(), &model.model_TRS.scaling.x, 2.f, WIDTH);
+                ImGui::SliderFloat(("##Radius " + sprite.name).c_str(), &sprite.model_TRS.scaling.x, 2.f, WIDTH);
                 ImGui::Spacing();
             } else {
                 ImGui::Text("%-6s", "Width");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.model_TRS.scaling.x, 2.f, WIDTH);
+                ImGui::SliderFloat(("##Width" + sprite.name).c_str(), &sprite.model_TRS.scaling.x, 2.f, WIDTH);
                 ImGui::Spacing();
                 ImGui::Text("%-6s", "Height");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.model_TRS.scaling.y, 2.f, HEIGHT);
+                ImGui::SliderFloat(("##Height" + sprite.name).c_str(), &sprite.model_TRS.scaling.y, 2.f, HEIGHT);
                 ImGui::Spacing();
             }
             ImGui::Text("%-6s", "Angle");
             ImGui::SameLine();
-            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.model_TRS.orientation.x, 0.f, 360.f);
+            ImGui::SliderFloat(("##Angle" + sprite.name).c_str(), &sprite.model_TRS.orientation.x, 0.f, 360.f);
             ImGui::Spacing();
             ImGui::Text("%-6s", "Speed");
             ImGui::SameLine();
-            ImGui::SliderFloat(("##Speed" + model.name).c_str(), &model.model_TRS.orientation.y, -180.f, 180.f);
+            ImGui::SliderFloat(("##Speed" + sprite.name).c_str(), &sprite.model_TRS.orientation.y, -180.f, 180.f);
 
             // Box uses texture so no point changing color
-            if (model.name != "Box") {
+            if (sprite.name != "Box") {
                 ImGui::Spacing();
                 ImGui::Text("%-6s", "Color");
                 ImGui::SameLine();
-                ImGui::ColorEdit3(("##Color" + model.name).c_str(), &model.color[0]);
+                ImGui::ColorEdit3(("##Color" + sprite.name).c_str(), &sprite.color[0]);
             }
             ImGui::Dummy({ 5.f, 5.f });
             ImGui::Separator();

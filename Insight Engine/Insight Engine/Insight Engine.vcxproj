@@ -20,6 +20,8 @@
     <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
@@ -57,6 +59,7 @@
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Transform.h" />
