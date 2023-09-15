@@ -27,7 +27,7 @@ namespace IS {
 	//create a class to listen to messages
     class MessageListener {
     public:
-	    virtual void HandleMessage(const Message& message) = 0;
+	    virtual void HandleMessage(const Message& message) {};
 	    virtual ~MessageListener() {}
 
     };

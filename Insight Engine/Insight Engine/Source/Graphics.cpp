@@ -32,13 +32,19 @@ namespace IS {
         //setupQuadVAO();
         setupScreenShaders();
         setupShaders();
+
+
+
+
     }
 
     void ISGraphics::Update(float delta_time) {
+
+
         for (Sprite& sprite : sprites) {
             sprite.transform(delta_time);
         }
-        Draw();
+        Draw(delta_time);
     }
 
     std::string ISGraphics::getName() { return "Graphics"; };
@@ -49,7 +55,7 @@ namespace IS {
         }
     }
 
-    void ISGraphics::Draw() {
+    void ISGraphics::Draw(float delta_time) {
         glBindFramebuffer(GL_FRAMEBUFFER, fbo_id);
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
@@ -68,15 +74,17 @@ namespace IS {
 
 
         for (auto& entity : mEntities) {
+            if (InsightEngine::Instance().HasComponent<Sprite>(entity));
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
-            //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            sprite.followTransform(trans);
             if (sprite.primitive_type == GL_TRIANGLES) {
-                sprite.transform(1 / 60);
+                sprite.transform(delta_time);
                 //ISModel ModelCopy = models[static_cast<int>(ModelType::Box)];
                 //set the model copy's transform
                 //ModelCopy.draw();
-                sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
-                sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+                //sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
+                //sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
                 sprite.drawSpecial(quad_mesh, mesh_shader_pgm);
             }
         }

@@ -13,6 +13,16 @@ and check for keyboard & mouse inputs.
 
 namespace IS {
 
+    class InputAffector  {
+
+        /*this is just an empty component
+        * all the entities that have this will be called
+         */
+
+    };
+
+
+
     class InputManager :public ParentSystem{
     public:
         //override parent

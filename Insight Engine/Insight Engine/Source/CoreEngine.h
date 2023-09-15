@@ -11,27 +11,6 @@
 
 namespace IS {
 
-    class Position :public IComponent {
-    public:
-        int x, y;
-        Json::Value Serialize() override {
-            Json::Value test;
-            test["px"] = x;
-            test["py"] = y;
-            return test;
-        }
-        void Deserialize(Json::Value smth) override {
-            x = smth["px"].asInt();
-            y = smth["py"].asInt();
-        }
-    };
-    class Velocity : public IComponent {
-    public:
-        int x, y;
-    };
-
-
-
 
     class InsightEngine : public MessageListener {
     public:

@@ -28,6 +28,10 @@ namespace IS {
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }
+            //give it a default size of 1 by 1
+            setSpriteSize(1, 1);
+            setWorldPos(0, 0);
+
         }
 
         Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
@@ -37,6 +41,12 @@ namespace IS {
             }
         }
         void transform(float delta_time);
+        //either manually set or follow transforms
+        void followTransform(Transform trans) { model_TRS = trans; }
+        void setWorldPos(Transform trans) { model_TRS.world_position = trans.world_position;}
+        void setWorldPos(float x, float y) { model_TRS.world_position = glm::vec2(x, y); }
+        void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
+        void setSpriteSize(float width, float height) { model_TRS.scaling = glm::vec2(width, height); }
         // for M1 rubrics showcase
         void drawSpecial(Mesh mesh_used, Shader shader, GLuint texture_id = 0);
     };

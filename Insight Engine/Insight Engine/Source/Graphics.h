@@ -57,7 +57,7 @@ namespace IS {
 		void Update(float deltaTime) override;
 		std::string getName() override;
 		void HandleMessage(const Message& msg) override;
-		void Draw() override;
+		void Draw(float delta) override;
 		
 		static void cleanup();
 

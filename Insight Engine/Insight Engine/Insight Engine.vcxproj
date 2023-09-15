@@ -55,6 +55,7 @@
     <ClInclude Include="Source\EditorLayer.h" />
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\GameLoop.h" />
     <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />

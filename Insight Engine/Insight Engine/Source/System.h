@@ -24,9 +24,9 @@ namespace IS {
         void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
         virtual void Initialize() {};
-        virtual std::string getName() = 0;
-        virtual void Update(float time) = 0;
-        virtual void Draw() {};
+        virtual std::string getName() { return ""; };
+        virtual void Update(float time) {};
+        virtual void Draw(float delta) {};
 
         
         
@@ -74,7 +74,7 @@ namespace IS {
                 auto const& systemSignature = mSignatures[type];
 
                 //Any component that matches will be added to the system
-                if ((entitySignature & systemSignature).any()) {
+                if ((entitySignature & systemSignature)==systemSignature) {
                     system->mEntities.insert(entity);
                 }
                 // Remove thoese that no longer match (even though we have an edge case of HasComponent in each system)

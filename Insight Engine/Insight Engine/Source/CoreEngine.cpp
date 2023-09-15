@@ -178,7 +178,7 @@ namespace IS {
         prefab["Signature"] = signature;
         
         //add in future components
-        SerializeComponent<Position>(entity, prefab, "POS");
+       // SerializeComponent<Position>(entity, prefab, "POS");
 
         SaveJsonToFile(prefab,file_path);
     }
@@ -190,7 +190,7 @@ namespace IS {
         LoadJsonFromFile(loaded, filename);
 
         //add in future components
-        DeserializeComponent<Position>(entity, loaded, "POS");
+       // DeserializeComponent<Position>(entity, loaded, "POS");
         return entity;
 
     }

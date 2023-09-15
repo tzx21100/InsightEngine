@@ -19,6 +19,7 @@
 #include "WindowSystem.h"
 #include "GUI.h"
 #include "MemoryLeakCheck.h"
+#include "GameLoop.h"
 
 
 using namespace IS;
@@ -37,17 +38,16 @@ int main() {
     
     //this is just to show how the new system works everthing can be deleted
     //register the position component
-    engine.RegisterComponent<Position>();
-    engine.RegisterComponent<Velocity>();
     engine.RegisterComponent<RigidBody>();
     engine.RegisterComponent<Transform>();
     engine.RegisterComponent<Sprite>();
+    engine.RegisterComponent<InputAffector>();
 
     //this just loads in the window and audio I will give them their components next time
     Signature signature;
     // create window first so other systems can just point to current context
     auto mySystem = std::make_shared<WindowSystem>(WIDTH, HEIGHT, "Insight Engine");
-    signature = engine.GenerateSignature<Position, Velocity>();
+    signature = engine.GenerateSignature<>();
     engine.AddSystem(mySystem, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3, signature);
@@ -58,29 +58,18 @@ int main() {
     auto physicsSystem = std::make_shared<Physics>();
     signature = engine.GenerateSignature<RigidBody, Transform>();
     engine.AddSystem(physicsSystem, signature);
-    signature = engine.GenerateSignature<Sprite>();
+    signature = engine.GenerateSignature<Sprite,Transform>();
     auto graphicSystem = std::make_shared<ISGraphics>();
     engine.AddSystem(graphicSystem, signature);
-    /* adding components to the systems
-       your system is going to be made out of different components
-       these components will add together to give you a signature
-       we are using shared pointers for the system */
+    signature = engine.GenerateSignature<InputAffector>();
     auto InputSys = std::make_shared<InputManager>();
-    //this function will give you the signature value (basically what your system contains)
-    Signature signatureValue = engine.GenerateSignature<Position, Velocity>();
-    //this function will let you add the value inside
-    engine.AddSystem(InputSys, signatureValue);
+    engine.AddSystem(InputSys, signature);
 
-    //showing you how to create your entity
 
-    /*          YAN KHANG LOOK HERE      */
-
-    //creating the entity (i might make the transform a compulsory component)
-    Entity testImage = engine.CreateEntityWithComponents<Sprite>();
-    /*Entity testImage2 = engine.CreateEntityWithComponents<Sprite>();
-    auto& model = engine.GetComponent<Sprite>(testImage2);
-    model.model = ModelType::Point;*/
-
+    //this is the game loop to be added at the end
+    auto gameLoop = std::make_shared<GameLoop>();
+    signature = engine.GenerateSignature<>();
+    engine.AddSystem(gameLoop, signature);
 
     //run engine (GAME LOOP)
     engine.SetFPS(60);//set fps to wtv
