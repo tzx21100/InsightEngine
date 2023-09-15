@@ -21,6 +21,7 @@
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Example System Implementation.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
+    <ClCompile Include="Source\LogPanel.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
+    <ClInclude Include="Source\LogPanel.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\Transform.h" />

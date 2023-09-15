@@ -1,14 +1,18 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
 
+#include "LogPanel.h"
+
 #include <mutex>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <fstream>
 #include <format>
+#include <deque>
 
 namespace IS {
+    static const int MaxLogMessages = 100;
 
     // ANSI escape codes for console formatting for color/style
     const char RESET[] = "\033[m";
@@ -57,6 +61,8 @@ namespace IS {
         aLogLevel getLogLevel() const;
         void setTimestampFormat(std::string const& new_timestamp_format);
         std::string getTimestampFormat() const;
+        std::deque<std::string> getLogMessages() const;
+
 
         // Additional options
         void enableColors(bool flag);
@@ -70,6 +76,7 @@ namespace IS {
         std::string timestamp_format = "%H:%M:%S";
         std::string log_filename_timestamp_format = "%Y%m%d %H-%M-%S";
         std::ofstream log_file;
+        std::deque<std::string> log_messages;
 
         static std::mutex log_mutex;
 
@@ -138,6 +145,11 @@ namespace IS {
             if (log_file.is_open()) {
                 log_file << timestamp << loglevel << ' ' << all_args << std::endl;
             }
+
+            log_messages.push_back(log.str());
+            // trim excess log messages
+            if (log_messages.size() > MaxLogMessages)
+                log_messages.pop_front();
         }
     }
 
