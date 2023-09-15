@@ -180,7 +180,7 @@ namespace IS {
         ImGui::SameLine();
         bool copy_flag = ImGui::Button("Copy");
         ImGui::SameLine();
-        filter.Draw("Filter", -150.f);
+        filter.Draw("Filter", -100.f);
         ImGui::SameLine();
 
         ImGui::Separator();

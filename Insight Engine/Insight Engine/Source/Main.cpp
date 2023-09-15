@@ -24,7 +24,7 @@
 using namespace IS;
 
 int main() {
-    ENABLE_MEMCHECK;
+    ENABLE_MEMORY_CHECK();
 
     // Initialize log
     Log::init();
