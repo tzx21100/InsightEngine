@@ -29,7 +29,6 @@ namespace IS
 	void Physics::Update(float dt)
 	{
 		//const float TimeStep = 1.0f / 60.0f;
-
 		//loops through all Entities registered by the System this mEntities map is written in the parent class
 		for (auto const& entity : mEntities) {
 

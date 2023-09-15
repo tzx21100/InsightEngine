@@ -44,9 +44,14 @@ namespace IS {
 			void drawSpecial();
 		};
 
-		void Update(float deltaTime) override;
+		//override parent
 		std::string getName() override;
 		void Initialize() override;
+		void Update(float deltaTime) override;
+		void Draw() override;
+		
+
+		
 		void HandleMessage(const Message& message) override;
 
 		static void init();
@@ -69,4 +74,18 @@ namespace IS {
 		static std::vector<ISModel> models;
 	};
 
+	//enums added
+
+	enum class ModelType {
+		Box,
+		Point,
+		Line,
+		Circle
+
+	};
+
+
 } // end namespace IS
+
+
+

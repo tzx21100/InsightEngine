@@ -20,6 +20,7 @@
 #include "GUI.h"
 #include "MemoryLeakCheck.h"
 
+
 using namespace IS;
 
 int main() {
@@ -39,38 +40,8 @@ int main() {
     engine.RegisterComponent<Position>();
     engine.RegisterComponent<Velocity>();
     engine.RegisterComponent<RigidBody>();
-    //you can now create entities
-    Entity newEntity = engine.CreateEntityWithComponents<Position>();
-    auto& pos = engine.GetComponent<Position>(newEntity);
-    pos.x = 1;
-    pos.y = 2;
-    engine.SaveToJson(newEntity, "testentity");
-
-    //this is how to clone an entity..
-    Entity entity2 = newEntity;
-    //this is loading entity from Json
-    Entity entity3 = engine.LoadFromJson("testentity");
-    //destroy entities
-    if (!engine.HasComponent<Position>(newEntity)) {
-        //get the component Position
-        auto& pos = engine.GetComponent<Position>(newEntity);
-        pos.x = 3;
-        pos.y = 4;
-        //remove the component for some reason
-        engine.RemoveComponent<Position>(newEntity);
-        engine.DestroyEntity(newEntity);
-    }
-    else {
-        IS_CORE_INFO("TYPE DETECTED!");
-    }
-    
-    //this is to show that entity 3 will give the saved value
-    //can delete after
-    if (engine.HasComponent<Position>(entity3)) {
-        auto& pos = engine.GetComponent<Position>(entity3);
-        std::cout <<"POSX" << pos.x << std::endl;
-        std::cout <<"POSY" << pos.y << std::endl;
-    }
+    engine.RegisterComponent<Transform>();
+    engine.RegisterComponent<Sprite>();
 
     //this just loads in the window and audio I will give them their components next time
     Signature signature;
@@ -85,12 +56,11 @@ int main() {
     auto gui = std::make_shared<GUISystem>();
     engine.AddSystem(gui, signature);
     auto physicsSystem = std::make_shared<Physics>();
-    signature = engine.GenerateSignature<RigidBody>();
+    signature = engine.GenerateSignature<RigidBody, Transform>();
     engine.AddSystem(physicsSystem, signature);
-    //Signature rigidbody;
-
-
-
+    signature = engine.GenerateSignature<Transform, Sprite>();
+    auto graphicSystem = std::make_shared<ISGraphics>();
+    engine.AddSystem(graphicSystem, signature);
     /* adding components to the systems
        your system is going to be made out of different components
        these components will add together to give you a signature
@@ -101,32 +71,16 @@ int main() {
     //this function will let you add the value inside
     engine.AddSystem(InputSys, signatureValue);
 
+    //showing you how to create your entity
 
-    // This is the end of the Initialize() part of your systems
+    /*          YAN KHANG LOOK HERE      */
 
-    /*
-    I will now demostrate how a Update loop will be 
-    eg. This is in a physics system's update loop
-    Update( float deltatime ) {
-        //loops through all Entities registered by the System this mEntities map is written in the parent class
-        for (auto const& entity : mEntities) {
-            //if the entity has a certain component do something with it
-            if (InsightEngine::Instance().HasComponent<Position>(entity)) {
-                //do something;
-            }
-            if (InsightEngine::Instance().HasComponent<Velocity>(entity)) {
-                //do something
-            }
-        }
+    //creating the entity (i might make the transform a compulsory component)
+    Entity testImage = engine.CreateEntityWithComponents<Sprite>();
+    Entity testImage2 = engine.CreateEntityWithComponents<Sprite>();
+    auto& model = engine.GetComponent<Sprite>(testImage2);
+    model.model = ModelType::Point;
 
-    }
-
-    Of course, you can do something like using InsightEngine& Engine= InsightEngine::Instance() to make life easier.
-    Then it will just be Engine.HasComponent<Position>(entity){
-    
-    }
-    */
-    
 
     //run engine (GAME LOOP)
     engine.SetFPS(60);//set fps to wtv
