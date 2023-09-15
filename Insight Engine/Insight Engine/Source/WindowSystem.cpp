@@ -25,7 +25,6 @@ namespace IS {
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!window) {
             std::cerr << "Failed to create OpneGL context!" << std::endl;
-            //IS_CORE_ERROR("Failed to create OpneGL context!");
             glfwTerminate();
         }
 
