@@ -64,8 +64,8 @@ namespace IS
 		case IS::BodyType::Dynamic:
 			//apply force here
 			//setDynamicObject(body)
-			body.velocity.y += gravity.y * dt;
-			body.position = body.position + body.velocity * dt;
+			//body.velocity.y += gravity.y * dt;
+			//body.position = body.position + body.velocity * dt;
 			break;
 		case IS::BodyType::Kinematic:
 			return;
@@ -91,7 +91,7 @@ namespace IS
 					{
 					case Shape::Box:
 						//box to box collision
-						if (Intersection_Polygons(body.transformedVertices, body2.transformedVertices, test, test2)) {
+						if (Intersection_Polygons(body.transformedVertices, body.bodyTransform.getWorldPosition(), body2.transformedVertices, body2.bodyTransform.getWorldPosition(), test, test2)) {
 							std::cout << "Colliding" << std::endl;
 						//if (CollisionIntersection_RectRect(std::get<Box>(collider.myCollider), body.velocity, std::get<Box>(collider2.myCollider), body2.velocity, dt)) {
 							// do collision effect here
@@ -147,6 +147,26 @@ namespace IS
 		default:
 			break;
 		}
+	}
+
+	void ResolveCollision(RigidBody bodyA, RigidBody bodyB, Vector2D normal, float depth)
+	{
+		Vector2D relativeVelocity = bodyB.velocity - bodyA.velocity;
+
+		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f) //
+		{
+			return;
+		}
+
+		float e = std::min(bodyA.restitution, bodyB.restitution);
+
+		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
+		j /= bodyA.InvMass + bodyB.InvMass;
+
+		Vector2D impulse = j * normal;
+
+		bodyA.velocity -= impulse * bodyA.InvMass;
+		bodyB.velocity += impulse * bodyB.InvMass;
 	}
 
 
