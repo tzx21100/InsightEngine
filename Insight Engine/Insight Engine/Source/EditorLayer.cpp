@@ -138,25 +138,25 @@ namespace IS {
             if (model.name == "Circle") {
                 ImGui::Text("%-6s", "Radius");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Radius " + model.name).c_str(), &model.scaling.x, 2.f, WIDTH);
+                ImGui::SliderFloat(("##Radius " + model.name).c_str(), &model.model_TRS.scaling.x, 2.f, WIDTH);
                 ImGui::Spacing();
             } else {
                 ImGui::Text("%-6s", "Width");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.scaling.x, 2.f, WIDTH);
+                ImGui::SliderFloat(("##Width" + model.name).c_str(), &model.model_TRS.scaling.x, 2.f, WIDTH);
                 ImGui::Spacing();
                 ImGui::Text("%-6s", "Height");
                 ImGui::SameLine();
-                ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.scaling.y, 2.f, HEIGHT);
+                ImGui::SliderFloat(("##Height" + model.name).c_str(), &model.model_TRS.scaling.y, 2.f, HEIGHT);
                 ImGui::Spacing();
             }
             ImGui::Text("%-6s", "Angle");
             ImGui::SameLine();
-            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.orientation.x, 0.f, 360.f);
+            ImGui::SliderFloat(("##Angle" + model.name).c_str(), &model.model_TRS.orientation.x, 0.f, 360.f);
             ImGui::Spacing();
             ImGui::Text("%-6s", "Speed");
             ImGui::SameLine();
-            ImGui::SliderFloat(("##Speed" + model.name).c_str(), &model.orientation.y, -180.f, 180.f);
+            ImGui::SliderFloat(("##Speed" + model.name).c_str(), &model.model_TRS.orientation.y, -180.f, 180.f);
 
             // Box uses texture so no point changing color
             if (model.name != "Box") {

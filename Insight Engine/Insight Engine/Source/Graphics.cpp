@@ -17,6 +17,11 @@ namespace IS {
     GLuint ISGraphics::vao_id;
     Shader ISGraphics::shader_pgm;
 
+    void ISGraphics::Update(float deltaTime) { update(deltaTime); };
+    std::string ISGraphics::getName() { return "Graphics"; };
+    void ISGraphics::Initialize() { init(); };
+    void ISGraphics::HandleMessage(const Message& message) {};
+
     void ISGraphics::init() {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
@@ -37,8 +42,8 @@ namespace IS {
 
     void ISGraphics::ISModel::transform(float delta_time) {
         // xform
-        if (name == "Circle")
-            scaling.y = scaling.x;
+        if (name == "Circle") 
+            model_TRS.scaling.y = model_TRS.scaling.x;
 
         auto wrap_angle = [](float angle) {
             angle = fmod(angle, 360.f);
@@ -47,16 +52,16 @@ namespace IS {
             return angle;
             };
 
-        orientation.x += orientation.y * delta_time;
-        orientation.x = wrap_angle(orientation.x);
-        float angle_rad = glm::radians(orientation.x);
+        model_TRS.orientation.x += model_TRS.orientation.y * delta_time;
+        model_TRS.orientation.x = wrap_angle(model_TRS.orientation.x);
+        float angle_rad = glm::radians(model_TRS.orientation.x);
 
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
 
-        glm::mat3 world_to_NDC_xform = { scaling.x * cos_angle, scaling.x * -sin_angle, 0,   // column 1
-                                         scaling.y * sin_angle, scaling.y * cos_angle,  0,   // column 2
-                                         world_position.x,       world_position.y,        1 }; // column 3
+        glm::mat3 world_to_NDC_xform = { model_TRS.scaling.x * cos_angle, model_TRS.scaling.x * -sin_angle, 0,   // column 1
+                                         model_TRS.scaling.y * sin_angle, model_TRS.scaling.y * cos_angle,  0,   // column 2
+                                         model_TRS.world_position.x,       model_TRS.world_position.y,        1 }; // column 3
 
 
         float map_scale_x = 0.00078125f; // 1/1280 (DEPENDANT ON WORLD SIZE)
@@ -66,7 +71,7 @@ namespace IS {
                                       0,         map_scale_y, 0,   // column 2
                                       0,         0,           1 }; // column 3
 
-        mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
+        model_TRS.mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
     }
 
     void ISGraphics::draw() {
@@ -79,6 +84,10 @@ namespace IS {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Render scene
+        // Loop through all entities
+        // find sprite dimensions and model type (box,line,triangle,circle)??
+        // get the transform
+        // render onto screen from ndc to world
         for (ISModel &model : models) {
             if (model.drawing)
                 model.drawSpecial();
@@ -116,23 +125,23 @@ namespace IS {
 
         test_box_model.setupVAO();
         test_box_model.setupShaders();
-        test_box_model.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
-        test_box_model.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
+        test_box_model.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
+        test_box_model.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
         //test_box_model.orientation.y = 30.f;
 
         test_points_model.setupSpecialVAO();
         test_points_model.setupShaders();
-        test_points_model.scaling = glm::vec2(1066.67f, 600.f);
-        test_points_model.orientation.y = 10.f;
+        test_points_model.model_TRS.scaling = glm::vec2(1066.67f, 600.f);
+        test_points_model.model_TRS.orientation.y = 10.f;
 
         test_lines_model.setupSpecialVAO();
         test_lines_model.setupShaders();
-        test_lines_model.scaling = glm::vec2(1000.00f, 500.f);
-        test_lines_model.orientation.y = -10.f;
+        test_lines_model.model_TRS.scaling = glm::vec2(1000.00f, 500.f);
+        test_lines_model.model_TRS.orientation.y = -10.f;
 
         test_circle_model.setupSpecialVAO();
         test_circle_model.setupShaders();
-        test_circle_model.scaling = glm::vec2(100.f, 100.f);
+        test_circle_model.model_TRS.scaling = glm::vec2(100.f, 100.f);
         //test_circle_model.orientation.y = -30.f;
 
         models.emplace_back(test_box_model);
@@ -414,7 +423,7 @@ namespace IS {
         glBindVertexArray(vao_ID);
         
         shader_program.setUniform("uColor", color);
-        shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
+        shader_program.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndl_xform);
 
         glDrawElements(primitive_type, draw_count, GL_UNSIGNED_INT, NULL);
 
@@ -476,7 +485,7 @@ namespace IS {
 
         //shader_program.SetUniform("uSize", test_model.size);
         shader_program.setUniform("uColor", color); // same colour as test_model for now
-        shader_program.setUniform("uModel_to_NDC", mdl_to_ndl_xform);
+        shader_program.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndl_xform);
 
         // Bind the texture to the uniform sampler2D
         if (this->name == "Box") {

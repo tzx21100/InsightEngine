@@ -4,13 +4,19 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "Shader.h"
+#include "Vector2D.h"
+#include "Transform.h"
+
 //#include "Asset.h"
 
 namespace IS {
 
-	struct ISGraphics {
 
+	class ISGraphics : public ParentSystem {
+	public:
 		struct ISModel {
+			Transform model_TRS{};
+
 			GLenum primitive_type{};
 			Shader shader_program{};
 			GLuint vao_ID{};
@@ -36,13 +42,12 @@ namespace IS {
 			// for M1 rubrics showcase
 			void setupSpecialVAO();
 			void drawSpecial();
-
-			// transformation
-			glm::vec2 world_position{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
-			glm::vec2 orientation{};   // x = angle displacement, y = angle speed
-			glm::vec2 scaling{};       // *2 twice the size, *1 same size, *0.5 half the size (per axis)
-			glm::mat3 mdl_to_ndl_xform = glm::imat3x3{};
 		};
+
+		void Update(float deltaTime) override;
+		std::string getName() override;
+		void Initialize() override;
+		void HandleMessage(const Message& message) override;
 
 		static void init();
 		static void update(float delta_time);
