@@ -42,6 +42,11 @@ namespace IS
 
     void ProjectVertices(std::vector<Vector2D> vertices, Vector2D normal, float& min, float& max);
 
+    // FOR CIRCLE VS POLYGON
+    bool Intersection_Cirlcec_Polygon(Vector2D circleCenter, float radius, Vector2D polygonCenter, std::vector<Vector2D> trans_vertices, Vector2D& normal, float& depth);
+    void ProjectCircle(Vector2D center, float radius, Vector2D normal, float& min, float& max);
+    int FindClosestPointOnPolygon(Vector2D circleCenter, std::vector<Vector2D> vertices);
+
     // FOR CIRCLE
     bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB);
 

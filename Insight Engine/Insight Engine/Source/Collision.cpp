@@ -205,6 +205,124 @@ namespace IS
 		}
 	}
 
+	// FOR CIRCLE VS POLYGON
+	bool Intersection_Cirlcec_Polygon(Vector2D circleCenter, float radius, Vector2D polygonCenter, std::vector<Vector2D> trans_vertices, Vector2D& normal, float& depth) {
+		normal = Vector2D();
+		depth = std::numeric_limits<float>::max();
+
+		Vector2D axis;
+		Vector2D axisnormalized;
+		float axisDepth = 0.f;
+
+		for (int i = 0; i < trans_vertices.size(); i++)
+		{
+			// getting two vertices to form a edge vector
+			Vector2D va = trans_vertices[i];
+			Vector2D vb = trans_vertices[(i + 1) % trans_vertices.size()]; // modules by the size of the vector to avoid going out of the range
+
+			Vector2D edge = vb - va;
+			axis = Vector2D(-edge.y, edge.x);
+			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
+
+			//float minA, maxA, minB, maxB;
+			float minA = std::numeric_limits<float>::max();
+			float maxA = std::numeric_limits<float>::min();
+			float minB = std::numeric_limits<float>::max();
+			float maxB = std::numeric_limits<float>::min();
+			ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
+			ProjectCircle(circleCenter, radius, axisnormalized, minB, maxB);
+
+			if (minA >= maxB || minB >= maxA) // not intersecting
+			{
+				return false;
+			}
+
+			axisDepth = std::min(maxB - minA, maxA - minB);
+
+			if (axisDepth < depth)
+			{
+				depth = axisDepth;
+				normal = axis;
+			}
+		}
+
+		// another case
+		// getting the closest point on polygon to the circle
+		Vector2D cp = trans_vertices[FindClosestPointOnPolygon(circleCenter, trans_vertices)];
+
+		axis = cp - circleCenter;
+		ISVector2DNormalize(axisnormalized, axis);
+
+		//float minA, maxA, minB, maxB;
+		float minA = std::numeric_limits<float>::max();
+		float maxA = std::numeric_limits<float>::min();
+		float minB = std::numeric_limits<float>::max();
+		float maxB = std::numeric_limits<float>::min();
+		ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
+		ProjectCircle(circleCenter, radius, axisnormalized, minB, maxB);
+
+		if (minA >= maxB || minB >= maxA)
+		{
+			return false;
+		}
+
+		axisDepth = std::min(maxB - minA, maxA - minB);
+
+		if (axisDepth < depth)
+		{
+			depth = axisDepth;
+			normal = axis;
+		}
+
+		Vector2D direction = polygonCenter - circleCenter;
+
+		if (ISVector2DDotProduct(direction, normal) < 0.f)
+		{
+			normal = -normal;
+		}
+
+		return true;
+
+	}
+
+	void ProjectCircle(Vector2D center, float radius, Vector2D normal, float& min, float& max)
+	{
+		Vector2D directionRadius = normal * radius;
+
+		Vector2D p1 = center + directionRadius;
+		Vector2D p2 = center - directionRadius;
+
+		min = ISVector2DDotProduct(p1, normal);
+		max = ISVector2DDotProduct(p2, normal);
+
+		if (min > max) {
+			// swap min and max
+			float tmp = min;
+			min = max;
+			max = tmp;
+		}
+	}
+
+	int FindClosestPointOnPolygon(Vector2D circleCenter, std::vector<Vector2D> vertices)
+	{
+		int result = -1;
+		float minDistance = std::numeric_limits<float>::max();
+
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			Vector2D v = vertices[i];
+			float distance = ISVector2DDistance(v, circleCenter);
+
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				result = i;
+			}
+		}
+
+		return result;
+	}
+
 
 	// FOR CIRCLE
 	bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB) {

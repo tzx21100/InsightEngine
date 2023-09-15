@@ -57,6 +57,9 @@ namespace IS
         std::vector<Vector2D> GetTransformedVertices();
         // calculting the updated vertices by sin & cos
         Vector2D Transform(Vector2D v, BodyTransform transform);
+
+        // update postion, rotation, force based on real world gravity
+        void BodyUpdate(float dt, Vector2D gravity);
         // move the game object
         void Move(Vector2D val);
         // rotate the game object

@@ -153,6 +153,17 @@ namespace IS
         return ret;
     }
 
+    void RigidBody::BodyUpdate(float dt, Vector2D gravity) {
+        if (!(this->bodyType == BodyType::Dynamic)) {
+            return;
+        }
+        this->velocity = gravity * dt;
+        this->position = this->velocity * dt;
+        this->rotation = this->rotationVelocity * dt;
+
+        this->transformUpdateRequired = true;
+    }
+
     void RigidBody::Move(Vector2D val) {
         this->position += val;
         this->transformUpdateRequired = true;
