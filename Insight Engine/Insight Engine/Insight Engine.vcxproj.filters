@@ -79,6 +79,9 @@
     <ClCompile Include="Source\LayerStack.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Transform.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -185,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="Source\LayerStack.h">
       <Filter>Editor\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
