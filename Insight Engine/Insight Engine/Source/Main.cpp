@@ -23,10 +23,10 @@
 using namespace IS;
 
 int main() {
-    ENABLE_MEMCHECK;
+    ENABLE_MEMORY_CHECK();
 
     // Initialize log
-    Log::init();
+    //Log::init();
 
     //engine get
     InsightEngine& engine = InsightEngine::Instance();
@@ -61,15 +61,15 @@ int main() {
         engine.DestroyEntity(newEntity);
     }
     else {
-        IS_CORE_INFO("TYPE DETECTED!");
+        //IS_CORE_INFO("TYPE DETECTED!");
     }
     
     //this is to show that entity 3 will give the saved value
     //can delete after
     if (engine.HasComponent<Position>(entity3)) {
         auto& pos = engine.GetComponent<Position>(entity3);
-        std::cout <<"POSX" << pos.x << std::endl;
-        std::cout <<"POSY" << pos.y << std::endl;
+        /*std::cout <<"POSX" << pos.x << std::endl;
+        std::cout <<"POSY" << pos.y << std::endl;*/
     }
 
     //this just loads in the window and audio I will give them their components next time

@@ -67,9 +67,6 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Example System Implementation.cpp">
-      <Filter>Engine\System Example</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GUI.cpp">
       <Filter>Editor\System</Filter>
     </ClCompile>
@@ -81,9 +78,6 @@
     </ClCompile>
     <ClCompile Include="Source\Transform.cpp">
       <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LogPanel.cpp">
-      <Filter>Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +189,6 @@
     <ClInclude Include="Source\Transform.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LogPanel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -268,9 +259,6 @@
     </Filter>
     <Filter Include="Editor\Layers">
       <UniqueIdentifier>{468e4dd2-5b0a-45d8-bbe0-505ecf85fc13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Panels">
-      <UniqueIdentifier>{aad2c855-e85f-4aba-9442-119d636c867d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

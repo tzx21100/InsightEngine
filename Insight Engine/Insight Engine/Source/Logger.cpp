@@ -1,12 +1,20 @@
 #include "Pch.h"
 #include "Logger.h"
+
+// STL
 #include <chrono>
 #include <iomanip>
 #include <filesystem>
 
 namespace IS {
 
+    /*
+     * Logger
+     * ---------------------------------------------------------------------------------------------------------------------------------
+     */
+
     // Initialize static data member
+    Logger::LoggerGUI Logger::logger_gui;
     std::mutex Logger::log_mutex;
 
     Logger::Logger(std::string const& name) : logger_name(name) {}
@@ -25,10 +33,6 @@ namespace IS {
 
     aLogLevel Logger::getLogLevel() const {
         return log_level;
-    }
-
-    void Logger::enableColors(bool flag) {
-        colors_enabled = flag;
     }
 
     void Logger::enableFileOutput() {
@@ -52,6 +56,10 @@ namespace IS {
         if (!log_file.is_open())
             std::cerr << "Error: Failed to open log file at " << filepath.str() << std::endl;
     }
+
+    Logger::LoggerGUI& Logger::getLoggerGUI() {
+        return logger_gui;
+    }
     
     void Logger::setTimestampFormat(std::string const& new_timestamp_format) {
         timestamp_format = new_timestamp_format;
@@ -74,13 +82,13 @@ namespace IS {
             oss << "[INFO]";
             break;
         case aLogLevel::Warning:
-            oss << BOLD << "[WARNING]";
+            oss << "[WARNING]";
             break;
         case aLogLevel::Error:
-            oss << BOLD << "[ERROR]";
+            oss << "[ERROR]";
             break;
         case aLogLevel::Critical:
-            oss << BOLD << "[CRITICAL]";
+            oss << "[CRITICAL]";
             break;
         }
         return oss.str();
@@ -97,7 +105,7 @@ namespace IS {
         return timestamp.str();
     }
 
-    void Logger::setColor(aLogLevel level) {
+    /*void Logger::setColor(aLogLevel level) {
         using enum aLogLevel;
         switch(level) {
         case Trace:
@@ -119,7 +127,7 @@ namespace IS {
             std::clog << BOLD_ON_RED;
             break;
         }
-    }
+    }*/
 
     void Logger::closeFile() {
         try {
@@ -130,5 +138,107 @@ namespace IS {
             std::cerr << e.what() << std::endl;
         }
     }
+
+    /*
+     * LoggerGUI
+     * ---------------------------------------------------------------------------------------------------------------------------------
+     */
+    Logger::LoggerGUI::LoggerGUI() : auto_scroll(true) { clear(); }
+
+    void Logger::LoggerGUI::clear() {
+        buffer.clear();
+        line_offsets.clear();
+        line_offsets.push_back(0);
+    }
+
+    void Logger::LoggerGUI::addLog(const char* fmt, ...) {
+        int old_size = buffer.size();
+        va_list args;
+        va_start(args, fmt);
+        buffer.appendfv(fmt, args);
+        va_end(args);
+        for (int new_size{ buffer.size() }; old_size < new_size; ++old_size) {
+            if (buffer[old_size] == '\n')
+                line_offsets.push_back(old_size + 1);
+        }
+    }
+
+    void Logger::LoggerGUI::draw(const char* title) {
+        ImGui::Begin(title);
+
+        // Options menu
+        if (ImGui::BeginPopup("Options")) {
+            ImGui::Checkbox("Auto-scroll", &auto_scroll);
+            ImGui::EndPopup();
+        }
+
+        // Main window
+        if (ImGui::Button("Options"))
+            ImGui::OpenPopup("Options");
+        ImGui::SameLine();
+        bool clear_flag = ImGui::Button("Clear");
+        ImGui::SameLine();
+        bool copy_flag = ImGui::Button("Copy");
+        ImGui::SameLine();
+        filter.Draw("Filter", -150.f);
+        ImGui::SameLine();
+
+        ImGui::Separator();
+
+        if (ImGui::BeginChild("scrolling", { 0, 0 }, false, ImGuiWindowFlags_HorizontalScrollbar)) {
+            if (clear_flag)
+                clear();
+            if (copy_flag)
+                ImGui::LogToClipboard();
+
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 0, 0 });
+            const char* buf = buffer.begin();
+            const char* buf_end = buffer.end();
+            if (filter.IsActive()) {
+                for (int line{}; line < line_offsets.size(); ++line) {
+                    const char* line_start = buf + line_offsets[line];
+                    const char* line_end = (line + 1 < line_offsets.size()) ? (buf + line_offsets[line + 1] - 1) : buf_end;
+                    if (filter.PassFilter(line_start, line_end))
+                        ImGui::TextUnformatted(line_start, line_end);
+                }
+            } else {
+                ImGuiListClipper clipper;
+                clipper.Begin(line_offsets.size());
+                while (clipper.Step()) {
+                    for (int line{ clipper.DisplayStart }; line < clipper.DisplayEnd; ++line) {
+                        const char* line_start = buf + line_offsets[line];
+                        const char* line_end = (line + 1 < line_offsets.size()) ? (buf + line_offsets[line + 1] - 1) : buf_end;
+                        ImGui::TextUnformatted(line_start, line_end);
+                    }
+                }
+                clipper.End();
+            }
+            ImGui::PopStyleVar();
+
+            if (auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.f);
+        }
+        ImGui::EndChild();
+        ImGui::End();
+    }
+
+    //ImU32 Logger::LoggerGUI::getLogLevelColor(aLogLevel log_level) {
+    //    switch (log_level) {
+    //    case aLogLevel::Trace:
+    //        return IM_COL32(127, 127, 127, 255); // Gray for Trace
+    //    case aLogLevel::Debug:
+    //        return IM_COL32(0, 0, 255, 255);     // Blue for Debug
+    //    case aLogLevel::Info:
+    //        return IM_COL32(0, 255, 0, 255);     // Green for Info
+    //    case aLogLevel::Warning:
+    //        return IM_COL32(255, 255, 0, 255);   // Yellow for Warning
+    //    case aLogLevel::Error:
+    //        return IM_COL32(255, 0, 0, 255);     // Red for Error
+    //    case aLogLevel::Critical:
+    //        return IM_COL32(255, 0, 0, 255);     // Red for Critical (same as Error)
+    //    default:
+    //        return IM_COL32_WHITE; // Default to white for unknown log levels
+    //    }
+    //}
 
 } // end namespace IS

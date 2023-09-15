@@ -17,6 +17,9 @@ namespace IS {
     }
 
     void GUISystem::Initialize() {
+        // Initialize log
+        Log::init();
+
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();

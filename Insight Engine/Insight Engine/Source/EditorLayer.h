@@ -2,7 +2,6 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERS_EDITORLAYER_H
 
 #include "Layer.h"
-#include "LogPanel.h"
 #include <cstdarg>
 
 // Dependencies
@@ -22,10 +21,9 @@ namespace IS {
         void onUpdate(float dt) override;
         void onRender() override;
 
-        // Probably a function for each window
         void RenderInspectorPanel();
         void RenderPerformancePanel();
-        //void RenderLogConsole();
+        void RenderLogConsolePanel();
         void RenderScenePanel();
     };
 
