@@ -19,7 +19,6 @@
     <ClCompile Include="Source\EditorLayer.cpp" />
     <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
-    <ClCompile Include="Source\Example System Implementation.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />

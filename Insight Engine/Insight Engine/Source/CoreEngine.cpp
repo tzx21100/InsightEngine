@@ -12,12 +12,12 @@ namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
-        IS_CORE_DEBUG("Starting Insight Engine...");
+        //IS_CORE_DEBUG("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
         mSystemManager = std::make_unique<SystemManager>();
-        IS_CORE_DEBUG("Insight Engine started");
+        //IS_CORE_DEBUG("Insight Engine started");
     }
 
     //handling messages
@@ -32,10 +32,10 @@ namespace IS {
     InsightEngine::~InsightEngine() {
         for (auto& [name, system] : mAllSystems) {
            // delete pair.second;
-            IS_CORE_INFO("{} terminated", name);
+            //IS_CORE_INFO("{} terminated", name);
         }
         mAllSystems.clear();
-        IS_CORE_DEBUG("Insight Engine terminated");
+        //IS_CORE_DEBUG("Insight Engine terminated");
     }
 
     void InsightEngine::Initialize() {
@@ -101,7 +101,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
-        IS_CORE_TRACE("Registering system... {}", systemName);
+        //IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
@@ -120,7 +120,7 @@ namespace IS {
     void InsightEngine::DestroyAllSystems() {
         for (auto& [name, system] : mAllSystems) {
             //delete pair.second;  // Delete the system object
-            IS_CORE_INFO("{} terminated", name);
+            //IS_CORE_INFO("{} terminated", name);
         }
         mAllSystems.clear();  // Clear the map
     }
@@ -129,8 +129,10 @@ namespace IS {
     void InsightEngine::InitializeAllSystems() {
         for (auto const& [name, system] : mAllSystems) {
             system->Initialize();
-            IS_CORE_INFO("{} initialized", name);
+            //IS_CORE_INFO("{} initialized", name);
         }
+        IS_WARN("DO NOT CALL LOG MACROS BEFORE ALL SYSTEM INITIALIZED!");
+        IS_CORE_INFO("All systems initialized");
     }
 
     // Accessor for system deltas

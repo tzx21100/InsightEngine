@@ -8,7 +8,8 @@ namespace IS {
         props = WindowProperties(width, height, title);
 
         // Initialize GLFW library
-        IS_CORE_ASSERT_MESG(glfwInit(), "Failed to to initialize libary!");
+        if (!glfwInit())
+            std::cerr << "Failed to to initialize libary!" << std::endl;
 
         // Specify minimum constraints in OpenGL context
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -23,7 +24,7 @@ namespace IS {
         // Create a windowed mode window and its OpenGL context
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!window) {
-            IS_CORE_ERROR("Failed to create OpneGL context!");
+            std::cerr << "Failed to create OpneGL context!" << std::endl;
             glfwTerminate();
         }
 
@@ -36,18 +37,14 @@ namespace IS {
 
         // Initialize entry points to OpenGL functions and extensions
         if (GLenum err = glewInit(); GLEW_OK != err) {
-            std::ostringstream error;
-            error << glewGetErrorString(err);
-            IS_CORE_ERROR("Unable to initialize GLEW - error: {} - abort program", error.str());
+            std::cerr << "Unable to initialize GLEW - error: " << glewGetErrorString(err) << " - abort program" << std::endl;
             std::exit(EXIT_FAILURE);
         }
         if (GLEW_VERSION_4_5) {
-            std::ostringstream glew_version;
-            glew_version << glewGetString(GLEW_VERSION);
-            IS_CORE_INFO("Using glew version: {}", glew_version.str());
-            IS_CORE_INFO("Driver supports OpenGL 4.5");
+            std::clog << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
+            std::clog << "Driver supports OpenGL 4.5" << std::endl;
         } else {
-            IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
+            std::cerr << "Driver doesn't support OpenGL 4.5 - abort program" << std::endl;
             std::exit(EXIT_FAILURE);
         }
     }
@@ -80,12 +77,11 @@ namespace IS {
     void WindowSystem::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::Collide) {
             // Handle collision logic here
-            IS_CORE_INFO("Handling collision in PhysicsSystem.");
         }
     }
 
     std::string WindowSystem::getName()  {
-        return "GLFWWindowSystem";
+        return "Window";
     }
 
     uint32_t WindowSystem::GetWidth() const {

@@ -6,9 +6,9 @@
 #ifdef _DEBUG
     #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
     #define new DEBUG_NEW
-    #define ENABLE_MEMCHECK _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
+    #define ENABLE_MEMORY_CHECK() _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
 #else
-    #define ENABLE_MEMCHECK (void(0))
+    #define ENABLE_MEMORY_CHECK (void(0))
 #endif
 
 

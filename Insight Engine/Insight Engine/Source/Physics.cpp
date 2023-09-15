@@ -21,7 +21,7 @@ namespace IS
 		//RegisterComponent(Body);
 		//InsightEngine::Instance().RegisterComponent<RigidBody>();
 		InsightEngine::Instance().RegisterComponent<Collider>();
-		std::cout << "PhysicsSystem initialized." << std::endl;
+		//std::cout << "PhysicsSystem initialized." << std::endl;
 		//The system can also subscribe to the message type it wants here
 		Subscribe(MessageType::Collide);
 	}

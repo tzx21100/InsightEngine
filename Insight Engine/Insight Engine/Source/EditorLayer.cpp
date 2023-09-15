@@ -9,11 +9,11 @@ namespace IS {
 
     void EditorLayer::onAttach() {
         // Attach scene viewer, import icons, open project...
-        IS_CORE_DEBUG("{} attached", getName());
+        //IS_CORE_DEBUG("{} attached", getName());
     }
 
     void EditorLayer::onDetach() {
-        IS_CORE_DEBUG("{} detached", getName());
+        //IS_CORE_DEBUG("{} detached", getName());
     }
 
     void EditorLayer::onUpdate([[maybe_unused]] float dt) {
@@ -83,49 +83,37 @@ namespace IS {
                 ImGui::EndMenu();
             }
 
-            if (ImGui::BeginMenu("Window")) {
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Tools")) {
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Build")) {
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Select")) {
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Actor")) {
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Help")) {
-
-                ImGui::EndMenu();
-            }
-
             ImGui::EndMenuBar();
         }
 
         // Other windows
-        RenderInspector();
-        RenderPerformanceViewer();
-        RenderLogConsole();
-        RenderSceneViewer();
+        RenderScenePanel();
+        RenderInspectorPanel();
+        RenderPerformancePanel();
+        RenderLogConsolePanel();
 
         ImGui::End();
     }
 
-    void EditorLayer::RenderInspector() {
+    void EditorLayer::RenderScenePanel() {
+        ImGui::Begin("Scene");
+
+        const uint32_t window_width = static_cast<uint32_t>(ImGui::GetContentRegionAvail().x);
+        const uint32_t window_height = static_cast<uint32_t>(ImGui::GetContentRegionAvail().y);
+        ImVec2 pos = ImGui::GetCursorScreenPos();
+
+        ImGui::GetWindowDrawList()->AddImage(
+            (void*)(static_cast<uintptr_t>(ISGraphics::tex_id)),
+            ImVec2(pos.x, pos.y),
+            ImVec2(pos.x + window_width, pos.y + window_height),
+            ImVec2(0, 1),
+            ImVec2(1, 0)
+        );
+
+        ImGui::End();
+    }
+
+    void EditorLayer::RenderInspectorPanel() {
         ImGui::Begin("Inspector");
 
         for (auto& sprite : ISGraphics::sprites) {
@@ -173,7 +161,7 @@ namespace IS {
         ImGui::End();
     }
 
-    void EditorLayer::RenderPerformanceViewer() {
+    void EditorLayer::RenderPerformancePanel() {
         ImGuiIO& io = ImGui::GetIO();
 
         ImGui::Begin("Performance");
@@ -195,7 +183,8 @@ namespace IS {
         ImGui::Dummy({ 5.f, 5.f });
         
         // Create a table for system usage
-        if (ImGui::BeginTable("Systems", 2, ImGuiTableFlags_Resizable)) {
+        ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
+        if (ImGui::BeginTable("Systems", 2, flags)) {
             // Table headers
             ImGui::TableSetupColumn("System");
             ImGui::TableSetupColumn("Usage %");
@@ -209,12 +198,11 @@ namespace IS {
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
                     ImGui::Text("%s", system.c_str());
-                    ImGui::Separator();
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
                     ImGui::Text("%6d%%", static_cast<int>(percent));
-                    ImGui::Separator();
+                    ImGui::Spacing();
                 }
             }
             // End rendering table
@@ -225,49 +213,8 @@ namespace IS {
         ImGui::End();
     }
 
-    // From imgui demo (for reference)
-    void EditorLayer::RenderLogConsole() {
-        static ExampleAppLog log;
-
-        // For the demo: add a debug button _BEFORE_ the normal log window contents
-        // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to the _same_ window.
-        // Most of the contents of the window will be added by the log.Draw() call.
-        ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Log");
-        if (ImGui::SmallButton("[Debug] Add 5 entries")) {
-            static int counter = 0;
-            const char* categories[6] = { "trace", "info", "debug", "warn", "error", "critical" };
-            const char* words[] = { "Bumfuzzled", "Cattywampus", "Snickersnee", "Abibliophobia", "Absquatulate", "Nincompoop", "Pauciloquent" };
-            for (int n = 0; n < 5; n++) {
-                const char* category = categories[counter % IM_ARRAYSIZE(categories)];
-                const char* word = words[counter % IM_ARRAYSIZE(words)];
-                log.AddLog("[%05d] [%s] Hello, current time is %.1f, here's a word: '%s'\n",
-                           ImGui::GetFrameCount(), category, ImGui::GetTime(), word);
-                counter++;
-            }
-        }
-        ImGui::End();
-
-        // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
-        log.Draw("Log");
-    }
-
-    void EditorLayer::RenderSceneViewer() {
-        ImGui::Begin("SceneView");
-
-        const uint32_t window_width  = static_cast<uint32_t>(ImGui::GetContentRegionAvail().x);
-        const uint32_t window_height = static_cast<uint32_t>(ImGui::GetContentRegionAvail().y);
-        ImVec2 pos = ImGui::GetCursorScreenPos();
-
-        ImGui::GetWindowDrawList()->AddImage(
-            (void*)(static_cast<uintptr_t>(ISGraphics::tex_id)),
-            ImVec2(pos.x, pos.y),
-            ImVec2(pos.x + window_width, pos.y + window_height),
-            ImVec2(0, 1),
-            ImVec2(1, 0)
-        );
-
-        ImGui::End();
+    void EditorLayer::RenderLogConsolePanel() {
+        Logger::getLoggerGUI().draw("Log Console");
     }
 
 } // end namespace IS
