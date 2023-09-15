@@ -110,7 +110,7 @@ namespace IS
 	}
 
     std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
-        float left = -width / 2.f;
+        float left = - width / 2.f;
         float right = left + width;
         float bottom = -height / 2.f;
         float top = bottom + height;
@@ -130,9 +130,7 @@ namespace IS
         if (this->transformUpdateRequired)
         {
             //BodyTransform transform(this->position, this->rotation);
-            //std::cout << this->bodyTransform.world_position.x << " - " << this->bodyTransform.world_position.y << std::endl;
             Transform currentTransform = Transform(this->bodyTransform.world_position, this->bodyTransform.orientation, this->bodyTransform.scaling);
-            //std::cout << this->position.x << ", " << this->position.y << std::endl;
 
             // loop for each vertice
             for (int i = 0; i < this->vertices.size(); i++)
@@ -140,7 +138,6 @@ namespace IS
                 Vector2D v = this->vertices[i];
                 // apply transform function to calculate correct vertices
                 this->transformedVertices[i] = RigidBody::TransformRigidBody(v, currentTransform);
-                //std::cout << this->transformedVertices[i].x << "- " << this->transformedVertices[i].y << std::endl;
             }
         }
 
@@ -180,7 +177,6 @@ namespace IS
         this->velocity += gravity * dt;
         this->bodyTransform.world_position.x += this->velocity.x * dt;
         this->bodyTransform.world_position.y += this->velocity.y * dt;
-        //this->bodyTransform.setWorldPosition(this->velocity.x * dt, this->velocity.y * dt);
         this->bodyTransform.orientation.x += this->bodyTransform.orientation.y * dt;
         //this->position = this->velocity * dt;
         //this->rotation = this->rotationVelocity * dt;
