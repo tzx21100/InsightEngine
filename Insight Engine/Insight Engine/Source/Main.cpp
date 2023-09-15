@@ -58,7 +58,7 @@ int main() {
     auto physicsSystem = std::make_shared<Physics>();
     signature = engine.GenerateSignature<RigidBody, Transform>();
     engine.AddSystem(physicsSystem, signature);
-    signature = engine.GenerateSignature<Transform, Sprite>();
+    signature = engine.GenerateSignature<Sprite>();
     auto graphicSystem = std::make_shared<ISGraphics>();
     engine.AddSystem(graphicSystem, signature);
     /* adding components to the systems
@@ -77,9 +77,9 @@ int main() {
 
     //creating the entity (i might make the transform a compulsory component)
     Entity testImage = engine.CreateEntityWithComponents<Sprite>();
-    Entity testImage2 = engine.CreateEntityWithComponents<Sprite>();
+    /*Entity testImage2 = engine.CreateEntityWithComponents<Sprite>();
     auto& model = engine.GetComponent<Sprite>(testImage2);
-    model.model = ModelType::Point;
+    model.model = ModelType::Point;*/
 
 
     //run engine (GAME LOOP)
