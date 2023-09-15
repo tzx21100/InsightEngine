@@ -93,7 +93,7 @@ namespace IS {
             for (int n = 0; n < 5; n++) {
                 const char* category = categories[counter % IM_ARRAYSIZE(categories)];
                 const char* word = words[counter % IM_ARRAYSIZE(words)];
-                log.addLog("\033[32m [%05d] [%s] Hello, current time is %.1f, here's a word: '%s' \033[m\n",
+                log.addLog("[%05d] [%s] Hello, current time is %.1f, here's a word: '%s' \n",
                            ImGui::GetFrameCount(), category, ImGui::GetTime(), word);
                 counter++;
             }
