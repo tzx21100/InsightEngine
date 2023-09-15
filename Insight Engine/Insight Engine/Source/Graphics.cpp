@@ -17,7 +17,7 @@ namespace IS {
     GLuint ISGraphics::vao_id;
     Shader ISGraphics::shader_pgm;
 
-    void ISGraphics::Update(float deltaTime) { update(deltaTime); };
+    void ISGraphics::Update(float deltaTime) { update(deltaTime); Draw(); };
     std::string ISGraphics::getName() { return "Graphics"; };
     void ISGraphics::Initialize() { init(); };
     void ISGraphics::HandleMessage(const Message& message) {};
@@ -74,7 +74,7 @@ namespace IS {
         model_TRS.mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
     }
 
-    void ISGraphics::draw() {
+    void ISGraphics::Draw() {
         glBindFramebuffer(GL_FRAMEBUFFER, fbo_id);
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
@@ -88,10 +88,22 @@ namespace IS {
         // find sprite dimensions and model type (box,line,triangle,circle)??
         // get the transform
         // render onto screen from ndc to world
-        for (ISModel &model : models) {
-            if (model.drawing)
-                model.drawSpecial();
+        for (auto& entity : mEntities) {
+            auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
+            //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            if (sprite.model == ModelType::Box) {
+                ISModel ModelCopy = models[static_cast<int>(ModelType::Box)];
+                //set the model copy's transform
+                ModelCopy.draw();
+                if (ModelCopy.drawing) { ModelCopy.drawSpecial(); }
+            }
+
+            
         }
+        //for (ISModel &model : models) {
+        //    if (model.drawing)
+        //        model.drawSpecial();
+        //}
 
         // switch back to default framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -144,10 +156,11 @@ namespace IS {
         test_circle_model.model_TRS.scaling = glm::vec2(100.f, 100.f);
         //test_circle_model.orientation.y = -30.f;
 
-        models.emplace_back(test_box_model);
-        models.emplace_back(test_points_model);
-        models.emplace_back(test_lines_model);
-        models.emplace_back(test_circle_model);
+        //based on this i create the enum
+        models.emplace_back(test_box_model); //ur box is 0
+        models.emplace_back(test_points_model);//ur point is 1
+        models.emplace_back(test_lines_model);//ur line is 2
+        models.emplace_back(test_circle_model);//ur circle is 3
     }
 
     void ISGraphics::setupScreenFBO() {

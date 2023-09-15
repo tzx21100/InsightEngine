@@ -60,7 +60,7 @@ namespace IS {
     void WindowSystem::Initialize() {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
-        ISGraphics::init();
+       // ISGraphics::init();
     }
 
     //this will be the update for the window we can use this to register like people pressing stuff on the window
@@ -71,10 +71,10 @@ namespace IS {
             BROADCAST_MESSAGE(quit);
         }
 
-        ISGraphics::update(time);
+        //ISGraphics::update(time);
 
         //grafix draws
-        ISGraphics::draw();
+       // ISGraphics::draw();
     }
 
     void WindowSystem::HandleMessage(const Message& message) {

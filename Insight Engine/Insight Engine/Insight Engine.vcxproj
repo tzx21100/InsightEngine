@@ -59,6 +59,7 @@
     <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Random.h" />
+    <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\WindowSystem.h" />
     <ClInclude Include="Source\Graphics.h" />
