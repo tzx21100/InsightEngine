@@ -57,6 +57,11 @@ namespace IS {
         void SaveToJson(Entity entity, std::string filename);
         Entity LoadFromJson(std::string filename);
 
+        //entity count
+        uint32_t EntitiesAlive() {
+            return mEntityManager->EntitiesAlive();
+        }
+
         //Basic components functions
         template <typename T>
         bool HasComponent(Entity entity) {

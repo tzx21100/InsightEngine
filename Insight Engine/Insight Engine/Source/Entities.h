@@ -15,7 +15,7 @@ namespace IS {
 	// Entity is just a number
 	using Entity = std::uint32_t;
 	// Limits how many entities we can have
-	const Entity MAX_ENTITIES = 20000;
+	const Entity MAX_ENTITIES = 200000;
 
 	// Define the component
 	using ComponentType = std::uint8_t;
@@ -39,6 +39,7 @@ namespace IS {
 			Signature signature = GetSignature(entity);
 			return signature.test(componentType);
 		}
+		uint32_t EntitiesAlive() { return mLivingEntityCount; };
 
 
 	private:

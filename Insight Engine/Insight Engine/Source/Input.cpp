@@ -49,10 +49,22 @@ namespace IS {
         return glfwGetMouseButton(window, button) == GLFW_PRESS;
     }
 
+    //our world pos 0,0 is in the center
     std::pair<double, double> InputManager::GetMousePosition() const {
         double xPos, yPos;
         glfwGetCursorPos(window, &xPos, &yPos);
-        return { xPos, yPos };
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+
+        double centerX = static_cast<double>(width) / 2.0;
+        double centerY = static_cast<double>(height) / 2.0;
+
+        // Translate to new coordinates
+        double newX = xPos - centerX;
+        double newY = centerY - yPos;  // Negate to make y-axis point upwards
+
+        return { newX, newY };
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
