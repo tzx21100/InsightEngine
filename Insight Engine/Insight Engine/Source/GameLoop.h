@@ -72,9 +72,9 @@ namespace IS {
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
-                    auto& trans = engine.GetComponent<Transform>(a);
-                    trans.setScaling(50-i, 50-i);
-                    trans.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
+                    auto& transl = engine.GetComponent<Transform>(a);
+                    transl.setScaling(50-i, 50-i);
+                    transl.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
                     auto& spr = engine.GetComponent<Sprite>(a);
 
                     //add the image in
