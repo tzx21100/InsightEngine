@@ -7,6 +7,9 @@ namespace IS {
 
         Entity myEntity; //create some entity
         Entity myEntity2; //create some entity
+        Entity points;
+        Entity lines;
+        Entity circle;
 
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
@@ -17,15 +20,37 @@ namespace IS {
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
             myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
+            circle = engine.CreateEntityWithComponents<Sprite, Transform>();
+            lines = engine.CreateEntityWithComponents<Sprite, Transform>();
+            points = engine.CreateEntityWithComponents<Sprite, Transform>();
+
             auto& trans = engine.GetComponent<Transform>(myEntity);
-            //auto& rigidbody = engine.GetComponent<RigidBody>(myEntity);
             auto& trans2 = engine.GetComponent<Transform>(myEntity2);
+
+            auto& transCircle = engine.GetComponent<Transform>(circle);
+            auto& transLines = engine.GetComponent<Transform>(lines);
+            auto& transPoints = engine.GetComponent<Transform>(points);
+
+            auto& spriteCircle = engine.GetComponent<Sprite>(circle);
+            auto& spriteLines = engine.GetComponent<Sprite>(lines);
+            auto& spritePoints = engine.GetComponent<Sprite>(points);
+
             trans.setScaling(100, 100);
             trans.setWorldPosition(0, 0);
             trans2.setScaling(100, 100);
             trans2.setWorldPosition(-400, 0);
-            //rigidbody.updateBoxBody();
+            
+            transCircle.setWorldPosition(650.f, 300.f);
+            transCircle.setScaling(200.f, 200.f);
+            spriteCircle.primitive_type = GL_TRIANGLE_FAN;
 
+            transLines.setWorldPosition(650.f, 300.f);
+            transLines.setScaling(200.f, 200.f);
+            transLines.setOrientation(0.f, -30.f);
+            spriteLines.primitive_type = GL_LINES;
+
+            transPoints.setWorldPosition(650.f, 300.f);
+            spritePoints.primitive_type = GL_POINTS;
         }
 
         virtual void Update(float delta) override {
@@ -69,6 +94,8 @@ namespace IS {
                 IS_CORE_TRACE("Entities Count: {}", engine.EntitiesAlive());
             }*/
 
+            auto& transLines = engine.GetComponent<Transform>(lines);
+            transLines.orientation.x += transLines.orientation.y * delta;
         }
 
         virtual void Draw(float delta) override{

@@ -14,17 +14,17 @@ namespace IS {
     GLuint ISGraphics::placeholder_tex;
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
-    Mesh ISGraphics::quad_mesh;
+    std::vector<Mesh> ISGraphics::meshes;
 
     void ISGraphics::Initialize() {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
         placeholder_tex = initTextures("Assets/placeholder_background.png");
-
+        initMeshes();
         initSprites();
-        //Mesh::init4Meshes();
-        quad_mesh.setupQuadVAO();
+
+
         setupShaders();
 
         framebuffer = std::make_shared<Framebuffer>();
@@ -65,15 +65,26 @@ namespace IS {
 
 
         for (auto& entity : mEntities) {
-            if (InsightEngine::Instance().HasComponent<Sprite>(entity));
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
-            if (sprite.primitive_type == GL_TRIANGLES) {
+            switch (sprite.primitive_type) {
+            case GL_TRIANGLES:
                 sprite.transform(delta_time);
-                //sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
-                //sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
-                sprite.drawSpecial(quad_mesh, mesh_shader_pgm);
+                sprite.drawSpecial(meshes[0], mesh_shader_pgm);
+                break;
+            case GL_POINTS:
+                sprite.transform(delta_time);
+                sprite.drawSpecial(meshes[1], mesh_shader_pgm);
+                break;
+            case GL_LINES:
+                sprite.transform(delta_time);
+                sprite.drawSpecial(meshes[2], mesh_shader_pgm);
+                break;
+            case GL_TRIANGLE_FAN:
+                sprite.transform(delta_time);
+                sprite.drawSpecial(meshes[3], mesh_shader_pgm);
+                break;
             }
         }
         framebuffer->Unbind();
@@ -106,6 +117,21 @@ namespace IS {
         //Mesh::cleanup4Meshes();
         glDeleteTextures(1, &placeholder_tex);
     }
+
+    void ISGraphics::initMeshes() {
+        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
+        quad_mesh.setupQuadVAO();
+        point_mesh.setupNonQuadVAO(GL_POINTS);
+        line_mesh.setupNonQuadVAO(GL_LINES);
+        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+
+        meshes.emplace_back(quad_mesh);
+        meshes.emplace_back(point_mesh);
+        meshes.emplace_back(line_mesh);
+        meshes.emplace_back(circle_mesh);
+    }
+
+
 
     void ISGraphics::initSprites() { // mainly for M1
         Sprite test_box_sprite("Box", GL_TRIANGLES);

@@ -64,14 +64,15 @@ namespace IS {
 
 		static GLuint initTextures(std::string const& imagePath);
 		static void initSprites();
+		static void initMeshes();
 		static void setupShaders();
 		static GLuint getScreenTexture();
 
 		static GLuint placeholder_tex;
 		static std::shared_ptr<Framebuffer> framebuffer;
 		static Shader mesh_shader_pgm;
-		static Mesh quad_mesh;
 
+		static std::vector<Mesh> meshes;
 		static std::vector<Sprite> sprites;
 	};
 

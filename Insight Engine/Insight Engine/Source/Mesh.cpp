@@ -61,12 +61,16 @@ namespace IS {
 
         std::vector<glm::vec2> pos_vtx;
 
-        if (mesh_primitive_type == GL_POINTS || mesh_primitive_type == GL_LINES) {
+        if (mesh_primitive_type == GL_POINTS) {
             pos_vtx = {
-                glm::vec2(-1.0f, -1.0f),
-                glm::vec2(1.0f, -1.0f),
-                glm::vec2(-1.0f, 1.0f),
-                glm::vec2(1.0f, 1.0f)
+                glm::vec2(0.f, 0.f)
+            };
+            draw_count = static_cast<GLuint>(pos_vtx.size());
+        }
+        else if (mesh_primitive_type == GL_LINES) {
+            pos_vtx = {
+                glm::vec2(-1.f, 0.f),
+                glm::vec2(1.f, 0.f)
             };
             draw_count = static_cast<GLuint>(pos_vtx.size());
         }

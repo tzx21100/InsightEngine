@@ -56,7 +56,7 @@ namespace IS {
             glDrawElements(primitive_type, mesh_used.draw_count, GL_UNSIGNED_INT, NULL);
             break;
         case GL_POINTS:
-            glPointSize(5.f);
+            glPointSize(8.f);
             glDrawArrays(primitive_type, 0, mesh_used.draw_count);
             glPointSize(1.f);
             break;
