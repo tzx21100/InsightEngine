@@ -12,10 +12,7 @@ namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
     GLuint ISGraphics::placeholder_tex;
-    GLuint ISGraphics::fbo_id;
-    GLuint ISGraphics::tex_id; // ?
-    GLuint ISGraphics::vao_id;
-    Shader ISGraphics::shader_pgm;
+    std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
     Mesh ISGraphics::quad_mesh;
 
@@ -28,12 +25,9 @@ namespace IS {
         initSprites();
         //Mesh::init4Meshes();
         quad_mesh.setupQuadVAO();
-        setupScreenFBO();
-        //setupQuadVAO();
-        setupScreenShaders();
         setupShaders();
 
-
+        framebuffer = std::make_shared<Framebuffer>();
 
 
     }
@@ -56,11 +50,8 @@ namespace IS {
     }
 
     void ISGraphics::Draw(float delta_time) {
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo_id);
+        framebuffer->Bind();
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
 
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -88,7 +79,7 @@ namespace IS {
                 sprite.drawSpecial(quad_mesh, mesh_shader_pgm);
             }
         }
-
+        framebuffer->Unbind();
         //for (Sprite &sprite : sprites) {
             //if (sprite.drawing) {
             //    Mesh meshUsed{};
@@ -112,26 +103,10 @@ namespace IS {
         //std::cout << "pri type: " << sprites[0].primitive_type << "draw cnt: " << quad_mesh.draw_count << std::endl;
 
         //sprites[0].drawSpecial(quad_mesh, mesh_shader_pgm, placeholder_tex);
-
-        // switch back to default framebuffer
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        glDisable(GL_DEPTH_TEST);
-
-        shader_pgm.use();
-        glBindTexture(GL_TEXTURE_2D, tex_id);
-        glBindVertexArray(vao_id);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindVertexArray(0);
-        shader_pgm.unUse();
     }
 
     void ISGraphics::cleanup() {
         //Mesh::cleanup4Meshes();
-
-        glDeleteFramebuffers(1, &fbo_id);
-        glDeleteVertexArrays(1, &vao_id);
-        glDeleteTextures(1, &tex_id);
         glDeleteTextures(1, &placeholder_tex);
     }
 
@@ -167,75 +142,6 @@ namespace IS {
         sprites.emplace_back(test_points_sprite);//ur point is 1
         sprites.emplace_back(test_lines_sprite);//ur line is 2
         sprites.emplace_back(test_circle_sprite);//ur circle is 3
-    }
-
-    void ISGraphics::setupScreenFBO() {
-        GLuint fbo_hdl, tex_hdl, rbo_hdl;
-
-        // Create framebuffer object
-        glGenFramebuffers(1, &fbo_hdl);
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo_hdl);
-
-        // Create texture object (color attachment)
-        glGenTextures(1, &tex_hdl);
-        glBindTexture(GL_TEXTURE_2D, tex_hdl);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        // Allow rescaling
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_hdl, 0);
-
-        // Create renderbuffer object (depth attachment)
-        glGenRenderbuffers(1, &rbo_hdl);
-        glBindRenderbuffer(GL_RENDERBUFFER, rbo_hdl);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, WIDTH, HEIGHT);
-        glFramebufferRenderbuffer(GL_RENDERBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo_hdl);
-
-        // Validate whether framebuffer object is complete
-        GLenum fbo_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        IS_CORE_ASSERT_MESG((fbo_status == GL_FRAMEBUFFER_COMPLETE), "Framebuffer is incomplete!");
-
-        fbo_id = fbo_hdl;
-        tex_id = tex_hdl;
-    }
-
-    void ISGraphics::setupScreenShaders() {
-        // vertex shader
-        std::string vtx_shdr = R"(
-            #version 450 core
-            layout (location = 0) in vec2 aVertexPosition;
-            layout (location = 1) in vec2 aTexCoord;
-            layout (location = 0) out vec2 vTexCoord;
-
-            void main()
-            {
-                gl_Position = vec4(aVertexPosition, 0.0, 1.0);
-                vTexCoord = aTexCoord;
-            }
-        )";
-
-        // fragment shader
-        std::string frag_shdr = R"(
-            #version 450 core
-
-            layout (location = 0) in vec2 vTexCoord;
-            layout (location = 0) out vec4 fFragColor;
-            uniform sampler2D uScreenTex;
-            
-            void main() {
-                fFragColor = texture(uScreenTex, vTexCoord);
-            }
-        )";
-
-        // Compile and link the shaders into a shader program
-        shader_pgm.compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-        shader_pgm.compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-        shader_pgm.link();
-        shader_pgm.validate();
-
-        // Check if the shader program compilation and linking was successful
-        IS_CORE_ASSERT_MESG(GL_TRUE == shader_pgm.isLinked(), "Unable to compile/link/validate shader programs {}", shader_pgm.getLog());
-
     }
 
     GLuint ISGraphics::initTextures(std::string const& image_path) {
@@ -318,5 +224,9 @@ namespace IS {
             std::cout << mesh_shader_pgm.getLog() << "\n";
             exit(EXIT_FAILURE);
         }
+    }
+
+    GLuint ISGraphics::getScreenTexture() {
+        return framebuffer->getTexture();
     }
 }

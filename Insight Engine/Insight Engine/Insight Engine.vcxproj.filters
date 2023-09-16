@@ -85,6 +85,9 @@
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framebuffer.cpp">
+      <Filter>Graphics\Buffers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="Source\GameLoop.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framebuffer.h">
+      <Filter>Graphics\Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -274,6 +280,9 @@
     </Filter>
     <Filter Include="Editor\Layers">
       <UniqueIdentifier>{468e4dd2-5b0a-45d8-bbe0-505ecf85fc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Buffers">
+      <UniqueIdentifier>{61cf34e4-1635-43dc-b79e-c4f55435eaa6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

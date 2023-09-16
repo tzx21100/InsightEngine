@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "Sprite.h"
 #include "Mesh.h"
+#include "Framebuffer.h"
 
 //#include "Asset.h"
 
@@ -63,16 +64,11 @@ namespace IS {
 
 		static GLuint initTextures(std::string const& imagePath);
 		static void initSprites();
-		static void setupScreenFBO();
-		//static void setupQuadVAO();
 		static void setupShaders();
-		static void setupScreenShaders();
+		static GLuint getScreenTexture();
 
 		static GLuint placeholder_tex;
-		static GLuint fbo_id;
-		static GLuint tex_id;
-		static GLuint vao_id;
-		static Shader shader_pgm;
+		static std::shared_ptr<Framebuffer> framebuffer;
 		static Shader mesh_shader_pgm;
 		static Mesh quad_mesh;
 

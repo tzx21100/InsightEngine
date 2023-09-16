@@ -3,7 +3,7 @@
 
 namespace IS {
 
-    Timer::Timer(const char* name) : stopped(false) {
+    Timer::Timer(const char* name, bool console_print) : stopped(false), print(console_print) {
         result = ProfileResult(name);
         start_timepoint = std::chrono::high_resolution_clock::now();
     }
@@ -25,9 +25,8 @@ namespace IS {
         result.time = std::chrono::duration<float>(end - start);
         stopped = true;
 
-    #ifdef IS_ENABLE_PROFILE
-        IS_CORE_DEBUG("{} : {:.3f} ms", result.name, GetDeltaTime() * 1000);
-    #endif // IS_ENABLE_PROFILE
+        if (print)
+            IS_CORE_DEBUG("{} : {:.3f} ms", result.name, GetDeltaTime() * 1000);
     }
 
 } // end namespace IS

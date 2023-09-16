@@ -12,12 +12,12 @@ namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
-        //IS_CORE_DEBUG("Starting Insight Engine...");
+        IS_CORE_DEBUG("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
         mSystemManager = std::make_unique<SystemManager>();
-        //IS_CORE_DEBUG("Insight Engine started");
+        IS_CORE_DEBUG("Insight Engine started");
     }
 
     //handling messages
@@ -62,7 +62,7 @@ namespace IS {
             mSystemDeltas["Engine"] = 0;
 
         for (const auto& [name, system] : mAllSystems) {
-            Timer timer(name.c_str());
+            Timer timer(name.c_str(), false);
             system->Update(delta_time.count());
             timer.Stop();
 
@@ -101,7 +101,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         std::string systemName = system->getName();
-        //IS_CORE_TRACE("Registering system... {}", systemName);
+        IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
@@ -127,12 +127,13 @@ namespace IS {
 
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
+        IS_PROFILE_FUNCTION();
+
         for (auto const& [name, system] : mAllSystems) {
+            IS_PROFILE_SCOPE(name.c_str());
             system->Initialize();
             //IS_CORE_INFO("{} initialized", name);
         }
-        IS_WARN("DO NOT CALL LOG MACROS BEFORE ALL SYSTEM INITIALIZED!");
-        IS_CORE_INFO("All systems initialized");
     }
 
     // Accessor for system deltas

@@ -40,7 +40,7 @@ namespace IS {
             }
 
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
-                std::cout <<"ENTITIES COUNT:"<< engine.EntitiesAlive() << std::endl;
+                IS_CORE_TRACE("Entities Count: {}", engine.EntitiesAlive());
 
             }
 
@@ -56,6 +56,10 @@ namespace IS {
 
 
 
+        }
+
+        std::string getName() override {
+            return "Game Loop";
         }
 
     };

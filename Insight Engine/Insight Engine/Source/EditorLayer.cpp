@@ -103,7 +103,7 @@ namespace IS {
         ImVec2 pos = ImGui::GetCursorScreenPos();
 
         ImGui::GetWindowDrawList()->AddImage(
-            (void*)(static_cast<uintptr_t>(ISGraphics::tex_id)),
+            std::bit_cast<void*>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
             ImVec2(pos.x, pos.y),
             ImVec2(pos.x + window_width, pos.y + window_height),
             ImVec2(0, 1),
@@ -146,13 +146,12 @@ namespace IS {
             ImGui::SameLine();
             ImGui::SliderFloat(("##Speed" + sprite.name).c_str(), &sprite.model_TRS.orientation.y, -180.f, 180.f);
 
-            // Box uses texture so no point changing color
-            if (sprite.name != "Box") {
-                ImGui::Spacing();
-                ImGui::Text("%-6s", "Color");
-                ImGui::SameLine();
-                ImGui::ColorEdit3(("##Color" + sprite.name).c_str(), &sprite.color[0]);
-            }
+
+            ImGui::Spacing();
+            ImGui::Text("%-6s", "Color");
+            ImGui::SameLine();
+            ImGui::ColorEdit3(("##Color" + sprite.name).c_str(), &sprite.color[0]);
+
             ImGui::Dummy({ 5.f, 5.f });
             ImGui::Separator();
             ImGui::Dummy({ 5.f, 5.f });
