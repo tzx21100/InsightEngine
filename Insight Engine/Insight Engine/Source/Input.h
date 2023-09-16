@@ -49,6 +49,17 @@ namespace IS {
             return instance;
         }
 
+        void setCenterPos(float posx, float posy) {
+            center_x = posx;
+            center_y = posy;
+        }
+        void setRatio(float widthR, float heightR) {
+            int width, height;
+            glfwGetWindowSize(window, &width, &height);
+            ratio_width =  (float)width / widthR;
+            ratio_height =  (float)height / heightR;
+        }
+
     private:
         std::unordered_set<int> pressed_keys;
         std::unordered_set<int> released_keys;
@@ -56,6 +67,10 @@ namespace IS {
         //this is to store held keys and make it unique
         std::unordered_set<int> held_keys;
 
+        float center_x = 0.f;
+        float center_y = 0.f;
+        float ratio_width = 1.f;
+        float ratio_height = 1.f;
         // GLFW key callback function
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 

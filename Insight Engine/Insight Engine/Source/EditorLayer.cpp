@@ -5,6 +5,9 @@
 
 namespace IS {
 
+    //i need the dockspace pos for input
+    ImVec2 dockspace_pos;
+
     EditorLayer::EditorLayer() : Layer("Editor Layer") {}
 
     void EditorLayer::onAttach() {
@@ -41,6 +44,9 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("EditorDockSpace", &show_dockspace, window_flags);
+        //i add in pos here to get the position of the dockspace
+        dockspace_pos = ImGui::GetWindowPos();
+
         ImGui::PopStyleVar();
 
         ImGui::PopStyleVar(2);
@@ -115,10 +121,20 @@ namespace IS {
     void EditorLayer::RenderScenePanel() {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
         ImGui::Begin("Scene");
+        ImVec2 scene_size = ImGui::GetWindowSize();
+        ImVec2 scene_pos = ImGui::GetWindowPos();
+        //scene pos for the input
+        ImVec2 actual_scene_pos;
+        actual_scene_pos.x = scene_pos.x-dockspace_pos.x;
+        actual_scene_pos.y = scene_pos.y-dockspace_pos.y;
+        InputManager::Instance().setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
+        InputManager::Instance().setRatio(scene_size.x, scene_size.y);
+
 
         const uint32_t window_width = static_cast<uint32_t>(ImGui::GetContentRegionAvail().x);
         const uint32_t window_height = static_cast<uint32_t>(ImGui::GetContentRegionAvail().y);
         ImVec2 pos = ImGui::GetCursorScreenPos();
+
 
         ImGui::GetWindowDrawList()->AddImage(
             std::bit_cast<void*>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),

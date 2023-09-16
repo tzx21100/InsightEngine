@@ -49,6 +49,8 @@ namespace IS {
     }
 
     void GUISystem::Update(float delta_time) {
+
+
         Begin();
         layers.Update(delta_time);
         layers.Render();

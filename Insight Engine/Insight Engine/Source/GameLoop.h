@@ -39,15 +39,27 @@ namespace IS {
             float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
             trans.orientation.x += rotate * speed;
 
-            /*if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
+            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                 for (int i = 0; i < 1; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                     auto& trans = engine.GetComponent<Transform>(a);
                     trans.setScaling(50-i, 50-i);
                     trans.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
                 }
 
-            }*/
+            }
+
+
+
+            if (input.IsKeyPressed(GLFW_KEY_1)) {
+          
+                Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
+                auto& trans = engine.GetComponent<Transform>(a);
+                trans.setScaling(50, 50);
+                trans.setWorldPosition(-WIDTH/2, -HEIGHT/2);
+                
+
+            }
             //Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
             //auto& trans = engine.GetComponent<Transform>(a);
             //trans.setScaling(50 , 50 );

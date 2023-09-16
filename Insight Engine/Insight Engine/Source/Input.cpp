@@ -54,15 +54,16 @@ namespace IS {
         double xPos, yPos;
         glfwGetCursorPos(window, &xPos, &yPos);
 
-        int width, height;
-        glfwGetWindowSize(window, &width, &height);
+        //int width, height;
+        //glfwGetWindowSize(window, &width, &height);
 
-        double centerX = static_cast<double>(width) / 2.0;
-        double centerY = static_cast<double>(height) / 2.0;
+        //double centerX = static_cast<double>(width) / 2.0;
+        //double centerY = static_cast<double>(height) / 2.0;
+       //std::cout << "X: " << xPos << "Y :" << yPos << std::endl;
 
-        // Translate to new coordinates
-        double newX = xPos - centerX;
-        double newY = centerY - yPos;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x)*ratio_width;
+        double newY = (center_y - yPos)*ratio_height;  // Negate to make y-axis point upwards
+
 
         return { newX, newY };
     }
