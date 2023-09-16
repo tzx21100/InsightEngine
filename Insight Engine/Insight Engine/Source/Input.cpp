@@ -59,14 +59,7 @@ namespace IS {
 
         //double centerX = static_cast<double>(width) / 2.0;
         //double centerY = static_cast<double>(height) / 2.0;
-       std::cout << "X: " << xPos << "Y :" << yPos << std::endl;
-        // Translate to new coordinates
-        // Adjust mouse position based on framebuffer properties
-        //int framebufferWidth, framebufferHeight;
-        //glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-        //float normalizedMouseX = (float)xPos / framebufferWidth;
-        //float normalizedMouseY = 1.0f - (float)yPos / framebufferHeight;
-
+       //std::cout << "X: " << xPos << "Y :" << yPos << std::endl;
 
         double newX = (xPos - center_x)*ratio_width;
         double newY = (center_y - yPos)*ratio_height;  // Negate to make y-axis point upwards
