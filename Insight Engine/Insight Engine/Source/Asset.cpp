@@ -10,20 +10,20 @@
 #pragma warning(pop)
 
 namespace IS {
-    void ISAsset::Initialize() {//call once
+    void AssetManager::Initialize() {//call once
         //Example usage:
        // const char* filename = "sky.jpg"; // Replace with your image file path
        // const char* filename2 = "shapes.png"; // Replace with your image file path
 
        //const char* filename = "Assets/placeholder_background.png"; // Replace with your image file path
-       //ISAsset asset(filename);
+       //AssetManager asset(filename);
        //Image image_manager;
        //asset.ISImageLoad(image_manager);
        //asset.ISImageCreate(image_manager, false);
        //asset.ISImageSave(image_manager, "Assets/placeholder_background.png");
        //asset.ISImageFree(image_manager);
 
-       // ISAsset asset2(filename2);
+       // AssetManager asset2(filename2);
        // asset2.ISImageLoad(image_manager);
        // asset2.ISImageCreate(image_manager, false);*/
        // asset2.ISImageSave(image_manager, "shapes.jpg");
@@ -44,114 +44,96 @@ namespace IS {
 
     }
 
-    void ISAsset::Update([[maybe_unused]] float deltaTime) {//every frame
+    void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame
                
     }
 
     
 
-    std::string ISAsset::getName() {
-        return "ISAsset";
+    std::string AssetManager::getName() {
+        return "AssetManager";
     }
 
-    void ISAsset::HandleMessage(const Message& message) {
+    void AssetManager::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
             std::cout << "Handling Debug" << std::endl;
         }
     }
 
-    // Constructor
-    ISAsset::ISAsset(const char* file_name) : filename(file_name), 
-        width(0), height(0), channels(0) {
 
-    }
-    // Destructor
-    ISAsset::~ISAsset() {
-
-    }
-
-    const ImageData& ISAsset::getImageData() const{
-        return image;
+    const Image& AssetManager::GetImage(const std::string& filename) const {
+        auto it = mImageList.find(filename);
+        if (it != mImageList.end()) {
+            return it->second;
+        }
+        throw std::runtime_error("Image not found.");
     }
 
-    uint8_t* ISAsset::ISImageLoad(Image & image_manager) {
-        // Use STB image library to load the image
-        unsigned char* img_data = stbi_load(filename, &width, &height, &channels, 0);
-
-        if (img_data) {
-            image.file_name = getFileName(filename);
+    Image AssetManager::ImageLoad(const std::string& filepath) {
+        int width, height, channels;
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+        if (data) {
+            Image image;
+            image.file_name = filepath;
             image.width = width;
             image.height = height;
             image.channels = channels;
-            image.data = img_data;
-            image.size = width * height * channels;
+            image.data = data;
             image.allocation_type = allocationType::StbAllocated;
-
-            // Save the image data into the provided Image object
-            image_manager.saveImageData(this->getImageData());
-            return image.data;
+            auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
+            auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
+            auto result=graphicsys->initTextures(image);
+            image.texture_data = result;
+            SaveImageData(image);
+            std::cout << "THE tex data: " <<image.texture_data;
+            return image;
         }
-        else {
-            std::cerr << "Error loading image: " << stbi_failure_reason() << std::endl;
-            return nullptr;
+
+       
+
+        throw std::runtime_error("Failed to load image.");
+    }
+
+    void AssetManager::SaveImageData(const Image& image_data) {
+        mImageList[image_data.file_name] = image_data;
+    }
+
+    void AssetManager::RemoveImageData(const std::string& filename) {
+        auto it = mImageList.find(filename);
+        if (it != mImageList.end()) {
+            stbi_image_free(it->second.data);
+            mImageList.erase(it);
         }
     }
 
-    void ISAsset::ISImageCreate([[maybe_unused]] Image& image_manager, bool zeroed) {
-        size_t size = width * height * channels;
-
-        if (zeroed) {
-            image.data = new uint8_t[size]();
-        }
-        else
-        {
-            image.data = new uint8_t[size];
-        }
-
-        if (image.data != nullptr) {
-            image.width = width;
-            image.height = height;
-            image.size = size;
-            image.channels = channels;
-            image.allocation_type = allocationType::SelfAllocated;
-        }
+    void AssetManager::ImageFree(const std::string& filename) {
+        RemoveImageData(filename);
     }
 
-    void ISAsset::ISImageSave([[maybe_unused]] Image& image_manager, const char* file_name) {
-        if (stringEndsIn(file_name, ".jpg") || stringEndsIn(file_name, ".JPG") || stringEndsIn(file_name, ".jpeg") || stringEndsIn(file_name, ".JPEG")) {
-            stbi_write_jpg(file_name, image.width, image.height, image.channels, image.data, 100);
-        }
-        else if (stringEndsIn(file_name, ".png") || stringEndsIn(file_name, ".PNG")) {
-            stbi_write_png(file_name, image.width, image.height, image.channels, image.data, image.width * image.channels);
-        }
-        else {
-            ON_ERROR(false, "");
-        }
-    }
+    //i have no idea what this does
+    //void AssetManager::ImageCreate([[maybe_unused]] Image& image, bool zeroed) {
+    //    size_t size = width * height * channels;
 
-    void ISAsset::ISImageFree(Image& image_manager){
-        if (image.allocation_type != allocationType::NoAllocation && image.data != nullptr) {
-            if (image.allocation_type == allocationType::StbAllocated) {
-                stbi_image_free(image.data);
-            }
-            else {
-                delete[] image.data;
-            }
+    //    if (zeroed) {
+    //        image.data = new uint8_t[size]();
+    //    }
+    //    else
+    //    {
+    //        image.data = new uint8_t[size];
+    //    }
 
-            image.data = nullptr;
-            image.width = 0;
-            image.height = 0;
-            image.size = 0;
-            image.allocation_type = allocationType::NoAllocation;
+    //    if (image.data != nullptr) {
+    //        image.width = width;
+    //        image.height = height;
+    //        image.size = size;
+    //        image.channels = channels;
+    //        image.allocation_type = allocationType::SelfAllocated;
+    //    }
+    //}
 
-            // Remove the image from the Image manager
-            image_manager.removeImageData(image);
-        }
-    }
-
-    void ISAsset::ISImageToGray(Image& image_manager) {
-        for (unsigned char* p = image.data, *pg = image.data; p != image.data + image.size; p += image.channels, pg += channels) {
+    void AssetManager::ImageToGray(Image& image) {
+        for (unsigned char* p = image.data, *pg = image.data; p != image.data + image.size; p += image.channels, pg += image.channels) {
             *pg = static_cast<uint8_t>((*p + *(p + 1) + *(p + 2)) / 3.0);
             if (image.channels == 4) {
                 *(pg + 1) = *(p + 3);
@@ -159,16 +141,15 @@ namespace IS {
         }
 
         // Update the channels and allocation type of the image
-        image.channels = channels;
         if (image.allocation_type != allocationType::SelfAllocated) {
             image.allocation_type = allocationType::SelfAllocated;
         }
 
         // save the modified image data to the image_manager
-        image_manager.saveImageData(image);
+        SaveImageData(image);
     }
 
-    void ISAsset::ISImageToSepia(Image& image_manager) {
+    void AssetManager::ImageToSepia(Image& image) {
         
         for (unsigned char* p = image.data; p != image.data + image.size; p += image.channels) {
             int r = *p, g = *(p + 1), b = *(p + 2);
@@ -184,55 +165,7 @@ namespace IS {
             image.allocation_type = allocationType::SelfAllocated;
         }
 
-        image_manager.saveImageData(image);
-    }
-
-    Image::Image() {}
-
-    Image::~Image() {}
-
-    const std::vector<ImageData>& Image::getImages() const
-    {
-        return images;
-    }
-    
-
-    void Image::saveImageData(const ImageData& image_data) {
-        images.push_back(image_data);
-    }
-
-    void Image::removeImageData(const ImageData& image_data) {
-        auto it = std::remove_if(images.begin(), images.end(),
-            [&image_data](const ImageData& image) {
-                return &image == &image_data;
-            });
-
-        if (it != images.end()) {
-            images.erase(it, images.end());
-        }
-    }
-
-    // Overload << for ImageData
-    std::ostream& operator<<(std::ostream& os, const ImageData& image_data) {
-        // print an ImageData object
-        os << "File Name = " << image_data.file_name << ", Width = " << image_data.width << ", Height = " << image_data.height << ", Channels = " << image_data.channels;
-        return os;
-    }
-
-    // overloaded << operator for Image
-    std::ostream& operator<<(std::ostream& os, const Image& image) {
-        const std::vector<ImageData>& imageVector = image.getImages();
-
-        os << "[";
-        for (size_t i = 0; i < imageVector.size(); ++i) {
-            os << imageVector[i];
-            if (i < imageVector.size() - 1) {
-                os << " | ";
-            }
-        }
-        os << "]";
-
-        return os;
+        SaveImageData(image);
     }
 
 

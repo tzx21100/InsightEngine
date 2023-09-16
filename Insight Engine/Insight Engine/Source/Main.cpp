@@ -51,7 +51,7 @@ int main() {
     engine.AddSystem(mySystem, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3, signature);
-    auto mySystem4 = std::make_shared<ISAsset>();
+    auto mySystem4 = std::make_shared<AssetManager>();
     engine.AddSystem(mySystem4, signature);
     auto gui = std::make_shared<GUISystem>();
     engine.AddSystem(gui, signature);

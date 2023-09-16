@@ -143,6 +143,11 @@ namespace IS {
     std::unordered_map<std::string, float> const& InsightEngine::GetSystemDeltas() const {
         return mSystemDeltas;
     }
+    // Accessor for system pointers
+    std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& InsightEngine::GetSystemPointer() const {
+        return mAllSystems;
+    }
+
 
     // Get frame count
     unsigned InsightEngine::FrameCount() const {

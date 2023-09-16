@@ -2,6 +2,7 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H
 
 #include "System.h"
+#include "Audio.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -40,35 +41,31 @@ namespace IS {
         StbAllocated
     };
 
-    struct ImageData {
-        std::string file_name;
-        int width;
-        int height;
-        int channels;
-        size_t size;
-        uint8_t* data;
-        allocationType allocation_type;
-  
+
+    struct Image {
+        
+        //image data should just be in image itself
+        //creating an extra image handler just makes it more tedious
+        std::string file_name{};
+        int width{};
+        int height{};
+        int channels{};
+        size_t size{};
+        uint8_t* data{};
+        unsigned long texture_data{};
+        allocationType allocation_type{};
+
     };
 
-    class Image {
+    class AssetManager :public ParentSystem {
     public:
-        Image();
-        ~Image();
 
-        const std::vector<ImageData>& getImages() const;
-        void saveImageData(const ImageData& image_data);
-        void removeImageData(const ImageData& image_data);
-        uint8_t* getImageData();
-        friend std::ostream& operator<<(std::ostream& os, const Image& image);
+        //this is to instatiate only ONE engine
+        static AssetManager& Instance() {
+            static AssetManager instance;
+            return instance;
+        }
 
-
-    private:
-        std::vector<ImageData> images;
-    };
-
-    class ISAsset :public ParentSystem {
-    public:
         //override parent
         void Initialize() override;
         void Update(float deltaTime) override;
@@ -76,27 +73,36 @@ namespace IS {
         void HandleMessage(const Message& message) override;
 
         //default constructor
-        ISAsset() = default;
-        ISAsset(const char* file_name);
-        ~ISAsset();
+        AssetManager() {}
+        AssetManager(const char* file_name);
+        ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
         
-        const ImageData& getImageData() const;
+        const Image& getImage() const;
 
-        uint8_t* ISImageLoad(Image& image_manager);
-        void ISImageCreate(Image& image_manager, bool zeroed);
-        void ISImageSave(Image& image_manager, const char* file_name);
-        void ISImageFree(Image& image_manager);
-        void ISImageToGray(Image& image_manager);
-        void ISImageToSepia(Image& image_manager);
+        const Image& GetImage(const std::string& filename) const;
+        Image ImageLoad(const std::string& filepath);
+        void SaveImageData(const Image& image_data);
+        void RemoveImageData(const std::string& filename);
+        void ImageFree(const std::string& filename);
 
+
+        void ImageCreate(Image& image, bool zeroed);
+        void ImageSave(Image& image, const char* file_name);
+        void ImageToGray(Image& image);
+        void ImageToSepia(Image& image);
+
+        //asset managers are supposed to save sounds and fonts as well
+        void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }
+        std::unordered_map<std::string,FMOD::Channel*>mSoundList;
+        std::unordered_map<std::string, Image>mImageList;
 
 
     private:
-        const char* filename;
-        int width;
-        int height;
-        int channels;
-        ImageData image;
+        //const char* filename;
+        //int width;
+        //int height;
+        //int channels;
+        //Image image;
     };
 
 

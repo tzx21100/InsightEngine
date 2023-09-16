@@ -14,8 +14,13 @@ namespace IS {
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
         InputManager& input = InputManager::Instance();
+        AssetManager& asset = AssetManager::Instance();
+
+        Image backgroundTest;
 
         virtual void Initialize() override {
+            //create a image
+            backgroundTest = asset.ImageLoad("Assets/placeholder_background.png");
 
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
@@ -43,6 +48,7 @@ namespace IS {
             transCircle.setWorldPosition(650.f, 300.f);
             transCircle.setScaling(200.f, 200.f);
             spriteCircle.primitive_type = GL_TRIANGLE_FAN;
+            
 
             transLines.setWorldPosition(650.f, 300.f);
             transLines.setScaling(200.f, 200.f);
@@ -63,36 +69,21 @@ namespace IS {
             trans.world_position.y += verti * speed;
             float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
             trans.orientation.x += rotate * speed;
-
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                     auto& trans = engine.GetComponent<Transform>(a);
                     trans.setScaling(50-i, 50-i);
                     trans.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
+                    auto& spr = engine.GetComponent<Sprite>(a);
+
+                    //add the image in
+                    spr.texture = backgroundTest.texture_data;
                 }
 
             }
 
 
-
-            if (input.IsKeyPressed(GLFW_KEY_1)) {
-          
-                Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
-                auto& trans = engine.GetComponent<Transform>(a);
-                trans.setScaling(50, 50);
-                trans.setWorldPosition(-WIDTH/2, -HEIGHT/2);
-                
-
-            }
-            //Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
-            //auto& trans = engine.GetComponent<Transform>(a);
-            //trans.setScaling(50 , 50 );
-            //trans.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
-            /*
-            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
-                IS_CORE_TRACE("Entities Count: {}", engine.EntitiesAlive());
-            }*/
 
             auto& transLines = engine.GetComponent<Transform>(lines);
             transLines.orientation.x += transLines.orientation.y * delta;

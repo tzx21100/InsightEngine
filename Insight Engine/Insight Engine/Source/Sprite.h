@@ -15,6 +15,7 @@ namespace IS {
     public:
         GLenum primitive_type{};
         Transform model_TRS{}; // transformation values
+        uint8_t texture{};
 
         // imgui
         std::string name;

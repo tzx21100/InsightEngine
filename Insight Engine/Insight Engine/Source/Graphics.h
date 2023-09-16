@@ -62,7 +62,7 @@ namespace IS {
 		
 		static void cleanup();
 
-		static GLuint initTextures(std::string const& imagePath);
+		static GLuint initTextures(Image& image);
 		static void initSprites();
 		static void initMeshes();
 		static void setupShaders();

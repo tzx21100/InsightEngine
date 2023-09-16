@@ -32,7 +32,8 @@ namespace IS {
 
         // Accessor to system deltas
         std::unordered_map<std::string, float> const& GetSystemDeltas() const;
-
+        // Accessor to system pointers
+        std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& GetSystemPointer() const;
         // Accessor to frame count
         unsigned FrameCount() const;
 

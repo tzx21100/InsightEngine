@@ -37,7 +37,7 @@ namespace IS {
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
-        placeholder_tex = initTextures("Assets/placeholder_background.png");
+        //placeholder_tex = initTextures("Assets/placeholder_background.png");
         initMeshes();
         initSprites();
 
@@ -77,19 +77,19 @@ namespace IS {
             switch (sprite.primitive_type) {
             case GL_TRIANGLES:
                 sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[0], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[0], mesh_shader_pgm,sprite.texture);
                 break;
             case GL_POINTS:
                 sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[1], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[1], mesh_shader_pgm, sprite.texture);
                 break;
             case GL_LINES:
                 sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[2], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[2], mesh_shader_pgm, sprite.texture);
                 break;
             case GL_TRIANGLE_FAN:
                 sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[3], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
         }
@@ -173,12 +173,12 @@ namespace IS {
         sprites.emplace_back(test_circle_sprite);//ur circle is 3
     }
 
-    GLuint ISGraphics::initTextures(std::string const& image_path) {
-        int width{}, height{}, channels{};
-        unsigned char* image_data = stbi_load(image_path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+    GLuint ISGraphics::initTextures(Image& image) {
+        int width{image.width}, height{image.height}, channels{image.channels};
+        unsigned char* image_data = image.data;
 
         if (!image_data) {
-            std::cerr << "Failed to load the texture image: " << image_path << std::endl;
+            std::cerr << "Failed to load the texture image: " << image.file_name << std::endl;
             return 0; // Return 0 to indicate failure
         }
 
@@ -197,6 +197,7 @@ namespace IS {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
+        std::cout << "TEXURE: " << textureID;
         return textureID;
     }
 

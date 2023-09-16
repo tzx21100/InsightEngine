@@ -27,6 +27,8 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <variant>
 #include <cmath>
 #include <limits>
+#include <chrono>
+#include <memory>
 
 // Project files
 #include "Properties.h"
@@ -43,5 +45,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Sprite.h"
 #include "Transform.h"
 #include "Input.h"
+#include "Graphics.h"
 
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
