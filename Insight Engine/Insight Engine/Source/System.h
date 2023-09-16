@@ -2,7 +2,7 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_SYSTEM_H_
 
 #include "Entities.h"
-#include"Message.h"
+#include "Message.h"
 #include "EventManager.h"
 #include <string>
 #include <unordered_map>

@@ -17,6 +17,23 @@ namespace IS {
     Mesh ISGraphics::quad_mesh;
 
     void ISGraphics::Initialize() {
+        // Initialize entry points to OpenGL functions and extensions
+        if (GLenum err = glewInit(); GLEW_OK != err) {
+            std::ostringstream oss;
+            oss << glewGetErrorString(err);
+            IS_CORE_ERROR("Unable Unable to initialize GLEW - error: {} - abort program", oss.str());
+            std::exit(EXIT_FAILURE);
+        }
+        if (GLEW_VERSION_4_5) {
+            std::ostringstream oss;
+            oss << glewGetString(GLEW_VERSION);
+            IS_CORE_INFO("Using glew version: {}", oss.str());
+            IS_CORE_INFO("Driver supports OpenGL 4.5");
+        } else {
+            IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
+            std::exit(EXIT_FAILURE);
+        }
+
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
 
         glViewport(0, 0, WIDTH, HEIGHT);
@@ -27,17 +44,11 @@ namespace IS {
         quad_mesh.setupQuadVAO();
         setupShaders();
 
-        framebuffer = std::make_shared<Framebuffer>();
-
-
+        Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
+        framebuffer = std::make_shared<Framebuffer>(props);
     }
 
     void ISGraphics::Update(float delta_time) {
-
-
-        for (Sprite& sprite : sprites) {
-            sprite.transform(delta_time);
-        }
         Draw(delta_time);
     }
 
@@ -52,7 +63,6 @@ namespace IS {
     void ISGraphics::Draw(float delta_time) {
         framebuffer->Bind();
         glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
-
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Render scene
@@ -60,12 +70,7 @@ namespace IS {
         // find sprite dimensions and model type (box,line,triangle,circle)??
         // get the transform
         // render onto screen from ndc to world
-
-
-
-
         for (auto& entity : mEntities) {
-            if (InsightEngine::Instance().HasComponent<Sprite>(entity));
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
@@ -224,6 +229,6 @@ namespace IS {
     }
 
     GLuint ISGraphics::getScreenTexture() {
-        return framebuffer->getTexture();
+        return framebuffer->GetColorAttachment();
     }
 }

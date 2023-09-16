@@ -2,7 +2,6 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_ENGINE_WINDOW_WINDOW_SYSTEM_H
 
 // Ensure glew is included before gl
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "System.h"
