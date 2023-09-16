@@ -237,7 +237,7 @@ namespace IS
 
     void RigidBody::updateBoxBody(Transform bodyTransform, float mass, float restitution) {
         CreateBoxBody(bodyTransform.world_position.x, bodyTransform.world_position.y, this->mass, this->restitution);
-        this->vertices = CreateBoxVertices(bodyTransform.scaling.x*2, bodyTransform.scaling.y*2);
+        this->vertices = CreateBoxVertices(bodyTransform.scaling.x, bodyTransform.scaling.y);
         this->transformUpdateRequired = true;
         this->transformedVertices = GetTransformedVertices();
     }

@@ -27,8 +27,8 @@ namespace IS {
                                    0.f, 0.f, 1.f }; // column 3
 
 
-        glm::mat3 scale_xform = { model_TRS.scaling.x, 0.f, 0.f,   // column 1
-                                  0.f, model_TRS.scaling.y, 0.f,   // column 2
+        glm::mat3 scale_xform = { model_TRS.scaling.x / 2.f, 0.f, 0.f,   // column 1
+                                  0.f, model_TRS.scaling.y / 2.f, 0.f,   // column 2
                                   0.f, 0.f, 1.f }; // column 3
 
         glm::mat3 world_to_NDC_xform = (translate_xform * rotate_xform) * scale_xform;
@@ -37,8 +37,8 @@ namespace IS {
 
 
 
-        float map_scale_x = 1.f / WIDTH; // 1/1280 (DEPENDANT ON WORLD SIZE)
-        float map_scale_y = 1.f / HEIGHT; // 1/720
+        float map_scale_x = 2.f / WIDTH; // 1/1280 (DEPENDANT ON WORLD SIZE)
+        float map_scale_y = 2.f / HEIGHT; // 1/720
 
         glm::mat3 map_scale_xform = { map_scale_x, 0,         0,   // column 1
                                       0,         map_scale_y, 0,   // column 2

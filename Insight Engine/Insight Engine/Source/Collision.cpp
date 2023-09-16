@@ -253,7 +253,7 @@ namespace IS
 			if (axisDepth < depth)
 			{
 				depth = axisDepth;
-				normal = axis;
+				normal = axisnormalized;
 			}
 		}
 

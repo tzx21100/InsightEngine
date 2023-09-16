@@ -54,7 +54,7 @@ namespace IS
 						Vector2D normal{ 1,1 };
 						float depth = 0.f;
 						//float adt += dt;
-						if (Intersection_Polygons(rigidBody.transformedVertices, rigidBody.bodyTransform.getWorldPosition(), rigidBody2.transformedVertices, rigidBody2.bodyTransform.getWorldPosition(), normal, depth)) {
+						if (Intersection_Polygons(rigidBody.GetTransformedVertices(), rigidBody.bodyTransform.getWorldPosition(), rigidBody2.GetTransformedVertices(), rigidBody2.bodyTransform.getWorldPosition(), normal, depth)) {
 							//std::cout << adt << "Colliding" << std::endl;
 							sprite.color = glm::vec3(1.f, 1.f, 0.f);
 							sprite2.color = glm::vec3(1.f, 0.f, 0.f);
