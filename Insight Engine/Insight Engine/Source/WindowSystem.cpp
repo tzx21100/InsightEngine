@@ -34,19 +34,6 @@ namespace IS {
 
         // All the stuff below should be handled by graphics
         glfwMakeContextCurrent(window);
-
-        // Initialize entry points to OpenGL functions and extensions
-        if (GLenum err = glewInit(); GLEW_OK != err) {
-            std::cerr << "Unable to initialize GLEW - error: " << glewGetErrorString(err) << " - abort program" << std::endl;
-            std::exit(EXIT_FAILURE);
-        }
-        if (GLEW_VERSION_4_5) {
-            std::clog << "Using glew version: " << glewGetString(GLEW_VERSION) << std::endl;
-            std::clog << "Driver supports OpenGL 4.5" << std::endl;
-        } else {
-            std::cerr << "Driver doesn't support OpenGL 4.5 - abort program" << std::endl;
-            std::exit(EXIT_FAILURE);
-        }
     }
 
     WindowSystem::~WindowSystem() {

@@ -56,8 +56,8 @@ namespace IS {
         
         glfwPollEvents();
 
-        // Update System deltas every 6s
-        const int update_frequency = 6 * targetFPS;
+        // Update System deltas every 4s
+        const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
 

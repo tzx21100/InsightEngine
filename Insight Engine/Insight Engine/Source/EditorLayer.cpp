@@ -96,8 +96,9 @@ namespace IS {
                     for (int i = 0; i < 500; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                         auto& trans = engine.GetComponent<Transform>(a);
-                        trans.setScaling(120 - i, 120 - i);
-                        trans.setWorldPosition(input.GetMousePosition().first / 2, input.GetMousePosition().second / 2);
+                        trans.setScaling(static_cast<float>(120 - i), static_cast<float>(120 - i));
+                        trans.setWorldPosition(static_cast<float>(input.GetMousePosition().first / 2.f),
+                                               static_cast<float>(input.GetMousePosition().second / 2.f));
                     }
                 }
 
@@ -118,8 +119,7 @@ namespace IS {
     }
 
     void EditorLayer::RenderScenePanel() {
-
-
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
         ImGui::Begin("Scene");
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
@@ -145,6 +145,7 @@ namespace IS {
         );
 
         ImGui::End();
+        ImGui::PopStyleVar();
     }
 
     void EditorLayer::RenderInspectorPanel() {
@@ -251,16 +252,17 @@ namespace IS {
     }
 
     void EditorLayer::RenderSceneOverlay() {
-        static bool show = true;
-        ImGuiIO& io = ImGui::GetIO();
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
         InsightEngine& engine = InsightEngine::Instance();
+        InputManager& input = InputManager::Instance();
 
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-        if (ImGui::Begin("Overlay", &show, window_flags)) {
+        if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
             ImGui::Text("Max Entities: %d", MAX_ENTITIES);
+            ImGui::Separator();
+            ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
         }
         ImGui::End();
     }
