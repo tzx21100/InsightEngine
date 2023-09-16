@@ -21,10 +21,11 @@ namespace IS {
         void onUpdate(float dt) override;
         void onRender() override;
 
-        void RenderInspectorPanel();
+        void RenderScenePanel();
         void RenderPerformancePanel();
         void RenderLogConsolePanel();
-        void RenderScenePanel();
+        void RenderInspectorPanel();
+        void RenderSceneOverlay();
     };
 
 } // end namespace IS

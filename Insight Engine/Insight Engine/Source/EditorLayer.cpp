@@ -83,6 +83,21 @@ namespace IS {
                 ImGui::EndMenu();
             }
 
+            if (ImGui::BeginMenu("Entity")) {
+                InsightEngine& engine = InsightEngine::Instance();
+                if (ImGui::MenuItem("Create 500 entities")) {
+                    InputManager& input = InputManager::Instance();
+                    for (int i = 0; i < 500; i++) {
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
+                        auto& trans = engine.GetComponent<Transform>(a);
+                        trans.setScaling(120 - i, 120 - i);
+                        trans.setWorldPosition(input.GetMousePosition().first / 2, input.GetMousePosition().second / 2);
+                    }
+                }
+
+                ImGui::EndMenu();
+            }
+
             ImGui::EndMenuBar();
         }
 
@@ -91,6 +106,7 @@ namespace IS {
         RenderInspectorPanel();
         RenderPerformancePanel();
         RenderLogConsolePanel();
+        RenderSceneOverlay();
 
         ImGui::End();
     }
@@ -116,7 +132,7 @@ namespace IS {
     void EditorLayer::RenderInspectorPanel() {
         ImGui::Begin("Inspector");
 
-        for (auto& sprite : ISGraphics::sprites) {
+        /*for (auto& sprite : ISGraphics::sprites) {
 
             ImGui::Text("%-6s", sprite.name.c_str());
             ImGui::SameLine();
@@ -155,7 +171,7 @@ namespace IS {
             ImGui::Dummy({ 5.f, 5.f });
             ImGui::Separator();
             ImGui::Dummy({ 5.f, 5.f });
-        }
+        }*/
 
         ImGui::End();
     }
@@ -214,6 +230,20 @@ namespace IS {
 
     void EditorLayer::RenderLogConsolePanel() {
         Logger::getLoggerGUI().draw("Log Console");
+    }
+
+    void EditorLayer::RenderSceneOverlay() {
+        static bool show = true;
+        ImGuiIO& io = ImGui::GetIO();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+        InsightEngine& engine = InsightEngine::Instance();
+
+        ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+        if (ImGui::Begin("Overlay", &show, window_flags)) {
+            ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
+            ImGui::Text("Max Entities: %d", MAX_ENTITIES);
+        }
+        ImGui::End();
     }
 
 } // end namespace IS

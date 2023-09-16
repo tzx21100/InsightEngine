@@ -29,21 +29,18 @@ namespace IS {
             trans.world_position.x += hori * speed;
             trans.world_position.y += verti * speed;
 
-            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
+            /*if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                 for (int i = 0; i < 500; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                     auto& trans = engine.GetComponent<Transform>(a);
                     trans.setScaling(120-i, 120-i);
                     trans.setWorldPosition(input.GetMousePosition().first/2, input.GetMousePosition().second/2);
                 }
-
             }
 
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
                 IS_CORE_TRACE("Entities Count: {}", engine.EntitiesAlive());
-
-            }
-
+            }*/
 
         }
 
