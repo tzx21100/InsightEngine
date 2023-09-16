@@ -125,7 +125,7 @@ namespace IS
 		// check seperating vertices on object A
 		for (int i = 0; i < trans_verticesA.size(); i++) {
 			Vector2D va = trans_verticesA[i];
-			Vector2D vb = trans_verticesB[(i + 1) % trans_verticesA.size()]; // modules by the size of the vector to avoid going out of the range
+			Vector2D vb = trans_verticesA[(i + 1) % trans_verticesA.size()]; // modules by the size of the vector to avoid going out of the range
 
 			Vector2D edge = vb - va; // getting the vector of the side
 			Vector2D axis(-edge.y, edge.x); // getting the left normal

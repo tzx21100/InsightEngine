@@ -48,7 +48,7 @@ namespace IS
 						auto& trans2 = InsightEngine::Instance().GetComponent<Transform>(entity2);
 						auto& sprite2 = InsightEngine::Instance().GetComponent<Sprite>(entity2);
 						rigidBody2.bodyFollowTransform(trans2);
-						std::cout << "body:" << rigidBody.transformedVertices[0].x << " - " << rigidBody.transformedVertices[0].y << std::endl;
+						//std::cout << "body:" << rigidBody.transformedVertices[0].x << " - " << rigidBody.transformedVertices[0].y << std::endl;
 						//std::cout << "body2:" << rigidBody2.transformedVertices[0].x << " - " << rigidBody2.transformedVertices[0].y << std::endl;
 						//std::cout << "body1:" << rigidBody.transformedVertices[0].x << " - " << rigidBody.transformedVertices[0].y << std::endl;
 						Vector2D normal{ 1,1 };
