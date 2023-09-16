@@ -235,7 +235,8 @@ namespace IS {
     void EditorLayer::RenderSceneOverlay() {
         static bool show = true;
         ImGuiIO& io = ImGui::GetIO();
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
+                                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
         InsightEngine& engine = InsightEngine::Instance();
 
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
