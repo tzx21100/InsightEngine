@@ -1,9 +1,13 @@
 #include "Pch.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4244)
+#pragma warning(disable: 4100)
 #define STB_IMAGE_IMPLEMENTATION
-#include "../libraries/stb/include/stb_image.h"
+#include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../libraries/stb/include/stb_image_write.h"
+#include "stb_image_write.h"
+#pragma warning(pop)
 
 namespace IS {
     void ISAsset::Initialize() {//call once
@@ -94,7 +98,7 @@ namespace IS {
         }
     }
 
-    void ISAsset::ISImageCreate(Image& image_manager, bool zeroed) {
+    void ISAsset::ISImageCreate([[maybe_unused]] Image& image_manager, bool zeroed) {
         size_t size = width * height * channels;
 
         if (zeroed) {
@@ -114,7 +118,7 @@ namespace IS {
         }
     }
 
-    void ISAsset::ISImageSave(Image& image_manager, const char* file_name) {
+    void ISAsset::ISImageSave([[maybe_unused]] Image& image_manager, const char* file_name) {
         if (stringEndsIn(file_name, ".jpg") || stringEndsIn(file_name, ".JPG") || stringEndsIn(file_name, ".jpeg") || stringEndsIn(file_name, ".JPEG")) {
             stbi_write_jpg(file_name, image.width, image.height, image.channels, image.data, 100);
         }

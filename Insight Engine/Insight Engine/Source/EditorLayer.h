@@ -2,7 +2,6 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERS_EDITORLAYER_H
 
 #include "Layer.h"
-#include <cstdarg>
 
 // Dependencies
 #include <imgui.h>

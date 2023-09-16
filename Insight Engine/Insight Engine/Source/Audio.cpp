@@ -113,6 +113,8 @@ namespace IS {
         return new_group;
     }
 
+#pragma warning(push)
+#pragma warning(disable: 4458)
     FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath) {
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
@@ -132,6 +134,7 @@ namespace IS {
 
         return sound_channel;
     }
+#pragma warning(pop)
 
     FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) {
         FMOD_MODE mode = FMOD_LOOP_OFF;

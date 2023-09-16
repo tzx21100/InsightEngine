@@ -48,7 +48,7 @@ namespace IS {
     }
 
     //this will be the update for the window we can use this to register like people pressing stuff on the window
-    void WindowSystem::Update(float time)  {
+    void WindowSystem::Update(float)  {
         //register window closing 
         if (glfwWindowShouldClose(window)) {
             Message quit = Message(MessageType::Quit);

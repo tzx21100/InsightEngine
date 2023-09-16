@@ -13,9 +13,6 @@
     <Filter Include="Misc\Debug">
       <UniqueIdentifier>{a73f3666-514b-4aaa-bf9b-c5fc2a0e2174}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Misc\String">
-      <UniqueIdentifier>{a98d2c62-0f52-4655-9ccc-94d0c84faf6a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imconfig.h">
@@ -45,15 +42,9 @@
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.h">
       <Filter>Backend</Filter>
     </ClInclude>
-    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.h">
-      <Filter>Misc\String</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui.cpp">
-      <Filter>Root</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_demo.cpp">
       <Filter>Root</Filter>
     </ClCompile>
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_draw.cpp">
@@ -70,9 +61,6 @@
     </ClCompile>
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.cpp">
       <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.cpp">
-      <Filter>Misc\String</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

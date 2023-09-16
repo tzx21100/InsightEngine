@@ -17,18 +17,15 @@
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.h" />
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_internal.h" />
-    <ClInclude Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.h" />
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_rectpack.h" />
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_textedit.h" />
     <ClInclude Include="..\Insight Engine\libraries\imgui\include\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui.cpp" />
-    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_demo.cpp" />
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_draw.cpp" />
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_stdlib.cpp" />
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_tables.cpp" />
     <ClCompile Include="..\Insight Engine\libraries\imgui\include\imgui_widgets.cpp" />
   </ItemGroup>
@@ -90,6 +87,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,6 +103,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

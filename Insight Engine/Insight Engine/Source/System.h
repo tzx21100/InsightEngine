@@ -25,8 +25,8 @@ namespace IS {
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
         virtual void Initialize() {};
         virtual std::string getName() { return ""; };
-        virtual void Update(float time) {};
-        virtual void Draw(float delta) {};
+        virtual void Update(float) {};
+        virtual void Draw(float) {};
 
         
         

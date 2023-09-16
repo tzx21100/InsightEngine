@@ -10,7 +10,7 @@ namespace IS
         void Update(float dt) override;
         std::string getName() override { return "Physics"; }
         void Initialize() override;
-        void HandleMessage(const Message& message) override {}
+        void HandleMessage(const Message&) override {}
         //void setGravity(float g) { Gravity = g; }
         Vector2D getGravity() { return Gravity; }
         ~Physics() {}

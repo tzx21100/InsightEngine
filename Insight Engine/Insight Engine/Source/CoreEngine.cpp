@@ -125,6 +125,8 @@ namespace IS {
         mAllSystems.clear();  // Clear the map
     }
 
+#pragma warning(push)
+#pragma warning(disable: 4456)
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
@@ -135,6 +137,7 @@ namespace IS {
             //IS_CORE_INFO("{} initialized", name);
         }
     }
+#pragma warning(pop)
 
     // Accessor for system deltas
     std::unordered_map<std::string, float> const& InsightEngine::GetSystemDeltas() const {

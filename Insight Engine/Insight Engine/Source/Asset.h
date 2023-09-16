@@ -22,13 +22,16 @@ static inline bool stringEndsIn(const std::string& str, const std::string& ends)
     return (pos != std::string::npos) && (pos + ends_len == str_len);
 }
 
+#pragma warning(push)
+#pragma warning(disable: 4505)
 static std::string getFileName(const std::string& file_path) {
     size_t last_slash = file_path.find_last_of("/\\");
-    if ((last_slash != std::string::npos)) {
+    if (last_slash != std::string::npos) {
         return file_path.substr(last_slash + 1);
     }
     return file_path;
 }
+#pragma warning(pop)
 
 namespace IS {
     enum class allocationType {
