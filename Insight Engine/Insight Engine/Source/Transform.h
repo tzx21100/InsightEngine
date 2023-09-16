@@ -9,7 +9,7 @@ namespace IS {
 		glm::vec2 world_position{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
 		glm::vec2 orientation{};   // x = angle displacement, y = angle speed
 		glm::vec2 scaling{}; // x = width, y = height
-		glm::mat3 mdl_to_ndl_xform = glm::imat3x3{};
+		glm::mat3 mdl_to_ndc_xform = glm::imat3x3{};
 
 		Transform();
 		Transform(glm::vec2 world_position, glm::vec2 orientation, glm::vec2 scaling);

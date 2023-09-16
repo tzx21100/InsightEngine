@@ -11,40 +11,22 @@ namespace IS {
         if (model_TRS.orientation.x < 0.f) model_TRS.orientation.x += 360.f;
 
         float angle_rad = glm::radians(model_TRS.orientation.x);
+
+        float map_scale_x = 2.f / WIDTH; 
+        float map_scale_y = 2.f / HEIGHT;
+
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
 
-        //glm::mat3 world_to_NDC_xform = { (model_TRS.scaling.x) * cos_angle, (model_TRS.scaling.x) * -sin_angle, 0,   // column 1
-        //                                 (model_TRS.scaling.y) * sin_angle, (model_TRS.scaling.y) * cos_angle,  0,   // column 2
-        //                                 model_TRS.world_position.x,              model_TRS.world_position.y,               1 }; // column 3
+        float model_scale_x = model_TRS.scaling.x / 2.f;
+        float model_scale_y = model_TRS.scaling.y / 2.f;
 
-        glm::mat3 translate_xform = { 1.f, 0.f, 0.f,   // column 1
-                                      0.f, 1.f, 0.f,   // column 2
-                                      model_TRS.world_position.x, model_TRS.world_position.y, 1.f }; // column 3
+        glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
+                                         (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
+                                         (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
+        
 
-        glm::mat3 rotate_xform = { cos_angle, sin_angle, 0.f,   // column 1
-                                   -sin_angle, cos_angle, 0.f,   // column 2
-                                   0.f, 0.f, 1.f }; // column 3
-
-
-        glm::mat3 scale_xform = { model_TRS.scaling.x / 2.f, 0.f, 0.f,   // column 1
-                                  0.f, model_TRS.scaling.y / 2.f, 0.f,   // column 2
-                                  0.f, 0.f, 1.f }; // column 3
-
-        glm::mat3 world_to_NDC_xform = (translate_xform * rotate_xform) * scale_xform;
-
-
-
-
-
-        float map_scale_x = 2.f / WIDTH; // 1/1280 (DEPENDANT ON WORLD SIZE)
-        float map_scale_y = 2.f / HEIGHT; // 1/720
-
-        glm::mat3 map_scale_xform = { map_scale_x, 0,         0,   // column 1
-                                      0,         map_scale_y, 0,   // column 2
-                                      0,         0,           1 }; // column 3
-
-        model_TRS.mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
+        model_TRS.mdl_to_ndc_xform = world_to_NDC_xform;
 	}
 
     void Sprite::drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
@@ -54,7 +36,7 @@ namespace IS {
 
         //shader_program.SetUniform("uSize", test_model.size);
         shader.setUniform("uColor", color);
-        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndl_xform);
+        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
 
         // Bind the texture to the uniform sampler2D
         if (glIsTexture(texture_id)) {
