@@ -255,11 +255,14 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
         InsightEngine& engine = InsightEngine::Instance();
+        InputManager& input = InputManager::Instance();
 
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
         if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
             ImGui::Text("Max Entities: %d", MAX_ENTITIES);
+            ImGui::Separator();
+            ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
         }
         ImGui::End();
     }
