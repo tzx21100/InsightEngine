@@ -48,6 +48,6 @@ namespace IS {
         void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
         void setSpriteSize(float width, float height) { model_TRS.scaling = glm::vec2(width, height); }
         // for M1 rubrics showcase
-        void drawSpecial(Mesh mesh_used, Shader shader, GLuint texture_id = 0);
+        void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
     };
 }

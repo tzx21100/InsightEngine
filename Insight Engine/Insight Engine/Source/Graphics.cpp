@@ -71,9 +71,6 @@ namespace IS {
             sprite.followTransform(trans);
             if (sprite.primitive_type == GL_TRIANGLES) {
                 sprite.transform(delta_time);
-                //ISModel ModelCopy = models[static_cast<int>(ModelType::Box)];
-                //set the model copy's transform
-                //ModelCopy.draw();
                 //sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
                 //sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
                 sprite.drawSpecial(quad_mesh, mesh_shader_pgm);

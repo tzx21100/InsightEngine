@@ -29,7 +29,7 @@ namespace IS {
         model_TRS.mdl_to_ndl_xform = map_scale_xform * world_to_NDC_xform;
 	}
 
-    void Sprite::drawSpecial(Mesh mesh_used, Shader shader, GLuint texture_id) {
+    void Sprite::drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
         shader.use();
 
         glBindVertexArray(mesh_used.vao_ID);
