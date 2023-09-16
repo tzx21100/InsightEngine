@@ -50,7 +50,7 @@ namespace IS
         RigidBody();
         RigidBody(glm::vec2 position, BodyType bodyType, float mass, float restitution,
             float width, float height,  Shape bodyShape);
-
+        void bodyFollowTransform(Transform trans);
         // calculate all the vertices for a box
         std::vector<Vector2D> CreateBoxVertices(float width, float height);
         // calculate all the updated transformed vertices based center position
@@ -71,6 +71,8 @@ namespace IS
         void CreateBoxBody(float width, float height, float mass, float restitution);
         // create circle rigidbody
         void CreateCircleBody(float radius, float mass, float restitution);
+
+        void updateBoxBody(Transform bodyTransform, float mass, float restitution);
 
         Json::Value Serialize() override {
             Json::Value prefab;

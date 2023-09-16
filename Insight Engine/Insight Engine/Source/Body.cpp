@@ -1,6 +1,7 @@
 #include "Pch.h"
 #include "CoreEngine.h"
 #include "Graphics.h"
+#include "Shader.h"
 
 namespace IS
 {
@@ -32,6 +33,7 @@ namespace IS
         this->bodyTransform.world_position = glm::vec2();
         this->bodyTransform.orientation = glm::vec2();
         this->bodyTransform.scaling = glm::vec2();
+        //Sprite::followTransform(this->bodyTransform);
 
         //this->position = Vector2D(); // (0,0)
         this->bodyType = BodyType::Static;
@@ -47,12 +49,13 @@ namespace IS
         this->bodyShape = Shape::Box;
         // if body dynamic, calculate the inverse mass, otherwise set as 0.f
         this->InvMass = (this->bodyType == BodyType::Dynamic) ? (1.f / this->mass) : 0.f;
+        this->transformUpdateRequired = false;
 
         if (this->bodyShape == Shape::Box) {
             CreateBoxBody(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y, this->mass, this->restitution);
             this->vertices = CreateBoxVertices(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y);
             // making the transform vertices same size as the vertices, not neccessary
-            //this->transformedVertices(this->vertices.size());
+            this->transformedVertices = this->vertices;
         }
         else if (this->bodyShape == Shape::Circle) {
             CreateCircleBody(this->bodyTransform.scaling.x/2, this->mass, this->restitution);
@@ -87,7 +90,8 @@ namespace IS
         this->bodyShape = bodyShape;
         // if body dynamic, calculate the inverse mass, otherwise set as 0.f
         this->InvMass = (this->bodyType == BodyType::Dynamic) ? (1.f / this->mass) : 0.f;
-        
+        this->transformUpdateRequired = false;
+
         if (this->bodyShape == Shape::Box) {
             CreateBoxBody(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y, this->mass, this->restitution);
             this->vertices = CreateBoxVertices(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y);
@@ -108,6 +112,11 @@ namespace IS
         this->transformUpdateRequired = true;
 
 	}
+
+    void RigidBody::bodyFollowTransform(Transform trans) {
+        this->bodyTransform = trans; 
+        updateBoxBody(trans, this->mass, this->restitution);
+    }
 
     std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
         float left = - width / 2.f;
@@ -139,7 +148,10 @@ namespace IS
                 // apply transform function to calculate correct vertices
                 this->transformedVertices[i] = RigidBody::TransformRigidBody(v, currentTransform);
             }
-        }
+        }/*
+        else {
+            this->transformedVertices = this->vertices;
+        }*/
 
         this->transformUpdateRequired = false;
         return this->transformedVertices;
@@ -198,6 +210,7 @@ namespace IS
         //this->rotation += val;
         //this->rotation = fmod(this->rotation, (2.0 * PI));
         this->transformUpdateRequired = true;
+        this->transformedVertices = GetTransformedVertices();
     }
 
     void RigidBody::AddForce(Vector2D val) {
@@ -220,5 +233,12 @@ namespace IS
         this->restitution = std::max(0.0f, std::min(restitution, 1.0f));
 
         this->density = mass * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+    }
+
+    void RigidBody::updateBoxBody(Transform bodyTransform, float mass, float restitution) {
+        CreateBoxBody(bodyTransform.world_position.x, bodyTransform.world_position.y, this->mass, this->restitution);
+        this->vertices = CreateBoxVertices(bodyTransform.scaling.x*2, bodyTransform.scaling.y*2);
+        this->transformUpdateRequired = true;
+        this->transformedVertices = GetTransformedVertices();
     }
 }

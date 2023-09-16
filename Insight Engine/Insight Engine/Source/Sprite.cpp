@@ -14,13 +14,31 @@ namespace IS {
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
 
-        glm::mat3 world_to_NDC_xform = { (model_TRS.scaling.x) * cos_angle, (model_TRS.scaling.x) * -sin_angle, 0,   // column 1
-                                         (model_TRS.scaling.y) * sin_angle, (model_TRS.scaling.y) * cos_angle,  0,   // column 2
-                                         model_TRS.world_position.x,              model_TRS.world_position.y,               1 }; // column 3
+        //glm::mat3 world_to_NDC_xform = { (model_TRS.scaling.x) * cos_angle, (model_TRS.scaling.x) * -sin_angle, 0,   // column 1
+        //                                 (model_TRS.scaling.y) * sin_angle, (model_TRS.scaling.y) * cos_angle,  0,   // column 2
+        //                                 model_TRS.world_position.x,              model_TRS.world_position.y,               1 }; // column 3
+
+        glm::mat3 translate_xform = { 1.f, 0.f, 0.f,   // column 1
+                                      0.f, 1.f, 0.f,   // column 2
+                                      model_TRS.world_position.x, model_TRS.world_position.y, 1.f }; // column 3
+
+        glm::mat3 rotate_xform = { cos_angle, sin_angle, 0.f,   // column 1
+                                   -sin_angle, cos_angle, 0.f,   // column 2
+                                   0.f, 0.f, 1.f }; // column 3
 
 
-        float map_scale_x = 0.00078125f; // 1/1280 (DEPENDANT ON WORLD SIZE)
-        float map_scale_y = 0.00138889f; // 1/720
+        glm::mat3 scale_xform = { model_TRS.scaling.x, 0.f, 0.f,   // column 1
+                                  0.f, model_TRS.scaling.y, 0.f,   // column 2
+                                  0.f, 0.f, 1.f }; // column 3
+
+        glm::mat3 world_to_NDC_xform = (translate_xform * rotate_xform) * scale_xform;
+
+
+
+
+
+        float map_scale_x = 1.f / WIDTH; // 1/1280 (DEPENDANT ON WORLD SIZE)
+        float map_scale_y = 1.f / HEIGHT; // 1/720
 
         glm::mat3 map_scale_xform = { map_scale_x, 0,         0,   // column 1
                                       0,         map_scale_y, 0,   // column 2
