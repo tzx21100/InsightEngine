@@ -121,7 +121,7 @@ namespace IS {
 
     void ISGraphics::cleanup() {
         //Mesh::cleanup4Meshes();
-        glDeleteTextures(1, &placeholder_tex);
+       // glDeleteTextures(1, &placeholder_tex);
     }
 
     void ISGraphics::initMeshes() {
