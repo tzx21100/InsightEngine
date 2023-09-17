@@ -11,9 +11,8 @@
 namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
-    Texture ISGraphics::placeholder_tex;
-    Texture ISGraphics::animation1;
     Animation ISGraphics::idle_ani;
+    Animation ISGraphics::idle_ani2;
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
@@ -40,11 +39,10 @@ namespace IS {
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        placeholder_tex.init_texture("Assets/placeholder_background.png");
-        animation1.init_texture("Assets/player_idle.png");
         initMeshes();
         // initSprites();
         idle_ani.initAnimation(1, 8, 3.f);
+        idle_ani2.initAnimation(1, 6, 2.f);
 
         setupShaders();
 
@@ -55,6 +53,7 @@ namespace IS {
     void ISGraphics::Update(float delta_time) {
 
         idle_ani.updateAnimation(delta_time);
+        idle_ani2.updateAnimation(delta_time);
         Draw(delta_time);
     }
 
@@ -84,9 +83,11 @@ namespace IS {
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
-                    texture = animation1.tex_ID;
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, texture);
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
 ;               }
+                else if (sprite.name == "textured_box2") {
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
+                }
                 else {
                     glBindVertexArray(meshes[0].vao_ID);
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm);
@@ -110,7 +111,7 @@ namespace IS {
 
     void ISGraphics::cleanup() {
         //Mesh::cleanup4Meshes();
-        glDeleteTextures(1, &placeholder_tex.tex_ID);
+        //glDeleteTextures(1, &placeholder_tex.tex_ID);
     }
 
     void ISGraphics::initMeshes() {
@@ -127,6 +128,12 @@ namespace IS {
     }
 
     GLuint ISGraphics::initTextures(Image& image) {
+
+        // Enable blending for transparency
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        
         int width{image.width}, height{image.height}, channels{image.channels};
         unsigned char* image_data = image.data;
 
@@ -134,6 +141,7 @@ namespace IS {
             std::cerr << "Failed to load the texture image: " << image.file_name << std::endl;
             return 0; // Return 0 to indicate failure
         }
+
 
         GLuint textureID;
         glGenTextures(1, &textureID);

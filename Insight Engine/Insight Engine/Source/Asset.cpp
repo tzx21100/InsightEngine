@@ -74,6 +74,7 @@ namespace IS {
         int width, height, channels;
         uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
         if (data) {
+
             Image image;
             image.file_name = filepath;
             image.width = width;

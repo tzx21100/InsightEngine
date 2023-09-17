@@ -71,9 +71,9 @@ namespace IS {
 		static GLuint getScreenTexture();
 		static void resizeFramebuffer(GLuint w, GLuint h);
 
-		static Texture placeholder_tex;
-		static Texture animation1;
+
 		static Animation idle_ani;
+		static Animation idle_ani2;
 		static std::shared_ptr<Framebuffer> framebuffer;
 		static Shader mesh_shader_pgm;
 

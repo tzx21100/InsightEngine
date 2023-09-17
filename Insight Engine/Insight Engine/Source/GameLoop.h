@@ -17,10 +17,14 @@ namespace IS {
         AssetManager& asset = AssetManager::Instance();
 
         Image backgroundTest;
+        Image idle_animation;
+        Image zx_animation;
 
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset.ImageLoad("Assets/placeholder_background.png");
+            idle_animation = asset.ImageLoad("Assets/player_idle.png");
+            zx_animation = asset.ImageLoad("Assets/icecream_truck.png");
 
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
@@ -42,6 +46,7 @@ namespace IS {
             auto& spritePoints = engine.GetComponent<Sprite>(points);
 
             spriteMyEntity.name = "textured_box";
+            spriteMyEntity.texture = idle_animation.texture_data;
 
             trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);
@@ -73,15 +78,16 @@ namespace IS {
             float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
             trans.orientation.x += rotate * speed;
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
-                for (int i = 0; i < 1; i++) {
+                for (int i = 0; i < 3; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                     auto& transl = engine.GetComponent<Transform>(a);
-                    transl.setScaling(50-i, 50-i);
+                    transl.setScaling(128, 128);
                     transl.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
                     auto& spr = engine.GetComponent<Sprite>(a);
-
+                    spr.name = "textured_box2";  
+                    spr.texture = zx_animation.texture_data;
                     //add the image in
-                    spr.texture = backgroundTest.texture_data;
+                    //spr.texture = backgroundTest.texture_data;
                 }
 
             }
