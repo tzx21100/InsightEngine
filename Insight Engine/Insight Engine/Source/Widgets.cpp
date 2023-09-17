@@ -48,6 +48,7 @@ namespace IS {
 
             ImGui::PopStyleVar();
             ImGui::EndTable();
+            ImGui::Separator();
         }
 
         ImGui::PopID();

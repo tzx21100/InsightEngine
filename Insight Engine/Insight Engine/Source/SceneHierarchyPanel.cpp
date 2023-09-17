@@ -112,12 +112,50 @@ namespace IS {
 
             if (opened) {
                 auto& rigidbody = engine.GetComponent<RigidBody>(entity);
+                ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInner;
+
+                if (ImGui::BeginTable((std::to_string(entity) + "RigidBodyTable1").c_str(), 2, table_flags)) {
+                    ImGui::TableNextColumn();
+                    ImGui::Text("Body Type: ");
+                    ImGui::TableNextColumn();
+                    switch (rigidbody.bodyType) {
+                    case BodyType::Static:
+                        ImGui::Text("Static");
+                        break;
+                    case BodyType::Dynamic:
+                        ImGui::Text("Dynamic");
+                        break;
+                    case BodyType::Kinematic:
+                        ImGui::Text("Kinematic");
+                        break;
+                    default:
+                        break;
+                    }
+                    ImGui::TableNextColumn();
+                    ImGui::Text("Body Shape: ");
+                    ImGui::TableNextColumn();
+                    switch (rigidbody.bodyShape) {
+                    case Shape::Box:
+                        ImGui::Text("Box");
+                        break;
+                    case Shape::Circle:
+                        ImGui::Text("Circle");
+                        break;
+                    case Shape::Line:
+                        ImGui::Text("Line");
+                        break;
+                    default:
+                        break;
+                    }
+
+                    ImGui::EndTable();
+                    ImGui::Separator();
+                }
 
                 RenderControlVec2("Velocity", rigidbody.velocity);
                 RenderControlVec2("Force", rigidbody.force);
 
-                ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInner;
-                if (ImGui::BeginTable((std::to_string(entity) + "RigidBody").c_str(), 2, table_flags)) {
+                if (ImGui::BeginTable((std::to_string(entity) + "RigidBodyTable2").c_str(), 2, table_flags)) {
                     ImGui::TableNextColumn();
                     ImGui::Text("Density");
                     ImGui::TableNextColumn();
@@ -154,6 +192,7 @@ namespace IS {
                     ImGui::Checkbox("##Transform Update", &rigidbody.transformUpdateRequired);
 
                     ImGui::EndTable();
+                    ImGui::Separator();
                 }
 
                 ImGui::TreePop();
