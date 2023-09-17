@@ -9,11 +9,8 @@ namespace IS {
     public:
         GLenum primitive_type{};
         Transform model_TRS{}; // transformation values
-<<<<<<< Updated upstream
         uint8_t texture{};
-=======
         GLuint tex_ID{};
->>>>>>> Stashed changes
 
         // imgui
         std::string name;

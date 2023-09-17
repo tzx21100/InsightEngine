@@ -39,17 +39,12 @@ namespace IS {
         glClearColor(1.f, 1.f, 1.f, 1.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);
-<<<<<<< Updated upstream
-        //placeholder_tex = initTextures("Assets/placeholder_background.png");
-        initMeshes();
-        initSprites();
-=======
+
         placeholder_tex.init_texture("Assets/placeholder_background.png");
         animation1.init_texture("Assets/player_idle.png");
         initMeshes();
         // initSprites();
         idle_ani.initAnimation(1, 8, 3.f);
->>>>>>> Stashed changes
 
         setupShaders();
 
@@ -58,11 +53,8 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
-<<<<<<< Updated upstream
-        glClearColor(1.f, 1.f, 1.f, 1.f);
-=======
+
         idle_ani.updateAnimation(delta_time);
->>>>>>> Stashed changes
         Draw(delta_time);
     }
 
@@ -90,42 +82,24 @@ namespace IS {
             sprite.transform(delta_time);
             GLuint texture{};
             switch (sprite.primitive_type) {
-<<<<<<< Updated upstream
-            case GL_TRIANGLES:
-                sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[0], mesh_shader_pgm,sprite.texture);
-                break;
-            case GL_POINTS:
-                sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[1], mesh_shader_pgm, sprite.texture);
-                break;
-            case GL_LINES:
-                sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[2], mesh_shader_pgm, sprite.texture);
-                break;
-            case GL_TRIANGLE_FAN:
-                sprite.transform(delta_time);
-                sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
-=======
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
                     texture = animation1.tex_ID;
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, texture);
-;                }
+;               }
                 else {
                     glBindVertexArray(meshes[0].vao_ID);
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm);
                 }
                 break;
             case GL_POINTS:
-                sprite.drawSpecial(meshes[1], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[1], mesh_shader_pgm, sprite.texture);
                 break;
             case GL_LINES:
-                sprite.drawSpecial(meshes[2], mesh_shader_pgm);
+                sprite.drawSpecial(meshes[2], mesh_shader_pgm, sprite.texture);
                 break;
             case GL_TRIANGLE_FAN:
-                sprite.drawSpecial(meshes[3], mesh_shader_pgm);
->>>>>>> Stashed changes
+                sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
         }
@@ -150,43 +124,6 @@ namespace IS {
         meshes.emplace_back(point_mesh);
         meshes.emplace_back(line_mesh);
         meshes.emplace_back(circle_mesh);
-    }
-
-<<<<<<< Updated upstream
-
-
-    void ISGraphics::initSprites() { // mainly for M1
-        Sprite test_box_sprite("Box", GL_TRIANGLES);
-        Sprite test_points_sprite("Points", GL_POINTS);
-        Sprite test_lines_sprite("Lines", GL_LINES);
-        Sprite test_circle_sprite("Circle", GL_TRIANGLE_FAN);
-
-        /* test_box_model.setupVAO();
-         test_box_model.setupShaders();*/
-        test_box_sprite.model_TRS.world_position = glm::vec2(0.f, -640.f); // somewhere top-left (initially)
-        test_box_sprite.model_TRS.scaling = glm::vec2(400.f, 200.f); // max scaling (fit entire screen x: 1280, y: 720)
-        //test_box_model.orientation.y = 30.f;
-
-        /*test_points_model.setupSpecialVAO();
-        test_points_model.setupShaders();*/
-        test_points_sprite.model_TRS.scaling = glm::vec2(1066.67f, 600.f);
-        test_points_sprite.model_TRS.orientation.y = 10.f;
-
-        /*test_lines_model.setupSpecialVAO();
-        test_lines_model.setupShaders();*/
-        test_lines_sprite.model_TRS.scaling = glm::vec2(1000.00f, 500.f);
-        test_lines_sprite.model_TRS.orientation.y = -10.f;
-
-        /*test_circle_model.setupSpecialVAO();
-        test_circle_model.setupShaders();*/
-        test_circle_sprite.model_TRS.scaling = glm::vec2(100.f, 100.f);
-        //test_circle_model.orientation.y = -30.f;
-
-        //based on this i create the enum
-        sprites.emplace_back(test_box_sprite); //ur box is 0
-        sprites.emplace_back(test_points_sprite);//ur point is 1
-        sprites.emplace_back(test_lines_sprite);//ur line is 2
-        sprites.emplace_back(test_circle_sprite);//ur circle is 3
     }
 
     GLuint ISGraphics::initTextures(Image& image) {
@@ -217,8 +154,6 @@ namespace IS {
         return textureID;
     }
 
-=======
->>>>>>> Stashed changes
     void ISGraphics::setupShaders() {
         // vertex shader
         std::string vtx_shdr = R"(
