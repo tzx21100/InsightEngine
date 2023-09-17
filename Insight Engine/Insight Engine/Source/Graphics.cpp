@@ -34,7 +34,7 @@ namespace IS {
             std::exit(EXIT_FAILURE);
         }
 
-        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
+        glClearColor(1.f, 1.f, 1.f, 1.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);
         //placeholder_tex = initTextures("Assets/placeholder_background.png");
@@ -48,7 +48,7 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
-        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
+        glClearColor(1.f, 1.f, 1.f, 1.f);
         Draw(delta_time);
     }
 
