@@ -2,23 +2,15 @@
 
 namespace IS {
 	void Mesh::setupQuadVAO() {
-        struct Vertex {
-            glm::vec2 position;
-            glm::vec2 texCoord;
-        };
-
-        // Define the vertices of the quad
+        // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
             Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
             Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
             Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, .0f)}
+            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
         };
 
-
-        std::array<unsigned int, 6> indices{ 0, 1, 2, 2, 1, 3 };
-
-        // Generate a VAO handle to encapsulate the VBO and EBO
+        // Generate a VAO handle to encapsulate the VBO
         GLuint vao_hdl;
         glCreateVertexArrays(1, &vao_hdl);
         glBindVertexArray(vao_hdl);
@@ -41,22 +33,15 @@ namespace IS {
         glVertexArrayAttribFormat(vao_hdl, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord));
         glVertexArrayAttribBinding(vao_hdl, 2, 0);
 
-        // Set up the element buffer object (EBO) for indexing
-        GLuint ebo_hdl;
-        glCreateBuffers(1, &ebo_hdl);
-        glNamedBufferStorage(ebo_hdl, sizeof(unsigned int) * indices.size(), indices.data(), 0);
-
-        // Bind the EBO to the VAO
-        glVertexArrayElementBuffer(vao_hdl, ebo_hdl);
-
         // Unbind the VAO (not necessary to unbind buffers individually)
         glBindVertexArray(0);
 
         vao_ID = vao_hdl;
-        draw_count = static_cast<GLuint>(indices.size());
+        vbo_ID = vbo_hdl;
+        draw_count = static_cast<GLuint>(vertices.size());
 	}
 
-	void Mesh::setupNonQuadVAO(GLenum mesh_primitive_type) {
+    void Mesh::setupNonQuadVAO(GLenum mesh_primitive_type) {
         // Define the vertices of the quad
 
         std::vector<glm::vec2> pos_vtx;
@@ -103,7 +88,8 @@ namespace IS {
         glBindVertexArray(0);
 
         vao_ID = vao_hdl;
-	}
+        
+    }
 
     /*void Mesh::init4Meshes() {
         quad_mesh.setupQuadVAO();

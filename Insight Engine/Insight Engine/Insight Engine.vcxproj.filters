@@ -41,10 +41,10 @@
       <Filter>Debug\Logging</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>Engine\Window</Filter>
@@ -62,7 +62,7 @@
       <Filter>Physics\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Asset.cpp">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
@@ -87,6 +87,12 @@
     </ClCompile>
     <ClCompile Include="Source\Framebuffer.cpp">
       <Filter>Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +142,10 @@
       <Filter>Debug\Logging</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input.h">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\JsonSaveLoad.h">
       <Filter>Engine\JSON</Filter>
@@ -163,7 +169,7 @@
       <Filter>Physics\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Asset.h">
-      <Filter>Engine\Systems</Filter>
+      <Filter>Engine\System Example\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>
@@ -210,6 +216,12 @@
     <ClInclude Include="Source\Framebuffer.h">
       <Filter>Graphics\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -241,9 +253,6 @@
     </Filter>
     <Filter Include="Debug\Logging">
       <UniqueIdentifier>{9562c0c5-815a-4760-9667-51a5e8766d7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems">
-      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Core\Messaging&amp;Event">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
@@ -283,6 +292,9 @@
     </Filter>
     <Filter Include="Graphics\Buffers">
       <UniqueIdentifier>{61cf34e4-1635-43dc-b79e-c4f55435eaa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\System Example\Systems">
+      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "Mesh.h"
 #include "Framebuffer.h"
+#include "Texture.h"
+#include "Animation.h"
 
 //#include "Asset.h"
 
@@ -69,12 +71,15 @@ namespace IS {
 		static GLuint getScreenTexture();
 		static void resizeFramebuffer(GLuint w, GLuint h);
 
-		static GLuint placeholder_tex;
+		static Texture placeholder_tex;
+		static Texture animation1;
+		static Animation idle_ani;
 		static std::shared_ptr<Framebuffer> framebuffer;
 		static Shader mesh_shader_pgm;
 
 		static std::vector<Mesh> meshes;
 		static std::vector<Sprite> sprites;
+
 	};
 
 	//enums added

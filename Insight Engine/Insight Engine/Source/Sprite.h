@@ -2,20 +2,18 @@
 #include <GL/glew.h>
 #include "Transform.h"
 #include "Shader.h"
-
-//enum class SpriteType {
-//    Quad,
-//    Point,
-//    Line,
-//    Circle
-//};
+#include "Animation.h"
 
 namespace IS {
     class Sprite : public IComponent {
     public:
         GLenum primitive_type{};
         Transform model_TRS{}; // transformation values
+<<<<<<< Updated upstream
         uint8_t texture{};
+=======
+        GLuint tex_ID{};
+>>>>>>> Stashed changes
 
         // imgui
         std::string name;
@@ -24,7 +22,7 @@ namespace IS {
 
         Sprite() {
             name = "Box";
-            primitive_type = GL_TRIANGLES;
+            primitive_type = GL_TRIANGLE_STRIP;
             PRNG prng;
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
@@ -50,5 +48,6 @@ namespace IS {
         void setSpriteSize(float width, float height) { model_TRS.scaling = glm::vec2(width, height); }
         // for M1 rubrics showcase
         void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
+        void drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animPointer, GLuint texture_id = 0);
     };
 }

@@ -36,11 +36,14 @@ namespace IS {
             auto& transLines = engine.GetComponent<Transform>(lines);
             auto& transPoints = engine.GetComponent<Transform>(points);
 
+            auto& spriteMyEntity = engine.GetComponent<Sprite>(myEntity);
             auto& spriteCircle = engine.GetComponent<Sprite>(circle);
             auto& spriteLines = engine.GetComponent<Sprite>(lines);
             auto& spritePoints = engine.GetComponent<Sprite>(points);
 
-            trans.setScaling(100, 100);
+            spriteMyEntity.name = "textured_box";
+
+            trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);
             trans2.setScaling(100, 100);
             trans2.setWorldPosition(-400, 0);

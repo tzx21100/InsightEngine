@@ -51,9 +51,8 @@ namespace IS {
         else shader.setUniform("uTexture", 0);
 
         switch (primitive_type) {
-        case GL_TRIANGLES:
-            
-            glDrawElements(primitive_type, mesh_used.draw_count, GL_UNSIGNED_INT, NULL);
+        case GL_TRIANGLE_STRIP:
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh_used.draw_count);
             break;
         case GL_POINTS:
             glPointSize(8.f);
@@ -69,6 +68,37 @@ namespace IS {
             glDrawArrays(primitive_type, 0, mesh_used.draw_count);
             break;
         }
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glBindVertexArray(0);
+        shader.unUse();
+    }
+
+    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animPointer, GLuint texture_id) {
+        shader.use();
+
+        glBindVertexArray(mesh_used.vao_ID);
+
+        //shader_program.SetUniform("uSize", test_model.size);
+        shader.setUniform("uColor", color);
+        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
+
+        GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
+        if (textureUniformLoc != -1) {
+            glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture_id);
+        }
+        shader.setUniform("uTexture", 1);
+
+        // animation uniforms
+        shader.setUniform("uFrameDim", glm::vec2(animPointer.getFrameWidth(), animPointer.getFrameHeight()));
+        shader.setUniform("uFrameIndex", glm::vec2(animPointer.x_frame_index, animPointer.y_frame_index));
+
+        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
+
+
+       glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh_used.draw_count);
 
         glBindTexture(GL_TEXTURE_2D, 0);
         glBindVertexArray(0);

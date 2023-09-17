@@ -11,7 +11,9 @@
 namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
-    GLuint ISGraphics::placeholder_tex;
+    Texture ISGraphics::placeholder_tex;
+    Texture ISGraphics::animation1;
+    Animation ISGraphics::idle_ani;
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
@@ -37,9 +39,17 @@ namespace IS {
         glClearColor(1.f, 1.f, 1.f, 1.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);
+<<<<<<< Updated upstream
         //placeholder_tex = initTextures("Assets/placeholder_background.png");
         initMeshes();
         initSprites();
+=======
+        placeholder_tex.init_texture("Assets/placeholder_background.png");
+        animation1.init_texture("Assets/player_idle.png");
+        initMeshes();
+        // initSprites();
+        idle_ani.initAnimation(1, 8, 3.f);
+>>>>>>> Stashed changes
 
         setupShaders();
 
@@ -48,7 +58,11 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
+<<<<<<< Updated upstream
         glClearColor(1.f, 1.f, 1.f, 1.f);
+=======
+        idle_ani.updateAnimation(delta_time);
+>>>>>>> Stashed changes
         Draw(delta_time);
     }
 
@@ -73,7 +87,10 @@ namespace IS {
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
+            sprite.transform(delta_time);
+            GLuint texture{};
             switch (sprite.primitive_type) {
+<<<<<<< Updated upstream
             case GL_TRIANGLES:
                 sprite.transform(delta_time);
                 sprite.drawSpecial(meshes[0], mesh_shader_pgm,sprite.texture);
@@ -89,39 +106,37 @@ namespace IS {
             case GL_TRIANGLE_FAN:
                 sprite.transform(delta_time);
                 sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
+=======
+            case GL_TRIANGLE_STRIP:
+                if (sprite.name == "textured_box") {
+                    texture = animation1.tex_ID;
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, texture);
+;                }
+                else {
+                    glBindVertexArray(meshes[0].vao_ID);
+                    sprite.drawSpecial(meshes[0], mesh_shader_pgm);
+                }
+                break;
+            case GL_POINTS:
+                sprite.drawSpecial(meshes[1], mesh_shader_pgm);
+                break;
+            case GL_LINES:
+                sprite.drawSpecial(meshes[2], mesh_shader_pgm);
+                break;
+            case GL_TRIANGLE_FAN:
+                sprite.drawSpecial(meshes[3], mesh_shader_pgm);
+>>>>>>> Stashed changes
                 break;
             }
         }
 
         framebuffer->Unbind();
-        //for (Sprite &sprite : sprites) {
-            //if (sprite.drawing) {
-            //    Mesh meshUsed{};
-            //    switch (sprite.primitive_type) {
-            //    case GL_TRIANGLES:
-            //        meshUsed = quad_mesh;
-            //        break;
-            //    case GL_POINTS:
-            //        meshUsed = points_mesh;
-            //        break;
-            //    case GL_LINES:
-            //        meshUsed = lines_mesh;
-            //        break;
-            //    case GL_TRIANGLE_FAN:
-            //        meshUsed = circle_mesh;
-            //        break;
-            //    }
-            //    //sprite.drawSpecial(meshUsed, mesh_shader_pgm);
-            //} 
-        //}
-        //std::cout << "pri type: " << sprites[0].primitive_type << "draw cnt: " << quad_mesh.draw_count << std::endl;
-
-        //sprites[0].drawSpecial(quad_mesh, mesh_shader_pgm, placeholder_tex);
+    
     }
 
     void ISGraphics::cleanup() {
         //Mesh::cleanup4Meshes();
-        glDeleteTextures(1, &placeholder_tex);
+        glDeleteTextures(1, &placeholder_tex.tex_ID);
     }
 
     void ISGraphics::initMeshes() {
@@ -137,6 +152,7 @@ namespace IS {
         meshes.emplace_back(circle_mesh);
     }
 
+<<<<<<< Updated upstream
 
 
     void ISGraphics::initSprites() { // mainly for M1
@@ -201,6 +217,8 @@ namespace IS {
         return textureID;
     }
 
+=======
+>>>>>>> Stashed changes
     void ISGraphics::setupShaders() {
         // vertex shader
         std::string vtx_shdr = R"(
@@ -228,6 +246,10 @@ namespace IS {
             in vec2 vTexCoord; // Input variable for texture coordinates
             uniform int uTexture; // Flag to indicate whether to use texture or color
 
+            // animation uniforms - default unless drawing animation
+            uniform vec2 uFrameDim = vec2(1.0, 1.0); 
+            uniform vec2 uFrameIndex = vec2(0.0, 0.0);
+
             void main()
             {
                 if (uTexture == 0)
@@ -236,7 +258,8 @@ namespace IS {
                 }
                 else
                 {
-                    fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
+                    //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
+                    fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
                 }
             }
         )";
