@@ -7,6 +7,7 @@ namespace IS {
 
         Entity myEntity; //create some entity
         Entity myEntity2; //create some entity
+        Entity myEntity3; //create some entity
         Entity points;
         Entity lines;
         Entity circle;
@@ -29,12 +30,15 @@ namespace IS {
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
             myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
+            myEntity3 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
             circle = engine.CreateEntityWithComponents<Sprite, Transform>();
             lines = engine.CreateEntityWithComponents<Sprite, Transform>();
             points = engine.CreateEntityWithComponents<Sprite, Transform>();
 
             auto& trans = engine.GetComponent<Transform>(myEntity);
             auto& trans2 = engine.GetComponent<Transform>(myEntity2);
+            auto& trans3 = engine.GetComponent<Transform>(myEntity3);
+            auto& body3 = engine.GetComponent<RigidBody>(myEntity3);
 
             auto& transCircle = engine.GetComponent<Transform>(circle);
             auto& transLines = engine.GetComponent<Transform>(lines);
@@ -52,6 +56,9 @@ namespace IS {
             trans.setWorldPosition(0, 0);
             trans2.setScaling(100, 100);
             trans2.setWorldPosition(-400, 0);
+            trans3.setScaling(600, 100);
+            trans3.setWorldPosition(0, -400);
+            body3.bodyType = BodyType::Static;
             
             transCircle.setWorldPosition(650.f, 300.f);
             transCircle.setScaling(200.f, 200.f);
@@ -78,8 +85,8 @@ namespace IS {
             float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
             trans.orientation.x += rotate * speed;
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
-                for (int i = 0; i < 3; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
+                for (int i = 0; i < 1; i++) {
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(128, 128);
                     transl.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
