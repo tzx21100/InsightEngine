@@ -51,6 +51,10 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
+        for (auto& entity : mEntities) {
+            auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            trans.orientation.x += trans.orientation.y * delta_time;
+        }
 
         idle_ani.updateAnimation(delta_time);
         idle_ani2.updateAnimation(delta_time);
@@ -79,7 +83,6 @@ namespace IS {
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
             sprite.transform(delta_time);
-            trans.orientation.x += trans.orientation.y * delta_time; // rotation
             GLuint texture{};
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
