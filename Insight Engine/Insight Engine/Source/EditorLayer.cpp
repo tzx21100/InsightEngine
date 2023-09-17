@@ -5,10 +5,7 @@
 
 namespace IS {
 
-    //i need the dockspace pos for input
-    ImVec2 dockspace_pos;
-
-    EditorLayer::EditorLayer() : Layer("Editor Layer"), scenepanel_size() {}
+    EditorLayer::EditorLayer() : Layer("Editor Layer"), dockspace_pos(), scene_panel_size(), scene_hierarchy_panel() {}
 
     void EditorLayer::onAttach() {
         // Attach scene viewer, import icons, open project...
@@ -44,7 +41,7 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("EditorDockSpace", nullptr, window_flags);
         //i add in pos here to get the position of the dockspace
-        dockspace_pos = ImGui::GetWindowPos();
+        dockspace_pos = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
 
         ImGui::PopStyleVar();
 
@@ -91,7 +88,6 @@ namespace IS {
             if (ImGui::BeginMenu("Scene")) {
                 InsightEngine& engine = InsightEngine::Instance();
                 if (ImGui::MenuItem("Create 500 entities")) {
-                    InputManager& input = InputManager::Instance();
                     for (int i{}; i < 500; i++) {
                         PRNG prng;
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
@@ -110,7 +106,7 @@ namespace IS {
 
         // Other windows
         RenderScenePanel();
-        RenderInspectorPanel();
+        RenderSceneHierarchyPanel();
         RenderPerformancePanel();
         RenderLogConsolePanel();
         RenderSceneOverlay();
@@ -135,63 +131,20 @@ namespace IS {
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
-        if (!(scenepanel_size.x == panel_size.x && scenepanel_size.y == panel_size.y)) {
+        if (!(scene_panel_size.x == panel_size.x && scene_panel_size.y == panel_size.y)) {
             ISGraphics::resizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
-            scenepanel_size = { panel_size.x, panel_size.y };
+            scene_panel_size = { panel_size.x, panel_size.y };
         }
 
         ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
-                     ImVec2(scenepanel_size.x, scenepanel_size.y), ImVec2(0, 1), ImVec2(1, 0));
+                     ImVec2(scene_panel_size.x, scene_panel_size.y), ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
         ImGui::PopStyleVar();
     }
 
-    void EditorLayer::RenderInspectorPanel() {
-        ImGui::Begin("Inspector");
-
-        /*for (auto& sprite : ISGraphics::sprites) {
-
-            ImGui::Text("%-6s", sprite.name.c_str());
-            ImGui::SameLine();
-            ImGui::Checkbox(("##Draw " + sprite.name).c_str(), &sprite.drawing);
-            ImGui::Spacing();
-
-            if (sprite.name == "Circle") {
-                ImGui::Text("%-6s", "Radius");
-                ImGui::SameLine();
-                ImGui::SliderFloat(("##Radius " + sprite.name).c_str(), &sprite.model_TRS.scaling.x, 2.f, WIDTH);
-                ImGui::Spacing();
-            } else {
-                ImGui::Text("%-6s", "Width");
-                ImGui::SameLine();
-                ImGui::SliderFloat(("##Width" + sprite.name).c_str(), &sprite.model_TRS.scaling.x, 2.f, WIDTH);
-                ImGui::Spacing();
-                ImGui::Text("%-6s", "Height");
-                ImGui::SameLine();
-                ImGui::SliderFloat(("##Height" + sprite.name).c_str(), &sprite.model_TRS.scaling.y, 2.f, HEIGHT);
-                ImGui::Spacing();
-            }
-            ImGui::Text("%-6s", "Angle");
-            ImGui::SameLine();
-            ImGui::SliderFloat(("##Angle" + sprite.name).c_str(), &sprite.model_TRS.orientation.x, 0.f, 360.f);
-            ImGui::Spacing();
-            ImGui::Text("%-6s", "Speed");
-            ImGui::SameLine();
-            ImGui::SliderFloat(("##Speed" + sprite.name).c_str(), &sprite.model_TRS.orientation.y, -180.f, 180.f);
-
-
-            ImGui::Spacing();
-            ImGui::Text("%-6s", "Color");
-            ImGui::SameLine();
-            ImGui::ColorEdit3(("##Color" + sprite.name).c_str(), &sprite.color[0]);
-
-            ImGui::Dummy({ 5.f, 5.f });
-            ImGui::Separator();
-            ImGui::Dummy({ 5.f, 5.f });
-        }*/
-
-        ImGui::End();
+    void EditorLayer::RenderSceneHierarchyPanel() {
+        scene_hierarchy_panel.RenderPanel();
     }
 
     void EditorLayer::RenderPerformancePanel() {
@@ -252,7 +205,7 @@ namespace IS {
 
     void EditorLayer::RenderSceneOverlay() {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
-                                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
+                                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
         InputManager& input = InputManager::Instance();
 

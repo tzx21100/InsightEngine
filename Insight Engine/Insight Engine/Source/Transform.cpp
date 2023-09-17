@@ -19,7 +19,7 @@ namespace IS {
 	}
 
 	Vector2D Transform::getOrientation() {
-		return Vector2D(orientation.x, world_position.y);
+		return Vector2D(orientation.x, orientation.y);
 	}
 
 	Vector2D Transform::getScaling() {

@@ -23,9 +23,11 @@
     <ClCompile Include="Source\Framebuffer.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\Widgets.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -67,9 +69,11 @@
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Random.h" />
+    <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\Widgets.h" />
     <ClInclude Include="Source\WindowSystem.h" />
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Input.h" />
@@ -94,6 +98,12 @@
     <ProjectReference Include="..\ImGui\ImGui.vcxproj">
       <Project>{1e9ddb85-9171-4335-bab2-caa43c8cecdc}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\icecream_truck.png" />
+    <Image Include="Assets\placeholder_background.png" />
+    <Image Include="Assets\player_idle.png" />
+    <Image Include="Assets\zxtestsprite.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

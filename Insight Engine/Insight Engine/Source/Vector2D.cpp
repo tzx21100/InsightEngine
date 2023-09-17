@@ -81,6 +81,11 @@ namespace IS
 		return ret;
 	}
 
+	// opeartor overloading for ==
+	bool operator == (const Vector2D& lhs, const Vector2D& rhs) {
+		return (lhs.x == rhs.x && lhs.y == rhs.y);
+	}
+
 	/**************************************************************************/
 	/*!
 		In this function, pResult will be the unit vector of pVec0
