@@ -45,12 +45,14 @@ namespace IS {
             auto& transPoints = engine.GetComponent<Transform>(points);
 
             auto& spriteMyEntity = engine.GetComponent<Sprite>(myEntity);
+            auto& spriteMyEntity2 = engine.GetComponent<Sprite>(myEntity2);
             auto& spriteCircle = engine.GetComponent<Sprite>(circle);
             auto& spriteLines = engine.GetComponent<Sprite>(lines);
             auto& spritePoints = engine.GetComponent<Sprite>(points);
 
             spriteMyEntity.name = "textured_box";
             spriteMyEntity.texture = idle_animation.texture_data;
+            spriteMyEntity2.texture = backgroundTest.texture_data;
 
             trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);

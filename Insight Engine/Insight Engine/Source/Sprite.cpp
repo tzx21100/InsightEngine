@@ -50,6 +50,9 @@ namespace IS {
         }
         else shader.setUniform("uTexture", 0);
 
+        shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
+        shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
+
         switch (primitive_type) {
         case GL_TRIANGLE_STRIP:
             glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh_used.draw_count);

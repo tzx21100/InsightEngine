@@ -4,9 +4,6 @@
     <ClCompile Include="Source\Graphics.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -76,23 +73,29 @@
     <ClCompile Include="Source\LayerStack.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Transform.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sprite.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framebuffer.cpp">
       <Filter>Graphics\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Animation.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transform.cpp">
+      <Filter>Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Text.cpp">
+      <Filter>Graphics\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +104,6 @@
     </ClInclude>
     <ClInclude Include="Source\Pch.h">
       <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector2D.h">
       <Filter>Math</Filter>
@@ -201,26 +201,32 @@
     <ClInclude Include="Source\LayerStack.h">
       <Filter>Editor\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sprite.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameLoop.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framebuffer.h">
       <Filter>Graphics\Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Animation.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Text.h">
+      <Filter>Graphics\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +301,9 @@
     </Filter>
     <Filter Include="Engine\System Example\Systems">
       <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Rendering">
+      <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
