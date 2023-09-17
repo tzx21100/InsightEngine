@@ -167,7 +167,8 @@
 copy "$(ProjectDir)libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y
-copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y</Command>
+copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
+xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -206,7 +207,8 @@ copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y</Command>
 copy "$(ProjectDir)libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y
-copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y</Command>
+copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
+xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

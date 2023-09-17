@@ -155,6 +155,10 @@ namespace IS {
 
         // Check Mark
         colors[ImGuiCol_CheckMark] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+
+        // Resize Grip
+        colors[ImGuiCol_ResizeGripHovered] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+        colors[ImGuiCol_ResizeGripActive] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
     }
 
 } // end namespace IS

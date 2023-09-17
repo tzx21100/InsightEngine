@@ -25,6 +25,9 @@ namespace IS {
         void RenderLogConsolePanel();
         void RenderInspectorPanel();
         void RenderSceneOverlay();
+
+    private:
+        Vec2 scenepanel_size;
     };
 
 } // end namespace IS

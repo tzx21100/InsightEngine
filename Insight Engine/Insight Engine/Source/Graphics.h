@@ -67,6 +67,7 @@ namespace IS {
 		static void initMeshes();
 		static void setupShaders();
 		static GLuint getScreenTexture();
+		static void resizeFramebuffer(GLuint w, GLuint h);
 
 		static GLuint placeholder_tex;
 		static std::shared_ptr<Framebuffer> framebuffer;

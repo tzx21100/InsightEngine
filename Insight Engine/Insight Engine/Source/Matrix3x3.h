@@ -34,7 +34,7 @@ namespace IS
 		// Assignment operators
 		Matrix3x3& operator *= (const Matrix3x3& rhs);
 
-	} Matrix3x3, Mtx33;
+	} Mat3, Mtx33;
 
 #ifdef _MSC_VER
 	// Supress warning: nonstandard extension used : nameless struct/union

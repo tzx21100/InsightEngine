@@ -8,7 +8,7 @@ namespace IS {
     //i need the dockspace pos for input
     ImVec2 dockspace_pos;
 
-    EditorLayer::EditorLayer() : Layer("Editor Layer") {}
+    EditorLayer::EditorLayer() : Layer("Editor Layer"), scenepanel_size() {}
 
     void EditorLayer::onAttach() {
         // Attach scene viewer, import icons, open project...
@@ -25,7 +25,6 @@ namespace IS {
 
     void EditorLayer::onRender() {
 
-        static bool show_dockspace = true;
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
         
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
@@ -43,7 +42,7 @@ namespace IS {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::SetNextWindowBgAlpha(0.f);
-        ImGui::Begin("EditorDockSpace", &show_dockspace, window_flags);
+        ImGui::Begin("EditorDockSpace", nullptr, window_flags);
         //i add in pos here to get the position of the dockspace
         dockspace_pos = ImGui::GetWindowPos();
 
@@ -89,16 +88,17 @@ namespace IS {
                 ImGui::EndMenu();
             }
 
-            if (ImGui::BeginMenu("Entity")) {
+            if (ImGui::BeginMenu("Scene")) {
                 InsightEngine& engine = InsightEngine::Instance();
                 if (ImGui::MenuItem("Create 500 entities")) {
                     InputManager& input = InputManager::Instance();
-                    for (int i = 0; i < 500; i++) {
+                    for (int i{}; i < 500; i++) {
+                        PRNG prng;
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                         auto& trans = engine.GetComponent<Transform>(a);
-                        trans.setScaling(static_cast<float>(120 - i), static_cast<float>(120 - i));
-                        trans.setWorldPosition(static_cast<float>(input.GetMousePosition().first / 2.f),
-                                               static_cast<float>(input.GetMousePosition().second / 2.f));
+                        trans.setScaling((prng.generate() * 8.f) + 2.f, (prng.generate() * 8.f) + 2.f); // scale [2, 10]
+                        trans.setWorldPosition((prng.generate() * WIDTH) - WIDTH / 2.f, (prng.generate() * HEIGHT) - HEIGHT / 2.f); // xpos [-width/2, width/2], ypos [-height/2, height/2]
+                        trans.setOrientation((prng.generate() * 360.f), (prng.generate() * 360.f) - 180.f); // angle [0, 360], speed [-180, 180]
                     }
                 }
 
@@ -119,8 +119,11 @@ namespace IS {
     }
 
     void EditorLayer::RenderScenePanel() {
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
-        ImGui::Begin("Scene");
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+
+        ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoTitleBar;
+        ImGui::Begin("Scene", nullptr, flags);
+
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
         //scene pos for the input
@@ -130,19 +133,15 @@ namespace IS {
         InputManager::Instance().setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
         InputManager::Instance().setRatio(scene_size.x, scene_size.y);
 
+        // Resize framebuffer
+        ImVec2 panel_size = ImGui::GetContentRegionAvail();
+        if (!(scenepanel_size.x == panel_size.x && scenepanel_size.y == panel_size.y)) {
+            ISGraphics::resizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
+            scenepanel_size = { panel_size.x, panel_size.y };
+        }
 
-        const uint32_t window_width = static_cast<uint32_t>(ImGui::GetContentRegionAvail().x);
-        const uint32_t window_height = static_cast<uint32_t>(ImGui::GetContentRegionAvail().y);
-        ImVec2 pos = ImGui::GetCursorScreenPos();
-
-
-        ImGui::GetWindowDrawList()->AddImage(
-            std::bit_cast<void*>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
-            ImVec2(pos.x, pos.y),
-            ImVec2(pos.x + window_width, pos.y + window_height),
-            ImVec2(0, 1),
-            ImVec2(1, 0)
-        );
+        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
+                     ImVec2(scenepanel_size.x, scenepanel_size.y), ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
         ImGui::PopStyleVar();

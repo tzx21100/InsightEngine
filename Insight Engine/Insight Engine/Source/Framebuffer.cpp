@@ -4,46 +4,39 @@
 namespace IS {
 
     Framebuffer::Framebuffer(FramebufferProps const& properties) : framebuffer_id(0), props(properties) {
-        GLuint fbo_hdl, tex_hdl, rbo_hdl;
-
-        // Create framebuffer object
-        glGenFramebuffers(1, &fbo_hdl);
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo_hdl);
-
-        // Create texture object (color attachment)
-        glGenTextures(1, &tex_hdl);
-        glBindTexture(GL_TEXTURE_2D, tex_hdl);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, props.width, props.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        // Allow rescaling
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_hdl, 0);
-
-        // Create renderbuffer object (depth attachment)
-        glGenRenderbuffers(1, &rbo_hdl);
-        glBindRenderbuffer(GL_RENDERBUFFER, rbo_hdl);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, props.width, props.height);
-        glFramebufferRenderbuffer(GL_RENDERBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo_hdl);
-
-        // Validate whether framebuffer object is complete
-        GLenum fbo_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        if (fbo_status != GL_FRAMEBUFFER_COMPLETE) {
-            std::cerr << "Framebuffer is incomplete!\n";
-            std::exit(EXIT_FAILURE);
-        }
-
-        // Unbind framebuffer
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        framebuffer_id         = fbo_hdl;
-        props.color_attachment = tex_hdl;
-        props.depth_attachment = rbo_hdl;
+        Create();
     }
 
     Framebuffer::~Framebuffer() {
         glDeleteFramebuffers(1, &framebuffer_id);
         glDeleteTextures(1, &props.color_attachment);
         glDeleteRenderbuffers(1, &props.depth_attachment);
+    }
+
+    void Framebuffer::Create() {
+        // Create framebuffer object
+        glGenFramebuffers(1, &framebuffer_id);
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_id);
+
+        // Create texture object color attachment
+        glGenTextures(1, &props.color_attachment);
+        glBindTexture(GL_TEXTURE_2D, props.color_attachment);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, props.width, props.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, props.color_attachment, 0);
+
+        // Create texture object for depth attachment
+        glCreateTextures(GL_TEXTURE_2D, 1, &props.depth_attachment);
+        glBindTexture(GL_TEXTURE_2D, props.depth_attachment);
+        glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, props.width, props.height);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, props.depth_attachment, 0);
+
+        // Validate whether framebuffer object is complete
+        IS_CORE_ASSERT_MESG((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "Error: Framebuffer is incompelete!");
+
+        // Unbind framebuffer
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     void Framebuffer::Bind() {
@@ -53,6 +46,7 @@ namespace IS {
 
     void Framebuffer::Unbind() {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, WIDTH, HEIGHT);
     }
 
     std::pair<GLuint, GLuint> Framebuffer::GetSize() const {
@@ -62,6 +56,14 @@ namespace IS {
     void Framebuffer::Resize(GLuint w, GLuint h) {
         props.width = w;
         props.height = h;
+
+        if (framebuffer_id) {
+            glDeleteFramebuffers(1, &framebuffer_id);
+            glDeleteTextures(1, &props.color_attachment);
+            glDeleteRenderbuffers(1, &props.depth_attachment);
+        }
+
+        Create();
     }
 
     GLuint Framebuffer::GetColorAttachment() const {

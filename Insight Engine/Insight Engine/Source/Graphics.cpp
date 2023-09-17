@@ -41,7 +41,6 @@ namespace IS {
         initMeshes();
         initSprites();
 
-
         setupShaders();
 
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
@@ -49,6 +48,7 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
+        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
         Draw(delta_time);
     }
 
@@ -62,7 +62,6 @@ namespace IS {
 
     void ISGraphics::Draw(float delta_time) {
         framebuffer->Bind();
-        glClearColor(0.2f, 0.2f, 0.2f, 1.f); // set color buffer to dark grey
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Render scene
@@ -93,6 +92,7 @@ namespace IS {
                 break;
             }
         }
+
         framebuffer->Unbind();
         //for (Sprite &sprite : sprites) {
             //if (sprite.drawing) {
@@ -258,5 +258,9 @@ namespace IS {
 
     GLuint ISGraphics::getScreenTexture() {
         return framebuffer->GetColorAttachment();
+    }
+
+    void ISGraphics::resizeFramebuffer(GLuint w, GLuint h) {
+        framebuffer->Resize(w, h);
     }
 }

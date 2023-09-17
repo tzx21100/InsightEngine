@@ -29,6 +29,11 @@ namespace IS {
         ~Framebuffer();
 
         /**
+         * @brief Creates the framebuffer object.
+         */
+        void Create();
+
+        /**
          * @brief Binds the framebuffer for rendering.
          */
         void Bind();
