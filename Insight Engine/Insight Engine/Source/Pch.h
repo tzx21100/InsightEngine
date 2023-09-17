@@ -45,6 +45,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Sprite.h"
 #include "Transform.h"
 #include "Input.h"
+#include "Text.h"
 #include "Graphics.h"
 
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

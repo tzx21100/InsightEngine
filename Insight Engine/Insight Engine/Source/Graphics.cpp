@@ -8,6 +8,8 @@
 #include <string>
 #include <stb_image.h>
 
+#include <ft2build.h>
+
 namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
@@ -16,6 +18,9 @@ namespace IS {
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
+
+    GLuint font_texture;
+    Text ISGraphics::cascadia_text;
 
     void ISGraphics::Initialize() {
         // Initialize entry points to OpenGL functions and extensions
@@ -43,6 +48,9 @@ namespace IS {
         // initSprites();
         idle_ani.initAnimation(1, 8, 3.f);
         idle_ani2.initAnimation(1, 6, 2.f);
+
+        cascadia_text.init_text("Assets/fonts/Cascadia.ttf", 30);
+        font_texture = cascadia_text.render_text("Hello World!");
 
         setupShaders();
 
@@ -94,7 +102,7 @@ namespace IS {
                 }
                 else {
                     glBindVertexArray(meshes[0].vao_ID);
-                    sprite.drawSpecial(meshes[0], mesh_shader_pgm);
+                    sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
                 }
                 break;
             case GL_POINTS:

@@ -36,7 +36,7 @@ namespace IS
         //Sprite::followTransform(this->bodyTransform);
 
         //this->position = Vector2D(); // (0,0)
-        this->bodyType = BodyType::Static;
+        this->bodyType = BodyType::Dynamic;
         //this->rotation = 0.f;
         //this->rotationVelocity = 0.f;
         this->force = Vector2D();

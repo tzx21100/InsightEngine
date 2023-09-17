@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
+    <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Widgets.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\Sprite.h" />
+    <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Widgets.h" />
@@ -139,8 +141,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -152,8 +154,8 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -171,7 +173,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib;freetype.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
@@ -211,7 +213,7 @@ xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glew32.lib;glfw3dll.lib;fmod_vc.lib;jsoncpp.lib;freetype.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
