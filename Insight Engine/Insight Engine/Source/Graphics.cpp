@@ -79,6 +79,7 @@ namespace IS {
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
             sprite.transform(delta_time);
+            trans.orientation.x += trans.orientation.y * delta_time; // rotation
             GLuint texture{};
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:

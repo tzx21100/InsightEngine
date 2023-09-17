@@ -167,7 +167,7 @@ namespace IS {
 
             // Write to file
             if (log_file.is_open()) {
-                log_file << timestamp << loglevel << ' ' << all_args << std::endl;
+                log_file << log.str();
             }
 
             logger_gui.addLog(log.str().c_str());
