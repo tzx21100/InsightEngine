@@ -41,7 +41,7 @@ namespace IS
         //this->rotationVelocity = 0.f;
         this->force = Vector2D();
         this->density = 0.f;
-        this->mass = 0.f;
+        this->mass = 1.f;
         this->restitution = 0.f;
         this->area = 0.f;
         //this->radius = 0.f;
@@ -236,7 +236,7 @@ namespace IS
     }
 
     void RigidBody::updateBoxBody(Transform bodyTransform, float mass, float restitution) {
-        CreateBoxBody(bodyTransform.world_position.x, bodyTransform.world_position.y, this->mass, this->restitution);
+        CreateBoxBody(bodyTransform.scaling.x, bodyTransform.scaling.y, this->mass, this->restitution);
         this->vertices = CreateBoxVertices(bodyTransform.scaling.x, bodyTransform.scaling.y);
         this->transformUpdateRequired = true;
         this->transformedVertices = GetTransformedVertices();
