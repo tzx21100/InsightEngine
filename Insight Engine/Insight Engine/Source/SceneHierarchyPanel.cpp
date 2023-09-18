@@ -13,7 +13,7 @@ namespace IS {
     void SceneHierarchyPanel::RenderPanel() {
         // Data sources
         InsightEngine& engine = InsightEngine::Instance();
-        std::shared_ptr<ISGraphics> graphics = std::dynamic_pointer_cast<ISGraphics>(engine.GetSystemPointer().at("Graphics"));
+        std::shared_ptr<ParentSystem> graphics = engine.GetSystemPointer().at("Graphics");
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
@@ -34,7 +34,7 @@ namespace IS {
         auto& sprite = engine.GetComponent<Sprite>(entity);
 
         ImGuiTreeNodeFlags entity_tree_flags = ((entity_selected == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding;
-        bool opened = ImGui::TreeNodeEx((void*)(uintptr_t)entity, entity_tree_flags, (sprite.name + ' ' + std::to_string(entity)).c_str());
+        bool opened = ImGui::TreeNodeEx((sprite.name + ' ' + std::to_string(entity)).c_str(), entity_tree_flags);
 
         if (ImGui::IsItemClicked())
             entity_selected = entity;
@@ -98,7 +98,7 @@ namespace IS {
                         ImGui::EndTooltip();
                     }
                 } else {
-                    ImGui::Text("%-6s", "Color");
+                    ImGui::Text("Color");
                     ImGui::SameLine();
                     ImGui::ColorEdit3(("##Color" + std::to_string(entity)).c_str(), &sprite.color[0]);
                 }
@@ -119,33 +119,20 @@ namespace IS {
                     ImGui::Text("Body Type: ");
                     ImGui::TableNextColumn();
                     switch (rigidbody.bodyType) {
-                    case BodyType::Static:
-                        ImGui::Text("Static");
-                        break;
-                    case BodyType::Dynamic:
-                        ImGui::Text("Dynamic");
-                        break;
-                    case BodyType::Kinematic:
-                        ImGui::Text("Kinematic");
-                        break;
-                    default:
-                        break;
+                    case BodyType::Static: ImGui::Text("Static"); break;
+                    case BodyType::Dynamic: ImGui::Text("Dynamic"); break;
+                    case BodyType::Kinematic: ImGui::Text("Kinematic"); break;
+                    default: break;
                     }
+
                     ImGui::TableNextColumn();
                     ImGui::Text("Body Shape: ");
                     ImGui::TableNextColumn();
                     switch (rigidbody.bodyShape) {
-                    case Shape::Box:
-                        ImGui::Text("Box");
-                        break;
-                    case Shape::Circle:
-                        ImGui::Text("Circle");
-                        break;
-                    case Shape::Line:
-                        ImGui::Text("Line");
-                        break;
-                    default:
-                        break;
+                    case Shape::Box: ImGui::Text("Box"); break;
+                    case Shape::Circle: ImGui::Text("Circle"); break;
+                    case Shape::Line: ImGui::Text("Line"); break;
+                    default: break;
                     }
 
                     ImGui::EndTable();

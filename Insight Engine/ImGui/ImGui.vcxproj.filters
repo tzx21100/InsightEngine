@@ -7,11 +7,8 @@
     <Filter Include="Backend">
       <UniqueIdentifier>{6cf68f19-9848-4204-b026-ef18dcd36a88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Misc">
+    <Filter Include="Debugger">
       <UniqueIdentifier>{4869b36b-5abb-46a5-9135-eef3e30ecbad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Misc\Debug">
-      <UniqueIdentifier>{a73f3666-514b-4aaa-bf9b-c5fc2a0e2174}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,12 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Insight Engine\libraries\imgui\include\imgui.natstepfilter">
-      <Filter>Misc\Debug</Filter>
+      <Filter>Debugger</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\Insight Engine\libraries\imgui\include\imgui.natvis">
-      <Filter>Misc\Debug</Filter>
+      <Filter>Debugger</Filter>
     </Natvis>
   </ItemGroup>
 </Project>

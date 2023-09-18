@@ -40,7 +40,7 @@ namespace IS {
             std::exit(EXIT_FAILURE);
         }
 
-        glClearColor(1.f, 1.f, 1.f, 1.f);
+        glClearColor(0.f, 0.f, 0.f, 0.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);
 

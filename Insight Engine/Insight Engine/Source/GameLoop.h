@@ -84,6 +84,11 @@ namespace IS {
             int verti = input.IsKeyHeld(GLFW_KEY_W) - input.IsKeyHeld(GLFW_KEY_S);
             trans.world_position.x += hori * speed;
             trans.world_position.y += verti * speed;
+
+            // flip image
+            trans.scaling.x *= (input.IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
+                               (input.IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
+
             float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
             trans.orientation.x += rotate * speed;
             if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {

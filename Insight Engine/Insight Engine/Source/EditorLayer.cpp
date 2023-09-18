@@ -155,12 +155,20 @@ namespace IS {
             ImGui::TableNextColumn();
             ImGui::Text("Framerate:");
             ImGui::TableNextColumn();
-            ImGui::Text("%5.0f FPS", io.Framerate);
+            ImGui::TextColored(
+                io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
+                io.Framerate < 30.f ? ImVec4(1.f, .98f, 0.5f, 1.f) : // yellow
+                ImVec4(1.f, 1.f, 1.f, 1.f), "%5.0f FPS", io.Framerate
+            );
 
             ImGui::TableNextColumn();
             ImGui::Text(" Timestep:");
             ImGui::TableNextColumn();
-            ImGui::Text("%.2f ms", 1000.f / io.Framerate);
+            ImGui::TextColored(
+                io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
+                io.Framerate < 30.f ? ImVec4(1.f, .98f, 0.5f, 1.f) : // yellow
+                ImVec4(1.f, 1.f, 1.f, 1.f), "%.2f ms", 1000.f / io.Framerate
+            );
 
             ImGui::EndTable();
         }
