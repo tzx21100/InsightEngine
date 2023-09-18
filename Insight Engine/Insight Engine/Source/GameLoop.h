@@ -83,8 +83,6 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-            Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(900.f, 100.f), delta);
-
             float speed = 10;
             if (engine.HasComponent<Transform>(myEntity)) {
                 auto& trans = engine.GetComponent<Transform>(myEntity);
