@@ -26,9 +26,9 @@ namespace IS {
                 float line_height = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
                 ImVec2 button_size = { line_height + 3.f, line_height };
 
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
                 if (ImGui::Button("X", button_size))
                     values.x = x_reset;
                 ImGui::PopStyleColor(3);
@@ -38,9 +38,9 @@ namespace IS {
                 ImGui::PopItemWidth();
                 ImGui::SameLine();
 
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.2f, .7f, .2f, 1.f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.3f, .8f, .3f, 1.f));
-                ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.2f, .7f, .2f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.44f, .67f, .01f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.55f, .74f, .21f, 1.f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.44f, .67f, .01f, 1.f));
                 if (ImGui::Button("Y", button_size))
                     values.y = y_reset;
                 ImGui::PopStyleColor(3);

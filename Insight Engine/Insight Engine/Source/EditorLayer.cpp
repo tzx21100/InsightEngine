@@ -42,10 +42,7 @@ namespace IS {
         ImGui::Begin("EditorDockSpace", nullptr, window_flags);
         //i add in pos here to get the position of the dockspace
         dockspace_pos = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
-
-        ImGui::PopStyleVar();
-
-        ImGui::PopStyleVar(2);
+        ImGui::PopStyleVar(3);
 
         ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
@@ -56,23 +53,7 @@ namespace IS {
         // Create Menu Bar
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
-                // Disabling fullscreen would allow the window to be moved to the front of other windows,
-                // which we can't undo at the moment without finer window depth/z control.
-                ImGui::Separator();
-                ImGui::MenuItem("New Level");
-                ImGui::MenuItem("Open Level");
-                ImGui::Separator();
-                ImGui::MenuItem("Save Current Level");
-                ImGui::MenuItem("Save Current Level As...");
-                ImGui::MenuItem("Save All");
-                ImGui::Separator();
-                ImGui::MenuItem("Import into Level...");
-                ImGui::MenuItem("Export All...");
-                ImGui::MenuItem("Export Selected...");
-                ImGui::Separator();
-                ImGui::MenuItem("New Project...");
-                ImGui::MenuItem("Open Project...");
-                ImGui::MenuItem("Recent Projects");
+                ImGui::MenuItem("(Empty)");
                 ImGui::Separator();
                 if (ImGui::MenuItem("Exit"))
                     InsightEngine::Instance().Exit();
@@ -81,7 +62,7 @@ namespace IS {
             }
 
             if (ImGui::BeginMenu("Edit")) {
-
+                ImGui::MenuItem("(Empty)");
                 ImGui::EndMenu();
             }
 

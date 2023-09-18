@@ -28,6 +28,9 @@ namespace IS {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
+        // Set default font
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f);
+
         // Setup Dear ImGui style
 
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -162,6 +165,9 @@ namespace IS {
 
         // Dockspace
         colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+
+        // Menubar
+        colors[ImGuiCol_MenuBarBg] = ImVec4{ .1137f, .1137f, .1137f, 1.f };
     }
 
 } // end namespace IS

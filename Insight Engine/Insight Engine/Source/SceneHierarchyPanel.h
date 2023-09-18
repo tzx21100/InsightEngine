@@ -15,7 +15,7 @@ namespace IS {
         void RenderEntityNode(Entity entity);
         void RenderComponentNodes(std::shared_ptr<Entity> entity);
     private:
-        std::shared_ptr<Entity> entity_selected;
+        std::shared_ptr<Entity> selected_entity;
     };
 
 } // end namespace IS
