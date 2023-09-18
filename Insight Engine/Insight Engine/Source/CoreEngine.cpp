@@ -180,11 +180,11 @@ namespace IS {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
-        std::cout << "DELETE SUCCEED";
+        IS_CORE_DEBUG("Entity {} deleted successfully!", entity);
     }
 
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {
-        std::string file_path = "Prefabs/" + filename;
+        std::string file_path = "Prefabs/" + filename + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
         prefab["Signature"] = signature;
@@ -196,7 +196,7 @@ namespace IS {
     }
 
     Entity InsightEngine::LoadFromJson(std::string name) {
-        std::string filename = "Prefabs/" + name;
+        std::string filename = "Prefabs/" + name + ".json";
         Entity entity = CreateEntity();
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
