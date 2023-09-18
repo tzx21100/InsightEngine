@@ -177,9 +177,10 @@ namespace IS {
     }
 
     void InsightEngine::DestroyEntity(Entity entity) {
-        mEntityManager->DestroyEntity(entity);
         mComponentManager->EntityDestroyed(entity);
+        mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
+        std::cout << "DELETE SUCCEED";
     }
 
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {

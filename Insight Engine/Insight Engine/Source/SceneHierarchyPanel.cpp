@@ -25,6 +25,9 @@ namespace IS {
         // Render inspector for selected entity
         ImGui::Begin("Inspector");
         RenderComponentNodes(entity_selected);
+        if (ImGui::Button("Delete")) {
+            engine.DestroyEntity(entity_selected);
+        }
         ImGui::End();
     }
 

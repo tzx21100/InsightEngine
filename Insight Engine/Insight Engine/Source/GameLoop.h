@@ -11,6 +11,7 @@ namespace IS {
         Entity points;
         Entity lines;
         Entity circle;
+        Entity quad;
 
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
@@ -77,21 +78,39 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
+
+
             float speed = 10;
-            auto& trans = engine.GetComponent<Transform>(myEntity);
-            //auto& trans2 = engine.GetComponent<Transform>(myEntity);
-            int hori = input.IsKeyHeld(GLFW_KEY_D) - input.IsKeyHeld(GLFW_KEY_A);
-            int verti = input.IsKeyHeld(GLFW_KEY_W) - input.IsKeyHeld(GLFW_KEY_S);
-            trans.world_position.x += hori * speed;
-            trans.world_position.y += verti * speed;
+            if (engine.HasComponent<Transform>(myEntity)) {
+                auto& trans = engine.GetComponent<Transform>(myEntity);
 
-            // flip image
-            trans.scaling.x *= (input.IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
-                               (input.IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
+                //auto& trans2 = engine.GetComponent<Transform>(myEntity);
+                int hori = input.IsKeyHeld(GLFW_KEY_D) - input.IsKeyHeld(GLFW_KEY_A);
+                int verti = input.IsKeyHeld(GLFW_KEY_W) - input.IsKeyHeld(GLFW_KEY_S);
+                trans.world_position.x += hori * speed;
+                trans.world_position.y += verti * speed;
 
-            float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
-            trans.orientation.x += rotate * speed;
-            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
+                // flip image
+                trans.scaling.x *= (input.IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
+                    (input.IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
+
+
+                float rotate = input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q);
+                trans.orientation.x += rotate * speed;
+            }
+            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) && input.GetMousePosition().first > -WIDTH / 2 && input.GetMousePosition().first < WIDTH / 2) {
+                for (int i = 0; i < 1; i++) {
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
+                    auto& transl = engine.GetComponent<Transform>(a);
+                    transl.setScaling(30, 38);
+                    transl.setWorldPosition(input.GetMousePosition().first, input.GetMousePosition().second);
+                    //add the image in
+                    //spr.texture = backgroundTest.texture_data;
+                }
+
+            }
+
+            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input.GetMousePosition().first>-WIDTH/2 && input.GetMousePosition().second<WIDTH/2) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
                     auto& transl = engine.GetComponent<Transform>(a);
@@ -106,7 +125,9 @@ namespace IS {
 
             }
 
-
+            if (input.IsKeyPressed(GLFW_KEY_R)) {
+                engine.DestroyEntity(myEntity);
+            }
 
             auto& transLines = engine.GetComponent<Transform>(lines);
             transLines.orientation.x += transLines.orientation.y * delta;

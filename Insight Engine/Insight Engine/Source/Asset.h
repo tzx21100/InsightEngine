@@ -76,8 +76,6 @@ namespace IS {
         AssetManager() {}
         AssetManager(const char* file_name);
         ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
-        
-        const Image& getImage() const;
 
         const Image& GetImage(const std::string& filename) const;
         Image ImageLoad(const std::string& filepath);
@@ -86,8 +84,7 @@ namespace IS {
         void ImageFree(const std::string& filename);
 
 
-        void ImageCreate(Image& image, bool zeroed);
-        void ImageSave(Image& image, const char* file_name);
+        //extra image functions
         void ImageToGray(Image& image);
         void ImageToSepia(Image& image);
 
