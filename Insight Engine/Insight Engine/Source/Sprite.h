@@ -10,6 +10,8 @@ namespace IS {
         GLenum primitive_type{};
         Transform model_TRS{}; // transformation values
         uint8_t texture{};
+        uint32_t texture_width{};
+        uint32_t texture_height{};
         GLuint tex_ID{};
 
         // imgui

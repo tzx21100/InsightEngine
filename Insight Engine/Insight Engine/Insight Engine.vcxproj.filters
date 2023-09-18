@@ -100,7 +100,7 @@
     <ClCompile Include="Source\SceneHierarchyPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Widgets.cpp">
+    <ClCompile Include="Source\Guidgets.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
   </ItemGroup>
@@ -237,7 +237,7 @@
     <ClInclude Include="Source\SceneHierarchyPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Widgets.h">
+    <ClInclude Include="Source\Guidgets.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>

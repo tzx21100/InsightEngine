@@ -159,6 +159,9 @@ namespace IS {
         // Resize Grip
         colors[ImGuiCol_ResizeGripHovered] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
         colors[ImGuiCol_ResizeGripActive] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+
+        // Dockspace
+        colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
     }
 
 } // end namespace IS

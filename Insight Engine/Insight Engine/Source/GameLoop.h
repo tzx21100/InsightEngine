@@ -53,7 +53,12 @@ namespace IS {
 
             spriteMyEntity.name = "textured_box";
             spriteMyEntity.texture = idle_animation.texture_data;
+            spriteMyEntity.texture_width = idle_animation.width;
+            spriteMyEntity.texture_height = idle_animation.height;
+
             spriteMyEntity2.texture = backgroundTest.texture_data;
+            spriteMyEntity2.texture_width = backgroundTest.width;
+            spriteMyEntity2.texture_height = backgroundTest.height;
 
             trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);
@@ -119,6 +124,8 @@ namespace IS {
                     auto& spr = engine.GetComponent<Sprite>(a);
                     spr.name = "textured_box2";  
                     spr.texture = zx_animation.texture_data;
+                    spr.texture_width = zx_animation.width;
+                    spr.texture_height = zx_animation.height;
                     //add the image in
                     //spr.texture = backgroundTest.texture_data;
                 }

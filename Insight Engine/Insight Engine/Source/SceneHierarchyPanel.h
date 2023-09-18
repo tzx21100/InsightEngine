@@ -2,6 +2,7 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_PANELS_SCENE_HIERARCHY_PANEL_H
 
 #include "Entities.h"
+#include <memory>
 
 namespace IS {
 
@@ -12,9 +13,9 @@ namespace IS {
 
         void RenderPanel();
         void RenderEntityNode(Entity entity);
-        void RenderComponentNodes(Entity entity);
+        void RenderComponentNodes(std::shared_ptr<Entity> entity);
     private:
-        Entity entity_selected;
+        std::shared_ptr<Entity> entity_selected;
     };
 
 } // end namespace IS
