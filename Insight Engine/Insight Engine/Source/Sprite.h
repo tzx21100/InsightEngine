@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Shader.h"
 #include "Animation.h"
+#include "Vector2D.h"
 
 namespace IS {
     class Sprite : public IComponent {
@@ -48,5 +49,8 @@ namespace IS {
         // for M1 rubrics showcase
         void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
         void drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animPointer, GLuint texture_id = 0);
+
+        static void drawLine(Vector2D const& p0, Vector2D const& p1, float delta_time);
+        static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale, float delta_time);
     };
 }

@@ -83,8 +83,6 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-
-
             float speed = 10;
             if (engine.HasComponent<Transform>(myEntity)) {
                 auto& trans = engine.GetComponent<Transform>(myEntity);
