@@ -82,11 +82,14 @@ namespace IS {
         void SaveImageData(const Image& image_data);
         void RemoveImageData(const std::string& filename);
         void ImageFree(const std::string& filename);
+        Image ToGray(const Image& image);
+        Image ToSepia(const Image& image);
 
 
         //extra image functions
         void ImageToGray(Image& image);
         void ImageToSepia(Image& image);
+
 
         //asset managers are supposed to save sounds and fonts as well
         void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }

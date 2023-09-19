@@ -21,6 +21,7 @@ namespace IS {
         Image backgroundTest;
         Image idle_animation;
         Image zx_animation;
+        Image greybackgroundTest = asset.ToSepia(backgroundTest);
 
         virtual void Initialize() override {
             //create a image
@@ -28,6 +29,7 @@ namespace IS {
             idle_animation = asset.ImageLoad("Assets/player_idle.png");
             zx_animation = asset.ImageLoad("Assets/icecream_truck.png");
 
+            
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
             myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
