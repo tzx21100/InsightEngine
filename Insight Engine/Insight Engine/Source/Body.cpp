@@ -207,7 +207,7 @@ namespace IS
         this->transformedVertices = GetTransformedVertices();
     }
 
-    void RigidBody::Rotate(float val) {
+    void RigidBody::Rotate(float const& val) {
         this->bodyTransform.rotation += val;
         //this->rotation += val;
         //this->rotation = fmod(this->rotation, (2.0 * PI));
