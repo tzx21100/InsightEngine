@@ -69,6 +69,7 @@
     <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Mono.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\Sprite.h" />
@@ -141,8 +142,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib\Deb</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -154,8 +155,8 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glew\include;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glew\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib\Rel</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -184,8 +185,11 @@ copy "$(ProjectDir)libraries\glew\lib\glew32.dll" "$(TargetDir)glew32.dll" /Y
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y
 copy "$(ProjectDir)libraries\freetype\lib\freetype.dll" "$(TargetDir)freetype.dll" /Y
+copy "$(ProjectDir)libraries\mono\bine\Deb\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+copy "$(ProjectDir)libraries\mono\bine\Deb\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
-xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y</Command>
+xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
+xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)mono\4.5\" /E /Y</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -226,7 +230,10 @@ copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y
 copy "$(ProjectDir)libraries\freetype\lib\freetype.dll" "$(TargetDir)freetype.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
-xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y</Command>
+copy "$(ProjectDir)libraries\mono\bine\Rel\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+copy "$(ProjectDir)libraries\mono\bine\Rel\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
+xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
+xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)mono\4.5\" /E /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
