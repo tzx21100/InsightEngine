@@ -207,7 +207,7 @@ namespace IS {
             ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             ImGui::Separator();
             ImGui::Text("Physics Debug");
-            ImGui::Checkbox("Draw Collision Boxes", &Physics::draw_debug);
+            ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
             ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
             ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
         }

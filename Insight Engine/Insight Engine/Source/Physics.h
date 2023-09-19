@@ -7,8 +7,6 @@ namespace IS
 {
 	class Physics : public ParentSystem {
 	public:
-        static bool draw_debug;
-
         Physics();
         void Update(float dt) override;
         std::string getName() override { return "Physics"; }
@@ -16,6 +14,7 @@ namespace IS
         void HandleMessage(const Message&) override {}
         //void setGravity(float g) { Gravity = g; }
         Vector2D getGravity() { return Gravity; }
+        static bool isDebugDraw;
         ~Physics() {}
 
         static void drawOutLine(float const& dt, RigidBody const& body, Sprite const& sprite);
