@@ -59,11 +59,6 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
-        for (auto& entity : mEntities) {
-            auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-            trans.orientation.x += trans.orientation.y * delta_time;
-        }
-
         idle_ani.updateAnimation(delta_time);
         idle_ani2.updateAnimation(delta_time);
         Draw(delta_time);
@@ -97,7 +92,8 @@ namespace IS {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-;               }
+                    ;
+                }
                 else if (sprite.name == "textured_box2") {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
                 }
@@ -115,6 +111,11 @@ namespace IS {
                 sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
+            if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+                auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+                Physics::drawOutLine(delta_time, body, sprite);
+            }
+                
         }
 
         Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);

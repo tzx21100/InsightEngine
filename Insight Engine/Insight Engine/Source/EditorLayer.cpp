@@ -196,7 +196,11 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
         if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
-            ImGui::Text("Max Entities: %d", MAX_ENTITIES);
+            // Comma separted numbers
+            std::ostringstream oss;
+            oss.imbue(std::locale(""));
+            oss << std::fixed << MAX_ENTITIES;
+            ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
             ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
         }

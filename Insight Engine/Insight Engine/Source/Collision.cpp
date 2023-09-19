@@ -117,7 +117,7 @@ namespace IS
 		return 0;
 	}
 
-	bool Intersection_Polygons(std::vector<Vector2D> trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
+	bool Intersection_Polygons(std::vector<Vector2D> const& trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
 
 		// init
 		normal = Vector2D();
@@ -203,7 +203,7 @@ namespace IS
 		return true;
 	}
 
-	void ProjectVertices(std::vector<Vector2D> vertices, Vector2D normal, float& min, float& max)
+	void ProjectVertices(std::vector<Vector2D> const& vertices, Vector2D const& normal, float& min, float& max)
 	{
 
 		for (int i = 0; i < vertices.size(); i++)
@@ -296,7 +296,7 @@ namespace IS
 
 	}
 
-	void ProjectCircle(Vector2D center, float radius, Vector2D normal, float& min, float& max)
+	void ProjectCircle(Vector2D const& center, float const& radius, Vector2D const& normal, float& min, float& max)
 	{
 		Vector2D directionRadius = normal * radius;
 

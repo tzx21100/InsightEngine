@@ -16,6 +16,7 @@ namespace IS {
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
+
         for (auto& entity : graphics->mEntities) {
             RenderEntityNode(entity);
         }
@@ -36,7 +37,9 @@ namespace IS {
 
         // Render inspector for selected entity
         ImGui::Begin("Inspector");
-        RenderComponentNodes(selected_entity);
+        if (selected_entity) {
+            RenderComponentNodes(selected_entity);
+        }
         ImGui::End();
     }
 
@@ -77,11 +80,7 @@ namespace IS {
             ImGui::TreePop();
     }
 
-    void SceneHierarchyPanel::RenderComponentNodes(std::shared_ptr<Entity> entity) {
-        // No entity selected
-        if (!entity)
-            return;
-
+    void SceneHierarchyPanel::RenderComponentNodes(EntityPtr entity) {
         // Sprite Component
         RenderComponent<Sprite>("Sprite", *entity, [&](auto& sprite) {
             if (sprite.texture) {
@@ -139,13 +138,19 @@ namespace IS {
         // Transform Component
         RenderComponent<Transform>("Transform", *entity, [](auto& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
-            Vector2D orientation = { transform.orientation.x, transform.orientation.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Position", position);
-            guidgets::RenderControlVec2("Orientation", orientation);
+            ImGui::BeginTable("TransformRotation", 2);
+            ImGui::TableNextColumn();
+            ImGui::Text("Rotation");
+            ImGui::TableNextColumn();
+            float rotation = transform.rotation * (PI / 180.f);
+            ImGui::SliderAngle("##Rotation", &rotation, 0.f);
+            transform.rotation = rotation / (PI / 180.f);
+            ImGui::EndTable();
+            ImGui::Separator();
             guidgets::RenderControlVec2("Scale", scale, 95.f, 120.f);
             transform.world_position = { position.x, position.y };
-            transform.orientation = { orientation.x, orientation.y };
             transform.scaling = { scale.x, scale.y };
         });
 
@@ -158,14 +163,19 @@ namespace IS {
 
             if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(*entity)).c_str(), 2, table_flags)) {
                 ImGui::TableNextColumn();
+                ImGui::Text("Angular Velocity");
+                ImGui::TableNextColumn();
+                ImGui::DragFloat(("##AngularVelocity" + std::to_string(*entity)).c_str(), &rigidbody.angular_velocity, 1.f, 0.f, 0.f, "%.2f");
+
+                ImGui::TableNextColumn();
                 ImGui::Text("Body Type");
                 ImGui::TableNextColumn();
-                guidgets::RenderComboBoxBodyType("##Body Type", rigidbody.bodyType);
+                guidgets::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.bodyType, { "Static", "Dynamic", "Kinematic" });
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Body Shape");
                 ImGui::TableNextColumn();
-                guidgets::RenderComboBoxBodyShape("##Body Shape", rigidbody.bodyShape);
+                guidgets::RenderComboBoxEnum<Shape>("##Body Shape", rigidbody.bodyShape, { "Box", "Circle", "Line" });
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Mass");
@@ -202,17 +212,80 @@ namespace IS {
             ImGui::Text("(Empty)");
         });
 
-        // Aditional actions (temp)
+        // Aditional configurations (temp)
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-        bool actions_opened = ImGui::TreeNodeEx(std::bit_cast<void*>(typeid("Configuration").hash_code()), tree_flags, "Configuration");
-        if (actions_opened) {
+        bool config_opened = ImGui::TreeNodeEx(std::bit_cast<void*>(typeid("Configuration").hash_code()), tree_flags, "Configuration");
+        if (config_opened) {
+
+            // Add component
+            if (ImGui::Button("Add Component"))
+                ImGui::OpenPopup("AddComponent");
+
+            if (ImGui::BeginPopup("AddComponent")) {
+                if (!engine.HasComponent<Sprite>(*entity)) {
+                    if (ImGui::MenuItem("Sprite")) {
+                        engine.AddComponent<Sprite>(*entity, Sprite());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<Transform>(*entity)) {
+                    if (ImGui::MenuItem("Transform")) {
+                        engine.AddComponent<Transform>(*entity, Transform());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<RigidBody>(*entity)) {
+                    if (ImGui::MenuItem("Rigidbody")) {
+                        engine.AddComponent<RigidBody>(*entity, RigidBody());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<InputAffector>(*entity)) {
+                    if (ImGui::MenuItem("InputAffector")) {
+                        engine.AddComponent<InputAffector>(*entity, InputAffector());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (engine.HasComponent<Sprite>(*entity) && engine.HasComponent<Transform>(*entity) &&
+                    engine.HasComponent<RigidBody>(*entity) && engine.HasComponent<InputAffector>(*entity)) {
+                    if (ImGui::MenuItem("Limit Reached!"))
+                        ImGui::CloseCurrentPopup();
+                }
+
+                ImGui::EndPopup();
+            }
+
+            // Clone entity
+            if (ImGui::Button("Clone Entity")) {
+                Entity e = engine.CreateEntity();
+                if (engine.HasComponent<Sprite>(*entity)) {
+                    auto& sprite = engine.GetComponent<Sprite>(*entity);
+                    engine.AddComponent<Sprite>(e, sprite);
+                }
+                if (engine.HasComponent<Transform>(*entity)) {
+                    auto& transform = engine.GetComponent<Transform>(*entity);
+                    engine.AddComponent<Transform>(e, transform);
+                }
+                if (engine.HasComponent<RigidBody>(*entity)) {
+                    auto& rigidbody = engine.GetComponent<RigidBody>(*entity);
+                    engine.AddComponent<RigidBody>(e, rigidbody);
+                }
+                if (engine.HasComponent<InputAffector>(*entity)) {
+                    auto& input_affector = engine.GetComponent<InputAffector>(*entity);
+                    engine.AddComponent<InputAffector>(e, input_affector);
+                }
+            }
 
             // Destroy entity
-            if (ImGui::Button("DESTROY ENTITY")) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+            if (ImGui::Button("Destroy Entity")) {
                 engine.DestroyEntity(*entity);
                 selected_entity = {};
             }
+            ImGui::PopStyleColor(3);
 
             //// Confirm deletion
             //static bool show = false;
@@ -242,27 +315,6 @@ namespace IS {
             //        ImGui::End();
             //    }
             //}
-
-            // Clone entity
-            if (ImGui::Button("CLONE ENTITY")) {
-                Entity e = engine.CreateEntity();
-                if (engine.HasComponent<Sprite>(*entity)) {
-                    auto& sprite = engine.GetComponent<Sprite>(*entity);
-                    engine.AddComponent<Sprite>(e, sprite);
-                }
-                if (engine.HasComponent<Transform>(*entity)) {
-                    auto& transform = engine.GetComponent<Transform>(*entity);
-                    engine.AddComponent<Transform>(e, transform);
-                }
-                if (engine.HasComponent<RigidBody>(*entity)) {
-                    auto& rigidbody = engine.GetComponent<RigidBody>(*entity);
-                    engine.AddComponent<RigidBody>(e, rigidbody);
-                }
-                if (engine.HasComponent<InputAffector>(*entity)) {
-                    auto& input_affector = engine.GetComponent<InputAffector>(*entity);
-                    engine.AddComponent<InputAffector>(e, input_affector);
-                }
-            }
 
             ImGui::TreePop();
         }
