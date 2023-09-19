@@ -14,6 +14,9 @@ namespace IS {
         void RenderPanel();
         void RenderEntityNode(Entity entity);
         void RenderComponentNodes(std::shared_ptr<Entity> entity);
+
+        template <typename Component, typename RenderFunc>
+        static void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
     private:
         std::shared_ptr<Entity> selected_entity;
     };
