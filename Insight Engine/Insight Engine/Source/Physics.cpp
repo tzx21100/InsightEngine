@@ -31,8 +31,11 @@ namespace IS
 	//bool addG = false;
 	Vector2D v = { 0.f, -9.8f };
 	float time = 1.f / 60.f;
+
+	
 	void Physics::Update(float dt)
 	{
+
 		time = dt;
 		//for (size_t i = 0; i < 5; i++) {
 			for (auto const& entity : mEntities) {
@@ -56,7 +59,11 @@ namespace IS
 					if (body.bodyType != BodyType::Dynamic) {
 						continue;
 					}
-
+					//freeze
+					if (InsightEngine::Instance().freezeFrame) {
+						if (!InsightEngine::Instance().continueFrame)
+							return;
+					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 					trans.world_position.x += v.x * time;
 					trans.world_position.y += v.y * time;
