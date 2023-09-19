@@ -96,7 +96,8 @@ namespace IS
             CreateBoxBody(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y, this->mass, this->restitution);
             this->vertices = CreateBoxVertices(this->bodyTransform.scaling.x, this->bodyTransform.scaling.y);
             
-            this->transformedVertices = this->vertices;
+            //this->transformedVertices = this->vertices;
+            this->transformedVertices = {Vector2D(), Vector2D(), Vector2D(), Vector2D()};
             // making the transform vertices same size as the vertices, not neccessary
             //this->transformedVertices(this->vertices.size());
         }
@@ -113,12 +114,12 @@ namespace IS
 
 	}
 
-    void RigidBody::bodyFollowTransform(Transform trans) {
+    void RigidBody::bodyFollowTransform(Transform const& trans) {
         this->bodyTransform = trans; 
         updateBoxBody(trans, this->mass, this->restitution);
     }
 
-    std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
+    std::vector<Vector2D> RigidBody::CreateBoxVertices(float const& width, float const& height) {
         float left = - width / 2.f;
         float right = left + width;
         float bottom = -height / 2.f;
@@ -182,7 +183,7 @@ namespace IS
         return ret;
     }
 
-    void RigidBody::BodyUpdate(float dt, Vector2D gravity) {
+    void RigidBody::BodyUpdate(float const& dt, Vector2D const& gravity) {
         if (!(this->bodyType == BodyType::Dynamic)) {
             return;
         }
@@ -196,7 +197,7 @@ namespace IS
         this->transformUpdateRequired = true;
     }
 
-    void RigidBody::Move(Vector2D val) {
+    void RigidBody::Move(Vector2D const& val) {
         this->bodyTransform.world_position.x += val.x;
         this->bodyTransform.world_position.y += val.y;
         //this->bodyTransform.setWorldPosition(val.x, val.y);
@@ -205,7 +206,7 @@ namespace IS
         this->transformedVertices = GetTransformedVertices();
     }
 
-    void RigidBody::Rotate(float val) {
+    void RigidBody::Rotate(float const& val) {
         this->bodyTransform.orientation.x += val;
         //this->rotation += val;
         //this->rotation = fmod(this->rotation, (2.0 * PI));
@@ -213,11 +214,11 @@ namespace IS
         this->transformedVertices = GetTransformedVertices();
     }
 
-    void RigidBody::AddForce(Vector2D val) {
+    void RigidBody::AddForce(Vector2D const& val) {
         this->force = val;
     }
 
-    void RigidBody::CreateBoxBody(float width, float height, float mass, float restitution) {
+    void RigidBody::CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution) {
         //this->radius = 0.f;
         this->area = width * height;
         // set the range to be [0,1]
@@ -226,7 +227,7 @@ namespace IS
         this->density = mass * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
     }
 
-    void RigidBody::CreateCircleBody(float radius, float mass, float restitution) {
+    void RigidBody::CreateCircleBody(float const& radius, float const& mass, float const& restitution) {
         //this->dimension = Vector2D(); //(0, 0);
         this->area = radius * radius * PI;
         // set the range to be [0,1]
@@ -235,7 +236,7 @@ namespace IS
         this->density = mass * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
     }
 
-    void RigidBody::updateBoxBody(Transform bodyTransform, float mass, float restitution) {
+    void RigidBody::updateBoxBody(Transform const& bodyTransform, float const& mass, float const& restitution) {
         CreateBoxBody(bodyTransform.scaling.x, bodyTransform.scaling.y, this->mass, this->restitution);
         this->vertices = CreateBoxVertices(bodyTransform.scaling.x, bodyTransform.scaling.y);
         this->transformUpdateRequired = true;

@@ -92,13 +92,14 @@ namespace IS {
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
-            sprite.transform(delta_time);
+            sprite.transform(delta_time);   
             GLuint texture{};
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-;               }
+                    ;
+                }
                 else if (sprite.name == "textured_box2") {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
                 }
@@ -117,6 +118,11 @@ namespace IS {
                 sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
+            if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+                auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+                Physics::drawOutLine(delta_time, body, sprite);
+            }
+                
         }
 
         framebuffer->Unbind();

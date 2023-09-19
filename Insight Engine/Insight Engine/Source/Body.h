@@ -50,9 +50,9 @@ namespace IS
         RigidBody();
         RigidBody(glm::vec2 position, BodyType bodyType, float mass, float restitution,
             float width, float height,  Shape bodyShape);
-        void bodyFollowTransform(Transform trans);
+        void bodyFollowTransform(Transform const& trans);
         // calculate all the vertices for a box
-        std::vector<Vector2D> CreateBoxVertices(float width, float height);
+        std::vector<Vector2D> CreateBoxVertices(float const& width, float const& height);
         // calculate all the updated transformed vertices based center position
         std::vector<Vector2D> GetTransformedVertices();
         // calculting the updated vertices by sin & cos
@@ -60,19 +60,19 @@ namespace IS
         Vector2D TransformRigidBody(Vector2D v, Transform transform);
 
         // update postion, rotation, force based on real world gravity
-        void BodyUpdate(float dt, Vector2D gravity);
+        void BodyUpdate(float const& dt, Vector2D const& gravity);
         // move the game object
-        void Move(Vector2D val);
+        void Move(Vector2D const& val);
         // rotate the game object
-        void Rotate(float val);
+        void Rotate(float const& val);
         // adding force
-        void AddForce(Vector2D val);
+        void AddForce(Vector2D const& val);
         // create box rigidbody
-        void CreateBoxBody(float width, float height, float mass, float restitution);
+        void CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution);
         // create circle rigidbody
-        void CreateCircleBody(float radius, float mass, float restitution);
+        void CreateCircleBody(float const& radius, float const& mass, float const& restitution);
 
-        void updateBoxBody(Transform bodyTransform, float mass, float restitution);
+        void updateBoxBody(Transform const& bodyTransform, float const& mass, float const& restitution);
 
         Json::Value Serialize() override {
             Json::Value prefab;
