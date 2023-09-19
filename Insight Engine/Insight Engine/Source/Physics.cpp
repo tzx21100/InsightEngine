@@ -13,6 +13,8 @@ namespace IS
 		//PHYSICS = this;
 		Gravity = Vector2D(0, -9.81f);
 		exertingGravity = false;
+		//isDebugDraw = false;
+		MaxVelocity = 2000.f;
 		//Gravity = 9.8f;
 		//MaxVelocity = 1000;
 
@@ -27,10 +29,12 @@ namespace IS
 		//std::cout << "PhysicsSystem initialized." << std::endl;
 		//The system can also subscribe to the message type it wants here
 		Subscribe(MessageType::Collide);
+
 	}
 	//bool addG = false;
 	Vector2D v = { 0.f, -9.8f };
 	float time = 1.f / 60.f;
+	bool Physics::isDebugDraw = false;
 	void Physics::Update(float dt)
 	{
 		time = dt;
@@ -43,6 +47,14 @@ namespace IS
 				}
 				else if (input.IsKeyPressed(GLFW_KEY_F)) {
 					exertingGravity = false;
+				}
+
+				// for drawing lines
+				if (input.IsKeyPressed(GLFW_KEY_2)) {
+					Physics::isDebugDraw = true;
+				}
+				else if (input.IsKeyPressed(GLFW_KEY_1)) {
+					Physics::isDebugDraw = false;
 				}
 				if (exertingGravity) {
 					v += Gravity * time;
@@ -58,11 +70,10 @@ namespace IS
 					}
 
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					trans.world_position.x += v.x * time;
-					trans.world_position.y += v.y * time;
+					trans.world_position.x += std::min(v.x, MaxVelocity) * time;
+					trans.world_position.y += std::min(v.y, MaxVelocity) * time;
 				}
 			}
-			//drawEachOutLine(dt, mEntities);
 			collisionCheck(dt, mEntities);
 #if 0
 			//loops through all Entities registered by the System this mEntities map is written in the parent class

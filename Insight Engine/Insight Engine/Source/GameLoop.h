@@ -91,7 +91,7 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-            if (engine.HasComponent<Transform>(myEntity)) {
+            if (engine.HasComponent<Transform>(myEntity) && engine.HasComponent<RigidBody>(myEntity)) {
                 auto& trans = engine.GetComponent<Transform>(myEntity);
                 auto& rbody = engine.GetComponent<RigidBody>(myEntity);
 
