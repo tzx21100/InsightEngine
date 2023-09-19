@@ -133,26 +133,34 @@ namespace IS {
     //    }
     //}
 
-    void AssetManager::ImageToGray(Image& image) {
-        for (unsigned char* p = image.data, *pg = image.data; p != image.data + image.size; p += image.channels, pg += image.channels) {
+    Image AssetManager::ToGray(const Image& image) {
+        Image grayImage = image; // Make a copy of the original image
+
+        for (unsigned char* p = grayImage.data, *pg = grayImage.data; p != grayImage.data + grayImage.size; p += grayImage.channels, pg += grayImage.channels) {
             *pg = static_cast<uint8_t>((*p + *(p + 1) + *(p + 2)) / 3.0);
-            if (image.channels == 4) {
+            if (grayImage.channels == 4) {
                 *(pg + 1) = *(p + 3);
             }
         }
 
-        // Update the channels and allocation type of the image
-        if (image.allocation_type != allocationType::SelfAllocated) {
-            image.allocation_type = allocationType::SelfAllocated;
+        // Update the channels and allocation type of the new image
+        if (grayImage.allocation_type != allocationType::SelfAllocated) {
+            grayImage.allocation_type = allocationType::SelfAllocated;
         }
+        auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
+        auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
+        auto result = graphicsys->initTextures(grayImage);
+        grayImage.texture_data = result;
+        // You may want to save the modified image data to the image_manager here if needed
+        SaveImageData(grayImage);
 
-        // save the modified image data to the image_manager
-        SaveImageData(image);
+        return grayImage;
     }
 
-    void AssetManager::ImageToSepia(Image& image) {
-        
-        for (unsigned char* p = image.data; p != image.data + image.size; p += image.channels) {
+    Image AssetManager::ToSepia(const Image& image) {
+        Image sepiaImage = image; // Make a copy of the original image
+
+        for (unsigned char* p = sepiaImage.data; p != sepiaImage.data + sepiaImage.size; p += sepiaImage.channels) {
             int r = *p, g = *(p + 1), b = *(p + 2);
             int new_r = static_cast<int>((0.393 * r) + (0.769 * g) + (0.189 * b));
             int new_g = static_cast<int>((0.349 * r) + (0.686 * g) + (0.168 * b));
@@ -162,12 +170,19 @@ namespace IS {
             *(p + 2) = static_cast<uint8_t>(std::min(255, std::max(0, new_b)));
         }
 
-        if (image.allocation_type != allocationType::SelfAllocated) {
-            image.allocation_type = allocationType::SelfAllocated;
+        // Update the channels and allocation type of the new image
+        if (sepiaImage.allocation_type != allocationType::SelfAllocated) {
+            sepiaImage.allocation_type = allocationType::SelfAllocated;
         }
-
-        SaveImageData(image);
+        auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
+        auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
+        auto result = graphicsys->initTextures(sepiaImage);
+        sepiaImage.texture_data = result;
+        // You may want to save the modified image data to the image_manager here if needed
+        SaveImageData(sepiaImage);
+        return sepiaImage;
     }
+
 
 
 }
