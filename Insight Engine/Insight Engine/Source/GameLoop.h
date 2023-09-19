@@ -15,7 +15,7 @@ namespace IS {
 
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
-        InputManager& input = InputManager::Instance();
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
         AssetManager& asset = AssetManager::Instance();
 
         Image backgroundTest;
@@ -92,11 +92,12 @@ namespace IS {
 
         virtual void Update(float delta) override {
             
-
-            if (input.IsKeyPressed(GLFW_KEY_SPACE)) {
+            //this controls the freeze frame
+            engine.continueFrame = false;
+            if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
                 engine.continueFrame = true;
             }
-            if (input.IsKeyPressed(GLFW_KEY_SPACE) && input.IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
                 engine.freezeFrame = !engine.freezeFrame;
             }
             if (engine.freezeFrame) {
@@ -109,38 +110,38 @@ namespace IS {
                 auto& rbody = engine.GetComponent<RigidBody>(myEntity);
 
                 //auto& trans2 = engine.GetComponent<Transform>(myEntity);
-                int hori = input.IsKeyHeld(GLFW_KEY_D) - input.IsKeyHeld(GLFW_KEY_A);
-                int verti = input.IsKeyHeld(GLFW_KEY_W) - input.IsKeyHeld(GLFW_KEY_S);
+                int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
+                int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
                 trans.world_position.x += hori * rbody.velocity.x;
                 trans.world_position.y += verti * rbody.velocity.y;
 
                 // flip image
-                trans.scaling.x *= (input.IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
-                    (input.IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
+                trans.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
+                    (input->IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
 
 
-                float rotate = static_cast<float>(input.IsKeyHeld(GLFW_KEY_E) - input.IsKeyHeld(GLFW_KEY_Q));
+                float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
                 trans.rotation += rotate * rbody.angular_velocity;
                 trans.rotation = trans.rotation < 0.f ? 360.f : fmod(trans.rotation, 360.f);
             }
-            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) && input.GetMousePosition().first > -WIDTH / 2 && input.GetMousePosition().first < WIDTH / 2) {
+            if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().first < WIDTH / 2) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(30, 38);
-                    transl.setWorldPosition(static_cast<float>(input.GetMousePosition().first), static_cast<float>(input.GetMousePosition().second));
+                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                     //add the image in
                     //spr.texture = backgroundTest.texture_data;
                 }
 
             }
 
-            if (input.IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input.GetMousePosition().first>-WIDTH/2 && input.GetMousePosition().second<WIDTH/2) {
+            if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input->GetMousePosition().first>-WIDTH/2 && input->GetMousePosition().second<WIDTH/2) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(128, 128);
-                    transl.setWorldPosition(static_cast<float>(input.GetMousePosition().first), static_cast<float>(input.GetMousePosition().second));
+                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                     auto& spr = engine.GetComponent<Sprite>(a);
                     spr.name = "textured_box2";  
                     spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
@@ -152,7 +153,7 @@ namespace IS {
 
             }
 
-            if (input.IsKeyPressed(GLFW_KEY_R)) {
+            if (input->IsKeyPressed(GLFW_KEY_R)) {
                 engine.DestroyEntity(myEntity);
             }
 

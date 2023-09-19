@@ -87,7 +87,6 @@ namespace IS {
             auto result=graphicsys->initTextures(image);
             image.texture_data = result;
             SaveImageData(image);
-            std::cout << "THE tex data: " <<image.texture_data;
             return image;
         }
 

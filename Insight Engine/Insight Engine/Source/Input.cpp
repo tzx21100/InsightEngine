@@ -12,11 +12,23 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
     }
 
-    void InputManager::Update([[maybe_unused]] float deltaTime) {
+    void InputManager::Update(float deltaTime) {
 
-        //this is an example
-        //if (IsKeyHeld(GLFW_KEY_A)) { std::cout << "A"; }
+        //keyboard
+        for (auto const& key : held_keys) {
+            pressed_keys.erase(key);
+        }
+        for (auto const& key : pressed_keys) {
+            held_keys.insert(key);
+        }
 
+        //mouse
+        for (auto const& button : held_mouse_buttons) {
+            pressed_mouse_buttons.erase(button);
+        }
+        for (auto const& button : pressed_mouse_buttons) {
+            held_mouse_buttons.insert(button);
+        }
     }
 
     void InputManager::HandleMessage(const Message& message) {
@@ -31,6 +43,7 @@ namespace IS {
         window = glfwGetCurrentContext();
         glfwSetWindowUserPointer(window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(window, KeyCallback);
+        glfwSetMouseButtonCallback(window, MouseButtonCallback);
     }
 
     bool InputManager::IsKeyPressed(int glfwKeyCode) const {
@@ -46,42 +59,55 @@ namespace IS {
     }
 
     bool InputManager::IsMouseButtonPressed(int button) const {
-        return glfwGetMouseButton(window, button) == GLFW_PRESS;
+        return pressed_mouse_buttons.count(button) > 0;
     }
+
+    bool InputManager::IsMouseButtonReleased(int button) const {
+        return released_mouse_buttons.count(button) > 0;
+    }
+
+    bool InputManager::IsMouseButtonHeld(int button) const {
+        return held_mouse_buttons.count(button) > 0;
+    }
+
 
     //our world pos 0,0 is in the center
     std::pair<double, double> InputManager::GetMousePosition() const {
         double xPos, yPos;
         glfwGetCursorPos(window, &xPos, &yPos);
 
-        //int width, height;
-        //glfwGetWindowSize(window, &width, &height);
-
-        //double centerX = static_cast<double>(width) / 2.0;
-        //double centerY = static_cast<double>(height) / 2.0;
-       //std::cout << "X: " << xPos << "Y :" << yPos << std::endl;
-
         double newX = (xPos - center_x)*ratio_width;
         double newY = (center_y - yPos)*ratio_height;  // Negate to make y-axis point upwards
-
 
         return { newX, newY };
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
-        //std::string key_name = glfwGetKeyName(key, scancode) ? glfwGetKeyName(key, scancode) : "code: " + std::to_string(key);
         if (action == GLFW_PRESS) {
-            //IS_CORE_TRACE("Key {} Pressed", key_name);
             inputManager->pressed_keys.insert(key);
-            inputManager->held_keys.insert(key); // Add to held_keys when pressed
+            inputManager->released_keys.erase(key);
         }
         if (action == GLFW_RELEASE) {
-            //IS_CORE_TRACE("Key {} Released", key_name);
             inputManager->pressed_keys.erase(key);
             inputManager->released_keys.insert(key);
             inputManager->held_keys.erase(key); // Remove from held_keys when released
         }
+        
     }
+
+    void InputManager::MouseButtonCallback(GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
+        InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+        if (action == GLFW_PRESS) {
+            inputManager->pressed_mouse_buttons.insert(button);
+            inputManager->released_mouse_buttons.erase(button);
+        }
+        if (action == GLFW_RELEASE) {
+            inputManager->pressed_mouse_buttons.erase(button);
+            inputManager->released_mouse_buttons.insert(button);
+            inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
+        }
+    }
+
 
 }

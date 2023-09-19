@@ -30,10 +30,7 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
-        for (auto& [name, system] : mAllSystems) {
-           // delete pair.second;
-            //IS_CORE_INFO("{} terminated", name);
-        }
+        mSystemList.clear();
         mAllSystems.clear();
         //IS_CORE_DEBUG("Insight Engine terminated");
     }
@@ -61,13 +58,13 @@ namespace IS {
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
 
-        for (const auto& [name, system] : mAllSystems) {
-            Timer timer(name.c_str(), false);
+        for (const auto& system: mSystemList) {
+            Timer timer(system->getName().c_str(), false);
             system->Update(delta_time.count());
             timer.Stop();
 
             if (!(frame_count % update_frequency)) {
-                mSystemDeltas[name] = timer.GetDeltaTime();
+                mSystemDeltas[system->getName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
@@ -82,7 +79,6 @@ namespace IS {
         delta_time = frameEnd - frameStart;
 
         ++frame_count;
-        continueFrame = false;
     }
 
     //moved all the engine stuff under this run function
@@ -104,6 +100,7 @@ namespace IS {
         std::string systemName = system->getName();
         IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
+        mSystemList.emplace_back(system);
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
     }
@@ -115,14 +112,19 @@ namespace IS {
             //delete it->second; //delete the object
             mAllSystems.erase(it);
         }
+        int i = 0;
+        for (auto& system : mSystemList) {
+            if (system == it->second) {
+                mSystemList.erase(mSystemList.begin()+i);
+            }
+            i++;
+        }
+
     }
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& [name, system] : mAllSystems) {
-            //delete pair.second;  // Delete the system object
-            //IS_CORE_INFO("{} terminated", name);
-        }
+        mSystemList.clear();
         mAllSystems.clear();  // Clear the map
     }
 
@@ -131,9 +133,8 @@ namespace IS {
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
-
-        for (auto const& [name, system] : mAllSystems) {
-            IS_PROFILE_SCOPE(name.c_str());
+        for (auto const& system : mSystemList) {
+            IS_PROFILE_SCOPE(system->getName().c_str());
             system->Initialize();
             //IS_CORE_INFO("{} initialized", name);
         }

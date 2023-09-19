@@ -49,6 +49,9 @@ int main() {
     auto mySystem = std::make_shared<WindowSystem>(WIDTH, HEIGHT, "Insight Engine");
     signature = engine.GenerateSignature<>();
     engine.AddSystem(mySystem, signature);
+    signature = engine.GenerateSignature<InputAffector>();
+    auto InputSys = std::make_shared<InputManager>();
+    engine.AddSystem(InputSys, signature);
     auto mySystem3 = std::make_shared<ISAudio>();
     engine.AddSystem(mySystem3, signature);
     auto mySystem4 = std::make_shared<AssetManager>();
@@ -61,9 +64,7 @@ int main() {
     signature = engine.GenerateSignature<Sprite,Transform>();
     auto graphicSystem = std::make_shared<ISGraphics>();
     engine.AddSystem(graphicSystem, signature);
-    signature = engine.GenerateSignature<InputAffector>();
-    auto InputSys = std::make_shared<InputManager>();
-    engine.AddSystem(InputSys, signature);
+
 
 
     //this is the game loop to be added at the end

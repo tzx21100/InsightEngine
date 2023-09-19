@@ -91,6 +91,9 @@ namespace IS {
     }
 
     void EditorLayer::RenderScenePanel() {
+
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
@@ -102,8 +105,8 @@ namespace IS {
         ImVec2 actual_scene_pos;
         actual_scene_pos.x = scene_pos.x-dockspace_pos.x;
         actual_scene_pos.y = scene_pos.y-dockspace_pos.y;
-        InputManager::Instance().setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
-        InputManager::Instance().setRatio(scene_size.x, scene_size.y);
+        input->setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
+        input->setRatio(scene_size.x, scene_size.y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
@@ -191,8 +194,7 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
-        InputManager& input = InputManager::Instance();
-
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
         if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());

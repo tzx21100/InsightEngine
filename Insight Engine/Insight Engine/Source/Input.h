@@ -38,16 +38,13 @@ namespace IS {
         bool IsKeyHeld(int glfwKeyCode) const;
 
         bool IsMouseButtonPressed(int button) const;
+        bool IsMouseButtonReleased(int button) const;
+        bool IsMouseButtonHeld(int button) const;
+
         std::pair<double, double> GetMousePosition() const;
 
         //window
         GLFWwindow* window;
-
-        //this is to instatiate only ONE engine
-        static InputManager& Instance() {
-            static InputManager instance;
-            return instance;
-        }
 
         void setCenterPos(float posx, float posy) {
             center_x = posx;
@@ -61,11 +58,16 @@ namespace IS {
         }
 
     private:
+
+        //for keyboard keys
         std::unordered_set<int> pressed_keys;
         std::unordered_set<int> released_keys;
-
-        //this is to store held keys and make it unique
         std::unordered_set<int> held_keys;
+        //for mouse button
+        std::unordered_set<int> pressed_mouse_buttons;
+        std::unordered_set<int> released_mouse_buttons;
+        std::unordered_set<int> held_mouse_buttons;
+
 
         float center_x = 0.f;
         float center_y = 0.f;
@@ -73,6 +75,8 @@ namespace IS {
         float ratio_height = 1.f;
         // GLFW key callback function
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        //GLFW mouse callback function
+        static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
     };
 

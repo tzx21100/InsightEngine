@@ -41,20 +41,20 @@ namespace IS
 		time = dt;
 		//for (size_t i = 0; i < 5; i++) {
 			for (auto const& entity : mEntities) {
-				InputManager& input = InputManager::Instance();
+				auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 				//time /= 5.f;
-				if (input.IsKeyPressed(GLFW_KEY_G)) {
+				if (input->IsKeyPressed(GLFW_KEY_G)) {
 					exertingGravity = true;
 				}
-				else if (input.IsKeyPressed(GLFW_KEY_F)) {
+				else if (input->IsKeyPressed(GLFW_KEY_F)) {
 					exertingGravity = false;
 				}
 
 				// for drawing lines
-				if (input.IsKeyPressed(GLFW_KEY_2)) {
+				if (input->IsKeyPressed(GLFW_KEY_2)) {
 					Physics::isDebugDraw = true;
 				}
-				else if (input.IsKeyPressed(GLFW_KEY_1)) {
+				else if (input->IsKeyPressed(GLFW_KEY_1)) {
 					Physics::isDebugDraw = false;
 				}
 				if (exertingGravity) {
