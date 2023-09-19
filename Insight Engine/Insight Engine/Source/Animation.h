@@ -16,9 +16,9 @@ namespace IS {
 
 
     private:
-        int x_frames;
-        int y_frames;
-        float animation_duration;
+        int x_frames{};
+        int y_frames{};
+        float animation_duration{};
         float time_per_frame{};
         float frame_timer{};
 	};

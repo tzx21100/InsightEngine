@@ -82,6 +82,7 @@ namespace IS {
         delta_time = frameEnd - frameStart;
 
         ++frame_count;
+        continueFrame = false;
     }
 
     //moved all the engine stuff under this run function

@@ -3,6 +3,126 @@
 #include "Shader.h"
 
 namespace IS {
+    void Shader::setupSpriteShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2 aVertexPosition;
+            layout(location = 2) in vec2 aTexCoord;
+            out vec2 vTexCoord;
+
+            uniform mat3 uModel_to_NDC;
+
+            void main()
+            {
+                gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+                vTexCoord = aTexCoord;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+
+            layout(location = 0) out vec4 fFragColor;
+            uniform vec3 uColor;
+            uniform sampler2D uTex2d;
+            in vec2 vTexCoord; // Input variable for texture coordinates
+            uniform int uTexture; // Flag to indicate whether to use texture or color
+
+            // animation uniforms - default unless drawing animation
+            uniform vec2 uFrameDim = vec2(1.0, 1.0); 
+            uniform vec2 uFrameIndex = vec2(0.0, 0.0);
+
+            void main()
+            {
+                if (uTexture == 0)
+                {
+                    fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
+                }
+                else
+                {
+                    //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
+                    fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
+                }
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    void Shader::setupTextShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout (location = 0) in vec2 vertex;
+
+            out VS_OUT{
+                vec2 TexCoords;
+                flat int index;
+            } vs_out;
+
+            uniform mat4 transforms[20]; // 400 chars per render
+            uniform mat4 projection;
+
+            void main()
+            {
+                gl_Position = projection * transforms[gl_InstanceID] * vec4(vertex.xy, 0.0, 1.0);
+                vs_out.index = gl_InstanceID; // get index to feed to frag shader
+                vs_out.TexCoords = vertex.xy;
+                vs_out.TexCoords.y = 1.0f-vs_out.TexCoords.y; // flip
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+
+            out vec4 color;
+
+            in VS_OUT{
+                vec2 TexCoords;
+                flat int index;
+            } fs_in;
+
+            uniform sampler2DArray text; // texture array
+            uniform int letterMap[400];
+            uniform vec3 textColor;
+
+            void main()
+            {    
+                vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, vec3(fs_in.TexCoords.xy,letterMap[fs_in.index])).r);
+                color = vec4(textColor, 1.0) * sampled;
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
     GLboolean Shader::compileShaderString(GLenum shader_type, std::string const& shader_src) {
         if (pgm_hdl <= 0) {
             pgm_hdl = glCreateProgram();

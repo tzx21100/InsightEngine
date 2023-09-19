@@ -91,7 +91,20 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-            if (engine.HasComponent<Transform>(myEntity) && engine.HasComponent<RigidBody>(myEntity)) {
+            
+
+            if (input.IsKeyPressed(GLFW_KEY_SPACE)) {
+                engine.continueFrame = true;
+            }
+            if (input.IsKeyPressed(GLFW_KEY_SPACE) && input.IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+                engine.freezeFrame = !engine.freezeFrame;
+            }
+            if (engine.freezeFrame) {
+                if(!engine.continueFrame)
+                return;
+            }
+
+            if (engine.HasComponent<Transform>(myEntity)) {
                 auto& trans = engine.GetComponent<Transform>(myEntity);
                 auto& rbody = engine.GetComponent<RigidBody>(myEntity);
 

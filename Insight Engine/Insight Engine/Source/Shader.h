@@ -17,7 +17,10 @@ namespace IS {
     class Shader
     {
     public:
-        // default ctor required to initialize GLSLShader object to safe state
+        void setupSpriteShaders();
+        void setupTextShaders();
+
+        // default ctor required to initialize Shader object to safe state
         Shader() : pgm_hdl(0), linked(GL_FALSE) {}
 
         GLboolean compileShaderString(GLenum shader_type, std::string const& shader_src);

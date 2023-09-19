@@ -37,6 +37,7 @@ namespace IS
 	bool Physics::isDebugDraw = false;
 	void Physics::Update(float dt)
 	{
+
 		time = dt;
 		//for (size_t i = 0; i < 5; i++) {
 			for (auto const& entity : mEntities) {
@@ -68,7 +69,11 @@ namespace IS
 					if (body.bodyType != BodyType::Dynamic) {
 						continue;
 					}
-
+					//freeze
+					if (InsightEngine::Instance().freezeFrame) {
+						if (!InsightEngine::Instance().continueFrame)
+							return;
+					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 					trans.world_position.x += std::min(v.x, MaxVelocity) * time;
 					trans.world_position.y += std::min(v.y, MaxVelocity) * time;

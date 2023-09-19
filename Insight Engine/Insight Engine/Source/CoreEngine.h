@@ -15,6 +15,10 @@ namespace IS {
     class InsightEngine : public MessageListener {
     public:
 
+        //freeze function
+        bool freezeFrame = false;
+        bool continueFrame = false;
+
         //override message handling this way the core engine also will recieve and send messages
         virtual void HandleMessage(const Message& message) override;
 
