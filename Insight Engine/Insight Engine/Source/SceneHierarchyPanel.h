@@ -8,17 +8,19 @@ namespace IS {
 
     class SceneHierarchyPanel {
     public:
+        using EntityPtr = std::shared_ptr<Entity>;
+
         SceneHierarchyPanel() = default;
         ~SceneHierarchyPanel() = default;
 
         void RenderPanel();
-        void RenderEntityNode(Entity entity);
-        void RenderComponentNodes(std::shared_ptr<Entity> entity);
+        void RenderEntityNode(Entity it);
+        void RenderComponentNodes(EntityPtr entity);
 
         template <typename Component, typename RenderFunc>
         static void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
     private:
-        std::shared_ptr<Entity> selected_entity;
+        EntityPtr selected_entity;
     };
 
 } // end namespace IS

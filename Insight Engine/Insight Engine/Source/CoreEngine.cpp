@@ -180,7 +180,7 @@ namespace IS {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
-        IS_CORE_DEBUG("Entity {} deleted successfully!", entity);
+        IS_CORE_DEBUG("Entity {} completely destroyed!", entity);
     }
 
     void InsightEngine::GenerateRandomEntity() {
