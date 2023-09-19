@@ -186,12 +186,12 @@ namespace IS {
     void InsightEngine::GenerateRandomEntity() {
         PRNG prng;
         InsightEngine& engine = Instance();
-        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
-        auto& trans = engine.GetComponent<Transform>(a);
+        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>();
+        auto& trans = engine.GetComponent<Transform>(e);
         // scale [2, 16], pos [viewport], orientation [-360, 360]
         trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f);
         trans.setWorldPosition((prng.generate()* WIDTH) - WIDTH / 2.f, (prng.generate()* HEIGHT) - HEIGHT / 2.f);
-        trans.setOrientation((prng.generate() * 360.f), (prng.generate() * 720.f) - 360.f);
+        trans.setRotation((prng.generate() * 720.f) - 360.f);
     }
 
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {

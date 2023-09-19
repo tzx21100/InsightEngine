@@ -51,7 +51,7 @@ namespace IS {
     
 
     std::string AssetManager::getName() {
-        return "AssetManager";
+        return "Asset";
     }
 
     void AssetManager::HandleMessage(const Message& message) {

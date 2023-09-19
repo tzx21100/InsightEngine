@@ -138,13 +138,19 @@ namespace IS {
         // Transform Component
         RenderComponent<Transform>("Transform", *entity, [](auto& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
-            Vector2D orientation = { transform.orientation.x, transform.orientation.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Position", position);
-            guidgets::RenderControlVec2("Orientation", orientation);
+            ImGui::BeginTable("TransformRotation", 2);
+            ImGui::TableNextColumn();
+            ImGui::Text("Rotation");
+            ImGui::TableNextColumn();
+            float rotation = transform.rotation * (PI / 180.f);
+            ImGui::SliderAngle("##Rotation", &rotation, 0.f);
+            transform.rotation = rotation / (PI / 180.f);
+            ImGui::EndTable();
+            ImGui::Separator();
             guidgets::RenderControlVec2("Scale", scale, 95.f, 120.f);
             transform.world_position = { position.x, position.y };
-            transform.orientation = { orientation.x, orientation.y };
             transform.scaling = { scale.x, scale.y };
         });
 
@@ -156,6 +162,11 @@ namespace IS {
             guidgets::RenderControlVec2("Force", rigidbody.force);
 
             if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(*entity)).c_str(), 2, table_flags)) {
+                ImGui::TableNextColumn();
+                ImGui::Text("Angular Velocity");
+                ImGui::TableNextColumn();
+                ImGui::DragFloat(("##AngularVelocity" + std::to_string(*entity)).c_str(), &rigidbody.angular_velocity, 1.f, 0.f, 0.f, "%.2f");
+
                 ImGui::TableNextColumn();
                 ImGui::Text("Body Type");
                 ImGui::TableNextColumn();

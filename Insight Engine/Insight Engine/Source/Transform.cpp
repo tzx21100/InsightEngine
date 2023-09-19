@@ -4,13 +4,13 @@
 namespace IS {
 	Transform::Transform() {
 		this->world_position = glm::vec2();
-		this->orientation = glm::vec2();
+		this->rotation = 0.f;
 		this->scaling = glm::vec2();
 	}
 
-	Transform::Transform(glm::vec2 world_position, glm::vec2 orientation, glm::vec2 scaling) {
+	Transform::Transform(glm::vec2 world_position, float rotation, glm::vec2 scaling) {
 		this->world_position = world_position;
-		this->orientation = orientation;
+		this->rotation = rotation;
 		this->scaling = scaling;
 	}
 
@@ -18,8 +18,8 @@ namespace IS {
 		return Vector2D(world_position.x, world_position.y);
 	}
 
-	Vector2D Transform::getOrientation() {
-		return Vector2D(orientation.x, orientation.y);
+	float Transform::getRotation() {
+		return rotation;
 	}
 
 	Vector2D Transform::getScaling() {
@@ -31,9 +31,8 @@ namespace IS {
 		world_position.y = y;
 	}
 
-	void Transform::setOrientation(float angle, float angle_speed) {
-		orientation.x = angle;
-		orientation.y = angle_speed;
+	void Transform::setRotation(float angle) {
+		rotation = angle;
 	}
 
 	void Transform::setScaling(float width, float height) {

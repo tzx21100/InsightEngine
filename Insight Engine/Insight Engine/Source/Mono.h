@@ -13,6 +13,6 @@ void init() {
     }
 
     // Store the root domain pointer
-    MonoDomain*  s_RootDomain = rootDomain;
+    [[maybe_unused]] MonoDomain*  s_RootDomain = rootDomain;
 
 }

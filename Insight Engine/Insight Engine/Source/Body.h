@@ -28,6 +28,7 @@ namespace IS
     class RigidBody : public IComponent{
         public:
         Vector2D velocity;
+        float angular_velocity;
         Transform bodyTransform; // position, orientation, scaling
         //Vector2D position;
         BodyType bodyType;
