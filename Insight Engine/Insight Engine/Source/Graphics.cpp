@@ -17,6 +17,7 @@ namespace IS {
     Animation ISGraphics::idle_ani2;
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
     Shader ISGraphics::mesh_shader_pgm;
+    Shader ISGraphics::text_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
 
     GLuint font_texture;
@@ -45,14 +46,13 @@ namespace IS {
         glViewport(0, 0, WIDTH, HEIGHT);
 
         initMeshes();
-        // initSprites();
         idle_ani.initAnimation(1, 8, 3.f);
         idle_ani2.initAnimation(1, 6, 2.f);
 
-        cascadia_text.init_text("Assets/fonts/Cascadia.ttf", 30);
-        font_texture = cascadia_text.render_text("Hello World!");
+        mesh_shader_pgm.setupSpriteShaders();
+        text_shader_pgm.setupTextShaders();
 
-        setupShaders();
+        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
         framebuffer = std::make_shared<Framebuffer>(props);
@@ -93,7 +93,6 @@ namespace IS {
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
             sprite.transform(delta_time);
-            GLuint texture{};
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
@@ -103,7 +102,6 @@ namespace IS {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
                 }
                 else {
-                    glBindVertexArray(meshes[0].vao_ID);
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
                 }
                 break;
@@ -118,6 +116,9 @@ namespace IS {
                 break;
             }
         }
+
+        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
         framebuffer->Unbind();
     
@@ -148,7 +149,7 @@ namespace IS {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         
-        int width{image.width}, height{image.height}, channels{image.channels};
+        int width{ image.width }, height{ image.height }; // channels{ image.channels };
         unsigned char* image_data = image.data;
 
         if (!image_data) {
@@ -174,66 +175,6 @@ namespace IS {
 
         std::cout << "TEXURE: " << textureID;
         return textureID;
-    }
-
-    void ISGraphics::setupShaders() {
-        // vertex shader
-        std::string vtx_shdr = R"(
-            #version 450 core
-            layout(location = 0) in vec2 aVertexPosition;
-            layout(location = 2) in vec2 aTexCoord;
-            out vec2 vTexCoord;
-
-            uniform mat3 uModel_to_NDC;
-
-            void main()
-            {
-                gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-                vTexCoord = aTexCoord;
-            }
-        )";
-
-        // fragment shader
-        std::string frag_shdr = R"(
-            #version 450 core
-
-            layout(location = 0) out vec4 fFragColor;
-            uniform vec3 uColor;
-            uniform sampler2D uTex2d;
-            in vec2 vTexCoord; // Input variable for texture coordinates
-            uniform int uTexture; // Flag to indicate whether to use texture or color
-
-            // animation uniforms - default unless drawing animation
-            uniform vec2 uFrameDim = vec2(1.0, 1.0); 
-            uniform vec2 uFrameIndex = vec2(0.0, 0.0);
-
-            void main()
-            {
-                if (uTexture == 0)
-                {
-                    fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
-                }
-                else
-                {
-                    //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
-                    fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
-                }
-            }
-        )";
-
-        // Compile and link the shaders into a shader program
-        mesh_shader_pgm.compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-        mesh_shader_pgm.compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-        mesh_shader_pgm.link();
-        mesh_shader_pgm.validate();
-
-        // Check if the shader program compilation and linking was successful
-        if (GL_FALSE == mesh_shader_pgm.isLinked())
-        {
-            std::cout << "Unable to compile/link/validate shader programs\n";
-            std::cout << mesh_shader_pgm.getLog() << "\n";
-            exit(EXIT_FAILURE);
-        }
     }
 
     GLuint ISGraphics::getScreenTexture() {

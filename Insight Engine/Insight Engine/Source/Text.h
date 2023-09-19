@@ -3,17 +3,34 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <GL/glew.h>
+#include <vector>
+
 
 namespace IS {
 	class Text {
     public:
-        void init_text(const char* font_file_path, int font_pixel_size);
-        void free_text();
-        static GLuint create_font_texture(FT_GlyphSlot glyph);
-        GLuint render_text(std::string const& text);
+        static void drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Shader shader);
 
-        FT_Library ft;
-        FT_Face face;
+        static const unsigned int ARRAY_LIMIT = 20;
+        static const int base_size = 48;
+
+        static void initText(std::string const& filepath, Shader text_shader);
+        static void renderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
+        static void textRenderCall(int length, GLuint shader);
+
+        /// Holds all state information relevant to a character as loaded using FreeType
+        struct Character {
+            int TextureID; // ID handle of the glyph texture
+            glm::ivec2   Size;      // Size of glyph
+            glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
+            unsigned int Advance;   // Horizontal offset to advance to next glyph
+        };
+
+        static std::map<GLchar, Text::Character> Characters;
+        static unsigned int text_vao, text_vbo;
+        static GLuint textureArray;
+        static std::vector<glm::mat4> transforms;
+        static std::vector<int> letterMap;
 	};
 
 }

@@ -27,9 +27,7 @@ namespace IS {
 		static void cleanup();
 
 		static GLuint initTextures(Image& image);
-		static void initSprites();
 		static void initMeshes();
-		static void setupShaders();
 		static GLuint getScreenTexture();
 		static void resizeFramebuffer(GLuint w, GLuint h);
 
@@ -38,6 +36,7 @@ namespace IS {
 		static Animation idle_ani2;
 		static std::shared_ptr<Framebuffer> framebuffer;
 		static Shader mesh_shader_pgm;
+		static Shader text_shader_pgm;
 		static Text cascadia_text;
 
 		static std::vector<Mesh> meshes;
