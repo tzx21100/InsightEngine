@@ -149,7 +149,10 @@ namespace IS {
     std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& InsightEngine::GetSystemPointer() const {
         return mAllSystems;
     }
-
+    //accessor for system list
+    std::vector<std::shared_ptr<ParentSystem>> const& InsightEngine::GetSystemList() const {
+        return mSystemList;
+    }
 
     // Get frame count
     unsigned InsightEngine::FrameCount() const {

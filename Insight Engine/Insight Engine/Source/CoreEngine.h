@@ -40,6 +40,8 @@ namespace IS {
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& GetSystemPointer() const;
         // Accessor to frame count
         unsigned FrameCount() const;
+        // Accessor to systemList
+        std::vector<std::shared_ptr<ParentSystem>> const& GetSystemList() const;
 
         //This is FPS
         void SetFPS(int num);
