@@ -30,8 +30,9 @@ namespace IS
     // define RigidBody class
     RigidBody::RigidBody() {
         this->velocity = Vector2D(); // (0,0)
+        this->angular_velocity = 0.f;
         this->bodyTransform.world_position = glm::vec2();
-        this->bodyTransform.orientation = glm::vec2();
+        this->bodyTransform.rotation = 0.f;
         this->bodyTransform.scaling = glm::vec2();
         //Sprite::followTransform(this->bodyTransform);
 
@@ -73,7 +74,7 @@ namespace IS
         float width, float height, Shape bodyShape) {
         this->velocity = Vector2D(); // (0,0)
         this->bodyTransform.world_position = position;
-        this->bodyTransform.orientation = glm::vec2();
+        this->bodyTransform.rotation = 0.f;
         this->bodyTransform.scaling = glm::vec2(width, height);
 
 		//this->position = position;
@@ -140,7 +141,7 @@ namespace IS
         if (this->transformUpdateRequired)
         {
             //BodyTransform transform(this->position, this->rotation);
-            Transform currentTransform = Transform(this->bodyTransform.world_position, this->bodyTransform.orientation, this->bodyTransform.scaling);
+            Transform currentTransform = Transform(this->bodyTransform.world_position, this->bodyTransform.rotation, this->bodyTransform.scaling);
 
             // loop for each vertice
             for (int i = 0; i < this->vertices.size(); i++)
@@ -175,9 +176,9 @@ namespace IS
 
     Vector2D RigidBody::TransformRigidBody(Vector2D v, Transform transform) {
         Vector2D ret;
-        float angle = fmod(transform.orientation.x, 360.f);
+        float angle = fmod(transform.rotation, 360.f);
         if (angle < 0.f) { angle += 360.f; }
-        angle = glm::radians(angle);
+        angle *= (PI / 180.f);
         ret.x = cosf(angle) * v.x - sinf(angle) * v.y + transform.world_position.x;
         ret.y = sinf(angle) * v.x + cosf(angle) * v.y + transform.world_position.y;
         return ret;
@@ -190,7 +191,7 @@ namespace IS
         this->velocity += gravity * dt;
         this->bodyTransform.world_position.x += this->velocity.x * dt;
         this->bodyTransform.world_position.y += this->velocity.y * dt;
-        this->bodyTransform.orientation.x += this->bodyTransform.orientation.y * dt;
+        this->bodyTransform.rotation += this->angular_velocity * dt;
         //this->position = this->velocity * dt;
         //this->rotation = this->rotationVelocity * dt;
 
@@ -206,8 +207,8 @@ namespace IS
         this->transformedVertices = GetTransformedVertices();
     }
 
-    void RigidBody::Rotate(float const& val) {
-        this->bodyTransform.orientation.x += val;
+    void RigidBody::Rotate(float val) {
+        this->bodyTransform.rotation += val;
         //this->rotation += val;
         //this->rotation = fmod(this->rotation, (2.0 * PI));
         this->transformUpdateRequired = true;
@@ -220,7 +221,7 @@ namespace IS
 
     void RigidBody::CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution) {
         //this->radius = 0.f;
-        this->area = width * height;
+        this->area = fabs(width * height);
         // set the range to be [0,1]
         this->restitution = std::max(0.0f, std::min(restitution, 1.0f));
 
@@ -229,7 +230,7 @@ namespace IS
 
     void RigidBody::CreateCircleBody(float const& radius, float const& mass, float const& restitution) {
         //this->dimension = Vector2D(); //(0, 0);
-        this->area = radius * radius * PI;
+        this->area = fabs(radius * radius * PI);
         // set the range to be [0,1]
         this->restitution = std::max(0.0f, std::min(restitution, 1.0f));
 

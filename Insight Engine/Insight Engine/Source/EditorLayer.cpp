@@ -68,14 +68,9 @@ namespace IS {
 
             if (ImGui::BeginMenu("Scene")) {
                 InsightEngine& engine = InsightEngine::Instance();
-                if (ImGui::MenuItem("Create 500 entities")) {
+                if (ImGui::MenuItem("Create 500 Random Entities")) {
                     for (int i{}; i < 500; i++) {
-                        PRNG prng;
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
-                        auto& trans = engine.GetComponent<Transform>(a);
-                        trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f); // scale [2, 20]
-                        trans.setWorldPosition((prng.generate() * WIDTH) - WIDTH / 2.f, (prng.generate() * HEIGHT) - HEIGHT / 2.f); // xpos [-width/2, width/2], ypos [-height/2, height/2]
-                        trans.setOrientation((prng.generate() * 360.f), (prng.generate() * 360.f) - 180.f); // angle [0, 360], speed [-180, 180]
+                        engine.GenerateRandomEntity();
                     }
                 }
 
@@ -201,7 +196,11 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
         if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
-            ImGui::Text("Max Entities: %d", MAX_ENTITIES);
+            // Comma separted numbers
+            std::ostringstream oss;
+            oss.imbue(std::locale(""));
+            oss << std::fixed << MAX_ENTITIES;
+            ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
             ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
         }

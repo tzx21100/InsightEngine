@@ -4,7 +4,7 @@ namespace IS {
 
 	void Sprite::transform(float delta_time) {
 
-        float angle_rad = glm::radians(model_TRS.orientation.x);
+        float angle_rad = glm::radians(model_TRS.rotation);
 
         float map_scale_x = 2.f / WIDTH; 
         float map_scale_y = 2.f / HEIGHT;

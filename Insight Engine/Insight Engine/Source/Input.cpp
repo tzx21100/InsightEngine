@@ -4,7 +4,7 @@
 namespace IS {
 
     std::string InputManager::getName() {
-        return "InputManager";
+        return "Input";
     }
 
     void InputManager::Initialize() {

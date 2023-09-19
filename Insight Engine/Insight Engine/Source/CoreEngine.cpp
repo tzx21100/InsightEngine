@@ -180,7 +180,18 @@ namespace IS {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
-        IS_CORE_DEBUG("Entity {} deleted successfully!", entity);
+        IS_CORE_DEBUG("Entity {} completely destroyed!", entity);
+    }
+
+    void InsightEngine::GenerateRandomEntity() {
+        PRNG prng;
+        InsightEngine& engine = Instance();
+        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>();
+        auto& trans = engine.GetComponent<Transform>(e);
+        // scale [2, 16], pos [viewport], orientation [-360, 360]
+        trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f);
+        trans.setWorldPosition((prng.generate()* WIDTH) - WIDTH / 2.f, (prng.generate()* HEIGHT) - HEIGHT / 2.f);
+        trans.setRotation((prng.generate() * 720.f) - 360.f);
     }
 
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {

@@ -57,46 +57,6 @@ namespace IS {
             ImGui::PopID();
         }
 
-        void RenderComboBoxBodyType(std::string const& label, BodyType& bodytype) {
-            std::array<std::string, 3> items = { "Static", "Dynamic", "Kinematic" };
-
-            size_t current_item = static_cast<size_t>(bodytype);
-
-            if (ImGui::BeginCombo(label.c_str(), items[current_item].c_str())) {
-                for (size_t i{}; i < items.size(); ++i) {
-                    const bool is_selected = (current_item == i);
-                    if (ImGui::Selectable(items[i].c_str(), is_selected)) {
-                        current_item = i;
-                        bodytype = static_cast<BodyType>(i);
-                    }
-
-                    if (is_selected)
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-            }
-        }
-
-        void RenderComboBoxBodyShape(std::string const& label, Shape& bodyshape) {
-            std::array<std::string, 3> items = { "Box", "Circle", "Line" };
-
-            size_t current_item = static_cast<size_t>(bodyshape);
-
-            if (ImGui::BeginCombo(label.c_str(), items[current_item].c_str())) {
-                for (size_t i{}; i < items.size(); ++i) {
-                    const bool is_selected = (current_item == i);
-                    if (ImGui::Selectable(items[i].c_str(), is_selected)) {
-                        current_item = i;
-                        bodyshape = static_cast<Shape>(i);
-                    }
-
-                    if (is_selected)
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-            }
-        }
-
     } // end namespace guidgets
 
 } // end namespace IS

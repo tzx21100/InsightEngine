@@ -53,6 +53,7 @@ namespace IS {
         //Entity Creation
         Entity CreateEntity();
         void DestroyEntity(Entity entity);
+        void GenerateRandomEntity();
 
         //Functions to save and load entities
         void SaveToJson(Entity entity, std::string filename);

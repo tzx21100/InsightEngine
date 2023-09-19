@@ -4,7 +4,7 @@
 namespace IS {
 
     std::string ISAudio::getName() {
-        return "ISAudio";
+        return "Audio";
     }
 
     void ISAudio::Initialize() {//call once
