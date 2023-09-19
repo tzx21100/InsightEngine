@@ -7,6 +7,8 @@ namespace IS
 {
 	class Physics : public ParentSystem {
 	public:
+        static bool draw_debug;
+
         Physics();
         void Update(float dt) override;
         std::string getName() override { return "Physics"; }

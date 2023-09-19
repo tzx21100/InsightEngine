@@ -6,6 +6,7 @@ using namespace IS;
 namespace IS 
 {
 	Physics* PHYSICS = NULL;
+	bool Physics::draw_debug = false;
 
 	Physics::Physics() 
 	{

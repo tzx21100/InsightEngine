@@ -202,7 +202,14 @@ namespace IS {
             oss << std::fixed << MAX_ENTITIES;
             ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
-            ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
+            ImGui::Text("Player Controls");
+            ImGui::BulletText("Press 'WASD' to move in the four directions");
+            ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
+            ImGui::Separator();
+            ImGui::Text("Physics Debug");
+            ImGui::Checkbox("Draw Collision Boxes", &Physics::draw_debug);
+            ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
+            ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
         }
         ImGui::End();
     }
