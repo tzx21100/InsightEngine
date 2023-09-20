@@ -14,7 +14,8 @@ namespace IS
 		Gravity = Vector2D(0, -9.81f);
 		exertingGravity = false;
 		//isDebugDraw = false;
-		MaxVelocity = 2000.f;
+		MaxPositionVelocity = 1000.f;
+		MaxNegativeVelocity = -1000.f;
 		//Gravity = 9.8f;
 		//MaxVelocity = 1000;
 
@@ -61,12 +62,12 @@ namespace IS
 					Physics::isDebugDraw = false;
 					IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
 				}
-				if (exertingGravity) {
+				/*if (exertingGravity) {
 					v += Gravity * time;
 				}
 				else {
 					v = Vector2D();
-				}
+				}*/
 				// update gravity
 				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
@@ -79,8 +80,17 @@ namespace IS
 							return;
 					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					trans.world_position.x += std::min(v.x, MaxVelocity) * time;
-					trans.world_position.y += std::min(v.y, MaxVelocity) * time;
+					//body.velocity += Gravity * 10.f * dt;
+					if (exertingGravity) {
+						body.velocity += Gravity * 10.f * dt;
+					}
+					//if (resultF.x < 1.f && resultF.y < 1.f && resultF.x > -1.f && resultF.y > -1.f) { body.velocity = Vector2D(); }
+					body.velocity.x = std::min(body.velocity.x, MaxPositionVelocity);
+					body.velocity.y = std::min(body.velocity.y, MaxPositionVelocity);
+					body.velocity.x = std::max(body.velocity.x, MaxNegativeVelocity);
+					body.velocity.y = std::max(body.velocity.y, MaxNegativeVelocity);
+					trans.world_position.x += body.velocity.x * time;
+					trans.world_position.y += body.velocity.y * time;
 				}
 			}
 			collisionCheck(dt, mEntities);
@@ -198,8 +208,8 @@ namespace IS
 						auto& sprite2 = InsightEngine::Instance().GetComponent<Sprite>(entityB);
 						rigidBodyB.bodyFollowTransform(trans2);
 						// for calculate collision response
-						Vector2D normal;
-						float depth;
+						Vector2D normal = Vector2D();
+						float depth = std::numeric_limits<float>::max();
 						bool isColliding = false;
 						switch (rigidBodyA.bodyShape)
 						{
@@ -247,8 +257,8 @@ namespace IS
 							else if (rigidBodyB.bodyType != BodyType::Dynamic)
 							{
 								//rigidBody.Move(-normal * depth);
-								trans.world_position.x += v.x;
-								trans.world_position.y += v.y;
+								trans.world_position.x += -v.x;
+								trans.world_position.y += -v.y;
 							}
 							else // both are dynamic
 							{
@@ -356,20 +366,24 @@ namespace IS
 		float e = std::min(bodyA.restitution, bodyB.restitution);
 
 		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
-		j /= bodyA.InvMass + bodyB.InvMass;
-
+		j /= bodyA.InvMass + bodyB.InvMass; //a
+		//normal *= -1;
 		Vector2D impulse = j * normal;
-
+		std::cout << "normal: " << normal.x << normal.y << std::endl;
+		std::cout << "before: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
+		// if check
 		bodyA.velocity -= impulse * bodyA.InvMass;
 		bodyB.velocity += impulse * bodyB.InvMass;
+		std::cout << "after: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
 	}
 
-	void Physics::drawOutLine(float const& dt, RigidBody const& body, Sprite const& sprite) {
+	void Physics::drawOutLine(float const& dt, RigidBody & body, Sprite const& sprite) {
 		for (int i = 0; i < body.transformedVertices.size(); i++) {
 			Vector2D va = body.transformedVertices[i];
 			Vector2D vb = body.transformedVertices[(i + 1) % body.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb, dt);
 		}
+		sprite.drawLine(body.bodyTransform.getWorldPosition(), body.bodyTransform.getWorldPosition() + body.velocity, dt);
 	}
 
 }

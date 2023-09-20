@@ -70,9 +70,11 @@ namespace IS {
             trans2.setWorldPosition(-400, 0);
             trans3.setScaling(600, 100);
             trans3.setWorldPosition(0, -400);
-            body.velocity = { 10.f, 10.f };
+            //body.velocity = { 10.f, 10.f };
             body.angular_velocity = 10.f;
             body3.bodyType = BodyType::Static;
+            body3.mass = 99999.f;
+            body3.InvMass = 1.f/99999.f;
             body4.bodyType = BodyType::Static;
             body4.angular_velocity = 30.f;
             
@@ -114,8 +116,10 @@ namespace IS {
                 //auto& trans2 = engine.GetComponent<Transform>(myEntity);
                 int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
                 int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
-                trans.world_position.x += hori * rbody.velocity.x;
-                trans.world_position.y += verti * rbody.velocity.y;
+                Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
+                rbody.AddVelocity(inputVelocity);
+                //trans.world_position.x += hori * rbody.velocity.x;
+                //trans.world_position.y += verti * rbody.velocity.y;
 
                 // flip image
                 trans.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||

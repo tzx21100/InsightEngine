@@ -41,15 +41,18 @@ namespace IS
         //this->rotation = 0.f;
         //this->rotationVelocity = 0.f;
         this->force = Vector2D();
+        this->acceleration = Vector2D();
         this->density = 0.f;
-        this->mass = 1.f;
-        this->restitution = 0.f;
+        //this->mass = 2.f;
+        this->mass = (this->bodyType == BodyType::Dynamic) ? 2.f : 999999.f;
+        this->restitution = 0.5f;
         this->area = 0.f;
         //this->radius = 0.f;
         //this->dimension = Vector2D();
         this->bodyShape = Shape::Box;
         // if body dynamic, calculate the inverse mass, otherwise set as 0.f
-        this->InvMass = (this->bodyType == BodyType::Dynamic) ? (1.f / this->mass) : 0.f;
+        //this->InvMass = (this->bodyType == BodyType::Dynamic) ? (1.f / this->mass) : 0.000005f;
+        this->InvMass = 1.f / this->mass;
         this->transformUpdateRequired = false;
 
         if (this->bodyShape == Shape::Box) {
@@ -82,6 +85,7 @@ namespace IS
         //this->rotation = 0.f;
         //this->rotationVelocity = 0.f;
         this->force = Vector2D(); // (0,0)
+        this->acceleration = Vector2D();
         this->density = 0.f;
         this->mass = mass;
         this->restitution = restitution;
@@ -217,6 +221,10 @@ namespace IS
 
     void RigidBody::AddForce(Vector2D const& val) {
         this->force = val;
+    }
+
+    void RigidBody::AddVelocity(Vector2D const& val) {
+        this->velocity += val;
     }
 
     void RigidBody::CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution) {

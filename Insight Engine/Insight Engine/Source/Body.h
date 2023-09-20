@@ -35,6 +35,7 @@ namespace IS
         //float rotation;
         //float rotationVelocity;
         Vector2D force;
+        Vector2D acceleration;
         float density;
         float mass;
         float InvMass;
@@ -68,6 +69,8 @@ namespace IS
         void Rotate(float const& val);
         // adding force
         void AddForce(Vector2D const& val);
+        // adding velocity
+        void AddVelocity(Vector2D const& val);
         // create box rigidbody
         void CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution);
         // create circle rigidbody

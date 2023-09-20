@@ -17,14 +17,15 @@ namespace IS
         static bool isDebugDraw;
         ~Physics() {}
 
-        static void drawOutLine(float const& dt, RigidBody const& body, Sprite const& sprite);
+        static void drawOutLine(float const& dt, RigidBody & body, Sprite const& sprite);
 	private:
 
         // gravity of the world
         Vector2D Gravity;
         bool exertingGravity;
         // max velocity for the game body
-        float MaxVelocity;
+        float MaxPositionVelocity;
+        float MaxNegativeVelocity;
 	};
 
     void rigidBodyCallUpdate(RigidBody body, Vector2D gravity, float dt);
