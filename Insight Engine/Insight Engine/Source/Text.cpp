@@ -21,16 +21,16 @@ namespace IS {
             drawFirst = !drawFirst;
         }
 
-        if (drawFirst) renderText(shader, str1, -110.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
-        else renderText(shader, str2, -120.f, 400.f, 12.f, glm::vec3(0.255f, 0.412f, 0.882f));
+        if (drawFirst) renderText(shader, str1, -125.f, 400.f, 10.f, glm::vec3(0.529f, 0.808f, 0.922f));
+        else renderText(shader, str2, -135.f, 400.f, 10.f, glm::vec3(0.255f, 0.412f, 0.882f));
     }
 
     void Text::initText(std::string const& filepath, Shader text_shader) {
         // OpenGL state
         // ------------
-       /* glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // compile and setup the shader
         // ----------------------------
@@ -55,7 +55,7 @@ namespace IS {
         }
         else {
             // set size to load glyphs as
-            FT_Set_Pixel_Sizes(face, 0, base_size);
+            FT_Set_Pixel_Sizes(face, base_size, base_size);
 
             // disable byte-alignment restriction
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -132,7 +132,7 @@ namespace IS {
     void Text::renderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
     {
         // activate corresponding render state	
-        scale = scale * base_size / 1024.f; // scale to correct size
+        scale = scale * 48.f / (base_size * 16); // scale to correct size
         float copyX = x;
         shader.use();
         glUniform3f(glGetUniformLocation(shader.getHandle(), "textColor"), color.x, color.y, color.z);

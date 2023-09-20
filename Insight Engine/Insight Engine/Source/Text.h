@@ -11,8 +11,8 @@ namespace IS {
     public:
         static void drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Shader shader);
 
-        static const unsigned int ARRAY_LIMIT = 20;
-        static const int base_size = 48;
+        static const unsigned int ARRAY_LIMIT = 100;
+        static const int base_size = 256;
 
         static void initText(std::string const& filepath, Shader text_shader);
         static void renderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);

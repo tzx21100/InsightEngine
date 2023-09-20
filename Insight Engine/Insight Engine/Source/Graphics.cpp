@@ -76,7 +76,7 @@ namespace IS {
         framebuffer->Bind();
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
+        //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
 
         // Render scene
         // Loop through all entities

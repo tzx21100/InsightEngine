@@ -74,7 +74,7 @@ namespace IS {
                 flat int index;
             } vs_out;
 
-            uniform mat4 transforms[20]; // 400 chars per render
+            uniform mat4 transforms[100]; // 400 chars per render
             uniform mat4 projection;
 
             void main()
