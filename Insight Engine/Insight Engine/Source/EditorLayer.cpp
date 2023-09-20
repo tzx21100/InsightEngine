@@ -9,11 +9,11 @@ namespace IS {
 
     void EditorLayer::onAttach() {
         // Attach scene viewer, import icons, open project...
-        //IS_CORE_DEBUG("{} attached", getName());
+        IS_CORE_DEBUG("{} attached", getName());
     }
 
     void EditorLayer::onDetach() {
-        //IS_CORE_DEBUG("{} detached", getName());
+        IS_CORE_DEBUG("{} detached", getName());
     }
 
     void EditorLayer::onUpdate([[maybe_unused]] float dt) {
@@ -91,6 +91,9 @@ namespace IS {
     }
 
     void EditorLayer::RenderScenePanel() {
+
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
@@ -102,8 +105,8 @@ namespace IS {
         ImVec2 actual_scene_pos;
         actual_scene_pos.x = scene_pos.x-dockspace_pos.x;
         actual_scene_pos.y = scene_pos.y-dockspace_pos.y;
-        InputManager::Instance().setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
-        InputManager::Instance().setRatio(scene_size.x, scene_size.y);
+        input->setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
+        input->setRatio(scene_size.x, scene_size.y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
@@ -188,13 +191,11 @@ namespace IS {
     }
 
     void EditorLayer::RenderSceneOverlay() {
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
-        InputManager& input = InputManager::Instance();
-
-        ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-        if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
+        ImGui::SetNextWindowBgAlpha(0.8f); // Translucent background
+        if (ImGui::Begin("Info", nullptr, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
             // Comma separted numbers
             std::ostringstream oss;
@@ -202,7 +203,14 @@ namespace IS {
             oss << std::fixed << MAX_ENTITIES;
             ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
-            ImGui::Text("Cursor Position: (%.2f, %.2f)", input.GetMousePosition().first, input.GetMousePosition().second);
+            ImGui::Text("Player Controls");
+            ImGui::BulletText("Press 'WASD' to move in the four directions");
+            ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
+            ImGui::Separator();
+            ImGui::Text("Physics Debug");
+            ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
+            ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
+            ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
         }
         ImGui::End();
     }

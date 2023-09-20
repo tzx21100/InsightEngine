@@ -15,6 +15,10 @@ namespace IS {
     class InsightEngine : public MessageListener {
     public:
 
+        //freeze function
+        bool freezeFrame = false;
+        bool continueFrame = false;
+
         //override message handling this way the core engine also will recieve and send messages
         virtual void HandleMessage(const Message& message) override;
 
@@ -36,6 +40,8 @@ namespace IS {
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& GetSystemPointer() const;
         // Accessor to frame count
         unsigned FrameCount() const;
+        // Accessor to systemList
+        std::vector<std::shared_ptr<ParentSystem>> const& GetSystemList() const;
 
         //This is FPS
         void SetFPS(int num);
@@ -167,6 +173,20 @@ namespace IS {
             }
         }
 
+        //faster way to get a system
+        template<typename T>
+        std::shared_ptr<T> GetSystem(const std::string& systemName) {
+            auto it = mAllSystems.find(systemName);
+            if (it != mAllSystems.end()) {
+                return std::dynamic_pointer_cast<T>(it->second);
+            }
+            else {
+                // System not found
+                return nullptr;
+            }
+        }
+
+
 
     private:
         unsigned frame_count = 0;
@@ -188,6 +208,8 @@ namespace IS {
         std::unique_ptr<SystemManager> mSystemManager;
         //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> mAllSystems;
+        //this is an array to store their load sequence and for faster iterations
+        std::vector<std::shared_ptr<ParentSystem>>mSystemList;
         //make a list of systems and their delta times
         std::unordered_map<std::string, float>mSystemDeltas;
         //get the delta_time of every engine

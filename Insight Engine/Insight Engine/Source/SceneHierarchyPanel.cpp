@@ -12,7 +12,7 @@ namespace IS {
     void SceneHierarchyPanel::RenderPanel() {
         // Data sources
         InsightEngine& engine = InsightEngine::Instance();
-        std::shared_ptr<ParentSystem> graphics = engine.GetSystemPointer().at("Graphics");
+        auto& graphics = engine.GetSystemPointer().at("Graphics");
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
@@ -46,7 +46,7 @@ namespace IS {
     void SceneHierarchyPanel::RenderEntityNode(Entity entity) {
         InsightEngine& engine = InsightEngine::Instance();
         // doing this because entity does not have a name
-        auto& sprite = engine.GetComponent<Sprite>(entity);
+        Sprite& sprite = engine.GetComponent<Sprite>(entity);
 
         ImGuiTreeNodeFlags tree_flags = (selected_entity && (*selected_entity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
@@ -60,15 +60,15 @@ namespace IS {
                 Entity e = engine.CreateEntity();
                 engine.AddComponent<Sprite>(e, sprite);
                 if (engine.HasComponent<Transform>(entity)) {
-                    auto& transform = engine.GetComponent<Transform>(entity);
+                    Transform& transform = engine.GetComponent<Transform>(entity);
                     engine.AddComponent<Transform>(e, transform);
                 }
                 if (engine.HasComponent<RigidBody>(entity)) {
-                    auto& rigidbody = engine.GetComponent<RigidBody>(entity);
+                    RigidBody& rigidbody = engine.GetComponent<RigidBody>(entity);
                     engine.AddComponent<RigidBody>(e, rigidbody);
                 }
                 if (engine.HasComponent<InputAffector>(entity)) {
-                    auto& input_affector = engine.GetComponent<InputAffector>(entity);
+                    InputAffector& input_affector = engine.GetComponent<InputAffector>(entity);
                     engine.AddComponent<InputAffector>(e, input_affector);
                 }
             }
@@ -82,7 +82,7 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderComponentNodes(EntityPtr entity) {
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", *entity, [&](auto& sprite) {
+        RenderComponent<Sprite>("Sprite", *entity, [&](Sprite& sprite) {
             if (sprite.texture) {
                 ImGui::Text("Texture");
                 ImTextureID texture_id = std::bit_cast<void*>(static_cast<uintptr_t>(sprite.texture));
@@ -136,7 +136,7 @@ namespace IS {
         });
 
         // Transform Component
-        RenderComponent<Transform>("Transform", *entity, [](auto& transform) {
+        RenderComponent<Transform>("Transform", *entity, [](Transform& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Position", position);
@@ -155,8 +155,8 @@ namespace IS {
         });
 
         // Rigidbody Component
-        RenderComponent<RigidBody>("Rigidbody", *entity, [&](auto& rigidbody) {
-            ImGuiTableFlags table_flags = 0;
+        RenderComponent<RigidBody>("Rigidbody", *entity, [&](RigidBody& rigidbody) {
+            ImGuiTableFlags table_flags = ImGuiTableFlags_SizingFixedSame;
 
             guidgets::RenderControlVec2("Velocity", rigidbody.velocity);
             guidgets::RenderControlVec2("Force", rigidbody.force);
@@ -208,7 +208,7 @@ namespace IS {
         });
 
         // Input Affector
-        RenderComponent<InputAffector>("Input Affector", *entity, []([[maybe_unused]]auto& input_affector) {
+        RenderComponent<InputAffector>("Input Affector", *entity, []([[maybe_unused]] InputAffector& input_affector) {
             ImGui::Text("(Empty)");
         });
 

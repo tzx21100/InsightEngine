@@ -19,14 +19,14 @@ namespace IS {
     static constexpr int MAX_LOG_MESSAGES (100);
 
     // ANSI escape codes for console formatting for color/style
-    /*const char RESET[] = "\033[m";
+    const char RESET[] = "\033[m";
     const char BOLD[] = "\033[1m";
     const char WHITE[] = "\033[37m";
     const char CYAN[] = "\033[36m";
     const char GREEN[] = "\033[32m";
     const char YELLOW_BOLD[] = "\033[33m\033[1m";
     const char RED_BOLD[] = "\033[31m\033[1m";
-    const char BOLD_ON_RED[] = "\033[1m\033[41m";*/
+    const char BOLD_ON_RED[] = "\033[1m\033[41m";
 
     // Severity level of log
     enum class aLogLevel : int{
@@ -151,7 +151,7 @@ namespace IS {
     inline void Logger::log(aLogLevel level, std::string_view fmt, Args&&... args) {
         std::scoped_lock lock(log_mutex);
         if (level >= log_level) {
-            //setColor(level);
+            setColor(level);
             
             // Construct log
             std::ostringstream log;
@@ -163,7 +163,7 @@ namespace IS {
             log << timestamp << name << loglevel << ' ' << all_args << '\n';
 
             // Print to console
-            //std::clog << log.str() << RESET << std::endl;
+            std::clog << log.str() << RESET;
 
             // Write to file
             if (log_file.is_open()) {

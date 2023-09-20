@@ -105,7 +105,7 @@ namespace IS {
         return timestamp.str();
     }
 
-    /*void Logger::setColor(aLogLevel level) {
+    void Logger::setColor(aLogLevel level) {
         using enum aLogLevel;
         switch(level) {
         case Trace:
@@ -127,7 +127,7 @@ namespace IS {
             std::clog << BOLD_ON_RED;
             break;
         }
-    }*/
+    }
 
     void Logger::closeFile() {
         try {

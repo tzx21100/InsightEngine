@@ -88,7 +88,7 @@ namespace IS {
 			mComponentArrays.insert({ type_name, std::make_shared<ComponentArray<T>>() });
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
-			IS_CORE_DEBUG("Component {} registered!", type_name);
+			IS_CORE_INFO("Component {} registered!", type_name);
 		}
 
 		template<typename T>

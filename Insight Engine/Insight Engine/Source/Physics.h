@@ -14,6 +14,7 @@ namespace IS
         void HandleMessage(const Message&) override {}
         //void setGravity(float g) { Gravity = g; }
         Vector2D getGravity() { return Gravity; }
+        static bool isDebugDraw;
         ~Physics() {}
 
         static void drawOutLine(float const& dt, RigidBody const& body, Sprite const& sprite);

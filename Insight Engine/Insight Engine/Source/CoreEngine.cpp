@@ -12,12 +12,13 @@ namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
-        IS_CORE_DEBUG("Starting Insight Engine...");
+        IS_PROFILE_FUNCTION();
+        IS_CORE_INFO("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
         mSystemManager = std::make_unique<SystemManager>();
-        IS_CORE_DEBUG("Insight Engine started");
+        IS_CORE_INFO("Insight Engine started");
     }
 
     //handling messages
@@ -30,16 +31,13 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
-        for (auto& [name, system] : mAllSystems) {
-           // delete pair.second;
-            //IS_CORE_INFO("{} terminated", name);
-        }
+        IS_PROFILE_FUNCTION();
+        mSystemList.clear();
         mAllSystems.clear();
         //IS_CORE_DEBUG("Insight Engine terminated");
     }
 
     void InsightEngine::Initialize() {
-
         //initialize all systems first
         InitializeAllSystems();
         //subscirbe to messages
@@ -61,13 +59,13 @@ namespace IS {
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
 
-        for (const auto& [name, system] : mAllSystems) {
-            Timer timer(name.c_str(), false);
+        for (const auto& system: mSystemList) {
+            Timer timer(system->getName() + " System", false);
             system->Update(delta_time.count());
             timer.Stop();
 
             if (!(frame_count % update_frequency)) {
-                mSystemDeltas[name] = timer.GetDeltaTime();
+                mSystemDeltas[system->getName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
@@ -86,6 +84,7 @@ namespace IS {
 
     //moved all the engine stuff under this run function
     void InsightEngine::Run() {
+        IS_PROFILE_FUNCTION();
         Initialize();
         //this is the game loop
         while (is_running) {
@@ -94,35 +93,44 @@ namespace IS {
     }
 
     void InsightEngine::Exit() {
-        Message quit = Message(MessageType::Quit);
-        EventManager::Instance().Broadcast(quit);
+        BROADCAST_MESSAGE(MessageType::Quit);
     }
 
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
+        IS_PROFILE_FUNCTION();
         std::string systemName = system->getName();
         IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
+        mSystemList.emplace_back(system);
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
     }
 
     //This function is meant to specifically find the individual system in the map and destroy it
     void InsightEngine::DestroySystem(const std::string& name) {
+        IS_PROFILE_FUNCTION();
         auto it = mAllSystems.find(name);
         if (it != mAllSystems.end()) {
             //delete it->second; //delete the object
             mAllSystems.erase(it);
         }
+        int i = 0;
+        for (auto& system : mSystemList) {
+            if (system == it->second) {
+                mSystemList.erase(mSystemList.begin()+i);
+            }
+            i++;
+        }
+
     }
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
-        for (auto& [name, system] : mAllSystems) {
-            //delete pair.second;  // Delete the system object
-            //IS_CORE_INFO("{} terminated", name);
-        }
+        IS_PROFILE_FUNCTION();
+        mSystemList.clear();
         mAllSystems.clear();  // Clear the map
+        IS_CORE_WARN("All systems terminated!");
     }
 
 #pragma warning(push)
@@ -130,11 +138,9 @@ namespace IS {
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
-
-        for (auto const& [name, system] : mAllSystems) {
-            IS_PROFILE_SCOPE(name.c_str());
+        for (auto const& system : mSystemList) {
+            IS_PROFILE_SCOPE(system->getName());
             system->Initialize();
-            //IS_CORE_INFO("{} initialized", name);
         }
     }
 #pragma warning(pop)
@@ -147,7 +153,10 @@ namespace IS {
     std::unordered_map<std::string, std::shared_ptr<ParentSystem>> const& InsightEngine::GetSystemPointer() const {
         return mAllSystems;
     }
-
+    //accessor for system list
+    std::vector<std::shared_ptr<ParentSystem>> const& InsightEngine::GetSystemList() const {
+        return mSystemList;
+    }
 
     // Get frame count
     unsigned InsightEngine::FrameCount() const {
@@ -173,14 +182,14 @@ namespace IS {
 
     //These functions involve creating entities and destroying them
     Entity InsightEngine::CreateEntity() { 
-        return mEntityManager->CreateEntity(); 
+        return mEntityManager->CreateEntity();
     }
 
     void InsightEngine::DestroyEntity(Entity entity) {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
-        IS_CORE_DEBUG("Entity {} completely destroyed!", entity);
+        IS_CORE_WARN("Entity {} completely destroyed!", entity);
     }
 
     void InsightEngine::GenerateRandomEntity() {

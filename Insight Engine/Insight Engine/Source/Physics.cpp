@@ -13,6 +13,8 @@ namespace IS
 		//PHYSICS = this;
 		Gravity = Vector2D(0, -9.81f);
 		exertingGravity = false;
+		//isDebugDraw = false;
+		MaxVelocity = 2000.f;
 		//Gravity = 9.8f;
 		//MaxVelocity = 1000;
 
@@ -27,22 +29,37 @@ namespace IS
 		//std::cout << "PhysicsSystem initialized." << std::endl;
 		//The system can also subscribe to the message type it wants here
 		Subscribe(MessageType::Collide);
+
 	}
 	//bool addG = false;
 	Vector2D v = { 0.f, -9.8f };
 	float time = 1.f / 60.f;
+	bool Physics::isDebugDraw = false;
 	void Physics::Update(float dt)
 	{
+
 		time = dt;
 		//for (size_t i = 0; i < 5; i++) {
 			for (auto const& entity : mEntities) {
-				InputManager& input = InputManager::Instance();
+				auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 				//time /= 5.f;
-				if (input.IsKeyPressed(GLFW_KEY_G)) {
+				if (input->IsKeyPressed(GLFW_KEY_G)) {
 					exertingGravity = true;
+					IS_CORE_DEBUG("Gravity Enabled!");
 				}
-				else if (input.IsKeyPressed(GLFW_KEY_F)) {
+				else if (input->IsKeyPressed(GLFW_KEY_F)) {
 					exertingGravity = false;
+					IS_CORE_DEBUG("Gravity Disabled!");
+				}
+
+				// for drawing lines
+				if (input->IsKeyPressed(GLFW_KEY_2)) {
+					Physics::isDebugDraw = true;
+					IS_CORE_DEBUG("Draw Collision Boxes Enabled!");
+				}
+				else if (input->IsKeyPressed(GLFW_KEY_1)) {
+					Physics::isDebugDraw = false;
+					IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
 				}
 				if (exertingGravity) {
 					v += Gravity * time;
@@ -56,13 +73,16 @@ namespace IS
 					if (body.bodyType != BodyType::Dynamic) {
 						continue;
 					}
-
+					//freeze
+					if (InsightEngine::Instance().freezeFrame) {
+						if (!InsightEngine::Instance().continueFrame)
+							return;
+					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					trans.world_position.x += v.x * time;
-					trans.world_position.y += v.y * time;
+					trans.world_position.x += std::min(v.x, MaxVelocity) * time;
+					trans.world_position.y += std::min(v.y, MaxVelocity) * time;
 				}
 			}
-			//drawEachOutLine(dt, mEntities);
 			collisionCheck(dt, mEntities);
 #if 0
 			//loops through all Entities registered by the System this mEntities map is written in the parent class

@@ -7,7 +7,7 @@ namespace IS {
 
     class Timer {
     public:
-        Timer(const char* name, bool console_print = true);
+        Timer(std::string const& name, bool console_print = true);
         ~Timer();
 
         float GetDeltaTime() const;
@@ -15,7 +15,7 @@ namespace IS {
 
     private:
         struct ProfileResult {
-            const char* name;
+            std::string name;
             std::chrono::duration<float> time;
         };
 

@@ -3,8 +3,8 @@
 
 namespace IS {
 
-    Timer::Timer(const char* name, bool console_print) : stopped(false), print(console_print) {
-        result = ProfileResult(name);
+    Timer::Timer(std::string const& name, bool console_print) : stopped(false), print(console_print) {
+        result.name = name;
         start_timepoint = std::chrono::high_resolution_clock::now();
     }
 
