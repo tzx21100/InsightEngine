@@ -20,13 +20,12 @@
 #include "GUI.h"
 #include "MemoryLeakCheck.h"
 #include "GameLoop.h"
-#include "Mono.h"
 
 using namespace IS;
 
 int main() {
     ENABLE_MEMORY_CHECK();
-    init();
+    ScriptEngine::Init();
     // Initialize log
     Log::init();
 

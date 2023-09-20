@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>IS_ScriptCore</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  <!--  <BaseOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates</BaseIntermediateOutputPath>-->
+    <OutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\</OutputPath>
+	  <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates\</BaseIntermediateOutputPath>
+
+  </PropertyGroup>
+
+</Project>

@@ -103,6 +103,9 @@
     <ClCompile Include="Source\Guidgets.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScriptEngine.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -240,8 +243,8 @@
     <ClInclude Include="Source\Guidgets.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mono.h">
-      <Filter>Engine\Mono</Filter>
+    <ClInclude Include="Source\ScriptEngine.h">
+      <Filter>Engine\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,7 +329,7 @@
     <Filter Include="Editor\Panels">
       <UniqueIdentifier>{fe2ccd58-dcff-4fcc-8c11-594d868ee370}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Mono">
+    <Filter Include="Engine\Scripting">
       <UniqueIdentifier>{806f2dfd-a96c-4787-975e-0885dd36e74f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
