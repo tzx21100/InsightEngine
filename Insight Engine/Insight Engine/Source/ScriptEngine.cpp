@@ -132,11 +132,11 @@ namespace IS {
         mono_runtime_invoke(printMessage_func, instance, nullptr, nullptr);
 
         //call func w param
-        MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
+        /*MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
         int val = 5;
         void* param = &val;
 
-        mono_runtime_invoke(printInt_func, instance, &param, nullptr);
+        mono_runtime_invoke(printInt_func, instance, &param, nullptr);*/
     }
 
     void ScriptEngine::ShutdownMono()
