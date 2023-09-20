@@ -35,7 +35,6 @@ namespace IS {
         //this is for ECS each system will have their own entities
         std::set<Entity> mEntities;
 
-
     };
 
     // System Manager

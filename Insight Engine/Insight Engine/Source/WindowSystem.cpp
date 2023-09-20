@@ -9,7 +9,7 @@ namespace IS {
 
         // Initialize GLFW library
         if (!glfwInit())
-            std::cerr << "Failed to to initialize libary!" << std::endl;
+            IS_CORE_CRITICAL("Failed to to initialize libary!");
 
         // Specify minimum constraints in OpenGL context
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -24,7 +24,7 @@ namespace IS {
         // Create a windowed mode window and its OpenGL context
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!window) {
-            std::cerr << "Failed to create OpneGL context!" << std::endl;
+            IS_CORE_CRITICAL("Failed to create OpneGL context!");
             glfwTerminate();
         }
 

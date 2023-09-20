@@ -45,17 +45,21 @@ namespace IS
 				//time /= 5.f;
 				if (input->IsKeyPressed(GLFW_KEY_G)) {
 					exertingGravity = true;
+					IS_CORE_DEBUG("Gravity Enabled!");
 				}
 				else if (input->IsKeyPressed(GLFW_KEY_F)) {
 					exertingGravity = false;
+					IS_CORE_DEBUG("Gravity Disabled!");
 				}
 
 				// for drawing lines
 				if (input->IsKeyPressed(GLFW_KEY_2)) {
 					Physics::isDebugDraw = true;
+					IS_CORE_DEBUG("Draw Collision Boxes Enabled!");
 				}
 				else if (input->IsKeyPressed(GLFW_KEY_1)) {
 					Physics::isDebugDraw = false;
+					IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
 				}
 				if (exertingGravity) {
 					v += Gravity * time;

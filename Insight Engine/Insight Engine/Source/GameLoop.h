@@ -96,9 +96,11 @@ namespace IS {
             engine.continueFrame = false;
             if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
                 engine.continueFrame = true;
+                IS_CORE_DEBUG("Step frame");
             }
             if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
                 engine.freezeFrame = !engine.freezeFrame;
+                IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
             }
             if (engine.freezeFrame) {
                 if(!engine.continueFrame)

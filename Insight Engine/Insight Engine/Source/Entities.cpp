@@ -19,7 +19,7 @@ namespace IS {
 		mAvailableEntities.pop();
 		++mLivingEntityCount;
 
-		IS_CORE_DEBUG("Entity {} created!", id);
+		IS_TRACE("Entity {} created!", id);
 		return id;
 	}
 
@@ -32,7 +32,7 @@ namespace IS {
 		// Put the destroyed ID at the back of the queue
 		mAvailableEntities.push(entity);
 		--mLivingEntityCount;
-		IS_CORE_DEBUG("Entity {} destroyed!", entity);
+		IS_WARN("Entity {} destroyed!", entity);
 	}
 
 	void EntityManager::SetSignature(Entity entity, Signature signature) {

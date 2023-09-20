@@ -12,12 +12,13 @@ namespace IS {
 
     //Basic constructor and setting base FPS to 60 
     InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
-        IS_CORE_DEBUG("Starting Insight Engine...");
+        IS_PROFILE_FUNCTION();
+        IS_CORE_INFO("Starting Insight Engine...");
         //create the pointers to the managers
         mComponentManager = std::make_unique<ComponentManager>();
         mEntityManager = std::make_unique<EntityManager>();
         mSystemManager = std::make_unique<SystemManager>();
-        IS_CORE_DEBUG("Insight Engine started");
+        IS_CORE_INFO("Insight Engine started");
     }
 
     //handling messages
@@ -30,13 +31,13 @@ namespace IS {
 
     //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
     InsightEngine::~InsightEngine() {
+        IS_PROFILE_FUNCTION();
         mSystemList.clear();
         mAllSystems.clear();
         //IS_CORE_DEBUG("Insight Engine terminated");
     }
 
     void InsightEngine::Initialize() {
-
         //initialize all systems first
         InitializeAllSystems();
         //subscirbe to messages
@@ -59,7 +60,7 @@ namespace IS {
             mSystemDeltas["Engine"] = 0;
 
         for (const auto& system: mSystemList) {
-            Timer timer(system->getName().c_str(), false);
+            Timer timer(system->getName() + " System", false);
             system->Update(delta_time.count());
             timer.Stop();
 
@@ -83,6 +84,7 @@ namespace IS {
 
     //moved all the engine stuff under this run function
     void InsightEngine::Run() {
+        IS_PROFILE_FUNCTION();
         Initialize();
         //this is the game loop
         while (is_running) {
@@ -91,12 +93,12 @@ namespace IS {
     }
 
     void InsightEngine::Exit() {
-        Message quit = Message(MessageType::Quit);
-        EventManager::Instance().Broadcast(quit);
+        BROADCAST_MESSAGE(MessageType::Quit);
     }
 
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
+        IS_PROFILE_FUNCTION();
         std::string systemName = system->getName();
         IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
@@ -107,6 +109,7 @@ namespace IS {
 
     //This function is meant to specifically find the individual system in the map and destroy it
     void InsightEngine::DestroySystem(const std::string& name) {
+        IS_PROFILE_FUNCTION();
         auto it = mAllSystems.find(name);
         if (it != mAllSystems.end()) {
             //delete it->second; //delete the object
@@ -124,8 +127,10 @@ namespace IS {
 
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
+        IS_PROFILE_FUNCTION();
         mSystemList.clear();
         mAllSystems.clear();  // Clear the map
+        IS_CORE_WARN("All systems terminated!");
     }
 
 #pragma warning(push)
@@ -134,9 +139,8 @@ namespace IS {
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
         for (auto const& system : mSystemList) {
-            IS_PROFILE_SCOPE(system->getName().c_str());
+            IS_PROFILE_SCOPE(system->getName());
             system->Initialize();
-            //IS_CORE_INFO("{} initialized", name);
         }
     }
 #pragma warning(pop)
@@ -178,14 +182,14 @@ namespace IS {
 
     //These functions involve creating entities and destroying them
     Entity InsightEngine::CreateEntity() { 
-        return mEntityManager->CreateEntity(); 
+        return mEntityManager->CreateEntity();
     }
 
     void InsightEngine::DestroyEntity(Entity entity) {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
         mSystemManager->EntityDestroyed(entity);
-        IS_CORE_DEBUG("Entity {} completely destroyed!", entity);
+        IS_CORE_WARN("Entity {} completely destroyed!", entity);
     }
 
     void InsightEngine::GenerateRandomEntity() {

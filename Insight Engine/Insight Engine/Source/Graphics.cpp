@@ -28,7 +28,7 @@ namespace IS {
         if (GLenum err = glewInit(); GLEW_OK != err) {
             std::ostringstream oss;
             oss << glewGetErrorString(err);
-            IS_CORE_ERROR("Unable Unable to initialize GLEW - error: {} - abort program", oss.str());
+            IS_CORE_CRITICAL("Unable Unable to initialize GLEW - error: {} - abort program", oss.str());
             std::exit(EXIT_FAILURE);
         }
         if (GLEW_VERSION_4_5) {
@@ -156,7 +156,7 @@ namespace IS {
         unsigned char* image_data = image.data;
 
         if (!image_data) {
-            std::cerr << "Failed to load the texture image: " << image.file_name << std::endl;
+            IS_CORE_ERROR("Failed to load image: {}", image.file_name.empty() ? "No filepath provided!" : image.file_name);
             return 0; // Return 0 to indicate failure
         }
 
@@ -176,7 +176,7 @@ namespace IS {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        std::cout << "TEXURE: " << textureID;
+        IS_CORE_INFO("Using Texture: {}", textureID);
         return textureID;
     }
 

@@ -9,11 +9,11 @@ namespace IS {
 
     void EditorLayer::onAttach() {
         // Attach scene viewer, import icons, open project...
-        //IS_CORE_DEBUG("{} attached", getName());
+        IS_CORE_DEBUG("{} attached", getName());
     }
 
     void EditorLayer::onDetach() {
-        //IS_CORE_DEBUG("{} detached", getName());
+        IS_CORE_DEBUG("{} detached", getName());
     }
 
     void EditorLayer::onUpdate([[maybe_unused]] float dt) {
@@ -191,12 +191,11 @@ namespace IS {
     }
 
     void EditorLayer::RenderSceneOverlay() {
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
-        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-        ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-        if (ImGui::Begin("Overlay", (bool*)1, window_flags)) {
+        ImGui::SetNextWindowBgAlpha(0.8f); // Translucent background
+        if (ImGui::Begin("Info", nullptr, window_flags)) {
             ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
             // Comma separted numbers
             std::ostringstream oss;
