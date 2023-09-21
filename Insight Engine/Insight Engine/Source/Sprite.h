@@ -14,6 +14,7 @@ namespace IS {
         uint32_t texture_width{};
         uint32_t texture_height{};
         GLuint tex_ID{};
+        int current_tex_index{}; // 0 is texture sprite initialized with
 
         // imgui
         std::string name;
@@ -30,7 +31,6 @@ namespace IS {
             //give it a default size of 1 by 1
             setSpriteSize(1, 1);
             setWorldPos(0, 0);
-
         }
 
         Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {

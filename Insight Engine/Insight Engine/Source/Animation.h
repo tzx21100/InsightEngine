@@ -10,6 +10,7 @@ namespace IS {
         void updateAnimation(float deltaTime);
         float getFrameWidth() const;
         float getFrameHeight() const;
+        void resetAnimation();
 
         int x_frame_index{};
         int y_frame_index{};

@@ -28,7 +28,6 @@ namespace IS {
     void Text::initText(std::string const& filepath, Shader text_shader) {
         // OpenGL state
         // ------------
-        glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

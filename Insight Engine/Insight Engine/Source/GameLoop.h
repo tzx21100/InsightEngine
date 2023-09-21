@@ -20,6 +20,7 @@ namespace IS {
 
         Image backgroundTest;
         Image idle_animation;
+        Image walking_animation;
         Image zx_animation;
         Image greybackgroundTest = asset.ToSepia(backgroundTest);
 
@@ -27,8 +28,8 @@ namespace IS {
             //create a image
             backgroundTest = asset.ImageLoad("Assets/placeholder_background.png");
             idle_animation = asset.ImageLoad("Assets/player_idle.png");
+            walking_animation = asset.ImageLoad("Assets/player_walking.png");
             zx_animation = asset.ImageLoad("Assets/icecream_truck.png");
-
             
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
@@ -66,7 +67,7 @@ namespace IS {
 
             trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);
-            trans2.setScaling(100, 100);
+            trans2.setScaling(-100, 100);
             trans2.setWorldPosition(-400, 0);
             trans3.setScaling(600, 100);
             trans3.setWorldPosition(0, -400);
@@ -109,6 +110,18 @@ namespace IS {
                 return;
             }
 
+            if (engine.HasComponent<Sprite>(myEntity)) {
+                auto& spriteMyEntity = engine.GetComponent<Sprite>(myEntity);
+                if (input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_D)) {
+                    spriteMyEntity.texture = static_cast<uint8_t>(walking_animation.texture_data);
+                    spriteMyEntity.current_tex_index = 1;
+                }
+                else {
+                    spriteMyEntity.texture = static_cast<uint8_t>(idle_animation.texture_data);
+                    spriteMyEntity.current_tex_index = 0;
+                }
+            }
+
             if (engine.HasComponent<Transform>(myEntity)) {
                 auto& trans = engine.GetComponent<Transform>(myEntity);
                 auto& rbody = engine.GetComponent<RigidBody>(myEntity);
@@ -125,11 +138,12 @@ namespace IS {
                 trans.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans.scaling.x > 0)) ||
                     (input->IsKeyHeld(GLFW_KEY_D) && (trans.scaling.x < 0)) ? -1 : 1;
 
-
                 float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
                 trans.rotation += rotate * rbody.angular_velocity;
                 trans.rotation = trans.rotation < 0.f ? 360.f : fmod(trans.rotation, 360.f);
             }
+            
+
             if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().first < WIDTH / 2) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();

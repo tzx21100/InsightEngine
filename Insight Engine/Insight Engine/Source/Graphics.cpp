@@ -14,7 +14,8 @@ namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
     Animation ISGraphics::idle_ani;
-    Animation ISGraphics::idle_ani2;
+    Animation ISGraphics::walking_ani;
+    Animation ISGraphics::ice_cream_truck_ani;
 #ifdef USING_IMGUI
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
 #endif // USING_IMGUI
@@ -24,6 +25,7 @@ namespace IS {
 
     GLuint font_texture;
     Text ISGraphics::cascadia_text;
+
 
     void ISGraphics::Initialize() {
         // Initialize entry points to OpenGL functions and extensions
@@ -48,13 +50,14 @@ namespace IS {
         glViewport(0, 0, WIDTH, HEIGHT);
 
         initMeshes();
+        walking_ani.initAnimation(1, 4, 1.f);
         idle_ani.initAnimation(1, 8, 3.f);
-        idle_ani2.initAnimation(1, 6, 2.f);
+        ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
         mesh_shader_pgm.setupSpriteShaders();
-        text_shader_pgm.setupTextShaders();
 
-        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
+       text_shader_pgm.setupTextShaders();
+       Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
     #ifdef USING_IMGUI
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
@@ -64,7 +67,8 @@ namespace IS {
 
     void ISGraphics::Update(float delta_time) {
         idle_ani.updateAnimation(delta_time);
-        idle_ani2.updateAnimation(delta_time);
+        walking_ani.updateAnimation(delta_time);
+        ice_cream_truck_ani.updateAnimation(delta_time);
         Draw(delta_time);
     }
 
@@ -98,11 +102,14 @@ namespace IS {
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-                    ;
+                    InsightEngine& engine = InsightEngine::Instance();
+                    auto input = engine.GetSystem<InputManager>("Input");
+
+                    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
+                    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
                 }
                 else if (sprite.name == "textured_box2") {
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture);
                 }
                 else {
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
@@ -127,7 +134,7 @@ namespace IS {
                 
         }
 
-        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
     #ifdef USING_IMGUI

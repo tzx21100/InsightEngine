@@ -31,4 +31,10 @@ namespace IS {
     float Animation::getFrameHeight() const {
         return 1.f / y_frames;
     }
+
+    void Animation::resetAnimation() {
+        x_frame_index = 0;
+        y_frame_index = 0;
+        frame_timer = 0;
+    }
 }
