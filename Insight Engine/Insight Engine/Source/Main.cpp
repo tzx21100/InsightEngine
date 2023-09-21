@@ -46,17 +46,29 @@ int main() {
     Signature sign_physics  = engine.GenerateSignature<Transform, RigidBody>();
     Signature sign_graphics = engine.GenerateSignature<Sprite, Transform>();
 
-    // Register each system to Insight Engine   
-    engine.AddSystem(std::make_shared<WindowSystem>(), sign_default);
-    engine.AddSystem(std::make_shared<InputManager>(), sign_input);
-    engine.AddSystem(std::make_shared<ISAudio>(), sign_default);
-    engine.AddSystem(std::make_shared<AssetManager>(), sign_default);
-    engine.AddSystem(std::make_shared<Physics>(), sign_physics);
-    engine.AddSystem(std::make_shared<ISGraphics>(), sign_graphics);
+    // Register each system to Insight Engine
+    auto insight_window   = std::make_shared<WindowSystem>();
+    auto insight_input    = std::make_shared<InputManager>();
+    insight_input->setCenterPos(insight_window->GetWidth() / 2.f, insight_window->GetHeight() / 2.f); // offset mouse position
+    auto insight_audio    = std::make_shared<ISAudio>();
+    auto insight_asset    = std::make_shared<AssetManager>();
+    auto insight_physics  = std::make_shared<Physics>();
+    auto insight_graphics = std::make_shared<ISGraphics>();
 #ifdef USING_IMGUI
-    engine.AddSystem(std::make_shared<GUISystem>(), sign_default);
+    auto insight_gui      = std::make_shared<GUISystem>();
 #endif // USING_IMGUI
-    engine.AddSystem(std::make_shared<GameLoop>(), sign_default); // Always added last
+
+    engine.AddSystem(insight_window, sign_default);
+    engine.AddSystem(insight_input, sign_input);
+    engine.AddSystem(insight_audio, sign_default);
+    engine.AddSystem(insight_asset, sign_default);
+    engine.AddSystem(insight_physics, sign_physics);
+    engine.AddSystem(insight_graphics, sign_graphics);
+#ifdef USING_IMGUI
+    engine.AddSystem(insight_gui, sign_default);
+#endif // USING_IMGUI
+    auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
+    engine.AddSystem(insight_gameloop, sign_default);
 
     //run engine (GAME LOOP)
     engine.SetFPS(60);//set fps to wtv
