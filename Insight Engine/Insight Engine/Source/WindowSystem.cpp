@@ -110,13 +110,13 @@ namespace IS {
 
     void WindowSystem::LoadProperties() {
         std::string filename = "properties.json";
-        Json::Value properties;
+        Json::Value properties{};
         
         // Load window properties from JSON file
         if (LoadJsonFromFile(properties, filename)) {
             auto const& win_props = properties["WindowProperties"];
             if (win_props.isMember("Title") && win_props["Title"].isString()) {
-                props.title = win_props["Title"].asCString();
+                props.title = win_props["Title"].asString();
                 IS_CORE_DEBUG("Using json window title");
             } else {
                 props.title = WindowProperties::default_properties.title;
@@ -133,14 +133,14 @@ namespace IS {
                 props.height = win_props["Height"].asInt();
                 IS_CORE_DEBUG("Using json window height");
             } else {
-                props.width = WindowProperties::default_properties.height;
+                props.height = WindowProperties::default_properties.height;
                 IS_CORE_DEBUG("Using default height");
             }
             if (win_props.isMember("Vsync") && win_props["Vsync"].isString()) {
                 props.vsync = win_props["Vsync"].asString() == "On" ? true : false;
                 IS_CORE_DEBUG("Using json window vsync");
             } else {
-                props.width = WindowProperties::default_properties.vsync;
+                props.vsync = WindowProperties::default_properties.vsync;
                 IS_CORE_DEBUG("Using default vsync");
             }
 

@@ -181,8 +181,8 @@ namespace IS {
     }
 
     //These functions involve creating entities and destroying them
-    Entity InsightEngine::CreateEntity() { 
-        return mEntityManager->CreateEntity();
+    Entity InsightEngine::CreateEntity(std::string name) {
+        return mEntityManager->CreateEntity(name);
     }
 
     void InsightEngine::DestroyEntity(Entity entity) {
@@ -195,7 +195,7 @@ namespace IS {
     void InsightEngine::GenerateRandomEntity() {
         PRNG prng;
         InsightEngine& engine = Instance();
-        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>();
+        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
         auto& trans = engine.GetComponent<Transform>(e);
         // scale [2, 16], pos [viewport], orientation [-360, 360]
         trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f);
@@ -203,12 +203,20 @@ namespace IS {
         trans.setRotation((prng.generate() * 720.f) - 360.f);
     }
 
+    // Dynamic entity copying 
+    Entity InsightEngine::CopyEntity(Entity old_entity) {
+        Entity newEntity = CreateEntity(mEntityManager->FindNames(old_entity));
+        CopyComponents(newEntity, old_entity);
+        return newEntity;
+    }
+
+
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {
         std::string file_path = "Prefabs/" + filename + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
         prefab["Signature"] = signature;
-        
+        prefab["Name"] = mEntityManager->FindNames(entity);
         //add in future components
        // SerializeComponent<Position>(entity, prefab, "POS");
 
@@ -217,10 +225,13 @@ namespace IS {
 
     Entity InsightEngine::LoadFromJson(std::string name) {
         std::string filename = "Prefabs/" + name + ".json";
-        Entity entity = CreateEntity();
+        
+       
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
-
+        std::string str_sig = loaded["Signature"].asString();
+        std::string entity_name = loaded["Name"].asString();
+        Entity entity = CreateEntity(entity_name);
         //add in future components
        // DeserializeComponent<Position>(entity, loaded, "POS");
         return entity;

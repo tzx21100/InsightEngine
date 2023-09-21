@@ -45,32 +45,19 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderEntityNode(Entity entity) {
         InsightEngine& engine = InsightEngine::Instance();
-        // doing this because entity does not have a name
-        Sprite& sprite = engine.GetComponent<Sprite>(entity);
 
+        //the entity now has names
         ImGuiTreeNodeFlags tree_flags = (selected_entity && (*selected_entity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool opened = ImGui::TreeNodeEx((sprite.name + ' ' + std::to_string(entity)).c_str(), tree_flags);
+        bool opened = ImGui::TreeNodeEx((engine.GetEntityName(entity) + ' ' + std::to_string(entity)).c_str(), tree_flags);
 
         if (ImGui::IsItemClicked())
             selected_entity = std::make_shared<Entity>(entity);
 
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Clone Entity")) {
-                Entity e = engine.CreateEntity();
-                engine.AddComponent<Sprite>(e, sprite);
-                if (engine.HasComponent<Transform>(entity)) {
-                    Transform& transform = engine.GetComponent<Transform>(entity);
-                    engine.AddComponent<Transform>(e, transform);
-                }
-                if (engine.HasComponent<RigidBody>(entity)) {
-                    RigidBody& rigidbody = engine.GetComponent<RigidBody>(entity);
-                    engine.AddComponent<RigidBody>(e, rigidbody);
-                }
-                if (engine.HasComponent<InputAffector>(entity)) {
-                    InputAffector& input_affector = engine.GetComponent<InputAffector>(entity);
-                    engine.AddComponent<InputAffector>(e, input_affector);
-                }
+                // Used the dynamic copy entity
+                Entity e = engine.CopyEntity(entity);
             }
 
             ImGui::EndPopup();
@@ -258,23 +245,7 @@ namespace IS {
 
             // Clone entity
             if (ImGui::Button("Clone Entity")) {
-                Entity e = engine.CreateEntity();
-                if (engine.HasComponent<Sprite>(*entity)) {
-                    auto& sprite = engine.GetComponent<Sprite>(*entity);
-                    engine.AddComponent<Sprite>(e, sprite);
-                }
-                if (engine.HasComponent<Transform>(*entity)) {
-                    auto& transform = engine.GetComponent<Transform>(*entity);
-                    engine.AddComponent<Transform>(e, transform);
-                }
-                if (engine.HasComponent<RigidBody>(*entity)) {
-                    auto& rigidbody = engine.GetComponent<RigidBody>(*entity);
-                    engine.AddComponent<RigidBody>(e, rigidbody);
-                }
-                if (engine.HasComponent<InputAffector>(*entity)) {
-                    auto& input_affector = engine.GetComponent<InputAffector>(*entity);
-                    engine.AddComponent<InputAffector>(e, input_affector);
-                }
+                Entity e = engine.CopyEntity(*entity);
             }
 
             // Destroy entity

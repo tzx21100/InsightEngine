@@ -56,14 +56,20 @@ namespace IS {
         void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
 
-        //Entity Creation
-        Entity CreateEntity();
+        //Entity Management
+        Entity CreateEntity(std::string name);
         void DestroyEntity(Entity entity);
         void GenerateRandomEntity();
 
         //Functions to save and load entities
         void SaveToJson(Entity entity, std::string filename);
         Entity LoadFromJson(std::string filename);
+
+        Entity CopyEntity(Entity old_entity);
+
+        std::string GetEntityName(Entity entity) {
+            return mEntityManager->FindNames(entity);
+        }
 
         //entity count
         uint32_t EntitiesAlive() {
@@ -75,6 +81,12 @@ namespace IS {
         bool HasComponent(Entity entity) {
             ComponentType type = mComponentManager->GetComponentType<T>();
             return mEntityManager->HasComponent(entity, type);
+        }
+
+        void CopyComponents(Entity entity,Entity old_entity) {
+            Signature signature=mComponentManager->CloneComponent(entity,old_entity);
+            mEntityManager->SetSignature(entity, signature);
+            mSystemManager->EntitySignatureChanged(entity, signature);
         }
 
         template <typename T>
@@ -120,8 +132,8 @@ namespace IS {
 
         // Abstracted Component Functions!
         template<typename... Components> // This ... will allow you to add as many Components as you want sort of like printf
-        Entity CreateEntityWithComponents() {
-            Entity entity = CreateEntity();
+        Entity CreateEntityWithComponents(std::string name) {
+            Entity entity = CreateEntity(name);
             (AddComponent<Components>(entity, Components()), ...);
             return entity;
         }

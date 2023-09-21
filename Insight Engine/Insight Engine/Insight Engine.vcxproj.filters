@@ -46,9 +46,6 @@
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>Engine\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Entities.cpp">
-      <Filter>Engine\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>

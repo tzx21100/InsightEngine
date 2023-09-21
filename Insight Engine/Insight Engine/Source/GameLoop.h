@@ -32,12 +32,12 @@ namespace IS {
             zx_animation = asset.ImageLoad("Assets/icecream_truck.png");
             
             //creating game object and their components
-            myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
-            myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
-            myEntity3 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>();
-            circle = engine.CreateEntityWithComponents<Sprite, Transform>();
-            lines = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
-            points = engine.CreateEntityWithComponents<Sprite, Transform>();
+            myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
+            myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
+            myEntity3 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
+            circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock circle");
+            lines = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Clock line");
+            points = engine.CreateEntityWithComponents<Sprite, Transform>("Clock points");
 
             auto& trans = engine.GetComponent<Transform>(myEntity);
             auto& trans2 = engine.GetComponent<Transform>(myEntity2);
@@ -101,7 +101,7 @@ namespace IS {
                 engine.continueFrame = true;
                 IS_CORE_DEBUG("Step frame");
             }
-            if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
                 engine.freezeFrame = !engine.freezeFrame;
                 IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
             }
@@ -146,7 +146,7 @@ namespace IS {
 
             if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().first < WIDTH / 2) {
                 for (int i = 0; i < 1; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>();
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(30, 38);
                     transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
@@ -158,7 +158,7 @@ namespace IS {
 
             if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input->GetMousePosition().first>-WIDTH/2 && input->GetMousePosition().second<WIDTH/2) {
                 for (int i = 0; i < 1; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>();
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Truck");
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(128, 128);
                     transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
@@ -169,7 +169,9 @@ namespace IS {
                     spr.texture_height = zx_animation.height;
                     //add the image in
                     //spr.texture = backgroundTest.texture_data;
+
                 }
+               
 
             }
 
