@@ -61,10 +61,10 @@
     }                                                                    \
 
 #else
-    #define IS_CORE_ASSERT(x) ((void)0)
-    #define IS_CORE_ASSERT_MESG(x, ...) ((void)0)
-    #define IS_ASSERT(x) ((void)0)
-    #define IS_ASSERT_MESG(x, ...) ((void)0)
+    #define IS_CORE_ASSERT(x) __noop
+    #define IS_CORE_ASSERT_MESG(x, ...) __noop
+    #define IS_ASSERT(x) __noop
+    #define IS_ASSERT_MESG(x, ...) __noop
 
 #endif // IS_ENABLE_ASSERTS
 

@@ -34,7 +34,9 @@ namespace IS {
 
 		static Animation idle_ani;
 		static Animation idle_ani2;
+	#ifdef USING_IMGUI
 		static std::shared_ptr<Framebuffer> framebuffer;
+	#endif // USING_IMGUI
 		static Shader mesh_shader_pgm;
 		static Shader text_shader_pgm;
 		static Text cascadia_text;

@@ -24,52 +24,39 @@
 using namespace IS;
 
 int main() {
+    // Enable memory leaks check
     ENABLE_MEMORY_CHECK();
+    // Initialize ScriptEngine
     ScriptEngine::Init();
     // Initialize log
     Log::init();
 
-    //engine get
+    // Engine Instance
     InsightEngine& engine = InsightEngine::Instance();
 
-
-    //The following demonstrates the Initialize() Part of your systems
-    
-    //this is just to show how the new system works everthing can be deleted
-    //register the position component
-    engine.RegisterComponent<RigidBody>();
-    engine.RegisterComponent<Transform>();
+    // Register Components
     engine.RegisterComponent<Sprite>();
+    engine.RegisterComponent<Transform>();
+    engine.RegisterComponent<RigidBody>();
     engine.RegisterComponent<InputAffector>();
+ 
+    // Signature (components registered for each system)
+    Signature sign_default  = engine.GenerateSignature<>();
+    Signature sign_input    = engine.GenerateSignature<InputAffector>();
+    Signature sign_physics  = engine.GenerateSignature<Transform, RigidBody>();
+    Signature sign_graphics = engine.GenerateSignature<Sprite, Transform>();
 
-    //this just loads in the window and audio I will give them their components next time
-    Signature signature;
-    // create window first so other systems can just point to current context
-    auto mySystem = std::make_shared<WindowSystem>(WIDTH, HEIGHT, "Insight Engine");
-    signature = engine.GenerateSignature<>();
-    engine.AddSystem(mySystem, signature);
-    signature = engine.GenerateSignature<InputAffector>();
-    auto InputSys = std::make_shared<InputManager>();
-    engine.AddSystem(InputSys, signature);
-    auto mySystem3 = std::make_shared<ISAudio>();
-    engine.AddSystem(mySystem3, signature);
-    auto mySystem4 = std::make_shared<AssetManager>();
-    engine.AddSystem(mySystem4, signature);
-    auto gui = std::make_shared<GUISystem>();
-    engine.AddSystem(gui, signature);
-    auto physicsSystem = std::make_shared<Physics>();
-    signature = engine.GenerateSignature<RigidBody, Transform>();
-    engine.AddSystem(physicsSystem, signature);
-    signature = engine.GenerateSignature<Sprite,Transform>();
-    auto graphicSystem = std::make_shared<ISGraphics>();
-    engine.AddSystem(graphicSystem, signature);
-
-
-
-    //this is the game loop to be added at the end
-    auto gameLoop = std::make_shared<GameLoop>();
-    signature = engine.GenerateSignature<>();
-    engine.AddSystem(gameLoop, signature);
+    // Register each system to Insight Engine   
+    engine.AddSystem(std::make_shared<WindowSystem>(), sign_default);
+    engine.AddSystem(std::make_shared<InputManager>(), sign_input);
+    engine.AddSystem(std::make_shared<ISAudio>(), sign_default);
+    engine.AddSystem(std::make_shared<AssetManager>(), sign_default);
+    engine.AddSystem(std::make_shared<Physics>(), sign_physics);
+    engine.AddSystem(std::make_shared<ISGraphics>(), sign_graphics);
+#ifdef USING_IMGUI
+    engine.AddSystem(std::make_shared<GUISystem>(), sign_default);
+#endif // USING_IMGUI
+    engine.AddSystem(std::make_shared<GameLoop>(), sign_default); // Always added last
 
     //run engine (GAME LOOP)
     engine.SetFPS(60);//set fps to wtv

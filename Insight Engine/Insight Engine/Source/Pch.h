@@ -7,6 +7,10 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
 
+#if 1
+#define USING_IMGUI // enable GUI
+#endif
+
 //we can switch these to our own STL when we finish them
 
 // Standard library

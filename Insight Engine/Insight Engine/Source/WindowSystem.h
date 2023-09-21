@@ -13,13 +13,15 @@ namespace IS {
     public:
         // struct encapsulating properties of a window
         struct WindowProperties {
-            uint32_t width{}, height{};
             std::string title;
-            bool VSync{};
+            uint32_t width{}, height{};
+            bool vsync{};
+
+            static WindowProperties default_properties;
         };
 
         // Constructor
-        WindowSystem(uint32_t width, uint32_t height, std::string const& title, bool vsync = true);
+        WindowSystem();
         ~WindowSystem();
 
         // override parent
@@ -34,8 +36,10 @@ namespace IS {
         std::string GetWindowTitle() const;
         void SetWindowSize(uint32_t width, uint32_t height);
         void SetWindowTitle(std::string const& title);
-        void SetVSync(bool enabled);
+        void EnableVsync(bool enabled);
         bool IsVSync() const;
+        void LoadProperties();
+        void SaveProperties();
 
     private:
         GLFWwindow* window = nullptr;

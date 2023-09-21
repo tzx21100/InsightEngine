@@ -15,7 +15,9 @@ namespace IS {
     std::vector<Sprite> ISGraphics::sprites;
     Animation ISGraphics::idle_ani;
     Animation ISGraphics::idle_ani2;
+#ifdef USING_IMGUI
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
+#endif // USING_IMGUI
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
@@ -54,8 +56,10 @@ namespace IS {
 
         Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
+    #ifdef USING_IMGUI
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
         framebuffer = std::make_shared<Framebuffer>(props);
+    #endif // USING_IMGUI
     }
 
     void ISGraphics::Update(float delta_time) {
@@ -73,7 +77,10 @@ namespace IS {
     }
 
     void ISGraphics::Draw(float delta_time) {
+
+    #ifdef USING_IMGUI
         framebuffer->Bind();
+    #endif // USING_IMGUI
         glClear(GL_COLOR_BUFFER_BIT);
 
         //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
@@ -123,7 +130,9 @@ namespace IS {
         Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
+    #ifdef USING_IMGUI
         framebuffer->Unbind();
+    #endif // USING_IMGUI
     
     }
 
@@ -181,10 +190,18 @@ namespace IS {
     }
 
     GLuint ISGraphics::getScreenTexture() {
+    #ifdef USING_IMGUI
         return framebuffer->GetColorAttachment();
+    #else
+        return 0;
+    #endif // USING_IMGUI
     }
 
     void ISGraphics::resizeFramebuffer(GLuint w, GLuint h) {
+    #ifdef USING_IMGUI
         framebuffer->Resize(w, h);
+    #else
+        w, h;
+    #endif // USING_IMGUI
     }
 }
