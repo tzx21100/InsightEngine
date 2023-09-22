@@ -95,22 +95,22 @@ namespace IS {
         }
     }
 
-    void GUISystem::PushLayer(Layer* layer) {
+    void GUISystem::PushLayer(layer_type layer) {
         layers.pushLayer(layer);
         layer->onAttach();
     }
 
-    void GUISystem::PushOverlay(Layer* overlay) {
+    void GUISystem::PushOverlay(layer_type overlay) {
         layers.pushOverlay(overlay);
         overlay->onAttach();
     }
 
-    void GUISystem::PopLayer(Layer* layer) {
+    void GUISystem::PopLayer(layer_type layer) {
         layers.popLayer(layer);
         layer->onDetach();
     }
 
-    void GUISystem::PopOverlay(Layer* overlay) {
+    void GUISystem::PopOverlay(layer_type overlay) {
         layers.popOverlay(overlay);
         overlay->onDetach();
     }
