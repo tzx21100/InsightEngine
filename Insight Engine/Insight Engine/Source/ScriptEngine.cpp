@@ -132,11 +132,22 @@ namespace IS {
         mono_runtime_invoke(printMessage_func, instance, nullptr, nullptr);
 
         //call func w param
-        MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
-        int val = 5;
-        void* param = &val;
+        MonoMethod* printCustomStr_func = mono_class_get_method_from_name(mono_class, "PrintCustomMessage", 1);
+        // Step 1: Create a MonoString
+        MonoString* monoStr = mono_string_new(s_data->app_domain, "Hello, Mono!");
 
-        mono_runtime_invoke(printInt_func, instance, &param, nullptr);
+        // Step 2: Allocate memory in the target process
+        void* memory = malloc(sizeof(MonoString*));
+
+        // Step 3: Write the address of the MonoString to the allocated memory
+        memcpy(memory, &monoStr, sizeof(MonoString*));
+
+        mono_runtime_invoke(printCustomStr_func, instance, &memory, nullptr);
+        free(memory);
+        delete []monoStr;
+        delete[]instance;
+        //delete[]root_domain;
+        mono_jit_cleanup(root_domain);
     }
 
     void ScriptEngine::ShutdownMono()
