@@ -127,24 +127,28 @@ namespace IS {
 
         }
 
-        // Render FPS and Entities alive
-        InsightEngine& engine = InsightEngine::Instance();
-        std::ostringstream fps_text_oss;
-        fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
-        std::string fps_text = fps_text_oss.str();
-        std::ostringstream entities_alive_text_oss;
-        entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
-        std::string entities_alive_text = entities_alive_text_oss.str();
+        // Render some text when GUI is disabled
+        if (InsightEngine& engine = InsightEngine::Instance(); !engine.mUsingGUI){
+            std::ostringstream fps_text_oss;
+            std::ostringstream entities_alive_text_oss;
+            fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
+            entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
 
-        float scale = 10.f;
-        float pos_x = -(WIDTH / 2.f) + scale;
-        float pos_y = (HEIGHT / 2.f) - (scale * 3.f);
-        const glm::vec3 islamic_green = { 0.f, .56f, .066f };
-        const glm::vec3 malachite = { 0.f, 1.f, .25f };
-        static glm::vec3 color = islamic_green;
-        color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
-        Text::renderText(text_shader_pgm, fps_text, pos_x, pos_y, scale, color);
-        Text::renderText(text_shader_pgm, entities_alive_text, pos_x, pos_y - (scale * 3.f), scale, color);
+            const std::string fps_text = fps_text_oss.str();
+            const std::string entities_alive_text = entities_alive_text_oss.str();
+            const std::string instructions = "Press 'Tab' to enable/disable GUI";
+
+            const float scale = 10.f;
+            const float pos_x = -(WIDTH / 2.f) + scale;
+            const float pos_y = (HEIGHT / 2.f) - (scale * 3.f);
+            const glm::vec3 islamic_green = { 0.f, .56f, .066f };
+            const glm::vec3 malachite = { 0.f, 1.f, .25f };
+            static glm::vec3 color = islamic_green;
+            color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
+            Text::renderText(text_shader_pgm, fps_text, pos_x, pos_y, scale, color);
+            Text::renderText(text_shader_pgm, entities_alive_text, pos_x, pos_y - (scale * 3.f), scale, color);
+            Text::renderText(text_shader_pgm, instructions, pos_x, pos_y - (scale * 6.f), scale, color);
+        }
 
 
         //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
