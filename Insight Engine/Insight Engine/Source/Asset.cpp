@@ -33,7 +33,7 @@ namespace IS {
 
     
 
-    std::string AssetManager::getName() {
+    std::string AssetManager::GetName() {
         return "Asset";
     }
 

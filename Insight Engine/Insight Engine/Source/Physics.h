@@ -9,7 +9,7 @@ namespace IS
 	public:
         Physics();
         void Update(float dt) override;
-        std::string getName() override { return "Physics"; }
+        std::string GetName() override { return "Physics"; }
         void Initialize() override;
         void HandleMessage(const Message&) override {}
         //void setGravity(float g) { Gravity = g; }

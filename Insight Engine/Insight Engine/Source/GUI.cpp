@@ -1,3 +1,16 @@
+/*!
+ * \file GUI.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This source file defines the implementation for class GUISystem, which
+ *      encapsulates the functionalities of a graphical user interface (GUI)
+ *      using the Dear ImGui libary.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "GUI.h"
 #include "EditorLayer.h"
@@ -53,13 +66,13 @@ namespace IS {
 
 
         Begin();
-        layers.Update(delta_time);
-        layers.Render();
+        mLayers.Update(delta_time);
+        mLayers.Render();
         End();
     }
 
     void GUISystem::Terminate() {
-        layers.clearStack();
+        mLayers.ClearStack();
 
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
@@ -70,7 +83,7 @@ namespace IS {
 
     }
 
-    std::string GUISystem::getName() {
+    std::string GUISystem::GetName() {
         return "GUI";
     }
 
@@ -96,23 +109,23 @@ namespace IS {
     }
 
     void GUISystem::PushLayer(layer_type layer) {
-        layers.pushLayer(layer);
-        layer->onAttach();
+        mLayers.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void GUISystem::PushOverlay(layer_type overlay) {
-        layers.pushOverlay(overlay);
-        overlay->onAttach();
+        mLayers.PushOverlay(overlay);
+        overlay->OnAttach();
     }
 
     void GUISystem::PopLayer(layer_type layer) {
-        layers.popLayer(layer);
-        layer->onDetach();
+        mLayers.PopLayer(layer);
+        layer->OnDetach();
     }
 
     void GUISystem::PopOverlay(layer_type overlay) {
-        layers.popOverlay(overlay);
-        overlay->onDetach();
+        mLayers.PopOverlay(overlay);
+        overlay->OnDetach();
     }
 
     void GUISystem::SetDarkThemeColors() const {

@@ -1,3 +1,16 @@
+/*!
+ * \file Guidgets.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This source file defines the implementation for ImGui widgetRenderControlVec2.
+ * 
+ * \copyright Copyright (C) 2023, Digipen Institute of Technology
+ *____________________________________________________________________________*/
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Guidgets.h"
 

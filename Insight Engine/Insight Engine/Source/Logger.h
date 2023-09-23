@@ -1,7 +1,21 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
+/*!
+ * \file Logger.h
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This header file declares the interface for class Logger, which encapsulates
+ *      the functionalities of a Logger, and class LoggerGUI, which encapsulates the
+ *      functionalities of Logger graphical user interface.
+ *____________________________________________________________________________*/
 
-// STL
+/*                                                                      guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_DEBUG_LOGGER_H
+#define GAM200_INSIGHT_ENGINE_DEBUG_LOGGER_H
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include <mutex>
 #include <string>
 #include <sstream>
@@ -42,18 +56,18 @@ namespace IS {
         public:
             LoggerGUI();
 
-            void clear();
-            void addLog(const char* fmt, ...);
-            void draw(const char* title);
+            void Clear();
+            void AddLog(const char* fmt, ...);
+            void Draw(const char* title);
             //ImU32 getLogLevelColor(aLogLevel log_level);
 
         private:
-            ImGuiTextBuffer buffer;
-            ImGuiTextFilter filter;
-            ImVector<int>   line_offsets;   // index to line offset
-            bool            auto_scroll;    // keep scrolling if already at the bottom
-            std::vector<std::string> defaultFilters = { "Trace", "Debug", "Info", "Warning", "Error", "Critical" };
-            int selectedFilterIndex = 2;  // Default filter index (e.g., "Info")
+            ImGuiTextBuffer mBuffer;
+            ImGuiTextFilter mFilter;
+            ImVector<int>   mLineOffsets;   // index to line offset
+            bool            mAutoScroll;    // keep scrolling if already at the bottom
+            std::vector<std::string> mDefaultFilters = { "Trace", "Debug", "Info", "Warning", "Error", "Critical" };
+            int mSelectedFilterIndex = 2;  // Default filter index (e.g., "Info")
         };
 
         // Constructor/Destructor
@@ -62,42 +76,42 @@ namespace IS {
 
         // Log functions
         template<typename... Args>
-        void trace(std::string_view fmt, Args&&... args);
+        void Trace(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void debug(std::string_view fmt, Args&&... args);
+        void Debug(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void info(std::string_view fmt, Args&&... args);
+        void Info(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void warn(std::string_view fmt, Args&&... args);
+        void Warn(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void error(std::string_view fmt, Args&&... args);
+        void Error(std::string_view fmt, Args&&... args);
         template<typename... Args>
-        void critical(std::string_view fmt, Args&&... args);
+        void Critical(std::string_view fmt, Args&&... args);
 
         // Getter/setter
-        void setLoggerName(std::string const& new_logger_name);
-        void setLogLevel(aLogLevel new_level);
-        aLogLevel getLogLevel() const;
-        void setTimestampFormat(std::string const& new_timestamp_format);
-        std::string getTimestampFormat() const;
+        void SetLoggerName(std::string const& new_logger_name);
+        void SetLogLevel(aLogLevel new_level);
+        aLogLevel GetLogLevel() const;
+        void SetTimestampFormat(std::string const& new_timestamp_format);
+        std::string GetTimestampFormat() const;
 
         // Additional options
-        void enableFileOutput();
+        void EnableFileOutput();
 
-        static LoggerGUI& getLoggerGUI();
+        static LoggerGUI& GetLoggerGUI();
 
     private:
 
         // Data members
-        std::string logger_name;
-        aLogLevel log_level = aLogLevel::Info;
-        std::string timestamp_format = "%H:%M:%S";
-        std::string log_filename_timestamp_format = "%Y%m%d %H-%M-%S";
-        std::ofstream log_file;
+        std::string mLoggerName;
+        aLogLevel mLogLevel = aLogLevel::Info;
+        std::string mTimestampFormat = "%H:%M:%S";
+        std::string mLogFilenameTimestampFormat = "%Y%m%d %H-%M-%S";
+        std::ofstream mLogFile;
         //std::deque<std::pair<aLogLevel, std::string>> log_messages;
-        static LoggerGUI logger_gui;
+        static LoggerGUI mLoggerGUI;
 
-        static std::mutex log_mutex;
+        static std::mutex mLogMutex;
 
         template<typename... Args>
         void log(aLogLevel level, std::string_view fmt, Args&&... args);
@@ -112,45 +126,45 @@ namespace IS {
 
     // Template implementation
     template<typename... Args>
-    inline void Logger::trace(std::string_view fmt, Args&&... args) {
+    inline void Logger::Trace(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Trace, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::debug(std::string_view fmt, Args&&... args) {
+    inline void Logger::Debug(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Debug, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::info(std::string_view fmt, Args&&... args) {
+    inline void Logger::Info(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Info, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::warn(std::string_view fmt, Args&&... args) {
+    inline void Logger::Warn(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Warning, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::error(std::string_view fmt, Args&&... args) {
+    inline void Logger::Error(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Error, fmt, args...);
     }
 
     template<typename... Args>
-    inline void Logger::critical(std::string_view fmt, Args&&... args) {
+    inline void Logger::Critical(std::string_view fmt, Args&&... args) {
         log(aLogLevel::Critical, fmt, args...);
     }
 
     template<typename... Args>
     inline void Logger::log(aLogLevel level, std::string_view fmt, Args&&... args) {
-        std::scoped_lock lock(log_mutex);
-        if (level >= log_level) {
+        std::scoped_lock lock(mLogMutex);
+        if (level >= mLogLevel) {
             setColor(level);
             
             // Construct log
             std::ostringstream log;
-            std::string timestamp = getTimestamp(timestamp_format);
-            std::string name = !logger_name.empty() ? '[' + logger_name + ']' : "";
+            std::string timestamp = getTimestamp(mTimestampFormat);
+            std::string name = !mLoggerName.empty() ? '[' + mLoggerName + ']' : "";
             std::string loglevel = getLogLevelString(level);
             std::string all_args = std::vformat(fmt, std::make_format_args(args...));
 
@@ -160,12 +174,12 @@ namespace IS {
             std::clog << log.str() << RESET;
 
             // Write to file
-            if (log_file.is_open()) {
-                log_file << log.str();
+            if (mLogFile.is_open()) {
+                mLogFile << log.str();
             }
 
         #ifdef USING_IMGUI
-            logger_gui.addLog(log.str().c_str());
+            mLoggerGUI.AddLog(log.str().c_str());
         #endif // USING_IMGUI
         }
     }

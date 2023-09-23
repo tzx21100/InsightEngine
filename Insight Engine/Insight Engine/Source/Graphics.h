@@ -21,7 +21,7 @@ namespace IS {
 		//override parent
 		void Initialize() override;
 		void Update(float deltaTime) override;
-		std::string getName() override;
+		std::string GetName() override;
 		void HandleMessage(const Message& msg) override;
 		void Draw(float delta) override;
 		

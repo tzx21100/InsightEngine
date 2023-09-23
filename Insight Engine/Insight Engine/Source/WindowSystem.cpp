@@ -1,3 +1,16 @@
+/*!
+ * \file WindowSystem.cpp
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+           Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This source file defines the implementation for class WindowSystem,
+ *      which encapsulates the functionalities of an application window.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "WindowSystem.h"
 #include "JsonSaveLoad.h"
@@ -5,7 +18,7 @@
 namespace IS {
 
     // In case <properties.json> is not found, window will use default properties
-    WindowSystem::WindowProperties WindowSystem::WindowProperties::default_properties{ "Insight Engine", 1600, 900, true };
+    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, true };
 
     WindowSystem::WindowSystem() {
         LoadProperties();
@@ -26,21 +39,21 @@ namespace IS {
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
         // Create a windowed mode window and its OpenGL context
-        window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-        if (!window) {
+        mWindow = glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
+        if (!mWindow) {
             IS_CORE_CRITICAL("Failed to create OpneGL context!");
             glfwTerminate();
         }
 
         // Default setting
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        EnableVsync(props.vsync);
+        glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        EnableVsync(mProps.mVSync);
 
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(mWindow);
     }
 
     WindowSystem::~WindowSystem() {
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(mWindow);
         glfwTerminate();
         SaveProperties();
     }
@@ -57,14 +70,14 @@ namespace IS {
 
     void WindowSystem::Update(float)  {
         //register window closing 
-        if (glfwWindowShouldClose(window)) {
+        if (glfwWindowShouldClose(mWindow)) {
             Message quit = Message(MessageType::Quit);
             BROADCAST_MESSAGE(quit);
         }
     }
 
     void WindowSystem::EndUpdate() {
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(mWindow);
     }
 
     void WindowSystem::HandleMessage(const Message& message) {
@@ -73,42 +86,42 @@ namespace IS {
         }
     }
 
-    std::string WindowSystem::getName()  {
+    std::string WindowSystem::GetName()  {
         return "Window";
     }
 
     uint32_t WindowSystem::GetWidth() const {
-        return props.width;
+        return mProps.mWidth;
     }
 
     uint32_t WindowSystem::GetHeight() const {
-        return props.height;
+        return mProps.mHeight;
     }
 
     std::string WindowSystem::GetWindowTitle() const {
-        return props.title;
+        return mProps.mTitle;
     }
 
     void WindowSystem::SetWindowSize(uint32_t width, uint32_t height) {
-        props.width = width;
-        props.height = height;
+        mProps.mWidth = width;
+        mProps.mHeight = height;
 
-        glfwSetWindowSize(window, width, height);
+        glfwSetWindowSize(mWindow, width, height);
     }
 
     void WindowSystem::SetWindowTitle(std::string const& title) {
-        props.title = title;
+        mProps.mTitle = title;
 
-        glfwSetWindowTitle(window, title.c_str());
+        glfwSetWindowTitle(mWindow, title.c_str());
     }
 
     void WindowSystem::EnableVsync(bool enabled) {
         glfwSwapInterval(enabled ? 1 : 0);
-        props.vsync = enabled;
+        mProps.mVSync = enabled;
     }
 
     bool WindowSystem::IsVSync() const {
-        return props.vsync;
+        return mProps.mVSync;
     }
 
     void WindowSystem::LoadProperties() {
@@ -121,14 +134,14 @@ namespace IS {
             success && win_props["Title"].isString() && win_props["Width"].isInt() &&
             win_props["Height"].isInt() && win_props["Vsync"].isString()) {
 
-            props.title  = win_props["Title"].asString();
-            props.width  = win_props["Width"].asInt();
-            props.height = win_props["Height"].asInt();
-            props.vsync  = win_props["Vsync"].asString() == "On" ? true : false;
+            mProps.mTitle  = win_props["Title"].asString();
+            mProps.mWidth  = win_props["Width"].asInt();
+            mProps.mHeight = win_props["Height"].asInt();
+            mProps.mVSync  = win_props["Vsync"].asString() == "On" ? true : false;
 
             IS_CORE_INFO("Loaded window properties from <{}>", filename);
         } else { // Assign default properties
-            props = WindowProperties::default_properties;
+            mProps = mDefaultProperties;
             IS_CORE_INFO("Using default window properties");
         }
     }
@@ -137,10 +150,10 @@ namespace IS {
         std::string filepath = "properties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];
-        win_props["Title"]  = props.title.c_str();
-        win_props["Width"]  = props.width;
-        win_props["Height"] = props.height;
-        win_props["Vsync"]  = props.vsync ? "On" : "Off";
+        win_props["Title"]  = mProps.mTitle.c_str();
+        win_props["Width"]  = mProps.mWidth;
+        win_props["Height"] = mProps.mHeight;
+        win_props["Vsync"]  = mProps.mVSync ? "On" : "Off";
 
         // Save window propeties to JSON file
         bool success = SaveJsonToFile(properties, filepath);

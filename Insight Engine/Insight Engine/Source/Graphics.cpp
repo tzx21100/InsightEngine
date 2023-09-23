@@ -72,7 +72,7 @@ namespace IS {
         Draw(delta_time);
     }
 
-    std::string ISGraphics::getName() { return "Graphics"; };
+    std::string ISGraphics::GetName() { return "Graphics"; };
 
     void ISGraphics::HandleMessage(const Message& msg) {
         if (msg.GetType() == MessageType::DebugInfo) {

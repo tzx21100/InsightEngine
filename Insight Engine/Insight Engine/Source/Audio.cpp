@@ -14,7 +14,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Audio.h"
 namespace IS {
 
-    std::string ISAudio::getName() { //for debug purposes
+    std::string ISAudio::GetName() { //for debug purposes
         return "Audio";
     }
 

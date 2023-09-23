@@ -199,7 +199,7 @@ namespace IS {
 
         }
 
-        std::string getName() override {
+        std::string GetName() override {
             return "Game Loop";
         }
 

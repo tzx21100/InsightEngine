@@ -3,7 +3,7 @@
 #include "Input.h"
 namespace IS {
 
-    std::string InputManager::getName() {
+    std::string InputManager::GetName() {
         return "Input";
     }
 

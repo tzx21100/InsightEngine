@@ -61,12 +61,12 @@ namespace IS {
 
         // Update all systems
         for (const auto& system: mSystemList) {
-            Timer timer(system->getName() + " System", false);
+            Timer timer(system->GetName() + " System", false);
             system->Update(delta_time.count());
             timer.Stop();
 
             if (!(frame_count % update_frequency)) {
-                mSystemDeltas[system->getName()] = timer.GetDeltaTime();
+                mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
@@ -98,7 +98,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         IS_PROFILE_FUNCTION();
-        std::string systemName = system->getName();
+        std::string systemName = system->GetName();
         IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
         mSystemList.emplace_back(system);
@@ -138,7 +138,7 @@ namespace IS {
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
         for (auto const& system : mSystemList) {
-            IS_PROFILE_SCOPE(system->getName());
+            IS_PROFILE_SCOPE(system->GetName());
             system->Initialize();
         }
     }

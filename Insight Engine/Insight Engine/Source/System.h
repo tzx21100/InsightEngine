@@ -24,7 +24,7 @@ namespace IS {
         void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
         virtual void Initialize() {};
-        virtual std::string getName() { return ""; };
+        virtual std::string GetName() { return ""; };
         virtual void Update(float) {};
         virtual void Draw(float) {};
 
@@ -44,7 +44,7 @@ namespace IS {
     {
     public:
         void RegisterSystem(std::shared_ptr<ParentSystem> system) {
-            std::string systemName = system->getName();
+            std::string systemName = system->GetName();
             assert(mSystems.find(systemName) == mSystems.end() && "Registering system more than once.");
             mSystems[systemName] = system;
         }

@@ -1,3 +1,19 @@
+/*!
+ * \file SceneHierarchyPanel.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This header file defines the implementation for class SceneHierarchyPanel,
+ *      which encapsulates the functionalities of a scene hierarchy panel
+ *      akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
+ *      manages the entities in a scene.
+ * 
+ * \copyright Copyright (C) 2023, Digipen Institute of Technology
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "SceneHierarchyPanel.h"
 #include "Guidgets.h"
@@ -21,7 +37,7 @@ namespace IS {
 
         // Deselect entity
         if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-            selected_entity = {};
+            mSelectedEntity = {};
 
         // Create random entity
         ImGuiPopupFlags flags = ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight;
@@ -37,8 +53,8 @@ namespace IS {
 
         // Render inspector for selected entity
         ImGui::Begin("Inspector");
-        if (selected_entity) {
-            RenderComponentNodes(selected_entity);
+        if (mSelectedEntity) {
+            RenderComponentNodes(mSelectedEntity);
         }
         ImGui::End();
     }
@@ -47,12 +63,12 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
 
         //the entity now has names
-        ImGuiTreeNodeFlags tree_flags = (selected_entity && (*selected_entity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
+        ImGuiTreeNodeFlags tree_flags = (mSelectedEntity && (*mSelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
         bool opened = ImGui::TreeNodeEx((engine.GetEntityName(entity) + ' ' + std::to_string(entity)).c_str(), tree_flags);
 
         if (ImGui::IsItemClicked())
-            selected_entity = std::make_shared<Entity>(entity);
+            mSelectedEntity = std::make_shared<Entity>(entity);
 
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Clone Entity")) {
@@ -249,7 +265,7 @@ namespace IS {
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
             if (ImGui::Button("Destroy Entity")) {
                 engine.DestroyEntity(*entity);
-                selected_entity = {};
+                mSelectedEntity = {};
             }
             ImGui::PopStyleColor(3);
 

@@ -29,7 +29,7 @@ int main() {
     // Initialize ScriptEngine
     //ScriptEngine::Init();
     // Initialize log
-    Log::init();
+    Log::Init();
 
     // Engine Instance
     InsightEngine& engine = InsightEngine::Instance();
