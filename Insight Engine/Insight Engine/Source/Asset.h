@@ -3,6 +3,7 @@
 
 #include "System.h"
 #include "Audio.h"
+#include "Prefab.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -84,14 +85,16 @@ namespace IS {
         //extra image functions
         void ImageToGray(Image& image);
         void ImageToSepia(Image& image);
-
+        
+        //functions for Prefabs
+        Prefab GetPrefab(std::string name);
 
         //asset managers are supposed to save sounds and fonts as well
         void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }
         std::unordered_map<std::string,FMOD::Channel*>mSoundList;
         std::unordered_map<std::string, Image>mImageList;
         std::vector<std::string>mImageNames;
-        std::unordered_map<std::string, Signature> mPrefabList;
+        std::unordered_map<std::string, Prefab> mPrefabList;
 
 
     private:

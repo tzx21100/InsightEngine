@@ -11,6 +11,7 @@
 
 namespace IS {
     void AssetManager::Initialize() {//call once
+        InsightEngine& engine = InsightEngine::Instance();
         namespace fs = std::filesystem;
         std::string path = "Assets/"; // Path to the Assets directory
 
@@ -25,7 +26,26 @@ namespace IS {
             }
         }
 
+        path = "Assets/Prefabs";
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string filePath = entry.path().string();
+            std::string extension = entry.path().extension().string();
+
+            // Check for json extensions
+            if (extension == ".json") {
+               Prefab to_list=engine.LoadPrefabFromFile(filePath);
+               mPrefabList[to_list.mName] = to_list;
+               std::cout << "SUCCESSFUL LOAD "<<to_list.mName;
+            }
+        }
+
+
     }
+
+    Prefab AssetManager::GetPrefab(std::string name) {
+        return mPrefabList[name];
+    }
+
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame
                
