@@ -41,10 +41,10 @@ namespace IS {
         //these commented codes are an example of how the sound system work
         
         //// Load a sound effect (put full path - not working directory path)
-        //FMOD::Channel* soundChannel = ISAudioLoadSound("sound.mp3", true);
+        //FMOD::Channel* soundChannel = ISAudioLoadSound("Assets/Audio/sound.mp3", true);
 
         //// Load music (ditto as abv)
-        //FMOD::Channel* musicChannel = ISAudioLoadMusic("music.MP3", true);
+        //FMOD::Channel* musicChannel = ISAudioLoadMusic("Assets/Audio/music.MP3", true);
 
         //FMOD::ChannelGroup* soundGroup = ISAudioCreateGroup();
         //FMOD::ChannelGroup* musicGroup = ISAudioCreateGroup();

@@ -4,9 +4,15 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file declares the interface for class GUISystem, which
- *      encapsulates the functionalities of a graphical user interface (GUI)
- *      using the Dear ImGui libary.
+ * This header file declares the interface for class GUISystem, which
+ * encapsulates the functionalities of a graphical user interface (GUI)
+ * using the Dear ImGui libary.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard

@@ -4,8 +4,14 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file declares the interface for class Log which encapsulates
- *      the functionalities of an Engine-side log and a Client-side log.
+ * This header file declares the interface for class Log which encapsulates
+ * the functionalities of an Engine-side log and a Client-side log.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard

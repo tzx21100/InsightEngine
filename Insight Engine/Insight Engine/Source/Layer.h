@@ -4,11 +4,17 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file declares the interface for pure virtual class Layer which
- *      encapsulates the functionalities of a layer.
+ * This header file declares the interface for pure virtual class Layer which
+ * encapsulates the functionalities of a layer.
  *
- *      A Layer provides a modular way to extend application functionality and behavior.
- *      Layers can be attached or detached dynamically and handle updates and rendering.
+ * A Layer provides a modular way to extend application functionality and behavior.
+ * Layers can be attached or detached dynamically and handle updates and rendering.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard

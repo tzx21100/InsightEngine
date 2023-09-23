@@ -4,10 +4,14 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file declares the interface for ImGui widget RenderControlVec2
- *      and template implementation for ImGui widget RenderComboBoxEnum
+ * This header file declares the interface for ImGui widget RenderControlVec2
+ * and template implementation for ImGui widget RenderComboBoxEnum
  * 
- * \copyright Copyright (C) 2023, Digipen Institute of Technology
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard

@@ -4,12 +4,16 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file defines the implementation for class SceneHierarchyPanel,
- *      which encapsulates the functionalities of a scene hierarchy panel
- *      akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
- *      manages the entities in a scene.
+ * This header file defines the implementation for class SceneHierarchyPanel,
+ * which encapsulates the functionalities of a scene hierarchy panel
+ * akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
+ * manages the entities in a scene.
  * 
- * \copyright Copyright (C) 2023, Digipen Institute of Technology
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                   includes

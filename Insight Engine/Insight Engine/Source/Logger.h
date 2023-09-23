@@ -4,9 +4,15 @@
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- *      This header file declares the interface for class Logger, which encapsulates
- *      the functionalities of a Logger, and class LoggerGUI, which encapsulates the
- *      functionalities of Logger graphical user interface.
+ * This header file declares the interface for class Logger, which encapsulates
+ * the functionalities of a Logger, and class LoggerGUI, which encapsulates the
+ * functionalities of Logger graphical user interface.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard
