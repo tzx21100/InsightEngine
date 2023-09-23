@@ -31,9 +31,8 @@ namespace IS {
 		world_position.y = y;
 	}
 
-	void Transform::setRotation(float angle, float angleSpeed) {
+	void Transform::setRotation(float angle) {
 		rotation = angle;
-		angle_speed = angleSpeed;
 	}
 
 	void Transform::setScaling(float width, float height) {

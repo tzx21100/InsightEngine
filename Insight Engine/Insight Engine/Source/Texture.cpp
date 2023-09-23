@@ -2,27 +2,24 @@
 //#include "Texture.h"
 //
 //namespace IS {
-//    GLuint Texture::initTextures(Image& image) {
-//
+//	void Texture::init_texture(std::string const& tex_file_name) {
 //        // Enable blending for transparency
 //        glEnable(GL_BLEND);
 //        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //
-//
-//        int width{ image.width }, height{ image.height }; // channels{ image.channels };
-//        unsigned char* image_data = image.data;
+//        int tex_width{}, tex_height{}, tex_channels{};
+//        unsigned char* image_data = stbi_load(tex_file_name.c_str(), &tex_width, &tex_height, &tex_channels, STBI_rgb_alpha);
 //
 //        if (!image_data) {
-//            IS_CORE_ERROR("Failed to load image: {}", image.file_name.empty() ? "No filepath provided!" : image.file_name);
-//            return 0; // Return 0 to indicate failure
+//            std::cerr << "Failed to load the texture image: " << tex_file_name << std::endl;
+//            return ;
 //        }
 //
+//        GLuint texture_ID;
+//        glGenTextures(1, &texture_ID);
+//        glBindTexture(GL_TEXTURE_2D, texture_ID);
 //
-//        GLuint textureID;
-//        glGenTextures(1, &textureID);
-//        glBindTexture(GL_TEXTURE_2D, textureID);
-//
-//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex_width, tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 //
 //        stbi_image_free(image_data);
 //
@@ -33,7 +30,11 @@
 //
 //        glBindTexture(GL_TEXTURE_2D, 0);
 //
-//        IS_CORE_INFO("Using Texture: {}", textureID);
-//        return textureID;
-//    }
+//        tex_ID = texture_ID;
+//        width = tex_width;
+//        height = tex_height;
+//        channels = tex_channels;
+//	}
+//
+//
 //}

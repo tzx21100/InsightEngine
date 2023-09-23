@@ -8,7 +8,6 @@ namespace IS {
 		// transformation
 		glm::vec2 world_position{}; // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
 		float rotation{}; // z-axis rotation in degrees
-		float angle_speed{};
 		glm::vec2 scaling{}; // x = width, y = height
 		glm::mat3 mdl_to_ndc_xform = glm::imat3x3{};
 
@@ -20,7 +19,7 @@ namespace IS {
 		Vector2D getScaling();
 
 		void setWorldPosition(float x, float y);
-		void setRotation(float angle, float angleSpeed = 0.f);
+		void setRotation(float angle);
 		void setScaling(float width, float height);
 
 

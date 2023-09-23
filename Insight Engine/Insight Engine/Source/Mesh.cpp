@@ -1,7 +1,7 @@
 #include "Pch.h"
 
 namespace IS {
-    void Mesh::setupQuadVAO() {
+	void Mesh::setupQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
             Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
@@ -39,7 +39,7 @@ namespace IS {
         vao_ID = vao_hdl;
         vbo_ID = vbo_hdl;
         draw_count = static_cast<GLuint>(vertices.size());
-    }
+	}
 
     void Mesh::setupNonQuadVAO(GLenum mesh_primitive_type) {
         // Define the vertices of the quad
@@ -88,20 +88,7 @@ namespace IS {
         glBindVertexArray(0);
 
         vao_ID = vao_hdl;
-
-    }
-
-    void Mesh::initMeshes(std::vector<Mesh>& meshes) {
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
-        quad_mesh.setupQuadVAO();
-        point_mesh.setupNonQuadVAO(GL_POINTS);
-        line_mesh.setupNonQuadVAO(GL_LINES);
-        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
-
-        meshes.emplace_back(quad_mesh);
-        meshes.emplace_back(point_mesh);
-        meshes.emplace_back(line_mesh);
-        meshes.emplace_back(circle_mesh);
+        
     }
 
     /*void Mesh::init4Meshes() {
@@ -111,10 +98,10 @@ namespace IS {
         circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
     }*/
 
-    void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {
-        for (auto& mesh : meshes) {
-            glDeleteVertexArrays(1, &mesh.vao_ID);
-            glDeleteBuffers(1, &mesh.vbo_ID);
-        }
-    }
+   /* void Mesh::cleanup4Meshes() {
+        glDeleteVertexArrays(1, &quad_mesh.vao_ID);
+        glDeleteVertexArrays(1, &points_mesh.vao_ID);
+        glDeleteVertexArrays(1, &lines_mesh.vao_ID);
+        glDeleteVertexArrays(1, &circle_mesh.vao_ID);
+    }*/
 }

@@ -12,6 +12,7 @@
 #include "Texture.h"
 #include "Animation.h"
 
+//#include "Asset.h"
 
 namespace IS {
 	class ISGraphics : public ParentSystem {
@@ -25,8 +26,12 @@ namespace IS {
 		void Draw(float delta) override;
 		
 		static void cleanup();
+
+		static GLuint initTextures(Image& image);
+		static void initMeshes();
 		static GLuint GetScreenTexture();
 		static void ResizeFramebuffer(GLuint width, GLuint height);
+
 
 		static Animation idle_ani;
 		static Animation walking_ani;
@@ -40,6 +45,17 @@ namespace IS {
 		static std::vector<Sprite> sprites;
 
 	};
+
+	//enums added
+
+	/*enum class ModelType {
+		Box,
+		Point,
+		Line,
+		Circle
+	};*/
+
+
 } // end namespace IS
 
 

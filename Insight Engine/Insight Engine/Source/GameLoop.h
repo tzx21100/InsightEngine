@@ -19,7 +19,6 @@ namespace IS {
         std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
 
         Image backgroundTest;
-        //Image black_background;
         Image idle_animation;
         Image walking_animation;
         Image zx_animation;
@@ -27,40 +26,34 @@ namespace IS {
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
-            //black_background = asset->GetImage("Assets/black_background.png");
             idle_animation = asset->GetImage("Assets/player_idle.png");
             walking_animation = asset->GetImage("Assets/player_walking.png");
             zx_animation = asset->GetImage("Assets/icecream_truck.png");
-
+            
             //creating game object and their components
-            quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
             myEntity2 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
             myEntity3 = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
             circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock circle");
-            lines = engine.CreateEntityWithComponents<Sprite, Transform>("Clock line");
+            lines = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Clock line");
             points = engine.CreateEntityWithComponents<Sprite, Transform>("Clock points");
-            
 
             auto& trans = engine.GetComponent<Transform>(myEntity);
             auto& trans2 = engine.GetComponent<Transform>(myEntity2);
             auto& trans3 = engine.GetComponent<Transform>(myEntity3);
             auto& body = engine.GetComponent<RigidBody>(myEntity);
             auto& body3 = engine.GetComponent<RigidBody>(myEntity3);
-            //auto& body4 = engine.GetComponent<RigidBody>(lines);
-
+            auto& body4 = engine.GetComponent<RigidBody>(lines);
 
             auto& transCircle = engine.GetComponent<Transform>(circle);
             auto& transLines = engine.GetComponent<Transform>(lines);
             auto& transPoints = engine.GetComponent<Transform>(points);
-            auto& transBG = engine.GetComponent<Transform>(quad);
 
             auto& spriteMyEntity = engine.GetComponent<Sprite>(myEntity);
             auto& spriteMyEntity2 = engine.GetComponent<Sprite>(myEntity2);
             auto& spriteCircle = engine.GetComponent<Sprite>(circle);
             auto& spriteLines = engine.GetComponent<Sprite>(lines);
             auto& spritePoints = engine.GetComponent<Sprite>(points);
-            auto& spriteBG = engine.GetComponent<Sprite>(quad);
 
             spriteMyEntity.name = "textured_box";
             spriteMyEntity.texture = static_cast<uint8_t>(idle_animation.texture_data);
@@ -71,32 +64,28 @@ namespace IS {
             spriteMyEntity2.texture_width = backgroundTest.width;
             spriteMyEntity2.texture_height = backgroundTest.height;
 
-            spriteBG.texture = static_cast<uint8_t>(backgroundTest.texture_data);
-            spriteBG.texture_width = backgroundTest.width;
-            spriteBG.texture_height = backgroundTest.height;
-
             trans.setScaling(95, 120);
             trans.setWorldPosition(0, 0);
             trans2.setScaling(-100, 100);
             trans2.setWorldPosition(-400, 0);
             trans3.setScaling(600, 100);
             trans3.setWorldPosition(0, -400);
-            transBG.setScaling(WIDTH, HEIGHT);
             //body.velocity = { 10.f, 10.f };
             body.angular_velocity = 10.f;
             body3.bodyType = BodyType::Static;
             body3.mass = 99999.f;
-            body3.InvMass = 1.f / 99999.f;
-            //body4.bodyType = BodyType::Static;
-            //body4.angular_velocity = 30.f;
-
+            body3.InvMass = 1.f/99999.f;
+            body4.bodyType = BodyType::Static;
+            body4.angular_velocity = 30.f;
+            
             transCircle.setWorldPosition(650.f, 300.f);
             transCircle.setScaling(200.f, 200.f);
             spriteCircle.primitive_type = GL_TRIANGLE_FAN;
+            
 
             transLines.setWorldPosition(650.f, 300.f);
             transLines.setScaling(200.f, 200.f);
-            transLines.setRotation(0.f, 40.f);
+            transLines.setRotation(0.f);
             spriteLines.primitive_type = GL_LINES;
 
             transPoints.setWorldPosition(650.f, 300.f);
@@ -110,8 +99,7 @@ namespace IS {
                 engine.mUsingGUI = !engine.mUsingGUI;
                 if (engine.mUsingGUI) {
                     IS_CORE_DEBUG("GUI Enabled");
-                }
-                else {
+                } else {
                     auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
@@ -130,8 +118,8 @@ namespace IS {
                 IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
             }
             if (engine.freezeFrame) {
-                if (!engine.continueFrame)
-                    return;
+                if(!engine.continueFrame)
+                return;
             }
 
             if (engine.HasComponent<Sprite>(myEntity)) {
@@ -166,7 +154,7 @@ namespace IS {
                 trans.rotation += rotate * rbody.angular_velocity;
                 trans.rotation = trans.rotation < 0.f ? 360.f : fmod(trans.rotation, 360.f);
             }
-
+            
 
             if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().first < WIDTH / 2) {
                 for (int i = 0; i < 1; i++) {
@@ -180,14 +168,14 @@ namespace IS {
 
             }
 
-            if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().second < WIDTH / 2) {
+            if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input->GetMousePosition().first>-WIDTH/2 && input->GetMousePosition().second<WIDTH/2) {
                 for (int i = 0; i < 1; i++) {
                     Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Truck");
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(128, 128);
                     transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                     auto& spr = engine.GetComponent<Sprite>(a);
-                    spr.name = "textured_box2";
+                    spr.name = "textured_box2";  
                     spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
                     spr.texture_width = zx_animation.width;
                     spr.texture_height = zx_animation.height;
@@ -195,34 +183,27 @@ namespace IS {
                     //spr.texture = backgroundTest.texture_data;
 
                 }
-
+               
 
             }
-
-            // rotate lines on clock
-            if (engine.HasComponent<Transform>(lines)) {
-                auto& transLines = engine.GetComponent<Transform>(lines);
-                transLines.rotation += transLines.angle_speed * delta;
-            }
-
 
             if (input->IsKeyPressed(GLFW_KEY_R)) {
-                engine.SaveAsPrefab(myEntity, "aa");
+                engine.SaveAsPrefab(myEntity,"aa");
             }
 
             if (input->IsKeyPressed(GLFW_KEY_J)) {
                 engine.LoadFromPrefab(asset->GetPrefab("aa"));
             }
 
-            /*  if (engine.HasComponent<Transform>(lines)) {
+            if (engine.HasComponent<Transform>(lines)) {
                 auto& transLines = engine.GetComponent<Transform>(lines);
                 auto& rbLines = engine.GetComponent<RigidBody>(lines);
                 transLines.rotation += rbLines.angular_velocity * delta;
                 transLines.rotation = transLines.rotation < 0.f ? 360.f : fmod(transLines.rotation, 360.f);
-            }*/
+            }
         }
 
-        virtual void Draw([[maybe_unused]] float delta) override {
+        virtual void Draw([[maybe_unused]]float delta) override{
 
 
 
