@@ -6,17 +6,45 @@
 
 namespace IS {
 
+	//this is just a parent class for all components
+	class IComponent {
+	public:
+		virtual Json::Value Serialize() {
+			//I give a default intialization so that not all components have to use this
+			Json::Value empty;
+			return empty;
+		}
+
+		virtual void Deserialize(Json::Value) {
+			//This is a empty default init so that not all components have to override
+		}
+
+
+	};
+
 	//parent component array this allows for destruction of entites of ANY types
 	class IComponentArray {
 	public:
 		virtual ~IComponentArray() {};
 		virtual void EntityDestroyed(Entity entity) = 0;//informs when an entity is destroyed
+		virtual ComponentType CloneData(Entity entity, Entity old_entity) = 0; //this is to clone a component
+		//Small functions to set and get the component type
+		void SetComponentType(ComponentType id) {
+			mComponentType = id;
+		}
+		ComponentType GetComponentType() {
+			return mComponentType;
+		}
+	private:
+		// The Component Type of the array
+		ComponentType mComponentType;
 	};
 
 	//This is a templated class so that it can be any component
 	template<typename T>
 	class ComponentArray : public IComponentArray {
 	public:
+
 		void InsertData(Entity entity, T component) {
 			assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -61,6 +89,17 @@ namespace IS {
 			}
 		}
 
+		ComponentType CloneData(Entity entity,Entity old_entity) override{
+			//if the old_entity exists
+			if (mEntityToIndexMap.find(old_entity) != mEntityToIndexMap.end()) {
+				T component = GetData(old_entity);
+				InsertData(entity, component);
+				return this->GetComponentType();
+			}
+			return MAX_COMPONENTS+1;
+		}
+
+
 	private:
 		// The packed array of components (of generic type T),
 		// set to a specified maximum amount, matching the maximum number
@@ -78,6 +117,13 @@ namespace IS {
 	class ComponentManager
 	{
 	public:
+
+		//method to get all component types
+		const std::unordered_map<const char*, ComponentType>& GetRegisteredComponents() const {
+			return mComponentTypes;
+		}
+
+
 		template<typename T>
 		void RegisterComponent() {
 			const char* type_name = typeid(T).name();
@@ -86,6 +132,8 @@ namespace IS {
 			mComponentTypes.insert({ type_name, mNextComponentType });
 			// Create a ComponentArray pointer and add it to the component arrays map
 			mComponentArrays.insert({ type_name, std::make_shared<ComponentArray<T>>() });
+			// Add the componentType to the value
+			mComponentArrays[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
 			IS_CORE_INFO("Component {} registered!", type_name);
@@ -127,11 +175,28 @@ namespace IS {
 		}
 
 
+		//This is to clone the components
+		Signature CloneComponent(Entity entity, Entity old_entity) {
+			ComponentType componentType;
+			Signature returned_signature;
+			for (auto const& pair : mComponentArrays) {
+				auto const& component = pair.second;
+				componentType = component->CloneData(entity, old_entity);
+				if (componentType<=MAX_COMPONENTS) {
+					returned_signature.set(componentType);
+				}
+				
+			}
+			return returned_signature;
+		}
+
+
 	private:
 		// Map from type string pointer to a component type
 		std::unordered_map<const char*, ComponentType> mComponentTypes{};
 		// Map from type string pointer to a component array
 		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
+
 		// The component type to be assigned to the next registered component - starting at 0
 		ComponentType mNextComponentType{};
 		// Convenience function to get the statically casted pointer to the ComponentArray of type T.
@@ -143,20 +208,7 @@ namespace IS {
 		}
 	};
 
-	//this is just a parent class for all components
-	class IComponent {
-	public:
-		virtual Json::Value Serialize() {
-			//I give a default intialization so that not all components have to use this
-			Json::Value empty;
-			return empty;
-		}
 
-		virtual void Deserialize(Json::Value) {
-			//This is a empty default init so that not all components have to override
-		}
-
-	};
 
 
 

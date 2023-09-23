@@ -11,36 +11,19 @@
 
 namespace IS {
     void AssetManager::Initialize() {//call once
-        //Example usage:
-       // const char* filename = "sky.jpg"; // Replace with your image file path
-       // const char* filename2 = "shapes.png"; // Replace with your image file path
+        namespace fs = std::filesystem;
+        std::string path = "Assets/"; // Path to the Assets directory
 
-       //const char* filename = "Assets/placeholder_background.png"; // Replace with your image file path
-       //AssetManager asset(filename);
-       //Image image_manager;
-       //asset.ISImageLoad(image_manager);
-       //asset.ISImageCreate(image_manager, false);
-       //asset.ISImageSave(image_manager, "Assets/placeholder_background.png");
-       //asset.ISImageFree(image_manager);
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string filePath = entry.path().string();
+            std::string extension = entry.path().extension().string();
 
-       // AssetManager asset2(filename2);
-       // asset2.ISImageLoad(image_manager);
-       // asset2.ISImageCreate(image_manager, false);*/
-       // asset2.ISImageSave(image_manager, "shapes.jpg");
-       // asset.ISImageToGray(image_manager);
-       // asset2.ISImageToGray(image_manager);
-       // asset.ISImageSave(image_manager, "skygr.jpg");
-       // asset2.ISImageSave(image_manager, "shapesgr.jpg");
-       // asset.ISImageToSepia(image_manager);
-       // asset2.ISImageToSepia(image_manager);
-       // asset.ISImageSave(image_manager, "skyse.jpg");
-       // asset2.ISImageSave(image_manager, "shapesse.jpg");
-       // std::cout << image_manager;
-       
-       // std::cout << image_manager;
-       // asset2.ISImageFree(image_manager);
-       // std::cout << image_manager;
-
+            // Check image extensions
+            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
+                Image img = ImageLoad(filePath);
+                SaveImageData(img); 
+            }
+        }
 
     }
 
@@ -97,6 +80,7 @@ namespace IS {
 
     void AssetManager::SaveImageData(const Image& image_data) {
         mImageList[image_data.file_name] = image_data;
+        mImageNames.emplace_back(image_data.file_name);
     }
 
     void AssetManager::RemoveImageData(const std::string& filename) {
@@ -105,6 +89,7 @@ namespace IS {
             stbi_image_free(it->second.data);
             mImageList.erase(it);
         }
+        mImageNames.erase(std::remove(mImageNames.begin(), mImageNames.end(), filename), mImageNames.end());
     }
 
     void AssetManager::ImageFree(const std::string& filename) {

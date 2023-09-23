@@ -9,6 +9,8 @@ namespace IS {
 
     class GUISystem : public ParentSystem {
     public:
+        using layer_type = LayerStack::value_type;
+
         GUISystem();
         ~GUISystem() override;
 
@@ -22,10 +24,10 @@ namespace IS {
         void Begin();
         void End();
 
-        void PushLayer(Layer* layer);
-        void PushOverlay(Layer* overlay);
-        void PopLayer(Layer* layer);
-        void PopOverlay(Layer* overlay);
+        void PushLayer(layer_type layer);
+        void PushOverlay(layer_type overlay);
+        void PopLayer(layer_type layer);
+        void PopOverlay(layer_type overlay);
 
         void SetDarkThemeColors() const;
     private:        

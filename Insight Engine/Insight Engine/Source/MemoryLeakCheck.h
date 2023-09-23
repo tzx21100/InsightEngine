@@ -8,7 +8,7 @@
     #define new DEBUG_NEW
     #define ENABLE_MEMORY_CHECK() _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF)
 #else
-    #define ENABLE_MEMORY_CHECK (void(0))
+    #define ENABLE_MEMORY_CHECK __noop
 #endif
 
 

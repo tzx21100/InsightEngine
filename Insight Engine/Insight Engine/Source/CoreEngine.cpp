@@ -1,11 +1,12 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
-#include "CoreEngine.h" // Include the header file
+#include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
+#include "WindowSystem.h" // Access to window
+#include "Timer.h"
+
 #include <iostream>
 #include <thread>
-#include <GLFW/glfw3.h>
-#include "Timer.h"
 
 
 namespace IS {
@@ -50,15 +51,15 @@ namespace IS {
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
-        //looping through the map and updating
-        
-        glfwPollEvents();
+        auto window = GetSystem<WindowSystem>("Window");
+        window->BeginUpdate(); // Poll events
 
         // Update System deltas every 4s
         const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
 
+        // Update all systems
         for (const auto& system: mSystemList) {
             Timer timer(system->getName() + " System", false);
             system->Update(delta_time.count());
@@ -70,9 +71,7 @@ namespace IS {
             }
         }
 
-        // Swap front and back buffers
-        GLFWwindow* window = glfwGetCurrentContext();
-        glfwSwapBuffers(window);
+        window->EndUpdate(); // Swap front and back buffers
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
@@ -134,7 +133,7 @@ namespace IS {
     }
 
 #pragma warning(push)
-#pragma warning(disable: 4456)
+#pragma warning(disable: 4456) // concatnating __LINE__ for variable name in macro
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
@@ -181,8 +180,8 @@ namespace IS {
     }
 
     //These functions involve creating entities and destroying them
-    Entity InsightEngine::CreateEntity() { 
-        return mEntityManager->CreateEntity();
+    Entity InsightEngine::CreateEntity(std::string name) {
+        return mEntityManager->CreateEntity(name);
     }
 
     void InsightEngine::DestroyEntity(Entity entity) {
@@ -195,7 +194,7 @@ namespace IS {
     void InsightEngine::GenerateRandomEntity() {
         PRNG prng;
         InsightEngine& engine = Instance();
-        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>();
+        Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
         auto& trans = engine.GetComponent<Transform>(e);
         // scale [2, 16], pos [viewport], orientation [-360, 360]
         trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f);
@@ -203,26 +202,41 @@ namespace IS {
         trans.setRotation((prng.generate() * 720.f) - 360.f);
     }
 
+    // Dynamic entity copying 
+    Entity InsightEngine::CopyEntity(Entity old_entity) {
+        Entity newEntity = CreateEntity(mEntityManager->FindNames(old_entity));
+        CopyComponents(newEntity, old_entity);
+        return newEntity;
+    }
+
+
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {
-        std::string file_path = "Prefabs/" + filename + ".json";
+        std::string file_path = "Assets/Prefabs/" + filename + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
         prefab["Signature"] = signature;
-        
+        prefab["Name"] = mEntityManager->FindNames(entity);
         //add in future components
-       // SerializeComponent<Position>(entity, prefab, "POS");
+        SerializeComponent<RigidBody>(entity, prefab, "RigidBody");
+        SerializeComponent<Sprite>(entity, prefab, "Sprite");
+        SerializeComponent<Transform>(entity, prefab, "Transform");
 
         SaveJsonToFile(prefab,file_path);
     }
 
     Entity InsightEngine::LoadFromJson(std::string name) {
-        std::string filename = "Prefabs/" + name + ".json";
-        Entity entity = CreateEntity();
+        std::string filename = "Assets/Prefabs/" + name + ".json";
+        
+       
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
-
+        std::string str_sig = loaded["Signature"].asString();
+        std::string entity_name = loaded["Name"].asString();
+        Entity entity = CreateEntity(entity_name);
         //add in future components
-       // DeserializeComponent<Position>(entity, loaded, "POS");
+        DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
+        DeserializeComponent<Sprite>(entity, loaded, "Sprite");
+        DeserializeComponent<Transform>(entity, loaded, "Transform");
         return entity;
 
     }

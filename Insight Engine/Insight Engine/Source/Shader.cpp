@@ -49,10 +49,10 @@ namespace IS {
         )";
 
         // Compile and link the shaders into a shader program
-        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-        link();
-        validate();
+       compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+       compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+       link();
+       validate();
 
         // Check if the shader program compilation and linking was successful
         if (GL_FALSE == isLinked())

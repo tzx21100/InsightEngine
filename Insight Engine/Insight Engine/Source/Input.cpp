@@ -12,7 +12,7 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
     }
 
-    void InputManager::Update(float deltaTime) {
+    void InputManager::Update([[maybe_unused]] float deltaTime) {
 
         //keyboard
         for (auto const& key : held_keys) {

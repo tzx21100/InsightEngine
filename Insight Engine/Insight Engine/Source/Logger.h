@@ -8,15 +8,11 @@
 #include <iostream>
 #include <fstream>
 #include <format>
-#include <deque>
 
 // dependencies
 #include <imgui.h> // for LoggerGUI
 
 namespace IS {
-
-    // Maximum number of messages that can be stored in deque
-    static constexpr int MAX_LOG_MESSAGES (100);
 
     // ANSI escape codes for console formatting for color/style
     const char RESET[] = "\033[m";
@@ -84,8 +80,6 @@ namespace IS {
         aLogLevel getLogLevel() const;
         void setTimestampFormat(std::string const& new_timestamp_format);
         std::string getTimestampFormat() const;
-
-        void clearLogMessages();
 
         // Additional options
         void enableFileOutput();
@@ -170,7 +164,9 @@ namespace IS {
                 log_file << log.str();
             }
 
+        #ifdef USING_IMGUI
             logger_gui.addLog(log.str().c_str());
+        #endif // USING_IMGUI
         }
     }
 

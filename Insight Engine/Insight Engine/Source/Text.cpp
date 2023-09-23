@@ -2,7 +2,11 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#pragma warning(push)
+#pragma warning(disable : 4201) // warning C4201: nonstandard extension used: nameless struct/union
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
 
 namespace IS {
     std::map<GLchar, Text::Character> Text::Characters;
@@ -28,7 +32,6 @@ namespace IS {
     void Text::initText(std::string const& filepath, Shader text_shader) {
         // OpenGL state
         // ------------
-        glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

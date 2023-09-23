@@ -1,15 +1,25 @@
+/* Start Header **************************************************************/
+/*!
+\file	Audio.cpp
+\author Matthew
+
+All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/* End Header ****************************************************************/
+
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "Audio.h"
 namespace IS {
 
-    std::string ISAudio::getName() {
+    std::string ISAudio::getName() { //for debug purposes
         return "Audio";
     }
 
     void ISAudio::Initialize() {//call once
-        //constuctor init alr
-        FMOD_RESULT result = FMOD::System_Create(&system);
+        FMOD_RESULT result = FMOD::System_Create(&system); //create fmod system
         if (result != FMOD_OK) {
             // Handle initialization error
             return;
@@ -30,10 +40,10 @@ namespace IS {
 
         //these commented codes are an example of how the sound system work
         
-        //// Load a sound effect
+        //// Load a sound effect (put full path - not working directory path)
         //FMOD::Channel* soundChannel = ISAudioLoadSound("sound.mp3", true);
 
-        //// Load music
+        //// Load music (ditto as abv)
         //FMOD::Channel* musicChannel = ISAudioLoadMusic("music.MP3", true);
 
         //FMOD::ChannelGroup* soundGroup = ISAudioCreateGroup();
@@ -51,7 +61,7 @@ namespace IS {
         //ISAudioPlay(musicChannel, musicGroup, 1.0f, 1.0f, true);
     }
 
-    void ISAudio::HandleMessage(const Message& message) {
+    void ISAudio::HandleMessage(const Message& message) { //for messaging system
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
             std::cout << "Handling Debug" << std::endl;
@@ -60,6 +70,7 @@ namespace IS {
 
     // Constructor
     ISAudio::ISAudio() {
+        //init member var
         system = nullptr;
         sound = nullptr;
         channel = nullptr;
@@ -86,7 +97,7 @@ namespace IS {
         }
     }
 
-    bool ISAudio::ISAudioIsValidAudio(FMOD::Sound* audio) {
+    bool ISAudio::ISAudioIsValidAudio(FMOD::Sound* audio) { //check if audio valid file
         if (audio) {
             FMOD_RESULT result = audio->getOpenState(nullptr, nullptr, nullptr, nullptr);
             if (result == FMOD_OK) {
@@ -96,11 +107,12 @@ namespace IS {
         return false; // The audio is not valid or an error occurred
     }
 
-    bool ISAudio::ISAudioIsValidGroup(FMOD::ChannelGroup* group) {
+    bool ISAudio::ISAudioIsValidGroup(FMOD::ChannelGroup* group) { //check group
         return group != nullptr;
     }
 
     FMOD::ChannelGroup* ISAudio::ISAudioCreateGroup() { 
+        // create channel group
         FMOD::ChannelGroup* new_group = nullptr;
         FMOD_RESULT result = system->createChannelGroup(nullptr, &new_group);
 
@@ -115,7 +127,7 @@ namespace IS {
 
 #pragma warning(push)
 #pragma warning(disable: 4458)
-    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath) {
+    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath) { //load sound w/o looping
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
@@ -136,7 +148,7 @@ namespace IS {
     }
 #pragma warning(pop)
 
-    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) {
+    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) { //load music w/o looping
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* music = nullptr;
 
@@ -157,40 +169,41 @@ namespace IS {
     }
 
     void ISAudio::ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop) {
+        //play audio
         if (audio && group) {
             audio->setChannelGroup(group);
             audio->setVolume(volume);
             audio->setPitch(pitch);
-            audio->setLoopCount(loop ? -1 : 0);
+            audio->setLoopCount(loop ? -1 : 0); //if loop variable is false; it'll set to -1 means play audio once only
             audio->setPaused(false);
         }
     }
 
-    void ISAudio::ISAudioResumeGroup(FMOD::ChannelGroup* group) {
+    void ISAudio::ISAudioResumeGroup(FMOD::ChannelGroup* group) { //resume audio in grp
         if (group) {
             group->setPaused(false);
         }
     }
     
-    void ISAudio::ISAudioStopGroup(FMOD::ChannelGroup* group) {
+    void ISAudio::ISAudioStopGroup(FMOD::ChannelGroup* group) { //stop audio in grp
         if (group) {
             group->stop();
         }
     }
     
-    void ISAudio::ISAudioPauseGroup(FMOD::ChannelGroup* group) {
+    void ISAudio::ISAudioPauseGroup(FMOD::ChannelGroup* group) { //pause audio in grp
         if (group) {
             group->setPaused(true);
         }
     }
 
-    void ISAudio::ISAudioSetGroupVolume(FMOD::ChannelGroup* group, float volume) {
+    void ISAudio::ISAudioSetGroupVolume(FMOD::ChannelGroup* group, float volume) {//set vol of grp; 0-1
         if (group) {
             group->setVolume(volume);
         }
     }
 
-    void ISAudio::ISAudioSetGroupPitch(FMOD::ChannelGroup* group, float pitch) {
+    void ISAudio::ISAudioSetGroupPitch(FMOD::ChannelGroup* group, float pitch) { //set pitch of grp; 0-1
         if (group) {
             group->setPitch(pitch);
         }

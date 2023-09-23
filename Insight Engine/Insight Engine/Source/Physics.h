@@ -17,14 +17,15 @@ namespace IS
         static bool isDebugDraw;
         ~Physics() {}
 
-        static void drawOutLine(float const& dt, RigidBody const& body, Sprite const& sprite);
+        static void drawOutLine(RigidBody & body, Sprite const& sprite);
 	private:
 
         // gravity of the world
         Vector2D Gravity;
         bool exertingGravity;
         // max velocity for the game body
-        float MaxVelocity;
+        float MaxPositionVelocity;
+        float MaxNegativeVelocity;
 	};
 
     void rigidBodyCallUpdate(RigidBody body, Vector2D gravity, float dt);
@@ -32,9 +33,9 @@ namespace IS
     //void collisionCallUpdate(Collider collider, float dt, RigidBody rigidBody, auto const& entity, std::set<Entity> mEntities);
     void collisionCallUpdate(RigidBody rigidBody, float dt,  auto const& entity, std::set<Entity> mEntities);
 
-    void collisionCheck(float const& dt,std::set<Entity> const& mEntities);
+    void collisionCheck(float dt,std::set<Entity> const& mEntities);
 
-    void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float const& depth);
+    void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
 
     
 

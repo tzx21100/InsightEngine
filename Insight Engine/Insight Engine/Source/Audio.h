@@ -1,3 +1,14 @@
+/* Start Header **************************************************************/
+/*!
+\file	Audio.h
+\author Matthew
+
+All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/* End Header ****************************************************************/
+
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_AUDIO_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_AUDIO_H
 
@@ -7,28 +18,28 @@
 namespace IS {
     class ISAudio :public ParentSystem {
     public:
-        //override parent
+        //override parent sys
         void Update(float deltaTime) override;
         std::string getName() override;
         void Initialize() override;
         void HandleMessage(const Message& message) override;
 
-        ISAudio();
-        ~ISAudio();
+        ISAudio(); //ctor
+        ~ISAudio(); //dtor
         void ISAudioRelease(); //exits audio sys
         
-        bool ISAudioIsValidAudio(FMOD::Sound* audio);
-        bool ISAudioIsValidGroup(FMOD::ChannelGroup* group); 
-        FMOD::ChannelGroup* ISAudioCreateGroup();
-        FMOD::Channel* ISAudioLoadSound(const char* filePath); 
-        FMOD::Channel* ISAudioLoadMusic(const char* filePath);
+        bool ISAudioIsValidAudio(FMOD::Sound* audio); //check audio valid anot
+        bool ISAudioIsValidGroup(FMOD::ChannelGroup* group); //check grp valid anot
+        FMOD::ChannelGroup* ISAudioCreateGroup(); //create audio grp
+        FMOD::Channel* ISAudioLoadSound(const char* filePath); //load sound file (pass in full path)
+        FMOD::Channel* ISAudioLoadMusic(const char* filePath); //load music file (pass in full path)
 
-        void ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop = false); // Fixed the parameters
+        void ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop = false); // play sound; default no looped audio
         void ISAudioResumeGroup(FMOD::ChannelGroup* group);
         void ISAudioStopGroup(FMOD::ChannelGroup* group); 
         void ISAudioPauseGroup(FMOD::ChannelGroup* group);
-        void ISAudioSetGroupVolume(FMOD::ChannelGroup* group, float volume);
-        void ISAudioSetGroupPitch(FMOD::ChannelGroup* group, float pitch);
+        void ISAudioSetGroupVolume(FMOD::ChannelGroup* group, float volume); // volume 0-1
+        void ISAudioSetGroupPitch(FMOD::ChannelGroup* group, float pitch);//pitch 0-1
 
     private:
         FMOD::System* system;
@@ -36,5 +47,4 @@ namespace IS {
         FMOD::Channel* channel;
     };
 }
-
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_AUDIO_H  

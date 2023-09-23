@@ -14,8 +14,11 @@ namespace IS {
 
     std::vector<Sprite> ISGraphics::sprites;
     Animation ISGraphics::idle_ani;
-    Animation ISGraphics::idle_ani2;
+    Animation ISGraphics::walking_ani;
+    Animation ISGraphics::ice_cream_truck_ani;
+#ifdef USING_IMGUI
     std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
+#endif // USING_IMGUI
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
@@ -23,12 +26,13 @@ namespace IS {
     GLuint font_texture;
     Text ISGraphics::cascadia_text;
 
+
     void ISGraphics::Initialize() {
         // Initialize entry points to OpenGL functions and extensions
         if (GLenum err = glewInit(); GLEW_OK != err) {
             std::ostringstream oss;
             oss << glewGetErrorString(err);
-            IS_CORE_CRITICAL("Unable Unable to initialize GLEW - error: {} - abort program", oss.str());
+            IS_CORE_CRITICAL("Unable to initialize GLEW - error: {} - abort program", oss.str());
             std::exit(EXIT_FAILURE);
         }
         if (GLEW_VERSION_4_5) {
@@ -46,21 +50,25 @@ namespace IS {
         glViewport(0, 0, WIDTH, HEIGHT);
 
         initMeshes();
+        walking_ani.initAnimation(1, 4, 1.f);
         idle_ani.initAnimation(1, 8, 3.f);
-        idle_ani2.initAnimation(1, 6, 2.f);
+        ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
         mesh_shader_pgm.setupSpriteShaders();
-        text_shader_pgm.setupTextShaders();
 
-        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
+       text_shader_pgm.setupTextShaders();
+       Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
+    #ifdef USING_IMGUI
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
         framebuffer = std::make_shared<Framebuffer>(props);
+    #endif // USING_IMGUI
     }
 
     void ISGraphics::Update(float delta_time) {
         idle_ani.updateAnimation(delta_time);
-        idle_ani2.updateAnimation(delta_time);
+        walking_ani.updateAnimation(delta_time);
+        ice_cream_truck_ani.updateAnimation(delta_time);
         Draw(delta_time);
     }
 
@@ -72,8 +80,11 @@ namespace IS {
         }
     }
 
-    void ISGraphics::Draw(float delta_time) {
+    void ISGraphics::Draw([[maybe_unused]] float delta_time) {
+
+    #ifdef USING_IMGUI
         framebuffer->Bind();
+    #endif // USING_IMGUI
         glClear(GL_COLOR_BUFFER_BIT);
 
         //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
@@ -87,15 +98,18 @@ namespace IS {
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
-            sprite.transform(delta_time);
+            sprite.transform();
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-                    ;
+                    InsightEngine& engine = InsightEngine::Instance();
+                    auto input = engine.GetSystem<InputManager>("Input");
+
+                    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
+                    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
                 }
                 else if (sprite.name == "textured_box2") {
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani2, sprite.texture);
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture);
                 }
                 else {
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
@@ -114,16 +128,18 @@ namespace IS {
             if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
                 auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
-                    Physics::drawOutLine(delta_time, body, sprite);
+                    Physics::drawOutLine(body, sprite);
                 }
             }
                 
         }
 
-        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
+    #ifdef USING_IMGUI
         framebuffer->Unbind();
+    #endif // USING_IMGUI
     
     }
 
@@ -181,10 +197,18 @@ namespace IS {
     }
 
     GLuint ISGraphics::getScreenTexture() {
+    #ifdef USING_IMGUI
         return framebuffer->GetColorAttachment();
+    #else
+        return 0;
+    #endif // USING_IMGUI
     }
 
     void ISGraphics::resizeFramebuffer(GLuint w, GLuint h) {
+    #ifdef USING_IMGUI
         framebuffer->Resize(w, h);
+    #else
+        w, h;
+    #endif // USING_IMGUI
     }
 }
