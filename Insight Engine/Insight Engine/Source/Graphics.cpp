@@ -129,25 +129,43 @@ namespace IS {
 
         // Render some text when GUI is disabled
         if (InsightEngine& engine = InsightEngine::Instance(); !engine.mUsingGUI){
+            // Shared Attributes
+            const float scale = 5.f;
+            const float x_padding = scale;
+            const float y_padding = (scale * 3.f);
+            const float pos_x = -(WIDTH / 2.f) + x_padding;
+            float pos_y = (HEIGHT / 2.f) - y_padding;
+            const glm::vec3 islamic_green = { 0.f, .56f, .066f };
+            const glm::vec3 malachite = { 0.f, 1.f, .25f };
+            static glm::vec3 color = islamic_green;
+            color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
+
+            // Text Attribute
             std::ostringstream fps_text_oss;
             std::ostringstream entities_alive_text_oss;
             fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
             entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
 
-            const std::string fps_text = fps_text_oss.str();
-            const std::string entities_alive_text = entities_alive_text_oss.str();
-            const std::string instructions = "Press 'Tab' to enable/disable GUI";
+            std::vector<std::string> render_texts;
+            render_texts.emplace_back(fps_text_oss.str());
+            render_texts.emplace_back(entities_alive_text_oss.str());
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Press 'Tab' to toggle GUI");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Player Controls");
+            render_texts.emplace_back("- Press 'WASD' to move in the four directions");
+            render_texts.emplace_back("- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Physics Debug");
+            render_texts.emplace_back("- Press '2' to enable draw collision boxes, '1' to disable");
+            render_texts.emplace_back("- Press 'G' to enable gravity, 'F' to disable");
+            render_texts.emplace_back("- Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
 
-            const float scale = 10.f;
-            const float pos_x = -(WIDTH / 2.f) + scale;
-            const float pos_y = (HEIGHT / 2.f) - (scale * 3.f);
-            const glm::vec3 islamic_green = { 0.f, .56f, .066f };
-            const glm::vec3 malachite = { 0.f, 1.f, .25f };
-            static glm::vec3 color = islamic_green;
-            color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
-            Text::renderText(text_shader_pgm, fps_text, pos_x, pos_y, scale, color);
-            Text::renderText(text_shader_pgm, entities_alive_text, pos_x, pos_y - (scale * 3.f), scale, color);
-            Text::renderText(text_shader_pgm, instructions, pos_x, pos_y - (scale * 6.f), scale, color);
+            // Render Text
+            for (std::string const& render_text : render_texts) {
+                Text::renderText(text_shader_pgm, render_text, pos_x, pos_y, scale, color);
+                pos_y -= y_padding;
+            }
         }
 
 

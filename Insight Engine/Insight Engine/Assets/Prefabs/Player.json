@@ -18,40 +18,40 @@
 		"RigidBodyTransformedVertices" : 
 		[
 			{
-				"x" : -1852.7127685546875,
-				"y" : 780.30859375
+				"x" : -47.5,
+				"y" : 60.0
 			},
-			{
-				"x" : -1947.7127685546875,
-				"y" : 780.30859375
-			},
-			{
-				"x" : -1947.7127685546875,
-				"y" : 660.30859375
-			},
-			{
-				"x" : -1852.7127685546875,
-				"y" : 660.30859375
-			}
-		],
-		"RigidBodyVelocityX" : -290.0,
-		"RigidBodyVelocityY" : 93.8399658203125,
-		"RigidBodyVertices" : 
-		[
 			{
 				"x" : 47.5,
 				"y" : 60.0
 			},
 			{
-				"x" : -47.5,
-				"y" : 60.0
+				"x" : 47.5,
+				"y" : -60.0
 			},
 			{
 				"x" : -47.5,
 				"y" : -60.0
+			}
+		],
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidBodyVertices" : 
+		[
+			{
+				"x" : -47.5,
+				"y" : 60.0
 			},
 			{
 				"x" : 47.5,
+				"y" : 60.0
+			},
+			{
+				"x" : 47.5,
+				"y" : -60.0
+			},
+			{
+				"x" : -47.5,
 				"y" : -60.0
 			}
 		]
@@ -62,26 +62,26 @@
 		"SpriteColorX" : 0.0,
 		"SpriteColorY" : 0.0,
 		"SpriteColorZ" : 1.0,
-		"SpriteCurrentTexIndex" : 1,
+		"SpriteCurrentTexIndex" : 0,
 		"SpriteDrawing" : true,
 		"SpriteName" : "textured_box",
 		"SpritePrimitiveType" : 5,
 		"SpriteTexID" : 0,
-		"SpriteTexture" : 4,
+		"SpriteTexture" : 3,
 		"SpriteTextureHeight" : 120,
 		"SpriteTextureWidth" : 760,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : -95.0,
+		"SpriteTransformScalingX" : 95.0,
 		"SpriteTransformScalingY" : 120.0,
-		"SpriteTransformWorldPositionX" : -1900.2127685546875,
-		"SpriteTransformWorldPositionY" : 720.30859375
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : -95.0,
+		"TransformScalingX" : 95.0,
 		"TransformScalingY" : 120.0,
-		"TransformWorldPositionX" : -1900.2127685546875,
-		"TransformWorldPositionY" : 720.30859375
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 0.0
 	}
 }

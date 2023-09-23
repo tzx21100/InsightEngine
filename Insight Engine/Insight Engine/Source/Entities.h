@@ -102,7 +102,10 @@ namespace IS {
 		}
 
 		//function to find the name by entites
-		std::string FindNames(Entity entity) {
+		std::string FindNames(Entity entity) const {
+			return mEntityIds.at(entity);
+		}
+		std::string& FindNames(Entity entity) {
 			return mEntityIds[entity];
 		}
 

@@ -1,0 +1,87 @@
+{
+	"Name" : "Clock line",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 30.0,
+		"RigidBodyArea" : 40000.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 80000.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.5,
+		"RigidBodyMass" : 2.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyShapeType" : 0,
+		"RigidBodyTransformUpdateRequired" : false,
+		"RigidBodyTransformedVertices" : 
+		[
+			{
+				"x" : 744.33172607421875,
+				"y" : 405.36376953125
+			},
+			{
+				"x" : 755.36376953125,
+				"y" : 205.66825866699219
+			},
+			{
+				"x" : 555.66827392578125,
+				"y" : 194.63623046875
+			},
+			{
+				"x" : 544.63623046875,
+				"y" : 394.33172607421875
+			}
+		],
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidBodyVertices" : 
+		[
+			{
+				"x" : -100.0,
+				"y" : 100.0
+			},
+			{
+				"x" : 100.0,
+				"y" : 100.0
+			},
+			{
+				"x" : 100.0,
+				"y" : -100.0
+			},
+			{
+				"x" : -100.0,
+				"y" : -100.0
+			}
+		]
+	},
+	"Signature" : "00000000000000000000000000000111",
+	"Sprite" : 
+	{
+		"SpriteColorX" : 0.0,
+		"SpriteColorY" : 0.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 1,
+		"SpriteTexID" : 0,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 273.16204833984375,
+		"SpriteTransformScalingX" : 200.0,
+		"SpriteTransformScalingY" : 200.0,
+		"SpriteTransformWorldPositionX" : 650.0,
+		"SpriteTransformWorldPositionY" : 300.0
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 273.16204833984375,
+		"TransformScalingX" : 200.0,
+		"TransformScalingY" : 200.0,
+		"TransformWorldPositionX" : 650.0,
+		"TransformWorldPositionY" : 300.0
+	}
+}
