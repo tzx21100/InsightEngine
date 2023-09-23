@@ -27,7 +27,7 @@ int main() {
     // Enable memory leaks check
     ENABLE_MEMORY_CHECK();
     // Initialize ScriptEngine
-    //ScriptEngine::Init();
+    ScriptEngine::Init();
     // Initialize log
     Log::init();
 
@@ -76,6 +76,7 @@ int main() {
    
     //engine stops technically don't need this since destructor is there and my engine is static
     engine.DestroyAllSystems();
+    ScriptEngine::Shutdown();
     IS_CORE_WARN("Insight Engine has terminated!");
 
     return 0;
