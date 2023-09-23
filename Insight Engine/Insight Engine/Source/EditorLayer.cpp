@@ -129,11 +129,11 @@ namespace IS {
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
         if (!(mScenePanelSize.x == panel_size.x && mScenePanelSize.y == panel_size.y)) {
-            ISGraphics::resizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
+            ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
             mScenePanelSize = { panel_size.x, panel_size.y };
         }
 
-        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
+        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::GetScreenTexture())),
                      ImVec2(mScenePanelSize.x, mScenePanelSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
@@ -220,6 +220,8 @@ namespace IS {
             oss.imbue(std::locale(""));
             oss << std::fixed << MAX_ENTITIES;
             ImGui::Text("Max Entities: %s", oss.str().c_str());
+            ImGui::Separator();
+            ImGui::Text("Press 'Tab' to enable/disable GUI");
             ImGui::Separator();
             ImGui::Text("Player Controls");
             ImGui::BulletText("Press 'WASD' to move in the four directions");

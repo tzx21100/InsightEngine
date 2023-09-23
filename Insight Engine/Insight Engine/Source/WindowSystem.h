@@ -96,6 +96,12 @@ namespace IS {
         uint32_t GetHeight() const;
 
         /*!
+         * \brief Gets the size of the window.
+         * \return A pair containing the width and height of the window.
+         */
+        std::pair<uint32_t, uint32_t> GetWindowSize() const;
+
+        /*!
          * \brief Gets the title of the window.
          * \return The title of the window.
          */

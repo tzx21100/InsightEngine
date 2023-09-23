@@ -146,7 +146,7 @@ namespace IS {
         RenderComponent<Transform>("Transform", *entity, [](Transform& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
-            guidgets::RenderControlVec2("Position", position);
+            guidgets::RenderControlVec2("Translation", position);
             ImGui::BeginTable("TransformRotation", 2);
             ImGui::TableNextColumn();
             ImGui::Text("Rotation");

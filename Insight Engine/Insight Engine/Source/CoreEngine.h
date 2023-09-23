@@ -19,6 +19,7 @@ namespace IS {
         //freeze function
         bool freezeFrame = false;
         bool continueFrame = false;
+        bool mUsingGUI = true;
 
         //override message handling this way the core engine also will recieve and send messages
         virtual void HandleMessage(const Message& message) override;

@@ -184,12 +184,10 @@ namespace IS {
                 mLogFile << log.str();
             }
 
-        #ifdef USING_IMGUI
             mLoggerGUI.AddLog(log.str().c_str());
-        #endif // USING_IMGUI
         }
     }
 
 } // end namespace IS
 
-#endif // GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_LOGGER_H
+#endif // GAM200_INSIGHT_ENGINE_DEBUG_LOGGER_H

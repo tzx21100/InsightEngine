@@ -64,9 +64,7 @@ namespace IS {
 
     }
 
-    void WindowSystem::BeginUpdate() {
-        glfwPollEvents();
-    }
+    void WindowSystem::BeginUpdate() { glfwPollEvents(); }
 
     void WindowSystem::Update(float)  {
         //register window closing 
@@ -76,9 +74,7 @@ namespace IS {
         }
     }
 
-    void WindowSystem::EndUpdate() {
-        glfwSwapBuffers(mWindow);
-    }
+    void WindowSystem::EndUpdate() { glfwSwapBuffers(mWindow); }
 
     void WindowSystem::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::Collide) {
@@ -86,21 +82,15 @@ namespace IS {
         }
     }
 
-    std::string WindowSystem::GetName()  {
-        return "Window";
-    }
+    std::string WindowSystem::GetName() { return "Window"; }
 
-    uint32_t WindowSystem::GetWidth() const {
-        return mProps.mWidth;
-    }
+    uint32_t WindowSystem::GetWidth() const { return mProps.mWidth; }
 
-    uint32_t WindowSystem::GetHeight() const {
-        return mProps.mHeight;
-    }
+    uint32_t WindowSystem::GetHeight() const { return mProps.mHeight; }
 
-    std::string WindowSystem::GetWindowTitle() const {
-        return mProps.mTitle;
-    }
+    std::pair<uint32_t, uint32_t> WindowSystem::GetWindowSize() const { return std::make_pair(mProps.mWidth, mProps.mHeight); }
+
+    std::string WindowSystem::GetWindowTitle() const { return mProps.mTitle; }
 
     void WindowSystem::SetWindowSize(uint32_t width, uint32_t height) {
         mProps.mWidth = width;
@@ -110,8 +100,6 @@ namespace IS {
     }
 
     void WindowSystem::SetWindowTitle(std::string const& title) {
-        mProps.mTitle = title;
-
         glfwSetWindowTitle(mWindow, title.c_str());
     }
 
@@ -120,9 +108,7 @@ namespace IS {
         mProps.mVSync = enabled;
     }
 
-    bool WindowSystem::IsVSync() const {
-        return mProps.mVSync;
-    }
+    bool WindowSystem::IsVSync() const { return mProps.mVSync; }
 
     void WindowSystem::LoadProperties() {
         std::string filename = "properties.json";
