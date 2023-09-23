@@ -16,20 +16,19 @@ namespace IS {
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
         std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-        AssetManager& asset = AssetManager::Instance();
+        std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
 
         Image backgroundTest;
         Image idle_animation;
         Image walking_animation;
         Image zx_animation;
-        Image greybackgroundTest = asset.ToSepia(backgroundTest);
 
         virtual void Initialize() override {
             //create a image
-            backgroundTest = asset.ImageLoad("Assets/placeholder_background.png");
-            idle_animation = asset.ImageLoad("Assets/player_idle.png");
-            walking_animation = asset.ImageLoad("Assets/player_walking.png");
-            zx_animation = asset.ImageLoad("Assets/icecream_truck.png");
+            backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            idle_animation = asset->GetImage("Assets/player_idle.png");
+            walking_animation = asset->GetImage("Assets/player_walking.png");
+            zx_animation = asset->GetImage("Assets/icecream_truck.png");
             
             //creating game object and their components
             myEntity = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
@@ -176,7 +175,11 @@ namespace IS {
             }
 
             if (input->IsKeyPressed(GLFW_KEY_R)) {
-                engine.DestroyEntity(myEntity);
+                engine.SaveToJson(myEntity,"aa");
+            }
+
+            if (input->IsKeyPressed(GLFW_KEY_J)) {
+                engine.LoadFromJson("aa");
             }
 
             auto& transLines = engine.GetComponent<Transform>(lines);

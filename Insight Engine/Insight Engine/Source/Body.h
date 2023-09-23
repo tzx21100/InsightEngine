@@ -80,19 +80,112 @@ namespace IS
 
         Json::Value Serialize() override {
             Json::Value prefab;
+
+            // Serializing velocity
             prefab["RigidBodyVelocityX"] = velocity.x;
             prefab["RigidBodyVelocityY"] = velocity.y;
-            //prefab["RigidBodyAccelerationX"] = acceleration.x;
-            //prefab["RigidBodyAccelerationY"] = acceleration.y;
-            //prefab["RigidBodyPositionX"] =position.x;
-            //prefab["RigidBodyPositionY"] = position.y;
+
+            // Serializing angular_velocity
+            prefab["RigidBodyAngularVelocity"] = angular_velocity;
+
+            // Serializing bodyType
             prefab["RigidBodyBodyType"] = static_cast<int>(bodyType);
-            //prefab["RigidBodyGravity"] = gravity;
+
+            // Serializing force
+            prefab["RigidBodyForceX"] = force.x;
+            prefab["RigidBodyForceY"] = force.y;
+
+            // Serializing acceleration
+            prefab["RigidBodyAccelerationX"] = acceleration.x;
+            prefab["RigidBodyAccelerationY"] = acceleration.y;
+
+            // Serializing other scalar properties
+            prefab["RigidBodyDensity"] = density;
             prefab["RigidBodyMass"] = mass;
-            //prefab["RigidBodyFriction"] = friction;
+            prefab["RigidBodyInvMass"] = InvMass;
             prefab["RigidBodyRestitution"] = restitution;
+            prefab["RigidBodyArea"] = area;
+
+            // Serializing bodyShape (casted to int)
+            prefab["RigidBodyShapeType"] = static_cast<int>(bodyShape);
+
+            // Serializing vertices and transformedVertices
+            Json::Value verticesArray(Json::arrayValue);
+            for (const auto& vertex : vertices) {
+                Json::Value v;
+                v["x"] = vertex.x;
+                v["y"] = vertex.y;
+                verticesArray.append(v);
+            }
+            prefab["RigidBodyVertices"] = verticesArray;
+
+            Json::Value transformedVerticesArray(Json::arrayValue);
+            for (const auto& vertex : transformedVertices) {
+                Json::Value v;
+                v["x"] = vertex.x;
+                v["y"] = vertex.y;
+                transformedVerticesArray.append(v);
+            }
+            prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
+
+            // Serializing transformUpdateRequired
+            prefab["RigidBodyTransformUpdateRequired"] = transformUpdateRequired;
+
             return prefab;
         }
+        void Deserialize(Json::Value data) override {
+            // Deserializing velocity
+            velocity.x = data["RigidBodyVelocityX"].asFloat();
+            velocity.y = data["RigidBodyVelocityY"].asFloat();
+
+            // Deserializing angular_velocity
+            angular_velocity = data["RigidBodyAngularVelocity"].asFloat();
+
+            // Deserializing bodyType
+            bodyType = static_cast<BodyType>(data["RigidBodyBodyType"].asInt());
+
+            // Deserializing force
+            force.x = data["RigidBodyForceX"].asFloat();
+            force.y = data["RigidBodyForceY"].asFloat();
+
+            // Deserializing acceleration
+            acceleration.x = data["RigidBodyAccelerationX"].asFloat();
+            acceleration.y = data["RigidBodyAccelerationY"].asFloat();
+
+            // Deserializing other scalar properties
+            density = data["RigidBodyDensity"].asFloat();
+            mass = data["RigidBodyMass"].asFloat();
+            InvMass = data["RigidBodyInvMass"].asFloat();
+            restitution = data["RigidBodyRestitution"].asFloat();
+            area = data["RigidBodyArea"].asFloat();
+
+            // Deserializing bodyShape (assuming it's an enum or similar that can be cast from int)
+            bodyShape = static_cast<Shape>(data["RigidBodyShapeType"].asInt());
+
+            // Deserializing vertices and transformedVertices
+            const Json::Value verticesArray = data["RigidBodyVertices"];
+            vertices.clear();
+            for (const auto& v : verticesArray) {
+                Vector2D vertex;
+                vertex.x = v["x"].asFloat();
+                vertex.y = v["y"].asFloat();
+                vertices.push_back(vertex);
+            }
+
+            const Json::Value transformedVerticesArray = data["RigidBodyTransformedVertices"];
+            transformedVertices.clear();
+            for (const auto& v : transformedVerticesArray) {
+                Vector2D vertex;
+                vertex.x = v["x"].asFloat();
+                vertex.y = v["y"].asFloat();
+                transformedVertices.push_back(vertex);
+            }
+
+            // Deserializing transformUpdateRequired
+            transformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
+        }
+
+
     };
 
     

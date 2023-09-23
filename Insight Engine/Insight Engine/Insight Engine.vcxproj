@@ -70,6 +70,7 @@
     <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Prefab.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />

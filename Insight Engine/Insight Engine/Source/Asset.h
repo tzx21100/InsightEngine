@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <filesystem>
 
 
 #define ON_ERROR(condition, msg) \
@@ -60,12 +61,6 @@ namespace IS {
     class AssetManager :public ParentSystem {
     public:
 
-        //this is to instatiate only ONE engine
-        static AssetManager& Instance() {
-            static AssetManager instance;
-            return instance;
-        }
-
         //override parent
         void Initialize() override;
         void Update(float deltaTime) override;
@@ -95,6 +90,8 @@ namespace IS {
         void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }
         std::unordered_map<std::string,FMOD::Channel*>mSoundList;
         std::unordered_map<std::string, Image>mImageList;
+        std::vector<std::string>mImageNames;
+        std::unordered_map<std::string, Signature> mPrefabList;
 
 
     private:

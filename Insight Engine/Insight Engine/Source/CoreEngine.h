@@ -4,6 +4,7 @@
 #include "System.h"
 #include "Vector2D.h"
 #include "Component.h"
+#include "Prefab.h"
 
 #include <unordered_map>
 #include <chrono>
@@ -64,6 +65,7 @@ namespace IS {
         //Functions to save and load entities
         void SaveToJson(Entity entity, std::string filename);
         Entity LoadFromJson(std::string filename);
+        Entity LoadFromPrefab(Prefab prefab);
 
         Entity CopyEntity(Entity old_entity);
 

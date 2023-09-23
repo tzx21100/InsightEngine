@@ -212,19 +212,21 @@ namespace IS {
 
 
     void InsightEngine::SaveToJson(Entity entity, std::string filename) {
-        std::string file_path = "Prefabs/" + filename + ".json";
+        std::string file_path = "Assets/Prefabs/" + filename + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
         prefab["Signature"] = signature;
         prefab["Name"] = mEntityManager->FindNames(entity);
         //add in future components
-       // SerializeComponent<Position>(entity, prefab, "POS");
+        SerializeComponent<RigidBody>(entity, prefab, "RigidBody");
+        SerializeComponent<Sprite>(entity, prefab, "Sprite");
+        SerializeComponent<Transform>(entity, prefab, "Transform");
 
         SaveJsonToFile(prefab,file_path);
     }
 
     Entity InsightEngine::LoadFromJson(std::string name) {
-        std::string filename = "Prefabs/" + name + ".json";
+        std::string filename = "Assets/Prefabs/" + name + ".json";
         
        
         Json::Value loaded;
@@ -233,7 +235,9 @@ namespace IS {
         std::string entity_name = loaded["Name"].asString();
         Entity entity = CreateEntity(entity_name);
         //add in future components
-       // DeserializeComponent<Position>(entity, loaded, "POS");
+        DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
+        DeserializeComponent<Sprite>(entity, loaded, "Sprite");
+        DeserializeComponent<Transform>(entity, loaded, "Transform");
         return entity;
 
     }

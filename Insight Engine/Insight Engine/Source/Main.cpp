@@ -27,7 +27,7 @@ int main() {
     // Enable memory leaks check
     ENABLE_MEMORY_CHECK();
     // Initialize ScriptEngine
-    ScriptEngine::Init();
+    //ScriptEngine::Init();
     // Initialize log
     Log::init();
 
