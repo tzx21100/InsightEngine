@@ -47,14 +47,14 @@ namespace IS {
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        initMeshes();
+        Mesh::initMeshes(meshes);
         walking_ani.initAnimation(1, 4, 1.f);
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
         mesh_shader_pgm.setupSpriteShaders();
-
         text_shader_pgm.setupTextShaders();
+
         Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
@@ -178,56 +178,7 @@ namespace IS {
     }
 
     void ISGraphics::cleanup() {
-        //Mesh::cleanup4Meshes();
-        //glDeleteTextures(1, &placeholder_tex.tex_ID);
-    }
-
-    void ISGraphics::initMeshes() {
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
-        quad_mesh.setupQuadVAO();
-        point_mesh.setupNonQuadVAO(GL_POINTS);
-        line_mesh.setupNonQuadVAO(GL_LINES);
-        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
-
-        meshes.emplace_back(quad_mesh);
-        meshes.emplace_back(point_mesh);
-        meshes.emplace_back(line_mesh);
-        meshes.emplace_back(circle_mesh);
-    }
-
-    GLuint ISGraphics::initTextures(Image& image) {
-
-        // Enable blending for transparency
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
-        int width{ image.width }, height{ image.height }; // channels{ image.channels };
-        unsigned char* image_data = image.data;
-
-        if (!image_data) {
-            IS_CORE_ERROR("Failed to load image: {}", image.file_name.empty() ? "No filepath provided!" : image.file_name);
-            return 0; // Return 0 to indicate failure
-        }
-
-
-        GLuint textureID;
-        glGenTextures(1, &textureID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-
-        stbi_image_free(image_data);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        IS_CORE_INFO("Using Texture: {}", textureID);
-        return textureID;
+        Mesh::cleanupMeshes(meshes);
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
