@@ -258,6 +258,11 @@ namespace IS {
         ImGui::SameLine();
         if (ImGui::Button("Load")) {
             // need open file explorer next time
+            ImGui::OpenPopup("Load");
+        }
+        if (ImGui::BeginPopup("Load")) {
+            ImGui::MenuItem("WIP");
+            ImGui::EndPopup();
         }
 
         // Add Component

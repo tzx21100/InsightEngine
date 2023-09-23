@@ -256,6 +256,8 @@ namespace IS {
         prefab["Signature"] = signature;
         prefab["Name"] = PrefabName;
         SaveJsonToFile(prefab, file_path);
+
+        IS_CORE_INFO("Prefab [{}] saved at <{}>", PrefabName, file_path);
     }
 
     //creating an entity from prefab
