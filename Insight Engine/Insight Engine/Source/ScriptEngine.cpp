@@ -25,6 +25,10 @@ namespace IS {
         delete s_data;
     }
 
+    static void CppFunc() {
+        std::cout << "This is C++";
+    }
+
     char* readBytes(const std::string& filepath, uint32_t* out_size)
     {
         std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
@@ -114,6 +118,8 @@ namespace IS {
         // Create an App Domain
         s_data->app_domain = mono_domain_create_appdomain((char*)"ISScriptRuntime", nullptr);
         mono_domain_set(s_data->app_domain, true);
+
+        mono_add_internal_call("IS.Main::CppFunction", CppFunc);
 
         //temp
         s_data->core_assembly = loadCSharpAssembly("Resources/Scripts/net6.0/IS-ScriptCore.dll");

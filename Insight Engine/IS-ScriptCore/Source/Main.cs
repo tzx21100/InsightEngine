@@ -1,4 +1,6 @@
-﻿namespace IS
+﻿using System.Runtime.CompilerServices;
+
+namespace IS
 {
     public class Main
     {
@@ -7,6 +9,7 @@
         public Main()
         {
             Console.WriteLine("ctor!");
+            CppFunction();
         }
 
         public void PrintMessage()
@@ -21,5 +24,8 @@
         {
             Console.WriteLine($"C# says: {message}");
         }
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern static void CppFunction();
     }
 }
