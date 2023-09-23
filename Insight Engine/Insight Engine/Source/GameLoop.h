@@ -93,7 +93,20 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-            
+
+            // Enable/disable GUI
+            if (input->IsKeyPressed(GLFW_KEY_TAB)) {
+                engine.mUsingGUI = !engine.mUsingGUI;
+                if (engine.mUsingGUI) {
+                    IS_CORE_INFO("GUI Enabled");
+                } else {
+                    auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
+                    input->setCenterPos(width / 2.f, height / 2.f);
+                    input->setRatio(static_cast<float>(width), static_cast<float>(height));
+                    IS_CORE_INFO("GUI Disabled");
+                }
+            }
+
             //this controls the freeze frame
             engine.continueFrame = false;
             if (input->IsKeyPressed(GLFW_KEY_SPACE)) {

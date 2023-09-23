@@ -124,4 +124,4 @@ namespace IS {
 
 } // end namespace IS
 
-#endif // !GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_SYSTEM_GUI_H
+#endif // !GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_GUI_H

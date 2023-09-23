@@ -58,9 +58,12 @@ namespace IS {
         const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
-
+        
         // Update all systems
         for (const auto& system: mSystemList) {
+            if (!mUsingGUI && system->GetName() == "GUI")
+                continue;
+
             Timer timer(system->GetName() + " System", false);
             system->Update(delta_time.count());
             timer.Stop();

@@ -79,4 +79,4 @@ namespace IS {
 #define IS_PROFILE_SCOPE(name) IS::Timer timer##__LINE__(name) // time within a scope
 #define IS_PROFILE_FUNCTION() IS_PROFILE_SCOPE(__FUNCTION__)   // time within a function
 
-#endif // !GAM200_INSIGHT_ENGINE_SOURCE_DEBUG_PROFILING_TIMER_H
+#endif // !GAM200_INSIGHT_ENGINE_DEBUG_PROFILING_TIMER_H
