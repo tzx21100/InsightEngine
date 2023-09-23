@@ -253,11 +253,11 @@ namespace IS {
         ImGui::Text("Prefab");
         ImGui::SameLine();
         if (ImGui::Button("Save")) {
-            engine.SaveToJson(entity, name);
+            engine.SaveAsPrefab(entity, name);
         }
         ImGui::SameLine();
-        if (ImGui::Button("Load")) { // idk not working as intended
-            entity = engine.LoadFromJson(name);
+        if (ImGui::Button("Load")) {
+            // need open file explorer next time
         }
 
         // Add Component

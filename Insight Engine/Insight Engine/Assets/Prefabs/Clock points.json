@@ -1,31 +1,4 @@
 {
 	"Name" : "Clock points",
-	"Signature" : "00000000000000000000000000000011",
-	"Sprite" : 
-	{
-		"SpriteColorX" : 0.4422728419303894,
-		"SpriteColorY" : 0.89678704738616943,
-		"SpriteColorZ" : 0.30125343799591064,
-		"SpriteCurrentTexIndex" : 0,
-		"SpriteDrawing" : true,
-		"SpriteName" : "Box",
-		"SpritePrimitiveType" : 0,
-		"SpriteTexID" : 0,
-		"SpriteTexture" : 0,
-		"SpriteTextureHeight" : 0,
-		"SpriteTextureWidth" : 0,
-		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 0.0,
-		"SpriteTransformScalingY" : 0.0,
-		"SpriteTransformWorldPositionX" : 650.0,
-		"SpriteTransformWorldPositionY" : 300.0
-	},
-	"Transform" : 
-	{
-		"TransformRotation" : 0.0,
-		"TransformScalingX" : 0.0,
-		"TransformScalingY" : 0.0,
-		"TransformWorldPositionX" : 650.0,
-		"TransformWorldPositionY" : 300.0
-	}
+	"Signature" : "00000000000000000000000000000011"
 }
