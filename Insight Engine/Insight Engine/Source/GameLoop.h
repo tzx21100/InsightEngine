@@ -95,7 +95,7 @@ namespace IS {
         virtual void Update(float delta) override {
 
             // Enable/disable GUI
-            if (input->IsKeyPressed(GLFW_KEY_TAB)) {
+            if (input->IsKeyPressed(GLFW_KEY_ESCAPE)) {
                 engine.mUsingGUI = !engine.mUsingGUI;
                 if (engine.mUsingGUI) {
                     IS_CORE_DEBUG("GUI Enabled");
