@@ -21,6 +21,7 @@ namespace IS {
 
     void ScriptEngine::Shutdown()
     {
+        ShutdownMono();
         delete s_data;
     }
 
@@ -132,30 +133,33 @@ namespace IS {
         }
         mono_runtime_invoke(printMessage_func, instance, nullptr, nullptr);
 
-        //call func w param
-        MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
-        if (printInt_func == nullptr) {
-            return;
-        }
+        //call func w str param
+        MonoString* monoString = mono_string_new(s_data->app_domain, "Hello World from C++!");
+        MonoMethod* printCustomMessageFunc = mono_class_get_method_from_name(mono_class, "PrintCustomMessage", 1);
+        void* stringParam = monoString;
+        mono_runtime_invoke(printCustomMessageFunc, instance, &stringParam, nullptr);
 
-        /* we execute methods that take one argument */
-        void* args[1];
-        int val = 10;
-        /* Note we put the address of the value type in the args array */
-        args[0] = &val;
-      
-        if (mono_runtime_invoke(printInt_func, instance, args, nullptr) == nullptr) {
-            printf("failed");
-        }
+        ////call func w param
+        //MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
+        //if (printInt_func == nullptr) {
+        //    return;
+        //}
 
-        
+        //
         
        
     }
 
     void ScriptEngine::ShutdownMono()
     {
-        
+        //fixed domain unload lel
+        mono_domain_unload(s_data->app_domain);
+        s_data->app_domain = nullptr;
+
+        //need assert - pls close by cmd prompt cuz idk
+        mono_jit_cleanup(s_data->root_domain);
+        s_data->root_domain = nullptr;
+
     }
 
     
