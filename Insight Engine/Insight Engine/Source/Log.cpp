@@ -1,19 +1,37 @@
+/*!
+ * \file Log.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This source file defines the implementation for class Log which encapsulates
+ * the functionalities of an Engine-side log and a Client-side log.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Log.h"
 
 namespace IS {
 
-    std::shared_ptr<Logger> Log::core_logger;
-    std::shared_ptr<Logger> Log::client_logger;
+    std::shared_ptr<Logger> Log::mCoreLogger;
+    std::shared_ptr<Logger> Log::mClientLogger;
 
-    void Log::init(bool enable_output) {
-        core_logger = std::make_shared<Logger>("Insight");
-        core_logger->setLogLevel(aLogLevel::Trace);
-        client_logger = std::make_shared<Logger>("Fragments");
-        client_logger->setLogLevel(aLogLevel::Trace);
+    void Log::Init(bool enable_output) {
+        mCoreLogger = std::make_shared<Logger>("Insight");
+        mCoreLogger->SetLogLevel(aLogLevel::Trace);
+        mClientLogger = std::make_shared<Logger>("Fragments");
+        mClientLogger->SetLogLevel(aLogLevel::Trace);
         if (enable_output) {
-            core_logger->enableFileOutput();
-            client_logger->enableFileOutput();
+            mCoreLogger->EnableFileOutput();
+            mClientLogger->EnableFileOutput();
         }
     }
 

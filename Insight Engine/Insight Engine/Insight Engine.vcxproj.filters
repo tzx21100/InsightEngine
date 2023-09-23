@@ -349,5 +349,8 @@
     <Image Include="Assets\zxtestsprite.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\player_walking.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

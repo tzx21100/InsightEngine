@@ -21,7 +21,7 @@ namespace IS {
 		//override parent
 		void Initialize() override;
 		void Update(float deltaTime) override;
-		std::string getName() override;
+		std::string GetName() override;
 		void HandleMessage(const Message& msg) override;
 		void Draw(float delta) override;
 		
@@ -29,16 +29,14 @@ namespace IS {
 
 		static GLuint initTextures(Image& image);
 		static void initMeshes();
-		static GLuint getScreenTexture();
-		static void resizeFramebuffer(GLuint w, GLuint h);
+		static GLuint GetScreenTexture();
+		static void ResizeFramebuffer(GLuint width, GLuint height);
 
 
 		static Animation idle_ani;
 		static Animation walking_ani;
 		static Animation ice_cream_truck_ani;
-	#ifdef USING_IMGUI
-		static std::shared_ptr<Framebuffer> framebuffer;
-	#endif // USING_IMGUI
+		static std::shared_ptr<Framebuffer> mFramebuffer;
 		static Shader mesh_shader_pgm;
 		static Shader text_shader_pgm;
 		static Text cascadia_text;

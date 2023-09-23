@@ -1,52 +1,152 @@
+/*!
+ * \file WindowSystem.h
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+           Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ *      This header file declares the interface for class WindowSystem, which
+ *      encapsulates the functionalities of an application window.
+ *____________________________________________________________________________*/
+
+/*                                                                      guard
+----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_ENGINE_WINDOW_WINDOW_SYSTEM_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_ENGINE_WINDOW_WINDOW_SYSTEM_H
 
-// Ensure glew is included before gl
-#include <GLFW/glfw3.h>
-
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "System.h"
 #include "Graphics.h"
 
+#include <GLFW/glfw3.h> // Ensure glew is included before gl
+
 namespace IS {
 
+    /*!
+     * \brief The WindowSystem class manages application windows.
+     *
+     * \brief WindowSystem is a subclass of ParentSystem and handles window-related functionality.
+     */
     class WindowSystem : public ParentSystem {
     public:
-        // struct encapsulating properties of a window
+        /*!
+         * \brief Structure encapsulating properties of a window.
+         */
         struct WindowProperties {
-            std::string title;
-            uint32_t width{}, height{};
-            bool vsync{};
-
-            static WindowProperties default_properties;
+            std::string mTitle; ///< The title of the window.
+            uint32_t mWidth{}; ///< The width of the window.
+            uint32_t mHeight{}; ///< The height of the window.
+            bool mVSync{}; ///< Flag indicating whether vsync is enabled.
         };
 
-        // Constructor
+        /*!
+         * \brief Constructs a WindowSystem object.
+         */
         WindowSystem();
+
+        /*!
+         * \brief Destroys the WindowSystem object.
+         */
         ~WindowSystem();
 
-        // override parent
+        /*!
+         * \brief Initializes the WindowSystem.
+         */
         void Initialize() override;
-        void Update(float deltaTime) override;
-        void HandleMessage(const Message& message) override;
-        std::string getName() override;
 
+        /*!
+         * \brief Updates the WindowSystem.
+         * \param deltaTime The time difference since the last update.
+         */
+        void Update(float deltaTime) override;
+
+        /*!
+         * \brief Handles a message.
+         * \param message The message to be handled.
+         */
+        void HandleMessage(const Message& message) override;
+
+        /*!
+         * \brief Gets the name of the WindowSystem.
+         * \return The name of the WindowSystem.
+         */
+        std::string GetName() override;
+
+        /*!
+         * \brief Begins the window update.
+         */
         void BeginUpdate();
+
+        /*!
+         * \brief Ends the window update.
+         */
         void EndUpdate();
 
-        // Property matters
+        /*!
+         * \brief Gets the width of the window.
+         * \return The width of the window.
+         */
         uint32_t GetWidth() const;
+
+        /*!
+         * \brief Gets the height of the window.
+         * \return The height of the window.
+         */
         uint32_t GetHeight() const;
+
+        /*!
+         * \brief Gets the size of the window.
+         * \return A pair containing the width and height of the window.
+         */
+        std::pair<uint32_t, uint32_t> GetWindowSize() const;
+
+        /*!
+         * \brief Gets the title of the window.
+         * \return The title of the window.
+         */
         std::string GetWindowTitle() const;
+
+        /*!
+         * \brief Sets the size of the window.
+         * \param width The new width of the window.
+         * \param height The new height of the window.
+         */
         void SetWindowSize(uint32_t width, uint32_t height);
+
+        /*!
+         * \brief Sets the title of the window.
+         * \param title The new title of the window.
+         */
         void SetWindowTitle(std::string const& title);
+
+        /*!
+         * \brief Enables or disables vsync for the window.
+         * \param enabled Flag indicating whether to enable vsync.
+         */
         void EnableVsync(bool enabled);
+
+        /*!
+         * \brief Checks if vsync is enabled for the window.
+         * \return True if vsync is enabled, false otherwise.
+         */
         bool IsVSync() const;
+
+        /*!
+         * \brief Loads window properties.
+         */
         void LoadProperties();
+
+        /*!
+         * \brief Saves window properties.
+         */
         void SaveProperties();
 
     private:
-        GLFWwindow* window = nullptr;
-        WindowProperties props;
+        GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
+        WindowProperties mProps; ///< The properties of the window.
+
+        static WindowProperties mDefaultProperties; ///< Default window properties.
     };
 
 } // end namespace IS

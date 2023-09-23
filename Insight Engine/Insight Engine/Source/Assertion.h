@@ -1,15 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////
-//
-//	Assertion.h
-//	Error handling and assertions
-//	
-//	Authors:  Guo Yiming
-//	Copyright 2023, Digipen Institute of Technology
-//
-///////////////////////////////////////////////////////////////////////////////////////
+/*!
+ * \file Assertion.h
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This header file defines assertions for Insight Engine.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
-#ifndef GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H
-#define GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H
+#ifndef GAME200_INSIGHT_ENGINE_DEBUG_ASSERTION_H
+#define GAME200_INSIGHT_ENGINE_DEBUG_ASSERTION_H
 
 #ifdef _MSC_VER
     #define IS_DEBUG_BREAK __debugbreak()
@@ -80,4 +85,4 @@
 
 #endif // IS_ENABLE_ASSERTS
 
-#endif // !GAME200_INSIGHT_ENGINE_SOURCE_DEBUG_ASSERTION_H
+#endif // !GAME200_INSIGHT_ENGINE_DEBUG_ASSERTION_H

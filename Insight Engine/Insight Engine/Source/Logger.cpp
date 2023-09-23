@@ -1,3 +1,22 @@
+/*!
+ * \file Logger.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This source file defines the implementation for class Logger, which
+ * encapsulates the functionalities of a Logger, and class LoggerGUI, which
+ * encapsulates the functionalities of Logger graphical user interface.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Logger.h"
 
@@ -14,59 +33,59 @@ namespace IS {
      */
 
     // Initialize static data member
-    Logger::LoggerGUI Logger::logger_gui;
-    std::mutex Logger::log_mutex;
+    Logger::LoggerGUI Logger::mLoggerGUI;
+    std::mutex Logger::mLogMutex;
 
-    Logger::Logger(std::string const& name) : logger_name(name) {}
+    Logger::Logger(std::string const& name) : mLoggerName(name) {}
 
     Logger::~Logger() {
         closeFile();
     }
 
-    void Logger::setLoggerName(std::string const& new_logger_name) {
-        logger_name = new_logger_name;
+    void Logger::SetLoggerName(std::string const& new_logger_name) {
+        mLoggerName = new_logger_name;
     }
 
-    void Logger::setLogLevel(aLogLevel new_level) {
-        log_level = new_level;
+    void Logger::SetLogLevel(aLogLevel new_level) {
+        mLogLevel = new_level;
     }
 
-    aLogLevel Logger::getLogLevel() const {
-        return log_level;
+    aLogLevel Logger::GetLogLevel() const {
+        return mLogLevel;
     }
 
-    void Logger::enableFileOutput() {
+    void Logger::EnableFileOutput() {
         // Thread safety
-        std::scoped_lock lock(log_mutex);
+        std::scoped_lock lock(mLogMutex);
         
         // Close file if already opened
-        if (log_file.is_open())
-            log_file.close();
+        if (mLogFile.is_open())
+            mLogFile.close();
 
         // Construct log filename with timestamp
         std::ostringstream filepath;
-        filepath << "Logs" << "/" << logger_name;
+        filepath << "Logs" << "/" << mLoggerName;
         if (!std::filesystem::exists(filepath.str())) {
             std::filesystem::create_directories(filepath.str());
         }
-        filepath << "/" << getTimestamp(log_filename_timestamp_format) << ".log";
+        filepath << "/" << getTimestamp(mLogFilenameTimestampFormat) << ".log";
 
         // Append logs to log file
-        log_file.open(filepath.str(), std::ios_base::app);
-        if (!log_file.is_open())
+        mLogFile.open(filepath.str(), std::ios_base::app);
+        if (!mLogFile.is_open())
             std::cerr << "Error: Failed to open log file at " << filepath.str() << std::endl;
     }
 
-    Logger::LoggerGUI& Logger::getLoggerGUI() {
-        return logger_gui;
+    Logger::LoggerGUI& Logger::GetLoggerGUI() {
+        return mLoggerGUI;
     }
     
-    void Logger::setTimestampFormat(std::string const& new_timestamp_format) {
-        timestamp_format = new_timestamp_format;
+    void Logger::SetTimestampFormat(std::string const& new_timestamp_format) {
+        mTimestampFormat = new_timestamp_format;
     }
 
-    std::string Logger::getTimestampFormat() const {
-        return timestamp_format;
+    std::string Logger::GetTimestampFormat() const {
+        return mTimestampFormat;
     }
 
     std::string Logger::getLogLevelString(aLogLevel level) {
@@ -131,8 +150,8 @@ namespace IS {
 
     void Logger::closeFile() {
         try {
-            if (log_file) {
-                log_file.close();
+            if (mLogFile) {
+                mLogFile.close();
             }
         } catch (std::ios_base::failure& e) {
             std::cerr << e.what() << std::endl;
@@ -143,32 +162,32 @@ namespace IS {
      * LoggerGUI
      * ---------------------------------------------------------------------------------------------------------------------------------
      */
-    Logger::LoggerGUI::LoggerGUI() : auto_scroll(true) { clear(); }
+    Logger::LoggerGUI::LoggerGUI() : mAutoScroll(true) { Clear(); }
 
-    void Logger::LoggerGUI::clear() {
-        buffer.clear();
-        line_offsets.clear();
-        line_offsets.push_back(0);
+    void Logger::LoggerGUI::Clear() {
+        mBuffer.clear();
+        mLineOffsets.clear();
+        mLineOffsets.push_back(0);
     }
 
-    void Logger::LoggerGUI::addLog(const char* fmt, ...) {
-        int old_size = buffer.size();
+    void Logger::LoggerGUI::AddLog(const char* fmt, ...) {
+        int old_size = mBuffer.size();
         va_list args;
         va_start(args, fmt);
-        buffer.appendfv(fmt, args);
+        mBuffer.appendfv(fmt, args);
         va_end(args);
-        for (int new_size{ buffer.size() }; old_size < new_size; ++old_size) {
-            if (buffer[old_size] == '\n')
-                line_offsets.push_back(old_size + 1);
+        for (int new_size{ mBuffer.size() }; old_size < new_size; ++old_size) {
+            if (mBuffer[old_size] == '\n')
+                mLineOffsets.push_back(old_size + 1);
         }
     }
 
-    void Logger::LoggerGUI::draw(const char* title) {
+    void Logger::LoggerGUI::Draw(const char* title) {
         ImGui::Begin(title);
 
         // Options menu
         if (ImGui::BeginPopup("Options")) {
-            ImGui::Checkbox("Auto-scroll", &auto_scroll);
+            ImGui::Checkbox("Auto-scroll", &mAutoScroll);
             ImGui::EndPopup();
         }
 
@@ -180,34 +199,34 @@ namespace IS {
         ImGui::SameLine();
         bool copy_flag = ImGui::Button("Copy");
         ImGui::SameLine();
-        filter.Draw("Filter", -100.f);
+        mFilter.Draw("Filter", -100.f);
         ImGui::SameLine();
 
         ImGui::Separator();
 
         if (ImGui::BeginChild("scrolling", { 0, 0 }, false, ImGuiWindowFlags_HorizontalScrollbar)) {
             if (clear_flag)
-                clear();
+                Clear();
             if (copy_flag)
                 ImGui::LogToClipboard();
 
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 0, 0 });
-            const char* buf = buffer.begin();
-            const char* buf_end = buffer.end();
-            if (filter.IsActive()) {
-                for (int line{}; line < line_offsets.size(); ++line) {
-                    const char* line_start = buf + line_offsets[line];
-                    const char* line_end = (line + 1 < line_offsets.size()) ? (buf + line_offsets[line + 1] - 1) : buf_end;
-                    if (filter.PassFilter(line_start, line_end))
+            const char* buf = mBuffer.begin();
+            const char* buf_end = mBuffer.end();
+            if (mFilter.IsActive()) {
+                for (int line{}; line < mLineOffsets.size(); ++line) {
+                    const char* line_start = buf + mLineOffsets[line];
+                    const char* line_end = (line + 1 < mLineOffsets.size()) ? (buf + mLineOffsets[line + 1] - 1) : buf_end;
+                    if (mFilter.PassFilter(line_start, line_end))
                         ImGui::TextUnformatted(line_start, line_end);
                 }
             } else {
                 ImGuiListClipper clipper;
-                clipper.Begin(line_offsets.size());
+                clipper.Begin(mLineOffsets.size());
                 while (clipper.Step()) {
                     for (int line{ clipper.DisplayStart }; line < clipper.DisplayEnd; ++line) {
-                        const char* line_start = buf + line_offsets[line];
-                        const char* line_end = (line + 1 < line_offsets.size()) ? (buf + line_offsets[line + 1] - 1) : buf_end;
+                        const char* line_start = buf + mLineOffsets[line];
+                        const char* line_end = (line + 1 < mLineOffsets.size()) ? (buf + mLineOffsets[line + 1] - 1) : buf_end;
                         ImGui::TextUnformatted(line_start, line_end);
                     }
                 }
@@ -215,7 +234,7 @@ namespace IS {
             }
             ImGui::PopStyleVar();
 
-            if (auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            if (mAutoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
                 ImGui::SetScrollHereY(1.f);
         }
         ImGui::EndChild();

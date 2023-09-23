@@ -1,57 +1,75 @@
+/*!
+ * \file LayerStack.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This source file defines the implementation for class LayerStack which
+ * encapsulates the functionalities of a stack of layers.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "LayerStack.h"
 
 namespace IS {
 
-    void LayerStack::pushLayer(value_type layer) {
-        layers.emplace(begin() + insert_index, layer);
-        ++insert_index;
+    void LayerStack::PushLayer(value_type layer) {
+        mLayers.emplace(begin() + mInsertIndex, layer);
+        ++mInsertIndex;
     }
 
-    void LayerStack::pushOverlay(value_type overlay) {
-        layers.emplace_back(overlay);
+    void LayerStack::PushOverlay(value_type overlay) {
+        mLayers.emplace_back(overlay);
     }
 
-    void LayerStack::popLayer(value_type layer) {
+    void LayerStack::PopLayer(value_type layer) {
         if (iterator it = std::ranges::find(begin(), end(), layer); it != end()) {
-            layers.erase(it);
-            --insert_index;
+            mLayers.erase(it);
+            --mInsertIndex;
         }
     }
 
-    void LayerStack::popOverlay(value_type overlay) {
+    void LayerStack::PopOverlay(value_type overlay) {
         if (iterator it = std::ranges::find(begin(), end(), overlay); it != end()) {
-            layers.erase(it);
+            mLayers.erase(it);
         }
     }
 
-    void LayerStack::clearStack() {
-        for (value_type layer : layers) {
-            layer->onDetach();
+    void LayerStack::ClearStack() {
+        for (value_type layer : mLayers) {
+            layer->OnDetach();
             delete layer;
         }
     }
 
     void LayerStack::Update([[maybe_unused]] float delta_time) {
-        for (reference layer : layers) {
-            layer->onUpdate(delta_time);
+        for (reference layer : mLayers) {
+            layer->OnUpdate(delta_time);
         }
     }
 
     void LayerStack::Render() {
-        for (reference layer : layers) {
-            layer->onRender();
+        for (reference layer : mLayers) {
+            layer->OnRender();
         }
     }
 
-    LayerStack::reference LayerStack::operator[](size_type index) { return layers[index]; }
-    LayerStack::const_reference LayerStack::operator[](size_type index) const { return layers[index]; }
+    LayerStack::reference LayerStack::operator[](size_type index) { return mLayers[index]; }
+    LayerStack::const_reference LayerStack::operator[](size_type index) const { return mLayers[index]; }
 
-    LayerStack::iterator LayerStack::begin() { return layers.begin(); }
-    LayerStack::const_iterator LayerStack::begin() const { return layers.begin(); }
-    LayerStack::const_iterator LayerStack::cbegin() const { return layers.cbegin(); }
-    LayerStack::iterator LayerStack::end() { return layers.end(); }
-    LayerStack::const_iterator LayerStack::end() const { return layers.end(); }
-    LayerStack::const_iterator LayerStack::cend() const { return layers.cend(); }
+    LayerStack::iterator LayerStack::begin() { return mLayers.begin(); }
+    LayerStack::const_iterator LayerStack::begin() const { return mLayers.begin(); }
+    LayerStack::const_iterator LayerStack::cbegin() const { return mLayers.cbegin(); }
+    LayerStack::iterator LayerStack::end() { return mLayers.end(); }
+    LayerStack::const_iterator LayerStack::end() const { return mLayers.end(); }
+    LayerStack::const_iterator LayerStack::cend() const { return mLayers.cend(); }
 
 } // end namespace IS

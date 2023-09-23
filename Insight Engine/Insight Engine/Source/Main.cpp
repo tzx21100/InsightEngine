@@ -29,7 +29,7 @@ int main() {
     // Initialize ScriptEngine
     ScriptEngine::Init();
     // Initialize log
-    Log::init();
+    Log::Init();
 
     // Engine Instance
     InsightEngine& engine = InsightEngine::Instance();
@@ -54,19 +54,14 @@ int main() {
     auto insight_asset    = std::make_shared<AssetManager>();
     auto insight_physics  = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
-#ifdef USING_IMGUI
     auto insight_gui      = std::make_shared<GUISystem>();
-#endif // USING_IMGUI
-
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_default);
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_physics, sign_physics);
     engine.AddSystem(insight_graphics, sign_graphics);
-#ifdef USING_IMGUI
     engine.AddSystem(insight_gui, sign_default);
-#endif // USING_IMGUI
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 

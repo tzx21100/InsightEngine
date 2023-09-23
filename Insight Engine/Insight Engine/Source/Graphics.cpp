@@ -16,9 +16,7 @@ namespace IS {
     Animation ISGraphics::idle_ani;
     Animation ISGraphics::walking_ani;
     Animation ISGraphics::ice_cream_truck_ani;
-#ifdef USING_IMGUI
-    std::shared_ptr<Framebuffer> ISGraphics::framebuffer;
-#endif // USING_IMGUI
+    std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
     std::vector<Mesh> ISGraphics::meshes;
@@ -56,13 +54,11 @@ namespace IS {
 
         mesh_shader_pgm.setupSpriteShaders();
 
-       text_shader_pgm.setupTextShaders();
-       Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
+        text_shader_pgm.setupTextShaders();
+        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
 
-    #ifdef USING_IMGUI
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
-        framebuffer = std::make_shared<Framebuffer>(props);
-    #endif // USING_IMGUI
+        mFramebuffer = std::make_shared<Framebuffer>(props);
     }
 
     void ISGraphics::Update(float delta_time) {
@@ -72,7 +68,7 @@ namespace IS {
         Draw(delta_time);
     }
 
-    std::string ISGraphics::getName() { return "Graphics"; };
+    std::string ISGraphics::GetName() { return "Graphics"; };
 
     void ISGraphics::HandleMessage(const Message& msg) {
         if (msg.GetType() == MessageType::DebugInfo) {
@@ -82,9 +78,8 @@ namespace IS {
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
 
-    #ifdef USING_IMGUI
-        framebuffer->Bind();
-    #endif // USING_IMGUI
+        if (InsightEngine::Instance().mUsingGUI)
+            mFramebuffer->Bind();
         glClear(GL_COLOR_BUFFER_BIT);
 
         //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
@@ -107,11 +102,9 @@ namespace IS {
 
                     if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
                     else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
-                }
-                else if (sprite.name == "textured_box2") {
+                } else if (sprite.name == "textured_box2") {
                     sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture);
-                }
-                else {
+                } else {
                     sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
                 }
                 break;
@@ -131,16 +124,39 @@ namespace IS {
                     Physics::drawOutLine(body, sprite);
                 }
             }
-                
+
         }
+
+        // Render some text when GUI is disabled
+        if (InsightEngine& engine = InsightEngine::Instance(); !engine.mUsingGUI){
+            std::ostringstream fps_text_oss;
+            std::ostringstream entities_alive_text_oss;
+            fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
+            entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
+
+            const std::string fps_text = fps_text_oss.str();
+            const std::string entities_alive_text = entities_alive_text_oss.str();
+            const std::string instructions = "Press 'Tab' to enable/disable GUI";
+
+            const float scale = 10.f;
+            const float pos_x = -(WIDTH / 2.f) + scale;
+            const float pos_y = (HEIGHT / 2.f) - (scale * 3.f);
+            const glm::vec3 islamic_green = { 0.f, .56f, .066f };
+            const glm::vec3 malachite = { 0.f, 1.f, .25f };
+            static glm::vec3 color = islamic_green;
+            color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
+            Text::renderText(text_shader_pgm, fps_text, pos_x, pos_y, scale, color);
+            Text::renderText(text_shader_pgm, entities_alive_text, pos_x, pos_y - (scale * 3.f), scale, color);
+            Text::renderText(text_shader_pgm, instructions, pos_x, pos_y - (scale * 6.f), scale, color);
+        }
+
 
         //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
-    #ifdef USING_IMGUI
-        framebuffer->Unbind();
-    #endif // USING_IMGUI
-    
+        if (InsightEngine::Instance().mUsingGUI)
+            mFramebuffer->Unbind();
+
     }
 
     void ISGraphics::cleanup() {
@@ -167,7 +183,7 @@ namespace IS {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        
+
         int width{ image.width }, height{ image.height }; // channels{ image.channels };
         unsigned char* image_data = image.data;
 
@@ -196,19 +212,7 @@ namespace IS {
         return textureID;
     }
 
-    GLuint ISGraphics::getScreenTexture() {
-    #ifdef USING_IMGUI
-        return framebuffer->GetColorAttachment();
-    #else
-        return 0;
-    #endif // USING_IMGUI
-    }
+    GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
+    void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
 
-    void ISGraphics::resizeFramebuffer(GLuint w, GLuint h) {
-    #ifdef USING_IMGUI
-        framebuffer->Resize(w, h);
-    #else
-        w, h;
-    #endif // USING_IMGUI
-    }
-}
+} // end namespace IS

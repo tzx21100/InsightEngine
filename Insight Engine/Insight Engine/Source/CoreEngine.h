@@ -19,6 +19,7 @@ namespace IS {
         //freeze function
         bool freezeFrame = false;
         bool continueFrame = false;
+        bool mUsingGUI = true;
 
         //override message handling this way the core engine also will recieve and send messages
         virtual void HandleMessage(const Message& message) override;
@@ -63,9 +64,11 @@ namespace IS {
         void GenerateRandomEntity();
 
         //Functions to save and load entities
-        void SaveToJson(Entity entity, std::string filename);
-        Entity LoadFromJson(std::string filename);
+        void SaveEntityToJson(Entity entity, std::string filename);
+        void SaveAsPrefab(Entity entity, std::string filename);
+        Entity LoadEntityFromJson(std::string filename);
         Entity LoadFromPrefab(Prefab prefab);
+        Prefab LoadPrefabFromFile(std::string filename);
 
         Entity CopyEntity(Entity old_entity);
 
@@ -91,6 +94,12 @@ namespace IS {
 
         void CopyComponents(Entity entity,Entity old_entity) {
             Signature signature=mComponentManager->CloneComponent(entity,old_entity);
+            mEntityManager->SetSignature(entity, signature);
+            mSystemManager->EntitySignatureChanged(entity, signature);
+        }
+
+        void PrefabSignatureToEntity(Signature prefab_signature,Entity entity) {
+            Signature signature = mComponentManager->PrefabToEntity(prefab_signature, entity);
             mEntityManager->SetSignature(entity, signature);
             mSystemManager->EntitySignatureChanged(entity, signature);
         }

@@ -20,7 +20,7 @@ namespace IS {
     public:
         //override parent sys
         void Update(float deltaTime) override;
-        std::string getName() override;
+        std::string GetName() override;
         void Initialize() override;
         void HandleMessage(const Message& message) override;
 

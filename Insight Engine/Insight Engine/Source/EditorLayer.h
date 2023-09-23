@@ -1,6 +1,26 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERS_EDITORLAYER_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERS_EDITORLAYER_H
+/*!
+ * \file EditorLayer.h
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This header file declares the interface for class EditorLayer which
+ * encapsulates the functionalities of a level editor layer.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
+/*                                                                      guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_EDITOR_LAYERS_EDITORLAYER_H
+#define GAM200_INSIGHT_ENGINE_EDITOR_LAYERS_EDITORLAYER_H
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Layer.h"
 #include "SceneHierarchyPanel.h"
 
@@ -14,10 +34,10 @@ namespace IS {
     public:
         EditorLayer();
 
-        void onAttach() override;
-        void onDetach() override;
-        void onUpdate(float dt) override;
-        void onRender() override;
+        void OnAttach() override;
+        void OnDetach() override;
+        void OnUpdate(float dt) override;
+        void OnRender() override;
 
         void RenderScenePanel();
         void RenderPerformancePanel();
@@ -26,11 +46,11 @@ namespace IS {
         void RenderSceneOverlay();
 
     private:
-        Vec2 dockspace_pos;
-        Vec2 scene_panel_size;
-        SceneHierarchyPanel scene_hierarchy_panel;
+        Vec2 mDockspacePosition;
+        Vec2 mScenePanelSize;
+        SceneHierarchyPanel mSceneHierarchyPanel;
     };
 
 } // end namespace IS
 
-#endif // !GAM200_INSIGHT_ENGINE_SOURCE_EDITOR_LAYERS_EDITORLAYER_H
+#endif // !GAM200_INSIGHT_ENGINE_EDITOR_LAYERS_EDITORLAYER_H

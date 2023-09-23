@@ -58,15 +58,18 @@ namespace IS {
         const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
-
+        
         // Update all systems
         for (const auto& system: mSystemList) {
-            Timer timer(system->getName() + " System", false);
+            if (!mUsingGUI && system->GetName() == "GUI")
+                continue;
+
+            Timer timer(system->GetName() + " System", false);
             system->Update(delta_time.count());
             timer.Stop();
 
             if (!(frame_count % update_frequency)) {
-                mSystemDeltas[system->getName()] = timer.GetDeltaTime();
+                mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
@@ -98,7 +101,7 @@ namespace IS {
     //This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         IS_PROFILE_FUNCTION();
-        std::string systemName = system->getName();
+        std::string systemName = system->GetName();
         IS_CORE_TRACE("Registering system... {}", systemName);
         mAllSystems[systemName] = system;
         mSystemList.emplace_back(system);
@@ -138,7 +141,7 @@ namespace IS {
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();
         for (auto const& system : mSystemList) {
-            IS_PROFILE_SCOPE(system->getName());
+            IS_PROFILE_SCOPE(system->GetName());
             system->Initialize();
         }
     }
@@ -210,24 +213,22 @@ namespace IS {
     }
 
 
-    void InsightEngine::SaveToJson(Entity entity, std::string filename) {
-        std::string file_path = "Assets/Prefabs/" + filename + ".json";
+    void InsightEngine::SaveEntityToJson(Entity entity, std::string filename) {
+        std::string file_path = "Assets/Entity/" + filename + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
-        Json::Value prefab;
-        prefab["Signature"] = signature;
-        prefab["Name"] = mEntityManager->FindNames(entity);
+        Json::Value saved_entity;
+        saved_entity["Signature"] = signature;
+        saved_entity["Name"] = mEntityManager->FindNames(entity);
         //add in future components
-        SerializeComponent<RigidBody>(entity, prefab, "RigidBody");
-        SerializeComponent<Sprite>(entity, prefab, "Sprite");
-        SerializeComponent<Transform>(entity, prefab, "Transform");
+        SerializeComponent<RigidBody>(entity, saved_entity, "RigidBody");
+        SerializeComponent<Sprite>(entity, saved_entity, "Sprite");
+        SerializeComponent<Transform>(entity, saved_entity, "Transform");
 
-        SaveJsonToFile(prefab,file_path);
+        SaveJsonToFile(saved_entity,file_path);
     }
 
-    Entity InsightEngine::LoadFromJson(std::string name) {
-        std::string filename = "Assets/Prefabs/" + name + ".json";
-        
-       
+    Entity InsightEngine::LoadEntityFromJson(std::string name) {
+        std::string filename = "Assets/Entity/" + name + ".json";
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
         std::string str_sig = loaded["Signature"].asString();
@@ -240,6 +241,48 @@ namespace IS {
         return entity;
 
     }
+
+    void InsightEngine::SaveAsPrefab(Entity entity,std::string PrefabName) {
+        std::string file_path = "Assets/Prefabs/" + PrefabName + ".json";
+        std::string signature = mEntityManager->GetSignature(entity).to_string();
+        Json::Value prefab;
+        prefab["Signature"] = signature;
+        prefab["Name"] = PrefabName;
+        SaveJsonToFile(prefab, file_path);
+    }
+
+    //creating an entity from prefab
+    Entity InsightEngine::LoadFromPrefab(Prefab prefab) {
+
+        Entity entity = CreateEntity(prefab.mName);
+        PrefabSignatureToEntity(prefab.mSignature, entity);
+        return entity;
+
+    }
+
+    //Helper function for signature and string
+    Signature StringToSignature(const std::string& str) {
+        Signature signature;
+        size_t strLength = str.size();
+        for (size_t i = 0; i < strLength && i < MAX_COMPONENTS; ++i) {
+            if (str[strLength - 1 - i] == '1') {
+                signature.set(i, true);
+            }
+        }
+        return signature;
+    }
+
+
+    Prefab InsightEngine::LoadPrefabFromFile(std::string filename) {
+        std::string file_path = filename;
+        Json::Value loaded;
+        LoadJsonFromFile(loaded, file_path);
+        Prefab prefab(StringToSignature(loaded["Signature"].asString()), loaded["Name"].asString());
+        return prefab;
+    }
+
+
+
 
 }
 

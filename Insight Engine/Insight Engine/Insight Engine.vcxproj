@@ -108,6 +108,7 @@
     <Image Include="Assets\icecream_truck.png" />
     <Image Include="Assets\placeholder_background.png" />
     <Image Include="Assets\player_idle.png" />
+    <Image Include="Assets\player_walking.png" />
     <Image Include="Assets\zxtestsprite.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

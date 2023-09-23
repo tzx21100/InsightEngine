@@ -1,3 +1,21 @@
+/*!
+ * \file EditorLayer.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 23-09-2023
+ * \brief
+ * This source file defines the implementation for class EditorLayer which
+ * encapsulates the functionalities of a level editor layer.
+ * 
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "EditorLayer.h"
 #include "Graphics.h"
@@ -5,22 +23,22 @@
 
 namespace IS {
 
-    EditorLayer::EditorLayer() : Layer("Editor Layer"), dockspace_pos(), scene_panel_size(), scene_hierarchy_panel() {}
+    EditorLayer::EditorLayer() : Layer("Editor Layer"), mDockspacePosition(), mScenePanelSize(), mSceneHierarchyPanel() {}
 
-    void EditorLayer::onAttach() {
+    void EditorLayer::OnAttach() {
         // Attach scene viewer, import icons, open project...
-        IS_CORE_DEBUG("{} attached", getName());
+        IS_CORE_DEBUG("{} attached", GetName());
     }
 
-    void EditorLayer::onDetach() {
-        IS_CORE_DEBUG("{} detached", getName());
+    void EditorLayer::OnDetach() {
+        IS_CORE_DEBUG("{} detached", GetName());
     }
 
-    void EditorLayer::onUpdate([[maybe_unused]] float dt) {
+    void EditorLayer::OnUpdate([[maybe_unused]] float dt) {
         // some updating
     }
 
-    void EditorLayer::onRender() {
+    void EditorLayer::OnRender() {
 
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
         
@@ -41,7 +59,7 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("EditorDockSpace", nullptr, window_flags);
         //i add in pos here to get the position of the dockspace
-        dockspace_pos = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
+        mDockspacePosition = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
         ImGui::PopStyleVar(3);
 
         ImGuiIO& io = ImGui::GetIO();
@@ -103,27 +121,27 @@ namespace IS {
         ImVec2 scene_pos = ImGui::GetWindowPos();
         //scene pos for the input
         ImVec2 actual_scene_pos;
-        actual_scene_pos.x = scene_pos.x-dockspace_pos.x;
-        actual_scene_pos.y = scene_pos.y-dockspace_pos.y;
+        actual_scene_pos.x = scene_pos.x-mDockspacePosition.x;
+        actual_scene_pos.y = scene_pos.y-mDockspacePosition.y;
         input->setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
         input->setRatio(scene_size.x, scene_size.y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
-        if (!(scene_panel_size.x == panel_size.x && scene_panel_size.y == panel_size.y)) {
-            ISGraphics::resizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
-            scene_panel_size = { panel_size.x, panel_size.y };
+        if (!(mScenePanelSize.x == panel_size.x && mScenePanelSize.y == panel_size.y)) {
+            ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
+            mScenePanelSize = { panel_size.x, panel_size.y };
         }
 
-        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::getScreenTexture())),
-                     ImVec2(scene_panel_size.x, scene_panel_size.y), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::GetScreenTexture())),
+                     ImVec2(mScenePanelSize.x, mScenePanelSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
         ImGui::PopStyleVar();
     }
 
     void EditorLayer::RenderSceneHierarchyPanel() {
-        scene_hierarchy_panel.RenderPanel();
+        mSceneHierarchyPanel.RenderPanel();
     }
 
     void EditorLayer::RenderPerformancePanel() {
@@ -187,7 +205,7 @@ namespace IS {
     }
 
     void EditorLayer::RenderLogConsolePanel() {
-        Logger::getLoggerGUI().draw("Log Console");
+        Logger::GetLoggerGUI().Draw("Log Console");
     }
 
     void EditorLayer::RenderSceneOverlay() {
@@ -202,6 +220,8 @@ namespace IS {
             oss.imbue(std::locale(""));
             oss << std::fixed << MAX_ENTITIES;
             ImGui::Text("Max Entities: %s", oss.str().c_str());
+            ImGui::Separator();
+            ImGui::Text("Press 'Tab' to enable/disable GUI");
             ImGui::Separator();
             ImGui::Text("Player Controls");
             ImGui::BulletText("Press 'WASD' to move in the four directions");
