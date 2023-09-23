@@ -175,11 +175,11 @@ namespace IS {
             }
 
             if (input->IsKeyPressed(GLFW_KEY_R)) {
-                engine.SaveToJson(myEntity,"aa");
+                engine.SaveAsPrefab(myEntity,"aa");
             }
 
             if (input->IsKeyPressed(GLFW_KEY_J)) {
-                engine.LoadFromJson("aa");
+                engine.LoadFromPrefab(asset->GetPrefab("aa"));
             }
 
             auto& transLines = engine.GetComponent<Transform>(lines);

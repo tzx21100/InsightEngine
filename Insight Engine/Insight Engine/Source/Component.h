@@ -28,6 +28,7 @@ namespace IS {
 		virtual ~IComponentArray() {};
 		virtual void EntityDestroyed(Entity entity) = 0;//informs when an entity is destroyed
 		virtual ComponentType CloneData(Entity entity, Entity old_entity) = 0; //this is to clone a component
+		virtual ComponentType SignatureMatch(Signature signature, Entity entity)=0; // This is for prefab signatures
 		//Small functions to set and get the component type
 		void SetComponentType(ComponentType id) {
 			mComponentType = id;
@@ -93,6 +94,15 @@ namespace IS {
 			//if the old_entity exists
 			if (mEntityToIndexMap.find(old_entity) != mEntityToIndexMap.end()) {
 				T component = GetData(old_entity);
+				InsertData(entity, component);
+				return this->GetComponentType();
+			}
+			return MAX_COMPONENTS+1;
+		}
+		
+		ComponentType SignatureMatch(Signature signature, Entity entity) {
+			if (signature.test(this->GetComponentType())) {
+				T component;
 				InsertData(entity, component);
 				return this->GetComponentType();
 			}
@@ -190,6 +200,20 @@ namespace IS {
 			return returned_signature;
 		}
 
+		//Add components to a prefab
+		Signature PrefabToEntity(Signature prefab, Entity entity) {
+			ComponentType componentType;
+			Signature returned_signature;
+			for (auto const& pair : mComponentArrays) {
+				auto const& component = pair.second;
+				componentType = component->SignatureMatch(prefab, entity);
+				if (componentType <= MAX_COMPONENTS) {
+					returned_signature.set(componentType);
+				}
+
+			}
+			return returned_signature;
+		}
 
 	private:
 		// Map from type string pointer to a component type

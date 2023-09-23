@@ -5,12 +5,14 @@ namespace IS {
 
     class Prefab {
     public:
-        void saveAsPrefab(std::string name, Signature signature) {
-            prefabList.insert({name,signature});
-        }
+        //Creating a prefab
+        Prefab(){};
+        Prefab(Signature signature, std::string name) { mSignature = signature; mName = name; }
 
-    private:
-        std::unordered_map<std::string, Signature> prefabList;
+        //Our prefab is just the signature of the entity
+        Signature mSignature;
+        //This is for the developers to change the name of the prefab
+        std::string mName;
     };
 
 } // namespace IS
