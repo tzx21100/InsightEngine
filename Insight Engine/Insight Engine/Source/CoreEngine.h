@@ -8,10 +8,9 @@
 
 #include <unordered_map>
 #include <chrono>
-
+#include <unordered_set>
 
 namespace IS {
-
 
     class InsightEngine : public MessageListener {
     public:
@@ -60,8 +59,8 @@ namespace IS {
 
         //Entity Management
         Entity CreateEntity(std::string name);
-        void DestroyEntity(Entity entity);
         void GenerateRandomEntity();
+        void DeleteEntity(Entity entity);
 
         //Functions to save and load entities
         void SaveEntityToJson(Entity entity, std::string filename);
@@ -72,7 +71,11 @@ namespace IS {
 
         Entity CopyEntity(Entity old_entity);
 
-        std::string GetEntityName(Entity entity) {
+        std::string GetEntityName(Entity entity) const {
+            return mEntityManager->FindNames(entity);
+        }
+
+        std::string& GetEntityName(Entity entity) {
             return mEntityManager->FindNames(entity);
         }
 
@@ -200,7 +203,7 @@ namespace IS {
             }
         }
 
-        //faster way to get a system
+        // faster way to get a system
         template<typename T>
         std::shared_ptr<T> GetSystem(const std::string& systemName) {
             auto it = mAllSystems.find(systemName);
@@ -213,8 +216,6 @@ namespace IS {
             }
         }
 
-
-
     private:
         unsigned frame_count = 0;
         //putting this here as a hard cap to fps, could move it to public as well
@@ -222,11 +223,14 @@ namespace IS {
         bool is_running;
         unsigned last_runtime;
         int targetFPS{ 60 };
-        std::chrono::duration<float> delta_time {0.f};
+        std::chrono::duration<float> delta_time { 0.f };
 
         // Follow the singleton pattern for only one engine
         InsightEngine();
         ~InsightEngine();
+
+        void ProcessEntityDeletion();
+        void DestroyEntity(Entity entity);
 
         //The containers for the class are listed below
         //For ECS
@@ -236,18 +240,15 @@ namespace IS {
         //this is to create a map of key string and shared ptr to all systems. Instead of regular pointers.
         std::unordered_map<std::string, std::shared_ptr<ParentSystem>> mAllSystems;
         //this is an array to store their load sequence and for faster iterations
-        std::vector<std::shared_ptr<ParentSystem>>mSystemList;
+        std::vector<std::shared_ptr<ParentSystem>> mSystemList;
         //make a list of systems and their delta times
         std::unordered_map<std::string, float>mSystemDeltas;
         //get the delta_time of every engine
         std::vector<float> mlistOfDelta{ 0.f };
-
+        std::unordered_set<Entity> mEntitiesToDelete;
     };
 
 }
 
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
 //check if there is a component
-
-
-
