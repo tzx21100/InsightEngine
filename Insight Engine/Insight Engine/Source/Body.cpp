@@ -76,6 +76,7 @@ namespace IS
 	RigidBody::RigidBody(glm::vec2 position, BodyType bodyType, float mass, float restitution,
         float width, float height, Shape bodyShape) {
         this->velocity = Vector2D(); // (0,0)
+        this->angular_velocity = 0.f;
         this->bodyTransform.world_position = position;
         this->bodyTransform.rotation = 0.f;
         this->bodyTransform.scaling = glm::vec2(width, height);
@@ -124,19 +125,19 @@ namespace IS
         updateBoxBody(trans, this->mass, this->restitution);
     }
 
-    std::vector<Vector2D> RigidBody::CreateBoxVertices(float const& width, float const& height) {
+    std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
         float left = - width / 2.f;
         float right = left + width;
         float bottom = -height / 2.f;
         float top = bottom + height;
 
-        std::vector<Vector2D> vertices;
-        vertices.emplace_back(Vector2D(left,top)); //0
-        vertices.emplace_back(Vector2D(right, top)); //1
-        vertices.emplace_back(Vector2D(right, bottom)); //2
-        vertices.emplace_back(Vector2D(left, bottom)); //3
+        std::vector<Vector2D> box_vertices;
+        box_vertices.emplace_back(Vector2D(left,top)); //0
+        box_vertices.emplace_back(Vector2D(right, top)); //1
+        box_vertices.emplace_back(Vector2D(right, bottom)); //2
+        box_vertices.emplace_back(Vector2D(left, bottom)); //3
 
-        return vertices;
+        return box_vertices;
     }
 
     std::vector<Vector2D> RigidBody::GetTransformedVertices()
@@ -188,7 +189,7 @@ namespace IS
         return ret;
     }
 
-    void RigidBody::BodyUpdate(float const& dt, Vector2D const& gravity) {
+    void RigidBody::BodyUpdate(float dt, Vector2D const& gravity) {
         if (!(this->bodyType == BodyType::Dynamic)) {
             return;
         }
@@ -211,7 +212,7 @@ namespace IS
         this->transformedVertices = GetTransformedVertices();
     }
 
-    void RigidBody::Rotate(float const& val) {
+    void RigidBody::Rotate(float val) {
         this->bodyTransform.rotation += val;
         //this->rotation += val;
         //this->rotation = fmod(this->rotation, (2.0 * PI));
@@ -227,27 +228,27 @@ namespace IS
         this->velocity += val;
     }
 
-    void RigidBody::CreateBoxBody(float const& width, float const& height, float const& mass, float const& restitution) {
+    void RigidBody::CreateBoxBody(float width, float height, float mass_, float restitution_) {
         //this->radius = 0.f;
         this->area = fabs(width * height);
         // set the range to be [0,1]
-        this->restitution = std::max(0.0f, std::min(restitution, 1.0f));
+        this->restitution = std::max(0.0f, std::min(restitution_, 1.0f));
 
-        this->density = mass * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        this->density = mass_ * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
     }
 
-    void RigidBody::CreateCircleBody(float const& radius, float const& mass, float const& restitution) {
+    void RigidBody::CreateCircleBody(float radius, float mass_, float restitution_) {
         //this->dimension = Vector2D(); //(0, 0);
         this->area = fabs(radius * radius * PI);
         // set the range to be [0,1]
-        this->restitution = std::max(0.0f, std::min(restitution, 1.0f));
+        this->restitution = std::max(0.0f, std::min(restitution_, 1.0f));
 
-        this->density = mass * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        this->density = mass_ * area; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
     }
 
-    void RigidBody::updateBoxBody(Transform const& bodyTransform, float const& mass, float const& restitution) {
-        CreateBoxBody(bodyTransform.scaling.x, bodyTransform.scaling.y, this->mass, this->restitution);
-        this->vertices = CreateBoxVertices(bodyTransform.scaling.x, bodyTransform.scaling.y);
+    void RigidBody::updateBoxBody(Transform const& bodyTransform_, [[maybe_unused]] float mass_, [[maybe_unused]] float restitution_) {
+        CreateBoxBody(bodyTransform_.scaling.x, bodyTransform_.scaling.y, this->mass, this->restitution);
+        this->vertices = CreateBoxVertices(bodyTransform_.scaling.x, bodyTransform_.scaling.y);
         this->transformUpdateRequired = true;
         this->transformedVertices = GetTransformedVertices();
     }

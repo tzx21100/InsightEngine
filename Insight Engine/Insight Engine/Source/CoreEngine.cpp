@@ -1,11 +1,12 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
-#include "CoreEngine.h" // Include the header file
+#include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
+#include "WindowSystem.h" // Access to window
+#include "Timer.h"
+
 #include <iostream>
 #include <thread>
-#include <GLFW/glfw3.h>
-#include "Timer.h"
 
 
 namespace IS {
@@ -50,15 +51,15 @@ namespace IS {
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
-        //looping through the map and updating
-        
-        glfwPollEvents();
+        auto window = GetSystem<WindowSystem>("Window");
+        window->BeginUpdate(); // Poll events
 
         // Update System deltas every 4s
         const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
             mSystemDeltas["Engine"] = 0;
 
+        // Update all systems
         for (const auto& system: mSystemList) {
             Timer timer(system->getName() + " System", false);
             system->Update(delta_time.count());
@@ -70,9 +71,7 @@ namespace IS {
             }
         }
 
-        // Swap front and back buffers
-        GLFWwindow* window = glfwGetCurrentContext();
-        glfwSwapBuffers(window);
+        window->EndUpdate(); // Swap front and back buffers
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
@@ -134,7 +133,7 @@ namespace IS {
     }
 
 #pragma warning(push)
-#pragma warning(disable: 4456)
+#pragma warning(disable: 4456) // concatnating __LINE__ for variable name in macro
     //loop through all the systems stored
     void InsightEngine::InitializeAllSystems() {
         IS_PROFILE_FUNCTION();

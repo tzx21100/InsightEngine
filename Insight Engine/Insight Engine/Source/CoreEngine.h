@@ -78,6 +78,10 @@ namespace IS {
             return mEntityManager->EntitiesAlive();
         }
 
+        std::unordered_map<Entity, std::string>& GetEntitiesAlive() {
+            return mEntityManager->GetEntitiesAlive();
+        }
+
         //Basic components functions
         template <typename T>
         bool HasComponent(Entity entity) {

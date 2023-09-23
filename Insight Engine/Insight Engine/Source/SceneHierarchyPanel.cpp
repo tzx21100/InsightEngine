@@ -2,7 +2,6 @@
 #include "SceneHierarchyPanel.h"
 #include "Guidgets.h"
 #include "CoreEngine.h"
-#include "Graphics.h"
 
 // Dependencies
 #include <imgui.h>
@@ -12,14 +11,13 @@ namespace IS {
     void SceneHierarchyPanel::RenderPanel() {
         // Data sources
         InsightEngine& engine = InsightEngine::Instance();
-        auto& graphics = engine.GetSystemPointer().at("Graphics");
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
 
-        for (auto& entity : graphics->mEntities) {
+        // Render all entity nodes
+        for (auto& [entity, name] : engine.GetEntitiesAlive())
             RenderEntityNode(entity);
-        }
 
         // Deselect entity
         if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
@@ -28,6 +26,8 @@ namespace IS {
         // Create random entity
         ImGuiPopupFlags flags = ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight;
         if (ImGui::BeginPopupContextWindow(0, flags)) {
+            if (ImGui::MenuItem("Create Empty Entity"))
+                engine.CreateEntity("Entity");
             if (ImGui::MenuItem("Create Random Entity"))
                 engine.GenerateRandomEntity();
             ImGui::EndPopup();
@@ -57,7 +57,7 @@ namespace IS {
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Clone Entity")) {
                 // Used the dynamic copy entity
-                Entity e = engine.CopyEntity(entity);
+                engine.CopyEntity(entity);
             }
 
             ImGui::EndPopup();
@@ -184,11 +184,6 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::Text("%.2f", rigidbody.density);
 
-                ImGui::TableNextColumn();
-                ImGui::Text("Vertex Count");
-                ImGui::TableNextColumn();
-                ImGui::Text("%d", rigidbody.vertices.size());
-
                 ImGui::EndTable();
                 ImGui::Separator();
             }
@@ -245,7 +240,7 @@ namespace IS {
 
             // Clone entity
             if (ImGui::Button("Clone Entity")) {
-                Entity e = engine.CopyEntity(*entity);
+                engine.CopyEntity(*entity);
             }
 
             // Destroy entity

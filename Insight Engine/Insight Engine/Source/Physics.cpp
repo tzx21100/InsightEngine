@@ -166,7 +166,7 @@ namespace IS
 	}
 
 		
-	void rigidBodyCallUpdate(RigidBody body, Vector2D gravity, float dt)
+	void rigidBodyCallUpdate(RigidBody body, [[maybe_unused]] Vector2D gravity, [[maybe_unused]] float dt)
 	{
 		// if the body is dynamic, adding gravity
 		switch (body.bodyType)
@@ -188,7 +188,7 @@ namespace IS
 		}
 	}
 
-	void collisionCheck(float const& dt, std::set<Entity> const& mEntities) {
+	void collisionCheck([[maybe_unused]] float dt, std::set<Entity> const& mEntities) {
 		//loops through all Entities registered by the System this mEntities map
 		for (auto const& entityA : mEntities) {
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) { // if entityA has rigidbody component
@@ -245,29 +245,29 @@ namespace IS
 						}
 						// if body A and body B colliding
 						if (isColliding) {
-							Vector2D v = normal * depth;
+							Vector2D vec = normal * depth;
 							// if body A is static 
 							if (rigidBodyA.bodyType != BodyType::Dynamic)
 							{
 								//rigidBody2.Move(normal * depth);
-								trans2.world_position.x += v.x;
-								trans2.world_position.y += v.y;
+								trans2.world_position.x += vec.x;
+								trans2.world_position.y += vec.y;
 							}
 							// if body B is static 
 							else if (rigidBodyB.bodyType != BodyType::Dynamic)
 							{
 								//rigidBody.Move(-normal * depth);
-								trans.world_position.x += -v.x;
-								trans.world_position.y += -v.y;
+								trans.world_position.x += -vec.x;
+								trans.world_position.y += -vec.y;
 							}
 							else // both are dynamic
 							{
 								//rigidBody.Move(-normal * depth / 2.f);
 								//rigidBody.Move(normal * depth / 2.f);
-								trans.world_position.x += -v.x / 2.;
-								trans.world_position.y += -v.y / 2.f;
-								trans2.world_position.x += v.x / 2.f;
-								trans2.world_position.y += v.y / 2.f;
+								trans.world_position.x += -vec.x / 2.f;
+								trans.world_position.y += -vec.y / 2.f;
+								trans2.world_position.x += vec.x / 2.f;
+								trans2.world_position.y += vec.y / 2.f;
 							}
 							sprite.color = glm::vec3(1.f, 0.f, 1.f);
 							
@@ -355,7 +355,7 @@ namespace IS
 		}
 	}
 #endif
-	void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float const& depth) {
+	void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, [[maybe_unused]] float depth) {
 		Vector2D relativeVelocity = bodyB.velocity - bodyA.velocity;
 
 		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f) //
@@ -377,13 +377,13 @@ namespace IS
 		std::cout << "after: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
 	}
 
-	void Physics::drawOutLine(float const& dt, RigidBody & body, Sprite const& sprite) {
+	void Physics::drawOutLine(RigidBody & body, Sprite const& sprite) {
 		for (int i = 0; i < body.transformedVertices.size(); i++) {
 			Vector2D va = body.transformedVertices[i];
 			Vector2D vb = body.transformedVertices[(i + 1) % body.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
-			sprite.drawLine(va, vb, dt);
+			sprite.drawLine(va, vb);
 		}
-		sprite.drawLine(body.bodyTransform.getWorldPosition(), body.bodyTransform.getWorldPosition() + body.velocity, dt);
+		sprite.drawLine(body.bodyTransform.getWorldPosition(), body.bodyTransform.getWorldPosition() + body.velocity);
 	}
 
 }

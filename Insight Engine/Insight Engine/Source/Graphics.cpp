@@ -32,7 +32,7 @@ namespace IS {
         if (GLenum err = glewInit(); GLEW_OK != err) {
             std::ostringstream oss;
             oss << glewGetErrorString(err);
-            IS_CORE_CRITICAL("Unable Unable to initialize GLEW - error: {} - abort program", oss.str());
+            IS_CORE_CRITICAL("Unable to initialize GLEW - error: {} - abort program", oss.str());
             std::exit(EXIT_FAILURE);
         }
         if (GLEW_VERSION_4_5) {
@@ -80,7 +80,7 @@ namespace IS {
         }
     }
 
-    void ISGraphics::Draw(float delta_time) {
+    void ISGraphics::Draw([[maybe_unused]] float delta_time) {
 
     #ifdef USING_IMGUI
         framebuffer->Bind();
@@ -98,7 +98,7 @@ namespace IS {
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
             sprite.followTransform(trans);
-            sprite.transform(delta_time);
+            sprite.transform();
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
@@ -128,7 +128,7 @@ namespace IS {
             if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
                 auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
-                    Physics::drawOutLine(delta_time, body, sprite);
+                    Physics::drawOutLine(body, sprite);
                 }
             }
                 

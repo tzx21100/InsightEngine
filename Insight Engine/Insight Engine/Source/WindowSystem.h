@@ -30,6 +30,9 @@ namespace IS {
         void HandleMessage(const Message& message) override;
         std::string getName() override;
 
+        void BeginUpdate();
+        void EndUpdate();
+
         // Property matters
         uint32_t GetWidth() const;
         uint32_t GetHeight() const;

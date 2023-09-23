@@ -2,7 +2,7 @@
 
 namespace IS {
 
-	void Sprite::transform(float delta_time) {
+	void Sprite::transform() {
 
         float angle_rad = glm::radians(model_TRS.rotation);
 
@@ -104,7 +104,7 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, float delta_time) {
+    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1) {
         if (ISGraphics::meshes.empty()) {
             std::cerr << "No mesh to draw line!" << std::endl;
             return;
@@ -123,7 +123,7 @@ namespace IS {
         // Scaling
         float length = ISVector2DDistance(p0, p1);
 
-        glm::mat3 world_to_NDC_xform = lineTransform(midpoint, angle, length, delta_time);
+        glm::mat3 world_to_NDC_xform = lineTransform(midpoint, angle, length);
 
         // render
         Shader shader = ISGraphics::mesh_shader_pgm;
@@ -146,7 +146,7 @@ namespace IS {
         shader.unUse();
     }
 
-    glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale, float delta_time) {
+    glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
         float map_scale_x = 2.f / WIDTH;
         float map_scale_y = 2.f / HEIGHT;
 

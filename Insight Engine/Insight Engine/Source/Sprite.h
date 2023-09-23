@@ -39,7 +39,7 @@ namespace IS {
                 color[i] = prng.generate();
             }
         }
-        void transform(float delta_time);
+        void transform();
         //either manually set or follow transforms
         void followTransform(Transform trans) { model_TRS = trans; }
         void setWorldPos(Transform trans) { model_TRS.world_position = trans.world_position;}
@@ -50,8 +50,8 @@ namespace IS {
         void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
         void drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animPointer, GLuint texture_id = 0);
 
-        static void drawLine(Vector2D const& p0, Vector2D const& p1, float delta_time);
-        static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale, float delta_time);
+        static void drawLine(Vector2D const& p0, Vector2D const& p1);
+        static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
 
 
         Json::Value Serialize() override {
@@ -100,7 +100,7 @@ namespace IS {
             // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
 
             // Deserializing texture-related properties
-            texture = data["SpriteTexture"].asUInt();
+            texture = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
             texture_width = data["SpriteTextureWidth"].asUInt();
             texture_height = data["SpriteTextureHeight"].asUInt();
             tex_ID = data["SpriteTexID"].asUInt();

@@ -2,7 +2,11 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#pragma warning(push)
+#pragma warning(disable : 4201) // warning C4201: nonstandard extension used: nameless struct/union
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
 
 namespace IS {
     std::map<GLchar, Text::Character> Text::Characters;

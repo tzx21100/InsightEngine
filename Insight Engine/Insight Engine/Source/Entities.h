@@ -110,6 +110,7 @@ namespace IS {
 		// return number of entities alive
 		uint32_t EntitiesAlive() { return mLivingEntityCount; };
 
+		std::unordered_map<Entity, std::string>& GetEntitiesAlive() { return mEntityIds; }
 
 	private:
 		// Queue of unused entity IDs

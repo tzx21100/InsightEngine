@@ -4,14 +4,16 @@
 
 namespace IS {
 
+    // In case <properties.json> is not found, window will use default properties
     WindowSystem::WindowProperties WindowSystem::WindowProperties::default_properties{ "Insight Engine", 1600, 900, true };
 
     WindowSystem::WindowSystem() {
         LoadProperties();
 
         // Initialize GLFW library
-        if (!glfwInit())
-            IS_CORE_CRITICAL("Failed to to initialize libary!");
+        bool success = glfwInit();
+        if (!success)
+            IS_CORE_CRITICAL("Failed to to initialize glew libary!");
 
         // Specify minimum constraints in OpenGL context
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -34,7 +36,6 @@ namespace IS {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         EnableVsync(props.vsync);
 
-        // All the stuff below should be handled by graphics
         glfwMakeContextCurrent(window);
     }
 
@@ -47,21 +48,23 @@ namespace IS {
     void WindowSystem::Initialize() {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
-       // ISGraphics::init();
+
     }
 
-    //this will be the update for the window we can use this to register like people pressing stuff on the window
+    void WindowSystem::BeginUpdate() {
+        glfwPollEvents();
+    }
+
     void WindowSystem::Update(float)  {
         //register window closing 
         if (glfwWindowShouldClose(window)) {
             Message quit = Message(MessageType::Quit);
             BROADCAST_MESSAGE(quit);
         }
+    }
 
-        //ISGraphics::update(time);
-
-        //grafix draws
-       // ISGraphics::draw();
+    void WindowSystem::EndUpdate() {
+        glfwSwapBuffers(window);
     }
 
     void WindowSystem::HandleMessage(const Message& message) {
@@ -110,45 +113,23 @@ namespace IS {
 
     void WindowSystem::LoadProperties() {
         std::string filename = "properties.json";
-        Json::Value properties{};
+        Json::Value properties;
         
         // Load window properties from JSON file
-        if (LoadJsonFromFile(properties, filename)) {
-            auto const& win_props = properties["WindowProperties"];
-            if (win_props.isMember("Title") && win_props["Title"].isString()) {
-                props.title = win_props["Title"].asString();
-                IS_CORE_DEBUG("Using json window title");
-            } else {
-                props.title = WindowProperties::default_properties.title;
-                IS_CORE_DEBUG("Using default title");
-            }
-            if (win_props.isMember("Width") && win_props["Width"].isInt()) {
-                props.width = win_props["Width"].asInt();
-                IS_CORE_DEBUG("Using json window width");
-            } else {
-                props.width = WindowProperties::default_properties.width;
-                IS_CORE_DEBUG("Using default width");
-            }
-            if (win_props.isMember("Height") && win_props["Height"].isInt()) {
-                props.height = win_props["Height"].asInt();
-                IS_CORE_DEBUG("Using json window height");
-            } else {
-                props.height = WindowProperties::default_properties.height;
-                IS_CORE_DEBUG("Using default height");
-            }
-            if (win_props.isMember("Vsync") && win_props["Vsync"].isString()) {
-                props.vsync = win_props["Vsync"].asString() == "On" ? true : false;
-                IS_CORE_DEBUG("Using json window vsync");
-            } else {
-                props.vsync = WindowProperties::default_properties.vsync;
-                IS_CORE_DEBUG("Using default vsync");
-            }
+        bool success = LoadJsonFromFile(properties, filename);
+        if (auto const& win_props = properties["WindowProperties"];
+            success && win_props["Title"].isString() && win_props["Width"].isInt() &&
+            win_props["Height"].isInt() && win_props["Vsync"].isString()) {
 
-            IS_CORE_INFO("Loaded window properties from JSON");
+            props.title  = win_props["Title"].asString();
+            props.width  = win_props["Width"].asInt();
+            props.height = win_props["Height"].asInt();
+            props.vsync  = win_props["Vsync"].asString() == "On" ? true : false;
 
+            IS_CORE_INFO("Loaded window properties from <{}>", filename);
         } else { // Assign default properties
             props = WindowProperties::default_properties;
-            IS_CORE_INFO("Loaded default window properties");
+            IS_CORE_INFO("Using default window properties");
         }
     }
 
@@ -160,9 +141,11 @@ namespace IS {
         win_props["Width"]  = props.width;
         win_props["Height"] = props.height;
         win_props["Vsync"]  = props.vsync ? "On" : "Off";
-        
-        SaveJsonToFile(properties, filepath) ? IS_CORE_INFO("Successfully saved window properties to JSON!") :
-                                               IS_CORE_ERROR("Failed to save window propeties to JSON!");
+
+        // Save window propeties to JSON file
+        bool success = SaveJsonToFile(properties, filepath);
+        success ? IS_CORE_INFO("Successfully saved window properties to <{}>!", filepath) :
+                  IS_CORE_ERROR("Failed to save window propeties to <{}>!", filepath);
     }
 
 } // end namespace IS

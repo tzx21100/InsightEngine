@@ -36,7 +36,7 @@ namespace IS {
 
         std::streampos end = stream.tellg();
         stream.seekg(0, std::ios::beg);
-        uint32_t size = end - stream.tellg();
+        uint32_t size = static_cast<uint32_t>(end - stream.tellg());
 
         if (size == 0)
         {
@@ -65,6 +65,7 @@ namespace IS {
         {
             const char* error_message = mono_image_strerror(status);
             // Log some error message using the error_message data
+            IS_CORE_ERROR("Mono: {}", error_message);
             return nullptr;
         }
 
