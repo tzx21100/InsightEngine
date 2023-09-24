@@ -107,16 +107,16 @@ namespace IS {
                 const float texture_width = static_cast<float>(sprite.texture_width);
                 const float texture_height = static_cast<float>(sprite.texture_height);
                 const float texture_aspect_ratio = texture_width / texture_height;
-                const float draw_size = 200.f;
+                const float draw_size = 30.f;
                 ImGuiIO& io = ImGui::GetIO();
                 ImVec2 pos = ImGui::GetCursorPos();
                 ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
                 ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
                 ImVec4 tint_color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
                 ImVec4 border_color = ImGui::GetStyleColorVec4(ImGuiCol_Border);
-                ImGui::Image(texture_id, ImVec2(draw_size, draw_size / texture_aspect_ratio), uv_min, uv_max, tint_color, border_color);
+                ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
                 if (ImGui::BeginItemTooltip()) {
-                    float region_size = 32.0f;
+                    float region_size = 8.f;
                     float region_x = io.MousePos.x - pos.x - region_size * 0.5f;
                     float region_y = io.MousePos.y - pos.y - region_size * 0.5f;
                     float zoom = 4.0f;
@@ -126,8 +126,8 @@ namespace IS {
                     ImGui::Text("Max: (%.2f, %.2f)", region_x + region_size, region_y + region_size);
                     ImVec2 uv0 = ImVec2((region_x) / texture_width, (region_y) / texture_height);
                     ImVec2 uv1 = ImVec2((region_x + region_size) / texture_width, (region_y + region_size) / texture_height);
-                    float zoomed_in_width = region_size * zoom;
-                    float zoomed_in_height = zoomed_in_width / texture_aspect_ratio;
+                    float zoomed_in_height = region_size * zoom;
+                    float zoomed_in_width = zoomed_in_height * texture_aspect_ratio;
                     ImGui::Image(texture_id, ImVec2(zoomed_in_width, zoomed_in_height)); // still WIP
                     ImGui::EndTooltip();
                 }
