@@ -25,7 +25,7 @@ namespace IS {
 
         virtual void Initialize() override {
             //create a image
-            backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            backgroundTest = asset->GetImage("Assets/blackbg.png");
             idle_animation = asset->GetImage("Assets/player_idle.png");
             walking_animation = asset->GetImage("Assets/player_walking.png");
             zx_animation = asset->GetImage("Assets/icecream_truck.png");
@@ -175,7 +175,7 @@ namespace IS {
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
-                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
                         auto& transl = engine.GetComponent<Transform>(a);

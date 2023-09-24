@@ -11,7 +11,7 @@ namespace IS
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
 		//PHYSICS = this;
-		Gravity = Vector2D(0, -9.81f);
+		Gravity = Vector2D(0, -98.81f);
 		exertingGravity = false;
 		//isDebugDraw = false;
 		MaxPositionVelocity = 1000.f;

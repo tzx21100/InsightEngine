@@ -53,7 +53,6 @@ namespace IS {
         int height{};
         int channels{};
         size_t size{};
-        uint8_t* data{};
         unsigned long texture_data{};
         allocationType allocation_type{};
 
@@ -74,7 +73,7 @@ namespace IS {
         ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
 
         const Image& GetImage(const std::string& filename) const;
-        Image ImageLoad(const std::string& filepath);
+        void ImageLoad(const std::string& filepath);
         void SaveImageData(const Image image_data);
         void RemoveImageData(const std::string& filename);
         void ImageFree(const std::string& filename);

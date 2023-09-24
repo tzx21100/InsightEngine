@@ -195,29 +195,45 @@ namespace IS {
         meshes.emplace_back(circle_mesh);
     }
 
-    GLuint ISGraphics::initTextures(Image& image) {
+    void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+        int width, height, channels;
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+
+        if (!data) {
+            IS_CORE_ERROR("Failed to load image: {}", filepath.empty() ? "No filepath provided!" : filepath);
+            return;
+        }
 
         // Enable blending for transparency
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
-        int width{ image.width }, height{ image.height }; // channels{ image.channels };
-        unsigned char* image_data = image.data;
-
-        if (!image_data) {
-            IS_CORE_ERROR("Failed to load image: {}", image.file_name.empty() ? "No filepath provided!" : image.file_name);
-            return 0; // Return 0 to indicate failure
+        GLuint format=GL_RGBA;
+        if (channels == 1) {
+            format = GL_RED;
+        }
+        else if (channels == 2) {
+            format = GL_RG;
+        }
+        else if (channels == 3) {
+            format = GL_RGB;
+        }
+        else if (channels == 4) {
+            format = GL_RGBA;
         }
 
-
         GLuint textureID;
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-        
-        stbi_image_free(image_data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            IS_CORE_DEBUG("OpenGL error: {}", err);
+        }
+
+        stbi_image_free(data);  // Use stbi_image_free instead of delete[]
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -226,8 +242,13 @@ namespace IS {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        return textureID;
+        image.width = width;
+        image.height = height;
+        image.channels = channels;
+        image.file_name = filepath;
+        image.texture_data = textureID;
     }
+
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
