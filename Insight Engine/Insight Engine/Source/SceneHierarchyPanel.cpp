@@ -265,11 +265,9 @@ namespace IS {
         ImGui::SameLine();
 
         ImGui::Button("Load");
-        if (ImGui::IsItemHovered()) {
-            if (ImGui::BeginTooltip()) {
-                ImGui::Text("WIP");
-                ImGui::EndTooltip();
-            }
+        if (ImGui::BeginItemTooltip()) {
+            ImGui::Text("WIP");
+            ImGui::EndTooltip();
         }
 
         // Add Component
