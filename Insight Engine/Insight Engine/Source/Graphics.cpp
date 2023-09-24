@@ -47,7 +47,7 @@ namespace IS {
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        initMeshes();
+        Mesh::initMeshes(meshes);
         walking_ani.initAnimation(1, 4, 1.f);
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
@@ -182,18 +182,6 @@ namespace IS {
         //glDeleteTextures(1, &placeholder_tex.tex_ID);
     }
 
-    void ISGraphics::initMeshes() {
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
-        quad_mesh.setupQuadVAO();
-        point_mesh.setupNonQuadVAO(GL_POINTS);
-        line_mesh.setupNonQuadVAO(GL_LINES);
-        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
-
-        meshes.emplace_back(quad_mesh);
-        meshes.emplace_back(point_mesh);
-        meshes.emplace_back(line_mesh);
-        meshes.emplace_back(circle_mesh);
-    }
 
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
         int width, height, channels;

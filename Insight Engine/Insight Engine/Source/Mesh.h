@@ -22,6 +22,8 @@ namespace IS {
 		};
 		std::array<Vertex, 4> animation_vertices{};*/
 
+		static void initMeshes(std::vector<Mesh>& meshes);
+		static void cleanupMeshes(std::vector<Mesh>& meshes);
 		void setupQuadVAO();
 		void setupNonQuadVAO(GLenum mesh_primitive_type);
 	};

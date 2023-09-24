@@ -11,7 +11,7 @@ namespace IS {
         Entity entity_point;
         Entity entity_line;
         Entity entity_circle;
-        Entity quad;
+        Entity entity_quad;
 
         //singleton entities
         InsightEngine& engine = InsightEngine::Instance();
@@ -19,6 +19,7 @@ namespace IS {
         std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
 
         Image backgroundTest;
+        Image black_background;
         Image idle_animation;
         Image walking_animation;
         Image zx_animation;
@@ -26,18 +27,21 @@ namespace IS {
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            black_background = asset->GetImage("Assets/black_background.png");
             idle_animation = asset->GetImage("Assets/player_idle.png");
             walking_animation = asset->GetImage("Assets/player_walking.png");
             zx_animation = asset->GetImage("Assets/icecream_truck.png");
             
             //creating game object and their components
+            entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
             entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
             entity_test = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
             entity_floor = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
             entity_circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Circle");
-            entity_line = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Clock Line");
+            entity_line = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Line");
             entity_point = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Point");
 
+            auto& trans_quad = engine.GetComponent<Transform>(entity_quad);
             auto& trans_player = engine.GetComponent<Transform>(entity_player);
             auto& trans_test = engine.GetComponent<Transform>(entity_test);
             auto& trans_floor = engine.GetComponent<Transform>(entity_floor);
@@ -47,13 +51,15 @@ namespace IS {
 
             auto& body_player = engine.GetComponent<RigidBody>(entity_player);
             auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);
-            auto& body_line = engine.GetComponent<RigidBody>(entity_line);
 
+            auto& sprite_background = engine.GetComponent<Sprite>(entity_quad);
             auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
             auto& sprite_test = engine.GetComponent<Sprite>(entity_test);
             auto& sprite_circle = engine.GetComponent<Sprite>(entity_circle);
             auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
+
+            sprite_background.texture = static_cast<uint8_t>(black_background.texture_data);
 
             sprite_player.name = "textured_box";
             sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
@@ -64,19 +70,17 @@ namespace IS {
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
 
+            trans_quad.setScaling(WIDTH, HEIGHT);
             trans_player.setScaling(95, 120);
             trans_player.setWorldPosition(0, 0);
             trans_test.setScaling(-100, 100);
             trans_test.setWorldPosition(-400, 0);
             trans_floor.setScaling(600, 100);
             trans_floor.setWorldPosition(0, -400);
-            //body.velocity = { 10.f, 10.f };
             body_player.angular_velocity = 10.f;
             body_floor.bodyType = BodyType::Static;
             body_floor.mass = 99999.f;
             body_floor.InvMass = 1.f/99999.f;
-            body_line.bodyType = BodyType::Static;
-            body_line.angular_velocity = 30.f;
             
             trans_circle.setWorldPosition(650.f, 300.f);
             trans_circle.setScaling(200.f, 200.f);
@@ -85,7 +89,7 @@ namespace IS {
 
             trans_line.setWorldPosition(650.f, 300.f);
             trans_line.setScaling(200.f, 200.f);
-            trans_line.setRotation(0.f);
+            trans_line.setRotation(0.f, 40.f);
             sprite_line.primitive_type = GL_LINES;
 
             trans_point.setWorldPosition(650.f, 300.f);
@@ -162,6 +166,12 @@ namespace IS {
                     float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
                     trans_player.rotation += rotate * body_player.angular_velocity;
                     trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
+                }
+
+                // rotate lines on clock
+                if (engine.HasComponent<Transform>(entity_line)) {
+                    auto& trans_lines = engine.GetComponent<Transform>(entity_line);
+                    trans_lines.rotation += trans_lines.angle_speed * delta;
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {

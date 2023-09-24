@@ -91,6 +91,26 @@ namespace IS {
         
     }
 
+    void Mesh::initMeshes(std::vector<Mesh>& meshes) {
+        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
+        quad_mesh.setupQuadVAO();
+        point_mesh.setupNonQuadVAO(GL_POINTS);
+        line_mesh.setupNonQuadVAO(GL_LINES);
+        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+
+        meshes.emplace_back(quad_mesh);
+        meshes.emplace_back(point_mesh);
+        meshes.emplace_back(line_mesh);
+        meshes.emplace_back(circle_mesh);
+    }
+
+    void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {
+        for (auto& mesh : meshes) {
+            glDeleteVertexArrays(1, &mesh.vao_ID);
+            glDeleteBuffers(1, &mesh.vbo_ID);
+        }
+    }
+
     /*void Mesh::init4Meshes() {
         quad_mesh.setupQuadVAO();
         points_mesh.setupNonQuadVAO(GL_POINTS);
