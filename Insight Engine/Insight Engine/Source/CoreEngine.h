@@ -65,6 +65,8 @@ namespace IS {
         //Functions to save and load entities
         void SaveEntityToJson(Entity entity, std::string filename);
         void SaveAsPrefab(Entity entity, std::string filename);
+        void SaveCurrentScene(std::string filename);
+        void LoadScene(std::string filename);
         Entity LoadEntityFromJson(std::string filename);
         Entity LoadFromPrefab(Prefab prefab);
         Prefab LoadPrefabFromFile(std::string filename);

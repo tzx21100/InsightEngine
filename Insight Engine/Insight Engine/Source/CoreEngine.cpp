@@ -221,7 +221,7 @@ namespace IS {
 
 
     void InsightEngine::SaveEntityToJson(Entity entity, std::string filename) {
-        std::string file_path = "Assets/Entity/" + filename + ".json";
+        std::string file_path = filename;
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value saved_entity;
         saved_entity["Signature"] = signature;
@@ -235,7 +235,7 @@ namespace IS {
     }
 
     Entity InsightEngine::LoadEntityFromJson(std::string name) {
-        std::string filename = "Assets/Entity/" + name + ".json";
+        std::string filename = name;
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
         std::string str_sig = loaded["Signature"].asString();
@@ -290,8 +290,48 @@ namespace IS {
         return prefab;
     }
 
+    void InsightEngine::SaveCurrentScene(std::string filename) {
+        std::string file_path = "Assets/Scene/" + filename + "/"+ "mainscene.json";
+        int EntitiesAlive = mEntityManager->EntitiesAlive();
+        Json::Value scene;
+        scene["EntityAmount"] = EntitiesAlive;
+        SaveJsonToFile(scene, file_path);
+        Json::Value entity;
+        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
+            std::string entity_names = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(id.first) + ".json";
+            SaveEntityToJson(id.first, entity_names);
+        }
+        IS_CORE_DEBUG("Saving scene successful: {} entities saved", EntitiesAlive);
+    }
 
+    void InsightEngine::LoadScene(std::string filename) {
+        // Destroy all existing entities
+        std::vector<Entity> list_of_entities;
+        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
+            list_of_entities.emplace_back(id.first);
+        }
+        for (int i = 0; i < list_of_entities.size(); i++) {
+            DestroyEntity(list_of_entities[i]);
+        }
 
+        // Load the main scene file
+        std::string mainSceneFile = "Assets/Scene/" + filename + "/mainscene.json";
+        Json::Value sceneRoot;
+        if (!LoadJsonFromFile(sceneRoot, mainSceneFile)) {
+            std::cerr << "Failed to load main scene file: " << mainSceneFile << std::endl;
+            return;
+        }
+
+        int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
+
+        // Load each entity
+        for (int i = 0; i < EntitiesAlive; ++i) {
+            std::string entityFile = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(i) + ".json";
+            LoadEntityFromJson(entityFile);
+        }
+
+        IS_CORE_DEBUG("Loading scene successful: {} entities loaded", EntitiesAlive);
+    }
 
 }
 

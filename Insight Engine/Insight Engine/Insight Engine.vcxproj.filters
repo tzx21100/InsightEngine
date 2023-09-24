@@ -249,6 +249,9 @@
     <ClInclude Include="Source\Prefab.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

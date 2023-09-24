@@ -177,11 +177,13 @@ namespace IS {
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
-                    engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
+                    //engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
+                    engine.SaveCurrentScene("testscene");
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_J)) {
-                    engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
+                    //engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
+                    engine.LoadScene("testscene");
                 }
             }
 
