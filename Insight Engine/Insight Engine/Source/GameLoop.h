@@ -95,118 +95,124 @@ namespace IS {
         virtual void Update(float delta) override {
 
             // Disable mouse/key event when GUI is using them
-            if (auto const& gui = InsightEngine::Instance().GetSystem<GUISystem>("GUI"); gui->WantCaptureKeyboard() || gui->WantCaptureMouse())
-                return;
-            
-            // Enable/disable GUI
-            if (input->IsKeyPressed(GLFW_KEY_ESCAPE)) {
-                engine.mUsingGUI = !engine.mUsingGUI;
-                if (engine.mUsingGUI) {
-                    IS_CORE_DEBUG("GUI Enabled");
-                } else {
-                    auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
-                    input->setCenterPos(width / 2.f, height / 2.f);
-                    input->setRatio(static_cast<float>(width), static_cast<float>(height));
-                    IS_CORE_DEBUG("GUI Disabled");
+            auto const& gui = InsightEngine::Instance().GetSystem<GUISystem>("GUI");
+
+            // Process Keyboard Events
+            if (!gui->WantCaptureKeyboard()) {
+
+                // Enable/disable GUI
+                if (input->IsKeyPressed(GLFW_KEY_ESCAPE)) {
+                    engine.mUsingGUI = !engine.mUsingGUI;
+                    if (engine.mUsingGUI) {
+                        IS_CORE_DEBUG("GUI Enabled");
+                    } else {
+                        auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
+                        input->setCenterPos(width / 2.f, height / 2.f);
+                        input->setRatio(static_cast<float>(width), static_cast<float>(height));
+                        IS_CORE_DEBUG("GUI Disabled");
+                    }
+                }
+
+                //this controls the freeze frame
+                engine.continueFrame = false;
+                if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
+                    engine.continueFrame = true;
+                    IS_CORE_DEBUG("Step frame");
+                }
+                if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
+                    engine.freezeFrame = !engine.freezeFrame;
+                    IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
+                }
+                if (engine.freezeFrame) {
+                    if (!engine.continueFrame)
+                        return;
+                }
+
+                if (engine.HasComponent<Sprite>(entity_player)) {
+                    auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
+                    if (input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_D)) {
+                        sprite_player.texture = static_cast<uint8_t>(walking_animation.texture_data);
+                        sprite_player.texture_width = walking_animation.width;
+                        sprite_player.texture_height = walking_animation.height;
+                        sprite_player.current_tex_index = 1;
+                    } else {
+                        sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
+                        sprite_player.texture_width = idle_animation.width;
+                        sprite_player.texture_height = idle_animation.height;
+                        sprite_player.current_tex_index = 0;
+                    }
+                }
+
+                if (engine.HasComponent<Transform>(entity_player)) {
+                    auto& trans_player = engine.GetComponent<Transform>(entity_player);
+                    auto& body_player = engine.GetComponent<RigidBody>(entity_player);
+
+                    //auto& trans2 = engine.GetComponent<Transform>(myEntity);
+                    int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
+                    int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
+                    Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
+                    body_player.AddVelocity(inputVelocity);
+                    //trans.world_position.x += hori * rbody.velocity.x;
+                    //trans.world_position.y += verti * rbody.velocity.y;
+
+                    // flip image
+                    trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||
+                        (input->IsKeyHeld(GLFW_KEY_D) && (trans_player.scaling.x < 0)) ? -1 : 1;
+
+                    float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
+                    trans_player.rotation += rotate * body_player.angular_velocity;
+                    trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
+                }
+
+                if (input->IsKeyPressed(GLFW_KEY_R)) {
+                    engine.SaveAsPrefab(entity_player, "aa");
+                }
+
+                if (input->IsKeyPressed(GLFW_KEY_J)) {
+                    engine.LoadFromPrefab(asset->GetPrefab("aa"));
                 }
             }
 
-            //this controls the freeze frame
-            engine.continueFrame = false;
-            if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
-                engine.continueFrame = true;
-                IS_CORE_DEBUG("Step frame");
-            }
-            if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
-                engine.freezeFrame = !engine.freezeFrame;
-                IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
-            }
-            if (engine.freezeFrame) {
-                if (!engine.continueFrame)
-                    return;
-            }
-
-            if (engine.HasComponent<Sprite>(entity_player)) {
-                auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
-                if (input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_D)) {
-                    sprite_player.texture = static_cast<uint8_t>(walking_animation.texture_data);
-                    sprite_player.texture_width = walking_animation.width;
-                    sprite_player.texture_height = walking_animation.height;
-                    sprite_player.current_tex_index = 1;
-                } else {
-                    sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
-                    sprite_player.texture_width = idle_animation.width;
-                    sprite_player.texture_height = idle_animation.height;
-                    sprite_player.current_tex_index = 0;
-                }
-            }
-
-            if (engine.HasComponent<Transform>(entity_player)) {
-                auto& trans_player = engine.GetComponent<Transform>(entity_player);
-                auto& body_player = engine.GetComponent<RigidBody>(entity_player);
-
-                //auto& trans2 = engine.GetComponent<Transform>(myEntity);
-                int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
-                int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
-                Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
-                body_player.AddVelocity(inputVelocity);
-                //trans.world_position.x += hori * rbody.velocity.x;
-                //trans.world_position.y += verti * rbody.velocity.y;
-
-                // flip image
-                trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||
-                    (input->IsKeyHeld(GLFW_KEY_D) && (trans_player.scaling.x < 0)) ? -1 : 1;
-
-                float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
-                trans_player.rotation += rotate * body_player.angular_velocity;
-                trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
-            }
-
-
-            if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().first < WIDTH / 2) {
-                for (int i = 0; i < 1; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
-                    auto& transl = engine.GetComponent<Transform>(a);
-                    transl.setScaling(30, 38);
-                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
-                    //add the image in
-                    //spr.texture = backgroundTest.texture_data;
-                }
-
-            }
-
-            if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2) && input->GetMousePosition().first > -WIDTH / 2 && input->GetMousePosition().second < WIDTH / 2) {
-                for (int i = 0; i < 1; i++) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Ice Cream Truck");
-                    auto& transl = engine.GetComponent<Transform>(a);
-                    transl.setScaling(128, 128);
-                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
-                    auto& spr = engine.GetComponent<Sprite>(a);
-                    spr.name = "textured_box2";
-                    spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
-                    spr.texture_width = zx_animation.width;
-                    spr.texture_height = zx_animation.height;
-                    //add the image in
-                    //spr.texture = backgroundTest.texture_data;
+            // Process Mouse Events
+            if (!gui->WantCaptureMouse()) {
+                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                    for (int i = 0; i < 1; i++) {
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
+                        auto& transl = engine.GetComponent<Transform>(a);
+                        transl.setScaling(30, 38);
+                        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                        //add the image in
+                        //spr.texture = backgroundTest.texture_data;
+                    }
 
                 }
 
+                if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
+                    for (int i = 0; i < 1; i++) {
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Ice Cream Truck");
+                        auto& transl = engine.GetComponent<Transform>(a);
+                        transl.setScaling(128, 128);
+                        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                        auto& spr = engine.GetComponent<Sprite>(a);
+                        spr.name = "textured_box2";
+                        spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
+                        spr.texture_width = zx_animation.width;
+                        spr.texture_height = zx_animation.height;
+                        //add the image in
+                        //spr.texture = backgroundTest.texture_data;
 
+                    }
+
+
+                }
             }
 
-            if (input->IsKeyPressed(GLFW_KEY_R)) {
-                engine.SaveAsPrefab(entity_player, "aa");
-            }
-
-            if (input->IsKeyPressed(GLFW_KEY_J)) {
-                engine.LoadFromPrefab(asset->GetPrefab("aa"));
-            }
-
-            if (engine.HasComponent<Transform>(entity_line)) {
-                auto& transLines = engine.GetComponent<Transform>(entity_line);
-                auto& rbLines = engine.GetComponent<RigidBody>(entity_line);
-                transLines.rotation += rbLines.angular_velocity * delta;
-                transLines.rotation = transLines.rotation < 0.f ? 360.f : fmod(transLines.rotation, 360.f);
+            // Update Line Rotation
+            if (engine.HasComponent<Transform>(entity_line) && engine.HasComponent<RigidBody>(entity_line)) {
+                auto& trans_line = engine.GetComponent<Transform>(entity_line);
+                auto& body_line = engine.GetComponent<RigidBody>(entity_line);
+                trans_line.rotation += body_line.angular_velocity * delta;
+                trans_line.rotation = trans_line.rotation < 0.f ? 360.f : fmod(trans_line.rotation, 360.f);
             }
         }
 
