@@ -217,12 +217,10 @@ namespace IS {
                 }
             }
 
-            // Update Line Rotation
-            if (engine.HasComponent<Transform>(entity_line) && engine.HasComponent<RigidBody>(entity_line)) {
-                auto& trans_line = engine.GetComponent<Transform>(entity_line);
-                auto& body_line = engine.GetComponent<RigidBody>(entity_line);
-                trans_line.rotation += body_line.angular_velocity * delta;
-                trans_line.rotation = trans_line.rotation < 0.f ? 360.f : fmod(trans_line.rotation, 360.f);
+            // rotate lines on clock
+            if (engine.HasComponent<Transform>(entity_quad)) {
+                auto& transLines = engine.GetComponent<Transform>(entity_quad);
+                transLines.rotation += transLines.angle_speed * delta;
             }
         }
 
