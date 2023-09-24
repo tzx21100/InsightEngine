@@ -25,7 +25,7 @@ namespace IS {
 
         virtual void Initialize() override {
             //create a image
-            backgroundTest = asset->GetImage("Assets/blackbg.png");
+            backgroundTest = asset->GetImage("Assets/placeholder_background.png");
             idle_animation = asset->GetImage("Assets/player_idle.png");
             walking_animation = asset->GetImage("Assets/player_walking.png");
             zx_animation = asset->GetImage("Assets/icecream_truck.png");
@@ -165,11 +165,11 @@ namespace IS {
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
-                    engine.SaveAsPrefab(entity_player, "aa");
+                    engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_J)) {
-                    engine.LoadFromPrefab(asset->GetPrefab("aa"));
+                    engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
                 }
             }
 

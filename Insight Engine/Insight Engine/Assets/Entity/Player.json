@@ -1,0 +1,86 @@
+{
+	"Name" : "Player",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 10.0,
+		"RigidBodyArea" : 11400.0,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyDensity" : 22800.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.5,
+		"RigidBodyMass" : 2.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyShapeType" : 0,
+		"RigidBodyTransformUpdateRequired" : false,
+		"RigidBodyTransformedVertices" : 
+		[
+			{
+				"x" : 106.1646728515625,
+				"y" : -101.83828735351562
+			},
+			{
+				"x" : 11.1646728515625,
+				"y" : -101.83828735351562
+			},
+			{
+				"x" : 11.1646728515625,
+				"y" : -221.83828735351562
+			},
+			{
+				"x" : 106.1646728515625,
+				"y" : -221.83828735351562
+			}
+		],
+		"RigidBodyVelocityX" : -80.0,
+		"RigidBodyVelocityY" : 169.99639892578125,
+		"RigidBodyVertices" : 
+		[
+			{
+				"x" : 47.5,
+				"y" : 60.0
+			},
+			{
+				"x" : -47.5,
+				"y" : 60.0
+			},
+			{
+				"x" : -47.5,
+				"y" : -60.0
+			},
+			{
+				"x" : 47.5,
+				"y" : -60.0
+			}
+		]
+	},
+	"Signature" : "00000000000000000000000000001111",
+	"Sprite" : 
+	{
+		"SpriteColorX" : 0.0,
+		"SpriteColorY" : 0.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "textured_box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 4,
+		"SpriteTextureHeight" : 120,
+		"SpriteTextureWidth" : 760,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : -95.0,
+		"SpriteTransformScalingY" : 120.0,
+		"SpriteTransformWorldPositionX" : 58.6646728515625,
+		"SpriteTransformWorldPositionY" : -161.83828735351562
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : -95.0,
+		"TransformScalingY" : 120.0,
+		"TransformWorldPositionX" : 58.6646728515625,
+		"TransformWorldPositionY" : -161.83828735351562
+	}
+}
