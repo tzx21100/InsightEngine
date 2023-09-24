@@ -9,7 +9,7 @@ namespace IS
         public Main()
         {
             Console.WriteLine("ctor!");
-            CppFunction();
+            nativeLog("matt", 1010);
         }
 
         public void PrintMessage()
@@ -26,6 +26,6 @@ namespace IS
         }
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        extern static void CppFunction();
+        extern static void nativeLog(string name, int param);
     }
 }

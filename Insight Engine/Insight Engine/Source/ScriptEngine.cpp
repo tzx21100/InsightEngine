@@ -25,9 +25,17 @@ namespace IS {
         delete s_data;
     }
 
-    static void CppFunc() {
-        std::cout << "This is C++";
+    static void nativeLog(MonoString* name, int param) {
+        char* cstr = mono_string_to_utf8(name);
+        std::string str(cstr);
+        mono_free(cstr);
+        std::cout << str << "," << param << std::endl;
     }
+
+ /*   static void nativeLog_v(glm::vec2* param) {
+       auto values = *param;
+       std::cout << values.x << "," << values.y<< std::endl;
+    }*/
 
     char* readBytes(const std::string& filepath, uint32_t* out_size)
     {
@@ -119,7 +127,8 @@ namespace IS {
         s_data->app_domain = mono_domain_create_appdomain((char*)"ISScriptRuntime", nullptr);
         mono_domain_set(s_data->app_domain, true);
 
-        mono_add_internal_call("IS.Main::CppFunction", CppFunc);
+        mono_add_internal_call("IS.Main::nativeLog", nativeLog);
+        //mono_add_internal_call("IS.Main::nativeLog_v", nativeLog_v);
 
         //temp
         s_data->core_assembly = loadCSharpAssembly("Resources/Scripts/net6.0/IS-ScriptCore.dll");
@@ -147,11 +156,13 @@ namespace IS {
 
         ////call func w param
         //MonoMethod* printInt_func = mono_class_get_method_from_name(mono_class, "PrintInt", 1);
-        //if (printInt_func == nullptr) {
-        //    return;
-        //}
+        //int val = 5;
+        //void* param[1] = {
+        //    &val
+        //};
 
-        //
+
+        //mono_runtime_invoke(printInt_func, instance, param, nullptr);
         
        
     }
