@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,7 +8,6 @@
   <!--  <BaseOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts</BaseOutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates</BaseIntermediateOutputPath>-->
     <OutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\</OutputPath>
-	  <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates\</BaseIntermediateOutputPath>
 
   </PropertyGroup>
 

@@ -38,7 +38,6 @@ namespace IS {
 
                 ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
                 ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 5.f);
 
                 float line_height = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
                 ImVec2 button_size = { line_height + 3.f, line_height };
@@ -66,7 +65,7 @@ namespace IS {
                 ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
-                ImGui::PopStyleVar(2);
+                ImGui::PopStyleVar();
                 ImGui::EndTable();
                 ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal, 0.5f);
             }

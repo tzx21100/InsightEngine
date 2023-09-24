@@ -95,7 +95,7 @@ namespace IS {
         virtual void Update(float delta) override {
 
             // Enable/disable GUI
-            if (input->IsKeyPressed(GLFW_KEY_TAB)) {
+            if (input->IsKeyPressed(GLFW_KEY_ESCAPE)) {
                 engine.mUsingGUI = !engine.mUsingGUI;
                 if (engine.mUsingGUI) {
                     IS_CORE_DEBUG("GUI Enabled");
@@ -195,10 +195,12 @@ namespace IS {
                 engine.LoadFromPrefab(asset->GetPrefab("aa"));
             }
 
-            auto& transLines = engine.GetComponent<Transform>(lines);
-            auto& rbLines = engine.GetComponent<RigidBody>(lines);
-            transLines.rotation += rbLines.angular_velocity * delta;
-            transLines.rotation = transLines.rotation < 0.f ? 360.f : fmod(transLines.rotation, 360.f);
+            if (engine.HasComponent<Transform>(lines)) {
+                auto& transLines = engine.GetComponent<Transform>(lines);
+                auto& rbLines = engine.GetComponent<RigidBody>(lines);
+                transLines.rotation += rbLines.angular_velocity * delta;
+                transLines.rotation = transLines.rotation < 0.f ? 360.f : fmod(transLines.rotation, 360.f);
+            }
         }
 
         virtual void Draw([[maybe_unused]]float delta) override{

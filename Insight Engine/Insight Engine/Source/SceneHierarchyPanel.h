@@ -52,15 +52,28 @@ namespace IS {
 
         /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
-         * \param it The Entity to be rendered.
+         * \param entity The Entity to be rendered.
          */
-        void RenderEntityNode(Entity it);
+        void RenderEntityNode(Entity entity);
 
         /*!
          * \brief Renders component nodes for the specified Entity.
          * \param entity The Entity for which components will be rendered.
          */
-        void RenderComponentNodes(EntityPtr entity);
+        void RenderComponentNodes(Entity entity);
+
+        /*!
+         * \brief Renders configuration for the specified Entity.
+         * \param entity The Entity for which configuration will be rendered.
+         */
+        void RenderEntityConfig(Entity entity);
+
+        /*!
+         * \brief Renders configuration for the specified Entity.
+         * \param entity The Entity to be deleted.
+         * \param show Boolean flag to determine where to show window.
+         */
+        void RenderConfirmDelete(Entity entity, bool& show);
 
         /*!
          * \brief Renders a specific component for the specified Entity.

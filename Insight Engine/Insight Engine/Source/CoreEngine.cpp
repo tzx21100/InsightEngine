@@ -91,6 +91,7 @@ namespace IS {
         //this is the game loop
         while (is_running) {
             Update();
+            ProcessEntityDeletion();
         }
     }
 
@@ -161,8 +162,14 @@ namespace IS {
     }
 
     // Get frame count
-    unsigned InsightEngine::FrameCount() const {
-        return frame_count;
+    unsigned InsightEngine::FrameCount() const { return frame_count; }
+
+    void InsightEngine::DeleteEntity(Entity entity) { mEntitiesToDelete.insert(entity); }
+
+    void InsightEngine::ProcessEntityDeletion() {
+        for (Entity entity : mEntitiesToDelete)
+            DestroyEntity(entity);
+        mEntitiesToDelete.clear();
     }
 
     //limit fps will return the frameEnd time now so i can use to find delta time
@@ -249,6 +256,8 @@ namespace IS {
         prefab["Signature"] = signature;
         prefab["Name"] = PrefabName;
         SaveJsonToFile(prefab, file_path);
+
+        IS_CORE_INFO("Prefab [{}] saved at <{}>", PrefabName, file_path);
     }
 
     //creating an entity from prefab

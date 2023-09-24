@@ -75,7 +75,7 @@ namespace IS {
 
         const Image& GetImage(const std::string& filename) const;
         Image ImageLoad(const std::string& filepath);
-        void SaveImageData(const Image& image_data);
+        void SaveImageData(const Image image_data);
         void RemoveImageData(const std::string& filename);
         void ImageFree(const std::string& filename);
         Image ToGray(const Image& image);
