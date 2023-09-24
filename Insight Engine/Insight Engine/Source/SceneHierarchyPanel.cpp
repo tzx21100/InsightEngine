@@ -107,7 +107,7 @@ namespace IS {
                 const float texture_width = static_cast<float>(sprite.texture_width);
                 const float texture_height = static_cast<float>(sprite.texture_height);
                 const float texture_aspect_ratio = texture_width / texture_height;
-                const float draw_size = 30.f;
+                const float draw_size = 40.f;
                 ImGuiIO& io = ImGui::GetIO();
                 ImVec2 pos = ImGui::GetCursorPos();
                 ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
@@ -355,6 +355,10 @@ namespace IS {
             ImGui::EndTable();
             ImGui::End();
         }
+    }
+
+    void SceneHierarchyPanel::RenderPrefab() {
+        
     }
 
     template <typename Component, typename RenderFunc>
