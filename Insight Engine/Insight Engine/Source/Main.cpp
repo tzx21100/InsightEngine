@@ -66,7 +66,7 @@ int main() {
     engine.AddSystem(insight_gameloop, sign_default);
 
     //run engine (GAME LOOP)
-    engine.SetFPS(60);//set fps to wtv
+    engine.SetFPS(144);//set fps to wtv
     engine.Run();
    
     //engine stops technically don't need this since destructor is there and my engine is static
