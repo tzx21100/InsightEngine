@@ -218,8 +218,8 @@ namespace IS {
             }
 
             // rotate lines on clock
-            if (engine.HasComponent<Transform>(entity_quad)) {
-                auto& transLines = engine.GetComponent<Transform>(entity_quad);
+            if (engine.HasComponent<Transform>(entity_line)) {
+                auto& transLines = engine.GetComponent<Transform>(entity_line);
                 transLines.rotation += transLines.angle_speed * delta;
             }
         }
