@@ -118,6 +118,18 @@ namespace IS {
          */
         void SetDarkThemeColors() const;
 
+        /*!
+         * \brief Checks if current context wants to capture mouse.
+         * \return true if current context wants to capture mouse, else false.
+         */
+        bool WantCaptureMouse() const;
+
+        /*!
+         * \brief Checks if current context wants to capture keyboard.
+         * \return true if current context wants to capture keyboard, else false.
+         */
+        bool WantCaptureKeyboard() const;
+
     private:
         LayerStack mLayers; ///< The stack of GUI layers.
     };

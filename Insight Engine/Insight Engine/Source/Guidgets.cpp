@@ -27,11 +27,13 @@ namespace IS {
     namespace guidgets {
 
         void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width) {
-            ImGuiTableFlags flags = ImGuiTableFlags_PreciseWidths;
+            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
             ImGui::PushID(label.c_str());
 
-            if (ImGui::BeginTable(label.c_str(), 2, flags, ImVec2(0, 0), column_width)) {
+            if (ImGui::BeginTable(label.c_str(), 2, table_flags)) {
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
                 ImGui::TableNextColumn();
                 ImGui::Text(label.c_str());
                 ImGui::TableNextColumn();
@@ -67,7 +69,6 @@ namespace IS {
 
                 ImGui::PopStyleVar();
                 ImGui::EndTable();
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal, 0.5f);
             }
 
             ImGui::PopID();

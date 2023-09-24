@@ -187,4 +187,14 @@ namespace IS {
         colors[ImGuiCol_MenuBarBg] = ImVec4{ .1137f, .1137f, .1137f, 1.f };
     }
 
+    bool GUISystem::WantCaptureMouse() const { 
+        ImGuiIO const& io = ImGui::GetIO();
+        return io.WantCaptureMouse;
+    }
+
+    bool GUISystem::WantCaptureKeyboard() const {
+        ImGuiIO const& io = ImGui::GetIO();
+        return io.WantCaptureKeyboard;
+    }
+
 } // end namespace IS

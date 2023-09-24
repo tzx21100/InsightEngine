@@ -26,7 +26,7 @@ namespace IS {
         // Initialize GLFW library
         bool success = glfwInit();
         if (!success)
-            IS_CORE_CRITICAL("Failed to to initialize glew libary!");
+            IS_CORE_CRITICAL("Failed to to initialize GLFW libary!");
 
         // Specify minimum constraints in OpenGL context
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -125,7 +125,7 @@ namespace IS {
             mProps.mHeight = win_props["Height"].asInt();
             mProps.mVSync  = win_props["Vsync"].asString() == "On" ? true : false;
 
-            IS_CORE_INFO("Loaded window properties from <{}>", filename);
+            IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
         } else { // Assign default properties
             mProps = mDefaultProperties;
             IS_CORE_INFO("Using default window properties");
@@ -143,8 +143,8 @@ namespace IS {
 
         // Save window propeties to JSON file
         bool success = SaveJsonToFile(properties, filepath);
-        success ? IS_CORE_INFO("Successfully saved window properties to <{}>!", filepath) :
-                  IS_CORE_ERROR("Failed to save window propeties to <{}>!", filepath);
+        success ? IS_CORE_INFO("Successfully saved window properties to \"{}\"!", filepath) :
+                  IS_CORE_ERROR("Failed to save window propeties to \"{}\"!", filepath);
     }
 
 } // end namespace IS

@@ -59,7 +59,7 @@ namespace IS {
     void AssetManager::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
-            std::cout << "Handling Debug" << std::endl;
+            IS_CORE_INFO("Handling Debug");
         }
     }
 
@@ -86,7 +86,7 @@ namespace IS {
             image.allocation_type = allocationType::StbAllocated;
             std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
             GLuint result = graphics->initTextures(image);
-            std::cout << result;
+            IS_CORE_INFO("Using Texture: {}", result);
             image.texture_data = result;
             image.data = nullptr;
             SaveImageData(image);

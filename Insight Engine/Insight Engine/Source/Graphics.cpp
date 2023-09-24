@@ -226,7 +226,6 @@ namespace IS {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        IS_CORE_INFO("Using Texture: {}", textureID);
         return textureID;
     }
 

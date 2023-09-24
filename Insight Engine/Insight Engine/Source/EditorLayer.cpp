@@ -2,7 +2,7 @@
  * \file EditorLayer.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 23-09-2023
+ * \date 24-09-2023
  * \brief
  * This source file defines the implementation for class EditorLayer which
  * encapsulates the functionalities of a level editor layer.
@@ -116,6 +116,12 @@ namespace IS {
 
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, flags);
+
+        // Allow key/mouse event pass through only in this panel
+        if (ImGui::IsWindowFocused()) {
+            ImGuiIO& io = ImGui::GetIO();
+            io.WantCaptureMouse = io.WantCaptureKeyboard = false;
+        }
 
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();

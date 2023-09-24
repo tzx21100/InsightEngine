@@ -25,12 +25,10 @@
 
 // Dependencies
 #include <imgui.h>
-#include <ranges>
 
 namespace IS {
 
     void SceneHierarchyPanel::RenderPanel() {
-        // Data sources
         InsightEngine& engine = InsightEngine::Instance();
 
         // Begin creating the scene hierarchy panel
@@ -158,7 +156,10 @@ namespace IS {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Translation", position);
-            if (ImGui::BeginTable("TransformRotation", 2)) {
+            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
+            if (ImGui::BeginTable("TransformRotation", 2, table_flags)) {
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn("TransformRotation", column_flags, 100.f);
                 ImGui::TableNextColumn();
                 ImGui::Text("Rotation");
                 ImGui::TableNextColumn();
@@ -174,12 +175,14 @@ namespace IS {
 
         // Rigidbody Component
         RenderComponent<RigidBody>("Rigidbody", entity, [&](RigidBody& rigidbody) {
-            ImGuiTableFlags table_flags = 0;
+            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
             guidgets::RenderControlVec2("Velocity", rigidbody.velocity);
             guidgets::RenderControlVec2("Force", rigidbody.force);
 
-            if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(entity)).c_str(), 2, table_flags, ImVec2(0, 0), 100.f)) {
+            if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(entity)).c_str(), 2, table_flags)) {
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn("RigidbodyTable", column_flags, 100.f);
                 ImGui::TableNextColumn();
                 ImGui::Text("Angular Velocity");
                 ImGui::TableNextColumn();
@@ -230,8 +233,12 @@ namespace IS {
                 ImGui::PopItemWidth();
 
                 ImGui::EndTable();
-                ImGui::Separator();
             }
+        });
+
+        // Input Affector Component
+        RenderComponent<InputAffector>("Input Affector", entity, []([[maybe_unused]] InputAffector& input_affector) {
+            ImGui::Text("(Empty)");
         });
 
         ImGui::PopStyleVar();
@@ -256,13 +263,13 @@ namespace IS {
             engine.SaveAsPrefab(entity, name);
         }
         ImGui::SameLine();
-        if (ImGui::Button("Load")) {
-            // need open file explorer next time
-            ImGui::OpenPopup("Load");
-        }
-        if (ImGui::BeginPopup("Load")) {
-            ImGui::MenuItem("WIP");
-            ImGui::EndPopup();
+
+        ImGui::Button("Load");
+        if (ImGui::IsItemHovered()) {
+            if (ImGui::BeginTooltip()) {
+                ImGui::Text("WIP");
+                ImGui::EndTooltip();
+            }
         }
 
         // Add Component

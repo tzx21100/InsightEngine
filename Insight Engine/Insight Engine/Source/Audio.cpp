@@ -64,7 +64,7 @@ namespace IS {
     void ISAudio::HandleMessage(const Message& message) { //for messaging system
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
-            std::cout << "Handling Debug" << std::endl;
+            IS_CORE_INFO("Handing Debug");
         }
     }
 
@@ -118,7 +118,7 @@ namespace IS {
 
         if (result != FMOD_OK) {
             // Handle group creation error
-            std::cout << "group creation error";
+            IS_CORE_ERROR("Group Creation Failed!");
             return nullptr; // Return nullptr on error
         }
 
