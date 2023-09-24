@@ -9,7 +9,6 @@
 #include <stdbool.h>
 #include <filesystem>
 
-
 #define ON_ERROR(condition, msg) \
 do { \
     if (condition) { \
@@ -105,7 +104,6 @@ namespace IS {
         //Image image;
     };
 
-
 }
 
-#endif // GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H  
+#endif // GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H

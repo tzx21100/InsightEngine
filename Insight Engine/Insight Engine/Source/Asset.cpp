@@ -4,13 +4,22 @@
 #pragma warning(push)
 #pragma warning(disable: 4244)
 #pragma warning(disable: 4100)
+#pragma warning(disable: 26451)
+#pragma warning(disable: 26819)
+#pragma warning(disable: 6262)
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#pragma warning(pop)
+
+#pragma warning(push)
+#pragma warning(disable: 26451)
+#pragma warning(disable: 26819)
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 #pragma warning(pop)
 
 namespace IS {
+
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
         namespace fs = std::filesystem;
@@ -37,24 +46,15 @@ namespace IS {
                mPrefabList[to_list.mName] = to_list;
             }
         }
-
-
     }
 
-    Prefab AssetManager::GetPrefab(std::string name) {
-        return mPrefabList[name];
-    }
-
+    Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame
-               
-    }
+         
+    }    
 
-    
-
-    std::string AssetManager::GetName() {
-        return "Asset";
-    }
+    std::string AssetManager::GetName() { return "Asset"; }
 
     void AssetManager::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {
@@ -62,7 +62,6 @@ namespace IS {
             IS_CORE_INFO("Handling Debug");
         }
     }
-
 
     const Image& AssetManager::GetImage(const std::string& filename) const {
         auto it = mImageList.find(filename);
@@ -91,9 +90,7 @@ namespace IS {
             image.data = nullptr;
             SaveImageData(image);
             return image;
-        }
-
-       
+        }       
 
         throw std::runtime_error("Failed to load image.");
     }
@@ -186,7 +183,5 @@ namespace IS {
         SaveImageData(sepiaImage);
         return sepiaImage;
     }
-
-
 
 }

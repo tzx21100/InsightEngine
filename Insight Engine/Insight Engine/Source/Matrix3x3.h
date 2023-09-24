@@ -21,7 +21,10 @@ namespace IS
 		float m[9];
 		float m2[3][3];//You need this for the second part of the assignment
 
+	#pragma warning(push)
+	#pragma warning(disable : 26495)
 		Matrix3x3() : m00(0.0f), m01(0.0f), m02(0.0f), m10(0.0f), m11(0.0f), m12(0.0f), m20(0.0f), m21(0.0f), m22(0.0f) {}
+	#pragma warning(pop)
 		Matrix3x3(const float* pArr);
 		Matrix3x3(float _00, float _01, float _02,
 			float _10, float _11, float _12,
