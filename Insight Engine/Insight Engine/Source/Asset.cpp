@@ -1,4 +1,5 @@
 #include "Pch.h"
+#include "CoreEngine.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4244)
@@ -22,7 +23,6 @@ namespace IS {
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
                 Image img = ImageLoad(filePath);
-                SaveImageData(img); 
             }
         }
 
@@ -35,7 +35,6 @@ namespace IS {
             if (extension == ".json") {
                Prefab to_list=engine.LoadPrefabFromFile(filePath);
                mPrefabList[to_list.mName] = to_list;
-               std::cout << "SUCCESSFUL LOAD "<<to_list.mName;
             }
         }
 
@@ -85,10 +84,11 @@ namespace IS {
             image.channels = channels;
             image.data = data;
             image.allocation_type = allocationType::StbAllocated;
-            auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
-            auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
-            auto result=graphicsys->initTextures(image);
+            std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
+            GLuint result = graphics->initTextures(image);
+            std::cout << result;
             image.texture_data = result;
+            image.data = nullptr;
             SaveImageData(image);
             return image;
         }
@@ -98,7 +98,7 @@ namespace IS {
         throw std::runtime_error("Failed to load image.");
     }
 
-    void AssetManager::SaveImageData(const Image& image_data) {
+    void AssetManager::SaveImageData(const Image image_data) {
         mImageList[image_data.file_name] = image_data;
         mImageNames.emplace_back(image_data.file_name);
     }
