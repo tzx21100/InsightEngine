@@ -11,7 +11,7 @@ namespace IS
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
 		//PHYSICS = this;
-		Gravity = Vector2D(0, -9.81f);
+		Gravity = Vector2D(0, -98.81f);
 		exertingGravity = false;
 		//isDebugDraw = false;
 		MaxPositionVelocity = 1000.f;
@@ -369,12 +369,12 @@ namespace IS
 		j /= bodyA.InvMass + bodyB.InvMass; //a
 		//normal *= -1;
 		Vector2D impulse = j * normal;
-		std::cout << "normal: " << normal.x << normal.y << std::endl;
-		std::cout << "before: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
+		//std::cout << "normal: " << normal.x << normal.y << std::endl;
+		//std::cout << "before: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
 		// if check
 		bodyA.velocity -= impulse * bodyA.InvMass;
 		bodyB.velocity += impulse * bodyB.InvMass;
-		std::cout << "after: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
+		//std::cout << "after: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
 	}
 
 	void Physics::drawOutLine(RigidBody & body, Sprite const& sprite) {

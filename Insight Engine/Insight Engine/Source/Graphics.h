@@ -27,7 +27,7 @@ namespace IS {
 		
 		static void cleanup();
 
-		static GLuint initTextures(Image& image);
+		static void initTextures(const std::string& filepath, Image& image);
 		static void initMeshes();
 		static GLuint GetScreenTexture();
 		static void ResizeFramebuffer(GLuint width, GLuint height);

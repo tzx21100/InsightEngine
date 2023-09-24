@@ -165,17 +165,17 @@ namespace IS {
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
-                    engine.SaveAsPrefab(entity_player, "aa");
+                    engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_J)) {
-                    engine.LoadFromPrefab(asset->GetPrefab("aa"));
+                    engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
                 }
             }
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
-                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
                         auto& transl = engine.GetComponent<Transform>(a);
