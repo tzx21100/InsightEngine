@@ -60,6 +60,8 @@ namespace IS {
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
             sprite_background.texture = static_cast<uint8_t>(black_background.texture_data);
+            sprite_background.texture_width = black_background.width;
+            sprite_background.texture_height = black_background.height;
 
             sprite_player.name = "textured_box";
             sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);

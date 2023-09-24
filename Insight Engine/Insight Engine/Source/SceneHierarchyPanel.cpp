@@ -116,10 +116,10 @@ namespace IS {
                 ImVec4 border_color = ImGui::GetStyleColorVec4(ImGuiCol_Border);
                 ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
                 if (ImGui::BeginItemTooltip()) {
-                    float region_size = 8.f;
+                    float region_size = draw_size;
                     float region_x = io.MousePos.x - pos.x - region_size * 0.5f;
                     float region_y = io.MousePos.y - pos.y - region_size * 0.5f;
-                    float zoom = 4.0f;
+                    float zoom = 4.f;
                     if (region_x < 0.0f) { region_x = 0.0f; } else if (region_x > texture_width - region_size) { region_x = texture_width - region_size; }
                     if (region_y < 0.0f) { region_y = 0.0f; } else if (region_y > texture_height - region_size) { region_y = texture_height - region_size; }
                     ImGui::Text("Min: (%.2f, %.2f)", region_x, region_y);
