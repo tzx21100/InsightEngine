@@ -1,0 +1,30 @@
+{
+	"Name" : "Clock Circle",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"SpriteColorX" : 0.074355781078338623,
+		"SpriteColorY" : 0.25456497073173523,
+		"SpriteColorZ" : 0.21323037147521973,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 6,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 200.0,
+		"SpriteTransformScalingY" : 200.0,
+		"SpriteTransformWorldPositionX" : 650.0,
+		"SpriteTransformWorldPositionY" : 300.0
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 200.0,
+		"TransformScalingY" : 200.0,
+		"TransformWorldPositionX" : 650.0,
+		"TransformWorldPositionY" : 300.0
+	}
+}

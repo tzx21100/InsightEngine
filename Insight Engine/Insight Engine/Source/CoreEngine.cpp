@@ -305,14 +305,6 @@ namespace IS {
     }
 
     void InsightEngine::LoadScene(std::string filename) {
-        // Destroy all existing entities
-        std::vector<Entity> list_of_entities;
-        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
-            list_of_entities.emplace_back(id.first);
-        }
-        for (int i = 0; i < list_of_entities.size(); i++) {
-            DestroyEntity(list_of_entities[i]);
-        }
 
         // Load the main scene file
         std::string mainSceneFile = "Assets/Scene/" + filename + "/mainscene.json";
@@ -320,6 +312,14 @@ namespace IS {
         if (!LoadJsonFromFile(sceneRoot, mainSceneFile)) {
             std::cerr << "Failed to load main scene file: " << mainSceneFile << std::endl;
             return;
+        }
+        // Destroy all existing entities
+        std::vector<Entity> list_of_entities;
+        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
+            list_of_entities.emplace_back(id.first);
+        }
+        for (int i = 0; i < list_of_entities.size(); i++) {
+            DestroyEntity(list_of_entities[i]);
         }
 
         int EntitiesAlive = sceneRoot["EntityAmount"].asInt();

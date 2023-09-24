@@ -1,0 +1,30 @@
+{
+	"Name" : "Clock Line",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"SpriteColorX" : 0.69539439678192139,
+		"SpriteColorY" : 0.76308172941207886,
+		"SpriteColorZ" : 0.56158298254013062,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 1,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 107.02035522460938,
+		"SpriteTransformScalingX" : 200.0,
+		"SpriteTransformScalingY" : 200.0,
+		"SpriteTransformWorldPositionX" : 650.0,
+		"SpriteTransformWorldPositionY" : 300.0
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 107.29813385009766,
+		"TransformScalingX" : 200.0,
+		"TransformScalingY" : 200.0,
+		"TransformWorldPositionX" : 650.0,
+		"TransformWorldPositionY" : 300.0
+	}
+}

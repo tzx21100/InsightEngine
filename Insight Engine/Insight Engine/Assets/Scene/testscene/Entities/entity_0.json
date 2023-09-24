@@ -1,0 +1,30 @@
+{
+	"Name" : "Background",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"SpriteColorX" : 0.80788260698318481,
+		"SpriteColorY" : 0.67890524864196777,
+		"SpriteColorZ" : 0.48954203724861145,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 1,
+		"SpriteTextureHeight" : 1080,
+		"SpriteTextureWidth" : 1920,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1600.0,
+		"SpriteTransformScalingY" : 900.0,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1600.0,
+		"TransformScalingY" : 900.0,
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 0.0
+	}
+}
