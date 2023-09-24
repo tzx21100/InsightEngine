@@ -25,6 +25,7 @@
     <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
+    <ClCompile Include="Source\ScriptGlue.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
+    <ClInclude Include="Source\ScriptGlue.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Texture.h" />

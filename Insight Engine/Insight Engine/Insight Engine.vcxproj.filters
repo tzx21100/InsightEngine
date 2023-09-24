@@ -106,6 +106,9 @@
     <ClCompile Include="Source\JsonSaveLoad.cpp">
       <Filter>Engine\JSON</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScriptGlue.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics.h">
@@ -248,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="Source\Prefab.h">
       <Filter>Engine\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptGlue.h">
+      <Filter>Engine\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
