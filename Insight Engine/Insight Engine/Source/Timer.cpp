@@ -44,7 +44,7 @@ namespace IS {
         mStopped = true;
 
         if (mToPrint)
-            IS_CORE_DEBUG("{} : {:.3f} ms", mResult.mName, GetDeltaTime() * 1000);
+            IS_CORE_DEBUG("{}: {:.3f} ms", mResult.mName, GetDeltaTime() * 1000);
     }
 
 } // end namespace IS

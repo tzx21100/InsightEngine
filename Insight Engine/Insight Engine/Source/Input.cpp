@@ -13,6 +13,8 @@ namespace IS {
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {
+        // poll for mouse/keyboard events before any update
+        glfwPollEvents();
 
         //keyboard
         for (auto const& key : held_keys) {

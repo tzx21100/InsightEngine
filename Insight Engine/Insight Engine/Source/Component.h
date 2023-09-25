@@ -146,7 +146,7 @@ namespace IS {
 			mComponentArrays[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
-			IS_CORE_INFO("Component {} registered!", type_name);
+			IS_CORE_INFO("Component {} registered!", std::string(type_name).substr(10));
 		}
 
 		template<typename T>

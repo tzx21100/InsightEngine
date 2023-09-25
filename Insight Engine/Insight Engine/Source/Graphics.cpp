@@ -2,6 +2,7 @@
 #include "Pch.h"
 #include "Graphics.h"
 #include "Asset.h"
+#include "WindowSystem.h"
 
 #include <vector>
 #include <array>
@@ -26,23 +27,6 @@ namespace IS {
 
 
     void ISGraphics::Initialize() {
-        // Initialize entry points to OpenGL functions and extensions
-        if (GLenum err = glewInit(); GLEW_OK != err) {
-            std::ostringstream oss;
-            oss << glewGetErrorString(err);
-            IS_CORE_CRITICAL("Unable to initialize GLEW - error: {} - abort program", oss.str());
-            std::exit(EXIT_FAILURE);
-        }
-        if (GLEW_VERSION_4_5) {
-            std::ostringstream oss;
-            oss << glewGetString(GLEW_VERSION);
-            IS_CORE_INFO("Using glew version: {}", oss.str());
-            IS_CORE_INFO("Driver supports OpenGL 4.5");
-        } else {
-            IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
-            std::exit(EXIT_FAILURE);
-        }
-
         glClearColor(0.f, 0.f, 0.f, 0.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);

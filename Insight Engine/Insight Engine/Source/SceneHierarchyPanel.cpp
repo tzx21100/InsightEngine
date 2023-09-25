@@ -68,7 +68,7 @@ namespace IS {
 
         ImGuiTreeNodeFlags tree_flags = (mSelectedEntity && (*mSelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool opened = ImGui::TreeNodeEx((engine.GetEntityName(entity) + " ##" + std::to_string(entity)).c_str(), tree_flags);
+        bool opened = ImGui::TreeNodeEx((engine.GetEntityName(entity) + ' ' + std::to_string(entity)).c_str(), tree_flags);
 
         if (ImGui::IsItemClicked())
             mSelectedEntity = std::make_shared<Entity>(entity);
@@ -264,11 +264,15 @@ namespace IS {
         }
         ImGui::SameLine();
 
-        ImGui::Button("Load");
+        /*ImGui::Button("Load");
         if (ImGui::BeginItemTooltip()) {
             
             ImGui::Text("WIP");
             ImGui::EndTooltip();
+        }*/
+
+        if (ImGui::Button("Load")) {
+
         }
 
         // Add Component

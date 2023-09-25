@@ -57,7 +57,7 @@ namespace IS {
             mSystemDeltas["Engine"] = 0;
         
         // Update all systems
-        for (const auto& system: mSystemList) {
+        for (const auto& system : mSystemList) {
             if (!mUsingGUI && system->GetName() == "GUI")
                 continue;
 
@@ -70,14 +70,6 @@ namespace IS {
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
         }
-
-        Timer timer("End update", false);
-        auto window = GetSystem<WindowSystem>("Window");
-        window->EndUpdate();    // swap buffers and poll events
-        timer.Stop();
-        mSystemDeltas["Window"] += timer.GetDeltaTime();
-        mSystemDeltas["Engine"] += timer.GetDeltaTime();
-
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
@@ -94,7 +86,9 @@ namespace IS {
         //this is the game loop
         while (is_running) {
             Update();
-            ProcessEntityDeletion();
+            auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+            window->SwapBuffers(); // swap buffers after all the rendering
+            ProcessEntityDeletion(); // destroy deleted entities
         }
     }
 

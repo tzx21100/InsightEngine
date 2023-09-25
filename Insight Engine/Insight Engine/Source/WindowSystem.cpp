@@ -3,7 +3,7 @@
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
            Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 23-09-2023
+ * \date 26-09-2023
  * \brief
  *      This source file defines the implementation for class WindowSystem,
  *      which encapsulates the functionalities of an application window.
@@ -15,9 +15,11 @@
 #include "WindowSystem.h"
 #include "JsonSaveLoad.h"
 
+#include <glad/glad.h>
+
 namespace IS {
 
-    // In case <properties.json> is not found, window will use default properties
+    // In case "WindowProperties.json" is not found, window will use default properties
     WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, true };
 
     WindowSystem::WindowSystem() {
@@ -50,6 +52,21 @@ namespace IS {
         EnableVsync(mProps.mVSync);
 
         glfwMakeContextCurrent(mWindow);
+
+        // Load OpenGL function pointers using GLAD
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        if (!status) {
+            IS_CORE_CRITICAL("Failed to initialize GLAD!");
+            glfwDestroyWindow(mWindow);
+            glfwTerminate();
+        }
+
+        if (GL_VERSION_4_5) {
+            IS_CORE_INFO("Driver supports OpenGL 4.5");
+        } else {
+            IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
+            BROADCAST_MESSAGE(MessageType::Quit); // idk
+        }
     }
 
     WindowSystem::~WindowSystem() {
@@ -72,10 +89,7 @@ namespace IS {
         }
     }
 
-    void WindowSystem::EndUpdate() {
-        glfwSwapBuffers(mWindow);
-        glfwPollEvents();
-    }
+    void WindowSystem::SwapBuffers() { glfwSwapBuffers(mWindow); }
 
     void WindowSystem::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::Collide) {
@@ -101,12 +115,13 @@ namespace IS {
     }
 
     void WindowSystem::SetWindowTitle(std::string const& title) {
+        mProps.mTitle = title;
         glfwSetWindowTitle(mWindow, title.c_str());
     }
 
     void WindowSystem::EnableVsync(bool enabled) {
-        glfwSwapInterval(enabled ? 1 : 0);
         mProps.mVSync = enabled;
+        glfwSwapInterval(enabled ? 1 : 0);
     }
 
     bool WindowSystem::IsVSync() const { return mProps.mVSync; }
@@ -118,12 +133,12 @@ namespace IS {
         // Load window properties from JSON file
         bool success = LoadJsonFromFile(properties, filename);
         if (auto const& win_props = properties["WindowProperties"];
-            success && win_props["Title"].isString() && win_props["Width"].isInt() &&
-            win_props["Height"].isInt() && win_props["Vsync"].isBool()) {
+            success && win_props["Title"].isString() && win_props["Width"].isUInt() &&
+            win_props["Height"].isUInt() && win_props["Vsync"].isBool()) {
 
             mProps.mTitle  = win_props["Title"].asString();
-            mProps.mWidth  = win_props["Width"].asInt();
-            mProps.mHeight = win_props["Height"].asInt();
+            mProps.mWidth  = win_props["Width"].asUInt();
+            mProps.mHeight = win_props["Height"].asUInt();
             mProps.mVSync  = win_props["Vsync"].asBool();
 
             IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
@@ -137,7 +152,7 @@ namespace IS {
         std::string filepath = "Properties/WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];
-        win_props["Title"]  = mProps.mTitle.c_str();
+        win_props["Title"]  = mProps.mTitle;
         win_props["Width"]  = mProps.mWidth;
         win_props["Height"] = mProps.mHeight;
         win_props["Vsync"]  = mProps.mVSync;

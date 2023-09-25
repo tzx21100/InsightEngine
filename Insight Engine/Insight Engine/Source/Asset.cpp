@@ -78,7 +78,7 @@ namespace IS {
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
         graphics->initTextures(filepath,newImage);
         SaveImageData(newImage);
-        IS_CORE_INFO("Using Texture: {}", newImage.texture_data);
+        IS_CORE_INFO("Using Texture: {} \"{}\"", newImage.texture_data, filepath.substr(7));
     }
 
     void AssetManager::SaveImageData(const Image image_data) {

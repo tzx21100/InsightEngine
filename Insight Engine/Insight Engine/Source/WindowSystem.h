@@ -3,7 +3,7 @@
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
            Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 23-09-2023
+ * \date 26-09-2023
  * \brief
  *      This header file declares the interface for class WindowSystem, which
  *      encapsulates the functionalities of an application window.
@@ -17,9 +17,9 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "System.h"
-#include "Graphics.h"
 
-#include <GLFW/glfw3.h> // Ensure glew is included before gl
+// Dependencies
+#include <GLFW/glfw3.h>
 
 namespace IS {
 
@@ -74,14 +74,9 @@ namespace IS {
         std::string GetName() override;
 
         /*!
-         * \brief Begins the window update.
+         * \brief Swaps the front and back buffers.
          */
-        void BeginUpdate();
-
-        /*!
-         * \brief Ends the window update.
-         */
-        void EndUpdate();
+        void SwapBuffers();
 
         /*!
          * \brief Gets the width of the window.

@@ -10,9 +10,6 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "Graphics.h"
 #include "Input.h"
 #include "CoreEngine.h"

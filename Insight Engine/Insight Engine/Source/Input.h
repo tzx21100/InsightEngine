@@ -6,10 +6,12 @@ and check for keyboard & mouse inputs.
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H
 
-#include <GLFW/glfw3.h>
+#include "System.h"
+
 #include <utility>
 #include <unordered_set>
-#include "System.h"
+
+#include <GLFW/glfw3.h>
 
 namespace IS {
 
