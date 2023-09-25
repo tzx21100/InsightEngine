@@ -87,6 +87,13 @@ namespace IS {
         void SetFullScreen(bool fullscreen = true);
 
         /*!
+         * \brief Checks if window is fullscreen.
+         *
+         * \return true if window is fullscreen, false otherwise.
+         */
+        bool IsFullScreen() const;
+
+        /*!
          * \brief Gets the width of the window.
          * \return The width of the window.
          */
@@ -103,6 +110,24 @@ namespace IS {
          * \return A pair containing the width and height of the window.
          */
         std::pair<uint32_t, uint32_t> GetWindowSize() const;
+
+        /*!
+         * \brief Gets the width of the monitor.
+         * \return The width of the monitor.
+         */
+        uint32_t GetMonitorWidth() const;
+
+        /*!
+         * \brief Gets the height of the monitor.
+         * \return The height of the monitor.
+         */
+        uint32_t GetMonitorHeight() const;
+
+        /*!
+         * \brief Gets the size of the monitor.
+         * \return A pair containing the width and height of the monitor.
+         */
+        std::pair<uint32_t, uint32_t> GetMonitorSize() const;
 
         /*!
          * \brief Gets the title of the window.
@@ -148,6 +173,8 @@ namespace IS {
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.
+        uint32_t mMonitorWidth; ///< The width of the monitor.
+        uint32_t mMonitorHeight; ///< The height of the monitor.
 
         static WindowProperties mDefaultProperties; ///< Default window properties.
     };

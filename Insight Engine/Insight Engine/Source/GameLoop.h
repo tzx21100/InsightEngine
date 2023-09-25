@@ -105,27 +105,28 @@ namespace IS {
             auto const& gui = InsightEngine::Instance().GetSystem<GUISystem>("GUI");
 
             // Process Keyboard Events
-            if (!gui->WantCaptureKeyboard()) {
+            if (!gui->WantCaptureKeyboard()) {                
+
+                // Toggle fullscreen
+                auto const& window = engine.GetSystem<WindowSystem>("Window");
+                static bool fullscreen = false;
+                if (input->IsKeyPressed(GLFW_KEY_F11)) {
+                    fullscreen = !fullscreen;
+                    window->SetFullScreen(fullscreen);
+                    IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
+                }
 
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
-                    if (engine.mUsingGUI) {
-                        IS_CORE_DEBUG("GUI Enabled");
-                    } else {
-                        auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
-                        input->setCenterPos(width / 2.f, height / 2.f);
-                        input->setRatio(static_cast<float>(width), static_cast<float>(height));
-                        IS_CORE_DEBUG("GUI Disabled");
-                    }
+                    IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
                 }
 
-                // Toggle fullscreen
-                static bool fullscreen = false;
-                if (input->IsKeyPressed(GLFW_KEY_F11)) {
-                    fullscreen = !fullscreen;
-                    auto const& window = engine.GetSystem<WindowSystem>("Window");
-                    window->SetFullScreen(fullscreen);
+                // Offset mouse position
+                if (!engine.mUsingGUI) {
+                    auto const& [width, height] = fullscreen ? window->GetMonitorSize() : window->GetWindowSize();
+                    input->setCenterPos(width / 2.f, height / 2.f);
+                    input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }
 
                 //this controls the freeze frame

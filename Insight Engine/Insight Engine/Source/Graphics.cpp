@@ -61,9 +61,13 @@ namespace IS {
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
-
-        if (InsightEngine::Instance().mUsingGUI)
+        InsightEngine& engine = InsightEngine::Instance();
+        if (engine.mUsingGUI)
             mFramebuffer->Bind();
+
+        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); window->IsFullScreen() && !engine.mUsingGUI)
+            glViewport(0, 0, window->GetMonitorWidth(), window->GetMonitorHeight());
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
@@ -81,7 +85,6 @@ namespace IS {
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
-                    InsightEngine& engine = InsightEngine::Instance();
                     auto input = engine.GetSystem<InputManager>("Input");
 
                     if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
@@ -112,7 +115,7 @@ namespace IS {
         }
 
         // Render some text when GUI is disabled
-        if (InsightEngine& engine = InsightEngine::Instance(); !engine.mUsingGUI){
+        if (!engine.mUsingGUI){
             // Shared Attributes
             const float scale = 5.f;
             const float x_padding = scale;
