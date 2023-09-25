@@ -41,14 +41,17 @@ namespace IS {
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
         // Create a window and its OpenGL context
-        if (mProps.mFullscreen) {
-            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-            mWindow = glfwCreateWindow(mode->width, mode->height, mProps.mTitle.c_str(), monitor, nullptr);
-        } else {
-            mWindow = glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
-        }
+        mMonitorWidth = mode->width;
+        mMonitorHeight = mode->height;
+
+        mWindow = glfwCreateWindow(mProps.mFullscreen ? mMonitorWidth : mProps.mWidth,
+                                   mProps.mFullscreen ? mMonitorHeight : mProps.mHeight,
+                                   mProps.mTitle.c_str(),
+                                   mProps.mFullscreen ? monitor : nullptr, nullptr);
+
         if (!mWindow) {
             IS_CORE_CRITICAL("Failed to create OpneGL context!");
             glfwTerminate();
@@ -115,6 +118,12 @@ namespace IS {
 
     std::pair<uint32_t, uint32_t> WindowSystem::GetWindowSize() const { return std::make_pair(mProps.mWidth, mProps.mHeight); }
 
+    uint32_t WindowSystem::GetMonitorWidth() const { return mMonitorWidth; }
+
+    uint32_t WindowSystem::GetMonitorHeight() const { return mMonitorHeight; }
+
+    std::pair<uint32_t, uint32_t> WindowSystem::GetMonitorSize() const { return std::make_pair(mMonitorWidth, mMonitorHeight); }
+
     std::string WindowSystem::GetWindowTitle() const { return mProps.mTitle; }
 
     void WindowSystem::SetWindowSize(uint32_t width, uint32_t height) {
@@ -146,10 +155,12 @@ namespace IS {
         }
 
         // Fullscreen mode
-        GLFWmonitor* primary_monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(primary_monitor);
-        glfwSetWindowMonitor(mWindow, primary_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        glfwSetWindowMonitor(mWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
     }
+
+    bool WindowSystem::IsFullScreen() const { return mProps.mFullscreen; }
 
     void WindowSystem::LoadProperties() {
         std::string filename = "Properties/WindowProperties.json";
