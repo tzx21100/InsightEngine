@@ -72,8 +72,8 @@ namespace IS
 						continue;
 					}
 					//freeze
-					if (InsightEngine::Instance().freezeFrame) {
-						if (!InsightEngine::Instance().continueFrame)
+					if (InsightEngine::Instance().mFreezeFrame) {
+						if (!InsightEngine::Instance().mContinueFrame)
 							return;
 					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
