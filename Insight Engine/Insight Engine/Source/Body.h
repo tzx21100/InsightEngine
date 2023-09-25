@@ -35,92 +35,99 @@ namespace IS
 
     class RigidBody : public IComponent{
         public:
-        Vector2D velocity;
-        float angular_velocity;
-        Transform bodyTransform; // position, orientation, scaling
-        //Vector2D position;
-        BodyType bodyType;
-        //float rotation;
-        //float rotationVelocity;
-        Vector2D force;
-        Vector2D acceleration;
-        float density;
-        float mass;
-        float InvMass;
-        float restitution; // bounciness/elasticity, 0 - objects stick tgt with no bounce, 1 - objects bounces off with no loss of energy
-        float area;    
-        BodyState state{ BodyState::IDLE };
-        //float radius; // for circle
-        //Vector2D dimension; // for box's width and height
-        Shape bodyShape;
-        std::vector<Vector2D> vertices; // vertices for polygon (based on origin)
-        std::vector<Vector2D> transformedVertices; // vertices for polygon after transfromation
-        bool transformUpdateRequired; // default false, for calculating the transformed vertices when this is true
+        Vector2D mVelocity;
+        float mAngularVelocity;
+        Transform mBodyTransform; // position, orientation, scaling
+        BodyType mBodyType;
+        Vector2D mForce;
+        Vector2D mAcceleration;
+        float mDensity;
+        float mMass;
+        float mInvMass;
+        float mRestitution; // bounciness/elasticity, 0 - objects stick tgt with no bounce, 1 - objects bounces off with no loss of energy
+        float mArea;    
+        BodyState mState;
+        Shape mBodyShape;
+        std::vector<Vector2D> mVertices; // vertices for polygon (based on origin)
+        std::vector<Vector2D> mTransformedVertices; // vertices for polygon after transfromation
+        bool mTransformUpdateRequired; // default false, for calculating the transformed vertices when this is true
 
         // default and copy constructor
         RigidBody();
-        RigidBody(glm::vec2 position, BodyType bodyType, float mass, float restitution,
-            float width, float height,  Shape bodyShape);
-        void bodyFollowTransform(Transform const& trans);
+
+        RigidBody(glm::vec2 my_position, BodyType my_body_type, float my_mass, float my_restitution,
+            float my_width, float my_height,  Shape my_body_shape);
+
+
+        void BodyFollowTransform(Transform const& my_trans);
+
         // calculate all the vertices for a box
-        std::vector<Vector2D> CreateBoxVertices(float width, float height);
+        std::vector<Vector2D> CreateBoxVertices(float my_width, float my_height);
+
         // calculate all the updated transformed vertices based center position
-        std::vector<Vector2D> GetTransformedVertices();
-        // calculting the updated vertices by sin & cos
-        //Vector2D Transform(Vector2D v, BodyTransform transform);
-        Vector2D TransformRigidBody(Vector2D v, Transform transform);
+        [[useless]] std::vector<Vector2D> GetTransformedVertices();
+
+
+        [[useless]] Vector2D TransformRigidBody(Vector2D my_v, Transform my_transform);
 
         // update postion, rotation, force based on real world gravity
-        void BodyUpdate(float dt, Vector2D const& gravity);
-        // move the game object
-        void Move(Vector2D const& val);
-        // rotate the game object
-        void Rotate(float val);
-        // adding force
-        void AddForce(Vector2D const& val);
-        // adding velocity
-        void AddVelocity(Vector2D const& val);
-        // create box rigidbody
-        void CreateBoxBody(float width, float height, float mass, float restitution);
-        // create circle rigidbody
-        void CreateCircleBody(float radius, float mass, float restitution);
+        void BodyUpdate(float my_dt, Vector2D const& my_gravity);
 
-        void updateBoxBody(Transform const& bodyTransform, float mass, float restitution);
+        // move the game object
+        void Move(Vector2D const& my_val);
+
+        // rotate the game object
+        void Rotate(float my_val);
+
+        // adding force
+        void AddForce(Vector2D const& my_val);
+
+        // adding velocity
+        void AddVelocity(Vector2D const& my_val);
+
+        // create box rigidbody
+        void CreateBoxBody(float my_width, float my_height, float my_mass, float my_restitution);
+
+        // create circle rigidbody
+        void CreateCircleBody(float my_radius, float my_mass, float my_restitution);
+
+
+        void UpdateBoxBody(Transform const& my_body_transform);
 
         Json::Value Serialize() override {
             Json::Value prefab;
 
             // Serializing velocity
-            prefab["RigidBodyVelocityX"] = velocity.x;
-            prefab["RigidBodyVelocityY"] = velocity.y;
+            prefab["RigidBodyVelocityX"] = mVelocity.x;
+            prefab["RigidBodyVelocityY"] = mVelocity.y;
 
             // Serializing angular_velocity
-            prefab["RigidBodyAngularVelocity"] = angular_velocity;
+            prefab["RigidBodyAngularVelocity"] = mAngularVelocity;
 
             // Serializing bodyType
-            prefab["RigidBodyBodyType"] = static_cast<int>(bodyType);
+            prefab["RigidBodyBodyType"] = static_cast<int>(mBodyType);
 
             // Serializing force
-            prefab["RigidBodyForceX"] = force.x;
-            prefab["RigidBodyForceY"] = force.y;
+            prefab["RigidBodyForceX"] = mForce.x;
+            prefab["RigidBodyForceY"] = mForce.y;
 
             // Serializing acceleration
-            prefab["RigidBodyAccelerationX"] = acceleration.x;
-            prefab["RigidBodyAccelerationY"] = acceleration.y;
+            prefab["RigidBodyAccelerationX"] = mAcceleration.x;
+            prefab["RigidBodyAccelerationY"] = mAcceleration.y;
 
             // Serializing other scalar properties
-            prefab["RigidBodyDensity"] = density;
-            prefab["RigidBodyMass"] = mass;
-            prefab["RigidBodyInvMass"] = InvMass;
-            prefab["RigidBodyRestitution"] = restitution;
-            prefab["RigidBodyArea"] = area;
+            prefab["RigidBodyDensity"] = mDensity;
+            prefab["RigidBodyMass"] = mMass;
+            prefab["RigidBodyInvMass"] = mInvMass;
+            prefab["RigidBodyRestitution"] = mRestitution;
+            prefab["RigidBodyArea"] = mArea;
 
             // Serializing bodyShape (casted to int)
-            prefab["RigidBodyShapeType"] = static_cast<int>(bodyShape);
+            prefab["RigidBodyShapeType"] = static_cast<int>(mBodyShape);
 
             // Serializing vertices and transformedVertices
             Json::Value verticesArray(Json::arrayValue);
-            for (const auto& vertex : vertices) {
+            for (const auto& vertex : mVertices) {
                 Json::Value v;
                 v["x"] = vertex.x;
                 v["y"] = vertex.y;
@@ -129,7 +136,7 @@ namespace IS
             prefab["RigidBodyVertices"] = verticesArray;
 
             Json::Value transformedVerticesArray(Json::arrayValue);
-            for (const auto& vertex : transformedVertices) {
+            for (const auto& vertex : mTransformedVertices) {
                 Json::Value v;
                 v["x"] = vertex.x;
                 v["y"] = vertex.y;
@@ -138,60 +145,60 @@ namespace IS
             prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
 
             // Serializing transformUpdateRequired
-            prefab["RigidBodyTransformUpdateRequired"] = transformUpdateRequired;
+            prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
 
             return prefab;
         }
         void Deserialize(Json::Value data) override {
             // Deserializing velocity
-            velocity.x = data["RigidBodyVelocityX"].asFloat();
-            velocity.y = data["RigidBodyVelocityY"].asFloat();
+            mVelocity.x = data["RigidBodyVelocityX"].asFloat();
+            mVelocity.y = data["RigidBodyVelocityY"].asFloat();
 
             // Deserializing angular_velocity
-            angular_velocity = data["RigidBodyAngularVelocity"].asFloat();
+            mAngularVelocity = data["RigidBodyAngularVelocity"].asFloat();
 
             // Deserializing bodyType
-            bodyType = static_cast<BodyType>(data["RigidBodyBodyType"].asInt());
+            mBodyType = static_cast<BodyType>(data["RigidBodyBodyType"].asInt());
 
             // Deserializing force
-            force.x = data["RigidBodyForceX"].asFloat();
-            force.y = data["RigidBodyForceY"].asFloat();
+            mForce.x = data["RigidBodyForceX"].asFloat();
+            mForce.y = data["RigidBodyForceY"].asFloat();
 
             // Deserializing acceleration
-            acceleration.x = data["RigidBodyAccelerationX"].asFloat();
-            acceleration.y = data["RigidBodyAccelerationY"].asFloat();
+            mAcceleration.x = data["RigidBodyAccelerationX"].asFloat();
+            mAcceleration.y = data["RigidBodyAccelerationY"].asFloat();
 
             // Deserializing other scalar properties
-            density = data["RigidBodyDensity"].asFloat();
-            mass = data["RigidBodyMass"].asFloat();
-            InvMass = data["RigidBodyInvMass"].asFloat();
-            restitution = data["RigidBodyRestitution"].asFloat();
-            area = data["RigidBodyArea"].asFloat();
+            mDensity = data["RigidBodyDensity"].asFloat();
+            mMass = data["RigidBodyMass"].asFloat();
+            mInvMass = data["RigidBodyInvMass"].asFloat();
+            mRestitution = data["RigidBodyRestitution"].asFloat();
+            mArea = data["RigidBodyArea"].asFloat();
 
             // Deserializing bodyShape (assuming it's an enum or similar that can be cast from int)
-            bodyShape = static_cast<Shape>(data["RigidBodyShapeType"].asInt());
+            mBodyShape = static_cast<Shape>(data["RigidBodyShapeType"].asInt());
 
             // Deserializing vertices and transformedVertices
             const Json::Value verticesArray = data["RigidBodyVertices"];
-            vertices.clear();
+            mVertices.clear();
             for (const auto& v : verticesArray) {
                 Vector2D vertex;
                 vertex.x = v["x"].asFloat();
                 vertex.y = v["y"].asFloat();
-                vertices.push_back(vertex);
+                mVertices.push_back(vertex);
             }
 
             const Json::Value transformedVerticesArray = data["RigidBodyTransformedVertices"];
-            transformedVertices.clear();
+            mTransformedVertices.clear();
             for (const auto& v : transformedVerticesArray) {
                 Vector2D vertex;
                 vertex.x = v["x"].asFloat();
                 vertex.y = v["y"].asFloat();
-                transformedVertices.push_back(vertex);
+                mTransformedVertices.push_back(vertex);
             }
 
             // Deserializing transformUpdateRequired
-            transformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
+            mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
         }
 
 

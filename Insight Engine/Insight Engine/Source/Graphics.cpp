@@ -121,7 +121,7 @@ namespace IS {
             if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
                 auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
-                    Physics::drawOutLine(body, sprite);
+                    Physics::DrawOutLine(body, sprite);
                 }
             }
 
