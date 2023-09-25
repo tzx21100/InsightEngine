@@ -121,17 +121,17 @@ namespace IS {
                 }
 
                 //this controls the freeze frame
-                engine.continueFrame = false;
+                engine.mContinueFrame = false;
                 if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
-                    engine.continueFrame = true;
+                    engine.mContinueFrame = true;
                     IS_CORE_DEBUG("Step frame");
                 }
                 if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
-                    engine.freezeFrame = !engine.freezeFrame;
-                    IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
+                    engine.mFreezeFrame = !engine.mFreezeFrame;
+                    IS_CORE_DEBUG("Freeze frame {}!", engine.mFreezeFrame ? "enabled" : "disabled");
                 }
-                if (engine.freezeFrame) {
-                    if (!engine.continueFrame)
+                if (engine.mFreezeFrame) {
+                    if (!engine.mContinueFrame)
                         return;
                 }
 
