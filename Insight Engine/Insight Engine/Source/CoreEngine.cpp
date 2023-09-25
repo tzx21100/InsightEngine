@@ -1,4 +1,20 @@
-//pch has to go to the top of every cpp
+/*!
+ * \file CoreEngine.cpp
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-09-2023
+ * \brief
+ * This source file defines the implementation of the core engine (Insight Engine)
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
@@ -12,7 +28,7 @@
 namespace IS {
 
     //Basic constructor and setting base FPS to 60 
-    InsightEngine::InsightEngine() : is_running(false), last_runtime(0), targetFPS(60) {
+    InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(60) {
         IS_PROFILE_FUNCTION();
         IS_CORE_INFO("Starting Insight Engine...");
         //create the pointers to the managers
@@ -26,7 +42,7 @@ namespace IS {
     void InsightEngine::HandleMessage(const Message& message) {
         //handling quit message
         if (message.GetType() == MessageType::Quit) {
-            is_running = false;
+            mIsRunning = false;
         }
     }
 
@@ -44,7 +60,7 @@ namespace IS {
         //subscirbe to messages
         Subscribe(MessageType::Quit);
         //run the game
-        is_running = true;
+        mIsRunning = true;
     }
 
     void InsightEngine::Update() {
@@ -52,8 +68,8 @@ namespace IS {
         auto frameStart = std::chrono::high_resolution_clock::now();
 
         // Update System deltas every 4s
-        const int update_frequency = 4 * targetFPS;
-        if (!(frame_count % update_frequency))
+        const int update_frequency = 4 * mTargetFPS;
+        if (!(mFrameCount % update_frequency))
             mSystemDeltas["Engine"] = 0;
         
         // Update all systems
@@ -62,10 +78,10 @@ namespace IS {
                 continue;
 
             Timer timer(system->GetName() + " System", false);
-            system->Update(delta_time.count());
+            system->Update(mDeltaTime.count());
             timer.Stop();
 
-            if (!(frame_count % update_frequency)) {
+            if (!(mFrameCount % update_frequency)) {
                 mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
@@ -74,9 +90,9 @@ namespace IS {
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
 
-        delta_time = frameEnd - frameStart;
+        mDeltaTime = frameEnd - frameStart;
 
-        ++frame_count;
+        ++mFrameCount;
     }
 
     //moved all the engine stuff under this run function
@@ -84,7 +100,7 @@ namespace IS {
         IS_PROFILE_FUNCTION();
         Initialize();
         //this is the game loop
-        while (is_running) {
+        while (mIsRunning) {
             Update();
             auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
             window->SwapBuffers(); // swap buffers after all the rendering
@@ -159,7 +175,7 @@ namespace IS {
     }
 
     // Get frame count
-    unsigned InsightEngine::FrameCount() const { return frame_count; }
+    unsigned InsightEngine::FrameCount() const { return mFrameCount; }
 
     void InsightEngine::DeleteEntity(Entity entity) { mEntitiesToDelete.insert(entity); }
 
@@ -171,7 +187,7 @@ namespace IS {
 
     //limit fps will return the frameEnd time now so i can use to find delta time
     std::chrono::high_resolution_clock::time_point InsightEngine::LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart) {
-        const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / targetFPS);  // Nanosecond-level precision because accurate
+        const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / mTargetFPS);  // Nanosecond-level precision because accurate
         while (true) { // We chill in this loop until true
             auto now = std::chrono::high_resolution_clock::now();
             auto frameDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - frameStart);
@@ -183,7 +199,7 @@ namespace IS {
 
     //This is a simple function to set the FPS
     void InsightEngine::SetFPS(int FPS) {
-        targetFPS = FPS;
+        mTargetFPS = FPS;
     }
 
     //These functions involve creating entities and destroying them

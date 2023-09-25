@@ -177,8 +177,8 @@ namespace IS {
         RenderComponent<RigidBody>("Rigidbody", entity, [&](RigidBody& rigidbody) {
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
-            guidgets::RenderControlVec2("Velocity", rigidbody.velocity);
-            guidgets::RenderControlVec2("Force", rigidbody.force);
+            guidgets::RenderControlVec2("Velocity", rigidbody.mVelocity);
+            guidgets::RenderControlVec2("Force", rigidbody.mForce);
 
             if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(entity)).c_str(), 2, table_flags)) {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
@@ -187,49 +187,49 @@ namespace IS {
                 ImGui::Text("Angular Velocity");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##AngularVelocity" + std::to_string(entity)).c_str(), &rigidbody.angular_velocity, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat(("##AngularVelocity" + std::to_string(entity)).c_str(), &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Body Type");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                guidgets::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.bodyType, { "Static", "Dynamic", "Kinematic" });
+                guidgets::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Body Shape");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                guidgets::RenderComboBoxEnum<Shape>("##Body Shape", rigidbody.bodyShape, { "Box", "Circle", "Line" });
+                guidgets::RenderComboBoxEnum<Shape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Mass");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##Mass" + std::to_string(entity)).c_str(), &rigidbody.mass, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat(("##Mass" + std::to_string(entity)).c_str(), &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Invariant Mass");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##InvMass" + std::to_string(entity)).c_str(), &rigidbody.InvMass, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat(("##InvMass" + std::to_string(entity)).c_str(), &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Restitution");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::Text("%.2f", rigidbody.restitution);
+                ImGui::Text("%.2f", rigidbody.mRestitution);
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::Text("Density");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::Text("%.2f", rigidbody.density);
+                ImGui::Text("%.2f", rigidbody.mDensity);
                 ImGui::PopItemWidth();
 
                 ImGui::EndTable();

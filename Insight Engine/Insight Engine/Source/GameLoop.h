@@ -79,10 +79,11 @@ namespace IS {
             trans_test.setWorldPosition(-400, 0);
             trans_floor.setScaling(600, 100);
             trans_floor.setWorldPosition(0, -400);
-            body_player.angular_velocity = 10.f;
-            body_floor.bodyType = BodyType::Static;
-            body_floor.mass = 99999.f;
-            body_floor.InvMass = 1.f/99999.f;
+            body_player.mAngularVelocity = 10.f;
+            body_player.mRestitution = 0.1f;
+            body_floor.mBodyType = BodyType::Static;
+            body_floor.mMass = 99999.f;
+            body_floor.mInvMass = 1.f/99999.f;
             
             trans_circle.setWorldPosition(650.f, 300.f);
             trans_circle.setScaling(200.f, 200.f);
@@ -120,23 +121,23 @@ namespace IS {
                 }
 
                 //this controls the freeze frame
-                engine.continueFrame = false;
+                engine.mContinueFrame = false;
                 if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
-                    engine.continueFrame = true;
+                    engine.mContinueFrame = true;
                     IS_CORE_DEBUG("Step frame");
                 }
                 if (input->IsKeyPressed(GLFW_KEY_SPACE) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
-                    engine.freezeFrame = !engine.freezeFrame;
-                    IS_CORE_DEBUG("Freeze frame {}!", engine.freezeFrame ? "enabled" : "disabled");
+                    engine.mFreezeFrame = !engine.mFreezeFrame;
+                    IS_CORE_DEBUG("Freeze frame {}!", engine.mFreezeFrame ? "enabled" : "disabled");
                 }
-                if (engine.freezeFrame) {
-                    if (!engine.continueFrame)
+                if (engine.mFreezeFrame) {
+                    if (!engine.mContinueFrame)
                         return;
                 }
 
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
-                    if (input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_D)) {
+                    if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
                         sprite_player.texture = static_cast<uint8_t>(walking_animation.texture_data);
                         sprite_player.texture_width = walking_animation.width;
                         sprite_player.texture_height = walking_animation.height;
@@ -161,9 +162,9 @@ namespace IS {
                     // for jumping
                     if (input->IsKeyPressed(GLFW_KEY_SPACE)) { 
                         //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
-                        if (body_player.state == BodyState::GROUNDED) {
+                        if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
                             body_player.AddVelocity(Vector2D(0.f, 500.f));
-                            body_player.state = BodyState::JUMP;
+                            body_player.mState = BodyState::JUMP;
                         }
                     }
 
@@ -172,7 +173,7 @@ namespace IS {
                         (input->IsKeyHeld(GLFW_KEY_D) && (trans_player.scaling.x < 0)) ? -1 : 1;
 
                     float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
-                    trans_player.rotation += rotate * body_player.angular_velocity;
+                    trans_player.rotation += rotate * body_player.mAngularVelocity;
                     trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
                 }
 

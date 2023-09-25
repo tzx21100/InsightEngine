@@ -11,13 +11,11 @@ namespace IS
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
 		//PHYSICS = this;
-		Gravity = Vector2D(0, -98.81f);
-		exertingGravity = false;
+		mGravity = Vector2D(0, -98.81f);
+		mExertingGravity = false;
 		//isDebugDraw = false;
-		MaxPositionVelocity = 1000.f;
-		MaxNegativeVelocity = -1000.f;
-		//Gravity = 9.8f;
-		//MaxVelocity = 1000;
+		mMaxVelocity = 1000.f;
+		mMinVelocity = -1000.f;
 
 	}
 
@@ -32,7 +30,6 @@ namespace IS
 		Subscribe(MessageType::Collide);
 
 	}
-	//bool addG = false;
 	Vector2D v = { 0.f, -9.8f };
 	float time = 1.f / 60.f;
 	bool Physics::isDebugDraw = false;
@@ -45,12 +42,12 @@ namespace IS
 				auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 				//time /= 5.f;
 				if (input->IsKeyPressed(GLFW_KEY_G)) {
-					exertingGravity = true;
-					IS_CORE_DEBUG("Gravity Enabled!");
+					mExertingGravity = true;
+					IS_CORE_DEBUG("mGravity Enabled!");
 				}
 				else if (input->IsKeyPressed(GLFW_KEY_F)) {
-					exertingGravity = false;
-					IS_CORE_DEBUG("Gravity Disabled!");
+					mExertingGravity = false;
+					IS_CORE_DEBUG("mGravity Disabled!");
 				}
 
 				// for drawing lines
@@ -62,8 +59,8 @@ namespace IS
 					Physics::isDebugDraw = false;
 					IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
 				}
-				/*if (exertingGravity) {
-					v += Gravity * time;
+				/*if (mExertingGravity) {
+					v += mGravity * time;
 				}
 				else {
 					v = Vector2D();
@@ -71,96 +68,29 @@ namespace IS
 				// update gravity
 				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-					if (body.bodyType != BodyType::Dynamic) {
+					if (body.mBodyType != BodyType::Dynamic) {
 						continue;
 					}
 					//freeze
-					if (InsightEngine::Instance().freezeFrame) {
-						if (!InsightEngine::Instance().continueFrame)
+					if (InsightEngine::Instance().mFreezeFrame) {
+						if (!InsightEngine::Instance().mContinueFrame)
 							return;
 					}
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					//body.velocity += Gravity * 10.f * dt;
-					if (exertingGravity) {
-						body.velocity += Gravity * 10.f * dt;
+					//body.mVelocity += mGravity * 10.f * dt;
+					if (mExertingGravity) {
+						body.mVelocity += mGravity * 10.f * dt;
 					}
-					//if (resultF.x < 1.f && resultF.y < 1.f && resultF.x > -1.f && resultF.y > -1.f) { body.velocity = Vector2D(); }
-					body.velocity.x = std::min(body.velocity.x, MaxPositionVelocity);
-					body.velocity.y = std::min(body.velocity.y, MaxPositionVelocity);
-					body.velocity.x = std::max(body.velocity.x, MaxNegativeVelocity);
-					body.velocity.y = std::max(body.velocity.y, MaxNegativeVelocity);
-					trans.world_position.x += body.velocity.x * time;
-					trans.world_position.y += body.velocity.y * time;
+					//if (resultF.x < 1.f && resultF.y < 1.f && resultF.x > -1.f && resultF.y > -1.f) { body.mVelocity = Vector2D(); }
+					body.mVelocity.x = std::min(body.mVelocity.x, mMaxVelocity);
+					body.mVelocity.y = std::min(body.mVelocity.y, mMaxVelocity);
+					body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
+					body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
+					trans.world_position.x += body.mVelocity.x * time;
+					trans.world_position.y += body.mVelocity.y * time;
 				}
 			}
-			collisionCheck(dt, mEntities);
-#if 0
-			//loops through all Entities registered by the System this mEntities map is written in the parent class
-			for (auto const& entity : mEntities) {
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
-					//getting rigidbody component for each entit
-					auto& rigidBody = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
-					rigidBody.bodyFollowTransform(trans);
-					//std::cout << "body1:" << rigidBody.bodyTransform.world_position.x << " - " << rigidBody.bodyTransform.world_position.y << std::endl;
-
-					for (auto const& entity2 : mEntities) {
-						if (entity == entity2) {
-							continue;
-						}
-						if (InsightEngine::Instance().HasComponent<RigidBody>(entity2)) {
-							auto& rigidBody2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
-							auto& trans2 = InsightEngine::Instance().GetComponent<Transform>(entity2);
-							auto& sprite2 = InsightEngine::Instance().GetComponent<Sprite>(entity2);
-							rigidBody2.bodyFollowTransform(trans2);
-							//std::cout << "body:" << rigidBody.transformedVertices[0].x << " - " << rigidBody.transformedVertices[0].y << std::endl;
-							//std::cout << "body2:" << rigidBody2.transformedVertices[0].x << " - " << rigidBody2.transformedVertices[0].y << std::endl;
-							//std::cout << "body1:" << rigidBody.transformedVertices[0].x << " - " << rigidBody.transformedVertices[0].y << std::endl;
-							Vector2D normal{ 1,1 };
-							float depth = 0.f;
-							//float adt += dt;
-							if (Intersection_Polygons(rigidBody.GetTransformedVertices(), rigidBody.bodyTransform.getWorldPosition(), rigidBody2.GetTransformedVertices(), rigidBody2.bodyTransform.getWorldPosition(), normal, depth)) {
-								//std::cout << adt << "Colliding" << std::endl;
-								//sprite.color = glm::vec3(1.f, 1.f, 0.f);
-								//sprite2.color = glm::vec3(1.f, 0.f, 0.f);
-								Vector2D v = normal * depth;
-								if (rigidBody.bodyType != BodyType::Dynamic)
-								{
-									//rigidBody2.Move(normal * depth);
-									trans2.world_position.x += v.x;
-									trans2.world_position.y += v.y;
-								}
-								else if (rigidBody2.bodyType != BodyType::Dynamic)
-								{
-									//rigidBody.Move(-normal * depth);
-									trans.world_position.x += v.x;
-									trans.world_position.y += v.y;
-								}
-								else
-								{
-									//rigidBody.Move(-normal * depth / 2.f);
-									//rigidBody.Move(normal * depth / 2.f);
-									trans.world_position.x += -v.x / 2.;
-									trans.world_position.y += -v.y / 2.f;
-									trans2.world_position.x += v.x / 2.f;
-									trans2.world_position.y += v.y / 2.f;
-								}
-
-								ResolveCollision(rigidBody, rigidBody2, normal, depth);
-							}
-							else {
-								sprite.color = glm::vec3(1.f, 0.f, 1.f);
-								sprite2.color = glm::vec3(0.f, 0.f, 1.f);
-							}
-						}
-
-					}
-				}
-
-			}
-		}
-#endif
+			CollisionDetect(mEntities);
 		//}
 
 	}
@@ -169,7 +99,7 @@ namespace IS
 	void rigidBodyCallUpdate(RigidBody body, [[maybe_unused]] Vector2D gravity, [[maybe_unused]] float dt)
 	{
 		// if the body is dynamic, adding gravity
-		switch (body.bodyType)
+		switch (body.mBodyType)
 		{
 		case IS::BodyType::Static:
 			return;
@@ -177,8 +107,8 @@ namespace IS
 		case IS::BodyType::Dynamic:
 			//apply force here
 			//setDynamicObject(body)
-			//body.velocity.y += gravity.y * dt;
-			//body.position = body.position + body.velocity * dt;
+			//body.mVelocity.y += gravity.y * dt;
+			//body.position = body.position + body.mVelocity * dt;
 			break;
 		case IS::BodyType::Kinematic:
 			return;
@@ -188,7 +118,7 @@ namespace IS
 		}
 	}
 
-	void collisionCheck([[maybe_unused]] float dt, std::set<Entity> const& mEntities) {
+	void CollisionDetect(std::set<Entity> const& mEntities) {
 		//loops through all Entities registered by the System this mEntities map
 		for (auto const& entityA : mEntities) {
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) { // if entityA has rigidbody component
@@ -196,7 +126,7 @@ namespace IS
 				auto& rigidBodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entityA);
 				auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entityA);
-				rigidBodyA.bodyFollowTransform(trans);
+				rigidBodyA.BodyFollowTransform(trans);
 
 				for (auto const& entityB : mEntities) {
 					if (entityA == entityB) { // if self checking, continue
@@ -206,19 +136,19 @@ namespace IS
 						auto& rigidBodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
 						auto& trans2 = InsightEngine::Instance().GetComponent<Transform>(entityB);
 						auto& sprite2 = InsightEngine::Instance().GetComponent<Sprite>(entityB);
-						rigidBodyB.bodyFollowTransform(trans2);
+						rigidBodyB.BodyFollowTransform(trans2);
 						// for calculate collision response
 						Vector2D normal = Vector2D();
 						float depth = std::numeric_limits<float>::max();
 						bool isColliding = false;
-						switch (rigidBodyA.bodyShape)
+						switch (rigidBodyA.mBodyShape)
 						{
 						case Shape::Box:
-							switch (rigidBodyB.bodyShape)
+							switch (rigidBodyB.mBodyShape)
 							{
 								// box vs box
 							case Shape::Box:
-								isColliding = Intersection_Polygons(rigidBodyA.GetTransformedVertices(), rigidBodyA.bodyTransform.getWorldPosition(), rigidBodyB.GetTransformedVertices(), rigidBodyB.bodyTransform.getWorldPosition(), normal, depth);
+								isColliding = IntersectionPolygons(rigidBodyA.GetTransformedVertices(), rigidBodyA.mBodyTransform.getWorldPosition(), rigidBodyB.GetTransformedVertices(), rigidBodyB.mBodyTransform.getWorldPosition(), normal, depth);
 								break;
 								// box vs circle
 							case Shape::Circle:
@@ -228,7 +158,7 @@ namespace IS
 							}
 							break;
 						case Shape::Circle:
-							switch (rigidBodyB.bodyShape)
+							switch (rigidBodyB.mBodyShape)
 							{
 								// circle vs box
 							case Shape::Box:
@@ -247,20 +177,20 @@ namespace IS
 						if (isColliding) {
 							Vector2D vec = normal * depth;
 							// if body A is static 
-							if (rigidBodyA.bodyType != BodyType::Dynamic)
+							if (rigidBodyA.mBodyType != BodyType::Dynamic)
 							{
 								//rigidBody2.Move(normal * depth);
 								trans2.world_position.x += vec.x;
 								trans2.world_position.y += vec.y;
-								rigidBodyB.state = BodyState::GROUNDED;
+								rigidBodyB.mState = BodyState::GROUNDED;
 							}
 							// if body B is static 
-							else if (rigidBodyB.bodyType != BodyType::Dynamic)
+							else if (rigidBodyB.mBodyType != BodyType::Dynamic)
 							{
 								//rigidBody.Move(-normal * depth);
 								trans.world_position.x += -vec.x;
 								trans.world_position.y += -vec.y;
-								rigidBodyA.state = BodyState::GROUNDED;
+								rigidBodyA.mState = BodyState::GROUNDED;
 							}
 							else // both are dynamic
 							{
@@ -284,9 +214,9 @@ namespace IS
 		}
 	}
 #if 0
-	void collisionCallUpdate(RigidBody body, float dt, auto const& entity, std::set<Entity> mEntities)
+	void CollisionCallUpdate(RigidBody body, float dt, auto const& entity, std::set<Entity> mEntities)
 	{
-		switch (body.bodyShape)
+		switch (body.mBodyShape)
 		{
 		case Shape::Box:
 			for (auto const& entity2 : mEntities) {
@@ -296,11 +226,11 @@ namespace IS
 					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
 					Vector2D test{ 1,1 };
 					float test2 = 0.f;
-					switch (body2.bodyShape)
+					switch (body2.mBodyShape)
 					{
 					case Shape::Box:
 						//box to box collision
-						if (Intersection_Polygons(body.transformedVertices, body.bodyTransform.getWorldPosition(), body2.transformedVertices, body2.bodyTransform.getWorldPosition(), test, test2)) {
+						if (Intersection_Polygons(body.transformedVertices, body.mBodyTransform.getWorldPosition(), body2.transformedVertices, body2.mBodyTransform.getWorldPosition(), test, test2)) {
 							std::cout << "Colliding" << std::endl;
 						}
 						break;
@@ -322,7 +252,7 @@ namespace IS
 				//if (entity == entity2 || !(InsightEngine::Instance().HasComponent<Collider>(entity2))) {
 					//auto& collider2 = InsightEngine::Instance().GetComponent<Collider>(entity2);
 					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
-					switch (body2.bodyShape)
+					switch (body2.mBodyShape)
 					{
 					//circle to box collision defined above
 					case Shape::Circle:
@@ -344,7 +274,7 @@ namespace IS
 					//auto& collider2 = InsightEngine::Instance().GetComponent<Collider>(entity2);
 					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
 					//line to box and line to circle collision defined above
-					if (body2.bodyShape == Shape::Line)
+					if (body2.mBodyShape == Shape::Line)
 					{
 						//box to line collision
 					}
@@ -357,34 +287,34 @@ namespace IS
 	}
 #endif
 	void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, [[maybe_unused]] float depth) {
-		Vector2D relativeVelocity = bodyB.velocity - bodyA.velocity;
+		Vector2D relativeVelocity = bodyB.mVelocity - bodyA.mVelocity;
 
 		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f) //
 		{
 			return;
 		}
 
-		float e = std::min(bodyA.restitution, bodyB.restitution);
+		float e = std::min(bodyA.mRestitution, bodyB.mRestitution);
 
 		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
-		j /= bodyA.InvMass + bodyB.InvMass; //a
+		j /= bodyA.mInvMass + bodyB.mInvMass; //a
 		//normal *= -1;
 		Vector2D impulse = j * normal;
 		//std::cout << "normal: " << normal.x << normal.y << std::endl;
-		//std::cout << "before: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
+		//std::cout << "before: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
 		// if check
-		bodyA.velocity -= impulse * bodyA.InvMass;
-		bodyB.velocity += impulse * bodyB.InvMass;
-		//std::cout << "after: " << bodyA.velocity.x << bodyA.velocity.y << std::endl;
+		bodyA.mVelocity -= impulse * bodyA.mInvMass;
+		bodyB.mVelocity += impulse * bodyB.mInvMass;
+		//std::cout << "after: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
 	}
 
-	void Physics::drawOutLine(RigidBody & body, Sprite const& sprite) {
-		for (int i = 0; i < body.transformedVertices.size(); i++) {
-			Vector2D va = body.transformedVertices[i];
-			Vector2D vb = body.transformedVertices[(i + 1) % body.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
+	void Physics::DrawOutLine(RigidBody & body, Sprite const& sprite) {
+		for (int i = 0; i < body.mTransformedVertices.size(); i++) {
+			Vector2D va = body.mTransformedVertices[i];
+			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
 		}
-		sprite.drawLine(body.bodyTransform.getWorldPosition(), body.bodyTransform.getWorldPosition() + body.velocity);
+		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);
 	}
 
 }
