@@ -17,8 +17,8 @@
 
  /*                                                                   guard
  ----------------------------------------------------------------------------- */
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
-#define GAM200_INSIGHT_ENGINE_SOURCE_COREENGINE_H_
+#ifndef GAM200_INSIGHT_ENGINE_CORE_COREENGINE_H_
+#define GAM200_INSIGHT_ENGINE_CORE_COREENGINE_H_
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */

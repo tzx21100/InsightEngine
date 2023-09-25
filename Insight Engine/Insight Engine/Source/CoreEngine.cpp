@@ -5,6 +5,9 @@
  * \date 26-09-2023
  * \brief
  * This source file defines the implementation of the core engine (Insight Engine)
+ * The engine has a few key features such as accessing the ECS, saving and loading
+ * scenes, prefabs and entities. Control key features such as FPS and is the general
+ * application responsible for the architecture.
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -27,7 +30,7 @@
 
 namespace IS {
 
-    //Basic constructor and setting base FPS to 60 
+    //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
     InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(60) {
         IS_PROFILE_FUNCTION();
         IS_CORE_INFO("Starting Insight Engine...");
@@ -46,7 +49,7 @@ namespace IS {
         }
     }
 
-    //destructor will delete all systems and clear it. I have a destroyallsystem function but this is just in case.
+    // Destructor will delete all systems and clear it.
     InsightEngine::~InsightEngine() {
         IS_PROFILE_FUNCTION();
         mSystemList.clear();
@@ -63,6 +66,7 @@ namespace IS {
         mIsRunning = true;
     }
 
+    //This is the update portion of the game
     void InsightEngine::Update() {
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
@@ -95,7 +99,7 @@ namespace IS {
         ++mFrameCount;
     }
 
-    //moved all the engine stuff under this run function
+    // Moved all the engine stuff under this run function so we can have draw() load() etc. next time with a GSM
     void InsightEngine::Run() {
         IS_PROFILE_FUNCTION();
         Initialize();
@@ -108,29 +112,31 @@ namespace IS {
         }
     }
 
+    //We quit
     void InsightEngine::Exit() {
         BROADCAST_MESSAGE(MessageType::Quit);
     }
 
-    //This function will add a system to the map with the key being whatever the system defined it to be
+    // This function will add a system to the map with the key being whatever the system defined it to be
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         IS_PROFILE_FUNCTION();
         std::string systemName = system->GetName();
         IS_CORE_TRACE("Registering system... {}", systemName);
+        // adding all of them to the different system maps and system manager
         mAllSystems[systemName] = system;
         mSystemList.emplace_back(system);
         mSystemManager->RegisterSystem(system);
         mSystemManager->SetSignature(systemName,signature);
     }
 
-    //This function is meant to specifically find the individual system in the map and destroy it
+    // This function is meant to specifically find the individual system in the map and destroy it
     void InsightEngine::DestroySystem(const std::string& name) {
         IS_PROFILE_FUNCTION();
         auto it = mAllSystems.find(name);
         if (it != mAllSystems.end()) {
-            //delete it->second; //delete the object
             mAllSystems.erase(it);
         }
+        // This is to delete it from the vector. The vector is ordered by its load sequence.
         int i = 0;
         for (auto& system : mSystemList) {
             if (system == it->second) {
@@ -144,7 +150,7 @@ namespace IS {
     //This function will destroy all systems and clear it from the map
     void InsightEngine::DestroyAllSystems() {
         IS_PROFILE_FUNCTION();
-        mSystemList.clear();
+        mSystemList.clear();  // Clear the vector
         mAllSystems.clear();  // Clear the map
         IS_CORE_WARN("All systems terminated!");
     }
@@ -177,15 +183,17 @@ namespace IS {
     // Get frame count
     unsigned InsightEngine::FrameCount() const { return mFrameCount; }
 
+    // Delete the entity queue
     void InsightEngine::DeleteEntity(Entity entity) { mEntitiesToDelete.insert(entity); }
 
+    // Process the entity deletion from queue
     void InsightEngine::ProcessEntityDeletion() {
         for (Entity entity : mEntitiesToDelete)
             DestroyEntity(entity);
         mEntitiesToDelete.clear();
     }
 
-    //limit fps will return the frameEnd time now so i can use to find delta time
+    // limit fps will return the frameEnd time now so i can use to find delta time
     std::chrono::high_resolution_clock::time_point InsightEngine::LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart) {
         const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / mTargetFPS);  // Nanosecond-level precision because accurate
         while (true) { // We chill in this loop until true
@@ -197,16 +205,17 @@ namespace IS {
         }
     }
 
-    //This is a simple function to set the FPS
+    // This is a simple function to set the FPS
     void InsightEngine::SetFPS(int FPS) {
         mTargetFPS = FPS;
     }
 
-    //These functions involve creating entities and destroying them
+    // These functions involve creating entities and destroying them
     Entity InsightEngine::CreateEntity(std::string name) {
         return mEntityManager->CreateEntity(name);
     }
 
+    // When destroying the entity, every ECS must know of it
     void InsightEngine::DestroyEntity(Entity entity) {
         mComponentManager->EntityDestroyed(entity);
         mEntityManager->DestroyEntity(entity);
@@ -214,6 +223,7 @@ namespace IS {
         IS_CORE_WARN("Entity {} completely destroyed!", entity);
     }
 
+    // Creates a random entity for demo testing
     void InsightEngine::GenerateRandomEntity(bool with_texture) {
         PRNG prng;
         InsightEngine& engine = Instance();
@@ -238,14 +248,16 @@ namespace IS {
         }
     }
 
-    // Dynamic entity copying 
+    // Dynamic entity copying, this will copy all components and their specific component array.
     Entity InsightEngine::CopyEntity(Entity old_entity) {
         Entity newEntity = CreateEntity(mEntityManager->FindNames(old_entity));
         CopyComponents(newEntity, old_entity);
         return newEntity;
     }
 
-
+    /* This will save the entity to a string file.The string file is not defined with a path so it can save it
+    *  directly unlike the other saving functions that have their specific use case.
+    */
     void InsightEngine::SaveEntityToJson(Entity entity, std::string filename) {
         std::string file_path = filename;
         std::string signature = mEntityManager->GetSignature(entity).to_string();
@@ -260,6 +272,9 @@ namespace IS {
         SaveJsonToFile(saved_entity,file_path);
     }
 
+    /* This directly Loads an entity from an absolute filepath
+    *  This is so that it can be used easily by other functions since its not for  a specific use case
+    */
     Entity InsightEngine::LoadEntityFromJson(std::string name) {
         std::string filename = name;
         Json::Value loaded;
@@ -267,7 +282,7 @@ namespace IS {
         std::string str_sig = loaded["Signature"].asString();
         std::string entity_name = loaded["Name"].asString();
         Entity entity = CreateEntity(entity_name);
-        //add in future components
+        //add in future components: the DeserializeComponent is defined in the .h as a helper function to make calling easier
         DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
         DeserializeComponent<Sprite>(entity, loaded, "Sprite");
         DeserializeComponent<Transform>(entity, loaded, "Transform");
@@ -275,10 +290,12 @@ namespace IS {
 
     }
 
+    // This saves an entity as a prefab directly into the prefab asset. 
     void InsightEngine::SaveAsPrefab(Entity entity,std::string PrefabName) {
         std::string file_path = "Assets/Prefabs/" + PrefabName + ".json";
         std::string signature = mEntityManager->GetSignature(entity).to_string();
         Json::Value prefab;
+        // The prefab only needs the signature to get the components it contains.
         prefab["Signature"] = signature;
         prefab["Name"] = PrefabName;
         SaveJsonToFile(prefab, file_path);
@@ -288,14 +305,13 @@ namespace IS {
 
     //creating an entity from prefab
     Entity InsightEngine::LoadFromPrefab(Prefab prefab) {
-
         Entity entity = CreateEntity(prefab.mName);
         PrefabSignatureToEntity(prefab.mSignature, entity);
         return entity;
 
     }
 
-    //Helper function for signature and string
+    // Helper function for signature and string this is only to help load prefabs from files.
     Signature StringToSignature(const std::string& str) {
         Signature signature;
         size_t strLength = str.size();
@@ -307,7 +323,7 @@ namespace IS {
         return signature;
     }
 
-
+    // Loading the prefabs from files and storing it as a prefab.
     Prefab InsightEngine::LoadPrefabFromFile(std::string filename) {
         std::string file_path = filename;
         Json::Value loaded;
@@ -316,11 +332,14 @@ namespace IS {
         return prefab;
     }
 
+    /* This function is meant to save the entire scene.
+    *  As our scene is made up of entities, we simply just have to save every entity in the scene.
+    */
     void InsightEngine::SaveCurrentScene(std::string filename) {
         std::string file_path = "Assets/Scene/" + filename + "/"+ "mainscene.json";
         int EntitiesAlive = mEntityManager->EntitiesAlive();
         Json::Value scene;
-        scene["EntityAmount"] = EntitiesAlive;
+        scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
         SaveJsonToFile(scene, file_path);
         Json::Value entity;
         for (auto const& id : mEntityManager->GetEntitiesAlive()) {
@@ -330,6 +349,7 @@ namespace IS {
         IS_CORE_DEBUG("Saving scene successful: {} entities saved", EntitiesAlive);
     }
 
+    // Using the same format defined above, we simply reverse it and load in our entities.
     void InsightEngine::LoadScene(std::string filename) {
 
         // Load the main scene file
@@ -347,9 +367,7 @@ namespace IS {
         for (int i = 0; i < list_of_entities.size(); i++) {
             DestroyEntity(list_of_entities[i]);
         }
-
         int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
-
         // Load each entity
         for (int i = 0; i < EntitiesAlive; ++i) {
             std::string entityFile = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(i) + ".json";

@@ -27,7 +27,6 @@
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Text.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Guidgets.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
@@ -72,12 +71,10 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Prefab.h" />
     <ClInclude Include="Source\Random.h" />
-    <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Text.h" />
-    <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Guidgets.h" />
     <ClInclude Include="Source\WindowSystem.h" />

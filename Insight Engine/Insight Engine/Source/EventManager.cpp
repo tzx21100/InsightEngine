@@ -1,3 +1,20 @@
+/*!
+ * \file EventManager.cpp
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-09-2023
+ * \brief
+ * This source file defines the implementation of a EventManager class
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "EventManager.h"
 
@@ -17,7 +34,6 @@ namespace IS {
     //first find if there are any handlers with the message type then broadcast
     void EventManager::Broadcast(const Message& message) {
         //it is a unorderedmap so i find the vector of messagelistener* here
-        //auto is used because its convenient and I don't see restrictions against it
         auto it = handlers.find(message.GetType());
         if (it != handlers.end()) {
             //i iterate over the array of messagelisteners*
