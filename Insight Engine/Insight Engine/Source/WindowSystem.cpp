@@ -111,7 +111,7 @@ namespace IS {
     bool WindowSystem::IsVSync() const { return mProps.mVSync; }
 
     void WindowSystem::LoadProperties() {
-        std::string filename = "properties.json";
+        std::string filename = "Properties/WindowProperties.json";
         Json::Value properties;
         
         // Load window properties from JSON file
@@ -133,7 +133,7 @@ namespace IS {
     }
 
     void WindowSystem::SaveProperties() {
-        std::string filepath = "properties.json";
+        std::string filepath = "Properties/WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];
         win_props["Title"]  = mProps.mTitle.c_str();
