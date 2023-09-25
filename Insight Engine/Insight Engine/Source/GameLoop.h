@@ -137,7 +137,7 @@ namespace IS {
 
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
-                    if (input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_D)) {
+                    if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
                         sprite_player.texture = static_cast<uint8_t>(walking_animation.texture_data);
                         sprite_player.texture_width = walking_animation.width;
                         sprite_player.texture_height = walking_animation.height;
