@@ -51,9 +51,6 @@ namespace IS {
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
-        auto window = GetSystem<WindowSystem>("Window");
-        window->BeginUpdate(); // Poll events
-
         // Update System deltas every 4s
         const int update_frequency = 4 * targetFPS;
         if (!(frame_count % update_frequency))
@@ -74,7 +71,13 @@ namespace IS {
             }
         }
 
-        window->EndUpdate(); // Swap front and back buffers
+        Timer timer("End update", false);
+        auto window = GetSystem<WindowSystem>("Window");
+        window->EndUpdate();    // swap buffers and poll events
+        timer.Stop();
+        mSystemDeltas["Window"] += timer.GetDeltaTime();
+        mSystemDeltas["Engine"] += timer.GetDeltaTime();
+
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
@@ -201,15 +204,28 @@ namespace IS {
         IS_CORE_WARN("Entity {} completely destroyed!", entity);
     }
 
-    void InsightEngine::GenerateRandomEntity() {
+    void InsightEngine::GenerateRandomEntity(bool with_texture) {
         PRNG prng;
         InsightEngine& engine = Instance();
         Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
         auto& trans = engine.GetComponent<Transform>(e);
         // scale [2, 16], pos [viewport], orientation [-360, 360]
-        trans.setScaling((prng.generate() * 18.f) + 2.f, (prng.generate() * 18.f) + 2.f);
-        trans.setWorldPosition((prng.generate()* WIDTH) - WIDTH / 2.f, (prng.generate()* HEIGHT) - HEIGHT / 2.f);
+        trans.setScaling((prng.generate() * 28.f) + 2.f, (prng.generate() * 28.f) + 2.f);
+        trans.setWorldPosition((prng.generate() * WIDTH) - WIDTH / 2.f, (prng.generate()* HEIGHT) - HEIGHT / 2.f);
         trans.setRotation((prng.generate() * 720.f) - 360.f);
+
+        // with texture
+        if (with_texture) {
+            auto& sprite = engine.GetComponent<Sprite>(e);
+            auto asset = engine.GetSystem<AssetManager>("Asset");
+            float gacha = prng.generate(); // [0, 1]
+            Image random_img = (gacha <= 0.3f) ? asset->GetImage("Assets/icecream_truck_frame.png") :
+                (gacha <= 0.6f) ? asset->GetImage("Assets/player_frame.png") :
+                (gacha <= 0.8f) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
+            sprite.texture = static_cast<uint8_t>(random_img.texture_data);
+            sprite.texture_width = random_img.width;
+            sprite.texture_height = random_img.height;
+        }
     }
 
     // Dynamic entity copying 

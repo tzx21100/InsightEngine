@@ -59,7 +59,7 @@ namespace IS {
 
         //Entity Management
         Entity CreateEntity(std::string name);
-        void GenerateRandomEntity();
+        void GenerateRandomEntity(bool with_texture = false);
         void DeleteEntity(Entity entity);
 
         //Functions to save and load entities

@@ -64,8 +64,6 @@ namespace IS {
 
     }
 
-    void WindowSystem::BeginUpdate() { glfwPollEvents(); }
-
     void WindowSystem::Update(float)  {
         //register window closing 
         if (glfwWindowShouldClose(mWindow)) {
@@ -74,7 +72,10 @@ namespace IS {
         }
     }
 
-    void WindowSystem::EndUpdate() { glfwSwapBuffers(mWindow); }
+    void WindowSystem::EndUpdate() {
+        glfwSwapBuffers(mWindow);
+        glfwPollEvents();
+    }
 
     void WindowSystem::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::Collide) {

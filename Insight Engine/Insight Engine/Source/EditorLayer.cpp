@@ -86,10 +86,14 @@ namespace IS {
 
             if (ImGui::BeginMenu("Scene")) {
                 InsightEngine& engine = InsightEngine::Instance();
-                if (ImGui::MenuItem("Create 500 Random Entities")) {
+                if (ImGui::MenuItem("Create 500 Random Colors")) {
                     for (int i{}; i < 500; i++) {
                         engine.GenerateRandomEntity();
                     }
+                }
+                if (ImGui::MenuItem("Create 500 Random Textures")) {
+                    for (int i{}; i < 500; ++i)
+                        engine.GenerateRandomEntity(true);
                 }
 
                 ImGui::EndMenu();
