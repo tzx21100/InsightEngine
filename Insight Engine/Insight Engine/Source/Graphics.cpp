@@ -169,7 +169,7 @@ namespace IS {
         }
 
 
-        //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
         if (InsightEngine::Instance().mUsingGUI)
