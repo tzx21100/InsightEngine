@@ -231,7 +231,7 @@ namespace IS {
             oss << std::fixed << MAX_ENTITIES;
             ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
-            ImGui::Text("Press 'Escape' to toggle GUI");
+            ImGui::Text("Press 'Tab' to toggle GUI");
             ImGui::Separator();
             ImGui::Text("Player Controls");
             ImGui::BulletText("Press 'WASD' to move in the four directions");

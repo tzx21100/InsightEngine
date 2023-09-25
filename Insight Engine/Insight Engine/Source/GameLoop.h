@@ -108,7 +108,7 @@ namespace IS {
             if (!gui->WantCaptureKeyboard()) {
 
                 // Enable/disable GUI
-                if (input->IsKeyPressed(GLFW_KEY_ESCAPE)) {
+                if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
                     if (engine.mUsingGUI) {
                         IS_CORE_DEBUG("GUI Enabled");
