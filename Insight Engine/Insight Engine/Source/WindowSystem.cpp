@@ -118,12 +118,12 @@ namespace IS {
         bool success = LoadJsonFromFile(properties, filename);
         if (auto const& win_props = properties["WindowProperties"];
             success && win_props["Title"].isString() && win_props["Width"].isInt() &&
-            win_props["Height"].isInt() && win_props["Vsync"].isString()) {
+            win_props["Height"].isInt() && win_props["Vsync"].isBool()) {
 
             mProps.mTitle  = win_props["Title"].asString();
             mProps.mWidth  = win_props["Width"].asInt();
             mProps.mHeight = win_props["Height"].asInt();
-            mProps.mVSync  = win_props["Vsync"].asString() == "On" ? true : false;
+            mProps.mVSync  = win_props["Vsync"].asBool();
 
             IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
         } else { // Assign default properties
@@ -139,7 +139,7 @@ namespace IS {
         win_props["Title"]  = mProps.mTitle.c_str();
         win_props["Width"]  = mProps.mWidth;
         win_props["Height"] = mProps.mHeight;
-        win_props["Vsync"]  = mProps.mVSync ? "On" : "Off";
+        win_props["Vsync"]  = mProps.mVSync;
 
         // Save window propeties to JSON file
         bool success = SaveJsonToFile(properties, filepath);

@@ -3,7 +3,7 @@
 	{
 		"Height" : 900,
 		"Title" : "Insight Engine",
-		"Vsync" : "On",
+		"Vsync" : true,
 		"Width" : 1600
 	}
 }
