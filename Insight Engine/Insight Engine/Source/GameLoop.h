@@ -158,8 +158,14 @@ namespace IS {
                     int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
                     Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
                     body_player.AddVelocity(inputVelocity);
-                    //trans.world_position.x += hori * rbody.velocity.x;
-                    //trans.world_position.y += verti * rbody.velocity.y;
+                    // for jumping
+                    if (input->IsKeyPressed(GLFW_KEY_SPACE)) { 
+                        //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
+                        if (body_player.state == BodyState::GROUNDED) {
+                            body_player.AddVelocity(Vector2D(0.f, 500.f));
+                            body_player.state = BodyState::JUMP;
+                        }
+                    }
 
                     // flip image
                     trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||

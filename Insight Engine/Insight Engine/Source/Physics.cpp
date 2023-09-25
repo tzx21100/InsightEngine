@@ -252,6 +252,7 @@ namespace IS
 								//rigidBody2.Move(normal * depth);
 								trans2.world_position.x += vec.x;
 								trans2.world_position.y += vec.y;
+								rigidBodyB.state = BodyState::GROUNDED;
 							}
 							// if body B is static 
 							else if (rigidBodyB.bodyType != BodyType::Dynamic)
@@ -259,6 +260,7 @@ namespace IS
 								//rigidBody.Move(-normal * depth);
 								trans.world_position.x += -vec.x;
 								trans.world_position.y += -vec.y;
+								rigidBodyA.state = BodyState::GROUNDED;
 							}
 							else // both are dynamic
 							{
@@ -270,7 +272,6 @@ namespace IS
 								trans2.world_position.y += vec.y / 2.f;
 							}
 							sprite.color = glm::vec3(1.f, 0.f, 1.f);
-							
 							ResolveCollision(rigidBodyA, rigidBodyB, normal, depth);
 						}
 						else { //not colliding

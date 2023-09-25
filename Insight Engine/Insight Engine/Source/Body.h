@@ -25,6 +25,14 @@ namespace IS
         BodyTransform(float x, float y, float angle);
     };*/
 
+    enum class BodyState : short
+    {
+        IDLE,
+        WALKING,
+        JUMP,
+        GROUNDED
+    };
+
     class RigidBody : public IComponent{
         public:
         Vector2D velocity;
@@ -40,7 +48,8 @@ namespace IS
         float mass;
         float InvMass;
         float restitution; // bounciness/elasticity, 0 - objects stick tgt with no bounce, 1 - objects bounces off with no loss of energy
-        float area;       
+        float area;    
+        BodyState state{ BodyState::IDLE };
         //float radius; // for circle
         //Vector2D dimension; // for box's width and height
         Shape bodyShape;
