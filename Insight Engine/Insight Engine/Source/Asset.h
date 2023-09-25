@@ -89,13 +89,26 @@ namespace IS {
 
         //function for Sounds
         FMOD::Channel* PlaySoundByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        FMOD::Channel* PlayMusicByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+
         void SaveSound(const std::string& name, FMOD::Sound* sound) {
             mSoundList[name] = sound;
+        }
+        void SaveChannel(const std::string& name, FMOD::Channel* channel) {
+            mChannelList[name] = channel;
         }
 
         FMOD::Sound* GetSound(const std::string& name) {
             auto it = mSoundList.find(name);
             if (it != mSoundList.end()) {
+                return it->second;
+            }
+            return nullptr;
+        }
+
+        FMOD::Channel* GetChannel(const std::string& name) {
+            auto it = mChannelList.find(name);
+            if (it != mChannelList.end()) {
                 return it->second;
             }
             return nullptr;
@@ -112,6 +125,7 @@ namespace IS {
 
         //asset managers are supposed to save sounds and fonts as well
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
+        std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;
         std::vector<std::string>mImageNames;
         std::unordered_map<std::string, Prefab> mPrefabList;

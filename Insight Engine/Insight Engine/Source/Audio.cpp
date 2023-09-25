@@ -138,7 +138,7 @@ namespace IS {
         }
 
         FMOD::Channel* sound_channel = nullptr;
-        result = system->playSound(sound, nullptr, false, &sound_channel);
+        //result = system->playSound(sound, nullptr, false, &sound_channel);
         if (result != FMOD_OK) {
             // Handle sound playing error
             return nullptr; // Return nullptr on error
@@ -242,6 +242,13 @@ namespace IS {
 
         return Cchannel;
     }
+    // Check if a sound is playing
+    bool ISAudio::IsSoundPlaying(FMOD::Channel* Cchannel) {
+        if (!Cchannel) return false;
 
+        bool isPlaying = false;
+        Cchannel->isPlaying(&isPlaying);
+        return isPlaying;
+    }
 
 }

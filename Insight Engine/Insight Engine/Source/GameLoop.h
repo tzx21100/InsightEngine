@@ -200,6 +200,9 @@ namespace IS {
                 if (input->IsKeyPressed(GLFW_KEY_Z)) {
                     asset->PlaySoundByName("sound.MP3");
                 }
+                if (input->IsKeyPressed(GLFW_KEY_X)) {
+                    asset->PlayMusicByName("music.wav");
+                }
 
                 if (input->IsKeyPressed(GLFW_KEY_J)) {
                     //engine.LoadEntityFromJson(engine.GetEntityName(entity_player));

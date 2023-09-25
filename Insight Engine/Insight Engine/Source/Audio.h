@@ -44,7 +44,9 @@ namespace IS {
 
         FMOD::System* GetSystem() { return system; }
 
-        //specific sound
+        //specific functions made for rubrics
+        // Check if a sound is playing
+        bool IsSoundPlaying(FMOD::Channel* channel);
         FMOD::Channel* PlaySound(FMOD::Sound* sound, bool loop, float volume, float pitch);
 
     private:

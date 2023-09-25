@@ -66,10 +66,12 @@ namespace IS {
             std::string extension = entry.path().extension().string();
 
             // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
-            if (extension == ".MP3" || extension == ".WAV") {
+            if (extension == ".MP3" || extension == ".WAV" || extension ==".wav" || extension==".mp3") {
+                FMOD::Channel* channel = audio->ISAudioLoadSound(filePath.c_str());
                 FMOD::Sound* sound = audio->ISAudioLoadSoundS(filePath.c_str());
                 std::string soundName = entry.path().filename().string();
                 SaveSound(soundName, sound);
+                SaveChannel(soundName, channel);
                 IS_CORE_DEBUG("Loaded Sound: {} ", soundName);
                 
             }
@@ -81,9 +83,29 @@ namespace IS {
 
     FMOD::Channel* AssetManager::PlaySoundByName(const std::string& soundName, bool loop , float volume, float pitch ) {
         FMOD::Sound* sound = GetSound(soundName);
-        if (sound) {
+        if (sound){
             auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
             return audio->PlaySound(sound, loop, volume, pitch);
+        }
+        return nullptr;
+    }
+    FMOD::Channel* AssetManager::PlayMusicByName(const std::string& soundName, bool loop, float volume, float pitch) {
+        FMOD::Sound* sound = GetSound(soundName);
+        FMOD::Channel* channel = GetChannel(soundName);
+        auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        if (audio->IsSoundPlaying(channel)) {
+            bool isPaused = false;
+            channel->getPaused(&isPaused);
+            if (isPaused) {
+                channel->setPaused(false);
+            }
+            else {
+                channel->setPaused(true);
+            }
+        }
+        else {
+            mChannelList[soundName]= audio->PlaySound(sound, loop, volume, pitch);
+            return mChannelList[soundName];
         }
         return nullptr;
     }
