@@ -38,6 +38,7 @@ namespace IS {
             uint32_t mWidth{}; ///< The width of the window.
             uint32_t mHeight{}; ///< The height of the window.
             bool mVSync{}; ///< Flag indicating whether vsync is enabled.
+            bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
         };
 
         /*!
@@ -77,6 +78,13 @@ namespace IS {
          * \brief Swaps the front and back buffers.
          */
         void SwapBuffers();
+
+        /*!
+         * \brief Set window to fullscreen/windowed
+         * 
+         * \param fullscreen fullscreen if true, windowed otherwise. (default true)
+         */
+        void SetFullScreen(bool fullscreen = true);
 
         /*!
          * \brief Gets the width of the window.

@@ -232,6 +232,7 @@ namespace IS {
             ImGui::Text("Max Entities: %s", oss.str().c_str());
             ImGui::Separator();
             ImGui::Text("Press 'Tab' to toggle GUI");
+            ImGui::Text("Press 'F11' to toggle fullscreen/windowed");
             ImGui::Separator();
             ImGui::Text("Player Controls");
             ImGui::BulletText("Press 'WASD' to move in the four directions");

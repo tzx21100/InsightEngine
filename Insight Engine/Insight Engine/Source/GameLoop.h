@@ -120,6 +120,14 @@ namespace IS {
                     }
                 }
 
+                // Toggle fullscreen
+                static bool fullscreen = false;
+                if (input->IsKeyPressed(GLFW_KEY_F11)) {
+                    fullscreen = !fullscreen;
+                    auto const& window = engine.GetSystem<WindowSystem>("Window");
+                    window->SetFullScreen(fullscreen);
+                }
+
                 //this controls the freeze frame
                 engine.mContinueFrame = false;
                 if (input->IsKeyPressed(GLFW_KEY_SPACE)) {

@@ -135,6 +135,7 @@ namespace IS {
             render_texts.emplace_back(entities_alive_text_oss.str());
             render_texts.emplace_back("");
             render_texts.emplace_back("Press 'Tab' to toggle GUI");
+            render_texts.emplace_back("Press 'F11' to toggle fullscreen/windowed");
             render_texts.emplace_back("");
             render_texts.emplace_back("Player Controls");
             render_texts.emplace_back("- Press 'WASD' to move in the four directions");

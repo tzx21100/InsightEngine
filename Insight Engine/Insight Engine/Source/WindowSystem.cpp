@@ -20,7 +20,7 @@
 namespace IS {
 
     // In case "WindowProperties.json" is not found, window will use default properties
-    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, true };
+    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, true, false };
 
     WindowSystem::WindowSystem() {
         LoadProperties();
@@ -40,12 +40,22 @@ namespace IS {
         glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
 
-        // Create a windowed mode window and its OpenGL context
-        mWindow = glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
+        // Create a window and its OpenGL context
+        if (mProps.mFullscreen) {
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+            mWindow = glfwCreateWindow(mode->width, mode->height, mProps.mTitle.c_str(), monitor, nullptr);
+        } else {
+            mWindow = glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
+        }
         if (!mWindow) {
             IS_CORE_CRITICAL("Failed to create OpneGL context!");
             glfwTerminate();
         }
+
+        // Set initial window position
+        glfwSetWindowPos(mWindow, 100, 100);
 
         // Default setting
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -126,6 +136,21 @@ namespace IS {
 
     bool WindowSystem::IsVSync() const { return mProps.mVSync; }
 
+    void WindowSystem::SetFullScreen(bool fullscreen) {
+        mProps.mFullscreen = fullscreen;
+
+        // Windowed mode
+        if (!fullscreen) {
+            glfwSetWindowMonitor(mWindow, NULL, 100, 100, mProps.mWidth, mProps.mHeight, GLFW_DONT_CARE);
+            return;
+        }
+
+        // Fullscreen mode
+        GLFWmonitor* primary_monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(primary_monitor);
+        glfwSetWindowMonitor(mWindow, primary_monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    }
+
     void WindowSystem::LoadProperties() {
         std::string filename = "Properties/WindowProperties.json";
         Json::Value properties;
@@ -134,12 +159,13 @@ namespace IS {
         bool success = LoadJsonFromFile(properties, filename);
         if (auto const& win_props = properties["WindowProperties"];
             success && win_props["Title"].isString() && win_props["Width"].isUInt() &&
-            win_props["Height"].isUInt() && win_props["Vsync"].isBool()) {
+            win_props["Height"].isUInt() && win_props["Vsync"].isBool() && win_props["Fullscreen"].isBool()) {
 
             mProps.mTitle  = win_props["Title"].asString();
             mProps.mWidth  = win_props["Width"].asUInt();
             mProps.mHeight = win_props["Height"].asUInt();
             mProps.mVSync  = win_props["Vsync"].asBool();
+            mProps.mFullscreen = win_props["Fullscreen"].asBool();
 
             IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
         } else { // Assign default properties
@@ -156,6 +182,7 @@ namespace IS {
         win_props["Width"]  = mProps.mWidth;
         win_props["Height"] = mProps.mHeight;
         win_props["Vsync"]  = mProps.mVSync;
+        win_props["Fullscreen"] = mProps.mFullscreen;
 
         // Save window propeties to JSON file
         bool success = SaveJsonToFile(properties, filepath);
