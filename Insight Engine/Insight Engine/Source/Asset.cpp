@@ -36,6 +36,7 @@ namespace IS {
             }
         }
 
+        // Gets all prefabs and loads them to a list.
         path = "Assets/Prefabs";
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string filePath = entry.path().string();
@@ -45,11 +46,47 @@ namespace IS {
             if (extension == ".json") {
                Prefab to_list=engine.LoadPrefabFromFile(filePath);
                mPrefabList[to_list.mName] = to_list;
+               IS_CORE_DEBUG("Loaded Prefab: {} ", filePath);
             }
         }
+
+        // Gets all the scenes and stores them into a list
+        path = "Assets/Scene";
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string filePath = entry.path().filename().string();
+            mSceneList.emplace_back(filePath);
+            IS_CORE_DEBUG("Loaded Scene: {} ", filePath);
+        }
+
+        // loads all audio and store it
+        path = "Assets/Sounds";
+        auto audio = engine.GetSystem<ISAudio>("Audio");
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string filePath = entry.path().string();
+            std::string extension = entry.path().extension().string();
+
+            // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
+            if (extension == ".MP3" || extension == ".WAV") {
+                FMOD::Sound* sound = audio->ISAudioLoadSoundS(filePath.c_str());
+                std::string soundName = entry.path().filename().string();
+                SaveSound(soundName, sound);
+                IS_CORE_DEBUG("Loaded Sound: {} ", soundName);
+                
+            }
+        }
+
     }
 
     Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
+
+    FMOD::Channel* AssetManager::PlaySoundByName(const std::string& soundName, bool loop , float volume, float pitch ) {
+        FMOD::Sound* sound = GetSound(soundName);
+        if (sound) {
+            auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+            return audio->PlaySound(sound, loop, volume, pitch);
+        }
+        return nullptr;
+    }
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame
          

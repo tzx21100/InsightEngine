@@ -146,6 +146,21 @@ namespace IS {
 
         return sound_channel;
     }
+
+    //this will return the sound file instead
+    FMOD::Sound* ISAudio::ISAudioLoadSoundS(const char* filePath) {
+        FMOD_MODE mode = FMOD_LOOP_OFF;
+        FMOD::Sound* sound = nullptr;
+
+        FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &sound);
+        if (result != FMOD_OK) {
+            // Handle sound loading error
+            return nullptr;
+        }
+        return sound; // Return the loaded sound
+    }
+
+
 #pragma warning(pop)
 
     FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) { //load music w/o looping
@@ -208,4 +223,25 @@ namespace IS {
             group->setPitch(pitch);
         }
     }
+
+    FMOD::Channel* ISAudio::PlaySound(FMOD::Sound* Ssound, bool loop, float volume, float pitch) {
+        if (!Ssound) return nullptr;
+
+        FMOD::Channel* Cchannel = nullptr;
+        FMOD_RESULT result = system->playSound(Ssound, nullptr, true, &Cchannel); // Start paused to set attributes
+
+        if (result != FMOD_OK || !Cchannel) {
+            // Handle error
+            return nullptr;
+        }
+
+        Cchannel->setVolume(volume);
+        Cchannel->setPitch(pitch);
+        Cchannel->setLoopCount(loop ? -1 : 0); // -1 for infinite loop, 0 for no loop
+        Cchannel->setPaused(false); // Start playing after setting attributes
+
+        return Cchannel;
+    }
+
+
 }

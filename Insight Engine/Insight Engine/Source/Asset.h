@@ -87,12 +87,35 @@ namespace IS {
         //functions for Prefabs
         Prefab GetPrefab(std::string name);
 
+        //function for Sounds
+        FMOD::Channel* PlaySoundByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        void SaveSound(const std::string& name, FMOD::Sound* sound) {
+            mSoundList[name] = sound;
+        }
+
+        FMOD::Sound* GetSound(const std::string& name) {
+            auto it = mSoundList.find(name);
+            if (it != mSoundList.end()) {
+                return it->second;
+            }
+            return nullptr;
+        }
+
+        void RemoveSound(const std::string& name) {
+            auto it = mSoundList.find(name);
+            if (it != mSoundList.end()) {
+                it->second->release();  // Important: Release the FMOD::Sound object
+                mSoundList.erase(it);
+            }
+        }
+
+
         //asset managers are supposed to save sounds and fonts as well
-        void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }
-        std::unordered_map<std::string,FMOD::Channel*>mSoundList;
+        std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, Image>mImageList;
         std::vector<std::string>mImageNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
+        std::vector<std::string>mSceneList;
 
 
     private:

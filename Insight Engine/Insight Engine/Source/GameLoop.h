@@ -193,7 +193,11 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
                     //engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
-                    engine.SaveCurrentScene("testscene");
+                    asset->PlaySoundByName("sound.MP3");
+                }
+
+                if (input->IsKeyPressed(GLFW_KEY_Z)) {
+                    asset->PlaySoundByName("sound.MP3");
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_J)) {

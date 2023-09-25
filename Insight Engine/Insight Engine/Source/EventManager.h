@@ -29,21 +29,66 @@ It stores who the subscribers are for the specific message and when the engine b
 all subscribed Systems will recieved the message.
 */
 namespace IS {
+    /**
+     * \class EventManager
+     * \brief Manages the subscription and broadcasting of messages to various listeners in the system.
+     *
+     * The EventManager follows the Singleton design pattern, ensuring that there is only one instance of the manager in the system.
+     * It provides methods for systems to subscribe to specific message types and for broadcasting messages to all subscribed systems.
+     */
     class EventManager {
     public:
-        //singleton
+        /**
+         * \brief Returns the singleton instance of the EventManager.
+         *
+         * This method follows the "Meyer's Singleton" pattern, ensuring thread safety and lazy initialization.
+         *
+         * \return A reference to the single instance of EventManager.
+         */
         static EventManager& Instance() {
             static EventManager instance;
             return instance;
         }
+
+        /**
+         * \brief Allows systems to subscribe to specific message types.
+         *
+         * When a system wishes to listen for a specific message type, it can use this method to register itself.
+         * When that message type is broadcast, the system will be notified.
+         *
+         * \param type The type of message to subscribe to.
+         * \param listener A pointer to the system or entity that wants to listen to the message.
+         */
         void Subscribe(MessageType type, MessageListener* listener);
+
+        /**
+         * \brief Broadcasts a message to all subscribed listeners of that message type.
+         *
+         * When this method is called with a message, all systems that have subscribed to that particular message type will be notified.
+         *
+         * \param message The message to be broadcast.
+         */
         void Broadcast(const Message& message);
 
     private:
-        //i create an unorderedmap with MessageType as key and it should store an array of a pointer to message listeners (systems)
+        /**
+         * \brief Map that stores message listeners indexed by message type.
+         *
+         * For each message type, there can be multiple systems/entities that wish to listen.
+         * Thus, for each message type, we maintain a vector of listeners.
+         */
         std::unordered_map<MessageType, std::vector<MessageListener*>> handlers;
-        //singleton
+
+        /**
+         * \brief Private constructor to ensure that no external entities can create an instance.
+         *
+         * The Singleton pattern is enforced by making the constructor private.
+         */
         EventManager();
+
+        /**
+         * \brief Destructor to handle any cleanup if necessary.
+         */
         ~EventManager();
     };
 }
