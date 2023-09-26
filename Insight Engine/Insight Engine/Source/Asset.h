@@ -9,7 +9,6 @@
 #include <stdbool.h>
 #include <filesystem>
 
-
 #define ON_ERROR(condition, msg) \
 do { \
     if (condition) { \
@@ -53,7 +52,6 @@ namespace IS {
         int height{};
         int channels{};
         size_t size{};
-        uint8_t* data{};
         unsigned long texture_data{};
         allocationType allocation_type{};
 
@@ -74,7 +72,7 @@ namespace IS {
         ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
 
         const Image& GetImage(const std::string& filename) const;
-        Image ImageLoad(const std::string& filepath);
+        void ImageLoad(const std::string& filepath);
         void SaveImageData(const Image image_data);
         void RemoveImageData(const std::string& filename);
         void ImageFree(const std::string& filename);
@@ -89,12 +87,49 @@ namespace IS {
         //functions for Prefabs
         Prefab GetPrefab(std::string name);
 
+        //function for Sounds
+        FMOD::Channel* PlaySoundByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        FMOD::Channel* PlayMusicByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+
+        void SaveSound(const std::string& name, FMOD::Sound* sound) {
+            mSoundList[name] = sound;
+        }
+        void SaveChannel(const std::string& name, FMOD::Channel* channel) {
+            mChannelList[name] = channel;
+        }
+
+        FMOD::Sound* GetSound(const std::string& name) {
+            auto it = mSoundList.find(name);
+            if (it != mSoundList.end()) {
+                return it->second;
+            }
+            return nullptr;
+        }
+
+        FMOD::Channel* GetChannel(const std::string& name) {
+            auto it = mChannelList.find(name);
+            if (it != mChannelList.end()) {
+                return it->second;
+            }
+            return nullptr;
+        }
+
+        void RemoveSound(const std::string& name) {
+            auto it = mSoundList.find(name);
+            if (it != mSoundList.end()) {
+                it->second->release();  // Important: Release the FMOD::Sound object
+                mSoundList.erase(it);
+            }
+        }
+
+
         //asset managers are supposed to save sounds and fonts as well
-        void SaveSound(std::string str, FMOD::Channel* sound) { mSoundList.insert({ str,sound }); }
-        std::unordered_map<std::string,FMOD::Channel*>mSoundList;
+        std::unordered_map<std::string, FMOD::Sound*> mSoundList;
+        std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;
         std::vector<std::string>mImageNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
+        std::vector<std::string>mSceneList;
 
 
     private:
@@ -105,7 +140,6 @@ namespace IS {
         //Image image;
     };
 
-
 }
 
-#endif // GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H  
+#endif // GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H

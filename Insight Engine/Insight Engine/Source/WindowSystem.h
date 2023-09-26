@@ -3,7 +3,7 @@
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
            Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 23-09-2023
+ * \date 26-09-2023
  * \brief
  *      This header file declares the interface for class WindowSystem, which
  *      encapsulates the functionalities of an application window.
@@ -17,9 +17,9 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "System.h"
-#include "Graphics.h"
 
-#include <GLFW/glfw3.h> // Ensure glew is included before gl
+// Dependencies
+#include <GLFW/glfw3.h>
 
 namespace IS {
 
@@ -38,6 +38,7 @@ namespace IS {
             uint32_t mWidth{}; ///< The width of the window.
             uint32_t mHeight{}; ///< The height of the window.
             bool mVSync{}; ///< Flag indicating whether vsync is enabled.
+            bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
         };
 
         /*!
@@ -74,14 +75,23 @@ namespace IS {
         std::string GetName() override;
 
         /*!
-         * \brief Begins the window update.
+         * \brief Swaps the front and back buffers.
          */
-        void BeginUpdate();
+        void SwapBuffers();
 
         /*!
-         * \brief Ends the window update.
+         * \brief Set window to fullscreen/windowed
+         * 
+         * \param fullscreen fullscreen if true, windowed otherwise. (default true)
          */
-        void EndUpdate();
+        void SetFullScreen(bool fullscreen = true);
+
+        /*!
+         * \brief Checks if window is fullscreen.
+         *
+         * \return true if window is fullscreen, false otherwise.
+         */
+        bool IsFullScreen() const;
 
         /*!
          * \brief Gets the width of the window.
@@ -100,6 +110,24 @@ namespace IS {
          * \return A pair containing the width and height of the window.
          */
         std::pair<uint32_t, uint32_t> GetWindowSize() const;
+
+        /*!
+         * \brief Gets the width of the monitor.
+         * \return The width of the monitor.
+         */
+        uint32_t GetMonitorWidth() const;
+
+        /*!
+         * \brief Gets the height of the monitor.
+         * \return The height of the monitor.
+         */
+        uint32_t GetMonitorHeight() const;
+
+        /*!
+         * \brief Gets the size of the monitor.
+         * \return A pair containing the width and height of the monitor.
+         */
+        std::pair<uint32_t, uint32_t> GetMonitorSize() const;
 
         /*!
          * \brief Gets the title of the window.
@@ -145,6 +173,8 @@ namespace IS {
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.
+        uint32_t mMonitorWidth; ///< The width of the monitor.
+        uint32_t mMonitorHeight; ///< The height of the monitor.
 
         static WindowProperties mDefaultProperties; ///< Default window properties.
     };

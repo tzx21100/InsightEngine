@@ -32,6 +32,7 @@ namespace IS {
         bool ISAudioIsValidGroup(FMOD::ChannelGroup* group); //check grp valid anot
         FMOD::ChannelGroup* ISAudioCreateGroup(); //create audio grp
         FMOD::Channel* ISAudioLoadSound(const char* filePath); //load sound file (pass in full path)
+        FMOD::Sound* ISAudioLoadSoundS(const char* filePath);
         FMOD::Channel* ISAudioLoadMusic(const char* filePath); //load music file (pass in full path)
 
         void ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop = false); // play sound; default no looped audio
@@ -40,6 +41,13 @@ namespace IS {
         void ISAudioPauseGroup(FMOD::ChannelGroup* group);
         void ISAudioSetGroupVolume(FMOD::ChannelGroup* group, float volume); // volume 0-1
         void ISAudioSetGroupPitch(FMOD::ChannelGroup* group, float pitch);//pitch 0-1
+
+        FMOD::System* GetSystem() { return system; }
+
+        //specific functions made for rubrics
+        // Check if a sound is playing
+        bool IsSoundPlaying(FMOD::Channel* channel);
+        FMOD::Channel* PlaySound(FMOD::Sound* sound, bool loop, float volume, float pitch);
 
     private:
         FMOD::System* system;

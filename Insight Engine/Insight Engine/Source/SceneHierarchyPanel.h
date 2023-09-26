@@ -75,6 +75,8 @@ namespace IS {
          */
         void RenderConfirmDelete(Entity entity, bool& show);
 
+        void RenderPrefab();
+
         /*!
          * \brief Renders a specific component for the specified Entity.
          * \tparam Component The type of the component to render.

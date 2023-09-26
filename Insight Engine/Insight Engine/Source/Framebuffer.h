@@ -22,7 +22,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include <GL/glew.h> // for access to OpenGL API
+#include <glad/glad.h> // for access to OpenGL API
 
 namespace IS {
 

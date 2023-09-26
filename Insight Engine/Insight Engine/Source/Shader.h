@@ -1,7 +1,7 @@
 #pragma once
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include <GL/glew.h> // for access to OpenGL API declarations 
+#include <glad/glad.h> // for access to OpenGL API declarations 
 #include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>

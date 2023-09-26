@@ -1,41 +1,126 @@
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_COMPONENT_H_
-#define GAM200_INSIGHT_ENGINE_SOURCE_COMPONENT_H_
+/*!
+ * \file Component.h
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-09-2023
+ * \brief
+ * This header file defines the implementation of the Components in our
+ * ECS system. Only the CoreEngine should be called to access the ECS and these
+ * functions shouldn't really be touched.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   guard
+ ----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_ECS_COMPONENT_H_
+#define GAM200_INSIGHT_ENGINE_ECS_COMPONENT_H_
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include <json/json.h>
 #include "Entities.h"
 
 namespace IS {
 
-	//this is just a parent class for all components
+	/**
+	 * \class IComponent
+	 * \brief A base class for all components.
+	 *
+	 * This class provides basic serialization and deserialization methods
+	 * for components, which can be overridden by derived component classes.
+	 */
 	class IComponent {
 	public:
+		/**
+		 * \brief Serialize the component into a JSON format.
+		 *
+		 * Derived component classes can override this to provide custom
+		 * serialization logic.
+		 *
+		 * \return A Json::Value containing the serialized data.
+		 */
 		virtual Json::Value Serialize() {
 			//I give a default intialization so that not all components have to use this
 			Json::Value empty;
 			return empty;
 		}
 
+		 /**
+         * \brief Deserialize the component from a JSON format.
+         * 
+         * Derived component classes can override this to provide custom 
+         * deserialization logic.
+         * 
+         * \param A Json::Value containing the serialized data.
+         */
 		virtual void Deserialize(Json::Value) {
 			//This is a empty default init so that not all components have to override
 		}
 
-
 	};
 
-	//parent component array this allows for destruction of entites of ANY types
+	/**
+	 * \class IComponentArray
+	 * \brief A base class for arrays of components.
+	 *
+	 * This class provides basic methods for handling entities and their
+	 * associated components in a generic manner.
+	 */
 	class IComponentArray {
 	public:
 		virtual ~IComponentArray() {};
-		virtual void EntityDestroyed(Entity entity) = 0;//informs when an entity is destroyed
-		virtual ComponentType CloneData(Entity entity, Entity old_entity) = 0; //this is to clone a component
-		virtual ComponentType SignatureMatch(Signature signature, Entity entity)=0; // This is for prefab signatures
-		//Small functions to set and get the component type
+
+		/**
+		 * \brief Called when an entity is destroyed to handle any associated components.
+		 *
+		 * \param entity The ID of the entity being destroyed.
+		 */
+		virtual void EntityDestroyed(Entity entity) = 0;
+
+		/**
+		 * \brief Clone the data of a component from one entity to another.
+		 *
+		 * \param entity The ID of the new entity.
+		 * \param old_entity The ID of the old entity to clone from.
+		 * \return The ComponentType of the cloned component.
+		 */
+		virtual ComponentType CloneData(Entity entity, Entity old_entity) = 0;
+
+		/**
+		 * \brief Match a signature to add default components to an entity.
+		 *
+		 * This is useful for matching the prefab's signature to get their components
+		 * 
+		 * \param signature The signature to match against.
+		 * \param entity The entity to which components should be added.
+		 * \return The ComponentType of the added component.
+		 */
+		virtual ComponentType SignatureMatch(Signature signature, Entity entity)=0;
+
+		/**
+		 * \brief Set the component type for this array.
+		 *
+		 * \param id The ComponentType to set.
+		 */
 		void SetComponentType(ComponentType id) {
 			mComponentType = id;
 		}
+
+		/**
+		 * \brief Get the component type for this array.
+		 *
+		 * \return The ComponentType of this array.
+		 */
 		ComponentType GetComponentType() {
 			return mComponentType;
 		}
+
 	private:
 		// The Component Type of the array
 		ComponentType mComponentType;
@@ -146,7 +231,7 @@ namespace IS {
 			mComponentArrays[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
-			IS_CORE_INFO("Component {} registered!", type_name);
+			IS_CORE_INFO("{} component registered!", std::string(type_name).substr(10));
 		}
 
 		template<typename T>

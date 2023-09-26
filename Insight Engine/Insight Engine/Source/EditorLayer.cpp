@@ -2,7 +2,7 @@
  * \file EditorLayer.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 23-09-2023
+ * \date 24-09-2023
  * \brief
  * This source file defines the implementation for class EditorLayer which
  * encapsulates the functionalities of a level editor layer.
@@ -86,10 +86,14 @@ namespace IS {
 
             if (ImGui::BeginMenu("Scene")) {
                 InsightEngine& engine = InsightEngine::Instance();
-                if (ImGui::MenuItem("Create 500 Random Entities")) {
+                if (ImGui::MenuItem("Create 500 Random Colors")) {
                     for (int i{}; i < 500; i++) {
                         engine.GenerateRandomEntity();
                     }
+                }
+                if (ImGui::MenuItem("Create 500 Random Textures")) {
+                    for (int i{}; i < 500; ++i)
+                        engine.GenerateRandomEntity(true);
                 }
 
                 ImGui::EndMenu();
@@ -116,6 +120,12 @@ namespace IS {
 
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, flags);
+
+        // Allow key/mouse event pass through only in this panel
+        if (ImGui::IsWindowFocused()) {
+            ImGuiIO& io = ImGui::GetIO();
+            io.WantCaptureMouse = io.WantCaptureKeyboard = false;
+        }
 
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
@@ -212,25 +222,71 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
+
+        ImGuiIO& io = ImGui::GetIO();
+        auto const& font_bold = io.Fonts->Fonts[0];
+
         ImGui::SetNextWindowBgAlpha(0.8f); // Translucent background
-        if (ImGui::Begin("Info", nullptr, window_flags)) {
-            ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
-            // Comma separted numbers
-            std::ostringstream oss;
-            oss.imbue(std::locale(""));
-            oss << std::fixed << MAX_ENTITIES;
-            ImGui::Text("Max Entities: %s", oss.str().c_str());
+        if (ImGui::Begin("Info/Help", nullptr, window_flags)) {
+            if (ImGui::BeginTable("Entities", 2)) {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Entities Alive:");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Text("%d", engine.EntitiesAlive());
+
+                // Comma separted numbers
+                ImGui::TableNextColumn();
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Max Entities:");
+                ImGui::PopFont();
+                std::ostringstream oss;
+                oss.imbue(std::locale(""));
+                oss << std::fixed << MAX_ENTITIES;
+                ImGui::TableNextColumn();
+                ImGui::Text("%s", oss.str().c_str());
+
+                ImGui::EndTable();
+            }
             ImGui::Separator();
-            ImGui::Text("Press 'Escape' to toggle GUI");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Controls ONLY work if scene panel focused!");
+            ImGui::PopFont();
             ImGui::Separator();
-            ImGui::Text("Player Controls");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("General Controls");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'Tab' to toggle GUI");
+            ImGui::BulletText("Press 'F11' to toggle fullscreen/windowed");
+            ImGui::BulletText("Click mouse scrollwheel to spawn entity");
+            ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Player Controls");
+            ImGui::PopFont();
             ImGui::BulletText("Press 'WASD' to move in the four directions");
             ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             ImGui::Separator();
-            ImGui::Text("Physics Debug");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Physics Controls");
+            ImGui::PopFont();
             ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
             ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
             ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Audio Controls");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'Z' to play sfx");
+            ImGui::BulletText("Press 'X' to play music");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Scene Controls");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'J' to load testscene");
+            ImGui::BulletText("Press 'R' to save testscene");
+
         }
         ImGui::End();
     }

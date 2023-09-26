@@ -13,27 +13,28 @@ namespace IS
         void Initialize() override;
         void HandleMessage(const Message&) override {}
         //void setGravity(float g) { Gravity = g; }
-        Vector2D getGravity() { return Gravity; }
+        //Vector2D getGravity() { return Gravity; }
         static bool isDebugDraw;
         ~Physics() {}
 
-        static void drawOutLine(RigidBody & body, Sprite const& sprite);
+        static void DrawOutLine(RigidBody & body, Sprite const& sprite);
 	private:
 
         // gravity of the world
-        Vector2D Gravity;
-        bool exertingGravity;
+        Vector2D mGravity;
+        bool mExertingGravity;
         // max velocity for the game body
-        float MaxPositionVelocity;
-        float MaxNegativeVelocity;
+        float mMaxVelocity;
+        float mMinVelocity;
 	};
 
-    void rigidBodyCallUpdate(RigidBody body, Vector2D gravity, float dt);
+    // not used
+    void RigidBodyCallUpdate(RigidBody body, Vector2D gravity, float dt);
 
     //void collisionCallUpdate(Collider collider, float dt, RigidBody rigidBody, auto const& entity, std::set<Entity> mEntities);
-    void collisionCallUpdate(RigidBody rigidBody, float dt,  auto const& entity, std::set<Entity> mEntities);
+    void CollisionCallUpdate(RigidBody rigidBody, float dt,  auto const& entity, std::set<Entity> mEntities);
 
-    void collisionCheck(float dt,std::set<Entity> const& mEntities);
+    void CollisionDetect(std::set<Entity> const& mEntities);
 
     void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
 

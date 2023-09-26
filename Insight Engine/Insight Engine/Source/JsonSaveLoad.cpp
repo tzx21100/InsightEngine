@@ -7,10 +7,26 @@
 
 namespace IS {
 
+    // It will create a directory at the path if its not found
     bool SaveJsonToFile(const Json::Value& root, const std::string& filename) {
+        // Extract directory path from filename
+        std::filesystem::path filePath(filename);
+        std::filesystem::path dirPath = filePath.parent_path();
+
+        // Check if the directory exists
+        if (!std::filesystem::exists(dirPath)) {
+            // If it doesn't exist, create the directory
+            try {
+                std::filesystem::create_directories(dirPath);
+            }
+            catch (const std::exception& e) {
+                std::cerr << "Failed to create directory: " << e.what() << std::endl;
+                return false;
+            }
+        }
+
         std::ofstream file(filename, std::ofstream::binary);
         if (!file.is_open()) {
-            std::cout << "Current path is " << std::filesystem::current_path() << '\n';
             std::cerr << "Could not open file for writing: " << filename << std::endl;
             return false;
         }

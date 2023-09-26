@@ -1,7 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 #include "Shader.h"
@@ -9,7 +8,6 @@
 #include "Sprite.h"
 #include "Mesh.h"
 #include "Framebuffer.h"
-#include "Texture.h"
 #include "Animation.h"
 
 //#include "Asset.h"
@@ -27,8 +25,7 @@ namespace IS {
 		
 		static void cleanup();
 
-		static GLuint initTextures(Image& image);
-		static void initMeshes();
+		static void initTextures(const std::string& filepath, Image& image);
 		static GLuint GetScreenTexture();
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 

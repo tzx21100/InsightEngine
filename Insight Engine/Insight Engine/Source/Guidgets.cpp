@@ -27,13 +27,20 @@ namespace IS {
     namespace guidgets {
 
         void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width) {
-            ImGuiTableFlags flags = ImGuiTableFlags_PreciseWidths;
+            ImGuiIO& io = ImGui::GetIO();
+            auto font_bold = io.Fonts->Fonts[0];
+
+            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
             ImGui::PushID(label.c_str());
 
-            if (ImGui::BeginTable(label.c_str(), 2, flags, ImVec2(0, 0), column_width)) {
+            if (ImGui::BeginTable(label.c_str(), 2, table_flags)) {
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
                 ImGui::TableNextColumn();
-                ImGui::Text(label.c_str());
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted(label.c_str());
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
 
                 ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
@@ -45,8 +52,10 @@ namespace IS {
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+                ImGui::PushFont(font_bold);
                 if (ImGui::Button("X", button_size))
                     values.x = x_reset;
+                ImGui::PopFont();
                 ImGui::PopStyleColor(3);
 
                 ImGui::SameLine();
@@ -57,8 +66,10 @@ namespace IS {
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.44f, .67f, .01f, 1.f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.55f, .74f, .21f, 1.f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.44f, .67f, .01f, 1.f));
+                ImGui::PushFont(font_bold);
                 if (ImGui::Button("Y", button_size))
                     values.y = y_reset;
+                ImGui::PopFont();
                 ImGui::PopStyleColor(3);
 
                 ImGui::SameLine();
@@ -67,7 +78,6 @@ namespace IS {
 
                 ImGui::PopStyleVar();
                 ImGui::EndTable();
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal, 0.5f);
             }
 
             ImGui::PopID();

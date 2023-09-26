@@ -25,7 +25,6 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <GLFW/glfw3.h>
 
 namespace IS {
 
@@ -45,8 +44,9 @@ namespace IS {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-        // Set default font
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f);
+        // Add fonts
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", 16.f); // bold font
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f); // default regular font
 
         // Setup Dear ImGui style
 
@@ -185,6 +185,16 @@ namespace IS {
 
         // Menubar
         colors[ImGuiCol_MenuBarBg] = ImVec4{ .1137f, .1137f, .1137f, 1.f };
+    }
+
+    bool GUISystem::WantCaptureMouse() const { 
+        ImGuiIO const& io = ImGui::GetIO();
+        return io.WantCaptureMouse;
+    }
+
+    bool GUISystem::WantCaptureKeyboard() const {
+        ImGuiIO const& io = ImGui::GetIO();
+        return io.WantCaptureKeyboard;
     }
 
 } // end namespace IS

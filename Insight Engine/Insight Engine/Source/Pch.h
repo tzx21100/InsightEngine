@@ -16,19 +16,20 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <initializer_list> // for std::initializer_list
 #include <algorithm>
 #include <cstdint>
-#include <bitset>
-#include <queue>
-#include <deque>
 #include <cassert>
-#include <array>
-#include <set>
-#include <unordered_map>
-#include <vector>
 #include <variant>
 #include <cmath>
 #include <limits>
 #include <chrono>
 #include <memory>
+#include <ranges>
+#include <set>
+#include <bitset>
+#include <array>
+#include <vector>
+#include <queue>
+#include <deque>
+#include <unordered_map>
 
 // Project files
 #include "Properties.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "Transform.h"
 #include "Shader.h"
 #include "Animation.h"
@@ -13,7 +13,6 @@ namespace IS {
         uint8_t texture{};
         uint32_t texture_width{};
         uint32_t texture_height{};
-        GLuint tex_ID{};
         int current_tex_index{}; // 0 is texture sprite initialized with
 
         // imgui
@@ -73,7 +72,6 @@ namespace IS {
             spriteData["SpriteTexture"] = texture;
             spriteData["SpriteTextureWidth"] = texture_width;
             spriteData["SpriteTextureHeight"] = texture_height;
-            spriteData["SpriteTexID"] = tex_ID;
             spriteData["SpriteCurrentTexIndex"] = current_tex_index;
 
             // Serializing imgui-related properties
@@ -103,7 +101,6 @@ namespace IS {
             texture = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
             texture_width = data["SpriteTextureWidth"].asUInt();
             texture_height = data["SpriteTextureHeight"].asUInt();
-            tex_ID = data["SpriteTexID"].asUInt();
             current_tex_index = data["SpriteCurrentTexIndex"].asInt();
 
             // Deserializing imgui-related properties

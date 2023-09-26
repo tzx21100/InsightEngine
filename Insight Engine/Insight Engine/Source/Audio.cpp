@@ -64,7 +64,7 @@ namespace IS {
     void ISAudio::HandleMessage(const Message& message) { //for messaging system
         if (message.GetType() == MessageType::DebugInfo) {
             // Handle collision logic here
-            std::cout << "Handling Debug" << std::endl;
+            IS_CORE_INFO("Handing Debug");
         }
     }
 
@@ -118,7 +118,7 @@ namespace IS {
 
         if (result != FMOD_OK) {
             // Handle group creation error
-            std::cout << "group creation error";
+            IS_CORE_ERROR("Group Creation Failed!");
             return nullptr; // Return nullptr on error
         }
 
@@ -138,7 +138,7 @@ namespace IS {
         }
 
         FMOD::Channel* sound_channel = nullptr;
-        result = system->playSound(sound, nullptr, false, &sound_channel);
+        //result = system->playSound(sound, nullptr, false, &sound_channel);
         if (result != FMOD_OK) {
             // Handle sound playing error
             return nullptr; // Return nullptr on error
@@ -146,6 +146,21 @@ namespace IS {
 
         return sound_channel;
     }
+
+    //this will return the sound file instead
+    FMOD::Sound* ISAudio::ISAudioLoadSoundS(const char* filePath) {
+        FMOD_MODE mode = FMOD_LOOP_OFF;
+        FMOD::Sound* sound = nullptr;
+
+        FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &sound);
+        if (result != FMOD_OK) {
+            // Handle sound loading error
+            return nullptr;
+        }
+        return sound; // Return the loaded sound
+    }
+
+
 #pragma warning(pop)
 
     FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) { //load music w/o looping
@@ -208,4 +223,32 @@ namespace IS {
             group->setPitch(pitch);
         }
     }
+
+    FMOD::Channel* ISAudio::PlaySound(FMOD::Sound* Ssound, bool loop, float volume, float pitch) {
+        if (!Ssound) return nullptr;
+
+        FMOD::Channel* Cchannel = nullptr;
+        FMOD_RESULT result = system->playSound(Ssound, nullptr, true, &Cchannel); // Start paused to set attributes
+
+        if (result != FMOD_OK || !Cchannel) {
+            // Handle error
+            return nullptr;
+        }
+
+        Cchannel->setVolume(volume);
+        Cchannel->setPitch(pitch);
+        Cchannel->setLoopCount(loop ? -1 : 0); // -1 for infinite loop, 0 for no loop
+        Cchannel->setPaused(false); // Start playing after setting attributes
+
+        return Cchannel;
+    }
+    // Check if a sound is playing
+    bool ISAudio::IsSoundPlaying(FMOD::Channel* Cchannel) {
+        if (!Cchannel) return false;
+
+        bool isPlaying = false;
+        Cchannel->isPlaying(&isPlaying);
+        return isPlaying;
+    }
+
 }

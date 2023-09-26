@@ -1,0 +1,10 @@
+{
+	"WindowProperties" : 
+	{
+		"Fullscreen" : false,
+		"Height" : 900,
+		"Title" : "Insight Engine",
+		"Vsync" : true,
+		"Width" : 1600
+	}
+}

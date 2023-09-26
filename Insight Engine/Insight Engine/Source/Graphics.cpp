@@ -2,6 +2,7 @@
 #include "Pch.h"
 #include "Graphics.h"
 #include "Asset.h"
+#include "WindowSystem.h"
 
 #include <vector>
 #include <array>
@@ -26,28 +27,11 @@ namespace IS {
 
 
     void ISGraphics::Initialize() {
-        // Initialize entry points to OpenGL functions and extensions
-        if (GLenum err = glewInit(); GLEW_OK != err) {
-            std::ostringstream oss;
-            oss << glewGetErrorString(err);
-            IS_CORE_CRITICAL("Unable to initialize GLEW - error: {} - abort program", oss.str());
-            std::exit(EXIT_FAILURE);
-        }
-        if (GLEW_VERSION_4_5) {
-            std::ostringstream oss;
-            oss << glewGetString(GLEW_VERSION);
-            IS_CORE_INFO("Using glew version: {}", oss.str());
-            IS_CORE_INFO("Driver supports OpenGL 4.5");
-        } else {
-            IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
-            std::exit(EXIT_FAILURE);
-        }
-
         glClearColor(0.f, 0.f, 0.f, 0.f);
 
         glViewport(0, 0, WIDTH, HEIGHT);
 
-        initMeshes();
+        Mesh::initMeshes(meshes);
         walking_ani.initAnimation(1, 4, 1.f);
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
@@ -77,9 +61,13 @@ namespace IS {
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
-
-        if (InsightEngine::Instance().mUsingGUI)
+        InsightEngine& engine = InsightEngine::Instance();
+        if (engine.mUsingGUI)
             mFramebuffer->Bind();
+
+        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); window->IsFullScreen() && !engine.mUsingGUI)
+            glViewport(0, 0, window->GetMonitorWidth(), window->GetMonitorHeight());
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
@@ -97,7 +85,6 @@ namespace IS {
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP:
                 if (sprite.name == "textured_box") {
-                    InsightEngine& engine = InsightEngine::Instance();
                     auto input = engine.GetSystem<InputManager>("Input");
 
                     if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
@@ -121,14 +108,14 @@ namespace IS {
             if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
                 auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
-                    Physics::drawOutLine(body, sprite);
+                    Physics::DrawOutLine(body, sprite);
                 }
             }
 
         }
 
         // Render some text when GUI is disabled
-        if (InsightEngine& engine = InsightEngine::Instance(); !engine.mUsingGUI){
+        if (!engine.mUsingGUI){
             // Shared Attributes
             const float scale = 5.f;
             const float x_padding = scale;
@@ -143,23 +130,39 @@ namespace IS {
             // Text Attribute
             std::ostringstream fps_text_oss;
             std::ostringstream entities_alive_text_oss;
+            std::ostringstream entities_max_text_oss;
             fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
             entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
+            entities_max_text_oss.imbue(std::locale("")); // comma separated
+            entities_max_text_oss << "Max Entities: " << std::fixed << MAX_ENTITIES;
 
             std::vector<std::string> render_texts;
             render_texts.emplace_back(fps_text_oss.str());
             render_texts.emplace_back(entities_alive_text_oss.str());
+            render_texts.emplace_back(entities_max_text_oss.str());
             render_texts.emplace_back("");
-            render_texts.emplace_back("Press 'Escape' to toggle GUI");
+            render_texts.emplace_back("General Controls");
+            render_texts.emplace_back("- Press 'Tab' to toggle GUI");
+            render_texts.emplace_back("- Press 'F11' to toggle fullscreen/windowed");
+            render_texts.emplace_back("- Click mouse scrollwheel to spawn entity");
+            render_texts.emplace_back("- Click right mouse button to spawn rigidbody entity");
             render_texts.emplace_back("");
             render_texts.emplace_back("Player Controls");
             render_texts.emplace_back("- Press 'WASD' to move in the four directions");
             render_texts.emplace_back("- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             render_texts.emplace_back("");
-            render_texts.emplace_back("Physics Debug");
+            render_texts.emplace_back("Physics Controls");
             render_texts.emplace_back("- Press '2' to enable draw collision boxes, '1' to disable");
             render_texts.emplace_back("- Press 'G' to enable gravity, 'F' to disable");
             render_texts.emplace_back("- Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Audio Controls");
+            render_texts.emplace_back("- Press 'Z' to play sfx");
+            render_texts.emplace_back("- Press 'X' to play music");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Scene Controls");
+            render_texts.emplace_back("- Press 'J' to load testscene");
+            render_texts.emplace_back("- Press 'R' to save testscene");
 
             // Render Text
             for (std::string const& render_text : render_texts) {
@@ -169,7 +172,7 @@ namespace IS {
         }
 
 
-        //Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
         //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
         if (InsightEngine::Instance().mUsingGUI)
@@ -182,42 +185,46 @@ namespace IS {
         //glDeleteTextures(1, &placeholder_tex.tex_ID);
     }
 
-    void ISGraphics::initMeshes() {
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
-        quad_mesh.setupQuadVAO();
-        point_mesh.setupNonQuadVAO(GL_POINTS);
-        line_mesh.setupNonQuadVAO(GL_LINES);
-        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
 
-        meshes.emplace_back(quad_mesh);
-        meshes.emplace_back(point_mesh);
-        meshes.emplace_back(line_mesh);
-        meshes.emplace_back(circle_mesh);
-    }
+    void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+        int width, height, channels;
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
 
-    GLuint ISGraphics::initTextures(Image& image) {
+        if (!data) {
+            IS_CORE_ERROR("Failed to load image: {}", filepath.empty() ? "No filepath provided!" : filepath);
+            return;
+        }
 
         // Enable blending for transparency
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
-        int width{ image.width }, height{ image.height }; // channels{ image.channels };
-        unsigned char* image_data = image.data;
-
-        if (!image_data) {
-            IS_CORE_ERROR("Failed to load image: {}", image.file_name.empty() ? "No filepath provided!" : image.file_name);
-            return 0; // Return 0 to indicate failure
+        GLuint format=GL_RGBA;
+        if (channels == 1) {
+            format = GL_RED;
+        }
+        else if (channels == 2) {
+            format = GL_RG;
+        }
+        else if (channels == 3) {
+            format = GL_RGB;
+        }
+        else if (channels == 4) {
+            format = GL_RGBA;
         }
 
-
         GLuint textureID;
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            IS_CORE_DEBUG("OpenGL error: {}", err);
+        }
 
-        stbi_image_free(image_data);
+        stbi_image_free(data);  // Use stbi_image_free instead of delete[]
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -226,9 +233,13 @@ namespace IS {
 
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        IS_CORE_INFO("Using Texture: {}", textureID);
-        return textureID;
+        image.width = width;
+        image.height = height;
+        image.channels = channels;
+        image.file_name = filepath;
+        image.texture_data = textureID;
     }
+
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }

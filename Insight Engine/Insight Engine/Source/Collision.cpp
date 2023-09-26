@@ -7,7 +7,7 @@ namespace IS
 	// FOR BOX
 
 	// AABB Collision for static and dynamic, return true if they colliding
-	bool CollisionIntersection_RectRect(const Box& aabb1, const Vector2D& vel1,
+	bool CollisionIntersectionRectRect(const Box& aabb1, const Vector2D& vel1,
 		const Box& aabb2, const Vector2D& vel2, const float& dt)
 	{
 		/*
@@ -117,7 +117,7 @@ namespace IS
 		return 0;
 	}
 
-	bool Intersection_Polygons(std::vector<Vector2D> const& trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
+	bool IntersectionPolygons(std::vector<Vector2D> const& trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
 
 		// init
 		normal = Vector2D();
@@ -217,7 +217,7 @@ namespace IS
 	}
 
 	// FOR CIRCLE VS POLYGON
-	bool Intersection_Cirlcec_Polygon(Vector2D circleCenter, float radius, Vector2D polygonCenter, std::vector<Vector2D> trans_vertices, Vector2D& normal, float& depth) {
+	bool IntersectionCirlcecPolygon(Vector2D circle_center, float radius, Vector2D polygon_center, std::vector<Vector2D> trans_vertices, Vector2D& normal, float& depth) {
 		normal = Vector2D();
 		depth = std::numeric_limits<float>::max();
 
@@ -241,7 +241,7 @@ namespace IS
 			float minB = std::numeric_limits<float>::max();
 			float maxB = std::numeric_limits<float>::min();
 			ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
-			ProjectCircle(circleCenter, radius, axisnormalized, minB, maxB);
+			ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
 
 			if (minA >= maxB || minB >= maxA) // not intersecting
 			{
@@ -259,9 +259,9 @@ namespace IS
 
 		// another case
 		// getting the closest point on polygon to the circle
-		Vector2D cp = trans_vertices[FindClosestPointOnPolygon(circleCenter, trans_vertices)];
+		Vector2D cp = trans_vertices[FindClosestPointOnPolygon(circle_center, trans_vertices)];
 
-		axis = cp - circleCenter;
+		axis = cp - circle_center;
 		ISVector2DNormalize(axisnormalized, axis);
 
 		//float minA, maxA, minB, maxB;
@@ -270,7 +270,7 @@ namespace IS
 		float minB = std::numeric_limits<float>::max();
 		float maxB = std::numeric_limits<float>::min();
 		ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
-		ProjectCircle(circleCenter, radius, axisnormalized, minB, maxB);
+		ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
 
 		if (minA >= maxB || minB >= maxA)
 		{
@@ -285,7 +285,7 @@ namespace IS
 			normal = axis;
 		}
 
-		Vector2D direction = polygonCenter - circleCenter;
+		Vector2D direction = polygon_center - circle_center;
 
 		if (ISVector2DDotProduct(direction, normal) < 0.f)
 		{
@@ -314,7 +314,7 @@ namespace IS
 		}
 	}
 
-	int FindClosestPointOnPolygon(Vector2D circleCenter, std::vector<Vector2D> vertices)
+	int FindClosestPointOnPolygon(Vector2D circle_center, std::vector<Vector2D> vertices)
 	{
 		int result = -1;
 		float minDistance = std::numeric_limits<float>::max();
@@ -322,7 +322,7 @@ namespace IS
 		for (int i = 0; i < vertices.size(); i++)
 		{
 			Vector2D v = vertices[i];
-			float distance = ISVector2DDistance(v, circleCenter);
+			float distance = ISVector2DDistance(v, circle_center);
 
 			if (distance < minDistance)
 			{

@@ -20,8 +20,11 @@ namespace IS {
         float m[2];
 
         // Constructors
+    #pragma warning(push)
+    #pragma warning(disable : 26495)
         Vector2D() : x(0.0f), y(0.0f) {}
         Vector2D(float _x, float _y);
+    #pragma warning(pop)
 
         //Do not change the following
         Vector2D& operator=(const Vector2D& rhs) = default;

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Graphics.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -74,25 +71,22 @@
       <Filter>Graphics\Buffers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Animation.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sprite.cpp">
-      <Filter>Graphics\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Transform.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Text.cpp">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneHierarchyPanel.cpp">
       <Filter>Editor\Panels</Filter>
@@ -106,14 +100,11 @@
     <ClCompile Include="Source\JsonSaveLoad.cpp">
       <Filter>Engine\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScriptGlue.cpp">
-      <Filter>Engine\Scripting</Filter>
+    <ClCompile Include="Source\Graphics.cpp">
+      <Filter>Graphics\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Graphics.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Pch.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -220,25 +211,22 @@
       <Filter>Graphics\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Animation.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shader.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sprite.h">
-      <Filter>Graphics\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Texture.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Transform.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Text.h">
-      <Filter>Graphics\Rendering</Filter>
+      <Filter>Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneHierarchyPanel.h">
       <Filter>Editor\Panels</Filter>
@@ -252,8 +240,11 @@
     <ClInclude Include="Source\Prefab.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScriptGlue.h">
-      <Filter>Engine\Scripting</Filter>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics.h">
+      <Filter>Graphics\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -329,9 +320,6 @@
     <Filter Include="Engine\System Example\Systems">
       <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Rendering">
-      <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{96bb3842-4153-4a24-bf01-20e7054a98bc}</UniqueIdentifier>
     </Filter>
@@ -340,6 +328,12 @@
     </Filter>
     <Filter Include="Engine\Scripting">
       <UniqueIdentifier>{806f2dfd-a96c-4787-975e-0885dd36e74f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Core">
+      <UniqueIdentifier>{01226b03-5139-49ee-83d6-d1d60c1c3e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\System">
+      <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
