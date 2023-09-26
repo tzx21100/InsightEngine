@@ -126,11 +126,28 @@ namespace IS {
 		ComponentType mComponentType;
 	};
 
-	//This is a templated class so that it can be any component
+	/**
+	 * \class ComponentArray
+	 * \brief A templated class for managing components associated with entities.
+	 *
+	 * This class provides specific methods for handling entities and their
+	 * associated components of type T. It maintains a dense array of components
+	 * for efficient data access and manipulation.
+	 *
+	 * \tparam T The type of the component stored in the array.
+	 */
 	template<typename T>
 	class ComponentArray : public IComponentArray {
 	public:
-
+		/**
+		 * \brief Inserts a component for a given entity.
+		 *
+		 * Inserts the component at the end of the component array, and updates
+		 * entity-to-index and index-to-entity maps.
+		 *
+		 * \param entity The ID of the entity associated with the component.
+		 * \param component The component data to be inserted.
+		 */
 		void InsertData(Entity entity, T component) {
 			assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -142,6 +159,15 @@ namespace IS {
 			++mSize;
 		}
 
+		/**
+		 * \brief Removes the component associated with a given entity.
+		 *
+		 * Copies the last component to the removed component's spot to maintain
+		 * density, updates entity-to-index and index-to-entity maps, and decreases
+		 * the size of valid entries.
+		 *
+		 * \param entity The ID of the entity whose component is to be removed.
+		 */
 		void RemoveData(Entity entity) {
 			assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Removing non-existent component.");
 
@@ -162,12 +188,27 @@ namespace IS {
 			--mSize;
 		}
 
+		/**
+		* \brief Retrieves the component associated with a given entity.
+		*
+		* Returns a reference to the component of the specified entity.
+		*
+		* \param entity The ID of the entity whose component is to be retrieved.
+		* \return A reference to the component.
+		*/
 		T& GetData(Entity entity) {
 			assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Retrieving non-existent component.");
 			// Return a reference to the entity's component
 			return mComponentArray[mEntityToIndexMap[entity]];
 		}
 
+		/**
+		* \brief Removes the component associated with a destroyed entity.
+		*
+		* If a component exists for the destroyed entity, it is removed.
+		*
+		* \param entity The ID of the entity being destroyed.
+		*/
 		void EntityDestroyed(Entity entity) override {
 			if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end()){
 				// Remove the entity's component if it existed
@@ -175,6 +216,15 @@ namespace IS {
 			}
 		}
 
+		/**
+		 * \brief Clones the data of a component from one entity to another.
+		 *
+		 * If the old entity has a component, the component is cloned to the new entity.
+		 *
+		 * \param entity The ID of the new entity.
+		 * \param old_entity The ID of the old entity to clone from.
+		 * \return The ComponentType of the cloned component or (MAX_COMPONENTS + 1) if no component was cloned.
+		 */
 		ComponentType CloneData(Entity entity,Entity old_entity) override{
 			//if the old_entity exists
 			if (mEntityToIndexMap.find(old_entity) != mEntityToIndexMap.end()) {
@@ -185,6 +235,15 @@ namespace IS {
 			return MAX_COMPONENTS+1;
 		}
 		
+		/**
+		 * \brief Matches a signature to add default components to an entity.
+		 *
+		 * If the signature matches the component type, a default component is added to the entity.
+		 *
+		 * \param signature The signature to match against.
+		 * \param entity The entity to which a default component should be added.
+		 * \return The ComponentType of the added component or (MAX_COMPONENTS + 1) if no component was added.
+		 */
 		ComponentType SignatureMatch(Signature signature, Entity entity) {
 			if (signature.test(this->GetComponentType())) {
 				T component;
@@ -194,31 +253,68 @@ namespace IS {
 			return MAX_COMPONENTS+1;
 		}
 
-
 	private:
-		// The packed array of components (of generic type T),
-		// set to a specified maximum amount, matching the maximum number
-		// of entities allowed to exist simultaneously, so that each entity
-		// has a unique spot.
+		/**
+		 * \brief A packed array of components.
+		 *
+		 * The array is of generic type T and is set to a specified maximum amount,
+		 * matching the maximum number of entities allowed to exist simultaneously.
+		 */
 		std::array<T, MAX_ENTITIES> mComponentArray;
-		// Map from an entity ID to an array index.
+
+		/**
+		 * \brief Map from an entity ID to an array index.
+		 *
+		 * This map helps in quickly determining the index in the component array
+		 * for a given entity.
+		 */
 		std::unordered_map<Entity, size_t> mEntityToIndexMap;
-		// Map from an array index to an entity ID.
+
+		/**
+		 * \brief Map from an array index to an entity ID.
+		 *
+		 * This map is used for efficient removal of components by swapping with
+		 * the last element in the dense array.
+		 */
 		std::unordered_map<size_t, Entity> mIndexToEntityMap;
-		// Total size of valid entries in the array.
+
+		/**
+		 * \brief The total size of valid entries in the array.
+		 *
+		 * This size increases or decreases as components are added or removed.
+		 */
 		size_t mSize;
 	};
 
+	/**
+	 * \class ComponentManager
+	 * \brief A manager class for handling and organizing all registered components.
+	 *
+	 * This class provides various methods to manage components associated with entities.
+	 * It also maintains maps to associate component types with their respective arrays.
+	 */
 	class ComponentManager
 	{
 	public:
 
-		//method to get all component types
+		/**
+		 * \brief Retrieves a map of all registered component types.
+		 *
+		 * Returns a map linking the type name of the component to its assigned type.
+		 *
+		 * \return An unordered map of registered components.
+		 */
 		const std::unordered_map<const char*, ComponentType>& GetRegisteredComponents() const {
 			return mComponentTypes;
 		}
 
-
+		/**
+		* \brief Registers a new component type.
+		*
+		* Adds the component type to the manager and initializes its respective component array.
+		*
+		* \tparam T The type of the component to be registered.
+		*/
 		template<typename T>
 		void RegisterComponent() {
 			const char* type_name = typeid(T).name();
@@ -234,6 +330,14 @@ namespace IS {
 			IS_CORE_INFO("{} component registered!", std::string(type_name).substr(10));
 		}
 
+		/**
+		 * \brief Retrieves the type of a specific component.
+		 *
+		 * Returns the component type based on its type name.
+		 *
+		 * \tparam T The type of the component.
+		 * \return The ComponentType of the specified component.
+		 */
 		template<typename T>
 		ComponentType GetComponentType() {
 			const char* type_name = typeid(T).name();
@@ -242,35 +346,77 @@ namespace IS {
 			return mComponentTypes[type_name];
 		}
 
+		/**
+		 * \brief Adds a component for a given entity.
+		 *
+		 * Inserts the component into the respective component array for the entity.
+		 *
+		 * \tparam T The type of the component.
+		 * \param entity The ID of the entity.
+		 * \param component The component data to be added.
+		 */
 		template<typename T>
 		void AddComponent(Entity entity, T component) {
 			// Add a component to the array for an entity
 			GetComponentArray<T>()->InsertData(entity, component);
 		}
 
+		/**
+		 * \brief Removes the component associated with a given entity.
+		 *
+		 * Removes the component from the respective component array for the entity.
+		 *
+		 * \tparam T The type of the component.
+		 * \param entity The ID of the entity.
+		 */
 		template<typename T>
 		void RemoveComponent(Entity entity) {
 			// Remove a component from the array for an entity
 			GetComponentArray<T>()->RemoveData(entity);
 		}
 
+		/**
+		 * \brief Retrieves the component associated with a given entity.
+		 *
+		 * Returns a reference to the component of the specified entity.
+		 *
+		 * \tparam T The type of the component.
+		 * \param entity The ID of the entity.
+		 * \return A reference to the component.
+		 */
 		template<typename T>
 		T& GetComponent(Entity entity) {
 			// Get a reference to a component from the array for an entity
 			return GetComponentArray<T>()->GetData(entity);
 		}
 
+		/**
+		 * \brief Handles the destruction of an entity.
+		 *
+		 * Notifies all component arrays that an entity has been destroyed.
+		 * If the entity has a component, the component will be removed.
+		 *
+		 * \param entity The ID of the entity being destroyed.
+		 */
 		void EntityDestroyed(Entity entity) {
-			// Notify each component array that an entity has been destroyed
-			// If it has a component for that entity, it will remove it
+			/* Notify each component array that an entity has been destroyed
+			 * If it has a component for that entity, it will remove it
+			 */
 			for (auto const& pair : mComponentArrays) {
 				auto const& component = pair.second;
 				component->EntityDestroyed(entity);
 			}
 		}
 
-
-		//This is to clone the components
+		/**
+		 * \brief Clones the components from one entity to another.
+		 *
+		 * For each component of the old entity, if it exists, it gets cloned to the new entity.
+		 *
+		 * \param entity The ID of the new entity.
+		 * \param old_entity The ID of the old entity to clone from.
+		 * \return A signature indicating which components were cloned.
+		 */
 		Signature CloneComponent(Entity entity, Entity old_entity) {
 			ComponentType componentType;
 			Signature returned_signature;
@@ -285,7 +431,15 @@ namespace IS {
 			return returned_signature;
 		}
 
-		//Add components to a prefab
+		/**
+		 * \brief Matches a prefab's signature to add components to an entity.
+		 *
+		 * For each component in the signature, if it matches, a default component is added to the entity.
+		 *
+		 * \param prefab The signature of the prefab to match against.
+		 * \param entity The entity to which components should be added.
+		 * \return A signature indicating which components were added.
+		 */
 		Signature PrefabToEntity(Signature prefab, Entity entity) {
 			ComponentType componentType;
 			Signature returned_signature;
@@ -300,26 +454,40 @@ namespace IS {
 			return returned_signature;
 		}
 
-	private:
-		// Map from type string pointer to a component type
-		std::unordered_map<const char*, ComponentType> mComponentTypes{};
-		// Map from type string pointer to a component array
-		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
-
-		// The component type to be assigned to the next registered component - starting at 0
-		ComponentType mNextComponentType{};
-		// Convenience function to get the statically casted pointer to the ComponentArray of type T.
+		/**
+		 * \brief Retrieves the component array for a specific component type.
+		 *
+		 * Returns a pointer to the component array of the specified type.
+		 *
+		 * \tparam T The type of the component.
+		 * \return A shared pointer to the component array.
+		 */
 		template<typename T>
-		std::shared_ptr<ComponentArray<T>> GetComponentArray(){
+		std::shared_ptr<ComponentArray<T>> GetComponentArray() {
 			const char* type_name = typeid(T).name();
 			assert(mComponentTypes.find(type_name) != mComponentTypes.end() && "Component not registered before use.");
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[type_name]);
 		}
+
+	private:
+		/**
+		 * \brief A map linking component type names to their assigned types.
+		 */
+		std::unordered_map<const char*, ComponentType> mComponentTypes{};
+
+		/**
+		 * \brief A map linking component type names to their respective component arrays.
+		 */
+		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
+
+		/**
+		 * \brief The next component type to be assigned.
+		 *
+		 * This value gets incremented each time a new component type is registered.
+		 */
+		ComponentType mNextComponentType{};
+		
 	};
-
-
-
-
 
 }
 
