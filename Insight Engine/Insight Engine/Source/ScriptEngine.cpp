@@ -15,7 +15,7 @@ consent of DigiPen Institute of Technology is prohibited.
 namespace IS {
 
     namespace Utils {
-        //move to asset manager?
+        //helps read bytes of assembly
         static  char* ReadBytes(const std::filesystem::path& file_path, uint32_t* out_size)
         {
             std::ifstream stream(file_path, std::ios::binary | std::ios::ate);
@@ -44,6 +44,7 @@ namespace IS {
             return buffer;
         }
 
+        //loads assembly 
         static  MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assembly_path)
         {
             uint32_t file_size = 0;
@@ -65,12 +66,13 @@ namespace IS {
             MonoAssembly* assembly = mono_assembly_load_from_full(image, str.c_str(), &status, 0);
             mono_image_close(image);
 
-            // Don't forget to free the file data
+            // free the file data
             delete[] file_data;
 
             return assembly;
         }
 
+        //for debugging - prints all c# classes/namespaces
         void PrintAssemblyTypes(MonoAssembly* assembly)
         {
             MonoImage* image = mono_assembly_get_image(assembly);
@@ -90,7 +92,7 @@ namespace IS {
         }
     }
 
-    struct ScriptEngineData
+    struct ScriptEngineData //stores the needed pointers for ease of use
     {
         MonoDomain* mRootDomain = nullptr;
         MonoDomain* mAppDomain = nullptr;
@@ -107,7 +109,7 @@ namespace IS {
         s_data = new ScriptEngineData();
         InitMono();
         LoadAssembly("Resources/Scripts/net6.0/IS-ScriptCore.dll");
-        ScriptGlue::RegisterFunctions();
+        ScriptGlue::RegisterFunctions(); //register cpp func
 
         //get and init class
         s_data->mEntityClass = ScriptClass("IS", "Entity");
@@ -115,29 +117,29 @@ namespace IS {
 
         //EXAMPLES
         //call func
-        MonoMethod* printMessage_func = s_data->mEntityClass.GetMethod("PrintMessage", 0);
-        s_data->mEntityClass.InvokeMethod(instance, printMessage_func, nullptr);
+        MonoMethod* print_message_func = s_data->mEntityClass.GetMethod("PrintMessage", 0);
+        s_data->mEntityClass.InvokeMethod(instance, print_message_func, nullptr);
 
         //call func w str param
-        MonoString* monoString = mono_string_new(s_data->mAppDomain, "Hello World from C++!");
-        MonoMethod* printCustomMessageFunc = s_data->mEntityClass.GetMethod("PrintCustomMessage", 1);
-        void* stringParam = monoString;
-        s_data->mEntityClass.InvokeMethod(instance, printCustomMessageFunc, &stringParam);
+        MonoString* mono_str = mono_string_new(s_data->mAppDomain, "Hello World from C++!");
+        MonoMethod* print_custom_message_func = s_data->mEntityClass.GetMethod("PrintCustomMessage", 1);
+        void* str_param = mono_str;
+        s_data->mEntityClass.InvokeMethod(instance, print_custom_message_func, &str_param);
 
         
     }
 
     void ScriptEngine::Shutdown()
     {
-        ShutdownMono();
-        delete s_data;
+        ShutdownMono(); //frees memory
+        delete s_data; //deletes unused pointers and class
     }
 
     void ScriptEngine::InitMono()
     {
         mono_set_assemblies_path("libraries/mono/lib/4.5");
 
-        MonoDomain* root_domain = mono_jit_init("ISJITRuntime");
+        MonoDomain* root_domain = mono_jit_init("ISJITRuntime"); //init runtime
         if (root_domain == nullptr)
         {
             // Maybe log some error here
@@ -150,11 +152,12 @@ namespace IS {
 
     void ScriptEngine::ShutdownMono()
     {
-        //fixed domain unload lel
+        //frees app domain
         mono_domain_unload(s_data->mAppDomain);
         s_data->mAppDomain = nullptr;
 
-        //need assert - pls close by cmd prompt cuz idk
+        //need assert i think - pls close by cmd prompt cuz idk
+        //mono library wrong code
         mono_jit_cleanup(s_data->mRootDomain);
         s_data->mRootDomain = nullptr;
 
@@ -169,19 +172,14 @@ namespace IS {
         s_data->mCoreAssembly = Utils::LoadMonoAssembly(file_path);
         s_data->mCoreAssemblyImage = mono_assembly_get_image(s_data->mCoreAssembly);
 
+        //debug purposes
         //PrintAssemblyTypes(s_data->mCoreAssembly);
     }
 
-    MonoObject* ScriptEngine::InstantiateClass(MonoClass* mono_class) {
+    MonoObject* ScriptEngine::InstantiateClass(MonoClass* mono_class) { //return the instance for easy storing
         MonoObject* instance = mono_object_new(s_data->mAppDomain, mono_class);
         mono_runtime_object_init(instance);
         return instance;
-    }
-
-    ScriptClass::ScriptClass(const std::string& class_namespace, const std::string& class_name)
-        : mClassNamespace(class_namespace), mClassName(class_name)
-    {
-        mMonoClass = mono_class_from_name(s_data->mCoreAssemblyImage, class_namespace.c_str(), class_name.c_str());
     }
 
     MonoObject* ScriptClass::Instantiate()
@@ -189,10 +187,17 @@ namespace IS {
         return ScriptEngine::InstantiateClass(mMonoClass);
     }
 
+    ScriptClass::ScriptClass(const std::string& class_namespace, const std::string& class_name) //sets the mono class 
+        : mClassNamespace(class_namespace), mClassName(class_name)
+    {
+        mMonoClass = mono_class_from_name(s_data->mCoreAssemblyImage, class_namespace.c_str(), class_name.c_str());
+    }
+
     MonoMethod* ScriptClass::GetMethod(const std::string& name, int parameterCount)
     {
         return mono_class_get_method_from_name(mMonoClass, name.c_str(), parameterCount);
     }
+
     MonoObject* ScriptClass::InvokeMethod(MonoObject* instance, MonoMethod* method, void** params)
     {
         return mono_runtime_invoke(method, instance, params, nullptr);

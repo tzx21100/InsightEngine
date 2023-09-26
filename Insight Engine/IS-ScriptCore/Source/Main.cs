@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 
 namespace IS
 {
+    //demo struct
     public struct Vector3
     {
         public float x, y, z;
@@ -24,7 +25,7 @@ namespace IS
             z = Z;
         }
     }
-
+    //to let c# know of cpp funcs
     public static class InternalCalls
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -33,6 +34,8 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void NativeLogVector(ref Vector3 param);
     }
+
+    //demo class for cpp to call
     public class Entity
     {
         public float FloatVar { get; set; }

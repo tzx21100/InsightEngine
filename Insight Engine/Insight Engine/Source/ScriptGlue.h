@@ -13,6 +13,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #define GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H
 
 namespace IS {
+    //this class is solely to register cpp functions so that c# knows of it existence, for now
     class ScriptGlue {
     public:
         static void RegisterFunctions();

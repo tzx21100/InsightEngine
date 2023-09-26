@@ -19,30 +19,30 @@ consent of DigiPen Institute of Technology is prohibited.
 #include <stdbool.h>
 #include <filesystem>
 
-#define ON_ERROR(condition, msg) \
-do { \
-    if (condition) { \
-        std::cerr << "Error in function: " << __func__ << " at line " << __LINE__ << std::endl; \
-        perror(msg); \
-    } \
-} while (0);
-
-static inline bool StringEndsIn(const std::string& str, const std::string& ends) {
-    size_t str_len = str.length();
-    size_t ends_len = ends.length();
-    size_t pos = str.rfind(ends);
-    return (pos != std::string::npos) && (pos + ends_len == str_len);
-}
+//#define ON_ERROR(condition, msg) \
+//do { \
+//    if (condition) { \
+//        std::cerr << "Error in function: " << __func__ << " at line " << __LINE__ << std::endl; \
+//        perror(msg); \
+//    } \
+//} while (0);
+//
+//static inline bool StringEndsIn(const std::string& str, const std::string& ends) {
+//    size_t str_len = str.length();
+//    size_t ends_len = ends.length();
+//    size_t pos = str.rfind(ends);
+//    return (pos != std::string::npos) && (pos + ends_len == str_len);
+//}
 
 #pragma warning(push)
 #pragma warning(disable: 4505)
-static std::string GetFileName(const std::string& file_path) {
-    size_t last_slash = file_path.find_last_of("/\\");
-    if (last_slash != std::string::npos) {
-        return file_path.substr(last_slash + 1);
-    }
-    return file_path;
-}
+//static std::string GetFileName(const std::string& file_path) {
+//    size_t last_slash = file_path.find_last_of("/\\");
+//    if (last_slash != std::string::npos) {
+//        return file_path.substr(last_slash + 1);
+//    }
+//    return file_path;
+//}
 #pragma warning(pop)
 
 namespace IS {
@@ -128,7 +128,7 @@ namespace IS {
             }
         }
 
-        //asset managers are supposed to save sounds and fonts as well
+        // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;

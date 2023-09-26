@@ -14,17 +14,18 @@ consent of DigiPen Institute of Technology is prohibited.
 #include <mono/metadata/object.h>
 
 namespace IS {
+    //a macro to add internal calls
 #define IS_ADD_INTERNAL_CALL(Name) mono_add_internal_call("IS.InternalCalls::" #Name, Name)
 
     static void NativeLog(MonoString* name, int param) {
-        char* c_str = mono_string_to_utf8(name);
-        std::string str(c_str);
-        mono_free(c_str);
+        char* c_str = mono_string_to_utf8(name); //create char* from mono str
+        std::string str(c_str); //converts to string stl
+        mono_free(c_str);//free the char*
         std::cout << str << "," << param << std::endl;
     }
 
     static void NativeLogVector(glm::vec3* param) {
-        auto values = *param;
+        auto values = *param; //get values
         std::cout << values.x << "," << values.y << "," << values.z << std::endl;
     }
 
