@@ -44,8 +44,9 @@ namespace IS {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-        // Set default font
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f);
+        // Add fonts
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", 16.f); // bold font
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f); // default regular font
 
         // Setup Dear ImGui style
 

@@ -130,15 +130,22 @@ namespace IS {
             // Text Attribute
             std::ostringstream fps_text_oss;
             std::ostringstream entities_alive_text_oss;
+            std::ostringstream entities_max_text_oss;
             fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
             entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
+            entities_max_text_oss.imbue(std::locale("")); // comma separated
+            entities_max_text_oss << "Max Entities: " << std::fixed << MAX_ENTITIES;
 
             std::vector<std::string> render_texts;
             render_texts.emplace_back(fps_text_oss.str());
             render_texts.emplace_back(entities_alive_text_oss.str());
+            render_texts.emplace_back(entities_max_text_oss.str());
             render_texts.emplace_back("");
-            render_texts.emplace_back("Press 'Tab' to toggle GUI");
-            render_texts.emplace_back("Press 'F11' to toggle fullscreen/windowed");
+            render_texts.emplace_back("Utils");
+            render_texts.emplace_back("- Press 'Tab' to toggle GUI");
+            render_texts.emplace_back("- Press 'F11' to toggle fullscreen/windowed");
+            render_texts.emplace_back("- Click mouse scrollwheel to spawn entity");
+            render_texts.emplace_back("- Click right mouse button to spawn rigidbody entity");
             render_texts.emplace_back("");
             render_texts.emplace_back("Player Controls");
             render_texts.emplace_back("- Press 'WASD' to move in the four directions");

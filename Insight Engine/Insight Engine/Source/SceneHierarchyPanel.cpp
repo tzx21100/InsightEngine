@@ -95,6 +95,8 @@ namespace IS {
     void SceneHierarchyPanel::RenderComponentNodes(Entity entity) {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
+        ImGuiIO& io = ImGui::GetIO();
+        auto font_bold = io.Fonts->Fonts[0];
 
         // Entity configurations
         RenderEntityConfig(entity);
@@ -102,7 +104,9 @@ namespace IS {
         // Sprite Component
         RenderComponent<Sprite>("Sprite", entity, [&](Sprite& sprite) {
             if (sprite.texture) {
-                ImGui::Text("Texture");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Texture");
+                ImGui::PopFont();
                 ImTextureID texture_id = std::bit_cast<void*>(static_cast<uintptr_t>(sprite.texture));
                 const float texture_width = static_cast<float>(sprite.texture_width);
                 const float texture_height = static_cast<float>(sprite.texture_height);
@@ -135,24 +139,30 @@ namespace IS {
                 ImGuiTableFlags table_flags = 0;
                 ImGui::BeginTable("Texture", 2, table_flags);
                 ImGui::TableNextColumn();
-                ImGui::Text("Width");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Width");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::Text("%dpx", sprite.texture_width);
                 ImGui::TableNextColumn();
-                ImGui::Text("Height");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Height");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::Text("%dpx", sprite.texture_height);
                 ImGui::EndTable();
 
             } else {
-                ImGui::Text("Color");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Color");
+                ImGui::PopFont();
                 ImGui::SameLine();
                 ImGui::ColorEdit3(("##Color" + std::to_string(entity)).c_str(), &sprite.color[0]);
             }
         });
 
         // Transform Component
-        RenderComponent<Transform>("Transform", entity, [](Transform& transform) {
+        RenderComponent<Transform>("Transform", entity, [&](Transform& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Translation", position);
@@ -161,7 +171,9 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("TransformRotation", column_flags, 100.f);
                 ImGui::TableNextColumn();
-                ImGui::Text("Rotation");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Rotation");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 float rotation = transform.rotation * (PI / 180.f);
                 ImGui::SliderAngle("##Rotation", &rotation, 0.f);
@@ -184,49 +196,63 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("RigidbodyTable", column_flags, 100.f);
                 ImGui::TableNextColumn();
-                ImGui::Text("Angular Velocity");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Angular Velocity");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat(("##AngularVelocity" + std::to_string(entity)).c_str(), &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Body Type");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Body Type");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 guidgets::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Body Shape");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Body Shape");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 guidgets::RenderComboBoxEnum<Shape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Mass");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Mass");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat(("##Mass" + std::to_string(entity)).c_str(), &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Invariant Mass");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Invariant Mass");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat(("##InvMass" + std::to_string(entity)).c_str(), &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Restitution");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Restitution");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::Text("%.2f", rigidbody.mRestitution);
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("Density");
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Density");
+                ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::Text("%.2f", rigidbody.mDensity);
@@ -238,7 +264,7 @@ namespace IS {
 
         // Input Affector Component
         RenderComponent<InputAffector>("Input Affector", entity, []([[maybe_unused]] InputAffector& input_affector) {
-            ImGui::Text("(Empty)");
+            ImGui::TextUnformatted("(Empty)");
         });
 
         ImGui::PopStyleVar();
@@ -253,31 +279,36 @@ namespace IS {
         auto source = name | std::ranges::views::take(name.size());
         std::ranges::copy(source, std::begin(buffer));
 
+        ImGuiIO& io = ImGui::GetIO();
+        auto font_bold = io.Fonts->Fonts[0];
+
         if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
             name = std::string(buffer);
 
         // Prefabs
-        ImGui::Text("Prefab");
+        ImGui::TextUnformatted("Prefab");
         ImGui::SameLine();
+        ImGui::PushFont(font_bold);
         if (ImGui::Button("Save")) {
             engine.SaveAsPrefab(entity, name);
         }
         ImGui::SameLine();
 
-        /*ImGui::Button("Load");
+        ImGui::Button("Load");
         if (ImGui::BeginItemTooltip()) {
             
-            ImGui::Text("WIP");
+            ImGui::TextUnformatted("WIP");
             ImGui::EndTooltip();
-        }*/
-
-        if (ImGui::Button("Load")) {
-
         }
+
+        /*if (ImGui::Button("Load")) {
+
+        }*/
 
         // Add Component
         if (ImGui::Button("Add Component"))
             ImGui::OpenPopup("AddComponent");
+        ImGui::PopFont();
 
         // Check whether entity already has the component
         if (ImGui::BeginPopup("AddComponent")) {
@@ -317,6 +348,7 @@ namespace IS {
         ImGui::SameLine();
 
         // Clone Entity
+        ImGui::PushFont(font_bold);
         if (ImGui::Button("Clone Entity"))
             engine.CopyEntity(entity);
         ImGui::SameLine();
@@ -330,6 +362,7 @@ namespace IS {
             mSelectedEntity = {};
         }
         ImGui::PopStyleColor(3);
+        ImGui::PopFont();
 
         ImGui::Spacing();
     }

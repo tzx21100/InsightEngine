@@ -222,23 +222,55 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
                                         ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
         InsightEngine& engine = InsightEngine::Instance();
+
+        ImGuiIO& io = ImGui::GetIO();
+        auto const& font_bold = io.Fonts->Fonts[0];
+
         ImGui::SetNextWindowBgAlpha(0.8f); // Translucent background
-        if (ImGui::Begin("Info", nullptr, window_flags)) {
-            ImGui::Text("Entities Alive: %d", engine.EntitiesAlive());
-            // Comma separted numbers
-            std::ostringstream oss;
-            oss.imbue(std::locale(""));
-            oss << std::fixed << MAX_ENTITIES;
-            ImGui::Text("Max Entities: %s", oss.str().c_str());
+        if (ImGui::Begin("Info/Help", nullptr, window_flags)) {
+            if (ImGui::BeginTable("Entities", 2)) {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Entities Alive:");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Text("%d", engine.EntitiesAlive());
+
+                // Comma separted numbers
+                ImGui::TableNextColumn();
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Max Entities:");
+                ImGui::PopFont();
+                std::ostringstream oss;
+                oss.imbue(std::locale(""));
+                oss << std::fixed << MAX_ENTITIES;
+                ImGui::TableNextColumn();
+                ImGui::Text("%s", oss.str().c_str());
+
+                ImGui::EndTable();
+            }
             ImGui::Separator();
-            ImGui::Text("Press 'Tab' to toggle GUI");
-            ImGui::Text("Press 'F11' to toggle fullscreen/windowed");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Controls ONLY work if scene panel focused!");
+            ImGui::PopFont();
             ImGui::Separator();
-            ImGui::Text("Player Controls");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Utils");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'Tab' to toggle GUI");
+            ImGui::BulletText("Press 'F11' to toggle fullscreen/windowed");
+            ImGui::BulletText("Click mouse scrollwheel to spawn entity");
+            ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Player Controls");
+            ImGui::PopFont();
             ImGui::BulletText("Press 'WASD' to move in the four directions");
             ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             ImGui::Separator();
-            ImGui::Text("Physics Debug");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Physics Debug");
+            ImGui::PopFont();
             ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
             ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
             ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
