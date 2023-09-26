@@ -110,7 +110,7 @@ namespace IS {
 
                 // Toggle fullscreen
                 auto const& window = engine.GetSystem<WindowSystem>("Window");
-                static bool fullscreen = false;
+                static bool fullscreen = window->IsFullScreen();
                 if (input->IsKeyPressed(GLFW_KEY_F11)) {
                     fullscreen = !fullscreen;
                     window->SetFullScreen(fullscreen);
