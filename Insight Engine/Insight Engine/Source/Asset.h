@@ -1,3 +1,13 @@
+/* Start Header **************************************************************/
+/*!
+\file	Asset.h
+\author Matthew
+
+All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/* End Header ****************************************************************/
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H
 
@@ -17,7 +27,7 @@ do { \
     } \
 } while (0);
 
-static inline bool stringEndsIn(const std::string& str, const std::string& ends) {
+static inline bool StringEndsIn(const std::string& str, const std::string& ends) {
     size_t str_len = str.length();
     size_t ends_len = ends.length();
     size_t pos = str.rfind(ends);
@@ -26,7 +36,7 @@ static inline bool stringEndsIn(const std::string& str, const std::string& ends)
 
 #pragma warning(push)
 #pragma warning(disable: 4505)
-static std::string getFileName(const std::string& file_path) {
+static std::string GetFileName(const std::string& file_path) {
     size_t last_slash = file_path.find_last_of("/\\");
     if (last_slash != std::string::npos) {
         return file_path.substr(last_slash + 1);
@@ -36,30 +46,26 @@ static std::string getFileName(const std::string& file_path) {
 #pragma warning(pop)
 
 namespace IS {
-    enum class allocationType {
+    enum class AllocationType {
         NoAllocation,
         SelfAllocated,
         StbAllocated
     };
 
-
-    struct Image {
-        
+    struct Image { 
         //image data should just be in image itself
-        //creating an extra image handler just makes it more tedious
-        std::string file_name{};
+        std::string mFileName{};
         int width{};
         int height{};
         int channels{};
         size_t size{};
-        unsigned long texture_data{};
-        allocationType allocation_type{};
+        unsigned long mTextureData{};
+        AllocationType mAllocationType{};
 
     };
 
     class AssetManager :public ParentSystem {
     public:
-
         //override parent
         void Initialize() override;
         void Update(float deltaTime) override;
@@ -71,11 +77,11 @@ namespace IS {
         AssetManager(const char* file_name);
         ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
 
-        const Image& GetImage(const std::string& filename) const;
-        void ImageLoad(const std::string& filepath);
+        const Image& GetImage(const std::string& file_name) const;
+        void ImageLoad(const std::string& file_path);
         void SaveImageData(const Image image_data);
-        void RemoveImageData(const std::string& filename);
-        void ImageFree(const std::string& filename);
+        void RemoveImageData(const std::string& file_name);
+        void ImageFree(const std::string& file_name);
         Image ToGray(const Image& image);
         Image ToSepia(const Image& image);
 
@@ -88,8 +94,8 @@ namespace IS {
         Prefab GetPrefab(std::string name);
 
         //function for Sounds
-        FMOD::Channel* PlaySoundByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
-        FMOD::Channel* PlayMusicByName(const std::string& soundName, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        FMOD::Channel* PlaySoundByName(const std::string& sound_name, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        FMOD::Channel* PlayMusicByName(const std::string& sound_name, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
 
         void SaveSound(const std::string& name, FMOD::Sound* sound) {
             mSoundList[name] = sound;
@@ -99,29 +105,28 @@ namespace IS {
         }
 
         FMOD::Sound* GetSound(const std::string& name) {
-            auto it = mSoundList.find(name);
-            if (it != mSoundList.end()) {
-                return it->second;
+            auto iter = mSoundList.find(name);
+            if (iter != mSoundList.end()) {
+                return iter->second;
             }
             return nullptr;
         }
 
         FMOD::Channel* GetChannel(const std::string& name) {
-            auto it = mChannelList.find(name);
-            if (it != mChannelList.end()) {
-                return it->second;
+            auto iter = mChannelList.find(name);
+            if (iter != mChannelList.end()) {
+                return iter->second;
             }
             return nullptr;
         }
 
         void RemoveSound(const std::string& name) {
-            auto it = mSoundList.find(name);
-            if (it != mSoundList.end()) {
-                it->second->release();  // Important: Release the FMOD::Sound object
-                mSoundList.erase(it);
+            auto iter = mSoundList.find(name);
+            if (iter != mSoundList.end()) {
+                iter->second->release();  // Important: Release the FMOD::Sound object
+                mSoundList.erase(iter);
             }
         }
-
 
         //asset managers are supposed to save sounds and fonts as well
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
@@ -130,7 +135,6 @@ namespace IS {
         std::vector<std::string>mImageNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
-
 
     private:
         //const char* filename;

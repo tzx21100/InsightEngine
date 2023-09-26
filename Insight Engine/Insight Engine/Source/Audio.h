@@ -31,9 +31,9 @@ namespace IS {
         bool ISAudioIsValidAudio(FMOD::Sound* audio); //check audio valid anot
         bool ISAudioIsValidGroup(FMOD::ChannelGroup* group); //check grp valid anot
         FMOD::ChannelGroup* ISAudioCreateGroup(); //create audio grp
-        FMOD::Channel* ISAudioLoadSound(const char* filePath); //load sound file (pass in full path)
-        FMOD::Sound* ISAudioLoadSoundS(const char* filePath);
-        FMOD::Channel* ISAudioLoadMusic(const char* filePath); //load music file (pass in full path)
+        FMOD::Channel* ISAudioLoadSound(const char* file_path); //load sound file (pass in full path)
+        FMOD::Sound* ISAudioLoadSoundS(const char* file_path);
+        FMOD::Channel* ISAudioLoadMusic(const char* file_path); //load music file (pass in full path)
 
         void ISAudioPlay(FMOD::Channel* audio, FMOD::ChannelGroup* group, float volume, float pitch, bool loop = false); // play sound; default no looped audio
         void ISAudioResumeGroup(FMOD::ChannelGroup* group);

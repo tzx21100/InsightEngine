@@ -1,3 +1,14 @@
+/* Start Header **************************************************************/
+/*!
+\file	ScriptGlue.h
+\author Matthew
+
+All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/* End Header ****************************************************************/
+
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H
 
@@ -5,7 +16,6 @@ namespace IS {
     class ScriptGlue {
     public:
         static void RegisterFunctions();
-
     };
 }
 

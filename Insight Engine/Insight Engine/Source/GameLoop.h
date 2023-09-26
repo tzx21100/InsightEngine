@@ -60,16 +60,16 @@ namespace IS {
             auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
-            sprite_background.texture = static_cast<uint8_t>(black_background.texture_data);
+            sprite_background.texture = static_cast<uint8_t>(black_background.mTextureData);
             sprite_background.texture_width = black_background.width;
             sprite_background.texture_height = black_background.height;
 
             sprite_player.name = "textured_box";
-            sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
+            sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
             sprite_player.texture_width = idle_animation.width;
             sprite_player.texture_height = idle_animation.height;
 
-            sprite_test.texture = static_cast<uint8_t>(backgroundTest.texture_data);
+            sprite_test.texture = static_cast<uint8_t>(backgroundTest.mTextureData);
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
 
@@ -148,12 +148,12 @@ namespace IS {
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
                     if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
-                        sprite_player.texture = static_cast<uint8_t>(walking_animation.texture_data);
+                        sprite_player.texture = static_cast<uint8_t>(walking_animation.mTextureData);
                         sprite_player.texture_width = walking_animation.width;
                         sprite_player.texture_height = walking_animation.height;
                         sprite_player.current_tex_index = 1;
                     } else {
-                        sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
+                        sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
                         sprite_player.texture_width = idle_animation.width;
                         sprite_player.texture_height = idle_animation.height;
                         sprite_player.current_tex_index = 0;
@@ -220,7 +220,7 @@ namespace IS {
                         transl.setScaling(30, 38);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         //add the image in
-                        //spr.texture = backgroundTest.texture_data;
+                        //spr.texture = backgroundTest.mTextureData;
                     }
 
                 }
@@ -233,11 +233,11 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "textured_box2";
-                        spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
+                        spr.texture = static_cast<uint8_t>(zx_animation.mTextureData);
                         spr.texture_width = zx_animation.width;
                         spr.texture_height = zx_animation.height;
                         //add the image in
-                        //spr.texture = backgroundTest.texture_data;
+                        //spr.texture = backgroundTest.mTextureData;
 
                     }
 

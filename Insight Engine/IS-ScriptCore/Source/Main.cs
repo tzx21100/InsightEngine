@@ -1,4 +1,15 @@
-﻿using System.Runtime.CompilerServices;
+﻿/* Start Header **************************************************************/
+/*!
+\file	Main.cs
+\author Matthew
+
+All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/* End Header ****************************************************************/
+
+using System.Runtime.CompilerServices;
 
 namespace IS
 {
@@ -17,10 +28,10 @@ namespace IS
     public static class InternalCalls
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void nativeLog(string name, int param);
+        internal extern static void NativeLog(string name, int param);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void nativeLog_v(ref Vector3 param);
+        internal extern static void NativeLogVector(ref Vector3 param);
     }
     public class Entity
     {
@@ -28,10 +39,10 @@ namespace IS
         public Entity()
         {
             Console.WriteLine("ctor!");
-            log("matt", 1010);
+            Log("matt", 1010);
 
             Vector3 pos = new Vector3(10,5.5f,2);
-            log(ref pos);
+            Log(ref pos);
         }
 
         public void PrintMessage()
@@ -46,13 +57,13 @@ namespace IS
         {
             Console.WriteLine($"C# says: {message}");
         }
-        private void log(string str, int param)
+        private void Log(string str, int param)
         {
-            InternalCalls.nativeLog(str, param);
+            InternalCalls.NativeLog(str, param);
         }
-        private void log(ref Vector3 param)
+        private void Log(ref Vector3 param)
         {
-            InternalCalls.nativeLog_v(ref param);
+            InternalCalls.NativeLogVector(ref param);
         }
 
     

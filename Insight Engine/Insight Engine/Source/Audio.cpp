@@ -127,11 +127,11 @@ namespace IS {
 
 #pragma warning(push)
 #pragma warning(disable: 4458)
-    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* filePath) { //load sound w/o looping
+    FMOD::Channel* ISAudio::ISAudioLoadSound(const char* file_path) { //load sound w/o looping
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
-        FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &sound);
+        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &sound);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr; // Return nullptr on error
@@ -148,11 +148,11 @@ namespace IS {
     }
 
     //this will return the sound file instead
-    FMOD::Sound* ISAudio::ISAudioLoadSoundS(const char* filePath) {
+    FMOD::Sound* ISAudio::ISAudioLoadSoundS(const char* file_path) {
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
-        FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &sound);
+        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &sound);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr;
@@ -163,11 +163,11 @@ namespace IS {
 
 #pragma warning(pop)
 
-    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* filePath) { //load music w/o looping
+    FMOD::Channel* IS::ISAudio::ISAudioLoadMusic(const char* file_path) { //load music w/o looping
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* music = nullptr;
 
-        FMOD_RESULT result = system->createSound(filePath, mode, nullptr, &music);
+        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &music);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr; // Return nullptr on error
@@ -246,9 +246,9 @@ namespace IS {
     bool ISAudio::IsSoundPlaying(FMOD::Channel* Cchannel) {
         if (!Cchannel) return false;
 
-        bool isPlaying = false;
-        Cchannel->isPlaying(&isPlaying);
-        return isPlaying;
+        bool is_playing = false;
+        Cchannel->isPlaying(&is_playing);
+        return is_playing;
     }
 
 }
