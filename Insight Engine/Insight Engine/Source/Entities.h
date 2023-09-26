@@ -94,6 +94,34 @@ namespace IS {
 			return mSignatures[entity].any();  // Returns true if any bit is set
 		}
 
+		// Reset all entities
+		void ResetEntityID() {
+			// Clear the existing queue of available entity IDs
+			while (!mAvailableEntities.empty()) {
+				mAvailableEntities.pop();
+			}
+
+			// Re-initialize the queue with all possible entity IDs starting from 0
+			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
+				mAvailableEntities.push(entity);
+			}
+
+			// Reset living entity count to 0
+			mLivingEntityCount = 0;
+
+			// Clear all entity signatures
+			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
+				mSignatures[entity].reset();
+			}
+
+			// Clear the name to entity and entity to name mappings
+			mEntityNames.clear();
+			mEntityIds.clear();
+
+			IS_CORE_DEBUG("All entities reset!");
+		}
+
+
 
 
 		//function to find the entity by name

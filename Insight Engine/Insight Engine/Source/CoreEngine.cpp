@@ -367,6 +367,8 @@ namespace IS {
         for (int i = 0; i < list_of_entities.size(); i++) {
             DestroyEntity(list_of_entities[i]);
         }
+        //reset the entity ID to start from 0
+        mEntityManager->ResetEntityID();
         int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
         // Load each entity
         for (int i = 0; i < EntitiesAlive; ++i) {
