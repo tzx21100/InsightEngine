@@ -255,7 +255,7 @@ namespace IS {
             ImGui::PopFont();
             ImGui::Separator();
             ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Utils");
+            ImGui::TextUnformatted("General Controls");
             ImGui::PopFont();
             ImGui::BulletText("Press 'Tab' to toggle GUI");
             ImGui::BulletText("Press 'F11' to toggle fullscreen/windowed");
@@ -269,11 +269,24 @@ namespace IS {
             ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             ImGui::Separator();
             ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Physics Debug");
+            ImGui::TextUnformatted("Physics Controls");
             ImGui::PopFont();
             ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
             ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
             ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Audio Controls");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'Z' to play sfx");
+            ImGui::BulletText("Press 'X' to play music");
+            ImGui::Separator();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Scene Controls");
+            ImGui::PopFont();
+            ImGui::BulletText("Press 'J' to load testscene");
+            ImGui::BulletText("Press 'R' to save testscene");
+
         }
         ImGui::End();
     }

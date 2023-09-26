@@ -195,7 +195,12 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
                     //engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
-                    asset->PlaySoundByName("sound.MP3");
+                    engine.SaveCurrentScene("testscene");
+                }
+
+                if (input->IsKeyPressed(GLFW_KEY_J)) {
+                    //engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
+                    engine.LoadScene("testscene");
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_Z)) {
@@ -203,11 +208,6 @@ namespace IS {
                 }
                 if (input->IsKeyPressed(GLFW_KEY_X)) {
                     asset->PlayMusicByName("music.wav");
-                }
-
-                if (input->IsKeyPressed(GLFW_KEY_J)) {
-                    //engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
-                    engine.LoadScene("testscene");
                 }
             }
 

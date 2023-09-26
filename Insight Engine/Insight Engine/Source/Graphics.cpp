@@ -141,7 +141,7 @@ namespace IS {
             render_texts.emplace_back(entities_alive_text_oss.str());
             render_texts.emplace_back(entities_max_text_oss.str());
             render_texts.emplace_back("");
-            render_texts.emplace_back("Utils");
+            render_texts.emplace_back("General Controls");
             render_texts.emplace_back("- Press 'Tab' to toggle GUI");
             render_texts.emplace_back("- Press 'F11' to toggle fullscreen/windowed");
             render_texts.emplace_back("- Click mouse scrollwheel to spawn entity");
@@ -151,10 +151,18 @@ namespace IS {
             render_texts.emplace_back("- Press 'WASD' to move in the four directions");
             render_texts.emplace_back("- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
             render_texts.emplace_back("");
-            render_texts.emplace_back("Physics Debug");
+            render_texts.emplace_back("Physics Controls");
             render_texts.emplace_back("- Press '2' to enable draw collision boxes, '1' to disable");
             render_texts.emplace_back("- Press 'G' to enable gravity, 'F' to disable");
             render_texts.emplace_back("- Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Audio Controls");
+            render_texts.emplace_back("- Press 'Z' to play sfx");
+            render_texts.emplace_back("- Press 'X' to play music");
+            render_texts.emplace_back("");
+            render_texts.emplace_back("Scene Controls");
+            render_texts.emplace_back("- Press 'J' to load testscene");
+            render_texts.emplace_back("- Press 'R' to save testscene");
 
             // Render Text
             for (std::string const& render_text : render_texts) {
