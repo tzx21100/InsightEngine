@@ -1,6 +1,7 @@
 //pch has to go to the top of every cpp
 #include "Pch.h"
 #include "Input.h"
+
 namespace IS {
 
     std::string InputManager::GetName() {
@@ -110,6 +111,5 @@ namespace IS {
             inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
         }
     }
-
 
 }

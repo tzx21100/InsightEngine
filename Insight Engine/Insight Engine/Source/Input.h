@@ -7,6 +7,7 @@ and check for keyboard & mouse inputs.
 #define GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H
 
 #include "System.h"
+#include "WindowSystem.h"
 
 #include <utility>
 #include <unordered_set>
@@ -53,8 +54,10 @@ namespace IS {
             center_y = posy;
         }
         void setRatio(float widthR, float heightR) {
-            int width, height;
-            glfwGetWindowSize(window, &width, &height);
+            InsightEngine& engine = InsightEngine::Instance();
+            auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+            auto const& [width, height] = window_sys->GetWindowSize();
+            //glfwGetWindowSize(window, &width, &height);
             ratio_width =  (float)width / widthR;
             ratio_height =  (float)height / heightR;
         }
