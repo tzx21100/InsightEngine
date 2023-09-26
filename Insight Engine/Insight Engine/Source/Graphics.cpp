@@ -154,7 +154,7 @@ namespace IS {
             render_texts.emplace_back("Physics Controls");
             render_texts.emplace_back("- Press '2' to enable draw collision boxes, '1' to disable");
             render_texts.emplace_back("- Press 'G' to enable gravity, 'F' to disable");
-            render_texts.emplace_back("- Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            render_texts.emplace_back("- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
             render_texts.emplace_back("");
             render_texts.emplace_back("Audio Controls");
             render_texts.emplace_back("- Press 'Z' to play sfx");

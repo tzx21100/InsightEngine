@@ -273,7 +273,7 @@ namespace IS {
             ImGui::PopFont();
             ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
             ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
-            ImGui::BulletText("Press 'Shift' + 'Space' to freeze frame, 'Space' to step frame");
+            ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
             ImGui::Separator();
             ImGui::PushFont(font_bold);
             ImGui::TextUnformatted("Audio Controls");

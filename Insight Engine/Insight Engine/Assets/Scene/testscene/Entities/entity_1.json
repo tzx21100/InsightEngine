@@ -18,45 +18,45 @@
 		"RigidBodyTransformedVertices" : 
 		[
 			{
-				"x" : 11.249717712402344,
-				"y" : -59.167587280273438
+				"x" : -62.317085266113281,
+				"y" : -78.562042236328125
 			},
 			{
-				"x" : -83.750282287597656,
-				"y" : -59.167587280273438
+				"x" : 32.682914733886719,
+				"y" : -78.562042236328125
 			},
 			{
-				"x" : -83.750282287597656,
-				"y" : -179.16758728027344
+				"x" : 32.682914733886719,
+				"y" : -198.56204223632812
 			},
 			{
-				"x" : 11.249717712402344,
-				"y" : -179.16758728027344
+				"x" : -62.317085266113281,
+				"y" : -198.56204223632812
 			}
 		],
-		"RigidBodyVelocityX" : -120.0,
-		"RigidBodyVelocityY" : -240.0,
+		"RigidBodyVelocityX" : 190.0,
+		"RigidBodyVelocityY" : -90.0072021484375,
 		"RigidBodyVertices" : 
 		[
 			{
+				"x" : -47.5,
+				"y" : 60.0
+			},
+			{
 				"x" : 47.5,
 				"y" : 60.0
 			},
 			{
-				"x" : -47.5,
-				"y" : 60.0
-			},
-			{
-				"x" : -47.5,
+				"x" : 47.5,
 				"y" : -60.0
 			},
 			{
-				"x" : 47.5,
+				"x" : -47.5,
 				"y" : -60.0
 			}
 		]
 	},
-	"Signature" : "00000000000000000000000000001111",
+	"Signature" : "00000000000000000000000000000111",
 	"Sprite" : 
 	{
 		"SpriteColorX" : 0.0,
@@ -66,21 +66,21 @@
 		"SpriteDrawing" : true,
 		"SpriteName" : "textured_box",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 4,
+		"SpriteTexture" : 6,
 		"SpriteTextureHeight" : 120,
 		"SpriteTextureWidth" : 760,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : -95.0,
+		"SpriteTransformScalingX" : 95.0,
 		"SpriteTransformScalingY" : 120.0,
-		"SpriteTransformWorldPositionX" : -36.250282287597656,
-		"SpriteTransformWorldPositionY" : -119.16758728027344
+		"SpriteTransformWorldPositionX" : -14.817084312438965,
+		"SpriteTransformWorldPositionY" : -138.56204223632812
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : -95.0,
+		"TransformScalingX" : 95.0,
 		"TransformScalingY" : 120.0,
-		"TransformWorldPositionX" : -36.250282287597656,
-		"TransformWorldPositionY" : -119.16758728027344
+		"TransformWorldPositionX" : -14.817084312438965,
+		"TransformWorldPositionY" : -138.56204223632812
 	}
 }
