@@ -262,6 +262,7 @@ namespace IS
 			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
 		}
+		// draw the velocity line
 		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);
 	}
 

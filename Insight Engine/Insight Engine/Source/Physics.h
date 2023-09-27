@@ -71,7 +71,7 @@ namespace IS
         ~Physics() {}
 
         /*!
-         * \brief Draws an outline around the specified rigid body using the provided sprite based on vertices for polygons.
+         * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *
          * \param body The rigid body to draw the outline for.
          * \param sprite The sprite used for drawing the outline.
