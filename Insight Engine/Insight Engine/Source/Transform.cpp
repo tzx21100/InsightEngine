@@ -40,4 +40,38 @@ namespace IS {
 		scaling.x = width;
 		scaling.y = height;
 	}
+
+	Json::Value Transform::Serialize() {
+		Json::Value transformData;
+
+		// Serializing world_position
+		transformData["TransformWorldPositionX"] = world_position.x;
+		transformData["TransformWorldPositionY"] = world_position.y;
+
+		// Serializing rotation
+		transformData["TransformRotation"] = rotation;
+
+		// Serializing scaling
+		transformData["TransformScalingX"] = scaling.x;
+		transformData["TransformScalingY"] = scaling.y;
+
+		// Note: Not serializing mdl_to_ndc_xform since matrix serialization can be complex and depends on specifics
+
+		return transformData;
+	}
+
+	void Transform::Deserialize(Json::Value data) {
+		// Deserializing world_position
+		world_position.x = data["TransformWorldPositionX"].asFloat();
+		world_position.y = data["TransformWorldPositionY"].asFloat();
+
+		// Deserializing rotation
+		rotation = data["TransformRotation"].asFloat();
+
+		// Deserializing scaling
+		scaling.x = data["TransformScalingX"].asFloat();
+		scaling.y = data["TransformScalingY"].asFloat();
+
+		// Note: Not deserializing mdl_to_ndc_xform since matrix deserialization can be complex and depends on specifics
+	}
 }

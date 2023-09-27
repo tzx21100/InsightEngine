@@ -1,7 +1,27 @@
-#pragma once
+/*!
+ * \file Shader.h
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This header file defines the Shader class, which encapsulates shader compilation,
+ * linking, and usage in OpenGL applications.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                      guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SHADER_H
+#define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SHADER_H
+
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include <glad/glad.h> // for access to OpenGL API declarations 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
@@ -13,66 +33,108 @@
 #include <map>
 
 namespace IS {
-    /*  _________________________________________________________________________ */
-    class Shader
-    {
+    /*!
+     * \brief The Shader class encapsulates shader compilation, linking, and usage.
+     *
+     * The Shader class provides a convenient interface for managing OpenGL shaders.
+     * It allows the compilation and linking of vertex and fragment shaders, setting
+     * uniform values, and using shader programs.
+     */
+    class Shader {
     public:
+        /*!
+         * \brief Creates and sets up shaders for sprite rendering.
+         *
+         * This function creates and sets up shaders for rendering sprites. It compiles
+         * both the vertex and fragment shaders and links them into a program.
+         */
         void setupSpriteShaders();
+
+        /*!
+         * \brief Creates and sets up shaders for text rendering.
+         *
+         * This function creates and sets up shaders for rendering text. It compiles both
+         * the vertex and fragment shaders and links them into a program.
+         */
         void setupTextShaders();
 
-        // default ctor required to initialize Shader object to safe state
+        /*!
+         * \brief Default constructor required to initialize Shader object to a safe state.
+         */
         Shader() : pgm_hdl(0), linked(GL_FALSE) {}
 
+        /*!
+         * \brief Compiles a shader from a provided source string.
+         *
+         * \param shader_type The type of shader to compile (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
+         * \param shader_src The source code of the shader as a string.
+         * \return GL_TRUE if compilation was successful, GL_FALSE otherwise.
+         */
         GLboolean compileShaderString(GLenum shader_type, std::string const& shader_src);
 
-        // Link shader objects attached to handle pgm_handle. This member function
-        // will also verify the status of the link operation (successful or not?).
-        // If the shader objects did not link into a program object, then the
-        // member function must retrieve and write the program object's information
-        // log to data member log_string. 
+        /*!
+         * \brief Links the shader program.
+         *
+         * This function links the shader program object with the attached shader objects.
+         * It also verifies the status of the link operation and sets the log string accordingly.
+         * \return GL_TRUE if linking was successful, GL_FALSE otherwise.
+         */
         GLboolean link();
 
-        // Install the shader program object whose handle is encapsulated
-        // by member pgm_handle
+        /*!
+         * \brief Installs the shader program for use in rendering.
+         */
         void use();
 
-        // De-install previously installed shader program object using Use().
-        // More correctly, after the execution of this member function, the
-        // current rendering state is referring to an invalid program object.
+        /*!
+         * \brief De-installs the currently used shader program.
+         *
+         * After this function is called, the rendering state refers to an invalid program object.
+         */
         void unUse();
 
-        // check whether the executable shader program object can execute given the
-        // current OpenGL state ...
-        // See the glValidateProgram() reference page for more information
-        // The function returns true if validatation succeeded 
+        /*!
+         * \brief Validates the shader program.
+         *
+         * This function validates the shader program against the current OpenGL state.
+         * \return GL_TRUE if validation was successful, GL_FALSE otherwise.
+         */
         GLboolean validate();
 
-        // return the handle to the shader program object
+        /*!
+         * \brief Retrieves the handle of the shader program.
+         * \return The handle of the shader program.
+         */
         GLuint getHandle() const;
 
-        // have the different object code linked into a shader program?
+        /*!
+         * \brief Checks if the shader program is successfully linked.
+         * \return GL_TRUE if the program is linked, GL_FALSE otherwise.
+         */
         GLboolean isLinked() const;
 
-        // return logged information from the GLSL compiler and linker and
-        // validation information obtained after calling Validate() ...
+        /*!
+         * \brief Retrieves the log information from shader compilation and linking.
+         * \return A string containing the compilation and linking log.
+         */
         std::string getLog() const;
 
-        // Use an OpenGL API function to dynamically associate a generic vertex 
-        // attribute index with a named in attribute variable.
-        // Note that labs and assignment sample code did not use the OpenGL API to
-        // provide a connection between an input value to a shader and the slot in
-        // which these values are fetched from buffer object to shaders. Instead, 
-        // the layout qualifier was used in our vertex shaders to statically
-        // provide indices to attribute values 
-        // But, if users decide to forego the use of the layout qualifier, they'll
-        // instead use this function to provide the association between a generic
-        // vertex attribute index with a named attribute variable.
+        /*!
+         * \brief Binds a vertex attribute location.
+         *
+         * This function binds a generic vertex attribute index with a named attribute variable.
+         * \param index The index to bind.
+         * \param name The name of the attribute variable.
+         */
         void bindAttribLocation(GLuint index, GLchar const* name);
 
-        // OpenGL is C-based API and therefore doesn't understand function
-        // overloading or templates
-        // Therefore, we need a family of functions to specify values of uniform
-        // variables of different types for the current program object
+        /*!
+         * \brief Overloaded function to set various uniform variable types.
+         *
+         * This function is overloaded to set uniform variables of different types for the current program object.
+         * \param name The name of the uniform variable.
+         * \param val The value to set (varies based on the type).
+         */
         void setUniform(GLchar const* name, GLboolean val);
         void setUniform(GLchar const* name, GLint val);
         void setUniform(GLchar const* name, GLfloat val);
@@ -83,16 +145,21 @@ namespace IS {
         void setUniform(GLchar const* name, glm::vec3 const& val);
         void setUniform(GLchar const* name, glm::mat3 const& val);
 
-        // display the list of active vertex attributes used by vertex shader
+        /*!
+         * \brief Prints the list of active vertex attributes used by the vertex shader.
+         */
         void printAttribs() const;
 
-        // display the list of active uniform variables
+        /*!
+         * \brief Prints the list of active uniform variables.
+         */
         void printUniforms() const;
 
     private:
-
-        GLuint pgm_hdl = 0;  // handle to linked shader program object
-        GLboolean linked = GL_FALSE; // has the program successfully linked?
-        std::string log; // log for OpenGL compiler and linker messages
+        GLuint pgm_hdl = 0;          // Handle to the linked shader program object.
+        GLboolean linked = GL_FALSE; // Flag indicating whether the program is successfully linked.
+        std::string log;             // Log for OpenGL compiler and linker messages.
     };
 }
+
+#endif // GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SHADER_H
