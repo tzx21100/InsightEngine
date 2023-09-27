@@ -38,8 +38,6 @@ namespace IS {
 
     };
 
-
-
     class InputManager :public ParentSystem{
     public:
         /**
