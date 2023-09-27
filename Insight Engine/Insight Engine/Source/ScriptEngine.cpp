@@ -1,13 +1,20 @@
-/* Start Header **************************************************************/
 /*!
-\file	ScriptEngine.cpp
-\author Matthew
+ * \file ScriptEngine.cpp
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This source file implements the ScriptEngine class and related functionality for interacting with C# scripting.
+ * The ScriptEngine class manages the interaction with C# scripting, and the ScriptClass class provides a way to work with C# classes.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
-All content (C) 2023 DigiPen Institute of Technology Singapore. All rights reserved.
-Reproduction or disclosure of this file or its contents without the prior written
-consent of DigiPen Institute of Technology is prohibited.
-*/
-/* End Header ****************************************************************/
+/*includes*/
 #include "Pch.h"
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
