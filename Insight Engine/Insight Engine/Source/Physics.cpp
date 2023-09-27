@@ -248,15 +248,12 @@ namespace IS
 		float e = std::min(bodyA.mRestitution, bodyB.mRestitution);
 
 		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
-		j /= bodyA.mInvMass + bodyB.mInvMass; //a
-		//normal *= -1;
+		j /= bodyA.mInvMass + bodyB.mInvMass;
+
 		Vector2D impulse = j * normal;
-		//std::cout << "normal: " << normal.x << normal.y << std::endl;
-		//std::cout << "before: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
-		// if check
+
 		bodyA.mVelocity -= impulse * bodyA.mInvMass;
 		bodyB.mVelocity += impulse * bodyB.mInvMass;
-		//std::cout << "after: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
 	}
 
 	void Physics::DrawOutLine(RigidBody & body, Sprite const& sprite) {
