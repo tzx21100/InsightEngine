@@ -1,4 +1,26 @@
-#pragma once
+/*!
+ * \file Sprite.h
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This header file defines the Sprite class, which represents a 2D sprite with transformation, rendering properties,
+ * and animation capabilities.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                      guard
+ ----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H
+#define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include <glad/glad.h>
 #include "Transform.h"
 #include "Shader.h"
@@ -6,20 +28,31 @@
 #include "Vector2D.h"
 
 namespace IS {
+    /*!
+     * \brief The Sprite class represents a 2D sprite with transformation and rendering properties.
+     *
+     * The Sprite class encapsulates a 2D sprite with various properties such as transformation, rendering settings,
+     * and animation capabilities. It allows you to create and manage 2D sprites for use in OpenGL applications.
+     */
     class Sprite : public IComponent {
     public:
-        GLenum primitive_type{};
-        Transform model_TRS{}; // transformation values
-        uint8_t texture{};
-        uint32_t texture_width{};
-        uint32_t texture_height{};
-        int current_tex_index{}; // 0 is texture sprite initialized with
+        GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
+        Transform model_TRS{};     // Transformation values for the sprite.
+        uint8_t texture{};         // The texture ID for the sprite.
+        uint32_t texture_width{};  // The width of the sprite's texture.
+        uint32_t texture_height{}; // The height of the sprite's texture.
+        int current_tex_index{};   // The current texture index for animation (0 is the default texture).
 
-        // imgui
-        std::string name;
-        glm::vec3 color{};
-        bool drawing{ true };
+        // ImGui properties
+        std::string name;          // The name of the sprite.
+        glm::vec3 color{};         // The color of the sprite.
+        bool drawing{ true };      // Whether the sprite is currently set to be drawn.
 
+        /*!
+         * \brief Default constructor for the Sprite class.
+         *
+         * Initializes the sprite with default values.
+         */
         Sprite() {
             name = "Box";
             primitive_type = GL_TRIANGLE_STRIP;
@@ -27,91 +60,101 @@ namespace IS {
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }
-            //give it a default size of 1 by 1
+            // Give it a default size of 1 by 1
             setSpriteSize(1, 1);
             setWorldPos(0, 0);
         }
 
+        /*!
+         * \brief Constructor for the Sprite class with specified parameters.
+         *
+         * Initializes the sprite with a specified name and primitive type.
+         *
+         * \param model_name The name of the sprite.
+         * \param primitive The rendering primitive type for the sprite.
+         */
         Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
             PRNG prng;
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }
         }
+
+        /*!
+         * \brief Applies the transformation to the sprite.
+         *
+         * This function calculates the transformation matrix for the sprite based on its position, rotation, and scaling.
+         */
         void transform();
-        //either manually set or follow transforms
+
+        /*!
+         * \brief Sets the sprite's transformation to follow another transformation.
+         *
+         * \param trans The transformation to follow.
+         */
         void followTransform(Transform trans) { model_TRS = trans; }
-        void setWorldPos(Transform trans) { model_TRS.world_position = trans.world_position;}
+
+        /*!
+         * \brief Sets the world position of the sprite.
+         *
+         * \param trans The world position to set.
+         */
+        void setWorldPos(Transform trans) { model_TRS.world_position = trans.world_position; }
         void setWorldPos(float x, float y) { model_TRS.world_position = glm::vec2(x, y); }
+
+        /*!
+         * \brief Sets the size of the sprite.
+         *
+         * \param trans The size to set.
+         */
         void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
         void setSpriteSize(float width, float height) { model_TRS.scaling = glm::vec2(width, height); }
-        // for M1 rubrics showcase
+
+        /*!
+         * \brief Draws a special sprite.
+         *
+         * This function draws a special sprite using the provided mesh, shader, and texture ID.
+         *
+         * \param mesh_used The mesh to use for rendering.
+         * \param shader The shader to use for rendering.
+         * \param texture_id The texture ID to use for rendering.
+         */
         void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
+
+        /*!
+         * \brief Draws an animated sprite.
+         *
+         * This function draws an animated sprite using the provided mesh, shader, animation, and texture ID.
+         *
+         * \param mesh_used The mesh to use for rendering.
+         * \param shader The shader to use for rendering.
+         * \param animPointer The pointer to the animation to use for rendering.
+         * \param texture_id The texture ID to use for rendering.
+         */
         void drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animPointer, GLuint texture_id = 0);
 
+        /*!
+         * \brief Draws a line between two points.
+         *
+         * This static function draws a line between two specified points.
+         *
+         * \param p0 The first point of the line.
+         * \param p1 The second point of the line.
+         */
         static void drawLine(Vector2D const& p0, Vector2D const& p1);
+
+        /*!
+         * \brief Calculates the transformation matrix for a line sprite.
+         *
+         * This static function calculates the transformation matrix for a line sprite based on
+         * midpoint translation, rotation angle, and length scale.
+         *
+         * \param midpoint_translate The midpoint translation.
+         * \param rotate_angle_rad The rotation angle in radians.
+         * \param length_scale The length scaling factor.
+         * \return The transformation matrix for the line sprite.
+         */
         static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
-
-
-        Json::Value Serialize() override {
-            Json::Value spriteData;
-
-            // Serializing primitive_type
-            spriteData["SpritePrimitiveType"] = primitive_type;
-
-            // Serializing model_TRS (using the details of the Transform class)
-            spriteData["SpriteTransformWorldPositionX"] = model_TRS.world_position.x;
-            spriteData["SpriteTransformWorldPositionY"] = model_TRS.world_position.y;
-            spriteData["SpriteTransformRotation"] = model_TRS.rotation;
-            spriteData["SpriteTransformScalingX"] = model_TRS.scaling.x;
-            spriteData["SpriteTransformScalingY"] = model_TRS.scaling.y;
-
-            // Note: Not serializing mdl_to_ndc_xform as it's a matrix and the specific serialization might depend on further needs
-
-            // Serializing texture-related properties
-            spriteData["SpriteTexture"] = texture;
-            spriteData["SpriteTextureWidth"] = texture_width;
-            spriteData["SpriteTextureHeight"] = texture_height;
-            spriteData["SpriteCurrentTexIndex"] = current_tex_index;
-
-            // Serializing imgui-related properties
-            spriteData["SpriteName"] = name;
-            spriteData["SpriteColorX"] = color.x;
-            spriteData["SpriteColorY"] = color.y;
-            spriteData["SpriteColorZ"] = color.z;
-            spriteData["SpriteDrawing"] = drawing;
-
-            return spriteData;
-        }
-
-        void Deserialize(Json::Value data) override {
-            // Deserializing primitive_type
-            primitive_type = data["SpritePrimitiveType"].asUInt();
-
-            // Deserializing model_TRS
-            model_TRS.world_position.x = data["SpriteTransformWorldPositionX"].asFloat();
-            model_TRS.world_position.y = data["SpriteTransformWorldPositionY"].asFloat();
-            model_TRS.rotation = data["SpriteTransformRotation"].asFloat();
-            model_TRS.scaling.x = data["SpriteTransformScalingX"].asFloat();
-            model_TRS.scaling.y = data["SpriteTransformScalingY"].asFloat();
-
-            // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
-
-            // Deserializing texture-related properties
-            texture = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
-            texture_width = data["SpriteTextureWidth"].asUInt();
-            texture_height = data["SpriteTextureHeight"].asUInt();
-            current_tex_index = data["SpriteCurrentTexIndex"].asInt();
-
-            // Deserializing imgui-related properties
-            name = data["SpriteName"].asString();
-            color.x = data["SpriteColorX"].asFloat();
-            color.y = data["SpriteColorY"].asFloat();
-            color.z = data["SpriteColorZ"].asFloat();
-            drawing = data["SpriteDrawing"].asBool();
-        }
-
-
-
     };
 }
+#endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

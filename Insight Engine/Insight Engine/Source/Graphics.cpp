@@ -1,29 +1,42 @@
-//pch has to go to the top of every cpp
-#include "Pch.h"
-#include "Graphics.h"
-#include "Asset.h"
-#include "WindowSystem.h"
+/*!
+ * \file Graphics.cpp
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This source file defines the implementation for class ISGraphics which
+ * encapsulates the functionalities of a Graphics Engine.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
-#include <vector>
-#include <array>
-#include <string>
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
+#include "Pch.h"
 #include <stb_image.h>
 
-#include <ft2build.h>
-
 namespace IS {
-
+    /// Static objects ///
+    // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
+    // Animation objects
     Animation ISGraphics::idle_ani;
     Animation ISGraphics::walking_ani;
     Animation ISGraphics::ice_cream_truck_ani;
-    std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
+    // Shaders
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
+    // Mesh vector
     std::vector<Mesh> ISGraphics::meshes;
-
+    // Text objects
     GLuint font_texture;
     Text ISGraphics::cascadia_text;
+    // Frame Buffer
+    std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
 
 
     void ISGraphics::Initialize() {
