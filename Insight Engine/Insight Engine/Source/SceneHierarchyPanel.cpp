@@ -288,25 +288,44 @@ namespace IS {
 
         // Prefabs
         ImGui::TextUnformatted("Prefab");
+
+        // Save Prefab
         ImGui::SameLine();
         ImGui::PushFont(font_bold);
-        if (ImGui::Button("Save")) {
+        if (ImGui::Button("Save"))
             engine.SaveAsPrefab(entity, name);
-        }
+
+        // Load Prefab
         ImGui::SameLine();
+        if (ImGui::Button("Load"))
+            show_prefabs = true;
 
-        ImGui::Button("Load");
-        if (ImGui::BeginItemTooltip()) {
-            
-            ImGui::TextUnformatted("WIP");
-            ImGui::EndTooltip();
+        ImGui::PopFont();
+        if (show_prefabs) {
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100.f);
+            bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
+            if (begin_combo) {
+                auto asset = engine.GetSystem<AssetManager>("Asset");
+                for (auto const& [prefab_name, prefab] : asset->mPrefabList) {
+                    const bool is_selected = (name == prefab_name);
+                    if (ImGui::Selectable(prefab_name.c_str(), is_selected)) {
+                        engine.LoadFromPrefab(prefab);
+                        show_prefabs = false;
+                    }
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::PopItemWidth();
+
+            if (ImGui::IsMouseDown(0) && !ImGui::IsItemHovered() && !begin_combo)
+                show_prefabs = false;
         }
-
-        /*if (ImGui::Button("Load")) {
-
-        }*/
 
         // Add Component
+        ImGui::PushFont(font_bold);
         if (ImGui::Button("Add Component"))
             ImGui::OpenPopup("AddComponent");
         ImGui::PopFont();
@@ -393,10 +412,6 @@ namespace IS {
             ImGui::EndTable();
             ImGui::End();
         }
-    }
-
-    void SceneHierarchyPanel::RenderPrefab() {
-        
     }
 
     void SceneHierarchyPanel::ResetSelection() { mSelectedEntity = {}; }
