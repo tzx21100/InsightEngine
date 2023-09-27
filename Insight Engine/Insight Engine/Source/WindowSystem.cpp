@@ -15,8 +15,6 @@
 #include "WindowSystem.h"
 #include "JsonSaveLoad.h"
 
-#include <glad/glad.h>
-
 namespace IS {
 
     // In case "WindowProperties.json" is not found, window will use default properties
@@ -161,6 +159,8 @@ namespace IS {
     }
 
     bool WindowSystem::IsFullScreen() const { return mProps.mFullscreen; }
+
+    GLFWwindow* WindowSystem::GetNativeWindow() const { return mWindow; }
 
     void WindowSystem::LoadProperties() {
         std::string filename = "Properties/WindowProperties.json";

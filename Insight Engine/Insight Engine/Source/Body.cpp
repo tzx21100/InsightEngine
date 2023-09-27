@@ -43,16 +43,16 @@ namespace IS
         mRestitution = 0.5f;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        mBodyShape = Shape::Box;
+        mBodyShape = BodyShape::Box;
         mTransformUpdateRequired = false;
 
-        if (mBodyShape == Shape::Box) {
+        if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
             // making the transform mVertices same size as the mVertices, not neccessary
             mTransformedVertices = mVertices;
         }
-        else if (mBodyShape == Shape::Circle) {
+        else if (mBodyShape == BodyShape::Circle) {
             CreateCircleBody(mBodyTransform.scaling.x/2, mMass, mRestitution);
         }
         else {
@@ -65,7 +65,7 @@ namespace IS
     }
 
 	RigidBody::RigidBody(glm::vec2 my_position, BodyType my_body_type, float my_mass, float my_restitution,
-        float my_width, float my_height, Shape my_body_shape) {
+        float my_width, float my_height, BodyShape my_body_shape) {
         mVelocity = Vector2D(); // (0,0)
         mAngularVelocity = 0.f;
         mBodyTransform.world_position = my_position;
@@ -83,14 +83,14 @@ namespace IS
         mBodyShape = my_body_shape;
         mTransformUpdateRequired = false;
 
-        if (mBodyShape == Shape::Box) {
+        if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
             
             // making the transform mVertices same size as the mVertices, not neccessary
             mTransformedVertices = mVertices;
         }
-        else if (mBodyShape == Shape::Circle) {
+        else if (mBodyShape == BodyShape::Circle) {
             CreateCircleBody(mBodyTransform.scaling.x/2, mMass, mRestitution);
         }
         else {

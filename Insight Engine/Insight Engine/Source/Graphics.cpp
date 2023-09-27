@@ -138,50 +138,36 @@ namespace IS {
             const float x_padding = scale;
             const float y_padding = (scale * 3.f);
             const float pos_x = -(WIDTH / 2.f) + x_padding;
-            float pos_y = (HEIGHT / 2.f) - y_padding;
+            const float pos_y = (HEIGHT / 2.f) - y_padding;
             const glm::vec3 islamic_green = { 0.f, .56f, .066f };
             const glm::vec3 malachite = { 0.f, 1.f, .25f };
             static glm::vec3 color = islamic_green;
-            color = (!(engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
+            color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
 
             // Text Attribute
-            std::ostringstream fps_text_oss;
-            std::ostringstream entities_alive_text_oss;
-            std::ostringstream entities_max_text_oss;
-            fps_text_oss << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time;
-            entities_alive_text_oss << "Entities Alive: " << engine.EntitiesAlive();
-            entities_max_text_oss.imbue(std::locale("")); // comma separated
-            entities_max_text_oss << "Max Entities: " << std::fixed << MAX_ENTITIES;
-
-            std::vector<std::string> render_texts;
-            render_texts.emplace_back(fps_text_oss.str());
-            render_texts.emplace_back(entities_alive_text_oss.str());
-            render_texts.emplace_back(entities_max_text_oss.str());
-            render_texts.emplace_back("");
-            render_texts.emplace_back("General Controls");
-            render_texts.emplace_back("- Press 'Tab' to toggle GUI");
-            render_texts.emplace_back("- Press 'F11' to toggle fullscreen/windowed");
-            render_texts.emplace_back("- Click mouse scrollwheel to spawn entity");
-            render_texts.emplace_back("- Click right mouse button to spawn rigidbody entity");
-            render_texts.emplace_back("");
-            render_texts.emplace_back("Player Controls");
-            render_texts.emplace_back("- Press 'WASD' to move in the four directions");
-            render_texts.emplace_back("- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
-            render_texts.emplace_back("");
-            render_texts.emplace_back("Physics Controls");
-            render_texts.emplace_back("- Press '2' to enable draw collision boxes, '1' to disable");
-            render_texts.emplace_back("- Press 'G' to enable gravity, 'F' to disable");
-            render_texts.emplace_back("- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
-            render_texts.emplace_back("");
-            render_texts.emplace_back("Audio Controls");
-            render_texts.emplace_back("- Press 'Z' to play sfx");
-            render_texts.emplace_back("- Press 'X' to play music");
+            std::ostringstream render_text;
+            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time << '\n';
+            render_text << "Entities Alive: " << engine.EntitiesAlive() << '\n';
+            render_text.imbue(std::locale("")); // comma separated numbers
+            render_text << "Max Entities: " << std::fixed << MAX_ENTITIES << "\n\n";
+            render_text << "General Controls\n"
+                           "- Press 'Tab' to toggle GUI\n"
+                           "- Press 'F11' to toggle fullscreen/windowed\n"
+                           "- Click mouse scrollwheel to spawn entity\n"
+                           "- Click right mouse button to spawn rigidbody entity\n\n";
+            render_text << "Player Controls\n"
+                           "- Press 'WASD' to move in the four directions\n"
+                           "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
+            render_text << "Physics Controls\n"
+                           "- Press '2' to enable draw collision boxes, '1' to disable\n"
+                           "- Press 'G' to enable gravity, 'F' to disable\n"
+                           "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
+            render_text << "Audio Controls\n"
+                           "- Press 'Z' to play sfx\n"
+                           "- Press 'X' to play music";
 
             // Render Text
-            for (std::string const& render_text : render_texts) {
-                Text::renderText(text_shader_pgm, render_text, pos_x, pos_y, scale, color);
-                pos_y -= y_padding;
-            }
+            Text::renderText(text_shader_pgm, render_text.str(), pos_x, pos_y, scale, color);
         }
 
         Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);

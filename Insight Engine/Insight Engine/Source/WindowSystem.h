@@ -19,6 +19,7 @@
 #include "System.h"
 
 // Dependencies
+#include <glad/glad.h> // ensure glad is included before glfw
 #include <GLFW/glfw3.h>
 
 namespace IS {
@@ -159,6 +160,12 @@ namespace IS {
          * \return True if vsync is enabled, false otherwise.
          */
         bool IsVSync() const;
+
+        /*|
+         * \brief Gets the native GLFW window.
+         * \return pointer to native window.
+         */
+        GLFWwindow* GetNativeWindow() const;
 
         /*!
          * \brief Loads window properties.

@@ -20,10 +20,11 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "WindowSystem.h"
-#include "GUI.h"
+#include "Editor.h"
 #include "GameLoop.h"
 
 using namespace IS;
+
 
 //This is a helper function to register all components
 void RegisterComponents() {
@@ -50,12 +51,11 @@ void RegisterSystems() {
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
     auto insight_input = std::make_shared<InputManager>();
-    insight_input->setCenterPos(insight_window->GetWidth() / 2.f, insight_window->GetHeight() / 2.f); // offset mouse position
     auto insight_audio = std::make_shared<ISAudio>();
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
-    auto insight_gui = std::make_shared<GUISystem>();
+    auto insight_gui = std::make_shared<Editor>();
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_default);
@@ -70,16 +70,19 @@ void RegisterSystems() {
 
 //This is a function to setup the engine correctly
 void EngineSetup() {
+    // Initialize log
+    Log::Init();
     RegisterComponents();
     RegisterSystems();
+    // Initialize ScriptEngine
+    //ScriptEngine::Init();
 }
 
 // The only function that main should ever call
 void RunInsightEngine() {
-    InsightEngine& engine = InsightEngine::Instance();
     //This is to set the flow of the engine
     EngineSetup();
-    engine.Run();
+    InsightEngine::Instance().Run();
     IS_CORE_WARN("Insight Engine has terminated!");
 }
 

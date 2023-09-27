@@ -11,11 +11,12 @@ namespace IS
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
 		//PHYSICS = this;
-		mGravity = Vector2D(0, -98.81f);
+		mGravity = Vector2D(0, -981.0f);
 		mExertingGravity = false;
 		//isDebugDraw = false;
 		mMaxVelocity = 1000.f;
 		mMinVelocity = -1000.f;
+		iterations = 1;
 
 	}
 
@@ -30,68 +31,18 @@ namespace IS
 		Subscribe(MessageType::Collide);
 
 	}
-	Vector2D v = { 0.f, -9.8f };
-	float time = 1.f / 60.f;
+
 	bool Physics::isDebugDraw = false;
+
+	
+
 	void Physics::Update(float dt)
 	{
-
-		time = dt;
-		//for (size_t i = 0; i < 5; i++) {
-			for (auto const& entity : mEntities) {
-				auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-				//time /= 5.f;
-				if (input->IsKeyPressed(GLFW_KEY_G)) {
-					mExertingGravity = true;
-					IS_CORE_DEBUG("mGravity Enabled!");
-				}
-				else if (input->IsKeyPressed(GLFW_KEY_F)) {
-					mExertingGravity = false;
-					IS_CORE_DEBUG("mGravity Disabled!");
-				}
-
-				// for drawing lines
-				if (input->IsKeyPressed(GLFW_KEY_2)) {
-					Physics::isDebugDraw = true;
-					IS_CORE_DEBUG("Draw Collision Boxes Enabled!");
-				}
-				else if (input->IsKeyPressed(GLFW_KEY_1)) {
-					Physics::isDebugDraw = false;
-					IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
-				}
-				/*if (mExertingGravity) {
-					v += mGravity * time;
-				}
-				else {
-					v = Vector2D();
-				}*/
-				// update gravity
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
-					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-					if (body.mBodyType != BodyType::Dynamic) {
-						continue;
-					}
-					//freeze
-					if (InsightEngine::Instance().mFreezeFrame) {
-						if (!InsightEngine::Instance().mContinueFrame)
-							return;
-					}
-					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					//body.mVelocity += mGravity * 10.f * dt;
-					if (mExertingGravity) {
-						body.mVelocity += mGravity * 10.f * dt;
-					}
-					//if (resultF.x < 1.f && resultF.y < 1.f && resultF.x > -1.f && resultF.y > -1.f) { body.mVelocity = Vector2D(); }
-					body.mVelocity.x = std::min(body.mVelocity.x, mMaxVelocity);
-					body.mVelocity.y = std::min(body.mVelocity.y, mMaxVelocity);
-					body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
-					body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
-					trans.world_position.x += body.mVelocity.x * time;
-					trans.world_position.y += body.mVelocity.y * time;
-				}
-			}
+		
+		for (size_t i = 0; i < iterations; i++) {
+			Step(dt, mEntities);
 			CollisionDetect(mEntities);
-		//}
+		}
 
 	}
 
@@ -143,28 +94,28 @@ namespace IS
 						bool isColliding = false;
 						switch (rigidBodyA.mBodyShape)
 						{
-						case Shape::Box:
+						case BodyShape::Box:
 							switch (rigidBodyB.mBodyShape)
 							{
 								// box vs box
-							case Shape::Box:
+							case BodyShape::Box:
 								isColliding = IntersectionPolygons(rigidBodyA.GetTransformedVertices(), rigidBodyA.mBodyTransform.getWorldPosition(), rigidBodyB.GetTransformedVertices(), rigidBodyB.mBodyTransform.getWorldPosition(), normal, depth);
 								break;
 								// box vs circle
-							case Shape::Circle:
+							case BodyShape::Circle:
 								break;
 							default:
 								break;
 							}
 							break;
-						case Shape::Circle:
+						case BodyShape::Circle:
 							switch (rigidBodyB.mBodyShape)
 							{
 								// circle vs box
-							case Shape::Box:
+							case BodyShape::Box:
 								break;
 								// circle vs circle
-							case Shape::Circle:
+							case BodyShape::Circle:
 								break;
 							default:
 								break;
@@ -297,25 +248,81 @@ namespace IS
 		float e = std::min(bodyA.mRestitution, bodyB.mRestitution);
 
 		float j = -(1.f + e) * ISVector2DDotProduct(relativeVelocity, normal);
-		j /= bodyA.mInvMass + bodyB.mInvMass; //a
-		//normal *= -1;
+		j /= bodyA.mInvMass + bodyB.mInvMass;
+
 		Vector2D impulse = j * normal;
-		//std::cout << "normal: " << normal.x << normal.y << std::endl;
-		//std::cout << "before: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
-		// if check
+
 		bodyA.mVelocity -= impulse * bodyA.mInvMass;
 		bodyB.mVelocity += impulse * bodyB.mInvMass;
-		//std::cout << "after: " << bodyA.mVelocity.x << bodyA.mVelocity.y << std::endl;
 	}
 
 	void Physics::DrawOutLine(RigidBody & body, Sprite const& sprite) {
-		for (int i = 0; i < body.mTransformedVertices.size(); i++) {
+		for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
 			Vector2D va = body.mTransformedVertices[i];
 			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
 		}
+		// draw the velocity line
 		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);
 	}
 
+	void Physics::UpdateGravity(auto const& key_input) {
+		if (key_input->IsKeyPressed(GLFW_KEY_G)) {
+			mExertingGravity = true;
+			IS_CORE_DEBUG("mGravity Enabled!");
+		}
+		else if (key_input->IsKeyPressed(GLFW_KEY_F)) {
+			mExertingGravity = false;
+			IS_CORE_DEBUG("mGravity Disabled!");
+		}
+	}
+
+	void Physics::UpdateDebugDraw(auto const& key_input) {
+		if (key_input->IsKeyPressed(GLFW_KEY_2)) {
+			Physics::isDebugDraw = true;
+			IS_CORE_DEBUG("Draw Collision Boxes Enabled!");
+		}
+		else if (key_input->IsKeyPressed(GLFW_KEY_1)) {
+			Physics::isDebugDraw = false;
+			IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
+		}
+	}
+
+	void Physics::Step(float time, std::set<Entity> const& entities) {
+		for (auto const& entity : entities) {
+			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+			// check input for applying gravity
+			UpdateGravity(input);
+
+			// check input for drawing lines
+			UpdateDebugDraw(input);
+
+			// update gravity
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+				if (body.mBodyType != BodyType::Dynamic) {
+					continue;
+				}
+				//freeze
+				if (InsightEngine::Instance().mFreezeFrame) {
+					if (!InsightEngine::Instance().mContinueFrame)
+						return;
+				}
+				time /= static_cast<float>(iterations);
+				//std::cout << time << std::endl;
+				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				if (mExertingGravity) {
+					body.mVelocity += mGravity * time;
+				}
+
+				body.mVelocity.x = std::min(body.mVelocity.x, mMaxVelocity);
+				body.mVelocity.y = std::min(body.mVelocity.y, mMaxVelocity);
+				body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
+				body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
+				trans.world_position.x += body.mVelocity.x * time;
+				trans.world_position.y += body.mVelocity.y * time;
+			}
+		}
+	}
 }
 

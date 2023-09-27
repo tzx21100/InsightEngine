@@ -1,10 +1,10 @@
 /*!
- * \file GUI.h
+ * \file Editor.h
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This header file declares the interface for class GUISystem, which
+ * This header file declares the interface for class Editor, which
  * encapsulates the functionalities of a graphical user interface (GUI)
  * using the Dear ImGui libary.
  * 
@@ -17,8 +17,8 @@
 
 /*                                                                      guard
 ----------------------------------------------------------------------------- */
-#ifndef GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_GUI_H
-#define GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_GUI_H
+#ifndef GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_EDITOR_H
+#define GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_EDITOR_H
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
@@ -29,37 +29,37 @@
 namespace IS {
 
     /*!
-     * \brief The GUISystem class manages GUI-related functionality.
+     * \brief The Editor class manages GUI-related functionality.
      *
-     * GUISystem is a subclass of ParentSystem and handles the GUI for the application.
+     * Editor is a subclass of ParentSystem and handles the GUI for the application.
      */
-    class GUISystem : public ParentSystem {
+    class Editor : public ParentSystem {
     public:
         using layer_type = LayerStack::value_type; ///< Type alias for a layer.
 
         /*!
-         * \brief Constructs a GUISystem object.
+         * \brief Constructs a Editor object.
          */
-        GUISystem();
+        Editor();
 
         /*!
-         * \brief Destroys the GUISystem object.
+         * \brief Destroys the Editor object.
          */
-        ~GUISystem() override;
+        ~Editor() override;
 
         /*!
-         * \brief Initializes the GUISystem.
+         * \brief Initializes the Editor.
          */
         void Initialize() override;
 
         /*!
-         * \brief Updates the GUISystem.
+         * \brief Updates the Editor.
          * \param delta_time The time difference since the last update.
          */
         void Update(float delta_time) override;
 
         /*!
-         * \brief Terminates the GUISystem.
+         * \brief Terminates the Editor.
          */
         void Terminate();
 
@@ -70,8 +70,8 @@ namespace IS {
         void HandleMessage(Message const& message) override;
 
         /*!
-         * \brief Gets the name of the GUISystem.
-         * \return The name of the GUISystem.
+         * \brief Gets the name of the Editor.
+         * \return The name of the Editor.
          */
         std::string GetName() override;
 
@@ -136,4 +136,4 @@ namespace IS {
 
 } // end namespace IS
 
-#endif // !GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_GUI_H
+#endif // !GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_EDITOR_H
