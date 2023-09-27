@@ -27,11 +27,10 @@
 #include <iostream>
 #include <thread>
 
-
 namespace IS {
 
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
-    InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(60) {
+    InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(DEFAULT_FPS) {
         IS_PROFILE_FUNCTION();
         IS_CORE_INFO("Starting Insight Engine...");
         //create the pointers to the managers
@@ -58,6 +57,7 @@ namespace IS {
     }
 
     void InsightEngine::Initialize() {
+        LoadProperties();
         //initialize all systems first
         InitializeAllSystems();
         //subscirbe to messages
@@ -110,6 +110,7 @@ namespace IS {
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
         }
+        SaveProperties();
         DestroyAllSystems();
     }
 
@@ -383,6 +384,32 @@ namespace IS {
         }
         //reset the entity ID to start from 0
         mEntityManager->ResetEntityID();
+    }
+
+    // Can add more properties when there are more features we need 
+    void InsightEngine::LoadProperties() {
+        std::string filename = "Properties/EngineProperties.json";
+        Json::Value properties;
+        // Load window properties from JSON file
+        bool success = LoadJsonFromFile(properties, filename);
+        if (success) {
+            auto const& engine_props = properties["EngineProperties"];
+            mTargetFPS = engine_props["Target FPS"].asInt();
+        }
+        IS_CORE_INFO("Loaded engine properties from \"{}\"", filename);
+    }
+    
+    //we can add more properties next time but for now theres only FPS
+    void InsightEngine::SaveProperties() {
+        std::string filepath = "Properties/EngineProperties.json";
+        Json::Value properties;
+        auto& engine_props = properties["EngineProperties"];
+        engine_props["Target FPS"] = mTargetFPS;
+        // Save window propeties to JSON file
+        bool success = SaveJsonToFile(properties, filepath);
+        if (success) {
+            IS_CORE_INFO("Saved engine properties to \"{}\"", filepath);
+        }
     }
 
 }
