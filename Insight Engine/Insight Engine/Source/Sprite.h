@@ -119,7 +119,7 @@ namespace IS {
          * \param shader The shader to use for rendering.
          * \param texture_id The texture ID to use for rendering.
          */
-        void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
+        void drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
 
         /*!
          * \brief Draws an animated sprite.

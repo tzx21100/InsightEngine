@@ -1,24 +1,39 @@
+/*!
+ * \file Transform.cpp
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This source file defines the Transform class, which represents transformation properties
+ * for game objects in an OpenGL-based application.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
 #include "Pch.h"
 
-
 namespace IS {
-	Transform::Transform() {
+	Transform::Transform() { // default constructor
 		this->world_position = glm::vec2();
 		this->rotation = 0.f;
 		this->scaling = glm::vec2();
 	}
 
-	Transform::Transform(glm::vec2 world_position, float rotation, glm::vec2 scaling) {
+	Transform::Transform(glm::vec2 world_position, float rotation, glm::vec2 scaling) { // param constructor
 		this->world_position = world_position;
 		this->rotation = rotation;
 		this->scaling = scaling;
 	}
 
-	Vector2D Transform::getWorldPosition() {
+	Vector2D Transform::getWorldPosition() { // for physics system
 		return Vector2D(world_position.x, world_position.y);
 	}
 
-	float Transform::getRotation() {
+	float Transform::getRotation() { 
 		return rotation;
 	}
 
@@ -26,17 +41,17 @@ namespace IS {
 		return Vector2D(scaling.x, scaling.y);
 	}
 
-	void Transform::setWorldPosition(float x, float y) {
+	void Transform::setWorldPosition(float x, float y) { // set T
 		world_position.x = x;
 		world_position.y = y;
 	}
 
-	void Transform::setRotation(float angle, float angleSpeed) {
+	void Transform::setRotation(float angle, float angleSpeed) { // set R
 		rotation = angle;
 		angle_speed = angleSpeed;
 	}
 
-	void Transform::setScaling(float width, float height) {
+	void Transform::setScaling(float width, float height) { // set S
 		scaling.x = width;
 		scaling.y = height;
 	}
