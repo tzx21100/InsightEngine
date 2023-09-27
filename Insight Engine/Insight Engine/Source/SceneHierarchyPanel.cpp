@@ -219,7 +219,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                guidgets::RenderComboBoxEnum<Shape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
+                guidgets::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();

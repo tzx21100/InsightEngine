@@ -18,6 +18,12 @@ namespace IS
         ~Physics() {}
 
         static void DrawOutLine(RigidBody & body, Sprite const& sprite);
+
+        void UpdateGravity(auto const& key_input);
+
+        void UpdateDebugDraw(auto const& key_input);
+
+        void Step(float time, std::set<Entity> const& entities);
 	private:
 
         // gravity of the world
@@ -26,6 +32,7 @@ namespace IS
         // max velocity for the game body
         float mMaxVelocity;
         float mMinVelocity;
+        int iterations;
 	};
 
     // not used

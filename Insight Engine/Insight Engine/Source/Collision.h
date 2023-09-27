@@ -25,13 +25,13 @@ namespace IS
         Vector2D normal;
     };
 
-    enum class Shape {Box, Circle, Line};
+    enum class BodyShape {Box, Circle, Line};
 
-    class Collider : public IComponent {
-    public:
-        //Shape colliderType;
-        std::variant<Box, Circle, Line> myCollider;
-    };
+    //class Collider : public IComponent {
+    //public:
+    //    //Shape colliderType;
+    //    std::variant<Box, Circle, Line> myCollider;
+    //};
 
     // FOR BOX 
 	// AABB Collision for static and dynamic, return true if they colliding
