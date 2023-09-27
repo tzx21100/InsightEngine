@@ -3,9 +3,9 @@
 	"Signature" : "00000000000000000000000000000011",
 	"Sprite" : 
 	{
-		"SpriteColorX" : 0.69539439678192139,
-		"SpriteColorY" : 0.76308172941207886,
-		"SpriteColorZ" : 0.56158298254013062,
+		"SpriteColorX" : 0.81940782070159912,
+		"SpriteColorY" : 0.47697252035140991,
+		"SpriteColorZ" : 0.76875227689743042,
 		"SpriteCurrentTexIndex" : 0,
 		"SpriteDrawing" : true,
 		"SpriteName" : "Box",
@@ -13,7 +13,7 @@
 		"SpriteTexture" : 0,
 		"SpriteTextureHeight" : 0,
 		"SpriteTextureWidth" : 0,
-		"SpriteTransformRotation" : 107.29813385009766,
+		"SpriteTransformRotation" : 122.01837158203125,
 		"SpriteTransformScalingX" : 200.0,
 		"SpriteTransformScalingY" : 200.0,
 		"SpriteTransformWorldPositionX" : 650.0,
@@ -21,7 +21,7 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 107.29813385009766,
+		"TransformRotation" : 122.01837158203125,
 		"TransformScalingX" : 200.0,
 		"TransformScalingY" : 200.0,
 		"TransformWorldPositionX" : 650.0,

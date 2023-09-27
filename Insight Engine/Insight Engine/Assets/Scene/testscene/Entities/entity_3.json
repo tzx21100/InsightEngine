@@ -35,7 +35,7 @@
 			}
 		],
 		"RigidBodyVelocityX" : 0.0,
-		"RigidBodyVelocityY" : -0.0071999276988208294,
+		"RigidBodyVelocityY" : 0.0,
 		"RigidBodyVertices" : 
 		[
 			{
@@ -56,7 +56,7 @@
 			}
 		]
 	},
-	"Signature" : "00000000000000000000000000000111",
+	"Signature" : "00000000000000000000000000001111",
 	"Sprite" : 
 	{
 		"SpriteColorX" : 0.0,

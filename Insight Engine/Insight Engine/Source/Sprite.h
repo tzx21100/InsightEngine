@@ -155,6 +155,18 @@ namespace IS {
          * \return The transformation matrix for the line sprite.
          */
         static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
+
+        /*!
+         * \brief Deserializes the sprite data
+         *
+         * \param Json::Value the data to deserialize
+         */
+        void Deserialize(Json::Value data) override;
+
+        /*!
+         * \brief Serializes the sprite data
+         */
+        Json::Value Serialize() override;
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

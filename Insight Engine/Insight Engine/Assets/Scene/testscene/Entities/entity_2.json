@@ -56,7 +56,7 @@
 			}
 		]
 	},
-	"Signature" : "00000000000000000000000000000111",
+	"Signature" : "00000000000000000000000000001111",
 	"Sprite" : 
 	{
 		"SpriteColorX" : 0.0,
@@ -66,7 +66,7 @@
 		"SpriteDrawing" : true,
 		"SpriteName" : "Box",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 3,
+		"SpriteTexture" : 4,
 		"SpriteTextureHeight" : 2160,
 		"SpriteTextureWidth" : 3840,
 		"SpriteTransformRotation" : 0.0,
