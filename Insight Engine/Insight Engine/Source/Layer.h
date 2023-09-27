@@ -30,8 +30,8 @@ namespace IS {
     /*!
      * \brief The base class for layers in the application.
      *
-     * \brief Layers allow modular functionality to be added to the application in a structured way.
-     * \brief Inherit from this class to create a custom layer with specific behavior.
+     * Layers allow modular functionality to be added to the application in a structured way.
+     * Inherit from this class to create a custom layer with specific behavior.
      */
     class Layer {
     public:

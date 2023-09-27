@@ -159,10 +159,6 @@ namespace IS {
             render_texts.emplace_back("Audio Controls");
             render_texts.emplace_back("- Press 'Z' to play sfx");
             render_texts.emplace_back("- Press 'X' to play music");
-            render_texts.emplace_back("");
-            render_texts.emplace_back("Scene Controls");
-            render_texts.emplace_back("- Press 'J' to load testscene");
-            render_texts.emplace_back("- Press 'R' to save testscene");
 
             // Render Text
             for (std::string const& render_text : render_texts) {

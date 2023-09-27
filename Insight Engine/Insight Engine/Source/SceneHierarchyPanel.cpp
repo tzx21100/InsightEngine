@@ -281,8 +281,9 @@ namespace IS {
 
         ImGuiIO& io = ImGui::GetIO();
         auto font_bold = io.Fonts->Fonts[0];
+        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
 
-        if (ImGui::InputText("##Name", buffer, sizeof(buffer)))
+        if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
             name = std::string(buffer);
 
         // Prefabs
@@ -397,6 +398,8 @@ namespace IS {
     void SceneHierarchyPanel::RenderPrefab() {
         
     }
+
+    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity = {}; }
 
     template <typename Component, typename RenderFunc>
     static void SceneHierarchyPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
