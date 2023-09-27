@@ -77,6 +77,8 @@ namespace IS {
 
         void RenderPrefab();
 
+        void ResetSelection();
+
         /*!
          * \brief Renders a specific component for the specified Entity.
          * \tparam Component The type of the component to render.

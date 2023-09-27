@@ -183,6 +183,8 @@ namespace IS {
          */
         void LoadScene(std::string filename);
 
+        void NewScene();
+
         /**
          * \brief Loads an entity from a JSON file.
          * \param filename The name of the JSON file to load the entity from.

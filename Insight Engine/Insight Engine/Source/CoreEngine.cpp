@@ -359,6 +359,19 @@ namespace IS {
             std::cerr << "Failed to load main scene file: " << mainSceneFile << std::endl;
             return;
         }
+        // Start a new scene
+        NewScene();
+        int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
+        // Load each entity
+        for (int i = 0; i < EntitiesAlive; ++i) {
+            std::string entityFile = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(i) + ".json";
+            LoadEntityFromJson(entityFile);
+        }
+
+        IS_CORE_DEBUG("Loading scene successful: {} entities loaded", EntitiesAlive);
+    }
+
+    void InsightEngine::NewScene() {
         // Destroy all existing entities
         std::vector<Entity> list_of_entities;
         for (auto const& id : mEntityManager->GetEntitiesAlive()) {
@@ -369,14 +382,6 @@ namespace IS {
         }
         //reset the entity ID to start from 0
         mEntityManager->ResetEntityID();
-        int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
-        // Load each entity
-        for (int i = 0; i < EntitiesAlive; ++i) {
-            std::string entityFile = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(i) + ".json";
-            LoadEntityFromJson(entityFile);
-        }
-
-        IS_CORE_DEBUG("Loading scene successful: {} entities loaded", EntitiesAlive);
     }
 
 }

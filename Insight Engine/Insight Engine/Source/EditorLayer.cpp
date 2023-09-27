@@ -2,7 +2,7 @@
  * \file EditorLayer.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
- * \date 24-09-2023
+ * \date 27-09-2023
  * \brief
  * This source file defines the implementation for class EditorLayer which
  * encapsulates the functionalities of a level editor layer.
@@ -21,6 +21,8 @@
 #include "Graphics.h"
 #include "CoreEngine.h"
 
+#include <ranges>
+
 namespace IS {
 
     EditorLayer::EditorLayer() : Layer("Editor Layer"), mDockspacePosition(), mScenePanelSize(), mSceneHierarchyPanel() {}
@@ -35,7 +37,26 @@ namespace IS {
     }
 
     void EditorLayer::OnUpdate([[maybe_unused]] float dt) {
-        // some updating
+        // Shortcuts
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        bool ctrl_held = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        bool shift_held = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
+        bool alt_held = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+        bool n_pressed = input->IsKeyPressed(GLFW_KEY_N);
+        bool l_pressed = input->IsKeyPressed(GLFW_KEY_L);
+        bool s_pressed = input->IsKeyPressed(GLFW_KEY_S);
+        bool ffour_pressed = input->IsKeyPressed(GLFW_KEY_F4);
+
+        if (ctrl_held && n_pressed) // Ctrl+N
+            NewScene();
+        if (ctrl_held && l_pressed) // Ctrl+L
+            show_load = true;
+        if (ctrl_held && s_pressed) // Ctrl+S
+            SaveScene();
+        if (ctrl_held && shift_held && s_pressed) // Ctrl+Shift+S
+            show_save = true;
+        if (alt_held && ffour_pressed)
+            InsightEngine::Instance().Exit();
     }
 
     void EditorLayer::OnRender() {
@@ -68,12 +89,25 @@ namespace IS {
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
 
-        // Create Menu Bar
+        // Menu bar
+        RenderMenuBar();
+
+        // Other windows
+        RenderScenePanel();
+        RenderSceneHierarchyPanel();
+        RenderPerformancePanel();
+        RenderLogConsolePanel();
+        RenderSceneOverlay();
+
+        ImGui::End();
+    }
+
+    void EditorLayer::RenderMenuBar() {
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
                 ImGui::MenuItem("(Empty)");
                 ImGui::Separator();
-                if (ImGui::MenuItem("Exit"))
+                if (ImGui::MenuItem("Exit", "Alt+F4"))
                     InsightEngine::Instance().Exit();
 
                 ImGui::EndMenu();
@@ -85,6 +119,25 @@ namespace IS {
             }
 
             if (ImGui::BeginMenu("Scene")) {
+                // New Scene
+                if (ImGui::MenuItem("New Scene", "Ctrl+N"))
+                    NewScene();
+                // Load Test Scene
+                if (ImGui::MenuItem("Load Test Scene"))
+                    LoadTestScene();
+                // Load Scene...
+                if (ImGui::MenuItem("Load Scene...", "Ctrl+L"))
+                    show_load = true;
+                ImGui::Separator();
+
+                // Save Scene
+                if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+                    SaveScene();
+                // Save Scene As...
+                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
+                    show_save = true;
+                ImGui::Separator();
+
                 InsightEngine& engine = InsightEngine::Instance();
                 if (ImGui::MenuItem("Create 500 Random Colors")) {
                     for (int i{}; i < 500; i++) {
@@ -102,14 +155,11 @@ namespace IS {
             ImGui::EndMenuBar();
         }
 
-        // Other windows
-        RenderScenePanel();
-        RenderSceneHierarchyPanel();
-        RenderPerformancePanel();
-        RenderLogConsolePanel();
-        RenderSceneOverlay();
+        if (show_load)
+            LoadScene();
 
-        ImGui::End();
+        if (show_save)
+            SaveSceneAs();
     }
 
     void EditorLayer::RenderScenePanel() {
@@ -150,17 +200,18 @@ namespace IS {
         ImGui::PopStyleVar();
     }
 
-    void EditorLayer::RenderSceneHierarchyPanel() {
-        mSceneHierarchyPanel.RenderPanel();
-    }
+    void EditorLayer::RenderSceneHierarchyPanel() { mSceneHierarchyPanel.RenderPanel(); }
 
     void EditorLayer::RenderPerformancePanel() {
         ImGuiIO& io = ImGui::GetIO();
+        auto font_bold = io.Fonts->Fonts[0];
 
         ImGui::Begin("Performance");
         if (ImGui::BeginTable("Engine", 2)) {
             ImGui::TableNextColumn();
-            ImGui::Text("Framerate:");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Framerate:");
+            ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextColored(
                 io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
@@ -169,7 +220,9 @@ namespace IS {
             );
 
             ImGui::TableNextColumn();
-            ImGui::Text(" Timestep:");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted(" Timestep:");
+            ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextColored(
                 io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
@@ -187,9 +240,11 @@ namespace IS {
         ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
         if (ImGui::BeginTable("Systems", 2, flags)) {
             // Table headers
+            ImGui::PushFont(font_bold);
             ImGui::TableSetupColumn("System");
             ImGui::TableSetupColumn("Usage %");
             ImGui::TableHeadersRow();
+            ImGui::PopFont();
 
             // Table values
             for (InsightEngine& engine = InsightEngine::Instance();
@@ -198,7 +253,9 @@ namespace IS {
                 if (system != "Engine") {
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
+                    ImGui::PushFont(font_bold);
                     ImGui::Text("%s", system.c_str());
+                    ImGui::PopFont();
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
@@ -214,9 +271,7 @@ namespace IS {
         ImGui::End();
     }
 
-    void EditorLayer::RenderLogConsolePanel() {
-        Logger::GetLoggerGUI().Draw("Log Console");
-    }
+    void EditorLayer::RenderLogConsolePanel() { Logger::GetLoggerGUI().Draw("Log Console"); }
 
     void EditorLayer::RenderSceneOverlay() {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
@@ -280,15 +335,62 @@ namespace IS {
             ImGui::PopFont();
             ImGui::BulletText("Press 'Z' to play sfx");
             ImGui::BulletText("Press 'X' to play music");
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Scene Controls");
-            ImGui::PopFont();
-            ImGui::BulletText("Press 'J' to load testscene");
-            ImGui::BulletText("Press 'R' to save testscene");
 
         }
         ImGui::End();
+    }
+
+    void EditorLayer::NewScene() {
+        mSceneHierarchyPanel.ResetSelection();
+        InsightEngine::Instance().NewScene();
+    }
+
+    void EditorLayer::LoadTestScene() {
+        mSceneHierarchyPanel.ResetSelection();
+        InsightEngine::Instance().LoadScene("testscene");
+    }
+
+    void EditorLayer::LoadScene() {
+        mSceneHierarchyPanel.ResetSelection();
+        ImGui::OpenPopup("Load Scene...");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
+
+        if (ImGui::BeginPopupModal("Load Scene...", &show_load, window_flags)) {
+            std::string default_text = "testscene";
+            char name[std::numeric_limits<char8_t>::max() + 1]{};
+            auto source = default_text | std::ranges::views::take(default_text.size());
+            std::ranges::copy(source, std::begin(name));
+
+            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText("##LoadScene", name, sizeof(name), input_flags) || ImGui::Button("Load")) {
+                InsightEngine::Instance().LoadScene(name);
+                show_load = false;
+            }
+
+            ImGui::EndPopup();
+        }
+    }
+
+    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene("testscene"); }
+
+    void EditorLayer::SaveSceneAs() {
+        ImGui::OpenPopup("Save Scene As...");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
+
+        if (ImGui::BeginPopupModal("Save Scene As...", &show_save, window_flags)) {
+            std::string default_text = "testscene";
+            char name[std::numeric_limits<char8_t>::max() + 1]{};
+            auto source = default_text | std::ranges::views::take(default_text.size());
+            std::ranges::copy(source, std::begin(name));
+
+            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText("##SaveScene", name, sizeof(name), input_flags) || ImGui::Button("Save")) {
+                InsightEngine::Instance().SaveCurrentScene(name);
+                show_save = false;
+            }
+
+            ImGui::EndPopup();
+        }
     }
 
 } // end namespace IS

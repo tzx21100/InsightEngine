@@ -194,16 +194,6 @@ namespace IS {
                     trans_lines.rotation += trans_lines.angle_speed * delta;
                 }
 
-                if (input->IsKeyPressed(GLFW_KEY_R)) {
-                    //engine.SaveEntityToJson(entity_player, engine.GetEntityName(entity_player));
-                    engine.SaveCurrentScene("testscene");
-                }
-
-                if (input->IsKeyPressed(GLFW_KEY_J)) {
-                    //engine.LoadEntityFromJson(engine.GetEntityName(entity_player));
-                    engine.LoadScene("testscene");
-                }
-
                 if (input->IsKeyPressed(GLFW_KEY_Z)) {
                     asset->PlaySoundByName("sound.MP3");
                 }
