@@ -32,10 +32,9 @@ namespace IS {
         // Check if the directory exists
         if (!std::filesystem::exists(dirPath)) {
             // If it doesn't exist, create the directory
-            try {
-                std::filesystem::create_directories(dirPath);
-            }
-            catch (const std::exception& e) {
+
+            std::filesystem::create_directories(dirPath);   
+            if (!std::filesystem::exists(dirPath)) {
                 IS_CORE_DEBUG("FAILED TO CREATE A DIRECTORY");
                 return false;
             }
@@ -67,15 +66,12 @@ namespace IS {
         Json::CharReaderBuilder builder;
         builder["collectComments"] = true;
         JSONCPP_STRING errs;
-        try {
-            bool ok = Json::parseFromStream(builder, file, &root, &errs);
-            if (!ok) {
-                IS_CORE_DEBUG("FAILED TO PARSE JSON");
-                return false;
-            }
-        } catch (std::exception const& e) {
-            std::cerr << e.what() << std::endl;
+        bool ok = Json::parseFromStream(builder, file, &root, &errs);
+        if (!ok) {
+            IS_CORE_DEBUG("FAILED TO PARSE JSON");
+            return false;
         }
+        
 
         return true;
     }
