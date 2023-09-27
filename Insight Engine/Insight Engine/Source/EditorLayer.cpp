@@ -42,13 +42,13 @@ namespace IS {
         bool ctrl_held = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
         bool shift_held = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
         bool alt_held = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
-        bool n_pressed = input->IsKeyPressed(GLFW_KEY_N);
+        //bool n_pressed = input->IsKeyPressed(GLFW_KEY_N);
         bool l_pressed = input->IsKeyPressed(GLFW_KEY_L);
         bool s_pressed = input->IsKeyPressed(GLFW_KEY_S);
         bool ffour_pressed = input->IsKeyPressed(GLFW_KEY_F4);
 
-        if (ctrl_held && n_pressed) // Ctrl+N
-            NewScene();
+        //if (ctrl_held && n_pressed) // Ctrl+N
+        //    NewScene();
         if (ctrl_held && l_pressed) // Ctrl+L
             show_load = true;
         if (ctrl_held && s_pressed) // Ctrl+S
@@ -120,8 +120,8 @@ namespace IS {
 
             if (ImGui::BeginMenu("Scene")) {
                 // New Scene
-                if (ImGui::MenuItem("New Scene", "Ctrl+N"))
-                    NewScene();
+                /*if (ImGui::MenuItem("New Scene", "Ctrl+N"))
+                    NewScene();*/
                 // Load Test Scene
                 if (ImGui::MenuItem("Load Test Scene"))
                     LoadTestScene();
