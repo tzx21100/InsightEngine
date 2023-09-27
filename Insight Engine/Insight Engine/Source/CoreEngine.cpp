@@ -110,6 +110,7 @@ namespace IS {
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
         }
+        DestroyAllSystems();
     }
 
     //We quit

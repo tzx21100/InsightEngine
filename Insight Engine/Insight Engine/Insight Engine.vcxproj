@@ -71,6 +71,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Prefab.h" />
     <ClInclude Include="Source\Random.h" />
+    <ClInclude Include="Source\InsightEngine.h" />
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
     <ClInclude Include="Source\Sprite.h" />
