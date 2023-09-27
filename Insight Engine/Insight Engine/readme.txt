@@ -1,15 +1,17 @@
 Insight Engine - M1 readme
 
 ImGui:
-File->Exit - exit program
-Scene: Able to quick save/load scenes
-       Able to save/load scenes with specific name
+File > Exit / Alt+F4 - exit program
+Scene: Able to quick save/load scenes (Ctrl+S)
+       Able to save/load scenes with specific name (Ctrl+Shift+S/Ctrl+L)
        Able to spawn 500 random colours / textured quads
 
-Hierarchy Tree:
-       Able to choose entity to edit (rotate, clone, change mass etc)
+Hierarchy Panel:
+       Able to choose entity to edit
+Inspector Panel:
+       Able to edit the components of selected entity (i.e., transformation, color, velocity, etc.)
 
-(Inputs only work if scene panel is in focus!)
+(Inputs ONLY work if scene panel is in focus!)
 Controls:
 W, A, S, D - move character (require scene to be in focus)
 Spacebar - jump
