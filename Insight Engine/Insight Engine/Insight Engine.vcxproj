@@ -19,6 +19,7 @@
     <ClCompile Include="Source\CoreEngine.cpp" />
     <ClCompile Include="Source\EditorLayer.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
+    <ClCompile Include="Source\FileDialog.cpp" />
     <ClCompile Include="Source\Framebuffer.cpp" />
     <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="Source\EditorLayer.h" />
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\FileDialog.h" />
     <ClInclude Include="Source\Framebuffer.h" />
     <ClInclude Include="Source\GameLoop.h" />
     <ClInclude Include="Source\GUI.h" />

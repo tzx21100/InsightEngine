@@ -103,6 +103,9 @@
     <ClCompile Include="Source\Graphics.cpp">
       <Filter>Graphics\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FileDialog.cpp">
+      <Filter>Editor\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -240,11 +243,11 @@
     <ClInclude Include="Source\Prefab.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics.h">
       <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FileDialog.h">
+      <Filter>Editor\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +337,9 @@
     </Filter>
     <Filter Include="Graphics\System">
       <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Utils">
+      <UniqueIdentifier>{740251d5-c27a-4d24-b5e2-c5230b560b21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

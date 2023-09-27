@@ -145,6 +145,8 @@ namespace IS {
 
     bool WindowSystem::IsVSync() const { return mProps.mVSync; }
 
+    GLFWwindow* WindowSystem::GetNativeWindow() const { return mWindow; }
+
     void WindowSystem::SetFullScreen(bool fullscreen) {
         mProps.mFullscreen = fullscreen;
 

@@ -49,6 +49,12 @@ namespace IS {
         Vec2 mDockspacePosition;
         Vec2 mScenePanelSize;
         SceneHierarchyPanel mSceneHierarchyPanel;
+
+        // File Dialogs
+        void NewScene();
+        void OpenScene();
+        void SaveScene();
+        void SaveSceneAs();
     };
 
 } // end namespace IS

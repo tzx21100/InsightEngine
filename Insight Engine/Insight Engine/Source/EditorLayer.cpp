@@ -20,6 +20,7 @@
 #include "EditorLayer.h"
 #include "Graphics.h"
 #include "CoreEngine.h"
+#include "FileDialog.h"
 
 namespace IS {
 
@@ -36,6 +37,22 @@ namespace IS {
 
     void EditorLayer::OnUpdate([[maybe_unused]] float dt) {
         // some updating
+        InsightEngine& engine = InsightEngine::Instance();
+        auto input = engine.GetSystem<InputManager>("Input");
+        bool control_pressed = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        bool shift_pressed = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        bool n_pressed = input->IsKeyPressed(GLFW_KEY_N);
+        bool o_pressed = input->IsKeyPressed(GLFW_KEY_O);
+        bool s_pressed = input->IsKeyPressed(GLFW_KEY_S);
+
+        if (control_pressed && n_pressed)
+            NewScene();
+        else if (control_pressed && o_pressed)
+            OpenScene();
+        else if (control_pressed && shift_pressed && s_pressed)
+            SaveSceneAs();
+        else if (control_pressed && s_pressed)
+            SaveScene();
     }
 
     void EditorLayer::OnRender() {
@@ -71,9 +88,21 @@ namespace IS {
         // Create Menu Bar
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
-                ImGui::MenuItem("(Empty)");
+                if (ImGui::MenuItem("New", "Ctrl+N"))
+                    NewScene();
+                
+                if (ImGui::MenuItem("Open...", "Ctrl+O"))
+                    OpenScene();
+
                 ImGui::Separator();
-                if (ImGui::MenuItem("Exit"))
+                if (ImGui::MenuItem("Save", "Ctrl+S"))
+                    SaveScene();
+
+                if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+                    SaveSceneAs();
+
+                ImGui::Separator();
+                if (ImGui::MenuItem("Exit", "Alt+F4"))
                     InsightEngine::Instance().Exit();
 
                 ImGui::EndMenu();
@@ -84,7 +113,7 @@ namespace IS {
                 ImGui::EndMenu();
             }
 
-            if (ImGui::BeginMenu("Scene")) {
+            if (ImGui::BeginMenu("Entity")) {
                 InsightEngine& engine = InsightEngine::Instance();
                 if (ImGui::MenuItem("Create 500 Random Colors")) {
                     for (int i{}; i < 500; i++) {
@@ -156,11 +185,14 @@ namespace IS {
 
     void EditorLayer::RenderPerformancePanel() {
         ImGuiIO& io = ImGui::GetIO();
+        auto font_bold = io.Fonts->Fonts[0];
 
         ImGui::Begin("Performance");
         if (ImGui::BeginTable("Engine", 2)) {
             ImGui::TableNextColumn();
-            ImGui::Text("Framerate:");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Framerate:");
+            ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextColored(
                 io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
@@ -169,7 +201,9 @@ namespace IS {
             );
 
             ImGui::TableNextColumn();
-            ImGui::Text(" Timestep:");
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted(" Timestep:");
+            ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextColored(
                 io.Framerate < 15.f ? ImVec4(1.f, 0.3f, 0.2f, 1.f) : // red
@@ -187,9 +221,11 @@ namespace IS {
         ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
         if (ImGui::BeginTable("Systems", 2, flags)) {
             // Table headers
+            ImGui::PushFont(font_bold);
             ImGui::TableSetupColumn("System");
             ImGui::TableSetupColumn("Usage %");
             ImGui::TableHeadersRow();
+            ImGui::PopFont();
 
             // Table values
             for (InsightEngine& engine = InsightEngine::Instance();
@@ -198,7 +234,9 @@ namespace IS {
                 if (system != "Engine") {
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
+                    ImGui::PushFont(font_bold);
                     ImGui::Text("%s", system.c_str());
+                    ImGui::PopFont();
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
@@ -289,6 +327,30 @@ namespace IS {
 
         }
         ImGui::End();
+    }
+
+    void EditorLayer::NewScene() {
+        
+    }
+
+    void EditorLayer::OpenScene() {
+        InsightEngine& engine = InsightEngine::Instance();
+        std::string filepath = filedialog::OpenFile("Insight Scene (*.json)\0*.json\0", "Assets\\Scene");
+        if (!filepath.empty()) {
+            engine.LoadScene(filepath);
+        }
+    }
+
+    void EditorLayer::SaveScene() {
+        
+    }
+
+    void EditorLayer::SaveSceneAs() {
+        InsightEngine& engine = InsightEngine::Instance();
+        std::string filepath = filedialog::SaveFile("Insight Scene (*.json)\0*.json\0", "Assets\\Scene");
+        if (!filepath.empty()) {
+            engine.SaveCurrentScene(filepath);
+        }
     }
 
 } // end namespace IS

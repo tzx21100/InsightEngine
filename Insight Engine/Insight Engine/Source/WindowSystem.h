@@ -161,6 +161,12 @@ namespace IS {
         bool IsVSync() const;
 
         /*!
+         * \brief Gets the pointer to native window.
+         * \return pointer to native window.
+         */
+        GLFWwindow* GetNativeWindow() const;
+
+        /*!
          * \brief Loads window properties.
          */
         void LoadProperties();
