@@ -20,7 +20,7 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "WindowSystem.h"
-#include "GUI.h"
+#include "Editor.h"
 #include "GameLoop.h"
 
 using namespace IS;
@@ -55,7 +55,7 @@ void RegisterSystems() {
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
-    auto insight_gui = std::make_shared<GUISystem>();
+    auto insight_gui = std::make_shared<Editor>();
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_default);

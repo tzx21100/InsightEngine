@@ -103,7 +103,7 @@ namespace IS {
         virtual void Update(float delta) override {
 
             // Disable mouse/key event when GUI is using them
-            auto const& gui = InsightEngine::Instance().GetSystem<GUISystem>("GUI");
+            auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {                

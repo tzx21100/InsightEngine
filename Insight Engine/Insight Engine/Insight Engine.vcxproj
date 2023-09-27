@@ -20,7 +20,7 @@
     <ClCompile Include="Source\EditorLayer.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Framebuffer.cpp" />
-    <ClCompile Include="Source\GUI.cpp" />
+    <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
@@ -63,7 +63,7 @@
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\Framebuffer.h" />
     <ClInclude Include="Source\GameLoop.h" />
-    <ClInclude Include="Source\GUI.h" />
+    <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />

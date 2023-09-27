@@ -1,10 +1,10 @@
 /*!
- * \file GUI.cpp
+ * \file Editor.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This source file defines the implementation for class GUISystem, which
+ * This source file defines the implementation for class Editor, which
  * encapsulates the functionalities of a graphical user interface (GUI)
  * using the Dear ImGui libary.
  * 
@@ -18,7 +18,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "GUI.h"
+#include "Editor.h"
 #include "EditorLayer.h"
 
 // Dependencies
@@ -28,13 +28,13 @@
 
 namespace IS {
 
-    GUISystem::GUISystem() {}
+    Editor::Editor() {}
 
-    GUISystem::~GUISystem() {
+    Editor::~Editor() {
         Terminate();
     }
 
-    void GUISystem::Initialize() {
+    void Editor::Initialize() {
 
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -60,24 +60,21 @@ namespace IS {
         SetDarkThemeColors();
 
         // Setup Platform/Renderer backends
-        GLFWwindow* window = glfwGetCurrentContext();
         const char* glsl_version = "#version 450";
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplGlfw_InitForOpenGL(InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetNativeWindow(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
         PushLayer(new EditorLayer());
     }
 
-    void GUISystem::Update(float delta_time) {
-
-
+    void Editor::Update(float delta_time) {
         Begin();
         mLayers.Update(delta_time);
         mLayers.Render();
         End();
     }
 
-    void GUISystem::Terminate() {
+    void Editor::Terminate() {
         mLayers.ClearStack();
 
         ImGui_ImplOpenGL3_Shutdown();
@@ -85,22 +82,20 @@ namespace IS {
         ImGui::DestroyContext();
     }
 
-    void GUISystem::HandleMessage([[maybe_unused]] Message const& message) {
+    void Editor::HandleMessage([[maybe_unused]] Message const& message) {
 
     }
 
-    std::string GUISystem::GetName() {
-        return "GUI";
-    }
+    std::string Editor::GetName() { return "Editor"; }
 
-    void GUISystem::Begin() {
+    void Editor::Begin() {
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 
-    void GUISystem::End() {
+    void Editor::End() {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -114,27 +109,27 @@ namespace IS {
         }
     }
 
-    void GUISystem::PushLayer(layer_type layer) {
+    void Editor::PushLayer(layer_type layer) {
         mLayers.PushLayer(layer);
         layer->OnAttach();
     }
 
-    void GUISystem::PushOverlay(layer_type overlay) {
+    void Editor::PushOverlay(layer_type overlay) {
         mLayers.PushOverlay(overlay);
         overlay->OnAttach();
     }
 
-    void GUISystem::PopLayer(layer_type layer) {
+    void Editor::PopLayer(layer_type layer) {
         mLayers.PopLayer(layer);
         layer->OnDetach();
     }
 
-    void GUISystem::PopOverlay(layer_type overlay) {
+    void Editor::PopOverlay(layer_type overlay) {
         mLayers.PopOverlay(overlay);
         overlay->OnDetach();
     }
 
-    void GUISystem::SetDarkThemeColors() const {
+    void Editor::SetDarkThemeColors() const {
         auto& style = ImGui::GetStyle();
         auto& colors = style.Colors;
 
@@ -187,14 +182,8 @@ namespace IS {
         colors[ImGuiCol_MenuBarBg] = ImVec4{ .1137f, .1137f, .1137f, 1.f };
     }
 
-    bool GUISystem::WantCaptureMouse() const { 
-        ImGuiIO const& io = ImGui::GetIO();
-        return io.WantCaptureMouse;
-    }
+    bool Editor::WantCaptureMouse() const { return ImGui::GetIO().WantCaptureMouse; }
 
-    bool GUISystem::WantCaptureKeyboard() const {
-        ImGuiIO const& io = ImGui::GetIO();
-        return io.WantCaptureKeyboard;
-    }
+    bool Editor::WantCaptureKeyboard() const { return ImGui::GetIO().WantCaptureKeyboard; }
 
 } // end namespace IS

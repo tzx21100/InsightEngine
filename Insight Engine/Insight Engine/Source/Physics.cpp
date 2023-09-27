@@ -260,7 +260,7 @@ namespace IS
 	}
 
 	void Physics::DrawOutLine(RigidBody & body, Sprite const& sprite) {
-		for (int i = 0; i < body.mTransformedVertices.size(); i++) {
+		for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
 			Vector2D va = body.mTransformedVertices[i];
 			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
@@ -311,7 +311,7 @@ namespace IS
 						return;
 				}
 				time /= static_cast<float>(iterations);
-				std::cout << time << std::endl;
+				//std::cout << time << std::endl;
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				if (mExertingGravity) {
 					body.mVelocity += mGravity * time;

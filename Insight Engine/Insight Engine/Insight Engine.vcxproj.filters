@@ -58,7 +58,7 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI.cpp">
+    <ClCompile Include="Source\Editor.cpp">
       <Filter>Editor\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\EditorLayer.cpp">
@@ -192,7 +192,7 @@
     <ClInclude Include="Source\ISContainers.h">
       <Filter>STL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI.h">
+    <ClInclude Include="Source\Editor.h">
       <Filter>Editor\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorLayer.h">

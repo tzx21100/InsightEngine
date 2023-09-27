@@ -78,7 +78,7 @@ namespace IS {
         
         // Update all systems
         for (const auto& system : mSystemList) {
-            if (!mUsingGUI && system->GetName() == "GUI")
+            if (!mUsingGUI && system->GetName() == "Editor")
                 continue;
 
             Timer timer(system->GetName() + " System", false);
