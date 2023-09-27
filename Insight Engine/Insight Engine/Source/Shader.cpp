@@ -1,4 +1,19 @@
-//pch has to go to the top of every cpp
+/*!
+ * \file Shader.cpp
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 27-09-2023
+ * \brief
+ * This source file defines the Shader class, which encapsulates shader compilation,
+ * linking, and usage in OpenGL applications.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
 #include "Pch.h"
 #include "Shader.h"
 
@@ -49,10 +64,10 @@ namespace IS {
         )";
 
         // Compile and link the shaders into a shader program
-       compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-       compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-       link();
-       validate();
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
 
         // Check if the shader program compilation and linking was successful
         if (GL_FALSE == isLinked())
@@ -124,6 +139,7 @@ namespace IS {
     }
 
     GLboolean Shader::compileShaderString(GLenum shader_type, std::string const& shader_src) {
+        // Check if the shader program handle is already created; if not, create it
         if (pgm_hdl <= 0) {
             pgm_hdl = glCreateProgram();
             if (!pgm_hdl) {
@@ -132,6 +148,7 @@ namespace IS {
             }
         }
 
+        // Create a shader object of the specified type (vertex or fragment)
         GLuint shader_hdl{};
         switch (shader_type) {
         case GL_VERTEX_SHADER: 
@@ -144,15 +161,18 @@ namespace IS {
             log = "Incorrect shader type.";
             return GL_FALSE;
         }
-
+        // Load the shader source code
         char const* shader_cstr[] {shader_src.c_str()};
         glShaderSource(shader_hdl, 1, shader_cstr, NULL);
 
+        // Compile the shader
         glCompileShader(shader_hdl);
 
+        // Check the compilation result
         GLint compile_result;
         glGetShaderiv(shader_hdl, GL_COMPILE_STATUS, &compile_result);
 
+        // If compilation failed, retrieve and log error messages
         if (compile_result == GL_FALSE) {
             GLint log_len;
             glGetShaderiv(shader_hdl, GL_INFO_LOG_LENGTH, &log_len);
@@ -164,23 +184,29 @@ namespace IS {
 
                 log = "Vertex shader compilation failed\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
             }
+            // Clean up the shader object and return GL_FALSE
             glDeleteShader(shader_hdl);
             return GL_FALSE;
         }
+        // Attach the compiled shader to the program and clean up the shader object
         glAttachShader(pgm_hdl, shader_hdl);
         glDeleteShader(shader_hdl);
         return GL_TRUE;
     }
 
     GLboolean Shader::link() {
+        // Check if the shader program has already been linked
         if (linked == GL_TRUE) return GL_TRUE;
         if (pgm_hdl <= 0) return GL_FALSE;
 
+        // Link the shader program
         glLinkProgram(pgm_hdl);
 
+        // Check the linking result
         GLint link_result;
         glGetProgramiv(pgm_hdl, GL_LINK_STATUS, &link_result);
 
+        // If linking failed, retrieve and log error messages
         if (link_result == GL_FALSE) {
             GLint log_len;
             glGetProgramiv(pgm_hdl, GL_INFO_LOG_LENGTH, &log_len);
@@ -195,25 +221,31 @@ namespace IS {
             return GL_FALSE;
         }
 
+        // Set the linked flag to GL_TRUE
         linked = GL_TRUE;
         return linked;
     }
 
     void Shader::use() {
+        // Activates the shader program for rendering
         if (pgm_hdl > 0 && linked == GL_TRUE) glUseProgram(pgm_hdl);
     }
 
     void Shader::unUse() {
+        // Deactivates the currently active shader program
         glUseProgram(0);
     }
 
     GLboolean Shader::validate() {
+        // Check if the shader program handle is valid and if it has been linked successfully
         if (pgm_hdl <= 0 || linked == GL_FALSE) return GL_FALSE;
 
+        // Validate the shader program.
         glValidateProgram(pgm_hdl);
         GLint status;
         glGetProgramiv(pgm_hdl, GL_VALIDATE_STATUS, &status);
 
+        // If validation fails, retrieve and log error messages
         if (status == GL_FALSE) {
             GLint log_len;
             glGetProgramiv(pgm_hdl, GL_INFO_LOG_LENGTH, &log_len);
@@ -246,6 +278,7 @@ namespace IS {
         glBindAttribLocation(pgm_hdl, index, name);
     }
 
+    // checks if uniform location is available, then sets the value as provided
     void Shader::setUniform(GLchar const* name, GLboolean val) {
         GLint loc = glGetUniformLocation(pgm_hdl, name);
         if (loc >= 0) glUniform1i(loc, val);
@@ -301,6 +334,7 @@ namespace IS {
     }
 
     void Shader::printAttribs() const {
+        // Prints the names and indices of active vertex attributes in the shader program.
         GLint max_length{}, num_attribs{};
         glGetProgramiv(pgm_hdl, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &max_length);
         glGetProgramiv(pgm_hdl, GL_ACTIVE_ATTRIBUTES, &num_attribs);
@@ -322,6 +356,7 @@ namespace IS {
     }
 
     void Shader::printUniforms() const {
+        // Prints the names and locations of active uniform variables in the shader program
         GLint max_length{};
         glGetProgramiv(pgm_hdl, GL_ACTIVE_UNIFORM_MAX_LENGTH, &max_length);
 

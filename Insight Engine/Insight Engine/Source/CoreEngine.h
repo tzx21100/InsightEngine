@@ -545,6 +545,16 @@ namespace IS {
          * \brief Set to store entities that are flagged for deletion.
          */
         std::unordered_set<Entity> mEntitiesToDelete;
+
+        /**
+         * \brief Private functions that automatically save an engine's properties
+         */
+        void SaveProperties();
+        /**
+         * \brief Private functions that automatically load an engine's properties
+         */
+        void LoadProperties();
+
     };
 
 }

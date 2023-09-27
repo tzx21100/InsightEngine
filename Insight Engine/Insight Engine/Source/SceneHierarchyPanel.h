@@ -75,8 +75,9 @@ namespace IS {
          */
         void RenderConfirmDelete(Entity entity, bool& show);
 
-        void RenderPrefab();
-
+        /*!
+         * \brief Resets the current selection.
+         */
         void ResetSelection();
 
         /*!
@@ -92,6 +93,7 @@ namespace IS {
 
     private:
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
+        bool show_prefabs = false;
     };
 
 } // end namespace IS

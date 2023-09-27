@@ -240,11 +240,11 @@
     <ClInclude Include="Source\Prefab.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics.h">
       <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InsightEngine.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

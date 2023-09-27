@@ -119,7 +119,7 @@ namespace IS {
          * \param shader The shader to use for rendering.
          * \param texture_id The texture ID to use for rendering.
          */
-        void drawSpecial(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
+        void drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
 
         /*!
          * \brief Draws an animated sprite.
@@ -155,6 +155,18 @@ namespace IS {
          * \return The transformation matrix for the line sprite.
          */
         static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
+
+        /*!
+         * \brief Deserializes the sprite data
+         *
+         * \param Json::Value the data to deserialize
+         */
+        void Deserialize(Json::Value data) override;
+
+        /*!
+         * \brief Serializes the sprite data
+         */
+        Json::Value Serialize() override;
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

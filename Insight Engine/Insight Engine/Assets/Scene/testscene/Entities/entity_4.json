@@ -3,9 +3,9 @@
 	"Signature" : "00000000000000000000000000000011",
 	"Sprite" : 
 	{
-		"SpriteColorX" : 0.074355781078338623,
-		"SpriteColorY" : 0.25456497073173523,
-		"SpriteColorZ" : 0.21323037147521973,
+		"SpriteColorX" : 0.042823776602745056,
+		"SpriteColorY" : 0.58815902471542358,
+		"SpriteColorZ" : 0.21002450585365295,
 		"SpriteCurrentTexIndex" : 0,
 		"SpriteDrawing" : true,
 		"SpriteName" : "Box",

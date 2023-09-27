@@ -21,6 +21,7 @@
 
 namespace IS {
     /// Static objects ///
+
     // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
     // Animation objects
@@ -38,30 +39,34 @@ namespace IS {
     // Frame Buffer
     std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
 
-
     void ISGraphics::Initialize() {
-        glClearColor(0.f, 0.f, 0.f, 0.f);
+        glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
 
-        glViewport(0, 0, WIDTH, HEIGHT);
+        glViewport(0, 0, WIDTH, HEIGHT); // set viewport to window size
 
-        Mesh::initMeshes(meshes);
-        walking_ani.initAnimation(1, 4, 1.f);
+        // init graphics systems
+        Mesh::initMeshes(meshes); // init 4 meshes
+
+        mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        text_shader_pgm.setupTextShaders();
+
+        walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+        
+        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm); // init text system
 
-        mesh_shader_pgm.setupSpriteShaders();
-
-        text_shader_pgm.setupTextShaders();
-        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm);
-
-        Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT };
+        Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT }; // create framebuffer
         mFramebuffer = std::make_shared<Framebuffer>(props);
     }
 
     void ISGraphics::Update(float delta_time) {
+        // update animations
         idle_ani.updateAnimation(delta_time);
         walking_ani.updateAnimation(delta_time);
         ice_cream_truck_ani.updateAnimation(delta_time);
+        
+        // draw
         Draw(delta_time);
     }
 
@@ -74,60 +79,59 @@ namespace IS {
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
-        InsightEngine& engine = InsightEngine::Instance();
-        if (engine.mUsingGUI)
-            mFramebuffer->Bind();
+        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+        if (engine.mUsingGUI) mFramebuffer->Bind(); // bind fb
 
         if (auto const& window = engine.GetSystem<WindowSystem>("Window"); window->IsFullScreen() && !engine.mUsingGUI)
             glViewport(0, 0, window->GetMonitorWidth(), window->GetMonitorHeight());
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        //Sprite::drawLine(Vector2D(0.f, 0.f), Vector2D(0.f, 200.f), delta_time);
+        glClear(GL_COLOR_BUFFER_BIT); // clear color buffer
 
         // Render scene
-        // Loop through all entities
-        // find sprite dimensions and model type (box,line,triangle,circle)??
-        // get the transform
-        // render onto screen from ndc to world
-        for (auto& entity : mEntities) {
+        for (auto& entity : mEntities) { // for each intentity
+            // get sprite and transform components
             auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
             auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+
+            // update sprite's transform
             sprite.followTransform(trans);
             sprite.transform();
-            switch (sprite.primitive_type) {
-            case GL_TRIANGLE_STRIP:
-                if (sprite.name == "textured_box") {
-                    auto input = engine.GetSystem<InputManager>("Input");
 
+            // for each type
+            switch (sprite.primitive_type) {
+            case GL_TRIANGLE_STRIP: // quads
+                if (sprite.name == "player_sprite") { // if drawing player
+                    // swap animations based on index
                     if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
                     else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
-                } else if (sprite.name == "textured_box2") {
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture);
-                } else {
-                    sprite.drawSpecial(meshes[0], mesh_shader_pgm, sprite.texture);
+                } 
+                else if (sprite.name == "ice_cream_truck") { // if drawing truck
+                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
+                } 
+                else { // every other textured box
+                    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
                 }
                 break;
-            case GL_POINTS:
-                sprite.drawSpecial(meshes[1], mesh_shader_pgm, sprite.texture);
+            case GL_POINTS: // points
+                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture);
                 break;
-            case GL_LINES:
-                sprite.drawSpecial(meshes[2], mesh_shader_pgm, sprite.texture);
+            case GL_LINES: // lines
+                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.texture);
                 break;
-            case GL_TRIANGLE_FAN:
-                sprite.drawSpecial(meshes[3], mesh_shader_pgm, sprite.texture);
+            case GL_TRIANGLE_FAN: // circle
+                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
-            if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+            if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
                 auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
-                    Physics::DrawOutLine(body, sprite);
+                    Physics::DrawOutLine(body, sprite); // draw lines in debug mode
                 }
             }
 
         }
 
-        // Render some text when GUI is disabled
+        // Render text when GUI is disabled
         if (!engine.mUsingGUI){
             // Shared Attributes
             const float scale = 5.f;
@@ -180,24 +184,20 @@ namespace IS {
             }
         }
 
-
         Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
-        //Text::renderText(text_shader_pgm, "  Welcome To \nInsight Engine!", -130.f, 400.f, 12.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
+        // if using ImGui, unbind fb at the end of draw
         if (InsightEngine::Instance().mUsingGUI)
             mFramebuffer->Unbind();
-
     }
 
     void ISGraphics::cleanup() {
-        //Mesh::cleanup4Meshes();
-        //glDeleteTextures(1, &placeholder_tex.tex_ID);
+        Mesh::cleanupMeshes(meshes); // delete array and buffers
     }
-
 
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
         int width, height, channels;
-        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
 
         if (!data) {
             IS_CORE_ERROR("Failed to load image: {}", filepath.empty() ? "No filepath provided!" : filepath);
@@ -208,6 +208,7 @@ namespace IS {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        // for different png formats
         GLuint format=GL_RGBA;
         if (channels == 1) {
             format = GL_RED;
@@ -222,11 +223,13 @@ namespace IS {
             format = GL_RGBA;
         }
 
+        // bind texture
         GLuint textureID;
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glGenTextures(1, &textureID);
         glBindTexture(GL_TEXTURE_2D, textureID);
 
+        // create texture
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         GLenum err = glGetError();
         if (err != GL_NO_ERROR) {
@@ -240,15 +243,16 @@ namespace IS {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        // unbind
         glBindTexture(GL_TEXTURE_2D, 0);
 
+        // update asset members
         image.width = width;
         image.height = height;
         image.channels = channels;
         image.file_name = filepath;
         image.texture_data = textureID;
     }
-
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
