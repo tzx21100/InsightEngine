@@ -103,6 +103,9 @@
     <ClCompile Include="Source\Graphics.cpp">
       <Filter>Graphics\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScriptGlue.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -245,6 +248,8 @@
     </ClInclude>
     <ClInclude Include="Source\InsightEngine.h">
       <Filter>Source</Filter>
+    <ClInclude Include="Source\ScriptGlue.h">
+      <Filter>Engine\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
