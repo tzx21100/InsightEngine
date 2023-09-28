@@ -65,7 +65,7 @@ namespace IS {
             sprite_background.texture_height = black_background.height;
 
             sprite_player.name = "player_sprite";
-            sprite_player.texture = static_cast<uint8_t>(idle_animation.texture_data);
+            sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
             sprite_player.texture_width = idle_animation.width;
             sprite_player.texture_height = idle_animation.height;
 
@@ -224,7 +224,7 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
-                        spr.texture = static_cast<uint8_t>(zx_animation.texture_data);
+                        spr.texture = static_cast<uint8_t>(zx_animation.mTextureData);
                         spr.texture_width = zx_animation.width;
                         spr.texture_height = zx_animation.height;
                         //add the image in
