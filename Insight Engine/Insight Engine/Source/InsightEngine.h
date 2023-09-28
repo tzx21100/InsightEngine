@@ -73,7 +73,7 @@ void RegisterSystems() {
 void EngineSetup() {
     // Initialize log
     ScriptEngine::Init();
-    Log::Init();
+    Log::Init(true);
     RegisterComponents();
     RegisterSystems();
     // Initialize ScriptEngine
