@@ -11,12 +11,12 @@ namespace IS
 	{
 		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
 		//PHYSICS = this;
-		mGravity = Vector2D(0, -981.0f);
+		mGravity = Vector2D(0, -981.f);
 		mExertingGravity = false;
 		//isDebugDraw = false;
 		mMaxVelocity = 1000.f;
 		mMinVelocity = -1000.f;
-		iterations = 1;
+		iterations = 10;
 
 	}
 
@@ -289,6 +289,8 @@ namespace IS
 	}
 
 	void Physics::Step(float time, std::set<Entity> const& entities) {
+		time /= static_cast<float>(iterations);
+
 		for (auto const& entity : entities) {
 			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 			// check input for applying gravity
@@ -308,7 +310,6 @@ namespace IS
 					if (!InsightEngine::Instance().mContinueFrame)
 						return;
 				}
-				time /= static_cast<float>(iterations);
 				//std::cout << time << std::endl;
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				if (mExertingGravity) {
