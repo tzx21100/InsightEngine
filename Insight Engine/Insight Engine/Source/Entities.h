@@ -70,7 +70,7 @@ namespace IS {
 		 * \return The ID of the newly created entity.
 		 */
 		Entity CreateEntity(const std::string& name) {
-			assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
+			if (mEntitiesAlive > MAX_ENTITIES) { IS_CORE_WARN("Too many entities in existence."); }
 
 			Entity id = mEntityQueue.front();
 			mEntityQueue.pop();
@@ -90,7 +90,7 @@ namespace IS {
 		 * \param entity The ID of the entity to be destroyed.
 		 */
 		void DestroyEntity(Entity entity) {
-			assert(entity < MAX_ENTITIES && "Entity out of range.");
+			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Entity destroyed out of range."); }
 
 			// Invalidate the destroyed entity's signature
 			mSignatures[entity].reset();
@@ -125,7 +125,7 @@ namespace IS {
 		 * \return The signature of the specified entity.
 		 */
 		Signature GetSignature(Entity entity) {
-			assert(entity < MAX_ENTITIES && "Entity out of range.");
+			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Too many entities in existence."); }
 			// Get this entity's signature from the array
 			return mSignatures[entity];
 		}
@@ -138,7 +138,7 @@ namespace IS {
 		 * \return \c true if the entity has the component, \c false otherwise.
 		 */
 		bool HasComponent(Entity entity, ComponentType componentType) {
-			assert(entity < MAX_ENTITIES && "Entity out of range.");
+			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Entity out of range."); }
 			Signature signature = GetSignature(entity);
 			return signature.test(componentType);
 		}
@@ -150,7 +150,7 @@ namespace IS {
 		 * \return \c true if the entity is alive, \c false otherwise.
 		 */
 		bool IsEntityAlive(Entity entity) const {
-			assert(entity < MAX_ENTITIES && "Entity out of range.");
+			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Entity out of range."); }
 			return mSignatures[entity].any();  // Returns true if any bit is set
 		}
 
