@@ -20,13 +20,13 @@ G, F - enable / disable gravity
 
 Spawn Objects:
 Scrollwheel click - spawn random coloured quads
-Right click - spawn ice-cream truck with rigidbody
+Right click - spawn dynamic ice-cream truck with rigidbody
 
 Debug:
 Shift + Enter - enter freeze frame
 Enter (if within freeze frame) - next frame
-2 - draw collision boxes
-1 - stop drawing collision boxes
+2 - draw collision boxes with velocity lines
+1 - stop drawing collision boxes and velocity lines
 Tab - toggle GUI
 F11 - toggle fullscreen
 
