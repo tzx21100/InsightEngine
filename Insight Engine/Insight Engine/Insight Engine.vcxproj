@@ -142,7 +142,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib\Deb</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -155,7 +155,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib\Rel</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -183,8 +183,8 @@
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncppD.dll" "$(TargetDir)jsoncpp.dll" /Y
 copy "$(ProjectDir)libraries\freetype\lib\freetype.dll" "$(TargetDir)freetype.dll" /Y
-copy "$(ProjectDir)libraries\mono\bine\Deb\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
-copy "$(ProjectDir)libraries\mono\bine\Deb\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
+copy "$(ProjectDir)libraries\mono\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
@@ -227,8 +227,8 @@ xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\4.5\" 
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncpp.dll" "$(TargetDir)jsoncpp.dll" /Y
 copy "$(ProjectDir)libraries\freetype\lib\freetype.dll" "$(TargetDir)freetype.dll" /Y
-copy "$(ProjectDir)libraries\mono\bine\Rel\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
-copy "$(ProjectDir)libraries\mono\bine\Rel\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
+copy "$(ProjectDir)libraries\mono\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
+copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y

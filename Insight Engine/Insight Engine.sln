@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Insight Engine", "Insight Engine\Insight Engine.vcxproj", "{A1FB79E1-A52C-4D58-9CB3-E993A52DA48A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FFB83A8-18AB-4DBB-89B2-D88BB7A9FA65} = {3FFB83A8-18AB-4DBB-89B2-D88BB7A9FA65}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IS-ScriptCore", "IS-ScriptCore\IS-ScriptCore.csproj", "{3FFB83A8-18AB-4DBB-89B2-D88BB7A9FA65}"
 EndProject

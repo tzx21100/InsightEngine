@@ -155,18 +155,21 @@ namespace IS {
 
         // Store the root domain pointer
         s_data->mRootDomain = root_domain;
+
+
     }
 
     void ScriptEngine::ShutdownMono()
     {
-        //frees app domain
-        mono_domain_unload(s_data->mAppDomain);
-        s_data->mAppDomain = nullptr;
+        mono_domain_set(mono_get_root_domain(), false);
 
-        //need assert i think - pls close by cmd prompt cuz idk
-        //mono library wrong code
-        mono_jit_cleanup(s_data->mRootDomain);
-        s_data->mRootDomain = nullptr;
+        mono_domain_unload(s_data->mAppDomain);
+        //s_data->appDomain = nullptr;
+
+        if (s_data->mRootDomain)
+        {
+            mono_jit_cleanup(s_data->mRootDomain);
+        }
 
     }
 

@@ -22,6 +22,7 @@
 #include "WindowSystem.h"
 #include "Editor.h"
 #include "GameLoop.h"
+#include "ScriptEngine.h"
 
 using namespace IS;
 
@@ -71,6 +72,7 @@ void RegisterSystems() {
 //This is a function to setup the engine correctly
 void EngineSetup() {
     // Initialize log
+    ScriptEngine::Init();
     Log::Init();
     RegisterComponents();
     RegisterSystems();
@@ -83,6 +85,7 @@ void RunInsightEngine() {
     //This is to set the flow of the engine
     EngineSetup();
     InsightEngine::Instance().Run();
+    ScriptEngine::Shutdown();
     IS_CORE_WARN("Insight Engine has terminated!");
 }
 

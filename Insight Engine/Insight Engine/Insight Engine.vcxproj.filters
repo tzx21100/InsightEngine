@@ -23,7 +23,7 @@
       <Filter>STL</Filter>
     </ClCompile>
     <ClCompile Include="Source\EventManager.cpp">
-      <Filter>Engine\Core\Messaging&amp;Event</Filter>
+      <Filter>Engine\Messages</Filter>
     </ClCompile>
     <ClCompile Include="Source\CoreEngine.cpp">
       <Filter>Engine\Core</Filter>
@@ -35,10 +35,10 @@
       <Filter>Debug\Logging</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>Engine\Window</Filter>
@@ -53,7 +53,7 @@
       <Filter>Physics\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Asset.cpp">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
@@ -133,10 +133,10 @@
       <Filter>Engine\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\EventManager.h">
-      <Filter>Engine\Core\Messaging&amp;Event</Filter>
+      <Filter>Engine\Messages</Filter>
     </ClInclude>
     <ClInclude Include="Source\Message.h">
-      <Filter>Engine\Core\Messaging&amp;Event</Filter>
+      <Filter>Engine\Messages</Filter>
     </ClInclude>
     <ClInclude Include="Source\CoreEngine.h">
       <Filter>Engine\Core</Filter>
@@ -148,10 +148,10 @@
       <Filter>Debug\Logging</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Input.h">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\JsonSaveLoad.h">
       <Filter>Engine\JSON</Filter>
@@ -175,7 +175,7 @@
       <Filter>Physics\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Asset.h">
-      <Filter>Engine\System Example\Systems</Filter>
+      <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>
@@ -275,17 +275,11 @@
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\System Example">
-      <UniqueIdentifier>{26be95f9-2ff5-47cb-828f-691b9e323d78}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{23331e8a-17f3-4a9c-a892-f9178c7ef7b3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug\Logging">
       <UniqueIdentifier>{9562c0c5-815a-4760-9667-51a5e8766d7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Core\Messaging&amp;Event">
-      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\ECS">
       <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
@@ -323,9 +317,6 @@
     <Filter Include="Graphics\Buffers">
       <UniqueIdentifier>{61cf34e4-1635-43dc-b79e-c4f55435eaa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\System Example\Systems">
-      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{96bb3842-4153-4a24-bf01-20e7054a98bc}</UniqueIdentifier>
     </Filter>
@@ -340,6 +331,12 @@
     </Filter>
     <Filter Include="Graphics\System">
       <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems">
+      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Messages">
+      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
