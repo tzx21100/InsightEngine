@@ -1,3 +1,23 @@
+/*!
+ * \file Collision.cpp
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 28-09-2023
+ * \brief
+ * This header file contains functions needed for handling collision detection between
+ * different shapes like circles, polygons, and axis-aligned bounding boxes (AABB).
+ * It includes functionality to detect and respond to collisions between these shapes,
+ * considering their velocities, positions, and normals.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   includes
+  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CoreEngine.h"
 
@@ -117,6 +137,7 @@ namespace IS
 		return 0;
 	}
 
+	// Uses the Axis Separation Theorem (AST) to check collision between two polygons and calculates collision response data normal and depth
 	bool IntersectionPolygons(std::vector<Vector2D> const& trans_verticesA, Vector2D centerA, std::vector<Vector2D> trans_verticesB, Vector2D centerB, Vector2D& normal, float& depth){
 
 		// init
@@ -203,6 +224,7 @@ namespace IS
 		return true;
 	}
 
+	// Projects all vertices of a polygon onto a given normal vector and finds the minimum and maximum projections
 	void ProjectVertices(std::vector<Vector2D> const& vertices, Vector2D const& normal, float& min, float& max)
 	{
 
@@ -217,6 +239,8 @@ namespace IS
 	}
 
 	// FOR CIRCLE VS POLYGON
+
+	// Uses the Axis Separation Theorem (AST) to check collision between a circle and a polygon and calculates collision response data normal and depth
 	bool IntersectionCirlcecPolygon(Vector2D circle_center, float radius, Vector2D polygon_center, std::vector<Vector2D> trans_vertices, Vector2D& normal, float& depth) {
 		normal = Vector2D();
 		depth = std::numeric_limits<float>::max();
@@ -296,6 +320,8 @@ namespace IS
 
 	}
 
+
+	// Projects the left and right edges of a circle onto a given normal vector and finds the minimum and maximum projections
 	void ProjectCircle(Vector2D const& center, float const& radius, Vector2D const& normal, float& min, float& max)
 	{
 		Vector2D directionRadius = normal * radius;
@@ -314,6 +340,7 @@ namespace IS
 		}
 	}
 
+	// Finds the closest point on a polygon to a given circle center
 	int FindClosestPointOnPolygon(Vector2D circle_center, std::vector<Vector2D> vertices)
 	{
 		int result = -1;
@@ -336,6 +363,8 @@ namespace IS
 
 
 	// FOR CIRCLE
+
+	// Checks if two circles are intersecting
 	bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB) {
 		float distance = ISVector2DDistance(centerA, centerB);
 		float totalRadius = radiusA + radiusB;
@@ -358,7 +387,7 @@ namespace IS
 		lineSegment.normal = normal;
 	}
 
-	//check whether the ball is going to collide with the line segment and check whether the ball is inside or outside of the line segement
+	// check whether the ball is going to collide with the line segment and check whether the ball is inside or outside of the line segement
 	int CollisionIntersection_CircleLineSegment(
 		const Circle& circle,													//Circle data - input
 		const Vector2D& ptEnd,													//End circle position - input
@@ -435,7 +464,7 @@ namespace IS
 	}
 
 
-	//moving the ball when it is going to collide with the line edge and reflecting the ball accordingly
+	// moving the ball when it is going to collide with the line edge and reflecting the ball accordingly
 	int CheckMovingCircleToLineEdge(
 		bool withinBothLines,	                            					//Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input
 		const Circle& circle,													//Circle data - input
@@ -554,9 +583,9 @@ namespace IS
 			}
 		}
 
-		return 0;//no collision
+		return 0;// no collision
 	}
-	//reflecting the ball according to the hit direction with the line segment based on the normal of V
+	// reflecting the ball according to the hit direction with the line segment based on the normal of V
 	void CollisionResponse_CircleLineSegment(
 		const Vector2D& ptInter,		                                    		//Intersection position of the circle - input
 		const Vector2D& normal,														//Normal vector of reflection on collision time - input
