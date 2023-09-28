@@ -26,13 +26,61 @@
 
 namespace IS {
 
+    /*!
+     * \brief The Log class provides logging functionality.
+     *
+     * This class provides static methods to initialize the logging system and obtain
+     * core and client loggers.
+     */
     class Log {
     public:
+        /*!
+         * \brief Deleted default constructor for the Log class.
+         *
+         * The default constructor is deleted, preventing the creation of instances of the Log class.
+         */
+        Log() = delete;
+
+        /*!
+         * \brief Deleted destructor for the Log class.
+         *
+         * The destructor is deleted, preventing the destruction of instances of the Log class.
+         */
+        ~Log() = delete;
+
+        /*!
+         * \brief Initialize the logging system.
+         *
+         * This method initializes the logging system.
+         *
+         * \param enable_output Whether to enable logging output (default is false).
+         */
         static void Init(bool enable_output = false);
+
+        /*!
+         * \brief Get the core logger instance.
+         *
+         * \return A shared pointer to the core logger instance.
+         */
         inline static std::shared_ptr<Logger>& GetCoreLogger() { return mCoreLogger; }
+
+        /*!
+         * \brief Get the client logger instance.
+         *
+         * \return A shared pointer to the client logger instance.
+         */
         inline static std::shared_ptr<Logger>& GetClientLogger() { return mClientLogger; }
+
     private:
+
+        /*!
+         * \brief The core logger instance.
+         */
         static std::shared_ptr<Logger> mCoreLogger;
+
+        /*!
+         * \brief The client logger instance.
+         */
         static std::shared_ptr<Logger> mClientLogger;
     };
 

@@ -80,18 +80,21 @@ namespace IS {
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
-        if (engine.mUsingGUI) mFramebuffer->Bind(); // bind fb
+        if (engine.mUsingGUI)
+            mFramebuffer->Bind(); // bind fb
 
-        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); window->IsFullScreen() && !engine.mUsingGUI)
-            glViewport(0, 0, window->GetMonitorWidth(), window->GetMonitorHeight());
+        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mUsingGUI) {
+            auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
+            glViewport(0, 0, width, height);
+        }
 
         glClear(GL_COLOR_BUFFER_BIT); // clear color buffer
 
         // Render scene
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
-            auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
-            auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+            auto& sprite = engine.GetComponent<Sprite>(entity);
+            auto& trans = engine.GetComponent<Transform>(entity);
 
             // update sprite's transform
             sprite.followTransform(trans);
@@ -122,8 +125,8 @@ namespace IS {
                 sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture);
                 break;
             }
-            if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
-                auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+            if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
+                auto& body = engine.GetComponent<RigidBody>(entity);
                 if (Physics::isDebugDraw) {
                     Physics::DrawOutLine(body, sprite); // draw lines in debug mode
                 }
@@ -173,7 +176,7 @@ namespace IS {
         Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
 
         // if using ImGui, unbind fb at the end of draw
-        if (InsightEngine::Instance().mUsingGUI)
+        if (engine.mUsingGUI)
             mFramebuffer->Unbind();
     }
 
