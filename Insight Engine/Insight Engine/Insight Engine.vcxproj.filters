@@ -248,6 +248,7 @@
     </ClInclude>
     <ClInclude Include="Source\InsightEngine.h">
       <Filter>Source</Filter>
+    </ClInclude>
     <ClInclude Include="Source\ScriptGlue.h">
       <Filter>Engine\Scripting</Filter>
     </ClInclude>
