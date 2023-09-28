@@ -236,8 +236,8 @@ namespace IS {
         image.width = width;
         image.height = height;
         image.channels = channels;
-        image.mFileName = filepath;
-        image.mTextureData = textureID;
+        image.file_name = filepath;
+        image.texture_data = textureID;
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }

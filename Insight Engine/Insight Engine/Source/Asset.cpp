@@ -1,22 +1,6 @@
-/* Start Header **************************************************************/
-/*!
-\file	Asset.cpp
-\author Matthew Ng, matthewdeen.ng@digipen.edu
-\par Course: CSD2401
-\date 27-09-2023
-\brief
-Definition of the AssetManager class for managing game assets.
-
-All content (C) 2023 DigiPen Institute of Technology Singapore.
-All rights reserved.
-Reproduction or disclosure of this file or its contents without the prior written
-consent of DigiPen Institute of Technology is prohibited.
-*/
-/* End Header ****************************************************************/
-
-/* includes*/
 #include "Pch.h"
 #include "CoreEngine.h"
+#include "Asset.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4244)
@@ -43,52 +27,52 @@ namespace IS {
         std::string path = "Assets/"; // Path to the Assets directory
 
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().string();
+            std::string filePath = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                ImageLoad(file_path);
+                ImageLoad(filePath);
             }
         }
 
         // Gets all prefabs and loads them to a list.
         path = "Assets/Prefabs";
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().string();
+            std::string filePath = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check for json extensions
             if (extension == ".json") {
-                Prefab to_list = engine.LoadPrefabFromFile(file_path);
-                mPrefabList[to_list.mName] = to_list;
-                IS_CORE_DEBUG("Loaded Prefab: {} ", file_path);
+               Prefab to_list=engine.LoadPrefabFromFile(filePath);
+               mPrefabList[to_list.mName] = to_list;
+               IS_CORE_DEBUG("Loaded Prefab: {} ", filePath);
             }
         }
 
         // Gets all the scenes and stores them into a list
         path = "Assets/Scene";
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().filename().string();
-            mSceneList.emplace_back(file_path);
-            IS_CORE_DEBUG("Loaded Scene: {} ", file_path);
+            std::string filePath = entry.path().filename().string();
+            mSceneList.emplace_back(filePath);
+            IS_CORE_DEBUG("Loaded Scene: {} ", filePath);
         }
 
         // loads all audio and store it
         path = "Assets/Sounds";
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().string();
+            std::string filePath = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
             if (extension == ".MP3" || extension == ".WAV" || extension ==".wav" || extension==".mp3") {
-                FMOD::Channel* channel = audio->ISAudioLoadSound(file_path.c_str());
-                FMOD::Sound* sound = audio->ISAudioLoadSoundS(file_path.c_str());
-                std::string sound_name = entry.path().filename().string();
-                SaveSound(sound_name, sound);
-                SaveChannel(sound_name, channel);
-                IS_CORE_DEBUG("Loaded Sound: {} ", sound_name);
+                FMOD::Channel* channel = audio->ISAudioLoadSound(filePath.c_str());
+                FMOD::Sound* sound = audio->ISAudioLoadSoundS(filePath.c_str());
+                std::string soundName = entry.path().filename().string();
+                SaveSound(soundName, sound);
+                SaveChannel(soundName, channel);
+                IS_CORE_DEBUG("Loaded Sound: {} ", soundName);
                 
             }
         }
@@ -97,23 +81,22 @@ namespace IS {
 
     Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
 
-    FMOD::Channel* AssetManager::PlaySoundByName(const std::string& sound_name, bool loop , float volume, float pitch ) {
-        FMOD::Sound* sound = GetSound(sound_name);
+    FMOD::Channel* AssetManager::PlaySoundByName(const std::string& soundName, bool loop , float volume, float pitch ) {
+        FMOD::Sound* sound = GetSound(soundName);
         if (sound){
             auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
             return audio->PlaySound(sound, loop, volume, pitch);
         }
         return nullptr;
     }
-
-    FMOD::Channel* AssetManager::PlayMusicByName(const std::string& sound_name, bool loop, float volume, float pitch) {
-        FMOD::Sound* sound = GetSound(sound_name);
-        FMOD::Channel* channel = GetChannel(sound_name);
+    FMOD::Channel* AssetManager::PlayMusicByName(const std::string& soundName, bool loop, float volume, float pitch) {
+        FMOD::Sound* sound = GetSound(soundName);
+        FMOD::Channel* channel = GetChannel(soundName);
         auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
         if (audio->IsSoundPlaying(channel)) {
-            bool is_paused = false;
-            channel->getPaused(&is_paused);
-            if (is_paused) {
+            bool isPaused = false;
+            channel->getPaused(&isPaused);
+            if (isPaused) {
                 channel->setPaused(false);
             }
             else {
@@ -121,8 +104,8 @@ namespace IS {
             }
         }
         else {
-            mChannelList[sound_name]= audio->PlaySound(sound, loop, volume, pitch);
-            return mChannelList[sound_name];
+            mChannelList[soundName]= audio->PlaySound(sound, loop, volume, pitch);
+            return mChannelList[soundName];
         }
         return nullptr;
     }
@@ -140,68 +123,89 @@ namespace IS {
         }
     }
 
-    const Image& AssetManager::GetImage(const std::string& file_name) const {
-        auto iter = mImageList.find(file_name);
-        if (iter != mImageList.end()) {
-            return iter->second;
+    const Image& AssetManager::GetImage(const std::string& filename) const {
+        auto it = mImageList.find(filename);
+        if (it != mImageList.end()) {
+            return it->second;
         }
         throw std::runtime_error("Image not found.");
     }
 
     void AssetManager::ImageLoad(const std::string& filepath) {
         
-        Image new_image;
+        Image newImage;
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
-        graphics->initTextures(filepath,new_image);
-        SaveImageData(new_image);
-        IS_CORE_INFO("Using Texture: {} \"{}\"", new_image.mTextureData, filepath.substr(7));
+        graphics->initTextures(filepath,newImage);
+        SaveImageData(newImage);
+        IS_CORE_INFO("Using Texture: {} \"{}\"", newImage.texture_data, filepath.substr(7));
     }
 
     void AssetManager::SaveImageData(const Image image_data) {
-        mImageList[image_data.mFileName] = image_data;
-        mImageNames.emplace_back(image_data.mFileName);
+        mImageList[image_data.file_name] = image_data;
+        mImageNames.emplace_back(image_data.file_name);
     }
 
-    void AssetManager::RemoveImageData(const std::string& file_name) {
-        auto iter = mImageList.find(file_name);
-        if (iter != mImageList.end()) {
-            mImageList.erase(iter);
+    void AssetManager::RemoveImageData(const std::string& filename) {
+        auto it = mImageList.find(filename);
+        if (it != mImageList.end()) {
+            mImageList.erase(it);
         }
-        mImageNames.erase(std::remove(mImageNames.begin(), mImageNames.end(), file_name), mImageNames.end());
+        mImageNames.erase(std::remove(mImageNames.begin(), mImageNames.end(), filename), mImageNames.end());
     }
 
-    void AssetManager::ImageFree(const std::string& file_name) {
-        RemoveImageData(file_name);
+    void AssetManager::ImageFree(const std::string& filename) {
+        RemoveImageData(filename);
     }
+
+    //i have no idea what this does
+    //void AssetManager::ImageCreate([[maybe_unused]] Image& image, bool zeroed) {
+    //    size_t size = width * height * channels;
+
+    //    if (zeroed) {
+    //        image.data = new uint8_t[size]();
+    //    }
+    //    else
+    //    {
+    //        image.data = new uint8_t[size];
+    //    }
+
+    //    if (image.data != nullptr) {
+    //        image.width = width;
+    //        image.height = height;
+    //        image.size = size;
+    //        image.channels = channels;
+    //        image.allocation_type = allocationType::SelfAllocated;
+    //    }
+    //}
 
     Image AssetManager::ToGray(const Image& image) {
-        Image gray_image = image; // Make a copy of the original image
+        Image grayImage = image; // Make a copy of the original image
 
-        //for (unsigned char* p = gray_image.data, *pg = gray_image.data; p != gray_image.data + gray_image.size; p += gray_image.channels, pg += gray_image.channels) {
+        //for (unsigned char* p = grayImage.data, *pg = grayImage.data; p != grayImage.data + grayImage.size; p += grayImage.channels, pg += grayImage.channels) {
         //    *pg = static_cast<uint8_t>((*p + *(p + 1) + *(p + 2)) / 3.0);
-        //    if (gray_image.channels == 4) {
+        //    if (grayImage.channels == 4) {
         //        *(pg + 1) = *(p + 3);
         //    }
         //}
 
         // Update the channels and allocation type of the new image
-        if (gray_image.mAllocationType != AllocationType::SelfAllocated) {
-            gray_image.mAllocationType = AllocationType::SelfAllocated;
+        if (grayImage.allocation_type != allocationType::SelfAllocated) {
+            grayImage.allocation_type = allocationType::SelfAllocated;
         }
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
-        //auto result = graphicsys->initTextures(gray_image);
-        //gray_image.mTextureData = result;
+        //auto result = graphicsys->initTextures(grayImage);
+        //grayImage.texture_data = result;
         // You may want to save the modified image data to the image_manager here if needed
-        SaveImageData(gray_image);
+        SaveImageData(grayImage);
 
-        return gray_image;
+        return grayImage;
     }
 
     Image AssetManager::ToSepia(const Image& image) {
-        Image sepia_image = image; // Make a copy of the original image
+        Image sepiaImage = image; // Make a copy of the original image
 
-        //for (unsigned char* p = sepia_image.data; p != sepia_image.data + sepia_image.size; p += sepia_image.channels) {
+        //for (unsigned char* p = sepiaImage.data; p != sepiaImage.data + sepiaImage.size; p += sepiaImage.channels) {
         //    int r = *p, g = *(p + 1), b = *(p + 2);
         //    int new_r = static_cast<int>((0.393 * r) + (0.769 * g) + (0.189 * b));
         //    int new_g = static_cast<int>((0.349 * r) + (0.686 * g) + (0.168 * b));
@@ -212,16 +216,16 @@ namespace IS {
         //}
 
         // Update the channels and allocation type of the new image
-        if (sepia_image.mAllocationType != AllocationType::SelfAllocated) {
-            sepia_image.mAllocationType = AllocationType::SelfAllocated;
+        if (sepiaImage.allocation_type != allocationType::SelfAllocated) {
+            sepiaImage.allocation_type = allocationType::SelfAllocated;
         }
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
-        //auto result = graphicsys->initTextures(sepia_image);
-        //sepia_image.mTextureData = result;
+        //auto result = graphicsys->initTextures(sepiaImage);
+        //sepiaImage.texture_data = result;
         // You may want to save the modified image data to the image_manager here if needed
-        SaveImageData(sepia_image);
-        return sepia_image;
+        SaveImageData(sepiaImage);
+        return sepiaImage;
     }
 
 }
