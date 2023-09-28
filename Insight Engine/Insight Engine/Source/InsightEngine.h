@@ -13,8 +13,8 @@
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_INSIGHTENGINE_H_
-#define GAM200_INSIGHT_ENGINE_SOURCE_INSIGHTENGINE_H_
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
+#define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 
 #include "CoreEngine.h"
 #include "Graphics.h"

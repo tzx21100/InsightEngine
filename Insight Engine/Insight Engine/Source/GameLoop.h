@@ -1,4 +1,20 @@
-#pragma once
+/*!
+ * \file GameLoop.h
+ * \author NA Not applicable.
+ * \par Course: CSD2401
+ * \date 26-09-2023
+ * \brief
+ * 
+ * This is just a pseudo game loop to show off the functionalities of the engine.
+ * Most of this will be converted to scripts once we integrate it with our ECS.
+ * 
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
+#define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #include "CoreEngine.h"
 
 namespace IS {
@@ -14,7 +30,7 @@ namespace IS {
         Entity entity_circle;
         Entity entity_quad;
 
-        //singleton entities
+        //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
         std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
         std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
@@ -262,3 +278,5 @@ namespace IS {
 
 
 }
+
+#endif

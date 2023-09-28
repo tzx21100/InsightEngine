@@ -1,7 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 //
 //	Main
-//	The main entry point for the game--everything starts here.
+//	The main entry point for the game engine--everything starts here.
+// : )
 //	
 //	Authors:  Tan Zheng Xun
 //	Copyright 2023, Digipen Institute of Technology
