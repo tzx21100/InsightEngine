@@ -305,7 +305,7 @@ namespace IS {
 		 * \return An unordered map of registered components.
 		 */
 		const std::unordered_map<const char*, ComponentType>& GetRegisteredComponents() const {
-			return mComponentTypes;
+			return mRegisteredComponentType;
 		}
 
 		/**
@@ -318,13 +318,13 @@ namespace IS {
 		template<typename T>
 		void RegisterComponent() {
 			const char* type_name = typeid(T).name();
-			assert(mComponentTypes.find(type_name) == mComponentTypes.end() && "Registering component type more than once.");
+			assert(mRegisteredComponentType.find(type_name) == mRegisteredComponentType.end() && "Registering component type more than once.");
 			// Add this component type to the component type map
-			mComponentTypes.insert({ type_name, mNextComponentType });
+			mRegisteredComponentType.insert({ type_name, mNextComponentType });
 			// Create a ComponentArray pointer and add it to the component arrays map
-			mComponentArrays.insert({ type_name, std::make_shared<ComponentArray<T>>() });
+			mComponentArrayMap.insert({ type_name, std::make_shared<ComponentArray<T>>() });
 			// Add the componentType to the value
-			mComponentArrays[type_name]->SetComponentType(mNextComponentType);
+			mComponentArrayMap[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
 			IS_CORE_INFO("{} component registered!", std::string(type_name).substr(10));
@@ -341,9 +341,9 @@ namespace IS {
 		template<typename T>
 		ComponentType GetComponentType() {
 			const char* type_name = typeid(T).name();
-			assert(mComponentTypes.find(type_name) != mComponentTypes.end() && "Component not registered before use.");
+			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			// Return this component's type - used for creating signatures
-			return mComponentTypes[type_name];
+			return mRegisteredComponentType[type_name];
 		}
 
 		/**
@@ -402,7 +402,7 @@ namespace IS {
 			/* Notify each component array that an entity has been destroyed
 			 * If it has a component for that entity, it will remove it
 			 */
-			for (auto const& pair : mComponentArrays) {
+			for (auto const& pair : mComponentArrayMap) {
 				auto const& component = pair.second;
 				component->EntityDestroyed(entity);
 			}
@@ -420,7 +420,7 @@ namespace IS {
 		Signature CloneComponent(Entity entity, Entity old_entity) {
 			ComponentType componentType;
 			Signature returned_signature;
-			for (auto const& pair : mComponentArrays) {
+			for (auto const& pair : mComponentArrayMap) {
 				auto const& component = pair.second;
 				componentType = component->CloneData(entity, old_entity);
 				if (componentType<=MAX_COMPONENTS) {
@@ -443,7 +443,7 @@ namespace IS {
 		Signature PrefabToEntity(Signature prefab, Entity entity) {
 			ComponentType componentType;
 			Signature returned_signature;
-			for (auto const& pair : mComponentArrays) {
+			for (auto const& pair : mComponentArrayMap) {
 				auto const& component = pair.second;
 				componentType = component->SignatureMatch(prefab, entity);
 				if (componentType <= MAX_COMPONENTS) {
@@ -465,20 +465,20 @@ namespace IS {
 		template<typename T>
 		std::shared_ptr<ComponentArray<T>> GetComponentArray() {
 			const char* type_name = typeid(T).name();
-			assert(mComponentTypes.find(type_name) != mComponentTypes.end() && "Component not registered before use.");
-			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[type_name]);
+			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
+			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayMap[type_name]);
 		}
 
 	private:
 		/**
 		 * \brief A map linking component type names to their assigned types.
 		 */
-		std::unordered_map<const char*, ComponentType> mComponentTypes{};
+		std::unordered_map<const char*, ComponentType> mRegisteredComponentType{};
 
 		/**
 		 * \brief A map linking component type names to their respective component arrays.
 		 */
-		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
+		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrayMap{};
 
 		/**
 		 * \brief The next component type to be assigned.

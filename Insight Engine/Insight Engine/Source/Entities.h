@@ -58,9 +58,9 @@ namespace IS {
 		EntityManager() {
 			// Initialize the queue with all possible entity IDs
 			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-				mAvailableEntities.push(entity);
+				mEntityQueue.push(entity);
 			}
-			mLivingEntityCount = 0;
+			mEntitiesAlive = 0;
 		}
 
 		/**
@@ -72,9 +72,9 @@ namespace IS {
 		Entity CreateEntity(const std::string& name) {
 			assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
-			Entity id = mAvailableEntities.front();
-			mAvailableEntities.pop();
-			mLivingEntityCount++;
+			Entity id = mEntityQueue.front();
+			mEntityQueue.pop();
+			mEntitiesAlive++;
 
 			// Set the name for the entity
 			mEntityNames[name] = id;
@@ -101,8 +101,8 @@ namespace IS {
 			mEntityIds.erase(entity);
 
 			// Put the destroyed ID at the back of the queue
-			mAvailableEntities.push(entity);
-			--mLivingEntityCount;
+			mEntityQueue.push(entity);
+			--mEntitiesAlive;
 			IS_WARN("Entity {} destroyed!", entity);
 		}
 
@@ -159,15 +159,15 @@ namespace IS {
 		 */
 		void ResetEntityID() {
 			// Clear the existing queue of available entity IDs
-			while (!mAvailableEntities.empty()) {
-				mAvailableEntities.pop();
+			while (!mEntityQueue.empty()) {
+				mEntityQueue.pop();
 			}
 			// Re-initialize the queue with all possible entity IDs starting from 0
 			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-				mAvailableEntities.push(entity);
+				mEntityQueue.push(entity);
 			}
 			// Reset living entity count to 0
-			mLivingEntityCount = 0;
+			mEntitiesAlive = 0;
 			// Clear all entity signatures
 			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
 				mSignatures[entity].reset();
@@ -214,7 +214,7 @@ namespace IS {
 		 *
 		 * \return The number of alive entities.
 		 */
-		uint32_t EntitiesAlive() { return mLivingEntityCount; };
+		uint32_t EntitiesAlive() { return mEntitiesAlive; };
 
 		/**
 		 * \brief Retrieves a map of all alive entities and their names.
@@ -225,11 +225,11 @@ namespace IS {
 
 	private:
 		// Queue of unused entity IDs
-		std::queue<Entity> mAvailableEntities;
+		std::queue<Entity> mEntityQueue;
 		// Array of signatures where the index corresponds to the entity ID
 		std::array<Signature, MAX_ENTITIES> mSignatures;
 		// Total living entities - used to keep limits on how many exist
-		uint32_t mLivingEntityCount;
+		uint32_t mEntitiesAlive;
 		// The name of entities
 		std::unordered_map<std::string,Entity >mEntityNames;
 		// Finding the name by the id
