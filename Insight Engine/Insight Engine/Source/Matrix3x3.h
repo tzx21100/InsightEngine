@@ -1,5 +1,22 @@
-#pragma once
+/*!
+ * \file Matrix3x3.h
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 28-09-2023
+ * \brief
+ * This header file declares the Matrix3x3 class for representing 3x3 matrices
+ * and provides various matrix operations.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
+ /*                                                                   includes
+  ----------------------------------------------------------------------------- */
+#pragma once
 #include "Vector2D.h"
 
 namespace IS

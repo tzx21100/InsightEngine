@@ -1,3 +1,21 @@
+/*!
+ * \file Vector2D.h
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 28-09-2023
+ * \brief
+ * This header file declares the Vector2D class for representing 2D vectors and
+ * provides various vector operations.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   guard
+  ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR2D_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR2D_H
 
