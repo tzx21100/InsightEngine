@@ -188,7 +188,8 @@ copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelpe
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
-xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\4.5\" /E /Y</Command>
+xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
+xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>
@@ -232,7 +233,8 @@ copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelpe
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
-xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\4.5\" /E /Y</Command>
+xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
+xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

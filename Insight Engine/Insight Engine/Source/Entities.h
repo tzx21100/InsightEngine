@@ -90,11 +90,10 @@ namespace IS {
 		 * \param entity The ID of the entity to be destroyed.
 		 */
 		void DestroyEntity(Entity entity) {
-			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Entity destroyed out of range."); }
-
-			// Invalidate the destroyed entity's signature
-			mSignatures[entity].reset();
-
+			if (entity < MAX_ENTITIES) {  
+				// Invalidate the destroyed entity's signature
+				mSignatures[entity].reset();
+			}
 			// Remove the mappings for this entity from the maps
 			std::string entityName = mEntityIds[entity];
 			mEntityNames.erase(entityName);
@@ -125,9 +124,10 @@ namespace IS {
 		 * \return The signature of the specified entity.
 		 */
 		Signature GetSignature(Entity entity) {
-			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Too many entities in existence."); }
-			// Get this entity's signature from the array
-			return mSignatures[entity];
+			if (entity < MAX_ENTITIES) {
+				return mSignatures[entity];
+			}
+			return 0;
 		}
 
 		/**
@@ -150,8 +150,9 @@ namespace IS {
 		 * \return \c true if the entity is alive, \c false otherwise.
 		 */
 		bool IsEntityAlive(Entity entity) const {
-			if (entity > MAX_ENTITIES) { IS_CORE_WARN("Entity out of range."); }
-			return mSignatures[entity].any();  // Returns true if any bit is set
+			if (entity < MAX_ENTITIES) { 
+				return mSignatures[entity].any();
+			}
 		}
 
 		/**

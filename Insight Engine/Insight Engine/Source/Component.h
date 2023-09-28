@@ -123,7 +123,7 @@ namespace IS {
 
 	private:
 		// The Component Type of the array
-		ComponentType mComponentType;
+		ComponentType mComponentType{};
 	};
 
 	/**
@@ -246,7 +246,7 @@ namespace IS {
 		 */
 		ComponentType SignatureMatch(Signature signature, Entity entity) {
 			if (signature.test(this->GetComponentType())) {
-				T component;
+				T component{};
 				InsertData(entity, component);
 				return this->GetComponentType();
 			}
@@ -260,7 +260,7 @@ namespace IS {
 		 * The array is of generic type T and is set to a specified maximum amount,
 		 * matching the maximum number of entities allowed to exist simultaneously.
 		 */
-		std::array<T, MAX_ENTITIES> mComponentArray;
+		std::array<T, MAX_ENTITIES> mComponentArray{};
 
 		/**
 		 * \brief Map from an entity ID to an array index.
@@ -268,7 +268,7 @@ namespace IS {
 		 * This map helps in quickly determining the index in the component array
 		 * for a given entity.
 		 */
-		std::unordered_map<Entity, size_t> mEntityToIndexMap;
+		std::unordered_map<Entity, size_t> mEntityToIndexMap{};
 
 		/**
 		 * \brief Map from an array index to an entity ID.
@@ -276,7 +276,7 @@ namespace IS {
 		 * This map is used for efficient removal of components by swapping with
 		 * the last element in the dense array.
 		 */
-		std::unordered_map<size_t, Entity> mIndexToEntityMap;
+		std::unordered_map<size_t, Entity> mIndexToEntityMap{};
 
 		/**
 		 * \brief The total size of valid entries in the array.

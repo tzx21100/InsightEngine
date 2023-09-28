@@ -22,24 +22,24 @@ namespace IS {
 
         //imagine this is AE engine screen
 
-        Entity entity_player;
-        Entity entity_test;
-        Entity entity_floor;
-        Entity entity_point;
-        Entity entity_line;
-        Entity entity_circle;
-        Entity entity_quad;
+        Entity entity_player{};
+        Entity entity_test{};
+        Entity entity_floor{};
+        Entity entity_point{};
+        Entity entity_line{};
+        Entity entity_circle{};
+        Entity entity_quad{};
 
         //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
         std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
         std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
 
-        Image backgroundTest;
-        Image black_background;
-        Image idle_animation;
-        Image walking_animation;
-        Image zx_animation;
+        Image backgroundTest{};
+        Image black_background{};
+        Image idle_animation{};
+        Image walking_animation{};
+        Image zx_animation{};
 
         virtual void Initialize() override {
             //create a image
