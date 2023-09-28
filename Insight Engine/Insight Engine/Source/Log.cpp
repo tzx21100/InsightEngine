@@ -21,6 +21,7 @@
 
 namespace IS {
 
+    // Static instances
     std::shared_ptr<Logger> Log::mCoreLogger;
     std::shared_ptr<Logger> Log::mClientLogger;
 
@@ -29,6 +30,7 @@ namespace IS {
         mCoreLogger->SetLogLevel(aLogLevel::Trace);
         mClientLogger = std::make_shared<Logger>("Fragments");
         mClientLogger->SetLogLevel(aLogLevel::Trace);
+
         if (enable_output) {
             mCoreLogger->EnableFileOutput();
             mClientLogger->EnableFileOutput();
