@@ -233,7 +233,7 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(font_bold);
-                ImGui::TextUnformatted("Invariant Mass");
+                ImGui::TextUnformatted("Inverse Mass");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
