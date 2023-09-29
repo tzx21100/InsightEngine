@@ -60,9 +60,9 @@ namespace IS {
 
         // Default setting
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        EnableVsync(mProps.mVSync);
 
         glfwMakeContextCurrent(mWindow);
+        EnableVsync(mProps.mVSync);
 
         // Load OpenGL function pointers using GLAD
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
