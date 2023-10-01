@@ -27,7 +27,7 @@ namespace IS
 	// FOR BOX
 
 	// AABB Collision for static and dynamic, return true if they colliding
-	bool CollisionIntersectionRectRect(const Box& aabb1, const Vector2D& vel1,
+	bool CollisionIntersectionAABB(const Box& aabb1, const Vector2D& vel1,
 		const Box& aabb2, const Vector2D& vel2, const float& dt)
 	{
 		/*
@@ -135,6 +135,16 @@ namespace IS
 			return true;
 		}
 		return 0;
+	}
+
+	// static AABB collision, return false if not colliding
+	bool StaticIntersectAABB(const Box& a, const Box& b) {
+		if (a.max.x < b.min.x || b.max.x < a.min.x ||
+			a.max.y < b.min.y || b.max.y < a.min.y) {
+			return false;
+		}
+
+		return true;
 	}
 
 	// Uses the Axis Separation Theorem (AST) to check collision between two polygons and calculates collision response data normal and depth

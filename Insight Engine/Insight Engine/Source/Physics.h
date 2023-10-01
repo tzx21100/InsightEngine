@@ -71,6 +71,24 @@ namespace IS
         ~Physics() {}
 
         /*!
+         * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
+        *
+        * \param mEntities The set of entities to consider for collision detection.
+        */
+        void CollisionDetect(std::set<Entity> const& entities);
+
+        /*!
+         * \brief Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
+         *
+         * \param bodyA The first rigid body involved in the collision.
+         * \param bodyB The second rigid body involved in the collision.
+         * \param normal The collision normal vector.
+         * \param depth The depth of collision penetration.
+         */
+        //void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
+        void ResolveCollision(Manifold & contact);
+
+        /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *
          * \param body The rigid body to draw the outline for.
@@ -99,41 +117,19 @@ namespace IS
          * \param entities The set of entities to consider in the physics step.
          */
         void Step(float time, std::set<Entity> const& entities);
+
+        
 	private:
 
         Vector2D mGravity;                              // Gravity of the world
         bool mExertingGravity;                          // Flag indicating whether gravity is currently exerted
         float mMaxVelocity;                             // Maximum velocity for game bodies
         float mMinVelocity;                             // Minimum velocity for game bodies
-        int iterations;                                 // Number of iterations for physics step
+        int mIterations;                                 // Number of iterations for physics step
+        std::vector<Manifold> mContactList;
+        std::vector<Vector2D> mContactPointsList;
+
 	};
-
-    /*!
-     * \brief Updates the collision for a rigid body during a physics step.
-     *
-     * \param rigidBody The rigid body to update.
-     * \param dt The time step for the physics update.
-     * \param entity The entity associated with the rigid body.
-     * \param mEntities The set of entities to consider for collision detection.
-     */
-    void CollisionCallUpdate(RigidBody rigidBody, float dt,  auto const& entity, std::set<Entity> mEntities); // not in use
-
-    /*!
-     * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
-     *
-     * \param mEntities The set of entities to consider for collision detection.
-     */
-    void CollisionDetect(std::set<Entity> const& mEntities);
-
-    /*!
-     * \brief Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
-     *
-     * \param bodyA The first rigid body involved in the collision.
-     * \param bodyB The second rigid body involved in the collision.
-     * \param normal The collision normal vector.
-     * \param depth The depth of collision penetration.
-     */
-    void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
 
     // Pointer to the Physics instance
     extern Physics* PHYSICS;

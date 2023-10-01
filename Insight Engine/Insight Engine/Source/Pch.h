@@ -41,6 +41,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "ISMath.h"
 #include "Collision.h"
 #include "Body.h"
+#include "Manifold.h"
 #include "Physics.h"
 #include "Mesh.h"
 #include "Sprite.h"

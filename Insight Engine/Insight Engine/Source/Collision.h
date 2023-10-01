@@ -18,7 +18,6 @@
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
 #pragma once
-
 #include "Pch.h"
 #include "Component.h"
 
@@ -32,6 +31,10 @@ namespace IS
     {
         Vector2D min; // Minimum point of the bounding box
         Vector2D max; // Maximum point of the bounding box
+
+        Box(const Vector2D& min, const Vector2D& max) : min(min), max(max) {}
+
+        Box(float minX, float minY, float maxX, float maxY) : min(minX, minY), max(maxX, maxY) {}
     };
 
     /*!
@@ -81,8 +84,11 @@ namespace IS
      * \param dt Delta time.
      * \return True if the two AABBs are colliding, false otherwise.
      */
-	bool CollisionIntersectionRectRect(const Box& aabb1, const Vector2D& vel1,
+	bool CollisionIntersectionAABB(const Box& aabb1, const Vector2D& vel1,
 		const Box& aabb2, const Vector2D& vel2, const float& dt);
+
+    // static AABB
+    bool StaticIntersectAABB(const Box& a, const Box& b);
 
      /*!
      * \brief Uses the Axis Separation Theorem (AST) to check collision between two polygons and calculates collision response data normal and depth.

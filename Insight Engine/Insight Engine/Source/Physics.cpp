@@ -37,8 +37,9 @@ namespace IS
 		//isDebugDraw = false;
 		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
 		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
-		iterations = 10;						// Number of iterations for physics step
-
+		mIterations = 10;						// Number of iterations for physics step
+		mContactList = std::vector<Manifold>();
+		mContactPointsList = std::vector<Vector2D>();
 	}
 
 	// Static flag to enable or disable debug drawing of rigidbody shapes
@@ -56,47 +57,56 @@ namespace IS
 	void Physics::Update(float dt)
 	{
 		
-		for (size_t i = 0; i < iterations; i++) {
+		for (size_t i = 0; i < mIterations; i++) {
 			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 			Step(dt, mEntities);
 			// Detects collisions among a set of entities
 			CollisionDetect(mEntities);
 		}
+		//std::cout << dt << std::endl;
 
 	}
 
 	// Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line)
-	void CollisionDetect(std::set<Entity> const& mEntities) {
+	void Physics::CollisionDetect(std::set<Entity> const& entities) {
+		mContactList.clear();
 		//loops through all Entities registered by the System this mEntities map
-		for (auto const& entityA : mEntities) {
+		for (auto const& entityA : entities) {
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) { // if entityA has rigidbody component
 				//getting rigidbody component for each entity
-				auto& rigidBodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entityA);
-				auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entityA);
-				rigidBodyA.BodyFollowTransform(trans);
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				//auto& spriteA = InsightEngine::Instance().GetComponent<Sprite>(entityA);
+				bodyA.BodyFollowTransform(transA);
 
-				for (auto const& entityB : mEntities) {
+				for (auto const& entityB : entities) {
 					if (entityA == entityB) { // if self checking, continue
 						continue;
 					}
 					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) { // if entityB has rigidbody component
-						auto& rigidBodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-						auto& trans2 = InsightEngine::Instance().GetComponent<Transform>(entityB);
-						auto& sprite2 = InsightEngine::Instance().GetComponent<Sprite>(entityB);
-						rigidBodyB.BodyFollowTransform(trans2);
-						// for calculate collision response
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						//auto& spriteB = InsightEngine::Instance().GetComponent<Sprite>(entityB);
+						bodyB.BodyFollowTransform(transB);
+						// for calculating collision response
 						Vector2D normal = Vector2D();
 						float depth = std::numeric_limits<float>::max();
 						bool isColliding = false;
-						switch (rigidBodyA.mBodyShape)
+
+						// static AABB collision check, continue to the next loop if not colliding
+						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
+						{
+							continue;
+						}
+
+						switch (bodyA.mBodyShape)
 						{
 						case BodyShape::Box:
-							switch (rigidBodyB.mBodyShape)
+							switch (bodyB.mBodyShape)
 							{
 								// box vs box
 							case BodyShape::Box:
-								isColliding = IntersectionPolygons(rigidBodyA.GetTransformedVertices(), rigidBodyA.mBodyTransform.getWorldPosition(), rigidBodyB.GetTransformedVertices(), rigidBodyB.mBodyTransform.getWorldPosition(), normal, depth);
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), normal, depth);
 								break;
 								// box vs circle
 							case BodyShape::Circle:
@@ -106,7 +116,7 @@ namespace IS
 							}
 							break;
 						case BodyShape::Circle:
-							switch (rigidBodyB.mBodyShape)
+							switch (bodyB.mBodyShape)
 							{
 								// circle vs box
 							case BodyShape::Box:
@@ -123,121 +133,67 @@ namespace IS
 						}
 						// if body A and body B colliding
 						if (isColliding) {
+							// vector of penetration
 							Vector2D vec = normal * depth;
 							// if body A is static 
-							if (rigidBodyA.mBodyType != BodyType::Dynamic)
+							if (bodyA.mBodyType != BodyType::Dynamic)
 							{
-								//rigidBody2.Move(normal * depth);
-								trans2.world_position.x += vec.x;
-								trans2.world_position.y += vec.y;
-								rigidBodyB.mState = BodyState::GROUNDED;
+								transB.Move(vec);
+								// to be optimize
+								bodyB.mState = BodyState::GROUNDED;
 							}
 							// if body B is static 
-							else if (rigidBodyB.mBodyType != BodyType::Dynamic)
+							else if (bodyB.mBodyType != BodyType::Dynamic)
 							{
-								//rigidBody.Move(-normal * depth);
-								trans.world_position.x += -vec.x;
-								trans.world_position.y += -vec.y;
-								rigidBodyA.mState = BodyState::GROUNDED;
+								transA.Move(-vec);
+								// to be optimize
+								bodyA.mState = BodyState::GROUNDED;
 							}
 							else // both are dynamic
 							{
-								//rigidBody.Move(-normal * depth / 2.f);
-								//rigidBody.Move(normal * depth / 2.f);
-								trans.world_position.x += -vec.x / 2.f;
-								trans.world_position.y += -vec.y / 2.f;
-								trans2.world_position.x += vec.x / 2.f;
-								trans2.world_position.y += vec.y / 2.f;
+								transA.Move(-vec/2.f);
+								transB.Move(vec/2.f);
 							}
-							sprite.color = glm::vec3(1.f, 0.f, 1.f);
-							ResolveCollision(rigidBodyA, rigidBodyB, normal, depth);
+							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
+							//ResolveCollision(bodyA, bodyB, normal, depth);
+
+							Manifold contact = Manifold(bodyA, bodyB, normal, depth, Vector2D(), Vector2D(), 0);
+							mContactList.emplace_back(contact);
 						}
 						else { //not colliding
-							sprite2.color = glm::vec3(0.f, 0.f, 1.f);
+							//spriteB.color = glm::vec3(0.f, 0.f, 1.f);
 						}
 					}
 
 				}
 			}
 		}
-	}
 
-#if 0
-	// Updates the collision for a rigid body during a physics step
-	void CollisionCallUpdate(RigidBody body, float dt, auto const& entity, std::set<Entity> mEntities)
-	{
-		switch (body.mBodyShape)
-		{
-		case Shape::Box:
-			for (auto const& entity2 : mEntities) {
-				//skip self comparison or the second entity do not have collider component
-					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
-					Vector2D test{ 1,1 };
-					float test2 = 0.f;
-					switch (body2.mBodyShape)
-					{
-					case Shape::Box:
-						//box to box collision
-						if (Intersection_Polygons(body.transformedVertices, body.mBodyTransform.getWorldPosition(), body2.transformedVertices, body2.mBodyTransform.getWorldPosition(), test, test2)) {
-							std::cout << "Colliding" << std::endl;
-						}
-						break;
-					case Shape::Circle:
-						//box to circle collision
-						break;
-					case Shape::Line:
-						//box to line collision
-						break;
-					default:
-						break;
-					}
-				//}
-			}
-			break;
-		case Shape::Circle:
-			for (auto const& entity2 : mEntities) {
-				//skip self comparison or the second entity do not have collider component
-					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
-					switch (body2.mBodyShape)
-					{
-					//circle to box collision defined above
-					case Shape::Circle:
-						//circle to circle collision
-						break;
-					case Shape::Line:
-						//circle to line collision
-						break;
-					default:
-						break;
-					}
-				//}
-			}
-			break;
-		case Shape::Line:
-			for (auto const& entity2 : mEntities) {
-				//skip self comparison or the second entity do not have collider component
-					auto& body2 = InsightEngine::Instance().GetComponent<RigidBody>(entity2);
-					//line to box and line to circle collision defined above
-					if (body2.mBodyShape == Shape::Line)
-					{
-						//box to line collision
-					}
-			//	}
-			}
-			break;
-		default:
-			break;
+		for (int i = 0; i < mContactList.size(); i++) {
+			Manifold contact = mContactList[i];
+			ResolveCollision(contact);
+
+			/*if (contact.ContactCount > 0) {
+				ContactPointsList.push_back(contact.Contact1);
+
+				if (contact.ContactCount > 1) {
+					ContactPointsList.push_back(contact.Contact2);
+				}
+			}*/
 		}
 	}
-#endif
 
 	// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities
-	void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, [[maybe_unused]] float depth) {
+	void Physics::ResolveCollision(Manifold & contact) {
+
+		RigidBody& bodyA = contact.mBodyA;
+		RigidBody& bodyB = contact.mBodyB;
+		Vector2D normal = contact.mNormal;
 		
 		// calculate the relative velocity of two bodies
 		Vector2D relativeVelocity = bodyB.mVelocity - bodyA.mVelocity;
 
-		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f)
+		if (ISVector2DDotProduct(relativeVelocity, normal) > 0.f) // moving away
 		{
 			return;
 		}
@@ -292,7 +248,7 @@ namespace IS
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
 		// divide by iterations to increase precision
-		time /= static_cast<float>(iterations);
+		time /= static_cast<float>(mIterations);
 
 		for (auto const& entity : entities) {
 			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");

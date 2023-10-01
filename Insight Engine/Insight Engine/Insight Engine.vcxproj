@@ -21,6 +21,7 @@
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Framebuffer.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
+    <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
+    <ClInclude Include="Source\Manifold.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Prefab.h" />

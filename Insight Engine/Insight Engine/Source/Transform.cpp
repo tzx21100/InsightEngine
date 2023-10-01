@@ -56,6 +56,11 @@ namespace IS {
 		scaling.y = height;
 	}
 
+	void Transform::Move(Vector2D const& val) {
+		world_position.x += val.x;
+		world_position.y += val.y;
+	}
+
 	Json::Value Transform::Serialize() {
 		Json::Value transformData;
 

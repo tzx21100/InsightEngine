@@ -51,7 +51,7 @@ namespace IS
             mTransformedVertices = mVertices;
         }
         else if (mBodyShape == BodyShape::Circle) {
-            CreateCircleBody(mBodyTransform.scaling.x/2, mMass, mRestitution);
+            CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
         }
         else {
             // make sure the vector array is empty
@@ -90,7 +90,7 @@ namespace IS
             mTransformedVertices = mVertices;
         }
         else if (mBodyShape == BodyShape::Circle) {
-            CreateCircleBody(mBodyTransform.scaling.x/2, mMass, mRestitution);
+            CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
         }
         else {
             // make sure the vector array is empty
@@ -222,5 +222,40 @@ namespace IS
         mVertices = CreateBoxVertices(my_body_transform.scaling.x, my_body_transform.scaling.y);
         mTransformUpdateRequired = true;
         mTransformedVertices = GetTransformedVertices();
+    }
+
+    Box RigidBody::GetAABB() {
+            float minX = std::numeric_limits<float>::max();
+            float minY = std::numeric_limits<float>::max();
+            float maxX = std::numeric_limits<float>::min();
+            float maxY = std::numeric_limits<float>::min();
+
+            if (mBodyShape == BodyShape::Box)
+            {
+                //FlatVector[] vertices = this.GetTransformedVertices();
+
+                for (int i = 0; i < mTransformedVertices.size(); i++)
+                {
+                    Vector2D v = mTransformedVertices[i];
+
+                    if (v.x < minX) { minX = v.x; }
+                    if (v.x > maxX) { maxX = v.x; }
+                    if (v.y < minY) { minY = v.y; }
+                    if (v.y > maxY) { maxY = v.y; }
+                }
+            }
+            else if (mBodyShape == BodyShape::Circle)
+            {
+                float radius = mBodyTransform.scaling.x / 2;
+
+                minX = mBodyTransform.world_position.x - radius;
+                minY = mBodyTransform.world_position.y - radius;
+                maxX = mBodyTransform.world_position.x + radius;
+                maxY = mBodyTransform.world_position.y + radius;
+            }
+
+            Box aabb = Box(minX, minY, maxX, maxY);
+
+        return aabb;
     }
 }

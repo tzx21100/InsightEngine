@@ -180,6 +180,8 @@ namespace IS
          */
         void UpdateBoxBody(Transform const& my_body_transform);
 
+        Box GetAABB();
+
         /*!
          * \brief Serialize the RigidBody component to a JSON format.
          * \return A JSON object representing the serialized RigidBody.

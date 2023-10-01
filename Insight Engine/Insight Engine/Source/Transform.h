@@ -86,6 +86,13 @@ namespace IS {
 		 */
 		void setScaling(float width, float height);
 
+		/*!
+		 * \brief force change/update/move the transform position by specific value (for collision response)
+		 *
+		 * \param value adding with type Vector2D
+		 */
+		void Move(Vector2D const& val);
+
 		// members
 		glm::vec2 world_position{};					 // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
 		float rotation{};							 // z-axis rotation in degrees
