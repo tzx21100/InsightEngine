@@ -121,6 +121,8 @@ namespace IS {
 			return mComponentType;
 		}
 
+		void ClearAllEntities() {}
+
 	private:
 		// The Component Type of the array
 		ComponentType mComponentType{};
@@ -149,7 +151,6 @@ namespace IS {
 		 * \param component The component data to be inserted.
 		 */
 		void InsertData(Entity entity, T component) {
-			assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
 			// Put new entry at end and update the maps
 			size_t new_index = mSize;
@@ -174,6 +175,7 @@ namespace IS {
 			// Copy element at end into deleted element's place to maintain density
 			size_t removed_index = mEntityToIndexMap[entity];
 			size_t last_index = mSize - 1;
+			// this basically hides the data structure but does not free it from memory
 			mComponentArray[removed_index] = mComponentArray[last_index];
 
 			// Update map to point to moved spot
@@ -252,6 +254,16 @@ namespace IS {
 			}
 			return MAX_COMPONENTS+1;
 		}
+
+		//clear all entities in the component
+		void ClearAllEntities() {
+			// we don't need to clear mComponentArray as its an array with fixed memory
+			std::fill(mComponentArray.begin(), mComponentArray.end(), T{});// fill it with new Ts instead
+			mEntityToIndexMap.clear();
+			mIndexToEntityMap.clear();
+			mSize = 0;
+		}
+
 
 	private:
 		/**
@@ -452,6 +464,14 @@ namespace IS {
 
 			}
 			return returned_signature;
+		}
+
+		// Accessor function to clear all entities.
+		void ClearEntities() {
+			for (auto const& pair : mComponentArrayMap) {
+				auto const& component = pair.second;
+				component->ClearAllEntities();
+			}
 		}
 
 		/**

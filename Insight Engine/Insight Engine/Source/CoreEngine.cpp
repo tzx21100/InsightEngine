@@ -375,13 +375,8 @@ namespace IS {
 
     void InsightEngine::NewScene() {
         // Destroy all existing entities
-        std::vector<Entity> list_of_entities;
-        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
-            list_of_entities.emplace_back(id.first);
-        }
-        for (int i = 0; i < list_of_entities.size(); i++) {
-            DestroyEntity(list_of_entities[i]);
-        }
+        mComponentManager->ClearEntities();
+        mSystemManager->ClearEntities();
         //reset the entity ID to start from 0
         mEntityManager->ResetEntityID();
     }

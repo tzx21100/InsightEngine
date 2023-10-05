@@ -168,6 +168,12 @@ namespace IS {
             }
         }
 
+        void ClearEntities() {
+            for (auto const& pair : mSystems) {
+                pair.second->mEntities.clear();
+            }
+        }
+
     private:
         // Map from system name to a signature
         std::unordered_map<std::string, Signature> mSignatures;
