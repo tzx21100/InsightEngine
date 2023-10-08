@@ -17,7 +17,7 @@
 mono_crash.*
 
 # Script Temp Files
-Resources/Scripts/
+/Insight Engine/Insight Engine/Resources/Scripts/
 
 # Build results
 [Dd]ebug/
