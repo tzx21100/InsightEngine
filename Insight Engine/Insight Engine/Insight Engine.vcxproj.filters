@@ -34,12 +34,6 @@
     <ClCompile Include="Source\Logger.cpp">
       <Filter>Debug\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>Engine\Window</Filter>
     </ClCompile>
@@ -51,9 +45,6 @@
     </ClCompile>
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Asset.cpp">
-      <Filter>Engine\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
@@ -109,6 +100,15 @@
     <ClCompile Include="Source\Manifold.cpp">
       <Filter>Physics\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Asset.cpp">
+      <Filter>Engine\Systems\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Engine\Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Engine\Systems\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -150,12 +150,6 @@
     <ClInclude Include="Source\Logger.h">
       <Filter>Debug\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Engine\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Engine\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Source\JsonSaveLoad.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
@@ -176,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Asset.h">
-      <Filter>Engine\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>Debug\Profiling</Filter>
@@ -257,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="Source\Manifold.h">
       <Filter>Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Asset.h">
+      <Filter>Engine\Systems\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Engine\Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Engine\Systems\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +343,21 @@
     </Filter>
     <Filter Include="Engine\Messages">
       <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Asset">
+      <UniqueIdentifier>{e323a738-f154-4f3b-bfdf-fd187f5a6dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Audio">
+      <UniqueIdentifier>{351e8767-fd63-4bce-850b-607c7a472e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Input">
+      <UniqueIdentifier>{47eb204d-0eaf-4570-ac17-f9c51b90b6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\FSM">
+      <UniqueIdentifier>{04098ec3-c3dc-405d-a930-8cc6a93d8694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Pathfinding">
+      <UniqueIdentifier>{33d7fb76-dea3-4e19-981f-928ac46431f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
