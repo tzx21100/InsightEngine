@@ -274,7 +274,9 @@ namespace IS
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				// update the velocity if gravity exists
 				if (mExertingGravity) {
-					body.mVelocity += mGravity * time;
+					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
+					body.mVelocity += body.mAcceleration * time;
+					//body.mVelocity += mGravity * time;
 				}
 
 				// set range
