@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AIFSM.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Asset.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -52,6 +53,8 @@
     <ClCompile Include="Source\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AIFSM.h" />
+    <ClInclude Include="Source\AIState.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Asset.h" />
     <ClInclude Include="Source\Audio.h" />

@@ -51,5 +51,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Graphics.h"
 #include "ScriptEngine.h"
 #include "ScriptGlue.h"
+#include "AIFSM.h"
 
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
