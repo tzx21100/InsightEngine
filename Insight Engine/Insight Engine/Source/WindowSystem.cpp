@@ -37,6 +37,7 @@ namespace IS {
         glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
         glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE); // window dimensions are static
+        glfwWindowHint(GLFW_DECORATED, mProps.mFullscreen ? GLFW_FALSE : GLFW_TRUE); // borderless fullscreen window
 
         // Create a window and its OpenGL context
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -47,8 +48,7 @@ namespace IS {
 
         mWindow = glfwCreateWindow(mProps.mFullscreen ? mMonitorWidth : mProps.mWidth,
                                    mProps.mFullscreen ? mMonitorHeight : mProps.mHeight,
-                                   mProps.mTitle.c_str(),
-                                   mProps.mFullscreen ? monitor : nullptr, nullptr);
+                                   mProps.mTitle.c_str(), nullptr, nullptr);
 
         if (!mWindow) {
             IS_CORE_CRITICAL("Failed to create OpneGL context!");
@@ -56,7 +56,8 @@ namespace IS {
         }
 
         // Set initial window position
-        glfwSetWindowPos(mWindow, 100, 100);
+        if (!mProps.mFullscreen)
+            glfwSetWindowPos(mWindow, 100, 100);
 
         // Default setting
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -145,17 +146,18 @@ namespace IS {
 
     void WindowSystem::SetFullScreen(bool fullscreen) {
         mProps.mFullscreen = fullscreen;
+        glfwSetWindowAttrib(mWindow, GLFW_DECORATED, fullscreen ? GLFW_FALSE : GLFW_TRUE);
 
         // Windowed mode
         if (!fullscreen) {
-            glfwSetWindowMonitor(mWindow, NULL, 100, 100, mProps.mWidth, mProps.mHeight, GLFW_DONT_CARE);
+            glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mProps.mWidth, mProps.mHeight, GLFW_DONT_CARE);
             return;
         }
 
-        // Fullscreen mode
+        // Borderless fullscreen window mode
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-        glfwSetWindowMonitor(mWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        glfwSetWindowMonitor(mWindow, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
     }
 
     bool WindowSystem::IsFullScreen() const { return mProps.mFullscreen; }
