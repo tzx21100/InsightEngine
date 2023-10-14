@@ -16,6 +16,84 @@
 #include "Pch.h"
 
 namespace IS {
+    void Mesh::setupInstancedQuadVAO() {
+        // Define the vertices of the quad as a triangle strip
+        std::array<Vertex, 4> vertices{
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
+            Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
+            Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+        };
+
+        // Define an array of instance data for a single quad
+        std::array<InstanceData, 1> instanceData{
+            InstanceData{
+                glm::mat4(1.0f),    // Identity transformation matrix
+                glm::vec3(1.0f),    // White color
+                0                   // Texture index (if applicable)
+            }
+        };
+
+        // Generate a VAO handle to encapsulate the VBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
+
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
+
+        // Create and bind a VBO to store the instance data
+        GLuint instance_vbo_hdl;
+        glCreateBuffers(1, &instance_vbo_hdl);
+        glNamedBufferStorage(instance_vbo_hdl, sizeof(InstanceData) * instanceData.size(), instanceData.data(), 0);
+
+        // Bind the VBO for vertices to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Bind the VBO for instance data to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 1, instance_vbo_hdl, 0, sizeof(InstanceData));
+
+        // Enable the position attribute for vertices
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Enable the texture coordinate attribute for vertices
+        glEnableVertexArrayAttrib(vao_hdl, 2);
+        glVertexArrayAttribFormat(vao_hdl, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord));
+        glVertexArrayAttribBinding(vao_hdl, 2, 0);
+
+        // Enable the instance attributes
+        // The model matrix is a 4x4 matrix (mat4), color is a vec3, and texIndex is an int
+        glEnableVertexArrayAttrib(vao_hdl, 3); // Model Matrix
+        glEnableVertexArrayAttrib(vao_hdl, 4); // Color
+        glEnableVertexArrayAttrib(vao_hdl, 5); // Texture Index
+
+        // Specify the format and bindings for instance attributes
+        glVertexArrayAttribFormat(vao_hdl, 3, 4, GL_FLOAT, GL_FALSE, offsetof(InstanceData, modelXformMatrix));
+        glVertexArrayAttribFormat(vao_hdl, 4, 3, GL_FLOAT, GL_FALSE, offsetof(InstanceData, color));
+        glVertexArrayAttribIFormat(vao_hdl, 5, 1, GL_INT, offsetof(InstanceData, texIndex));
+
+        // Specify which buffer binding point the instance attributes will use
+        glVertexArrayAttribBinding(vao_hdl, 3, 1);
+        glVertexArrayAttribBinding(vao_hdl, 4, 1);
+        glVertexArrayAttribBinding(vao_hdl, 5, 1);
+
+        // Set the divisor for the instance attributes to 1 (one set of attributes per instance)
+        glVertexArrayBindingDivisor(vao_hdl, 1, 1);
+
+        // Unbind the VAO (not necessary to unbind buffers individually)
+        glBindVertexArray(0);
+
+        // Save VAO and draw count
+        vao_ID = vao_hdl;
+        vbo_ID = vbo_hdl;
+        instance_vbo_ID = instance_vbo_hdl;
+        draw_count = static_cast<GLuint>(vertices.size());
+    }
+
 	void Mesh::setupQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
@@ -113,6 +191,7 @@ namespace IS {
         // 4 meshes for 4 different models
         Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
         quad_mesh.setupQuadVAO();
+        //quad_mesh.setupInstancedQuadVAO();
         point_mesh.setupNonQuadVAO(GL_POINTS);
         line_mesh.setupNonQuadVAO(GL_LINES);
         circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
@@ -129,5 +208,27 @@ namespace IS {
             glDeleteVertexArrays(1, &mesh.vao_ID);
             glDeleteBuffers(1, &mesh.vbo_ID);
         }
+    }
+
+    void Mesh::uploadInstanceData(const std::vector<InstanceData>& instanceData, Mesh const& mesh_used) {
+        glBindBuffer(GL_ARRAY_BUFFER, mesh_used.instance_vbo_ID);
+
+        // Map the buffer for writing
+        InstanceData* bufferData = (InstanceData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+
+        if (bufferData) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(bufferData, instanceData.data(), instanceData.size() * sizeof(InstanceData));
+
+            // Unmap the buffer
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+        }
+        else {
+            // Handle buffer mapping error
+            std::cerr << "Failed to map the instance buffer for writing." << std::endl;
+        }
+
+        // Unbind the buffer
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 }

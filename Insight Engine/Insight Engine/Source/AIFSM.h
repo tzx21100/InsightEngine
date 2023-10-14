@@ -30,8 +30,8 @@ namespace IS {
 
     private:
         //store states
-        std::unordered_map<std::string, AIState*> mStateList;
-        AIState* mCurrentState;
+        std::unordered_map<std::string, AIState*> mStateList{};
+        AIState* mCurrentState{};
     };
 }
 

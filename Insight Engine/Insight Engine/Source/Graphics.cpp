@@ -21,7 +21,7 @@
 
 namespace IS {
     /// Static objects ///
-
+    std::vector<Mesh::InstanceData> ISGraphics::quadInstances;
     // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
     // Animation objects
@@ -47,6 +47,24 @@ namespace IS {
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
 
+        // Loop through all the entities
+        //InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+        //for (auto& entity : mEntities) {
+        //    if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity)) {
+        //        auto& sprite = engine.GetComponent<Sprite>(entity);
+        //        auto& transform = engine.GetComponent<Transform>(entity);
+
+        //        // Create an instance data for the entity
+        //        Mesh::InstanceData instanceData;
+        //        instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
+        //        instanceData.color = sprite.color;
+        //        instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+
+        //        // Add the instance data to the array
+        //        quadInstances.push_back(instanceData);
+        //    }
+        //}
+
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
         text_shader_pgm.setupTextShaders();
 
@@ -60,7 +78,36 @@ namespace IS {
         mFramebuffer = std::make_shared<Framebuffer>(props);
     }
 
+    std::string ISGraphics::GetName() { return "Graphics"; };
+
+    void ISGraphics::HandleMessage(const Message& msg) {
+        if (msg.GetType() == MessageType::DebugInfo) {
+            IS_CORE_INFO("Handling Graphics");
+        }
+    }
+
     void ISGraphics::Update(float delta_time) {
+        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+
+        quadInstances.clear();
+        for (auto& entity : mEntities) { // for each intentity
+            // get sprite and transform components
+            auto& sprite = engine.GetComponent<Sprite>(entity);
+            auto& trans = engine.GetComponent<Transform>(entity);
+
+            // update sprite's transform
+            sprite.followTransform(trans);
+            sprite.transform();
+
+            Mesh::InstanceData instanceData;
+            instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
+            instanceData.color = sprite.color;
+            instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+
+            // Add the instance data to the array
+            quadInstances.push_back(instanceData);
+        }
+
         // update animations
         idle_ani.updateAnimation(delta_time);
         walking_ani.updateAnimation(delta_time);
@@ -68,14 +115,6 @@ namespace IS {
         
         // draw
         Draw(delta_time);
-    }
-
-    std::string ISGraphics::GetName() { return "Graphics"; };
-
-    void ISGraphics::HandleMessage(const Message& msg) {
-        if (msg.GetType() == MessageType::DebugInfo) {
-            IS_CORE_INFO("Handling Graphics");
-        }
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
@@ -88,9 +127,24 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        glClear(GL_COLOR_BUFFER_BIT); // clear color buffer
+        //glClear(GL_COLOR_BUFFER_BIT);
 
-        // Render scene
+        //// Bind the VAO for instances
+        //glBindVertexArray(meshes[0].vao_ID);
+
+        //// Bind the instance VBO
+        //glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
+
+        //// Upload the quadInstances data to the GPU
+        //Mesh::uploadInstanceData(quadInstances, meshes[0]);
+
+        //// Render the instances using instanced rendering (triangle strips)
+        //glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (GLsizei)quadInstances.size());
+
+        //// Unbind the VAO
+        //glBindVertexArray(0);
+
+
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
             auto& sprite = engine.GetComponent<Sprite>(entity);
@@ -99,6 +153,14 @@ namespace IS {
             // update sprite's transform
             sprite.followTransform(trans);
             sprite.transform();
+
+            Mesh::InstanceData instanceData;
+            instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
+            instanceData.color = sprite.color;
+            instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+
+            // Add the instance data to the array
+            quadInstances.push_back(instanceData);
 
             // for each type
             switch (sprite.primitive_type) {
@@ -245,5 +307,7 @@ namespace IS {
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
+
+
 
 } // end namespace IS

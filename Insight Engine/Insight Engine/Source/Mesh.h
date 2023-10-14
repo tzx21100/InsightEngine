@@ -29,9 +29,10 @@ namespace IS {
     class Mesh {
     public:
         GLuint vao_ID{};            // The OpenGL vertex array object ID.
-        GLuint animation_vao_ID{};  // The OpenGL vertex array object ID for animation (unused).
         GLuint vbo_ID{};            // The OpenGL vertex buffer object ID.
+        GLuint instance_vbo_ID{};
         GLuint draw_count{};        // The number of vertices to be drawn.
+        //GLuint instance_count{};
 
         /*!
          * \brief Represents a vertex with position and texture coordinates.
@@ -40,6 +41,16 @@ namespace IS {
             glm::vec2 position; // The vertex position.
             glm::vec2 texCoord; // The texture coordinates.
         };
+
+        struct InstanceData {
+            glm::mat3 modelXformMatrix{};
+            glm::vec3 color{};
+            int texIndex{};
+        };
+
+        //std::vector<Vertex> vertices{};
+
+        void setupInstancedQuadVAO();
 
         /*!
          * \brief Initializes various types of meshes for rendering.
@@ -75,6 +86,8 @@ namespace IS {
          * \param mesh_primitive_type The OpenGL primitive type for the non-quad mesh.
          */
         void setupNonQuadVAO(GLenum mesh_primitive_type);
+
+        static void uploadInstanceData(const std::vector<InstanceData>& instanceData, Mesh const& mesh_used);
     };
 } // end namespace IS
 
