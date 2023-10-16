@@ -23,6 +23,7 @@
 #include "Editor.h"
 #include "GameLoop.h"
 #include "ScriptEngine.h"
+#include "AIFSM.h"
 
 using namespace IS;
 
@@ -36,6 +37,7 @@ void RegisterComponents() {
     engine.RegisterComponent<Transform>();
     engine.RegisterComponent<RigidBody>();
     engine.RegisterComponent<InputAffector>();
+    engine.RegisterComponent<AIState>();
 
 }
 
@@ -48,6 +50,7 @@ void RegisterSystems() {
     Signature sign_input = engine.GenerateSignature<InputAffector>();
     Signature sign_physics = engine.GenerateSignature<Transform, RigidBody>();
     Signature sign_graphics = engine.GenerateSignature<Sprite, Transform>();
+    Signature sign_fsm = engine.GenerateSignature<AIState>();
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -57,6 +60,7 @@ void RegisterSystems() {
     auto insight_physics = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
     auto insight_gui = std::make_shared<Editor>();
+    auto insight_fsm = std::make_shared<AIFSMManager>();
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_default);
@@ -64,6 +68,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_physics, sign_physics);
     engine.AddSystem(insight_graphics, sign_graphics);
     engine.AddSystem(insight_gui, sign_default);
+    engine.AddSystem(insight_fsm, sign_fsm);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 

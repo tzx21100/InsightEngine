@@ -5,14 +5,18 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Pch.h"
+#include "Entities.h"
+#include "Component.h"
 
 namespace IS {
-    class AIState {
-    public:
-        virtual void Enter() = 0;
-        virtual void Update() = 0;
-        virtual void Exit() = 0;
-    };
+	class AIState : public IComponent
+	{
+	public:
+		void(*Enter)();
+		void(*Update)();
+		void(*Exit)();
+	};
 }
 
 
