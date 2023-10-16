@@ -21,7 +21,9 @@
 
 namespace IS {
     /// Static objects ///
-    std::vector<Mesh::InstanceData> ISGraphics::quadInstances;
+
+    std::vector<Sprite::instanceData> ISGraphics::quadInstances;
+    
     // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
     // Animation objects
@@ -46,24 +48,6 @@ namespace IS {
 
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
-
-        // Loop through all the entities
-        //InsightEngine& engine = InsightEngine::Instance(); // get engine instance
-        //for (auto& entity : mEntities) {
-        //    if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity)) {
-        //        auto& sprite = engine.GetComponent<Sprite>(entity);
-        //        auto& transform = engine.GetComponent<Transform>(entity);
-
-        //        // Create an instance data for the entity
-        //        Mesh::InstanceData instanceData;
-        //        instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-        //        instanceData.color = sprite.color;
-        //        instanceData.texIndex = sprite.texture; // Set the appropriate texture index
-
-        //        // Add the instance data to the array
-        //        quadInstances.push_back(instanceData);
-        //    }
-        //}
 
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
         text_shader_pgm.setupTextShaders();
@@ -99,13 +83,13 @@ namespace IS {
             sprite.followTransform(trans);
             sprite.transform();
 
-            Mesh::InstanceData instanceData;
-            instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-            instanceData.color = sprite.color;
-            instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+            //Sprite::instanceData instData;
+            //instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
+            //instanceData.color = sprite.color;
+            //instanceData.texIndex = sprite.texture; // Set the appropriate texture index
 
-            // Add the instance data to the array
-            quadInstances.push_back(instanceData);
+            //// Add the instance data to the array
+            //quadInstances.push_back(instanceData);
         }
 
         // update animations
@@ -148,19 +132,19 @@ namespace IS {
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
             auto& sprite = engine.GetComponent<Sprite>(entity);
-            auto& trans = engine.GetComponent<Transform>(entity);
+            //auto& trans = engine.GetComponent<Transform>(entity);
 
-            // update sprite's transform
-            sprite.followTransform(trans);
-            sprite.transform();
+            //// update sprite's transform
+            //sprite.followTransform(trans);
+            //sprite.transform();
 
-            Mesh::InstanceData instanceData;
-            instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-            instanceData.color = sprite.color;
-            instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+            //Mesh::InstanceData instanceData;
+            //instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
+            //instanceData.color = sprite.color;
+            //instanceData.texIndex = sprite.texture; // Set the appropriate texture index
 
-            // Add the instance data to the array
-            quadInstances.push_back(instanceData);
+            //// Add the instance data to the array
+            //quadInstances.push_back(instanceData);
 
             // for each type
             switch (sprite.primitive_type) {

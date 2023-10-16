@@ -95,7 +95,7 @@ namespace IS {
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
 		// Static objects
-		static std::vector<Mesh::InstanceData> quadInstances;
+		static std::vector<Sprite::instanceData> quadInstances;
 		// Sprites (models) to render
 		static std::vector<Sprite> sprites;
 		// Animation objects
