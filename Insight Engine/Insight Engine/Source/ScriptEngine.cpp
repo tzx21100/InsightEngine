@@ -194,6 +194,7 @@ namespace IS {
     }
 
     MonoObject* ScriptEngine::InstantiateClass(MonoClass* mono_class) {
+        if (mono_class == nullptr) { return nullptr; }
         MonoObject* instance = mono_object_new(s_data->mAppDomain, mono_class);
         mono_runtime_object_init(instance);
         return instance;
