@@ -22,10 +22,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Layer.h"
+#include "Panel.h"
 #include "SceneHierarchyPanel.h"
-
-// Dependencies
-#include <imgui.h>
 
 namespace IS {
 
@@ -65,41 +63,32 @@ namespace IS {
         void OnRender() override;
 
         /*!
+         * \brief Add panels.
+         */
+        void AddPanels();
+
+        /*!
          * \brief Render the menu bar.
          */
         void RenderMenuBar();
 
         /*!
-         * \brief Render the scene panel in the editor interface.
-         */
-        void RenderScenePanel();
-
-        /*!
-         * \brief Render the performance panel in the editor interface.
-         */
-        void RenderPerformancePanel();
-
-        /*!
-         * \brief Render the log console panel in the editor interface.
-         */
-        void RenderLogConsolePanel();
-
-        /*!
-         * \brief Render the scene hierarchy panel in the editor interface.
-         */
-        void RenderSceneHierarchyPanel();
-
-        /*!
          * \brief Render an overlay on top of the scene in the editor interface.
+         * \note helper for milestones
          */
         void RenderSceneOverlay();
 
+        /*!
+         * \brief Get the dockspace position.
+         * \return Dockspace position.
+         */
+        static Vec2 GetDockspacePosition();
+
     private:
-        Vec2 mDockspacePosition;               ///< Position of the dockspace in the editor.
-        Vec2 mScenePanelSize;                  ///< Size of the scene panel.
-        SceneHierarchyPanel mSceneHierarchyPanel; ///< Instance of the scene hierarchy panel.
-        bool show_load = false;
-        bool show_save = false;
+        static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
+        std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
+        bool mShowLoad = false; ///< Flag indicating to show load scene.
+        bool mShowSave = false; ///< Flag indicating to show save scene.
 
         /*!
          * \brief Load a new scene.
@@ -125,6 +114,16 @@ namespace IS {
          * \brief Save current scene as.
          */
         void SaveSceneAs();
+
+        /*!
+         * \brief Toggle fullscreen mode.
+         */
+        void ToggleFullscreen();
+
+        /*!
+         * \brief Exit current program.
+         */
+        void ExitProgram();
     };
 
 } // end namespace IS

@@ -38,7 +38,7 @@ namespace IS {
 
     };
 
-    class InputManager :public ParentSystem{
+    class InputManager : public ParentSystem{
     public:
         /**
          * \brief Returns the name of the InputManager system.
@@ -70,8 +70,9 @@ namespace IS {
 
         /**
          * \brief Constructor for InputManager. Sets up GLFW callbacks.
+         * \param window Pointer to the window system.
          */
-        InputManager();
+        InputManager(std::shared_ptr<WindowSystem> window);
 
         /**
          * \brief Checks if a key is currently triggered.
@@ -110,8 +111,8 @@ namespace IS {
          */
         std::pair<double, double> GetMousePosition() const;
 
-        //window
-        GLFWwindow* window;
+        // window
+        std::shared_ptr<WindowSystem> mWindow;
 
         /**
          * \brief Sets the center world position for the mouse relative to the GLFW window
@@ -127,7 +128,7 @@ namespace IS {
         void setRatio(float widthR, float heightR) {
             InsightEngine& engine = InsightEngine::Instance();
             auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-            auto const& [width, height] = window_sys->GetWindowSize();
+            auto [width, height] = window_sys->GetWindowSize();
             //glfwGetWindowSize(window, &width, &height);
             ratio_width =  (float)width / widthR;
             ratio_height =  (float)height / heightR;

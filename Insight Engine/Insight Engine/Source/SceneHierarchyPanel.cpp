@@ -28,19 +28,38 @@
 
 namespace IS {
 
+    SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::mSelectedEntity;
+
+    SceneHierarchyPanel::SceneHierarchyPanel() : mInspectorPanel(std::make_shared<InspectorPanel>()) {}
+
     void SceneHierarchyPanel::RenderPanel() {
         InsightEngine& engine = InsightEngine::Instance();
+        ImGuiIO& io = ImGui::GetIO();
+        auto& font_bold = io.Fonts->Fonts[0];
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
 
-        // Render all entity nodes
-        for (auto& [entity, name] : engine.GetEntitiesAlive())
-            RenderEntityNode(entity);
+        // No. of entities
+        ImGui::PushFont(font_bold);
+        ImGui::TextUnformatted("No. of entities:");
+        ImGui::PopFont();
+        ImGui::SameLine();
+        ImGui::Text("%d", engine.EntitiesAlive());
+
+        // Filter entity hierarchy
+        mFilter.Draw("Filter");
+        ImGui::Separator();
+
+        // Render all filtered entities
+        for (auto const& [entity, name] : engine.GetEntitiesAlive()) {
+            if (mFilter.PassFilter(name.c_str())) // filter
+                RenderEntityNode(entity);
+        }
 
         // Deselect entity
         if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-            mSelectedEntity = {};
+            SceneHierarchyPanel::ResetSelection();
 
         ImGuiPopupFlags flags = ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight;
         if (ImGui::BeginPopupContextWindow(0, flags)) {
@@ -56,14 +75,12 @@ namespace IS {
 
         ImGui::End();
 
-        // Render inspector for selected entity
-        ImGui::Begin("Inspector");
-        if (mSelectedEntity)
-            RenderComponentNodes(*mSelectedEntity);
-        ImGui::End();
+        mInspectorPanel->RenderPanel();
     }
 
     void SceneHierarchyPanel::RenderEntityNode(Entity entity) {
+        // Set minimum window size
+        ImGui::SetNextWindowSizeConstraints(ImVec2(200.f, 200.f), ImVec2(FLT_MAX, FLT_MAX));
         InsightEngine& engine = InsightEngine::Instance();
 
         ImGuiTreeNodeFlags tree_flags = (mSelectedEntity && (*mSelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
@@ -92,7 +109,163 @@ namespace IS {
             ImGui::TreePop();
     }
 
-    void SceneHierarchyPanel::RenderComponentNodes(Entity entity) {
+    void SceneHierarchyPanel::RenderConfirmDelete(Entity entity, bool& show) {
+        InsightEngine& engine = InsightEngine::Instance();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
+
+        if (ImGui::Begin("Confirm delete?", &show, window_flags)) {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
+
+            ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
+            ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
+            ImGui::TableNextColumn();
+            if (ImGui::Button("CONFIRM")) {
+                engine.DeleteEntity(entity);
+                if (mSelectedEntity && *mSelectedEntity == entity)
+                    mSelectedEntity = {};
+                show = false;
+            }
+            ImGui::PopStyleColor(3);
+            ImGui::TableNextColumn();
+            if (ImGui::Button("CANCEL"))
+                show = false;
+            ImGui::EndTable();
+            ImGui::End();
+        }
+    }
+
+    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity = {}; }
+
+    SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
+
+    void SceneHierarchyPanel::InspectorPanel::RenderPanel() {
+        ImGui::SetNextWindowSizeConstraints(ImVec2(350.f, 200.f), ImVec2(FLT_MAX, FLT_MAX));
+        ImGui::Begin("Inspector");
+        if (mSelectedEntity)
+            RenderComponentNodes(*mSelectedEntity);
+        ImGui::End();
+    }
+
+    void SceneHierarchyPanel::InspectorPanel::RenderEntityConfig(Entity entity) {
+        InsightEngine& engine = InsightEngine::Instance();
+
+        // Edit Entity Name
+        std::string& name = engine.GetEntityName(entity);
+        char buffer[std::numeric_limits<char8_t>::max() + 1]{};
+        auto source = name | std::ranges::views::take(name.size());
+        std::ranges::copy(source, std::begin(buffer));
+
+        ImGuiIO& io = ImGui::GetIO();
+        auto font_bold = io.Fonts->Fonts[0];
+        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+
+        if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
+            name = std::string(buffer);
+
+        // Prefabs
+        ImGui::TextUnformatted("Prefab");
+
+        // Save Prefab
+        ImGui::SameLine();
+        ImGui::PushFont(font_bold);
+        if (ImGui::Button("Save"))
+            engine.SaveAsPrefab(entity, name);
+
+        // Load Prefab
+        ImGui::SameLine();
+        if (ImGui::Button("Load"))
+            mShowPrefabs = true;
+
+        ImGui::PopFont();
+        if (mShowPrefabs) {
+            ImGui::SameLine();
+            ImGui::PushItemWidth(100.f);
+            bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
+            if (begin_combo) {
+                auto asset = engine.GetSystem<AssetManager>("Asset");
+                for (auto const& [prefab_name, prefab] : asset->mPrefabList) {
+                    const bool is_selected = (name == prefab_name);
+                    if (ImGui::Selectable(prefab_name.c_str(), is_selected)) {
+                        engine.LoadFromPrefab(prefab);
+                        mShowPrefabs = false;
+                    }
+                    if (is_selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::PopItemWidth();
+
+            if (ImGui::IsMouseDown(0) && !ImGui::IsItemHovered() && !begin_combo)
+                mShowPrefabs = false;
+        }
+
+        // Add Component
+        ImGui::PushFont(font_bold);
+        if (ImGui::Button("Add Component"))
+            ImGui::OpenPopup("AddComponent");
+        ImGui::PopFont();
+
+        // Check whether entity already has the component
+        if (ImGui::BeginPopup("AddComponent")) {
+            if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity) &&
+                engine.HasComponent<RigidBody>(entity) && engine.HasComponent<InputAffector>(entity)) {
+                if (ImGui::MenuItem("Limit Reached!"))
+                    ImGui::CloseCurrentPopup();
+            } else {
+                if (!engine.HasComponent<Sprite>(entity)) {
+                    if (ImGui::MenuItem("Sprite")) {
+                        engine.AddComponent<Sprite>(entity, Sprite());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<Transform>(entity)) {
+                    if (ImGui::MenuItem("Transform")) {
+                        engine.AddComponent<Transform>(entity, Transform());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<RigidBody>(entity)) {
+                    if (ImGui::MenuItem("Rigidbody")) {
+                        engine.AddComponent<RigidBody>(entity, RigidBody());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+                if (!engine.HasComponent<InputAffector>(entity)) {
+                    if (ImGui::MenuItem("InputAffector")) {
+                        engine.AddComponent<InputAffector>(entity, InputAffector());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
+            }
+
+            ImGui::EndPopup();
+        }
+        ImGui::SameLine();
+
+        // Clone Entity
+        ImGui::PushFont(font_bold);
+        if (ImGui::Button("Clone Entity"))
+            engine.CopyEntity(entity);
+        ImGui::SameLine();
+
+        // Destroy Entity
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+        if (ImGui::Button("Destroy Entity")) {
+            engine.DeleteEntity(entity);
+            mSelectedEntity = {};
+        }
+        ImGui::PopStyleColor(3);
+        ImGui::PopFont();
+
+        ImGui::Spacing();
+    }
+
+    void SceneHierarchyPanel::InspectorPanel::RenderComponentNodes(Entity entity) {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
@@ -270,154 +443,8 @@ namespace IS {
         ImGui::PopStyleVar();
     }
 
-    void SceneHierarchyPanel::RenderEntityConfig(Entity entity) {
-        InsightEngine& engine = InsightEngine::Instance();
-
-        // Edit Entity Name
-        std::string& name = engine.GetEntityName(entity);
-        char buffer[std::numeric_limits<char8_t>::max() + 1]{};
-        auto source = name | std::ranges::views::take(name.size());
-        std::ranges::copy(source, std::begin(buffer));
-
-        ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[0];
-        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-
-        if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
-            name = std::string(buffer);
-
-        // Prefabs
-        ImGui::TextUnformatted("Prefab");
-
-        // Save Prefab
-        ImGui::SameLine();
-        ImGui::PushFont(font_bold);
-        if (ImGui::Button("Save"))
-            engine.SaveAsPrefab(entity, name);
-
-        // Load Prefab
-        ImGui::SameLine();
-        if (ImGui::Button("Load"))
-            show_prefabs = true;
-
-        ImGui::PopFont();
-        if (show_prefabs) {
-            ImGui::SameLine();
-            ImGui::PushItemWidth(100.f);
-            bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
-            if (begin_combo) {
-                auto asset = engine.GetSystem<AssetManager>("Asset");
-                for (auto const& [prefab_name, prefab] : asset->mPrefabList) {
-                    const bool is_selected = (name == prefab_name);
-                    if (ImGui::Selectable(prefab_name.c_str(), is_selected)) {
-                        engine.LoadFromPrefab(prefab);
-                        show_prefabs = false;
-                    }
-                    if (is_selected)
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-            }
-            ImGui::PopItemWidth();
-
-            if (ImGui::IsMouseDown(0) && !ImGui::IsItemHovered() && !begin_combo)
-                show_prefabs = false;
-        }
-
-        // Add Component
-        ImGui::PushFont(font_bold);
-        if (ImGui::Button("Add Component"))
-            ImGui::OpenPopup("AddComponent");
-        ImGui::PopFont();
-
-        // Check whether entity already has the component
-        if (ImGui::BeginPopup("AddComponent")) {
-            if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity) &&
-                engine.HasComponent<RigidBody>(entity) && engine.HasComponent<InputAffector>(entity)) {
-                if (ImGui::MenuItem("Limit Reached!"))
-                    ImGui::CloseCurrentPopup();
-            } else {
-                if (!engine.HasComponent<Sprite>(entity)) {
-                    if (ImGui::MenuItem("Sprite")) {
-                        engine.AddComponent<Sprite>(entity, Sprite());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                if (!engine.HasComponent<Transform>(entity)) {
-                    if (ImGui::MenuItem("Transform")) {
-                        engine.AddComponent<Transform>(entity, Transform());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                if (!engine.HasComponent<RigidBody>(entity)) {
-                    if (ImGui::MenuItem("Rigidbody")) {
-                        engine.AddComponent<RigidBody>(entity, RigidBody());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                if (!engine.HasComponent<InputAffector>(entity)) {
-                    if (ImGui::MenuItem("InputAffector")) {
-                        engine.AddComponent<InputAffector>(entity, InputAffector());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-            }
-
-            ImGui::EndPopup();
-        }
-        ImGui::SameLine();
-
-        // Clone Entity
-        ImGui::PushFont(font_bold);
-        if (ImGui::Button("Clone Entity"))
-            engine.CopyEntity(entity);
-        ImGui::SameLine();
-
-        // Destroy Entity
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
-        if (ImGui::Button("Destroy Entity")) {
-            engine.DeleteEntity(entity);
-            mSelectedEntity = {};
-        }
-        ImGui::PopStyleColor(3);
-        ImGui::PopFont();
-
-        ImGui::Spacing();
-    }
-
-    void SceneHierarchyPanel::RenderConfirmDelete(Entity entity, bool& show) {
-        InsightEngine& engine = InsightEngine::Instance();
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
-
-        if (ImGui::Begin("Confirm delete?", &show, window_flags)) {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
-
-            ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
-            ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
-            ImGui::TableNextColumn();
-            if (ImGui::Button("CONFIRM")) {
-                engine.DeleteEntity(entity);
-                if (mSelectedEntity && *mSelectedEntity == entity)
-                    mSelectedEntity = {};
-                show = false;
-            }
-            ImGui::PopStyleColor(3);
-            ImGui::TableNextColumn();
-            if (ImGui::Button("CANCEL"))
-                show = false;
-            ImGui::EndTable();
-            ImGui::End();
-        }
-    }
-
-    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity = {}; }
-
     template <typename Component, typename RenderFunc>
-    static void SceneHierarchyPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
+    static void SceneHierarchyPanel::InspectorPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
         // Engine instance
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;

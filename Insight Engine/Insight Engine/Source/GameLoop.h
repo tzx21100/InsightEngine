@@ -122,16 +122,8 @@ namespace IS {
             auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
 
             // Process Keyboard Events
-            if (!gui->WantCaptureKeyboard()) {                
-
-                // Toggle fullscreen
+            if (!gui->WantCaptureKeyboard()) {
                 auto const& window = engine.GetSystem<WindowSystem>("Window");
-                static bool fullscreen = window->IsFullScreen();
-                if (input->IsKeyPressed(GLFW_KEY_F11)) {
-                    fullscreen = !fullscreen;
-                    window->SetFullScreen(fullscreen);
-                    IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
-                }
 
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
@@ -141,7 +133,7 @@ namespace IS {
 
                 // Offset mouse position
                 if (!engine.mUsingGUI) {
-                    auto const& [width, height] = fullscreen ? window->GetMonitorSize() : window->GetWindowSize();
+                    auto [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }

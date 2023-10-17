@@ -36,10 +36,17 @@ namespace IS {
          */
         struct WindowProperties {
             std::string mTitle; ///< The title of the window.
-            uint32_t mWidth{}; ///< The width of the window.
-            uint32_t mHeight{}; ///< The height of the window.
+            int mXpos{}; ///< The x-position of the window.
+            int mYpos{}; ///< The y-position of the window.
+            int mWidth{}; ///< The width of the window.
+            int mHeight{}; ///< The height of the window.
             bool mVSync{}; ///< Flag indicating whether vsync is enabled.
+            bool mMaximized{}; ///< Flag indicating whether window is maximzed.
             bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
+
+            WindowProperties() = default;
+            WindowProperties(std::string const& title, int width, int height, bool vsync = true, bool maximized = false, bool fullscreen = false)
+                : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
         };
 
         /*!
@@ -80,12 +87,77 @@ namespace IS {
          */
         void SwapBuffers();
 
-        /*!
-         * \brief Set window to fullscreen/windowed
-         * 
-         * \param fullscreen fullscreen if true, windowed otherwise. (default true)
+        /*|
+         * \brief Gets the native GLFW window.
+         * \return pointer to native window.
          */
-        void SetFullScreen(bool fullscreen = true);
+        GLFWwindow* GetNativeWindow() const;
+
+        /*!
+         * \brief Gets the width of the monitor.
+         * \return The width of the monitor.
+         */
+        int GetMonitorWidth() const;
+
+        /*!
+         * \brief Gets the height of the monitor.
+         * \return The height of the monitor.
+         */
+        int GetMonitorHeight() const;
+
+        /*!
+         * \brief Gets the title of the window.
+         * \return The title of the window.
+         */
+        std::string GetWindowTitle() const;
+
+        /*!
+         * \brief Gets the xpos of the window.
+         * \return The xpos of the window.
+         */
+        int GetWindowXpos() const;
+
+        /*!
+         * \brief Gets the ypos of the window.
+         * \return The ypos of the window.
+         */
+        int GetWindowYpos() const;
+
+        /*!
+         * \brief Gets the position of the window.
+         * \return The position of the window.
+         */
+        std::pair<int, int> GetWindowPos() const;
+
+        /*!
+         * \brief Gets the width of the window.
+         * \return The width of the window.
+         */
+        int GetWidth() const;
+
+        /*!
+         * \brief Gets the height of the window.
+         * \return The height of the window.
+         */
+        int GetHeight() const;
+
+        /*!
+         * \brief Gets the size of the window.
+         * \return A pair containing the width and height of the window.
+         */
+        std::pair<int, int> GetWindowSize() const;
+
+        /*!
+         * \brief Gets the size of the monitor.
+         * \return A pair containing the width and height of the monitor.
+         */
+        std::pair<int, int> GetMonitorSize() const;
+
+        /*!
+         * \brief Checks if vsync is enabled for the window.
+         * \return True if vsync is enabled, false otherwise.
+         */
+        bool IsVSync() const;
 
         /*!
          * \brief Checks if window is fullscreen.
@@ -95,77 +167,49 @@ namespace IS {
         bool IsFullScreen() const;
 
         /*!
-         * \brief Gets the width of the window.
-         * \return The width of the window.
-         */
-        uint32_t GetWidth() const;
-
-        /*!
-         * \brief Gets the height of the window.
-         * \return The height of the window.
-         */
-        uint32_t GetHeight() const;
-
-        /*!
-         * \brief Gets the size of the window.
-         * \return A pair containing the width and height of the window.
-         */
-        std::pair<uint32_t, uint32_t> GetWindowSize() const;
-
-        /*!
-         * \brief Gets the width of the monitor.
-         * \return The width of the monitor.
-         */
-        uint32_t GetMonitorWidth() const;
-
-        /*!
-         * \brief Gets the height of the monitor.
-         * \return The height of the monitor.
-         */
-        uint32_t GetMonitorHeight() const;
-
-        /*!
-         * \brief Gets the size of the monitor.
-         * \return A pair containing the width and height of the monitor.
-         */
-        std::pair<uint32_t, uint32_t> GetMonitorSize() const;
-
-        /*!
-         * \brief Gets the title of the window.
-         * \return The title of the window.
-         */
-        std::string GetWindowTitle() const;
-
-        /*!
-         * \brief Sets the size of the window.
-         * \param width The new width of the window.
-         * \param height The new height of the window.
-         */
-        void SetWindowSize(uint32_t width, uint32_t height);
-
-        /*!
          * \brief Sets the title of the window.
          * \param title The new title of the window.
          */
         void SetWindowTitle(std::string const& title);
 
         /*!
-         * \brief Enables or disables vsync for the window.
-         * \param enabled Flag indicating whether to enable vsync.
+         * \brief Sets the position of the window.
+         * \param xpos The new xpos of the window.
+         * \param ypos The new ypos of the window.
          */
-        void EnableVsync(bool enabled);
+        void SetWindowPos(int xpos, int ypos);
 
         /*!
-         * \brief Checks if vsync is enabled for the window.
-         * \return True if vsync is enabled, false otherwise.
+         * \brief Sets the size of the window.
+         * \param width The new width of the window.
+         * \param height The new height of the window.
          */
-        bool IsVSync() const;
+        void SetWindowSize(int width, int height);
 
-        /*|
-         * \brief Gets the native GLFW window.
-         * \return pointer to native window.
+        /*!
+         * \brief Enables or disables vsync for the window.
+         * \param enabled Flag indicating whether to enable vsync. (default true)
          */
-        GLFWwindow* GetNativeWindow() const;
+        void EnableVsync(bool enabled = true);
+
+        /*!
+         * \brief Set window to maximized.
+         *
+         * \param maximized if true, normal otherwise. (default true)
+         */
+        void SetMaximized(bool maximized = true);
+
+        /*!
+         * \brief Set window to minimized.
+         */
+        void SetMinimized();
+
+        /*!
+         * \brief Set window to fullscreen/windowed
+         *
+         * \param fullscreen fullscreen if true, windowed otherwise. (default true)
+         */
+        void SetFullScreen(bool fullscreen = true);
 
         /*!
          * \brief Loads window properties.
@@ -180,8 +224,8 @@ namespace IS {
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.
-        uint32_t mMonitorWidth; ///< The width of the monitor.
-        uint32_t mMonitorHeight; ///< The height of the monitor.
+        int mMonitorWidth; ///< The width of the monitor.
+        int mMonitorHeight; ///< The height of the monitor.
 
         static WindowProperties mDefaultProperties; ///< Default window properties.
     };

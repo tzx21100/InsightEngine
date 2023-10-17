@@ -51,7 +51,7 @@ void RegisterSystems() {
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
-    auto insight_input = std::make_shared<InputManager>();
+    auto insight_input = std::make_shared<InputManager>(insight_window);
     auto insight_audio = std::make_shared<ISAudio>();
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();

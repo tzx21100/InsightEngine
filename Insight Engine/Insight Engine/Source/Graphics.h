@@ -94,6 +94,8 @@ namespace IS {
 		 */
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
+		static std::pair<GLuint, GLuint> GetFramebufferSize() { return mFramebuffer->GetSize(); }
+
 		// Static objects
 		static std::vector<Mesh::InstanceData> quadInstances;
 		// Sprites (models) to render

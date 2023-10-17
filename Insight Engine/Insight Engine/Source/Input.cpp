@@ -27,8 +27,44 @@ namespace IS {
     }
 
     void InputManager::Initialize() {
-        //Subscirbe to messages
+        // Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
+
+        GLFWwindow* native_window = mWindow->GetNativeWindow();
+        glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
+        glfwSetKeyCallback(native_window, KeyCallback);
+        glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
+
+        // Window size callback
+        glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            
+            // Store non-fullscreen window size (top-left of window)
+            if (!input.mWindow->IsFullScreen())
+                input.mWindow->SetWindowSize(width, height);
+        });
+
+        // Window position callback
+        glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos) {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+
+            // Store non-fullscreen window position (top-left of window)
+            if (!input.mWindow->IsFullScreen())
+                input.mWindow->SetWindowPos(xpos, ypos);
+        });
+
+        // Window maximize callback
+        glfwSetWindowMaximizeCallback(native_window, [](GLFWwindow* window, int maximized) {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+
+            if (maximized) {
+                IS_CORE_DEBUG("Window was maximized.");
+                input.mWindow->SetMaximized();
+            } else {
+                IS_CORE_DEBUG("Window was restored from maximized.");
+                input.mWindow->SetMaximized(false);
+            }
+        });
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {
@@ -60,11 +96,8 @@ namespace IS {
     }
 
 
-    InputManager::InputManager() {
-        window = glfwGetCurrentContext();
-        glfwSetWindowUserPointer(window, this); // Set InputManager as user pointer
-        glfwSetKeyCallback(window, KeyCallback);
-        glfwSetMouseButtonCallback(window, MouseButtonCallback);
+    InputManager::InputManager(std::shared_ptr<WindowSystem> window) {
+        mWindow = window;
     }
 
     bool InputManager::IsKeyPressed(int glfwKeyCode) const {
@@ -95,7 +128,7 @@ namespace IS {
     //our world pos 0,0 is in the center
     std::pair<double, double> InputManager::GetMousePosition() const {
         double xPos, yPos;
-        glfwGetCursorPos(window, &xPos, &yPos);
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 
         double newX = (xPos - center_x)*ratio_width;
         double newY = (center_y - yPos)*ratio_height;  // Negate to make y-axis point upwards

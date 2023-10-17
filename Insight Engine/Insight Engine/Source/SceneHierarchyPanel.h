@@ -23,22 +23,26 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include <memory> // for std::shared_ptr
+#include "Panel.h"
 #include "Entities.h"
+
+// Dependencies
+#include <memory> // for std::shared_ptr
+#include <imgui.h>
 
 namespace IS {
 
     /*!
-     * \brief The SceneHierarchyPanel class provides a panel for managing scene entities and components.
+     * \brief The SceneHierarchyPanel class provides a panel for managing scene entities.
      */
-    class SceneHierarchyPanel {
+    class SceneHierarchyPanel : public Panel {
     public:
         using EntityPtr = std::shared_ptr<Entity>; ///< Type alias for a shared pointer to an Entity.
 
         /*!
          * \brief Constructs a SceneHierarchyPanel object.
          */
-        SceneHierarchyPanel() = default;
+        SceneHierarchyPanel();
 
         /*!
          * \brief Destroys the SceneHierarchyPanel object.
@@ -48,25 +52,30 @@ namespace IS {
         /*!
          * \brief Renders the panel for the scene hierarchy.
          */
-        void RenderPanel();
+        void RenderPanel() override;
+
+        /*!
+         * \brief Resets the current selection.
+         */
+        static void ResetSelection();
+
+        /*!
+         * \brief Getter for entity selected currently.
+         * \return Pointer to the entity selected currently.
+         */
+        static EntityPtr GetSelectedEntity();
+
+    private:
+        class InspectorPanel; ///< Forward declaration of class InspectorPanel.
+        ImGuiTextFilter mFilter; ///< Filter for entity hierarchy.
+        std::shared_ptr<InspectorPanel> mInspectorPanel; ///< Instance of inspector panel.
+        static EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
 
         /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
          * \param entity The Entity to be rendered.
          */
         void RenderEntityNode(Entity entity);
-
-        /*!
-         * \brief Renders component nodes for the specified Entity.
-         * \param entity The Entity for which components will be rendered.
-         */
-        void RenderComponentNodes(Entity entity);
-
-        /*!
-         * \brief Renders configuration for the specified Entity.
-         * \param entity The Entity for which configuration will be rendered.
-         */
-        void RenderEntityConfig(Entity entity);
 
         /*!
          * \brief Renders configuration for the specified Entity.
@@ -76,24 +85,42 @@ namespace IS {
         void RenderConfirmDelete(Entity entity, bool& show);
 
         /*!
-         * \brief Resets the current selection.
+         * \brief The InspectorPanel class provides a panel for managing selected entity and its components.
          */
-        void ResetSelection();
+        class InspectorPanel : public Panel {
+        public:
 
-        /*!
-         * \brief Renders a specific component for the specified Entity.
-         * \tparam Component The type of the component to render.
-         * \tparam RenderFunc The type of the rendering function for the component.
-         * \param label The label for the component.
-         * \param entity The Entity for which the component will be rendered.
-         * \param render The rendering function for the component.
-         */
-        template <typename Component, typename RenderFunc>
-        static void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
+            /*!
+             * \brief Renders the panel for the inspector.
+             */
+            void RenderPanel() override;
 
-    private:
-        EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
-        bool show_prefabs = false;
+        private:
+            bool mShowPrefabs = false; ///< Flag indicating show prefabs
+
+            /*!
+             * \brief Renders component nodes for the specified Entity.
+             * \param entity The Entity for which components will be rendered.
+             */
+            void RenderComponentNodes(Entity entity);
+
+            /*!
+             * \brief Renders configuration for the specified Entity.
+             * \param entity The Entity for which configuration will be rendered.
+             */
+            void RenderEntityConfig(Entity entity);
+
+            /*!
+             * \brief Renders a specific component for the specified Entity.
+             * \tparam Component The type of the component to render.
+             * \tparam RenderFunc The type of the rendering function for the component.
+             * \param label The label for the component.
+             * \param entity The Entity for which the component will be rendered.
+             * \param render The rendering function for the component.
+             */
+            template <typename Component, typename RenderFunc>
+            static void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
+        };
     };
 
 } // end namespace IS

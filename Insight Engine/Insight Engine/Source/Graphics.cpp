@@ -127,7 +127,7 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        //glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         //// Bind the VAO for instances
         //glBindVertexArray(meshes[0].vao_ID);
@@ -217,7 +217,6 @@ namespace IS {
             render_text << "Max Entities: " << std::fixed << MAX_ENTITIES << "\n\n";
             render_text << "General Controls\n"
                            "- Press 'Tab' to toggle GUI\n"
-                           "- Press 'F11' to toggle fullscreen/windowed\n"
                            "- Click mouse scrollwheel to spawn entity\n"
                            "- Click right mouse button to spawn rigidbody entity\n\n";
             render_text << "Player Controls\n"
