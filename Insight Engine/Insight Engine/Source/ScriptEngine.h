@@ -59,9 +59,6 @@ namespace IS {
          */
         static void LoadAssembly(const std::filesystem::path& file_path);
 
-    private:
-        /* Private Functions */
-
         /*!
          * \brief Initializes the Mono runtime.
          *
@@ -89,6 +86,9 @@ namespace IS {
          * \return A MonoObject pointer representing the instantiated class.
          */
         static MonoObject* InstantiateClass(MonoClass* mono_class);
+        static MonoObject* InstantiateClass(const std::string& class_namespace, const std::string& class_name);
+
+
 
         /* Friend Declaration */
         friend class ScriptClass;
@@ -143,10 +143,35 @@ namespace IS {
          */
         MonoObject* InvokeMethod(MonoObject* instance, MonoMethod* method, void** params = nullptr);
 
-    private:
         std::string mClassNamespace; ///< The namespace of the C# class.
         std::string mClassName;      ///< The name of the C# class.
         MonoClass* mMonoClass = nullptr; ///< Pointer to the MonoClass representing the C# class.
+
+
+        MonoMethod* mInitMethod = nullptr;
+        MonoMethod* mUpdateMethod = nullptr;
+        MonoObject* mInstance = nullptr;
+
+    
+        void LoadMethods() {
+            mInitMethod = GetMethod("Init", 0);
+            mUpdateMethod = GetMethod("Update", 0);
+        }
+
+        void InstantiateAndInitialize() {
+            mInstance = Instantiate();
+            if (mInitMethod) {
+                InvokeMethod(mInstance, mInitMethod);
+            }
+        }
+
+        void Update() {
+            if (mUpdateMethod) {
+                InvokeMethod(mInstance, mUpdateMethod);
+            }
+        }
+
+
     };
 }
 

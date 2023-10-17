@@ -30,6 +30,7 @@
     <ClCompile Include="Source\ScriptEngine.cpp" />
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
     <ClCompile Include="Source\ScriptGlue.cpp" />
+    <ClCompile Include="Source\ScriptManager.cpp" />
     <ClCompile Include="Source\Sprite.cpp" />
     <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="Source\SceneHierarchyPanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
     <ClInclude Include="Source\ScriptGlue.h" />
+    <ClInclude Include="Source\ScriptManager.h" />
     <ClInclude Include="Source\Sprite.h" />
     <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Transform.h" />

@@ -45,6 +45,40 @@ namespace IS {
         std::cout << values.x << "," << values.y << "," << values.z << std::endl;
     }
 
+
+    
+    // registering input functions
+
+    static bool KeyPressed(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsKeyPressed(keycode);
+    }
+
+    static bool KeyHeld(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsKeyHeld(keycode);
+    }
+
+    static bool KeyReleased(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsKeyReleased(keycode);
+    }
+
+    static bool MousePressed(int mousebutton) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsMouseButtonPressed(mousebutton);
+    }
+
+    static bool MouseHeld(int mousebutton) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsMouseButtonHeld(mousebutton);
+    }
+
+    static bool MouseReleased(int mousebutton) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsMouseButtonReleased(mousebutton);
+    }
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -52,5 +86,14 @@ namespace IS {
     {
         IS_ADD_INTERNAL_CALL(NativeLog);
         IS_ADD_INTERNAL_CALL(NativeLogVector);
+
+        //input functions
+        IS_ADD_INTERNAL_CALL(KeyPressed);
+        IS_ADD_INTERNAL_CALL(KeyHeld);
+        IS_ADD_INTERNAL_CALL(KeyReleased);
+        IS_ADD_INTERNAL_CALL(MousePressed);
+        IS_ADD_INTERNAL_CALL(MouseHeld);
+        IS_ADD_INTERNAL_CALL(MouseReleased);
+
     }
 }

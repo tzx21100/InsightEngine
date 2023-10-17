@@ -187,7 +187,13 @@ namespace IS {
         //PrintAssemblyTypes(s_data->mCoreAssembly);
     }
 
-    MonoObject* ScriptEngine::InstantiateClass(MonoClass* mono_class) { //return the instance for easy storing
+    //added this for entities to be able to instantiate
+    MonoObject* ScriptEngine::InstantiateClass(const std::string& class_namespace, const std::string& class_name) {
+        ScriptClass scriptClass(class_namespace, class_name);
+        return scriptClass.Instantiate();
+    }
+
+    MonoObject* ScriptEngine::InstantiateClass(MonoClass* mono_class) {
         MonoObject* instance = mono_object_new(s_data->mAppDomain, mono_class);
         mono_runtime_object_init(instance);
         return instance;

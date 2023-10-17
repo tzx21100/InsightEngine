@@ -51,7 +51,7 @@ namespace IS {
             
             //creating game object and their components
             entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
-            entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
+            entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody,ScriptComponent>("Player");
             entity_test = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
             entity_floor = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
             entity_circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Circle");
@@ -65,6 +65,9 @@ namespace IS {
             auto& trans_circle = engine.GetComponent<Transform>(entity_circle);
             auto& trans_line = engine.GetComponent<Transform>(entity_line);
             auto& trans_point = engine.GetComponent<Transform>(entity_point);
+
+            auto& player_script = engine.GetComponent<ScriptComponent>(entity_player);
+            player_script.mScriptName = "Test";
 
             auto& body_player = engine.GetComponent<RigidBody>(entity_player);
             auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);

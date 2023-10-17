@@ -26,6 +26,7 @@
 #include "Vector2D.h"
 #include "Component.h"
 #include "Prefab.h"
+#include "ScriptManager.h"
 #include <unordered_map>
 #include <chrono>
 #include <unordered_set>

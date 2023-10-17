@@ -21,9 +21,6 @@ using System.Runtime.CompilerServices;
 
 namespace IS
 {
-    /// <summary>
-    /// A simple struct representing a 3D vector with x, y, and z components.
-    /// </summary>
     public struct Vector3
     {
         public float x, y, z;
@@ -34,18 +31,6 @@ namespace IS
             y = Y;
             z = Z;
         }
-    }
-
-    /// <summary>
-    /// A static class used for declaring C++ functions to be called from C# scripts.
-    /// </summary>
-    public static class InternalCalls
-    {
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void NativeLog(string name, int param);
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void NativeLogVector(ref Vector3 param);
     }
 
     /// <summary>

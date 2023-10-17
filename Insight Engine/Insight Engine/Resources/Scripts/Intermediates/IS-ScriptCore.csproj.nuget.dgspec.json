@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {}
+    "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {}
   },
   "projects": {
-    "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {
+    "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+        "projectUniqueName": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
         "projectName": "IS-ScriptCore",
-        "projectPath": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
-        "packagesPath": "C:\\Users\\77458\\.nuget\\packages\\",
-        "outputPath": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
+        "projectPath": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+        "packagesPath": "C:\\Users\\tzx87\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\77458\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tzx87\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -37,8 +37,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "imports": [
             "net461",
             "net462",
