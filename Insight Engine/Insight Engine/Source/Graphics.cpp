@@ -49,7 +49,8 @@ namespace IS {
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
 
-        mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        //mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        mesh_shader_pgm.setupInstSpriteShaders();
         text_shader_pgm.setupTextShaders();
 
         walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
@@ -73,6 +74,12 @@ namespace IS {
     void ISGraphics::Update(float delta_time) {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
+        // update animations
+        idle_ani.updateAnimation(delta_time);
+        walking_ani.updateAnimation(delta_time);
+        ice_cream_truck_ani.updateAnimation(delta_time);
+
+        // fill up instancing vector
         quadInstances.clear();
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
@@ -83,20 +90,17 @@ namespace IS {
             sprite.followTransform(trans);
             sprite.transform();
 
-            //Sprite::instanceData instData;
-            //instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-            //instanceData.color = sprite.color;
-            //instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+            if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
+                Sprite::instanceData instData;
+                instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
+                instData.tex_id = static_cast<float>(sprite.texture);
+                instData.anim_frame_dimension = sprite.anim.frame_dimension;
+                instData.anim_frame_index = sprite.anim.frame_index;
 
-            //// Add the instance data to the array
-            //quadInstances.push_back(instanceData);
+                quadInstances.push_back(instData);
+            }
         }
 
-        // update animations
-        idle_ani.updateAnimation(delta_time);
-        walking_ani.updateAnimation(delta_time);
-        ice_cream_truck_ani.updateAnimation(delta_time);
-        
         // draw
         Draw(delta_time);
     }
@@ -111,22 +115,21 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        //glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        //// Bind the VAO for instances
-        //glBindVertexArray(meshes[0].vao_ID);
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
 
-        //// Bind the instance VBO
-        //glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
+        glUnmapBuffer(GL_ARRAY_BUFFER);
 
-        //// Upload the quadInstances data to the GPU
-        //Mesh::uploadInstanceData(quadInstances, meshes[0]);
+        glUseProgram(mesh_shader_pgm.getHandle());
+        glBindVertexArray(meshes[0].vao_ID);
 
-        //// Render the instances using instanced rendering (triangle strips)
-        //glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (GLsizei)quadInstances.size());
-
-        //// Unbind the VAO
-        //glBindVertexArray(0);
+        //std::vector<GLuint> tex_id_vect;
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[0].draw_count, static_cast<GLsizei>(quadInstances.size()));
 
 
         for (auto& entity : mEntities) { // for each intentity
@@ -149,18 +152,18 @@ namespace IS {
             // for each type
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP: // quads
-                if (sprite.name == "player_sprite") { // if drawing player
-                    // swap animations based on index
-                    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-                    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
-                } 
-                else if (sprite.name == "ice_cream_truck") { // if drawing truck
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
-                } 
-                else { // every other textured box
-                    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
-                }
-                break;
+                //if (sprite.name == "player_sprite") { // if drawing player
+                //    // swap animations based on index
+                //    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
+                //    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
+                //}
+                //else if (sprite.name == "ice_cream_truck") { // if drawing truck
+                //    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
+                //}
+                //else { // every other textured box
+                //    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
+                //}
+                //break;
             case GL_POINTS: // points
                 sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture);
                 break;
@@ -181,7 +184,7 @@ namespace IS {
         }
 
         // Render text when GUI is disabled
-        if (!engine.mUsingGUI){
+        if (!engine.mUsingGUI) {
             // Shared Attributes
             const float scale = 5.f;
             const float x_padding = scale;
@@ -200,20 +203,20 @@ namespace IS {
             render_text.imbue(std::locale("")); // comma separated numbers
             render_text << "Max Entities: " << std::fixed << MAX_ENTITIES << "\n\n";
             render_text << "General Controls\n"
-                           "- Press 'Tab' to toggle GUI\n"
-                           "- Press 'F11' to toggle fullscreen/windowed\n"
-                           "- Click mouse scrollwheel to spawn entity\n"
-                           "- Click right mouse button to spawn rigidbody entity\n\n";
+                "- Press 'Tab' to toggle GUI\n"
+                "- Press 'F11' to toggle fullscreen/windowed\n"
+                "- Click mouse scrollwheel to spawn entity\n"
+                "- Click right mouse button to spawn rigidbody entity\n\n";
             render_text << "Player Controls\n"
-                           "- Press 'WASD' to move in the four directions\n"
-                           "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
+                "- Press 'WASD' to move in the four directions\n"
+                "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
             render_text << "Physics Controls\n"
-                           "- Press '2' to enable draw collision boxes, '1' to disable\n"
-                           "- Press 'G' to enable gravity, 'F' to disable\n"
-                           "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
+                "- Press '2' to enable draw collision boxes, '1' to disable\n"
+                "- Press 'G' to enable gravity, 'F' to disable\n"
+                "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
             render_text << "Audio Controls\n"
-                           "- Press 'Z' to play sfx\n"
-                           "- Press 'X' to play music";
+                "- Press 'Z' to play sfx\n"
+                "- Press 'X' to play music";
 
             // Render Text
             Text::renderText(text_shader_pgm, render_text.str(), pos_x, pos_y, scale, color);
@@ -244,7 +247,7 @@ namespace IS {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // for different png formats
-        GLuint format=GL_RGBA;
+        GLuint format = GL_RGBA;
         if (channels == 1) {
             format = GL_RED;
         }

@@ -4,10 +4,10 @@
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
- * 
+ *
  * This is just a pseudo game loop to show off the functionalities of the engine.
  * Most of this will be converted to scripts once we integrate it with our ECS.
- * 
+ *
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
@@ -41,6 +41,11 @@ namespace IS {
         Image walking_animation{};
         Image zx_animation{};
 
+        // Animation objects
+        /*Animation idle_ani;
+        Animation walking_ani;
+        Animation ice_cream_truck_ani;*/
+
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
@@ -48,7 +53,7 @@ namespace IS {
             idle_animation = asset->GetImage("Assets/player_idle.png");
             walking_animation = asset->GetImage("Assets/player_walking.png");
             zx_animation = asset->GetImage("Assets/icecream_truck.png");
-            
+
             //creating game object and their components
             entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
             entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Player");
@@ -84,6 +89,9 @@ namespace IS {
             sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
             sprite_player.texture_width = idle_animation.width;
             sprite_player.texture_height = idle_animation.height;
+            sprite_player.anim = ISGraphics::idle_ani;
+            // sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
+            // sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
 
             sprite_test.texture = static_cast<uint8_t>(backgroundTest.mTextureData);
             sprite_test.texture_width = backgroundTest.width;
@@ -100,12 +108,12 @@ namespace IS {
             body_player.mRestitution = 0.1f;
             body_floor.mBodyType = BodyType::Static;
             body_floor.mMass = 99999.f;
-            body_floor.mInvMass = 1.f/99999.f;
-            
+            body_floor.mInvMass = 1.f / 99999.f;
+
             trans_circle.setWorldPosition(650.f, 300.f);
             trans_circle.setScaling(200.f, 200.f);
             sprite_circle.primitive_type = GL_TRIANGLE_FAN;
-            
+
 
             trans_line.setWorldPosition(650.f, 300.f);
             trans_line.setScaling(200.f, 200.f);
@@ -122,7 +130,7 @@ namespace IS {
             auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
 
             // Process Keyboard Events
-            if (!gui->WantCaptureKeyboard()) {                
+            if (!gui->WantCaptureKeyboard()) {
 
                 // Toggle fullscreen
                 auto const& window = engine.GetSystem<WindowSystem>("Window");
@@ -148,7 +156,7 @@ namespace IS {
 
                 //this controls the freeze frame
                 engine.mContinueFrame = false;
-                
+
                 if (input->IsKeyPressed(GLFW_KEY_ENTER) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
                     engine.mFreezeFrame = !engine.mFreezeFrame;
                     IS_CORE_DEBUG("Freeze frame {}!", engine.mFreezeFrame ? "enabled" : "disabled");
@@ -169,7 +177,8 @@ namespace IS {
                         sprite_player.texture_width = walking_animation.width;
                         sprite_player.texture_height = walking_animation.height;
                         sprite_player.current_tex_index = 1;
-                    } else {
+                    }
+                    else {
                         sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
                         sprite_player.texture_width = idle_animation.width;
                         sprite_player.texture_height = idle_animation.height;
@@ -187,7 +196,7 @@ namespace IS {
                     Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
                     body_player.AddVelocity(inputVelocity);
                     // for jumping
-                    if (input->IsKeyPressed(GLFW_KEY_SPACE)) { 
+                    if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
                         //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
                         if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
                             body_player.AddVelocity(Vector2D(0.f, 500.f));
@@ -243,6 +252,9 @@ namespace IS {
                         spr.texture = static_cast<uint8_t>(zx_animation.mTextureData);
                         spr.texture_width = zx_animation.width;
                         spr.texture_height = zx_animation.height;
+                        //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
+                        spr.anim = ISGraphics::ice_cream_truck_ani;
+                        
                         //add the image in
                         //spr.texture = backgroundTest.mTextureData;
 
@@ -259,7 +271,7 @@ namespace IS {
             }
         }
 
-        virtual void Draw([[maybe_unused]]float delta) override{
+        virtual void Draw([[maybe_unused]] float delta) override {
 
 
 

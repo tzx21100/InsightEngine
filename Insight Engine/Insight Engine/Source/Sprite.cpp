@@ -18,12 +18,12 @@
 
 namespace IS {
 
-	void Sprite::transform() {
+    void Sprite::transform() {
         // convert angle to radians
         float angle_rad = glm::radians(model_TRS.rotation);
 
         // to scale to world coordinates
-        float map_scale_x = 2.f / WIDTH; 
+        float map_scale_x = 2.f / WIDTH;
         float map_scale_y = 2.f / HEIGHT;
 
         float sin_angle = sinf(angle_rad);
@@ -37,12 +37,12 @@ namespace IS {
 
         // save matrix
         model_TRS.mdl_to_ndc_xform = world_to_NDC_xform;
-	}
+    }
 
     void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
         // use sprite shader
         shader.use();
-        
+
         // bind vao
         glBindVertexArray(mesh_used.vao_ID);
 
@@ -92,13 +92,13 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& anim, GLuint texture_id) {
+    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animation, GLuint texture_id) {
         // use sprite shader
         shader.use();
 
         // bind vao
         glBindVertexArray(mesh_used.vao_ID);
-        
+
         // set uniforms
         shader.setUniform("uColor", color);
         shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
@@ -113,8 +113,8 @@ namespace IS {
         shader.setUniform("uTexture", 1);
 
         // animation uniforms
-        shader.setUniform("uFrameDim", glm::vec2(anim.getFrameWidth(), anim.getFrameHeight()));
-        shader.setUniform("uFrameIndex", glm::vec2(anim.x_frame_index, anim.y_frame_index));
+        shader.setUniform("uFrameDim", glm::vec2(animation.getFrameWidth(), animation.getFrameHeight()));
+        shader.setUniform("uFrameIndex", glm::vec2(animation.frame_index.x, animation.frame_index.y));
 
         // transformation matrix uniform
         shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
@@ -164,7 +164,7 @@ namespace IS {
         shader.setUniform("uTexture", 0);
         shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
         shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
-       
+
         // draw line
         glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
         glLineWidth(1.f);

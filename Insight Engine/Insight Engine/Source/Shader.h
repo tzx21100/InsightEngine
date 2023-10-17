@@ -42,6 +42,8 @@ namespace IS {
      */
     class Shader {
     public:
+        void setupInstSpriteShaders();
+
         /*!
          * \brief Creates and sets up shaders for sprite rendering.
          *
