@@ -127,14 +127,20 @@ namespace IS {
 
     void EditorLayer::RenderMenuBar() {
         InsightEngine& engine = InsightEngine::Instance();
+        const bool is_fullscreen = engine.GetSystem<WindowSystem>("Window")->IsFullScreen();
+        std::string fullscreen_label = is_fullscreen ? "Exit Fullscreen" : "Enter Fullscreen";
 
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
                 ImGui::MenuItem("(Empty)");
                 ImGui::Separator();
-                if (ImGui::MenuItem("Fullscreen", "F11"))
+
+                // Toggle fullscreen mode
+                if (ImGui::MenuItem(fullscreen_label.c_str(), "F11"))
                     ToggleFullscreen();
                 ImGui::Separator();
+
+                // Exit current program
                 if (ImGui::MenuItem("Exit", "Alt+F4"))
                     ExitProgram();
 

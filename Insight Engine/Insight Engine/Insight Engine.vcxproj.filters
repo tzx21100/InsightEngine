@@ -112,6 +112,9 @@
     <ClCompile Include="Source\AIFSM.cpp">
       <Filter>Engine\Systems\AIFSM</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Grid.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Panel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
@@ -125,9 +128,6 @@
     </ClInclude>
     <ClInclude Include="Source\Matrix3x3.h">
       <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Properties.h">
-      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\ISArray.h">
       <Filter>STL</Filter>
@@ -269,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="Source\AIFSM.h">
       <Filter>Engine\Systems\AIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Grid.h">
+      <Filter>Physics\Dynamics</Filter>
     </ClInclude>
     <ClInclude Include="Source\Panel.h">
       <Filter>Editor\Panels</Filter>

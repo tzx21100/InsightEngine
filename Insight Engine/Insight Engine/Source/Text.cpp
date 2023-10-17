@@ -52,7 +52,8 @@ namespace IS {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // compile and setup the shader
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(WIDTH), 0.0f, static_cast<float>(HEIGHT));
+        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
         text_shader.use();
         glUniformMatrix4fv(glGetUniformLocation(text_shader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -180,8 +181,9 @@ namespace IS {
             }
             else {
                 // Calculate the position and transformation for the character
-                float xpos = x + ch.Bearing.x * scale + (WIDTH / 2.f);
-                float ypos = y - (base_size - ch.Bearing.y) * scale + (HEIGHT / 2.f);
+                auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+                float xpos = x + ch.Bearing.x * scale + (width / 2.f);
+                float ypos = y - (base_size - ch.Bearing.y) * scale + (height / 2.f);
 
                 // Store the transformation matrix and character texture ID
                 transforms[char_index] = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0)) * glm::scale(glm::mat4(1.0f), glm::vec3(base_size * scale, base_size * scale, 0));

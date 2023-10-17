@@ -36,6 +36,13 @@ namespace IS {
      */
     class Sprite : public IComponent {
     public:
+        struct instanceData {
+            Matrix3x3 model_to_ndc_xform{};
+            float tex_id{};
+            Vector2D anim_frame_dimension{ 1.f, 1.f }; // default UV size
+            Vector2D anim_frame_index{ 0.f, 0.f };
+        };
+
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
         uint8_t texture{};         // The texture ID for the sprite.
@@ -56,7 +63,7 @@ namespace IS {
         Sprite() {
             name = "Box";
             primitive_type = GL_TRIANGLE_STRIP;
-            PRNG prng;
+            PRNG& prng = PRNG::Instance();
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }
@@ -74,7 +81,7 @@ namespace IS {
          * \param primitive The rendering primitive type for the sprite.
          */
         Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
-            PRNG prng;
+            PRNG& prng = PRNG::Instance();
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }

@@ -89,12 +89,13 @@ namespace IS {
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
 
-            trans_quad.setScaling(WIDTH, HEIGHT);
+            auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+            trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
             trans_player.setScaling(95, 120);
             trans_player.setWorldPosition(0, 0);
             trans_test.setScaling(-100, 100);
             trans_test.setWorldPosition(-400, 0);
-            trans_floor.setScaling(600, 100);
+            trans_floor.setScaling(1200, 80);
             trans_floor.setWorldPosition(0, -400);
             body_player.mAngularVelocity = 10.f;
             body_player.mRestitution = 0.1f;

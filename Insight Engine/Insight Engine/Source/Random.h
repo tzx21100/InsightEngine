@@ -7,16 +7,21 @@ namespace IS {
 
     class PRNG {
     public:
-        PRNG() {
-            std::random_device rd;
-            generator = std::mt19937(rd());
-            distribution = std::uniform_real_distribution<float>(0.0f, 1.0f);
+        static PRNG& Instance() {
+            static PRNG prng;
+            return prng;
         }
 
         float generate() {
             return distribution(generator);
         }
     private:
+        PRNG() {
+            std::random_device rd;
+            generator = std::mt19937(rd());
+            distribution = std::uniform_real_distribution<float>(0.0f, 1.0f);
+        }
+
         std::default_random_engine generator;
         std::uniform_real_distribution<float> distribution;
     };

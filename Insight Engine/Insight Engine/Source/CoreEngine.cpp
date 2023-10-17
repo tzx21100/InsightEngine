@@ -29,6 +29,8 @@
 
 namespace IS {
 
+    constexpr int DEFAULT_FPS(60);
+
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
     InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(DEFAULT_FPS) {
         IS_PROFILE_FUNCTION();
@@ -227,23 +229,38 @@ namespace IS {
 
     // Creates a random entity for demo testing
     void InsightEngine::GenerateRandomEntity(bool with_texture) {
-        PRNG prng;
+        PRNG& prng = PRNG::Instance();
         InsightEngine& engine = Instance();
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
+        auto [width, height] = window->GetWindowSize();
+
         Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
         auto& trans = engine.GetComponent<Transform>(e);
+
+        // Constants
+        constexpr float MAX_SCALE = 16.f;
+        constexpr float MIN_SCALE = 2.f;
+        constexpr float MAX_ROTATION = 720.f;
+        constexpr float MIN_ROTATION = -360.f;
+
         // scale [2, 16], pos [viewport], orientation [-360, 360]
-        trans.setScaling((prng.generate() * 28.f) + 2.f, (prng.generate() * 28.f) + 2.f);
-        trans.setWorldPosition((prng.generate() * WIDTH) - WIDTH / 2.f, (prng.generate()* HEIGHT) - HEIGHT / 2.f);
-        trans.setRotation((prng.generate() * 720.f) - 360.f);
+        trans.setScaling((prng.generate() * (MAX_SCALE - MIN_SCALE)) + MIN_SCALE, (prng.generate() * (MAX_SCALE - MIN_SCALE)) + MIN_SCALE);
+        trans.setWorldPosition((prng.generate() * width) - width * .5f, (prng.generate()* height) - height * .5f);
+        trans.setRotation((prng.generate() * (MAX_ROTATION - MIN_ROTATION)) + MIN_ROTATION);
 
         // with texture
         if (with_texture) {
             auto& sprite = engine.GetComponent<Sprite>(e);
             auto asset = engine.GetSystem<AssetManager>("Asset");
             float gacha = prng.generate(); // [0, 1]
-            Image random_img = (gacha <= 0.3f) ? asset->GetImage("Assets/icecream_truck_frame.png") :
-                (gacha <= 0.6f) ? asset->GetImage("Assets/player_frame.png") :
-                (gacha <= 0.8f) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
+            constexpr float ULTRA_RARE = 0.3f;
+            constexpr float SUPER_RARE = 0.6f;
+            constexpr float RARE = 0.8f;
+
+            Image random_img =
+                (gacha <= ULTRA_RARE) ? asset->GetImage("Assets/icecream_truck_frame.png") :
+                (gacha <= SUPER_RARE) ? asset->GetImage("Assets/player_frame.png") :
+                (gacha <= RARE) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
             sprite.texture = static_cast<uint8_t>(random_img.mTextureData);
             sprite.texture_width = random_img.width;
             sprite.texture_height = random_img.height;

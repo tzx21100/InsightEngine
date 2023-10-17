@@ -68,8 +68,12 @@ namespace IS {
     void Framebuffer::Unbind() {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        // Set viewport to default size
-        glViewport(0, 0, WIDTH, HEIGHT);
+        // Set viewport to window size
+        InsightEngine& engine = InsightEngine::Instance();
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
+        auto [width, height] = window->GetWindowSize();
+
+        glViewport(0, 0, width, height);
     }
 
     std::pair<GLuint, GLuint> Framebuffer::GetSize() const { return std::make_pair(mProps.mWidth, mProps.mHeight); }

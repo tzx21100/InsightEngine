@@ -32,7 +32,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <unordered_map>
 
 // Project files
-#include "Properties.h"
 #include "Log.h"
 #include "Assertion.h"
 #include "ISContainers.h"
@@ -41,6 +40,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "ISMath.h"
 #include "Collision.h"
 #include "Body.h"
+#include "Grid.h"
 #include "Manifold.h"
 #include "Physics.h"
 #include "Mesh.h"

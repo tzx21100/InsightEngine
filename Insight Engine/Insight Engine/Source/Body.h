@@ -75,7 +75,9 @@ namespace IS
         std::vector<Vector2D> mVertices;            /**< Vertices defining the polygon shape (for polygons). */
         std::vector<Vector2D> mTransformedVertices; /**< Transformed vertices of the polygon shape. */
         bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
-
+        int mId; // To compare then add/remove from the grid cell
+        static int mNextId;
+        bool mIsInGrid;
         // Constructors and member functions
 
         /**
@@ -95,6 +97,11 @@ namespace IS
          */
         RigidBody(glm::vec2 my_position, BodyType my_body_type, float my_mass, float my_restitution,
             float my_width, float my_height, BodyShape my_body_shape);
+
+        /**
+         * \brief Destructor for the RigidBody class.
+         */
+        //~RigidBody() { mNextId--; }
 
         // Member functions for rigid body operations
 
@@ -181,6 +188,9 @@ namespace IS
         void UpdateBoxBody(Transform const& my_body_transform);
 
         Box GetAABB();
+
+        // Define the equality operator
+        bool operator==(const RigidBody& other) const;
 
         /*!
          * \brief Serialize the RigidBody component to a JSON format.

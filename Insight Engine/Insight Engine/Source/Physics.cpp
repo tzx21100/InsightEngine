@@ -26,6 +26,9 @@ using namespace IS;
 namespace IS 
 {
 	Physics* PHYSICS = NULL;
+	
+	// Static flag to enable or disable debug drawing of rigidbody shapes
+	bool Physics::isDebugDraw = false;
 
 	// Constructs a Physics instance
 	Physics::Physics() 
@@ -40,52 +43,128 @@ namespace IS
 		mIterations = 10;						// Number of iterations for physics step
 		mContactList = std::vector<Manifold>();
 		mContactPointsList = std::vector<Vector2D>();
+		//mGrid = Grid();
 	}
-
-	// Static flag to enable or disable debug drawing of rigidbody shapes
-	bool Physics::isDebugDraw = false;
 
 	// Initializes the physics system
 	void Physics::Initialize()
 	{
 		// Initialization logic here
 		Subscribe(MessageType::Collide);
-
+		mGrid.ClearGrid();
 	}
 
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
+		mGrid.ClearGrid();
+		for (auto const& entity : mEntities) {
+			mGrid.AddIntoCell(entity);
+		}
+		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+		for (auto const& entity : mEntities) {
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+				//auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+				//mGrid.AddIntoCell(body);
+				for (int i = 0; i < Grid::mRows; i++) {
+					for (int j = 0; j < Grid::mCols; j++) {
+						if (input->IsKeyPressed(GLFW_KEY_3)) {
+							std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
+						}
+					}
+				}
+			}
+		}
 		
-		for (size_t i = 0; i < mIterations; i++) {
+		for (size_t it = 0; it < mIterations; it++) {
 			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 			Step(dt, mEntities);
-			// Detects collisions among a set of entities
-			CollisionDetect(mEntities);
+
+			// detect collision through grid cell
+			CellCollisionDetect();
+			// Detects collisions among a set of entities (normal way)
+			std::set<Entity> cell_list;
+			for (auto const& entity : mEntities) {
+				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+					if (!(body.mIsInGrid)) {
+						// emplace all the entities outside of the grid
+						cell_list.emplace(entity);
+					}
+				}
+			}
+			if (!(cell_list.empty())) {
+				CollisionDetect(cell_list);
+			}
 		}
 		//std::cout << dt << std::endl;
 
+	}
+
+	void Physics::CellCollisionDetect() {
+		// if the obj inside camera view (to be updated)
+		for (int rol = 0; rol < Grid::mRows; rol++) {
+			for (int col = 0; col < Grid::mCols; col++) {
+				if (mGrid.mCells[rol][col].empty()) {
+					continue;
+				}
+				// a temp list to store all entities with self cell and neighbor cell
+				std::set<Entity> cell_list;
+				cell_list.clear();
+				//check_cell.insert(mGrid.mCells[rol][col].begin(), mGrid.mCells[rol][col].end());
+				mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col]);
+
+				// update the collision with the residing cell
+				//CollisionDetect(mGrid.mCells[rol][col]);
+
+				// update the collision with neighbor cells
+				if (col > 0) {
+					// left cell
+					//CollisionDetect(mGrid.mCells[rol][col-1]);
+					mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col - 1]);
+					if (rol > 0) {
+						// top left cell
+						//CollisionDetect(mGrid.mCells[rol-1][col-1]);
+						mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol - 1][col - 1]);
+					}
+					if (rol < Grid::mRows - 1) {
+						// bottom left cell
+						//CollisionDetect(mGrid.mCells[rol+1][col-1]);
+						mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol + 1][col - 1]);
+					}
+				}
+				if (rol > 0) { // up cell
+					//CollisionDetect(mGrid.mCells[rol-1][col]);
+					mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol - 1][col]);
+				}
+				if (cell_list.empty()) {
+					continue;
+				}
+				CollisionDetect(cell_list);
+				
+			}
+		}
 	}
 
 	// Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line)
 	void Physics::CollisionDetect(std::set<Entity> const& entities) {
 		mContactList.clear();
 		//loops through all Entities registered by the System this mEntities map
-		for (auto const& entityA : entities) {
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) { // if entityA has rigidbody component
+		for (std::set<Entity>::iterator entityA = entities.begin(); entityA != std::prev(entities.end(), 1); ++entityA) {
+			if (InsightEngine::Instance().HasComponent<RigidBody>(*entityA)) { // if entityA has rigidbody component
 				//getting rigidbody component for each entity
-				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(*entityA);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(*entityA);
 				//auto& spriteA = InsightEngine::Instance().GetComponent<Sprite>(entityA);
 				bodyA.BodyFollowTransform(transA);
 
-				for (auto const& entityB : entities) {
+				for (std::set<Entity>::iterator entityB = std::next(entityA, 1); entityB != entities.end(); ++entityB) {
 					if (entityA == entityB) { // if self checking, continue
 						continue;
 					}
-					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) { // if entityB has rigidbody component
-						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+					if (InsightEngine::Instance().HasComponent<RigidBody>(*entityB)) { // if entityB has rigidbody component
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(*entityB);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(*entityB);
 						//auto& spriteB = InsightEngine::Instance().GetComponent<Sprite>(entityB);
 						bodyB.BodyFollowTransform(transB);
 						// for calculating collision response
@@ -151,8 +230,8 @@ namespace IS
 							}
 							else // both are dynamic
 							{
-								transA.Move(-vec/2.f);
-								transB.Move(vec/2.f);
+								transA.Move(-vec / 2.f);
+								transB.Move(vec / 2.f);
 							}
 							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
 							//ResolveCollision(bodyA, bodyB, normal, depth);
@@ -217,6 +296,22 @@ namespace IS
 			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
 		}
+
+		for (int i = 0; i < Grid::mRows; i++) {
+			for (int j = 0; j < Grid::mCols; j++) {
+				/*Vector2D test = { (j * Grid::mCellSize.x + Grid::mCellSize.x / 2) - (WIDTH / 2), (i * Grid::mCellSize.y + Grid::mCellSize.y / 2) - (HEIGHT / 2) };
+				Vector2D testnew = { 0.f, 100.f };
+				sprite.drawLine(test, test + testnew);*/
+				auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+				Vector2D vertical = { (j * Grid::mCellSize.x) - (width / 2), - (i * Grid::mCellSize.y) + (height / 2) };
+				Vector2D verticalend = { 0.f,-(Grid::mCellSize.y)};
+				sprite.drawLine(vertical, vertical + verticalend);
+				Vector2D hori = { (j * Grid::mCellSize.x) - (width / 2), -(i * Grid::mCellSize.y) + (height / 2) };
+				Vector2D horiend = { Grid::mCellSize.x, 0.f };
+				sprite.drawLine(hori, hori + horiend);
+			}
+		}
+
 		// draw the velocity line
 		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);
 	}
@@ -272,6 +367,7 @@ namespace IS
 				}
 
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				body.BodyFollowTransform(trans);
 				// update the velocity if gravity exists
 				if (mExertingGravity) {
 					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
@@ -287,6 +383,7 @@ namespace IS
 				// update position
 				trans.world_position.x += body.mVelocity.x * time;
 				trans.world_position.y += body.mVelocity.y * time;
+				//mGrid.UpdateCell(body, trans, time);
 			}
 		}
 	}

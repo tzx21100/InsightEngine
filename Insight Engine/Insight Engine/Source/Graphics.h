@@ -97,7 +97,7 @@ namespace IS {
 		static std::pair<GLuint, GLuint> GetFramebufferSize() { return mFramebuffer->GetSize(); }
 
 		// Static objects
-		static std::vector<Mesh::InstanceData> quadInstances;
+		static std::vector<Sprite::instanceData> quadInstances;
 		// Sprites (models) to render
 		static std::vector<Sprite> sprites;
 		// Animation objects

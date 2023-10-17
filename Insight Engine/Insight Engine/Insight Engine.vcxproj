@@ -22,6 +22,7 @@
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Framebuffer.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
+    <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Panel.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Source\Framebuffer.h" />
     <ClInclude Include="Source\GameLoop.h" />
     <ClInclude Include="Source\Editor.h" />
+    <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
@@ -101,7 +103,6 @@
     <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Pch.h" />
     <ClInclude Include="Source\Physics.h" />
-    <ClInclude Include="Source\Properties.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\Timer.h" />

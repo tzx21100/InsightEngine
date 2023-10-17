@@ -23,8 +23,9 @@ namespace IS {
         float angle_rad = glm::radians(model_TRS.rotation);
 
         // to scale to world coordinates
-        float map_scale_x = 2.f / WIDTH; 
-        float map_scale_y = 2.f / HEIGHT;
+        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        float map_scale_x = 2.f / width; 
+        float map_scale_y = 2.f / height;
 
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
@@ -177,8 +178,9 @@ namespace IS {
 
     glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
         // similar to transform
-        float map_scale_x = 2.f / WIDTH;
-        float map_scale_y = 2.f / HEIGHT;
+        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        float map_scale_x = 2.f / width;
+        float map_scale_y = 2.f / height;
 
         float sin_angle = sinf(rotate_angle_rad);
         float cos_angle = cosf(rotate_angle_rad);

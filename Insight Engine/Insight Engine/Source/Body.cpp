@@ -25,6 +25,8 @@
 
 namespace IS
 {    
+    int RigidBody::mNextId = 0;
+
     // Default constructor for the RigidBody class
     RigidBody::RigidBody() {
         mVelocity = Vector2D(); // (0,0)
@@ -43,6 +45,10 @@ namespace IS
         mState = BodyState::IDLE;
         mBodyShape = BodyShape::Box;
         mTransformUpdateRequired = false;
+        mId = mNextId++;
+        mIsInGrid = false;
+        //std::cout << "x: " << this->mBodyTransform.world_position.x << std::endl;
+        //std::cout << "id: " << this->mId << std::endl;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -60,6 +66,8 @@ namespace IS
         }
 
         mTransformUpdateRequired = true;
+
+        //Grid::AddIntoCell(*this);
     }
 
     // Parameterized constructor to initialize rigid body properties.
@@ -81,6 +89,8 @@ namespace IS
         mState = BodyState::IDLE;
         mBodyShape = my_body_shape;
         mTransformUpdateRequired = false;
+        mId = mNextId++;
+        mIsInGrid = false;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -99,6 +109,8 @@ namespace IS
         }
 
         mTransformUpdateRequired = true;
+
+        //Grid::AddIntoCell(*this);
 	}
 
     // Updates the rigid body's transformation data to match the texture sprite Transform
@@ -257,5 +269,10 @@ namespace IS
             Box aabb = Box(minX, minY, maxX, maxY);
 
         return aabb;
+    }
+
+    // Define the equality operator
+    bool RigidBody::operator==(const RigidBody& other) const {
+        return mId == other.mId;
     }
 }
