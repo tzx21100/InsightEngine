@@ -104,6 +104,7 @@ namespace IS {
 		static Animation ice_cream_truck_ani;
 		// Shaders
 		static Shader mesh_shader_pgm;
+		static Shader mesh_inst_shader_pgm;
 		static Shader text_shader_pgm;
 		// Mesh vector
 		static std::vector<Mesh> meshes;

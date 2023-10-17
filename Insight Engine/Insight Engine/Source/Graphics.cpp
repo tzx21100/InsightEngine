@@ -32,6 +32,7 @@ namespace IS {
     Animation ISGraphics::ice_cream_truck_ani;
     // Shaders
     Shader ISGraphics::mesh_shader_pgm;
+    Shader ISGraphics::mesh_inst_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
     // Mesh vector
     std::vector<Mesh> ISGraphics::meshes;
@@ -45,18 +46,17 @@ namespace IS {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
 
         glViewport(0, 0, WIDTH, HEIGHT); // set viewport to window size
-
+        
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
-
-        //mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
-        mesh_shader_pgm.setupInstSpriteShaders();
+        
+        mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        mesh_inst_shader_pgm.setupInstSpriteShaders();
         text_shader_pgm.setupTextShaders();
-
+        
         walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
-        
         Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm); // init text system
 
         Framebuffer::FramebufferProps props{ 0, 0, WIDTH, HEIGHT }; // create framebuffer
@@ -78,7 +78,7 @@ namespace IS {
         idle_ani.updateAnimation(delta_time);
         walking_ani.updateAnimation(delta_time);
         ice_cream_truck_ani.updateAnimation(delta_time);
-
+        
         // fill up instancing vector
         quadInstances.clear();
         for (auto& entity : mEntities) { // for each intentity
@@ -89,14 +89,14 @@ namespace IS {
             // update sprite's transform
             sprite.followTransform(trans);
             sprite.transform();
-
+            
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
                 instData.tex_id = static_cast<float>(sprite.texture);
                 instData.anim_frame_dimension = sprite.anim.frame_dimension;
                 instData.anim_frame_index = sprite.anim.frame_index;
-
+                
                 quadInstances.push_back(instData);
             }
         }
@@ -116,16 +116,30 @@ namespace IS {
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-
+        
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
-
         // Upload the quadInstances data to the GPU
         Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-        std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
-        glUnmapBuffer(GL_ARRAY_BUFFER);
 
-        glUseProgram(mesh_shader_pgm.getHandle());
+        std::cout << "OpenGL error: " << glGetError() << std::endl;
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
+            
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        glUseProgram(mesh_inst_shader_pgm.getHandle());
         glBindVertexArray(meshes[0].vao_ID);
 
         //std::vector<GLuint> tex_id_vect;

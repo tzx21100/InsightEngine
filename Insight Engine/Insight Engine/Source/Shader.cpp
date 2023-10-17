@@ -31,6 +31,7 @@ namespace IS {
             layout(location = 7) in vec3  aMtxRow3;
             layout(location = 8) in vec2  aAnimDim;
             layout(location = 9) in vec2  aAnimIndex;
+
             layout(location = 0) out vec3  vColor;
             layout(location = 1) out vec2  vTexCoord;
             layout(location = 2) out float vTexID;
@@ -58,21 +59,9 @@ namespace IS {
             layout(location = 4) in vec2  vAnimIndex;
             layout(location = 0) out vec4 fFragColor;
 
-            //uniform sampler2D uTex2d[32];
-
             void main()
             {
-                bool textured = false;
-                if (vTexId >= 0) textured = true;
-                //if (!textured)
-                //{
-                    fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
-                //}
-                /*else
-                {
-                    int texIdx = int(vTexID);
-                    fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y)); // Multiply texture color with vColor
-                }*/
+                fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
             }
         )";
 
