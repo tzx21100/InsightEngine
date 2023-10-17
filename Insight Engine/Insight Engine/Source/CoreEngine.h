@@ -139,6 +139,11 @@ namespace IS {
          */
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
 
+
+        //abstracted function to make game script
+        void CreateGameScript(const std::string& ScriptName);
+
+
         /**
          * \brief Creates an entity with a specific name.
          * \param name The name for the new entity.

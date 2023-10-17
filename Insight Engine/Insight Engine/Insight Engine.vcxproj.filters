@@ -118,6 +118,9 @@
     <ClCompile Include="Source\Panel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ScriptManager.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -275,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="Source\Panel.h">
       <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScriptManager.h">
+      <Filter>Engine\Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
