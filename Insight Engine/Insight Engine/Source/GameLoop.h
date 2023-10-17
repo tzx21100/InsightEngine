@@ -94,7 +94,7 @@ namespace IS {
             trans_player.setWorldPosition(0, 0);
             trans_test.setScaling(-100, 100);
             trans_test.setWorldPosition(-400, 0);
-            trans_floor.setScaling(600, 100);
+            trans_floor.setScaling(1200, 80);
             trans_floor.setWorldPosition(0, -400);
             body_player.mAngularVelocity = 10.f;
             body_player.mRestitution = 0.1f;

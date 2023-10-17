@@ -70,6 +70,8 @@ namespace IS
          */
         ~Physics() {}
 
+        void CellCollisionDetect();
+
         /*!
          * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
         *
@@ -128,7 +130,7 @@ namespace IS
         int mIterations;                                 // Number of iterations for physics step
         std::vector<Manifold> mContactList;
         std::vector<Vector2D> mContactPointsList;
-
+        Grid mGrid;
 	};
 
     // Pointer to the Physics instance

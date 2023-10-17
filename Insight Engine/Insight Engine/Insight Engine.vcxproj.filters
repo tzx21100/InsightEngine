@@ -112,6 +112,9 @@
     <ClCompile Include="Source\AIFSM.cpp">
       <Filter>Engine\Systems\AIFSM</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Grid.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -266,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="Source\AIFSM.h">
       <Filter>Engine\Systems\AIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Grid.h">
+      <Filter>Physics\Dynamics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
