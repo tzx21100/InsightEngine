@@ -7,18 +7,22 @@ namespace IS {
 
     std::string ScriptManager::GetName() { return "ScriptManager"; }
 
+    void ScriptManager::InitScript(ScriptComponent &scriptcomponent) {
+        scriptcomponent.scriptClass = ScriptClass("IS", scriptcomponent.mScriptName);
+        scriptcomponent.instance = scriptcomponent.scriptClass.Instantiate();
+        if (scriptcomponent.instance != nullptr) {
+            scriptcomponent.scriptClass.LoadMethods();
+            MonoMethod* init_method = scriptcomponent.scriptClass.GetMethod("Init", 0);
+            scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, init_method, nullptr);
+        }
+    }
+
     void ScriptManager::InitScripts() {
         auto& engine = InsightEngine::Instance();
         for (auto& entity : mEntities) {
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
-            scriptcomponent.scriptClass=ScriptClass("IS",scriptcomponent.mScriptName);
-            scriptcomponent.instance=scriptcomponent.scriptClass.Instantiate();
-            if (scriptcomponent.instance != nullptr) {
-                scriptcomponent.scriptClass.LoadMethods();
-                MonoMethod* init_method = scriptcomponent.scriptClass.GetMethod("Init", 0);
-                scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, init_method, nullptr);
-            }
-
+            //init all scripts 
+            InitScript(scriptcomponent);
         }
     }
 

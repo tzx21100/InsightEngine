@@ -24,6 +24,7 @@ namespace IS {
     // Macro to add internal calls for C# access
 #define IS_ADD_INTERNAL_CALL(Name) mono_add_internal_call("IS.InternalCalls::" #Name, Name)
 
+
     /**
      * \brief Native function to log a message with an integer parameter.
      * \param name The message to log.
@@ -46,7 +47,6 @@ namespace IS {
     }
 
 
-    
     // registering input functions
 
     static bool KeyPressed(int keycode) {
@@ -79,6 +79,21 @@ namespace IS {
         return input->IsMouseButtonReleased(mousebutton);
     }
 
+    static Entity GetCurrentEntity(MonoString* name) {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str); // Convert char* to C++ string
+        mono_free(c_str); // Free the allocated char*
+        return engine.GetEntityByName(str);
+    }
+
+    static void RigidBodyAddForce(float x, float y, Entity entity_id) {
+        auto &engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(entity_id);
+        Vector2D vec(x, y);
+        body_component.AddVelocity(vec);
+    }
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -94,6 +109,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
+
+        //get the entity
+        IS_ADD_INTERNAL_CALL(GetCurrentEntity);
+
+        IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
 
     }
 }

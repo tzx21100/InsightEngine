@@ -1,4 +1,5 @@
 ﻿
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace IS
@@ -32,6 +33,12 @@ namespace IS
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal extern static bool MouseReleased(int mouseButton);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static uint GetCurrentEntity(string name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodyAddForce(float x,float y,uint entity);
 
     }
 }
