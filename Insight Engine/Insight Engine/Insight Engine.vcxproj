@@ -70,6 +70,7 @@
     <ClInclude Include="Source\Entities.h" />
     <ClInclude Include="Source\EventManager.h" />
     <ClInclude Include="Source\Framebuffer.h" />
+    <ClInclude Include="Source\GameGui.h" />
     <ClInclude Include="Source\GameLoop.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\Grid.h" />

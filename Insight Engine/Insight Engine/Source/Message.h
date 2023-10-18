@@ -31,7 +31,9 @@ namespace IS {
         None,       ///< Represents no message or an uninitialized message.
         Quit,       ///< Represents a message indicating the termination or quitting of a process or action.
         Collide,    ///< Represents a collision-related message.
-        DebugInfo   ///< Represents a debug information message.
+        DebugInfo,  ///< Represents a debug information message.
+        RunScene,   ///< Represents the scene running.
+        StopScene   ///< Represent that the scene isn't running.
     };
 
     /**

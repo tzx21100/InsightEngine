@@ -25,6 +25,7 @@
 #include "ScriptEngine.h"
 #include "AIFSM.h"
 #include "ScriptManager.h"
+#include "GameGui.h"
 
 using namespace IS;
 
@@ -40,6 +41,7 @@ void RegisterComponents() {
     engine.RegisterComponent<InputAffector>();
     engine.RegisterComponent<AIState>();
     engine.RegisterComponent<ScriptComponent>();
+    engine.RegisterComponent<ButtonComponent>();
 
 }
 
@@ -54,6 +56,7 @@ void RegisterSystems() {
     Signature sign_graphics = engine.GenerateSignature<Sprite, Transform>();
     Signature sign_fsm = engine.GenerateSignature<AIState>();
     Signature sign_script = engine.GenerateSignature<ScriptComponent>();
+    Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -65,6 +68,8 @@ void RegisterSystems() {
     auto insight_gui = std::make_shared<Editor>();
     auto insight_fsm = std::make_shared<AIFSMManager>();
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
+    auto insight_guisystem = std::make_shared<GuiSystem>();
+
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_default);
@@ -74,6 +79,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_gui, sign_default);
     engine.AddSystem(insight_fsm, sign_fsm);
     engine.AddSystem(insight_scriptmanager, sign_script);
+    engine.AddSystem(insight_guisystem, sign_gui);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 

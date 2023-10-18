@@ -16,7 +16,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #include "CoreEngine.h"
-
+#include "GameGui.h"
 namespace IS {
     class GameLoop :public ParentSystem {
 
@@ -29,6 +29,7 @@ namespace IS {
         Entity entity_line{};
         Entity entity_circle{};
         Entity entity_quad{};
+        Entity entity_button{};
 
         //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
@@ -57,6 +58,7 @@ namespace IS {
             entity_circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Circle");
             entity_line = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Line");
             entity_point = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Point");
+            entity_button = engine.CreateEntityWithComponents<ButtonComponent>("Button");
 
             auto& trans_quad = engine.GetComponent<Transform>(entity_quad);
             auto& trans_player = engine.GetComponent<Transform>(entity_player);
@@ -118,9 +120,12 @@ namespace IS {
 
             trans_point.setWorldPosition(650.f, 300.f);
             sprite_point.primitive_type = GL_POINTS;
+
+
         }
 
         virtual void Update(float delta) override {
+
 
             // Disable mouse/key event when GUI is using them
             auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
@@ -253,6 +258,17 @@ namespace IS {
                 auto& transLines = engine.GetComponent<Transform>(entity_line);
                 transLines.rotation += transLines.angle_speed * delta;
             }
+
+            if (engine.HasComponent<ButtonComponent>(entity_button)) {
+                auto& buttoncomponent = engine.GetComponent<ButtonComponent>(entity_button);
+                auto& buttonsprite = engine.GetComponent<Sprite>(entity_button);
+                if (buttoncomponent.mButtonState == ButtonStates::Hovered) {
+                    buttonsprite.color= glm::vec3(1.f, 0.f, 1.f);
+                }
+                else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
+            }
+
+
         }
 
         virtual void Draw([[maybe_unused]]float delta) override{

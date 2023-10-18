@@ -282,6 +282,9 @@
     <ClInclude Include="Source\ScriptManager.h">
       <Filter>Engine\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameGui.h">
+      <Filter>Engine\Systems\Gui System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -382,6 +385,9 @@
     </Filter>
     <Filter Include="Engine\Systems\AIFSM">
       <UniqueIdentifier>{04098ec3-c3dc-405d-a930-8cc6a93d8694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Gui System">
+      <UniqueIdentifier>{7c2b3b4c-19b5-4d80-994a-0269fcb5fddd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
