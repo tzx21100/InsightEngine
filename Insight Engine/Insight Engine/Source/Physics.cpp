@@ -291,20 +291,8 @@ namespace IS
 			sprite.drawLine(va, vb);
 		}
 
-		for (int i = 0; i < Grid::mRows; i++) {
-			for (int j = 0; j < Grid::mCols; j++) {
-				/*Vector2D test = { (j * Grid::mCellSize.x + Grid::mCellSize.x / 2) - (WIDTH / 2), (i * Grid::mCellSize.y + Grid::mCellSize.y / 2) - (HEIGHT / 2) };
-				Vector2D testnew = { 0.f, 100.f };
-				sprite.drawLine(test, test + testnew);*/
-				auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
-				Vector2D vertical = { (j * Grid::mCellSize.x) - (width / 2), - (i * Grid::mCellSize.y) + (height / 2) };
-				Vector2D verticalend = { 0.f,-(Grid::mCellSize.y)};
-				sprite.drawLine(vertical, vertical + verticalend);
-				Vector2D hori = { (j * Grid::mCellSize.x) - (width / 2), -(i * Grid::mCellSize.y) + (height / 2) };
-				Vector2D horiend = { Grid::mCellSize.x, 0.f };
-				sprite.drawLine(hori, hori + horiend);
-			}
-		}
+		// draw grid cell line
+		Grid::DrawGrid(sprite);
 
 		// draw the velocity line
 		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);

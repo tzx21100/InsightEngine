@@ -281,4 +281,19 @@ namespace IS
 		}
 	}
 
+	void Grid::DrawGrid(Sprite const& sprite) {
+		auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+		Grid::mCellSize = { static_cast<float>(width) / Grid::mCols, static_cast<float>(height) / Grid::mRows };
+
+		for (int i = 0; i < Grid::mRows; i++) {
+			for (int j = 0; j < Grid::mCols; j++) {
+				Vector2D vertical = { (j * Grid::mCellSize.x) - (width / 2), -(i * Grid::mCellSize.y) + (height / 2) };
+				Vector2D verticalend = { 0.f,-(Grid::mCellSize.y) };
+				sprite.drawLine(vertical, vertical + verticalend);
+				Vector2D hori = { (j * Grid::mCellSize.x) - (width / 2), -(i * Grid::mCellSize.y) + (height / 2) };
+				Vector2D horiend = { Grid::mCellSize.x, 0.f };
+				sprite.drawLine(hori, hori + horiend);
+			}
+		}
+	}
 }
