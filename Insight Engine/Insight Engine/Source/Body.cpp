@@ -47,6 +47,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mIsInGrid = false;
+        mFirstTransform = false;
         //std::cout << "x: " << this->mBodyTransform.world_position.x << std::endl;
         //std::cout << "id: " << this->mId << std::endl;
 
@@ -91,6 +92,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mIsInGrid = false;
+        mFirstTransform = false;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);

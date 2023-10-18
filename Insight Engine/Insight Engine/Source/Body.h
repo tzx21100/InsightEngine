@@ -78,6 +78,8 @@ namespace IS
         int mId; // To compare then add/remove from the grid cell
         static int mNextId;
         bool mIsInGrid;
+        bool mFirstTransform;
+
         // Constructors and member functions
 
         /**

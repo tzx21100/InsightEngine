@@ -57,21 +57,15 @@ namespace IS
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-		mGrid.ClearGrid();
+		/*mGrid.ClearGrid();
 		for (auto const& entity : mEntities) {
 			mGrid.AddIntoCell(entity);
-		}
+		}*/
 		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-		for (auto const& entity : mEntities) {
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
-				//auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-				//mGrid.AddIntoCell(body);
-				for (int i = 0; i < Grid::mRows; i++) {
-					for (int j = 0; j < Grid::mCols; j++) {
-						if (input->IsKeyPressed(GLFW_KEY_3)) {
-							std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
-						}
-					}
+		for (int i = 0; i < Grid::mRows; i++) {
+			for (int j = 0; j < Grid::mCols; j++) {
+				if (input->IsKeyPressed(GLFW_KEY_3)) {
+					std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
 				}
 			}
 		}
@@ -81,23 +75,25 @@ namespace IS
 			Step(dt, mEntities);
 
 			// detect collision through grid cell
-			CellCollisionDetect();
+			//CellCollisionDetect();
+			// 
 			// Detects collisions among a set of entities (normal way)
-			std::set<Entity> cell_list;
-			for (auto const& entity : mEntities) {
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
-					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-					if (!(body.mIsInGrid)) {
-						// emplace all the entities outside of the grid
-						cell_list.emplace(entity);
-					}
-				}
-			}
-			if (!(cell_list.empty())) {
-				CollisionDetect(cell_list);
-			}
+			CollisionDetect(mEntities);
+			//std::set<Entity> cell_list;
+			//cell_list.clear();
+			//for (auto const& entity : mEntities) {
+			//	if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+			//		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+			//		if (!(body.mIsInGrid)) {
+			//			// emplace all the entities outside of the grid
+			//			cell_list.emplace(entity);
+			//		}
+			//	}
+			//}
+			//if (!(cell_list.empty())) {
+			//	CollisionDetect(cell_list);
+			//}
 		}
-		//std::cout << dt << std::endl;
 
 	}
 
@@ -111,11 +107,9 @@ namespace IS
 				// a temp list to store all entities with self cell and neighbor cell
 				std::set<Entity> cell_list;
 				cell_list.clear();
-				//check_cell.insert(mGrid.mCells[rol][col].begin(), mGrid.mCells[rol][col].end());
-				mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col]);
 
 				// update the collision with the residing cell
-				//CollisionDetect(mGrid.mCells[rol][col]);
+				mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col]);
 
 				// update the collision with neighbor cells
 				if (col > 0) {
@@ -356,6 +350,15 @@ namespace IS
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				body.BodyFollowTransform(trans);
+
+				/*if (!body.mFirstTransform) {
+					std::cout << body.mBodyTransform.world_position.x << std::endl;
+					body.mFirstTransform = true;
+					mGrid.AddIntoCell(entity);
+				}*/
+				
 				// if the entity is static or kinematic, skip
 				if (body.mBodyType != BodyType::Dynamic) {
 					continue;
@@ -365,9 +368,7 @@ namespace IS
 					if (!InsightEngine::Instance().mContinueFrame)
 						return;
 				}
-
-				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				body.BodyFollowTransform(trans);
+				
 				// update the velocity if gravity exists
 				if (mExertingGravity) {
 					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
@@ -383,7 +384,7 @@ namespace IS
 				// update position
 				trans.world_position.x += body.mVelocity.x * time;
 				trans.world_position.y += body.mVelocity.y * time;
-				//mGrid.UpdateCell(body, trans, time);
+				//mGrid.UpdateCell(entity, time);
 			}
 		}
 	}

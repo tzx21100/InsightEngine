@@ -18,11 +18,11 @@ namespace IS
 
 		void EmplaceEntity(std::set<Entity>& result, std::set<Entity> const& source);
 
-		static const int mRows = 5;
-		static const int mCols = 5;
+		static const int mRows = 4;
+		static const int mCols = 4;
 		static Vector2D mCellSize;
 		static std::set<Entity> mCells[mRows][mCols];
-
+		static std::set<Entity> mOutsideGridList;
 	private:
 	};
 }
