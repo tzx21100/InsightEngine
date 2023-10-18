@@ -9,7 +9,8 @@ namespace IS
 {
     public class PlayerScript
     {
-
+        //private entity
+        private static uint entity;
         public static int BoolToInt(bool boolValue)
         {
             return boolValue ? 1 : 0;
@@ -19,7 +20,8 @@ namespace IS
         {
             // Initialization code
             Console.WriteLine("ctor!");
-            InternalCalls.NativeLog("Entity Initialized", 0);
+            entity = InternalCalls.GetCurrentEntity("Player");
+            InternalCalls.NativeLog("Entity Initialized", (int)entity);
         }
 
         static public void Update()
@@ -35,9 +37,8 @@ namespace IS
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
             int verti_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.W)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.S));
-            uint entity = InternalCalls.GetCurrentEntity("Player");
+            
             Vector2D vect2 = new Vector2D(10, 0);
-            InternalCalls.NativeLog("PlayerID", (int)entity);
             InternalCalls.RigidBodyAddForce(hori_movement*10f, verti_movement*10f, entity);
         }
 
