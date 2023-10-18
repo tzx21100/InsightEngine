@@ -33,6 +33,7 @@ namespace IS
         }
     }
 
+
     /// <summary>
     /// A demo class for demonstrating C++ function calls from C# scripts.
     /// </summary>

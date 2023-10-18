@@ -67,7 +67,7 @@ namespace IS {
             auto& trans_point = engine.GetComponent<Transform>(entity_point);
 
             auto& player_script = engine.GetComponent<ScriptComponent>(entity_player);
-            player_script.mScriptName = "Test";
+            player_script.mScriptName = "PlayerScript";
 
             auto& body_player = engine.GetComponent<RigidBody>(entity_player);
             auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);
@@ -177,19 +177,19 @@ namespace IS {
                     auto& trans_player = engine.GetComponent<Transform>(entity_player);
                     auto& body_player = engine.GetComponent<RigidBody>(entity_player);
 
-                    //auto& trans2 = engine.GetComponent<Transform>(myEntity);
-                    int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
-                    int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
-                    Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
-                    body_player.AddVelocity(inputVelocity);
-                    // for jumping
-                    if (input->IsKeyPressed(GLFW_KEY_SPACE)) { 
-                        //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
-                        if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
-                            body_player.AddVelocity(Vector2D(0.f, 500.f));
-                            body_player.mState = BodyState::JUMP;
-                        }
-                    }
+                //    //auto& trans2 = engine.GetComponent<Transform>(myEntity);
+                //    int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
+                //    int verti = input->IsKeyHeld(GLFW_KEY_W) - input->IsKeyHeld(GLFW_KEY_S);
+                //    Vector2D inputVelocity = Vector2D(hori * 10.f, verti * 10.f);
+                //    body_player.AddVelocity(inputVelocity);
+                //    // for jumping
+                //    if (input->IsKeyPressed(GLFW_KEY_SPACE)) { 
+                //        //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
+                //        if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
+                //            body_player.AddVelocity(Vector2D(0.f, 500.f));
+                //            body_player.mState = BodyState::JUMP;
+                //        }
+                //    }
 
                     // flip image
                     trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||

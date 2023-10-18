@@ -239,6 +239,15 @@ namespace IS {
         }
 
         /**
+        * \brief Retrieves the Entity associated with a given name.
+        * \param entity The entity whose name is to be retrieved.
+        * \return The name of the specified entity.
+        */
+        Entity GetEntityByName(std::string name) {
+            return mEntityManager->FindEntity(name);
+        }
+
+        /**
          * \brief Determines the number of entities that are currently alive.
          * \return The count of currently alive entities.
          */
