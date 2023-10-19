@@ -37,8 +37,8 @@ namespace IS {
     class Sprite : public IComponent {
     public:
         struct instanceData {
-            glm::mat3 model_to_ndc_xform{};
             float tex_id{};
+            glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
         };

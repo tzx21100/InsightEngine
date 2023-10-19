@@ -25,10 +25,10 @@ namespace IS {
             layout(location = 0) in vec2  aVertexPosition;
             layout(location = 1) in vec3  aVertexColor;
             layout(location = 2) in vec2  aVertexTexCoord;
-            layout(location = 4) in float aTexID;
-            layout(location = 5) in vec3  aMtxRow1;
-            layout(location = 6) in vec3  aMtxRow2;
-            layout(location = 7) in vec3  aMtxRow3;
+            layout(location = 3) in float aTexID;
+            layout(location = 4) in vec3  aMtxRow1;
+            layout(location = 5) in vec3  aMtxRow2;
+            layout(location = 6) in vec3  aMtxRow3;
             layout(location = 8) in vec2  aAnimDim;
             layout(location = 9) in vec2  aAnimIndex;
 
@@ -40,6 +40,7 @@ namespace IS {
             void main()
             {
                 mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
+                //model_to_NDC_xform = transpose(model_to_NDC_xform);
                 gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
 				vColor = aVertexColor;  
                 vTexCoord = aVertexTexCoord;
