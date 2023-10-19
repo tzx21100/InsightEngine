@@ -17,6 +17,7 @@
 #include "Pch.h"
 
 namespace IS {
+    int Sprite::texture_count = 0;
 
     void Sprite::transform() {
         // convert angle to radians
@@ -39,7 +40,7 @@ namespace IS {
         model_TRS.mdl_to_ndc_xform = world_to_NDC_xform;
     }
 
-    void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
+    void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
         // use sprite shader
         shader.use();
 
@@ -51,12 +52,12 @@ namespace IS {
         shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
 
         // Bind the texture to the uniform sampler2D
-        if (glIsTexture(texture_id)) {
+        if (glIsTexture(texture_ID)) {
             GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
             if (textureUniformLoc != -1) {
                 glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture_id);
+                glBindTexture(GL_TEXTURE_2D, texture_ID);
             }
             shader.setUniform("uTexture", 1);
         }
@@ -92,7 +93,7 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animation, GLuint texture_id) {
+    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animation, GLuint texture_ID) {
         // use sprite shader
         shader.use();
 
@@ -108,7 +109,7 @@ namespace IS {
         if (textureUniformLoc != -1) {
             glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture_id);
+            glBindTexture(GL_TEXTURE_2D, texture_ID);
         }
         shader.setUniform("uTexture", 1);
 
@@ -210,10 +211,10 @@ namespace IS {
         // Note: Not serializing mdl_to_ndc_xform as it's a matrix and the specific serialization might depend on further needs
 
         // Serializing texture-related properties
-        spriteData["SpriteTexture"] = texture;
+        spriteData["SpriteTexture"] = texture_id;
         spriteData["SpriteTextureWidth"] = texture_width;
         spriteData["SpriteTextureHeight"] = texture_height;
-        spriteData["SpriteCurrentTexIndex"] = current_tex_index;
+        spriteData["SpriteCurrentTexIndex"] = animation_index;
 
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
@@ -239,10 +240,10 @@ namespace IS {
         // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
 
         // Deserializing texture-related properties
-        texture = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
         texture_width = data["SpriteTextureWidth"].asUInt();
         texture_height = data["SpriteTextureHeight"].asUInt();
-        current_tex_index = data["SpriteCurrentTexIndex"].asInt();
+        animation_index = data["SpriteCurrentTexIndex"].asInt();
 
         // Deserializing imgui-related properties
         name = data["SpriteName"].asString();

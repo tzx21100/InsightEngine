@@ -60,9 +60,22 @@ namespace IS {
             layout(location = 4) in vec2  vAnimIndex;
             layout(location = 0) out vec4 fFragColor;
 
+            uniform sampler2D uTex2d[32];
+          
             void main()
             {
-                fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+                bool textured = false;
+                if (vTexID >= 0) textured = true;
+                if (!textured)
+                {
+                    fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+                }
+                else
+                {
+                    int texIdx = int(vTexID);
+                    // fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y)); // Multiply texture color with vColor
+                    fFragColor = texture(uTex2d[texIdx], vec2(1.0, 1.0));
+                }
             }
         )";
 

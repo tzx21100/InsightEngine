@@ -99,8 +99,6 @@ namespace IS {
          * \param mesh_primitive_type The OpenGL primitive type for the non-quad mesh.
          */
         void setupNonQuadVAO(GLenum mesh_primitive_type);
-
-        //static void uploadInstanceData(const std::vector<InstanceData>& instanceData, Mesh const& mesh_used);
     };
 } // end namespace IS
 

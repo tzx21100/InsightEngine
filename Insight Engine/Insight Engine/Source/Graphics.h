@@ -94,6 +94,8 @@ namespace IS {
 		 */
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
+		static std::unordered_map<int, Image> textures;
+
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;
 		// Sprites (models) to render

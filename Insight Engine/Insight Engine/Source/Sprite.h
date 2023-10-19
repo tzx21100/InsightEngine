@@ -37,20 +37,24 @@ namespace IS {
     class Sprite : public IComponent {
     public:
         struct instanceData {
-            float tex_id{};
+            float tex_index{};
             glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
         };
 
+        static int texture_count;
+
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
-        uint8_t texture{};         // The texture ID for the sprite.
+        uint8_t texture_id{};      // The texture ID for the sprite. (randomly given by OpenGL)
+        int texture_index{};       // Sequential, first texture has index 0, second has 1 ...
         uint32_t texture_width{};  // The width of the sprite's texture.
         uint32_t texture_height{}; // The height of the sprite's texture.
-        int current_tex_index{};   // The current texture index for animation (0 is the default texture).
+        int animation_index{};     // The current texture index for switching animations (0 is the default texture).
         // std::vector<Animation> anim_vect{};
         Animation anim{};
+
 
         // ImGui properties
         std::string name;          // The name of the sprite.
@@ -72,6 +76,7 @@ namespace IS {
             // Give it a default size of 1 by 1
             setSpriteSize(1, 1);
             setWorldPos(0, 0);
+            texture_index = texture_count++;
         }
 
         /*!
@@ -87,6 +92,7 @@ namespace IS {
             for (int i{}; i < 3; ++i) {
                 color[i] = prng.generate();
             }
+            texture_index = texture_count++;
         }
 
         /*!

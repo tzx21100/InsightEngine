@@ -21,7 +21,7 @@
 
 namespace IS {
     /// Static objects ///
-
+    std::unordered_map<int, Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
     
     // Sprites (models) to render
@@ -81,6 +81,7 @@ namespace IS {
         
         // fill up instancing vector
         quadInstances.clear();
+
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
             auto& sprite = engine.GetComponent<Sprite>(entity);
@@ -90,13 +91,21 @@ namespace IS {
             sprite.followTransform(trans);
             sprite.transform();
             
+            int i{};
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
-                instData.tex_id = static_cast<float>(sprite.texture);
+                if (sprite.texture_id == 0) { // no texture
+                    instData.tex_index = -1.f;
+                }
+                else {
+                    //instData.tex_index = static_cast<float>(sprite.texture_index - MAX_ENTITIES);
+                    instData.tex_index = static_cast<float>(i++);
+                }
                 instData.anim_frame_dimension = sprite.anim.frame_dimension;
                 instData.anim_frame_index = sprite.anim.frame_index;
                 
+                //std::cout << instData.tex_id << std::endl;
                 quadInstances.push_back(instData);
             }
         }
@@ -122,8 +131,6 @@ namespace IS {
         // Upload the quadInstances data to the GPU
         Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
-        std::cout << "OpenGL error: " << glGetError() << std::endl;
-
         if (buffer) {
             // Copy the instance data to the mapped buffer
             std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
@@ -142,7 +149,15 @@ namespace IS {
         glUseProgram(mesh_inst_shader_pgm.getHandle());
         glBindVertexArray(meshes[0].vao_ID);
 
-        //std::vector<GLuint> tex_id_vect;
+        
+        std::vector<int> tex_array_index_vect; int i{};
+        for (std::pair<int, Image> const& texture : textures) {
+            glBindTextureUnit(texture.first, texture.second.texture_id);
+            tex_array_index_vect.emplace_back(i++);
+        }
+        auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
+        glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[0].draw_count, static_cast<GLsizei>(quadInstances.size()));
 
 
@@ -168,7 +183,7 @@ namespace IS {
             case GL_TRIANGLE_STRIP: // quads
                 //if (sprite.name == "player_sprite") { // if drawing player
                 //    // swap animations based on index
-                //    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
+                //    if (sprite.animation_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
                 //    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
                 //}
                 //else if (sprite.name == "ice_cream_truck") { // if drawing truck
@@ -179,13 +194,13 @@ namespace IS {
                 //}
                 //break;
             case GL_POINTS: // points
-                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture_id);
                 break;
             case GL_LINES: // lines
-                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.texture_id);
                 break;
             case GL_TRIANGLE_FAN: // circle
-                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture_id);
                 break;
             }
             if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
@@ -248,6 +263,9 @@ namespace IS {
     }
 
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+        InsightEngine& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
+
         int width, height, channels;
         uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
 
@@ -303,7 +321,7 @@ namespace IS {
         image.height = height;
         image.channels = channels;
         image.mFileName = filepath;
-        image.mTextureData = textureID;
+        image.texture_id = textureID;
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
