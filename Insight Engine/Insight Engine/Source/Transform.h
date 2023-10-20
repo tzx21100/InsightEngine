@@ -27,6 +27,10 @@
 namespace IS {
 	class Transform : public IComponent {
 	public:
+		virtual std::string GetType() const override {
+			return "Transform";
+		}
+
 		/*!
 		 * \brief Default constructor for the Transform class.
 		 */

@@ -38,7 +38,32 @@ namespace IS
         internal extern static uint GetCurrentEntity(string name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodyAddForce(float x,float y,uint entity);
+        internal extern static void RigidBodyAddForce(float x,float y);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodyAddForceEntity(float x, float y, uint entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetRotation(float angle, float angle_speed);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetPosition(float x, float y);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetScale(float x, float y);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetRigidBodyAngularVelocity();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetTransformPosition();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetTransformScaling();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetTransformRotation();
+
 
     }
 }

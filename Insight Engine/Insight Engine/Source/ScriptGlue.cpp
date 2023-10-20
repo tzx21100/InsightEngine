@@ -87,11 +87,72 @@ namespace IS {
         return engine.GetEntityByName(str);
     }
 
-    static void RigidBodyAddForce(float x, float y, Entity entity_id) {
+    static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
         auto &engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(entity_id);
         Vector2D vec(x, y);
         body_component.AddVelocity(vec);
+    }
+
+    static void RigidBodyAddForce(float x, float y) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        Vector2D vec(x, y);
+        body_component.AddVelocity(vec);
+    }
+
+    static void TransformSetPosition(float x, float y) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        trans_component.world_position.x=x;
+        trans_component.world_position.y = y;
+    }
+
+    static void TransformSetScale(float x, float y) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        trans_component.scaling.x = x;
+        trans_component.scaling.y = y;
+    }
+
+    static void TransformSetRotation(float angle,float angle_speed) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        trans_component.setRotation(angle,angle_speed);
+    }
+
+    static SimpleVector2D GetTransformPosition() {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        SimpleVector2D vec;
+        vec.x = trans_component.getWorldPosition().x;
+        vec.y = trans_component.getWorldPosition().y;
+        return vec;
+    }
+
+    static SimpleVector2D GetTransformScaling() {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        SimpleVector2D vec;
+        vec.x = trans_component.getScaling().x;
+        vec.y = trans_component.getScaling().y;
+        return vec;
+    }
+
+    static float GetTransformRotation() {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        float vec;
+        vec = trans_component.getRotation();
+        return vec;
+    }
+
+    static float GetRigidBodyAngularVelocity() {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        float vec;
+        vec = trans_component.mAngularVelocity;
+        return vec;
     }
 
     /**
@@ -110,10 +171,22 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
 
-        //get the entity
+        // Get the entity by name
         IS_ADD_INTERNAL_CALL(GetCurrentEntity);
 
+        // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
+        IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
+        IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
+
+        // Transform
+        IS_ADD_INTERNAL_CALL(TransformSetPosition);
+        IS_ADD_INTERNAL_CALL(TransformSetRotation);
+        IS_ADD_INTERNAL_CALL(TransformSetScale);
+        IS_ADD_INTERNAL_CALL(GetTransformPosition);
+        IS_ADD_INTERNAL_CALL(GetTransformScaling);
+        IS_ADD_INTERNAL_CALL(GetTransformRotation);
+
 
     }
 }

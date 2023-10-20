@@ -179,8 +179,8 @@ namespace IS {
                 }
 
                 if (engine.HasComponent<Transform>(entity_player)) {
-                    auto& trans_player = engine.GetComponent<Transform>(entity_player);
-                    auto& body_player = engine.GetComponent<RigidBody>(entity_player);
+                    //auto& trans_player = engine.GetComponent<Transform>(entity_player);
+                    //auto& body_player = engine.GetComponent<RigidBody>(entity_player);
 
                 //    //auto& trans2 = engine.GetComponent<Transform>(myEntity);
                 //    int hori = input->IsKeyHeld(GLFW_KEY_D) - input->IsKeyHeld(GLFW_KEY_A);
@@ -196,13 +196,13 @@ namespace IS {
                 //        }
                 //    }
 
-                    // flip image
-                    trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||
-                        (input->IsKeyHeld(GLFW_KEY_D) && (trans_player.scaling.x < 0)) ? -1 : 1;
+                    //// flip image
+                    //trans_player.scaling.x *= (input->IsKeyHeld(GLFW_KEY_A) && (trans_player.scaling.x > 0)) ||
+                    //    (input->IsKeyHeld(GLFW_KEY_D) && (trans_player.scaling.x < 0)) ? -1 : 1;
 
-                    float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
-                    trans_player.rotation += rotate * body_player.mAngularVelocity;
-                    trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
+                    //float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
+                    //trans_player.rotation += rotate * body_player.mAngularVelocity;
+                    //trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
                 }
 
                 // rotate lines on clock

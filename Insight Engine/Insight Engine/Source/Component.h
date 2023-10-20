@@ -63,6 +63,8 @@ namespace IS {
 			//This is a empty default init so that not all components have to override
 		}
 
+		virtual std::string GetType() const = 0;
+
 	};
 
 	/**
@@ -316,7 +318,7 @@ namespace IS {
 		 *
 		 * \return An unordered map of registered components.
 		 */
-		const std::unordered_map<const char*, ComponentType>& GetRegisteredComponents() const {
+		const std::unordered_map<std::string, ComponentType>& GetRegisteredComponents() const {
 			return mRegisteredComponentType;
 		}
 
@@ -329,7 +331,7 @@ namespace IS {
 		*/
 		template<typename T>
 		void RegisterComponent() {
-			const char* type_name = typeid(T).name();
+			std::string type_name = T().GetType();
 			assert(mRegisteredComponentType.find(type_name) == mRegisteredComponentType.end() && "Registering component type more than once.");
 			// Add this component type to the component type map
 			mRegisteredComponentType.insert({ type_name, mNextComponentType });
@@ -339,7 +341,7 @@ namespace IS {
 			mComponentArrayMap[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
 			++mNextComponentType;
-			IS_CORE_INFO("{} component registered!", std::string(type_name).substr(10));
+			IS_CORE_INFO("{} component registered!", type_name);
 		}
 
 		/**
@@ -352,7 +354,7 @@ namespace IS {
 		 */
 		template<typename T>
 		ComponentType GetComponentType() {
-			const char* type_name = typeid(T).name();
+			std::string type_name = T().GetType();
 			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			// Return this component's type - used for creating signatures
 			return mRegisteredComponentType[type_name];
@@ -484,7 +486,7 @@ namespace IS {
 		 */
 		template<typename T>
 		std::shared_ptr<ComponentArray<T>> GetComponentArray() {
-			const char* type_name = typeid(T).name();
+			std::string type_name = T().GetType();
 			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayMap[type_name]);
 		}
@@ -493,12 +495,12 @@ namespace IS {
 		/**
 		 * \brief A map linking component type names to their assigned types.
 		 */
-		std::unordered_map<const char*, ComponentType> mRegisteredComponentType{};
+		std::unordered_map<std::string, ComponentType> mRegisteredComponentType{};
 
 		/**
 		 * \brief A map linking component type names to their respective component arrays.
 		 */
-		std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrayMap{};
+		std::unordered_map<std::string, std::shared_ptr<IComponentArray>> mComponentArrayMap{};
 
 		/**
 		 * \brief The next component type to be assigned.

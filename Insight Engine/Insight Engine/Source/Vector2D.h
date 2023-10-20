@@ -25,6 +25,11 @@ namespace IS {
     #pragma warning(disable : 4201) // Supress warning: nonstandard extension used : nameless struct/union
 #endif
 
+    // I added a simple vector2d to convert to C#
+    struct SimpleVector2D {
+        float x, y;
+    };
+
     /**************************************************************************/
     /*!
         This typedef union represents a mathematical vector in 2D space.
@@ -125,6 +130,20 @@ namespace IS {
      */
      /**************************************************************************/
     float ISVector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1);
+
+
+    //functionalities to convert vector2d and simple vector 2d
+    Vector2D ConvertToVector2D(const SimpleVector2D& simpleVec) {
+        return Vector2D(simpleVec.x, simpleVec.y);
+    }
+
+    SimpleVector2D ConvertToSimpleVector2D(const Vector2D& vec) {
+        SimpleVector2D simpleVec;
+        simpleVec.x = vec.x;
+        simpleVec.y = vec.y;
+        return simpleVec;
+    }
+
 
 } // end namespace IS
 

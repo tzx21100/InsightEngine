@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+
+[StructLayout(LayoutKind.Sequential)]
+public struct SimpleVector2D
+{
+    public float x;
+    public float y;
+}
+
+
 public class Vector2D
 {
     public float x { get; set; }
     public float y { get; set; }
+
 
     public Vector2D(float x, float y)
     {
@@ -63,5 +73,15 @@ public class Vector2D
         return $"({x}, {y})";
     }
 
+    // Functionalities to convert to SimpleVector2D
+    public SimpleVector2D ToSimpleVector2D()
+    {
+        return new SimpleVector2D { x = this.x, y = this.y };
+    }
+
+    public static Vector2D FromSimpleVector2D(SimpleVector2D simpleVec)
+    {
+        return new Vector2D(simpleVec.x, simpleVec.y);
+    }
 
 }

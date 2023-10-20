@@ -144,6 +144,13 @@ namespace IS {
         void CreateGameScript(const std::string& ScriptName);
         void OpenGameScript(const std::string& ScriptName);
 
+        // abstracted function to get entity calling script
+        Entity GetScriptCaller() {
+            auto script = GetSystem<ScriptManager>("ScriptManager");
+            return script->GetScriptEntity();
+        }
+
+
         /**
          * \brief Creates an entity with a specific name.
          * \param name The name for the new entity.

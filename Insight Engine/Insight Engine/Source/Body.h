@@ -56,6 +56,9 @@ namespace IS
      */
     class RigidBody : public IComponent{
     public:
+        virtual std::string GetType() const override {
+            return "RigidBody";
+        }
         // Member variables for rigid body properties
 
         Vector2D mVelocity;                         /**< Linear velocity of the rigid body. */

@@ -26,6 +26,7 @@ namespace IS {
         for (auto& entity : mEntities) {
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
             //init all scripts 
+            mEntityScriptCaller = entity;
             InitScript(scriptcomponent);
         }
     }
@@ -41,6 +42,7 @@ namespace IS {
         for (auto& entity: mEntities) {
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
             if (scriptcomponent.instance != nullptr) {
+                mEntityScriptCaller = entity;
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
                 scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
             }

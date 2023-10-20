@@ -30,7 +30,7 @@
 
  /*                                                                   macros
  ----------------------------------------------------------------------------- */
-#define MAX_ENTITIES 200000
+#define MAX_ENTITIES 20000
 #define MAX_COMPONENTS 32
 
 namespace IS {

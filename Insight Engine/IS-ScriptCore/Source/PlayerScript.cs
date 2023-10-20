@@ -37,9 +37,22 @@ namespace IS
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
             int verti_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.W)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.S));
-            
-            Vector2D vect2 = new Vector2D(10, 0);
-            InternalCalls.RigidBodyAddForce(hori_movement*10f, verti_movement*10f, entity);
+            InternalCalls.RigidBodyAddForce(hori_movement*10f, verti_movement*10f);
+
+            // scaling transform with movement
+            Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+            Vector2D trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
+            float trans_rotate = InternalCalls.GetTransformRotation();
+            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+            if (InternalCalls.KeyHeld((int)KeyCodes.D)){ if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);
+
+            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
+            trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();
+            trans_rotate = trans_rotate <0? 360: trans_rotate %= 360;
+            InternalCalls.TransformSetRotation(trans_rotate, 10);
+
+
         }
 
 

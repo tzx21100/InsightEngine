@@ -11,6 +11,9 @@ namespace IS {
 
     class ScriptComponent : IComponent {
     public:
+        virtual std::string GetType() const override {
+            return "ScriptComponent";
+        }
         std::string mScriptName;
         ScriptClass scriptClass;
         MonoObject* instance = nullptr;
@@ -36,6 +39,13 @@ namespace IS {
     // Usage example...
     //CreateClassFile("MyClass", "MyClass.cs");
 
+        //accessor funciton to get entity calling script
+        Entity GetScriptEntity() {
+            return mEntityScriptCaller;
+        }
+
+    private:
+        Entity mEntityScriptCaller;
 
 
     };

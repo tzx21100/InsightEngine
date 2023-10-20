@@ -30,8 +30,11 @@
 
 namespace IS {
 
-    class InputAffector  {
-
+    class InputAffector :public IComponent {
+    public:
+        virtual std::string GetType() const override {
+            return "InputAffector";
+        }
         /*this is just an empty component
         * all the entities that have this will be called
          */

@@ -40,6 +40,9 @@ namespace IS {
     //Components for GUI (to represent an entity as a button)
     class ButtonComponent : IComponent {
     public:
+        virtual std::string GetType() const override {
+            return "ButtonComponent";
+        }
         std::string mButtonText;
         int mButtonType;
         int mButtonState;

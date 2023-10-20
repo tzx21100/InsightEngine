@@ -34,8 +34,13 @@ namespace IS {
      * The Sprite class encapsulates a 2D sprite with various properties such as transformation, rendering settings,
      * and animation capabilities. It allows you to create and manage 2D sprites for use in OpenGL applications.
      */
+
     class Sprite : public IComponent {
     public:
+        virtual std::string GetType() const override {
+            return "Sprite";
+        }
+
         struct instanceData {
             Matrix3x3 model_to_ndc_xform{};
             float tex_id{};
@@ -60,7 +65,9 @@ namespace IS {
          *
          * Initializes the sprite with default values.
          */
+        int sscounter=0;
         Sprite() {
+
             name = "Box";
             primitive_type = GL_TRIANGLE_STRIP;
             PRNG& prng = PRNG::Instance();

@@ -16,9 +16,11 @@
 
 #include "Pch.h"
 
+
 namespace IS {
 
 	void Sprite::transform() {
+
         // convert angle to radians
         float angle_rad = glm::radians(model_TRS.rotation);
 
