@@ -244,7 +244,7 @@ namespace IS {
             Image random_img = (gacha <= 0.3f) ? asset->GetImage("Assets/icecream_truck_frame.png") :
                 (gacha <= 0.6f) ? asset->GetImage("Assets/player_frame.png") :
                 (gacha <= 0.8f) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
-            sprite.texture_id = static_cast<uint8_t>(random_img.texture_id);
+            sprite.img.texture_id = static_cast<uint8_t>(random_img.texture_id);
             sprite.texture_width = random_img.width;
             sprite.texture_height = random_img.height;
         }

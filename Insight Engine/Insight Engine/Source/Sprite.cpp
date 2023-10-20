@@ -211,7 +211,7 @@ namespace IS {
         // Note: Not serializing mdl_to_ndc_xform as it's a matrix and the specific serialization might depend on further needs
 
         // Serializing texture-related properties
-        spriteData["SpriteTexture"] = texture_id;
+        spriteData["SpriteTexture"] = img.texture_id;
         spriteData["SpriteTextureWidth"] = texture_width;
         spriteData["SpriteTextureHeight"] = texture_height;
         spriteData["SpriteCurrentTexIndex"] = animation_index;
@@ -240,7 +240,7 @@ namespace IS {
         // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
 
         // Deserializing texture-related properties
-        texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
         texture_width = data["SpriteTextureWidth"].asUInt();
         texture_height = data["SpriteTextureHeight"].asUInt();
         animation_index = data["SpriteCurrentTexIndex"].asInt();

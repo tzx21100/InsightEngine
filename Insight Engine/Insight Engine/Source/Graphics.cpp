@@ -81,7 +81,6 @@ namespace IS {
         
         // fill up instancing vector
         quadInstances.clear();
-
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
             auto& sprite = engine.GetComponent<Sprite>(entity);
@@ -90,17 +89,18 @@ namespace IS {
             // update sprite's transform
             sprite.followTransform(trans);
             sprite.transform();
-            
-            int i{};
+           
+
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
-                if (sprite.texture_id == 0) { // no texture
+                if (sprite.img.texture_id == 0) { // no texture
                     instData.tex_index = -1.f;
                 }
                 else {
                     //instData.tex_index = static_cast<float>(sprite.texture_index - MAX_ENTITIES);
-                    instData.tex_index = static_cast<float>(i++);
+                    //std::cout << sprite.name << " " << sprite.img.texture_index << std::endl;
+                    instData.tex_index = static_cast<float>(sprite.img.texture_index);
                 }
                 instData.anim_frame_dimension = sprite.anim.frame_dimension;
                 instData.anim_frame_index = sprite.anim.frame_index;
@@ -127,7 +127,7 @@ namespace IS {
         glClear(GL_COLOR_BUFFER_BIT);
         
         // Bind the instance VBO
-        glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
+        glBindBuffer(GL_ARRAY_BUFFER, meshes[4].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
         Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
@@ -147,7 +147,7 @@ namespace IS {
         }
 
         glUseProgram(mesh_inst_shader_pgm.getHandle());
-        glBindVertexArray(meshes[0].vao_ID);
+        glBindVertexArray(meshes[4].vao_ID);
 
         
         std::vector<int> tex_array_index_vect;
@@ -158,7 +158,7 @@ namespace IS {
         auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
         glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
 
-        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[0].draw_count, static_cast<GLsizei>(quadInstances.size()));
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[4].draw_count, static_cast<GLsizei>(quadInstances.size()));
 
 
         for (auto& entity : mEntities) { // for each intentity
@@ -194,13 +194,13 @@ namespace IS {
                 //}
                 //break;
             case GL_POINTS: // points
-                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture_id);
+                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             case GL_LINES: // lines
-                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.texture_id);
+                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             case GL_TRIANGLE_FAN: // circle
-                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture_id);
+                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             }
             if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody

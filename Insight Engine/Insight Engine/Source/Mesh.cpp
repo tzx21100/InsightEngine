@@ -171,17 +171,19 @@ namespace IS {
 
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // 4 meshes for 4 different models
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
+        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh, inst_quad_mesh;
         //quad_mesh.setupQuadVAO();
-        quad_mesh.setupInstancedQuadVAO();
+        quad_mesh.setupQuadVAO();
         point_mesh.setupNonQuadVAO(GL_POINTS);
         line_mesh.setupNonQuadVAO(GL_LINES);
         circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+        inst_quad_mesh.setupInstancedQuadVAO();
 
         meshes.emplace_back(quad_mesh);
         meshes.emplace_back(point_mesh);
         meshes.emplace_back(line_mesh);
         meshes.emplace_back(circle_mesh);
+        meshes.emplace_back(inst_quad_mesh);
     }
 
     void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {

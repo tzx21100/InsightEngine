@@ -51,13 +51,13 @@ namespace IS {
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
             backgroundTest.texture_index = 0; // hard code first :)
             black_background = asset->GetImage("Assets/black_background.png");
-            backgroundTest.texture_index = 1;
+            black_background.texture_index = 1;
             idle_animation = asset->GetImage("Assets/player_idle.png");
-            backgroundTest.texture_index = 2;
+            idle_animation.texture_index = 2;
             walking_animation = asset->GetImage("Assets/player_walking.png");
-            backgroundTest.texture_index = 3;
+            walking_animation.texture_index = 3;
             truck_animation = asset->GetImage("Assets/icecream_truck.png");
-            backgroundTest.texture_index = 4;
+            truck_animation.texture_index = 4;
 
             ISGraphics::textures.emplace_back(backgroundTest);
             ISGraphics::textures.emplace_back(black_background);
@@ -92,21 +92,24 @@ namespace IS {
             auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
-            sprite_background.texture_id = static_cast<uint8_t>(black_background.texture_id);
+            sprite_background.img.texture_id = static_cast<uint8_t>(black_background.texture_id);
             sprite_background.texture_width = black_background.width;
             sprite_background.texture_height = black_background.height;
+            sprite_background.img.texture_index = 1;
 
             sprite_player.name = "player_sprite";
-            sprite_player.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
+            sprite_player.img.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
             sprite_player.texture_width = idle_animation.width;
             sprite_player.texture_height = idle_animation.height;
             sprite_player.anim = ISGraphics::idle_ani;
+            sprite_player.img.texture_index = 2;
             // sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
             // sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
 
-            sprite_test.texture_id = static_cast<uint8_t>(backgroundTest.texture_id);
+            sprite_test.img.texture_id = static_cast<uint8_t>(backgroundTest.texture_id);
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
+            sprite_test.img.texture_index = 0;
 
             trans_quad.setScaling(WIDTH, HEIGHT);
             trans_player.setScaling(95, 120);
@@ -136,7 +139,6 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-
             // Disable mouse/key event when GUI is using them
             auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
 
@@ -184,16 +186,18 @@ namespace IS {
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
                     if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
-                        sprite_player.texture_id = static_cast<uint8_t>(walking_animation.texture_id);
+                        sprite_player.img.texture_id = static_cast<uint8_t>(walking_animation.texture_id);
                         sprite_player.texture_width = walking_animation.width;
                         sprite_player.texture_height = walking_animation.height;
                         sprite_player.animation_index = 1;
+                        sprite_player.img.texture_index = 3;
                     }
                     else {
-                        sprite_player.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
+                        sprite_player.img.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
                         sprite_player.texture_width = idle_animation.width;
                         sprite_player.texture_height = idle_animation.height;
                         sprite_player.animation_index = 0;
+                        sprite_player.img.texture_index = 2;
                     }
                 }
 
@@ -260,9 +264,10 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
-                        spr.texture_id = static_cast<uint8_t>(truck_animation.texture_id);
+                        spr.img.texture_id = static_cast<uint8_t>(truck_animation.texture_id);
                         spr.texture_width = truck_animation.width;
                         spr.texture_height = truck_animation.height;
+                        spr.img.texture_index = 4;
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
                         spr.anim = ISGraphics::ice_cream_truck_ani;
                         
