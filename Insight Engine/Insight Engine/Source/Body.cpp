@@ -31,9 +31,7 @@ namespace IS
     RigidBody::RigidBody() {
         mVelocity = Vector2D(); // (0,0)
         mAngularVelocity = 0.f;
-        mBodyTransform.world_position = glm::vec2();
-        mBodyTransform.rotation = 0.f;
-        mBodyTransform.scaling = glm::vec2();
+        mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
         mBodyType = BodyType::Dynamic;
         mForce = Vector2D();
         mAcceleration = Vector2D();
@@ -72,13 +70,13 @@ namespace IS
     }
 
     // Parameterized constructor to initialize rigid body properties.
-	RigidBody::RigidBody(glm::vec2 my_position, BodyType my_body_type, float my_mass, float my_restitution,
+	RigidBody::RigidBody(Vector2D my_position, BodyType my_body_type, float my_mass, float my_restitution,
         float my_width, float my_height, BodyShape my_body_shape) {
         mVelocity = Vector2D(); // (0,0)
         mAngularVelocity = 0.f;
         mBodyTransform.world_position = my_position;
         mBodyTransform.rotation = 0.f;
-        mBodyTransform.scaling = glm::vec2(my_width, my_height);
+        mBodyTransform.scaling = Vector2D(my_width, my_height);
         mBodyType = my_body_type;
         mForce = Vector2D(); // (0,0)
         mAcceleration = Vector2D();
@@ -180,8 +178,7 @@ namespace IS
             return;
         }
         mVelocity += my_gravity * my_dt;
-        mBodyTransform.world_position.x += mVelocity.x * my_dt;
-        mBodyTransform.world_position.y += mVelocity.y * my_dt;
+        mBodyTransform.world_position += mVelocity * my_dt;
         mBodyTransform.rotation += mAngularVelocity * my_dt;
 
         mTransformUpdateRequired = true;
@@ -189,8 +186,7 @@ namespace IS
 
     // Move the game object by a specified vector
     void RigidBody::Move(Vector2D const& my_val) {
-        mBodyTransform.world_position.x += my_val.x;
-        mBodyTransform.world_position.y += my_val.y;
+        mBodyTransform.world_position += my_val;
         mTransformUpdateRequired = true;
         mTransformedVertices = GetTransformedVertices();
     }

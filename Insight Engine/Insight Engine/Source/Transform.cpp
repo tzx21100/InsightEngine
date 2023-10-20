@@ -18,15 +18,17 @@
 
 namespace IS {
 	Transform::Transform() { // default constructor
-		this->world_position = glm::vec2();
+		this->world_position = Vec2D();
 		this->rotation = 0.f;
-		this->scaling = glm::vec2();
+		this->scaling = Vec2D();
+		ISMtx33Identity(mdl_to_ndc_xform);
 	}
 
-	Transform::Transform(glm::vec2 world_position, float rotation, glm::vec2 scaling) { // param constructor
+	Transform::Transform(Vec2D world_position, float rotation, Vec2D scaling) { // param constructor
 		this->world_position = world_position;
 		this->rotation = rotation;
 		this->scaling = scaling;
+		ISMtx33Identity(mdl_to_ndc_xform);
 	}
 
 	Vector2D Transform::getWorldPosition() { // for physics system
@@ -93,5 +95,24 @@ namespace IS {
 		scaling.y = data["TransformScalingY"].asFloat();
 
 		// Note: Not deserializing mdl_to_ndc_xform since matrix deserialization can be complex and depends on specifics
+	}
+
+	glm::mat3 ISMtx33ToGlmMat3(Matrix3x3 const& mat) {
+		glm::mat3 ret{
+			mat.m00, mat.m10, mat.m20, // col 0
+			mat.m01, mat.m11, mat.m21, // col 1
+			mat.m02, mat.m12, mat.m22, // col 2
+		};
+		return ret;
+	}
+
+	Matrix3x3 GlmMat3ToISMtx33(glm::mat3 const& mat) {
+		Matrix3x3 ret;
+
+		ret.m00 = mat[0][0]; ret.m01 = mat[1][0]; ret.m02 = mat[2][0]; // row 0
+		ret.m10 = mat[0][1]; ret.m11 = mat[1][1]; ret.m12 = mat[2][1]; // row 1
+		ret.m20 = mat[0][2]; ret.m21 = mat[1][2]; ret.m22 = mat[2][2]; // row 2
+
+		return ret;
 	}
 }

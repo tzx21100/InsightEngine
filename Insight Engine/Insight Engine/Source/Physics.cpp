@@ -370,8 +370,9 @@ namespace IS
 				body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
 				body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
 				// update position
-				trans.world_position.x += body.mVelocity.x * time;
-				trans.world_position.y += body.mVelocity.y * time;
+				trans.world_position += body.mVelocity * time;
+				//trans.world_position.x += body.mVelocity.x * time;
+				//trans.world_position.y += body.mVelocity.y * time;
 				//mGrid.UpdateCell(entity, time);
 			}
 		}

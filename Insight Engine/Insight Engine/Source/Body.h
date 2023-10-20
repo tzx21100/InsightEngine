@@ -23,7 +23,6 @@
 #include "Entities.h"
 #include "Component.h"
 #include "Transform.h"
-#include <glm/glm.hpp>
 
 namespace IS
 {
@@ -97,7 +96,7 @@ namespace IS
          * \param my_height The height of the body (if applicable).
          * \param my_body_shape The shape of the rigid body (Box, Circle, etc.).
          */
-        RigidBody(glm::vec2 my_position, BodyType my_body_type, float my_mass, float my_restitution,
+        RigidBody(Vector2D my_position, BodyType my_body_type, float my_mass, float my_restitution,
             float my_width, float my_height, BodyShape my_body_shape);
 
         /**

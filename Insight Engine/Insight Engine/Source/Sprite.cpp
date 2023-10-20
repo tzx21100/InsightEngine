@@ -37,7 +37,7 @@ namespace IS {
                                          (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
 
         // save matrix
-        model_TRS.mdl_to_ndc_xform = world_to_NDC_xform;
+        model_TRS.mdl_to_ndc_xform = GlmMat3ToISMtx33(world_to_NDC_xform);
 	}
 
     void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
@@ -49,7 +49,7 @@ namespace IS {
 
         // set uniforms
         shader.setUniform("uColor", color);
-        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
+        shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
 
         // Bind the texture to the uniform sampler2D
         if (glIsTexture(texture_id)) {
@@ -102,7 +102,7 @@ namespace IS {
         
         // set uniforms
         shader.setUniform("uColor", color);
-        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
+        shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
 
         // set spritesheet texture
         GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
@@ -118,7 +118,7 @@ namespace IS {
         shader.setUniform("uFrameIndex", glm::vec2(anim.x_frame_index, anim.y_frame_index));
 
         // transformation matrix uniform
-        shader.setUniform("uModel_to_NDC", model_TRS.mdl_to_ndc_xform);
+        shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
 
         // draw quad
         glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh_used.draw_count);
