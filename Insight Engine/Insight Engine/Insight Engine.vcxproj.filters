@@ -121,6 +121,9 @@
     <ClCompile Include="Source\ScriptManager.cpp">
       <Filter>Engine\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp">
+      <Filter>Engine\Systems\Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -284,6 +287,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameGui.h">
       <Filter>Engine\Systems\Gui System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pathfinder.h">
+      <Filter>Engine\Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Engine\Systems\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@
 #include "AIFSM.h"
 #include "ScriptManager.h"
 #include "GameGui.h"
+#include "Pathfinder.h"
 
 using namespace IS;
 
@@ -42,6 +43,7 @@ void RegisterComponents() {
     engine.RegisterComponent<AIState>();
     engine.RegisterComponent<ScriptComponent>();
     engine.RegisterComponent<ButtonComponent>();
+    engine.RegisterComponent<Pathfinder>();
 
 }
 
@@ -57,6 +59,8 @@ void RegisterSystems() {
     Signature sign_fsm = engine.GenerateSignature<AIState>();
     Signature sign_script = engine.GenerateSignature<ScriptComponent>();
     Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
+    Signature sign_pathfinding = engine.GenerateSignature<Pathfinder>();
+
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -69,6 +73,8 @@ void RegisterSystems() {
     auto insight_fsm = std::make_shared<AIFSMManager>();
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
     auto insight_guisystem = std::make_shared<GuiSystem>();
+    auto insight_pathfinding = std::make_shared<Pathfinding>();
+
 
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
@@ -80,6 +86,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_fsm, sign_fsm);
     engine.AddSystem(insight_scriptmanager, sign_script);
     engine.AddSystem(insight_guisystem, sign_gui);
+    engine.AddSystem(insight_pathfinding, sign_pathfinding);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 
