@@ -73,8 +73,8 @@ namespace IS {
                 else
                 {
                     int texIdx = int(vTexID);
-                    // fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y)); // Multiply texture color with vColor
-                    fFragColor = texture(uTex2d[texIdx], vec2(1.0, 1.0));
+                    //fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y)); // Multiply texture color with vColor
+                    fFragColor = texture(uTex2d[texIdx], vTexCoord);
                 }
             }
         )";

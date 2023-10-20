@@ -155,8 +155,13 @@ namespace IS {
             glBindTextureUnit(texture.texture_index, texture.texture_id);
             tex_array_index_vect.emplace_back(texture.texture_index);
         }
+
         auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
-        glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        if (tex_arr_uniform >= 0)
+            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        else
+            std::cout << "uTex2d Uniform not found" << std::endl;
+        
 
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[4].draw_count, static_cast<GLsizei>(quadInstances.size()));
 
@@ -265,7 +270,7 @@ namespace IS {
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
-
+        static int bind{};
         int width, height, channels;
         uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
 
@@ -322,6 +327,7 @@ namespace IS {
         image.channels = channels;
         image.mFileName = filepath;
         image.texture_id = textureID;
+        image.texture_index = bind++;
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
