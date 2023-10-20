@@ -7,7 +7,7 @@
 		"Title" : "Insight Engine",
 		"Vsync" : true,
 		"Width" : 1920,
-		"Xpos" : 0,
-		"Ypos" : 35
+		"Xpos" : 160,
+		"Ypos" : 195
 	}
 }

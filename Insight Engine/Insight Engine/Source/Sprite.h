@@ -107,7 +107,7 @@ namespace IS {
          * \param trans The world position to set.
          */
         void setWorldPos(Transform trans) { model_TRS.world_position = trans.world_position; }
-        void setWorldPos(float x, float y) { model_TRS.world_position = glm::vec2(x, y); }
+        void setWorldPos(float x, float y) { model_TRS.world_position = Vec2D(x, y); }
 
         /*!
          * \brief Sets the size of the sprite.
@@ -115,7 +115,7 @@ namespace IS {
          * \param trans The size to set.
          */
         void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
-        void setSpriteSize(float width, float height) { model_TRS.scaling = glm::vec2(width, height); }
+        void setSpriteSize(float width, float height) { model_TRS.scaling = Vec2D(width, height); }
 
         /*!
          * \brief Draws a special sprite.

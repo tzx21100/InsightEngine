@@ -57,7 +57,7 @@ namespace IS {
         // Unary operators
         Vector2D operator -() const;
 
-    } Vec2;
+    } Vec2, Vec2D;
 
 
 #ifdef _MSC_VER

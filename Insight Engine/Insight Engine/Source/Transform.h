@@ -39,7 +39,7 @@ namespace IS {
 		 * \param rotation The initial rotation angle in degrees.
 		 * \param scaling The initial scaling factors as a glm::vec2.
 		 */
-		Transform(glm::vec2 world_position, float rotation, glm::vec2 scaling);
+		Transform(Vec2D world_position, float rotation, Vec2D scaling);
 
 		/*!
 		 * \brief Get the world position.
@@ -94,11 +94,11 @@ namespace IS {
 		void Move(Vector2D const& val);
 
 		// members
-		glm::vec2 world_position{};					 // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
+		Vec2D world_position{};					 // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
 		float rotation{};							 // z-axis rotation in degrees
 		float angle_speed{};						 // rotation speed
-		glm::vec2 scaling{};						 // x = width, y = height
-		glm::mat3 mdl_to_ndc_xform = glm::imat3x3{}; // identity matrix default
+		Vec2D scaling{};						 // x = width, y = height
+		Mtx33 mdl_to_ndc_xform; // identity matrix default
 
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.
@@ -118,6 +118,9 @@ namespace IS {
 		 */
 		void Deserialize(Json::Value data) override;
 	};
+
+	glm::mat3 ISMtx33ToGlmMat3(Matrix3x3 const& mat);
+	Matrix3x3 GlmMat3ToISMtx33(glm::mat3 const& mat);
 }
 
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_TRANSFORM_H
