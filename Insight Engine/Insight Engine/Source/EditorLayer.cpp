@@ -131,7 +131,44 @@ namespace IS {
         std::string fullscreen_label = is_fullscreen ? "Exit Fullscreen" : "Enter Fullscreen";
 
         if (ImGui::BeginMenuBar()) {
+
             if (ImGui::BeginMenu("File")) {
+
+                // New File
+                if (ImGui::BeginMenu("New")) {
+                    // Load New Scene
+                    if (ImGui::MenuItem("Scene", "Ctrl+N"))
+                        NewScene();
+                    
+                    // Create New Script
+                    if (ImGui::MenuItem("Script..."))
+                        mShowNewScript = true;
+
+                    ImGui::EndMenu();
+                }
+
+                // Open File
+                if (ImGui::BeginMenu("Open")) {
+                    // Open Scene
+                    if (ImGui::MenuItem("Scene...", "Ctrl+O"))
+                        mShowLoad = true;
+
+                    // Open Scipt
+                    if (ImGui::MenuItem("Script..."))
+                        mShowOpenScript = true;
+
+                    ImGui::EndMenu();
+                }
+
+                ImGui::Separator();
+
+                // Save File
+                if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+                    SaveScene();
+                // Save Scene As...
+                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
+                    mShowSave = true;
+
                 ImGui::MenuItem("(Empty)");
                 ImGui::Separator();
 
@@ -153,25 +190,6 @@ namespace IS {
             }
 
             if (ImGui::BeginMenu("Scene")) {
-                // New Scene
-                if (ImGui::MenuItem("New Scene", "Ctrl+N"))
-                    NewScene();
-                // Load Test Scene
-                if (ImGui::MenuItem("Load Test Scene"))
-                    LoadTestScene();
-                // Load Scene...
-                if (ImGui::MenuItem("Load Scene...", "Ctrl+L"))
-                    mShowLoad = true;
-                ImGui::Separator();
-
-                // Save Scene
-                if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
-                    SaveScene();
-                // Save Scene As...
-                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
-                    mShowSave = true;
-                ImGui::Separator();
-
                 if (ImGui::MenuItem("Create 500 Random Colors")) {
                     for (int i{}; i < 500; i++) {
                         engine.GenerateRandomEntity();
@@ -193,6 +211,12 @@ namespace IS {
 
         if (mShowSave)
             SaveSceneAs();
+
+        if (mShowNewScript)
+            NewScript();
+
+        if (mShowOpenScript)
+            OpenScript();
     }
 
     void EditorLayer::RenderSceneOverlay() {
@@ -327,6 +351,51 @@ namespace IS {
 
     void EditorLayer::ExitProgram() {
         InsightEngine::Instance().Exit();
+    }
+
+    void EditorLayer::NewScript() {
+        auto& engine = InsightEngine::Instance();
+
+        ImGui::OpenPopup("New Script...");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
+
+        if (ImGui::BeginPopupModal("New Script...", &mShowNewScript, window_flags)) {
+            std::string default_text = "NewScript";
+            char name[std::numeric_limits<char8_t>::max() + 1]{};
+            auto source = default_text | std::ranges::views::take(default_text.size());
+            std::ranges::copy(source, std::begin(name));
+
+            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText("##NewScript", name, sizeof(name), input_flags) || ImGui::Button("Create")) {
+                engine.CreateGameScript(name);
+                engine.OpenGameScript(name);
+                mShowNewScript = false;
+            }
+
+            ImGui::EndPopup();
+        }
+    }
+
+    void EditorLayer::OpenScript() {
+        auto& engine = InsightEngine::Instance();
+
+        ImGui::OpenPopup("Open Script...");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
+
+        if (ImGui::BeginPopupModal("Open Script...", &mShowOpenScript, window_flags)) {
+            std::string default_text = "";
+            char name[std::numeric_limits<char8_t>::max() + 1]{};
+            auto source = default_text | std::ranges::views::take(default_text.size());
+            std::ranges::copy(source, std::begin(name));
+
+            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText("##OpenScript", name, sizeof(name), input_flags) || ImGui::Button("Open")) {
+                engine.OpenGameScript(name);
+                mShowOpenScript = false;
+            }
+
+            ImGui::EndPopup();
+        }
     }
 
 } // end namespace IS

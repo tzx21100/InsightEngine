@@ -47,9 +47,9 @@ namespace IS {
         mMonitorHeight = mode->height;
 
         // Create a window and its OpenGL context
-        mWindow = glfwCreateWindow(mProps.mFullscreen ? mMonitorWidth : mProps.mWidth, 
-                                   mProps.mFullscreen ? mMonitorHeight : mProps.mHeight, mProps.mTitle.c_str(),
-                                   mProps.mFullscreen ? monitor : nullptr, nullptr);
+        mWindow = mProps.mFullscreen
+            ? glfwCreateWindow(mMonitorWidth, mMonitorHeight, mProps.mTitle.c_str(), monitor, nullptr)
+            : glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
 
         // Validate window
         if (!mWindow) {

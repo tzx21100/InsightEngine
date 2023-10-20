@@ -28,6 +28,15 @@
 
 namespace IS {
 
+    std::string GetCurrentWorkingDirectory() {
+        std::filesystem::path path = std::filesystem::current_path();
+        std::string path_str = path.generic_string();
+
+        // Replace forward slashes with backslashes
+        std::replace(path_str.begin(), path_str.end(), '/', '\\');
+        return path_str;
+    }
+
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::mSelectedEntity;
 
     SceneHierarchyPanel::SceneHierarchyPanel() : mInspectorPanel(std::make_shared<InspectorPanel>()) {}
@@ -153,7 +162,7 @@ namespace IS {
 
         // Edit Entity Name
         std::string& name = engine.GetEntityName(entity);
-        char buffer[std::numeric_limits<char8_t>::max() + 1]{};
+        char buffer[256]{};
         auto source = name | std::ranges::views::take(name.size());
         std::ranges::copy(source, std::begin(buffer));
 
@@ -239,6 +248,12 @@ namespace IS {
                         ImGui::CloseCurrentPopup();
                     }
                 }
+                if (!engine.HasComponent<ScriptComponent>(entity)) {
+                    if (ImGui::MenuItem("Script")) {
+                        engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
+                        ImGui::CloseCurrentPopup();
+                    }
+                }
             }
 
             ImGui::EndPopup();
@@ -275,7 +290,7 @@ namespace IS {
         RenderEntityConfig(entity);
 
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [&](Sprite& sprite) {
+        RenderComponent<Sprite>("Sprite", entity, [font_bold, entity](Sprite& sprite) {
             if (sprite.texture) {
                 ImGui::PushFont(font_bold);
                 ImGui::TextUnformatted("Texture");
@@ -335,7 +350,7 @@ namespace IS {
         });
 
         // Transform Component
-        RenderComponent<Transform>("Transform", entity, [&](Transform& transform) {
+        RenderComponent<Transform>("Transform", entity, [font_bold](Transform& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
             guidgets::RenderControlVec2("Translation", position);
@@ -359,7 +374,7 @@ namespace IS {
         });
 
         // Rigidbody Component
-        RenderComponent<RigidBody>("Rigidbody", entity, [&](RigidBody& rigidbody) {
+        RenderComponent<RigidBody>("Rigidbody", entity, [entity, font_bold](RigidBody& rigidbody) {
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
             guidgets::RenderControlVec2("Velocity", rigidbody.mVelocity);
@@ -438,6 +453,23 @@ namespace IS {
         // Input Affector Component
         RenderComponent<InputAffector>("Input Affector", entity, []([[maybe_unused]] InputAffector& input_affector) {
             ImGui::TextUnformatted("(Empty)");
+        });
+
+        // Script Component
+        RenderComponent<ScriptComponent>("Script", entity, [font_bold](ScriptComponent& script) {
+            if (ImGui::BeginTable("ScriptTable", 2)) {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(font_bold);
+                ImGui::TextUnformatted("Script Name:");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Text("%s", script.mScriptName.c_str());
+                ImGui::EndTable();
+            }
+
+            if (ImGui::Button("Open"))
+                InsightEngine::Instance().OpenGameScript(script.mScriptName);
+
         });
 
         ImGui::PopStyleVar();

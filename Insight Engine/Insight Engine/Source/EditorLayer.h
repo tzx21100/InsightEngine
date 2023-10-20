@@ -89,6 +89,8 @@ namespace IS {
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
         bool mShowLoad = false; ///< Flag indicating to show load scene.
         bool mShowSave = false; ///< Flag indicating to show save scene.
+        bool mShowNewScript = false; ///< Flag indicating to show new script.
+        bool mShowOpenScript = false; ///< Flag indicating to show save script.
 
         /*!
          * \brief Load a new scene.
@@ -124,6 +126,16 @@ namespace IS {
          * \brief Exit current program.
          */
         void ExitProgram();
+
+        /*!
+         * \brief Creates a new script.
+         */
+        void NewScript();
+
+        /*!
+         * \brief Open a script.
+         */
+        void OpenScript();
     };
 
 } // end namespace IS

@@ -27,44 +27,11 @@ namespace IS {
         //specific script
         void InitScript(ScriptComponent& scriptcomponent);
 
-    // Function to create a C# class file from a template
-        void CreateClassFile(const std::string& className, const std::string& filePath) {
-            // Define the template for the C# class
-            std::string classTemplate = R"(using System.Runtime.CompilerServices;
-namespace IS
-{
-    class {CLASS_NAME}
-    {
-        static public void Init(){
+        // Function to create a C# class file from a template
+        void CreateClassFile(const std::string& className, const std::string& filePath);
 
-        }
-
-        static public void Update(){
-            
-        }
-
-    }
-}
-)";
-
-            // Replace placeholder in the template with the actual class name
-            size_t pos;
-            while ((pos = classTemplate.find("{CLASS_NAME}")) != std::string::npos) {
-                classTemplate.replace(pos, 12, className);
-            }
-
-            // Write the resulting string to a file
-            std::ofstream outFile(filePath);
-            if (outFile.is_open()) {
-                outFile << classTemplate;
-                outFile.close();
-                IS_CORE_DEBUG("Script file created sucessfully");
-            }
-            else {
-                IS_CORE_DEBUG("Script file failed to be created, unable to open file for writing");
-            }
-        }
-        //end of create file
+        // Function to open a C# class file in default application (i.e. Visual Studio Code)
+        void OpenClassFile(std::string const& class_name);
 
     // Usage example...
     //CreateClassFile("MyClass", "MyClass.cs");

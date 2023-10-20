@@ -142,7 +142,7 @@ namespace IS {
 
         //abstracted function to make game script
         void CreateGameScript(const std::string& ScriptName);
-
+        void OpenGameScript(const std::string& ScriptName);
 
         /**
          * \brief Creates an entity with a specific name.
