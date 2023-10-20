@@ -49,16 +49,21 @@ namespace IS {
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            backgroundTest.texture_index = 0; // hard code first :)
             black_background = asset->GetImage("Assets/black_background.png");
+            backgroundTest.texture_index = 1;
             idle_animation = asset->GetImage("Assets/player_idle.png");
+            backgroundTest.texture_index = 2;
             walking_animation = asset->GetImage("Assets/player_walking.png");
+            backgroundTest.texture_index = 3;
             truck_animation = asset->GetImage("Assets/icecream_truck.png");
+            backgroundTest.texture_index = 4;
 
-            ISGraphics::textures.emplace(0, backgroundTest);
-            ISGraphics::textures.emplace(1, black_background);
-            ISGraphics::textures.emplace(2, idle_animation);
-            ISGraphics::textures.emplace(3, walking_animation);
-            ISGraphics::textures.emplace(4, truck_animation);
+            ISGraphics::textures.emplace_back(backgroundTest);
+            ISGraphics::textures.emplace_back(black_background);
+            ISGraphics::textures.emplace_back(idle_animation);
+            ISGraphics::textures.emplace_back(walking_animation);
+            ISGraphics::textures.emplace_back(truck_animation);
 
             //creating game object and their components
             entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");

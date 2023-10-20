@@ -69,7 +69,7 @@ namespace IS {
         int channels{};
         size_t size{};
         GLuint texture_id{}; // actual ID given my openGL
-        int texture_index{}; // Sequential, first texture IN USE has index 0, second has 1 ...
+        int texture_index{-1}; // Sequential, first texture IN USE has index 0, second has 1 ...
         AllocationType mAllocationType{};
     };
 

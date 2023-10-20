@@ -51,7 +51,7 @@ namespace IS {
                                    mProps.mTitle.c_str(), nullptr, nullptr);
 
         if (!mWindow) {
-            IS_CORE_CRITICAL("Failed to create OpneGL context!");
+            IS_CORE_CRITICAL("Failed to create OpenGL context!");
             glfwTerminate();
         }
 

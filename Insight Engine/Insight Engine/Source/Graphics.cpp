@@ -21,7 +21,7 @@
 
 namespace IS {
     /// Static objects ///
-    std::unordered_map<int, Image> ISGraphics::textures;
+    std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
     
     // Sprites (models) to render
@@ -150,10 +150,10 @@ namespace IS {
         glBindVertexArray(meshes[0].vao_ID);
 
         
-        std::vector<int> tex_array_index_vect; int i{};
-        for (std::pair<int, Image> const& texture : textures) {
-            glBindTextureUnit(texture.first, texture.second.texture_id);
-            tex_array_index_vect.emplace_back(i++);
+        std::vector<int> tex_array_index_vect;
+        for (auto const& texture : textures) {
+            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            tex_array_index_vect.emplace_back(texture.texture_index);
         }
         auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
         glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
