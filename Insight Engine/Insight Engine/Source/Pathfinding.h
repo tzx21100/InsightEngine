@@ -16,26 +16,6 @@ namespace IS {
     };
 
 
-    //// Define a custom comparison function for waypoints in the open set
-    //class CompareWaypoints {
-    //public:
-    //    //default ctor
-    //    CompareWaypoints() = default;
-    //    
-    //    CompareWaypoints(std::unordered_map<const Waypoint*, double>& g_cost, const Waypoint& goal)
-    //        : mGCost(g_cost), mGoal(goal) {}
-
-    //    bool operator()(const Waypoint* a, const Waypoint* b) {
-    //        return mGCost[a] + distance(*a, mGoal) > mGCost[b] + distance(*b, mGoal);
-    //    }
-
-    //private:
-    //    std::unordered_map<const Waypoint*, double>& mGCost;
-    //    const Waypoint& mGoal;
-    //};
-
-
-
     class Pathfinding : public ParentSystem {
     public:
         //override parent
