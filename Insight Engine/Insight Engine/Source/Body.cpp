@@ -44,7 +44,7 @@ namespace IS
         mBodyShape = BodyShape::Box;
         mTransformUpdateRequired = false;
         mId = mNextId++;
-        mIsInGrid = false;
+        mGridState = GridState::Uninitialized;
         mFirstTransform = false;
         //std::cout << "x: " << this->mBodyTransform.world_position.x << std::endl;
         //std::cout << "id: " << this->mId << std::endl;
@@ -89,7 +89,7 @@ namespace IS
         mBodyShape = my_body_shape;
         mTransformUpdateRequired = false;
         mId = mNextId++;
-        mIsInGrid = false;
+        mGridState = GridState::Uninitialized;
         mFirstTransform = false;
 
         if (mBodyShape == BodyShape::Box) {
@@ -237,13 +237,12 @@ namespace IS
     Box RigidBody::GetAABB() {
             float minX = std::numeric_limits<float>::max();
             float minY = std::numeric_limits<float>::max();
-            float maxX = std::numeric_limits<float>::min();
-            float maxY = std::numeric_limits<float>::min();
+            float maxX = -std::numeric_limits<float>::max();
+            float maxY = -std::numeric_limits<float>::max();
 
             if (mBodyShape == BodyShape::Box)
             {
-                //FlatVector[] vertices = this.GetTransformedVertices();
-
+                // loop through the vertices to get a bigger(if necessary) box for grid cell calculation
                 for (int i = 0; i < mTransformedVertices.size(); i++)
                 {
                     Vector2D v = mTransformedVertices[i];
@@ -273,4 +272,5 @@ namespace IS
     bool RigidBody::operator==(const RigidBody& other) const {
         return mId == other.mId;
     }
+
 }

@@ -165,9 +165,9 @@ namespace IS
 
 			// init min & max for Object A & B
 			float minA = std::numeric_limits<float>::max();
-			float maxA = std::numeric_limits<float>::min();
+			float maxA = -std::numeric_limits<float>::max(); // negative max
 			float minB = std::numeric_limits<float>::max();
-			float maxB = std::numeric_limits<float>::min();
+			float maxB = -std::numeric_limits<float>::max(); // negative max
 
 			// projecting all the vertices onto the normal
 			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
@@ -199,9 +199,9 @@ namespace IS
 
 			// init min & max for Object A & B
 			float minA = std::numeric_limits<float>::max();
-			float maxA = std::numeric_limits<float>::min();
+			float maxA = -std::numeric_limits<float>::max(); // negative max
 			float minB = std::numeric_limits<float>::max();
-			float maxB = std::numeric_limits<float>::min();
+			float maxB = -std::numeric_limits<float>::max(); // negative max
 
 			// projecting all the vertices onto the normal
 			ProjectVertices(trans_verticesA, axisnormalized, minA, maxA);
@@ -271,9 +271,9 @@ namespace IS
 
 			//float minA, maxA, minB, maxB;
 			float minA = std::numeric_limits<float>::max();
-			float maxA = std::numeric_limits<float>::min();
+			float maxA = -std::numeric_limits<float>::max(); // negative max
 			float minB = std::numeric_limits<float>::max();
-			float maxB = std::numeric_limits<float>::min();
+			float maxB = -std::numeric_limits<float>::max(); // negative max
 			ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
 			ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
 
@@ -300,9 +300,9 @@ namespace IS
 
 		//float minA, maxA, minB, maxB;
 		float minA = std::numeric_limits<float>::max();
-		float maxA = std::numeric_limits<float>::min();
+		float maxA = -std::numeric_limits<float>::max(); // negative max
 		float minB = std::numeric_limits<float>::max();
-		float maxB = std::numeric_limits<float>::min();
+		float maxB = -std::numeric_limits<float>::max(); // negative max
 		ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
 		ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
 

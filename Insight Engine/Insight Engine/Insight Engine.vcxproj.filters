@@ -40,9 +40,6 @@
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Body.cpp">
-      <Filter>Physics\Dynamics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics\Collision</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Engine\Systems\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Body.cpp">
+      <Filter>Physics\Dynamics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

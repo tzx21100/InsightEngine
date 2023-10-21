@@ -23,6 +23,7 @@
 #include "Entities.h"
 #include "Component.h"
 #include "Transform.h"
+#include "Grid.h"
 
 namespace IS
 {
@@ -79,7 +80,7 @@ namespace IS
         bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
         int mId; // To compare then add/remove from the grid cell
         static int mNextId;
-        bool mIsInGrid;
+        GridState mGridState;
         bool mFirstTransform;
 
         // Constructors and member functions
@@ -195,6 +196,7 @@ namespace IS
 
         // Define the equality operator
         bool operator==(const RigidBody& other) const;
+
 
         /*!
          * \brief Serialize the RigidBody component to a JSON format.

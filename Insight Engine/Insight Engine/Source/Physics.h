@@ -72,6 +72,8 @@ namespace IS
 
         void CellCollisionDetect();
 
+        void ImplicitGridCollisionDetect();
+
         /*!
          * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
         *
@@ -131,6 +133,7 @@ namespace IS
         std::vector<Manifold> mContactList;
         std::vector<Vector2D> mContactPointsList;
         Grid mGrid;
+        ImplicitGrid mImplicitGrid;
 	};
 
     // Pointer to the Physics instance

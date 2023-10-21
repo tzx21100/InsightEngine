@@ -51,7 +51,8 @@ namespace IS
 	{
 		// Initialization logic here
 		Subscribe(MessageType::Collide);
-		mGrid.ClearGrid();
+		//mGrid.ClearGrid();
+		mImplicitGrid.ClearGrid();
 	}
 
 	// Updates the physics simulation for the given time step
@@ -61,14 +62,29 @@ namespace IS
 		for (auto const& entity : mEntities) {
 			mGrid.AddIntoCell(entity);
 		}*/
+
+		/*mImplicitGrid.ClearGrid();
+		for (auto const& entity : mEntities) {
+			mImplicitGrid.AddIntoCell(entity);
+		}*/
+
+		mImplicitGrid.AddIntoCell(mEntities);
 		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-		for (int i = 0; i < Grid::mRows; i++) {
-			for (int j = 0; j < Grid::mCols; j++) {
-				if (input->IsKeyPressed(GLFW_KEY_3)) {
-					std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
-				}
+		if (input->IsKeyPressed(GLFW_KEY_3)) {
+			for (int i = 0; i < ImplicitGrid::mRows; i++) {
+				//for (int j = 0; j < Grid::mCols; j++) {
+					//std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
+					std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
+					//std::cout << "[ " << i << " col ]" << mImplicitGrid.mColsBitArray[i].count() << std::endl;
+				//}
+			}
+			for (int j = 0; j < ImplicitGrid::mCols; j++) {
+					//std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
+			//std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
+			std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
 			}
 		}
+
 		
 		for (size_t it = 0; it < mIterations; it++) {
 			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
@@ -76,9 +92,13 @@ namespace IS
 
 			// detect collision through grid cell
 			//CellCollisionDetect();
-			// 
+			
+			// detect collision through Implicit Grid
+			ImplicitGridCollisionDetect();
+			
+
 			// Detects collisions among a set of entities (normal way)
-			CollisionDetect(mEntities);
+			//CollisionDetect(mEntities);
 			//std::set<Entity> cell_list;
 			//cell_list.clear();
 			//for (auto const& entity : mEntities) {
@@ -99,9 +119,9 @@ namespace IS
 
 	void Physics::CellCollisionDetect() {
 		// if the obj inside camera view (to be updated)
-		for (int rol = 0; rol < Grid::mRows; rol++) {
+		for (int row = 0; row < Grid::mRows; row++) {
 			for (int col = 0; col < Grid::mCols; col++) {
-				if (mGrid.mCells[rol][col].empty()) {
+				if (mGrid.mCells[row][col].empty()) {
 					continue;
 				}
 				// a temp list to store all entities with self cell and neighbor cell
@@ -109,33 +129,68 @@ namespace IS
 				cell_list.clear();
 
 				// update the collision with the residing cell
-				mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col]);
+				mGrid.EmplaceEntity(cell_list, mGrid.mCells[row][col]);
 
 				// update the collision with neighbor cells
 				if (col > 0) {
 					// left cell
-					//CollisionDetect(mGrid.mCells[rol][col-1]);
-					mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol][col - 1]);
-					if (rol > 0) {
+					//CollisionDetect(mGrid.mCells[row][col-1]);
+					mGrid.EmplaceEntity(cell_list, mGrid.mCells[row][col - 1]);
+					if (row > 0) {
 						// top left cell
-						//CollisionDetect(mGrid.mCells[rol-1][col-1]);
-						mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol - 1][col - 1]);
+						//CollisionDetect(mGrid.mCells[row-1][col-1]);
+						mGrid.EmplaceEntity(cell_list, mGrid.mCells[row - 1][col - 1]);
 					}
-					if (rol < Grid::mRows - 1) {
+					if (row < Grid::mRows - 1) {
 						// bottom left cell
-						//CollisionDetect(mGrid.mCells[rol+1][col-1]);
-						mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol + 1][col - 1]);
+						//CollisionDetect(mGrid.mCells[row+1][col-1]);
+						mGrid.EmplaceEntity(cell_list, mGrid.mCells[row + 1][col - 1]);
 					}
 				}
-				if (rol > 0) { // up cell
-					//CollisionDetect(mGrid.mCells[rol-1][col]);
-					mGrid.EmplaceEntity(cell_list, mGrid.mCells[rol - 1][col]);
+				if (row > 0) { // up cell
+					//CollisionDetect(mGrid.mCells[row-1][col]);
+					mGrid.EmplaceEntity(cell_list, mGrid.mCells[row - 1][col]);
 				}
 				if (cell_list.empty()) {
 					continue;
 				}
 				CollisionDetect(cell_list);
 				
+			}
+		}
+	}
+
+	void Physics::ImplicitGridCollisionDetect() {
+
+		// loop through each row with each col
+		for (int row = 0; row < ImplicitGrid::mRows; row++) {
+			for (int col = 0; col < ImplicitGrid::mCols; col++) {
+
+				// check the existence of the objects in a cell, simply perform a bitwise AND operation
+				std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
+				// avoid self checking
+				if (test_cell.count() > 1) {
+					// emplace all the entities in current cell
+					for (Entity e = 0; e < test_cell.size(); ++e) {
+						if (test_cell.test(e)) { // if the current bit entity is true
+							mImplicitGrid.mInGridList.emplace(e);
+						}
+					}
+					// if the cell is at the edge of the grid
+					/*if (row == 0 || row == ImplicitGrid::mRows - 1 ||
+						col == 0 || col == ImplicitGrid::mCols - 1) {
+						for (auto const& entity : mImplicitGrid.mOverlapGridList) {
+							mImplicitGrid.mInGridList.emplace(entity);
+						}
+					}*/
+
+					for (auto const& entity : mImplicitGrid.mOverlapGridList) {
+						mImplicitGrid.mInGridList.emplace(entity);
+					}
+
+					CollisionDetect(mImplicitGrid.mInGridList);
+					mImplicitGrid.mInGridList.clear();
+				}
 			}
 		}
 	}
@@ -290,7 +345,9 @@ namespace IS
 			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 			sprite.drawLine(va, vb);
 		}
-
+		Box box = body.GetAABB();
+		//sprite.drawLine(box.min, {0,0});
+		//sprite.drawLine(box.max, { 0,0 });
 		// draw grid cell line
 		Grid::DrawGrid(sprite);
 
@@ -370,9 +427,8 @@ namespace IS
 				body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
 				body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
 				// update position
-				trans.world_position += body.mVelocity * time;
-				//trans.world_position.x += body.mVelocity.x * time;
-				//trans.world_position.y += body.mVelocity.y * time;
+				mImplicitGrid.UpdateCell(entity, time);
+				//trans.world_position += body.mVelocity * time;
 				//mGrid.UpdateCell(entity, time);
 			}
 		}

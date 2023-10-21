@@ -14,42 +14,42 @@ namespace IS {
 
     void Pathfinding::Update([[maybe_unused]] float deltaTime) {
         // Create and add waypoints
-        Waypoint waypointA;
-        Waypoint waypointB;
-        Waypoint waypointC;
+        //Waypoint waypointA;
+        //Waypoint waypointB;
+        //Waypoint waypointC;
 
-        // Add waypoints to the pathfinding system
-        AddWaypoint(waypointA);
-        AddWaypoint(waypointB);
-        AddWaypoint(waypointC);
+        //// Add waypoints to the pathfinding system
+        //AddWaypoint(waypointA);
+        //AddWaypoint(waypointB);
+        //AddWaypoint(waypointC);
 
-        // Connect waypoints to define the navigation graph
-        ConnectWaypoints(waypointA, waypointB);
-        ConnectWaypoints(waypointB, waypointC);
+        //// Connect waypoints to define the navigation graph
+        //ConnectWaypoints(waypointA, waypointB);
+        //ConnectWaypoints(waypointB, waypointC);
 
-        // Define a start and goal waypoint
-        Waypoint startWaypoint = waypointA;
-        Waypoint goalWaypoint = waypointC;
+        //// Define a start and goal waypoint
+        //Waypoint startWaypoint = waypointA;
+        //Waypoint goalWaypoint = waypointC;
 
-        // Perform pathfinding for an entity
-        Entity entity; // Create an entity
-        PerformPathfinding(entity, startWaypoint, goalWaypoint);
+        //// Perform pathfinding for an entity
+        //Entity entity; // Create an entity
+        //PerformPathfinding(entity, startWaypoint, goalWaypoint);
 
-        // Get the path for the entity
-        std::vector<Waypoint*> path = GetPathForEntity(entity);
+        //// Get the path for the entity
+        //std::vector<Waypoint*> path = GetPathForEntity(entity);
 
-        // Check if a valid path was found
-        if (!path.empty()) {
-            // Path found, now you can use the path for entity navigation
-            // The 'path' vector contains the ordered waypoints from start to goal.
-            for (Waypoint* waypoint : path) {
-                // Navigate the entity to 'waypoint'
-                // You may have your own entity navigation logic here.
-            }
-        }
-        else {
-            // No path found, handle this case
-        }
+        //// Check if a valid path was found
+        //if (!path.empty()) {
+        //    // Path found, now you can use the path for entity navigation
+        //    // The 'path' vector contains the ordered waypoints from start to goal.
+        //    for (Waypoint* waypoint : path) {
+        //        // Navigate the entity to 'waypoint'
+        //        // You may have your own entity navigation logic here.
+        //    }
+        //}
+        //else {
+        //    // No path found, handle this case
+        //}
     }
 
     void Pathfinding::HandleMessage(const Message& message) {

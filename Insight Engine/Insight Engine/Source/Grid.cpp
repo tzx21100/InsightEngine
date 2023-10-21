@@ -5,6 +5,289 @@
 
 namespace IS
 {
+	ImplicitGrid::ImplicitGrid() {
+
+		for (int i = 0; i < mRows; ++i) {
+			mRowsBitArray[i].reset();  // Reset all bits to 0
+		}
+
+		for (int i = 0; i < mCols; ++i) {
+			mColsBitArray[i].reset();  // Reset all bits to 0
+		}
+
+		mInGridList;
+		mOverlapGridList;
+		mOutsideGridList;
+	}
+
+	void ImplicitGrid::ClearGrid() {
+		// clear the grid and reset all bits to 0
+		for (int i = 0; i < mRows; ++i) {
+			mRowsBitArray[i].reset();  // Reset all bits to 0
+		}
+
+		for (int i = 0; i < mCols; ++i) {
+			mColsBitArray[i].reset();  // Reset all bits to 0
+		}
+		mInGridList.clear();
+		mOverlapGridList.clear();
+		mOutsideGridList.clear();
+	}
+
+	Cell ImplicitGrid::GetCell(Vector2D const& position) {
+
+		InsightEngine& engine = InsightEngine::Instance();
+		// Set cell size based on current window size
+		auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
+		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
+		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
+
+		int col = static_cast<int>((position.x + (mGridSize.x / 2.f)) / mCellSize.x);
+		int row = static_cast<int>(std::abs((position.y - (mGridSize.y / 2.f))) / mCellSize.y);
+
+		return {row, col};
+	}
+
+	bool ImplicitGrid::areCellsEqual(Cell const& c1, Cell const& c2) {
+		return (c1.row == c2.row == c1.col == c2.col);
+	}
+
+	bool ImplicitGrid::areCellsEqual(Cell const& c1, Cell const& c2, Cell const& c3, Cell const& c4) {
+		return (c1.row == c2.row == c1.col == c2.col == c3.row == c4.row == c3.col == c4.col);
+	}
+
+
+	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
+
+		InsightEngine& engine = InsightEngine::Instance();
+		// loop through all the entities
+		for (auto const& entity : Entities) {
+			if (engine.HasComponent<RigidBody>(entity)) { // if entity has rigidbody component
+				//getting rigidbody component for each entity
+				auto& body = engine.GetComponent<RigidBody>(entity);
+				if (body.mGridState == GridState::Uninitialized) { // if the body is not initialized with grid
+					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+					body.BodyFollowTransform(trans);
+					// getting the min & max for checking which cell contain the entity
+					Box box = body.GetAABB();
+					Cell min_cell = GetCell(box.min);
+					Cell max_cell = GetCell(box.max);
+
+					// to be update
+					/*if (min_cell.col < 0 || min_cell.col >= mCols || min_cell.row < 0 || min_cell.row >= mRows ||
+						max_cell.col < 0 || max_cell.col >= mCols || max_cell.row < 0 || max_cell.row >= mRows) {
+						throw std::runtime_error("Entities outside of the camera view");
+					}*/
+
+					if (GridContains(min_cell) && GridContains(max_cell)) {
+						body.mGridState = GridState::Inside;
+						AddToBitArray(min_cell, max_cell, entity);
+					}else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
+							(!GridContains(min_cell) && GridContains(max_cell))) {
+						// body box overlap on the grid edge, half inside half outside
+						body.mGridState = GridState::Overlap;
+						mOverlapGridList.emplace(entity);
+					}
+					else { // body box fully outside of the grid
+						body.mGridState = GridState::Outside;
+						mOutsideGridList.emplace(entity);
+					}
+
+					//AddToBitArray(min_cell, max_cell, entity);
+
+					//// check whether min and max are at the same cell
+					//if (areCellsEqual(min_cell, max_cell)) {
+					//	// assign the entity to the grid cell based on its position
+					//	std::bitset<MAX_ENTITIES> mask = 1;
+					//	// left shift the eneity into the bitset
+					//	mRowsBitArray[min_cell.row] |= (mask << entity);
+					//	mColsBitArray[min_cell.col] |= (mask << entity);
+					//}
+					//else { // the min and max are not at the same cell
+					//	// add from min to max
+					//	for (int row = min_cell.row; row >= max_cell.row; row--) {
+					//		std::bitset<MAX_ENTITIES> mask = 1;
+					//		mRowsBitArray[row] |= (mask << entity);
+					//	}
+					//	for (int col = min_cell.col; col <= max_cell.col; col++) {
+					//		std::bitset<MAX_ENTITIES> mask = 1;
+					//		mColsBitArray[col] |= (mask << entity);
+					//	}
+					//}
+
+					// indicate that the entity is inside grid
+					//body.mGridState = GridState::Inside;
+				}
+			}
+		}
+	}
+
+	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+		//// check whether min and max are at the same cell
+		//if (areCellsEqual(min, max)) {
+		//	// assign the entity to the grid cell based on its position
+		//	std::bitset<MAX_ENTITIES> mask = 1;
+		//	// left shift the eneity into the bitset
+		//	mRowsBitArray[min.row] |= (mask << entity);
+		//	mColsBitArray[max.col] |= (mask << entity);
+		//}
+		//else { // the min and max are not at the same cell
+		//	// add from min to max
+		//	for (int row = min.row; row >= max.row; row--) {
+		//		std::bitset<MAX_ENTITIES> mask = 1;
+		//		mRowsBitArray[row] |= (mask << entity);
+		//	}
+		//	for (int col = min.col; col <= max.col; col++) {
+		//		std::bitset<MAX_ENTITIES> mask = 1;
+		//		mColsBitArray[col] |= (mask << entity);
+		//	}
+		//}
+
+		// add from min to max
+		for (int row = min.row; row >= max.row; row--) {
+			std::bitset<MAX_ENTITIES> mask = 1;
+			mRowsBitArray[row] |= (mask << entity);
+		}
+		for (int col = min.col; col <= max.col; col++) {
+			std::bitset<MAX_ENTITIES> mask = 1;
+			mColsBitArray[col] |= (mask << entity);
+		}
+	}
+
+	void ImplicitGrid::RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+		//// check whether min and max are at the same cell
+		//if (areCellsEqual(min, max)) {
+		//	// assign the entity to the grid cell based on its position
+		//	std::bitset<MAX_ENTITIES> mask = 1;
+		//	// left shift the eneity into the bitset
+		//	mRowsBitArray[min.row] |= (mask << entity);
+		//	mColsBitArray[max.col] |= (mask << entity);
+		//}
+		//else { // the min and max are not at the same cell
+		//	// add from min to max
+		//	for (int row = min.row; row >= max.row; row--) {
+		//		std::bitset<MAX_ENTITIES> mask = 1;
+		//		mRowsBitArray[row] |= (mask << entity);
+		//	}
+		//	for (int col = min.col; col <= max.col; col++) {
+		//		std::bitset<MAX_ENTITIES> mask = 1;
+		//		mColsBitArray[col] |= (mask << entity);
+		//	}
+		//}
+
+		// add from min to max
+		for (int row = min.row; row >= max.row; row--) {
+			std::bitset<MAX_ENTITIES> mask = 1;
+			mRowsBitArray[row] ^= (mask << entity);
+		}
+		for (int col = min.col; col <= max.col; col++) {
+			std::bitset<MAX_ENTITIES> mask = 1;
+			mColsBitArray[col] ^= (mask << entity);
+		}
+	}
+
+
+	void ImplicitGrid::UpdateCell(Entity const& entity, float const& dt) {
+		InsightEngine& engine = InsightEngine::Instance();
+		auto& body = engine.GetComponent<RigidBody>(entity);
+		auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+		body.BodyFollowTransform(trans);
+		// getting the min & max for checking which cell contain the entity
+		Box prev_box = body.GetAABB();
+		Cell prev_min_cell = GetCell(prev_box.min);
+		Cell prev_max_cell = GetCell(prev_box.max);
+
+		trans.world_position += body.mVelocity * dt;
+
+		body.BodyFollowTransform(trans);
+		Box next_box = body.GetAABB();
+		Cell next_min_cell = GetCell(next_box.min);
+		Cell next_max_cell = GetCell(next_box.max);
+
+		switch (body.mGridState) // body's previous state for grid
+		{
+		case GridState::Inside: // if the body inside grid
+
+			// if the body min & max move but still within the same cell
+			if (areCellsEqual(prev_min_cell, next_min_cell, next_min_cell, next_max_cell)) {
+				return; // no update on cell
+			}
+
+			// remove the cell from previous cell
+			RemoveFromBitArray(prev_min_cell, prev_max_cell, entity);
+			// if the body box still within the camera view
+			if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+				AddToBitArray(next_min_cell, next_max_cell, entity);
+			}
+			else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
+				(!GridContains(next_min_cell) && GridContains(next_max_cell))) {
+				// body box overlap on the grid edge, half inside half outside
+				body.mGridState = GridState::Overlap;
+				mOverlapGridList.emplace(entity);
+			}
+			else { // body box fully outside of the grid
+				body.mGridState = GridState::Outside;
+				mOutsideGridList.emplace(entity);
+			}
+
+			break;
+		case GridState::Outside: // if body outside grid
+			
+			// remove from outside entity list
+			mOutsideGridList.erase(entity);
+
+			// inside grid
+			if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+				AddToBitArray(next_min_cell, next_max_cell, entity);
+			}
+			// overlap grid
+			else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
+				(!GridContains(next_min_cell) && GridContains(next_max_cell))) {
+				// body box overlap on the grid edge, half inside half outside
+				body.mGridState = GridState::Overlap;
+				mOverlapGridList.emplace(entity);
+			}
+			else { // outside grid
+				body.mGridState = GridState::Outside;
+				mOutsideGridList.emplace(entity);
+			}
+
+			break;
+		case GridState::Overlap: // if body overlap on grid
+
+			// remove from outside entity list
+			mOverlapGridList.erase(entity);
+
+			// inside grid
+			if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+				AddToBitArray(next_min_cell, next_max_cell, entity);
+			}
+			// overlap grid
+			else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
+				(!GridContains(next_min_cell) && GridContains(next_max_cell))) {
+				// body box overlap on the grid edge, half inside half outside
+				body.mGridState = GridState::Overlap;
+				mOverlapGridList.emplace(entity);
+			}
+			else { // outside grid
+				body.mGridState = GridState::Outside;
+				mOutsideGridList.emplace(entity);
+			}
+
+			break;
+		default:
+			break;
+		}
+	}
+
+	bool ImplicitGrid::GridContains(Cell const& cell) {
+		return (cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows &&
+			cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);
+	}
+
+
+
+
 	Vector2D Grid::mCellSize{}; // default 0 because no window added to engine yet
 
 	std::set<Entity> Grid::mCells[mRows][mCols];
@@ -27,7 +310,7 @@ namespace IS
 			}
 		}
 	}
-
+#if 0
 	void Grid::AddIntoCell(Entity const& entity) {
 		InsightEngine& engine = InsightEngine::Instance();
 
@@ -55,7 +338,6 @@ namespace IS
 				}
 				else {
 					// the body the size bigger than the cell size
-					std::cout << body.mBodyTransform.world_position.x << std::endl;
 					// init
 					int tl_col;
 					int tl_row;
@@ -212,8 +494,8 @@ namespace IS
 						int row = static_cast<int>(std::abs((body.mBodyTransform.world_position.y - (height / 2.f))) / mCellSize.y);
 
 						// remove it from the old cell
-						std::cout << row << std::endl;
-						std::cout << col << std::endl;
+						//std::cout << row << std::endl;
+						//std::cout << col << std::endl;
 						row = (row >= mRows) ? mRows - 1 : row;
 						row = (row < 0) ? 0 : row;
 						col = (col >= mCols) ? mCols - 1 : col;
@@ -268,7 +550,7 @@ namespace IS
 			}
 		}
 	}
-
+#endif
 	// certain issues in the function above:
 	// 1. everytime the obj go in / out of the grid need check its mIsInGrid data, need update 
 	// if the obj is inside grid with mIsInGrid false or outside grid with mIsInGrid true
