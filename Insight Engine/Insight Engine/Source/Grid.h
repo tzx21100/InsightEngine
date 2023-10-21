@@ -59,7 +59,7 @@ namespace IS
 		std::bitset<MAX_ENTITIES> mRowsBitArray[MAX_GRID_ROWS];
 		std::bitset<MAX_ENTITIES> mColsBitArray[MAX_GRID_COLS];
 
-		std::set<Entity> mInGridList;
+		std::vector<Entity> mInGridList;
 		std::set<Entity> mOverlapGridList;
 		std::set<Entity> mOutsideGridList;
 

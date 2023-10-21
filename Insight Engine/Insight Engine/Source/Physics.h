@@ -91,7 +91,10 @@ namespace IS {
         *
         * \param mEntities The set of entities to consider for collision detection.
         */
+        void CollisionDetect(std::vector<Entity> const& entities);
         void CollisionDetect(std::set<Entity> const& entities);
+        void CollisionDetect(std::unordered_set<Entity> const& entities);
+        void CollisionDetect(std::deque<Entity> const& entities);
 
         /*!
          * \brief Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.

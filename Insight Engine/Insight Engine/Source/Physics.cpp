@@ -158,20 +158,41 @@ namespace IS {
 		}
 	}
 
-	void Physics::ImplicitGridCollisionDetect() {
+	template <size_t T>
+	unsigned int findLeftmostSetBitPosition(const std::bitset<T>& myBitset) {
+		if (myBitset.none()) {
+			return 0; // No set bits in the bitset
+		}
 
+		// Use a bit mask to find the leftmost set bit position
+		unsigned long long value = myBitset.to_ullong();
+		unsigned int position = 0;
+
+		while ((value >>= 1) != 0) {
+			++position;
+		}
+
+		return (position > 1 && position < MAX_ENTITIES) ? position : 0;
+	}
+	void Physics::ImplicitGridCollisionDetect() {
+		//auto& engine = InsightEngine::Instance();
 		// loop through each row with each col
 		for (int row = 0; row < ImplicitGrid::mRows; row++) {
 			for (int col = 0; col < ImplicitGrid::mCols; col++) {
-
 				// check the existence of the objects in a cell, simply perform a bitwise AND operation
 				std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
 				// avoid self checking
-				if (test_cell.count() > 1) {
+				size_t totalEntities = (test_cell.count());
+				if (totalEntities) {
+					//size_t totalEntities = test_cell.count();
 					// emplace all the entities in current cell
-					for (Entity e = 0; e < test_cell.size(); ++e) {
+					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
 						if (test_cell.test(e)) { // if the current bit entity is true
-							mImplicitGrid.mInGridList.emplace(e);
+							mImplicitGrid.mInGridList.emplace_back(e);
+							totalEntities--;
+							if (totalEntities <= 0) {
+								break;
+							}
 						}
 					}
 					// if the cell is at the edge of the grid
@@ -183,13 +204,134 @@ namespace IS {
 					}*/
 
 					for (auto const& entity : mImplicitGrid.mOverlapGridList) {
-						mImplicitGrid.mInGridList.emplace(entity);
+						mImplicitGrid.mInGridList.emplace_back(entity);
 					}
 
 					CollisionDetect(mImplicitGrid.mInGridList);
 					mImplicitGrid.mInGridList.clear();
+					
 				}
 			}
+		}
+		
+	}
+
+
+	void Physics::CollisionDetect(std::vector<Entity> const& entities) {
+		mContactList.clear();
+
+		// Loop through all Entities registered by the System
+		for (size_t i = 0; i < entities.size(); ++i) {
+			const Entity& entityA = entities[i];
+
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				bodyA.BodyFollowTransform(transA);
+
+				for (size_t j = i + 1; j < entities.size(); ++j) {
+					const Entity& entityB = entities[j];
+
+					if (entityA == entityB) {
+						continue;
+					}
+
+					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						bodyB.BodyFollowTransform(transB);
+						// for calculating collision response
+						Vector2D normal = Vector2D();
+						float depth = std::numeric_limits<float>::max();
+						bool isColliding = false;
+
+						// static AABB collision check, continue to the next loop if not colliding
+						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
+						{
+							continue;
+						}
+
+						switch (bodyA.mBodyShape)
+						{
+						case BodyShape::Box:
+							switch (bodyB.mBodyShape)
+							{
+								// box vs box
+							case BodyShape::Box:
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), normal, depth);
+								break;
+								// box vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						case BodyShape::Circle:
+							switch (bodyB.mBodyShape)
+							{
+								// circle vs box
+							case BodyShape::Box:
+								break;
+								// circle vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						default:
+							break;
+						}
+						// if body A and body B colliding
+						if (isColliding) {
+							// vector of penetration
+							Vector2D vec = normal * depth;
+							// if body A is static 
+							if (bodyA.mBodyType != BodyType::Dynamic)
+							{
+								transB.Move(vec);
+								// to be optimize
+								bodyB.mState = BodyState::GROUNDED;
+							}
+							// if body B is static 
+							else if (bodyB.mBodyType != BodyType::Dynamic)
+							{
+								transA.Move(-vec);
+								// to be optimize
+								bodyA.mState = BodyState::GROUNDED;
+							}
+							else // both are dynamic
+							{
+								transA.Move(-vec / 2.f);
+								transB.Move(vec / 2.f);
+							}
+							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
+							//ResolveCollision(bodyA, bodyB, normal, depth);
+
+							Manifold contact = Manifold(bodyA, bodyB, normal, depth, Vector2D(), Vector2D(), 0);
+							mContactList.emplace_back(contact);
+						}
+						else { //not colliding
+							//spriteB.color = glm::vec3(0.f, 0.f, 1.f);
+						}
+					}
+
+				}
+			}
+		}
+
+		for (int i = 0; i < mContactList.size(); i++) {
+			Manifold contact = mContactList[i];
+			ResolveCollision(contact);
+
+			/*if (contact.ContactCount > 0) {
+				ContactPointsList.push_back(contact.Contact1);
+
+				if (contact.ContactCount > 1) {
+					ContactPointsList.push_back(contact.Contact2);
+				}
+			}*/
 		}
 	}
 
@@ -308,6 +450,239 @@ namespace IS {
 			}*/
 		}
 	}
+
+	void Physics::CollisionDetect(std::unordered_set<Entity> const& entities) {
+		mContactList.clear();
+
+		// Loop through all Entities registered by the System
+		for (const Entity& entityA : entities) {
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				bodyA.BodyFollowTransform(transA);
+
+				for (const Entity& entityB : entities) {
+					if (entityA == entityB) {
+						continue;
+					}
+
+					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						bodyB.BodyFollowTransform(transB);
+						// for calculating collision response
+						Vector2D normal = Vector2D();
+						float depth = std::numeric_limits<float>::max();
+						bool isColliding = false;
+
+						// static AABB collision check, continue to the next loop if not colliding
+						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
+						{
+							continue;
+						}
+
+						switch (bodyA.mBodyShape)
+						{
+						case BodyShape::Box:
+							switch (bodyB.mBodyShape)
+							{
+								// box vs box
+							case BodyShape::Box:
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), normal, depth);
+								break;
+								// box vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						case BodyShape::Circle:
+							switch (bodyB.mBodyShape)
+							{
+								// circle vs box
+							case BodyShape::Box:
+								break;
+								// circle vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						default:
+							break;
+						}
+						// if body A and body B colliding
+						if (isColliding) {
+							// vector of penetration
+							Vector2D vec = normal * depth;
+							// if body A is static 
+							if (bodyA.mBodyType != BodyType::Dynamic)
+							{
+								transB.Move(vec);
+								// to be optimize
+								bodyB.mState = BodyState::GROUNDED;
+							}
+							// if body B is static 
+							else if (bodyB.mBodyType != BodyType::Dynamic)
+							{
+								transA.Move(-vec);
+								// to be optimize
+								bodyA.mState = BodyState::GROUNDED;
+							}
+							else // both are dynamic
+							{
+								transA.Move(-vec / 2.f);
+								transB.Move(vec / 2.f);
+							}
+							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
+							//ResolveCollision(bodyA, bodyB, normal, depth);
+
+							Manifold contact = Manifold(bodyA, bodyB, normal, depth, Vector2D(), Vector2D(), 0);
+							mContactList.emplace_back(contact);
+						}
+						else { //not colliding
+							//spriteB.color = glm::vec3(0.f, 0.f, 1.f);
+						}
+					}
+
+				}
+			}
+		}
+
+		for (int i = 0; i < mContactList.size(); i++) {
+			Manifold contact = mContactList[i];
+			ResolveCollision(contact);
+
+			/*if (contact.ContactCount > 0) {
+				ContactPointsList.push_back(contact.Contact1);
+
+				if (contact.ContactCount > 1) {
+					ContactPointsList.push_back(contact.Contact2);
+				}
+			}*/
+		}
+	}
+
+	void Physics::CollisionDetect(std::deque<Entity> const& entities) {
+		mContactList.clear();
+
+		// Loop through all Entities registered by the System
+		for (size_t i = 0; i < entities.size(); ++i) {
+			const Entity& entityA = entities[i];
+
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				bodyA.BodyFollowTransform(transA);
+
+				for (size_t j = i + 1; j < entities.size(); ++j) {
+					const Entity& entityB = entities[j];
+
+					if (entityA == entityB) {
+						continue;
+					}
+
+					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						bodyB.BodyFollowTransform(transB);
+						// for calculating collision response
+						Vector2D normal = Vector2D();
+						float depth = std::numeric_limits<float>::max();
+						bool isColliding = false;
+
+						// static AABB collision check, continue to the next loop if not colliding
+						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
+						{
+							continue;
+						}
+
+						switch (bodyA.mBodyShape)
+						{
+						case BodyShape::Box:
+							switch (bodyB.mBodyShape)
+							{
+								// box vs box
+							case BodyShape::Box:
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), normal, depth);
+								break;
+								// box vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						case BodyShape::Circle:
+							switch (bodyB.mBodyShape)
+							{
+								// circle vs box
+							case BodyShape::Box:
+								break;
+								// circle vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						default:
+							break;
+						}
+						// if body A and body B colliding
+						if (isColliding) {
+							// vector of penetration
+							Vector2D vec = normal * depth;
+							// if body A is static 
+							if (bodyA.mBodyType != BodyType::Dynamic)
+							{
+								transB.Move(vec);
+								// to be optimize
+								bodyB.mState = BodyState::GROUNDED;
+							}
+							// if body B is static 
+							else if (bodyB.mBodyType != BodyType::Dynamic)
+							{
+								transA.Move(-vec);
+								// to be optimize
+								bodyA.mState = BodyState::GROUNDED;
+							}
+							else // both are dynamic
+							{
+								transA.Move(-vec / 2.f);
+								transB.Move(vec / 2.f);
+							}
+							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
+							//ResolveCollision(bodyA, bodyB, normal, depth);
+
+							Manifold contact = Manifold(bodyA, bodyB, normal, depth, Vector2D(), Vector2D(), 0);
+							mContactList.emplace_back(contact);
+						}
+						else { //not colliding
+							//spriteB.color = glm::vec3(0.f, 0.f, 1.f);
+						}
+					}
+
+				}
+			}
+		}
+
+		for (int i = 0; i < mContactList.size(); i++) {
+			Manifold contact = mContactList[i];
+			ResolveCollision(contact);
+
+			/*if (contact.ContactCount > 0) {
+				ContactPointsList.push_back(contact.Contact1);
+
+				if (contact.ContactCount > 1) {
+					ContactPointsList.push_back(contact.Contact2);
+				}
+			}*/
+		}
+	}
+
 
 	// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities
 	void Physics::ResolveCollision(Manifold & contact) {
