@@ -287,6 +287,8 @@ namespace IS
 
 
 
+	int Grid::mRows = 5;
+	int Grid::mCols = 5;
 
 	Vector2D Grid::mCellSize{}; // default 0 because no window added to engine yet
 
