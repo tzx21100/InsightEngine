@@ -75,9 +75,9 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
         // update animations
-        idle_ani.updateAnimation(delta_time);
+        /*idle_ani.updateAnimation(delta_time);
         walking_ani.updateAnimation(delta_time);
-        ice_cream_truck_ani.updateAnimation(delta_time);
+        ice_cream_truck_ani.updateAnimation(delta_time);*/
         
         // fill up instancing vector
         quadInstances.clear();
@@ -90,6 +90,9 @@ namespace IS {
             sprite.followTransform(trans);
             sprite.transform();
            
+            if (!sprite.anims.empty()) {
+                sprite.anims[sprite.animation_index].updateAnimation(delta_time);
+            }
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
@@ -98,14 +101,14 @@ namespace IS {
                     instData.tex_index = -1.f;
                 }
                 else {
-                    //instData.tex_index = static_cast<float>(sprite.texture_index - MAX_ENTITIES);
-                    //std::cout << sprite.name << " " << sprite.img.texture_index << std::endl;
                     instData.tex_index = static_cast<float>(sprite.img.texture_index);
                 }
-                instData.anim_frame_dimension = sprite.anim.frame_dimension;
-                instData.anim_frame_index = sprite.anim.frame_index;
-                
-                //std::cout << instData.tex_id << std::endl;
+                if (!sprite.anims.empty()) {
+                    instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                    instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                }
+                // no need for else as default values of instData will stay
+
                 quadInstances.push_back(instData);
             }
         }
@@ -270,7 +273,6 @@ namespace IS {
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
-        static int bind{};
         int width, height, channels;
         uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
 
@@ -327,7 +329,6 @@ namespace IS {
         image.channels = channels;
         image.mFileName = filepath;
         image.texture_id = textureID;
-        image.texture_index = bind++;
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }

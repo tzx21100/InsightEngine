@@ -29,8 +29,8 @@ namespace IS {
             layout(location = 4) in vec3  aMtxRow1;
             layout(location = 5) in vec3  aMtxRow2;
             layout(location = 6) in vec3  aMtxRow3;
-            layout(location = 8) in vec2  aAnimDim;
-            layout(location = 9) in vec2  aAnimIndex;
+            layout(location = 7) in vec2  aAnimDim;
+            layout(location = 8) in vec2  aAnimIndex;
 
             layout(location = 0) out vec3  vColor;
             layout(location = 1) out vec2  vTexCoord;
@@ -73,8 +73,9 @@ namespace IS {
                 else
                 {
                     int texIdx = int(vTexID);
-                    //fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y)); // Multiply texture color with vColor
-                    fFragColor = texture(uTex2d[texIdx], vTexCoord);
+                    fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
+                    //fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * 1, vTexCoord.y * 1) + vec2(1 * vAnimIndex.x, 1 * vAnimIndex.y));
+                    //fFragColor = texture(uTex2d[texIdx], vTexCoord);
                 }
             }
         )";

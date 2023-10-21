@@ -37,14 +37,14 @@ namespace IS {
 
         Image backgroundTest{};
         Image black_background{};
-        Image idle_animation{};
-        Image walking_animation{};
-        Image truck_animation{};
+        Image idle_anim_image{};
+        Image walking_anim_image{};
+        Image truck_anim_image{};
 
         // Animation objects
-        /*Animation idle_ani;
+        Animation idle_ani;
         Animation walking_ani;
-        Animation ice_cream_truck_ani;*/
+        Animation ice_cream_truck_ani;
 
         virtual void Initialize() override {
             //create a image
@@ -52,18 +52,22 @@ namespace IS {
             backgroundTest.texture_index = 0; // hard code first :)
             black_background = asset->GetImage("Assets/black_background.png");
             black_background.texture_index = 1;
-            idle_animation = asset->GetImage("Assets/player_idle.png");
-            idle_animation.texture_index = 2;
-            walking_animation = asset->GetImage("Assets/player_walking.png");
-            walking_animation.texture_index = 3;
-            truck_animation = asset->GetImage("Assets/icecream_truck.png");
-            truck_animation.texture_index = 4;
+            idle_anim_image = asset->GetImage("Assets/player_idle.png");
+            idle_anim_image.texture_index = 2;
+            walking_anim_image = asset->GetImage("Assets/player_walking.png");
+            walking_anim_image.texture_index = 3;
+            truck_anim_image = asset->GetImage("Assets/icecream_truck.png");
+            truck_anim_image.texture_index = 4;
+
+            walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
+            idle_ani.initAnimation(1, 8, 3.f);
+            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
             ISGraphics::textures.emplace_back(backgroundTest);
             ISGraphics::textures.emplace_back(black_background);
-            ISGraphics::textures.emplace_back(idle_animation);
-            ISGraphics::textures.emplace_back(walking_animation);
-            ISGraphics::textures.emplace_back(truck_animation);
+            ISGraphics::textures.emplace_back(idle_anim_image);
+            ISGraphics::textures.emplace_back(walking_anim_image);
+            ISGraphics::textures.emplace_back(truck_anim_image);
 
             //creating game object and their components
             entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
@@ -92,24 +96,22 @@ namespace IS {
             auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
-            sprite_background.img.texture_id = static_cast<uint8_t>(black_background.texture_id);
             sprite_background.texture_width = black_background.width;
             sprite_background.texture_height = black_background.height;
-            sprite_background.img.texture_index = 1;
+            sprite_background.img = black_background;
 
             sprite_player.name = "player_sprite";
-            sprite_player.img.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
-            sprite_player.texture_width = idle_animation.width;
-            sprite_player.texture_height = idle_animation.height;
-            sprite_player.anim = ISGraphics::idle_ani;
-            sprite_player.img.texture_index = 2;
+            sprite_player.texture_width = idle_anim_image.width;
+            sprite_player.texture_height = idle_anim_image.height;
+            sprite_player.anims.emplace_back(idle_ani);
+            sprite_player.anims.emplace_back(walking_ani);
+            sprite_player.img = idle_anim_image;
             // sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
             // sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
 
-            sprite_test.img.texture_id = static_cast<uint8_t>(backgroundTest.texture_id);
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
-            sprite_test.img.texture_index = 0;
+            sprite_test.img = backgroundTest;
 
             trans_quad.setScaling(WIDTH, HEIGHT);
             trans_player.setScaling(95, 120);
@@ -186,18 +188,16 @@ namespace IS {
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
                     if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
-                        sprite_player.img.texture_id = static_cast<uint8_t>(walking_animation.texture_id);
-                        sprite_player.texture_width = walking_animation.width;
-                        sprite_player.texture_height = walking_animation.height;
+                        sprite_player.texture_width = walking_anim_image.width;
+                        sprite_player.texture_height = walking_anim_image.height;
                         sprite_player.animation_index = 1;
-                        sprite_player.img.texture_index = 3;
+                        sprite_player.img = walking_anim_image;
                     }
                     else {
-                        sprite_player.img.texture_id = static_cast<uint8_t>(idle_animation.texture_id);
-                        sprite_player.texture_width = idle_animation.width;
-                        sprite_player.texture_height = idle_animation.height;
+                        sprite_player.texture_width = idle_anim_image.width;
+                        sprite_player.texture_height = idle_anim_image.height;
                         sprite_player.animation_index = 0;
-                        sprite_player.img.texture_index = 2;
+                        sprite_player.img = idle_anim_image;
                     }
                 }
 
@@ -264,12 +264,11 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
-                        spr.img.texture_id = static_cast<uint8_t>(truck_animation.texture_id);
-                        spr.texture_width = truck_animation.width;
-                        spr.texture_height = truck_animation.height;
-                        spr.img.texture_index = 4;
+                        spr.texture_width = truck_anim_image.width;
+                        spr.texture_height = truck_anim_image.height;
+                        spr.img = truck_anim_image;
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
-                        spr.anim = ISGraphics::ice_cream_truck_ani;
+                        spr.anims.emplace_back(ice_cream_truck_ani);
                         
                         //add the image in
                         //spr.texture = backgroundTest.texture_id;
