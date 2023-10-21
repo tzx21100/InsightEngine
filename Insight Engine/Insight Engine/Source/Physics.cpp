@@ -16,19 +16,14 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                   includes
-  ----------------------------------------------------------------------------- */
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CoreEngine.h"
 #include "Sprite.h"
-using namespace IS;
 
-namespace IS 
-{
-	Physics* PHYSICS = NULL;
-	
-	// Static flag to enable or disable debug drawing of rigidbody shapes
-	bool Physics::isDebugDraw = false;
+namespace IS {
+
 	bool Physics::mShowColliders = false;
 	bool Physics::mShowVelocity = false;
 	bool Physics::mShowGrid = false;
@@ -374,18 +369,6 @@ namespace IS
 		}
 	}
 
-	// Updates the debug drawing mode based on user input
-	void Physics::UpdateDebugDraw(auto const& key_input) {
-		if (key_input->IsKeyPressed(GLFW_KEY_2)) {
-			Physics::isDebugDraw = true;
-			IS_CORE_DEBUG("Draw Collision Boxes Enabled!");
-		}
-		else if (key_input->IsKeyPressed(GLFW_KEY_1)) {
-			Physics::isDebugDraw = false;
-			IS_CORE_DEBUG("Draw Collision Boxes Disabled!");
-		}
-	}
-
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
 		// divide by iterations to increase precision
@@ -395,9 +378,6 @@ namespace IS
 			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 			// check input for applying gravity
 			UpdateGravity(input);
-
-			// check input for drawing lines
-			UpdateDebugDraw(input);
 
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {

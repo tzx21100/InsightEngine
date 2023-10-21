@@ -14,15 +14,17 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                   includes
-  ----------------------------------------------------------------------------- */
-#pragma once
+/*                                                                      guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_PHYSICS_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_PHYSICS_H
 
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Sprite.h"
 
-namespace IS 
-{
+namespace IS {
     /*!
      * \class Physics
      * \brief The Physics class handles physics simulation, collision detection and response for game entities.
@@ -61,12 +63,18 @@ namespace IS
         void HandleMessage(const Message&) override {}
 
         /*!
-         * \brief Static flag to enable or disable debug drawing of rigidbody shapes.
+         * \brief Boolean flag to show colliders.
          */
-        static bool isDebugDraw;
-
         static bool mShowColliders;
+
+        /*!
+         * \brief Boolean flag to show velocity.
+         */
         static bool mShowVelocity;
+
+        /*!
+         * \brief Boolean flag to show grid.
+         */
         static bool mShowGrid;
 
         /*!
@@ -112,13 +120,6 @@ namespace IS
         void UpdateGravity(auto const& key_input);
 
         /*!
-         * \brief Updates the debug drawing mode based on user input.
-         *
-         * \param key_input The input related to debug drawing control.
-         */
-        void UpdateDebugDraw(auto const& key_input);
-
-        /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.
          *
          * \param time The time for the physics step.
@@ -140,6 +141,6 @@ namespace IS
         ImplicitGrid mImplicitGrid;
 	};
 
-    // Pointer to the Physics instance
-    extern Physics* PHYSICS;
 }
+
+#endif // !GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_PHYSICS_H
