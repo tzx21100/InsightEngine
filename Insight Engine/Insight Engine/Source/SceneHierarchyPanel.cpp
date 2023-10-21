@@ -76,8 +76,6 @@ namespace IS {
     }
 
     void SceneHierarchyPanel::RenderEntityNode(Entity entity) {
-        // Set minimum window size
-        ImGui::SetNextWindowSizeConstraints(ImVec2(200.f, 200.f), ImVec2(FLT_MAX, FLT_MAX));
         InsightEngine& engine = InsightEngine::Instance();
 
         ImGuiTreeNodeFlags tree_flags = (mSelectedEntity && (*mSelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0);
