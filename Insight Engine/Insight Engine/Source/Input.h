@@ -32,7 +32,7 @@ namespace IS {
 
     class InputAffector :public IComponent {
     public:
-        virtual std::string GetType() const override {
+        static std::string GetType() {
             return "InputAffector";
         }
         /*this is just an empty component

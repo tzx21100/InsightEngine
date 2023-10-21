@@ -57,7 +57,7 @@ namespace IS
      */
     class RigidBody : public IComponent{
     public:
-        virtual std::string GetType() const override {
+        static std::string GetType() {
             return "RigidBody";
         }
         // Member variables for rigid body properties

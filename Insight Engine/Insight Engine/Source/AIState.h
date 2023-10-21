@@ -13,7 +13,7 @@ namespace IS {
 	class AIState : public IComponent
 	{
 	public:
-		virtual std::string GetType() const override {
+		static std::string GetType() {
 			return "AIState";
 		}
 		void(*Enter)();

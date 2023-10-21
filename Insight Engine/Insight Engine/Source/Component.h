@@ -63,7 +63,7 @@ namespace IS {
 			//This is a empty default init so that not all components have to override
 		}
 
-		virtual std::string GetType() const = 0;
+		//virtual std::string GetType() const = 0;
 
 	};
 
@@ -333,7 +333,7 @@ namespace IS {
 		void RegisterComponent() {
 			IS_PROFILE_FUNCTION();
 
-			std::string type_name = T().GetType();
+			std::string type_name = T::GetType();
 			assert(mRegisteredComponentType.find(type_name) == mRegisteredComponentType.end() && "Registering component type more than once.");
 			// Add this component type to the component type map
 			mRegisteredComponentType.insert({ type_name, mNextComponentType });
@@ -356,7 +356,7 @@ namespace IS {
 		 */
 		template<typename T>
 		ComponentType GetComponentType() {
-			std::string type_name = T().GetType();
+			std::string type_name = T::GetType();
 			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			// Return this component's type - used for creating signatures
 			return mRegisteredComponentType[type_name];
@@ -488,7 +488,7 @@ namespace IS {
 		 */
 		template<typename T>
 		std::shared_ptr<ComponentArray<T>> GetComponentArray() {
-			std::string type_name = T().GetType();
+			std::string type_name = T::GetType();
 			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayMap[type_name]);
 		}

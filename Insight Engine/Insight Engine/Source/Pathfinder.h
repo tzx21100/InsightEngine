@@ -12,7 +12,7 @@ namespace IS {
 	class Pathfinder : public IComponent
 	{
 	public:
-		virtual std::string GetType() const override {
+		static std::string GetType() {
 			return "Pathfinder";
 		}
 		Vector2D mInitPos;

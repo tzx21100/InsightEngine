@@ -120,7 +120,7 @@
     </ClCompile>
     <ClCompile Include="Source\Body.cpp">
       <Filter>Physics\Dynamics</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\EditorUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
@@ -293,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="Source\EditorUtils.h">
       <Filter>Editor\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Engine\ECS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

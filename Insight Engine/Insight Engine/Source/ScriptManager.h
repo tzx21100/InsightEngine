@@ -11,7 +11,7 @@ namespace IS {
 
     class ScriptComponent : IComponent {
     public:
-        virtual std::string GetType() const override {
+        static std::string GetType() {
             return "ScriptComponent";
         }
         std::string mScriptName;
