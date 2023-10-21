@@ -44,10 +44,10 @@ namespace IS
 
 		static void DrawGrid(Sprite const& sprite);
 
-		static const int mRows = 5;
-		static const int mCols = 5;
+		static const int mRows = 6;
+		static const int mCols = 6;
 		Vector2D mGridSize;
-		Vector2D mCellSize;
+		static Vector2D mCellSize;
 		std::bitset<MAX_ENTITIES> mRowsBitArray[mRows];
 		std::bitset<MAX_ENTITIES> mColsBitArray[mCols];
 

@@ -5,6 +5,8 @@
 
 namespace IS
 {
+	Vector2D ImplicitGrid::mCellSize{};
+
 	ImplicitGrid::ImplicitGrid() {
 
 		for (int i = 0; i < mRows; ++i) {
@@ -285,6 +287,21 @@ namespace IS
 			cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);
 	}
 
+	void ImplicitGrid::DrawGrid(Sprite const& sprite) {
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		ImplicitGrid::mCellSize = { static_cast<float>(width) / ImplicitGrid::mCols, static_cast<float>(height) / ImplicitGrid::mRows };
+
+		for (int i = 0; i < ImplicitGrid::mRows; i++) {
+			for (int j = 0; j < ImplicitGrid::mCols; j++) {
+				Vector2D vertical = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
+				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
+				sprite.drawLine(vertical, vertical + verticalend);
+				Vector2D hori = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
+				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
+				sprite.drawLine(hori, hori + horiend);
+			}
+		}
+	}
 
 
 	int Grid::mRows = 5;

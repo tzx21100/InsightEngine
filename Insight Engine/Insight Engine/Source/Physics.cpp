@@ -354,7 +354,8 @@ namespace IS
 
 		// draw grid cell line in white
 		if (mShowGrid)
-			Grid::DrawGrid(sprite);
+			//Grid::DrawGrid(sprite);
+			ImplicitGrid::DrawGrid(sprite);
 
 		// draw the velocity line in blue
 		if (mShowVelocity)
