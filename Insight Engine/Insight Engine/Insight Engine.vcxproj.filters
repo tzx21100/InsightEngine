@@ -120,6 +120,7 @@
     </ClCompile>
     <ClCompile Include="Source\Body.cpp">
       <Filter>Physics\Dynamics</Filter>
+	</ClCompile>
     <ClCompile Include="Source\EditorUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
