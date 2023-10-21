@@ -65,6 +65,10 @@ namespace IS
          */
         static bool isDebugDraw;
 
+        static bool mShowColliders;
+        static bool mShowVelocity;
+        static bool mShowGrid;
+
         /*!
          * \brief Destructor for the Physics class.
          */
@@ -96,7 +100,7 @@ namespace IS
          * \param body The rigid body to draw the outline for.
          * \param sprite The sprite used for drawing the outline.
          */
-        static void DrawOutLine(RigidBody & body, Sprite const& sprite);
+        static void DrawOutLine(RigidBody& body, Sprite const& sprite);
 
         /*!
          * \brief Updates the gravity vector based on user input.

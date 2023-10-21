@@ -52,7 +52,7 @@ namespace IS {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // compile and setup the shader
-        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
         text_shader.use();
         glUniformMatrix4fv(glGetUniformLocation(text_shader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -181,7 +181,7 @@ namespace IS {
             }
             else {
                 // Calculate the position and transformation for the character
-                auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+                auto [width, height] = InsightEngine::Instance().GetWindowSize();
                 float xpos = x + ch.Bearing.x * scale + (width / 2.f);
                 float ypos = y - (base_size - ch.Bearing.y) * scale + (height / 2.f);
 

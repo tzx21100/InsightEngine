@@ -20,11 +20,17 @@ namespace IS
 		void EmplaceEntity(std::set<Entity>& result, std::set<Entity> const& source);
 
 		static void DrawGrid(Sprite const& sprite);
+		static void ResizeGrid(int cols, int rows);
 
-		static const int mRows = 5;
-		static const int mCols = 5;
+		static const int MIN_GRID_COLS = 2;
+		static const int MAX_GRID_COLS = 20;
+		static const int MIN_GRID_ROWS = 2;
+		static const int MAX_GRID_ROWS = 20;
+
+		static int mRows;
+		static int mCols;
 		static Vector2D mCellSize;
-		static std::set<Entity> mCells[mRows][mCols];
+		static std::vector<std::vector<std::set<Entity>>> mCells;
 		static std::set<Entity> mOutsideGridList;
 	private:
 	};

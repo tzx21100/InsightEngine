@@ -18,7 +18,7 @@
 namespace IS {
 
     // In case "WindowProperties.json" is not found, window will use default properties
-    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900 };
+    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, 60 };
 
     WindowSystem::WindowSystem() {
         LoadProperties();
@@ -53,7 +53,7 @@ namespace IS {
 
         // Validate window
         if (!mWindow) {
-            IS_CORE_CRITICAL("Failed to create OpneGL context!");
+            IS_CORE_CRITICAL("Failed to create OpenGL context!");
             glfwTerminate();
         }
 
@@ -120,36 +120,24 @@ namespace IS {
 
     /*                                                                    Getters
     ----------------------------------------------------------------------------- */
-
-    GLFWwindow* WindowSystem::GetNativeWindow() const { return mWindow; }
-
-    int WindowSystem::GetMonitorWidth() const { return mMonitorWidth; }
-
-    int WindowSystem::GetMonitorHeight() const { return mMonitorHeight; }
-
-    std::pair<int, int> WindowSystem::GetMonitorSize() const { return std::make_pair(mMonitorWidth, mMonitorHeight); }
-
-    std::string WindowSystem::GetWindowTitle() const { return mProps.mTitle; }
-
-    int WindowSystem::GetWindowXpos() const { return mProps.mXpos; }
-
-    int WindowSystem::GetWindowYpos() const { return mProps.mYpos; }
-
-    std::pair<int, int> WindowSystem::GetWindowPos() const { return std::make_pair(mProps.mXpos, mProps.mYpos); }
-
-    int WindowSystem::GetWidth() const { return mProps.mWidth; }
-
-    int WindowSystem::GetHeight() const { return mProps.mHeight; }
-
-    std::pair<int, int> WindowSystem::GetWindowSize() const { return std::make_pair(mProps.mWidth, mProps.mHeight); }
-
-    bool WindowSystem::IsVSync() const { return mProps.mVSync; }
-
-    bool WindowSystem::IsFullScreen() const { return mProps.mFullscreen; }
+    GLFWwindow* WindowSystem::GetNativeWindow() const           { return mWindow; }
+    int WindowSystem::GetMonitorWidth() const                   { return mMonitorWidth; }
+    int WindowSystem::GetMonitorHeight() const                  { return mMonitorHeight; }
+    std::pair<int, int> WindowSystem::GetMonitorSize() const    { return std::make_pair(mMonitorWidth, mMonitorHeight); }
+    std::string WindowSystem::GetWindowTitle() const            { return mProps.mTitle; }
+    int WindowSystem::GetWindowXpos() const                     { return mProps.mXpos; }
+    int WindowSystem::GetWindowYpos() const                     { return mProps.mYpos; }
+    std::pair<int, int> WindowSystem::GetWindowPos() const      { return std::make_pair(mProps.mXpos, mProps.mYpos); }
+    int WindowSystem::GetWidth() const                          { return mProps.mWidth; }
+    int WindowSystem::GetHeight() const                         { return mProps.mHeight; }
+    std::pair<int, int> WindowSystem::GetWindowSize() const     { return std::make_pair(mProps.mWidth, mProps.mHeight); }
+    int WindowSystem::GetTargetFPS() const                      { return mProps.mTargetFPS; }
+    int* WindowSystem::GetTargetFPS()                           { return &mProps.mTargetFPS; }
+    bool WindowSystem::IsVSync() const                          { return mProps.mVSync; }
+    bool WindowSystem::IsFullScreen() const                     { return mProps.mFullscreen; }
 
     /*                                                                    Setters
     ----------------------------------------------------------------------------- */
-
     void WindowSystem::SetWindowTitle(std::string const& title) {
         mProps.mTitle = title;
         glfwSetWindowTitle(mWindow, title.c_str());
@@ -208,7 +196,6 @@ namespace IS {
 
     /*                                                                 Properties
     ----------------------------------------------------------------------------- */
-
     void WindowSystem::LoadProperties() {
         std::string filename = "Properties/WindowProperties.json";
         Json::Value properties;
@@ -218,7 +205,7 @@ namespace IS {
         if (auto const& win_props = properties["WindowProperties"];
             success && win_props["Title"].isString() &&
             win_props["Xpos"].isInt() && win_props["Ypos"].isInt() &&
-            win_props["Width"].isInt() && win_props["Height"].isInt() &&
+            win_props["Width"].isInt() && win_props["Height"].isInt() && win_props["TargetFPS"] &&
             win_props["Vsync"].isBool() && win_props["Maximized"].isBool() && win_props["Fullscreen"].isBool()) {
 
             mProps.mTitle      = win_props["Title"].asString();
@@ -226,6 +213,7 @@ namespace IS {
             mProps.mYpos       = win_props["Ypos"].asInt();
             mProps.mWidth      = win_props["Width"].asInt();
             mProps.mHeight     = win_props["Height"].asInt();
+            mProps.mTargetFPS  = win_props["TargetFPS"].asInt();
             mProps.mVSync      = win_props["Vsync"].asBool();
             mProps.mMaximized  = win_props["Maximized"].asBool();
             mProps.mFullscreen = win_props["Fullscreen"].asBool();
@@ -246,6 +234,7 @@ namespace IS {
         win_props["Ypos"]       = mProps.mYpos;
         win_props["Width"]      = mProps.mWidth;
         win_props["Height"]     = mProps.mHeight;
+        win_props["TargetFPS"]  = mProps.mTargetFPS;
         win_props["Vsync"]      = mProps.mVSync;
         win_props["Maximized"]  = mProps.mMaximized;
         win_props["Fullscreen"] = mProps.mFullscreen;

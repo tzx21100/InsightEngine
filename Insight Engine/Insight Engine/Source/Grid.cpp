@@ -5,12 +5,15 @@
 
 namespace IS
 {
+	int Grid::mCols = 5;
+	int Grid::mRows = 5;
 	Vector2D Grid::mCellSize{}; // default 0 because no window added to engine yet
 
-	std::set<Entity> Grid::mCells[mRows][mCols];
+	std::vector<std::vector<std::set<Entity>>> Grid::mCells;
 	std::set<Entity> Grid::mOutsideGridList;
 
 	Grid::Grid() {
+		ResizeGrid(mRows, mCols);
 		// clear the grid
 		for (int i = 0; i < mRows; i++) {
 			for (int j = 0; j < mCols; j++) {
@@ -34,7 +37,7 @@ namespace IS
 		if (engine.HasComponent<RigidBody>(entity)) { // if entity has rigidbody component
 
 			// Set cell size based on current window size
-			auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
+			auto [width, height] = engine.GetWindowSize();
 			mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
 
 			//getting rigidbody component for each entity
@@ -99,7 +102,7 @@ namespace IS
 		InsightEngine& engine = InsightEngine::Instance();
 
 		// Update cell size based on current window size
-		auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
+		auto [width, height] = engine.GetWindowSize();
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
 
 		if (engine.HasComponent<RigidBody>(entity)) { // if entityA has rigidbody component
@@ -282,7 +285,7 @@ namespace IS
 	}
 
 	void Grid::DrawGrid(Sprite const& sprite) {
-		auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
 		Grid::mCellSize = { static_cast<float>(width) / Grid::mCols, static_cast<float>(height) / Grid::mRows };
 
 		for (int i = 0; i < Grid::mRows; i++) {
@@ -295,5 +298,11 @@ namespace IS
 				sprite.drawLine(hori, hori + horiend);
 			}
 		}
+	}
+
+	void Grid::ResizeGrid(int cols, int rows) {
+		mCols = cols;
+		mRows = rows;
+		mCells.resize(rows, std::vector<std::set<Entity>>(cols));
 	}
 }

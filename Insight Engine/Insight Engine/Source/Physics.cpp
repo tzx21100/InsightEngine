@@ -29,6 +29,9 @@ namespace IS
 	
 	// Static flag to enable or disable debug drawing of rigidbody shapes
 	bool Physics::isDebugDraw = false;
+	bool Physics::mShowColliders = false;
+	bool Physics::mShowVelocity = false;
+	bool Physics::mShowGrid = false;
 
 	// Constructs a Physics instance
 	Physics::Physics() 
@@ -284,18 +287,23 @@ namespace IS
 		bodyB.mVelocity += impulse * bodyB.mInvMass;
 	}
 
-	void Physics::DrawOutLine(RigidBody & body, Sprite const& sprite) {
-		for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
-			Vector2D va = body.mTransformedVertices[i];
-			Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
-			sprite.drawLine(va, vb);
+	void Physics::DrawOutLine(RigidBody& body, Sprite const& sprite) {
+		// draw colliders in green
+		if (mShowColliders) {
+			for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
+				Vector2D va = body.mTransformedVertices[i];
+				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
+				sprite.drawLine(va, vb, { 0.f, 1.f, 0.f });
+			}
 		}
 
-		// draw grid cell line
-		Grid::DrawGrid(sprite);
+		// draw grid cell line in white
+		if (mShowGrid)
+			Grid::DrawGrid(sprite);
 
-		// draw the velocity line
-		sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity);
+		// draw the velocity line in blue
+		if (mShowVelocity)
+			sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 0.f, 0.f, 1.f });
 	}
 
 	// Updates the gravity vector based on user input

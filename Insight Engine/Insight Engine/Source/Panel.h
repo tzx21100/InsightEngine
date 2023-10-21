@@ -56,6 +56,11 @@ namespace IS {
          * \brief Overrides the base class method to render the scene panel.
          */
         void RenderPanel() override;
+
+        /**
+         * \brief Renders an overlay which will render a help tooltip.
+         */
+        void RenderOverlay();
     private:
         Vec2 mScenePanelSize{}; ///< Size of the scene panel.
     };
@@ -78,6 +83,17 @@ namespace IS {
     public:
         /**
          * \brief Overrides the base class method to render the log console panel.
+         */
+        void RenderPanel() override;
+    };
+
+    /*!
+     * \brief A derived class representing a physics control panel in a dockspace.
+     */
+    class PhysicsControlPanel : public Panel {
+    public:
+        /**
+         * \brief Overrides the base class method to render the physics control panel.
          */
         void RenderPanel() override;
     };

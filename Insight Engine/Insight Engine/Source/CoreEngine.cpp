@@ -22,7 +22,6 @@
 #include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
 #include "WindowSystem.h" // Access to window
-#include "Timer.h"
 
 #include <iostream>
 #include <thread>
@@ -32,7 +31,7 @@ namespace IS {
     constexpr int DEFAULT_FPS(60);
 
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
-    InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0), mTargetFPS(DEFAULT_FPS) {
+    InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0) {
         IS_PROFILE_FUNCTION();
         IS_CORE_INFO("Starting Insight Engine...");
         //create the pointers to the managers
@@ -59,9 +58,10 @@ namespace IS {
     }
 
     void InsightEngine::Initialize() {
-        LoadProperties();
         //initialize all systems first
         InitializeAllSystems();
+        auto window = GetSystem<WindowSystem>("Window");
+        mTargetFPS = window->GetTargetFPS();
         //subscirbe to messages
         Subscribe(MessageType::Quit);
         //run the game
@@ -74,7 +74,7 @@ namespace IS {
         auto frameStart = std::chrono::high_resolution_clock::now();
 
         // Update System deltas every 4s
-        const int update_frequency = 4 * mTargetFPS;
+        const int update_frequency = 4 * (*mTargetFPS);
         if (!(mFrameCount % update_frequency))
             mSystemDeltas["Engine"] = 0;
         
@@ -112,7 +112,6 @@ namespace IS {
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
         }
-        SaveProperties();
         DestroyAllSystems();
     }
 
@@ -184,6 +183,10 @@ namespace IS {
         return mSystemList;
     }
 
+    int InsightEngine::GetTargetFPS() const {
+        return *mTargetFPS;
+    }
+
     // Get frame count
     unsigned InsightEngine::FrameCount() const { return mFrameCount; }
 
@@ -199,7 +202,7 @@ namespace IS {
 
     // limit fps will return the frameEnd time now so i can use to find delta time
     std::chrono::high_resolution_clock::time_point InsightEngine::LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart) {
-        const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / mTargetFPS);  // Nanosecond-level precision because accurate
+        const std::chrono::nanoseconds targetFrameTime(1'000'000'000 / *mTargetFPS);  // Nanosecond-level precision because accurate
         while (true) { // We chill in this loop until true
             auto now = std::chrono::high_resolution_clock::now();
             auto frameDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - frameStart);
@@ -210,9 +213,7 @@ namespace IS {
     }
 
     // This is a simple function to set the FPS
-    void InsightEngine::SetFPS(int FPS) {
-        mTargetFPS = FPS;
-    }
+    void InsightEngine::SetFPS(int FPS) { *mTargetFPS = FPS; }
 
     // These functions involve creating entities and destroying them
     Entity InsightEngine::CreateEntity(std::string name) {
@@ -398,32 +399,18 @@ namespace IS {
         mEntityManager->ResetEntityID();
     }
 
-    // Can add more properties when there are more features we need 
-    void InsightEngine::LoadProperties() {
-        std::string filename = "Properties/EngineProperties.json";
-        Json::Value properties;
-        // Load window properties from JSON file
-        bool success = LoadJsonFromFile(properties, filename);
-        if (success) {
-            auto const& engine_props = properties["EngineProperties"];
-            mTargetFPS = engine_props["Target FPS"].asInt();
-        }
-        IS_CORE_INFO("Loaded engine properties from \"{}\"", filename);
-    }
-    
-    //we can add more properties next time but for now theres only FPS
-    void InsightEngine::SaveProperties() {
-        std::string filepath = "Properties/EngineProperties.json";
-        Json::Value properties;
-        auto& engine_props = properties["EngineProperties"];
-        engine_props["Target FPS"] = mTargetFPS;
-        // Save window propeties to JSON file
-        bool success = SaveJsonToFile(properties, filepath);
-        if (success) {
-            IS_CORE_INFO("Saved engine properties to \"{}\"", filepath);
-        }
-    }
-
+    // Abstracted functions for window getters/setters
+    // Getters
+    int InsightEngine::GetMonitorWidth()                { return GetSystem<WindowSystem>("Window")->GetMonitorWidth(); }
+    int InsightEngine::GetMonitorHeight()               { return GetSystem<WindowSystem>("Window")->GetMonitorHeight(); }
+    std::pair<int, int> InsightEngine::GetMonitorSize() { return GetSystem<WindowSystem>("Window")->GetMonitorSize(); }
+    int InsightEngine::GetWindowWidth()                 { return GetSystem<WindowSystem>("Window")->GetWidth(); }
+    int InsightEngine::GetWindowHeight()                { return GetSystem<WindowSystem>("Window")->GetHeight(); }
+    std::pair<int, int> InsightEngine::GetWindowSize()  { return GetSystem<WindowSystem>("Window")->GetWindowSize(); }
+    bool InsightEngine::IsVSync()                       { return GetSystem<WindowSystem>("Window")->IsVSync(); }
+    bool InsightEngine::IsFullScreen()                  { return GetSystem<WindowSystem>("Window")->IsFullScreen(); }
+    // Setters
+    void InsightEngine::EnableVSync(bool enabled)       { GetSystem<WindowSystem>("Window")->EnableVsync(enabled); }
 
     //abstracted function to make game script
     void InsightEngine::CreateGameScript(const std::string& ScriptName) {
