@@ -73,10 +73,13 @@ namespace IS {
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
-        // Update System deltas every 4s
-        const int update_frequency = 4 * (*mTargetFPS);
-        if (!(mFrameCount % update_frequency))
-            mSystemDeltas["Engine"] = 0;
+        // Update System deltas every 1s
+        static const float UPDATE_FREQUENCY = 1.f;
+        static float elapsed_time = 0.f;
+        elapsed_time += mDeltaTime.count();
+        const bool to_update = mFrameCount == 0 || elapsed_time >= UPDATE_FREQUENCY;
+        if (to_update)
+            mSystemDeltas["Engine"] = elapsed_time = 0.f;
         
         // Update all systems
         for (const auto& system : mSystemList) {
@@ -87,7 +90,7 @@ namespace IS {
             system->Update(mDeltaTime.count());
             timer.Stop();
 
-            if (!(mFrameCount % update_frequency)) {
+            if (to_update) {
                 mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
