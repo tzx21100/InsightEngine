@@ -86,12 +86,14 @@ namespace IS {
             // load first 128 characters of ASCII set
             for (unsigned char c = 0; c < 128; c++)
             {
+                //if (c == 36) continue; // unable to load '$' for some reason
                 // Load character glyph 
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER))
                 {
-                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character " << static_cast<int>(c) << std::endl;
                     continue;
                 }
+
                 glTexSubImage3D(
                     GL_TEXTURE_2D_ARRAY,
                     0, 0, 0, int(c),
@@ -102,12 +104,6 @@ namespace IS {
                     face->glyph->bitmap.buffer
                 );
 
-                // set texture options
-                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
                 // now store character for later use
                 Character character = {
                     int(c),
@@ -117,7 +113,13 @@ namespace IS {
                 };
                 Characters.insert(std::pair<char, Character>(c, character));
             }
+            // set texture options
+            glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+            
         }
         // destroy FreeType once we're finished
         FT_Done_Face(face);

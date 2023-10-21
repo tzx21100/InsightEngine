@@ -26,6 +26,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <filesystem>
+#include <glad/glad.h>
 
 //#define ON_ERROR(condition, msg) \
 //do { \
@@ -67,9 +68,9 @@ namespace IS {
         int height{};
         int channels{};
         size_t size{};
-        unsigned long mTextureData{};
+        GLuint texture_id{}; // actual ID given my openGL
+        int texture_index{}; // Sequential, first texture IN USE has index 0, second has 1 ...
         AllocationType mAllocationType{};
-
     };
 
     /*!

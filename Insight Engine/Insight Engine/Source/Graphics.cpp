@@ -21,7 +21,7 @@
 
 namespace IS {
     /// Static objects ///
-
+    std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
     
     // Sprites (models) to render
@@ -32,6 +32,7 @@ namespace IS {
     Animation ISGraphics::ice_cream_truck_ani;
     // Shaders
     Shader ISGraphics::mesh_shader_pgm;
+    Shader ISGraphics::mesh_inst_shader_pgm;
     Shader ISGraphics::text_shader_pgm;
     // Mesh vector
     std::vector<Mesh> ISGraphics::meshes;
@@ -49,14 +50,14 @@ namespace IS {
 
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
-
+        
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        mesh_inst_shader_pgm.setupInstSpriteShaders();
         text_shader_pgm.setupTextShaders();
-
+        
         walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
-        
         Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm); // init text system
 
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; // create framebuffer
@@ -74,6 +75,12 @@ namespace IS {
     void ISGraphics::Update(float delta_time) {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
+        // update animations
+        /*idle_ani.updateAnimation(delta_time);
+        walking_ani.updateAnimation(delta_time);
+        ice_cream_truck_ani.updateAnimation(delta_time);*/
+        
+        // fill up instancing vector
         quadInstances.clear();
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
@@ -83,21 +90,30 @@ namespace IS {
             // update sprite's transform
             sprite.followTransform(trans);
             sprite.transform();
+           
+            if (!sprite.anims.empty()) {
+                sprite.anims[sprite.animation_index].updateAnimation(delta_time);
+            }
 
-            //Sprite::instanceData instData;
-            //instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-            //instanceData.color = sprite.color;
-            //instanceData.texIndex = sprite.texture; // Set the appropriate texture index
+            if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
+                Sprite::instanceData instData;
+                instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
+                if (sprite.img.texture_id == 0) { // no texture
+                    instData.tex_index = -1.f;
+                }
+                else {
+                    instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                }
+                if (!sprite.anims.empty()) {
+                    instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                    instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                }
+                // no need for else as default values of instData will stay
 
-            //// Add the instance data to the array
-            //quadInstances.push_back(instanceData);
+                quadInstances.push_back(instData);
+            }
         }
 
-        // update animations
-        idle_ani.updateAnimation(delta_time);
-        walking_ani.updateAnimation(delta_time);
-        ice_cream_truck_ani.updateAnimation(delta_time);
-        
         // draw
         Draw(delta_time);
     }
@@ -113,21 +129,45 @@ namespace IS {
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, meshes[4].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
-        //// Bind the VAO for instances
-        //glBindVertexArray(meshes[0].vao_ID);
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
+            
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
 
-        //// Bind the instance VBO
-        //glBindBuffer(GL_ARRAY_BUFFER, meshes[0].instance_vbo_ID);
+        glUseProgram(mesh_inst_shader_pgm.getHandle());
+        glBindVertexArray(meshes[4].vao_ID);
 
-        //// Upload the quadInstances data to the GPU
-        //Mesh::uploadInstanceData(quadInstances, meshes[0]);
+        
+        std::vector<int> tex_array_index_vect;
+        for (auto const& texture : textures) {
+            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            tex_array_index_vect.emplace_back(texture.texture_index);
+        }
 
-        //// Render the instances using instanced rendering (triangle strips)
-        //glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, (GLsizei)quadInstances.size());
+        auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
+        if (tex_arr_uniform >= 0)
+            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        else
+            std::cout << "uTex2d Uniform not found" << std::endl;
+        
 
-        //// Unbind the VAO
-        //glBindVertexArray(0);
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[4].draw_count, static_cast<GLsizei>(quadInstances.size()));
 
 
         for (auto& entity : mEntities) { // for each intentity
@@ -150,26 +190,26 @@ namespace IS {
             // for each type
             switch (sprite.primitive_type) {
             case GL_TRIANGLE_STRIP: // quads
-                if (sprite.name == "player_sprite") { // if drawing player
-                    // swap animations based on index
-                    if (sprite.current_tex_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-                    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
-                } 
-                else if (sprite.name == "ice_cream_truck") { // if drawing truck
-                    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
-                } 
-                else { // every other textured box
-                    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
-                }
-                break;
+                //if (sprite.name == "player_sprite") { // if drawing player
+                //    // swap animations based on index
+                //    if (sprite.animation_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
+                //    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
+                //}
+                //else if (sprite.name == "ice_cream_truck") { // if drawing truck
+                //    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
+                //}
+                //else { // every other textured box
+                //    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
+                //}
+                //break;
             case GL_POINTS: // points
-                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             case GL_LINES: // lines
-                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             case GL_TRIANGLE_FAN: // circle
-                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.texture);
+                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             }
             if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
@@ -180,7 +220,7 @@ namespace IS {
         }
 
         // Render text when GUI is disabled
-        if (!engine.mUsingGUI){
+        if (!engine.mUsingGUI) {
             // Shared Attributes
             const float scale = 5.f;
             const float x_padding = scale;
@@ -204,15 +244,15 @@ namespace IS {
                            "- Click mouse scrollwheel to spawn entity\n"
                            "- Click right mouse button to spawn rigidbody entity\n\n";
             render_text << "Player Controls\n"
-                           "- Press 'WASD' to move in the four directions\n"
-                           "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
+                "- Press 'WASD' to move in the four directions\n"
+                "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
             render_text << "Physics Controls\n"
-                           "- Press '2' to enable draw collision boxes, '1' to disable\n"
-                           "- Press 'G' to enable gravity, 'F' to disable\n"
-                           "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
+                "- Press '2' to enable draw collision boxes, '1' to disable\n"
+                "- Press 'G' to enable gravity, 'F' to disable\n"
+                "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
             render_text << "Audio Controls\n"
-                           "- Press 'Z' to play sfx\n"
-                           "- Press 'X' to play music";
+                "- Press 'Z' to play sfx\n"
+                "- Press 'X' to play music";
 
             // Render Text
             Text::renderText(text_shader_pgm, render_text.str(), pos_x, pos_y, scale, color);
@@ -230,6 +270,8 @@ namespace IS {
     }
 
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+        InsightEngine& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
         int width, height, channels;
         uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
 
@@ -243,7 +285,7 @@ namespace IS {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // for different png formats
-        GLuint format=GL_RGBA;
+        GLuint format = GL_RGBA;
         if (channels == 1) {
             format = GL_RED;
         }
@@ -285,7 +327,7 @@ namespace IS {
         image.height = height;
         image.channels = channels;
         image.mFileName = filepath;
-        image.mTextureData = textureID;
+        image.texture_id = textureID;
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }

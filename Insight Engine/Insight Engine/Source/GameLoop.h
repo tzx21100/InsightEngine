@@ -4,10 +4,10 @@
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
- * 
+ *
  * This is just a pseudo game loop to show off the functionalities of the engine.
  * Most of this will be converted to scripts once we integrate it with our ECS.
- * 
+ *
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
@@ -38,18 +38,38 @@ namespace IS {
 
         Image backgroundTest{};
         Image black_background{};
-        Image idle_animation{};
-        Image walking_animation{};
-        Image zx_animation{};
+        Image idle_anim_image{};
+        Image walking_anim_image{};
+        Image truck_anim_image{};
+
+        // Animation objects
+        Animation idle_ani;
+        Animation walking_ani;
+        Animation ice_cream_truck_ani;
 
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            backgroundTest.texture_index = 0; // hard code first :)
             black_background = asset->GetImage("Assets/black_background.png");
-            idle_animation = asset->GetImage("Assets/player_idle.png");
-            walking_animation = asset->GetImage("Assets/player_walking.png");
-            zx_animation = asset->GetImage("Assets/icecream_truck.png");
-            
+            black_background.texture_index = 1;
+            idle_anim_image = asset->GetImage("Assets/player_idle.png");
+            idle_anim_image.texture_index = 2;
+            walking_anim_image = asset->GetImage("Assets/player_walking.png");
+            walking_anim_image.texture_index = 3;
+            truck_anim_image = asset->GetImage("Assets/icecream_truck.png");
+            truck_anim_image.texture_index = 4;
+
+            walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
+            idle_ani.initAnimation(1, 8, 3.f);
+            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+
+            ISGraphics::textures.emplace_back(backgroundTest);
+            ISGraphics::textures.emplace_back(black_background);
+            ISGraphics::textures.emplace_back(idle_anim_image);
+            ISGraphics::textures.emplace_back(walking_anim_image);
+            ISGraphics::textures.emplace_back(truck_anim_image);
+
             //creating game object and their components
             entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
             entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody,ScriptComponent>("Player");
@@ -81,18 +101,22 @@ namespace IS {
             auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
             auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
-            sprite_background.texture = static_cast<uint8_t>(black_background.mTextureData);
             sprite_background.texture_width = black_background.width;
             sprite_background.texture_height = black_background.height;
+            sprite_background.img = black_background;
 
             sprite_player.name = "player_sprite";
-            sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
-            sprite_player.texture_width = idle_animation.width;
-            sprite_player.texture_height = idle_animation.height;
+            sprite_player.texture_width = idle_anim_image.width;
+            sprite_player.texture_height = idle_anim_image.height;
+            sprite_player.anims.emplace_back(idle_ani);
+            sprite_player.anims.emplace_back(walking_ani);
+            sprite_player.img = idle_anim_image;
+            // sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
+            // sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
 
-            sprite_test.texture = static_cast<uint8_t>(backgroundTest.mTextureData);
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
+            sprite_test.img = backgroundTest;
 
             auto [width, height] = engine.GetWindowSize();
             trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
@@ -106,12 +130,12 @@ namespace IS {
             body_player.mRestitution = 0.1f;
             body_floor.mBodyType = BodyType::Static;
             body_floor.mMass = 99999.f;
-            body_floor.mInvMass = 1.f/99999.f;
-            
+            body_floor.mInvMass = 1.f / 99999.f;
+
             trans_circle.setWorldPosition(650.f, 300.f);
             trans_circle.setScaling(200.f, 200.f);
             sprite_circle.primitive_type = GL_TRIANGLE_FAN;
-            
+
 
             trans_line.setWorldPosition(650.f, 300.f);
             trans_line.setScaling(200.f, 200.f);
@@ -125,7 +149,6 @@ namespace IS {
         }
 
         virtual void Update(float delta) override {
-
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetSystem<Editor>("Editor");
 
@@ -146,7 +169,7 @@ namespace IS {
 
                 //this controls the freeze frame
                 engine.mContinueFrame = false;
-                
+
                 if (input->IsKeyPressed(GLFW_KEY_ENTER) && input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)) {
                     engine.mFreezeFrame = !engine.mFreezeFrame;
                     IS_CORE_DEBUG("Freeze frame {}!", engine.mFreezeFrame ? "enabled" : "disabled");
@@ -163,15 +186,16 @@ namespace IS {
                 if (engine.HasComponent<Sprite>(entity_player)) {
                     auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
                     if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
-                        sprite_player.texture = static_cast<uint8_t>(walking_animation.mTextureData);
-                        sprite_player.texture_width = walking_animation.width;
-                        sprite_player.texture_height = walking_animation.height;
-                        sprite_player.current_tex_index = 1;
-                    } else {
-                        sprite_player.texture = static_cast<uint8_t>(idle_animation.mTextureData);
-                        sprite_player.texture_width = idle_animation.width;
-                        sprite_player.texture_height = idle_animation.height;
-                        sprite_player.current_tex_index = 0;
+                        sprite_player.texture_width = walking_anim_image.width;
+                        sprite_player.texture_height = walking_anim_image.height;
+                        sprite_player.animation_index = 1;
+                        sprite_player.img = walking_anim_image;
+                    }
+                    else {
+                        sprite_player.texture_width = idle_anim_image.width;
+                        sprite_player.texture_height = idle_anim_image.height;
+                        sprite_player.animation_index = 0;
+                        sprite_player.img = idle_anim_image;
                     }
                 }
 
@@ -225,7 +249,7 @@ namespace IS {
                         transl.setScaling(30, 38);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         //add the image in
-                        //spr.texture = backgroundTest.mTextureData;
+                        //spr.texture = backgroundTest.texture_id;
                     }
 
                 }
@@ -238,11 +262,14 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
-                        spr.texture = static_cast<uint8_t>(zx_animation.mTextureData);
-                        spr.texture_width = zx_animation.width;
-                        spr.texture_height = zx_animation.height;
+                        spr.texture_width = truck_anim_image.width;
+                        spr.texture_height = truck_anim_image.height;
+                        spr.img = truck_anim_image;
+                        //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
+                        spr.anims.emplace_back(ice_cream_truck_ani);
+                        
                         //add the image in
-                        //spr.texture = backgroundTest.mTextureData;
+                        //spr.texture = backgroundTest.texture_id;
 
                     }
 
@@ -268,7 +295,7 @@ namespace IS {
 
         }
 
-        virtual void Draw([[maybe_unused]]float delta) override{
+        virtual void Draw([[maybe_unused]] float delta) override {
 
 
 

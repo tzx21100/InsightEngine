@@ -92,7 +92,6 @@ namespace IS {
                 
             }
         }
-
     }
 
     Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
@@ -154,7 +153,7 @@ namespace IS {
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
         graphics->initTextures(filepath,new_image);
         SaveImageData(new_image);
-        IS_CORE_INFO("Using Texture: {} \"{}\"", new_image.mTextureData, filepath.substr(7));
+        IS_CORE_INFO("Using Texture: {} \"{}\"", new_image.texture_id, filepath.substr(7));
     }
 
     void AssetManager::SaveImageData(const Image image_data) {
@@ -191,7 +190,7 @@ namespace IS {
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
         //auto result = graphicsys->initTextures(gray_image);
-        //gray_image.mTextureData = result;
+        //gray_image.texture_id = result;
         // You may want to save the modified image data to the image_manager here if needed
         SaveImageData(gray_image);
 
@@ -218,7 +217,7 @@ namespace IS {
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
         //auto result = graphicsys->initTextures(sepia_image);
-        //sepia_image.mTextureData = result;
+        //sepia_image.texture_id = result;
         // You may want to save the modified image data to the image_manager here if needed
         SaveImageData(sepia_image);
         return sepia_image;

@@ -18,6 +18,7 @@
 
 
 namespace IS {
+    int Sprite::texture_count = 0;
 
 	void Sprite::transform() {
 
@@ -42,10 +43,10 @@ namespace IS {
         model_TRS.mdl_to_ndc_xform = GlmMat3ToISMtx33(world_to_NDC_xform);
 	}
 
-    void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id) {
+    void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
         // use sprite shader
         shader.use();
-        
+
         // bind vao
         glBindVertexArray(mesh_used.vao_ID);
 
@@ -54,12 +55,12 @@ namespace IS {
         shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
 
         // Bind the texture to the uniform sampler2D
-        if (glIsTexture(texture_id)) {
+        if (glIsTexture(texture_ID)) {
             GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
             if (textureUniformLoc != -1) {
                 glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
                 glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture_id);
+                glBindTexture(GL_TEXTURE_2D, texture_ID);
             }
             shader.setUniform("uTexture", 1);
         }
@@ -95,13 +96,13 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& anim, GLuint texture_id) {
+    void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animation, GLuint texture_ID) {
         // use sprite shader
         shader.use();
 
         // bind vao
         glBindVertexArray(mesh_used.vao_ID);
-        
+
         // set uniforms
         shader.setUniform("uColor", color);
         shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
@@ -111,13 +112,13 @@ namespace IS {
         if (textureUniformLoc != -1) {
             glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
             glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture_id);
+            glBindTexture(GL_TEXTURE_2D, texture_ID);
         }
         shader.setUniform("uTexture", 1);
 
         // animation uniforms
-        shader.setUniform("uFrameDim", glm::vec2(anim.getFrameWidth(), anim.getFrameHeight()));
-        shader.setUniform("uFrameIndex", glm::vec2(anim.x_frame_index, anim.y_frame_index));
+        shader.setUniform("uFrameDim", glm::vec2(animation.getFrameWidth(), animation.getFrameHeight()));
+        shader.setUniform("uFrameIndex", glm::vec2(animation.frame_index.x, animation.frame_index.y));
 
         // transformation matrix uniform
         shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
@@ -169,7 +170,7 @@ namespace IS {
         shader.setUniform("uTexture", 0);
         shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
         shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
-       
+
         // draw line
         glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
         glLineWidth(1.f);
@@ -216,10 +217,10 @@ namespace IS {
         // Note: Not serializing mdl_to_ndc_xform as it's a matrix and the specific serialization might depend on further needs
 
         // Serializing texture-related properties
-        spriteData["SpriteTexture"] = texture;
+        spriteData["SpriteTexture"] = img.texture_id;
         spriteData["SpriteTextureWidth"] = texture_width;
         spriteData["SpriteTextureHeight"] = texture_height;
-        spriteData["SpriteCurrentTexIndex"] = current_tex_index;
+        spriteData["SpriteCurrentTexIndex"] = animation_index;
 
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
@@ -245,10 +246,10 @@ namespace IS {
         // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
 
         // Deserializing texture-related properties
-        texture = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
         texture_width = data["SpriteTextureWidth"].asUInt();
         texture_height = data["SpriteTextureHeight"].asUInt();
-        current_tex_index = data["SpriteCurrentTexIndex"].asInt();
+        animation_index = data["SpriteCurrentTexIndex"].asInt();
 
         // Deserializing imgui-related properties
         name = data["SpriteName"].asString();

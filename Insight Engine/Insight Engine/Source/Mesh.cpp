@@ -58,11 +58,11 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
 
         glVertexAttribPointer(tex_id_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
-        glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
-        glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 6));
-        glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 9));
-        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(offsetof(Sprite::instanceData, Sprite::instanceData::anim_frame_dimension)));
-        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(offsetof(Sprite::instanceData, Sprite::instanceData::anim_frame_index)));
+        glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 1));
+        glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 7));
+        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 10));
+        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 12));
 
         glVertexAttribDivisor(tex_id_attrib, 1);
         glVertexAttribDivisor(x_form_row1_attrib, 1);
@@ -171,17 +171,19 @@ namespace IS {
 
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // 4 meshes for 4 different models
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh;
+        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh, inst_quad_mesh;
+        //quad_mesh.setupQuadVAO();
         quad_mesh.setupQuadVAO();
-        //quad_mesh.setupInstancedQuadVAO();
         point_mesh.setupNonQuadVAO(GL_POINTS);
         line_mesh.setupNonQuadVAO(GL_LINES);
         circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+        inst_quad_mesh.setupInstancedQuadVAO();
 
         meshes.emplace_back(quad_mesh);
         meshes.emplace_back(point_mesh);
         meshes.emplace_back(line_mesh);
         meshes.emplace_back(circle_mesh);
+        meshes.emplace_back(inst_quad_mesh);
     }
 
     void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {

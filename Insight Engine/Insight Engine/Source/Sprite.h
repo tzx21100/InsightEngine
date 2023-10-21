@@ -42,18 +42,25 @@ namespace IS {
         }
 
         struct instanceData {
-            Matrix3x3 model_to_ndc_xform{};
-            float tex_id{};
-            Vector2D anim_frame_dimension{ 1.f, 1.f }; // default UV size
-            Vector2D anim_frame_index{ 0.f, 0.f };
+            float tex_index{};
+            glm::mat3 model_to_ndc_xform{};
+            glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
+            glm::vec2 anim_frame_index{ 0.f, 0.f };
         };
+
+        static int texture_count;
 
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
-        uint8_t texture{};         // The texture ID for the sprite.
+        //uint8_t texture_id{};      // The texture ID for the sprite. (randomly given by OpenGL)
         uint32_t texture_width{};  // The width of the sprite's texture.
         uint32_t texture_height{}; // The height of the sprite's texture.
-        int current_tex_index{};   // The current texture index for animation (0 is the default texture).
+        int animation_index{};     // The current texture index for switching animations (0 is the default texture).
+        // std::vector<Animation> anim_vect{};
+        Image img{};
+        // Animation anim{};
+        std::vector<Animation> anims{};
+
 
         // ImGui properties
         std::string name;          // The name of the sprite.

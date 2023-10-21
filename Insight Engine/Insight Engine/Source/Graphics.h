@@ -94,7 +94,7 @@ namespace IS {
 		 */
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
-		static std::pair<GLuint, GLuint> GetFramebufferSize() { return mFramebuffer->GetSize(); }
+		static std::vector<Image> textures;
 
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;
@@ -106,6 +106,7 @@ namespace IS {
 		static Animation ice_cream_truck_ani;
 		// Shaders
 		static Shader mesh_shader_pgm;
+		static Shader mesh_inst_shader_pgm;
 		static Shader text_shader_pgm;
 		// Mesh vector
 		static std::vector<Mesh> meshes;

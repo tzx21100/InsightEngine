@@ -279,11 +279,11 @@ namespace IS {
 
         // Sprite Component
         RenderComponent<Sprite>("Sprite", entity, [font_bold, entity](Sprite& sprite) {
-            if (sprite.texture) {
+            if (sprite.img.texture_id) {
                 ImGui::PushFont(font_bold);
                 ImGui::TextUnformatted("Texture");
                 ImGui::PopFont();
-                ImTextureID texture_id = std::bit_cast<void*>(static_cast<uintptr_t>(sprite.texture));
+                ImTextureID texture_id = std::bit_cast<void*>(static_cast<uintptr_t>(sprite.img.texture_id));
                 const float texture_width = static_cast<float>(sprite.texture_width);
                 const float texture_height = static_cast<float>(sprite.texture_height);
                 const float texture_aspect_ratio = texture_width / texture_height;
