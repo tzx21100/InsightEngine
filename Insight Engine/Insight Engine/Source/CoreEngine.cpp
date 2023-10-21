@@ -265,7 +265,7 @@ namespace IS {
                 (gacha <= ULTRA_RARE) ? asset->GetImage("Assets/icecream_truck_frame.png") :
                 (gacha <= SUPER_RARE) ? asset->GetImage("Assets/player_frame.png") :
                 (gacha <= RARE) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
-            sprite.texture = static_cast<uint8_t>(random_img.mTextureData);
+            sprite.img.texture_id = static_cast<uint8_t>(random_img.mTextureData);
             sprite.texture_width = random_img.width;
             sprite.texture_height = random_img.height;
         }

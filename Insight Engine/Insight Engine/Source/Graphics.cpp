@@ -97,7 +97,7 @@ namespace IS {
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
-                instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_ndc_xform;
+                instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
                 if (sprite.img.texture_id == 0) { // no texture
                     instData.tex_index = -1.f;
                 }
