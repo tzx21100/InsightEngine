@@ -5,30 +5,20 @@
 
 namespace IS
 {
+	int ImplicitGrid::mCols = ImplicitGrid::DEFAULT_GRID_COLS;
+	int ImplicitGrid::mRows = ImplicitGrid::DEFAULT_GRID_ROWS;
+
 	Vector2D ImplicitGrid::mCellSize{};
 
-	ImplicitGrid::ImplicitGrid() {
-
-		for (int i = 0; i < mRows; ++i) {
-			mRowsBitArray[i].reset();  // Reset all bits to 0
-		}
-
-		for (int i = 0; i < mCols; ++i) {
-			mColsBitArray[i].reset();  // Reset all bits to 0
-		}
-
-		mInGridList;
-		mOverlapGridList;
-		mOutsideGridList;
-	}
+	ImplicitGrid::ImplicitGrid() { ClearGrid(); }
 
 	void ImplicitGrid::ClearGrid() {
 		// clear the grid and reset all bits to 0
-		for (int i = 0; i < mRows; ++i) {
+		for (int i = 0; i < MAX_GRID_ROWS; ++i) {
 			mRowsBitArray[i].reset();  // Reset all bits to 0
 		}
 
-		for (int i = 0; i < mCols; ++i) {
+		for (int i = 0; i < MAX_GRID_COLS; ++i) {
 			mColsBitArray[i].reset();  // Reset all bits to 0
 		}
 		mInGridList.clear();
@@ -124,7 +114,7 @@ namespace IS
 		}
 	}
 
-	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity entity) {
 		//// check whether min and max are at the same cell
 		//if (areCellsEqual(min, max)) {
 		//	// assign the entity to the grid cell based on its position
@@ -156,7 +146,7 @@ namespace IS
 		}
 	}
 
-	void ImplicitGrid::RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+	void ImplicitGrid::RemoveFromBitArray(Cell const& min, Cell const& max, Entity entity) {
 		//// check whether min and max are at the same cell
 		//if (areCellsEqual(min, max)) {
 		//	// assign the entity to the grid cell based on its position

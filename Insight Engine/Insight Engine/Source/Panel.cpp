@@ -31,7 +31,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1, 1));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
@@ -272,24 +272,11 @@ namespace IS {
         ImGui::Begin("Physics");
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
-        ImGuiTableFlags table_flags = ImGuiTableFlags_BordersOuterH;
+        ImGuiTableFlags table_flags = 0;
         if (ImGui::BeginTable("Grid", 2, table_flags)) {
             ImGui::PushFont(font_bold);
             ImGui::TableSetupColumn("Grid");
             ImGui::TableHeadersRow();
-
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Columns");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SliderInt("##GridColumns", &Grid::mCols, Grid::MIN_GRID_COLS, Grid::MAX_GRID_COLS);
-
-            ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Rows");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SliderInt("##GridRows", &Grid::mRows, Grid::MIN_GRID_ROWS, Grid::MAX_GRID_ROWS);
 
             ImGui::TableNextColumn();
             ImGui::PushFont(font_bold);
@@ -297,6 +284,19 @@ namespace IS {
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
+
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Columns");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(font_bold);
+            ImGui::TextUnformatted("Rows");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
 
             ImGui::EndTable(); // end table Grid
         }

@@ -34,9 +34,9 @@ namespace IS
 
 		void AddIntoCell(std::set<Entity> const& Entities);
 
-		void AddToBitArray(Cell const& min, Cell const& max, Entity const& entity);
+		void AddToBitArray(Cell const& min, Cell const& max, Entity entity);
 
-		void RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity);
+		void RemoveFromBitArray(Cell const& min, Cell const& max, Entity entity);
 
 		void UpdateCell(Entity const& entity, float const& dt);
 
@@ -44,12 +44,20 @@ namespace IS
 
 		static void DrawGrid(Sprite const& sprite);
 
-		static const int mRows = 6;
-		static const int mCols = 6;
+		static const int MIN_GRID_COLS = 1;
+		static const int MAX_GRID_COLS = 20;
+		static const int MIN_GRID_ROWS = 1;
+		static const int MAX_GRID_ROWS = 20;
+
+		static const int DEFAULT_GRID_COLS = 6;
+		static const int DEFAULT_GRID_ROWS = 6;
+
+		static int mRows;
+		static int mCols;
 		Vector2D mGridSize;
 		static Vector2D mCellSize;
-		std::bitset<MAX_ENTITIES> mRowsBitArray[mRows];
-		std::bitset<MAX_ENTITIES> mColsBitArray[mCols];
+		std::bitset<MAX_ENTITIES> mRowsBitArray[MAX_GRID_ROWS];
+		std::bitset<MAX_ENTITIES> mColsBitArray[MAX_GRID_COLS];
 
 		std::set<Entity> mInGridList;
 		std::set<Entity> mOverlapGridList;
