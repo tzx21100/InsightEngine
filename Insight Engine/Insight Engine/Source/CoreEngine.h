@@ -114,6 +114,12 @@ namespace IS {
         std::vector<std::shared_ptr<ParentSystem>> const& GetSystemList() const;
 
         /*!
+         * \brief Gets the target frames per second for the engine.
+         * \return The target FPS.
+         */
+        int GetTargetFPS() const;
+
+        /*!
          * \brief Sets the desired frames per second for the engine.
          * \param num The desired FPS.
          */
@@ -138,6 +144,62 @@ namespace IS {
          * \param type The type of message to subscribe to.
          */
         void Subscribe(MessageType type) { EventManager::Instance().Subscribe(type, this); };
+
+        // abstracted functions to get window properties
+
+        /*!
+         * \brief Gets the width of the monitor.
+         * \return The width of the monitor.
+         */
+        int GetMonitorWidth();
+
+        /*!
+         * \brief Gets the height of the monitor.
+         * \return The height of the monitor.
+         */
+        int GetMonitorHeight();
+
+        /*!
+         * \brief Gets the size of the monitor.
+         * \return A pair containing the width and height of the monitor.
+         */
+        std::pair<int, int> GetMonitorSize();
+
+        /*!
+         * \brief Gets the width of the window.
+         * \return The width of the window.
+         */
+        int GetWindowWidth();
+
+        /*!
+         * \brief Gets the height of the window.
+         * \return The height of the window.
+         */
+        int GetWindowHeight();
+
+        /*!
+         * \brief Gets the size of the window.
+         * \return A pair containing the width and height of the window.
+         */
+        std::pair<int, int> GetWindowSize();
+
+        /*!
+         * \brief Checks if vsync is enabled for the window.
+         * \return True if vsync is enabled, false otherwise.
+         */
+        bool IsVSync();
+
+        /*!
+         * \brief Checks if window is fullscreen.
+         * \return true if window is fullscreen, false otherwise.
+         */
+        bool IsFullScreen();
+
+        /*!
+         * \brief Enables or disables vsync for the window.
+         * \param enabled Flag indicating whether to enable vsync. (default true)
+         */
+        void EnableVSync(bool enabled = true);
 
 
         //abstracted function to make game script
@@ -507,8 +569,8 @@ namespace IS {
         //! Tracks the last runtime of the engine.
         unsigned mLastRuntime;
 
-        //! Target frames per second for the game.
-        int mTargetFPS{ 60 };
+        //! Pointer to the target frames per second for the game.
+        int* mTargetFPS = nullptr;
 
         //! Duration of the delta time between frames.
         std::chrono::duration<float> mDeltaTime{ 0.f };
@@ -567,15 +629,6 @@ namespace IS {
          * \brief Set to store entities that are flagged for deletion.
          */
         std::unordered_set<Entity> mEntitiesToDelete;
-
-        /**
-         * \brief Private functions that automatically save an engine's properties
-         */
-        void SaveProperties();
-        /**
-         * \brief Private functions that automatically load an engine's properties
-         */
-        void LoadProperties();
 
     };
 

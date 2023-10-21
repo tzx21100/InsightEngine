@@ -79,9 +79,6 @@
     <ClCompile Include="Source\SceneHierarchyPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Guidgets.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ScriptEngine.cpp">
       <Filter>Engine\Scripting</Filter>
     </ClCompile>
@@ -123,6 +120,8 @@
     </ClCompile>
     <ClCompile Include="Source\Body.cpp">
       <Filter>Physics\Dynamics</Filter>
+    <ClCompile Include="Source\EditorUtils.cpp">
+      <Filter>Editor\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +239,6 @@
     <ClInclude Include="Source\SceneHierarchyPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Guidgets.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ScriptEngine.h">
       <Filter>Engine\Scripting</Filter>
     </ClInclude>
@@ -293,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="Source\Pathfinding.h">
       <Filter>Engine\Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EditorUtils.h">
+      <Filter>Editor\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +396,9 @@
     </Filter>
     <Filter Include="Engine\Systems\Gui System">
       <UniqueIdentifier>{7c2b3b4c-19b5-4d80-994a-0269fcb5fddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Utils">
+      <UniqueIdentifier>{091bd855-80c0-4451-ba80-733ec30c1671}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

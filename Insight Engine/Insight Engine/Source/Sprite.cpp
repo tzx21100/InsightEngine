@@ -25,7 +25,7 @@ namespace IS {
         float angle_rad = glm::radians(model_TRS.rotation);
 
         // to scale to world coordinates
-        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
         float map_scale_x = 2.f / width; 
         float map_scale_y = 2.f / height;
 
@@ -131,7 +131,7 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1) {
+    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color) {
         // ensure line mesh is initialized
         if (ISGraphics::meshes.empty()) {
             std::cerr << "No mesh to draw line!" << std::endl;
@@ -162,7 +162,9 @@ namespace IS {
         glBindVertexArray(mesh_used.vao_ID);
 
         // set uniforms
-        shader.setUniform("uColor", glm::vec3(1.f, 1.f, 1.f));
+        auto [r, g, b] = color;
+        glm::vec3 uniform_color{ r, g, b };
+        shader.setUniform("uColor", uniform_color);
         shader.setUniform("uModel_to_NDC", world_to_NDC_xform);
         shader.setUniform("uTexture", 0);
         shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
@@ -180,7 +182,7 @@ namespace IS {
 
     glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
         // similar to transform
-        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
         float map_scale_x = 2.f / width;
         float map_scale_y = 2.f / height;
 

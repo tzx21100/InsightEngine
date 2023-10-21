@@ -33,8 +33,8 @@ namespace IS {
 
         //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
-        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-        std::shared_ptr<AssetManager> asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        std::shared_ptr<InputManager> input = engine.GetSystem<InputManager>("Input");
+        std::shared_ptr<AssetManager> asset = engine.GetSystem<AssetManager>("Asset");
 
         Image backgroundTest{};
         Image black_background{};
@@ -94,7 +94,7 @@ namespace IS {
             sprite_test.texture_width = backgroundTest.width;
             sprite_test.texture_height = backgroundTest.height;
 
-            auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+            auto [width, height] = engine.GetWindowSize();
             trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
             trans_player.setScaling(95, 120);
             trans_player.setWorldPosition(0, 0);
@@ -126,14 +126,11 @@ namespace IS {
 
         virtual void Update(float delta) override {
 
-
             // Disable mouse/key event when GUI is using them
-            auto const& gui = InsightEngine::Instance().GetSystem<Editor>("Editor");
+            auto const& gui = engine.GetSystem<Editor>("Editor");
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
-                auto const& window = engine.GetSystem<WindowSystem>("Window");
-
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
@@ -142,7 +139,7 @@ namespace IS {
 
                 // Offset mouse position
                 if (!engine.mUsingGUI) {
-                    auto [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
+                    auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }

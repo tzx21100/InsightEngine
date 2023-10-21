@@ -35,18 +35,22 @@ namespace IS {
     }
 
     void Editor::Initialize() {
-
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        ImGuiIO& io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-        // Add fonts
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", 16.f); // bold font
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", 16.f); // default regular font
+        // Add Fonts
+        static const float FONT_SIZE = 16.f;
+        // Default Font
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", FONT_SIZE);
+        // Bold Font
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", FONT_SIZE);
+        // Italic Font
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Italic.ttf", FONT_SIZE);
 
         // Setup Dear ImGui style
 

@@ -36,6 +36,7 @@ namespace IS {
      */
     class EditorLayer : public Layer {
     public:
+
         /*!
          * \brief Constructor for the EditorLayer class.
          */
@@ -73,12 +74,6 @@ namespace IS {
         void RenderMenuBar();
 
         /*!
-         * \brief Render an overlay on top of the scene in the editor interface.
-         * \note helper for milestones
-         */
-        void RenderSceneOverlay();
-
-        /*!
          * \brief Get the dockspace position.
          * \return Dockspace position.
          */
@@ -86,6 +81,7 @@ namespace IS {
 
     private:
         static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
+        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
         bool mShowLoad = false; ///< Flag indicating to show load scene.
         bool mShowSave = false; ///< Flag indicating to show save scene.
@@ -105,7 +101,7 @@ namespace IS {
         /*!
          * \brief Load a scene.
          */
-        void LoadScene();
+        void OpenScene();
 
         /*!
          * \brief Save current scene.
@@ -118,16 +114,6 @@ namespace IS {
         void SaveSceneAs();
 
         /*!
-         * \brief Toggle fullscreen mode.
-         */
-        void ToggleFullscreen();
-
-        /*!
-         * \brief Exit current program.
-         */
-        void ExitProgram();
-
-        /*!
          * \brief Creates a new script.
          */
         void NewScript();
@@ -136,6 +122,16 @@ namespace IS {
          * \brief Open a script.
          */
         void OpenScript();
+
+        /*!
+         * \brief Toggle fullscreen mode.
+         */
+        void ToggleFullscreen();
+
+        /*!
+         * \brief Exit current program.
+         */
+        void ExitProgram();
     };
 
 } // end namespace IS

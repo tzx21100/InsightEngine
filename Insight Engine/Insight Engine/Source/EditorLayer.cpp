@@ -18,6 +18,7 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "EditorLayer.h"
+#include "EditorUtils.h"
 #include "Graphics.h"
 #include "CoreEngine.h"
 
@@ -48,23 +49,17 @@ namespace IS {
         const bool shift_held      = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
         const bool alt_held        = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
         const bool n_pressed       = input->IsKeyPressed(GLFW_KEY_N);
-        const bool l_pressed       = input->IsKeyPressed(GLFW_KEY_L);
+        const bool o_pressed       = input->IsKeyPressed(GLFW_KEY_O);
         const bool s_pressed       = input->IsKeyPressed(GLFW_KEY_S);
         const bool ffour_pressed   = input->IsKeyPressed(GLFW_KEY_F4);
         const bool feleven_pressed = input->IsKeyPressed(GLFW_KEY_F11);
 
-        if (ctrl_held && n_pressed) // Ctrl+N
-            NewScene();
-        if (ctrl_held && l_pressed) // Ctrl+L
-            mShowLoad = true;
-        if (ctrl_held && s_pressed) // Ctrl+S
-            SaveScene();
-        if (ctrl_held && shift_held && s_pressed) // Ctrl+Shift+S
-            mShowSave = true;
-        if (alt_held && ffour_pressed) // Alt+F4
-            ExitProgram();
-        if (feleven_pressed) // F11
-            ToggleFullscreen();
+        if (ctrl_held && n_pressed) { NewScene(); }                     // Ctrl+N
+        if (ctrl_held && o_pressed) { mShowLoad = true; }               // Ctrl+O
+        if (ctrl_held && s_pressed) { SaveScene(); }                    // Ctrl+S
+        if (ctrl_held && shift_held && s_pressed) { mShowSave = true; } // Ctrl+Shift+S
+        if (alt_held && ffour_pressed) { ExitProgram(); }               // Alt+F4
+        if (feleven_pressed) { ToggleFullscreen(); }                    // F11
     }
 
     void EditorLayer::OnRender() {
@@ -109,212 +104,142 @@ namespace IS {
         for (auto& panel : mPanels)
             panel->RenderPanel();
 
-        // End Rendering dockspace
-        ImGui::End();
-
         style.WindowMinSize = min_window_size;
 
-        // Overlay
-        RenderSceneOverlay();
+        ImGui::End(); // end dockspace
     }
 
     void EditorLayer::AddPanels() {
-        mPanels.emplace_back(std::make_shared<SceneHierarchyPanel>());
+        mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+        mPanels.emplace_back(mSceneHierarchyPanel);
         mPanels.emplace_back(std::make_shared<ScenePanel>());
         mPanels.emplace_back(std::make_shared<LogConsolePanel>());
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
+        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
     }
 
     void EditorLayer::RenderMenuBar() {
         InsightEngine& engine = InsightEngine::Instance();
-        const bool is_fullscreen = engine.GetSystem<WindowSystem>("Window")->IsFullScreen();
-        std::string fullscreen_label = is_fullscreen ? "Exit Fullscreen" : "Enter Fullscreen";
+        std::string fullscreen_label = engine.IsFullScreen() ? "Exit Fullscreen" : "Enter Fullscreen";
 
         if (ImGui::BeginMenuBar()) {
-
             if (ImGui::BeginMenu("File")) {
-
                 // New File
                 if (ImGui::BeginMenu("New")) {
                     // Load New Scene
-                    if (ImGui::MenuItem("Scene", "Ctrl+N"))
-                        NewScene();
-                    
+                    if (ImGui::MenuItem("Scene", "Ctrl+N")) { NewScene(); }
                     // Create New Script
-                    if (ImGui::MenuItem("Script..."))
-                        mShowNewScript = true;
-
+                    if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
-                }
+                } // end menu New
 
                 // Open File
                 if (ImGui::BeginMenu("Open")) {
                     // Open Scene
-                    if (ImGui::MenuItem("Scene...", "Ctrl+O"))
-                        mShowLoad = true;
-
-                    // Open Scipt
-                    if (ImGui::MenuItem("Script..."))
-                        mShowOpenScript = true;
-
+                    if (ImGui::MenuItem("Scene...", "Ctrl+O")) { mShowLoad = true; }
+                    // Open Script
+                    if (ImGui::MenuItem("Script...")) { mShowOpenScript = true; }
                     ImGui::EndMenu();
-                }
+                } // end menu Open
 
                 ImGui::Separator();
 
                 // Save File
-                if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
-                    SaveScene();
+                if (ImGui::MenuItem("Save Scene", "Ctrl+S")) { SaveScene(); }
                 // Save Scene As...
-                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
-                    mShowSave = true;
+                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) { mShowSave = true; }
 
-                ImGui::MenuItem("(Empty)");
                 ImGui::Separator();
 
                 // Toggle fullscreen mode
-                if (ImGui::MenuItem(fullscreen_label.c_str(), "F11"))
-                    ToggleFullscreen();
+                if (ImGui::MenuItem(fullscreen_label.c_str(), "F11")) { ToggleFullscreen(); }
+                    
                 ImGui::Separator();
 
                 // Exit current program
-                if (ImGui::MenuItem("Exit", "Alt+F4"))
-                    ExitProgram();
+                if (ImGui::MenuItem("Exit", "Alt+F4")) { ExitProgram(); }
 
                 ImGui::EndMenu();
-            }
+            } // end menu File
 
             if (ImGui::BeginMenu("Edit")) {
                 ImGui::MenuItem("(Empty)");
                 ImGui::EndMenu();
+            } // end menu Edit
+
+            bool open_testing = ImGui::BeginMenu("Testing");
+
+            // Tooltip
+            if (!open_testing && ImGui::BeginItemTooltip()) {
+                static const float MAX_WIDTH = 200.f;
+                ImGui::PushTextWrapPos(MAX_WIDTH); // Set a maximum width of 200 pixels.
+                ImGui::TextUnformatted("These options are for testing purposes, not part of the engine iteself.");
+                ImGui::PopTextWrapPos(); // Reset text wrap width to default.
+                ImGui::EndTooltip();
             }
 
-            if (ImGui::BeginMenu("Scene")) {
-                if (ImGui::MenuItem("Create 500 Random Colors")) {
-                    for (int i{}; i < 500; i++) {
-                        engine.GenerateRandomEntity();
-                    }
-                }
-                if (ImGui::MenuItem("Create 500 Random Textures")) {
-                    for (int i{}; i < 500; ++i)
-                        engine.GenerateRandomEntity(true);
-                }
+            // Render menu Testing
+            if (open_testing) {
+                if (ImGui::BeginMenu("Create Entity")) {
+                    // Create random entities without texture
+                    if (ImGui::BeginMenu("Random Color")) {
+                        if (ImGui::MenuItem("100"))    { for (int i{}; i < 100; ++i)    { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("500"))    { for (int i{}; i < 500; ++i)    { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("1,000"))  { for (int i{}; i < 1'000; ++i)  { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("5,000"))  { for (int i{}; i < 5'000; ++i)  { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("10,000")) { for (int i{}; i < 10'000; ++i) { engine.GenerateRandomEntity(); } }
+                        ImGui::EndMenu();
+                    } // end menu Random Color
+
+                    // Create random entities with texture
+                    if (ImGui::BeginMenu("Random Texture")) {
+                        if (ImGui::MenuItem("100"))    { for (int i{}; i < 100; ++i)    { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("500"))    { for (int i{}; i < 500; ++i)    { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("1,000"))  { for (int i{}; i < 1'000; ++i)  { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("5,000"))  { for (int i{}; i < 5'000; ++i)  { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("10,000")) { for (int i{}; i < 10'000; ++i) { engine.GenerateRandomEntity(true); } }
+                        ImGui::EndMenu();
+                    } // end menu Random Texture
+
+                    ImGui::EndMenu();
+                } // end menu Create Entity
 
                 ImGui::EndMenu();
-            }
+            } // end menu Testing
 
             ImGui::EndMenuBar();
         }
 
-        if (mShowLoad)
-            LoadScene();
-
-        if (mShowSave)
-            SaveSceneAs();
-
-        if (mShowNewScript)
-            NewScript();
-
-        if (mShowOpenScript)
-            OpenScript();
-    }
-
-    void EditorLayer::RenderSceneOverlay() {
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_AlwaysAutoResize |
-                                        ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
-        InsightEngine& engine = InsightEngine::Instance();
-
-        ImGuiIO& io = ImGui::GetIO();
-        auto const& font_bold = io.Fonts->Fonts[0];
-
-        ImGui::SetNextWindowBgAlpha(0.8f); // Translucent background
-        if (ImGui::Begin("Info/Help", nullptr, window_flags)) {
-            if (ImGui::BeginTable("Entities", 2)) {
-                ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
-                ImGui::TextUnformatted("Entities Alive:");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::Text("%d", engine.EntitiesAlive());
-
-                // Comma separted numbers
-                ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
-                ImGui::TextUnformatted("Max Entities:");
-                ImGui::PopFont();
-                std::ostringstream oss;
-                oss.imbue(std::locale(""));
-                oss << std::fixed << MAX_ENTITIES;
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", oss.str().c_str());
-
-                ImGui::EndTable();
-            }
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Controls ONLY work if scene panel focused!");
-            ImGui::PopFont();
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("General Controls");
-            ImGui::PopFont();
-            ImGui::BulletText("Press 'Tab' to toggle GUI");
-            ImGui::BulletText("Click mouse scrollwheel to spawn entity");
-            ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Player Controls");
-            ImGui::PopFont();
-            ImGui::BulletText("Press 'WASD' to move in the four directions");
-            ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Physics Controls");
-            ImGui::PopFont();
-            ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
-            ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
-            ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
-            ImGui::Separator();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Audio Controls");
-            ImGui::PopFont();
-            ImGui::BulletText("Press 'Z' to play sfx");
-            ImGui::BulletText("Press 'X' to play music");
-
-        }
-        ImGui::End();
+        if (mShowLoad) { OpenScene(); }
+        if (mShowSave) { SaveSceneAs(); }
+        if (mShowNewScript) { NewScript(); }
+        if (mShowOpenScript) { OpenScript(); }
     }
 
     Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
 
-    void EditorLayer::NewScene() {
-        SceneHierarchyPanel::ResetSelection();
-        InsightEngine::Instance().NewScene();
-    }
+    void EditorLayer::NewScene() { mSceneHierarchyPanel->ResetSelection(); InsightEngine::Instance().NewScene(); }
 
-    void EditorLayer::LoadTestScene() {
-        SceneHierarchyPanel::ResetSelection();
-        InsightEngine::Instance().LoadScene("testscene");
-    }
+    void EditorLayer::LoadTestScene() { mSceneHierarchyPanel->ResetSelection(); InsightEngine::Instance().LoadScene("testscene"); }
 
-    void EditorLayer::LoadScene() {
-        SceneHierarchyPanel::ResetSelection();
-        ImGui::OpenPopup("Load Scene...");
+    void EditorLayer::OpenScene() {
+        mSceneHierarchyPanel->ResetSelection();
+        ImGui::OpenPopup("Open Scene...");
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
 
-        if (ImGui::BeginPopupModal("Load Scene...", &mShowLoad, window_flags)) {
+        if (ImGui::BeginPopupModal("Open Scene...", &mShowLoad, window_flags)) {
             std::string default_text = "testscene";
             char name[std::numeric_limits<char8_t>::max() + 1]{};
             auto source = default_text | std::ranges::views::take(default_text.size());
             std::ranges::copy(source, std::begin(name));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##LoadScene", name, sizeof(name), input_flags) || ImGui::Button("Load")) {
+            if (ImGui::InputText("##OpenScene", name, sizeof(name), input_flags) || ImGui::Button("Open")) {
                 InsightEngine::Instance().LoadScene(name);
                 mShowLoad = false;
             }
 
-            ImGui::EndPopup();
+            ImGui::EndPopup(); // end popup Open Scene...
         }
     }
 
@@ -336,21 +261,8 @@ namespace IS {
                 mShowSave = false;
             }
 
-            ImGui::EndPopup();
+            ImGui::EndPopup(); // end popup Save Scene As...
         }
-    }
-
-    void EditorLayer::ToggleFullscreen() {
-        InsightEngine& engine = InsightEngine::Instance();
-        auto const& window = engine.GetSystem<WindowSystem>("Window");
-        static bool fullscreen = window->IsFullScreen();
-        fullscreen = !fullscreen;
-        window->SetFullScreen(fullscreen);
-        IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
-    }
-
-    void EditorLayer::ExitProgram() {
-        InsightEngine::Instance().Exit();
     }
 
     void EditorLayer::NewScript() {
@@ -372,7 +284,7 @@ namespace IS {
                 mShowNewScript = false;
             }
 
-            ImGui::EndPopup();
+            ImGui::EndPopup(); // end popup New Script...
         }
     }
 
@@ -394,8 +306,19 @@ namespace IS {
                 mShowOpenScript = false;
             }
 
-            ImGui::EndPopup();
+            ImGui::EndPopup(); // end popup Open Script...
         }
     }
+
+    void EditorLayer::ToggleFullscreen() {
+        InsightEngine& engine = InsightEngine::Instance();
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
+        static bool fullscreen = window->IsFullScreen();
+        fullscreen = !fullscreen;
+        window->SetFullScreen(fullscreen);
+        IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
+    }
+
+    void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
 
 } // end namespace IS

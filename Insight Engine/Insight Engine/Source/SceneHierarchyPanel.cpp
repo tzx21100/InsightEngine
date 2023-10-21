@@ -20,7 +20,7 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "SceneHierarchyPanel.h"
-#include "Guidgets.h"
+#include "EditorUtils.h"
 #include "CoreEngine.h"
 
 // Dependencies
@@ -28,43 +28,31 @@
 
 namespace IS {
 
-    std::string GetCurrentWorkingDirectory() {
-        std::filesystem::path path = std::filesystem::current_path();
-        std::string path_str = path.generic_string();
-
-        // Replace forward slashes with backslashes
-        std::replace(path_str.begin(), path_str.end(), '/', '\\');
-        return path_str;
-    }
-
-    SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::mSelectedEntity;
-
-    SceneHierarchyPanel::SceneHierarchyPanel() : mInspectorPanel(std::make_shared<InspectorPanel>()) {}
+    SceneHierarchyPanel::SceneHierarchyPanel() : mInspectorPanel(std::make_shared<InspectorPanel>(*this)) {}
 
     void SceneHierarchyPanel::RenderPanel() {
         InsightEngine& engine = InsightEngine::Instance();
-        ImGuiIO& io = ImGui::GetIO();
-        auto& font_bold = io.Fonts->Fonts[0];
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
 
-        // No. of entities
-        ImGui::PushFont(font_bold);
-        ImGui::TextUnformatted("No. of entities:");
-        ImGui::PopFont();
-        ImGui::SameLine();
-        ImGui::Text("%d", engine.EntitiesAlive());
+        // Display entity count
+        EditorUtils::RenderEntityCount();
 
         // Filter entity hierarchy
-        mFilter.Draw("Filter");
-        ImGui::Separator();
+        EditorUtils::RenderFilterWithHint(mFilter, "Search...");
+        ImGui::Spacing();
 
-        // Render all filtered entities
-        for (auto const& [entity, name] : engine.GetEntitiesAlive()) {
-            if (mFilter.PassFilter(name.c_str())) // filter
-                RenderEntityNode(entity);
+        // Render entity list in child window
+        ImGui::SetNextWindowBgAlpha(0.3f);
+        if (ImGui::BeginChild("EntityList")) {
+            // Render all filtered entities
+            for (auto const& [entity, name] : engine.GetEntitiesAlive()) {
+                if (mFilter.PassFilter(name.c_str())) // filter
+                    RenderEntityNode(entity);
+            }
         }
+        ImGui::EndChild();
 
         // Deselect entity
         if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
@@ -149,11 +137,13 @@ namespace IS {
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
+    SceneHierarchyPanel::InspectorPanel::InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel)
+        : mSceneHierarchyPanel(scene_hierarchy_panel) {}
+
     void SceneHierarchyPanel::InspectorPanel::RenderPanel() {
-        ImGui::SetNextWindowSizeConstraints(ImVec2(350.f, 200.f), ImVec2(FLT_MAX, FLT_MAX));
         ImGui::Begin("Inspector");
-        if (mSelectedEntity)
-            RenderComponentNodes(*mSelectedEntity);
+        if (mSceneHierarchyPanel.mSelectedEntity)
+            RenderComponentNodes(*mSceneHierarchyPanel.mSelectedEntity);
         ImGui::End();
     }
 
@@ -167,7 +157,7 @@ namespace IS {
         std::ranges::copy(source, std::begin(buffer));
 
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[0];
+        auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
 
         if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
@@ -272,7 +262,7 @@ namespace IS {
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
         if (ImGui::Button("Destroy Entity")) {
             engine.DeleteEntity(entity);
-            mSelectedEntity = {};
+            mSceneHierarchyPanel.ResetSelection();
         }
         ImGui::PopStyleColor(3);
         ImGui::PopFont();
@@ -284,7 +274,7 @@ namespace IS {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[0];
+        auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
 
         // Entity configurations
         RenderEntityConfig(entity);
@@ -353,7 +343,7 @@ namespace IS {
         RenderComponent<Transform>("Transform", entity, [font_bold](Transform& transform) {
             Vector2D position = { transform.world_position.x, transform.world_position.y };
             Vector2D scale = { transform.scaling.x, transform.scaling.y };
-            guidgets::RenderControlVec2("Translation", position);
+            EditorUtils::RenderControlVec2("Translation", position);
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
             if (ImGui::BeginTable("TransformRotation", 2, table_flags)) {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
@@ -368,7 +358,7 @@ namespace IS {
                 transform.rotation = rotation / (PI / 180.f);
                 ImGui::EndTable();
             }
-            guidgets::RenderControlVec2("Scale", scale, 95.f, 120.f);
+            EditorUtils::RenderControlVec2("Scale", scale, 95.f, 120.f);
             transform.world_position = { position.x, position.y };
             transform.scaling = { scale.x, scale.y };
         });
@@ -377,8 +367,8 @@ namespace IS {
         RenderComponent<RigidBody>("Rigidbody", entity, [entity, font_bold](RigidBody& rigidbody) {
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
-            guidgets::RenderControlVec2("Velocity", rigidbody.mVelocity);
-            guidgets::RenderControlVec2("Force", rigidbody.mForce);
+            EditorUtils::RenderControlVec2("Velocity", rigidbody.mVelocity);
+            EditorUtils::RenderControlVec2("Force", rigidbody.mForce);
 
             if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(entity)).c_str(), 2, table_flags)) {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
@@ -398,7 +388,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                guidgets::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
+                EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
@@ -407,7 +397,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                guidgets::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
+                EditorUtils::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
                 ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
@@ -476,7 +466,7 @@ namespace IS {
     }
 
     template <typename Component, typename RenderFunc>
-    static void SceneHierarchyPanel::InspectorPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
+    void SceneHierarchyPanel::InspectorPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
         // Engine instance
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;

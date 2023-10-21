@@ -40,14 +40,17 @@ namespace IS {
             int mYpos{}; ///< The y-position of the window.
             int mWidth{}; ///< The width of the window.
             int mHeight{}; ///< The height of the window.
+            int mTargetFPS{}; ///< The target FPS of the window.
             bool mVSync{}; ///< Flag indicating whether vsync is enabled.
             bool mMaximized{}; ///< Flag indicating whether window is maximzed.
             bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
 
             WindowProperties() = default;
-            WindowProperties(std::string const& title, int width, int height, bool vsync = true, bool maximized = false, bool fullscreen = false)
-                : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
+            WindowProperties(std::string const& title, int width, int height, int fps, bool vsync = true, bool maximized = false, bool fullscreen = false)
+                : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mTargetFPS(fps), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
         };
+
+        static WindowProperties mDefaultProperties; ///< Default window properties.
 
         /*!
          * \brief Constructs a WindowSystem object.
@@ -106,6 +109,12 @@ namespace IS {
         int GetMonitorHeight() const;
 
         /*!
+         * \brief Gets the size of the monitor.
+         * \return A pair containing the width and height of the monitor.
+         */
+        std::pair<int, int> GetMonitorSize() const;
+
+        /*!
          * \brief Gets the title of the window.
          * \return The title of the window.
          */
@@ -148,10 +157,16 @@ namespace IS {
         std::pair<int, int> GetWindowSize() const;
 
         /*!
-         * \brief Gets the size of the monitor.
-         * \return A pair containing the width and height of the monitor.
+         * \brief Gets the target FPS of the window.
+         * \return The target FPS of the window.
          */
-        std::pair<int, int> GetMonitorSize() const;
+        int GetTargetFPS() const;
+
+        /*!
+         * \brief Gets the reference to target FPS of the window.
+         * \return The the reference to target FPS of the window.
+         */
+        int* GetTargetFPS();
 
         /*!
          * \brief Checks if vsync is enabled for the window.
@@ -161,8 +176,7 @@ namespace IS {
 
         /*!
          * \brief Checks if window is fullscreen.
-         *
-         * \return true if window is fullscreen, false otherwise.
+         * \return True if window is fullscreen, false otherwise.
          */
         bool IsFullScreen() const;
 
@@ -194,7 +208,6 @@ namespace IS {
 
         /*!
          * \brief Set window to maximized.
-         *
          * \param maximized if true, normal otherwise. (default true)
          */
         void SetMaximized(bool maximized = true);
@@ -206,7 +219,6 @@ namespace IS {
 
         /*!
          * \brief Set window to fullscreen/windowed
-         *
          * \param fullscreen fullscreen if true, windowed otherwise. (default true)
          */
         void SetFullScreen(bool fullscreen = true);
@@ -226,8 +238,6 @@ namespace IS {
         WindowProperties mProps; ///< The properties of the window.
         int mMonitorWidth; ///< The width of the monitor.
         int mMonitorHeight; ///< The height of the monitor.
-
-        static WindowProperties mDefaultProperties; ///< Default window properties.
     };
 
 } // end namespace IS

@@ -154,8 +154,9 @@ namespace IS {
          *
          * \param p0 The first point of the line.
          * \param p1 The second point of the line.
+         * \param color The color of the line, white by default. TODO: Replace with Vector3D
          */
-        static void drawLine(Vector2D const& p0, Vector2D const& p1);
+        static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f });
 
         /*!
          * \brief Calculates the transformation matrix for a line sprite.

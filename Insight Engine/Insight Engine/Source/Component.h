@@ -331,6 +331,8 @@ namespace IS {
 		*/
 		template<typename T>
 		void RegisterComponent() {
+			IS_PROFILE_FUNCTION();
+
 			std::string type_name = T().GetType();
 			assert(mRegisteredComponentType.find(type_name) == mRegisteredComponentType.end() && "Registering component type more than once.");
 			// Add this component type to the component type map

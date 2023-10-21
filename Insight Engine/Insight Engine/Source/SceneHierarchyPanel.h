@@ -57,19 +57,19 @@ namespace IS {
         /*!
          * \brief Resets the current selection.
          */
-        static void ResetSelection();
+        void ResetSelection();
 
         /*!
          * \brief Getter for entity selected currently.
          * \return Pointer to the entity selected currently.
          */
-        static EntityPtr GetSelectedEntity();
+        EntityPtr GetSelectedEntity();
 
     private:
         class InspectorPanel; ///< Forward declaration of class InspectorPanel.
         ImGuiTextFilter mFilter; ///< Filter for entity hierarchy.
         std::shared_ptr<InspectorPanel> mInspectorPanel; ///< Instance of inspector panel.
-        static EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
+        EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
 
         /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
@@ -91,11 +91,18 @@ namespace IS {
         public:
 
             /*!
+             * \brief Constructs an InspectorPanel object.
+             * \param scene_hierarchy_panel The instance of scene hierarchy panel.
+             */
+            InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel);
+
+            /*!
              * \brief Renders the panel for the inspector.
              */
             void RenderPanel() override;
 
         private:
+            SceneHierarchyPanel& mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
             bool mShowPrefabs = false; ///< Flag indicating show prefabs
 
             /*!
@@ -119,7 +126,7 @@ namespace IS {
              * \param render The rendering function for the component.
              */
             template <typename Component, typename RenderFunc>
-            static void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
+            void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
         };
     };
 

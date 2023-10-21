@@ -44,7 +44,7 @@ namespace IS {
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
 
-        auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
         glViewport(0, 0, width, height); // set viewport to window size
 
         // init graphics systems
@@ -174,9 +174,7 @@ namespace IS {
             }
             if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
                 auto& body = engine.GetComponent<RigidBody>(entity);
-                if (Physics::isDebugDraw) {
-                    Physics::DrawOutLine(body, sprite); // draw lines in debug mode
-                }
+                Physics::DrawOutLine(body, sprite);
             }
 
         }
@@ -187,7 +185,7 @@ namespace IS {
             const float scale = 5.f;
             const float x_padding = scale;
             const float y_padding = (scale * 3.f);
-            auto [width, height] = InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetWindowSize();
+            auto [width, height] = InsightEngine::Instance().GetWindowSize();
             const float pos_x = -(width / 2.f) + x_padding;
             const float pos_y = (height / 2.f) - y_padding;
             const glm::vec3 islamic_green = { 0.f, .56f, .066f };

@@ -34,6 +34,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 // Project files
 #include "Log.h"
 #include "Assertion.h"
+#include "Timer.h"
 #include "ISContainers.h"
 #include "Audio.h"
 #include "Asset.h"

@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Logger.h"
+#include "EditorUtils.h"
 
 // STL
 #include <chrono>
@@ -199,11 +200,13 @@ namespace IS {
         ImGui::SameLine();
         bool copy_flag = ImGui::Button("Copy");
         ImGui::SameLine();
-        mFilter.Draw("Filter", -100.f);
-        ImGui::SameLine();
 
-        ImGui::Separator();
+        EditorUtils::RenderFilterWithHint(mFilter, "Search...");
 
+        ImGui::Spacing();
+
+        // Render log console in child window
+        ImGui::SetNextWindowBgAlpha(0.3f);
         if (ImGui::BeginChild("scrolling", { 0, 0 }, false, ImGuiWindowFlags_HorizontalScrollbar)) {
             if (clear_flag)
                 Clear();
