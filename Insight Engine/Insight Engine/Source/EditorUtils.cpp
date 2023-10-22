@@ -27,6 +27,8 @@ namespace IS::EditorUtils {
 
     int FontTypeToInt(aFontType font_type) { return static_cast<int>(font_type); }
 
+    ImTextureID ConvertTextureID(GLuint tex_id) { return std::bit_cast<ImTextureID>(static_cast<uintptr_t>(tex_id)); }
+
     ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
 
     bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius) {
@@ -77,14 +79,14 @@ namespace IS::EditorUtils {
         float original_cursor_xpos = ImGui::GetCursorPosX();
 
         // Render filter input text box
-        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x); // Use the entire span of the panel
+        ImGui::SetNextItemAllowOverlap();
+        ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
         filter.Draw();
 
         // Render hint text if search box is empty
         if (!filter.IsActive()) {
-            ImGui::SetNextItemAllowOverlap();
             ImGui::SameLine();
-            ImGui::SetCursorPosX(original_cursor_xpos + ImGui::CalcTextSize(" ").x); // Reset the cursor position
+            ImGui::SetCursorPosX(original_cursor_xpos + ImGui::GetStyle().FramePadding.x);
             ImGui::PushFont(font_italic);
             ImGui::TextColored({ .8f, .8f, .8f, .8f }, hint);
             ImGui::PopFont();

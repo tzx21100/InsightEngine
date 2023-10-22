@@ -124,6 +124,9 @@
     <ClCompile Include="Source\EditorUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AssetBrowserPanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -296,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
       <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetBrowserPanel.h">
+      <Filter>Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Entities.h"
+
 #include <string>
 
 namespace IS {
@@ -52,6 +53,8 @@ namespace IS {
      */
     class ScenePanel : public Panel {
     public:
+        ScenePanel(std::shared_ptr<Entity> selected_entity);
+
         /**
          * \brief Overrides the base class method to render the scene panel.
          */
@@ -62,6 +65,8 @@ namespace IS {
          */
         void RenderOverlay();
     private:
+        std::shared_ptr<Entity> mSelectedEntity; ///< Current selected entity
+
         Vec2 mScenePanelSize{}; ///< Size of the scene panel.
     };
 

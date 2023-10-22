@@ -14,6 +14,7 @@
     <ClCompile Include="Source\AIFSM.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Asset.cpp" />
+    <ClCompile Include="Source\AssetBrowserPanel.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Collision.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\AssetBrowserPanel.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\Assertion.h" />
     <ClInclude Include="Source\EditorLayer.h" />

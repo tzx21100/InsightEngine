@@ -26,12 +26,13 @@
 
 namespace IS {
 
+    ScenePanel::ScenePanel(std::shared_ptr<Entity> selected_entity) : mSelectedEntity(selected_entity) {}
     // Scene Panel
     void ScenePanel::RenderPanel() {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1, 1));
+        //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
@@ -59,14 +60,24 @@ namespace IS {
             mScenePanelSize = { panel_size.x, panel_size.y };
         }
         
-        ImGui::Image(std::bit_cast<ImTextureID>(static_cast<uintptr_t>(ISGraphics::GetScreenTexture())),
-                     panel_size, { 0, 1 }, {1, 0});
+        ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
+
+        // Accept file drop
+        if (ImGui::BeginDragDropTarget()) {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM")) {
+                const char* path = static_cast<const char*>(payload->Data);
+                mSelectedEntity.reset();
+                IS_CORE_TRACE("Selected Entity reference count: {}", mSelectedEntity.use_count());
+                EditorLayer::OpenScene(path);
+            }
+            ImGui::EndDragDropTarget();
+        }
 
         // Help tooltip
         RenderOverlay();
 
         ImGui::End(); // end window Scene
-        ImGui::PopStyleVar();
+        //ImGui::PopStyleVar();
         
     }
 
@@ -86,7 +97,7 @@ namespace IS {
         ImVec2 text_position = ImVec2(circle_center.x - ImGui::CalcTextSize(display_text).x * 0.5f, circle_center.y - ImGui::GetTextLineHeight() * 0.5f);
 
         // Check if the circle is being hovered
-        if (EditorUtils::TestPointCircle(mouse_pos, circle_center, CIRCLE_RADIUS)) {
+        if (!ImGui::IsAnyItemHovered() && EditorUtils::TestPointCircle(mouse_pos, circle_center, CIRCLE_RADIUS)) {
             ImVec2 tooltip_size(400.f, 0.0f);
 
             // Create a custom tooltip window
@@ -260,9 +271,7 @@ namespace IS {
     }
 
     // Log Console Panel
-    void LogConsolePanel::RenderPanel() {
-        Logger::GetLoggerGUI().Draw("Log Console");
-    }
+    void LogConsolePanel::RenderPanel() { Logger::LoggerGUI::Instance().Draw("Log Console"); }
 
     // Physics Control Panel
     void PhysicsControlPanel::RenderPanel() {
