@@ -84,7 +84,7 @@ namespace IS {
             IS_CORE_INFO("Driver supports OpenGL 4.5");
         } else {
             IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
-            BROADCAST_MESSAGE(MessageType::Quit); // idk
+            BROADCAST_MESSAGE(MessageType::Quit); // 
         }
     }
 

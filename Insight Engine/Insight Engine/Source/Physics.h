@@ -132,7 +132,8 @@ namespace IS {
 
         
 	private:
-
+        Vector2D mNormal;
+        float mDepth;
         Vector2D mGravity;                              // Gravity of the world
         bool mExertingGravity;                          // Flag indicating whether gravity is currently exerted
         float mMaxVelocity;                             // Maximum velocity for game bodies
@@ -140,7 +141,6 @@ namespace IS {
         int mIterations;                                 // Number of iterations for physics step
         std::vector<Manifold> mContactList;
         std::vector<Vector2D> mContactPointsList;
-        Grid mGrid;
         ImplicitGrid mImplicitGrid;
 	};
 

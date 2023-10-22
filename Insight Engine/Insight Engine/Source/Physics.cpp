@@ -31,17 +31,16 @@ namespace IS {
 	// Constructs a Physics instance
 	Physics::Physics() 
 	{
-		//ErrorIf(PHYSICS != NULL, "Physics already initialized");
-		//PHYSICS = this;
+		mNormal = Vector2D();
+		mDepth = std::numeric_limits<float>::max();
 		mGravity = Vector2D(0, -981.f);			// Gravity of the world
 		mExertingGravity = false;				// Flag indicating whether gravity is currently exerted
-		//isDebugDraw = false;
 		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
 		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
-		mIterations = 10;						// Number of iterations for physics step
+		mIterations = 20;						// Number of iterations for physics step
 		mContactList = std::vector<Manifold>();
 		mContactPointsList = std::vector<Vector2D>();
-		//mGrid = Grid();
+		mImplicitGrid;
 	}
 
 	// Initializes the physics system
@@ -56,34 +55,22 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-		/*mGrid.ClearGrid();
-		for (auto const& entity : mEntities) {
-			mGrid.AddIntoCell(entity);
-		}*/
-
-		/*mImplicitGrid.ClearGrid();
-		for (auto const& entity : mEntities) {
-			mImplicitGrid.AddIntoCell(entity);
-		}*/
-
+		// add new entity inside grid
 		mImplicitGrid.AddIntoCell(mEntities);
+		
+		// for testing grid
 		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 		if (input->IsKeyPressed(GLFW_KEY_3)) {
 			for (int i = 0; i < ImplicitGrid::mRows; i++) {
-				//for (int j = 0; j < Grid::mCols; j++) {
-					//std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
-					std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
-					//std::cout << "[ " << i << " col ]" << mImplicitGrid.mColsBitArray[i].count() << std::endl;
-				//}
+				std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
+					
 			}
 			for (int j = 0; j < ImplicitGrid::mCols; j++) {
-					//std::cout << "[ " << i << "," << j << " ]" << mGrid.mCells[i][j].size() << std::endl;
-			//std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
-			std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
+				std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
 			}
 		}
 
-		
+		// physics update iteration
 		for (size_t it = 0; it < mIterations; it++) {
 			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 			Step(dt, mEntities);
@@ -94,6 +81,8 @@ namespace IS {
 			// detect collision through Implicit Grid
 			ImplicitGridCollisionDetect();
 			
+			// to do
+			// add collision detect outside of the camera view
 
 			// Detects collisions among a set of entities (normal way)
 			//CollisionDetect(mEntities);
@@ -114,7 +103,8 @@ namespace IS {
 		}
 
 	}
-
+#if 0
+	// useless, uniform grid
 	void Physics::CellCollisionDetect() {
 		// if the obj inside camera view (to be updated)
 		for (int row = 0; row < Grid::mRows; row++) {
@@ -157,63 +147,51 @@ namespace IS {
 			}
 		}
 	}
-
-	template <size_t T>
-	unsigned int findLeftmostSetBitPosition(const std::bitset<T>& myBitset) {
-		if (myBitset.none()) {
-			return 0; // No set bits in the bitset
-		}
-
-		// Use a bit mask to find the leftmost set bit position
-		unsigned long long value = myBitset.to_ullong();
-		unsigned int position = 0;
-
-		while ((value >>= 1) != 0) {
-			++position;
-		}
-
-		return (position > 1 && position < MAX_ENTITIES) ? position : 0;
-	}
+#endif
+	// collision detect for implicit grid
 	void Physics::ImplicitGridCollisionDetect() {
-		//auto& engine = InsightEngine::Instance();
 		// loop through each row with each col
 		for (int row = 0; row < ImplicitGrid::mRows; row++) {
 			for (int col = 0; col < ImplicitGrid::mCols; col++) {
 				// check the existence of the objects in a cell, simply perform a bitwise AND operation
 				std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
-				// avoid self checking
-				size_t totalEntities = (test_cell.count());
-				if (totalEntities) {
-					//size_t totalEntities = test_cell.count();
+				// getting entity number in this cell
+				size_t totalEntities = test_cell.count();
+				mImplicitGrid.mInGridList.resize(totalEntities);
+				if (totalEntities > 1) {// more than 1 entity to avoid self checking
 					// emplace all the entities in current cell
 					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
 						if (test_cell.test(e)) { // if the current bit entity is true
+							// emplace into InGridList
 							mImplicitGrid.mInGridList.emplace_back(e);
 							totalEntities--;
-							if (totalEntities <= 0) {
+							if (totalEntities <= 0) { 
+								// if there is no more entities in this cell, break
 								break;
 							}
 						}
 					}
-					// if the cell is at the edge of the grid
-					/*if (row == 0 || row == ImplicitGrid::mRows - 1 ||
+
+					// if the cell is at the edge of the grid, then need check with the entities overlap on the grid
+					if (row == 0 || row == ImplicitGrid::mRows - 1 ||
 						col == 0 || col == ImplicitGrid::mCols - 1) {
 						for (auto const& entity : mImplicitGrid.mOverlapGridList) {
-							mImplicitGrid.mInGridList.emplace(entity);
+							mImplicitGrid.mInGridList.emplace_back(entity);
 						}
-					}*/
-
-					for (auto const& entity : mImplicitGrid.mOverlapGridList) {
-						mImplicitGrid.mInGridList.emplace_back(entity);
 					}
 
+					/*for (auto const& entity : mImplicitGrid.mOverlapGridList) {
+						mImplicitGrid.mInGridList.emplace_back(entity);
+					}*/
+
 					CollisionDetect(mImplicitGrid.mInGridList);
+					// empty the list
 					mImplicitGrid.mInGridList.clear();
+					//std::vector<Entity>().swap(mImplicitGrid.mInGridList);
 					
 				}
 			}
 		}
-		
 	}
 
 
@@ -221,7 +199,7 @@ namespace IS {
 		mContactList.clear();
 
 		// Loop through all Entities registered by the System
-		for (size_t i = 0; i < entities.size(); ++i) {
+		for (size_t i = 0; i < entities.size() - 1; ++i) {
 			const Entity& entityA = entities[i];
 
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
@@ -241,8 +219,8 @@ namespace IS {
 						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
 						bodyB.BodyFollowTransform(transB);
 						// for calculating collision response
-						Vector2D normal = Vector2D();
-						float depth = std::numeric_limits<float>::max();
+						mNormal = Vector2D();
+						mDepth = std::numeric_limits<float>::max();
 						bool isColliding = false;
 
 						// static AABB collision check, continue to the next loop if not colliding
@@ -258,7 +236,7 @@ namespace IS {
 							{
 								// box vs box
 							case BodyShape::Box:
-								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), normal, depth);
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), mNormal, mDepth);
 								break;
 								// box vs circle
 							case BodyShape::Circle:
@@ -286,7 +264,7 @@ namespace IS {
 						// if body A and body B colliding
 						if (isColliding) {
 							// vector of penetration
-							Vector2D vec = normal * depth;
+							Vector2D vec = mNormal * mDepth;
 							// if body A is static 
 							if (bodyA.mBodyType != BodyType::Dynamic)
 							{
@@ -309,7 +287,7 @@ namespace IS {
 							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
 							//ResolveCollision(bodyA, bodyB, normal, depth);
 
-							Manifold contact = Manifold(bodyA, bodyB, normal, depth, Vector2D(), Vector2D(), 0);
+							Manifold contact = Manifold(bodyA, bodyB, mNormal, mDepth, Vector2D(), Vector2D(), 0);
 							mContactList.emplace_back(contact);
 						}
 						else { //not colliding

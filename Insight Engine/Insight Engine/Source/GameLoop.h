@@ -183,23 +183,23 @@ namespace IS {
                         return;
                 }
 
-                if (engine.HasComponent<Sprite>(entity_player)) {
-                    auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
-                    if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
-                        sprite_player.texture_width = walking_anim_image.width;
-                        sprite_player.texture_height = walking_anim_image.height;
-                        sprite_player.animation_index = 1;
-                        sprite_player.img = walking_anim_image;
-                    }
-                    else {
-                        sprite_player.texture_width = idle_anim_image.width;
-                        sprite_player.texture_height = idle_anim_image.height;
-                        sprite_player.animation_index = 0;
-                        sprite_player.img = idle_anim_image;
-                    }
-                }
+                //if (engine.HasComponent<Sprite>(entity_player)) {
+                //    auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
+                //    if (input->IsKeyHeld(GLFW_KEY_W) || input->IsKeyHeld(GLFW_KEY_A) || input->IsKeyHeld(GLFW_KEY_S) || input->IsKeyHeld(GLFW_KEY_D)) {
+                //        sprite_player.texture_width = walking_anim_image.width;
+                //        sprite_player.texture_height = walking_anim_image.height;
+                //        sprite_player.animation_index = 1;
+                //        sprite_player.img = walking_anim_image;
+                //    }
+                //    else {
+                //        sprite_player.texture_width = idle_anim_image.width;
+                //        sprite_player.texture_height = idle_anim_image.height;
+                //        sprite_player.animation_index = 0;
+                //        sprite_player.img = idle_anim_image;
+                //    }
+                //}
 
-                if (engine.HasComponent<Transform>(entity_player)) {
+                //if (engine.HasComponent<Transform>(entity_player)) {
                     //auto& trans_player = engine.GetComponent<Transform>(entity_player);
                     //auto& body_player = engine.GetComponent<RigidBody>(entity_player);
 
@@ -224,7 +224,7 @@ namespace IS {
                     //float rotate = static_cast<float>(input->IsKeyHeld(GLFW_KEY_E) - input->IsKeyHeld(GLFW_KEY_Q));
                     //trans_player.rotation += rotate * body_player.mAngularVelocity;
                     //trans_player.rotation = trans_player.rotation < 0.f ? 360.f : fmod(trans_player.rotation, 360.f);
-                }
+                //}
 
                 // rotate lines on clock
                 if (engine.HasComponent<Transform>(entity_line)) {
@@ -278,19 +278,19 @@ namespace IS {
             }
 
             // rotate lines on clock
-            if (engine.HasComponent<Transform>(entity_line)) {
-                auto& transLines = engine.GetComponent<Transform>(entity_line);
-                transLines.rotation += transLines.angle_speed * delta;
-            }
+            //if (engine.HasComponent<Transform>(entity_line)) {
+            //    auto& transLines = engine.GetComponent<Transform>(entity_line);
+            //    transLines.rotation += transLines.angle_speed * delta;
+            //}
 
-            if (engine.HasComponent<ButtonComponent>(entity_button)) {
-                auto& buttoncomponent = engine.GetComponent<ButtonComponent>(entity_button);
-                auto& buttonsprite = engine.GetComponent<Sprite>(entity_button);
-                if (buttoncomponent.mButtonState == ButtonStates::Hovered) {
-                    buttonsprite.color= glm::vec3(1.f, 0.f, 1.f);
-                }
-                else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
-            }
+            //if (engine.HasComponent<ButtonComponent>(entity_button)) {
+            //    auto& buttoncomponent = engine.GetComponent<ButtonComponent>(entity_button);
+            //    auto& buttonsprite = engine.GetComponent<Sprite>(entity_button);
+            //    if (buttoncomponent.mButtonState == ButtonStates::Hovered) {
+            //        buttonsprite.color= glm::vec3(1.f, 0.f, 1.f);
+            //    }
+            //    else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
+            //}
 
 
         }

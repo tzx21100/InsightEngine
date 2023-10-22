@@ -37,7 +37,7 @@ namespace IS
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
             int verti_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.W)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.S));
-            InternalCalls.RigidBodyAddForce(hori_movement*10f, verti_movement*10f);
+            InternalCalls.RigidBodyAddForce(hori_movement*1000f*InternalCalls.GetDeltaTime(), verti_movement*1000f * InternalCalls.GetDeltaTime());
 
             // scaling transform with movement
             Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());

@@ -36,7 +36,7 @@ namespace IS
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = (mBodyType == BodyType::Dynamic) ? 2.f : 999999.f;
+        mMass = (mBodyType == BodyType::Dynamic) ? 1.f : 999999.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
@@ -46,8 +46,6 @@ namespace IS
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
         mFirstTransform = false;
-        //std::cout << "x: " << this->mBodyTransform.world_position.x << std::endl;
-        //std::cout << "id: " << this->mId << std::endl;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -228,8 +226,11 @@ namespace IS
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& my_body_transform) {
-        CreateBoxBody(my_body_transform.scaling.x, my_body_transform.scaling.y, mMass, mRestitution);
-        mVertices = CreateBoxVertices(my_body_transform.scaling.x, my_body_transform.scaling.y);
+        if (!mFirstTransform) { // if body havent been transform for once
+            CreateBoxBody(my_body_transform.scaling.x, my_body_transform.scaling.y, mMass, mRestitution);
+            mVertices = CreateBoxVertices(my_body_transform.scaling.x, my_body_transform.scaling.y);
+            mFirstTransform = true; // true means update and transform for at least one time
+        }
         mTransformUpdateRequired = true;
         mTransformedVertices = GetTransformedVertices();
     }

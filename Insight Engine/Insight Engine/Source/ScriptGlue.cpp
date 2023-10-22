@@ -155,6 +155,12 @@ namespace IS {
         return vec;
     }
 
+    static float GetDeltaTime() {
+         auto system=InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+         return system->mScriptDeltaTime;
+    }
+
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -186,6 +192,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetTransformPosition);
         IS_ADD_INTERNAL_CALL(GetTransformScaling);
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
+        IS_ADD_INTERNAL_CALL(GetDeltaTime);
 
 
     }
