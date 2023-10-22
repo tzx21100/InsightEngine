@@ -236,7 +236,10 @@ namespace IS {
             std::ranges::copy(source, std::begin(name));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##OpenScene", name, sizeof(name), input_flags) || ImGui::Button("Open")) {
+            bool enter_pressed = ImGui::InputText("##OpenScene", name, sizeof(name), input_flags);
+            ImGui::SameLine();
+            bool button_pressed = ImGui::Button("Open");
+            if (enter_pressed || button_pressed) {
                 InsightEngine::Instance().LoadScene(name);
                 mShowLoad = false;
 

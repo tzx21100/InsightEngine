@@ -4,6 +4,11 @@
 
 #include <regex>
 
+#pragma warning(push)
+#pragma warning(disable: 4005) // redefine APIENTRY && IS_WARN
+#include <Windows.h> // for ShellExecute()
+#pragma warning(pop)
+
 namespace IS {
 
     static std::filesystem::path ASSETS_PATH = "Assets";
@@ -25,25 +30,25 @@ namespace IS {
         ImGui::BeginGroup();
 
         // Replace backslashes with " >"
-        std::string filepath = mCurrentDirectory.string();
-        std::replace(filepath.begin(), filepath.end(), '\\', ' ');
-        filepath = std::regex_replace(filepath, std::regex(" "), " > ");
+        std::string path_records = mCurrentDirectory.string();
+        std::replace(path_records.begin(), path_records.end(), '\\', ' ');
+        path_records = std::regex_replace(path_records, std::regex(" "), " > ");
 
         ImVec2 cursor_pos = ImGui::GetCursorScreenPos();
-        ImVec2 filepath_textsize = ImGui::CalcTextSize(filepath.c_str());
+        ImVec2 path_records_textsize = ImGui::CalcTextSize(path_records.c_str());
         ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
         // Calculate the background rectangle's position and size
         ImGuiStyle& style = ImGui::GetStyle();
         float padding_width = style.FramePadding.x;
         ImVec2 background_pos = { cursor_pos.x - padding_width / 2.f, cursor_pos.y };
-        ImVec2 background_size = ImVec2(filepath_textsize.x + padding_width, filepath_textsize.y);
+        ImVec2 background_size = ImVec2(path_records_textsize.x + padding_width, path_records_textsize.y);
 
         // Draw the background rectangle with the specified color
         draw_list->AddRectFilled(background_pos,
                                  ImVec2(background_pos.x + background_size.x, background_pos.y + background_size.y),
                                  IM_COL32(255, 255, 255, 80), 2.f);
-        ImGui::Text("%s >", filepath.c_str());
+        ImGui::Text("%s >", path_records.c_str());
         ImGui::EndGroup();
 
         float cell_size = mControls.mThumbnailSize + mControls.mPadding;
@@ -89,10 +94,13 @@ namespace IS {
                     ImGui::EndDragDropSource();
                 }
                 if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-                    if (is_directory)
+                    if (is_directory) {
                         mCurrentDirectory /= path.filename();
-
-                    IS_CORE_TRACE("Entered Directory: {}", mCurrentDirectory.string());
+                        IS_CORE_TRACE("Entered Directory: {}", mCurrentDirectory.string());
+                    } else {
+                        std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
+                        ShellExecute(NULL, NULL, filepath.c_str(), NULL, NULL, SW_SHOW);
+                    }
                 }
 
                 ImGui::TextWrapped(filename_string.c_str());
