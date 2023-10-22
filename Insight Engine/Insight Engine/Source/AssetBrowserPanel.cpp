@@ -121,7 +121,7 @@ namespace IS {
             ImGui::TextUnformatted("Thumbnail Size");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+            ImGui::SetNextItemWidth(100.f);
             ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f");
 
             ImGui::TableNextColumn();
@@ -129,7 +129,7 @@ namespace IS {
             ImGui::TextUnformatted("Padding");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+            ImGui::SetNextItemWidth(100.f);
             ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f");
 
             ImGui::EndTable();

@@ -34,7 +34,7 @@ namespace IS {
 
         //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
         ImGui::Begin("Scene", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel

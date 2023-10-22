@@ -16,8 +16,12 @@ namespace IS {
         void RenderControls();
 
     private:
+        static constexpr inline float MIN_THUMBNAIL_SIZE = 62.f;
+        static constexpr inline float MIN_PADDING = 1.f;
+        static constexpr inline float MAX_PADDING = 32.f;
+
         struct Controls {
-            float mThumbnailSize = 128.f;
+            float mThumbnailSize = MIN_THUMBNAIL_SIZE;
             float mPadding = 16.f;
         };
 
@@ -27,10 +31,6 @@ namespace IS {
         std::shared_ptr<Image> mFolderIcon;
         std::shared_ptr<Image> mFileIcon;
         std::shared_ptr<Image> mBackIcon;
-
-        static constexpr inline float MIN_THUMBNAIL_SIZE = 62.f;
-        static constexpr inline float MIN_PADDING = 0.f;
-        static constexpr inline float MAX_PADDING = 32.f;
     };
 
 } // end namespace IS
