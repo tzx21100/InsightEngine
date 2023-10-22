@@ -64,6 +64,9 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetTransformRotation();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetDeltaTime();
+
 
     }
 }

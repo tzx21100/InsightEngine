@@ -278,6 +278,20 @@ namespace IS {
         return newEntity;
     }
 
+    void InsightEngine::DeserializeAllComponents(Entity entity, Json::Value &loaded) {
+        DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
+        DeserializeComponent<Sprite>(entity, loaded, "Sprite");
+        DeserializeComponent<Transform>(entity, loaded, "Transform");
+        DeserializeComponent<ScriptComponent>(entity, loaded, "Script");
+    }
+
+    void InsightEngine::SerializeAllComponents(Entity entity, Json::Value &saved_entity) {
+        SerializeComponent<RigidBody>(entity, saved_entity, "RigidBody");
+        SerializeComponent<Sprite>(entity, saved_entity, "Sprite");
+        SerializeComponent<Transform>(entity, saved_entity, "Transform");
+        SerializeComponent<ScriptComponent>(entity, saved_entity, "Script");
+    }
+
     /* This will save the entity to a string file.The string file is not defined with a path so it can save it
     *  directly unlike the other saving functions that have their specific use case.
     */
@@ -288,9 +302,7 @@ namespace IS {
         saved_entity["Signature"] = signature;
         saved_entity["Name"] = mEntityManager->FindNames(entity);
         //add in future components
-        SerializeComponent<RigidBody>(entity, saved_entity, "RigidBody");
-        SerializeComponent<Sprite>(entity, saved_entity, "Sprite");
-        SerializeComponent<Transform>(entity, saved_entity, "Transform");
+        SerializeAllComponents(entity, saved_entity);
 
         SaveJsonToFile(saved_entity,file_path);
     }
@@ -306,23 +318,16 @@ namespace IS {
         std::string entity_name = loaded["Name"].asString();
         Entity entity = CreateEntity(entity_name);
         //add in future components: the DeserializeComponent is defined in the .h as a helper function to make calling easier
-        DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
-        DeserializeComponent<Sprite>(entity, loaded, "Sprite");
-        DeserializeComponent<Transform>(entity, loaded, "Transform");
+        DeserializeAllComponents(entity, loaded);
         return entity;
 
     }
 
+
     // This saves an entity as a prefab directly into the prefab asset. 
     void InsightEngine::SaveAsPrefab(Entity entity,std::string PrefabName) {
         std::string file_path = "Assets/Prefabs/" + PrefabName + ".json";
-        std::string signature = mEntityManager->GetSignature(entity).to_string();
-        Json::Value prefab;
-        // The prefab only needs the signature to get the components it contains.
-        prefab["Signature"] = signature;
-        prefab["Name"] = PrefabName;
-        SaveJsonToFile(prefab, file_path);
-
+        SaveEntityToJson(entity,file_path);
         IS_CORE_INFO("Prefab \"{}\" saved at \"{}\"", PrefabName, file_path);
     }
 
@@ -363,18 +368,23 @@ namespace IS {
         int EntitiesAlive = mEntityManager->EntitiesAlive();
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
-        SaveJsonToFile(scene, file_path);
-        Json::Value entity;
-        for (auto const& id : mEntityManager->GetEntitiesAlive()) {
-            std::string entity_names = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(id.first) + ".json";
-            SaveEntityToJson(id.first, entity_names);
+        Json::Value entities(Json::arrayValue);
+        for (Entity id = 0 ; id < mEntityManager->EntitiesAlive(); id++) {
+            Json::Value entity;
+            entity["Name"] = mEntityManager->FindNames(id);
+            SerializeAllComponents(id, entity);
+
+            entities.append(entity);
+            /*std::string entity_names = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(id.first) + ".json";
+            SaveEntityToJson(id.first, entity_names);*/
         }
+        scene["Entities"] = entities;
+        SaveJsonToFile(scene, file_path);
         IS_CORE_DEBUG("Saving scene successful: {} entities saved", EntitiesAlive);
     }
 
     // Using the same format defined above, we simply reverse it and load in our entities.
     void InsightEngine::LoadScene(std::string filename) {
-
         // Load the main scene file
         std::string mainSceneFile = "Assets/Scene/" + filename + "/mainscene.json";
         Json::Value sceneRoot;
@@ -382,13 +392,22 @@ namespace IS {
             std::cerr << "Failed to load main scene file: " << mainSceneFile << std::endl;
             return;
         }
+
         // Start a new scene
         NewScene();
         int EntitiesAlive = sceneRoot["EntityAmount"].asInt();
+        const Json::Value entities = sceneRoot["Entities"];
+        
+
         // Load each entity
         for (int i = 0; i < EntitiesAlive; ++i) {
-            std::string entityFile = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(i) + ".json";
-            LoadEntityFromJson(entityFile);
+            Json::Value entityData = entities[i]; // Get data for each individual entity from the "Entities" array
+
+            std::string entity_name = entityData["Name"].asString();
+            Entity entity = CreateEntity(entity_name);
+
+            // Deserialize components for the entity
+            DeserializeAllComponents(entity, entityData);
         }
 
         IS_CORE_DEBUG("Loading scene successful: {} entities loaded", EntitiesAlive);

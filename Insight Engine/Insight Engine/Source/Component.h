@@ -123,7 +123,7 @@ namespace IS {
 			return mComponentType;
 		}
 
-		void ClearAllEntities() {}
+		virtual void ClearAllEntities() = 0;
 
 	private:
 		// The Component Type of the array
@@ -258,7 +258,7 @@ namespace IS {
 		}
 
 		//clear all entities in the component
-		void ClearAllEntities() {
+		void ClearAllEntities() override {
 			// we don't need to clear mComponentArray as its an array with fixed memory
 			std::fill(mComponentArray.begin(), mComponentArray.end(), T{});// fill it with new Ts instead
 			mEntityToIndexMap.clear();

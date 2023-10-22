@@ -630,6 +630,11 @@ namespace IS {
          */
         std::unordered_set<Entity> mEntitiesToDelete;
 
+
+        void DeserializeAllComponents(Entity entity, Json::Value& loaded);
+        void SerializeAllComponents(Entity entity, Json::Value& loaded);
+
+
     };
 
 }

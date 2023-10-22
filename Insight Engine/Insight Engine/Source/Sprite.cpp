@@ -229,6 +229,8 @@ namespace IS {
         spriteData["SpriteColorZ"] = color.z;
         spriteData["SpriteDrawing"] = drawing;
 
+        spriteData["AnimationIndex"] = animation_index;
+
         return spriteData;
     }
 
@@ -257,6 +259,8 @@ namespace IS {
         color.y = data["SpriteColorY"].asFloat();
         color.z = data["SpriteColorZ"].asFloat();
         drawing = data["SpriteDrawing"].asBool();
+
+        animation_index = data["AnimationIndex"].asInt();
     }
 
 }

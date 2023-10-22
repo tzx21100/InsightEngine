@@ -35,12 +35,12 @@ namespace IS {
 
     }
 
-    bool Init_scripts = false;
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
-        if (!Init_scripts) { InitScripts(); Init_scripts = true; }
+        mScriptDeltaTime = deltaTime;
         auto& engine = InsightEngine::Instance();
         for (auto& entity: mEntities) {
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
+            if (scriptcomponent.mInited == false) { InitScript(scriptcomponent); scriptcomponent.mInited = false; }
             if (scriptcomponent.instance != nullptr) {
                 mEntityScriptCaller = entity;
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);

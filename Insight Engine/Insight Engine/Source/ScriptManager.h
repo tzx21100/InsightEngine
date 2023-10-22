@@ -14,9 +14,24 @@ namespace IS {
         static std::string GetType() {
             return "ScriptComponent";
         }
+        bool mInited = false;
         std::string mScriptName;
         ScriptClass scriptClass;
         MonoObject* instance = nullptr;
+
+        Json::Value Serialize() {
+            Json::Value scriptData;
+
+            // Serialize mScriptName
+            scriptData["ScriptName"] = mScriptName;
+
+            return scriptData;
+        }
+
+        void Deserialize(const Json::Value& data) {
+            mScriptName = data["ScriptName"].asString();
+        }
+
     };
 
     class ScriptManager :public ParentSystem {
@@ -44,8 +59,10 @@ namespace IS {
             return mEntityScriptCaller;
         }
 
+        float mScriptDeltaTime{};
+
     private:
-        Entity mEntityScriptCaller;
+        Entity mEntityScriptCaller{};
 
 
     };
