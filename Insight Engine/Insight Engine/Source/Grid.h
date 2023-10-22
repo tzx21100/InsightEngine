@@ -34,9 +34,9 @@ namespace IS
 
 		void AddIntoCell(std::set<Entity> const& Entities);
 
-		void AddToBitArray(Cell const& min, Cell const& max, Entity entity);
+		void AddToBitArray(Cell const& min, Cell const& max, Entity const& entity);
 
-		void RemoveFromBitArray(Cell const& min, Cell const& max, Entity entity);
+		void RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity);
 
 		void UpdateCell(Entity const& entity, float const& dt);
 
@@ -60,14 +60,14 @@ namespace IS
 		std::bitset<MAX_ENTITIES> mColsBitArray[MAX_GRID_COLS];
 
 		std::vector<Entity> mInGridList;
-		std::set<Entity> mOverlapGridList;
-		std::set<Entity> mOutsideGridList;
+		std::vector<Entity> mOverlapGridList;
+		std::vector<Entity> mOutsideGridList;
 
 	private:
 
 	};
 
-
+#if 0
 	class Grid 
 	{
 	public:
@@ -96,4 +96,6 @@ namespace IS
 		static std::set<Entity> mOutsideGridList;
 	private:
 	};
+
+#endif
 }
