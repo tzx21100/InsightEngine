@@ -17,6 +17,7 @@
     <ClCompile Include="Source\AssetBrowserPanel.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Body.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
     <ClCompile Include="Source\EditorLayer.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Source\Asset.h" />
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Body.h" />
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\AssetBrowserPanel.h" />
@@ -187,7 +189,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -230,7 +232,7 @@ xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

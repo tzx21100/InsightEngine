@@ -194,9 +194,9 @@ namespace IS {
         //}
 
         // Update the channels and allocation type of the new image
-        if (gray_image.mAllocationType != AllocationType::SelfAllocated) {
-            gray_image.mAllocationType = AllocationType::SelfAllocated;
-        }
+        //if (gray_image.mAllocationType != AllocationType::SelfAllocated) {
+        //    gray_image.mAllocationType = AllocationType::SelfAllocated;
+        //}
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
         //auto result = graphicsys->initTextures(gray_image);
@@ -221,9 +221,9 @@ namespace IS {
         //}
 
         // Update the channels and allocation type of the new image
-        if (sepia_image.mAllocationType != AllocationType::SelfAllocated) {
-            sepia_image.mAllocationType = AllocationType::SelfAllocated;
-        }
+        //if (sepia_image.mAllocationType != AllocationType::SelfAllocated) {
+        //    sepia_image.mAllocationType = AllocationType::SelfAllocated;
+        //}
         auto map = (InsightEngine::Instance().GetSystemPointer().find("Graphics"));
         auto graphicsys = std::dynamic_pointer_cast<ISGraphics>(map->second);
         //auto result = graphicsys->initTextures(sepia_image);

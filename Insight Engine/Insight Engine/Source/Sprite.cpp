@@ -27,17 +27,40 @@ namespace IS {
 
         // to scale to world coordinates
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
-        float map_scale_x = 2.f / width; 
-        float map_scale_y = 2.f / height;
 
         float sin_angle = sinf(angle_rad);
         float cos_angle = cosf(angle_rad);
         float model_scale_x = model_TRS.scaling.x / 2.f;
         float model_scale_y = model_TRS.scaling.y / 2.f;
 
-        glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
-                                         (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
-                                         (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
+        glm::vec2 cameraPos = { 0.f, 0.f };
+        glm::vec2 cameraU = { cosf(glm::radians(0.f)), sinf(glm::radians(0.f)) };
+        glm::vec2 cameraV = { -cameraU.y, cameraU.x }; // -b/a
+        glm::vec2 cameraDim = { width, height };
+
+        float map_scale_x = 2.f / cameraDim.x;
+        float map_scale_y = 2.f / cameraDim.y;
+
+        float a = map_scale_x * cameraU.x;
+        float b = map_scale_x * cameraU.y;
+        float c = map_scale_x * (-glm::dot(cameraU, cameraPos));
+        float d = map_scale_y * cameraV.x;
+        float e = map_scale_y * cameraV.y;
+        float f = map_scale_y * (-glm::dot(cameraV, cameraPos));
+
+        float tx = model_TRS.world_position.x;
+        float ty = model_TRS.world_position.y;
+        //float wOver2 = width / 2.f;
+        //float hOver2 = height / 2.f;
+
+        glm::mat3 world_to_NDC_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
+                                         (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,  // column 2
+                                         (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
+
+
+        //glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
+        //                                 (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
+        //                                 (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
 
         // save matrix
         model_TRS.mdl_to_ndc_xform = GlmMat3ToISMtx33(world_to_NDC_xform);
@@ -221,6 +244,7 @@ namespace IS {
         spriteData["SpriteTextureWidth"] = texture_width;
         spriteData["SpriteTextureHeight"] = texture_height;
         spriteData["SpriteCurrentTexIndex"] = animation_index;
+        spriteData["SpriteTextureIndex"] = img.texture_index;
 
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
@@ -249,6 +273,7 @@ namespace IS {
 
         // Deserializing texture-related properties
         img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        img.texture_index = data["SpriteTextureIndex"].asInt();
         texture_width = data["SpriteTextureWidth"].asUInt();
         texture_height = data["SpriteTextureHeight"].asUInt();
         animation_index = data["SpriteCurrentTexIndex"].asInt();

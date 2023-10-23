@@ -16,6 +16,8 @@ consent of DigiPen Institute of Technology is prohibited.
 *____________________________________________________________________________*/
 /* End Header ****************************************************************/
 
+#pragma once
+
 /* includes */
 #include "Pch.h"
 #include <mono/metadata/object.h>
@@ -160,6 +162,27 @@ namespace IS {
          return system->mScriptDeltaTime;
     }
 
+    static void SetSpriteImage(SimpleImage image) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        Image a = ConvertToImage(image);
+        sprite_component.img = a;
+    }
+
+    static SimpleImage GetSpriteImage(MonoString* name) {
+        auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        //if (name == nullptr) return system->GetImage("Assets/player_walking.png");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        return ConvertToSimpleImage(system->GetImage(str));
+        
+    }
+
+    static void EmplaceImageToGraphics(SimpleImage image) {
+        ISGraphics::textures.emplace_back(ConvertToImage(image));
+    }
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -193,6 +216,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetTransformScaling);
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
         IS_ADD_INTERNAL_CALL(GetDeltaTime);
+
+        // Images
+        IS_ADD_INTERNAL_CALL(SetSpriteImage);
+        IS_ADD_INTERNAL_CALL(GetSpriteImage);
+        IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
+
 
 
     }

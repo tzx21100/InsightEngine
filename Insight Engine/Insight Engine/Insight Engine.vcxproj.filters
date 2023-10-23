@@ -1,443 +1,118 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pch.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Vector2D.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Matrix3x3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISArray.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISString.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISVector.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EventManager.cpp">
-      <Filter>Engine\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CoreEngine.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>Debug\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Logger.cpp">
-      <Filter>Debug\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Physics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collision.cpp">
-      <Filter>Physics\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>Debug\Profiling</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Editor.cpp">
-      <Filter>Editor\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorLayer.cpp">
-      <Filter>Editor\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LayerStack.cpp">
-      <Filter>Editor\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framebuffer.cpp">
-      <Filter>Graphics\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sprite.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Transform.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Text.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneHierarchyPanel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScriptEngine.cpp">
-      <Filter>Engine\Scripting</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\JsonSaveLoad.cpp">
-      <Filter>Engine\JSON</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics.cpp">
-      <Filter>Graphics\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScriptGlue.cpp">
-      <Filter>Engine\Scripting</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manifold.cpp">
-      <Filter>Physics\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Asset.cpp">
-      <Filter>Engine\Systems\Asset</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine\Systems\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine\Systems\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AIFSM.cpp">
-      <Filter>Engine\Systems\AIFSM</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Grid.cpp">
-      <Filter>Physics\Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Panel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScriptManager.cpp">
-      <Filter>Engine\Scripting</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pathfinding.cpp">
-      <Filter>Engine\Systems\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Body.cpp">
-      <Filter>Physics\Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorUtils.cpp">
-      <Filter>Editor\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AssetBrowserPanel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WindowSystem.cpp">
-      <Filter>Window\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WindowUtils.cpp">
-      <Filter>Window\Utils</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\AIFSM.cpp" />
+    <ClCompile Include="Source\Animation.cpp" />
+    <ClCompile Include="Source\Asset.cpp" />
+    <ClCompile Include="Source\AssetBrowserPanel.cpp" />
+    <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Body.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Collision.cpp" />
+    <ClCompile Include="Source\CoreEngine.cpp" />
+    <ClCompile Include="Source\EditorLayer.cpp" />
+    <ClCompile Include="Source\EventManager.cpp" />
+    <ClCompile Include="Source\Framebuffer.cpp" />
+    <ClCompile Include="Source\Editor.cpp" />
+    <ClCompile Include="Source\Grid.cpp" />
+    <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Panel.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
+    <ClCompile Include="Source\ScriptEngine.cpp" />
+    <ClCompile Include="Source\JsonSaveLoad.cpp" />
+    <ClCompile Include="Source\ScriptGlue.cpp" />
+    <ClCompile Include="Source\ScriptManager.cpp" />
+    <ClCompile Include="Source\Sprite.cpp" />
+    <ClCompile Include="Source\Text.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\EditorUtils.cpp" />
+    <ClCompile Include="Source\WindowSystem.cpp" />
+    <ClCompile Include="Source\Graphics.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\ISArray.cpp" />
+    <ClCompile Include="Source\ISString.cpp" />
+    <ClCompile Include="Source\ISVector.cpp" />
+    <ClCompile Include="Source\LayerStack.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
+    <ClCompile Include="Source\Logger.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Matrix3x3.cpp" />
+    <ClCompile Include="Source\Pch.cpp" />
+    <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Vector2D.cpp" />
+    <ClCompile Include="Source\WindowUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Pch.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Vector2D.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Matrix3x3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISArray.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISString.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISVector.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EventManager.h">
-      <Filter>Engine\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Message.h">
-      <Filter>Engine\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CoreEngine.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Log.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Logger.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\JsonSaveLoad.h">
-      <Filter>Engine\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Physics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Body.h">
-      <Filter>Physics\Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Collision.h">
-      <Filter>Physics\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Debug\Profiling</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Assertion.h">
-      <Filter>Debug\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MemoryLeakCheck.h">
-      <Filter>Debug\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Random.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISMath.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISContainers.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Editor.h">
-      <Filter>Editor\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EditorLayer.h">
-      <Filter>Editor\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Layer.h">
-      <Filter>Editor\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LayerStack.h">
-      <Filter>Editor\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameLoop.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framebuffer.h">
-      <Filter>Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sprite.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Text.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneHierarchyPanel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptEngine.h">
-      <Filter>Engine\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Prefab.h">
-      <Filter>Engine\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InsightEngine.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptGlue.h">
-      <Filter>Engine\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manifold.h">
-      <Filter>Physics\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Asset.h">
-      <Filter>Engine\Systems\Asset</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Engine\Systems\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Engine\Systems\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AIState.h">
-      <Filter>Engine\Systems\AIFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AIFSM.h">
-      <Filter>Engine\Systems\AIFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Grid.h">
-      <Filter>Physics\Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Panel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptManager.h">
-      <Filter>Engine\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameGui.h">
-      <Filter>Engine\Systems\Gui System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pathfinder.h">
-      <Filter>Engine\Systems\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pathfinding.h">
-      <Filter>Engine\Systems\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EditorUtils.h">
-      <Filter>Editor\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AssetBrowserPanel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowSystem.h">
-      <Filter>Window\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowUtils.h">
-      <Filter>Window\Utils</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\AIFSM.h" />
+    <ClInclude Include="Source\AIState.h" />
+    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Asset.h" />
+    <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\Body.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Collision.h" />
+    <ClInclude Include="Source\Component.h" />
+    <ClInclude Include="Source\AssetBrowserPanel.h" />
+    <ClInclude Include="Source\CoreEngine.h" />
+    <ClInclude Include="Source\Assertion.h" />
+    <ClInclude Include="Source\EditorLayer.h" />
+    <ClInclude Include="Source\Entities.h" />
+    <ClInclude Include="Source\EventManager.h" />
+    <ClInclude Include="Source\Framebuffer.h" />
+    <ClInclude Include="Source\GameGui.h" />
+    <ClInclude Include="Source\GameLoop.h" />
+    <ClInclude Include="Source\Editor.h" />
+    <ClInclude Include="Source\Grid.h" />
+    <ClInclude Include="Source\ISMath.h" />
+    <ClInclude Include="Source\ISContainers.h" />
+    <ClInclude Include="Source\JsonSaveLoad.h" />
+    <ClInclude Include="Source\Manifold.h" />
+    <ClInclude Include="Source\MemoryLeakCheck.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Panel.h" />
+    <ClInclude Include="Source\Pathfinder.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\Prefab.h" />
+    <ClInclude Include="Source\Random.h" />
+    <ClInclude Include="Source\InsightEngine.h" />
+    <ClInclude Include="Source\SceneHierarchyPanel.h" />
+    <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\ScriptEngine.h" />
+    <ClInclude Include="Source\ScriptGlue.h" />
+    <ClInclude Include="Source\ScriptManager.h" />
+    <ClInclude Include="Source\Sprite.h" />
+    <ClInclude Include="Source\Text.h" />
+    <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\EditorUtils.h" />
+    <ClInclude Include="Source\WindowSystem.h" />
+    <ClInclude Include="Source\Graphics.h" />
+    <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\ISArray.h" />
+    <ClInclude Include="Source\ISString.h" />
+    <ClInclude Include="Source\ISVector.h" />
+    <ClInclude Include="Source\Layer.h" />
+    <ClInclude Include="Source\LayerStack.h" />
+    <ClInclude Include="Source\Log.h" />
+    <ClInclude Include="Source\Logger.h" />
+    <ClInclude Include="Source\Matrix3x3.h" />
+    <ClInclude Include="Source\Message.h" />
+    <ClInclude Include="Source\Pch.h" />
+    <ClInclude Include="Source\Physics.h" />
+    <ClInclude Include="Source\Shader.h" />
+    <ClInclude Include="Source\System.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Vector2D.h" />
+    <ClInclude Include="Source\WindowUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{ea2adbc9-3ca1-411d-8b5b-8ba4483f23d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{928261bd-2fc6-4eba-a9e0-30afdbe24ebd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{aeb2915c-ff43-445f-a90d-fd5beaec6627}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{e4d5b7dc-d972-4b83-9e14-f84afd59316d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="STL">
-      <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Core">
-      <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug">
-      <UniqueIdentifier>{23331e8a-17f3-4a9c-a892-f9178c7ef7b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Logging">
-      <UniqueIdentifier>{9562c0c5-815a-4760-9667-51a5e8766d7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ECS">
-      <UniqueIdentifier>{578cc73c-91ae-4882-8b32-ee2554b4913f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics\Collision">
-      <UniqueIdentifier>{1167242a-a072-411b-b015-6f8b501c57e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics\System">
-      <UniqueIdentifier>{55dd4382-5868-46e8-ab56-823d34a930f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Physics\Dynamics">
-      <UniqueIdentifier>{8f9d153c-6f63-4498-a0b1-0e3436fb8d6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Profiling">
-      <UniqueIdentifier>{2dc82fc5-2056-4a90-8188-d1ca8727b7b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor">
-      <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Handler">
-      <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\JSON">
-      <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\System">
-      <UniqueIdentifier>{cc28fd07-1305-4d66-ab4c-785d75fa5a6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Layers">
-      <UniqueIdentifier>{468e4dd2-5b0a-45d8-bbe0-505ecf85fc13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Buffers">
-      <UniqueIdentifier>{61cf34e4-1635-43dc-b79e-c4f55435eaa6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>{96bb3842-4153-4a24-bf01-20e7054a98bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Panels">
-      <UniqueIdentifier>{fe2ccd58-dcff-4fcc-8c11-594d868ee370}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Scripting">
-      <UniqueIdentifier>{806f2dfd-a96c-4787-975e-0885dd36e74f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Core">
-      <UniqueIdentifier>{01226b03-5139-49ee-83d6-d1d60c1c3e50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\System">
-      <UniqueIdentifier>{7229e15d-d835-4456-9266-14ff39548ef3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems">
-      <UniqueIdentifier>{dcdfd115-206a-4a32-9a88-b8b91352e30b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Messages">
-      <UniqueIdentifier>{843b6e56-19c4-4741-b58b-a526ac26b015}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\Asset">
-      <UniqueIdentifier>{e323a738-f154-4f3b-bfdf-fd187f5a6dd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\Audio">
-      <UniqueIdentifier>{351e8767-fd63-4bce-850b-607c7a472e79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\Input">
-      <UniqueIdentifier>{47eb204d-0eaf-4570-ac17-f9c51b90b6cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\Pathfinding">
-      <UniqueIdentifier>{33d7fb76-dea3-4e19-981f-928ac46431f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\AIFSM">
-      <UniqueIdentifier>{04098ec3-c3dc-405d-a930-8cc6a93d8694}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Systems\Gui System">
-      <UniqueIdentifier>{7c2b3b4c-19b5-4d80-994a-0269fcb5fddd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Utils">
-      <UniqueIdentifier>{091bd855-80c0-4451-ba80-733ec30c1671}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window">
-      <UniqueIdentifier>{0952072b-323d-45ee-a5fc-c54facde40af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window\System">
-      <UniqueIdentifier>{60361c56-ff3b-4f33-92a5-2c577591fb55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window\Utils">
-      <UniqueIdentifier>{a982f7df-34fc-4b9f-9dec-ffde0af26947}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\icecream_truck.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\placeholder_background.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\player_idle.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\zxtestsprite.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\player_walking.png">
-      <Filter>Assets</Filter>
-    </Image>
+    <Image Include="Assets\icecream_truck.png" />
+    <Image Include="Assets\placeholder_background.png" />
+    <Image Include="Assets\player_idle.png" />
+    <Image Include="Assets\player_walking.png" />
+    <Image Include="Assets\zxtestsprite.png" />
   </ItemGroup>
 </Project>

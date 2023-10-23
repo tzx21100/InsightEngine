@@ -47,6 +47,8 @@ namespace IS {
         Animation walking_ani;
         Animation ice_cream_truck_ani;
 
+        Camera camera;
+
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
@@ -119,38 +121,42 @@ namespace IS {
             sprite_test.img = backgroundTest;
 
             auto [width, height] = engine.GetWindowSize();
+
             trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
-            trans_player.setScaling(95, 120);
-            trans_player.setWorldPosition(0, 0);
-            trans_test.setScaling(-100, 100);
-            trans_test.setWorldPosition(-400, 0);
-            trans_floor.setScaling(1200, 80);
-            trans_floor.setWorldPosition(0, -400);
+            trans_player.setScaling(width * 0.05375f, height * 0.13333333f);
+            trans_player.setWorldPosition(width * 0.f, height * 0.f);
+            trans_test.setScaling(width * -0.0625f, height * 0.11111111f);
+            trans_test.setWorldPosition(width * -0.25f, height * 0.f);
+            trans_floor.setScaling(width * 0.56034f, height * 0.10441f);
+            trans_floor.setWorldPosition(width * -0.00050056f, height * -0.443105f);
             body_player.mAngularVelocity = 10.f;
             body_player.mRestitution = 0.1f;
             body_floor.mBodyType = BodyType::Static;
             body_floor.mMass = 99999.f;
             body_floor.mInvMass = 1.f / 99999.f;
 
-            trans_circle.setWorldPosition(650.f, 300.f);
-            trans_circle.setScaling(200.f, 200.f);
+
+            std::cout << width << ", " << height << std::endl;
+            trans_circle.setWorldPosition(width * 0.406f, height * 0.33333333f);
+            trans_circle.setScaling(width * 0.125f, height * 0.22222222f);
             sprite_circle.primitive_type = GL_TRIANGLE_FAN;
 
 
-            trans_line.setWorldPosition(650.f, 300.f);
-            trans_line.setScaling(200.f, 200.f);
+            trans_line.setWorldPosition(width * 0.406f, height * 0.33333333f);
+            trans_line.setScaling(width * 0.125f, height * 0.24972f);
             trans_line.setRotation(0.f, 40.f);
             sprite_line.primitive_type = GL_LINES;
 
-            trans_point.setWorldPosition(650.f, 300.f);
+            trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             sprite_point.primitive_type = GL_POINTS;
 
-
+            camera.UpdateCamDim(1000.f);
         }
 
         virtual void Update(float delta) override {
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetSystem<Editor>("Editor");
+            auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
@@ -162,7 +168,7 @@ namespace IS {
 
                 // Offset mouse position
                 if (!engine.mUsingGUI) {
-                    auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                   
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }
@@ -181,6 +187,11 @@ namespace IS {
                     }
                     if (!engine.mContinueFrame)
                         return;
+                }
+
+                if (engine.HasComponent<Transform>(entity_player)) {
+                    auto& trans_player = engine.GetComponent<Transform>(entity_player);
+                    camera.UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
                 }
 
                 //if (engine.HasComponent<Sprite>(entity_player)) {
@@ -246,7 +257,7 @@ namespace IS {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
                         auto& transl = engine.GetComponent<Transform>(a);
-                        transl.setScaling(30, 38);
+                        transl.setScaling(width * 0.01875f, height * 0.042222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         //add the image in
                         //spr.texture = backgroundTest.texture_id;
@@ -258,7 +269,7 @@ namespace IS {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
-                        transl.setScaling(128, 128);
+                        transl.setScaling(width * 0.08f, height * 0.14222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
