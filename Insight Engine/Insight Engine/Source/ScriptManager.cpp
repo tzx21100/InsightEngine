@@ -1,11 +1,7 @@
 #include "Pch.h"
 #include "ScriptManager.h"
 #include "CoreEngine.h"
-
-#pragma warning(push)
-#pragma warning(disable: 4005) // redefine APIENTRY && IS_WARN
-#include <Windows.h> // for ShellExecute()
-#pragma warning(pop)
+#include "WindowUtils.h"
 
 namespace IS {
 
@@ -86,11 +82,11 @@ namespace IS
     } //end of create file
 
     void ScriptManager::OpenClassFile(std::string const& class_name) {
-        std::string filepath = class_name + ".cs";
+        std::string filepath = class_name;
         std::string directory = "..\\IS-ScriptCore\\Source";
 
         // Open .cs file in default program
-        ShellExecute(NULL, NULL, filepath.c_str(), NULL, directory.c_str(), SW_SHOW);
+        WindowUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
         IS_CORE_DEBUG("Script File: {}", filepath);
     }
 }

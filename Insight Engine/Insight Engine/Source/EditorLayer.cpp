@@ -22,26 +22,32 @@
 #include "Graphics.h"
 #include "CoreEngine.h"
 #include "AssetBrowserPanel.h"
+#include "WindowUtils.h"
 
 // Dependencies
 #include <ranges>
 #include <imgui.h>
 
 namespace IS {
+
     Vec2 EditorLayer::mDockspacePosition{};
+    bool EditorLayer::mShowNewScript = false;
 
     EditorLayer::EditorLayer() : Layer("Editor Layer") { AddPanels(); }
 
-    void EditorLayer::OnAttach() {
+    void EditorLayer::OnAttach()
+    {
         // Attach scene viewer, import icons, open project...
         IS_CORE_DEBUG("{} attached", GetName());
     }
 
-    void EditorLayer::OnDetach() {
+    void EditorLayer::OnDetach()
+    {
         IS_CORE_DEBUG("{} detached", GetName());
     }
 
-    void EditorLayer::OnUpdate([[maybe_unused]] float dt) {
+    void EditorLayer::OnUpdate([[maybe_unused]] float dt)
+    {
         InsightEngine& engine = InsightEngine::Instance();
         auto const& input = engine.GetSystem<InputManager>("Input");
 
@@ -55,15 +61,16 @@ namespace IS {
         const bool ffour_pressed   = input->IsKeyPressed(GLFW_KEY_F4);
         const bool feleven_pressed = input->IsKeyPressed(GLFW_KEY_F11);
 
-        if (ctrl_held && n_pressed) { NewScene(); }                     // Ctrl+N
-        if (ctrl_held && o_pressed) { mShowLoad = true; }               // Ctrl+O
-        if (ctrl_held && s_pressed) { SaveScene(); }                    // Ctrl+S
-        if (ctrl_held && shift_held && s_pressed) { mShowSave = true; } // Ctrl+Shift+S
-        if (alt_held && ffour_pressed) { ExitProgram(); }               // Alt+F4
-        if (feleven_pressed) { ToggleFullscreen(); }                    // F11
+        if (ctrl_held && n_pressed) { NewScene(); }                  // Ctrl+N
+        if (ctrl_held && o_pressed) { OpenScene(); }                 // Ctrl+O
+        if (ctrl_held && s_pressed) { SaveScene(); }                 // Ctrl+S
+        if (ctrl_held && shift_held && s_pressed) { SaveSceneAs(); } // Ctrl+Shift+S
+        if (alt_held && ffour_pressed) { ExitProgram(); }            // Alt+F4
+        if (feleven_pressed) { ToggleFullscreen(); }                 // F11
     }
 
-    void EditorLayer::OnRender() {
+    void EditorLayer::OnRender()
+    {
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -90,7 +97,7 @@ namespace IS {
         ImGuiIO& io = ImGui::GetIO();
         ImGuiStyle& style = ImGui::GetStyle();
         ImVec2 min_window_size = style.WindowMinSize;
-        style.WindowMinSize = ImVec2(200.f, 200.f);
+        style.WindowMinSize = ImVec2(350.f, 300.f);
 
         // Enable dockspace
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
@@ -110,24 +117,20 @@ namespace IS {
         ImGui::End(); // end dockspace
     }
 
-    void EditorLayer::AddPanels() {
-        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
-        mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
-        mPanels.emplace_back(mSceneHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel->GetSelectedEntity()));
-        mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
-        mPanels.emplace_back(std::make_shared<LogConsolePanel>());
-    }
+    Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
 
-    void EditorLayer::RenderMenuBar() {
+    void EditorLayer::RenderMenuBar()
+    {
         InsightEngine& engine = InsightEngine::Instance();
         std::string fullscreen_label = engine.IsFullScreen() ? "Exit Fullscreen" : "Enter Fullscreen";
 
-        if (ImGui::BeginMenuBar()) {
-            if (ImGui::BeginMenu("File")) {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
                 // New File
-                if (ImGui::BeginMenu("New")) {
+                if (ImGui::BeginMenu("New"))
+                {
                     // Load New Scene
                     if (ImGui::MenuItem("Scene", "Ctrl+N")) { NewScene(); }
                     // Create New Script
@@ -136,11 +139,12 @@ namespace IS {
                 } // end menu New
 
                 // Open File
-                if (ImGui::BeginMenu("Open")) {
+                if (ImGui::BeginMenu("Open"))
+                {
                     // Open Scene
-                    if (ImGui::MenuItem("Scene...", "Ctrl+O")) { mShowLoad = true; }
+                    if (ImGui::MenuItem("Scene...", "Ctrl+O")) { OpenScene(); }
                     // Open Script
-                    if (ImGui::MenuItem("Script...")) { mShowOpenScript = true; }
+                    if (ImGui::MenuItem("Script...")) { WindowUtils::OpenScript(); }
                     ImGui::EndMenu();
                 } // end menu Open
 
@@ -149,13 +153,13 @@ namespace IS {
                 // Save File
                 if (ImGui::MenuItem("Save Scene", "Ctrl+S")) { SaveScene(); }
                 // Save Scene As...
-                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) { mShowSave = true; }
+                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
 
                 ImGui::Separator();
 
                 // Toggle fullscreen mode
                 if (ImGui::MenuItem(fullscreen_label.c_str(), "F11")) { ToggleFullscreen(); }
-                    
+
                 ImGui::Separator();
 
                 // Exit current program
@@ -164,7 +168,8 @@ namespace IS {
                 ImGui::EndMenu();
             } // end menu File
 
-            if (ImGui::BeginMenu("Edit")) {
+            if (ImGui::BeginMenu("Edit"))
+            {
                 ImGui::MenuItem("(Empty)");
                 ImGui::EndMenu();
             } // end menu Edit
@@ -172,7 +177,8 @@ namespace IS {
             bool open_testing = ImGui::BeginMenu("Testing");
 
             // Tooltip
-            if (!open_testing && ImGui::BeginItemTooltip()) {
+            if (!open_testing && ImGui::BeginItemTooltip())
+            {
                 static const float MAX_WIDTH = 200.f;
                 ImGui::PushTextWrapPos(MAX_WIDTH); // Set a maximum width of 200 pixels.
                 ImGui::TextUnformatted("These options are for testing purposes, not part of the engine iteself.");
@@ -181,24 +187,28 @@ namespace IS {
             }
 
             // Render menu Testing
-            if (open_testing) {
-                if (ImGui::BeginMenu("Create Entity")) {
+            if (open_testing)
+            {
+                if (ImGui::BeginMenu("Create Entity"))
+                {
                     // Create random entities without texture
-                    if (ImGui::BeginMenu("Random Color")) {
-                        if (ImGui::MenuItem("100"))    { for (int i{}; i < 100; ++i)    { engine.GenerateRandomEntity(); } }
-                        if (ImGui::MenuItem("500"))    { for (int i{}; i < 500; ++i)    { engine.GenerateRandomEntity(); } }
-                        if (ImGui::MenuItem("1,000"))  { for (int i{}; i < 1'000; ++i)  { engine.GenerateRandomEntity(); } }
-                        if (ImGui::MenuItem("5,000"))  { for (int i{}; i < 5'000; ++i)  { engine.GenerateRandomEntity(); } }
+                    if (ImGui::BeginMenu("Random Color"))
+                    {
+                        if (ImGui::MenuItem("100")) { for (int i{}; i < 100; ++i) { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("500")) { for (int i{}; i < 500; ++i) { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("1,000")) { for (int i{}; i < 1'000; ++i) { engine.GenerateRandomEntity(); } }
+                        if (ImGui::MenuItem("5,000")) { for (int i{}; i < 5'000; ++i) { engine.GenerateRandomEntity(); } }
                         if (ImGui::MenuItem("10,000")) { for (int i{}; i < 10'000; ++i) { engine.GenerateRandomEntity(); } }
                         ImGui::EndMenu();
                     } // end menu Random Color
 
                     // Create random entities with texture
-                    if (ImGui::BeginMenu("Random Texture")) {
-                        if (ImGui::MenuItem("100"))    { for (int i{}; i < 100; ++i)    { engine.GenerateRandomEntity(true); } }
-                        if (ImGui::MenuItem("500"))    { for (int i{}; i < 500; ++i)    { engine.GenerateRandomEntity(true); } }
-                        if (ImGui::MenuItem("1,000"))  { for (int i{}; i < 1'000; ++i)  { engine.GenerateRandomEntity(true); } }
-                        if (ImGui::MenuItem("5,000"))  { for (int i{}; i < 5'000; ++i)  { engine.GenerateRandomEntity(true); } }
+                    if (ImGui::BeginMenu("Random Texture"))
+                    {
+                        if (ImGui::MenuItem("100")) { for (int i{}; i < 100; ++i) { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("500")) { for (int i{}; i < 500; ++i) { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("1,000")) { for (int i{}; i < 1'000; ++i) { engine.GenerateRandomEntity(true); } }
+                        if (ImGui::MenuItem("5,000")) { for (int i{}; i < 5'000; ++i) { engine.GenerateRandomEntity(true); } }
                         if (ImGui::MenuItem("10,000")) { for (int i{}; i < 10'000; ++i) { engine.GenerateRandomEntity(true); } }
                         ImGui::EndMenu();
                     } // end menu Random Texture
@@ -212,13 +222,22 @@ namespace IS {
             ImGui::EndMenuBar();
         }
 
-        if (mShowLoad) { OpenScene(); }
-        if (mShowSave) { SaveSceneAs(); }
+        //if (mShowLoad) { OpenScene(); }
+        //if (mShowSave) { SaveSceneAs(); }
         if (mShowNewScript) { NewScript(); }
-        if (mShowOpenScript) { OpenScript(); }
+        //if (mShowOpenScript) { OpenScript(); }
     }
 
-    Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
+    void EditorLayer::AddPanels()
+    {
+        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
+        mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+        mPanels.emplace_back(mSceneHierarchyPanel);
+        mPanels.emplace_back(std::make_shared<PerformancePanel>());
+        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel->GetSelectedEntity()));
+        mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
+        mPanels.emplace_back(std::make_shared<LogConsolePanel>());
+    }
 
     void EditorLayer::NewScene() { mSceneHierarchyPanel->ResetSelection(); InsightEngine::Instance().NewScene(); }
 
@@ -226,59 +245,27 @@ namespace IS {
 
     void EditorLayer::OpenScene() {
         mSceneHierarchyPanel->ResetSelection();
-        ImGui::OpenPopup("Open Scene...");
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
-
-        if (ImGui::BeginPopupModal("Open Scene...", &mShowLoad, window_flags)) {
-            std::string default_text = "testscene";
-            char name[std::numeric_limits<char8_t>::max() + 1]{};
-            auto source = default_text | std::ranges::views::take(default_text.size());
-            std::ranges::copy(source, std::begin(name));
-
-            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            bool enter_pressed = ImGui::InputText("##OpenScene", name, sizeof(name), input_flags);
-            ImGui::SameLine();
-            bool button_pressed = ImGui::Button("Open");
-            if (enter_pressed || button_pressed) {
-                InsightEngine::Instance().LoadScene(name);
-                mShowLoad = false;
-
-                IS_CORE_TRACE("Selected Entity reference count: {}", mSceneHierarchyPanel->GetSelectedEntity().use_count());
-            }
-
-            ImGui::EndPopup(); // end popup Open Scene...
+        InsightEngine& engine = InsightEngine::Instance();
+        std::string directory = "Assets\\Scene";
+                
+        if (std::string filepath = WindowUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", directory.c_str()); !filepath.empty())
+        {
+            engine.LoadScene(filepath);
+            directory += "\\\\";
+            filepath = filepath.substr(WindowUtils::GetCurrentWorkingDirectory().length() + directory.length());
+            mSceneName = filepath;
         }
     }
 
-    void EditorLayer::OpenScene(const char* path) {
-        std::string name = path;
-        std::string prefix = "Scene\\";
-        if (name.substr(0, prefix.length()) == prefix)
-            name.erase(0, prefix.length());
+    void EditorLayer::OpenScene(const char* path) { InsightEngine::Instance().LoadScene(path); }
 
-        InsightEngine::Instance().LoadScene(name);
-    }
-
-    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene("testscene"); }
+    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene(mSceneName); }
 
     void EditorLayer::SaveSceneAs() {
-        ImGui::OpenPopup("Save Scene As...");
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
-
-        if (ImGui::BeginPopupModal("Save Scene As...", &mShowSave, window_flags)) {
-            std::string default_text = "testscene";
-            char name[std::numeric_limits<char8_t>::max() + 1]{};
-            auto source = default_text | std::ranges::views::take(default_text.size());
-            std::ranges::copy(source, std::begin(name));
-
-            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##SaveScene", name, sizeof(name), input_flags) || ImGui::Button("Save")) {
-                InsightEngine::Instance().SaveCurrentScene(name);
-                mShowSave = false;
-            }
-
-            ImGui::EndPopup(); // end popup Save Scene As...
-        }
+        InsightEngine& engine = InsightEngine::Instance();
+        std::string filepath = WindowUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene");
+        if (!filepath.empty())
+            engine.SaveCurrentScene(filepath);
     }
 
     void EditorLayer::NewScript() {
@@ -301,28 +288,6 @@ namespace IS {
             }
 
             ImGui::EndPopup(); // end popup New Script...
-        }
-    }
-
-    void EditorLayer::OpenScript() {
-        auto& engine = InsightEngine::Instance();
-
-        ImGui::OpenPopup("Open Script...");
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
-
-        if (ImGui::BeginPopupModal("Open Script...", &mShowOpenScript, window_flags)) {
-            std::string default_text = "";
-            char name[std::numeric_limits<char8_t>::max() + 1]{};
-            auto source = default_text | std::ranges::views::take(default_text.size());
-            std::ranges::copy(source, std::begin(name));
-
-            ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##OpenScript", name, sizeof(name), input_flags) || ImGui::Button("Open")) {
-                engine.OpenGameScript(name);
-                mShowOpenScript = false;
-            }
-
-            ImGui::EndPopup(); // end popup Open Script...
         }
     }
 

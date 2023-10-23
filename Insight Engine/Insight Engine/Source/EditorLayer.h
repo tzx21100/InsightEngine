@@ -64,16 +64,6 @@ namespace IS {
         void OnRender() override;
 
         /*!
-         * \brief Add panels.
-         */
-        void AddPanels();
-
-        /*!
-         * \brief Render the menu bar.
-         */
-        void RenderMenuBar();
-
-        /*!
          * \brief Get the dockspace position.
          * \return Dockspace position.
          */
@@ -86,14 +76,30 @@ namespace IS {
          */
         static void OpenScene(const char* path);
 
+        /*!
+         * \brief Creates a new script.
+         */
+        static void NewScript();
+
     private:
         static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
-        bool mShowLoad = false; ///< Flag indicating to show load scene.
-        bool mShowSave = false; ///< Flag indicating to show save scene.
-        bool mShowNewScript = false; ///< Flag indicating to show new script.
-        bool mShowOpenScript = false; ///< Flag indicating to show save script.
+
+        std::string mSceneName = "testscene"; ///< Name of the current scene.
+
+        // Internal Flags
+        static bool mShowNewScript; ///< Flag indicating to show new script.
+
+        /*!
+         * \brief Render the menu bar.
+         */
+        void RenderMenuBar();
+
+        /*!
+         * \brief Add panels.
+         */
+        void AddPanels();
 
         /*!
          * \brief Load a new scene.
@@ -119,16 +125,6 @@ namespace IS {
          * \brief Save current scene as.
          */
         void SaveSceneAs();
-
-        /*!
-         * \brief Creates a new script.
-         */
-        void NewScript();
-
-        /*!
-         * \brief Open a script.
-         */
-        void OpenScript();
 
         /*!
          * \brief Toggle fullscreen mode.

@@ -20,25 +20,29 @@
 #include "Panel.h"
 #include "EditorUtils.h"
 #include "EditorLayer.h"
+#include "WindowUtils.h"
 
 // Dependencies
 #include <imgui.h>
 
 namespace IS {
 
-    ScenePanel::ScenePanel(std::shared_ptr<Entity> selected_entity) : mSelectedEntity(selected_entity) {}
     // Scene Panel
-    void ScenePanel::RenderPanel() {
+    ScenePanel::ScenePanel(std::shared_ptr<Entity> selected_entity) : mSelectedEntity(selected_entity) {}
+
+    void ScenePanel::RenderPanel()
+    {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
         //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
-        if (ImGui::IsWindowFocused()) {
+        if (ImGui::IsWindowFocused())
+        {
             ImGuiIO& io = ImGui::GetIO();
             io.WantCaptureMouse = io.WantCaptureKeyboard = false;
         }
@@ -55,7 +59,8 @@ namespace IS {
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
-        if (!(mScenePanelSize.x == panel_size.x && mScenePanelSize.y == panel_size.y)) {
+        if (!(mScenePanelSize.x == panel_size.x && mScenePanelSize.y == panel_size.y))
+        {
             ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
             mScenePanelSize = { panel_size.x, panel_size.y };
         }
@@ -63,8 +68,10 @@ namespace IS {
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
         // Accept file drop
-        if (ImGui::BeginDragDropTarget()) {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM")) {
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
+            {
                 const char* path = static_cast<const char*>(payload->Data);
                 mSelectedEntity.reset();
                 IS_CORE_TRACE("Selected Entity reference count: {}", mSelectedEntity.use_count());
@@ -78,10 +85,10 @@ namespace IS {
 
         ImGui::End(); // end window Scene
         //ImGui::PopStyleVar();
-        
     }
 
-    void ScenePanel::RenderOverlay() {
+    void ScenePanel::RenderOverlay()
+    {
         ImDrawList* foreground = ImGui::GetForegroundDrawList();
         ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
         ImVec2 mouse_pos = ImGui::GetMousePos();
@@ -97,12 +104,14 @@ namespace IS {
         ImVec2 text_position = ImVec2(circle_center.x - ImGui::CalcTextSize(display_text).x * 0.5f, circle_center.y - ImGui::GetTextLineHeight() * 0.5f);
 
         // Check if the circle is being hovered
-        if (!ImGui::IsAnyItemHovered() && EditorUtils::TestPointCircle(mouse_pos, circle_center, CIRCLE_RADIUS)) {
+        if (!ImGui::IsAnyItemHovered() && EditorUtils::TestPointCircle(mouse_pos, circle_center, CIRCLE_RADIUS))
+        {
             ImVec2 tooltip_size(400.f, 0.0f);
 
             // Create a custom tooltip window
             ImGui::SetNextWindowSize(tooltip_size);
-            if (ImGui::BeginTooltip()) {
+            if (ImGui::BeginTooltip())
+            {
                 // Set padding and indetation
                 static const float PADDING = 10.f;
                 ImGui::Dummy(ImVec2(1.f, 1.f));
@@ -154,14 +163,16 @@ namespace IS {
     }
 
     // Performance Viewer Panel
-    void PerformancePanel::RenderPanel() {
+    void PerformancePanel::RenderPanel()
+    {
         ImGuiIO& io = ImGui::GetIO();
         auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
 
         ImGui::Begin("Performance");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         
-        if (ImGui::BeginTable("Engine", 2)) {
+        if (ImGui::BeginTable("Engine", 2))
+        {
             InsightEngine& engine = InsightEngine::Instance();
 
             // Text Colors
@@ -191,8 +202,10 @@ namespace IS {
             const char* fps_options[] = { "30", "60", "120", "240", "9999"};
             int fps_values[] = { 30, 60, 120, 240, 9999 };
 
-            for (int i{}; i < IM_ARRAYSIZE(fps_values); i++) {
-                if (fps_values[i] == engine.GetTargetFPS()) {
+            for (int i{}; i < IM_ARRAYSIZE(fps_values); i++)
+            {
+                if (fps_values[i] == engine.GetTargetFPS())
+                {
                     selected_fps_index = i;
                     break;
                 }
@@ -200,7 +213,8 @@ namespace IS {
             if (selected_fps_index == -1)
                 selected_fps_index = 1; // Default to 60 FPS
 
-            if (ImGui::Combo("FPS", &selected_fps_index, fps_options, IM_ARRAYSIZE(fps_options))) {
+            if (ImGui::Combo("FPS", &selected_fps_index, fps_options, IM_ARRAYSIZE(fps_options)))
+            {
                 int selected_fps = fps_values[selected_fps_index];
                 engine.SetFPS(selected_fps);
             }
@@ -226,10 +240,12 @@ namespace IS {
         ImGui::Separator();
         ImGui::Spacing();
 
-        if (ImGui::BeginChild("Systems")) {
+        if (ImGui::BeginChild("Systems"))
+        {
             // Create a table for system usage
             ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
-            if (ImGui::BeginTable("System Usage", 2, flags)) {
+            if (ImGui::BeginTable("System Usage", 2, flags))
+            {
                 // Table headers
                 ImGui::PushFont(font_bold);
                 ImGui::TableSetupColumn("System");
@@ -239,7 +255,8 @@ namespace IS {
 
                 // Table values
                 for (InsightEngine& engine = InsightEngine::Instance();
-                     auto const& [system, dt] : engine.GetSystemDeltas()) {
+                     auto const& [system, dt] : engine.GetSystemDeltas())
+                {
                     // Skip engine delta time
                     if (system == "Engine")
                         continue;
@@ -274,7 +291,8 @@ namespace IS {
     void LogConsolePanel::RenderPanel() { Logger::LoggerGUI::Instance().Draw("Log Console"); }
 
     // Physics Control Panel
-    void PhysicsControlPanel::RenderPanel() {
+    void PhysicsControlPanel::RenderPanel()
+    {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
 
@@ -282,7 +300,8 @@ namespace IS {
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiTableFlags table_flags = 0;
-        if (ImGui::BeginTable("Grid", 2, table_flags)) {
+        if (ImGui::BeginTable("Grid", 2, table_flags))
+        {
             ImGui::PushFont(font_bold);
             ImGui::TableSetupColumn("Grid");
             ImGui::TableHeadersRow();
@@ -310,7 +329,8 @@ namespace IS {
             ImGui::EndTable(); // end table Grid
         }
 
-        if (ImGui::BeginTable("Other Options", 2, table_flags)) {
+        if (ImGui::BeginTable("Other Options", 2, table_flags))
+        {
             ImGui::PushFont(font_bold);
             ImGui::TableSetupColumn("Other Options");
             ImGui::TableHeadersRow();

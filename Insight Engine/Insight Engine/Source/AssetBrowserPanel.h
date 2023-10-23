@@ -28,9 +28,7 @@ namespace IS {
         std::filesystem::path mCurrentDirectory;
         Controls mControls;
 
-        std::shared_ptr<Image> mFolderIcon;
-        std::shared_ptr<Image> mFileIcon;
-        std::shared_ptr<Image> mBackIcon;
+        std::unordered_map<std::string, std::shared_ptr<Image>> mIcons;
     };
 
 } // end namespace IS

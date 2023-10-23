@@ -14,8 +14,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                      guard
- ----------------------------------------------------------------------------- */
+/*                                                                      guard
+----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_EDITOR_PANELS_PANEL_H
 #define GAM200_INSIGHT_ENGINE_EDITOR_PANELS_PANEL_H
 
@@ -66,7 +66,6 @@ namespace IS {
         void RenderOverlay();
     private:
         std::shared_ptr<Entity> mSelectedEntity; ///< Current selected entity
-
         Vec2 mScenePanelSize{}; ///< Size of the scene panel.
     };
 

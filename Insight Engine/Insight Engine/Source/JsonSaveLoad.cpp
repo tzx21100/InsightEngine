@@ -30,7 +30,7 @@ namespace IS {
         std::filesystem::path dirPath = filePath.parent_path();
 
         // Check if the directory exists
-        if (!std::filesystem::exists(dirPath)) {
+        if (std::filesystem::is_directory(dirPath) && !std::filesystem::exists(dirPath)) {
             // If it doesn't exist, create the directory
 
             std::filesystem::create_directories(dirPath);   

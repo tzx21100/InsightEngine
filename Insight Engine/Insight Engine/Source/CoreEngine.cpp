@@ -364,7 +364,7 @@ namespace IS {
     *  As our scene is made up of entities, we simply just have to save every entity in the scene.
     */
     void InsightEngine::SaveCurrentScene(std::string filename) {
-        std::string file_path = "Assets/Scene/" + filename + "/"+ "mainscene.json";
+        std::string file_path = filename;
         int EntitiesAlive = mEntityManager->EntitiesAlive();
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
@@ -380,16 +380,23 @@ namespace IS {
         }
         scene["Entities"] = entities;
         SaveJsonToFile(scene, file_path);
-        IS_CORE_DEBUG("Saving scene successful: {} entities saved", EntitiesAlive);
+        IS_CORE_INFO("Saving scene {} successful!", filename);
+        IS_CORE_INFO("{} entities saved.", EntitiesAlive);
     }
 
     // Using the same format defined above, we simply reverse it and load in our entities.
     void InsightEngine::LoadScene(std::string filename) {
         // Load the main scene file
-        std::string mainSceneFile = "Assets/Scene/" + filename + "/mainscene.json";
+        std::filesystem::path filepath(filename);
+        if (filepath.extension() != ".insight")
+        {
+            IS_CORE_ERROR("Scene file is of the wrong file type, use \".insight\" files");
+            return;
+        }
+        std::string scene_file = filename;
         Json::Value sceneRoot;
-        if (!LoadJsonFromFile(sceneRoot, mainSceneFile)) {
-            std::cerr << "Failed to load main scene file: " << mainSceneFile << std::endl;
+        if (!LoadJsonFromFile(sceneRoot, scene_file)) {
+            IS_CORE_ERROR("Failed to load scene file: {}", scene_file);
             return;
         }
 
@@ -410,7 +417,8 @@ namespace IS {
             DeserializeAllComponents(entity, entityData);
         }
 
-        IS_CORE_DEBUG("Loading scene successful: {} entities loaded", EntitiesAlive);
+        IS_CORE_INFO("Loading scene {} successful!", filename);
+        IS_CORE_INFO("{} entities loaded", EntitiesAlive);
     }
 
     void InsightEngine::NewScene() {

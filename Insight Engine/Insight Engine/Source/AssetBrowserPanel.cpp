@@ -1,27 +1,26 @@
 #include "Pch.h"
 #include "AssetBrowserPanel.h"
 #include "EditorUtils.h"
+#include "WindowUtils.h"
 
 #include <regex>
-
-#pragma warning(push)
-#pragma warning(disable: 4005) // redefine APIENTRY && IS_WARN
-#include <Windows.h> // for ShellExecute()
-#pragma warning(pop)
 
 namespace IS {
 
     static std::filesystem::path ASSETS_PATH = "Assets";
 
-    AssetBrowserPanel::AssetBrowserPanel() : mCurrentDirectory(ASSETS_PATH) {
+    AssetBrowserPanel::AssetBrowserPanel() : mCurrentDirectory(ASSETS_PATH)
+    {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset  = engine.GetSystem<AssetManager>("Asset");
-        mFolderIcon = std::make_unique<Image>(asset->GetImage("Assets/Icons/folder_icon.png"));
-        mFileIcon   = std::make_unique<Image>(asset->GetImage("Assets/Icons/file_icon.png"));
-        mBackIcon   = std::make_unique<Image>(asset->GetImage("Assets/Icons/back_icon.png"));
+
+        mIcons["Folder"]     = std::make_unique<Image>(asset->GetImage("Assets/Icons/folder_icon.png"));
+        mIcons["File"]       = std::make_unique<Image>(asset->GetImage("Assets/Icons/file_icon.png"));
+        mIcons["BackButton"] = std::make_unique<Image>(asset->GetImage("Assets/Icons/back_icon.png"));
     }
 
-    void AssetBrowserPanel::RenderPanel() {
+    void AssetBrowserPanel::RenderPanel()
+    {
         ImGui::Begin("Asset Browser");
 
         RenderControls();
@@ -56,10 +55,12 @@ namespace IS {
         int column_count = std::clamp(static_cast<int>(panel_width / cell_size), 1, static_cast<int>(panel_width));
 
         // Back Button
-        if (mCurrentDirectory != std::filesystem::path(ASSETS_PATH)) {
-            bool back_pressed = ImGui::ImageButton(EditorUtils::ConvertTextureID(mBackIcon->texture_id), { 16.f, 16.f });
+        if (mCurrentDirectory != std::filesystem::path(ASSETS_PATH))
+        {
+            bool back_pressed = ImGui::ImageButton(EditorUtils::ConvertTextureID(mIcons["BackButton"]->texture_id), {16.f, 16.f});
 
-            if (back_pressed) {
+            if (back_pressed)
+            {
                 mCurrentDirectory = mCurrentDirectory.parent_path();
                 IS_CORE_TRACE("Returned to Directory: {}", mCurrentDirectory.string());
             }
@@ -70,8 +71,10 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(.3f);
         ImGui::BeginChild("Assets", { 0, 0 }, false, child_window_flags);
         ImGuiTableFlags table_flags = ImGuiTableFlags_None;
-        if (ImGui::BeginTable("Assets Layout", column_count, table_flags)) {
-            for (auto const& entry : std::filesystem::directory_iterator(mCurrentDirectory)) {
+        if (ImGui::BeginTable("Assets Layout", column_count, table_flags))
+        {
+            for (auto const& entry : std::filesystem::directory_iterator(mCurrentDirectory))
+            {
                 auto const& path = entry.path();
                 auto const& relative_path = std::filesystem::relative(path, ASSETS_PATH);
                 std::string filename_string = relative_path.filename().string();
@@ -79,13 +82,14 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                ImTextureID icon = EditorUtils::ConvertTextureID(is_directory ? mFolderIcon->texture_id : mFileIcon->texture_id);
+                ImTextureID icon = EditorUtils::ConvertTextureID(mIcons[is_directory ? "Folder" : "File"]->texture_id);
                 ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                 ImGui::PopStyleColor();
 
                 // Start dragging item
-                if (ImGui::BeginDragDropSource()) {
-                    std::string item_path = relative_path.string().c_str();
+                if (ImGui::BeginDragDropSource())
+                {
+                    std::string item_path = path.string().c_str();
                     ImGui::SetDragDropPayload("ASSET_BROWSER_ITEM", item_path.c_str(), item_path.size() * sizeof(std::string));
 
                     ImVec2 image_size = { 48.f, 48.f };
@@ -93,18 +97,26 @@ namespace IS {
 
                     ImGui::EndDragDropSource();
                 }
-                if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-                    if (is_directory) {
+
+                // Clicking Item
+                if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                {
+                    if (is_directory)
+                    {
                         mCurrentDirectory /= path.filename();
                         IS_CORE_TRACE("Entered Directory: {}", mCurrentDirectory.string());
-                    } else {
+                    }
+                    else
+                    {
                         std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
-                        ShellExecute(NULL, NULL, filepath.c_str(), NULL, NULL, SW_SHOW);
+                        WindowUtils::OpenFileFromDefaultApp(filepath.c_str());
                     }
                 }
 
+                // Render label
                 ImGui::TextWrapped(filename_string.c_str());
             }
+
             ImGui::EndTable(); // end table Assets Layout
         }
 
@@ -116,7 +128,8 @@ namespace IS {
     void AssetBrowserPanel::RenderControls() {
         // Browser Controls
         float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
-        if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width)) {
+        if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
+        {
             ImGuiIO& io = ImGui::GetIO();
             ImFont* const font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
             float panel_width = ImGui::GetContentRegionAvail().x;

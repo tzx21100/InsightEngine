@@ -34,9 +34,6 @@
     <ClCompile Include="Source\Logger.cpp">
       <Filter>Debug\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WindowSystem.cpp">
-      <Filter>Engine\Window</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>
@@ -127,6 +124,12 @@
     <ClCompile Include="Source\AssetBrowserPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\WindowSystem.cpp">
+      <Filter>Window\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WindowUtils.cpp">
+      <Filter>Window\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -146,9 +149,6 @@
     </ClInclude>
     <ClInclude Include="Source\ISVector.h">
       <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowSystem.h">
-      <Filter>Engine\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source\EventManager.h">
       <Filter>Engine\Messages</Filter>
@@ -303,6 +303,12 @@
     <ClInclude Include="Source\AssetBrowserPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Source\WindowSystem.h">
+      <Filter>Window\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WindowUtils.h">
+      <Filter>Window\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -349,9 +355,6 @@
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Window">
-      <UniqueIdentifier>{30e46da8-cd48-4c71-baf2-a748ccf5bf4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug\Handler">
       <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
@@ -409,6 +412,15 @@
     </Filter>
     <Filter Include="Editor\Utils">
       <UniqueIdentifier>{091bd855-80c0-4451-ba80-733ec30c1671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{0952072b-323d-45ee-a5fc-c54facde40af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\System">
+      <UniqueIdentifier>{60361c56-ff3b-4f33-92a5-2c577591fb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\Utils">
+      <UniqueIdentifier>{a982f7df-34fc-4b9f-9dec-ffde0af26947}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
