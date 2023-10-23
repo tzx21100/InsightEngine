@@ -133,8 +133,6 @@ namespace IS {
             body_floor.mMass = 99999.f;
             body_floor.mInvMass = 1.f / 99999.f;
 
-
-            std::cout << width << ", " << height << std::endl;
             trans_circle.setWorldPosition(width * 0.406f, height * 0.33333333f);
             trans_circle.setScaling(width * 0.125f, height * 0.22222222f);
             sprite_circle.primitive_type = GL_TRIANGLE_FAN;
@@ -147,6 +145,8 @@ namespace IS {
 
             trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             sprite_point.primitive_type = GL_POINTS;
+
+            
         }
 
         virtual void Update(float delta) override {

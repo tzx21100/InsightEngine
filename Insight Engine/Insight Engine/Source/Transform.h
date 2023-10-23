@@ -97,11 +97,13 @@ namespace IS {
 		 */
 		void Move(Vector2D const& val);
 
+		Mtx33 ReturnXformMatrix();
+
 		// members
-		Vec2D world_position{};					 // world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
-		float rotation{};							 // z-axis rotation in degrees
-		float angle_speed{};						 // rotation speed
-		Vec2D scaling{};						 // x = width, y = height
+		Vec2D world_position{};	// world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
+		float rotation{};		// z-axis rotation in degrees
+		float angle_speed{};	// rotation speed
+		Vec2D scaling{};		// x = width, y = height
 		Mtx33 mdl_to_ndc_xform; // identity matrix default
 
 		/*!
