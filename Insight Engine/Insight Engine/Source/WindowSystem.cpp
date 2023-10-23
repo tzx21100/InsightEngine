@@ -76,6 +76,8 @@ namespace IS {
 
         EnableVsync(mProps.mVSync);
 
+        glfwSetWindowAspectRatio(mWindow, 16, 9);
+
         // Load OpenGL function pointers using GLAD
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
         if (!status)
