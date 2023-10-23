@@ -23,7 +23,7 @@
 #include "EditorUtils.h"
 #include "CoreEngine.h"
 #include "EditorLayer.h"
-#include "WindowUtils.h"
+#include "FileUtils.h"
 
 // Dependencies
 #include <imgui.h>
@@ -151,10 +151,10 @@ namespace IS {
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
-    SceneHierarchyPanel::InspectorPanel::InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel)
+    InspectorPanel::InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel)
         : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 
-    void SceneHierarchyPanel::InspectorPanel::RenderPanel()
+    void InspectorPanel::RenderPanel()
     {
         ImGui::Begin("Inspector");
         if (mSceneHierarchyPanel.mSelectedEntity)
@@ -162,7 +162,7 @@ namespace IS {
         ImGui::End(); // end window Inspector
     }
 
-    void SceneHierarchyPanel::InspectorPanel::RenderEntityConfig(Entity entity)
+    void InspectorPanel::RenderEntityConfig(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
 
@@ -227,69 +227,6 @@ namespace IS {
             ImGui::OpenPopup("AddComponent");
         ImGui::PopFont();
 
-        // Check whether entity already has the component
-        if (ImGui::BeginPopup("AddComponent"))
-        {
-            // Entity already has all the entities
-            if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity) &&
-                engine.HasComponent<RigidBody>(entity) && engine.HasComponent<InputAffector>(entity) &&
-                engine.HasComponent<ScriptComponent>(entity))
-            {
-                if (ImGui::MenuItem("Limit Reached!"))
-                    ImGui::CloseCurrentPopup();
-            }
-            // Choose Available Component to add
-            else
-            {
-                // Add Sprite Component
-                if (!engine.HasComponent<Sprite>(entity))
-                {
-                    if (ImGui::MenuItem("Sprite"))
-                    {
-                        engine.AddComponent<Sprite>(entity, Sprite());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                // Add Transform Component
-                if (!engine.HasComponent<Transform>(entity))
-                {
-                    if (ImGui::MenuItem("Transform"))
-                    {
-                        engine.AddComponent<Transform>(entity, Transform());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                // Add Rigidbody Component
-                if (!engine.HasComponent<RigidBody>(entity))
-                {
-                    if (ImGui::MenuItem("Rigidbody"))
-                    {
-                        engine.AddComponent<RigidBody>(entity, RigidBody());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                // Add Input Affector Component
-                if (!engine.HasComponent<InputAffector>(entity))
-                {
-                    if (ImGui::MenuItem("InputAffector"))
-                    {
-                        engine.AddComponent<InputAffector>(entity, InputAffector());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-                // Add Script Component
-                if (!engine.HasComponent<ScriptComponent>(entity))
-                {
-                    if (ImGui::MenuItem("Script"))
-                    {
-                        engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-            }
-
-            ImGui::EndPopup();
-        }
         ImGui::SameLine();
 
         // Clone Entity
@@ -311,9 +248,73 @@ namespace IS {
 
         ImGui::Spacing();
 
+        // Check whether entity already has the component
+        if (ImGui::BeginPopup("AddComponent"))
+        {
+            // Entity already has all the components
+            if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity) &&
+                engine.HasComponent<RigidBody>(entity) && engine.HasComponent<ScriptComponent>(entity))
+            {
+                if (ImGui::MenuItem("Limit Reached!"))
+                    ImGui::CloseCurrentPopup();
+
+                return;
+            }
+
+            // Choose Available Component to add
+            // Add Sprite Component
+            if (!engine.HasComponent<Sprite>(entity))
+            {
+                if (ImGui::MenuItem("Sprite"))
+                {
+                    engine.AddComponent<Sprite>(entity, Sprite());
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+
+            // Add Transform Component
+            if (!engine.HasComponent<Transform>(entity))
+            {
+                if (ImGui::MenuItem("Transform"))
+                {
+                    engine.AddComponent<Transform>(entity, Transform());
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+
+            // Add Rigidbody Component
+            if (!engine.HasComponent<RigidBody>(entity))
+            {
+                if (ImGui::MenuItem("Rigidbody"))
+                {
+                    engine.AddComponent<RigidBody>(entity, RigidBody());
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+
+            // Add Script Component
+            if (!engine.HasComponent<ScriptComponent>(entity))
+            {
+                if (ImGui::MenuItem("Script"))
+                {
+                    // Browse for script to add
+                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    {
+                        engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
+                        auto& script = engine.GetComponent<ScriptComponent>(entity);
+                        script.mScriptName = filepath.stem().string();
+                    }
+                    ImGui::CloseCurrentPopup();
+                }
+            }
+
+            ImGui::EndPopup();
+        }
+
     } // end RenderEntityConfig()
 
-    void SceneHierarchyPanel::InspectorPanel::RenderComponentNodes(Entity entity) {
+    void InspectorPanel::RenderComponentNodes(Entity entity)
+    {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
@@ -513,13 +514,6 @@ namespace IS {
             }
         }); // end render Rigidbody Component
 
-        // Input Affector Component
-        RenderComponent<InputAffector>("Input Affector", entity, []([[maybe_unused]] InputAffector& input_affector)
-        {
-            // Empty by design
-            ImGui::TextUnformatted("(Empty)");
-        }); // end render Input Affector Component
-
         // Script Component
         RenderComponent<ScriptComponent>("Script", entity, [font_bold](ScriptComponent& script)
         {
@@ -535,21 +529,35 @@ namespace IS {
                 ImGui::EndTable();
             }
 
-            // Open Game Script in default application
-            if (ImGui::Button("Change"))
+            ImGui::SameLine();
+
+            // Modify Script
+            bool modify_button = ImGui::Button("Modify");
+            if (ImGui::BeginItemTooltip())
             {
-                if (std::string filepath = WindowUtils::ChangeScript(); !filepath.empty())
-                {
-                    std::string directory = "Source";
-                    std::string extension = ".cs";
-                    filepath = filepath.substr(WindowUtils::GetCurrentWorkingDirectory().length() + directory.length());
-                    filepath = filepath.substr(0, filepath.length() - extension.length());
-                    script.mScriptName = filepath;
-                }
+                ImGui::SetTooltip("Browse and replace the existing script");
+                ImGui::EndTooltip();
+            }
+
+            // Clicking the modfiy button
+            if (modify_button)
+            {
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    script.mScriptName = filepath.stem().string();
             }
 
             ImGui::SameLine();
-            if (ImGui::Button("Edit"))
+
+            // Edit Script
+            bool edit_button = ImGui::Button("Edit");
+            if (ImGui::BeginItemTooltip())
+            {
+                ImGui::SetTooltip("Open and edit script in default application");
+                ImGui::EndTooltip();
+            }
+
+            // Clicking the edit button
+            if (edit_button)
                 InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
 
         }); // end render Script Component
@@ -559,7 +567,7 @@ namespace IS {
     } // end RenderComponentNodes()
 
     template <typename Component, typename RenderFunc>
-    void SceneHierarchyPanel::InspectorPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
+    void InspectorPanel::RenderComponent(std::string const& label, Entity entity, RenderFunc render) {
         // Engine instance
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;

@@ -1,7 +1,7 @@
 #include "Pch.h"
 #include "ScriptManager.h"
 #include "CoreEngine.h"
-#include "WindowUtils.h"
+#include "FileUtils.h"
 
 namespace IS {
 
@@ -86,7 +86,7 @@ namespace IS
         std::string directory = "..\\IS-ScriptCore\\Source";
 
         // Open .cs file in default program
-        WindowUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
+        FileUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
         IS_CORE_DEBUG("Script File: {}", filepath);
     }
 }

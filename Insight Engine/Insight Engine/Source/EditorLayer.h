@@ -25,6 +25,8 @@
 #include "Panel.h"
 #include "SceneHierarchyPanel.h"
 
+#include <functional>
+
 namespace IS {
 
     /*!
@@ -74,22 +76,18 @@ namespace IS {
          *
          * \param path Path to the scene.
          */
-        static void OpenScene(const char* path);
-
-        /*!
-         * \brief Creates a new script.
-         */
-        static void NewScript();
+        void OpenScene(std::string const& path);
 
     private:
         static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
 
-        std::string mSceneName = "testscene"; ///< Name of the current scene.
+        std::string mActiveScene = "emptyscene"; ///< Name of the active scene.
 
         // Internal Flags
-        static bool mShowNewScript; ///< Flag indicating to show new script.
+        bool mShowNewScene = false; ///< Flag indicating to show new scene.
+        bool mShowNewScript = false; ///< Flag indicating to show new script.
 
         /*!
          * \brief Render the menu bar.
@@ -97,19 +95,29 @@ namespace IS {
         void RenderMenuBar();
 
         /*!
-         * \brief Add panels.
+         * \brief Attach panels.
          */
-        void AddPanels();
+        void AttachPanels();
 
-        /*!
-         * \brief Load a new scene.
+        /*! \brief Show a create popup modal with a customizable name, default text, and create action.
+         *
+         * This function displays a create popup modal using ImGui. The popup can be customized
+         * with a unique name, default text, and an action to execute when the "Create" button is pressed.
+         *
+         * \param popup_name The name of the popup modal.
+         * \param default_text The default text displayed in the input field.
+         * \param show A pointer to a boolean variable that controls the visibility of the popup.
+         * \param CreateAction A function that takes a const char* parameter and is executed when the "Create" button is pressed.
+         *
+         * Example usage:
+         * \code
+         * bool mShowNewScript = false;
+         * ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [](const char* script_name) {
+         *     // Your create action code here
+         * });
+         * \endcode
          */
-        void NewScene();
-
-        /*!
-         * \brief Load the test scene.
-         */
-        void LoadTestScene();
+        void ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction);
 
         /*!
          * \brief Load a scene.

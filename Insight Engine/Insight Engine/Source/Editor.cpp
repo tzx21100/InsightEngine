@@ -19,7 +19,6 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Editor.h"
-#include "EditorLayer.h"
 
 // Dependencies
 #include <imgui.h>
@@ -30,11 +29,10 @@ namespace IS {
 
     Editor::Editor() {}
 
-    Editor::~Editor() {
-        Terminate();
-    }
+    Editor::~Editor() { Terminate(); }
 
-    void Editor::Initialize() {
+    void Editor::Initialize()
+    {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -55,7 +53,8 @@ namespace IS {
 
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         ImGuiStyle& style = ImGui::GetStyle();
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
@@ -67,17 +66,20 @@ namespace IS {
         ImGui_ImplGlfw_InitForOpenGL(InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetNativeWindow(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        PushLayer(new EditorLayer());
+        mEditorLayer = std::make_shared<EditorLayer>();
+        PushLayer(mEditorLayer);
     }
 
-    void Editor::Update(float delta_time) {
+    void Editor::Update(float delta_time)
+    {
         Begin();
         mLayers.Update(delta_time);
         mLayers.Render();
         End();
     }
 
-    void Editor::Terminate() {
+    void Editor::Terminate()
+    {
         mLayers.ClearStack();
 
         ImGui_ImplOpenGL3_Shutdown();
@@ -85,26 +87,27 @@ namespace IS {
         ImGui::DestroyContext();
     }
 
-    void Editor::HandleMessage([[maybe_unused]] Message const& message) {
-
-    }
+    void Editor::HandleMessage(Message const&) {}
 
     std::string Editor::GetName() { return "Editor"; }
 
-    void Editor::Begin() {
+    void Editor::Begin()
+    {
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 
-    void Editor::End() {
+    void Editor::End()
+    {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         // Update and Render additional Platform Windows
         ImGuiIO& io = ImGui::GetIO();
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
@@ -112,27 +115,32 @@ namespace IS {
         }
     }
 
-    void Editor::PushLayer(layer_type layer) {
+    void Editor::PushLayer(layer_type layer)
+    {
         mLayers.PushLayer(layer);
         layer->OnAttach();
     }
 
-    void Editor::PushOverlay(layer_type overlay) {
+    void Editor::PushOverlay(layer_type overlay)
+    {
         mLayers.PushOverlay(overlay);
         overlay->OnAttach();
     }
 
-    void Editor::PopLayer(layer_type layer) {
+    void Editor::PopLayer(layer_type layer)
+    {
         mLayers.PopLayer(layer);
         layer->OnDetach();
     }
 
-    void Editor::PopOverlay(layer_type overlay) {
+    void Editor::PopOverlay(layer_type overlay)
+    {
         mLayers.PopOverlay(overlay);
         overlay->OnDetach();
     }
 
-    void Editor::SetDarkThemeColors() const {
+    void Editor::SetDarkThemeColors() const
+    {
         auto& style = ImGui::GetStyle();
         auto& colors = style.Colors;
 
@@ -188,5 +196,7 @@ namespace IS {
     bool Editor::WantCaptureMouse() const { return ImGui::GetIO().WantCaptureMouse; }
 
     bool Editor::WantCaptureKeyboard() const { return ImGui::GetIO().WantCaptureKeyboard; }
+
+    std::shared_ptr<EditorLayer> Editor::GetEditorLayer() { return mEditorLayer; }
 
 } // end namespace IS

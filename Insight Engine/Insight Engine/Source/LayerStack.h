@@ -32,7 +32,7 @@ namespace IS {
      */
     class LayerStack {
     public:
-        using container = std::vector<Layer*>; ///< The container type for storing layers.
+        using container = std::vector<std::shared_ptr<Layer>>; ///< The container type for storing layers.
         using value_type = container::value_type; ///< The type of elements stored in the container.
         using size_type = container::size_type; ///< The type for size-related operations.
         using reference = container::reference; ///< The type for referencing elements in the container.

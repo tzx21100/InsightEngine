@@ -69,7 +69,7 @@ void RegisterSystems() {
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
-    auto insight_gui = std::make_shared<Editor>();
+    auto insight_editor = std::make_shared<Editor>();
     auto insight_fsm = std::make_shared<AIFSMManager>();
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
     auto insight_guisystem = std::make_shared<GuiSystem>();
@@ -82,7 +82,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_physics, sign_physics);
     engine.AddSystem(insight_graphics, sign_graphics);
-    engine.AddSystem(insight_gui, sign_default);
+    engine.AddSystem(insight_editor, sign_default);
     engine.AddSystem(insight_fsm, sign_fsm);
     engine.AddSystem(insight_scriptmanager, sign_script);
     engine.AddSystem(insight_guisystem, sign_gui);

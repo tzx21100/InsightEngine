@@ -127,11 +127,11 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WindowSystem.cpp">
-      <Filter>Window\System</Filter>
+    <ClCompile Include="Source\FileUtils.cpp">
+      <Filter>Editor\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WindowUtils.cpp">
-      <Filter>Window\Utils</Filter>
+    <ClCompile Include="Source\WindowSystem.cpp">
+      <Filter>Engine\Systems\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,11 +309,11 @@
     <ClInclude Include="Source\Camera.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WindowSystem.h">
-      <Filter>Window\System</Filter>
+    <ClInclude Include="Source\FileUtils.h">
+      <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\WindowUtils.h">
-      <Filter>Window\Utils</Filter>
+    <ClInclude Include="Source\WindowSystem.h">
+      <Filter>Engine\Systems\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +377,6 @@
     <Filter Include="Graphics\Buffers">
       <UniqueIdentifier>{61cf34e4-1635-43dc-b79e-c4f55435eaa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>{96bb3842-4153-4a24-bf01-20e7054a98bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor\Panels">
       <UniqueIdentifier>{fe2ccd58-dcff-4fcc-8c11-594d868ee370}</UniqueIdentifier>
     </Filter>
@@ -419,31 +416,8 @@
     <Filter Include="Editor\Utils">
       <UniqueIdentifier>{091bd855-80c0-4451-ba80-733ec30c1671}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Window">
+    <Filter Include="Engine\Systems\Window">
       <UniqueIdentifier>{0952072b-323d-45ee-a5fc-c54facde40af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Window\System">
-      <UniqueIdentifier>{60361c56-ff3b-4f33-92a5-2c577591fb55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Window\Utils">
-      <UniqueIdentifier>{a982f7df-34fc-4b9f-9dec-ffde0af26947}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\icecream_truck.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\placeholder_background.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\player_idle.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\zxtestsprite.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\player_walking.png">
-      <Filter>Assets</Filter>
-    </Image>
   </ItemGroup>
 </Project>

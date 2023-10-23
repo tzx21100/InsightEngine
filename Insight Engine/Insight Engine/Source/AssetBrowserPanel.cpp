@@ -1,7 +1,25 @@
+/*!
+ * \file AssetBrowserPanel.cpp
+ * \author Guo Yiming, yiming.guo@digipen.edu
+ * \par Course: CSD2401
+ * \date 24-10-2023
+ * \brief
+ * This source file defines the implementation for class AssetBrowserPanel which
+ * encapsulates the functionalities of an asset browser panel.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "AssetBrowserPanel.h"
 #include "EditorUtils.h"
-#include "WindowUtils.h"
+#include "FileUtils.h"
 
 #include <regex>
 
@@ -89,8 +107,8 @@ namespace IS {
                 // Start dragging item
                 if (ImGui::BeginDragDropSource())
                 {
-                    std::string item_path = path.string().c_str();
-                    ImGui::SetDragDropPayload("ASSET_BROWSER_ITEM", item_path.c_str(), item_path.size() * sizeof(std::string));
+                    const wchar_t* item_path = path.c_str();
+                    ImGui::SetDragDropPayload("ASSET_BROWSER_ITEM", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
                     ImVec2 image_size = { 48.f, 48.f };
                     ImGui::Image(icon, image_size);
@@ -109,7 +127,7 @@ namespace IS {
                     else
                     {
                         std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
-                        WindowUtils::OpenFileFromDefaultApp(filepath.c_str());
+                        path.extension() == ".insight" ? InsightEngine::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
                     }
                 }
 
@@ -125,7 +143,8 @@ namespace IS {
         ImGui::End(); // end window Asset Browser
     }
 
-    void AssetBrowserPanel::RenderControls() {
+    void AssetBrowserPanel::RenderControls()
+    {
         // Browser Controls
         float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
         if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))

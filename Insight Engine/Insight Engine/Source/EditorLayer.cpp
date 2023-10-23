@@ -22,7 +22,7 @@
 #include "Graphics.h"
 #include "CoreEngine.h"
 #include "AssetBrowserPanel.h"
-#include "WindowUtils.h"
+#include "FileUtils.h"
 
 // Dependencies
 #include <ranges>
@@ -31,42 +31,44 @@
 namespace IS {
 
     Vec2 EditorLayer::mDockspacePosition{};
-    bool EditorLayer::mShowNewScript = false;
 
-    EditorLayer::EditorLayer() : Layer("Editor Layer") { AddPanels(); }
+    EditorLayer::EditorLayer() : Layer("Editor Layer") {}
 
     void EditorLayer::OnAttach()
     {
-        // Attach scene viewer, import icons, open project...
+        AttachPanels();
+        OpenScene();
+
         IS_CORE_DEBUG("{} attached", GetName());
     }
 
     void EditorLayer::OnDetach()
     {
+        mPanels.clear();
         IS_CORE_DEBUG("{} detached", GetName());
     }
 
-    void EditorLayer::OnUpdate([[maybe_unused]] float dt)
+    void EditorLayer::OnUpdate(float)
     {
         InsightEngine& engine = InsightEngine::Instance();
         auto const& input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
-        const bool ctrl_held       = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
-        const bool shift_held      = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
-        const bool alt_held        = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
-        const bool n_pressed       = input->IsKeyPressed(GLFW_KEY_N);
-        const bool o_pressed       = input->IsKeyPressed(GLFW_KEY_O);
-        const bool s_pressed       = input->IsKeyPressed(GLFW_KEY_S);
-        const bool ffour_pressed   = input->IsKeyPressed(GLFW_KEY_F4);
-        const bool feleven_pressed = input->IsKeyPressed(GLFW_KEY_F11);
+        const bool CTRL_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool SHIFT_HELD  = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)   || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
+        const bool ALT_HELD    = input->IsKeyHeld(GLFW_KEY_LEFT_ALT)     || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+        const bool N_PRESSED   = input->IsKeyPressed(GLFW_KEY_N);
+        const bool O_PRESSED   = input->IsKeyPressed(GLFW_KEY_O);
+        const bool S_PRESSED   = input->IsKeyPressed(GLFW_KEY_S);
+        const bool F4_PRESSED  = input->IsKeyPressed(GLFW_KEY_F4);
+        const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
 
-        if (ctrl_held && n_pressed) { NewScene(); }                  // Ctrl+N
-        if (ctrl_held && o_pressed) { OpenScene(); }                 // Ctrl+O
-        if (ctrl_held && s_pressed) { SaveScene(); }                 // Ctrl+S
-        if (ctrl_held && shift_held && s_pressed) { SaveSceneAs(); } // Ctrl+Shift+S
-        if (alt_held && ffour_pressed) { ExitProgram(); }            // Alt+F4
-        if (feleven_pressed) { ToggleFullscreen(); }                 // F11
+        if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
+        if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
+        if (CTRL_HELD && S_PRESSED) { SaveScene(); }                 // Ctrl+S
+        if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
+        if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
+        if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
     }
 
     void EditorLayer::OnRender()
@@ -100,7 +102,8 @@ namespace IS {
         style.WindowMinSize = ImVec2(350.f, 300.f);
 
         // Enable dockspace
-        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+        {
             ImGuiID dockspace_id = ImGui::GetID("Editor");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
@@ -131,9 +134,7 @@ namespace IS {
                 // New File
                 if (ImGui::BeginMenu("New"))
                 {
-                    // Load New Scene
-                    if (ImGui::MenuItem("Scene", "Ctrl+N")) { NewScene(); }
-                    // Create New Script
+                    if (ImGui::MenuItem("Scene", "Ctrl+N")) { mShowNewScene = true; }
                     if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
                 } // end menu New
@@ -141,18 +142,15 @@ namespace IS {
                 // Open File
                 if (ImGui::BeginMenu("Open"))
                 {
-                    // Open Scene
                     if (ImGui::MenuItem("Scene...", "Ctrl+O")) { OpenScene(); }
-                    // Open Script
-                    if (ImGui::MenuItem("Script...")) { WindowUtils::OpenScript(); }
+                    if (ImGui::MenuItem("Script...")) { FileUtils::OpenScript(); }
                     ImGui::EndMenu();
                 } // end menu Open
 
                 ImGui::Separator();
 
-                // Save File
+                // Saving Scene
                 if (ImGui::MenuItem("Save Scene", "Ctrl+S")) { SaveScene(); }
-                // Save Scene As...
                 if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
 
                 ImGui::Separator();
@@ -222,76 +220,97 @@ namespace IS {
             ImGui::EndMenuBar();
         }
 
-        //if (mShowLoad) { OpenScene(); }
-        //if (mShowSave) { SaveSceneAs(); }
-        if (mShowNewScript) { NewScript(); }
-        //if (mShowOpenScript) { OpenScript(); }
+        // Show Create Popup window
+        if (mShowNewScene)
+            ShowCreatePopup("Create new scene", "NewScene", &mShowNewScene, [this](const char* scene_name)
+            {
+                mSceneHierarchyPanel->ResetSelection();
+                InsightEngine::Instance().NewScene();
+                mActiveScene = scene_name;
+                IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+            });
+        if (mShowNewScript)
+            ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [](const char* script_name)
+            {
+                InsightEngine::Instance().CreateGameScript(script_name);
+                InsightEngine::Instance().OpenGameScript(script_name);
+            });
     }
 
-    void EditorLayer::AddPanels()
+    void EditorLayer::AttachPanels()
     {
-        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+
+        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel));
+        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mPanels.emplace_back(mSceneHierarchyPanel);
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel->GetSelectedEntity()));
         mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
         mPanels.emplace_back(std::make_shared<LogConsolePanel>());
     }
 
-    void EditorLayer::NewScene() { mSceneHierarchyPanel->ResetSelection(); InsightEngine::Instance().NewScene(); }
-
-    void EditorLayer::LoadTestScene() { mSceneHierarchyPanel->ResetSelection(); InsightEngine::Instance().LoadScene("testscene"); }
-
-    void EditorLayer::OpenScene() {
-        mSceneHierarchyPanel->ResetSelection();
-        InsightEngine& engine = InsightEngine::Instance();
-        std::string directory = "Assets\\Scene";
-                
-        if (std::string filepath = WindowUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", directory.c_str()); !filepath.empty())
-        {
-            engine.LoadScene(filepath);
-            directory += "\\\\";
-            filepath = filepath.substr(WindowUtils::GetCurrentWorkingDirectory().length() + directory.length());
-            mSceneName = filepath;
-        }
-    }
-
-    void EditorLayer::OpenScene(const char* path) { InsightEngine::Instance().LoadScene(path); }
-
-    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene(mSceneName); }
-
-    void EditorLayer::SaveSceneAs() {
-        InsightEngine& engine = InsightEngine::Instance();
-        std::string filepath = WindowUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene");
-        if (!filepath.empty())
-            engine.SaveCurrentScene(filepath);
-    }
-
-    void EditorLayer::NewScript() {
-        auto& engine = InsightEngine::Instance();
-
-        ImGui::OpenPopup("New Script...");
+    void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
+    {
+        ImGui::OpenPopup(popup_name);
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
 
-        if (ImGui::BeginPopupModal("New Script...", &mShowNewScript, window_flags)) {
-            std::string default_text = "NewScript";
-            char name[std::numeric_limits<char8_t>::max() + 1]{};
-            auto source = default_text | std::ranges::views::take(default_text.size());
-            std::ranges::copy(source, std::begin(name));
+        if (ImGui::BeginPopupModal(popup_name, show, window_flags))
+        {
+            char name[256]{};
+            memcpy(name, default_text, strlen(default_text));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##NewScript", name, sizeof(name), input_flags) || ImGui::Button("Create")) {
-                engine.CreateGameScript(name);
-                engine.OpenGameScript(name);
-                mShowNewScript = false;
+            if (ImGui::InputText(("##" + std::string(popup_name)).c_str(), name, sizeof(name), input_flags) || ImGui::Button("Create"))
+            {
+                CreateAction(name);
+                *show = false;
             }
 
-            ImGui::EndPopup(); // end popup New Script...
+            ImGui::EndPopup();
         }
     }
 
-    void EditorLayer::ToggleFullscreen() {
+    void EditorLayer::OpenScene()
+    {
+        mSceneHierarchyPanel->ResetSelection();
+        InsightEngine& engine = InsightEngine::Instance();
+                
+        if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
+        {
+            auto const& relative_path = std::filesystem::relative(filepath);
+            engine.LoadScene(relative_path.string());
+            mActiveScene = filepath.stem().string();
+
+            IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+        }
+    }
+
+    void EditorLayer::OpenScene(std::string const& path)
+    {
+        InsightEngine::Instance().LoadScene(path);
+        std::filesystem::path filepath(path);
+        mActiveScene = filepath.stem().string();
+
+        IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+    }
+
+    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene(mActiveScene); }
+
+    void EditorLayer::SaveSceneAs()
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+
+        if (std::filesystem::path filepath(FileUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
+        {
+            mActiveScene = filepath.stem().string();
+            engine.SaveCurrentScene(mActiveScene);
+
+            IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+        }
+    }
+
+    void EditorLayer::ToggleFullscreen()
+    {
         InsightEngine& engine = InsightEngine::Instance();
         auto const& window = engine.GetSystem<WindowSystem>("Window");
         static bool fullscreen = window->IsFullScreen();

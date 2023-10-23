@@ -25,13 +25,15 @@ namespace IS {
     std::shared_ptr<Logger> Log::mCoreLogger;
     std::shared_ptr<Logger> Log::mClientLogger;
 
-    void Log::Init(bool enable_output) {
+    void Log::Init(bool enable_output)
+    {
         mCoreLogger = std::make_shared<Logger>("Insight");
         mCoreLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
         mClientLogger = std::make_shared<Logger>("Fragments");
         mClientLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
 
-        if (enable_output) {
+        if (enable_output)
+        {
             mCoreLogger->EnableFileOutput();
             mClientLogger->EnableFileOutput();
         }

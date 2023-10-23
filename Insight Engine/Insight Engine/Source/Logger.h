@@ -56,7 +56,7 @@ namespace IS {
         LOGLEVEL_CRITICAL
     };
 
-    /**
+    /*!
      * \brief Get an int representation of a log level.
      *
      * \param level The log level.
@@ -64,7 +64,7 @@ namespace IS {
      */
     int LogLevelToInt(aLogLevel level);
 
-    /**
+    /*!
      * \brief Get a log level of an int representation.
      *
      * \param level The log level as an int.
@@ -72,7 +72,7 @@ namespace IS {
      */
     aLogLevel IntToLogLevel(int level);
 
-    /**
+    /*!
      * \brief Get a string representation of a log level.
      *
      * \param level The log level.
@@ -80,7 +80,7 @@ namespace IS {
      */
     std::string LogLevelToString(aLogLevel level);
 
-    /**
+    /*!
      * \brief Get a log level of a string representation.
      *
      * \param level The log level as a string.
@@ -88,7 +88,7 @@ namespace IS {
      */
     aLogLevel StringToLogLevel(std::string const& level);
 
-    /**
+    /*!
      * \class Logger
      * \brief A flexible logging class that allows different log levels and output options.
      *
@@ -98,7 +98,7 @@ namespace IS {
     class Logger {
     public:
 
-        /**
+        /*!
          * \class LoggerGUI
          * \brief GUI interface for real-time log viewing.
          *
@@ -107,7 +107,7 @@ namespace IS {
         class LoggerGUI {
         public:
 
-            /**
+            /*!
              * \brief Structure to encapsulate a log entry.
              */
             struct LogEntry {
@@ -115,7 +115,7 @@ namespace IS {
                 std::string mLogMessage;
             };
 
-            /**
+            /*!
              * \brief Add a log message to the GUI.
              *
              * \param level The severity of the log message.
@@ -123,19 +123,19 @@ namespace IS {
              */
             void AddLog(aLogLevel severity, const char* message);
 
-            /**
+            /*!
              * \brief Draw the GUI window for log viewing.
              *
              * \param title The title of the log window.
              */
             void Draw(const char* title);
 
-            /**
-             * @brief Clear the log entries.
+            /*!
+             * \brief Clear the log entries.
              */
             void Clear();
 
-            /**
+            /*!
              * \brief Gets the color corresponding to the log level.
              *
              * \param level The log severity level.
@@ -143,7 +143,7 @@ namespace IS {
              */
             static ImVec4 GetLogLevelColor(aLogLevel level);
 
-            /**
+            /*!
              * \brief Gets the instance of LoggerGUI.
              *
              * \return The instance of LoggerGUI.
@@ -158,25 +158,25 @@ namespace IS {
 
             static const int MAX_LOG_LINES = 1000; // Limit the number of log lines to prevent excessive memory usage
 
-            /**
-             * @brief Constructor for the LoggerGUI class.
+            /*!
+             * \brief Constructor for the LoggerGUI class.
              */
             LoggerGUI() = default;
         };
 
-        /**
+        /*!
          * \brief Constructor for the Logger class.
          *
          * \param name The name of the logger.
          */
         Logger(std::string const& name = "");
 
-        /**
+        /*!
          * \brief Destructor for the Logger class.
          */
         ~Logger();
 
-        /**
+        /*!
          * \brief Log a message with the Trace log level.
          *
          * This function is used to log a message with the Trace log level. It allows you to include
@@ -188,7 +188,7 @@ namespace IS {
         template<typename... Args>
         void Trace(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Log a message with the Debug log level.
          *
          * This function is used to log a message with the Debug log level. It allows you to include
@@ -200,7 +200,7 @@ namespace IS {
         template<typename... Args>
         void Debug(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Log a message with the Info log level.
          *
          * This function is used to log a message with the Info log level. It allows you to include
@@ -212,7 +212,7 @@ namespace IS {
         template<typename... Args>
         void Info(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Log a message with the Warning log level.
          *
          * This function is used to log a message with the Warning log level. It allows you to include
@@ -224,7 +224,7 @@ namespace IS {
         template<typename... Args>
         void Warn(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Log a message with the Error log level.
          *
          * This function is used to log a message with the Error log level. It allows you to include
@@ -236,7 +236,7 @@ namespace IS {
         template<typename... Args>
         void Error(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Log a message with the Critical log level.
          *
          * This function is used to log a message with the Critical log level. It allows you to include
@@ -248,7 +248,7 @@ namespace IS {
         template<typename... Args>
         void Critical(const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Set the name of the logger.
          *
          * This function sets the name of the logger, which can be used for identification or labeling purposes.
@@ -257,7 +257,7 @@ namespace IS {
          */
         void SetLoggerName(std::string const& new_logger_name);
 
-        /**
+        /*!
          * \brief Set the log level for the logger.
          *
          * This function sets the log level for the logger, controlling which log messages are displayed.
@@ -266,7 +266,7 @@ namespace IS {
          */
         void SetLogLevel(aLogLevel new_level);
 
-        /**
+        /*!
          * \brief Get the current log level of the logger.
          *
          * This function returns the current log level of the logger, indicating the level of log messages
@@ -276,7 +276,7 @@ namespace IS {
          */
         aLogLevel GetLogLevel() const;
 
-        /**
+        /*!
          * \brief Set the timestamp format for log messages.
          *
          * This function sets the format for timestamping log messages. You can customize the timestamp format
@@ -286,7 +286,7 @@ namespace IS {
          */
         void SetTimestampFormat(std::string const& new_timestamp_format);
 
-        /**
+        /*!
          * \brief Get the current timestamp format for log messages.
          *
          * This function returns the current timestamp format used for log messages.
@@ -295,7 +295,7 @@ namespace IS {
          */
         std::string GetTimestampFormat() const;
 
-        /**
+        /*!
          * \brief Enable file output for log messages.
          */
         void EnableFileOutput();
@@ -308,7 +308,7 @@ namespace IS {
         std::ofstream mLogFile; ///< The output log file.
         static std::mutex mLogMutex; ///< Mutex of the logger.
 
-        /**
+        /*!
          * \brief Log a message with the specified log level.
          *
          * \param level The log level.
@@ -318,7 +318,7 @@ namespace IS {
         template<typename... Args>
         void Log(aLogLevel level, const char* fmt, Args&&... args);
 
-        /**
+        /*!
          * \brief Get a timestamp with the specified format.
          *
          * \param ts_format The timestamp format.
@@ -326,12 +326,12 @@ namespace IS {
          */
         std::string GetTimestamp(std::string const& ts_format) const;
 
-        /**
+        /*!
          * \brief Close the log file (if open).
          */
         void CloseFile();
 
-        /**
+        /*!
          * \brief Set the color for displaying log messages of a specific level.
          *
          * \param level The log level.

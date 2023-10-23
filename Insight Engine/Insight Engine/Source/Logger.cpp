@@ -32,8 +32,10 @@ namespace IS {
 
     aLogLevel IntToLogLevel(int level) { return static_cast<aLogLevel>(level); }
 
-    std::string LogLevelToString(aLogLevel level) {
-        switch (level) {
+    std::string LogLevelToString(aLogLevel level)
+    {
+        switch (level)
+        {
         case aLogLevel::LOGLEVEL_ALL:      return "All";
         case aLogLevel::LOGLEVEL_TRACE:    return "Trace";
         case aLogLevel::LOGLEVEL_DEBUG:    return "Debug";
@@ -46,7 +48,8 @@ namespace IS {
         return "Unknown";
     }
 
-    aLogLevel StringToLogLevel(std::string const& level) {
+    aLogLevel StringToLogLevel(std::string const& level)
+    {
         if (level == "All")      return aLogLevel::LOGLEVEL_ALL;
         if (level == "Trace")    return aLogLevel::LOGLEVEL_TRACE;
         if (level == "Debug")    return aLogLevel::LOGLEVEL_DEBUG;
@@ -76,7 +79,8 @@ namespace IS {
 
     aLogLevel Logger::GetLogLevel() const { return mMinLogLevel; }
 
-    void Logger::EnableFileOutput() {
+    void Logger::EnableFileOutput()
+    {
         // Thread safety
         std::scoped_lock lock(mLogMutex);
         
@@ -87,9 +91,9 @@ namespace IS {
         // Construct log filename with timestamp
         std::ostringstream filepath;
         filepath << "Logs" << "/" << mLoggerName;
-        if (!std::filesystem::exists(filepath.str())) {
+        if (!std::filesystem::exists(filepath.str()))
             std::filesystem::create_directories(filepath.str());
-        }
+
         filepath << "/" << GetTimestamp(mLogFilenameTimestampFormat) << ".log";
 
         // Append logs to log file
@@ -102,7 +106,8 @@ namespace IS {
 
     std::string Logger::GetTimestampFormat() const { return mTimestampFormat; }
 
-    std::string Logger::GetTimestamp(std::string const& ts_format) const {
+    std::string Logger::GetTimestamp(std::string const& ts_format) const
+    {
         auto now = std::chrono::system_clock::now();
         long long milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
         std::time_t current_time = std::chrono::system_clock::to_time_t(now);
@@ -113,8 +118,10 @@ namespace IS {
         return timestamp.str();
     }
 
-    void Logger::SetColor(aLogLevel level) {
-        switch(level) {
+    void Logger::SetColor(aLogLevel level)
+    {
+        switch(level)
+        {
         case aLogLevel::LOGLEVEL_TRACE:    std::clog << WHITE;       break;
         case aLogLevel::LOGLEVEL_DEBUG:    std::clog << CYAN;        break;
         case aLogLevel::LOGLEVEL_INFO:     std::clog << GREEN;       break;
@@ -124,7 +131,8 @@ namespace IS {
         }
     }
 
-    void Logger::CloseFile() {
+    void Logger::CloseFile()
+    {
         try {
             if (mLogFile) {
                 mLogFile.close();
@@ -134,7 +142,8 @@ namespace IS {
         }
     }
 
-    void Logger::LoggerGUI::AddLog(aLogLevel level, const char* message) {
+    void Logger::LoggerGUI::AddLog(aLogLevel level, const char* message)
+    {
         // Store log messages with their log levels
         mLogEntries.emplace_back(level, message);
 
@@ -143,13 +152,15 @@ namespace IS {
             mLogEntries.pop_front();
     }
 
-    void Logger::LoggerGUI::Draw(const char* title) {
+    void Logger::LoggerGUI::Draw(const char* title)
+    {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
         ImGui::Begin(title, nullptr, window_flags);
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         
         // Options
-        if (ImGui::BeginPopup("Options")) {
+        if (ImGui::BeginPopup("Options"))
+        {
             ImGui::Checkbox("Auto-scroll", &mAutoScroll);
             ImGui::EndPopup();
         }
@@ -170,8 +181,10 @@ namespace IS {
         ImGui::SetNextItemWidth(COMBO_WIDTH);
         ImGui::SameLine();
         
-        if (ImGui::BeginCombo("##LogLevels", LogLevelToString(mSelectedFilter).c_str())) {
-            for (int i{ LogLevelToInt(aLogLevel::LOGLEVEL_ALL) }; i <= LogLevelToInt(aLogLevel::LOGLEVEL_CRITICAL); ++i) {
+        if (ImGui::BeginCombo("##LogLevels", LogLevelToString(mSelectedFilter).c_str()))
+        {
+            for (int i{ LogLevelToInt(aLogLevel::LOGLEVEL_ALL) }; i <= LogLevelToInt(aLogLevel::LOGLEVEL_CRITICAL); ++i)
+            {
                 aLogLevel log_level = IntToLogLevel(i);
                 if (ImGui::Selectable(LogLevelToString(log_level).c_str(), log_level == mSelectedFilter))
                     mSelectedFilter = log_level;
@@ -190,7 +203,8 @@ namespace IS {
         ImGui::BeginChild("Log Entries", { 0, 0 }, false, child_window_flags);
         if (clear_flag)
             Clear();
-        for (auto const& [level, message] : mLogEntries) {
+        for (auto const& [level, message] : mLogEntries)
+        {
             const bool filtered = !(mSelectedFilter == aLogLevel::LOGLEVEL_ALL || level == mSelectedFilter);
             if (message.empty() || !mFilter.PassFilter(message.c_str()) || filtered)
                 continue;
@@ -222,7 +236,8 @@ namespace IS {
     ImVec4 Logger::LoggerGUI::GetLogLevelColor(aLogLevel level) {
         ImU32 color = IM_COL32_WHITE;
 
-        switch (level) {
+        switch (level)
+        {
         case aLogLevel::LOGLEVEL_TRACE:    color = IM_COL32_WHITE;               break; // White Color
         case aLogLevel::LOGLEVEL_DEBUG:    color = IM_COL32( 57, 148, 218, 255); break; // Cyan Color
         case aLogLevel::LOGLEVEL_INFO:     color = IM_COL32( 18, 150,  14, 255); break; // Green Color

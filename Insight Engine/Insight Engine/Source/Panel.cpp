@@ -20,7 +20,8 @@
 #include "Panel.h"
 #include "EditorUtils.h"
 #include "EditorLayer.h"
-#include "WindowUtils.h"
+#include "FileUtils.h"
+#include "Editor.h"
 
 // Dependencies
 #include <imgui.h>
@@ -28,14 +29,14 @@
 namespace IS {
 
     // Scene Panel
-    ScenePanel::ScenePanel(std::shared_ptr<Entity> selected_entity) : mSelectedEntity(selected_entity) {}
+    ScenePanel::ScenePanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel) : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 
     void ScenePanel::RenderPanel()
     {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
-        //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
@@ -65,6 +66,7 @@ namespace IS {
             mScenePanelSize = { panel_size.x, panel_size.y };
         }
         
+        // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
         // Accept file drop
@@ -72,10 +74,12 @@ namespace IS {
         {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
             {
-                const char* path = static_cast<const char*>(payload->Data);
-                mSelectedEntity.reset();
-                IS_CORE_TRACE("Selected Entity reference count: {}", mSelectedEntity.use_count());
-                EditorLayer::OpenScene(path);
+                std::filesystem::path path = static_cast<const wchar_t*>(payload->Data);
+                mSceneHierarchyPanel->ResetSelection();
+                IS_CORE_TRACE("Selected Entity reference count: {}", mSceneHierarchyPanel.use_count());
+
+                auto editor = engine.GetSystem<Editor>("Editor");
+                editor->GetEditorLayer()->OpenScene(path.string());
             }
             ImGui::EndDragDropTarget();
         }
@@ -84,7 +88,7 @@ namespace IS {
         RenderOverlay();
 
         ImGui::End(); // end window Scene
-        //ImGui::PopStyleVar();
+        ImGui::PopStyleVar();
     }
 
     void ScenePanel::RenderOverlay()

@@ -21,21 +21,22 @@
 
 namespace IS {
 
-    Timer::Timer(std::string const& name, bool console_print) : mStopped(false), mToPrint(console_print) {
+    Timer::Timer(std::string const& name, bool console_print) : mStopped(false), mToPrint(console_print)
+    {
         mResult.mName = name;
         mStartTime = std::chrono::high_resolution_clock::now();
     }
 
-    Timer::~Timer() {
+    Timer::~Timer()
+    {
         if (!mStopped)
             Stop();
     }
 
-    float Timer::GetDeltaTime() const {
-        return mResult.mTime.count();
-    }
+    float Timer::GetDeltaTime() const { return mResult.mTime.count(); }
 
-    void Timer::Stop() {
+    void Timer::Stop()
+    {
         auto end_timepoint = std::chrono::high_resolution_clock::now();
         auto start = std::chrono::time_point_cast<std::chrono::nanoseconds>(mStartTime).time_since_epoch();
         auto end = std::chrono::time_point_cast<std::chrono::nanoseconds>(end_timepoint).time_since_epoch();
@@ -44,7 +45,7 @@ namespace IS {
         mStopped = true;
 
         if (mToPrint)
-            IS_CORE_DEBUG("{}: {:.3f} ms", mResult.mName, GetDeltaTime() * 1000);
+            IS_CORE_TRACE("{}: {:.3f} ms", mResult.mName, GetDeltaTime() * 1000);
     }
 
 } // end namespace IS

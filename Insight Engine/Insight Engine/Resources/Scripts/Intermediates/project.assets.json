@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\krake\\.nuget\\packages\\": {}
+    "C:\\Users\\guoyi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "projectUniqueName": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
       "projectName": "IS-ScriptCore",
-      "projectPath": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
-      "packagesPath": "C:\\Users\\krake\\.nuget\\packages\\",
-      "outputPath": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
+      "projectPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "packagesPath": "C:\\Users\\guoyi\\.nuget\\packages\\",
+      "outputPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\krake\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\guoyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

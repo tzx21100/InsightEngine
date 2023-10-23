@@ -32,40 +32,42 @@ namespace IS {
      */
     class Panel {
     public:
-        /**
+        /*!
          * \brief Default constructor.
          */
         Panel() = default;
 
-        /**
+        /*!
          * \brief Virtual destructor.
          */
         virtual ~Panel() = default;
 
-        /**
+        /*!
          * \brief Pure virtual function to render the panel.
          */
         virtual void RenderPanel() = 0;
     };
+
+    class SceneHierarchyPanel; ///< Forward declaration
 
     /*!
      * \brief A derived class representing a scene panel in a dockspace.
      */
     class ScenePanel : public Panel {
     public:
-        ScenePanel(std::shared_ptr<Entity> selected_entity);
+        ScenePanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel);
 
-        /**
+        /*!
          * \brief Overrides the base class method to render the scene panel.
          */
         void RenderPanel() override;
 
-        /**
+        /*!
          * \brief Renders an overlay which will render a help tooltip.
          */
         void RenderOverlay();
     private:
-        std::shared_ptr<Entity> mSelectedEntity; ///< Current selected entity
+        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         Vec2 mScenePanelSize{}; ///< Size of the scene panel.
     };
 
@@ -74,7 +76,7 @@ namespace IS {
      */
     class PerformancePanel : public Panel {
     public:
-        /**
+        /*!
          * \brief Overrides the base class method to render the performance panel.
          */
         void RenderPanel() override;
@@ -85,7 +87,7 @@ namespace IS {
      */
     class LogConsolePanel : public Panel {
     public:
-        /**
+        /*!
          * \brief Overrides the base class method to render the log console panel.
          */
         void RenderPanel() override;
@@ -96,7 +98,7 @@ namespace IS {
      */
     class PhysicsControlPanel : public Panel {
     public:
-        /**
+        /*!
          * \brief Overrides the base class method to render the physics control panel.
          */
         void RenderPanel() override;

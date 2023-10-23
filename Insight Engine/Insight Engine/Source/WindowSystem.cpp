@@ -20,7 +20,8 @@ namespace IS {
     // In case "WindowProperties.json" is not found, window will use default properties
     WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, 60 };
 
-    WindowSystem::WindowSystem() {
+    WindowSystem::WindowSystem()
+    {
         LoadProperties();
 
         // Initialize GLFW library
@@ -52,7 +53,8 @@ namespace IS {
             : glfwCreateWindow(mProps.mWidth, mProps.mHeight, mProps.mTitle.c_str(), nullptr, nullptr);
 
         // Validate window
-        if (!mWindow) {
+        if (!mWindow)
+        {
             IS_CORE_CRITICAL("Failed to create OpenGL context!");
             glfwTerminate();
         }
@@ -62,8 +64,10 @@ namespace IS {
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
         // Center window
-        if (!mProps.mFullscreen) {
-            if (!mProps.mMaximized) {
+        if (!mProps.mFullscreen)
+        {
+            if (!mProps.mMaximized)
+            {
                 mProps.mXpos = (mMonitorWidth - mProps.mWidth) / 2;
                 mProps.mYpos = (mMonitorHeight - mProps.mHeight) / 2;
             }
@@ -74,33 +78,39 @@ namespace IS {
 
         // Load OpenGL function pointers using GLAD
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-        if (!status) {
+        if (!status)
+        {
             IS_CORE_CRITICAL("Failed to initialize GLAD!");
             glfwDestroyWindow(mWindow);
             glfwTerminate();
         }
 
-        if (GL_VERSION_4_5) {
-            IS_CORE_INFO("Driver supports OpenGL 4.5");
-        } else {
+        if (!GL_VERSION_4_5)
+        {
             IS_CORE_ERROR("Driver doesn't support OpenGL 4.5 - abort program");
-            BROADCAST_MESSAGE(MessageType::Quit); // 
+            BROADCAST_MESSAGE(MessageType::Quit);
+            return;
         }
+
+        IS_CORE_INFO("Driver supports OpenGL 4.5");
     }
 
-    WindowSystem::~WindowSystem() {
+    WindowSystem::~WindowSystem()
+    {
         glfwDestroyWindow(mWindow);
         glfwTerminate();
         SaveProperties();
     }
 
-    void WindowSystem::Initialize() {
+    void WindowSystem::Initialize()
+    {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
 
     }
 
-    void WindowSystem::Update(float)  {
+    void WindowSystem::Update(float)
+    {
         //register window closing 
         if (glfwWindowShouldClose(mWindow)) {
             Message quit = Message(MessageType::Quit);
@@ -108,11 +118,7 @@ namespace IS {
         }
     }
 
-    void WindowSystem::HandleMessage(const Message& message) {
-        if (message.GetType() == MessageType::Collide) {
-            // Handle collision logic here
-        }
-    }
+    void WindowSystem::HandleMessage(const Message&) {}
 
     std::string WindowSystem::GetName() { return "Window"; }
 
@@ -138,38 +144,45 @@ namespace IS {
 
     /*                                                                    Setters
     ----------------------------------------------------------------------------- */
-    void WindowSystem::SetWindowTitle(std::string const& title) {
+    void WindowSystem::SetWindowTitle(std::string const& title)
+    {
         mProps.mTitle = title;
         glfwSetWindowTitle(mWindow, title.c_str());
     }
 
-    void WindowSystem::SetWindowPos(int xpos, int ypos) {
+    void WindowSystem::SetWindowPos(int xpos, int ypos)
+    {
         mProps.mXpos = xpos;
         mProps.mYpos = ypos;
 
         glfwSetWindowPos(mWindow, xpos, ypos);
     }
 
-    void WindowSystem::SetWindowSize(int width, int height) {
+    void WindowSystem::SetWindowSize(int width, int height)
+    {
         mProps.mWidth = width;
         mProps.mHeight = height;
 
         glfwSetWindowSize(mWindow, width, height);
     }
 
-    void WindowSystem::EnableVsync(bool enabled) {
+    void WindowSystem::EnableVsync(bool enabled)
+    {
         mProps.mVSync = enabled;
         glfwSwapInterval(enabled ? 1 : 0);
     }
 
-    void WindowSystem::SetFullScreen(bool fullscreen) {
+    void WindowSystem::SetFullScreen(bool fullscreen)
+    {
         mProps.mFullscreen = fullscreen;
         glfwSetWindowAttrib(mWindow, GLFW_DECORATED, fullscreen ? GLFW_FALSE : GLFW_TRUE);
         glfwSetWindowAttrib(mWindow, GLFW_MAXIMIZED, mProps.mMaximized ? GLFW_TRUE : GLFW_FALSE);
 
         // Windowed mode
-        if (!fullscreen) {
-            if (!mProps.mMaximized) {
+        if (!fullscreen)
+        {
+            if (!mProps.mMaximized)
+            {
                 mProps.mXpos = (mMonitorWidth - mProps.mWidth) / 2;
                 mProps.mYpos = (mMonitorHeight - mProps.mHeight) / 2;
             }
@@ -186,7 +199,8 @@ namespace IS {
         IS_CORE_DEBUG("pos : ({}, {})", mProps.mXpos, mProps.mYpos);
     }
 
-    void WindowSystem::SetMaximized(bool maximized) { 
+    void WindowSystem::SetMaximized(bool maximized)
+    { 
         mProps.mMaximized = maximized;
         if (maximized)
             glfwMaximizeWindow(mWindow);
@@ -196,7 +210,8 @@ namespace IS {
 
     /*                                                                 Properties
     ----------------------------------------------------------------------------- */
-    void WindowSystem::LoadProperties() {
+    void WindowSystem::LoadProperties()
+    {
         std::string filename = "Properties/WindowProperties.json";
         Json::Value properties;
         
@@ -206,8 +221,8 @@ namespace IS {
             success && win_props["Title"].isString() &&
             win_props["Xpos"].isInt() && win_props["Ypos"].isInt() &&
             win_props["Width"].isInt() && win_props["Height"].isInt() && win_props["TargetFPS"] &&
-            win_props["Vsync"].isBool() && win_props["Maximized"].isBool() && win_props["Fullscreen"].isBool()) {
-
+            win_props["Vsync"].isBool() && win_props["Maximized"].isBool() && win_props["Fullscreen"].isBool())
+        {
             mProps.mTitle      = win_props["Title"].asString();
             mProps.mXpos       = win_props["Xpos"].asInt();
             mProps.mYpos       = win_props["Ypos"].asInt();
@@ -219,13 +234,17 @@ namespace IS {
             mProps.mFullscreen = win_props["Fullscreen"].asBool();
 
             IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
-        } else { // Assign default properties
+        }
+        else
+        {
+            // Assign default properties
             mProps = mDefaultProperties;
             IS_CORE_INFO("Using default window properties");
         }
     }
 
-    void WindowSystem::SaveProperties() {
+    void WindowSystem::SaveProperties()
+    {
         std::string filepath = "Properties/WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];

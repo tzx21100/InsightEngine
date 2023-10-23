@@ -57,7 +57,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Vector2D.cpp" />
-    <ClCompile Include="Source\WindowUtils.cpp" />
+    <ClCompile Include="Source\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AIFSM.h" />
@@ -119,14 +119,12 @@
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Vector2D.h" />
-    <ClInclude Include="Source\WindowUtils.h" />
+    <ClInclude Include="Source\FileUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\icecream_truck.png" />
-    <Image Include="Assets\placeholder_background.png" />
-    <Image Include="Assets\player_idle.png" />
-    <Image Include="Assets\player_walking.png" />
-    <Image Include="Assets\zxtestsprite.png" />
+    <ProjectReference Include="..\IS-ScriptCore\IS-ScriptCore.csproj">
+      <Project>{3ffb83a8-18ab-4dbb-89b2-d88bb7a9fa65}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

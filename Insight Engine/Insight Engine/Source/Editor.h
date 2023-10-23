@@ -25,6 +25,7 @@
 #include "System.h"
 #include "Layer.h"
 #include "LayerStack.h"
+#include "EditorLayer.h"
 
 namespace IS {
 
@@ -130,8 +131,11 @@ namespace IS {
          */
         bool WantCaptureKeyboard() const;
 
+        std::shared_ptr<EditorLayer> GetEditorLayer();
+
     private:
-        LayerStack mLayers; ///< The stack of GUI layers.
+        std::shared_ptr<EditorLayer> mEditorLayer; ///< Instance of editor layer.
+        LayerStack mLayers; ///< The stack of GUI layers
     };
 
 } // end namespace IS

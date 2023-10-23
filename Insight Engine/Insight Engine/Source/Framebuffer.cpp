@@ -22,17 +22,17 @@
 
 namespace IS {
 
-    Framebuffer::Framebuffer(FramebufferProps const& properties) : mFramebufferID(0), mProps(properties) {
-        Create();
-    }
+    Framebuffer::Framebuffer(FramebufferProps const& properties) : mFramebufferID(0), mProps(properties) { Create(); }
 
-    Framebuffer::~Framebuffer() {
+    Framebuffer::~Framebuffer()
+    {
         glDeleteFramebuffers(1, &mFramebufferID);
         glDeleteTextures(1, &mProps.mColorAttachment);
         glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
     }
 
-    void Framebuffer::Create() {
+    void Framebuffer::Create()
+    {
         // Create framebuffer object
         glGenFramebuffers(1, &mFramebufferID);
         glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
@@ -58,14 +58,16 @@ namespace IS {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void Framebuffer::Bind() {
+    void Framebuffer::Bind()
+    {
         glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
 
         // Set viewport to size of framebuffer
         glViewport(0, 0, mProps.mWidth, mProps.mHeight);
     }
 
-    void Framebuffer::Unbind() {
+    void Framebuffer::Unbind()
+    {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // Set viewport to window size
@@ -78,7 +80,8 @@ namespace IS {
 
     std::pair<GLuint, GLuint> Framebuffer::GetSize() const { return std::make_pair(mProps.mWidth, mProps.mHeight); }
 
-    void Framebuffer::Resize(GLuint w, GLuint h) {
+    void Framebuffer::Resize(GLuint w, GLuint h)
+    {
         mProps.mWidth = w;
         mProps.mHeight = h;
 

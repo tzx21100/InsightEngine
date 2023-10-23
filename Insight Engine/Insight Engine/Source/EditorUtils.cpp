@@ -31,20 +31,23 @@ namespace IS::EditorUtils {
 
     ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
 
-    bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius) {
+    bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius)
+    {
         ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
         float distance = font_bold->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, " ").x; // Minimum size for text, use any ImGui widget you prefer.
         ImVec2 delta = point - center;
         return delta.x * delta.x + delta.y * delta.y < (radius + distance) * (radius + distance);
     }
 
-    void RenderEntityCount() {
+    void RenderEntityCount()
+    {
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiIO& io = ImGui::GetIO();
         ImFont* const& font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
 
         // Display Max and Alive Entity count
-        if (ImGui::BeginTable("EntityCount", 2)) {
+        if (ImGui::BeginTable("EntityCount", 2))
+        {
             // Comma separted numbers
             std::ostringstream entity_count;
             entity_count.imbue(std::locale(""));
@@ -73,7 +76,8 @@ namespace IS::EditorUtils {
         }
     }
 
-    void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint) {
+    void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint)
+    {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* const& font_italic = io.Fonts->Fonts[FontTypeToInt(aFontType::FONT_TYPE_ITALIC)];
         float original_cursor_xpos = ImGui::GetCursorPosX();
@@ -84,7 +88,8 @@ namespace IS::EditorUtils {
         filter.Draw();
 
         // Render hint text if search box is empty
-        if (!filter.IsActive()) {
+        if (!filter.IsActive())
+        {
             ImGui::SameLine();
             ImGui::SetCursorPosX(original_cursor_xpos + ImGui::GetStyle().FramePadding.x);
             ImGui::PushFont(font_italic);
@@ -93,7 +98,8 @@ namespace IS::EditorUtils {
         }
     }
 
-    void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width) {
+    void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
+    {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* const& font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
 
@@ -101,7 +107,8 @@ namespace IS::EditorUtils {
 
         ImGui::PushID(label.c_str());
 
-        if (ImGui::BeginTable(label.c_str(), 2, table_flags)) {
+        if (ImGui::BeginTable(label.c_str(), 2, table_flags))
+        {
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
             ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();

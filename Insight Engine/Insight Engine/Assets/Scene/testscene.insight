@@ -52,20 +52,20 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -254.82080078125,
-						"y" : -201.4163818359375
+						"x" : -2225.307373046875,
+						"y" : 307.94619750976562
 					},
 					{
-						"x" : -159.82080078125,
-						"y" : -201.4163818359375
+						"x" : -2320.307373046875,
+						"y" : 307.94619750976562
 					},
 					{
-						"x" : -159.82080078125,
-						"y" : -321.4163818359375
+						"x" : -2320.307373046875,
+						"y" : 187.94619750976562
 					},
 					{
-						"x" : -254.82080078125,
-						"y" : -321.4163818359375
+						"x" : -2225.307373046875,
+						"y" : 187.94619750976562
 					}
 				],
 				"RigidBodyVelocityX" : -68.227104187011719,
@@ -73,19 +73,19 @@
 				"RigidBodyVertices" : 
 				[
 					{
+						"x" : 47.5,
+						"y" : 60.0
+					},
+					{
 						"x" : -47.5,
 						"y" : 60.0
 					},
 					{
-						"x" : 47.5,
-						"y" : 60.0
-					},
-					{
-						"x" : 47.5,
+						"x" : -47.5,
 						"y" : -60.0
 					},
 					{
-						"x" : -47.5,
+						"x" : 47.5,
 						"y" : -60.0
 					}
 				]
@@ -106,21 +106,21 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 120,
-				"SpriteTextureIndex" : 2,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 760,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : -95.0,
 				"SpriteTransformScalingY" : 120.0,
-				"SpriteTransformWorldPositionX" : -207.32080078125,
-				"SpriteTransformWorldPositionY" : -261.4163818359375
+				"SpriteTransformWorldPositionX" : -2272.807373046875,
+				"SpriteTransformWorldPositionY" : 247.94619750976562
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : -95.0,
 				"TransformScalingY" : 120.0,
-				"TransformWorldPositionX" : -207.32080078125,
-				"TransformWorldPositionY" : -261.4163818359375
+				"TransformWorldPositionX" : -2272.807373046875,
+				"TransformWorldPositionY" : 247.94619750976562
 			}
 		},
 		{
@@ -143,19 +143,19 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -350.0,
+						"x" : -335.0,
 						"y" : 50.0
 					},
 					{
-						"x" : -450.0,
+						"x" : -435.0,
 						"y" : 50.0
 					},
 					{
-						"x" : -450.0,
+						"x" : -435.0,
 						"y" : -50.0
 					},
 					{
-						"x" : -350.0,
+						"x" : -335.0,
 						"y" : -50.0
 					}
 				],
@@ -198,7 +198,7 @@
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : -100.0,
 				"SpriteTransformScalingY" : 100.0,
-				"SpriteTransformWorldPositionX" : -400.0,
+				"SpriteTransformWorldPositionX" : -385.0,
 				"SpriteTransformWorldPositionY" : 0.0
 			},
 			"Transform" : 
@@ -206,7 +206,7 @@
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : -100.0,
 				"TransformScalingY" : 100.0,
-				"TransformWorldPositionX" : -400.0,
+				"TransformWorldPositionX" : -385.0,
 				"TransformWorldPositionY" : 0.0
 			}
 		},
@@ -247,7 +247,7 @@
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : -0.0018509920919314027,
+				"RigidBodyVelocityY" : -0.00046274799387902021,
 				"RigidBodyVertices" : 
 				[
 					{
@@ -420,7 +420,427 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Name" : "Background",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.043052464723587036,
+				"SpriteColorY" : 0.54852879047393799,
+				"SpriteColorZ" : 0.71250802278518677,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 1,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 1,
+				"SpriteTextureWidth" : 1920,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1920.0,
+				"SpriteTransformScalingY" : 991.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1920.0,
+				"TransformScalingY" : 991.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"Name" : "Player",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 10.0,
+				"RigidBodyArea" : 13636.16015625,
+				"RigidBodyBodyType" : 1,
+				"RigidBodyDensity" : 13636.16015625,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.10000000149011612,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : -51.600002288818359,
+						"y" : 66.066665649414062
+					},
+					{
+						"x" : 51.600002288818359,
+						"y" : 66.066665649414062
+					},
+					{
+						"x" : 51.600002288818359,
+						"y" : -66.066665649414062
+					},
+					{
+						"x" : -51.600002288818359,
+						"y" : -66.066665649414062
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -51.600002288818359,
+						"y" : 66.066665649414062
+					},
+					{
+						"x" : 51.600002288818359,
+						"y" : 66.066665649414062
+					},
+					{
+						"x" : 51.600002288818359,
+						"y" : -66.066665649414062
+					},
+					{
+						"x" : -51.600002288818359,
+						"y" : -66.066665649414062
+					}
+				]
+			},
+			"Script" : 
+			{
+				"ScriptName" : "PlayerScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.09706106036901474,
+				"SpriteColorY" : 0.92876273393630981,
+				"SpriteColorZ" : 0.058775480836629868,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "player_sprite",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 6,
+				"SpriteTextureHeight" : 120,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 760,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 103.20000457763672,
+				"SpriteTransformScalingY" : 132.13333129882812,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 103.20000457763672,
+				"TransformScalingY" : 132.13333129882812,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"Name" : "Test Texture",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 13213.333984375,
+				"RigidBodyBodyType" : 1,
+				"RigidBodyDensity" : 13213.333984375,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : -435.0,
+						"y" : 55.055557250976562
+					},
+					{
+						"x" : -555.0,
+						"y" : 55.055557250976562
+					},
+					{
+						"x" : -555.0,
+						"y" : -55.055557250976562
+					},
+					{
+						"x" : -435.0,
+						"y" : -55.055557250976562
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : 60.0,
+						"y" : 55.055557250976562
+					},
+					{
+						"x" : -60.0,
+						"y" : 55.055557250976562
+					},
+					{
+						"x" : -60.0,
+						"y" : -55.055557250976562
+					},
+					{
+						"x" : 60.0,
+						"y" : -55.055557250976562
+					}
+				]
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.073074586689472198,
+				"SpriteColorY" : 0.23878926038742065,
+				"SpriteColorZ" : 0.36930689215660095,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 4,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : -120.0,
+				"SpriteTransformScalingY" : 110.11111450195312,
+				"SpriteTransformWorldPositionX" : -495.0,
+				"SpriteTransformWorldPositionY" : 0.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : -120.0,
+				"TransformScalingY" : 110.11111450195312,
+				"TransformWorldPositionX" : -495.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"Name" : "Floor",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 111318.8203125,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 11131770880.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0000099791795947e-05,
+				"RigidBodyMass" : 99999.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : -538.887451171875,
+						"y" : -440.0
+					},
+					{
+						"x" : 536.96533203125,
+						"y" : -440.0
+					},
+					{
+						"x" : 536.96533203125,
+						"y" : -543.4703369140625
+					},
+					{
+						"x" : -538.887451171875,
+						"y" : -543.4703369140625
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : -0.0013882440980523825,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -537.9263916015625,
+						"y" : 51.735153198242188
+					},
+					{
+						"x" : 537.9263916015625,
+						"y" : 51.735153198242188
+					},
+					{
+						"x" : 537.9263916015625,
+						"y" : -51.735153198242188
+					},
+					{
+						"x" : -537.9263916015625,
+						"y" : -51.735153198242188
+					}
+				]
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.66173654794692993,
+				"SpriteColorY" : 0.065770357847213745,
+				"SpriteColorZ" : 0.05314796045422554,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1075.852783203125,
+				"SpriteTransformScalingY" : 103.47030639648438,
+				"SpriteTransformWorldPositionX" : -0.96107518672943115,
+				"SpriteTransformWorldPositionY" : -491.73516845703125
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1075.852783203125,
+				"TransformScalingY" : 103.47030639648438,
+				"TransformWorldPositionX" : -0.96107518672943115,
+				"TransformWorldPositionY" : -491.73516845703125
+			}
+		},
+		{
+			"Name" : "Clock Circle",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.47189000248908997,
+				"SpriteColorY" : 0.70716279745101929,
+				"SpriteColorZ" : 0.60955846309661865,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 6,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 240.0,
+				"SpriteTransformScalingY" : 220.22222900390625,
+				"SpriteTransformWorldPositionX" : 779.51995849609375,
+				"SpriteTransformWorldPositionY" : 330.33334350585938
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 240.0,
+				"TransformScalingY" : 220.22222900390625,
+				"TransformWorldPositionX" : 779.51995849609375,
+				"TransformWorldPositionY" : 330.33334350585938
+			}
+		},
+		{
+			"Name" : "Clock Line",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.62691706418991089,
+				"SpriteColorY" : 0.60699522495269775,
+				"SpriteColorZ" : 0.85037249326705933,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 1,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 572.6270751953125,
+				"SpriteTransformScalingX" : 240.0,
+				"SpriteTransformScalingY" : 247.4725341796875,
+				"SpriteTransformWorldPositionX" : 779.51995849609375,
+				"SpriteTransformWorldPositionY" : 330.33334350585938
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 572.6270751953125,
+				"TransformScalingX" : 240.0,
+				"TransformScalingY" : 247.4725341796875,
+				"TransformWorldPositionX" : 779.51995849609375,
+				"TransformWorldPositionY" : 330.33334350585938
+			}
+		},
+		{
+			"Name" : "Clock Point",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.18847456574440002,
+				"SpriteColorY" : 0.263567715883255,
+				"SpriteColorZ" : 0.40903407335281372,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 0,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 0.0,
+				"SpriteTransformScalingY" : 0.0,
+				"SpriteTransformWorldPositionX" : 779.51995849609375,
+				"SpriteTransformWorldPositionY" : 330.33334350585938
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 0.0,
+				"TransformScalingY" : 0.0,
+				"TransformWorldPositionX" : 779.51995849609375,
+				"TransformWorldPositionY" : 330.33334350585938
+			}
+		},
+		{
+			"Name" : "Button",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.38643652200698853,
+				"SpriteColorY" : 0.55533522367477417,
+				"SpriteColorZ" : 0.23966354131698608,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 0.0,
+				"SpriteTransformScalingY" : 0.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 0.0,
+				"TransformScalingY" : 0.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
 		}
 	],
-	"EntityAmount" : 8
+	"EntityAmount" : 16
 }

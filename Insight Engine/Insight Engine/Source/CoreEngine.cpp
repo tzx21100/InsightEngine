@@ -127,7 +127,7 @@ namespace IS {
     void InsightEngine::AddSystem(std::shared_ptr<ParentSystem> system ,Signature signature) {
         IS_PROFILE_FUNCTION();
         std::string systemName = system->GetName();
-        IS_CORE_TRACE("Registering system... {}", systemName);
+        IS_CORE_DEBUG("Registering system... {}", systemName);
         // adding all of them to the different system maps and system manager
         mAllSystems[systemName] = system;
         mSystemList.emplace_back(system);
@@ -364,7 +364,7 @@ namespace IS {
     *  As our scene is made up of entities, we simply just have to save every entity in the scene.
     */
     void InsightEngine::SaveCurrentScene(std::string filename) {
-        std::string file_path = filename;
+        std::string file_path = "Assets\\Scene\\" + filename + ".insight";
         int EntitiesAlive = mEntityManager->EntitiesAlive();
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
@@ -380,7 +380,7 @@ namespace IS {
         }
         scene["Entities"] = entities;
         SaveJsonToFile(scene, file_path);
-        IS_CORE_INFO("Saving scene {} successful!", filename);
+        IS_CORE_INFO("Saving scene {} successful!", file_path);
         IS_CORE_INFO("{} entities saved.", EntitiesAlive);
     }
 
@@ -390,13 +390,12 @@ namespace IS {
         std::filesystem::path filepath(filename);
         if (filepath.extension() != ".insight")
         {
-            IS_CORE_ERROR("Scene file is of the wrong file type, use \".insight\" files");
+            IS_CORE_ERROR("Invalid scene file, use \".insight\" file");
             return;
         }
-        std::string scene_file = filename;
         Json::Value sceneRoot;
-        if (!LoadJsonFromFile(sceneRoot, scene_file)) {
-            IS_CORE_ERROR("Failed to load scene file: {}", scene_file);
+        if (!LoadJsonFromFile(sceneRoot, filepath.string())) {
+            IS_CORE_ERROR("Failed to load scene file: {}", filepath.string());
             return;
         }
 
@@ -417,7 +416,7 @@ namespace IS {
             DeserializeAllComponents(entity, entityData);
         }
 
-        IS_CORE_INFO("Loading scene {} successful!", filename);
+        IS_CORE_INFO("Loading scene {} successful!", filepath.string());
         IS_CORE_INFO("{} entities loaded", EntitiesAlive);
     }
 
