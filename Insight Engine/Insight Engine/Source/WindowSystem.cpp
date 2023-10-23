@@ -18,7 +18,7 @@
 namespace IS {
 
     // In case "WindowProperties.json" is not found, window will use default properties
-    WindowSystem::WindowProperties WindowSystem::mDefaultProperties{ "Insight Engine", 1600, 900, 60 };
+    static const WindowSystem::WindowProperties DEFAULT_PROPERTIES{ "Insight Engine", 1280, 720, 60 };
 
     WindowSystem::WindowSystem()
     {
@@ -76,7 +76,9 @@ namespace IS {
 
         EnableVsync(mProps.mVSync);
 
-        glfwSetWindowAspectRatio(mWindow, 16, 9);
+        // Set window size limites and aspect ratio
+        glfwSetWindowSizeLimits(mWindow, DEFAULT_PROPERTIES.mWidth, DEFAULT_PROPERTIES.mHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+        glfwSetWindowAspectRatio(mWindow, DEFAULT_PROPERTIES.mWidth, DEFAULT_PROPERTIES.mHeight);
 
         // Load OpenGL function pointers using GLAD
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
@@ -240,7 +242,7 @@ namespace IS {
         else
         {
             // Assign default properties
-            mProps = mDefaultProperties;
+            mProps = DEFAULT_PROPERTIES;
             IS_CORE_INFO("Using default window properties");
         }
     }

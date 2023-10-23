@@ -50,8 +50,6 @@ namespace IS {
                 : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mTargetFPS(fps), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
         };
 
-        static WindowProperties mDefaultProperties; ///< Default window properties.
-
         /*!
          * \brief Constructs a WindowSystem object.
          */
