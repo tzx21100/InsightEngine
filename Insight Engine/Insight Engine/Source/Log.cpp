@@ -27,9 +27,9 @@ namespace IS {
 
     void Log::Init(bool enable_output) {
         mCoreLogger = std::make_shared<Logger>("Insight");
-        mCoreLogger->SetLogLevel(aLogLevel::Trace);
+        mCoreLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
         mClientLogger = std::make_shared<Logger>("Fragments");
-        mClientLogger->SetLogLevel(aLogLevel::Trace);
+        mClientLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
 
         if (enable_output) {
             mCoreLogger->EnableFileOutput();

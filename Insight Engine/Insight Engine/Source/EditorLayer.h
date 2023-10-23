@@ -79,6 +79,13 @@ namespace IS {
          */
         static Vec2 GetDockspacePosition();
 
+        /*!
+         * \brief Load a scene.
+         *
+         * \param path Path to the scene.
+         */
+        static void OpenScene(const char* path);
+
     private:
         static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.

@@ -35,6 +35,7 @@ namespace IS {
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin("Hierarchy");
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         // Display entity count
         EditorUtils::RenderEntityCount();
@@ -53,9 +54,9 @@ namespace IS {
             }
         }
         ImGui::EndChild();
-
+        
         // Deselect entity
-        if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+        if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && (ImGui::IsItemHovered() || ImGui::IsWindowHovered()))
             SceneHierarchyPanel::ResetSelection();
 
         ImGuiPopupFlags flags = ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight;
@@ -70,7 +71,8 @@ namespace IS {
             ImGui::EndPopup();
         }
 
-        ImGui::End();
+        ImGui::PopStyleVar();
+        ImGui::End(); // end window Hierarchy
 
         mInspectorPanel->RenderPanel();
     }
@@ -94,7 +96,7 @@ namespace IS {
             if (ImGui::MenuItem("Delete Entity")) {
                 engine.DeleteEntity(entity);
                 if (mSelectedEntity && *mSelectedEntity == entity)
-                    mSelectedEntity = {};
+                    mSelectedEntity.reset();
             }
 
             ImGui::EndPopup();
@@ -119,7 +121,7 @@ namespace IS {
             if (ImGui::Button("CONFIRM")) {
                 engine.DeleteEntity(entity);
                 if (mSelectedEntity && *mSelectedEntity == entity)
-                    mSelectedEntity = {};
+                    mSelectedEntity.reset();
                 show = false;
             }
             ImGui::PopStyleColor(3);
@@ -131,7 +133,7 @@ namespace IS {
         }
     }
 
-    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity = {}; }
+    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity.reset(); }
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
@@ -195,7 +197,7 @@ namespace IS {
             }
             ImGui::PopItemWidth();
 
-            if (ImGui::IsMouseDown(0) && !ImGui::IsItemHovered() && !begin_combo)
+            if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGui::IsItemHovered() && !begin_combo)
                 mShowPrefabs = false;
         }
 
@@ -283,7 +285,7 @@ namespace IS {
                 ImGui::PushFont(font_bold);
                 ImGui::TextUnformatted("Texture");
                 ImGui::PopFont();
-                ImTextureID texture_id = std::bit_cast<void*>(static_cast<uintptr_t>(sprite.img.texture_id));
+                ImTextureID texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
                 const float texture_width = static_cast<float>(sprite.texture_width);
                 const float texture_height = static_cast<float>(sprite.texture_height);
                 const float texture_aspect_ratio = texture_width / texture_height;
@@ -385,18 +387,14 @@ namespace IS {
                 ImGui::TextUnformatted("Body Type");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::PushItemWidth(80.f);
                 EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
-                ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(font_bold);
                 ImGui::TextUnformatted("Body Shape");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::PushItemWidth(80.f);
                 EditorUtils::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
-                ImGui::PopItemWidth();
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(font_bold);

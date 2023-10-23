@@ -28,7 +28,13 @@ namespace IS {
     /*!
      * \brief Type of font stored in imgui fonts array.
      */
-    enum class aFontType : int { FONT_TYPE_DEFAULT = 0, FONT_TYPE_BOLD, FONT_TYPE_ITALIC };
+    enum class aFontType : int {
+        FONT_TYPE_DEFAULT = 0,
+        FONT_TYPE_BOLD,
+        FONT_TYPE_ITALIC,
+        FONT_TYPE_LOG_DEFAULT,
+        FONT_TYPE_LOG_BOLD
+    };
 
     /*!
      * \brief Namespace containing all utility functions for the editor.
@@ -41,6 +47,13 @@ namespace IS {
          * \return The integer version of the given font type.
          */
         int FontTypeToInt(aFontType font_type);
+
+        /*!
+         * \brief Converts tex id from GLuint to ImTextureID.
+         * \param tex_id Texture id to be converted.
+         * \return The ImTextureID version of the given texture id.
+         */
+        ImTextureID ConvertTextureID(GLuint tex_id);
 
         /*!
          * \brief -operator overload for ImVec2.
@@ -67,7 +80,7 @@ namespace IS {
         /*!
          * \brief Renders the filter input text box with hint text.
          * \param filter The imgui text filter to render.
-         * \param hitn The hint to render in the filter input text box.
+         * \param hint The hint to render in the filter input text box.
          */
         void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint);
 
@@ -90,22 +103,33 @@ namespace IS {
          *
          * This function renders a combo box for an enumeration type with provided label and options using ImGui.
          *
-         * \tparam T The enumeration type.
+         * \tparam EnumType The enumeration type.
          * \param label The label for the combo box.
          * \param enum_value The reference to the enumeration value to be controlled and displayed.
          * \param item_list The list of item names for the combo box.
          */
-        template <typename T>
-        void RenderComboBoxEnum(const char* label, T& enum_value, std::initializer_list<const char*> item_list) {
+        template <typename EnumType>
+        void RenderComboBoxEnum(const char* label, EnumType& enum_value, std::initializer_list<const char*> item_list) {
+            auto longest_item = std::max_element(item_list.begin(), item_list.end(), [](const char* lhs, const char* rhs) {
+                return std::strlen(lhs) < std::strlen(rhs);
+            });
             std::vector<const char*> items = item_list;
-
             size_t current_item = static_cast<size_t>(enum_value);
+
+            // Compute the width of the combo box based on the longest item
+            ImGuiStyle& style = ImGui::GetStyle();
+            const float PADDING = style.FramePadding.x;
+            const float LONGEST_ITEM_WIDTH = ImGui::CalcTextSize(*longest_item).x + 2 * PADDING;
+            const float ARROW_WIDTH = style.ItemSpacing.x + 2 * PADDING;
+            const float COMBO_WIDTH = LONGEST_ITEM_WIDTH + ARROW_WIDTH + PADDING;
+
+            ImGui::SetNextItemWidth(COMBO_WIDTH);
             if (ImGui::BeginCombo(label, items[current_item])) {
                 for (size_t i{}; i < items.size(); ++i) {
                     const bool is_selected = (current_item == i);
                     if (ImGui::Selectable(items[i], is_selected)) {
                         current_item = i;
-                        enum_value = static_cast<T>(i);
+                        enum_value = static_cast<EnumType>(i);
                     }
                     if (is_selected)
                         ImGui::SetItemDefaultFocus();

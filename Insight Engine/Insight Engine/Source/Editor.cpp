@@ -44,13 +44,12 @@ namespace IS {
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
         // Add Fonts
-        static const float FONT_SIZE = 16.f;
-        // Default Font
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", FONT_SIZE);
-        // Bold Font
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", FONT_SIZE);
-        // Italic Font
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Italic.ttf", FONT_SIZE);
+        const float FONT_SIZE = 16.f;
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", FONT_SIZE); // default
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", FONT_SIZE); // bold
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Italic.ttf", FONT_SIZE); // italic
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf", FONT_SIZE); // log console default
+        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto_Mono/static/RobotoMono-Bold.ttf", FONT_SIZE); // log console bold
 
         // Setup Dear ImGui style
 

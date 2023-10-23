@@ -21,6 +21,7 @@
 #include "EditorUtils.h"
 #include "Graphics.h"
 #include "CoreEngine.h"
+#include "AssetBrowserPanel.h"
 
 // Dependencies
 #include <ranges>
@@ -110,12 +111,13 @@ namespace IS {
     }
 
     void EditorLayer::AddPanels() {
+        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
         mPanels.emplace_back(mSceneHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<ScenePanel>());
-        mPanels.emplace_back(std::make_shared<LogConsolePanel>());
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
+        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel->GetSelectedEntity()));
+        mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
+        mPanels.emplace_back(std::make_shared<LogConsolePanel>());
     }
 
     void EditorLayer::RenderMenuBar() {
@@ -234,13 +236,27 @@ namespace IS {
             std::ranges::copy(source, std::begin(name));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##OpenScene", name, sizeof(name), input_flags) || ImGui::Button("Open")) {
+            bool enter_pressed = ImGui::InputText("##OpenScene", name, sizeof(name), input_flags);
+            ImGui::SameLine();
+            bool button_pressed = ImGui::Button("Open");
+            if (enter_pressed || button_pressed) {
                 InsightEngine::Instance().LoadScene(name);
                 mShowLoad = false;
+
+                IS_CORE_TRACE("Selected Entity reference count: {}", mSceneHierarchyPanel->GetSelectedEntity().use_count());
             }
 
             ImGui::EndPopup(); // end popup Open Scene...
         }
+    }
+
+    void EditorLayer::OpenScene(const char* path) {
+        std::string name = path;
+        std::string prefix = "Scene\\";
+        if (name.substr(0, prefix.length()) == prefix)
+            name.erase(0, prefix.length());
+
+        InsightEngine::Instance().LoadScene(name);
     }
 
     void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene("testscene"); }

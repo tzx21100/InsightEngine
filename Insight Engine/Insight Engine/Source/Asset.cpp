@@ -52,6 +52,16 @@ namespace IS {
             }
         }
 
+        for (const auto& entry : fs::directory_iterator("Assets/Icons/")) {
+            std::string file_path = entry.path().string();
+            std::string extension = entry.path().extension().string();
+
+            // Check image extensions
+            if (extension == ".png") {
+                ImageLoad(file_path);
+            }
+        }
+
         // Gets all prefabs and loads them to a list.
         path = "Assets/Prefabs";
         for (const auto& entry : fs::directory_iterator(path)) {
@@ -62,7 +72,7 @@ namespace IS {
             if (extension == ".json") {
                 Prefab to_list = engine.LoadPrefabFromFile(file_path);
                 mPrefabList[to_list.mName] = to_list;
-                IS_CORE_DEBUG("Loaded Prefab: {} ", file_path);
+                IS_CORE_INFO("Loaded Prefab: {} ", file_path);
             }
         }
 
@@ -71,7 +81,7 @@ namespace IS {
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().filename().string();
             mSceneList.emplace_back(file_path);
-            IS_CORE_DEBUG("Loaded Scene: {} ", file_path);
+            IS_CORE_INFO("Loaded Scene: {} ", file_path);
         }
 
         // loads all audio and store it
@@ -88,7 +98,7 @@ namespace IS {
                 std::string sound_name = entry.path().filename().string();
                 SaveSound(sound_name, sound);
                 SaveChannel(sound_name, channel);
-                IS_CORE_DEBUG("Loaded Sound: {} ", sound_name);
+                IS_CORE_INFO("Loaded Sound: {} ", sound_name);
                 
             }
         }
@@ -138,7 +148,7 @@ namespace IS {
             IS_CORE_INFO("Handling Debug");
         }
     }
-
+    
     const Image& AssetManager::GetImage(const std::string& file_name) const {
         auto iter = mImageList.find(file_name);
         if (iter != mImageList.end()) {
