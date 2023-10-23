@@ -127,6 +127,9 @@
     <ClCompile Include="Source\AssetBrowserPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -302,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="Source\AssetBrowserPanel.h">
       <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Graphics\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

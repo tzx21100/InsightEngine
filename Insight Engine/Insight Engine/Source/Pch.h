@@ -47,6 +47,7 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Mesh.h"
 #include "Sprite.h"
 #include "Transform.h"
+#include "Camera.h"
 #include "Input.h"
 #include "Text.h"
 #include "Graphics.h"
