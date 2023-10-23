@@ -22,14 +22,14 @@ namespace IS {
 
         //imagine this is AE engine screen
 
-        Entity entity_player{};
-        Entity entity_test{};
-        Entity entity_floor{};
-        Entity entity_point{};
-        Entity entity_line{};
-        Entity entity_circle{};
-        Entity entity_quad{};
-        Entity entity_button{};
+        //Entity entity_player{};
+        //Entity entity_test{};
+        //Entity entity_floor{};
+        //Entity entity_point{};
+        //Entity entity_line{};
+        //Entity entity_circle{};
+        //Entity entity_quad{};
+        //Entity entity_button{};
 
         //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
@@ -71,85 +71,85 @@ namespace IS {
             ISGraphics::textures.emplace_back(*truck_anim_image);
 
             //creating game object and their components
-            entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
-            entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody,ScriptComponent>("Player");
-            entity_test = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
-            entity_floor = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
-            entity_circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Circle");
-            entity_line = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Line");
-            entity_point = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Point");
-            entity_button = engine.CreateEntityWithComponents<ButtonComponent>("Button");
+            //entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
+            //entity_player = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody,ScriptComponent>("Player");
+            //entity_test = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Test Texture");
+            //entity_floor = engine.CreateEntityWithComponents<Sprite, InputAffector, Transform, RigidBody>("Floor");
+            //entity_circle = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Circle");
+            //entity_line = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Line");
+            //entity_point = engine.CreateEntityWithComponents<Sprite, Transform>("Clock Point");
+            //entity_button = engine.CreateEntityWithComponents<ButtonComponent>("Button");
 
-            auto& trans_quad = engine.GetComponent<Transform>(entity_quad);
-            auto& trans_player = engine.GetComponent<Transform>(entity_player);
-            auto& trans_test = engine.GetComponent<Transform>(entity_test);
-            auto& trans_floor = engine.GetComponent<Transform>(entity_floor);
-            auto& trans_circle = engine.GetComponent<Transform>(entity_circle);
-            auto& trans_line = engine.GetComponent<Transform>(entity_line);
-            auto& trans_point = engine.GetComponent<Transform>(entity_point);
+            //auto& trans_quad = engine.GetComponent<Transform>(entity_quad);
+            //auto& trans_player = engine.GetComponent<Transform>(entity_player);
+            //auto& trans_test = engine.GetComponent<Transform>(entity_test);
+            //auto& trans_floor = engine.GetComponent<Transform>(entity_floor);
+            //auto& trans_circle = engine.GetComponent<Transform>(entity_circle);
+            //auto& trans_line = engine.GetComponent<Transform>(entity_line);
+            //auto& trans_point = engine.GetComponent<Transform>(entity_point);
 
-            auto& player_script = engine.GetComponent<ScriptComponent>(entity_player);
-            player_script.mScriptName = "PlayerScript";
+            //auto& player_script = engine.GetComponent<ScriptComponent>(entity_player);
+            //player_script.mScriptName = "PlayerScript";
 
-            auto& body_player = engine.GetComponent<RigidBody>(entity_player);
-            auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);
+            //auto& body_player = engine.GetComponent<RigidBody>(entity_player);
+            //auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);
 
-            auto& sprite_background = engine.GetComponent<Sprite>(entity_quad);
-            auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
-            auto& sprite_test = engine.GetComponent<Sprite>(entity_test);
-            auto& sprite_circle = engine.GetComponent<Sprite>(entity_circle);
-            auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
-            auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
+            //auto& sprite_background = engine.GetComponent<Sprite>(entity_quad);
+            //auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
+            //auto& sprite_test = engine.GetComponent<Sprite>(entity_test);
+            //auto& sprite_circle = engine.GetComponent<Sprite>(entity_circle);
+            //auto& sprite_line = engine.GetComponent<Sprite>(entity_line);
+            //auto& sprite_point = engine.GetComponent<Sprite>(entity_point);
 
-            sprite_background.texture_width = black_background->width;
-            sprite_background.texture_height = black_background->height;
-            sprite_background.img = *black_background;
+            //sprite_background.texture_width = black_background->width;
+            //sprite_background.texture_height = black_background->height;
+            //sprite_background.img = *black_background;
 
-            sprite_player.name = "player_sprite";
-            sprite_player.texture_width = idle_anim_image->width;
-            sprite_player.texture_height = idle_anim_image->height;
-            sprite_player.anims.emplace_back(idle_ani);
-            sprite_player.anims.emplace_back(walking_ani);
-            sprite_player.img = *idle_anim_image;
-            // sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
-            // sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
+            //sprite_player.name = "player_sprite";
+            //sprite_player.texture_width = idle_anim_image->width;
+            //sprite_player.texture_height = idle_anim_image->height;
+            //sprite_player.anims.emplace_back(idle_ani);
+            //sprite_player.anims.emplace_back(walking_ani);
+            //sprite_player.img = *idle_anim_image;
+            //// sprite_player.anim_vect.emplace_back(ISGraphics::idle_ani);
+            //// sprite_player.anim_vect.emplace_back(ISGraphics::walking_ani);
 
-            sprite_test.texture_width = backgroundTest->width;
-            sprite_test.texture_height = backgroundTest->height;
-            sprite_test.img = *backgroundTest;
+            //sprite_test.texture_width = backgroundTest->width;
+            //sprite_test.texture_height = backgroundTest->height;
+            //sprite_test.img = *backgroundTest;
 
-            auto [width, height] = engine.GetWindowSize();
+            //auto [width, height] = engine.GetWindowSize();
 
-            trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
-            trans_player.setScaling(width * 0.05375f, height * 0.13333333f);
-            trans_player.setWorldPosition(width * 0.f, height * 0.f);
-            trans_test.setScaling(width * -0.0625f, height * 0.11111111f);
-            trans_test.setWorldPosition(width * -0.25f, height * 0.f);
-            trans_floor.setScaling(width * 0.56034f, height * 0.10441f);
-            trans_floor.setWorldPosition(width * -0.00050056f, height * -0.443105f);
-            body_player.mAngularVelocity = 10.f;
-            body_player.mRestitution = 0.1f;
-            body_floor.mBodyType = BodyType::Static;
-            body_floor.mMass = 99999.f;
-            body_floor.mInvMass = 1.f / 99999.f;
+            //trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
+            //trans_player.setScaling(width * 0.05375f, height * 0.13333333f);
+            //trans_player.setWorldPosition(width * 0.f, height * 0.f);
+            //trans_test.setScaling(width * -0.0625f, height * 0.11111111f);
+            //trans_test.setWorldPosition(width * -0.25f, height * 0.f);
+            //trans_floor.setScaling(width * 0.56034f, height * 0.10441f);
+            //trans_floor.setWorldPosition(width * -0.00050056f, height * -0.443105f);
+            //body_player.mAngularVelocity = 10.f;
+            //body_player.mRestitution = 0.1f;
+            //body_floor.mBodyType = BodyType::Static;
+            //body_floor.mMass = 99999.f;
+            //body_floor.mInvMass = 1.f / 99999.f;
 
-            trans_circle.setWorldPosition(width * 0.406f, height * 0.33333333f);
-            trans_circle.setScaling(width * 0.125f, height * 0.22222222f);
-            sprite_circle.primitive_type = GL_TRIANGLE_FAN;
+            //trans_circle.setWorldPosition(width * 0.406f, height * 0.33333333f);
+            //trans_circle.setScaling(width * 0.125f, height * 0.22222222f);
+            //sprite_circle.primitive_type = GL_TRIANGLE_FAN;
 
 
-            trans_line.setWorldPosition(width * 0.406f, height * 0.33333333f);
-            trans_line.setScaling(width * 0.125f, height * 0.24972f);
-            trans_line.setRotation(0.f, 40.f);
-            sprite_line.primitive_type = GL_LINES;
+            //trans_line.setWorldPosition(width * 0.406f, height * 0.33333333f);
+            //trans_line.setScaling(width * 0.125f, height * 0.24972f);
+            //trans_line.setRotation(0.f, 40.f);
+            //sprite_line.primitive_type = GL_LINES;
 
-            trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
-            sprite_point.primitive_type = GL_POINTS;
+            //trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
+            //sprite_point.primitive_type = GL_POINTS;
 
             
         }
 
-        virtual void Update(float delta) override {
+        virtual void Update([[maybe_unused]] float delta) override {
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetSystem<Editor>("Editor");
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
@@ -185,11 +185,11 @@ namespace IS {
                         return;
                 }
 
-                if (engine.HasComponent<Transform>(entity_player)) {
-                    auto& trans_player = engine.GetComponent<Transform>(entity_player);
-                    //ISgraphics::camera.UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
-                    Camera::Instance().UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
-                }
+                //if (engine.HasComponent<Transform>(entity_player)) {
+                //    auto& trans_player = engine.GetComponent<Transform>(entity_player);
+                //    //ISgraphics::camera.UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
+                //    Camera::Instance().UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
+                //}
 
                 //if (engine.HasComponent<Sprite>(entity_player)) {
                 //    auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
@@ -235,25 +235,25 @@ namespace IS {
                 //}
 
                 // rotate lines on clock
-                if (engine.HasComponent<Transform>(entity_line)) {
-                    auto& trans_lines = engine.GetComponent<Transform>(entity_line);
-                    trans_lines.rotation += trans_lines.angle_speed * delta;
-                }
+                //if (engine.HasComponent<Transform>(entity_line)) {
+                //    auto& trans_lines = engine.GetComponent<Transform>(entity_line);
+                //    trans_lines.rotation += trans_lines.angle_speed * delta;
+                //}
 
-                if (input->IsKeyPressed(GLFW_KEY_Z)) {
-                    asset->PlaySoundByName("sound.MP3");
-                    SceneManager::Instance().CreateScene("zx_test");
-                }
-                if (input->IsKeyPressed(GLFW_KEY_X)) {
-                    asset->PlayMusicByName("music.wav");
-                    SceneManager::Instance().CreateScene("zx_test2");
-                }
-                if (input->IsKeyPressed(GLFW_KEY_0)) {
-                    SceneManager::Instance().SwitchScene(0);
-                }
-                if (input->IsKeyPressed(GLFW_KEY_1)) {
-                    SceneManager::Instance().SwitchScene(1);
-                }
+                //if (input->IsKeyPressed(GLFW_KEY_Z)) {
+                //    asset->PlaySoundByName("sound.MP3");
+                //    SceneManager::Instance().CreateScene("zx_test");
+                //}
+                //if (input->IsKeyPressed(GLFW_KEY_X)) {
+                //    asset->PlayMusicByName("music.wav");
+                //    SceneManager::Instance().CreateScene("zx_test2");
+                //}
+                //if (input->IsKeyPressed(GLFW_KEY_0)) {
+                //    SceneManager::Instance().SwitchScene(0);
+                //}
+                //if (input->IsKeyPressed(GLFW_KEY_1)) {
+                //    SceneManager::Instance().SwitchScene(1);
+                //}
 
 
             }
