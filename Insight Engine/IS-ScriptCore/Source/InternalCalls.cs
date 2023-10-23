@@ -38,7 +38,7 @@ namespace IS
         internal extern static uint GetCurrentEntity(string name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodyAddForce(float x,float y);
+        internal extern static void RigidBodyAddForce(float x, float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodyAddForceEntity(float x, float y, uint entity);
@@ -67,6 +67,14 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetDeltaTime();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetSpriteImage(SimpleImage image);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleImage GetSpriteImage(string filename);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void EmplaceImageToGraphics(SimpleImage image);
 
     }
 }

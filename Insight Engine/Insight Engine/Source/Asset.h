@@ -61,6 +61,7 @@ namespace IS {
         StbAllocated
     };
 
+
     struct Image { 
         //image data should just be in image itself
         std::string mFileName{};
@@ -71,8 +72,50 @@ namespace IS {
         GLuint texture_id{}; // actual ID given my openGL
         unsigned long mTextureData{};
         int texture_index{}; // Sequential, first texture IN USE has index 0, second has 1 ...
-        AllocationType mAllocationType{};
+        //AllocationType mAllocationType{};
     };
+
+    //converstion to C#
+    struct SimpleImage {
+        char* mFileName; // pointer to null-terminated string
+        int width;
+        int height;
+        int channels;
+        size_t size;
+        GLuint texture_id;
+        unsigned long mTextureData;
+        int texture_index;
+    };
+
+    // Convert Image to SimpleImage
+    inline SimpleImage ConvertToSimpleImage(const Image& image) {
+        SimpleImage simg;
+        simg.mFileName = new char[image.mFileName.length() + 1];
+        strcpy(simg.mFileName, image.mFileName.c_str());
+
+        simg.width = image.width;
+        simg.height = image.height;
+        simg.channels = image.channels;
+        simg.size = image.size;
+        simg.texture_id = image.texture_id;
+        simg.mTextureData = image.mTextureData;
+        simg.texture_index = image.texture_index;
+        return simg;
+    }
+    // Convert from SimpleImage
+    inline Image ConvertToImage(const SimpleImage& simg) {
+        Image img;
+        img.mFileName = std::string(simg.mFileName); // Convert char* to std::string
+
+        img.width = simg.width;
+        img.height = simg.height;
+        img.channels = simg.channels;
+        img.size = simg.size;
+        img.texture_id = simg.texture_id;
+        img.mTextureData = simg.mTextureData;
+        img.texture_index = simg.texture_index;
+        return img;
+    }
 
     /*!
      * \brief The AssetManager class manages game assets.

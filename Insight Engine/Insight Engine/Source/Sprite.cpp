@@ -221,6 +221,7 @@ namespace IS {
         spriteData["SpriteTextureWidth"] = texture_width;
         spriteData["SpriteTextureHeight"] = texture_height;
         spriteData["SpriteCurrentTexIndex"] = animation_index;
+        spriteData["SpriteTextureIndex"] = img.texture_index;
 
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
@@ -249,6 +250,7 @@ namespace IS {
 
         // Deserializing texture-related properties
         img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        img.texture_index = data["SpriteTextureIndex"].asInt();
         texture_width = data["SpriteTextureWidth"].asUInt();
         texture_height = data["SpriteTextureHeight"].asUInt();
         animation_index = data["SpriteCurrentTexIndex"].asInt();
