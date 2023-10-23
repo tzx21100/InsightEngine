@@ -47,8 +47,6 @@ namespace IS {
         Animation walking_ani;
         Animation ice_cream_truck_ani;
 
-        Camera camera;
-
         virtual void Initialize() override {
             //create a image
             backgroundTest = asset->GetImage("Assets/placeholder_background.png");
@@ -149,8 +147,6 @@ namespace IS {
 
             trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             sprite_point.primitive_type = GL_POINTS;
-
-            camera.UpdateCamDim(1000.f);
         }
 
         virtual void Update(float delta) override {
@@ -191,7 +187,8 @@ namespace IS {
 
                 if (engine.HasComponent<Transform>(entity_player)) {
                     auto& trans_player = engine.GetComponent<Transform>(entity_player);
-                    camera.UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
+                    //ISgraphics::camera.UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
+                    Camera::Instance().UpdateCamPos(trans_player.world_position.x, trans_player.world_position.y);
                 }
 
                 //if (engine.HasComponent<Sprite>(entity_player)) {

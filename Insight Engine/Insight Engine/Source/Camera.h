@@ -12,8 +12,7 @@
 namespace IS {
 	class Camera {
 	public:
-
-		Camera();
+		static Camera& Instance() { static Camera instance; return instance; }
 
 		void UpdateCamPos(float newX, float newY);
 		void UpdateCamDim(float newWidth);
@@ -25,6 +24,9 @@ namespace IS {
 		glm::vec2 GetVVector();
 
 	private:
+		Camera();
+		~Camera() = default;
+
 		glm::vec2 world_position{};
 		glm::vec2 camera_dim{};
 		glm::vec2 uVector{}; // camera x/y axis
