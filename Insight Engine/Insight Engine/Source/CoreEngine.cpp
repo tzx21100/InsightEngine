@@ -115,6 +115,8 @@ namespace IS {
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
         }
+        auto script = GetSystem<ScriptManager>("ScriptManager");
+        script->CleanUp();
         DestroyAllSystems();
     }
 
@@ -262,9 +264,9 @@ namespace IS {
             constexpr float RARE = 0.8f;
 
             Image random_img =
-                (gacha <= ULTRA_RARE) ? asset->GetImage("Assets/icecream_truck_frame.png") :
-                (gacha <= SUPER_RARE) ? asset->GetImage("Assets/player_frame.png") :
-                (gacha <= RARE) ? asset->GetImage("Assets/wii.png") : asset->GetImage("Assets/placeholder_background.png");
+                (gacha <= ULTRA_RARE) ? *asset->GetImage("Assets/icecream_truck_frame.png") :
+                (gacha <= SUPER_RARE) ? *asset->GetImage("Assets/player_frame.png") :
+                (gacha <= RARE) ? *asset->GetImage("Assets/wii.png") : *asset->GetImage("Assets/placeholder_background.png");
             sprite.img.texture_id = static_cast<uint8_t>(random_img.mTextureData);
             sprite.texture_width = random_img.width;
             sprite.texture_height = random_img.height;
