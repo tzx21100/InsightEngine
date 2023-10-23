@@ -33,10 +33,10 @@ namespace IS {
         float model_scale_x = model_TRS.scaling.x / 2.f;
         float model_scale_y = model_TRS.scaling.y / 2.f;
 
-        glm::vec2 cameraPos = { 0.f, 0.f };
-        glm::vec2 cameraU = { cosf(glm::radians(0.f)), sinf(glm::radians(0.f)) };
-        glm::vec2 cameraV = { -cameraU.y, cameraU.x }; // -b/a
-        glm::vec2 cameraDim = { width, height };
+        glm::vec2 cameraPos = ISGraphics::camera.GetCamPos();
+        glm::vec2 cameraU = ISGraphics::camera.GetUVector();
+        glm::vec2 cameraV = ISGraphics::camera.GetVVector(); // -b/a
+        glm::vec2 cameraDim = ISGraphics::camera.GetCamDim();
 
         float map_scale_x = 2.f / cameraDim.x;
         float map_scale_y = 2.f / cameraDim.y;

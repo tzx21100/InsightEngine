@@ -23,7 +23,8 @@ namespace IS {
     /// Static objects ///
     std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
-    
+    Camera ISGraphics::camera{};
+
     // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
     // Animation objects
