@@ -9,8 +9,8 @@ namespace IS
     {
         //private entity
         private static uint entity;
-        static SimpleImage player_walk = InternalCalls.GetSpriteImage("Assets/player_walking.png");
-        static SimpleImage player_idle = InternalCalls.GetSpriteImage("Assets/player_idle.png");
+        static SimpleImage player_walk =  InternalCalls.GetSpriteImage("Assets/player_walking.png");
+        static SimpleImage player_idle =  InternalCalls.GetSpriteImage("Assets/player_idle.png");
        
 
         public static int BoolToInt(bool boolValue)
@@ -20,19 +20,19 @@ namespace IS
 
         static public void Init()
         {
-            InternalCalls.EmplaceImageToGraphics(player_walk);
-            InternalCalls.EmplaceImageToGraphics(player_idle);
+            //InternalCalls.EmplaceImageToGraphics(player_walk);
+            //InternalCalls.EmplaceImageToGraphics(player_idle);
             // Initialization code
             Console.WriteLine("ctor!");
             entity = InternalCalls.GetCurrentEntity("Player");
-            InternalCalls.NativeLog("Entity Initialized", (int)entity);
+            //InternalCalls.NativeLog("Entity Initialized", (int)entity);
         }
 
         static public void Update()
         {
 
-            player_walk.texture_index = 2;
-            player_idle.texture_index = 3;
+            //player_walk.texture_index = 2;
+            //player_idle.texture_index = 3;
 
             // Update code
             if (InternalCalls.MouseHeld(1) == true)
@@ -60,17 +60,25 @@ namespace IS
             InternalCalls.TransformSetRotation(trans_rotate, 10);
 
             if (hori_movement != 0 || verti_movement != 0) {
+                //InternalCalls.NativeLog("texture_index", player_walk.texture_index);
                 InternalCalls.SetSpriteImage(player_walk);
+                InternalCalls.SetSpriteAnimationIndex(1);
             }
             else
             {
                 InternalCalls.SetSpriteImage(player_idle);
+                InternalCalls.SetSpriteAnimationIndex(0);
             }
-
 
 
         }
 
+        static public void CleanUp()
+        {
+            InternalCalls.FreeSpriteImage(player_idle);
+            InternalCalls.FreeSpriteImage(player_walk);
+        }
+       
 
     }
 

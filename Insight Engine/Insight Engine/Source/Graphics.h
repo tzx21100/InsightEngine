@@ -95,6 +95,7 @@ namespace IS {
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
 		static std::vector<Image> textures;
+		//static Camera camera;
 
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;

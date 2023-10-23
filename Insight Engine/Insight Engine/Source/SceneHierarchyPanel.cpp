@@ -62,7 +62,7 @@ namespace IS {
         
         // Deselect entity
         if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && (ImGui::IsItemHovered() || ImGui::IsWindowHovered()))
-            SceneHierarchyPanel::ResetSelection();
+            ResetSelection();
 
         ImGuiPopupFlags flags = ImGuiPopupFlags_NoOpenOverItems | ImGuiPopupFlags_MouseButtonRight;
         if (ImGui::BeginPopupContextWindow(0, flags))

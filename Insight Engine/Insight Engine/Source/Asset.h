@@ -92,7 +92,7 @@ namespace IS {
         SimpleImage simg;
         simg.mFileName = new char[image.mFileName.length() + 1];
         strcpy(simg.mFileName, image.mFileName.c_str());
-
+        
         simg.width = image.width;
         simg.height = image.height;
         simg.channels = image.channels;
@@ -148,7 +148,24 @@ namespace IS {
          *
          * Unloads all assets and releases resources.
          */
-        ~AssetManager() { mSoundList.clear(); mImageList.clear(); }
+        ~AssetManager() { 
+            // Release memory for images
+            for (auto& imagePair : mImageList) {
+                if (imagePair.second.texture_id) {
+                    glDeleteTextures(1, &imagePair.second.texture_id); // release OpenGL texture
+                }
+            }
+            mImageList.clear();
+            mImageNames.clear();
+
+            // Release FMOD Sound objects
+            mSoundList.clear();
+            mChannelList.clear();
+
+            // Clear other lists
+            mPrefabList.clear();
+            mSceneList.clear();
+        }
 
         /*!
          * \brief Retrieves image data by file name.
@@ -156,7 +173,7 @@ namespace IS {
          * \param file_name The name of the image file.
          * \return A reference to the Image structure containing image data.
          */
-        const Image& GetImage(const std::string& file_name) const;
+        Image* GetImage(const std::string& file_name);
 
         /*!
          * \brief Loads image data from a file.
@@ -299,6 +316,8 @@ namespace IS {
         std::vector<std::string>mImageNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
+
+
 
     private:
         //const char* filename;

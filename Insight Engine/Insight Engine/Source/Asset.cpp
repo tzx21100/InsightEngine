@@ -149,10 +149,10 @@ namespace IS {
         }
     }
     
-    const Image& AssetManager::GetImage(const std::string& file_name) const {
+    Image* AssetManager::GetImage(const std::string& file_name)  {
         auto iter = mImageList.find(file_name);
         if (iter != mImageList.end()) {
-            return iter->second;
+            return &(iter->second);
         }
         throw std::runtime_error("Image not found.");
     }

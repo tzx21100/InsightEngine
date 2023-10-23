@@ -174,12 +174,25 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        return ConvertToSimpleImage(system->GetImage(str));
+        return ConvertToSimpleImage(*(system->GetImage(str)));
         
     }
 
     static void EmplaceImageToGraphics(SimpleImage image) {
         ISGraphics::textures.emplace_back(ConvertToImage(image));
+    }
+
+    static void SetSpriteAnimationIndex(int num) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        sprite_component.animation_index = num;
+    }
+
+    static void FreeSpriteImage(SimpleImage* simg)
+    {
+        if (simg && simg->mFileName) {
+            delete[] simg->mFileName;
+            simg->mFileName = nullptr;
+        }
     }
 
 
@@ -217,10 +230,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
         IS_ADD_INTERNAL_CALL(GetDeltaTime);
 
-        // Images
+        // Images and Sprite
         IS_ADD_INTERNAL_CALL(SetSpriteImage);
         IS_ADD_INTERNAL_CALL(GetSpriteImage);
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
+        IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
+        IS_ADD_INTERNAL_CALL(FreeSpriteImage);
 
 
 

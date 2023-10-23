@@ -41,6 +41,7 @@ namespace IS {
                 mEntityScriptCaller = entity;
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
                 scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
+
             }
         }
     }
@@ -58,6 +59,10 @@ namespace IS
 
         static public void Update(){
             
+        }
+        
+        static public void CleanUp(){
+
         }
 
     }
@@ -89,4 +94,17 @@ namespace IS
         FileUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
         IS_CORE_DEBUG("Script File: {}", filepath);
     }
+
+    void ScriptManager::CleanUp() {
+        for (auto& entity : mEntities) {
+            auto& scriptcomponent = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
+            if (scriptcomponent.instance == nullptr) { return; }
+            mEntityScriptCaller = entity;
+            MonoMethod* cleanup = scriptcomponent.scriptClass.GetMethod("CleanUp", 0);
+            scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, cleanup, nullptr);
+            
+
+        }
+    }
+
 }

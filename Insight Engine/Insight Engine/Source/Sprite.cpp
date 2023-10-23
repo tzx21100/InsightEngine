@@ -21,49 +21,7 @@ namespace IS {
     int Sprite::texture_count = 0;
 
 	void Sprite::transform() {
-
-        // convert angle to radians
-        float angle_rad = glm::radians(model_TRS.rotation);
-
-        // to scale to world coordinates
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
-
-        float sin_angle = sinf(angle_rad);
-        float cos_angle = cosf(angle_rad);
-        float model_scale_x = model_TRS.scaling.x / 2.f;
-        float model_scale_y = model_TRS.scaling.y / 2.f;
-
-        glm::vec2 cameraPos = { 0.f, 0.f };
-        glm::vec2 cameraU = { cosf(glm::radians(0.f)), sinf(glm::radians(0.f)) };
-        glm::vec2 cameraV = { -cameraU.y, cameraU.x }; // -b/a
-        glm::vec2 cameraDim = { width, height };
-
-        float map_scale_x = 2.f / cameraDim.x;
-        float map_scale_y = 2.f / cameraDim.y;
-
-        float a = map_scale_x * cameraU.x;
-        float b = map_scale_x * cameraU.y;
-        float c = map_scale_x * (-glm::dot(cameraU, cameraPos));
-        float d = map_scale_y * cameraV.x;
-        float e = map_scale_y * cameraV.y;
-        float f = map_scale_y * (-glm::dot(cameraV, cameraPos));
-
-        float tx = model_TRS.world_position.x;
-        float ty = model_TRS.world_position.y;
-        //float wOver2 = width / 2.f;
-        //float hOver2 = height / 2.f;
-
-        glm::mat3 world_to_NDC_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-                                         (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,  // column 2
-                                         (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-
-
-        //glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
-        //                                 (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
-        //                                 (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
-
-        // save matrix
-        model_TRS.mdl_to_ndc_xform = GlmMat3ToISMtx33(world_to_NDC_xform);
+        model_TRS.mdl_to_ndc_xform = model_TRS.ReturnXformMatrix();
 	}
 
     void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
@@ -174,9 +132,10 @@ namespace IS {
 
         // Scaling
         float length = ISVector2DDistance(p0, p1);
+        Transform lineTRS(midpoint, glm::degrees(angle), { length, 0.f });
 
         // get line scaling matrix
-        glm::mat3 world_to_NDC_xform = lineTransform(midpoint, angle, length);
+        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
 
         // render
         Shader shader = ISGraphics::mesh_shader_pgm;
@@ -204,25 +163,25 @@ namespace IS {
         shader.unUse();
     }
 
-    glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
-        // similar to transform
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
-        float map_scale_x = 2.f / width;
-        float map_scale_y = 2.f / height;
+    //glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
+    //    // similar to transform
+    //    auto [width, height] = InsightEngine::Instance().GetWindowSize();
+    //    float map_scale_x = 2.f / width;
+    //    float map_scale_y = 2.f / height;
 
-        float sin_angle = sinf(rotate_angle_rad);
-        float cos_angle = cosf(rotate_angle_rad);
+    //    float sin_angle = sinf(rotate_angle_rad);
+    //    float cos_angle = cosf(rotate_angle_rad);
 
-        float model_scale_x = length_scale / 2.f;
-        float model_scale_y = 1.f; // no Y-scaling for line
+    //    float model_scale_x = length_scale / 2.f;
+    //    float model_scale_y = 1.f; // no Y-scaling for line
 
-        glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
-                                         (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
-                                         (map_scale_x * midpoint_translate.x),       (map_scale_y * midpoint_translate.y),       1.f }; // column 3
+    //    glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
+    //                                     (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
+    //                                     (map_scale_x * midpoint_translate.x),       (map_scale_y * midpoint_translate.y),       1.f }; // column 3
 
 
-        return world_to_NDC_xform;
-    }
+    //    return world_to_NDC_xform;
+    //}
 
     Json::Value Sprite::Serialize() {
         Json::Value spriteData;

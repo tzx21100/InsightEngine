@@ -63,6 +63,49 @@ namespace IS {
 		world_position.y += val.y;
 	}
 
+	Mtx33 Transform::ReturnXformMatrix() {
+		// convert angle to radians
+		float angle_rad = glm::radians(rotation);
+
+		// to scale to world coordinates
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+
+		float sin_angle = sinf(angle_rad);
+		float cos_angle = cosf(angle_rad);
+		float model_scale_x = scaling.x / 2.f;
+		float model_scale_y = scaling.y / 2.f;
+
+		glm::vec2 cameraPos = Camera::Instance().GetCamPos();
+		glm::vec2 cameraU = Camera::Instance().GetUVector();
+		glm::vec2 cameraV = Camera::Instance().GetVVector();
+		glm::vec2 cameraDim = Camera::Instance().GetCamDim();
+
+		float map_scale_x = 2.f / cameraDim.x;
+		float map_scale_y = 2.f / cameraDim.y;
+
+		float a = map_scale_x * cameraU.x;
+		float b = map_scale_x * cameraU.y;
+		float c = map_scale_x * (-glm::dot(cameraU, cameraPos));
+		float d = map_scale_y * cameraV.x;
+		float e = map_scale_y * cameraV.y;
+		float f = map_scale_y * (-glm::dot(cameraV, cameraPos));
+
+		float tx = world_position.x;
+		float ty = world_position.y;
+
+		glm::mat3 world_to_NDC_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
+										 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
+										 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
+
+
+		//glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
+		//                                 (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
+		//                                 (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
+
+		// save matrix
+		return GlmMat3ToISMtx33(world_to_NDC_xform);
+	}
+
 	Json::Value Transform::Serialize() {
 		Json::Value transformData;
 

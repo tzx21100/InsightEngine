@@ -176,7 +176,7 @@ namespace IS {
          * \param length_scale The length scaling factor.
          * \return The transformation matrix for the line sprite.
          */
-        static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
+        // static glm::mat3 lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale);
 
         /*!
          * \brief Deserializes the sprite data

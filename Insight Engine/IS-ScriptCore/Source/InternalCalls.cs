@@ -76,5 +76,11 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void EmplaceImageToGraphics(SimpleImage image);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetSpriteAnimationIndex(int num);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void FreeSpriteImage(SimpleImage image);
+
     }
 }

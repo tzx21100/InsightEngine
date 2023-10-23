@@ -61,6 +61,9 @@ namespace IS {
 
         float mScriptDeltaTime{};
 
+        void CleanUp();
+
+
     private:
         Entity mEntityScriptCaller{};
 

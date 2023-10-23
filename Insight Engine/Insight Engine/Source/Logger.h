@@ -7,7 +7,7 @@
  * This header file declares the interface for class Logger, which encapsulates
  * the functionalities of a Logger, and class LoggerGUI, which encapsulates the
  * functionalities of Logger graphical user interface.
- * 
+ *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
  * All rights reserved.
@@ -15,14 +15,14 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
-/*                                                                      guard
------------------------------------------------------------------------------ */
+ /*                                                                      guard
+ ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_DEBUG_LOGGER_H
 #define GAM200_INSIGHT_ENGINE_DEBUG_LOGGER_H
 
-/*                                                                   includes
------------------------------------------------------------------------------ */
-// dependencies
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
+ // dependencies
 #include <mutex>
 #include <string>
 #include <sstream>
@@ -36,13 +36,13 @@
 namespace IS {
 
     // ANSI escape codes for console formatting for color/style
-    constexpr const char RESET[]       = "\033[m";
-    constexpr const char BOLD[]        = "\033[1m";
-    constexpr const char WHITE[]       = "\033[37m";
-    constexpr const char CYAN[]        = "\033[36m";
-    constexpr const char GREEN[]       = "\033[32m";
+    constexpr const char RESET[] = "\033[m";
+    constexpr const char BOLD[] = "\033[1m";
+    constexpr const char WHITE[] = "\033[37m";
+    constexpr const char CYAN[] = "\033[36m";
+    constexpr const char GREEN[] = "\033[32m";
     constexpr const char YELLOW_BOLD[] = "\033[33m\033[1m";
-    constexpr const char RED_BOLD[]    = "\033[31m\033[1m";
+    constexpr const char RED_BOLD[] = "\033[31m\033[1m";
     constexpr const char BOLD_ON_RED[] = "\033[1m\033[41m";
 
     // Severity level of log
@@ -340,15 +340,15 @@ namespace IS {
     };
 
     template<typename... Args>
-    inline void Logger::Trace   (const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_TRACE, fmt, args...); }
+    inline void Logger::Trace(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_TRACE, fmt, args...); }
     template<typename... Args>
-    inline void Logger::Debug   (const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_DEBUG, fmt, args...); }
+    inline void Logger::Debug(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_DEBUG, fmt, args...); }
     template<typename... Args>
-    inline void Logger::Info    (const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_INFO, fmt, args...); }
+    inline void Logger::Info(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_INFO, fmt, args...); }
     template<typename... Args>
-    inline void Logger::Warn    (const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_WARNING, fmt, args...); }
+    inline void Logger::Warn(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_WARNING, fmt, args...); }
     template<typename... Args>
-    inline void Logger::Error   (const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_ERROR, fmt, args...); }
+    inline void Logger::Error(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_ERROR, fmt, args...); }
     template<typename... Args>
     inline void Logger::Critical(const char* fmt, Args&&... args) { Log(aLogLevel::LOGLEVEL_CRITICAL, fmt, args...); }
 
