@@ -14,9 +14,9 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset  = engine.GetSystem<AssetManager>("Asset");
 
-        mIcons["Folder"]     = std::make_unique<Image>(asset->GetImage("Assets/Icons/folder_icon.png"));
-        mIcons["File"]       = std::make_unique<Image>(asset->GetImage("Assets/Icons/file_icon.png"));
-        mIcons["BackButton"] = std::make_unique<Image>(asset->GetImage("Assets/Icons/back_icon.png"));
+        mIcons["Folder"]     = std::make_unique<Image>(*asset->GetImage("Assets/Icons/folder_icon.png"));
+        mIcons["File"]       = std::make_unique<Image>(*asset->GetImage("Assets/Icons/file_icon.png"));
+        mIcons["BackButton"] = std::make_unique<Image>(*asset->GetImage("Assets/Icons/back_icon.png"));
     }
 
     void AssetBrowserPanel::RenderPanel()
