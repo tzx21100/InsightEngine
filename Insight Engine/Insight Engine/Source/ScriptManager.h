@@ -43,7 +43,7 @@ namespace IS {
         //all scripts
         void InitScripts();
         //specific script
-        void InitScript(ScriptComponent& scriptcomponent);
+        bool InitScript(ScriptComponent& scriptcomponent);
 
         // Function to create a C# class file from a template
         void CreateClassFile(const std::string& className, const std::string& filePath);

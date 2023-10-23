@@ -101,6 +101,24 @@ namespace IS {
             }
         }
 
+        // Copy constructor
+        Sprite(const Sprite& other)
+            : primitive_type(other.primitive_type),
+            model_TRS(other.model_TRS),
+            texture_width(other.texture_width),
+            texture_height(other.texture_height),
+            animation_index(other.animation_index),
+            img(other.img), // Directly using the default copy for Image. You might need to adjust this if you add a custom copy constructor for Image.
+            anims(other.anims),
+            name(other.name),
+            color(other.color),
+            drawing(other.drawing),
+            sscounter(other.sscounter)
+        {
+            img.texture_id = other.img.texture_id;
+        }
+
+
         /*!
          * \brief Applies the transformation to the sprite.
          *

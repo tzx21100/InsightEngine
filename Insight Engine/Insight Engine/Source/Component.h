@@ -83,7 +83,7 @@ namespace IS {
 		 *
 		 * \param entity The ID of the entity being destroyed.
 		 */
-		virtual void EntityDestroyed(Entity entity) = 0;
+		virtual void DestroyEntity(Entity entity) = 0;
 
 		/**
 		 * \brief Clone the data of a component from one entity to another.
@@ -125,6 +125,8 @@ namespace IS {
 
 		virtual void ClearAllEntities() = 0;
 
+		virtual std::shared_ptr<IComponentArray> clone() const = 0;
+
 	private:
 		// The Component Type of the array
 		ComponentType mComponentType{};
@@ -135,14 +137,18 @@ namespace IS {
 	 * \brief A templated class for managing components associated with entities.
 	 *
 	 * This class provides specific methods for handling entities and their
-	 * associated components of type T. It maintains a dense array of components
-	 * for efficient data access and manipulation.
+	 * associated components of type T. It is just a map of the component arrays.
 	 *
 	 * \tparam T The type of the component stored in the array.
 	 */
 	template<typename T>
 	class ComponentArray : public IComponentArray {
 	public:
+
+		std::shared_ptr<IComponentArray> clone() const override {
+			return std::make_shared<ComponentArray>(*this);
+		}
+
 		/**
 		 * \brief Inserts a component for a given entity.
 		 *
@@ -152,14 +158,11 @@ namespace IS {
 		 * \param entity The ID of the entity associated with the component.
 		 * \param component The component data to be inserted.
 		 */
-		void InsertData(Entity entity, T component) {
-
+		void InsertComponentData(Entity entity, T component) {
+			if (mSize >= 20000) { return; }
 			// Put new entry at end and update the maps
-			size_t new_index = mSize;
-			mEntityToIndexMap[entity] = new_index;
-			mIndexToEntityMap[new_index] = entity;
-			mComponentArray[new_index] = component;
-			++mSize;
+			mComponentArray.insert({ entity,component });
+			mSize++;
 		}
 
 		/**
@@ -171,25 +174,10 @@ namespace IS {
 		 *
 		 * \param entity The ID of the entity whose component is to be removed.
 		 */
-		void RemoveData(Entity entity) {
-			assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Removing non-existent component.");
+		void RemoveComponentData(Entity entity) {
 
-			// Copy element at end into deleted element's place to maintain density
-			size_t removed_index = mEntityToIndexMap[entity];
-			size_t last_index = mSize - 1;
-			// this basically hides the data structure but does not free it from memory
-			mComponentArray[removed_index] = mComponentArray[last_index];
-
-			// Update map to point to moved spot
-			Entity entityOfLastElement = mIndexToEntityMap[last_index];
-			mIndexToEntityMap[removed_index] = entityOfLastElement;
-			mEntityToIndexMap[entityOfLastElement] = removed_index;
-			
-			// Erase from map
-			mEntityToIndexMap.erase(entity);
-			mIndexToEntityMap.erase(last_index);
-
-			--mSize;
+			mComponentArray.erase(entity);
+			mSize--;
 		}
 
 		/**
@@ -200,10 +188,10 @@ namespace IS {
 		* \param entity The ID of the entity whose component is to be retrieved.
 		* \return A reference to the component.
 		*/
-		T& GetData(Entity entity) {
-			assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Retrieving non-existent component.");
+		T& GetComponentData(Entity entity) {
+
 			// Return a reference to the entity's component
-			return mComponentArray[mEntityToIndexMap[entity]];
+			return mComponentArray[entity];
 		}
 
 		/**
@@ -213,10 +201,10 @@ namespace IS {
 		*
 		* \param entity The ID of the entity being destroyed.
 		*/
-		void EntityDestroyed(Entity entity) override {
-			if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end()){
+		void DestroyEntity(Entity entity) override {
+			if (mComponentArray.find(entity) != mComponentArray.end()){
 				// Remove the entity's component if it existed
-				RemoveData(entity);
+				RemoveComponentData(entity);
 			}
 		}
 
@@ -231,9 +219,9 @@ namespace IS {
 		 */
 		ComponentType CloneData(Entity entity,Entity old_entity) override{
 			//if the old_entity exists
-			if (mEntityToIndexMap.find(old_entity) != mEntityToIndexMap.end()) {
-				T component = GetData(old_entity);
-				InsertData(entity, component);
+			if (mComponentArray.find(old_entity) != mComponentArray.end()) {
+				T component = GetComponentData(old_entity);
+				InsertComponentData(entity, component);
 				return this->GetComponentType();
 			}
 			return MAX_COMPONENTS+1;
@@ -251,7 +239,7 @@ namespace IS {
 		ComponentType SignatureMatch(Signature signature, Entity entity) {
 			if (signature.test(this->GetComponentType())) {
 				T component{};
-				InsertData(entity, component);
+				InsertComponentData(entity, component);
 				return this->GetComponentType();
 			}
 			return MAX_COMPONENTS+1;
@@ -259,10 +247,7 @@ namespace IS {
 
 		//clear all entities in the component
 		void ClearAllEntities() override {
-			// we don't need to clear mComponentArray as its an array with fixed memory
-			std::fill(mComponentArray.begin(), mComponentArray.end(), T{});// fill it with new Ts instead
-			mEntityToIndexMap.clear();
-			mIndexToEntityMap.clear();
+			mComponentArray.clear();
 			mSize = 0;
 		}
 
@@ -274,23 +259,7 @@ namespace IS {
 		 * The array is of generic type T and is set to a specified maximum amount,
 		 * matching the maximum number of entities allowed to exist simultaneously.
 		 */
-		std::array<T, MAX_ENTITIES> mComponentArray{};
-
-		/**
-		 * \brief Map from an entity ID to an array index.
-		 *
-		 * This map helps in quickly determining the index in the component array
-		 * for a given entity.
-		 */
-		std::unordered_map<Entity, size_t> mEntityToIndexMap{};
-
-		/**
-		 * \brief Map from an array index to an entity ID.
-		 *
-		 * This map is used for efficient removal of components by swapping with
-		 * the last element in the dense array.
-		 */
-		std::unordered_map<size_t, Entity> mIndexToEntityMap{};
+		std::unordered_map<Entity, T> mComponentArray{};
 
 		/**
 		 * \brief The total size of valid entries in the array.
@@ -329,12 +298,11 @@ namespace IS {
 		*
 		* \tparam T The type of the component to be registered.
 		*/
-		template<typename T>
+		template<typename T>	
 		void RegisterComponent() {
 			IS_PROFILE_FUNCTION();
 
 			std::string type_name = T::GetType();
-			assert(mRegisteredComponentType.find(type_name) == mRegisteredComponentType.end() && "Registering component type more than once.");
 			// Add this component type to the component type map
 			mRegisteredComponentType.insert({ type_name, mNextComponentType });
 			// Create a ComponentArray pointer and add it to the component arrays map
@@ -357,7 +325,6 @@ namespace IS {
 		template<typename T>
 		ComponentType GetComponentType() {
 			std::string type_name = T::GetType();
-			assert(mRegisteredComponentType.find(type_name) != mRegisteredComponentType.end() && "Component not registered before use.");
 			// Return this component's type - used for creating signatures
 			return mRegisteredComponentType[type_name];
 		}
@@ -374,7 +341,7 @@ namespace IS {
 		template<typename T>
 		void AddComponent(Entity entity, T component) {
 			// Add a component to the array for an entity
-			GetComponentArray<T>()->InsertData(entity, component);
+			GetComponentArray<T>()->InsertComponentData(entity, component);
 		}
 
 		/**
@@ -388,7 +355,7 @@ namespace IS {
 		template<typename T>
 		void RemoveComponent(Entity entity) {
 			// Remove a component from the array for an entity
-			GetComponentArray<T>()->RemoveData(entity);
+			GetComponentArray<T>()->RemoveComponentData(entity);
 		}
 
 		/**
@@ -403,7 +370,7 @@ namespace IS {
 		template<typename T>
 		T& GetComponent(Entity entity) {
 			// Get a reference to a component from the array for an entity
-			return GetComponentArray<T>()->GetData(entity);
+			return GetComponentArray<T>()->GetComponentData(entity);
 		}
 
 		/**
@@ -420,7 +387,7 @@ namespace IS {
 			 */
 			for (auto const& pair : mComponentArrayMap) {
 				auto const& component = pair.second;
-				component->EntityDestroyed(entity);
+				component->DestroyEntity(entity);
 			}
 		}
 
@@ -493,16 +460,18 @@ namespace IS {
 			return std::static_pointer_cast<ComponentArray<T>>(mComponentArrayMap[type_name]);
 		}
 
+		/**
+		 * \brief A map linking component type names to their respective component arrays.
+		 */
+		std::unordered_map<std::string, std::shared_ptr<IComponentArray>> mComponentArrayMap{};
+
 	private:
 		/**
 		 * \brief A map linking component type names to their assigned types.
 		 */
 		std::unordered_map<std::string, ComponentType> mRegisteredComponentType{};
 
-		/**
-		 * \brief A map linking component type names to their respective component arrays.
-		 */
-		std::unordered_map<std::string, std::shared_ptr<IComponentArray>> mComponentArrayMap{};
+		
 
 		/**
 		 * \brief The next component type to be assigned.

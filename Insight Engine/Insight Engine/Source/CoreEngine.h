@@ -556,6 +556,16 @@ namespace IS {
             }
         }
 
+        //! Unique pointer to the Component Manager.
+        std::unique_ptr<ComponentManager> mComponentManager;
+
+        //! Unique pointer to the Entity Manager.
+        std::unique_ptr<EntityManager> mEntityManager;
+
+        //! Unique pointer to the System Manager.
+        std::unique_ptr<SystemManager> mSystemManager;
+
+
     private:
         //! Counter for the number of frames.
         unsigned mFrameCount = 0;
@@ -595,15 +605,6 @@ namespace IS {
          * \param entity The entity to destroy.
          */
         void DestroyEntity(Entity entity);
-
-        //! Unique pointer to the Component Manager.
-        std::unique_ptr<ComponentManager> mComponentManager;
-
-        //! Unique pointer to the Entity Manager.
-        std::unique_ptr<EntityManager> mEntityManager;
-
-        //! Unique pointer to the System Manager.
-        std::unique_ptr<SystemManager> mSystemManager;
 
         /**
          * \brief Map to store all systems by name.

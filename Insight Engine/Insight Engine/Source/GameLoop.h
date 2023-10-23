@@ -242,10 +242,20 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_Z)) {
                     asset->PlaySoundByName("sound.MP3");
+                    SceneManager::Instance().CreateScene("zx_test");
                 }
                 if (input->IsKeyPressed(GLFW_KEY_X)) {
                     asset->PlayMusicByName("music.wav");
+                    SceneManager::Instance().CreateScene("zx_test2");
                 }
+                if (input->IsKeyPressed(GLFW_KEY_0)) {
+                    SceneManager::Instance().SwitchScene(0);
+                }
+                if (input->IsKeyPressed(GLFW_KEY_1)) {
+                    SceneManager::Instance().SwitchScene(1);
+                }
+
+
             }
 
             // Process Mouse Events
@@ -264,7 +274,7 @@ namespace IS {
 
                 if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
                     for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody>("Ice Cream Truck");
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.08f, height * 0.14222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
