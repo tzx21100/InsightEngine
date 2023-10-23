@@ -40,7 +40,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         for (auto& entity: mEntities) {
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
-            if (scriptcomponent.mInited == false) { InitScript(scriptcomponent); scriptcomponent.mInited = false; }
+            if (scriptcomponent.mInited == false) { InitScript(scriptcomponent); scriptcomponent.mInited = true; }
             if (scriptcomponent.instance != nullptr) {
                 mEntityScriptCaller = entity;
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
