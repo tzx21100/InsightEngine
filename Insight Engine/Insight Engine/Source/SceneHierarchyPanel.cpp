@@ -544,6 +544,14 @@ namespace IS {
             {
                 if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                     script.mScriptName = filepath.stem().string();
+                /*if (std::string filepath = WindowUtils::ChangeScript(); !filepath.empty())
+                {
+                    std::string directory = "Source";
+                    std::string extension = ".cs";
+                    filepath = filepath.substr(WindowUtils::GetCurrentWorkingDirectory().length() + directory.length());
+                    filepath = filepath.substr(0, filepath.length() - extension.length());
+                    script.mScriptName = filepath.substr(1);
+                }*/
             }
 
             ImGui::SameLine();

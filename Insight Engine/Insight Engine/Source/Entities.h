@@ -56,10 +56,6 @@ namespace IS {
 		 * \brief Constructs the EntityManager and initializes the entity queue.
 		 */
 		EntityManager() {
-			// Initialize the queue with all possible entity IDs
-			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-				mEntityQueue.push(entity);
-			}
 			mEntitiesAlive = 0;
 		}
 
@@ -70,16 +66,22 @@ namespace IS {
 		 * \return The ID of the newly created entity.
 		 */
 		Entity CreateEntity(const std::string& name) {
-			if (mEntitiesAlive > MAX_ENTITIES) { IS_CORE_WARN("Too many entities in existence."); }
+			if (mEntitiesAlive >= MAX_ENTITIES) {
+				IS_CORE_WARN("Too many entities in existence.");
+				return MAX_ENTITIES + 1;
+			}
 
-			Entity id = mEntityQueue.front();
-			mEntityQueue.pop();
+			// Generate a new entity ID. This can be simply the current count of entities.
+			Entity id = mEntitiesAlive;
 			mEntitiesAlive++;
 
 			// Set the name for the entity
 			mEntityNames[name] = id;
 			// Set the entity for the name
 			mEntityIds[id] = name;
+
+			// Initialize its signature as empty in the mSignatures map
+			mSignatures[id] = Signature();
 
 			return id;
 		}
@@ -90,18 +92,22 @@ namespace IS {
 		 * \param entity The ID of the entity to be destroyed.
 		 */
 		void DestroyEntity(Entity entity) {
-			if (entity < MAX_ENTITIES) {  
-				// Invalidate the destroyed entity's signature
-				mSignatures[entity].reset();
+			if (mSignatures.find(entity) == mSignatures.end()) {
+				IS_WARN("Entity {} not found!", entity);
+				return;
 			}
+
+			// Remove the entity's signature
+			mSignatures.erase(entity);
+
 			// Remove the mappings for this entity from the maps
 			std::string entityName = mEntityIds[entity];
 			mEntityNames.erase(entityName);
 			mEntityIds.erase(entity);
 
-			// Put the destroyed ID at the back of the queue
-			mEntityQueue.push(entity);
+			// Decrement the count of living entities
 			--mEntitiesAlive;
+
 			IS_WARN("Entity {} destroyed!", entity);
 		}
 
@@ -124,10 +130,10 @@ namespace IS {
 		 * \return The signature of the specified entity.
 		 */
 		Signature GetSignature(Entity entity) {
-			if (entity < MAX_ENTITIES) {
+			if (mSignatures.find(entity) != mSignatures.end()) {
 				return mSignatures[entity];
 			}
-			return 0;
+			return 0;  // Return an empty signature if not found
 		}
 
 		/**
@@ -150,29 +156,21 @@ namespace IS {
 		 * \return \c true if the entity is alive, \c false otherwise.
 		 */
 		bool IsEntityAlive(Entity entity) const {
-			if (entity < MAX_ENTITIES) { 
-				return mSignatures[entity].any();
+			auto it = mSignatures.find(entity);
+			if (it != mSignatures.end()) {
+				return it->second.any();
 			}
+			return false;
 		}
 
 		/**
 		 * \brief Resets all entities, making them available for reuse.
 		 */
 		void ResetEntityID() {
-			// Clear the existing queue of available entity IDs
-			while (!mEntityQueue.empty()) {
-				mEntityQueue.pop();
-			}
-			// Re-initialize the queue with all possible entity IDs starting from 0
-			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-				mEntityQueue.push(entity);
-			}
-			// Reset living entity count to 0
 			mEntitiesAlive = 0;
+
 			// Clear all entity signatures
-			for (Entity entity = 0; entity < MAX_ENTITIES; ++entity) {
-				mSignatures[entity].reset();
-			}
+			mSignatures.clear();
 			// Clear the name to entity and entity to name mappings
 			mEntityNames.clear();
 			mEntityIds.clear();
@@ -224,17 +222,18 @@ namespace IS {
 		 */
 		std::unordered_map<Entity, std::string>& GetEntitiesAlive() { return mEntityIds; }
 
-	private:
-		// Queue of unused entity IDs
-		std::queue<Entity> mEntityQueue;
-		// Array of signatures where the index corresponds to the entity ID
-		std::array<Signature, MAX_ENTITIES> mSignatures;
-		// Total living entities - used to keep limits on how many exist
+		// Total living entities
 		uint32_t mEntitiesAlive;
+		// Entity and signature
+		std::unordered_map<Entity, Signature> mSignatures;
 		// The name of entities
-		std::unordered_map<std::string,Entity >mEntityNames;
+		std::unordered_map<std::string, Entity >mEntityNames;
 		// Finding the name by the id
-		std::unordered_map<Entity ,std::string>mEntityIds;
+		std::unordered_map<Entity, std::string>mEntityIds;
+	private:
+
+		
+
 	};
 
 }
