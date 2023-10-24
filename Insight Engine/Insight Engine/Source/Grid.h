@@ -1,6 +1,9 @@
 
 
-#pragma once
+
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_GRID_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_GRID_H
+
 #include "Pch.h"
 #include "Sprite.h"
 
@@ -67,6 +70,7 @@ namespace IS
 
 	};
 
+	/*DEPRECATED*/
 #if 0
 	class Grid 
 	{
@@ -99,3 +103,5 @@ namespace IS
 
 #endif
 }
+
+#endif

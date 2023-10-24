@@ -137,6 +137,28 @@ namespace IS
 		return 0;
 	}
 
+	void PointSegmentDistance(Vector2D const& point, Vector2D const& a, Vector2D const& b, float& distance_squared, Vector2D& closest_point) {
+		Vector2D ab = b - a;
+		Vector2D ap = point - a;
+
+		float proj = ISVector2DDotProduct(ap, ab);
+		float abLenSq = ISVector2DSquareLength(ab);
+		float d = proj / abLenSq;
+
+		if (d <= 0.0f) { // heading opposite of ab from a
+			closest_point = a;
+		}
+		else if (d >= 1.0f) { // out of ab from b
+			closest_point = b;
+		}
+		else { // between a and b
+			closest_point = a + ab * d;
+		}
+
+		// getting the distance from point to the line segment
+		distance_squared = ISVector2DSquareDistance(point, closest_point);
+	}
+
 	// static AABB collision, return false if not colliding
 	bool StaticIntersectAABB(const Box& a, const Box& b) {
 		if (a.max.x < b.min.x || b.max.x < a.min.x ||

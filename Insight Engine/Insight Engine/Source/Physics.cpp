@@ -27,19 +27,21 @@ namespace IS {
 	bool Physics::mShowColliders = false;
 	bool Physics::mShowVelocity = false;
 	bool Physics::mShowGrid = false;
+	std::vector<Vector2D> Physics::mContactPointsList = std::vector<Vector2D>();
 
 	// Constructs a Physics instance
 	Physics::Physics() 
 	{
-		mNormal = Vector2D();
-		mDepth = std::numeric_limits<float>::max();
+		//mNormal = Vector2D();
+		//mDepth = std::numeric_limits<float>::max();
 		mGravity = Vector2D(0, -981.f);			// Gravity of the world
 		mExertingGravity = false;				// Flag indicating whether gravity is currently exerted
 		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
 		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
 		mIterations = 20;						// Number of iterations for physics step
 		mContactList = std::vector<Manifold>();
-		mContactPointsList = std::vector<Vector2D>();
+		
+		mManifoldInfo;
 		mImplicitGrid;
 	}
 
@@ -55,6 +57,9 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
+
+		mContactPointsList.clear();
+
 		// add new entity inside grid
 		mImplicitGrid.AddIntoCell(mEntities);
 		
@@ -74,6 +79,9 @@ namespace IS {
 		for (size_t it = 0; it < mIterations; it++) {
 			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 			Step(dt, mEntities);
+
+			// empty contact list before going into collision step
+			mContactList.clear();
 
 			// detect collision through grid cell
 			//CellCollisionDetect();
@@ -196,7 +204,7 @@ namespace IS {
 
 
 	void Physics::CollisionDetect(std::vector<Entity> const& entities) {
-		mContactList.clear();
+		
 
 		// Loop through all Entities registered by the System
 		for (size_t i = 0; i < entities.size() - 1; ++i) {
@@ -217,10 +225,13 @@ namespace IS {
 					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
 						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
 						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						
+						if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
+							// continue if collision happens between two non dynamic entities
+							continue;
+						}
+						
 						bodyB.BodyFollowTransform(transB);
-						// for calculating collision response
-						mNormal = Vector2D();
-						mDepth = std::numeric_limits<float>::max();
 						bool isColliding = false;
 
 						// static AABB collision check, continue to the next loop if not colliding
@@ -236,7 +247,7 @@ namespace IS {
 							{
 								// box vs box
 							case BodyShape::Box:
-								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), mNormal, mDepth);
+								isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
 								break;
 								// box vs circle
 							case BodyShape::Circle:
@@ -263,8 +274,8 @@ namespace IS {
 						}
 						// if body A and body B colliding
 						if (isColliding) {
-							// vector of penetration
-							Vector2D vec = mNormal * mDepth;
+							// vector of penetration depth to move entities apart
+							Vector2D vec = mManifoldInfo.mNormal * mManifoldInfo.mDepth;
 							// if body A is static 
 							if (bodyA.mBodyType != BodyType::Dynamic)
 							{
@@ -287,7 +298,8 @@ namespace IS {
 							//spriteA.color = glm::vec3(1.f, 0.f, 1.f);
 							//ResolveCollision(bodyA, bodyB, normal, depth);
 
-							Manifold contact = Manifold(bodyA, bodyB, mNormal, mDepth, Vector2D(), Vector2D(), 0);
+							mManifoldInfo.FindContactPoints(bodyA, bodyB);
+							Manifold contact = Manifold(&bodyA, &bodyB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 							mContactList.emplace_back(contact);
 						}
 						else { //not colliding
@@ -303,16 +315,21 @@ namespace IS {
 			Manifold contact = mContactList[i];
 			ResolveCollision(contact);
 
-			/*if (contact.ContactCount > 0) {
-				ContactPointsList.push_back(contact.Contact1);
-
-				if (contact.ContactCount > 1) {
-					ContactPointsList.push_back(contact.Contact2);
+			if (contact.mContactCount > 0) {
+				if (std::find(mContactPointsList.begin(), mContactPointsList.end(), contact.mContact1) == mContactPointsList.end()) {
+					mContactPointsList.emplace_back(contact.mContact1);
 				}
-			}*/
+
+				if (contact.mContactCount > 1) {
+					if (std::find(mContactPointsList.begin(), mContactPointsList.end(), contact.mContact2) == mContactPointsList.end()) {
+						mContactPointsList.emplace_back(contact.mContact2);
+					}
+				}
+			}
+
 		}
 	}
-
+#if 0
 	// Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line)
 	void Physics::CollisionDetect(std::set<Entity> const& entities) {
 		mContactList.clear();
@@ -660,13 +677,13 @@ namespace IS {
 			}*/
 		}
 	}
-
+#endif
 
 	// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities
 	void Physics::ResolveCollision(Manifold & contact) {
 
-		RigidBody& bodyA = contact.mBodyA;
-		RigidBody& bodyB = contact.mBodyB;
+		RigidBody& bodyA = *(contact.mBodyA);
+		RigidBody& bodyB = *(contact.mBodyB);
 		Vector2D normal = contact.mNormal;
 		
 		// calculate the relative velocity of two bodies
@@ -697,6 +714,10 @@ namespace IS {
 				Vector2D va = body.mTransformedVertices[i];
 				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 				sprite.drawLine(va, vb, { 0.f, 1.f, 0.f });
+			}
+			for (int i = 0; i < mContactPointsList.size(); i++) {
+				Vector2D end = { 100.f, 100.f };
+				sprite.drawLine(mContactPointsList[i], mContactPointsList[i] + end, { 1.f, 1.f, 1.f });
 			}
 		}
 

@@ -15,9 +15,12 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_H
+
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
-#pragma once
+
 #include "Pch.h"
 #include "Component.h"
 
@@ -45,7 +48,6 @@ namespace IS
     {
         Vector2D center; // Center of the circle
         float    radius; // Radius of the circle
-
     };
 
     /*!
@@ -71,6 +73,7 @@ namespace IS
     //    std::variant<Box, Circle, Line> myCollider;
     //};
 
+
      /*                                                                FOR BOX 
   ----------------------------------------------------------------------------- */
 
@@ -86,6 +89,9 @@ namespace IS
      */
 	bool CollisionIntersectionAABB(const Box& aabb1, const Vector2D& vel1,
 		const Box& aabb2, const Vector2D& vel2, const float& dt);
+
+    // calculate the shortest distance from a point to the line segment
+    void PointSegmentDistance(Vector2D const& point, Vector2D const& a, Vector2D const& b, float & distance_squared, Vector2D & closest_point);
 
     // static AABB
     bool StaticIntersectAABB(const Box& a, const Box& b);
@@ -229,3 +235,5 @@ namespace IS
 
 
 }
+
+#endif

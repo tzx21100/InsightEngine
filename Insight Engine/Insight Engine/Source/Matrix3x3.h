@@ -14,9 +14,11 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MATRIX3X3_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MATRIX3X3_H
+
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
-#pragma once
 #include "Vector2D.h"
 
 namespace IS
@@ -135,3 +137,4 @@ namespace IS
 	 /**************************************************************************/
 	void ISMtx33Concat(Matrix3x3& pResult, Matrix3x3 const& Matrix1, Matrix3x3 const& Matrix2);
 }
+#endif

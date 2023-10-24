@@ -16,9 +16,11 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_BODY_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_BODY_H
+
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
-#pragma once
 #include "Pch.h"
 #include "Entities.h"
 #include "Component.h"
@@ -319,3 +321,5 @@ namespace IS
 
     
 }
+
+#endif
