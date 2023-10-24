@@ -146,11 +146,11 @@ namespace IS
 	}
 
 	bool Manifold::NearlyEqual(float const& a, float const& b) {
-		return std::abs(a - b) < 0.0005f; // less than half millimeter
+		return std::abs(a - b) < 0.05f; // less than 5 centimeter
 	}
 
 	bool Manifold::NearlyEqual(Vector2D const& a, Vector2D const& b) {
-		return ISVector2DSquareDistance(a, b) < 0.0005f * 0.0005f; 
+		return ISVector2DSquareDistance(a, b) < 0.5f * 0.5f ; // less than half meter square
 	}
 
 }

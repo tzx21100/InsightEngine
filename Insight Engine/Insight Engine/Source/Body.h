@@ -66,7 +66,7 @@ namespace IS
 
         Vector2D mVelocity;                         /**< Linear velocity of the rigid body. */
         float mAngularVelocity;                     /**< Angular velocity of the rigid body. */
-        Transform mBodyTransform;                   /**< Transformation data (position, ratation, ratation speed, scaling). */
+        Transform mBodyTransform;                   /**< Transformation data (position, ratation, angle speed, scaling). */
         BodyType mBodyType;                         /**< Type of the rigid body (Static, Dynamic, Kinematic). */
         Vector2D mForce;                            /**< Force applied to the rigid body. */
         Vector2D mAcceleration;                     /**< Acceleration of the rigid body. */
@@ -83,7 +83,8 @@ namespace IS
         int mId; // To compare then add/remove from the grid cell
         static int mNextId;
         GridState mGridState;
-        bool mFirstTransform;
+        static bool mCheckTransform;
+        float mInertia;
 
         // Constructors and member functions
 
@@ -94,16 +95,16 @@ namespace IS
 
         /**
          * \brief Parameterized constructor to initialize rigid body properties.
-         * \param my_position The initial position of the rigid body.
-         * \param my_body_type The type of the rigid body (Static, Dynamic, Kinematic).
-         * \param my_mass The mass of the rigid body.
-         * \param my_restitution The restitution coefficient (bounciness).
-         * \param my_width The width of the body (if applicable).
-         * \param my_height The height of the body (if applicable).
-         * \param my_body_shape The shape of the rigid body (Box, Circle, etc.).
+         * \param position The initial position of the rigid body.
+         * \param body_type The type of the rigid body (Static, Dynamic, Kinematic).
+         * \param mass The mass of the rigid body.
+         * \param restitution The restitution coefficient (bounciness).
+         * \param width The width of the body (if applicable).
+         * \param height The height of the body (if applicable).
+         * \param body_shape The shape of the rigid body (Box, Circle, etc.).
          */
-        RigidBody(Vector2D my_position, BodyType my_body_type, float my_mass, float my_restitution,
-            float my_width, float my_height, BodyShape my_body_shape);
+        RigidBody(Vector2D position, BodyType body_type, float mass, float restitution,
+            float width, float height, BodyShape body_shape);
 
         /**
          * \brief Destructor for the RigidBody class.
@@ -114,17 +115,17 @@ namespace IS
 
         /**
          * \brief Updates the rigid body's transformation data to match the texture sprite Transform.
-         * \param my_trans The Transform representing the new position and orientation.
+         * \param trans The Transform representing the new position and orientation.
          */
-        void BodyFollowTransform(Transform const& my_trans);
+        void BodyFollowTransform(Transform const& trans);
 
         /*!
          * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
-         * \param my_width The width of the box.
-         * \param my_height The height of the box.
+         * \param width The width of the box.
+         * \param height The height of the box.
          * \return A vector containing the vertices of the box.
          */
-        std::vector<Vector2D> CreateBoxVertices(float my_width, float my_height);
+        std::vector<Vector2D> CreateBoxVertices(float width, float height);
 
         /*!
          * \brief Calculate all the updated transformed vertices based on the transform center position.
@@ -132,67 +133,69 @@ namespace IS
          */
         std::vector<Vector2D> GetTransformedVertices();
 
+        void UpdateTransformedVertices();
+
         /*!
          * \brief Transform a vector using a given transformation matrix.
-         * \param my_v The vector to transform.
-         * \param my_transform The transformation matrix.
+         * \param v The vector to transform.
+         * \param transform The transformation matrix.
          * \return The transformed vector.
          */
-        Vector2D TransformRigidBody(Vector2D my_v, Transform my_transform);
+        Vector2D TransformRigidBody(Vector2D v, Transform transform);
 
         /*!
          * \brief Update the position, rotation, and force of the rigid body based on real-world gravity.
-         * \param my_dt The time step.
-         * \param my_gravity The gravity vector.
+         * \param dt The time step.
+         * \param gravity The gravity vector.
          */
-        void BodyUpdate(float my_dt, Vector2D const& my_gravity); // not in use
+        void BodyUpdate(float dt, Vector2D const& gravity); // not in use
 
         /*!
          * \brief Move the game object by a specified vector.
-         * \param my_val The vector by which to move the game object.
+         * \param val The vector by which to move the game object.
          */
-        void Move(Vector2D const& my_val); // not in use
+        void Move(Vector2D const& val);
 
         /*!
          * \brief Rotate the game object by a specified angle.
-         * \param my_val The angle (in radians) by which to rotate the game object.
+         * \param val The angle (in radians) by which to rotate the game object.
          */
-        void Rotate(float my_val);
+        void Rotate(float val); // not in use
 
         /*!
          * \brief Add a force to the rigid body.
-         * \param my_val The force vector to add.
+         * \param val The force vector to add.
          */
-        void AddForce(Vector2D const& my_val); // not in use
+        void AddForce(Vector2D const& val);
 
         /*!
          * \brief Add a velocity to the rigid body.
-         * \param my_val The velocity vector to add.
+         * \param val The velocity vector to add.
          */
-        void AddVelocity(Vector2D const& my_val);
+        void AddVelocity(Vector2D const& val);
 
         /*!
         * \brief Create a box-shaped rigid body with specified parameters.
-        * \param my_width The width of the box.
-        * \param my_height The height of the box.
-        * \param my_mass The mass of the rigid body.
-        * \param my_restitution The restitution (bounciness/elasticity) of the rigid body.
+        * \param width The width of the box.
+        * \param height The height of the box.
+        * \param mass The mass of the rigid body.
+        * \param restitution The restitution (bounciness/elasticity) of the rigid body.
         */
-        void CreateBoxBody(float my_width, float my_height, float my_mass, float my_restitution);
+        void CreateBoxBody(float width, float height, float mass, float restitution);
 
         /*!
          * \brief Create a circle-shaped rigid body with specified parameters.
-         * \param my_radius The radius of the circle.
-         * \param my_mass The mass of the rigid body.
-         * \param my_restitution The restitution (bounciness/elasticity) of the rigid body.
+         * \param radius The radius of the circle.
+         * \param mass The mass of the rigid body.
+         * \param restitution The restitution (bounciness/elasticity) of the rigid body.
          */
-        void CreateCircleBody(float my_radius, float my_mass, float my_restitution);
+        void CreateCircleBody(float radius, float mass, float restitution);
 
         /*!
          * \brief Update the parameters of a box-shaped rigid body based on its current Transform.
-         * \param my_body_transform The Transform of the rigid body.
+         * \param body_transform The Transform of the rigid body.
          */
-        void UpdateBoxBody(Transform const& my_body_transform);
+        void UpdateBoxBody(Transform const& body_transform);
 
         Box GetAABB();
 

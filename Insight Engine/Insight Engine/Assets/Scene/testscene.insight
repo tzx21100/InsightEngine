@@ -14,9 +14,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 1,
-				"SpriteTextureHeight" : 1080,
 				"SpriteTextureIndex" : 1,
-				"SpriteTextureWidth" : 1920,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1920.0,
 				"SpriteTransformScalingY" : 1009.0,
@@ -52,20 +50,20 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -51.600002288818359,
-						"y" : 67.26666259765625
+						"x" : -2.0128746032714844,
+						"y" : -15.260162353515625
 					},
 					{
-						"x" : 51.600002288818359,
-						"y" : 67.26666259765625
+						"x" : 101.1871337890625,
+						"y" : -15.260162353515625
 					},
 					{
-						"x" : 51.600002288818359,
-						"y" : -67.26666259765625
+						"x" : 101.1871337890625,
+						"y" : -149.79348754882812
 					},
 					{
-						"x" : -51.600002288818359,
-						"y" : -67.26666259765625
+						"x" : -2.0128746032714844,
+						"y" : -149.79348754882812
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -105,22 +103,20 @@
 				"SpriteName" : "player_sprite",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
-				"SpriteTextureHeight" : 120,
 				"SpriteTextureIndex" : 2,
-				"SpriteTextureWidth" : 760,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 103.20000457763672,
 				"SpriteTransformScalingY" : 134.5333251953125,
-				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : 0.0
+				"SpriteTransformWorldPositionX" : 49.587127685546875,
+				"SpriteTransformWorldPositionY" : -82.526824951171875
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 103.20000457763672,
 				"TransformScalingY" : 134.5333251953125,
-				"TransformWorldPositionX" : 0.0,
-				"TransformWorldPositionY" : 0.0
+				"TransformWorldPositionX" : 49.587127685546875,
+				"TransformWorldPositionY" : -82.526824951171875
 			}
 		},
 		{
@@ -192,9 +188,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 4,
-				"SpriteTextureHeight" : 2160,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : -120.0,
 				"SpriteTransformScalingY" : 112.11111450195312,
@@ -279,9 +273,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1075.852783203125,
 				"SpriteTransformScalingY" : 105.34969329833984,
@@ -310,9 +302,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 6,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 240.0,
 				"SpriteTransformScalingY" : 224.22222900390625,
@@ -341,9 +331,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 1,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 240.0,
 				"SpriteTransformScalingY" : 251.96748352050781,
@@ -372,9 +360,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 0,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 0.0,
 				"SpriteTransformScalingY" : 0.0,
@@ -403,9 +389,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 0.0,
 				"SpriteTransformScalingY" : 0.0,
@@ -420,7 +404,92 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Name" : "Floor",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 52674.84765625,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 5267431936.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0000099791795947e-05,
+				"RigidBodyMass" : 99999.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : 345.1654052734375,
+						"y" : 61.724971771240234
+					},
+					{
+						"x" : 825.7962646484375,
+						"y" : 199.54365539550781
+					},
+					{
+						"x" : 854.8345947265625,
+						"y" : 98.2750244140625
+					},
+					{
+						"x" : 374.2037353515625,
+						"y" : -39.543655395507812
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -250.0,
+						"y" : 52.674846649169922
+					},
+					{
+						"x" : 250.0,
+						"y" : 52.674846649169922
+					},
+					{
+						"x" : 250.0,
+						"y" : -52.674846649169922
+					},
+					{
+						"x" : -250.0,
+						"y" : -52.674846649169922
+					}
+				]
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.89927870035171509,
+				"SpriteColorY" : 0.37864303588867188,
+				"SpriteColorZ" : 0.16378366947174072,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTransformRotation" : 16.0,
+				"SpriteTransformScalingX" : 500.0,
+				"SpriteTransformScalingY" : 105.34969329833984,
+				"SpriteTransformWorldPositionX" : 600.0,
+				"SpriteTransformWorldPositionY" : 80.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 16.0,
+				"TransformScalingX" : 500.0,
+				"TransformScalingY" : 105.34969329833984,
+				"TransformWorldPositionX" : 600.0,
+				"TransformWorldPositionY" : 80.0
+			}
 		}
 	],
-	"EntityAmount" : 8
+	"EntityAmount" : 9
 }

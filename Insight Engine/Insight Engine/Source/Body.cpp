@@ -26,6 +26,7 @@
 namespace IS
 {    
     int RigidBody::mNextId = 0;
+    bool RigidBody::mCheckTransform = false;
 
     // Default constructor for the RigidBody class
     RigidBody::RigidBody() {
@@ -45,7 +46,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mFirstTransform = false;
+        mInertia = 0.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -68,34 +69,34 @@ namespace IS
     }
 
     // Parameterized constructor to initialize rigid body properties.
-	RigidBody::RigidBody(Vector2D my_position, BodyType my_body_type, float my_mass, float my_restitution,
-        float my_width, float my_height, BodyShape my_body_shape) {
+	RigidBody::RigidBody(Vector2D position, BodyType body_type, float mass, float restitution,
+        float width, float height, BodyShape body_shape) {
         mVelocity = Vector2D(); // (0,0)
         mAngularVelocity = 0.f;
-        mBodyTransform.world_position = my_position;
+        mBodyTransform.world_position = position;
         mBodyTransform.rotation = 0.f;
-        mBodyTransform.scaling = Vector2D(my_width, my_height);
-        mBodyType = my_body_type;
+        mBodyTransform.scaling = Vector2D(width, height);
+        mBodyType = body_type;
         mForce = Vector2D(); // (0,0)
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = my_mass;
+        mMass = mass;
         mInvMass = 1.f / mMass;
-        mRestitution = my_restitution;
+        mRestitution = restitution;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        mBodyShape = my_body_shape;
+        mBodyShape = body_shape;
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mFirstTransform = false;
+        mInertia = 0.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-            mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
+            //mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
             
             // making the transform mVertices same size as the mVertices
-            mTransformedVertices = mVertices;
+            //mTransformedVertices = mVertices;
         }
         else if (mBodyShape == BodyShape::Circle) {
             CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
@@ -112,18 +113,18 @@ namespace IS
 	}
 
     // Updates the rigid body's transformation data to match the texture sprite Transform
-    void RigidBody::BodyFollowTransform(Transform const& my_trans) {
-        mBodyTransform = my_trans;
-        UpdateBoxBody(my_trans);
+    void RigidBody::BodyFollowTransform(Transform const& trans) {
+        mBodyTransform = trans;
+        UpdateBoxBody(trans);
     }
 
     // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)
-    std::vector<Vector2D> RigidBody::CreateBoxVertices(float my_width, float my_height) {
+    std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
         // the vertices are calculated based on origin (not transform yet)
-        float left = - my_width / 2.f;
-        float right = left + my_width;
-        float bottom = - my_height / 2.f;
-        float top = bottom + my_height;
+        float left = - width / 2.f;
+        float right = left + width;
+        float bottom = - height / 2.f;
+        float top = bottom + height;
 
         std::vector<Vector2D> box_vertices;
         box_vertices.emplace_back(Vector2D(left,top)); // 0 top left
@@ -159,80 +160,106 @@ namespace IS
         return mTransformedVertices;
     }
 
+    void RigidBody::UpdateTransformedVertices() {
+        // if true means the game object had move from previous place
+        if (mTransformUpdateRequired)
+        {
+            //BodyTransform transform(this->position, this->rotation);
+            Transform currentTransform = Transform(mBodyTransform.world_position, mBodyTransform.rotation, mBodyTransform.scaling);
+
+            // loop for each vertice
+            for (int i = 0; i < mVertices.size(); i++)
+            {
+                Vector2D v = mVertices[i];
+                // apply transform function to calculate correct mVertices
+                mTransformedVertices[i] = RigidBody::TransformRigidBody(v, currentTransform);
+            }
+        }/*
+        else {
+            this->mTransformedVertices = this->mVertices;
+        }*/
+
+        mTransformUpdateRequired = false;
+    }
+
     // Transform a vector using a given transformation matrix
-    Vector2D RigidBody::TransformRigidBody(Vector2D my_v, Transform my_transform) {
+    Vector2D RigidBody::TransformRigidBody(Vector2D v, Transform transform) {
         Vector2D ret;
-        float angle = fmod(my_transform.rotation, 360.f);
+        float angle = fmod(transform.rotation, 360.f);
         if (angle < 0.f) { angle += 360.f; }
         angle *= (PI / 180.f);
-        ret.x = cosf(angle) * my_v.x - sinf(angle) * my_v.y + my_transform.world_position.x;
-        ret.y = sinf(angle) * my_v.x + cosf(angle) * my_v.y + my_transform.world_position.y;
+        ret.x = cosf(angle) * v.x - sinf(angle) * v.y + transform.world_position.x;
+        ret.y = sinf(angle) * v.x + cosf(angle) * v.y + transform.world_position.y;
         return ret;
     }
 
     // Update the position, rotation, and force of the rigid body based on real-world gravity
-    void RigidBody::BodyUpdate(float my_dt, Vector2D const& my_gravity) {
+    void RigidBody::BodyUpdate(float dt, Vector2D const& gravity) {
         if (!(mBodyType == BodyType::Dynamic)) {
             return;
         }
-        mVelocity += my_gravity * my_dt;
-        mBodyTransform.world_position += mVelocity * my_dt;
-        mBodyTransform.rotation += mAngularVelocity * my_dt;
+        mVelocity += gravity * dt;
+        mBodyTransform.world_position += mVelocity * dt;
+        mBodyTransform.rotation += mAngularVelocity * dt;
 
         mTransformUpdateRequired = true;
     }
 
     // Move the game object by a specified vector
-    void RigidBody::Move(Vector2D const& my_val) {
-        mBodyTransform.world_position += my_val;
-        mTransformUpdateRequired = true;
-        mTransformedVertices = GetTransformedVertices();
+    void RigidBody::Move(Vector2D const& val) {
+        mBodyTransform.world_position += val;
+        //mTransformUpdateRequired = true;
+        //mTransformedVertices = GetTransformedVertices();
     }
 
     // Rotate the game object by a specified angle
-    void RigidBody::Rotate(float my_val) {
-        mBodyTransform.rotation += my_val;
-        mTransformUpdateRequired = true;
-        mTransformedVertices = GetTransformedVertices();
+    void RigidBody::Rotate(float val) {
+        mBodyTransform.rotation += val;
+        //mTransformUpdateRequired = true;
+        //mTransformedVertices = GetTransformedVertices();
     }
 
     // Add a force to the rigid body
-    void RigidBody::AddForce(Vector2D const& my_val) {
-        mForce = my_val;
+    void RigidBody::AddForce(Vector2D const& val) {
+        mForce = val;
     }
 
     // Add a velocity to the rigid body
-    void RigidBody::AddVelocity(Vector2D const& my_val) {
-        mVelocity += my_val;
+    void RigidBody::AddVelocity(Vector2D const& val) {
+        mVelocity += val;
     }
 
     // Create a box-shaped rigid body with specified parameters
-    void RigidBody::CreateBoxBody(float my_width, float my_height, float my_mass, float my_restitution) {
-        mArea = fabs(my_width * my_height);
+    void RigidBody::CreateBoxBody(float width, float height, float mass, float restitution) {
+        mArea = fabs(width * height);
         // set the range to be [0,1]
-        mRestitution = std::max(0.0f, std::min(my_restitution, 1.0f));
+        mRestitution = std::max(0.0f, std::min(restitution, 1.0f));
         // p = m * v
-        mDensity = my_mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        
+        mInertia = (1.f / 12.f) * mass * (width * width + height * height);
     }
 
     // Create a circle-shaped rigid body with specified parameters
-    void RigidBody::CreateCircleBody(float my_radius, float my_mass, float my_restitution) {
-        mArea = fabs(my_radius * my_radius * PI);
+    void RigidBody::CreateCircleBody(float radius, float mass, float restitution) {
+        mArea = fabs(radius * radius * PI);
         // set the range to be [0,1]
-        mRestitution = std::max(0.0f, std::min(my_restitution, 1.0f));
+        mRestitution = std::max(0.0f, std::min(restitution, 1.0f));
         // p = m * v
-        mDensity = my_mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        // static obj should have 0 mass and inertia
+        mInertia = (1.f / 2.f) * mass * radius * radius;
     }
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
-    void RigidBody::UpdateBoxBody(Transform const& my_body_transform) {
-        if (!mFirstTransform) { // if body havent been transform for once
-            CreateBoxBody(my_body_transform.scaling.x, my_body_transform.scaling.y, mMass, mRestitution);
-            mVertices = CreateBoxVertices(my_body_transform.scaling.x, my_body_transform.scaling.y);
-            mFirstTransform = true; // true means update and transform for at least one time
+    void RigidBody::UpdateBoxBody(Transform const& body_transform) {
+        if (!RigidBody::mCheckTransform) { // if body havent been transform for once
+            CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
+            mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
+            RigidBody::mCheckTransform = true; // true means update and transform for at least one time
         }
         mTransformUpdateRequired = true;
-        mTransformedVertices = GetTransformedVertices();
+        UpdateTransformedVertices();
     }
 
     Box RigidBody::GetAABB() {
