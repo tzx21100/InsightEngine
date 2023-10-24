@@ -229,25 +229,6 @@ namespace IS {
 
         ImGui::SameLine();
 
-        // Clone Entity
-        ImGui::PushFont(font_bold);
-        if (ImGui::Button("Clone Entity"))
-            engine.CopyEntity(entity);
-        ImGui::SameLine();
-
-        // Destroy Entity
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
-        if (ImGui::Button("Destroy Entity")) {
-            engine.DeleteEntity(entity);
-            mSceneHierarchyPanel.ResetSelection();
-        }
-        ImGui::PopStyleColor(3);
-        ImGui::PopFont();
-
-        ImGui::Spacing();
-
         // Check whether entity already has the component
         if (ImGui::BeginPopup("AddComponent"))
         {
@@ -257,8 +238,6 @@ namespace IS {
             {
                 if (ImGui::MenuItem("Limit Reached!"))
                     ImGui::CloseCurrentPopup();
-
-                return;
             }
 
             // Choose Available Component to add
@@ -310,6 +289,25 @@ namespace IS {
 
             ImGui::EndPopup();
         }
+
+        // Clone Entity
+        ImGui::PushFont(font_bold);
+        if (ImGui::Button("Clone Entity"))
+            engine.CopyEntity(entity);
+        ImGui::SameLine();
+
+        // Destroy Entity
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+        if (ImGui::Button("Destroy Entity")) {
+            engine.DeleteEntity(entity);
+            mSceneHierarchyPanel.ResetSelection();
+        }
+        ImGui::PopStyleColor(3);
+        ImGui::PopFont();
+
+        ImGui::Spacing();
 
     } // end RenderEntityConfig()
 
@@ -528,8 +526,6 @@ namespace IS {
                 ImGui::Text("%s", script.mScriptName.c_str());
                 ImGui::EndTable();
             }
-
-            ImGui::SameLine();
 
             // Modify Script
             bool modify_button = ImGui::Button("Modify");
