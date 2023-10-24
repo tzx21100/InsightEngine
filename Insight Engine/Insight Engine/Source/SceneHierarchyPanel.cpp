@@ -341,8 +341,8 @@ namespace IS {
 
             // Parameters
             ImTextureID texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
-            const float texture_width = static_cast<float>(sprite.texture_width);
-            const float texture_height = static_cast<float>(sprite.texture_height);
+            const float texture_width = static_cast<float>(sprite.img.width);
+            const float texture_height = static_cast<float>(sprite.img.height);
             const float texture_aspect_ratio = texture_width / texture_height;
             const float draw_size = 40.f;
             ImGuiIO& io = ImGui::GetIO();
@@ -382,13 +382,13 @@ namespace IS {
             ImGui::TextUnformatted("Width");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::Text("%dpx", sprite.texture_width);
+            ImGui::Text("%dpx", sprite.img.width);
             ImGui::TableNextColumn();
             ImGui::PushFont(font_bold);
             ImGui::TextUnformatted("Height");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::Text("%dpx", sprite.texture_height);
+            ImGui::Text("%dpx", sprite.img.height);
             ImGui::EndTable();
 
         }); // end render Sprite Component

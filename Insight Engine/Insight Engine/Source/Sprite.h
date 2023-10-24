@@ -53,8 +53,6 @@ namespace IS {
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
         //uint8_t texture_id{};      // The texture ID for the sprite. (randomly given by OpenGL)
-        uint32_t texture_width{};  // The width of the sprite's texture.
-        uint32_t texture_height{}; // The height of the sprite's texture.
         int animation_index{};     // The current texture index for switching animations (0 is the default texture).
         // std::vector<Animation> anim_vect{};
         Image img{};
@@ -105,8 +103,6 @@ namespace IS {
         Sprite(const Sprite& other)
             : primitive_type(other.primitive_type),
             model_TRS(other.model_TRS),
-            texture_width(other.texture_width),
-            texture_height(other.texture_height),
             animation_index(other.animation_index),
             img(other.img), // Directly using the default copy for Image. You might need to adjust this if you add a custom copy constructor for Image.
             anims(other.anims),

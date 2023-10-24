@@ -280,8 +280,6 @@ namespace IS {
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
-                        spr.texture_width = truck_anim_image->width;
-                        spr.texture_height = truck_anim_image->height;
                         spr.img = *truck_anim_image;
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
                         spr.anims.emplace_back(ice_cream_truck_ani);
