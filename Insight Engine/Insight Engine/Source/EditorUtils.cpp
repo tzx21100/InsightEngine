@@ -25,15 +25,13 @@
 
 namespace IS::EditorUtils {
 
-    int FontTypeToInt(aFontType font_type) { return static_cast<int>(font_type); }
-
     ImTextureID ConvertTextureID(GLuint tex_id) { return std::bit_cast<ImTextureID>(static_cast<uintptr_t>(tex_id)); }
 
     ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs) { return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y); }
 
     bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius)
     {
-        ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         float distance = font_bold->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, " ").x; // Minimum size for text, use any ImGui widget you prefer.
         ImVec2 delta = point - center;
         return delta.x * delta.x + delta.y * delta.y < (radius + distance) * (radius + distance);
@@ -43,7 +41,7 @@ namespace IS::EditorUtils {
     {
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        ImFont* const& font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Display Max and Alive Entity count
         if (ImGui::BeginTable("EntityCount", 2))
@@ -79,7 +77,7 @@ namespace IS::EditorUtils {
     void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint)
     {
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& font_italic = io.Fonts->Fonts[FontTypeToInt(aFontType::FONT_TYPE_ITALIC)];
+        ImFont* const& font_italic = io.Fonts->Fonts[FONT_TYPE_ITALIC];
         float original_cursor_xpos = ImGui::GetCursorPosX();
 
         // Render filter input text box
@@ -101,7 +99,7 @@ namespace IS::EditorUtils {
     void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        ImFont* const& font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 

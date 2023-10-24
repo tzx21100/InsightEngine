@@ -210,10 +210,9 @@ namespace IS {
                 continue;
 
             ImGuiIO& io = ImGui::GetIO();
-            ImFont* const font = io.Fonts->Fonts[EditorUtils::FontTypeToInt(
-                                 level < aLogLevel::LOGLEVEL_WARNING
-                                       ? aFontType::FONT_TYPE_LOG_DEFAULT
-                                       : aFontType::FONT_TYPE_LOG_BOLD)];
+            ImFont* const font = io.Fonts->Fonts[level < aLogLevel::LOGLEVEL_WARNING
+                                                       ? FONT_TYPE_LOG_DEFAULT
+                                                       : FONT_TYPE_LOG_BOLD];
 
             ImGui::PushFont(font);
             ImGui::TextColored(GetLogLevelColor(level), message.c_str());

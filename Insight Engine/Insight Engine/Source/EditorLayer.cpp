@@ -244,6 +244,7 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel));
         mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mPanels.emplace_back(mSceneHierarchyPanel);
+        mPanels.emplace_back(std::make_shared<InspectorPanel>(mSceneHierarchyPanel));
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
         mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
         mPanels.emplace_back(std::make_shared<LogConsolePanel>());
@@ -289,8 +290,10 @@ namespace IS {
     {
         InsightEngine::Instance().LoadScene(path);
         std::filesystem::path filepath(path);
-        mActiveScene = filepath.stem().string();
+        if (filepath.extension() != ".insight")
+            return;
 
+        mActiveScene = filepath.stem().string();
         IS_CORE_TRACE("Current Scene: {}", mActiveScene);
     }
 

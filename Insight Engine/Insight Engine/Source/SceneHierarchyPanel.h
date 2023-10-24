@@ -68,8 +68,7 @@ namespace IS {
         EntityPtr GetSelectedEntity();
 
     private:
-        ImGuiTextFilter mFilter; ///< Filter for entity hierarchy.
-        std::shared_ptr<InspectorPanel> mInspectorPanel; ///< Instance of inspector panel.
+        ImGuiTextFilter mFilter; ///< Filter for scnehierarchy hierarchy.
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
 
         /*!
@@ -85,7 +84,7 @@ namespace IS {
          */
         void RenderConfirmDelete(Entity entity, bool& show);
 
-        friend class InspectorPanel;
+        friend class InspectorPanel; ///< Grant InspectorPanel access to private data members.
     };
 
     /*!
@@ -98,7 +97,7 @@ namespace IS {
          * \brief Constructs an InspectorPanel object.
          * \param scene_hierarchy_panel The instance of scene hierarchy panel.
          */
-        InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel);
+        InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel);
 
         /*!
          * \brief Renders the panel for the inspector.
@@ -106,7 +105,7 @@ namespace IS {
         void RenderPanel() override;
 
     private:
-        SceneHierarchyPanel& mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
+        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
         bool mShowPrefabs = false; ///< Flag indicating show prefabs
 
         /*!

@@ -28,7 +28,7 @@ namespace IS {
     /*!
      * \brief Type of font stored in imgui fonts array.
      */
-    enum class aFontType : int {
+    enum aFontType : int {
         FONT_TYPE_DEFAULT = 0,
         FONT_TYPE_BOLD,
         FONT_TYPE_ITALIC,
@@ -40,13 +40,6 @@ namespace IS {
      * \brief Namespace containing all utility functions for the editor.
      */
     namespace EditorUtils {
-
-        /*!
-         * \brief Converts font type to int.
-         * \param font_type Font type to be converted.
-         * \return The integer version of the given font type.
-         */
-        int FontTypeToInt(aFontType font_type);
 
         /*!
          * \brief Converts tex id from GLuint to ImTextureID.

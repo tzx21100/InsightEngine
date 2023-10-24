@@ -93,8 +93,8 @@ namespace IS {
 
     void ScenePanel::RenderOverlay()
     {
-        ImDrawList* foreground = ImGui::GetForegroundDrawList();
-        ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        ImDrawList* window_drawlist = ImGui::GetWindowDrawList();
+        ImFont* const font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         ImVec2 mouse_pos = ImGui::GetMousePos();
 
         // Attributes of circle
@@ -118,7 +118,7 @@ namespace IS {
             {
                 // Set padding and indetation
                 static const float PADDING = 10.f;
-                ImGui::Dummy(ImVec2(1.f, 1.f));
+                ImGui::Spacing();
                 ImGui::Indent(PADDING);
 
                 // Tooltip content
@@ -154,23 +154,23 @@ namespace IS {
 
                 // Reset padding and indentation
                 ImGui::Unindent(PADDING);
-                ImGui::Dummy(ImVec2(1.f, 1.f));
+                ImGui::Spacing();
 
                 ImGui::EndTooltip();
             }
         }
         
         // Icon to be displayed as overlay
-        foreground->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
-        foreground->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
-        foreground->AddText(text_position, IM_COL32_WHITE, display_text);
+        window_drawlist->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
+        window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
+        window_drawlist->AddText(text_position, IM_COL32_WHITE, display_text);
     }
 
     // Performance Viewer Panel
     void PerformancePanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         ImGui::Begin("Performance");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
@@ -298,7 +298,7 @@ namespace IS {
     void PhysicsControlPanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        ImFont* font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         ImGui::Begin("Physics");
 

@@ -150,7 +150,7 @@ namespace IS {
         if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
         {
             ImGuiIO& io = ImGui::GetIO();
-            ImFont* const font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+            ImFont* const font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
             float panel_width = ImGui::GetContentRegionAvail().x;
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
 

@@ -30,7 +30,7 @@
 
 namespace IS {
 
-    SceneHierarchyPanel::SceneHierarchyPanel() : mInspectorPanel(std::make_shared<InspectorPanel>(*this)) {}
+    SceneHierarchyPanel::SceneHierarchyPanel() {}
 
     void SceneHierarchyPanel::RenderPanel()
     {
@@ -79,8 +79,6 @@ namespace IS {
 
         ImGui::PopStyleVar();
         ImGui::End(); // end window Hierarchy
-
-        mInspectorPanel->RenderPanel();
 
     } // end RenderPanel()
 
@@ -151,14 +149,14 @@ namespace IS {
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
-    InspectorPanel::InspectorPanel(SceneHierarchyPanel& scene_hierarchy_panel)
+    InspectorPanel::InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel)
         : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 
     void InspectorPanel::RenderPanel()
     {
         ImGui::Begin("Inspector");
-        if (mSceneHierarchyPanel.mSelectedEntity)
-            RenderComponentNodes(*mSceneHierarchyPanel.mSelectedEntity);
+        if (mSceneHierarchyPanel->mSelectedEntity)
+            RenderComponentNodes(*mSceneHierarchyPanel->mSelectedEntity);
         ImGui::End(); // end window Inspector
     }
 
@@ -173,7 +171,7 @@ namespace IS {
         std::ranges::copy(source, std::begin(buffer));
 
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
 
         if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
@@ -302,7 +300,7 @@ namespace IS {
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
         if (ImGui::Button("Destroy Entity")) {
             engine.DeleteEntity(entity);
-            mSceneHierarchyPanel.ResetSelection();
+            mSceneHierarchyPanel->ResetSelection();
         }
         ImGui::PopStyleColor(3);
         ImGui::PopFont();
@@ -316,7 +314,7 @@ namespace IS {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[EditorUtils::FontTypeToInt(aFontType::FONT_TYPE_BOLD)];
+        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Entity configurations
         RenderEntityConfig(entity);
