@@ -21,7 +21,7 @@ namespace IS {
             mIsObstacle = obstacle;
         };
 
-        int mId;
+        int mId{};
         Vector2D mPosition;
         std::vector<Waypoint*> mNeighbors;
         bool mIsObstacle;

@@ -108,12 +108,14 @@ namespace IS {
 		// Shaders
 		static Shader mesh_shader_pgm;
 		static Shader mesh_inst_shader_pgm;
-		static Shader text_shader_pgm;
+		//static Shader TNR_text_shader_pgm; // Times new roman
+		//static Shader CS_text_shader_pgm; // Cascadia
+
+		static Text Times_New_Roman_font;
+		static Text Brush_Script_font;
+
 		// Mesh vector
 		static std::vector<Mesh> meshes;
-		// Text objects
-		static GLuint font_texture;
-		static Text cascadia_text;
 		// Frame Buffer
 		static std::shared_ptr<Framebuffer> mFramebuffer;
 	};

@@ -44,7 +44,7 @@ namespace IS {
          * \param dt The time delta for animation.
          * \param shader The shader to use for rendering.
          */
-        static void drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Shader shader);
+        static void drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Text& font1, Text& font2);
 
         /*!
          * \brief Initializes the Text class with a font file and shader.
@@ -54,7 +54,7 @@ namespace IS {
          * \param filepath The filepath to the font file.
          * \param text_shader The shader for text rendering.
          */
-        static void initText(std::string const& filepath, Shader text_shader);
+        void initText(std::string const& filepath);
 
         /*!
          * \brief Renders text at a specified position, size, and color.
@@ -68,7 +68,7 @@ namespace IS {
          * \param scale The scale of the text.
          * \param color The color of the text.
          */
-        static void renderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
+        void renderText(std::string text, float x, float y, float scale, glm::vec3 color);
 
         /*!
          * \brief Renders text using instanced rendering.
@@ -78,7 +78,7 @@ namespace IS {
          * \param length The length of the text to render.
          * \param shader The shader to use for rendering.
          */
-        static void textRenderCall(int length, GLuint shader);
+        void textRenderCall(int length);
 
         /// Holds all state information relevant to a character as loaded using FreeType
         struct Character {
@@ -88,14 +88,15 @@ namespace IS {
             unsigned int Advance;   // Horizontal offset to advance to next glyph
         };
 
-        static std::map<GLchar, Text::Character> Characters; // A map of character information loaded from FreeType.
-        static unsigned int text_vao;                        // VAO for text rendering.
-        static unsigned int text_vbo;                        // VBO for text rendering.
-        static GLuint textureArray;                          // Texture array for storing glyph textures.
-        static std::vector<glm::mat4> transforms;            // Transforms for text rendering.
-        static std::vector<int> letterMap;                   // Letter map for text rendering.
-        static const unsigned int ARRAY_LIMIT = 100;         // The maximum limit for text rendering.
-        static const int base_size = 256;                    // The base size for text rendering.
+        Shader shader;
+        std::map<GLchar, Text::Character> Characters; // A map of character information loaded from FreeType.
+        unsigned int text_vao;                        // VAO for text rendering.
+        unsigned int text_vbo;                        // VBO for text rendering.
+        GLuint textureArray;                          // Texture array for storing glyph textures.
+        std::vector<glm::mat4> transforms;            // Transforms for text rendering.
+        std::vector<int> letterMap;                   // Letter map for text rendering.
+        const int ARRAY_LIMIT = 100;         // The maximum limit for text rendering.
+        const int base_size = 256;                    // The base size for text rendering.
     };
 }
 

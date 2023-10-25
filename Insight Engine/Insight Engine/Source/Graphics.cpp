@@ -34,12 +34,14 @@ namespace IS {
     // Shaders
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::mesh_inst_shader_pgm;
-    Shader ISGraphics::text_shader_pgm;
+    /*Shader ISGraphics::TNR_text_shader_pgm;
+    Shader ISGraphics::CS_text_shader_pgm;*/
+
+    Text ISGraphics::Times_New_Roman_font;
+    Text ISGraphics::Brush_Script_font;
+
     // Mesh vector
     std::vector<Mesh> ISGraphics::meshes;
-    // Text objects
-    GLuint font_texture;
-    Text ISGraphics::cascadia_text;
     // Frame Buffer
     std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
 
@@ -54,12 +56,16 @@ namespace IS {
         
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
         mesh_inst_shader_pgm.setupInstSpriteShaders();
-        text_shader_pgm.setupTextShaders();
+        Times_New_Roman_font.shader.setupTextShaders();
+        Brush_Script_font.shader.setupTextShaders();
         
         walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
-        Text::initText("Assets/Fonts/Cascadia.ttf", text_shader_pgm); // init text system
+
+        // init text system
+        Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
+        Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
 
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; // create framebuffer
         mFramebuffer = std::make_shared<Framebuffer>(props);
@@ -257,10 +263,10 @@ namespace IS {
                 "- Press 'X' to play music";
 
             // Render Text
-            Text::renderText(text_shader_pgm, render_text.str(), pos_x, pos_y, scale, color);
+            Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
 
-        Text::drawTextAnimation("  Welcome To \nInsight Engine,", "Enjoy your stay!", delta_time, text_shader_pgm);
+        Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
 
         // if using ImGui, unbind fb at the end of draw
         if (engine.mUsingGUI)
