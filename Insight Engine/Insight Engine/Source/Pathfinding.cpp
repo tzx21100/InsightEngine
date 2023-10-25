@@ -120,6 +120,9 @@ namespace IS {
 
             // Loop through neighboring waypoints
             for (Waypoint* neighbor : current->mNeighbors) {
+                if (neighbor->mIsObstacle) {
+                    continue; // Skip if obstacle
+                }
                 if (ClosedListContains(closed_list, neighbor)) {
                     continue; // Skip waypoints in the closed set
                 }
@@ -146,8 +149,10 @@ namespace IS {
     }
 
     void Pathfinding::ConnectWaypoints(Waypoint& waypoint1, Waypoint& waypoint2){
-        waypoint1.mNeighbors.push_back(&waypoint2);
-        waypoint2.mNeighbors.push_back(&waypoint1);
+        if(!waypoint1.mIsObstacle && !waypoint2.mIsObstacle){
+            waypoint1.mNeighbors.push_back(&waypoint2);
+            waypoint2.mNeighbors.push_back(&waypoint1);
+        }
     }
 
     void Pathfinding::PerformPathfinding(Entity& entity, const Waypoint& start, const Waypoint& goal){

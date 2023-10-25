@@ -9,10 +9,22 @@
 #include "Pathfinder.h"
 
 namespace IS {
-    struct Waypoint {
+    class Waypoint {
+    public:
+        //Default ctor
+        Waypoint() {
+            mIsObstacle = false;
+        };
+
+        //Single arg ctor
+        Waypoint(bool obstacle) {
+            mIsObstacle = obstacle;
+        };
+
         int mId;
         Vector2D mPosition;
         std::vector<Waypoint*> mNeighbors;
+        bool mIsObstacle;
     };
 
 
