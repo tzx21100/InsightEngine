@@ -57,12 +57,12 @@ namespace IS {
 		 * \return The singleton instance.
 		 */
 		static SceneManager& Instance();
+
         /*!
          * \brief Create a new scene with the given filename and an optional function.
          * \param scene_filename The name of the scene file.
-         * \param SceneFunc An optional function to be executed for the scene.
          */
-        void CreateScene(std::string const& scene_filename, std::function<void(void)> SceneFunc = nullptr);
+        void CreateScene(std::string const& scene_filename);
 
         /*!
          * \brief Load a scene from a given filename.
@@ -82,11 +82,6 @@ namespace IS {
         void SaveSceneAs(std::string const& scene_filename);
 
         /*!
-         * \brief Save the current scene to file.
-         */
-        void SaveSceneToFile();
-
-        /*!
          * \brief Switch to the scene with the specified SceneID.
          * \param scene The SceneID of the scene to switch to.
          */
@@ -99,11 +94,30 @@ namespace IS {
         void RunSceneFunction(std::function<void(SceneID)> SceneFunc);
 
         /*!
+         * \brief Run a function for a specified entity.
+         * \param EntityFunc The function to run.
+         */
+        void RunEntityFunction(SceneID scene_id, std::function<void(Entity, std::string)> EntityFunc);
+
+        /*!
          * \brief Get the name of the scene with the given SceneID.
          * \param scene_id The SceneID of the scene.
          * \return The name of the scene.
          */
-        std::string GetSceneName(SceneID scene_id) const;
+        const char* GetSceneName(SceneID scene_id) const;
+
+        /*!
+         * \brief Get the number of the entities in a scene.
+         * \param scene_id The SceneID of the scene.
+         * \return The number of entities in the scene.
+         */
+        int GetEntityCount(SceneID scene_id) const;
+
+        /*!
+         * \brief Get the number of the entities in the active scene.
+         * \return The number of entities in the active scene.
+         */
+        int GetActiveEntityCount() const;
 
         /*!
          * \brief Get the SceneID of the active scene.
@@ -115,13 +129,18 @@ namespace IS {
          * \brief Get the name of the active scene.
          * \return The name of the active scene.
          */
-        std::string GetActiveSceneName() const;
+        const char* GetActiveSceneName() const;
 
         /*!
          * \brief Get the number of scenes managed by the SceneManager.
          * \return The number of scenes.
          */
         SceneID GetSceneCount() const;
+
+        void AddEntity(const char* name);
+        void AddRandomEntity();
+        void CloneEntity(Entity entity);
+        void DeleteEntity(Entity entity);
 
 	private:
 		SceneID mActiveSceneID	= 0; ///< Unique identifier for active scene
@@ -132,7 +151,7 @@ namespace IS {
 		SceneMap<Entity> mSceneEntities;
 		SceneMap<Map<Entity, Signature>> mSceneEntitySignatures;
 		SceneMap<Map<std::string, Entity>> mSceneEntityNames;
-		SceneMap<Map<Entity, std::string>> mSceneEntityIds;
+        SceneMap<Map<Entity, std::string>> mSceneEntityIds;
 		SceneMap<ECSMap> mSceneComponents; // some data structure its an unordered tree :)
 
         /*!
@@ -144,6 +163,11 @@ namespace IS {
          * \brief Destructor for the SceneManager.
          */
         ~SceneManager() = default;
+
+        /*!
+         * \brief Save the current scene to file.
+         */
+        void SaveSceneToFile();
 	};
 
 } // end namespace IS

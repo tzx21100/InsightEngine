@@ -223,8 +223,9 @@ namespace IS {
         /**
          * \brief Generates a random entity.
          * \param with_texture A flag indicating if the entity should have a texture. Default is false.
+         * \return The randomly generated entity.
          */
-        void GenerateRandomEntity(bool with_texture = false);
+        Entity GenerateRandomEntity(bool with_texture = false);
 
         /**
          * \brief Deletes a specified entity.
@@ -599,13 +600,13 @@ namespace IS {
         * \brief Processes entities queued for deletion.
         */
         void ProcessEntityDeletion();
-
+        
         /**
          * \brief Destroys a specified entity.
          * \param entity The entity to destroy.
          */
         void DestroyEntity(Entity entity);
-
+        
         /**
          * \brief Map to store all systems by name.
          */

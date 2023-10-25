@@ -54,7 +54,7 @@ namespace IS {
             bool opened = ImGui::TreeNodeEx("Scenes", tree_flags);
             if (ImGui::BeginPopupContextItem())
             {
-                if (ImGui::MenuItem("Add Scene")) {}
+                if (ImGui::MenuItem("Add Scene")) { scene_manager.CreateScene("NewScene"); }
 
                 ImGui::EndPopup();
             }
@@ -89,14 +89,13 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderActiveSceneDetails()
     {
-        auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Comma separted numbers
         std::ostringstream entity_count, max_entity_count;
         entity_count.imbue(std::locale(""));
-        entity_count << std::fixed << engine.EntitiesAlive();
+        entity_count << std::fixed << scene_manager.GetActiveEntityCount();
         max_entity_count.imbue(std::locale(""));
         max_entity_count << std::fixed << MAX_ENTITIES;
 
@@ -109,7 +108,7 @@ namespace IS {
             ImGui::TextUnformatted("Active Scene:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted(scene_manager.GetActiveSceneName().c_str());
+            ImGui::TextUnformatted(scene_manager.GetActiveSceneName());
 
             // Entities Alive
             ImGui::TableNextColumn();
@@ -131,7 +130,7 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
         SceneManager& scene_manager = SceneManager::Instance();        
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool opened = ImGui::TreeNodeEx(scene_manager.GetSceneName(scene).c_str(), tree_flags);
+        bool opened = ImGui::TreeNodeEx(scene_manager.GetSceneName(scene), tree_flags);
 
         // Right click on scene
         if (ImGui::BeginPopupContextItem())
@@ -140,6 +139,8 @@ namespace IS {
             {
                 if (ImGui::MenuItem("Entity")) { engine.CreateEntity("Entity"); }
                 if (ImGui::MenuItem("Random Entity")) { engine.GenerateRandomEntity(); }
+                //if (ImGui::MenuItem("Entity")) { scene_manager.AddEntity("Entity"); }
+                //if (ImGui::MenuItem("Random Entity")) { scene_manager.AddRandomEntity(); }
 
                 ImGui::EndMenu(); // end menu Add
             }
@@ -152,21 +153,23 @@ namespace IS {
         {
             ResetSelection();
             scene_manager.SwitchScene(scene);
+            IS_CORE_DEBUG("Scene {} : {} clicked", scene, scene_manager.GetSceneName(scene));
+            IS_CORE_DEBUG("Active Scene {}", scene_manager.GetActiveScene());
         }
 
         // Display scene entity count
         ImGui::SameLine();
-        ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%d)", engine.EntitiesAlive());
+        ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%d)", scene_manager.GetEntityCount(scene));
 
         // Render entity tree
         if (opened)
         {
             // Render all filtered entities
-            for (auto const& [entity, name] : engine.GetEntitiesAlive())
+            scene_manager.RunEntityFunction(scene, [this](Entity entity, std::string name)
             {
-                if (mFilter.PassFilter(name.c_str())) // filter
+                if (mFilter.PassFilter(name.c_str()))
                     RenderEntityNode(entity);
-            }
+            });
 
             ImGui::TreePop(); // end tree scene
         }
@@ -258,11 +261,11 @@ namespace IS {
     //    }
     //}
 
-    void SceneHierarchyPanel::CloneEntity(Entity entity) { InsightEngine::Instance().CopyEntity(entity); }
+    void SceneHierarchyPanel::CloneEntity(Entity entity) { SceneManager::Instance().CloneEntity(entity); }
 
     void SceneHierarchyPanel::DeleteEntity(Entity entity)
     {
-        InsightEngine::Instance().DeleteEntity(entity);
+        SceneManager::Instance().DeleteEntity(entity);
         if (mSelectedEntity && *mSelectedEntity == entity)
             mSelectedEntity.reset();
     }

@@ -50,8 +50,6 @@ namespace IS {
          */
         ~SceneHierarchyPanel() = default;
 
-        void ProcessShortcuts();
-
         /*!
          * \brief Renders the panel for the scene hierarchy.
          */

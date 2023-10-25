@@ -203,6 +203,7 @@ namespace IS {
         for (Entity entity : mEntitiesToDelete)
             DestroyEntity(entity);
         mEntitiesToDelete.clear();
+        SceneManager::Instance().SaveScene();
     }
 
     // limit fps will return the frameEnd time now so i can use to find delta time
@@ -234,7 +235,7 @@ namespace IS {
     }
 
     // Creates a random entity for demo testing
-    void InsightEngine::GenerateRandomEntity(bool with_texture) {
+    Entity InsightEngine::GenerateRandomEntity(bool with_texture) {
         PRNG& prng = PRNG::Instance();
         InsightEngine& engine = Instance();
         auto const& window = engine.GetSystem<WindowSystem>("Window");
@@ -269,6 +270,8 @@ namespace IS {
                 (gacha <= RARE) ? *asset->GetImage("Assets/wii.png") : *asset->GetImage("Assets/placeholder_background.png");
             sprite.img.texture_id = static_cast<uint8_t>(random_img.mTextureData);
         }
+
+        return e;
     }
 
     // Dynamic entity copying, this will copy all components and their specific component array.
