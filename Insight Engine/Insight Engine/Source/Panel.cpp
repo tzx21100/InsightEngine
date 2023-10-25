@@ -172,17 +172,17 @@ namespace IS {
         ImGuiIO& io = ImGui::GetIO();
         auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
+        // Text Colors
+        static const ImVec4 RED_COLOR = { 1.f, 0.3f, 0.2f, 1.f };
+        static const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
+        static const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
+
         ImGui::Begin("Performance");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         
         if (ImGui::BeginTable("Engine", 2))
         {
             InsightEngine& engine = InsightEngine::Instance();
-
-            // Text Colors
-            static const ImVec4 RED_COLOR = { 1.f, 0.3f, 0.2f, 1.f };
-            static const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
-            static const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
             const ImVec4 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : WHITE_COLOR;
 
             ImGui::TableNextColumn();
@@ -234,7 +234,7 @@ namespace IS {
             // Delta Time
             ImGui::TableNextColumn();
             ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Delta Time:");
+            ImGui::TextUnformatted("Time:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextColored(text_color, "%.2f ms", 1000.f / io.Framerate);
@@ -247,12 +247,13 @@ namespace IS {
         if (ImGui::BeginChild("Systems"))
         {
             // Create a table for system usage
-            ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
-            if (ImGui::BeginTable("System Usage", 2, flags))
+            ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersInnerV;
+            if (ImGui::BeginTable("System Usage", 3, flags))
             {
                 // Table headers
                 ImGui::PushFont(font_bold);
                 ImGui::TableSetupColumn("System");
+                ImGui::TableSetupColumn("Time");
                 ImGui::TableSetupColumn("Usage %");
                 ImGui::TableHeadersRow();
                 ImGui::PopFont();
@@ -267,17 +268,22 @@ namespace IS {
 
                     // Compute usage percent
                     double percent = std::round((dt / engine.GetSystemDeltas().at("Engine")) * 100.0);
+                    ImVec4 text_color = percent < 60.f ? WHITE_COLOR : percent < 80.f ? YELLOW_COLOR : RED_COLOR;
 
                     // Display system usage
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
                     ImGui::PushFont(font_bold);
-                    ImGui::Text("%s", system.c_str());
+                    ImGui::TextColored(text_color, "%s", system.c_str());
                     ImGui::PopFont();
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
-                    ImGui::Text("%6d%%", static_cast<int>(percent));
+                    ImGui::TextColored(text_color, "%.2f ms", dt * 1000.f);
+
+                    ImGui::TableNextColumn();
+                    ImGui::Spacing();
+                    ImGui::TextColored(text_color, "%d%%", static_cast<int>(percent));
                     ImGui::Spacing();
                 }
 

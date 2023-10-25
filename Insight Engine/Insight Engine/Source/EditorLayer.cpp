@@ -21,6 +21,7 @@
 #include "EditorUtils.h"
 #include "Graphics.h"
 #include "CoreEngine.h"
+#include "InspectorPanel.h"
 #include "AssetBrowserPanel.h"
 #include "FileUtils.h"
 
@@ -37,7 +38,7 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
-        OpenScene();
+        //OpenScene();
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -224,10 +225,14 @@ namespace IS {
         if (mShowNewScene)
             ShowCreatePopup("Create new scene", "NewScene", &mShowNewScene, [this](const char* scene_name)
             {
+                SceneManager& scene_manager = SceneManager::Instance();
                 mSceneHierarchyPanel->ResetSelection();
-                InsightEngine::Instance().NewScene();
-                mActiveScene = scene_name;
-                IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+                //InsightEngine::Instance().NewScene();
+                //mActiveScene = scene_name;
+                //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+                scene_manager.CreateScene(scene_name);
+                IS_CORE_TRACE("Current Scene: {}", scene_name);
+                
             });
         if (mShowNewScript)
             ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [](const char* script_name)
@@ -274,41 +279,55 @@ namespace IS {
     void EditorLayer::OpenScene()
     {
         mSceneHierarchyPanel->ResetSelection();
-        InsightEngine& engine = InsightEngine::Instance();
+        //InsightEngine& engine = InsightEngine::Instance();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
             auto const& relative_path = std::filesystem::relative(filepath);
-            engine.LoadScene(relative_path.string());
-            mActiveScene = filepath.stem().string();
+            auto& scene_manager = SceneManager::Instance();
+            scene_manager.LoadScene(relative_path.string());
+            IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
+            //engine.LoadScene(relative_path.string());
+            //mActiveScene = filepath.stem().string();
 
-            IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         }
     }
 
     void EditorLayer::OpenScene(std::string const& path)
     {
-        InsightEngine::Instance().LoadScene(path);
+        //InsightEngine::Instance().LoadScene(path);
         std::filesystem::path filepath(path);
         if (filepath.extension() != ".insight")
             return;
 
-        mActiveScene = filepath.stem().string();
-        IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+        //mActiveScene = filepath.stem().string();
+        //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+        auto& scene_manager = SceneManager::Instance();
+        scene_manager.LoadScene(filepath.stem().string());
+        IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
     }
 
-    void EditorLayer::SaveScene() { InsightEngine::Instance().SaveCurrentScene(mActiveScene); }
+    void EditorLayer::SaveScene() 
+    {
+        //InsightEngine::Instance().SaveCurrentScene(mActiveScene);
+        auto& scene_manager = SceneManager::Instance();
+        scene_manager.SaveScene();
+    }
 
     void EditorLayer::SaveSceneAs()
     {
-        InsightEngine& engine = InsightEngine::Instance();
+        //InsightEngine& engine = InsightEngine::Instance();
 
         if (std::filesystem::path filepath(FileUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
-            mActiveScene = filepath.stem().string();
-            engine.SaveCurrentScene(mActiveScene);
+            //mActiveScene = filepath.stem().string();
+            //engine.SaveCurrentScene(mActiveScene);
 
-            IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
+            auto& scene_manager = SceneManager::Instance();
+            scene_manager.SaveSceneAs(filepath.stem().string());
+            IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
         }
     }
 

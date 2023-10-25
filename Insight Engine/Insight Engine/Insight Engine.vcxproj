@@ -25,11 +25,13 @@
     <ClCompile Include="Source\Framebuffer.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\Grid.cpp" />
+    <ClCompile Include="Source\InspectorPanel.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Panel.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
     <ClCompile Include="Source\ScriptGlue.cpp" />
@@ -80,6 +82,7 @@
     <ClInclude Include="Source\GameLoop.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\Grid.h" />
+    <ClInclude Include="Source\InspectorPanel.h" />
     <ClInclude Include="Source\ISMath.h" />
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />

@@ -24,6 +24,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
+#include "InspectorPanel.h"
 #include "Entities.h"
 
 // Dependencies
@@ -31,8 +32,6 @@
 #include <imgui.h>
 
 namespace IS {
-
-    class InspectorPanel; ///< Forward declaration of class InspectorPanel.
 
     /*!
      * \brief The SceneHierarchyPanel class provides a panel for managing scene entities.
@@ -44,7 +43,7 @@ namespace IS {
         /*!
          * \brief Constructs a SceneHierarchyPanel object.
          */
-        SceneHierarchyPanel();
+        SceneHierarchyPanel() = default;
 
         /*!
          * \brief Destroys the SceneHierarchyPanel object.
@@ -72,64 +71,32 @@ namespace IS {
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
 
         /*!
+         * \brief Renders details about the active scene.
+         */
+        void RenderActiveSceneDetails();
+
+        /*!
+         * \brief Renders a node for the specified scene in the scene hierarchy.
+         * \param scene The scene to be rendered.
+         */
+        void RenderSceneNode(SceneID scene);
+
+        /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
          * \param entity The Entity to be rendered.
          */
         void RenderEntityNode(Entity entity);
 
-        /*!
-         * \brief Renders configuration for the specified Entity.
-         * \param entity The Entity to be deleted.
-         * \param show Boolean flag to determine where to show window.
-         */
-        void RenderConfirmDelete(Entity entity, bool& show);
+        ///*!
+        // * \brief Renders configuration for the specified Entity.
+        // * \param entity The Entity to be deleted.
+        // * \param show Boolean flag to determine where to show window.
+        // */
+        //void RenderConfirmDelete(Entity entity, bool& show);
+
+        static void RenderAddComponent(Entity entity);
 
         friend class InspectorPanel; ///< Grant InspectorPanel access to private data members.
-    };
-
-    /*!
-     * \brief The InspectorPanel class provides a panel for managing selected entity and its components.
-     */
-    class InspectorPanel : public Panel {
-    public:
-
-        /*!
-         * \brief Constructs an InspectorPanel object.
-         * \param scene_hierarchy_panel The instance of scene hierarchy panel.
-         */
-        InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel);
-
-        /*!
-         * \brief Renders the panel for the inspector.
-         */
-        void RenderPanel() override;
-
-    private:
-        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
-        bool mShowPrefabs = false; ///< Flag indicating show prefabs
-
-        /*!
-         * \brief Renders component nodes for the specified Entity.
-         * \param entity The Entity for which components will be rendered.
-         */
-        void RenderComponentNodes(Entity entity);
-
-        /*!
-         * \brief Renders configuration for the specified Entity.
-         * \param entity The Entity for which configuration will be rendered.
-         */
-        void RenderEntityConfig(Entity entity);
-
-        /*!
-         * \brief Renders a specific component for the specified Entity.
-         * \tparam Component The type of the component to render.
-         * \tparam RenderFunc The type of the rendering function for the component.
-         * \param label The label for the component.
-         * \param entity The Entity for which the component will be rendered.
-         * \param render The rendering function for the component.
-         */
-        template <typename Component, typename RenderFunc>
-        void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
     };
 
 } // end namespace IS

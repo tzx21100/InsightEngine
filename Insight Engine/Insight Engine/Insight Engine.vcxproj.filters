@@ -133,6 +133,12 @@
     <ClCompile Include="Source\WindowSystem.cpp">
       <Filter>Engine\Systems\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Editor\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorPanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -300,9 +306,6 @@
     <ClInclude Include="Source\EditorUtils.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AssetBrowserPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
@@ -314,6 +317,12 @@
     </ClInclude>
     <ClInclude Include="Source\WindowSystem.h">
       <Filter>Engine\Systems\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Editor\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InspectorPanel.h">
+      <Filter>Editor\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +427,9 @@
     </Filter>
     <Filter Include="Engine\Systems\Window">
       <UniqueIdentifier>{0952072b-323d-45ee-a5fc-c54facde40af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Scene">
+      <UniqueIdentifier>{af6e24eb-8858-4a53-9442-61aca5bc19b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

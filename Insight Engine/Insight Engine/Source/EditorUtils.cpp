@@ -37,43 +37,6 @@ namespace IS::EditorUtils {
         return delta.x * delta.x + delta.y * delta.y < (radius + distance) * (radius + distance);
     }
 
-    void RenderEntityCount()
-    {
-        InsightEngine& engine = InsightEngine::Instance();
-        ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
-
-        // Display Max and Alive Entity count
-        if (ImGui::BeginTable("EntityCount", 2))
-        {
-            // Comma separted numbers
-            std::ostringstream entity_count;
-            entity_count.imbue(std::locale(""));
-            entity_count << std::fixed << MAX_ENTITIES;
-
-            // Max Entities
-            ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Max Entities:");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", entity_count.str().c_str());
-
-            // Entities Alive
-            ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Entities Alive:");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            entity_count.str(""); // Set to empty string
-            entity_count.clear(); // Clear any error flags
-            entity_count << std::fixed << engine.EntitiesAlive();
-            ImGui::Text("%s", entity_count.str().c_str());
-
-            ImGui::EndTable();
-        }
-    }
-
     void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint)
     {
         ImGuiIO& io = ImGui::GetIO();

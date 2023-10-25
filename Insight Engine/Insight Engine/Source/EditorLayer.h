@@ -83,8 +83,6 @@ namespace IS {
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
 
-        std::string mActiveScene = "emptyscene"; ///< Name of the active scene.
-
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
         bool mShowNewScript = false; ///< Flag indicating to show new script.
