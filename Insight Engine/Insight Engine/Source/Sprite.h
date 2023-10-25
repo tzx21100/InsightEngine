@@ -42,6 +42,7 @@ namespace IS {
         }
 
         struct instanceData {
+            glm::vec3 color{};
             float tex_index{};
             glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size

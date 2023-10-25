@@ -29,14 +29,14 @@ namespace IS {
     class Mesh {
     public:
         enum attribs {
-            pos_attrib, 
-            color_attrib, 
-            tex_coord_attrib, 
-            tex_id_attrib,
+            pos_attrib,
+            tex_coord_attrib,
+            color_attrib,
+            tex_index_attrib,
             x_form_row1_attrib,
             x_form_row2_attrib,
             x_form_row3_attrib,
-            anim_dim_attrib, 
+            anim_dim_attrib,
             anim_index_attrib
         };
 
