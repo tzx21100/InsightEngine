@@ -163,8 +163,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\ImGuizmo\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\ImGuizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -176,8 +176,8 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\ImGuizmo\include;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\ImGuizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -195,7 +195,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glfw3dll.lib;fmod_vc.lib;freetype.lib;gladD.lib;imguiD.lib;jsoncppD.lib;mono-2.0-sgen.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glfw3dll.lib;fmod_vc.lib;freetype.lib;gladD.lib;imguiD.lib;ImGuizmoD.lib;jsoncppD.lib;mono-2.0-sgen.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
@@ -240,7 +240,7 @@ xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glfw3dll.lib;fmod_vc.lib;freetype.lib;mono-2.0-sgen.lib;glad.lib;imgui.lib;jsoncpp.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;glfw3dll.lib;fmod_vc.lib;freetype.lib;mono-2.0-sgen.lib;glad.lib;imgui.lib;ImGuizmo.lib;jsoncpp.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
