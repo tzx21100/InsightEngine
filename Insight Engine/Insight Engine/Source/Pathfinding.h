@@ -33,7 +33,7 @@ namespace IS {
         bool OpenListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>> &open_list, Waypoint* waypoint);
 
         // find a path using A* algorithm
-        std::vector<Waypoint*> FindPath(const Waypoint& start, const Waypoint& goal);
+        std::vector<Waypoint*> AStarPathfinding(const Waypoint& start, const Waypoint& goal);
 
         // add a waypoint
         void AddWaypoint(const Waypoint& waypoint);

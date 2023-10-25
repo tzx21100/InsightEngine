@@ -84,7 +84,7 @@ namespace IS {
         return false;
     } 
 
-    std::vector<Waypoint*> Pathfinding::FindPath(const Waypoint& start, const Waypoint& goal) {
+    std::vector<Waypoint*> Pathfinding::AStarPathfinding(const Waypoint& start, const Waypoint& goal) {
 
         // Create open and closed sets as priority queues
         std::priority_queue<Waypoint*, std::vector<Waypoint*>> open_list;
@@ -155,7 +155,7 @@ namespace IS {
 
         if (engine.HasComponent<Pathfinder>(entity)) {
             // Perform pathfinding and store the result in the component
-            std::vector<Waypoint*> path = FindPath(start, goal);
+            std::vector<Waypoint*> path = AStarPathfinding(start, goal);
             // Store the path in the system's mPathStorage
             mPathStorage[entity] = path;
         }
