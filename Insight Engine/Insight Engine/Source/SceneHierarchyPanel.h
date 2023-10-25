@@ -50,6 +50,8 @@ namespace IS {
          */
         ~SceneHierarchyPanel() = default;
 
+        void ProcessShortcuts();
+
         /*!
          * \brief Renders the panel for the scene hierarchy.
          */
@@ -87,12 +89,21 @@ namespace IS {
          */
         void RenderEntityNode(Entity entity);
 
+        /*!
+         * \brief Renders a node for the specified Entity in the scene hierarchy.
+         * \param entity The Entity to be rendered.
+         */
+        void ProcessSelectedEntityShortcuts();
+
         ///*!
         // * \brief Renders configuration for the specified Entity.
         // * \param entity The Entity to be deleted.
         // * \param show Boolean flag to determine where to show window.
         // */
         //void RenderConfirmDelete(Entity entity, bool& show);
+
+        void CloneEntity(Entity entity);
+        void DeleteEntity(Entity entity);
 
         static void RenderAddComponent(Entity entity);
 

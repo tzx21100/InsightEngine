@@ -51,7 +51,7 @@ namespace IS {
         std::ranges::copy(source, std::begin(buffer));
 
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+        auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
 
         if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
@@ -62,7 +62,7 @@ namespace IS {
 
         // Save Prefab
         ImGui::SameLine();
-        ImGui::PushFont(font_bold);
+        ImGui::PushFont(FONT_BOLD);
         if (ImGui::Button("Save"))
             engine.SaveAsPrefab(entity, name);
 
@@ -101,7 +101,7 @@ namespace IS {
         }
 
         // Add Component
-        ImGui::PushFont(font_bold);
+        ImGui::PushFont(FONT_BOLD);
         if (ImGui::Button("Add Component"))
             ImGui::OpenPopup("AddComponent");
         ImGui::PopFont();
@@ -116,7 +116,7 @@ namespace IS {
         }
 
         // Clone Entity
-        ImGui::PushFont(font_bold);
+        ImGui::PushFont(FONT_BOLD);
         if (ImGui::Button("Clone Entity"))
             engine.CopyEntity(entity);
         ImGui::SameLine();
@@ -142,18 +142,18 @@ namespace IS {
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+        auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Entity configurations
         RenderEntityConfig(entity);
 
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [font_bold, entity](Sprite& sprite)
+        RenderComponent<Sprite>("Sprite", entity, [FONT_BOLD, entity](Sprite& sprite)
         {
             // Render Color Picker if does not have texture
             if (!sprite.img.texture_id)
             {
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Color");
                 ImGui::PopFont();
                 ImGui::SameLine();
@@ -163,7 +163,7 @@ namespace IS {
 
             // Rendert Texture and its dimension data
             // Header
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Texture");
             ImGui::PopFont();
 
@@ -206,13 +206,13 @@ namespace IS {
             ImGuiTableFlags table_flags = 0;
             ImGui::BeginTable("Texture", 2, table_flags);
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Width");
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::Text("%dpx", sprite.img.width);
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Height");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -222,7 +222,7 @@ namespace IS {
         }); // end render Sprite Component
 
         // Transform Component
-        RenderComponent<Transform>("Transform", entity, [font_bold](Transform& transform)
+        RenderComponent<Transform>("Transform", entity, [FONT_BOLD](Transform& transform)
         {
             // Render Translation
             Vector2D position = { transform.world_position.x, transform.world_position.y };
@@ -235,7 +235,7 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("TransformRotation", column_flags, 100.f);
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Rotation");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -255,7 +255,7 @@ namespace IS {
         }); // end render Transform Component
 
         // Rigidbody Component
-        RenderComponent<RigidBody>("Rigidbody", entity, [entity, font_bold](RigidBody& rigidbody)
+        RenderComponent<RigidBody>("Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
@@ -271,7 +271,7 @@ namespace IS {
 
                 // Angular Velocity
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Angular Velocity");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -281,7 +281,7 @@ namespace IS {
 
                 // Body Type
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Body Type");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -289,7 +289,7 @@ namespace IS {
 
                 // Body Shape
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Body Shape");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -297,7 +297,7 @@ namespace IS {
 
                 // Mass
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Mass");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -307,7 +307,7 @@ namespace IS {
 
                 // Inverse Mass
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Inverse Mass");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -317,7 +317,7 @@ namespace IS {
 
                 // Restitution
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Restitution");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -327,7 +327,7 @@ namespace IS {
 
                 // Density
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Density");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -340,13 +340,13 @@ namespace IS {
         }); // end render Rigidbody Component
 
         // Script Component
-        RenderComponent<ScriptComponent>("Script", entity, [font_bold](ScriptComponent& script)
+        RenderComponent<ScriptComponent>("Script", entity, [FONT_BOLD](ScriptComponent& script)
         {
             // Display Sprite Name
             if (ImGui::BeginTable("ScriptTable", 2))
             {
                 ImGui::TableNextColumn();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Script Name:");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();

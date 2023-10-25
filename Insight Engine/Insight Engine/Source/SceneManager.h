@@ -82,9 +82,9 @@ namespace IS {
         void SaveSceneAs(std::string const& scene_filename);
 
         /*!
-         * \brief Save the current scene to disk.
+         * \brief Save the current scene to file.
          */
-        void SaveSceneToDisk();
+        void SaveSceneToFile();
 
         /*!
          * \brief Switch to the scene with the specified SceneID.

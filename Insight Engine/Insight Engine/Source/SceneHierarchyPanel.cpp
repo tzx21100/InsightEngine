@@ -91,7 +91,7 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
-        auto const font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Comma separted numbers
         std::ostringstream entity_count, max_entity_count;
@@ -105,7 +105,7 @@ namespace IS {
         {
             // Display active scene
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Active Scene:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -113,7 +113,7 @@ namespace IS {
 
             // Entities Alive
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Entities Alive:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -186,6 +186,8 @@ namespace IS {
         if (ImGui::IsItemClicked())
             mSelectedEntity = std::make_shared<Entity>(entity);
 
+        ProcessSelectedEntityShortcuts();
+
         // Right click on entity
         if (ImGui::BeginPopupContextItem())
         {
@@ -196,16 +198,9 @@ namespace IS {
                 ImGui::EndMenu();
             }
 
-            // Clone Entity
-            if (ImGui::MenuItem("Clone Entity")) { engine.CopyEntity(entity); }
-
-            // Delete Entity
-            if (ImGui::MenuItem("Delete Entity"))
-            {
-                engine.DeleteEntity(entity);
-                if (mSelectedEntity && *mSelectedEntity == entity)
-                    mSelectedEntity.reset();
-            }
+            // Clone/Delete entity
+            if (ImGui::MenuItem("Clone", "Ctrl+D"))  { CloneEntity(entity); }
+            if (ImGui::MenuItem("Delete", "Delete")) { DeleteEntity(entity); }
 
             ImGui::EndPopup();
         }
@@ -215,6 +210,23 @@ namespace IS {
         ImGui::PopID();
 
     } // end RenderEntityNode()
+
+    void SceneHierarchyPanel::ProcessSelectedEntityShortcuts()
+    {
+        if (!mSelectedEntity)
+            return;
+
+        Entity entity = *mSelectedEntity;
+
+        auto& engine = InsightEngine::Instance();
+        auto input = engine.GetSystem<InputManager>("Input");
+        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
+        const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
+
+        if (CTRL_HELD && D_PRESSED) { CloneEntity(entity); }  // Ctrl+D
+        if (DELETE_PRESSED) { DeleteEntity(entity); } // Delete
+    }
 
     //void SceneHierarchyPanel::RenderConfirmDelete(Entity entity, bool& show)
     //{
@@ -245,6 +257,15 @@ namespace IS {
     //        ImGui::End();
     //    }
     //}
+
+    void SceneHierarchyPanel::CloneEntity(Entity entity) { InsightEngine::Instance().CopyEntity(entity); }
+
+    void SceneHierarchyPanel::DeleteEntity(Entity entity)
+    {
+        InsightEngine::Instance().DeleteEntity(entity);
+        if (mSelectedEntity && *mSelectedEntity == entity)
+            mSelectedEntity.reset();
+    }
 
     void SceneHierarchyPanel::RenderAddComponent(Entity entity)
     {

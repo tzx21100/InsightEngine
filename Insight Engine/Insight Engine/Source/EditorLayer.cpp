@@ -173,7 +173,7 @@ namespace IS {
                 ImGui::EndMenu();
             } // end menu Edit
 
-            bool open_testing = ImGui::BeginMenu("Testing");
+            bool open_testing = ImGui::BeginMenu("Test");
 
             // Tooltip
             if (!open_testing && ImGui::BeginItemTooltip())
@@ -185,10 +185,10 @@ namespace IS {
                 ImGui::EndTooltip();
             }
 
-            // Render menu Testing
+            // Render menu Test
             if (open_testing)
             {
-                if (ImGui::BeginMenu("Create Entity"))
+                if (ImGui::BeginMenu("Add Entity"))
                 {
                     // Create random entities without texture
                     if (ImGui::BeginMenu("Random Color"))
@@ -298,13 +298,10 @@ namespace IS {
     {
         //InsightEngine::Instance().LoadScene(path);
         std::filesystem::path filepath(path);
-        if (filepath.extension() != ".insight")
-            return;
-
         //mActiveScene = filepath.stem().string();
         //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         auto& scene_manager = SceneManager::Instance();
-        scene_manager.LoadScene(filepath.stem().string());
+        scene_manager.LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
     }
 

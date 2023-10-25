@@ -34,7 +34,6 @@ namespace IS {
 		// Checks for if scene has already been loaded
 		auto found = std::find_if(mSceneNames.begin(), mSceneNames.end(), [filename](std::pair<SceneID, std::string> const& pair)
 		{
-			// Get the iterator if found
 			auto const& [scene_id, scene_name] = pair;
 			return scene_name == filename;
 		});
@@ -53,9 +52,9 @@ namespace IS {
 		mSceneCount++;
 		if (SceneFunc)
 			SceneFunc();
-		SaveSceneToDisk();
+		SaveSceneToFile();
 
-		IS_CORE_DEBUG("Current number of scenees : {}", mSceneCount);
+		IS_CORE_DEBUG("Current number of scenes : {}", mSceneCount);
 		IS_CORE_DEBUG("Scene {} created successfully!", filename);
 	}
 
@@ -92,7 +91,7 @@ namespace IS {
 		SaveScene();
 	}
 
-	void SceneManager::SaveSceneToDisk() { InsightEngine::Instance().SaveCurrentScene(mSceneNames[mActiveSceneID]); }
+	void SceneManager::SaveSceneToFile() { InsightEngine::Instance().SaveCurrentScene(mSceneNames[mActiveSceneID]); }
 
 	void SceneManager::SwitchScene(SceneID scene_id)
 	{

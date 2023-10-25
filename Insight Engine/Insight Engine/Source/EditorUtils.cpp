@@ -31,8 +31,8 @@ namespace IS::EditorUtils {
 
     bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius)
     {
-        ImFont* const& font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
-        float distance = font_bold->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, " ").x; // Minimum size for text, use any ImGui widget you prefer.
+        ImFont* const& FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        float distance = FONT_BOLD->CalcTextSizeA(ImGui::GetFontSize(), FLT_MAX, -1.0f, " ").x; // Minimum size for text, use any ImGui widget you prefer.
         ImVec2 delta = point - center;
         return delta.x * delta.x + delta.y * delta.y < (radius + distance) * (radius + distance);
     }
@@ -62,7 +62,7 @@ namespace IS::EditorUtils {
     void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+        ImFont* const& FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
@@ -73,7 +73,7 @@ namespace IS::EditorUtils {
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
             ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted(label.c_str());
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -89,7 +89,7 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("X", button_size))
                 values.x = x_reset;
             ImGui::PopFont();
@@ -104,7 +104,7 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.44f, .67f, .01f, 1.f));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.55f, .74f, .21f, 1.f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.44f, .67f, .01f, 1.f));
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Y", button_size))
                 values.y = y_reset;
             ImGui::PopFont();
