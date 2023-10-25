@@ -19,6 +19,7 @@ namespace IS {
 		void(*Enter)();
 		void(*Update)();
 		void(*Exit)();
+		std::unordered_map<std::string, AIState*> substates{};
 	};
 }
 
