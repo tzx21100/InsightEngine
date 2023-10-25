@@ -193,7 +193,7 @@ namespace IS {
         }
 
         ImGui::SameLine();
-        EditorUtils::RenderFilterWithHint(mFilter, "Search...");
+        EditorUtils::RenderFilterWithHint(mFilter, "Search Log...");
 
         ImGui::Spacing();
 

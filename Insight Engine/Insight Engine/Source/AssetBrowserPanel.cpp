@@ -104,13 +104,14 @@ namespace IS {
                 ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                 ImGui::PopStyleColor();
 
-                // Start dragging item
+                // Start file drag
                 if (ImGui::BeginDragDropSource())
                 {
                     const wchar_t* item_path = path.c_str();
                     ImGui::SetDragDropPayload("ASSET_BROWSER_ITEM", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
-                    ImVec2 image_size = { 48.f, 48.f };
+                    // Tooltip
+                    const ImVec2 image_size = { 48.f, 48.f };
                     ImGui::Image(icon, image_size);
 
                     ImGui::EndDragDropSource();
@@ -150,14 +151,14 @@ namespace IS {
         if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
         {
             ImGuiIO& io = ImGui::GetIO();
-            ImFont* const font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+            ImFont* const FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
             float panel_width = ImGui::GetContentRegionAvail().x;
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
 
             ImGui::TableSetupColumn("Browser Control", column_flags, label_width);
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Thumbnail Size");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -165,7 +166,7 @@ namespace IS {
             ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f");
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Padding");
             ImGui::PopFont();
             ImGui::TableNextColumn();

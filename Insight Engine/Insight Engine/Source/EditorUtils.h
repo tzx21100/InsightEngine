@@ -66,11 +66,6 @@ namespace IS {
         bool TestPointCircle(ImVec2 const& point, ImVec2 const& center, float radius);
 
         /*!
-         * \brief Renders the max entity count and entities alive count.
-         */
-        void RenderEntityCount();
-
-        /*!
          * \brief Renders the filter input text box with hint text.
          * \param filter The imgui text filter to render.
          * \param hint The hint to render in the filter input text box.

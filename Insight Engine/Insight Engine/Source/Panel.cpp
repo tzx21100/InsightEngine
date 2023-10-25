@@ -74,7 +74,7 @@ namespace IS {
         {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
             {
-                std::filesystem::path path = static_cast<const wchar_t*>(payload->Data);
+                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                 mSceneHierarchyPanel->ResetSelection();
                 IS_CORE_TRACE("Selected Entity reference count: {}", mSceneHierarchyPanel.use_count());
 
@@ -94,11 +94,11 @@ namespace IS {
     void ScenePanel::RenderOverlay()
     {
         ImDrawList* window_drawlist = ImGui::GetWindowDrawList();
-        ImFont* const font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        ImFont* const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         ImVec2 mouse_pos = ImGui::GetMousePos();
 
         // Attributes of circle
-        static const float CIRCLE_RADIUS = 20.f;
+        const float CIRCLE_RADIUS = 20.f;
         ImVec2 window_pos = ImGui::GetWindowPos();
         float tab_height = ImGui::GetTextLineHeightWithSpacing() + ImGui::GetFontSize();
         ImVec2 circle_center = { window_pos.x + CIRCLE_RADIUS + tab_height / 2.f, window_pos.y + CIRCLE_RADIUS + tab_height };
@@ -110,43 +110,43 @@ namespace IS {
         // Check if the circle is being hovered
         if (!ImGui::IsAnyItemHovered() && EditorUtils::TestPointCircle(mouse_pos, circle_center, CIRCLE_RADIUS))
         {
-            ImVec2 tooltip_size(400.f, 0.0f);
+            const ImVec2 TOOLTIP_SIZE = { 400.f, 0.f };
 
             // Create a custom tooltip window
-            ImGui::SetNextWindowSize(tooltip_size);
+            ImGui::SetNextWindowSize(TOOLTIP_SIZE);
             if (ImGui::BeginTooltip())
             {
                 // Set padding and indetation
-                static const float PADDING = 10.f;
+                const float PADDING = 10.f;
                 ImGui::Spacing();
                 ImGui::Indent(PADDING);
 
                 // Tooltip content
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("The following controls ONLY work if scene panel focused!");
                 ImGui::PopFont();
                 ImGui::Separator();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("General Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'Tab' to toggle GUI");
                 ImGui::BulletText("Click mouse scrollwheel to spawn entity");
                 ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
                 ImGui::Separator();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Player Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'WASD' to move in the four directions");
                 ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
                 ImGui::Separator();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Physics Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
                 ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
                 ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
                 ImGui::Separator();
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Audio Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'Z' to play sfx");
@@ -170,7 +170,12 @@ namespace IS {
     void PerformancePanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
-        auto font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+        auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
+
+        // Text Colors
+        const ImVec4 RED_COLOR = { 1.f, 0.3f, 0.2f, 1.f };
+        const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
+        const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
 
         ImGui::Begin("Performance");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
@@ -178,15 +183,10 @@ namespace IS {
         if (ImGui::BeginTable("Engine", 2))
         {
             InsightEngine& engine = InsightEngine::Instance();
-
-            // Text Colors
-            static const ImVec4 RED_COLOR = { 1.f, 0.3f, 0.2f, 1.f };
-            static const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
-            static const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
             const ImVec4 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : WHITE_COLOR;
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("V-Sync");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -196,7 +196,7 @@ namespace IS {
 
             // Target FPS
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::SetNextItemWidth(20);
             ImGui::TextUnformatted("Target FPS:");
             ImGui::PopFont();
@@ -206,7 +206,7 @@ namespace IS {
             const char* fps_options[] = { "30", "60", "120", "240", "9999"};
             int fps_values[] = { 30, 60, 120, 240, 9999 };
 
-            for (int i{}; i < IM_ARRAYSIZE(fps_values); i++)
+            for (int i{}; i < IM_ARRAYSIZE(fps_values); ++i)
             {
                 if (fps_values[i] == engine.GetTargetFPS())
                 {
@@ -225,7 +225,7 @@ namespace IS {
 
             // Current FPS
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Current FPS:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -233,11 +233,11 @@ namespace IS {
 
             // Delta Time
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
-            ImGui::TextUnformatted("Delta Time:");
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Time:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::TextColored(text_color, "%.2f ms", 1000.f / io.Framerate);
+            ImGui::TextColored(text_color, "%.3f ms", 1000.f / io.Framerate);
 
             ImGui::EndTable(); // end table Engine
         }
@@ -247,13 +247,14 @@ namespace IS {
         if (ImGui::BeginChild("Systems"))
         {
             // Create a table for system usage
-            ImGuiTableFlags flags = ImGuiTableFlags_Resizable | ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersH;
-            if (ImGui::BeginTable("System Usage", 2, flags))
+            ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV;
+            if (ImGui::BeginTable("System Usage", 3, flags))
             {
                 // Table headers
-                ImGui::PushFont(font_bold);
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TableSetupColumn("System");
-                ImGui::TableSetupColumn("Usage %");
+                ImGui::TableSetupColumn("Time");
+                ImGui::TableSetupColumn("Usage");
                 ImGui::TableHeadersRow();
                 ImGui::PopFont();
 
@@ -266,18 +267,23 @@ namespace IS {
                         continue;
 
                     // Compute usage percent
-                    double percent = std::round((dt / engine.GetSystemDeltas().at("Engine")) * 100.0);
+                    double percent = (dt / engine.GetSystemDeltas().at("Engine")) * 100.0;
+                    ImVec4 text_color = percent < 60.f ? WHITE_COLOR : percent < 80.f ? YELLOW_COLOR : RED_COLOR;
 
                     // Display system usage
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
-                    ImGui::PushFont(font_bold);
-                    ImGui::Text("%s", system.c_str());
+                    ImGui::PushFont(FONT_BOLD);
+                    ImGui::TextColored(text_color, "%s", system.c_str());
                     ImGui::PopFont();
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
-                    ImGui::Text("%6d%%", static_cast<int>(percent));
+                    ImGui::TextColored(text_color, "%.3f ms", dt * 1000.f);
+
+                    ImGui::TableNextColumn();
+                    ImGui::Spacing();
+                    ImGui::TextColored(text_color, "%.2lf%%", percent);
                     ImGui::Spacing();
                 }
 
@@ -298,7 +304,7 @@ namespace IS {
     void PhysicsControlPanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
-        ImFont* font_bold = io.Fonts->Fonts[FONT_TYPE_BOLD];
+        ImFont* FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         ImGui::Begin("Physics");
 
@@ -306,12 +312,12 @@ namespace IS {
         ImGuiTableFlags table_flags = 0;
         if (ImGui::BeginTable("Grid", 2, table_flags))
         {
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TableSetupColumn("Grid");
             ImGui::TableHeadersRow();
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Show Grid");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -324,7 +330,7 @@ namespace IS {
             ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Rows");
             ImGui::PopFont();
             ImGui::TableNextColumn();
@@ -335,7 +341,7 @@ namespace IS {
 
         if (ImGui::BeginTable("Other Options", 2, table_flags))
         {
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TableSetupColumn("Other Options");
             ImGui::TableHeadersRow();
 
@@ -346,7 +352,7 @@ namespace IS {
             ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
 
             ImGui::TableNextColumn();
-            ImGui::PushFont(font_bold);
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Show Velocity");
             ImGui::PopFont();
             ImGui::TableNextColumn();
