@@ -11,11 +11,11 @@
 				"RigidBodyArea" : 50000.0,
 				"RigidBodyBodyType" : 0,
 				"RigidBodyCheckTransform" : true,
-				"RigidBodyDensity" : 50000.0,
+				"RigidBodyDensity" : 4999949824.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 99999.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
@@ -59,7 +59,7 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 21666.66796875
+				"mInertia" : 2166644992.0
 			},
 			"Sprite" : 
 			{
@@ -189,11 +189,11 @@
 				"RigidBodyArea" : 150000.0,
 				"RigidBodyBodyType" : 0,
 				"RigidBodyCheckTransform" : true,
-				"RigidBodyDensity" : 150000.0,
+				"RigidBodyDensity" : 14999849984.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 99999.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
@@ -217,7 +217,7 @@
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : -828.56292724609375,
+				"RigidBodyVelocityY" : 0.0,
 				"RigidBodyVertices" : 
 				[
 					{
@@ -237,7 +237,7 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 188333.34375
+				"mInertia" : 18833145856.0
 			},
 			"Sprite" : 
 			{

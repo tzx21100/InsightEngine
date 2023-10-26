@@ -561,9 +561,9 @@ namespace IS {
 			Vector2D rb = temp_rb_list[i];
 
 			bodyA->mVelocity += -impulse * bodyA->mInvMass;
-			//bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * (1.f / bodyA->mInertia);
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * (1.f / bodyA->mInertia);
 			bodyB->mVelocity += impulse * bodyB->mInvMass;
-			//bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * (1.f / bodyB->mInertia);
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * (1.f / bodyB->mInertia);
 		}
 
 	}
@@ -577,10 +577,10 @@ namespace IS {
 				sprite.drawLine(va, vb, { 0.f, 1.f, 0.f });
 			}
 
-			for (int i = 0; i < mContactPointsList.size(); i++) {
+			/*for (int i = 0; i < mContactPointsList.size(); i++) {
 				Vector2D end = { 100.f, 100.f };
 				sprite.drawLine(mContactPointsList[i], mContactPointsList[i] + end, { 1.f, 1.f, 1.f });
-			}
+			}*/
 		}
 
 		// draw grid cell line in white

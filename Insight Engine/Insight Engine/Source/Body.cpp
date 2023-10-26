@@ -39,7 +39,7 @@ namespace IS
         mDensity = 0.f;
         mMass = (mBodyType == BodyType::Dynamic) ? 1.f : 999999.f;
         mInvMass = 1.f / mMass;
-        mRestitution = 0.8f;
+        mRestitution = 0.5f;
         mArea = 0.f;
         mState = BodyState::IDLE;
         mBodyShape = BodyShape::Box;
@@ -254,11 +254,11 @@ namespace IS
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
-        //if (!RigidBody::mCheckTransform) { // if body havent been transform for once
+        if (!RigidBody::mCheckTransform) { // if body havent been transform for once
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
             RigidBody::mCheckTransform = true; // true means update and transform for at least one time
-        //}
+        }
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
     }
