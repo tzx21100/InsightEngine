@@ -51,12 +51,20 @@ namespace IS {
         // Size of scene panel
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
+
+       
+
         // Scene pos for the input
         ImVec2 actual_scene_pos;
         actual_scene_pos.x = scene_pos.x - EditorLayer::GetDockspacePosition().x;
         actual_scene_pos.y = scene_pos.y - EditorLayer::GetDockspacePosition().y;
-        input->setCenterPos(actual_scene_pos.x + scene_size.x / 2, actual_scene_pos.y + scene_size.y / 2);
-        input->setRatio(scene_size.x, scene_size.y);
+        //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::camera_in_use].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::camera_in_use].GetCamPos().y);
+        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f ,
+            actual_scene_pos.y + (float)scene_size.y / 2.f );
+       input->setRatio(scene_size.x, scene_size.y);
+        //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::camera_in_use].GetCamPos().x, ISGraphics::cameras[Camera::camera_in_use].GetCamPos().y);
+
+        //input->setRatio(ISGraphics::cameras[Camera::camera_in_use].GetCamDim().x, ISGraphics::cameras[Camera::camera_in_use].GetCamDim().y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
