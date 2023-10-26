@@ -166,8 +166,6 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         Image a = ConvertToImage(image);
         sprite_component.img = a;
-        sprite_component.texture_width = a.width;
-        sprite_component.texture_height = a.height;
     }
 
 
