@@ -100,6 +100,7 @@ namespace IS {
 
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;
+		static std::vector<Sprite::lineInstanceData> lineInstances;
 		// Sprites (models) to render
 		static std::vector<Sprite> sprites;
 		// Animation objects
@@ -109,6 +110,7 @@ namespace IS {
 		// Shaders
 		static Shader mesh_shader_pgm;
 		static Shader mesh_inst_shader_pgm;
+		static Shader mesh_inst_line_shader_pgm;
 		static Text Times_New_Roman_font;
 		static Text Brush_Script_font;
 

@@ -95,6 +95,53 @@ namespace IS {
         }
     }
 
+    void Shader::setupInstLineShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2  aVertexPosition;
+            layout(location = 2) in vec3  aVertexColor;
+            layout(location = 4) in vec3  aMtxRow1;
+            layout(location = 5) in vec3  aMtxRow2;
+            layout(location = 6) in vec3  aMtxRow3;
+
+            layout(location = 0) out vec3  vColor;
+
+            void main()
+            {
+                mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
+                gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+				vColor = aVertexColor;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec3 vColor;
+            layout(location = 0) out vec4 fFragColor;
+
+            void main()
+            {
+                fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
     void Shader::setupSpriteShaders() {
         // vertex shader
         std::string vtx_shdr = R"(
