@@ -82,5 +82,8 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void FreeSpriteImage(SimpleImage image);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void CreateAnimationFromSprite(int row, int columns, float animation_time);
+
     }
 }

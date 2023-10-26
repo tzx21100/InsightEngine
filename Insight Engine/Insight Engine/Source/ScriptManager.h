@@ -36,6 +36,19 @@ namespace IS {
 
     class ScriptManager :public ParentSystem {
     public:
+
+        // for sprites 
+        std::array<int, 32> mTextureIndexList;
+        std::stack<int> availableIndices;
+
+        // Initialize the available indices
+        void InitializeTextureIndices() {
+            for (int i = 31; i >= 0; i--) {
+                availableIndices.push(i);
+            }
+            availableIndices.pop();
+        }
+
         std::string GetName() override;
         void Initialize() override;
         void Update(float deltatime) override;

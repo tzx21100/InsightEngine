@@ -166,15 +166,23 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         Image a = ConvertToImage(image);
         sprite_component.img = a;
+        sprite_component.texture_width = a.width;
+        sprite_component.texture_height = a.height;
     }
 
+
     static SimpleImage GetSpriteImage(MonoString* name) {
+        auto script_sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+ 
         auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        //if (name == nullptr) return system->GetImage("Assets/player_walking.png");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        return ConvertToSimpleImage(*(system->GetImage(str)));
+        Image* img = system->GetImage(str);
+
+        img->mFileName = str;
+       // IS_CORE_DEBUG("{}", img->mFileName);
+        return ConvertToSimpleImage(img);
         
     }
 
@@ -189,10 +197,23 @@ namespace IS {
 
     static void FreeSpriteImage(SimpleImage* simg)
     {
+        auto script_sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+        if (simg && simg->texture_index >= 0 && simg->texture_index < 32) {
+            script_sys->availableIndices.push(simg->texture_index);
+        }
+
         if (simg && simg->mFileName) {
             delete[] simg->mFileName;
             simg->mFileName = nullptr;
         }
+    }
+
+    static void CreateAnimationFromSprite(int row, int columns, float animation_time) {
+        Animation animation;
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        animation.initAnimation(row, columns, animation_time);
+        sprite_component.anims.emplace_back(animation);
+
     }
 
 
@@ -236,6 +257,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
+        IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
 
 
 

@@ -88,22 +88,22 @@ namespace IS {
     };
 
     // Convert Image to SimpleImage
-    inline SimpleImage ConvertToSimpleImage(const Image& image) {
+    inline SimpleImage ConvertToSimpleImage(const Image* image) {
         SimpleImage simg;
-        simg.mFileName = new char[image.mFileName.length() + 1];
-        strcpy(simg.mFileName, image.mFileName.c_str());
+        simg.mFileName = new char[image->mFileName.length() + 1];
+        strcpy(simg.mFileName, image->mFileName.c_str());
         
-        simg.width = image.width;
-        simg.height = image.height;
-        simg.channels = image.channels;
-        simg.size = image.size;
-        simg.texture_id = image.texture_id;
-        simg.mTextureData = image.mTextureData;
-        simg.texture_index = image.texture_index;
+        simg.width = image->width;
+        simg.height = image->height;
+        simg.channels = image->channels;
+        simg.size = image->size;
+        simg.texture_id = image->texture_id;
+        simg.mTextureData = image->mTextureData;
+        simg.texture_index = image->texture_index;
         return simg;
     }
     // Convert from SimpleImage
-    inline Image ConvertToImage(const SimpleImage& simg) {
+    inline Image ConvertToImage(const SimpleImage &simg) {
         Image img;
         img.mFileName = std::string(simg.mFileName); // Convert char* to std::string
 
@@ -320,6 +320,7 @@ namespace IS {
 
 
     private:
+        int mCurrentTexId{};
         //const char* filename;
         //int width;
         //int height;

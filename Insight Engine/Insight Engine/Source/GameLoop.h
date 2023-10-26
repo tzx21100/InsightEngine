@@ -17,6 +17,7 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #include "CoreEngine.h"
 #include "GameGui.h"
+
 namespace IS {
     class GameLoop :public ParentSystem {
 
@@ -42,33 +43,35 @@ namespace IS {
         Image* walking_anim_image{};
         Image* truck_anim_image{};
 
-        // Animation objects
+        //// Animation objects
         Animation idle_ani;
         Animation walking_ani;
         Animation ice_cream_truck_ani;
 
+        
         virtual void Initialize() override {
+            
             //create a image
-            backgroundTest = asset->GetImage("Assets/placeholder_background.png");
-            backgroundTest->texture_index = 0; // hard code first :)
-            black_background = asset->GetImage("Assets/black_background.png");
-            black_background->texture_index = 1;
-            idle_anim_image = asset->GetImage("Assets/player_idle.png");
-            idle_anim_image->texture_index = 2;
-            walking_anim_image = asset->GetImage("Assets/player_walking.png");
-            walking_anim_image->texture_index = 3;
+            //backgroundTest = asset->GetImage("Assets/placeholder_background.png");
+            //backgroundTest->texture_index = 0; // hard code first :)
+            //black_background = asset->GetImage("Assets/black_background.png");
+            //black_background->texture_index = 1;
+            //idle_anim_image = asset->GetImage("Assets/player_idle.png");
+            //idle_anim_image->texture_index = 2;
+            //walking_anim_image = asset->GetImage("Assets/player_walking.png");
+            //walking_anim_image->texture_index = 3;
             truck_anim_image = asset->GetImage("Assets/icecream_truck.png");
-            truck_anim_image->texture_index = 4;
+            //truck_anim_image->texture_index = 0;
 
-            walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
-            idle_ani.initAnimation(1, 8, 3.f);
+            //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
+            //idle_ani.initAnimation(1, 8, 3.f);
             ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
-            ISGraphics::textures.emplace_back(*backgroundTest);
-            ISGraphics::textures.emplace_back(*black_background);
-            ISGraphics::textures.emplace_back(*idle_anim_image);
-            ISGraphics::textures.emplace_back(*walking_anim_image);
-            ISGraphics::textures.emplace_back(*truck_anim_image);
+            //ISGraphics::textures.emplace_back(*backgroundTest);
+            //ISGraphics::textures.emplace_back(*black_background);
+            //ISGraphics::textures.emplace_back(*idle_anim_image);
+            //ISGraphics::textures.emplace_back(*walking_anim_image);
+            //ISGraphics::textures.emplace_back(*truck_anim_image);
 
             //creating game object and their components
             //entity_quad = engine.CreateEntityWithComponents<Sprite, Transform>("Background");
@@ -283,14 +286,15 @@ namespace IS {
                         spr.img = *truck_anim_image;
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
                         spr.anims.emplace_back(ice_cream_truck_ani);
+                        spr.animation_index = 0;
                         
                         //add the image in
                         //spr.texture = backgroundTest.texture_id;
 
+                        }
+
+
                     }
-
-
-                }
             }
 
             // rotate lines on clock

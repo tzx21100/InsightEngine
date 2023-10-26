@@ -30,7 +30,7 @@ namespace IS {
     }
 
     void ScriptManager::Initialize() {
-
+        InitializeTextureIndices();
     }
 
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {

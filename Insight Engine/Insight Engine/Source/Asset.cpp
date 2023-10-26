@@ -49,6 +49,10 @@ namespace IS {
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
                 ImageLoad(file_path);
+                Image* img=GetImage(file_path);
+                img->texture_index = mCurrentTexId;
+                mCurrentTexId++;
+                ISGraphics::textures.emplace_back(*img);
             }
         }
 
@@ -59,6 +63,7 @@ namespace IS {
             // Check image extensions
             if (extension == ".png") {
                 ImageLoad(file_path);
+                
             }
         }
 
