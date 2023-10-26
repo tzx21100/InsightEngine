@@ -185,9 +185,9 @@ namespace IS
     // Transform a vector using a given transformation matrix
     Vector2D RigidBody::TransformRigidBody(Vector2D v, Transform transform) {
         Vector2D ret;
-        float angle = fmod(transform.rotation, 360.f);
-        if (angle < 0.f) { angle += 360.f; }
-        angle *= (PI / 180.f);
+        float angle = glm::radians(transform.rotation);
+        /*if (angle < 0.f) { angle += 360.f; }
+        angle *= (PI / 180.f);*/
         ret.x = cosf(angle) * v.x - sinf(angle) * v.y + transform.world_position.x;
         ret.y = sinf(angle) * v.x + cosf(angle) * v.y + transform.world_position.y;
         return ret;
@@ -254,11 +254,11 @@ namespace IS
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
-        if (!RigidBody::mCheckTransform) { // if body havent been transform for once
+        //if (!RigidBody::mCheckTransform) { // if body havent been transform for once
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
             RigidBody::mCheckTransform = true; // true means update and transform for at least one time
-        }
+        //}
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
     }

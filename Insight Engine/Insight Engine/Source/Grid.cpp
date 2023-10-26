@@ -151,7 +151,7 @@ namespace IS
 			trans.world_position += body.mVelocity * dt;
 
 			float angle = trans.getRotation();
-			angle += body.mAngularVelocity * dt;
+			angle += body.mAngularVelocity * dt * 10.f;
 			trans.setRotation(angle, body.mAngularVelocity);
 
 			body.BodyFollowTransform(trans);

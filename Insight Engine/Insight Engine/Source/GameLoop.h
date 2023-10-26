@@ -283,7 +283,7 @@ namespace IS {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
-                        transl.setScaling(width * 0.008f, height * 0.014222222f);
+                        transl.setScaling(width * 0.05f, height * 0.094222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
