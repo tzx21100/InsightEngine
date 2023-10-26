@@ -35,6 +35,7 @@ namespace IS
 
         static public void Update()
         {
+            InternalCalls.AttachCamera();
 
             //player_walk.texture_index = 2;
             //player_idle.texture_index = 3;

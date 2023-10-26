@@ -292,7 +292,7 @@ namespace IS {
                         spr.anims.emplace_back(ice_cream_truck_ani);
                         spr.animation_index = 0;
                         
-                        ISGraphics::cameras[Camera::camera_in_use].UpdateCamPos(transl.world_position.x, transl.world_position.y);
+                        //ISGraphics::cameras[Camera::camera_in_use].UpdateCamPos(transl.world_position.x, transl.world_position.y);
                         //add the image in
                         //spr.texture = backgroundTest.texture_id;
 

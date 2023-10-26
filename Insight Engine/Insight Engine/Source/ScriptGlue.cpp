@@ -213,6 +213,12 @@ namespace IS {
         sprite_component.anims.emplace_back(animation);
 
     }
+    
+    static void AttachCamera() {
+        auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
+        ISGraphics::cameras[Camera::camera_in_use].UpdateCamPos(transform_component.world_position.x, transform_component.world_position.y);
+
+    }
 
 
 
@@ -256,6 +262,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
+
+        // Camera
+        IS_ADD_INTERNAL_CALL(AttachCamera);
 
 
 
