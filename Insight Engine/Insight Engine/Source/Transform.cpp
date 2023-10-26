@@ -76,10 +76,10 @@ namespace IS {
 		float model_scale_x = scaling.x / 2.f;
 		float model_scale_y = scaling.y / 2.f;
 
-		glm::vec2 cameraPos = Camera::Instance().GetCamPos();
-		glm::vec2 cameraU = Camera::Instance().GetUVector();
-		glm::vec2 cameraV = Camera::Instance().GetVVector();
-		glm::vec2 cameraDim = Camera::Instance().GetCamDim();
+		glm::vec2 cameraPos = ISGraphics::cameras[Camera::camera_in_use].GetCamPos();
+		glm::vec2 cameraU = ISGraphics::cameras[Camera::camera_in_use].GetUVector();
+		glm::vec2 cameraV = ISGraphics::cameras[Camera::camera_in_use].GetVVector();
+		glm::vec2 cameraDim = ISGraphics::cameras[Camera::camera_in_use].GetCamDim();
 
 		float map_scale_x = 2.f / cameraDim.x;
 		float map_scale_y = 2.f / cameraDim.y;

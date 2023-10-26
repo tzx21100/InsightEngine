@@ -30,6 +30,7 @@
 #include "Mesh.h"
 #include "Framebuffer.h"
 #include "Animation.h"
+#include "Camera.h"
 
 namespace IS {
 	/*!
@@ -95,7 +96,7 @@ namespace IS {
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
 		static std::vector<Image> textures;
-		//static Camera camera;
+		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;
@@ -108,9 +109,6 @@ namespace IS {
 		// Shaders
 		static Shader mesh_shader_pgm;
 		static Shader mesh_inst_shader_pgm;
-		//static Shader TNR_text_shader_pgm; // Times new roman
-		//static Shader CS_text_shader_pgm; // Cascadia
-
 		static Text Times_New_Roman_font;
 		static Text Brush_Script_font;
 

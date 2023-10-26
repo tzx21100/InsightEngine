@@ -2,10 +2,12 @@
 #include "Camera.h"
 
 namespace IS {
+	int Camera::camera_in_use;
+
 	Camera::Camera() {
-		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		//auto [width, height] = InsightEngine::Instance().GetWindowSize();
 		world_position = { 0.f, 0.f };
-		camera_dim = { width, height };
+		camera_dim = { 0.f, 0.f };
 		uVector = { 1.f, 0.f };
 		vVector = { 0.f, 1.f };
 	}
