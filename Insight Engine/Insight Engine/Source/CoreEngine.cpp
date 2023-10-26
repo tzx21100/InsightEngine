@@ -114,6 +114,7 @@ namespace IS {
             auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
+            SceneManager::Instance().UpdateActiveScene(); // update active scene
         }
         auto script = GetSystem<ScriptManager>("ScriptManager");
         script->CleanUp();
@@ -203,7 +204,6 @@ namespace IS {
         for (Entity entity : mEntitiesToDelete)
             DestroyEntity(entity);
         mEntitiesToDelete.clear();
-        SceneManager::Instance().SaveScene();
     }
 
     // limit fps will return the frameEnd time now so i can use to find delta time
