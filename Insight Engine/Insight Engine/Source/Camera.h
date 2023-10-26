@@ -19,6 +19,7 @@ namespace IS {
 		void UpdateCamPos(float newX, float newY);
 		void UpdateCamDim(float newWidth);
 		void UpdateCamRotation(float newAngle);
+		void updateCamXform();
 
 		glm::vec2 GetCamPos();
 		glm::vec2 GetCamDim();
@@ -31,10 +32,8 @@ namespace IS {
 		};
 
 		static int camera_in_use; // 0 for entity, 1 for engine
-
+		glm::mat3 xform{};
 	private:
-		
-
 		glm::vec2 world_position{};
 		glm::vec2 camera_dim{};
 		glm::vec2 uVector{}; // camera x/y axis
