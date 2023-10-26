@@ -58,7 +58,7 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-
+		if (InsightEngine::Instance().mRuntime == false) { return; }
 		mContactPointsList.clear();
 
 		// add new entity inside grid

@@ -153,6 +153,7 @@ namespace IS {
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
+            if (InsightEngine::Instance().mRuntime == false) { return; }
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetSystem<Editor>("Editor");
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
