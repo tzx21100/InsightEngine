@@ -10,11 +10,13 @@
 #include <glm/glm.hpp>
 
 namespace IS {
+
+	enum aCameraType { CAMERA_TYPE_SCENE = 0, CAMERA_TYPE_EDITOR };
+
 	class Camera {
-	public:
+	public:		
 		Camera();
 		~Camera() = default;
-
 
 		void UpdateCamPos(float newX, float newY);
 		void UpdateCamDim(float newWidth);
@@ -25,12 +27,7 @@ namespace IS {
 		glm::vec2 GetUVector();
 		glm::vec2 GetVVector();
 
-		enum camera_target {
-			entity,
-			editor
-		};
-
-		static int camera_in_use; // 0 for entity, 1 for engine
+		static aCameraType mActiveCamera;
 
 	private:
 		

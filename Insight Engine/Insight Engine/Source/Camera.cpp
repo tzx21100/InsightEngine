@@ -2,7 +2,8 @@
 #include "Camera.h"
 
 namespace IS {
-	int Camera::camera_in_use;
+
+	aCameraType Camera::mActiveCamera;
 
 	Camera::Camera() {
 		//auto [width, height] = InsightEngine::Instance().GetWindowSize();

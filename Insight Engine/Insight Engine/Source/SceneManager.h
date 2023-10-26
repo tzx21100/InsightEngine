@@ -88,6 +88,11 @@ namespace IS {
         void SwitchScene(SceneID scene);
 
         /*!
+         * \brief Reload the active scene.
+         */
+        void ReloadActiveScene();
+
+        /*!
          * \brief Run a function for the specified scene.
          * \param SceneFunc The function to run.
          */

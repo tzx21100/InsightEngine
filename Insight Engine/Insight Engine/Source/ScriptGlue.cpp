@@ -216,7 +216,7 @@ namespace IS {
     
     static void AttachCamera() {
         auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
-        ISGraphics::cameras[Camera::camera_in_use].UpdateCamPos(transform_component.world_position.x, transform_component.world_position.y);
+        ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(transform_component.world_position.x, transform_component.world_position.y);
 
     }
 

@@ -20,6 +20,7 @@
 #include <stb_image.h>
 
 namespace IS {
+
     /// Static objects ///
     std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;

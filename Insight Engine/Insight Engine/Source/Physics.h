@@ -121,12 +121,12 @@ namespace IS {
          */
         static void DrawOutLine(RigidBody& body, Sprite const& sprite);
 
-        /*!
-         * \brief Updates the gravity vector based on user input.
-         *
-         * \param key_input The input related to gravity control.
-         */
-        void UpdateGravity(auto const& key_input);
+        ///*!
+        // * \brief Updates the gravity vector based on user input.
+        // *
+        // * \param key_input The input related to gravity control.
+        // */
+        //void UpdateGravity(auto const& key_input);
 
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.

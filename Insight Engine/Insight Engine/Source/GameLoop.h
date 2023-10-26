@@ -48,7 +48,7 @@ namespace IS {
         Animation walking_ani;
         Animation ice_cream_truck_ani;
 
-        // Camera::int camera_in_use;
+        // Camera::int mActiveCamera;
         
         virtual void Initialize() override {
             
@@ -151,8 +151,8 @@ namespace IS {
             //sprite_point.primitive_type = GL_POINTS;
 
             
-            ISGraphics::cameras[Camera::camera_in_use].UpdateCamDim((float)width);
-            Camera::camera_in_use = Camera::entity;
+            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
+            Camera::mActiveCamera = CAMERA_TYPE_SCENE;
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
@@ -292,7 +292,7 @@ namespace IS {
                         spr.anims.emplace_back(ice_cream_truck_ani);
                         spr.animation_index = 0;
                         
-                        //ISGraphics::cameras[Camera::camera_in_use].UpdateCamPos(transl.world_position.x, transl.world_position.y);
+                        //ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(transl.world_position.x, transl.world_position.y);
                         //add the image in
                         //spr.texture = backgroundTest.texture_id;
 

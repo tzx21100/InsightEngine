@@ -323,7 +323,11 @@ namespace IS {
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
 
-
+        static constexpr const char* TEXTURE_DIRECTORY  = "Assets/Textures/";
+        static constexpr const char* ICON_DIRECTORY     = "Assets/Icons/";
+        static constexpr const char* PREFAB_DIRECTORY   = "Assets/Prefabs/";
+        static constexpr const char* SCENE_DIRECTORY    = "Assets/Scene/";
+        static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
 
     private:
         int mCurrentTexId{};

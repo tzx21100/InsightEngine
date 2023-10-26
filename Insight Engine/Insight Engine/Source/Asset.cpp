@@ -40,7 +40,7 @@ namespace IS {
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
         namespace fs = std::filesystem;
-        std::string path = "Assets/Textures/"; // Path to the Assets directory
+        std::string path = TEXTURE_DIRECTORY; // Path to the Assets directory
 
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();
@@ -56,7 +56,7 @@ namespace IS {
             }
         }
 
-        for (const auto& entry : fs::directory_iterator("Assets/Icons/")) {
+        for (const auto& entry : fs::directory_iterator(ICON_DIRECTORY)) {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
 
@@ -68,7 +68,7 @@ namespace IS {
         }
 
         // Gets all prefabs and loads them to a list.
-        path = "Assets/Prefabs";
+        path = PREFAB_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
@@ -82,7 +82,7 @@ namespace IS {
         }
 
         // Gets all the scenes and stores them into a list
-        path = "Assets/Scene";
+        path = SCENE_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().filename().string();
             mSceneList.emplace_back(file_path);
@@ -90,7 +90,7 @@ namespace IS {
         }
 
         // loads all audio and store it
-        path = "Assets/Sounds";
+        path = SOUND_DIRECTORY;
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();

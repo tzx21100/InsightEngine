@@ -31,10 +31,11 @@ namespace IS {
     {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset  = engine.GetSystem<AssetManager>("Asset");
+        std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
-        mIcons["Folder"]     = std::make_unique<Image>(*asset->GetIcon("Assets/Icons/folder_icon.png"));
-        mIcons["File"]       = std::make_unique<Image>(*asset->GetIcon("Assets/Icons/file_icon.png"));
-        mIcons["BackButton"] = std::make_unique<Image>(*asset->GetIcon("Assets/Icons/back_icon.png"));
+        mIcons["Folder"]     = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "folder_icon.png")->texture_id);
+        mIcons["File"]       = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "file_icon.png")->texture_id);
+        mIcons["BackButton"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "back_icon.png")->texture_id);
     }
 
     void AssetBrowserPanel::RenderPanel()
@@ -75,7 +76,7 @@ namespace IS {
         // Back Button
         if (mCurrentDirectory != std::filesystem::path(ASSETS_PATH))
         {
-            bool back_pressed = ImGui::ImageButton(EditorUtils::ConvertTextureID(mIcons["BackButton"]->texture_id), {16.f, 16.f});
+            bool back_pressed = ImGui::ImageButton(mIcons["BackButton"], {16.f, 16.f});
 
             if (back_pressed)
             {
@@ -100,7 +101,7 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                ImTextureID icon = EditorUtils::ConvertTextureID(mIcons[is_directory ? "Folder" : "File"]->texture_id);
+                ImTextureID icon = mIcons[is_directory ? "Folder" : "File"];
                 ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                 ImGui::PopStyleColor();
 

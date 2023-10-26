@@ -35,7 +35,7 @@ namespace IS {
 		//mNormal = Vector2D();
 		//mDepth = std::numeric_limits<float>::max();
 		mGravity = Vector2D(0, -981.f);			// Gravity of the world
-		mExertingGravity = false;				// Flag indicating whether gravity is currently exerted
+		mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
 		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
 		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
 		mCurrentIterations = 0;					// Number of current iterations for physics step
@@ -594,16 +594,16 @@ namespace IS {
 	}
 
 	// Updates the gravity vector based on user input
-	void Physics::UpdateGravity(auto const& key_input) {
-		if (key_input->IsKeyPressed(GLFW_KEY_G)) {
-			mExertingGravity = true;
-			IS_CORE_DEBUG("mGravity Enabled!");
-		}
-		else if (key_input->IsKeyPressed(GLFW_KEY_F)) {
-			mExertingGravity = false;
-			IS_CORE_DEBUG("mGravity Disabled!");
-		}
-	}
+	//void Physics::UpdateGravity(auto const& key_input) {
+	//	if (key_input->IsKeyPressed(GLFW_KEY_G)) {
+	//		mExertingGravity = true;
+	//		IS_CORE_DEBUG("mGravity Enabled!");
+	//	}
+	//	else if (key_input->IsKeyPressed(GLFW_KEY_F)) {
+	//		mExertingGravity = false;
+	//		IS_CORE_DEBUG("mGravity Disabled!");
+	//	}
+	//}
 
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
@@ -613,7 +613,7 @@ namespace IS {
 		for (auto const& entity : entities) {
 			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 			// check input for applying gravity
-			UpdateGravity(input);
+			//UpdateGravity(input);
 
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {

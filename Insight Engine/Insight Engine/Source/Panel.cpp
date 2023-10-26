@@ -27,7 +27,7 @@
 #include <imgui.h>
 
 namespace IS {
-
+    
     // Scene Panel
     ScenePanel::ScenePanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel) : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 
@@ -38,7 +38,7 @@ namespace IS {
 
         //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
@@ -58,13 +58,13 @@ namespace IS {
         ImVec2 actual_scene_pos;
         actual_scene_pos.x = scene_pos.x - EditorLayer::GetDockspacePosition().x;
         actual_scene_pos.y = scene_pos.y - EditorLayer::GetDockspacePosition().y;
-        //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::camera_in_use].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::camera_in_use].GetCamPos().y);
+        //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
         input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f ,
             actual_scene_pos.y + (float)scene_size.y / 2.f );
        input->setRatio(scene_size.x, scene_size.y);
-        //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::camera_in_use].GetCamPos().x, ISGraphics::cameras[Camera::camera_in_use].GetCamPos().y);
+        //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
 
-        //input->setRatio(ISGraphics::cameras[Camera::camera_in_use].GetCamDim().x, ISGraphics::cameras[Camera::camera_in_use].GetCamDim().y);
+        //input->setRatio(ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
@@ -276,7 +276,7 @@ namespace IS {
 
                     // Compute usage percent
                     double percent = (dt / engine.GetSystemDeltas().at("Engine")) * 100.0;
-                    ImVec4 text_color = dt < 1000.f / 60.f ? WHITE_COLOR : dt < 1000.f / 30.f ? YELLOW_COLOR : RED_COLOR;
+                    ImVec4 text_color = dt < 1.f / 60.f ? WHITE_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
 
                     // Display system usage
                     ImGui::TableNextColumn();

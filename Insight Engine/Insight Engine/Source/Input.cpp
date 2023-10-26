@@ -131,8 +131,8 @@ namespace IS {
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
        
 
-        double newX = (xPos - center_x)*ratio_width + ISGraphics::cameras[Camera::camera_in_use].GetCamPos().x;
-        double newY = (center_y - yPos)*ratio_height + ISGraphics::cameras[Camera::camera_in_use].GetCamPos().y;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x)*ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos)*ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
        // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };

@@ -35,14 +35,17 @@ namespace IS::EditorUtils {
     {
         bool clicked = false;
 
-        float button_height = ImGui::GetTextLineHeightWithSpacing() - ImGui::GetStyle().FramePadding.y;
+        float button_height = ImGui::GetTextLineHeightWithSpacing() - 2 * ImGui::GetStyle().FramePadding.y;
         ImVec2 icon_size = ImVec2(button_height, button_height);
-
+        
         // Display the icon to the left of the text with a fixed height
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         ImGui::SetNextItemAllowOverlap();
-        ImGui::Image(icon_texture, icon_size);
+        if (ImGui::ImageButton(icon_texture, icon_size))
+            clicked = true;
+        ImGui::PopStyleColor();
         ImGui::SameLine();
-        if (ImGui::MenuItem((label + std::string(" ") + shortcut).c_str()))
+        if (ImGui::MenuItem(label, shortcut))
             clicked = true;
 
         return clicked;

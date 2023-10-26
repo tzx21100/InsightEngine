@@ -40,10 +40,12 @@ namespace IS {
         AttachPanels();
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
+        std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
-        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/play_button.png")->texture_id);
-        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/pause_button.png")->texture_id);
-        mIcons["SaveFile"] = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/save_button.png")->texture_id);
+        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
+        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
+        mIcons["StopButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
+        mIcons["SaveFile"]    = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -57,7 +59,7 @@ namespace IS {
     void EditorLayer::OnUpdate(float)
     {
         InsightEngine& engine = InsightEngine::Instance();
-        auto const& input = engine.GetSystem<InputManager>("Input");
+        auto input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
         const bool CTRL_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
@@ -68,6 +70,7 @@ namespace IS {
         const bool S_PRESSED   = input->IsKeyPressed(GLFW_KEY_S);
         const bool F4_PRESSED  = input->IsKeyPressed(GLFW_KEY_F4);
         const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
+        //const bool LEFT_MOUSE_HELD = input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_LEFT);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -75,6 +78,15 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
+        //if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
+        //{
+        //    if (LEFT_MOUSE_HELD)
+        //    {
+        //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        //        auto const& [mouse_x, mouse_y] = input->GetMousePosition();
+        //        camera.UpdateCamPos(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
+        //    }
+        //}
     }
 
     void EditorLayer::OnRender()
@@ -143,15 +155,11 @@ namespace IS {
                 // New File
                 if (ImGui::BeginMenu("New"))
                 {
-                    if (EditorUtils::RenderIconMenuItem("Scene", "Ctrl+N", mIcons["SaveFile"])) { mShowNewScene = true; }
-                    //if (ImGui::MenuItem("##Scene", "Ctrl+N")) 
-                    //{
-                    //    ImGui::SameLine();
-                    //    ImGui::Image(mIcons["SaveFile"], { ImGui::GetContentRegionMax().y , ImGui::GetContentRegionMax().y });
-                    //    ImGui::SameLine();
-                    //    ImGui::TextUnformatted("Scene");
-                    //    mShowNewScene = true;
-                    //}
+                    //if (EditorUtils::RenderIconMenuItem("Scene", "Ctrl+N", mIcons["SaveFile"])) { mShowNewScene = true; }
+                    if (ImGui::MenuItem("Scene", "Ctrl+N")) 
+                    {
+                        mShowNewScene = true;
+                    }
                     if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
                 } // end menu New
@@ -196,7 +204,7 @@ namespace IS {
             {
                 static const float MAX_WIDTH = 200.f;
                 ImGui::PushTextWrapPos(MAX_WIDTH); // Set a maximum width of 200 pixels.
-                ImGui::TextUnformatted("These options are for testing purposes, not part of the engine iteself.");
+                ImGui::TextUnformatted("These options are for testing purposes, not part of the engine itself.");
                 ImGui::PopTextWrapPos(); // Reset text wrap width to default.
                 ImGui::EndTooltip();
             }
@@ -261,18 +269,39 @@ namespace IS {
     void EditorLayer::RenderToolBar()
     {
         auto& engine = InsightEngine::Instance();
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
+        auto& scene_manager = SceneManager::Instance();
+        auto& style = ImGui::GetStyle();
+        auto input = engine.GetSystem<InputManager>("Input");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
             ImTextureID button_icon = mIcons[engine.mRuntime ? "PauseButton" : "PlayButton"];
             const float BUTTON_SIZE = 32.f;
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f - BUTTON_SIZE / 2.f,
+            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f - BUTTON_SIZE,
                                   ImGui::GetContentRegionMax().y / 2.f - BUTTON_SIZE / 2.f });
             if (ImGui::ImageButton(button_icon, ImVec2(BUTTON_SIZE, BUTTON_SIZE)))
             {
                 engine.mRuntime = !engine.mRuntime;
-                IS_CORE_DEBUG("{}", engine.mRuntime ? "Running" : "Paused");
+                if (engine.mRuntime)
+                {
+                    Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+                    IS_CORE_DEBUG("Using Scene Camera");
+                }
+                else
+                {
+                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                    ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim(static_cast<float>(engine.GetWindowWidth()));
+                    IS_CORE_DEBUG("Using Editor Camera");
+                }
+            }
+            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f + BUTTON_SIZE / 2.f - style.ItemSpacing.x,
+                                  ImGui::GetContentRegionMax().y / 2.f - (BUTTON_SIZE * .8f) / 2.f });
+            if (ImGui::ImageButton(mIcons["StopButton"], ImVec2(BUTTON_SIZE * .8f, BUTTON_SIZE * .8f)))
+            {
+                engine.mRuntime = false;
+                scene_manager.ReloadActiveScene();
+                IS_CORE_DEBUG("Stopped");
             }
             ImGui::PopStyleColor();
             ImGui::End();
@@ -303,7 +332,7 @@ namespace IS {
             memcpy(name, default_text, strlen(default_text));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(("##" + std::string(popup_name)).c_str(), name, sizeof(name), input_flags) || ImGui::Button("Create"))
+            if (ImGui::InputText(("##" + std::string(popup_name)).c_str(), name, sizeof(name), input_flags))
             {
                 CreateAction(name);
                 *show = false;
