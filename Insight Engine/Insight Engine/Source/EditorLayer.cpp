@@ -251,9 +251,6 @@ namespace IS {
             {
                 SceneManager& scene_manager = SceneManager::Instance();
                 mSceneHierarchyPanel->ResetSelection();
-                //InsightEngine::Instance().NewScene();
-                //mActiveScene = scene_name;
-                //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
                 scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
@@ -286,13 +283,18 @@ namespace IS {
                 if (engine.mRuntime)
                 {
                     Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
                     IS_CORE_DEBUG("Using Scene Camera");
+                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
+                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
                 }
                 else
                 {
                     Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-                    ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim(static_cast<float>(engine.GetWindowWidth()));
+                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
                     IS_CORE_DEBUG("Using Editor Camera");
+                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
+                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
                 }
             }
             ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f + BUTTON_SIZE / 2.f - style.ItemSpacing.x,
@@ -300,6 +302,7 @@ namespace IS {
             if (ImGui::ImageButton(mIcons["StopButton"], ImVec2(BUTTON_SIZE * .8f, BUTTON_SIZE * .8f)))
             {
                 engine.mRuntime = false;
+                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
                 scene_manager.ReloadActiveScene();
                 IS_CORE_DEBUG("Stopped");
             }
@@ -345,7 +348,6 @@ namespace IS {
     void EditorLayer::OpenScene()
     {
         mSceneHierarchyPanel->ResetSelection();
-        //InsightEngine& engine = InsightEngine::Instance();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
@@ -353,19 +355,12 @@ namespace IS {
             auto& scene_manager = SceneManager::Instance();
             scene_manager.LoadScene(relative_path.string());
             IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
-            //engine.LoadScene(relative_path.string());
-            //mActiveScene = filepath.stem().string();
-
-            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         }
     }
 
     void EditorLayer::OpenScene(std::string const& path)
     {
-        //InsightEngine::Instance().LoadScene(path);
         std::filesystem::path filepath(path);
-        //mActiveScene = filepath.stem().string();
-        //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         auto& scene_manager = SceneManager::Instance();
         scene_manager.LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
@@ -373,21 +368,14 @@ namespace IS {
 
     void EditorLayer::SaveScene() 
     {
-        //InsightEngine::Instance().SaveCurrentScene(mActiveScene);
         auto& scene_manager = SceneManager::Instance();
         scene_manager.SaveScene();
     }
 
     void EditorLayer::SaveSceneAs()
     {
-        //InsightEngine& engine = InsightEngine::Instance();
-
         if (std::filesystem::path filepath(FileUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
-            //mActiveScene = filepath.stem().string();
-            //engine.SaveCurrentScene(mActiveScene);
-
-            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
             auto& scene_manager = SceneManager::Instance();
             scene_manager.SaveSceneAs(filepath.stem().string());
             IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());

@@ -26,6 +26,7 @@
 #include "Shader.h"
 #include "Animation.h"
 #include "Vector2D.h"
+#include <vector>
 
 namespace IS {
     /*!
@@ -47,6 +48,11 @@ namespace IS {
             glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
+        };
+
+        struct lineInstanceData {
+            glm::vec3 color{};
+            glm::mat3 model_to_ndc_xform{};
         };
 
         static int texture_count;
@@ -73,7 +79,6 @@ namespace IS {
          */
         int sscounter=0;
         Sprite() {
-
             name = "Box";
             primitive_type = GL_TRIANGLE_STRIP;
             PRNG& prng = PRNG::Instance();
@@ -204,6 +209,10 @@ namespace IS {
          * \brief Serializes the sprite data
          */
         Json::Value Serialize() override;
+
+
+        static void draw_instanced_lines();
+        static void draw_instanced_quads();
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

@@ -161,6 +161,9 @@ namespace IS {
             auto const& gui = engine.GetSystem<Editor>("Editor");
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
+            // transform camera
+            ISGraphics::cameras[Camera::mActiveCamera].updateCamXform();
+
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
                 // Enable/disable GUI

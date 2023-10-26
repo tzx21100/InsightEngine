@@ -16,13 +16,12 @@
 
 #include "Pch.h"
 
-
 namespace IS {
     int Sprite::texture_count = 0;
 
-	void Sprite::transform() {
+    void Sprite::transform() {
         model_TRS.mdl_to_ndc_xform = model_TRS.ReturnXformMatrix();
-	}
+    }
 
     void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
         // use sprite shader
@@ -163,6 +162,49 @@ namespace IS {
         shader.unUse();
     }
 
+    void Sprite::draw_instanced_quads() {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[4].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::quadInstances.data(), ISGraphics::quadInstances.size() * sizeof(Sprite::instanceData));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        glUseProgram(ISGraphics::mesh_inst_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[4].vao_ID);
+
+
+        std::vector<int> tex_array_index_vect;
+        for (auto const& texture : ISGraphics::textures) {
+            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            tex_array_index_vect.emplace_back(texture.texture_index);
+        }
+
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::mesh_inst_shader_pgm.getHandle(), "uTex2d");
+        if (tex_arr_uniform >= 0)
+            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        else
+            std::cout << "uTex2d Uniform not found" << std::endl;
+
+
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[4].draw_count, static_cast<GLsizei>(ISGraphics::quadInstances.size()));
+    }
+
     //glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
     //    // similar to transform
     //    auto [width, height] = InsightEngine::Instance().GetWindowSize();
@@ -243,4 +285,33 @@ namespace IS {
         animation_index = data["AnimationIndex"].asInt();
     }
 
+    void Sprite::draw_instanced_lines() {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[5].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::lineInstanceData* buffer = reinterpret_cast<Sprite::lineInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::lineInstances.data(), ISGraphics::lineInstances.size() * sizeof(Sprite::lineInstanceData));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[5].vao_ID);
+
+
+        glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
+    }
 }

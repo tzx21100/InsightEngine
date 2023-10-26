@@ -42,6 +42,8 @@ namespace IS {
 
 	void SceneManager::LoadScene(std::string const& scene_filename)
 	{
+		auto& engine = InsightEngine::Instance();
+
 		// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();
@@ -60,8 +62,13 @@ namespace IS {
 			}
 		}
 
-		InsightEngine::Instance().LoadScene(scene_filename);
+		engine.LoadScene(scene_filename);
 		CreateScene(scene_filename);
+
+		Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+		camera.UpdateCamPos(0, 0);
+		camera.UpdateCamDim(static_cast<float>(engine.GetWindowWidth()));
+		camera.updateCamXform();
 	}
 
 	void SceneManager::SwitchScene(SceneID scene_id)
@@ -103,7 +110,6 @@ namespace IS {
 	void SceneManager::ReloadActiveScene()
 	{
 		LoadScene(AssetManager::SCENE_DIRECTORY + mSceneNames[mActiveSceneID] + ".insight");
-		ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(0, 0);
 	}
 
 	void SceneManager::RunSceneFunction(std::function<void(SceneID)> SceneFunc)

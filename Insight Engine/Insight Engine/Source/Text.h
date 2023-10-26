@@ -90,9 +90,9 @@ namespace IS {
 
         Shader shader;
         std::map<GLchar, Text::Character> Characters; // A map of character information loaded from FreeType.
-        unsigned int text_vao;                        // VAO for text rendering.
-        unsigned int text_vbo;                        // VBO for text rendering.
-        GLuint textureArray;                          // Texture array for storing glyph textures.
+        unsigned int text_vao{};                        // VAO for text rendering.
+        unsigned int text_vbo{};                        // VBO for text rendering.
+        GLuint textureArray{};                          // Texture array for storing glyph textures.
         std::vector<glm::mat4> transforms;            // Transforms for text rendering.
         std::vector<int> letterMap;                   // Letter map for text rendering.
         const int ARRAY_LIMIT = 100;         // The maximum limit for text rendering.

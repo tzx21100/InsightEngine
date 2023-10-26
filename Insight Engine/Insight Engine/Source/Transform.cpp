@@ -76,35 +76,19 @@ namespace IS {
 		float model_scale_x = scaling.x / 2.f;
 		float model_scale_y = scaling.y / 2.f;
 
-		glm::vec2 cameraPos = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
-		glm::vec2 cameraU = ISGraphics::cameras[Camera::mActiveCamera].GetUVector();
-		glm::vec2 cameraV = ISGraphics::cameras[Camera::mActiveCamera].GetVVector();
-		glm::vec2 cameraDim = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
-
-		float map_scale_x = 2.f / cameraDim.x;
-		float map_scale_y = 2.f / cameraDim.y;
-
-		float a = map_scale_x * cameraU.x;
-		float b = map_scale_x * cameraU.y;
-		float c = map_scale_x * (-glm::dot(cameraU, cameraPos));
-		float d = map_scale_y * cameraV.x;
-		float e = map_scale_y * cameraV.y;
-		float f = map_scale_y * (-glm::dot(cameraV, cameraPos));
-
 		float tx = world_position.x;
 		float ty = world_position.y;
 
-		glm::mat3 world_to_NDC_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-										 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-										 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
+		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
+		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
+		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
 
-
-		//glm::mat3 world_to_NDC_xform = { (map_scale_x * model_scale_x * cos_angle),  (map_scale_y * model_scale_x * sin_angle),  0.f,   // column 1
-		//                                 (map_scale_x * model_scale_y * -sin_angle), (map_scale_y * model_scale_y * cos_angle),  0.f,   // column 2
-		//                                 (map_scale_x * model_TRS.world_position.x), (map_scale_y * model_TRS.world_position.y), 1.f }; // column 3
+		glm::mat3 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle),  0.f,   // column 1
+										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle),  0.f,   // column 2
+										 tx,                           ty,                           1.f }; // column 3
 
 		// save matrix
-		return GlmMat3ToISMtx33(world_to_NDC_xform);
+		return GlmMat3ToISMtx33(ISGraphics::cameras[Camera::mActiveCamera].xform * world_to_cam_xform);
 	}
 
 	Json::Value Transform::Serialize() {
