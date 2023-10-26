@@ -230,7 +230,7 @@ namespace IS {
                 //InsightEngine::Instance().NewScene();
                 //mActiveScene = scene_name;
                 //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
-                scene_manager.CreateScene(scene_name);
+                scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
             });

@@ -59,21 +59,21 @@ namespace IS {
 		static SceneManager& Instance();
 
         /*!
-         * \brief Create a new scene with the given filename and an optional function.
-         * \param scene_filename The name of the scene file.
+         * \brief Create a new scene.
+         * \param scene_filename The name of the new scene.
          */
-        void CreateScene(std::string const& scene_filename);
+        void NewScene(std::string const& scene_filename);
+
+        /*!
+         * \brief Save the current scene to file.
+         */
+        void SaveScene();
 
         /*!
          * \brief Load a scene from a given filename.
          * \param scene_filename The name of the scene file to load.
          */
         void LoadScene(std::string const& scene_filename);
-
-        /*!
-         * \brief Save the current scene to the default filename.
-         */
-        void SaveScene();
 
         /*!
          * \brief Save the current scene to a specified filename.
@@ -165,9 +165,28 @@ namespace IS {
         ~SceneManager() = default;
 
         /*!
-         * \brief Save the current scene to file.
+         * \brief Create a new scene with the given filename and an optional function.
+         * \param scene_filename The name of the scene file.
          */
-        void SaveSceneToFile();
+        void CreateScene(std::string const& scene_filename);
+
+        /*!
+         * \brief Update active scene with engine entities.
+         */
+        void UpdateActiveScene();
+
+        /*!
+         * \brief Overwite engine entities with scene entities.
+         * \param scene_id The scene to overwite with.
+         */
+        void OverwriteEngineEntities(SceneID scene_id);
+
+        /*!
+         * \brief Overwite scene entities with engine entities.
+         */
+        void OverwriteSceneEntities();
+
+        friend class InsightEngine; // Allow engine to access private members/functions
 	};
 
 } // end namespace IS

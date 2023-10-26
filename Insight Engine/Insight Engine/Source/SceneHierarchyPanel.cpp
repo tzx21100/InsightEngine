@@ -54,7 +54,7 @@ namespace IS {
             bool opened = ImGui::TreeNodeEx("Scenes", tree_flags);
             if (ImGui::BeginPopupContextItem())
             {
-                if (ImGui::MenuItem("Add Scene")) { scene_manager.CreateScene("NewScene"); }
+                if (ImGui::MenuItem("Add Scene")) { scene_manager.NewScene("NewScene"); }
 
                 ImGui::EndPopup();
             }
