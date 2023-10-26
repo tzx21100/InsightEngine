@@ -38,7 +38,7 @@ namespace IS {
 
         //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
         ImGui::Begin("Scene", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
@@ -268,7 +268,7 @@ namespace IS {
 
                     // Compute usage percent
                     double percent = (dt / engine.GetSystemDeltas().at("Engine")) * 100.0;
-                    ImVec4 text_color = percent < 60.f ? WHITE_COLOR : percent < 80.f ? YELLOW_COLOR : RED_COLOR;
+                    ImVec4 text_color = dt < 1000.f / 60.f ? WHITE_COLOR : dt < 1000.f / 30.f ? YELLOW_COLOR : RED_COLOR;
 
                     // Display system usage
                     ImGui::TableNextColumn();

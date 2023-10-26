@@ -56,8 +56,7 @@ namespace IS {
 
 			if (found != mSceneNames.end())
 			{
-				IS_CORE_WARN("Scene {} already exist!", filename);
-				return;
+				IS_CORE_WARN("Scene {} overwritten!", filename);
 			}
 		}
 
@@ -143,8 +142,7 @@ namespace IS {
 
 			if (found != mSceneNames.end())
 			{
-				IS_CORE_WARN("Scene {} already exist!", filename);
-				return;
+				IS_CORE_WARN("Scene {} overwritten!", filename);
 			}
 		}
 

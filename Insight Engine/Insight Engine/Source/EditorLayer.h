@@ -80,6 +80,7 @@ namespace IS {
 
     private:
         static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
+        std::unordered_map<std::string, ImTextureID> mIcons;
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
 
@@ -91,6 +92,11 @@ namespace IS {
          * \brief Render the menu bar.
          */
         void RenderMenuBar();
+
+        /*!
+         * \brief Render the tool bar.
+         */
+        void RenderToolBar();
 
         /*!
          * \brief Attach panels.

@@ -128,7 +128,7 @@ namespace IS {
                     else
                     {
                         std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
-                        path.extension() == ".insight" ? InsightEngine::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
+                        path.extension() == ".insight" ? SceneManager::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
                     }
                 }
 

@@ -38,7 +38,12 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
-        //OpenScene();
+        InsightEngine& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
+
+        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/play_button.png")->texture_id);
+        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/pause_button.png")->texture_id);
+        mIcons["SaveFile"] = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/save_button.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -112,6 +117,9 @@ namespace IS {
         // Menu bar
         RenderMenuBar();
 
+        // Tool bar
+        RenderToolBar();
+
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
@@ -135,7 +143,15 @@ namespace IS {
                 // New File
                 if (ImGui::BeginMenu("New"))
                 {
-                    if (ImGui::MenuItem("Scene", "Ctrl+N")) { mShowNewScene = true; }
+                    if (EditorUtils::RenderIconMenuItem("Scene", "Ctrl+N", mIcons["SaveFile"])) { mShowNewScene = true; }
+                    //if (ImGui::MenuItem("##Scene", "Ctrl+N")) 
+                    //{
+                    //    ImGui::SameLine();
+                    //    ImGui::Image(mIcons["SaveFile"], { ImGui::GetContentRegionMax().y , ImGui::GetContentRegionMax().y });
+                    //    ImGui::SameLine();
+                    //    ImGui::TextUnformatted("Scene");
+                    //    mShowNewScene = true;
+                    //}
                     if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
                 } // end menu New
@@ -235,11 +251,32 @@ namespace IS {
                 
             });
         if (mShowNewScript)
-            ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [](const char* script_name)
+            ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [&engine](const char* script_name)
             {
-                InsightEngine::Instance().CreateGameScript(script_name);
-                InsightEngine::Instance().OpenGameScript(script_name);
+                engine.CreateGameScript(script_name);
+                engine.OpenGameScript(script_name);
             });
+    }
+
+    void EditorLayer::RenderToolBar()
+    {
+        auto& engine = InsightEngine::Instance();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration;
+        if (ImGui::Begin("##Runtime", nullptr, window_flags))
+        {
+            ImTextureID button_icon = mIcons[engine.mRuntime ? "PauseButton" : "PlayButton"];
+            const float BUTTON_SIZE = 32.f;
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f - BUTTON_SIZE / 2.f,
+                                  ImGui::GetContentRegionMax().y / 2.f - BUTTON_SIZE / 2.f });
+            if (ImGui::ImageButton(button_icon, ImVec2(BUTTON_SIZE, BUTTON_SIZE)))
+            {
+                engine.mRuntime = !engine.mRuntime;
+                IS_CORE_DEBUG("{}", engine.mRuntime ? "Running" : "Paused");
+            }
+            ImGui::PopStyleColor();
+            ImGui::End();
+        }
     }
 
     void EditorLayer::AttachPanels()
