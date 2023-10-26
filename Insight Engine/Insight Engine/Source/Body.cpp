@@ -39,14 +39,14 @@ namespace IS
         mDensity = 0.f;
         mMass = (mBodyType == BodyType::Dynamic) ? 1.f : 999999.f;
         mInvMass = 1.f / mMass;
-        mRestitution = 0.5f;
+        mRestitution = 0.8f;
         mArea = 0.f;
         mState = BodyState::IDLE;
         mBodyShape = BodyShape::Box;
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mInertia = 0.f;
+        mInertia = 1.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -89,7 +89,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mInertia = 0.f;
+        mInertia = 1.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -238,6 +238,7 @@ namespace IS
         mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
         
         mInertia = (1.f / 12.f) * mass * (width * width + height * height);
+        //IS_CORE_DEBUG("inertia - {}", mInertia);
     }
 
     // Create a circle-shaped rigid body with specified parameters

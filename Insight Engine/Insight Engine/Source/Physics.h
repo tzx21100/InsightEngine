@@ -111,6 +111,8 @@ namespace IS {
         //void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
         void ResolveCollision(Manifold & contact);
 
+        void ResolveCollisionWithRotation(Manifold & contact);
+
         /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *

@@ -150,6 +150,10 @@ namespace IS
 
 			trans.world_position += body.mVelocity * dt;
 
+			float angle = trans.getRotation();
+			angle += body.mAngularVelocity * dt;
+			trans.setRotation(angle, body.mAngularVelocity);
+
 			body.BodyFollowTransform(trans);
 			Box next_box = body.GetAABB();
 			Cell next_min_cell = GetCell(next_box.min);

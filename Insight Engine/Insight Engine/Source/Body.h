@@ -35,7 +35,7 @@ namespace IS
      * \enum BodyType
      * \brief Enumerates the types of rigid bodies.
      */
-    enum class BodyType : int {
+    enum class BodyType : short {
         Static,
         Dynamic,
         Kinematic

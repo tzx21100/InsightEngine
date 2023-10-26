@@ -297,7 +297,8 @@ namespace IS {
 	void Physics::NarrowPhase() {
 		for (int i = 0; i < mContactList.size(); i++) {
 			Manifold contact = mContactList[i];
-			ResolveCollision(contact);
+			//ResolveCollision(contact);
+			ResolveCollisionWithRotation(contact);
 
 			// add contact points only at the last iteration
 			if (mCurrentIterations == mTotalIterations - 1) {
@@ -484,8 +485,87 @@ namespace IS {
 		Vector2D impulse = j * normal;
 
 		// increment the velocity by impulse force
-		bodyA.mVelocity -= impulse * bodyA.mInvMass;
+		bodyA.mVelocity += -impulse * bodyA.mInvMass;
 		bodyB.mVelocity += impulse * bodyB.mInvMass;
+	}
+
+	void Physics::ResolveCollisionWithRotation(Manifold& contact) {
+		// init
+		RigidBody* bodyA = contact.mBodyA;
+		RigidBody* bodyB = contact.mBodyB;
+		Vector2D normal = contact.mNormal;
+		Vector2D contact1 = contact.mContact1;
+		Vector2D contact2 = contact.mContact2;
+		int contactCount = contact.mContactCount;
+
+		// getting the lower restitution
+		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
+
+		std::vector<Vector2D> temp_contact_list;
+		std::vector<Vector2D> temp_impulse_list;
+		std::vector<Vector2D> temp_ra_list;
+		std::vector<Vector2D> temp_rb_list;
+
+		temp_contact_list.emplace_back(contact1);
+		temp_contact_list.emplace_back(contact2);
+
+		for (int i = 0; i < contactCount; i++) {
+			temp_impulse_list.emplace_back(Vector2D());
+			temp_ra_list.emplace_back(Vector2D());
+			temp_rb_list.emplace_back(Vector2D());
+		}
+
+		for (int i = 0; i < contactCount; i++) {
+			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
+			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
+
+			temp_ra_list[i] = ra;
+			temp_rb_list[i] = rb;
+
+			Vector2D raPerp = Vector2D(-ra.y, ra.x);
+			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+
+			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
+			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+
+			Vector2D relativeVelocity =
+				(bodyB->mVelocity + angularLinearVelocityB) -
+				(bodyA->mVelocity + angularLinearVelocityA);
+
+			float contactVelocityMag = ISVector2DDotProduct(relativeVelocity, normal);
+
+			if (contactVelocityMag > 0.f)
+			{
+				continue;
+			}
+
+			float raPerpDotN = ISVector2DDotProduct(raPerp, normal);
+			float rbPerpDotN = ISVector2DDotProduct(rbPerp, normal);
+
+			float denom = bodyA->mInvMass + bodyB->mInvMass +
+				(raPerpDotN * raPerpDotN) * (1.f / bodyA->mInertia) +
+				(rbPerpDotN * rbPerpDotN) * (1.f / bodyB->mInertia);
+
+			float j = -(1.f + e) * contactVelocityMag;
+			j /= denom;
+			j /= (float)contactCount;
+
+			Vector2D impulse = j * normal;
+			temp_impulse_list[i] = impulse;
+		}
+
+		for (int i = 0; i < contactCount; i++)
+		{
+			Vector2D impulse = temp_impulse_list[i];
+			Vector2D ra = temp_ra_list[i];
+			Vector2D rb = temp_rb_list[i];
+
+			bodyA->mVelocity += -impulse * bodyA->mInvMass;
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * (1.f / bodyA->mInertia);
+			bodyB->mVelocity += impulse * bodyB->mInvMass;
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * (1.f / bodyB->mInertia);
+		}
+
 	}
 
 	void Physics::DrawOutLine(RigidBody& body, Sprite const& sprite) {
@@ -496,10 +576,11 @@ namespace IS {
 				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 				sprite.drawLine(va, vb, { 0.f, 1.f, 0.f });
 			}
-			for (int i = 0; i < mContactPointsList.size(); i++) {
+
+			/*for (int i = 0; i < mContactPointsList.size(); i++) {
 				Vector2D end = { 100.f, 100.f };
 				sprite.drawLine(mContactPointsList[i], mContactPointsList[i] + end, { 1.f, 1.f, 1.f });
-			}
+			}*/
 		}
 
 		// draw grid cell line in white
