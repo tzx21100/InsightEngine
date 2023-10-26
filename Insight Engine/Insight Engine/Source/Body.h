@@ -257,6 +257,8 @@ namespace IS
             }
             prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
 
+            prefab["RigidBodyCheckTransform"] = mCheckTransform;
+            prefab["mInertia"] = mInertia;
             // Serializing transformUpdateRequired
             prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
 
@@ -314,6 +316,10 @@ namespace IS
                 vertex.y = v["y"].asFloat();
                 mTransformedVertices.push_back(vertex);
             }
+
+
+            mCheckTransform= data["RigidBodyCheckTransform"].asBool();
+            mInertia= data["mInertia"].asFloat();
 
             // Deserializing transformUpdateRequired
             mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
