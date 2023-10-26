@@ -220,6 +220,22 @@ namespace IS {
 
     }
 
+    static void AudioPlaySound(MonoString* name) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlaySoundByName(str);
+    }
+
+    static void AudioPlayMusic(MonoString* name) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlayMusicByName("music.wav");
+    }
+
 
 
     /**
@@ -265,6 +281,10 @@ namespace IS {
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
+
+        // Audio
+        IS_ADD_INTERNAL_CALL(AudioPlaySound);
+        IS_ADD_INTERNAL_CALL(AudioPlayMusic);
 
 
 

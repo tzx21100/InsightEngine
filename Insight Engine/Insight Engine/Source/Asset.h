@@ -174,6 +174,7 @@ namespace IS {
          * \return A reference to the Image structure containing image data.
          */
         Image* GetImage(const std::string& file_name);
+        Image* GetIcon(const std::string& file_name);
 
         /*!
          * \brief Loads image data from a file.
@@ -182,12 +183,15 @@ namespace IS {
          */
         void ImageLoad(const std::string& file_path);
 
+        void IconLoad(const std::string& file_path);
         /*!
          * \brief Saves image data.
          *
          * \param image_data The Image structure containing image data to be saved.
          */
         void SaveImageData(const Image image_data);
+
+        void SaveIconData(const Image icon_data);
 
         /*!
          * \brief Removes image data by file name.
@@ -313,7 +317,9 @@ namespace IS {
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;
+        std::unordered_map <std::string, Image> mIconList;
         std::vector<std::string>mImageNames;
+        std::vector<std::string>mIconNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
 

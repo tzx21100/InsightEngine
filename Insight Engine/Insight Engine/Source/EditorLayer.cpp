@@ -41,9 +41,9 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 
-        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/play_button.png")->texture_id);
-        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/pause_button.png")->texture_id);
-        mIcons["SaveFile"] = EditorUtils::ConvertTextureID(asset->GetImage("Assets/Icons/save_button.png")->texture_id);
+        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/play_button.png")->texture_id);
+        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/pause_button.png")->texture_id);
+        mIcons["SaveFile"] = EditorUtils::ConvertTextureID(asset->GetIcon("Assets/Icons/save_button.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached", GetName());
     }

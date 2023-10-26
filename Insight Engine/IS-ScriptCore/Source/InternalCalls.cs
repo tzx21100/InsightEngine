@@ -88,5 +88,11 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AttachCamera();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlaySound(string name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlayMusic(string name);
+
     }
 }
