@@ -27,6 +27,7 @@ namespace IS {
 	bool Physics::mShowColliders = false;
 	bool Physics::mShowVelocity = false;
 	bool Physics::mShowGrid = false;
+	bool Physics::mExertingGravity = false;				// Flag indicating whether gravity is currently exerted
 	std::vector<Vector2D> Physics::mContactPointsList = std::vector<Vector2D>();
 
 	// Constructs a Physics instance
@@ -35,7 +36,6 @@ namespace IS {
 		//mNormal = Vector2D();
 		//mDepth = std::numeric_limits<float>::max();
 		mGravity = Vector2D(0, -981.f);			// Gravity of the world
-		mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
 		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
 		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
 		mCurrentIterations = 0;					// Number of current iterations for physics step

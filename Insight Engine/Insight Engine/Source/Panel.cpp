@@ -354,6 +354,13 @@ namespace IS {
             ImGui::TableHeadersRow();
 
             ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Exert Gravity");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Show Colliders");
             ImGui::PopFont();
             ImGui::TableNextColumn();

@@ -78,6 +78,11 @@ namespace IS {
         static bool mShowGrid;
 
         /*!
+         * \brief Boolean flag to exert gravity
+         */
+        static bool mExertingGravity;
+
+        /*!
          * \brief Destructor for the Physics class.
          */
         ~Physics() {}
@@ -139,7 +144,6 @@ namespace IS {
         
 	private:
         Vector2D mGravity;                              // Gravity of the world
-        bool mExertingGravity;                          // Flag indicating whether gravity is currently exerted
         float mMaxVelocity;                             // Maximum velocity for game bodies
         float mMinVelocity;                             // Minimum velocity for game bodies
         int mTotalIterations;                                // Number of iterations for physics step
