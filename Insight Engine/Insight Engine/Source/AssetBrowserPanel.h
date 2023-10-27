@@ -85,7 +85,7 @@ namespace IS {
          *
          * This map stores associations between asset type names and the icon images representing them.
          */
-        std::unordered_map<std::string, std::shared_ptr<Image>> mIcons;
+        std::unordered_map<std::string, ImTextureID> mIcons;
     };
 
 

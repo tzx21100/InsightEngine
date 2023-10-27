@@ -48,6 +48,7 @@ namespace IS {
          */
         bool mFreezeFrame = false;
         bool mContinueFrame = false;
+        bool mRuntime = false;
 
         /*!
          * \brief Flag indicating if the GUI is in use.

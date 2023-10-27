@@ -42,6 +42,8 @@ namespace IS {
 
 	void SceneManager::LoadScene(std::string const& scene_filename)
 	{
+		auto& engine = InsightEngine::Instance();
+
 		// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();
@@ -56,13 +58,17 @@ namespace IS {
 
 			if (found != mSceneNames.end())
 			{
-				IS_CORE_WARN("Scene {} already exist!", filename);
-				return;
+				IS_CORE_WARN("Scene {} reloaded!", filename);
 			}
 		}
 
-		InsightEngine::Instance().LoadScene(scene_filename);
+		engine.LoadScene(scene_filename);
 		CreateScene(scene_filename);
+
+		Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+		camera.UpdateCamPos(0, 0);
+		camera.UpdateCamDim(static_cast<float>(engine.GetWindowWidth()));
+		camera.updateCamXform();
 	}
 
 	void SceneManager::SwitchScene(SceneID scene_id)
@@ -101,6 +107,11 @@ namespace IS {
 		IS_CORE_DEBUG("Switch from \"{}\" to scene \"{}\"", old_scene, mSceneNames[scene_id]);
 	}
 
+	void SceneManager::ReloadActiveScene()
+	{
+		LoadScene(AssetManager::SCENE_DIRECTORY + mSceneNames[mActiveSceneID] + ".insight");
+	}
+
 	void SceneManager::RunSceneFunction(std::function<void(SceneID)> SceneFunc)
 	{
 		for (auto const& [scene_id, scene_name] : mSceneNames)
@@ -122,10 +133,33 @@ namespace IS {
 	SceneID SceneManager::GetSceneCount() const { return mSceneCount; }
 
 	// Entity management
-	void SceneManager::AddEntity(const char* name) { InsightEngine::Instance().CreateEntity(name); }
-	void SceneManager::AddRandomEntity() { InsightEngine::Instance().GenerateRandomEntity(); }
-	void SceneManager::CloneEntity(Entity entity) { InsightEngine::Instance().CopyEntity(entity); }
-	void SceneManager::DeleteEntity(Entity entity) { InsightEngine::Instance().DeleteEntity(entity); }
+	void SceneManager::AddEntity(const char* name) 
+	{
+		if (mSceneCount == 0)
+			return;
+		InsightEngine::Instance().CreateEntity(name); 
+	}
+
+	void SceneManager::AddRandomEntity() 
+	{
+		if (mSceneCount == 0)
+			return;
+		InsightEngine::Instance().GenerateRandomEntity(); 
+	}
+
+	void SceneManager::CloneEntity(Entity entity) 
+	{
+		if (mSceneCount == 0)
+			return;
+		InsightEngine::Instance().CopyEntity(entity);
+	}
+
+	void SceneManager::DeleteEntity(Entity entity) 
+	{
+		if (mSceneCount == 0)
+			return;
+		InsightEngine::Instance().DeleteEntity(entity);
+	}
 
 	void SceneManager::CreateScene(std::string const& scene_filename)
 	{
@@ -143,7 +177,10 @@ namespace IS {
 
 			if (found != mSceneNames.end())
 			{
-				IS_CORE_WARN("Scene {} already exist!", filename);
+				auto const& [scene_id, scene_name] = *found;
+				mActiveSceneID = scene_id;
+				UpdateActiveScene();
+				IS_CORE_WARN("Scene {} reloaded!", filename);
 				return;
 			}
 		}
@@ -165,7 +202,7 @@ namespace IS {
 		// Instance of game engine
 		auto& engine = InsightEngine::Instance();
 		ECSMap original_map, cloned_map;
-		mSceneEntities.insert_or_assign(mActiveSceneID, engine.EntitiesAlive());
+		mSceneEntities[mActiveSceneID] = engine.EntitiesAlive();
 		original_map = engine.mComponentManager->mComponentArrayMap;
 
 		for (auto const& [name, components] : original_map)

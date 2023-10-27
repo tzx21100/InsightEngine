@@ -265,9 +265,9 @@ namespace IS {
             constexpr float RARE = 0.8f;
 
             Image random_img =
-                (gacha <= ULTRA_RARE) ? *asset->GetImage("Assets/icecream_truck_frame.png") :
-                (gacha <= SUPER_RARE) ? *asset->GetImage("Assets/player_frame.png") :
-                (gacha <= RARE) ? *asset->GetImage("Assets/wii.png") : *asset->GetImage("Assets/placeholder_background.png");
+                (gacha <= ULTRA_RARE) ? *asset->GetImage("Assets/Textures/icecream_truck_frame.png") :
+                (gacha <= SUPER_RARE) ? *asset->GetImage("Assets/Textures/player_frame.png") :
+                (gacha <= RARE) ? *asset->GetImage("Assets/Textures/wii.png") : *asset->GetImage("Assets/Textures/placeholder_background.png");
             sprite.img.texture_id = static_cast<uint8_t>(random_img.mTextureData);
         }
 

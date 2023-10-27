@@ -78,6 +78,11 @@ namespace IS {
         static bool mShowGrid;
 
         /*!
+         * \brief Boolean flag to exert gravity
+         */
+        static bool mExertingGravity;
+
+        /*!
          * \brief Destructor for the Physics class.
          */
         ~Physics() {}
@@ -111,6 +116,8 @@ namespace IS {
         //void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
         void ResolveCollision(Manifold & contact);
 
+        void ResolveCollisionWithRotation(Manifold & contact);
+
         /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *
@@ -119,12 +126,12 @@ namespace IS {
          */
         static void DrawOutLine(RigidBody& body, Sprite const& sprite);
 
-        /*!
-         * \brief Updates the gravity vector based on user input.
-         *
-         * \param key_input The input related to gravity control.
-         */
-        void UpdateGravity(auto const& key_input);
+        ///*!
+        // * \brief Updates the gravity vector based on user input.
+        // *
+        // * \param key_input The input related to gravity control.
+        // */
+        //void UpdateGravity(auto const& key_input);
 
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.
@@ -137,7 +144,6 @@ namespace IS {
         
 	private:
         Vector2D mGravity;                              // Gravity of the world
-        bool mExertingGravity;                          // Flag indicating whether gravity is currently exerted
         float mMaxVelocity;                             // Maximum velocity for game bodies
         float mMinVelocity;                             // Minimum velocity for game bodies
         int mTotalIterations;                                // Number of iterations for physics step

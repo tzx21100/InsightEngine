@@ -10,23 +10,28 @@
 #include <glm/glm.hpp>
 
 namespace IS {
+
+	enum aCameraType { CAMERA_TYPE_SCENE = 0, CAMERA_TYPE_EDITOR };
+
 	class Camera {
-	public:
-		static Camera& Instance() { static Camera instance; return instance; }
+	public:		
+		Camera();
+		~Camera() = default;
 
 		void UpdateCamPos(float newX, float newY);
 		void UpdateCamDim(float newWidth);
 		void UpdateCamRotation(float newAngle);
+		void updateCamXform();
 
 		glm::vec2 GetCamPos();
 		glm::vec2 GetCamDim();
 		glm::vec2 GetUVector();
 		glm::vec2 GetVVector();
 
-	private:
-		Camera();
-		~Camera() = default;
+		static aCameraType mActiveCamera;
 
+		glm::mat3 xform{};
+	private:
 		glm::vec2 world_position{};
 		glm::vec2 camera_dim{};
 		glm::vec2 uVector{}; // camera x/y axis

@@ -20,10 +20,12 @@
 #include <stb_image.h>
 
 namespace IS {
+
     /// Static objects ///
     std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
-    // Camera ISGraphics::camera{};
+    std::vector<Sprite::lineInstanceData> ISGraphics::lineInstances;
+    Camera ISGraphics::cameras[2];
     
     // Sprites (models) to render
     std::vector<Sprite> ISGraphics::sprites;
@@ -34,6 +36,7 @@ namespace IS {
     // Shaders
     Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::mesh_inst_shader_pgm;
+    Shader ISGraphics::mesh_inst_line_shader_pgm;
     /*Shader ISGraphics::TNR_text_shader_pgm;
     Shader ISGraphics::CS_text_shader_pgm;*/
 
@@ -56,6 +59,7 @@ namespace IS {
         
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
         mesh_inst_shader_pgm.setupInstSpriteShaders();
+        mesh_inst_line_shader_pgm.setupInstLineShaders();
         Times_New_Roman_font.shader.setupTextShaders();
         Brush_Script_font.shader.setupTextShaders();
         
@@ -102,6 +106,13 @@ namespace IS {
                 sprite.anims[sprite.animation_index].updateAnimation(delta_time);
             }
 
+            if (sprite.primitive_type == GL_LINES) {
+                Sprite::lineInstanceData instLineData;
+                instLineData.color = sprite.color;
+                instLineData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
+                lineInstances.emplace_back(instLineData);
+            }
+
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
@@ -118,7 +129,7 @@ namespace IS {
                 }
                 // no need for else as default values of instData will stay
 
-                quadInstances.push_back(instData);
+                quadInstances.emplace_back(instData);
             }
         }
 
@@ -136,46 +147,8 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        // Bind the instance VBO
-        glBindBuffer(GL_ARRAY_BUFFER, meshes[4].instance_vbo_ID);
-        // Upload the quadInstances data to the GPU
-        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-
-        if (buffer) {
-            // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, quadInstances.data(), quadInstances.size() * sizeof(Sprite::instanceData));
-            
-            // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
-                // Handle the case where unmap was not successful
-                std::cerr << "Failed to unmap the buffer." << std::endl;
-            }
-        }
-        else {
-            // Handle the case where mapping the buffer was not successful
-            std::cerr << "Failed to map the buffer for writing." << std::endl;
-        }
-
-        glUseProgram(mesh_inst_shader_pgm.getHandle());
-        glBindVertexArray(meshes[4].vao_ID);
-
-        
-        std::vector<int> tex_array_index_vect;
-        for (auto const& texture : textures) {
-            glBindTextureUnit(texture.texture_index, texture.texture_id);
-            tex_array_index_vect.emplace_back(texture.texture_index);
-        }
-
-        auto tex_arr_uniform = glGetUniformLocation(mesh_inst_shader_pgm.getHandle(), "uTex2d");
-        if (tex_arr_uniform >= 0)
-            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
-        else
-            std::cout << "uTex2d Uniform not found" << std::endl;
-        
-
-        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, meshes[4].draw_count, static_cast<GLsizei>(quadInstances.size()));
+        Sprite::draw_instanced_lines();
+        Sprite::draw_instanced_quads();
 
 
         for (auto& entity : mEntities) { // for each intentity
@@ -214,8 +187,8 @@ namespace IS {
                 sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.img.texture_id);
                 break;
             case GL_LINES: // lines
-                sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.img.texture_id);
-                break;
+                /*sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.img.texture_id);
+                break;*/
             case GL_TRIANGLE_FAN: // circle
                 sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.img.texture_id);
                 break;

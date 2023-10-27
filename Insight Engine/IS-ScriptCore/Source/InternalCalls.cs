@@ -82,5 +82,17 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void FreeSpriteImage(SimpleImage image);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void CreateAnimationFromSprite(int row, int columns, float animation_time);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AttachCamera();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlaySound(string name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlayMusic(string name);
+
     }
 }

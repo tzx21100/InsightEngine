@@ -317,6 +317,16 @@ namespace IS {
                 ImGui::DragFloat(("##InvMass" + std::to_string(entity)).c_str(), &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
+                // Inertia
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Inertia");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::PushItemWidth(80.f);
+                ImGui::DragFloat(("##Inertia" + std::to_string(entity)).c_str(), &rigidbody.mInertia, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::PopItemWidth();
+
                 // Restitution
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);

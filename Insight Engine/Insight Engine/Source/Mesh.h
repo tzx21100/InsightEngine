@@ -46,12 +46,6 @@ namespace IS {
         GLuint draw_count{};        // The number of vertices to be drawn.
         GLuint instance_count{};
 
-        // test
-        struct instVertex {
-            glm::vec2 position; // The vertex position.
-            glm::vec3 color;
-            glm::vec2 texCoord; // The texture coordinates.
-        };
         /*!
          * \brief Represents a vertex with position and texture coordinates.
          */
@@ -64,6 +58,7 @@ namespace IS {
         //std::vector<Vertex> vertices{};
 
         void setupInstancedQuadVAO();
+        void setupInstancedLineVAO();
 
         /*!
          * \brief Initializes various types of meshes for rendering.

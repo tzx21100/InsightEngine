@@ -38,7 +38,14 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
-        //OpenScene();
+        InsightEngine& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
+        std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
+
+        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
+        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
+        mIcons["StopButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
+        mIcons["SaveFile"]    = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -52,7 +59,7 @@ namespace IS {
     void EditorLayer::OnUpdate(float)
     {
         InsightEngine& engine = InsightEngine::Instance();
-        auto const& input = engine.GetSystem<InputManager>("Input");
+        auto input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
         const bool CTRL_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
@@ -63,6 +70,7 @@ namespace IS {
         const bool S_PRESSED   = input->IsKeyPressed(GLFW_KEY_S);
         const bool F4_PRESSED  = input->IsKeyPressed(GLFW_KEY_F4);
         const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
+        //const bool LEFT_MOUSE_HELD = input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_LEFT);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -70,6 +78,15 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
+        //if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
+        //{
+        //    if (LEFT_MOUSE_HELD)
+        //    {
+        //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        //        auto const& [mouse_x, mouse_y] = input->GetMousePosition();
+        //        camera.UpdateCamPos(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
+        //    }
+        //}
     }
 
     void EditorLayer::OnRender()
@@ -112,6 +129,9 @@ namespace IS {
         // Menu bar
         RenderMenuBar();
 
+        // Tool bar
+        RenderToolBar();
+
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
@@ -135,7 +155,11 @@ namespace IS {
                 // New File
                 if (ImGui::BeginMenu("New"))
                 {
-                    if (ImGui::MenuItem("Scene", "Ctrl+N")) { mShowNewScene = true; }
+                    //if (EditorUtils::RenderIconMenuItem("Scene", "Ctrl+N", mIcons["SaveFile"])) { mShowNewScene = true; }
+                    if (ImGui::MenuItem("Scene", "Ctrl+N")) 
+                    {
+                        mShowNewScene = true;
+                    }
                     if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
                 } // end menu New
@@ -180,7 +204,7 @@ namespace IS {
             {
                 static const float MAX_WIDTH = 200.f;
                 ImGui::PushTextWrapPos(MAX_WIDTH); // Set a maximum width of 200 pixels.
-                ImGui::TextUnformatted("These options are for testing purposes, not part of the engine iteself.");
+                ImGui::TextUnformatted("These options are for testing purposes, not part of the engine itself.");
                 ImGui::PopTextWrapPos(); // Reset text wrap width to default.
                 ImGui::EndTooltip();
             }
@@ -227,19 +251,64 @@ namespace IS {
             {
                 SceneManager& scene_manager = SceneManager::Instance();
                 mSceneHierarchyPanel->ResetSelection();
-                //InsightEngine::Instance().NewScene();
-                //mActiveScene = scene_name;
-                //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
                 scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
             });
         if (mShowNewScript)
-            ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [](const char* script_name)
+            ShowCreatePopup("Create new script", "NewScript", &mShowNewScript, [&engine](const char* script_name)
             {
-                InsightEngine::Instance().CreateGameScript(script_name);
-                InsightEngine::Instance().OpenGameScript(script_name);
+                engine.CreateGameScript(script_name);
+                engine.OpenGameScript(script_name);
             });
+    }
+
+    void EditorLayer::RenderToolBar()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto& scene_manager = SceneManager::Instance();
+        auto& style = ImGui::GetStyle();
+        auto input = engine.GetSystem<InputManager>("Input");
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        if (ImGui::Begin("##Runtime", nullptr, window_flags))
+        {
+            ImTextureID button_icon = mIcons[engine.mRuntime ? "PauseButton" : "PlayButton"];
+            const float BUTTON_SIZE = 32.f;
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f - BUTTON_SIZE,
+                                  ImGui::GetContentRegionMax().y / 2.f - BUTTON_SIZE / 2.f });
+            if (ImGui::ImageButton(button_icon, ImVec2(BUTTON_SIZE, BUTTON_SIZE)))
+            {
+                engine.mRuntime = !engine.mRuntime;
+                if (engine.mRuntime)
+                {
+                    Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+                    IS_CORE_DEBUG("Using Scene Camera");
+                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
+                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
+                }
+                else
+                {
+                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+                    IS_CORE_DEBUG("Using Editor Camera");
+                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
+                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
+                }
+            }
+            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f + BUTTON_SIZE / 2.f - style.ItemSpacing.x,
+                                  ImGui::GetContentRegionMax().y / 2.f - (BUTTON_SIZE * .8f) / 2.f });
+            if (ImGui::ImageButton(mIcons["StopButton"], ImVec2(BUTTON_SIZE * .8f, BUTTON_SIZE * .8f)))
+            {
+                engine.mRuntime = false;
+                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                scene_manager.ReloadActiveScene();
+                IS_CORE_DEBUG("Stopped");
+            }
+            ImGui::PopStyleColor();
+            ImGui::End();
+        }
     }
 
     void EditorLayer::AttachPanels()
@@ -266,7 +335,7 @@ namespace IS {
             memcpy(name, default_text, strlen(default_text));
 
             ImGuiInputTextFlags input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(("##" + std::string(popup_name)).c_str(), name, sizeof(name), input_flags) || ImGui::Button("Create"))
+            if (ImGui::InputText(("##" + std::string(popup_name)).c_str(), name, sizeof(name), input_flags))
             {
                 CreateAction(name);
                 *show = false;
@@ -279,7 +348,6 @@ namespace IS {
     void EditorLayer::OpenScene()
     {
         mSceneHierarchyPanel->ResetSelection();
-        //InsightEngine& engine = InsightEngine::Instance();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
@@ -287,19 +355,12 @@ namespace IS {
             auto& scene_manager = SceneManager::Instance();
             scene_manager.LoadScene(relative_path.string());
             IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
-            //engine.LoadScene(relative_path.string());
-            //mActiveScene = filepath.stem().string();
-
-            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         }
     }
 
     void EditorLayer::OpenScene(std::string const& path)
     {
-        //InsightEngine::Instance().LoadScene(path);
         std::filesystem::path filepath(path);
-        //mActiveScene = filepath.stem().string();
-        //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
         auto& scene_manager = SceneManager::Instance();
         scene_manager.LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
@@ -307,21 +368,14 @@ namespace IS {
 
     void EditorLayer::SaveScene() 
     {
-        //InsightEngine::Instance().SaveCurrentScene(mActiveScene);
         auto& scene_manager = SceneManager::Instance();
         scene_manager.SaveScene();
     }
 
     void EditorLayer::SaveSceneAs()
     {
-        //InsightEngine& engine = InsightEngine::Instance();
-
         if (std::filesystem::path filepath(FileUtils::SaveFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
-            //mActiveScene = filepath.stem().string();
-            //engine.SaveCurrentScene(mActiveScene);
-
-            //IS_CORE_TRACE("Current Scene: {}", mActiveScene);
             auto& scene_manager = SceneManager::Instance();
             scene_manager.SaveSceneAs(filepath.stem().string());
             IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());

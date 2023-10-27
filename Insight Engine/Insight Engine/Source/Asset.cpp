@@ -40,7 +40,7 @@ namespace IS {
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
         namespace fs = std::filesystem;
-        std::string path = "Assets/"; // Path to the Assets directory
+        std::string path = TEXTURE_DIRECTORY; // Path to the Assets directory
 
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();
@@ -49,21 +49,26 @@ namespace IS {
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
                 ImageLoad(file_path);
+                Image* img=GetImage(file_path);
+                img->texture_index = mCurrentTexId;
+                mCurrentTexId++;
+                ISGraphics::textures.emplace_back(*img);
             }
         }
 
-        for (const auto& entry : fs::directory_iterator("Assets/Icons/")) {
+        for (const auto& entry : fs::directory_iterator(ICON_DIRECTORY)) {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check image extensions
             if (extension == ".png") {
-                ImageLoad(file_path);
+                IconLoad(file_path);
+                
             }
         }
 
         // Gets all prefabs and loads them to a list.
-        path = "Assets/Prefabs";
+        path = PREFAB_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
@@ -77,7 +82,7 @@ namespace IS {
         }
 
         // Gets all the scenes and stores them into a list
-        path = "Assets/Scene";
+        path = SCENE_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().filename().string();
             mSceneList.emplace_back(file_path);
@@ -85,7 +90,7 @@ namespace IS {
         }
 
         // loads all audio and store it
-        path = "Assets/Sounds";
+        path = SOUND_DIRECTORY;
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().string();
@@ -157,6 +162,14 @@ namespace IS {
         throw std::runtime_error("Image not found.");
     }
 
+    Image* AssetManager::GetIcon(const std::string& file_name) {
+        auto iter = mIconList.find(file_name);
+        if (iter != mIconList.end()) {
+            return &(iter->second);
+        }
+        throw std::runtime_error("Image not found.");
+    }
+
     void AssetManager::ImageLoad(const std::string& filepath) {
         
         Image new_image;
@@ -164,6 +177,20 @@ namespace IS {
         graphics->initTextures(filepath,new_image);
         SaveImageData(new_image);
         IS_CORE_INFO("Using Texture: {} \"{}\"", new_image.texture_id, filepath.substr(7));
+    }
+
+    void AssetManager::IconLoad(const std::string& filepath) {
+
+        Image new_image;
+        std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
+        graphics->initTextures(filepath, new_image);
+        SaveIconData(new_image);
+        IS_CORE_INFO("Using Icon: {} \"{}\"", new_image.texture_id, filepath.substr(7));
+    }
+
+    void AssetManager::SaveIconData(const Image icon_data){
+        mIconList[icon_data.mFileName] = icon_data;
+        mIconNames.emplace_back(icon_data.mFileName);
     }
 
     void AssetManager::SaveImageData(const Image image_data) {

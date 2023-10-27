@@ -57,6 +57,23 @@ namespace IS {
         ImVec2 operator-(ImVec2 const& lhs, ImVec2 const& rhs);
 
         /*!
+         * \brief +operator overload for ImVec2.
+         * \param lhs Left hand side of the binary operation.
+         * \param rhs Right hand side of the binary operation.
+         * \return The resulting added value.
+         */
+        ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs);
+
+        /*!
+         * \brief Render menu item with icon.
+         * \param label Display text for menu item.
+         * \param shortcut Display text for shortcut.
+         * \param icon_texture Texture of icon.
+         * \return True if menu item is clicked, false otherwise.
+         */
+        bool RenderIconMenuItem(const char* label, const char* shortcut, ImTextureID icon_texture);
+
+        /*!
          * \brief Testing if point is within a circle.
          * \param point Position of the point.
          * \param center Center of the circle.

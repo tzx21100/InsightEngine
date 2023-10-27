@@ -88,22 +88,22 @@ namespace IS {
     };
 
     // Convert Image to SimpleImage
-    inline SimpleImage ConvertToSimpleImage(const Image& image) {
+    inline SimpleImage ConvertToSimpleImage(const Image* image) {
         SimpleImage simg;
-        simg.mFileName = new char[image.mFileName.length() + 1];
-        strcpy(simg.mFileName, image.mFileName.c_str());
+        simg.mFileName = new char[image->mFileName.length() + 1];
+        strcpy(simg.mFileName, image->mFileName.c_str());
         
-        simg.width = image.width;
-        simg.height = image.height;
-        simg.channels = image.channels;
-        simg.size = image.size;
-        simg.texture_id = image.texture_id;
-        simg.mTextureData = image.mTextureData;
-        simg.texture_index = image.texture_index;
+        simg.width = image->width;
+        simg.height = image->height;
+        simg.channels = image->channels;
+        simg.size = image->size;
+        simg.texture_id = image->texture_id;
+        simg.mTextureData = image->mTextureData;
+        simg.texture_index = image->texture_index;
         return simg;
     }
     // Convert from SimpleImage
-    inline Image ConvertToImage(const SimpleImage& simg) {
+    inline Image ConvertToImage(const SimpleImage &simg) {
         Image img;
         img.mFileName = std::string(simg.mFileName); // Convert char* to std::string
 
@@ -174,6 +174,7 @@ namespace IS {
          * \return A reference to the Image structure containing image data.
          */
         Image* GetImage(const std::string& file_name);
+        Image* GetIcon(const std::string& file_name);
 
         /*!
          * \brief Loads image data from a file.
@@ -182,12 +183,15 @@ namespace IS {
          */
         void ImageLoad(const std::string& file_path);
 
+        void IconLoad(const std::string& file_path);
         /*!
          * \brief Saves image data.
          *
          * \param image_data The Image structure containing image data to be saved.
          */
         void SaveImageData(const Image image_data);
+
+        void SaveIconData(const Image icon_data);
 
         /*!
          * \brief Removes image data by file name.
@@ -313,13 +317,20 @@ namespace IS {
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;
+        std::unordered_map <std::string, Image> mIconList;
         std::vector<std::string>mImageNames;
+        std::vector<std::string>mIconNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
 
-
+        static constexpr const char* TEXTURE_DIRECTORY  = "Assets/Textures/";
+        static constexpr const char* ICON_DIRECTORY     = "Assets/Icons/";
+        static constexpr const char* PREFAB_DIRECTORY   = "Assets/Prefabs/";
+        static constexpr const char* SCENE_DIRECTORY    = "Assets/Scene/";
+        static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
 
     private:
+        int mCurrentTexId{};
         //const char* filename;
         //int width;
         //int height;

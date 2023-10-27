@@ -80,13 +80,14 @@ namespace IS {
         // need to be accessed by shader
         glm::vec2 frame_dimension{1.f, 1.f};
         glm::vec2 frame_index{0.f, 0.f};
-
-    private:
         int x_frames{};             // The total number of columns in the sprite sheet.
         int y_frames{};             //The total number of rows in the sprite sheet.
         float animation_duration{}; // The total duration of the animation in seconds.
         float time_per_frame{};     // The duration of each frame in seconds.
         float frame_timer{};        // Timer to keep track of elapsed time for frame updates.
+
+    private:
+
     };
 } // end namespace IS
 

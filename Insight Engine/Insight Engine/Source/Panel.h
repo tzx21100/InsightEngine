@@ -62,13 +62,14 @@ namespace IS {
          */
         void RenderPanel() override;
 
+    private:
+        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
+        Vec2 mScenePanelSize{}; ///< Size of the scene panel.
+
         /*!
          * \brief Renders an overlay which will render a help tooltip.
          */
         void RenderOverlay();
-    private:
-        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
-        Vec2 mScenePanelSize{}; ///< Size of the scene panel.
     };
 
     /*!

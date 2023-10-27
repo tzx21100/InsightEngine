@@ -46,7 +46,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mInertia = 0.f;
+        mInertia = 1.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -89,7 +89,7 @@ namespace IS
         mTransformUpdateRequired = false;
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
-        mInertia = 0.f;
+        mInertia = 1.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -185,9 +185,9 @@ namespace IS
     // Transform a vector using a given transformation matrix
     Vector2D RigidBody::TransformRigidBody(Vector2D v, Transform transform) {
         Vector2D ret;
-        float angle = fmod(transform.rotation, 360.f);
-        if (angle < 0.f) { angle += 360.f; }
-        angle *= (PI / 180.f);
+        float angle = glm::radians(transform.rotation);
+        /*if (angle < 0.f) { angle += 360.f; }
+        angle *= (PI / 180.f);*/
         ret.x = cosf(angle) * v.x - sinf(angle) * v.y + transform.world_position.x;
         ret.y = sinf(angle) * v.x + cosf(angle) * v.y + transform.world_position.y;
         return ret;
@@ -238,6 +238,7 @@ namespace IS
         mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
         
         mInertia = (1.f / 12.f) * mass * (width * width + height * height);
+        //IS_CORE_DEBUG("inertia - {}", mInertia);
     }
 
     // Create a circle-shaped rigid body with specified parameters

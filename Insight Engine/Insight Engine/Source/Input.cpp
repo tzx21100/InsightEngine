@@ -129,9 +129,11 @@ namespace IS {
     std::pair<double, double> InputManager::GetMousePosition() const {
         double xPos, yPos;
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+       
 
-        double newX = (xPos - center_x)*ratio_width;
-        double newY = (center_y - yPos)*ratio_height;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x)*ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos)*ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+       // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };
     }

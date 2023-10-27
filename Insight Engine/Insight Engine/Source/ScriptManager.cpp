@@ -30,10 +30,11 @@ namespace IS {
     }
 
     void ScriptManager::Initialize() {
-
+        InitializeTextureIndices();
     }
 
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
+        if (InsightEngine::Instance().mRuntime == false) { return; }
         mScriptDeltaTime = deltaTime;
         auto& engine = InsightEngine::Instance();
         for (auto& entity: mEntities) {
