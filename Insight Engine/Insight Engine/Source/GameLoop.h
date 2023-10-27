@@ -270,6 +270,15 @@ namespace IS {
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
+                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                    std::vector<Entity> test;
+                    test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
+                    for (auto const& ent : test) {
+                        //IS_CORE_INFO("entity selected: {}", ent);
+                    }
+                    //IS_CORE_INFO("end of click");
+                }
+
                 if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");

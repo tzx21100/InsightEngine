@@ -91,6 +91,26 @@ namespace IS {
 		return GlmMat3ToISMtx33(ISGraphics::cameras[Camera::mActiveCamera].xform * world_to_cam_xform);
 	}
 
+	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
+		std::vector<Vector2D> vertices;
+		float left = world_position.x - (scaling.x / 2.f);
+		float right = world_position.x + (scaling.x / 2.f);
+		float bottom = world_position.y - (scaling.y / 2.f);
+		float top = world_position.y + (scaling.y / 2.f);
+
+		vertices.emplace_back(Vector2D(left, top)); // 0 top left
+		vertices.emplace_back(Vector2D(right, top)); // 1 top right
+		vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
+		vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
+
+		for (int i = 0; i < vertices.size(); i++) {
+			vertices[i].x = cosf(rotation) * world_position.x - sinf(rotation) * world_position.y + world_position.x;
+			vertices[i].y = sinf(rotation) * world_position.x + cosf(rotation) * world_position.y + world_position.y;
+		}
+		
+		return vertices;
+	}
+
 	Json::Value Transform::Serialize() {
 		Json::Value transformData;
 

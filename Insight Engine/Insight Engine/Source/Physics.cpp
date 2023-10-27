@@ -668,11 +668,29 @@ namespace IS {
 	std::vector<Entity> Physics::GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities) {
 		std::vector<Entity> entities_list;
 		entities_list.clear();
+
+		float left = position.x - 1.f;
+		float right = position.x + 1.f;
+		float bottom = position.y - 1.f;
+		float top = position.y + 1.f;
+		std::vector<Vector2D> mouse_vertices;
+		mouse_vertices.emplace_back(Vector2D(left, top)); // 0 top left
+		mouse_vertices.emplace_back(Vector2D(right, top)); // 1 top right
+		mouse_vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
+		mouse_vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
+
 		for (auto const& entity : entities) {
 			if (InsightEngine::Instance().HasComponent<Transform>(entity)) {
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				if (position.x >= (trans.world_position.x - (trans.scaling.x / 2.f)) && position.x <= (trans.world_position.x + (trans.scaling.x / 2.f)) &&
+				//auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+
+				/*if (position.x >= (trans.world_position.x - (trans.scaling.x / 2.f)) && position.x <= (trans.world_position.x + (trans.scaling.x / 2.f)) &&
 					position.y >= (trans.world_position.y - (trans.scaling.y / 2.f)) && position.y <= (trans.world_position.y + (trans.scaling.y / 2.f)) ) {
+					entities_list.emplace_back(entity);
+				}*/
+				Vector2D normal = Vector2D();
+				float depth = 0.f;
+				if (IntersectionPolygons(mouse_vertices, position, trans.GetSquareTransformVertices(), trans.world_position, normal, depth)) {
 					entities_list.emplace_back(entity);
 				}
 			}
