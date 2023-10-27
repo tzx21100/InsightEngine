@@ -166,37 +166,40 @@ namespace IS {
 				std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
 				// getting entity number in this cell
 				size_t totalEntities = test_cell.count();
-				mImplicitGrid.mInGridList.resize(totalEntities);
-				if (totalEntities > 1) {// more than 1 entity to avoid self checking
-					// emplace all the entities in current cell
-					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
-						if (test_cell.test(e)) { // if the current bit entity is true
-							// emplace into InGridList
-							mImplicitGrid.mInGridList.emplace_back(e);
-							totalEntities--;
-							if (totalEntities <= 0) { 
-								// if there is no more entities in this cell, break
-								break;
-							}
-						}
-					}
+				if (totalEntities > 0) { // at least one entity
 
 					// if the cell is at the edge of the grid, then need check with the entities overlap on the grid
 					if (row == 0 || row == ImplicitGrid::mRows - 1 ||
 						col == 0 || col == ImplicitGrid::mCols - 1) {
-						for (auto const& entity : mImplicitGrid.mOverlapGridList) {
+						/*for (auto const& entity : mImplicitGrid.mOverlapGridList) {
 							mImplicitGrid.mInGridList.emplace_back(entity);
-						}
+						}*/
+						mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
 					}
 
-					/*for (auto const& entity : mImplicitGrid.mOverlapGridList) {
-						mImplicitGrid.mInGridList.emplace_back(entity);
-					}*/
-
-					CollisionDetect(mImplicitGrid.mInGridList);
-					// empty the list
-					mImplicitGrid.mInGridList.clear();
-					//std::vector<Entity>().swap(mImplicitGrid.mInGridList);
+					// at least more than 1 entity to avoid self checking
+					if (mImplicitGrid.mInGridList.size() > 1 || totalEntities > 1) {
+						// emplace all the entities in current cell
+						for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
+							if (test_cell.test(e)) { // if the current bit entity is true
+								// emplace into InGridList
+								mImplicitGrid.mInGridList.emplace_back(e);
+								totalEntities--;
+								if (totalEntities <= 0) {
+									// if there is no more entities in this cell, break
+									break;
+								}
+							}
+						}
+						//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
+						if (mImplicitGrid.mInGridList.size() > 1) {
+							CollisionDetect(mImplicitGrid.mInGridList);
+						}
+						// empty the list
+						mImplicitGrid.mInGridList.clear();
+						
+					}
+					
 					
 				}
 			}
@@ -292,6 +295,12 @@ namespace IS {
 	void Physics::BroadPhase() {
 		// detect collision through Implicit Grid
 		ImplicitGridCollisionDetect();
+		if (mImplicitGrid.mOutsideGridList.size() > 1 || mImplicitGrid.mOverlapGridList.size() > 1) {
+			CollisionDetect(mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList);
+		}
+		//IS_CORE_DEBUG({ "overlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
+		//IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
+		//IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
 	}
 
 	void Physics::NarrowPhase() {
@@ -625,6 +634,11 @@ namespace IS {
 				if (body.mBodyType != BodyType::Dynamic) {
 					continue;
 				}
+
+				//Cell test = mImplicitGrid.GetCell(body.mBodyTransform.world_position);
+				//IS_CORE_DEBUG({ "row - {}" }, test.row);
+				//IS_CORE_DEBUG({ "col - {}" }, test.col);
+
 				//freeze
 				if (InsightEngine::Instance().mFreezeFrame) {
 					if (!InsightEngine::Instance().mContinueFrame)
@@ -649,6 +663,21 @@ namespace IS {
 				//mGrid.UpdateCell(entity, time);
 			}
 		}
+	}
+
+	std::vector<Entity> Physics::GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities) {
+		std::vector<Entity> entities_list;
+		entities_list.clear();
+		for (auto const& entity : entities) {
+			if (InsightEngine::Instance().HasComponent<Transform>(entity)) {
+				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				if (position.x >= (trans.world_position.x - (trans.scaling.x / 2.f)) && position.x <= (trans.world_position.x + (trans.scaling.x / 2.f)) &&
+					position.y >= (trans.world_position.y - (trans.scaling.y / 2.f)) && position.y <= (trans.world_position.y + (trans.scaling.y / 2.f)) ) {
+					entities_list.emplace_back(entity);
+				}
+			}
+		}
+		return entities_list;
 	}
 }
 

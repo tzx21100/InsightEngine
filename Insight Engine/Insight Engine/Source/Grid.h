@@ -70,6 +70,8 @@ namespace IS
 
 	};
 
+	std::vector<Entity> operator+(std::vector<Entity> const& lhs, std::vector<Entity> const& rhs);
+
 	/*DEPRECATED*/
 #if 0
 	class Grid 

@@ -254,11 +254,11 @@ namespace IS
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
-        if (!RigidBody::mCheckTransform) { // if body havent been transform for once
+        //if (!RigidBody::mCheckTransform) { // if body havent been transform for once
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
             RigidBody::mCheckTransform = true; // true means update and transform for at least one time
-        }
+        //}
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
     }

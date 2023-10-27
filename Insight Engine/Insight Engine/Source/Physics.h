@@ -141,6 +141,8 @@ namespace IS {
          */
         void Step(float time, std::set<Entity> const& entities);
 
+        static std::vector<Entity> GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities);
+
         
 	private:
         Vector2D mGravity;                              // Gravity of the world
