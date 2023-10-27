@@ -24,6 +24,7 @@
 #include "CoreEngine.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
+#include "Editor.h"
 
 // Dependencies
 #include <imgui.h>
@@ -32,6 +33,7 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderPanel()
     {
+        auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
@@ -83,6 +85,21 @@ namespace IS {
             ResetSelection();
 
         ImGui::PopStyleVar();
+
+        // Accept file drop
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
+            {
+                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                ResetSelection();
+
+                auto editor = engine.GetSystem<Editor>("Editor");
+                editor->GetEditorLayer()->OpenScene(path.string());
+            }
+            ImGui::EndDragDropTarget();
+        }
+
         ImGui::End(); // end window Scene Hierarchy
 
     } // end RenderPanel()
@@ -127,8 +144,7 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderSceneNode(SceneID scene)
     {
-        InsightEngine& engine = InsightEngine::Instance();
-        SceneManager& scene_manager = SceneManager::Instance();        
+        auto& scene_manager = SceneManager::Instance();        
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
         bool opened = ImGui::TreeNodeEx(scene_manager.GetSceneName(scene), tree_flags);
 
@@ -137,10 +153,8 @@ namespace IS {
         {
             if (ImGui::BeginMenu("Add"))
             {
-                if (ImGui::MenuItem("Entity")) { engine.CreateEntity("Entity"); }
-                if (ImGui::MenuItem("Random Entity")) { engine.GenerateRandomEntity(); }
-                //if (ImGui::MenuItem("Entity")) { scene_manager.AddEntity("Entity"); }
-                //if (ImGui::MenuItem("Random Entity")) { scene_manager.AddRandomEntity(); }
+                if (ImGui::MenuItem("Entity"))        { scene_manager.AddEntity("Entity"); }
+                if (ImGui::MenuItem("Random Entity")) { scene_manager.AddRandomEntity(); }
 
                 ImGui::EndMenu(); // end menu Add
             }
@@ -173,6 +187,10 @@ namespace IS {
 
             ImGui::TreePop(); // end tree scene
         }
+        if (scene_manager.GetActiveScene() == scene)
+        {
+            ImGui::SetNextItemOpen(false);
+        }
     }
 
     void SceneHierarchyPanel::RenderEntityNode(Entity entity)
@@ -182,14 +200,15 @@ namespace IS {
         ImGuiTreeNodeFlags tree_flags = is_selected_entity ? ImGuiTreeNodeFlags_Selected : 0;
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-        ImGui::PushID(entity);
+        //ImGui::PushID(entity);
         bool opened = ImGui::TreeNodeEx(engine.GetEntityName(entity).c_str(), tree_flags);
 
         // Set as selected entity
         if (ImGui::IsItemClicked())
             mSelectedEntity = std::make_shared<Entity>(entity);
 
-        ProcessSelectedEntityShortcuts();
+        if (ImGui::IsWindowFocused())
+            ProcessSelectedEntityShortcuts();
 
         // Right click on entity
         if (ImGui::BeginPopupContextItem())
@@ -210,7 +229,7 @@ namespace IS {
 
         if (opened)
             ImGui::TreePop();
-        ImGui::PopID();
+        //ImGui::PopID();
 
     } // end RenderEntityNode()
 

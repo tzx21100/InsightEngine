@@ -246,7 +246,7 @@ namespace IS {
     {
         mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
 
-        mPanels.emplace_back(std::make_shared<ScenePanel>(mSceneHierarchyPanel));
+        mPanels.emplace_back(std::make_shared<ScenePanel>());
         mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mPanels.emplace_back(mSceneHierarchyPanel);
         mPanels.emplace_back(std::make_shared<InspectorPanel>(mSceneHierarchyPanel));

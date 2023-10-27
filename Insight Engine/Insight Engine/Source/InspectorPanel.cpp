@@ -29,6 +29,8 @@
 
 namespace IS {
 
+    class SceneHierarchyPanel;
+
     InspectorPanel::InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel)
         : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 

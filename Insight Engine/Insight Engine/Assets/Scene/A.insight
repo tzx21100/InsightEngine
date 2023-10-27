@@ -2,36 +2,10 @@
 	"Entities" : 
 	[
 		{
-			"Name" : "Random Entity",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"SpriteColorX" : 0.26556825637817383,
-				"SpriteColorY" : 0.29065093398094177,
-				"SpriteColorZ" : 0.27456113696098328,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 0,
-				"SpriteTextureIndex" : 0,
-				"SpriteTransformRotation" : 281.821044921875,
-				"SpriteTransformScalingX" : 13.526634216308594,
-				"SpriteTransformScalingY" : 9.4840030670166016,
-				"SpriteTransformWorldPositionX" : 204.732666015625,
-				"SpriteTransformWorldPositionY" : -1.992706298828125
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 281.821044921875,
-				"TransformScalingX" : 13.526634216308594,
-				"TransformScalingY" : 9.4840030670166016,
-				"TransformWorldPositionX" : 204.732666015625,
-				"TransformWorldPositionY" : -1.992706298828125
-			}
+			"Name" : ""
 		},
 		{
-			"Name" : "Random Entity",
+			"Name" : "Yellow Confetti",
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -44,7 +18,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTransformRotation" : 339.0537109375,
+				"SpriteTransformRotation" : 339.05368041992188,
 				"SpriteTransformScalingX" : 13.288753509521484,
 				"SpriteTransformScalingY" : 6.9347143173217773,
 				"SpriteTransformWorldPositionX" : 54.59405517578125,
@@ -52,7 +26,7 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 339.0537109375,
+				"TransformRotation" : 339.05368041992188,
 				"TransformScalingX" : 13.288753509521484,
 				"TransformScalingY" : 6.9347143173217773,
 				"TransformWorldPositionX" : 54.59405517578125,
@@ -68,6 +42,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 0.0,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -115,7 +90,8 @@
 						"x" : -0.0,
 						"y" : -0.0
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -141,7 +117,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -149,6 +125,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -196,7 +173,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -230,7 +208,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -238,6 +216,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -285,7 +264,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -319,7 +299,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -327,6 +307,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -374,7 +355,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -408,7 +390,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -416,6 +398,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -463,7 +446,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -497,7 +481,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -505,6 +489,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -552,7 +537,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -586,7 +572,7 @@
 			}
 		},
 		{
-			"Name" : "Ice Cream Truck",
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -594,6 +580,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : false,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -641,7 +628,8 @@
 						"x" : -76.799995422363281,
 						"y" : -71.751113891601562
 					}
-				]
+				],
+				"mInertia" : 0.0
 			},
 			"Script" : 
 			{
@@ -673,185 +661,7 @@
 				"TransformWorldPositionX" : 172.10527038574219,
 				"TransformWorldPositionY" : -254.09123229980469
 			}
-		},
-		{
-			"Name" : "Ice Cream Truck",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 22041.94140625,
-				"RigidBodyBodyType" : 1,
-				"RigidBodyDensity" : 22041.94140625,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 250.0421142578125,
-						"y" : 45.973739624023438
-					},
-					{
-						"x" : 403.64208984375,
-						"y" : 45.973739624023438
-					},
-					{
-						"x" : 403.64208984375,
-						"y" : -97.528488159179688
-					},
-					{
-						"x" : 250.0421142578125,
-						"y" : -97.528488159179688
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -76.799995422363281,
-						"y" : 71.751113891601562
-					},
-					{
-						"x" : 76.799995422363281,
-						"y" : 71.751113891601562
-					},
-					{
-						"x" : 76.799995422363281,
-						"y" : -71.751113891601562
-					},
-					{
-						"x" : -76.799995422363281,
-						"y" : -71.751113891601562
-					}
-				]
-			},
-			"Script" : 
-			{
-				"ScriptName" : ""
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"SpriteColorX" : 0.61390405893325806,
-				"SpriteColorY" : 0.73432081937789917,
-				"SpriteColorZ" : 0.79526454210281372,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
-				"SpriteName" : "ice_cream_truck",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 2,
-				"SpriteTextureIndex" : 4,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 153.59999084472656,
-				"SpriteTransformScalingY" : 143.50222778320312,
-				"SpriteTransformWorldPositionX" : 326.84210205078125,
-				"SpriteTransformWorldPositionY" : -25.777372360229492
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 153.59999084472656,
-				"TransformScalingY" : 143.50222778320312,
-				"TransformWorldPositionX" : 326.84210205078125,
-				"TransformWorldPositionY" : -25.777372360229492
-			}
-		},
-		{
-			"Name" : "Ice Cream Truck",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 22041.94140625,
-				"RigidBodyBodyType" : 1,
-				"RigidBodyDensity" : 22041.94140625,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 107.93685150146484,
-						"y" : 208.0029296875
-					},
-					{
-						"x" : 261.53683471679688,
-						"y" : 208.0029296875
-					},
-					{
-						"x" : 261.53683471679688,
-						"y" : 64.500701904296875
-					},
-					{
-						"x" : 107.93685150146484,
-						"y" : 64.500701904296875
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -76.799995422363281,
-						"y" : 71.751113891601562
-					},
-					{
-						"x" : 76.799995422363281,
-						"y" : 71.751113891601562
-					},
-					{
-						"x" : 76.799995422363281,
-						"y" : -71.751113891601562
-					},
-					{
-						"x" : -76.799995422363281,
-						"y" : -71.751113891601562
-					}
-				]
-			},
-			"Script" : 
-			{
-				"ScriptName" : ""
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"SpriteColorX" : 0.61433148384094238,
-				"SpriteColorY" : 0.078481294214725494,
-				"SpriteColorZ" : 0.83353251218795776,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
-				"SpriteName" : "ice_cream_truck",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 2,
-				"SpriteTextureIndex" : 4,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 153.59999084472656,
-				"SpriteTransformScalingY" : 143.50222778320312,
-				"SpriteTransformWorldPositionX" : 184.73684692382812,
-				"SpriteTransformWorldPositionY" : 136.25181579589844
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 153.59999084472656,
-				"TransformScalingY" : 143.50222778320312,
-				"TransformWorldPositionX" : 184.73684692382812,
-				"TransformWorldPositionY" : 136.25181579589844
-			}
 		}
 	],
-	"EntityAmount" : 11
+	"EntityAmount" : 9
 }

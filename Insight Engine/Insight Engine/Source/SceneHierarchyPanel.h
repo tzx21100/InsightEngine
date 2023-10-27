@@ -67,7 +67,7 @@ namespace IS {
         EntityPtr GetSelectedEntity();
 
     private:
-        ImGuiTextFilter mFilter; ///< Filter for scnehierarchy hierarchy.
+        ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
 
         /*!
