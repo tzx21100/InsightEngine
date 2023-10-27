@@ -10,9 +10,9 @@ namespace IS
         
         //private entity
 
-/*        static SimpleImage backGround;
+        static SimpleImage backGround;
         static SimpleImage player_walk;
-        static SimpleImage player_idle;*/
+        static SimpleImage player_idle;
        
 
         public static int BoolToInt(bool boolValue)
@@ -22,14 +22,14 @@ namespace IS
 
         static public void Init()
         {
-/*             backGround = InternalCalls.GetSpriteImage("Assets/black_background.png");
-             player_walk = InternalCalls.GetSpriteImage("Assets/player_walking.png");
-             player_idle = InternalCalls.GetSpriteImage("Assets/player_idle.png");*/
+             backGround = InternalCalls.GetSpriteImage("Assets/Textures/black_background.png");
+             player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
+             player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
-/*            InternalCalls.CreateAnimationFromSprite(1,4,1f);
-            InternalCalls.CreateAnimationFromSprite(1,8,3f);*/
+            InternalCalls.CreateAnimationFromSprite(1,4,1f);
+            InternalCalls.CreateAnimationFromSprite(1,8,3f);
 
         }
 
@@ -66,16 +66,16 @@ namespace IS
             InternalCalls.TransformSetRotation(trans_rotate, 10);
 
             if (hori_movement != 0 || verti_movement != 0) {
-                //InternalCalls.SetSpriteAnimationIndex(1);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 //InternalCalls.NativeLog("texture_index", player_walk.texture_index);
-                //InternalCalls.SetSpriteImage(player_walk);
+                InternalCalls.SetSpriteImage(player_walk);
                 //InternalCalls.TransformSetScale(player_walk.width, player_walk.height);
                 
             }
             else
             {
-                //InternalCalls.SetSpriteAnimationIndex(0);
-                //InternalCalls.SetSpriteImage(player_idle);
+                InternalCalls.SetSpriteAnimationIndex(0);
+                InternalCalls.SetSpriteImage(player_idle);
                 
             }
 

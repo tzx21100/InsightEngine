@@ -211,6 +211,7 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         animation.initAnimation(row, columns, animation_time);
         sprite_component.anims.emplace_back(animation);
+        IS_CORE_DEBUG("Frame index {} X frames: {}", sprite_component.anims[0].frame_index.x, sprite_component.anims[0].x_frames);
 
     }
     
