@@ -27,9 +27,6 @@
 #include <imgui.h>
 
 namespace IS {
-    
-    // Scene Panel
-    ScenePanel::ScenePanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel) : mSceneHierarchyPanel(scene_hierarchy_panel) {}
 
     void ScenePanel::RenderPanel()
     {
@@ -76,21 +73,6 @@ namespace IS {
         
         // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
-
-        // Accept file drop
-        if (ImGui::BeginDragDropTarget())
-        {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
-            {
-                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                mSceneHierarchyPanel->ResetSelection();
-                IS_CORE_TRACE("Selected Entity reference count: {}", mSceneHierarchyPanel.use_count());
-
-                auto editor = engine.GetSystem<Editor>("Editor");
-                editor->GetEditorLayer()->OpenScene(path.string());
-            }
-            ImGui::EndDragDropTarget();
-        }
 
         // Help tooltip
         RenderOverlay();
