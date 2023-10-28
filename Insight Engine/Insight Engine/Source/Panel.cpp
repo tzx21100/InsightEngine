@@ -81,7 +81,7 @@ namespace IS {
         auto input = engine.GetSystem<InputManager>("Input");
         auto editor = engine.GetSystem<Editor>("Editor");
 
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
@@ -96,7 +96,8 @@ namespace IS {
 
         // Size of scene panel
         ImVec2 scene_size = ImGui::GetWindowSize();
-        ImVec2 scene_pos = ImGui::GetWindowPos();       
+        ImVec2 scene_pos = ImGui::GetWindowPos();
+       
 
         // Scene pos for the input
         ImVec2 actual_scene_pos;

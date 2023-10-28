@@ -148,12 +148,18 @@ namespace IS {
     }
 
 
-    //our world pos 0,0 is in the center
-    std::pair<double, double> InputManager::GetMousePosition() const 
-    {
-        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
-       // IS_CORE_DEBUG("{}, {}", newX, newY);
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+        //InsightEngine& engine = InsightEngine::Instance();
+        //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+        //auto [width, height] = window_sys->GetWindowSize();
+
+        //newX += width / 2.f;
+        //newY -= height / 2.f;
+
+
+        // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };
     }
@@ -220,6 +226,39 @@ namespace IS {
         }
     }
 
+    void InputManager::mouse_pick_entity() {
+       /* double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        std::cout << "xPos: " << xPos << "yPos: " << yPos << std::endl;*/
+
+        double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+
+
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+        InsightEngine& engine = InsightEngine::Instance();
+        auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+        auto [width, height] = window_sys->GetWindowSize();
+
+        newX += width / 2.f;
+        newY += height / 2.f;
+
+        if (engine.mUsingGUI) ISGraphics::mFramebuffer->Bind(); // bind fb
+
+        int entityID{};
+        // Read the entityID value at the specified pixel coordinates
+        glReadBuffer(GL_COLOR_ATTACHMENT1);
+        glReadPixels(1195, 620, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
+        //GLuint entityIDR = entityID.x;
+        //std::cout << entityID << std::endl;
+        IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
+
+        if (engine.mUsingGUI) ISGraphics::mFramebuffer->Unbind();
+    }
+
+}
     void InputManager::MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
     {
         InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));

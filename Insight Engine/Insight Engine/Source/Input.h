@@ -145,6 +145,8 @@ namespace IS {
             ratio_height =  (float)height / heightR;
         }
 
+        void mouse_pick_entity();
+
     private:
         // window
         std::shared_ptr<WindowSystem> mWindow;

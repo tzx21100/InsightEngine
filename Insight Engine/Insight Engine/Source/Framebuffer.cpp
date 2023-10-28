@@ -28,34 +28,83 @@ namespace IS {
     {
         glDeleteFramebuffers(1, &mFramebufferID);
         glDeleteTextures(1, &mProps.mColorAttachment);
-        glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
+        glDeleteTextures(1, &mProps.mEntIDAttachment);
+        //glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
     }
 
     void Framebuffer::Create()
     {
         // Create framebuffer object
-        glGenFramebuffers(1, &mFramebufferID);
+        glCreateFramebuffers(1, &mFramebufferID);
         glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
 
         // Create texture object color attachment
-        glGenTextures(1, &mProps.mColorAttachment);
+        glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mColorAttachment);
         glBindTexture(GL_TEXTURE_2D, mProps.mColorAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mProps.mWidth, mProps.mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mProps.mWidth, mProps.mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mProps.mColorAttachment, 0);
 
-        // Create texture object for depth attachment
-        glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mDepthAttachment);
+        glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mEntIDAttachment);
+        glBindTexture(GL_TEXTURE_2D, mProps.mEntIDAttachment);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, mProps.mWidth, mProps.mHeight, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mProps.mEntIDAttachment, 0);
+
+        /*glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mDepthAttachment);
         glBindTexture(GL_TEXTURE_2D, mProps.mDepthAttachment);
         glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, mProps.mWidth, mProps.mHeight);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, mProps.mDepthAttachment, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, mProps.mDepthAttachment, 0);*/
 
         // Validate whether framebuffer object is complete
+        // 
         IS_CORE_ASSERT_MESG((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "Error: Framebuffer is incompelete!");
+
+        GLenum framebufferStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        if (framebufferStatus != GL_FRAMEBUFFER_COMPLETE) {
+            std::cout << "Framebuffer is incomplete. Error code: " << framebufferStatus << std::endl;
+            // Handle the specific error based on the error code.
+        }
+
+        unsigned drawBuffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+        glDrawBuffers(2, drawBuffers);
 
         // Unbind framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        //// Create framebuffer object
+        //glGenFramebuffers(1, &mFramebufferID);
+        //glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
+
+        //// Create texture object color attachment
+        //glGenTextures(1, &mProps.mColorAttachment);
+        //glBindTexture(GL_TEXTURE_2D, mProps.mColorAttachment);
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mProps.mWidth, mProps.mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mProps.mColorAttachment, 0);
+
+        //glGenTextures(1, &mProps.mEntIDAttachment);
+        //glBindTexture(GL_TEXTURE_2D, mProps.mEntIDAttachment);
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mProps.mWidth, mProps.mHeight, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mProps.mEntIDAttachment, 0);
+
+        //// Create texture object for depth attachment
+        //glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mDepthAttachment);
+        //glBindTexture(GL_TEXTURE_2D, mProps.mDepthAttachment);
+        //glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, mProps.mWidth, mProps.mHeight);
+        //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, mProps.mDepthAttachment, 0);
+
+        //// Validate whether framebuffer object is complete
+        //IS_CORE_ASSERT_MESG((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "Error: Framebuffer is incompelete!");
+
+        //GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+        //glDrawBuffers(2, drawBuffers);
+
+        //// Unbind framebuffer
+        //glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     void Framebuffer::Bind()
@@ -89,12 +138,14 @@ namespace IS {
         if (mFramebufferID) {
             glDeleteFramebuffers(1, &mFramebufferID);
             glDeleteTextures(1, &mProps.mColorAttachment);
-            glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
+            glDeleteTextures(1, &mProps.mEntIDAttachment);
+            //glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
         }
 
         // Recreate framebuffer with new size
         Create();
     }
+
 
     GLuint Framebuffer::GetColorAttachment() const { return mProps.mColorAttachment; }
 

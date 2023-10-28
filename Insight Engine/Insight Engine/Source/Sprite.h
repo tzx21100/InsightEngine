@@ -48,6 +48,7 @@ namespace IS {
             glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
+            float entID{};
         };
 
         struct lineInstanceData {

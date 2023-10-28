@@ -164,6 +164,12 @@ namespace IS {
             // transform camera
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
+            Entity player = engine.GetEntityByName("Player");
+            auto& body_player = engine.GetComponent<RigidBody>(player);
+            body_player.mMass = 100.f;
+            //body_player.mAngularVelocity = 0.f;
+            body_player.mRestitution = 0.1f;
+
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
                 // Enable/disable GUI
@@ -194,6 +200,15 @@ namespace IS {
                     }
                     if (!engine.mContinueFrame)
                         return;
+                }
+
+                // for jumping
+                if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
+                    //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
+                    if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
+                        body_player.AddVelocity(Vector2D(0.f, 700.f));
+                        body_player.mState = BodyState::JUMP;
+                    }
                 }
 
                 //if (engine.HasComponent<Transform>(entity_player)) {
@@ -269,13 +284,21 @@ namespace IS {
 
             }
 
+            input->mouse_pick_entity();
+
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
+
                 if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                    //std::vector<Entity> test;
+                    //test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
+                    //for (auto const& ent : test) {
+                    //    //IS_CORE_INFO("entity selected: {}", ent);
+                    //}
                     std::vector<Entity> test;
                     test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
                     for (auto const& ent : test) {
-                        IS_CORE_INFO("entity selected: {}", ent);
+                        IS_CORE_INFO("(Zekai's algo) entity selected: {}", ent);
                     }
                     //IS_CORE_INFO("end of click");
                 }
