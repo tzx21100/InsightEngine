@@ -303,6 +303,7 @@ namespace IS {
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
                         spr.anims.emplace_back(ice_cream_truck_ani);
                         spr.animation_index = 0;
+                        IS_CORE_DEBUG("Animsize: {}", spr.anims.size());
                         
                         //ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(transl.world_position.x, transl.world_position.y);
                         //add the image in
