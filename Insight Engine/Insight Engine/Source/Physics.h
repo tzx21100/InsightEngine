@@ -118,6 +118,8 @@ namespace IS {
 
         void ResolveCollisionWithRotation(Manifold & contact);
 
+        void ResolveCollisionWithRotationAndFriction(Manifold& contact);
+
         /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *
@@ -140,6 +142,8 @@ namespace IS {
          * \param entities The set of entities to consider in the physics step.
          */
         void Step(float time, std::set<Entity> const& entities);
+
+        static std::vector<Entity> GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities);
 
         
 	private:

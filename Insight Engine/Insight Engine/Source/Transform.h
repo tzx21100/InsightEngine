@@ -99,6 +99,8 @@ namespace IS {
 
 		Mtx33 ReturnXformMatrix();
 
+		std::vector<Vector2D> GetSquareTransformVertices();
+
 		// members
 		Vec2D world_position{};	// world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
 		float rotation{};		// z-axis rotation in degrees

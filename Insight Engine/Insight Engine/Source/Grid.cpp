@@ -41,15 +41,18 @@ namespace IS
 
 		//InsightEngine& engine = InsightEngine::Instance();
 		// Set cell size based on current window size
-		//auto [width, height] = engine.GetSystem<WindowSystem>("Window")->GetWindowSize();
-		auto [width, height] = InsightEngine::Instance().GetWindowSize();
-		//int width = 1600;
-		//int height = 900;
+		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
+		float width = camera_dimension.x;
+		float height = camera_dimension.y;
+
 		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
-		//IS_CORE_DEBUG(" w - h: {} - {}", width, height);
-		int col = static_cast<int>((position.x + (mGridSize.x / 2.f)) / mCellSize.x);
-		int row = static_cast<int>(std::abs((position.y - (mGridSize.y / 2.f))) / mCellSize.y);
+		//IS_CORE_DEBUG(" w - h: {} - {}", width, height); 
+		float tmp_col = (position.x + (mGridSize.x / 2.f) - camera_center.x) / mCellSize.x;
+		float tmp_row = (-position.y + (mGridSize.y / 2.f) + camera_center.y) / mCellSize.y;
+		int col = static_cast<int>(tmp_col < 0 ? tmp_col -1 : tmp_col);
+		int row = static_cast<int>(tmp_row < 0 ? tmp_row - 1 : tmp_row);
 
 		return {row, col};
 	}
@@ -163,8 +166,9 @@ namespace IS
 			{
 			case GridState::Inside: // if the body inside grid
 
-				// if the body min & max move but still within the same cell
-				if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell)) {
+				// if the moving dynamic body min & max move but still within the same cell
+				if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell) &&
+					body.mBodyType == BodyType::Dynamic) {
 					return; // no update on cell
 				}
 
@@ -172,6 +176,7 @@ namespace IS
 				RemoveFromBitArray(prev_min_cell, prev_max_cell, entity);
 				// if the body box still within the camera view
 				if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+					body.mGridState = GridState::Inside;
 					AddToBitArray(next_min_cell, next_max_cell, entity);
 				}
 				else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
@@ -193,6 +198,7 @@ namespace IS
 
 				// inside grid
 				if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+					body.mGridState = GridState::Inside;
 					AddToBitArray(next_min_cell, next_max_cell, entity);
 				}
 				// overlap grid
@@ -215,6 +221,7 @@ namespace IS
 
 				// inside grid
 				if (GridContains(next_min_cell) && GridContains(next_max_cell)) {
+					body.mGridState = GridState::Inside;
 					AddToBitArray(next_min_cell, next_max_cell, entity);
 				}
 				// overlap grid
@@ -239,24 +246,45 @@ namespace IS
 	}
 
 	bool ImplicitGrid::GridContains(Cell const& cell) {
-		return (cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows &&
-			cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);
+		return (cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);
 	}
 
 	void ImplicitGrid::DrawGrid(Sprite const& sprite) {
-		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		float width = camera_dimension.x;
+		float height = camera_dimension.y;
 		ImplicitGrid::mCellSize = { static_cast<float>(width) / ImplicitGrid::mCols, static_cast<float>(height) / ImplicitGrid::mRows };
+
+		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
+		float start_x = camera_center.x - width / 2.f;
+		float start_y = camera_center.y + height / 2.f;
 
 		for (int i = 0; i < ImplicitGrid::mRows; i++) {
 			for (int j = 0; j < ImplicitGrid::mCols; j++) {
-				Vector2D vertical = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
+				/*Vector2D vertical = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
 				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
 				sprite.drawLine(vertical, vertical + verticalend);
 				Vector2D hori = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
 				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
+				sprite.drawLine(hori, hori + horiend);*/
+
+				Vector2D vertical = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
+				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
+				sprite.drawLine(vertical, vertical + verticalend);
+
+				Vector2D hori = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
+				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
 				sprite.drawLine(hori, hori + horiend);
 			}
 		}
+	}
+
+	std::vector<Entity> operator+(std::vector<Entity> const& lhs, std::vector<Entity> const& rhs) {
+		std::vector<Entity> ret = lhs;;
+		for (auto const& entity : rhs) {
+			ret.emplace_back(entity);
+		}
+		return ret;
 	}
 
 #if 0

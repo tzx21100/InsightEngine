@@ -28,6 +28,7 @@ namespace IS
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
+            InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(1,4,1f);
             InternalCalls.CreateAnimationFromSprite(1,8,3f);
 
@@ -66,7 +67,7 @@ namespace IS
             InternalCalls.TransformSetRotation(trans_rotate, 10);
 
             if (hori_movement != 0 || verti_movement != 0) {
-                InternalCalls.SetSpriteAnimationIndex(1);
+                InternalCalls.SetSpriteAnimationIndex(0);
                 //InternalCalls.NativeLog("texture_index", player_walk.texture_index);
                 InternalCalls.SetSpriteImage(player_walk);
                 //InternalCalls.TransformSetScale(player_walk.width, player_walk.height);
@@ -74,7 +75,7 @@ namespace IS
             }
             else
             {
-                InternalCalls.SetSpriteAnimationIndex(0);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
                 
             }
@@ -84,9 +85,9 @@ namespace IS
 
         static public void CleanUp()
         {
-/*            InternalCalls.FreeSpriteImage(backGround);
+            InternalCalls.FreeSpriteImage(backGround);
             InternalCalls.FreeSpriteImage(player_idle);
-            InternalCalls.FreeSpriteImage(player_walk);*/
+            InternalCalls.FreeSpriteImage(player_walk);
         }
        
 

@@ -85,6 +85,17 @@ namespace IS
         GridState mGridState;
         static bool mCheckTransform;
         float mInertia;
+        float mInvInertia;
+        float mStaticFriction;
+        float mDynamicFriction;
+
+        /*Dynamic friction is the friction which occurs once the static friction is overcome.
+        The static friction conceptually is what is keeping our objects in place while grounded 
+        and what brings moving objects to rest as the linear velocity is absorbed in contact by 
+        the friction.In order for an object to be moved from rest, the static friction force must 
+        be overcome with some kinetic force.once the static friction has been over come the body 
+        begins to apply its dynamic friction which attempts to consume the excess kinetic energy 
+        in an "angular" manner which induces spin on the body.*/
 
         // Constructors and member functions
 

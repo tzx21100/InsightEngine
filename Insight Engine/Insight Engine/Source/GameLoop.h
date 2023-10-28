@@ -271,6 +271,15 @@ namespace IS {
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
+                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
+                    std::vector<Entity> test;
+                    test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
+                    for (auto const& ent : test) {
+                        IS_CORE_INFO("entity selected: {}", ent);
+                    }
+                    //IS_CORE_INFO("end of click");
+                }
+
                 if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
@@ -295,6 +304,7 @@ namespace IS {
                         //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
                         spr.anims.emplace_back(ice_cream_truck_ani);
                         spr.animation_index = 0;
+                        IS_CORE_DEBUG("Animsize: {}", spr.anims.size());
                         
                         //ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(transl.world_position.x, transl.world_position.y);
                         //add the image in

@@ -255,6 +255,8 @@ namespace IS {
 
     void WindowSystem::SaveProperties()
     {
+        if (mProps.mWidth == 0 || mProps.mHeight)
+            return;
         std::string filepath = "Properties/WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];

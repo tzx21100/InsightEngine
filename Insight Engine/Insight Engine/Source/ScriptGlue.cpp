@@ -211,8 +211,13 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         animation.initAnimation(row, columns, animation_time);
         sprite_component.anims.emplace_back(animation);
-        IS_CORE_DEBUG("Frame index {} X frames: {}", sprite_component.anims[0].frame_index.x, sprite_component.anims[0].x_frames);
+        IS_CORE_DEBUG("Animsize: {}",sprite_component.anims.size());
 
+    }
+
+    static void ResetAnimations() {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        sprite_component.anims.clear();
     }
     
     static void AttachCamera() {
@@ -279,6 +284,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
+        IS_ADD_INTERNAL_CALL(ResetAnimations);
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
