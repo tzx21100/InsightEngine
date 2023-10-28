@@ -221,7 +221,7 @@ namespace IS {
         glReadPixels(1195, 620, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
         //GLuint entityIDR = entityID.x;
         //std::cout << entityID << std::endl;
-        IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
+        //IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
 
         if (engine.mUsingGUI) ISGraphics::mFramebuffer->Unbind();
     }
