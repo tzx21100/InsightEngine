@@ -69,7 +69,7 @@ namespace IS {
          * \brief Get the dockspace position.
          * \return Dockspace position.
          */
-        static Vec2 GetDockspacePosition();
+        Vec2 GetDockspacePosition();
 
         /*!
          * \brief Load a scene.
@@ -78,15 +78,25 @@ namespace IS {
          */
         void OpenScene(std::string const& path);
 
-    private:
-        static Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
-        std::unordered_map<std::string, ImTextureID> mIcons;
-        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
-        std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
+        bool IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
 
+        bool IsScenePanelFocused() const { return mScenePanel->IsFocused(); }
+
+        ImTextureID GetIcon(const char* icon) const;
+
+    private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
         bool mShowNewScript = false; ///< Flag indicating to show new script.
+
+        Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
+
+        std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
+        std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
+        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
+
+        std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
+        std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
 
         /*!
          * \brief Render the menu bar.

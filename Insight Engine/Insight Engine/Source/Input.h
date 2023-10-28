@@ -17,8 +17,8 @@
 
  /*                                                                   guard
  ----------------------------------------------------------------------------- */
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H
+#ifndef GAM200_INSIGHT_ENGINE_ENGINE_SYSTEMS_INPUT_H
+#define GAM200_INSIGHT_ENGINE_ENGINE_SYSTEMS_INPUT_H
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
@@ -106,6 +106,9 @@ namespace IS {
          * \brief Checks if a mouse button is currently held down.
          */
         bool IsMouseButtonHeld(int button) const;
+
+        double GetMouseXPosition() const;
+        double GetMouseYPosition() const;
         
         /**
          * \brief Gets the current mouse position in world coordinates.
@@ -114,8 +117,13 @@ namespace IS {
          */
         std::pair<double, double> GetMousePosition() const;
 
-        // window
-        std::shared_ptr<WindowSystem> mWindow;
+        double GetMousePreviousXPosition() const;
+        double GetMousePreviousYPosition() const;
+        std::pair<double, double> GetMousePreviousPosition() const;
+
+        double GetMouseDeltaX() const;
+        double GetMouseDeltaY() const;
+        std::pair<double, double> GetMouseDelta() const;
 
         /**
          * \brief Sets the center world position for the mouse relative to the GLFW window
@@ -138,6 +146,8 @@ namespace IS {
         }
 
     private:
+        // window
+        std::shared_ptr<WindowSystem> mWindow;
 
         //for keyboard keys
         std::unordered_set<int> pressed_keys;
@@ -153,6 +163,11 @@ namespace IS {
         float ratio_width = 1.f;
         float ratio_height = 1.f;
 
+        double current_mouse_x = 0.0;
+        double current_mouse_y = 0.0;
+        double previous_mouse_x = 0.0;
+        double previous_mouse_y = 0.0;
+
         /**
          * \brief GLFW callback for key events.
          *
@@ -167,6 +182,7 @@ namespace IS {
         */
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
+        static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos);
     };
 
 }

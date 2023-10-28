@@ -19,12 +19,11 @@
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Input.h"
+#include "Editor.h"
 
 namespace IS {
 
-    std::string InputManager::GetName() {
-        return "Input";
-    }
+    std::string InputManager::GetName() { return "Input"; }
 
     void InputManager::Initialize() {
         // Subscirbe to messages
@@ -34,6 +33,7 @@ namespace IS {
         glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(native_window, KeyCallback);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
+        glfwSetCursorPosCallback(native_window, MousePositionCallback);
 
         // Window size callback
         glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
@@ -64,6 +64,19 @@ namespace IS {
                 IS_CORE_DEBUG("Window was restored from maximized.");
                 input.mWindow->SetMaximized(false);
             }
+        });
+
+        // Mouse scroll callback
+        glfwSetScrollCallback(native_window, []([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] double xoffset, double yoffset)
+        {
+            // Do nothing if it's using scene camera
+            if (Camera::mActiveCamera == CAMERA_TYPE_SCENE)
+                return;
+
+            auto& engine = InsightEngine::Instance();
+            auto editor = engine.GetSystem<Editor>("Editor");
+            if (editor->GetEditorLayer()->IsScenePanelFocused())
+                ISGraphics::cameras[Camera::mActiveCamera].ZoomCamera(static_cast<float>(yoffset));
         });
     }
 
@@ -124,18 +137,60 @@ namespace IS {
         return held_mouse_buttons.count(button) > 0;
     }
 
+    double InputManager::GetMouseXPosition() const
+    {
+        return (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+    }
+
+    double InputManager::GetMouseYPosition() const
+    {
+        return (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;
+    }
+
 
     //our world pos 0,0 is in the center
-    std::pair<double, double> InputManager::GetMousePosition() const {
-        double xPos, yPos;
-        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-       
-
-        double newX = (xPos - center_x)*ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - yPos)*ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+    std::pair<double, double> InputManager::GetMousePosition() const 
+    {
+        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
        // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };
+    }
+
+    double InputManager::GetMousePreviousXPosition() const
+    {
+        return (previous_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+    }
+
+    double InputManager::GetMousePreviousYPosition() const
+    {
+        return (center_y - previous_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;
+    }
+
+    std::pair<double, double> InputManager::GetMousePreviousPosition() const
+    {
+        double new_x = (previous_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double new_y = (center_y - previous_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+        return std::make_pair(new_x, new_y);
+    }
+
+    double InputManager::GetMouseDeltaX() const
+    {
+        IS_CORE_DEBUG("Delta X: {}", GetMousePreviousXPosition() - GetMouseXPosition());
+        return GetMousePreviousXPosition() - GetMouseYPosition();
+    }
+
+    double InputManager::GetMouseDeltaY() const
+    {
+        IS_CORE_DEBUG("Delta Y: {}", GetMousePreviousYPosition() - GetMouseYPosition());
+        return GetMousePreviousYPosition() - GetMouseYPosition();
+    }
+
+    std::pair<double, double> InputManager::GetMouseDelta() const
+    {
+        return std::make_pair(current_mouse_x - previous_mouse_x, current_mouse_y - previous_mouse_y);
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -165,4 +220,18 @@ namespace IS {
         }
     }
 
-}
+    void InputManager::MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
+    {
+        InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+        const double noiseThreshold = 0.1; // Adjust this threshold as needed
+
+        if (fabs(xpos - input.current_mouse_x) > noiseThreshold && fabs(ypos - input.current_mouse_y) > noiseThreshold)
+        {
+            input.previous_mouse_x = input.current_mouse_x;
+            input.previous_mouse_y = input.current_mouse_y;
+            input.current_mouse_x = xpos;
+            input.current_mouse_y = ypos;
+        }
+    }
+
+} // end namespace IS

@@ -27,7 +27,7 @@ namespace IS {
 	bool Physics::mShowColliders = false;
 	bool Physics::mShowVelocity = false;
 	bool Physics::mShowGrid = false;
-	bool Physics::mExertingGravity = false;				// Flag indicating whether gravity is currently exerted
+	bool Physics::mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
 	std::vector<Vector2D> Physics::mContactPointsList = std::vector<Vector2D>();
 
 	// Constructs a Physics instance

@@ -50,6 +50,20 @@ namespace IS {
 
     class SceneHierarchyPanel; ///< Forward declaration
 
+    class GamePanel : public Panel
+    {
+    public:
+        GamePanel() = default;
+
+        void RenderPanel() override;
+
+        bool IsFocused() const;
+
+    private:
+        bool mFocused{};
+        Vec2 mGamePanelSize{};
+    };
+
     /*!
      * \brief A derived class representing a scene panel in a dockspace.
      */
@@ -62,13 +76,21 @@ namespace IS {
          */
         void RenderPanel() override;
 
+        bool IsFocused() const;
+
     private:
+        bool mFocused{};
         Vec2 mScenePanelSize{}; ///< Size of the scene panel.
 
         /*!
-         * \brief Renders an overlay which will render a help tooltip.
+         * \brief Renders a help tooltip overlay.
          */
-        void RenderOverlay();
+        void RenderHelp();
+
+        /*!
+         * \brief Renders the camera zoom level.
+         */
+        void RenderCameraZoom();
     };
 
     /*!

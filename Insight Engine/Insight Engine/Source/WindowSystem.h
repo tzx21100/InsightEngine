@@ -5,14 +5,20 @@
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
- *      This header file declares the interface for class WindowSystem, which
- *      encapsulates the functionalities of an application window.
+ * This header file declares the interface for class WindowSystem, which
+ * encapsulates the functionalities of an application window.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                      guard
 ----------------------------------------------------------------------------- */
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_ENGINE_WINDOW_WINDOW_SYSTEM_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_ENGINE_WINDOW_WINDOW_SYSTEM_H
+#ifndef GAM200_INSIGHT_ENGINE_ENGINE_SYSTEMS_WINDOW_WINDOW_SYSTEM_H
+#define GAM200_INSIGHT_ENGINE_ENGINE_SYSTEMS_WINDOW_WINDOW_SYSTEM_H
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */

@@ -200,7 +200,7 @@ namespace IS {
         ImGuiTreeNodeFlags tree_flags = is_selected_entity ? ImGuiTreeNodeFlags_Selected : 0;
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-        //ImGui::PushID(entity);
+        ImGui::PushID(entity);
         bool opened = ImGui::TreeNodeEx(engine.GetEntityName(entity).c_str(), tree_flags);
 
         // Set as selected entity
@@ -221,15 +221,15 @@ namespace IS {
             }
 
             // Clone/Delete entity
-            if (ImGui::MenuItem("Clone", "Ctrl+D"))  { CloneEntity(entity); }
-            if (ImGui::MenuItem("Delete", "Delete")) { DeleteEntity(entity); }
+            if (ImGui::MenuItem("Clone"))  { CloneEntity(entity); }
+            if (ImGui::MenuItem("Delete", "Del")) { DeleteEntity(entity); }
 
             ImGui::EndPopup();
         }
 
         if (opened)
             ImGui::TreePop();
-        //ImGui::PopID();
+        ImGui::PopID();
 
     } // end RenderEntityNode()
 
@@ -242,11 +242,11 @@ namespace IS {
 
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
-        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
-        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
+        //const bool CTRL_PRESSED = input->IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || input->IsKeyPressed(GLFW_KEY_RIGHT_CONTROL);
+        //const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
         const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
 
-        if (CTRL_HELD && D_PRESSED) { CloneEntity(entity); }  // Ctrl+D
+        //if (CTRL_PRESSED && D_PRESSED) { CloneEntity(entity); }  // Ctrl+D
         if (DELETE_PRESSED) { DeleteEntity(entity); } // Delete
     }
 

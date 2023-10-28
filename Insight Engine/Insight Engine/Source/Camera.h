@@ -21,7 +21,12 @@ namespace IS {
 		void UpdateCamPos(float newX, float newY);
 		void UpdateCamDim(float newWidth);
 		void UpdateCamRotation(float newAngle);
-		void updateCamXform();
+		void UpdateCamXform();
+		void ZoomCamera(float yoffset);
+		void PanCamera(float dt, float delta_x, float delta_y);
+
+		float ZoomLevel() const;
+		float& ZoomLevel();
 
 		glm::vec2 GetCamPos();
 		glm::vec2 GetCamDim();
@@ -31,11 +36,22 @@ namespace IS {
 		static aCameraType mActiveCamera;
 
 		glm::mat3 xform{};
+		static float mMinZoom; ///< minimum zoom level
+		static float mMaxZoom; ///< maximum zoom level
+
 	private:
+		float mZoomLevel;
 		glm::vec2 world_position{};
 		glm::vec2 camera_dim{};
 		glm::vec2 uVector{}; // camera x/y axis
 		glm::vec2 vVector{};
+
+		static float mMinX; ///< minimum x bound of camera
+		static float mMaxX; ///< maximum x bound of camera
+		static float mMinY; ///< minimum y bound of camera
+		static float mMaxY; ///< maximum y bound of camera
+		static float mZoomSpeed; ///< rate of zoom
+		static float mMoveSpeed; ///< rate of camera pan
 	};
 }
 

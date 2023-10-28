@@ -242,6 +242,8 @@ namespace IS {
 
         // Serializing texture-related properties
         spriteData["SpriteTexture"] = img.texture_id;
+        spriteData["SpriteTextureWidth"] = img.width;
+        spriteData["SpriteTextureHeight"] = img.height;
         spriteData["SpriteCurrentTexIndex"] = animation_index;
         spriteData["SpriteTextureIndex"] = img.texture_index;
 
@@ -272,6 +274,8 @@ namespace IS {
 
         // Deserializing texture-related properties
         img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
+        img.width = data["SpriteTextureWidth"].asInt();
+        img.height = data["SpriteTextureHeight"].asInt();
         img.texture_index = data["SpriteTextureIndex"].asInt();
         animation_index = data["SpriteCurrentTexIndex"].asInt();
 

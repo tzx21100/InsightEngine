@@ -31,9 +31,7 @@
 
 namespace IS {
 
-    Vec2 EditorLayer::mDockspacePosition{};
-
-    EditorLayer::EditorLayer() : Layer("Editor Layer") {}
+    EditorLayer::EditorLayer() : Layer("Editor Layer"), mDockspacePosition() {}
 
     void EditorLayer::OnAttach()
     {
@@ -45,7 +43,10 @@ namespace IS {
         mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
         mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
         mIcons["StopButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
+        mIcons["StepButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
         mIcons["SaveFile"]    = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
+        mIcons["ZoomIn"]      = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_in.png")->texture_id);
+        mIcons["ZoomOut"]     = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_out.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -56,21 +57,20 @@ namespace IS {
         IS_CORE_DEBUG("{} detached", GetName());
     }
 
-    void EditorLayer::OnUpdate(float)
+    void EditorLayer::OnUpdate(float dt)
     {
         InsightEngine& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
-        const bool CTRL_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
-        const bool SHIFT_HELD  = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)   || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
-        const bool ALT_HELD    = input->IsKeyHeld(GLFW_KEY_LEFT_ALT)     || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
-        const bool N_PRESSED   = input->IsKeyPressed(GLFW_KEY_N);
-        const bool O_PRESSED   = input->IsKeyPressed(GLFW_KEY_O);
-        const bool S_PRESSED   = input->IsKeyPressed(GLFW_KEY_S);
-        const bool F4_PRESSED  = input->IsKeyPressed(GLFW_KEY_F4);
-        const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
-        //const bool LEFT_MOUSE_HELD = input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_LEFT);
+        const bool CTRL_HELD       = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool SHIFT_HELD      = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)   || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
+        const bool ALT_HELD        = input->IsKeyHeld(GLFW_KEY_LEFT_ALT)     || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+        const bool N_PRESSED       = input->IsKeyPressed(GLFW_KEY_N);
+        const bool O_PRESSED       = input->IsKeyPressed(GLFW_KEY_O);
+        const bool S_PRESSED       = input->IsKeyPressed(GLFW_KEY_S);
+        const bool F4_PRESSED      = input->IsKeyPressed(GLFW_KEY_F4);
+        const bool F11_PRESSED     = input->IsKeyPressed(GLFW_KEY_F11);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -78,20 +78,30 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
-        //if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
-        //{
-        //    if (LEFT_MOUSE_HELD)
-        //    {
-        //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-        //        auto const& [mouse_x, mouse_y] = input->GetMousePosition();
-        //        camera.UpdateCamPos(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
-        //    }
-        //}
+
+        // Controls for scene panel
+        if (mScenePanel->IsFocused())
+        {
+            Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+            const bool LEFT_MOUSE_HELD = input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_LEFT);
+
+            if (LEFT_MOUSE_HELD)
+            {
+                Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+                camera.PanCamera(dt, static_cast<float>(input->GetMouseDeltaX()), static_cast<float>(input->GetMouseDeltaY()));
+            }
+        }
+
+        // Auto pause game if game panel is in focus
+        if (!mGamePanel->IsFocused())
+        {
+            engine.mRuntime = false;
+        }
     }
 
     void EditorLayer::OnRender()
     {
-        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_NoResize;
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
 
@@ -115,9 +125,9 @@ namespace IS {
         ImGui::PopStyleVar(3);
 
         ImGuiIO& io = ImGui::GetIO();
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec2 min_window_size = style.WindowMinSize;
-        style.WindowMinSize = ImVec2(350.f, 300.f);
+        //ImGuiStyle& style = ImGui::GetStyle();
+        //ImVec2 min_window_size = style.WindowMinSize;
+        //style.WindowMinSize = ImVec2(350.f, 300.f);
 
         // Enable dockspace
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -136,7 +146,7 @@ namespace IS {
         for (auto& panel : mPanels)
             panel->RenderPanel();
 
-        style.WindowMinSize = min_window_size;
+        //style.WindowMinSize = min_window_size;
 
         ImGui::End(); // end dockspace
     }
@@ -267,55 +277,74 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
-        auto& style = ImGui::GetStyle();
         auto input = engine.GetSystem<InputManager>("Input");
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        const bool scene_loaded = (0 != scene_manager.GetSceneCount());
+
+        auto& style = ImGui::GetStyle();
+        const char* play_pause_button = engine.mRuntime ? "PauseButton" : "PlayButton";
+        const int BUTTON_COUNT = 3;
+        const char* buttons[BUTTON_COUNT] = { play_pause_button, "StopButton", "StepButton" };
+        bool button_clicked[BUTTON_COUNT] = {};
+        const ImVec2 button_size = { 16.f, 16.f };
+
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse;
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
-            ImTextureID button_icon = mIcons[engine.mRuntime ? "PauseButton" : "PlayButton"];
-            const float BUTTON_SIZE = 32.f;
+            ImVec2 window_size = ImVec2(ImGui::GetContentRegionMax().x, ImGui::GetContentRegionMax().y);
+            ImVec2 start_position = ImVec2((window_size.x - (button_size.x * BUTTON_COUNT)) / 2, (window_size.y - button_size.y) / 2);
+
+            // Remove button background
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f - BUTTON_SIZE,
-                                  ImGui::GetContentRegionMax().y / 2.f - BUTTON_SIZE / 2.f });
-            if (ImGui::ImageButton(button_icon, ImVec2(BUTTON_SIZE, BUTTON_SIZE)))
+
+            // Render buttons
+            for (int i{}; i < BUTTON_COUNT; ++i, start_position.x += button_size.x + style.ItemSpacing.x)
             {
-                engine.mRuntime = !engine.mRuntime;
-                if (engine.mRuntime)
-                {
-                    Camera::mActiveCamera = CAMERA_TYPE_SCENE;
-                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                    IS_CORE_DEBUG("Using Scene Camera");
-                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
-                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
-                }
-                else
-                {
-                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-                    Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                    IS_CORE_DEBUG("Using Editor Camera");
-                    IS_CORE_DEBUG("Camera Pos: {}, {}", camera.GetCamPos().x, camera.GetCamPos().y);
-                    IS_CORE_DEBUG("Camera Dim: {}, {}", camera.GetCamDim().x, camera.GetCamDim().y);
-                }
+                ImGui::SetCursorPos(start_position);
+                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size);
             }
-            ImGui::SetCursorPos({ ImGui::GetContentRegionMax().x / 2.f + BUTTON_SIZE / 2.f - style.ItemSpacing.x,
-                                  ImGui::GetContentRegionMax().y / 2.f - (BUTTON_SIZE * .8f) / 2.f });
-            if (ImGui::ImageButton(mIcons["StopButton"], ImVec2(BUTTON_SIZE * .8f, BUTTON_SIZE * .8f)))
-            {
-                engine.mRuntime = false;
-                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-                scene_manager.ReloadActiveScene();
-                IS_CORE_DEBUG("Stopped");
-            }
+
             ImGui::PopStyleColor();
-            ImGui::End();
+
+            // Play/Pause
+            if (scene_loaded)
+            {
+                if (button_clicked[0])
+                {
+                    engine.mRuntime = !engine.mRuntime;
+                    Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+                    ImGui::SetWindowFocus("Game");
+                    IS_CORE_DEBUG("Button 0");
+                }
+
+                // Stop
+                if (button_clicked[1])
+                {
+                    engine.mRuntime = false;
+                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                    ImGui::SetWindowFocus("Scene");
+                    scene_manager.ReloadActiveScene();
+                    IS_CORE_DEBUG("Button 1");
+                }
+
+                // Step
+                if (button_clicked[2])
+                {
+                    IS_CORE_DEBUG("Button 2");
+                }
+            }
+
+            ImGui::End(); // end window Runtime
         }
     }
 
     void EditorLayer::AttachPanels()
     {
+        mScenePanel = std::make_shared<ScenePanel>();
+        mGamePanel = std::make_shared<GamePanel>();
         mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
 
-        mPanels.emplace_back(std::make_shared<ScenePanel>());
+        mPanels.emplace_back(mGamePanel);
+        mPanels.emplace_back(mScenePanel);
         mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
         mPanels.emplace_back(mSceneHierarchyPanel);
         mPanels.emplace_back(std::make_shared<InspectorPanel>(mSceneHierarchyPanel));
@@ -365,6 +394,8 @@ namespace IS {
         scene_manager.LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
     }
+
+    ImTextureID EditorLayer::GetIcon(const char* icon) const { return mIcons.at(icon); }
 
     void EditorLayer::SaveScene() 
     {

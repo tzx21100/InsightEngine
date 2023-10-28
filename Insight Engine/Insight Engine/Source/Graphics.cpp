@@ -73,6 +73,11 @@ namespace IS {
 
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; // create framebuffer
         mFramebuffer = std::make_shared<Framebuffer>(props);
+        std::for_each_n(cameras, 2, [width](Camera& camera)
+        {
+            camera.UpdateCamPos(0, 0);
+            camera.UpdateCamDim(static_cast<float>(width));
+        });
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };

@@ -5,8 +5,14 @@
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
- *      This source file defines the implementation for class WindowSystem,
- *      which encapsulates the functionalities of an application window.
+ * This source file defines the implementation for class WindowSystem,
+ * which encapsulates the functionalities of an application window.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
 /*                                                                   includes

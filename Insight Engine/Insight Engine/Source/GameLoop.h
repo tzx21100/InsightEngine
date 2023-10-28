@@ -152,7 +152,7 @@ namespace IS {
 
             
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
-            Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+            Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
@@ -162,13 +162,14 @@ namespace IS {
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
             // transform camera
-            ISGraphics::cameras[Camera::mActiveCamera].updateCamXform();
+            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
+                    engine.mRuntime = !engine.mRuntime;
                     IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
                 }
 

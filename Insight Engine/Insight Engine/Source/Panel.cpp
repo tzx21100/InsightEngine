@@ -28,18 +28,19 @@
 
 namespace IS {
 
-    void ScenePanel::RenderPanel()
+    void GamePanel::RenderPanel()
     {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
-
-        //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+        auto editor = engine.GetSystem<Editor>("Editor");
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
-        ImGui::Begin("Scene", nullptr, window_flags);
+        ImGui::Begin("Game", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
-        if (ImGui::IsWindowFocused())
+        mFocused = ImGui::IsWindowFocused();
+        if (mFocused)
         {
             ImGuiIO& io = ImGui::GetIO();
             io.WantCaptureMouse = io.WantCaptureKeyboard = false;
@@ -49,12 +50,58 @@ namespace IS {
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
 
-       
+        // Scene pos for the input
+        ImVec2 actual_scene_pos;
+        actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
+        actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
+        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f,
+                            actual_scene_pos.y + (float)scene_size.y / 2.f);
+        input->setRatio(scene_size.x, scene_size.y);
+
+        // Resize framebuffer
+        ImVec2 panel_size = ImGui::GetContentRegionAvail();
+        if ((panel_size.x > 0 && panel_size.y > 0) && !(mGamePanelSize.x == panel_size.x && mGamePanelSize.y == panel_size.y))
+        {
+            ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
+            mGamePanelSize = { panel_size.x, panel_size.y };
+        }
+
+        // Display actual scene
+        ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
+
+        ImGui::End(); // end window Scene
+        ImGui::PopStyleVar();
+    }
+
+    bool GamePanel::IsFocused() const { return mFocused; }
+
+    void ScenePanel::RenderPanel()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto input = engine.GetSystem<InputManager>("Input");
+        auto editor = engine.GetSystem<Editor>("Editor");
+
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        ImGui::Begin("Scene", nullptr, window_flags);
+
+        // Allow key/mouse event pass through only in this panel
+        mFocused = ImGui::IsWindowFocused();
+        if (mFocused)
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            io.WantCaptureMouse = io.WantCaptureKeyboard = false;
+        }
+
+        // Size of scene panel
+        ImVec2 scene_size = ImGui::GetWindowSize();
+        ImVec2 scene_pos = ImGui::GetWindowPos();       
 
         // Scene pos for the input
         ImVec2 actual_scene_pos;
-        actual_scene_pos.x = scene_pos.x - EditorLayer::GetDockspacePosition().x;
-        actual_scene_pos.y = scene_pos.y - EditorLayer::GetDockspacePosition().y;
+        actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
+        actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
         //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
         input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f ,
             actual_scene_pos.y + (float)scene_size.y / 2.f );
@@ -75,13 +122,19 @@ namespace IS {
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
         // Help tooltip
-        RenderOverlay();
+        if (!editor->GetEditorLayer()->IsGamePanelFocused())
+        {
+            RenderHelp();
+            RenderCameraZoom();
+        }
 
         ImGui::End(); // end window Scene
-        //ImGui::PopStyleVar();
+        ImGui::PopStyleVar();
     }
 
-    void ScenePanel::RenderOverlay()
+    bool ScenePanel::IsFocused() const { return mFocused; }
+
+    void ScenePanel::RenderHelp()
     {
         ImDrawList* window_drawlist = ImGui::GetWindowDrawList();
         ImFont* const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
@@ -115,27 +168,43 @@ namespace IS {
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("The following controls ONLY work if scene panel focused!");
                 ImGui::PopFont();
+
                 ImGui::Separator();
+
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("General Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'Tab' to toggle GUI");
                 ImGui::BulletText("Click mouse scrollwheel to spawn entity");
                 ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
+
                 ImGui::Separator();
+
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Camera Controls");
+                ImGui::PopFont();
+                ImGui::BulletText("Hold Ctrl+Scroll to zoom in/out");
+                ImGui::BulletText("Drag mouse to move around");
+
+                ImGui::Separator();
+
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Player Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'WASD' to move in the four directions");
                 ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
+
                 ImGui::Separator();
+
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Physics Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
                 ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
                 ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
+
                 ImGui::Separator();
+
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Audio Controls");
                 ImGui::PopFont();
@@ -154,6 +223,27 @@ namespace IS {
         window_drawlist->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
         window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
         window_drawlist->AddText(text_position, IM_COL32_WHITE, display_text);
+    }
+
+    void ScenePanel::RenderCameraZoom()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto editor = engine.GetSystem<Editor>("Editor");
+
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
+        ImGui::SetNextWindowBgAlpha(0.f);
+        ImGui::Begin("##Camera Zoom", nullptr, window_flags);
+
+        float size = 16.f;
+        float xpos = (ImGui::GetContentRegionMax().x - size) / 2.f;
+
+        ImGui::SetCursorPosX(xpos);
+        ImGui::Image(editor->GetEditorLayer()->GetIcon("ZoomIn"), { size, size });
+        ImGui::SetCursorPosX(xpos);
+        ImGui::VSliderFloat("##Camera Zoom", { size, size * 10.f }, &ISGraphics::cameras[Camera::mActiveCamera].ZoomLevel(), Camera::mMinZoom, Camera::mMaxZoom, "##%.2f");
+        ImGui::SetCursorPosX(xpos);
+        ImGui::Image(editor->GetEditorLayer()->GetIcon("ZoomOut"), { size, size });
+        ImGui::End(); // end window camera zoom
     }
 
     // Performance Viewer Panel
