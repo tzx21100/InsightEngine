@@ -116,6 +116,7 @@ namespace IS {
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
+                instData.entID = static_cast<float>(entity);
                 if (sprite.img.texture_id == 0) { // no texture
                     instData.color = sprite.color;
                     instData.tex_index = -1.f;
@@ -141,6 +142,15 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
         if (engine.mUsingGUI)
             mFramebuffer->Bind(); // bind fb
+
+
+        //int entityID{};
+        //// Read the entityID value at the specified pixel coordinates
+        //glReadBuffer(GL_COLOR_ATTACHMENT1);
+        //glReadPixels(0, 0, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
+        ////GLuint entityIDR = entityID.x;
+        //std::cout << entityID << std::endl;
+
 
         if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mUsingGUI) {
             auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();

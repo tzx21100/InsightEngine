@@ -55,6 +55,7 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row3_attrib);
         glEnableVertexArrayAttrib(vao_ID, anim_dim_attrib);
         glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
+        glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
 
         glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
         glVertexAttribPointer(tex_index_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
@@ -63,6 +64,7 @@ namespace IS {
         glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 10));
         glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 13));
         glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
+        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
 
         glVertexAttribDivisor(color_attrib, 1);
         glVertexAttribDivisor(tex_index_attrib, 1);
@@ -71,6 +73,7 @@ namespace IS {
         glVertexAttribDivisor(x_form_row3_attrib, 1);
         glVertexAttribDivisor(anim_dim_attrib, 1);
         glVertexAttribDivisor(anim_index_attrib, 1);
+        glVertexAttribDivisor(ent_ID_attib, 1);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);

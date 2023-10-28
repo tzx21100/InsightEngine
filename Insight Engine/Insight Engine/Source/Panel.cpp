@@ -36,7 +36,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
-        //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
@@ -51,7 +51,6 @@ namespace IS {
         // Size of scene panel
         ImVec2 scene_size = ImGui::GetWindowSize();
         ImVec2 scene_pos = ImGui::GetWindowPos();
-
        
 
         // Scene pos for the input
@@ -96,7 +95,7 @@ namespace IS {
         RenderOverlay();
 
         ImGui::End(); // end window Scene
-        //ImGui::PopStyleVar();
+        ImGui::PopStyleVar();
     }
 
     void ScenePanel::RenderOverlay()
