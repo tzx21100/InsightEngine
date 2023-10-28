@@ -274,7 +274,7 @@ namespace IS {
                     std::vector<Entity> test;
                     test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
                     for (auto const& ent : test) {
-                        //IS_CORE_INFO("entity selected: {}", ent);
+                        IS_CORE_INFO("entity selected: {}", ent);
                     }
                     //IS_CORE_INFO("end of click");
                 }

@@ -37,7 +37,7 @@ namespace IS
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = (mBodyType == BodyType::Dynamic) ? 1.f : 999999.f;
+        mMass = 1.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
@@ -47,6 +47,9 @@ namespace IS
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
         mInertia = 1.f;
+        mInvInertia = 1.f / mInertia;
+        mStaticFriction = 0.6f;
+        mDynamicFriction = 0.4f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -90,6 +93,9 @@ namespace IS
         mId = mNextId++;
         mGridState = GridState::Uninitialized;
         mInertia = 1.f;
+        mInvInertia = 1.f / mInertia;
+        mStaticFriction = 30.f;
+        mDynamicFriction = 20.f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -234,11 +240,19 @@ namespace IS
         mArea = fabs(width * height);
         // set the range to be [0,1]
         mRestitution = std::max(0.0f, std::min(restitution, 1.0f));
-        // p = m * v
-        mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
         
-        mInertia = (1.f / 12.f) * mass * (width * width + height * height);
-        //IS_CORE_DEBUG("inertia - {}", mInertia);
+        mMass = 0.f;
+        mInertia = 0.f;
+
+        if (mBodyType == BodyType::Dynamic) {
+            mMass = mass;
+            mInertia = (1.f / 12.f) * mass * (width * width + height * height);
+        }
+
+        // p = m * v
+        mDensity = mMass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        mInvMass = mMass > 0.f ? (1.f / mMass) : 0.f;
+        mInvInertia = mInertia > 0.f ? (1.f / mInertia) : 0.f;
     }
 
     // Create a circle-shaped rigid body with specified parameters
@@ -258,6 +272,7 @@ namespace IS
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
             mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
             RigidBody::mCheckTransform = true; // true means update and transform for at least one time
+            //IS_CORE_DEBUG("Transform");
         //}
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
