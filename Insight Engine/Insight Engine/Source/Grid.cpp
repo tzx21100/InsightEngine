@@ -287,6 +287,12 @@ namespace IS
 		return ret;
 	}
 
+	void ImplicitGrid::EmplaceEntity(std::vector<Entity>& result, std::vector<Entity> const& source) {
+		for (auto const& entity : source) {
+			result.emplace_back(entity);
+		}
+	}
+
 #if 0
 	int Grid::mRows = 5;
 	int Grid::mCols = 5;

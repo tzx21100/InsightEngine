@@ -211,7 +211,8 @@ namespace IS {
 						}
 					}
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
-					mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+					//mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+					mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
 					//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
 					if (mImplicitGrid.mInGridList.size() > 1) {
 						CollisionDetect(mImplicitGrid.mInGridList);
@@ -313,7 +314,7 @@ namespace IS {
 	void Physics::BroadPhase() {
 		// detect collision through Implicit Grid
 		ImplicitGridCollisionDetect();
-		if (mImplicitGrid.mOutsideGridList.size() > 1 || mImplicitGrid.mOverlapGridList.size() > 1) {
+		if (mImplicitGrid.mOutsideGridList.size() >= 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
 			CollisionDetect(mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList);
 		}
 	}
