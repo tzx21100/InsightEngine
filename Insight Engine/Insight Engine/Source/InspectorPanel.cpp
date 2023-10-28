@@ -39,7 +39,10 @@ namespace IS {
     {
         ImGui::Begin("Inspector");
         if (mSceneHierarchyPanel->mSelectedEntity)
+        {
             RenderComponentNodes(*mSceneHierarchyPanel->mSelectedEntity);
+            RenderOutline(*mSceneHierarchyPanel->mSelectedEntity);
+        }
         ImGui::End(); // end window Inspector
     }
 
@@ -140,6 +143,17 @@ namespace IS {
 
     } // end RenderEntityConfig()
 
+    void InspectorPanel::RenderOutline(Entity entity)
+    {
+        auto& engine = InsightEngine::Instance();
+        if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<RigidBody>(entity))
+        {
+            auto& sprite = engine.GetComponent<Sprite>(entity);
+            auto& body = engine.GetComponent<RigidBody>(entity);
+            ISGraphics::DrawOutLine(body, sprite, { 1.f, 1.f, 0.f }, 3.f);
+        }
+    }
+
     void InspectorPanel::RenderComponentNodes(Entity entity)
     {
         ImGui::PushID(entity);
@@ -189,6 +203,7 @@ namespace IS {
                 texture_id = editor_layer->GetIcon("TexturePlaceholder");
                 texture_width = texture_height = 512.f;
             }
+
             const float texture_aspect_ratio = texture_width / texture_height;
             const float draw_size = 40.f;
             ImGuiIO& io = ImGui::GetIO();
@@ -250,6 +265,29 @@ namespace IS {
             ImGui::TableNextColumn();
             ImGui::Text("%dpx", sprite.img.height);
             ImGui::EndTable();
+
+            //// Render Animation stuff
+            //if (!sprite.anims.empty())
+            //{
+            //    ImGui::PushFont(FONT_BOLD);
+            //    ImGui::TextUnformatted("Animation");
+            //    ImGui::PopFont();
+
+            //    for (Animation& animation : sprite.anims)
+            //    {
+            //        if (ImGui::BeginTable("Animation", 2))
+            //        {
+            //            ImGui::TableNextColumn();
+            //            ImGui::PushFont(FONT_BOLD);
+            //            ImGui::TextUnformatted("Columns");
+            //            ImGui::PopFont();
+            //            ImGui::TableNextColumn();
+            //            ImGui::SliderInt("##Columns", &animation.x_frames, 1, 20);
+
+            //            ImGui::EndTable();
+            //        }
+            //    }
+            //}
 
         }); // end render Sprite Component
 

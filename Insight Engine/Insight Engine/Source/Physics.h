@@ -125,8 +125,10 @@ namespace IS {
          *
          * \param body The rigid body to draw the outline for.
          * \param sprite The sprite used for drawing the outline.
+         * \param color The color of the outline.
+         * \param thickness The width of the outline.
          */
-        static void DrawOutLine(RigidBody& body, Sprite const& sprite);
+        static void DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
 
         ///*!
         // * \brief Updates the gravity vector based on user input.

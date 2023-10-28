@@ -95,6 +95,16 @@ namespace IS {
 		 */
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
+		/*!
+		 * \brief Draws the outline around the specified rigid body using the provided sprite based on vertices for polygons.
+		 *
+		 * \param body The rigid body to draw the outline for.
+		 * \param sprite The sprite used for drawing the outline.
+		 * \param color The color of the outline.
+		 * \param thickness The width of the outline.
+		 */
+		static void DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
+
 		static std::vector<Image> textures;
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 

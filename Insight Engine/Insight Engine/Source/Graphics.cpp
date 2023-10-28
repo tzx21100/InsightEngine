@@ -329,6 +329,16 @@ namespace IS {
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
 
+    void ISGraphics::DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness)
+    {
+        for (size_t i = 0; i < body.mTransformedVertices.size(); i++)
+        {
+            Vector2D va = body.mTransformedVertices[i];
+            Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
+            sprite.drawLine(va, vb, color, thickness);
+        }
+    }
+
 
 
 } // end namespace IS

@@ -33,7 +33,6 @@ namespace IS {
         glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(native_window, KeyCallback);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
-        glfwSetCursorPosCallback(native_window, MousePositionCallback);
 
         // Window size callback
         glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
@@ -137,19 +136,10 @@ namespace IS {
         return held_mouse_buttons.count(button) > 0;
     }
 
-    double InputManager::GetMouseXPosition() const
-    {
-        return (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-    }
+    std::pair<double, double> InputManager::GetMousePosition() const {
 
-    double InputManager::GetMouseYPosition() const
-    {
-        return (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;
-    }
-
-
-        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
 
         //InsightEngine& engine = InsightEngine::Instance();
         //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
@@ -162,41 +152,6 @@ namespace IS {
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };
-    }
-
-    double InputManager::GetMousePreviousXPosition() const
-    {
-        return (previous_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-    }
-
-    double InputManager::GetMousePreviousYPosition() const
-    {
-        return (center_y - previous_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;
-    }
-
-    std::pair<double, double> InputManager::GetMousePreviousPosition() const
-    {
-        double new_x = (previous_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double new_y = (center_y - previous_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
-
-        return std::make_pair(new_x, new_y);
-    }
-
-    double InputManager::GetMouseDeltaX() const
-    {
-        IS_CORE_DEBUG("Delta X: {}", GetMousePreviousXPosition() - GetMouseXPosition());
-        return GetMousePreviousXPosition() - GetMouseYPosition();
-    }
-
-    double InputManager::GetMouseDeltaY() const
-    {
-        IS_CORE_DEBUG("Delta Y: {}", GetMousePreviousYPosition() - GetMouseYPosition());
-        return GetMousePreviousYPosition() - GetMouseYPosition();
-    }
-
-    std::pair<double, double> InputManager::GetMouseDelta() const
-    {
-        return std::make_pair(current_mouse_x - previous_mouse_x, current_mouse_y - previous_mouse_y);
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -250,27 +205,12 @@ namespace IS {
         int entityID{};
         // Read the entityID value at the specified pixel coordinates
         glReadBuffer(GL_COLOR_ATTACHMENT1);
-        glReadPixels(1195, 620, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
+        glReadPixels(static_cast<GLint>(xPos), static_cast<GLint>(yPos), 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
         //GLuint entityIDR = entityID.x;
         //std::cout << entityID << std::endl;
         IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
 
         if (engine.mUsingGUI) ISGraphics::mFramebuffer->Unbind();
-    }
-
-}
-    void InputManager::MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
-    {
-        InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-        const double noiseThreshold = 0.1; // Adjust this threshold as needed
-
-        if (fabs(xpos - input.current_mouse_x) > noiseThreshold && fabs(ypos - input.current_mouse_y) > noiseThreshold)
-        {
-            input.previous_mouse_x = input.current_mouse_x;
-            input.previous_mouse_y = input.current_mouse_y;
-            input.current_mouse_x = xpos;
-            input.current_mouse_y = ypos;
-        }
     }
 
 } // end namespace IS

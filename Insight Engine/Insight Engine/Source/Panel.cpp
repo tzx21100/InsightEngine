@@ -60,11 +60,7 @@ namespace IS {
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
-        if ((panel_size.x > 0 && panel_size.y > 0) && !(mGamePanelSize.x == panel_size.x && mGamePanelSize.y == panel_size.y))
-        {
-            ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
-            mGamePanelSize = { panel_size.x, panel_size.y };
-        }
+        mViewportSize = { panel_size.x, panel_size.y };
 
         // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
@@ -85,6 +81,12 @@ namespace IS {
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
+
+        auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
+        auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
+        auto viewportOffset = ImGui::GetWindowPos();
+        mViewportBounds[0] = { viewportMinRegion.x + viewportOffset.x, viewportMinRegion.y + viewportOffset.y };
+        mViewportBounds[1] = { viewportMaxRegion.x + viewportOffset.x, viewportMaxRegion.y + viewportOffset.y };
 
         // Allow key/mouse event pass through only in this panel
         mFocused = ImGui::IsWindowFocused();
@@ -113,11 +115,7 @@ namespace IS {
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
-        if (!(mScenePanelSize.x == panel_size.x && mScenePanelSize.y == panel_size.y))
-        {
-            ISGraphics::ResizeFramebuffer(static_cast<uint32_t>(panel_size.x), static_cast<uint32_t>(panel_size.y));
-            mScenePanelSize = { panel_size.x, panel_size.y };
-        }
+        mViewportSize = { panel_size.x, panel_size.y };
         
         // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
@@ -230,21 +228,39 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto editor = engine.GetSystem<Editor>("Editor");
+        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        auto& style = ImGui::GetStyle();
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
         ImGui::SetNextWindowBgAlpha(0.f);
+
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f);
         ImGui::Begin("##Camera Zoom", nullptr, window_flags);
 
         const float size = 16.f;
-        const float xpos = (ImGui::GetContentRegionMax().x - size) / 2.f;
+        const float xpos = (ImGui::GetContentRegionAvail().x - size - style.ItemSpacing.x) / 2.f;
 
         ImGui::SetCursorPosX(xpos);
-        ImGui::Image(editor->GetEditorLayer()->GetIcon("ZoomIn"), { size, size });
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::ImageButton("ZoomIn", editor->GetEditorLayer()->GetIcon("ZoomIn"), {size, size}))
+        {
+            camera.ZoomCamera(1.f);
+        }
+        ImGui::PopStyleColor();
+
+        ImGui::SetCursorPosX(xpos + style.ItemSpacing.x / 2.f);
+        ImGui::VSliderFloat("##Camera Zoom", { size, size * 10.f }, &camera.ZoomLevel(), Camera::mMinZoom, Camera::mMaxZoom, "##%.2f");
+        
         ImGui::SetCursorPosX(xpos);
-        ImGui::VSliderFloat("##Camera Zoom", { size, size * 10.f }, &ISGraphics::cameras[Camera::mActiveCamera].ZoomLevel(), Camera::mMinZoom, Camera::mMaxZoom, "##%.2f");
-        ImGui::SetCursorPosX(xpos);
-        ImGui::Image(editor->GetEditorLayer()->GetIcon("ZoomOut"), { size, size });
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::ImageButton("ZoomOut", editor->GetEditorLayer()->GetIcon("ZoomOut"), {size, size}))
+        {
+            camera.ZoomCamera(-1.f);
+        }
+        ImGui::PopStyleColor();
+
         ImGui::End(); // end window camera zoom
+        ImGui::PopStyleVar();
     }
 
     // Performance Viewer Panel

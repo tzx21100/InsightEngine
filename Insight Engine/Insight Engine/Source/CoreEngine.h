@@ -257,8 +257,9 @@ namespace IS {
         /**
          * \brief Loads a scene from a specified file directory in the Scene folder.
          * \param filename The name of the file to load the scene from.
+         * \return boolean flag indicating success of load scene.
          */
-        void LoadScene(std::string filename);
+        bool LoadScene(std::string filename);
 
         void NewScene();
 

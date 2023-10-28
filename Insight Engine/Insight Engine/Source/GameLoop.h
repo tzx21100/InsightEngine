@@ -176,6 +176,7 @@ namespace IS {
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
                     engine.mRuntime = !engine.mRuntime;
+                    Camera::mActiveCamera = engine.mUsingGUI ? CAMERA_TYPE_SCENE : CAMERA_TYPE_EDITOR;
                     IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
                 }
 
@@ -284,7 +285,7 @@ namespace IS {
 
             }
 
-            input->mouse_pick_entity();
+            //input->mouse_pick_entity();
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {

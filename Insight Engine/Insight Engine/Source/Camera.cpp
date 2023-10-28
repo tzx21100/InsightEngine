@@ -11,7 +11,7 @@ namespace IS {
 	float Camera::mMinZoom = .1f;
 	float Camera::mMaxZoom = 10.f;
 	float Camera::mZoomSpeed = .1f;
-	float Camera::mMoveSpeed = 200.f;
+	float Camera::mMoveSpeed = 20.f;
 
 	Camera::Camera() {
 		mZoomLevel = 1.f;

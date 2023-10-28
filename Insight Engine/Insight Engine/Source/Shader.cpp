@@ -85,7 +85,7 @@ namespace IS {
                     //fFragColor = texture(uTex2d[texIdx], vTexCoord);
                 }
                 int id = int(vEntityID);
-                fEntityID = id;
+                fEntityID = id + 1;
             }
         )";
 

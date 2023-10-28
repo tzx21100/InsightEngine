@@ -354,4 +354,6 @@ namespace IS {
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
+    void SceneHierarchyPanel::SetSelectedEntity(EntityPtr entity) { mSelectedEntity = entity; }
+
 } // end namespace IS

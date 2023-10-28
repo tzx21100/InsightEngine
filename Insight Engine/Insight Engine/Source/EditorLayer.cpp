@@ -28,6 +28,7 @@
 // Dependencies
 #include <ranges>
 #include <imgui.h>
+#include <ImGuizmo.h>
 
 namespace IS {
 
@@ -63,6 +64,13 @@ namespace IS {
 
     void EditorLayer::OnUpdate(float dt)
     {
+        if (auto const& [fb_width, fb_height] = ISGraphics::mFramebuffer->GetSize();
+            mScenePanel->GetViewportSize().x > 0.f && mScenePanel->GetViewportSize().y > 0.f &&
+            (fb_width != mScenePanel->GetViewportSize().x || fb_height != mScenePanel->GetViewportSize().y))
+        {
+            ISGraphics::ResizeFramebuffer(static_cast<GLuint>(mScenePanel->GetViewportSize().x), static_cast<GLuint>(mScenePanel->GetViewportSize().y));
+        }
+
         InsightEngine& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
 
@@ -87,12 +95,13 @@ namespace IS {
         if (mScenePanel->IsFocused())
         {
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-            const bool LEFT_MOUSE_HELD = input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_LEFT);
-
-            if (LEFT_MOUSE_HELD)
+            
+            // Right mouse drag
+            if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
             {
                 Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                camera.PanCamera(dt, static_cast<float>(input->GetMouseDeltaX()), static_cast<float>(input->GetMouseDeltaY()));
+                auto const& [x_drag, y_drag] = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
+                camera.PanCamera(dt, x_drag, y_drag);
             }
         }
 
@@ -100,6 +109,32 @@ namespace IS {
         if (!mGamePanel->IsFocused())
         {
             engine.mRuntime = false;
+
+            auto [mx, my] = ImGui::GetMousePos();
+            mx -= mScenePanel->mViewportBounds[0].x;
+            my -= mScenePanel->mViewportBounds[0].y;
+            Vec2 viewportSize = mScenePanel->mViewportBounds[1] - mScenePanel->mViewportBounds[0];
+            my = viewportSize.y - my;
+            int mouseX = (int)mx;
+            int mouseY = (int)my;
+
+            if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+            {
+                int pixelData = ISGraphics::mFramebuffer->ReadPixel(mouseX, mouseY);
+                if (pixelData == -1)
+                {
+                    mHoveredEntity = {};
+                } else
+                {
+                    mHoveredEntity = std::make_shared<Entity>(pixelData);
+                }
+
+                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                {
+                    mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
+                    //IS_CORE_DEBUG("Entity : {}", mHoveredEntity ? std::to_string(*mHoveredEntity) : "none");
+                }
+            }
         }
     }
 
@@ -149,6 +184,8 @@ namespace IS {
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
+
+        RenderGizmo();
 
         //style.WindowMinSize = min_window_size;
 
@@ -355,6 +392,25 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
         mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
         mPanels.emplace_back(std::make_shared<LogConsolePanel>());
+    }
+
+    void EditorLayer::RenderGizmo()
+    {
+        if (!mSceneHierarchyPanel->GetSelectedEntity())
+            return;
+
+        //Entity selected_entity = *mSceneHierarchyPanel->GetSelectedEntity();
+
+        ImGuizmo::SetOrthographic(true);
+        ImGuizmo::SetDrawlist();
+
+        ImGuizmo::SetRect(mScenePanel->mViewportBounds[0].x, mScenePanel->mViewportBounds[0].y,
+                          mScenePanel->mViewportBounds[1].x - mScenePanel->mViewportBounds[0].x,
+                          mScenePanel->mViewportBounds[1].y - mScenePanel->mViewportBounds[0].y);
+
+        //Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        //glm::mat3 view_matrix = camera.xform;
+        ImGuizmo::SetOrthographic(true);
     }
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)

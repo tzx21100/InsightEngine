@@ -59,9 +59,12 @@ namespace IS {
 
         bool IsFocused() const;
 
+        Vec2 GetViewportSize() const { return mViewportSize; }
+
     private:
         bool mFocused{};
-        Vec2 mGamePanelSize{};
+        Vec2 mViewportSize{};
+        Vec2 mViewportBounds[2];
     };
 
     /*!
@@ -78,9 +81,12 @@ namespace IS {
 
         bool IsFocused() const;
 
+        Vec2 GetViewportSize() const { return mViewportSize; }
+        Vec2 mViewportBounds[2];
+
     private:
         bool mFocused{};
-        Vec2 mScenePanelSize{}; ///< Size of the scene panel.
+        Vec2 mViewportSize{}; ///< Size of the scene panel.
 
         /*!
          * \brief Renders a help tooltip overlay.

@@ -62,8 +62,8 @@ namespace IS {
 			}
 		}
 
-		engine.LoadScene(scene_filename);
-		CreateScene(scene_filename);
+		if (engine.LoadScene(scene_filename))
+			CreateScene(scene_filename);
 	}
 
 	void SceneManager::SwitchScene(SceneID scene_id)

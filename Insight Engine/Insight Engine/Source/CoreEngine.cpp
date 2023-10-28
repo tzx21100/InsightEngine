@@ -388,18 +388,18 @@ namespace IS {
     }
 
     // Using the same format defined above, we simply reverse it and load in our entities.
-    void InsightEngine::LoadScene(std::string filename) {
+    bool InsightEngine::LoadScene(std::string filename) {
         // Load the main scene file
         std::filesystem::path filepath(filename);
         if (filepath.extension() != ".insight")
         {
             IS_CORE_ERROR("Invalid scene file, use \".insight\" file");
-            return;
+            return false;
         }
         Json::Value sceneRoot;
         if (!LoadJsonFromFile(sceneRoot, filepath.string())) {
             IS_CORE_ERROR("Failed to load scene file: {}", filepath.string());
-            return;
+            return false;
         }
 
         // Start a new scene
@@ -421,6 +421,7 @@ namespace IS {
 
         IS_CORE_INFO("Loading scene {} successful!", filepath.string());
         IS_CORE_INFO("{} entities loaded", EntitiesAlive);
+        return true;
     }
 
     void InsightEngine::NewScene() {

@@ -112,7 +112,7 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color) {
+    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float thickness) {
         // ensure line mesh is initialized
         if (ISGraphics::meshes.empty()) {
             std::cerr << "No mesh to draw line!" << std::endl;
@@ -154,7 +154,7 @@ namespace IS {
 
         // draw line
         glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
-        glLineWidth(1.f);
+        glLineWidth(thickness);
 
         // unbind texture and vao
         glBindTexture(GL_TEXTURE_2D, 0);

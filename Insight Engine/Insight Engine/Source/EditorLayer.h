@@ -91,6 +91,7 @@ namespace IS {
 
         Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
 
+        std::shared_ptr<Entity> mHoveredEntity;
         std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
         std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
@@ -107,6 +108,8 @@ namespace IS {
          * \brief Render the tool bar.
          */
         void RenderToolBar();
+
+        void RenderGizmo();
 
         /*!
          * \brief Attach panels.

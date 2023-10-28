@@ -65,6 +65,8 @@ namespace IS {
          */
         void Unbind();
 
+        int ReadPixel(GLint x, GLint y);
+
         /*!
          \brief Gets the width and height of the framebuffer.
          \return A pair containing the width and height of the framebuffer.
@@ -88,9 +90,7 @@ namespace IS {
          \brief Sets the color attachment ID.
          \param color_attachment The color attachment ID to set.
          */
-        void SetColorAttachment(GLuint color_attachment);
-
-        
+        void SetColorAttachment(GLuint color_attachment);        
 
     private:
         GLuint mFramebufferID;  /**< ID of the framebuffer. */
