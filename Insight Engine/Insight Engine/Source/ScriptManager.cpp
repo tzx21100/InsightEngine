@@ -38,10 +38,10 @@ namespace IS {
         mScriptDeltaTime = deltaTime;
         auto& engine = InsightEngine::Instance();
         for (auto& entity: mEntities) {
+            mEntityScriptCaller = entity;
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
             if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
-            if (scriptcomponent.instance != nullptr) {
-                mEntityScriptCaller = entity;
+            if (scriptcomponent.instance != nullptr) {  
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
                 scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
 

@@ -118,6 +118,8 @@ namespace IS {
 
         void ResolveCollisionWithRotation(Manifold & contact);
 
+        void ResolveCollisionWithRotationAndFriction(Manifold& contact);
+
         /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
          *
@@ -159,3 +161,4 @@ namespace IS {
 }
 
 #endif // !GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_PHYSICS_H
+  

@@ -74,6 +74,9 @@ namespace IS {
 			for (int j = 0; j < ImplicitGrid::mCols; j++) {
 				std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
 			}
+			IS_CORE_DEBUG({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
+			IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
+			IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
 		}
 
 		// physics update iteration
@@ -163,45 +166,50 @@ namespace IS {
 		for (int row = 0; row < ImplicitGrid::mRows; row++) {
 			for (int col = 0; col < ImplicitGrid::mCols; col++) {
 				// check the existence of the objects in a cell, simply perform a bitwise AND operation
-				std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
+				std::bitset<MAX_ENTITIES> test_cell;
+				
+				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i) {
+					test_cell[i] = mImplicitGrid.mRowsBitArray[row][i] && mImplicitGrid.mColsBitArray[col][i];
+				}
+				
+				
 				// getting entity number in this cell
-				size_t totalEntities = test_cell.count();
-				if (totalEntities > 0) { // at least one entity
-
-					// if the cell is at the edge of the grid, then need check with the entities overlap on the grid
-					if (row == 0 || row == ImplicitGrid::mRows - 1 ||
-						col == 0 || col == ImplicitGrid::mCols - 1) {
-						/*for (auto const& entity : mImplicitGrid.mOverlapGridList) {
-							mImplicitGrid.mInGridList.emplace_back(entity);
-						}*/
-						mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+				size_t totalEntities = 0;
+				
+				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i) {
+					if (test_cell[i]) {
+						totalEntities++;
 					}
+				}
 
-					// at least more than 1 entity to avoid self checking
-					if (mImplicitGrid.mInGridList.size() > 1 || totalEntities > 1) {
-						// emplace all the entities in current cell
-						for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
-							if (test_cell.test(e)) { // if the current bit entity is true
-								// emplace into InGridList
-								mImplicitGrid.mInGridList.emplace_back(e);
-								totalEntities--;
-								if (totalEntities <= 0) {
-									// if there is no more entities in this cell, break
-									break;
-								}
+				//std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
+				//size_t totalEntities = test_cell.count();
+
+				// at least more than 1 entity to avoid self checking
+				// in case one entity overlaps on the grid check collide with one in grid entity
+				if (totalEntities > 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
+					// emplace all the entities in current cell
+					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
+						if (test_cell.test(e)) { // if the current bit entity is true
+							// emplace into InGridList
+							mImplicitGrid.mInGridList.emplace_back(e);
+							totalEntities--;
+							if (totalEntities <= 0) {
+								// if there is no more entities in this cell, break
+								break;
 							}
 						}
-						//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
-						if (mImplicitGrid.mInGridList.size() > 1) {
-							CollisionDetect(mImplicitGrid.mInGridList);
-						}
-						// empty the list
-						mImplicitGrid.mInGridList.clear();
-						
 					}
-					
-					
+					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
+					mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+					//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
+					if (mImplicitGrid.mInGridList.size() > 1) {
+						CollisionDetect(mImplicitGrid.mInGridList);
+					}
 				}
+
+				// empty the list
+				mImplicitGrid.mInGridList.clear();
 			}
 		}
 	}
@@ -298,16 +306,14 @@ namespace IS {
 		if (mImplicitGrid.mOutsideGridList.size() > 1 || mImplicitGrid.mOverlapGridList.size() > 1) {
 			CollisionDetect(mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList);
 		}
-		//IS_CORE_DEBUG({ "overlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
-		//IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
-		//IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
 	}
 
 	void Physics::NarrowPhase() {
 		for (int i = 0; i < mContactList.size(); i++) {
 			Manifold contact = mContactList[i];
 			//ResolveCollision(contact);
-			ResolveCollisionWithRotation(contact);
+			//ResolveCollisionWithRotation(contact);
+			ResolveCollisionWithRotationAndFriction(contact);
 
 			// add contact points only at the last iteration
 			if (mCurrentIterations == mTotalIterations - 1) {
@@ -552,8 +558,8 @@ namespace IS {
 			float rbPerpDotN = ISVector2DDotProduct(rbPerp, normal);
 
 			float denom = bodyA->mInvMass + bodyB->mInvMass +
-				(raPerpDotN * raPerpDotN) * (1.f / bodyA->mInertia) +
-				(rbPerpDotN * rbPerpDotN) * (1.f / bodyB->mInertia);
+				(raPerpDotN * raPerpDotN) * bodyA->mInvInertia +
+				(rbPerpDotN * rbPerpDotN) * bodyB->mInvInertia;
 
 			float j = -(1.f + e) * contactVelocityMag;
 			j /= denom;
@@ -570,11 +576,167 @@ namespace IS {
 			Vector2D rb = temp_rb_list[i];
 
 			bodyA->mVelocity += -impulse * bodyA->mInvMass;
-			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * (1.f / bodyA->mInertia);
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * bodyA->mInvInertia;
 			bodyB->mVelocity += impulse * bodyB->mInvMass;
-			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * (1.f / bodyB->mInertia);
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * bodyB->mInvInertia;
 		}
 
+	}
+
+	void Physics::ResolveCollisionWithRotationAndFriction(Manifold& contact) {
+		// init
+		RigidBody* bodyA = contact.mBodyA;
+		RigidBody* bodyB = contact.mBodyB;
+		Vector2D normal = contact.mNormal;
+		Vector2D contact1 = contact.mContact1;
+		Vector2D contact2 = contact.mContact2;
+		int contactCount = contact.mContactCount;
+
+		// getting the lower restitution
+		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
+
+		float sf = (bodyA->mStaticFriction + bodyB->mStaticFriction) * 0.5f;
+		float df = (bodyA->mDynamicFriction + bodyB->mDynamicFriction) * 0.5f;
+
+		std::vector<Vector2D> temp_contact_list;
+		std::vector<Vector2D> temp_impulse_list;
+		std::vector<Vector2D> temp_ra_list;
+		std::vector<Vector2D> temp_rb_list;
+		std::vector<Vector2D> temp_friction_impulse_list;
+		std::vector<float> temp_j_list;
+
+		temp_contact_list.emplace_back(contact1);
+		temp_contact_list.emplace_back(contact2);
+
+		for (int i = 0; i < contactCount; i++) {
+			temp_impulse_list.emplace_back(Vector2D());
+			temp_ra_list.emplace_back(Vector2D());
+			temp_rb_list.emplace_back(Vector2D());
+			temp_friction_impulse_list.emplace_back(Vector2D());
+			temp_j_list.emplace_back(0.f);
+		}
+
+		// calculation for rotational velocity
+		for (int i = 0; i < contactCount; i++) {
+			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
+			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
+
+			temp_ra_list[i] = ra;
+			temp_rb_list[i] = rb;
+
+			Vector2D raPerp = Vector2D(-ra.y, ra.x);
+			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+
+			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
+			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+
+			Vector2D relativeVelocity =
+				(bodyB->mVelocity + angularLinearVelocityB) -
+				(bodyA->mVelocity + angularLinearVelocityA);
+
+			float contactVelocityMag = ISVector2DDotProduct(relativeVelocity, normal);
+
+			if (contactVelocityMag > 0.f)
+			{
+				continue;
+			}
+
+			float raPerpDotN = ISVector2DDotProduct(raPerp, normal);
+			float rbPerpDotN = ISVector2DDotProduct(rbPerp, normal);
+
+			float denom = bodyA->mInvMass + bodyB->mInvMass +
+				(raPerpDotN * raPerpDotN) * bodyA->mInvInertia +
+				(rbPerpDotN * rbPerpDotN) * bodyB->mInvInertia;
+
+			float j = -(1.f + e) * contactVelocityMag;
+			j /= denom;
+			j /= static_cast<float>(contactCount);
+
+			temp_j_list[i] = j;
+
+			Vector2D impulse = j * normal;
+			temp_impulse_list[i] = impulse;
+		}
+
+		for (int i = 0; i < contactCount; i++)
+		{
+			Vector2D impulse = temp_impulse_list[i];
+			Vector2D ra = temp_ra_list[i];
+			Vector2D rb = temp_rb_list[i];
+
+			bodyA->mVelocity += -impulse * bodyA->mInvMass;
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * bodyA->mInvInertia;
+			bodyB->mVelocity += impulse * bodyB->mInvMass;
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * bodyB->mInvInertia;
+		}
+
+		// calculation for static and dynamic friction
+		for (int i = 0; i < contactCount; i++) {
+			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
+			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
+
+			temp_ra_list[i] = ra;
+			temp_rb_list[i] = rb;
+
+			Vector2D raPerp = Vector2D(-ra.y, ra.x);
+			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+
+			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
+			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+
+			Vector2D relativeVelocity =
+				(bodyB->mVelocity + angularLinearVelocityB) -
+				(bodyA->mVelocity + angularLinearVelocityA);
+
+			Vector2D tangent = relativeVelocity - ISVector2DDotProduct(relativeVelocity, normal) * normal;
+
+			if (mManifoldInfo.NearlyEqual(tangent, Vector2D()))
+			{
+				continue;
+			}
+			else
+			{
+				ISVector2DNormalize(tangent, tangent);
+			}
+
+			float raPerpDotT = ISVector2DDotProduct(raPerp, tangent);
+			float rbPerpDotT = ISVector2DDotProduct(rbPerp, tangent);
+
+			float denom = bodyA->mInvMass + bodyB->mInvMass +
+				(raPerpDotT * raPerpDotT) * bodyA->mInvInertia +
+				(rbPerpDotT * rbPerpDotT) * bodyB->mInvInertia;
+
+			float jt = -ISVector2DDotProduct(relativeVelocity, tangent);
+			jt /= denom;
+			jt /= static_cast<float>(contactCount);
+
+			Vector2D firction_impulse;
+			float j = temp_j_list[i];
+
+			if (std::abs(jt) <= j * sf)
+			{
+				firction_impulse = jt * tangent;
+			}
+			else
+			{
+				firction_impulse = -j * tangent * df;
+			}
+
+
+			temp_impulse_list[i] = firction_impulse;
+		}
+
+		for (int i = 0; i < contactCount; i++)
+		{
+			Vector2D firction_impulse = temp_impulse_list[i];
+			Vector2D ra = temp_ra_list[i];
+			Vector2D rb = temp_rb_list[i];
+
+			bodyA->mVelocity += -firction_impulse * bodyA->mInvMass;
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, firction_impulse) * bodyA->mInvInertia;
+			bodyB->mVelocity += firction_impulse * bodyB->mInvMass;
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, firction_impulse) * bodyB->mInvInertia;
+		}
 	}
 
 	void Physics::DrawOutLine(RigidBody& body, Sprite const& sprite) {
@@ -602,18 +764,6 @@ namespace IS {
 			sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 0.f, 0.f, 1.f });
 	}
 
-	// Updates the gravity vector based on user input
-	//void Physics::UpdateGravity(auto const& key_input) {
-	//	if (key_input->IsKeyPressed(GLFW_KEY_G)) {
-	//		mExertingGravity = true;
-	//		IS_CORE_DEBUG("mGravity Enabled!");
-	//	}
-	//	else if (key_input->IsKeyPressed(GLFW_KEY_F)) {
-	//		mExertingGravity = false;
-	//		IS_CORE_DEBUG("mGravity Disabled!");
-	//	}
-	//}
-
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
 		// divide by iterations to increase precision
@@ -627,17 +777,17 @@ namespace IS {
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				body.BodyFollowTransform(trans);
+				//auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				//body.BodyFollowTransform(trans);
 				
-				// if the entity is static or kinematic, skip
-				if (body.mBodyType != BodyType::Dynamic) {
-					continue;
-				}
+				//// if the entity is static or kinematic, skip
+				//if (body.mBodyType != BodyType::Dynamic) {
+				//	continue;
+				//}
 
-				//Cell test = mImplicitGrid.GetCell(body.mBodyTransform.world_position);
-				//IS_CORE_DEBUG({ "row - {}" }, test.row);
-				//IS_CORE_DEBUG({ "col - {}" }, test.col);
+				/*Cell test = mImplicitGrid.GetCell(body.mBodyTransform.world_position);
+				IS_CORE_DEBUG({ "row - {}" }, test.row);
+				IS_CORE_DEBUG({ "col - {}" }, test.col);*/
 
 				//freeze
 				if (InsightEngine::Instance().mFreezeFrame) {
@@ -657,6 +807,12 @@ namespace IS {
 				body.mVelocity.y = std::min(body.mVelocity.y, mMaxVelocity);
 				body.mVelocity.x = std::max(body.mVelocity.x, mMinVelocity);
 				body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
+
+				// if the entity is static or kinematic, skip
+				if (body.mBodyType != BodyType::Dynamic) {
+					body.mVelocity = Vector2D(0.f, 0.f);
+				}
+
 				// update position
 				mImplicitGrid.UpdateCell(entity, time);
 				//trans.world_position += body.mVelocity * time;
@@ -688,6 +844,9 @@ namespace IS {
 					position.y >= (trans.world_position.y - (trans.scaling.y / 2.f)) && position.y <= (trans.world_position.y + (trans.scaling.y / 2.f)) ) {
 					entities_list.emplace_back(entity);
 				}*/
+
+				// not wokring as SAT not apply to a obj that fully inside another
+
 				Vector2D normal = Vector2D();
 				float depth = 0.f;
 				if (IntersectionPolygons(mouse_vertices, position, trans.GetSquareTransformVertices(), trans.world_position, normal, depth)) {

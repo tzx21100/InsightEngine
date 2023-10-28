@@ -42,14 +42,15 @@ namespace IS
 		//InsightEngine& engine = InsightEngine::Instance();
 		// Set cell size based on current window size
 		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
 		float width = camera_dimension.x;
 		float height = camera_dimension.y;
 
 		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
 		//IS_CORE_DEBUG(" w - h: {} - {}", width, height); 
-		float tmp_col = (position.x + (mGridSize.x / 2.f)) / mCellSize.x;
-		float tmp_row = (-position.y + (mGridSize.y / 2.f)) / mCellSize.y;
+		float tmp_col = (position.x + (mGridSize.x / 2.f) - camera_center.x) / mCellSize.x;
+		float tmp_row = (-position.y + (mGridSize.y / 2.f) + camera_center.y) / mCellSize.y;
 		int col = static_cast<int>(tmp_col < 0 ? tmp_col -1 : tmp_col);
 		int row = static_cast<int>(tmp_row < 0 ? tmp_row - 1 : tmp_row);
 
@@ -165,8 +166,9 @@ namespace IS
 			{
 			case GridState::Inside: // if the body inside grid
 
-				// if the body min & max move but still within the same cell
-				if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell)) {
+				// if the moving dynamic body min & max move but still within the same cell
+				if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell) &&
+					body.mBodyType == BodyType::Dynamic) {
 					return; // no update on cell
 				}
 
