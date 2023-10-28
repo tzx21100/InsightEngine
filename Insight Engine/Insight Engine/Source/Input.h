@@ -114,6 +114,8 @@ namespace IS {
          */
         std::pair<double, double> GetMousePosition() const;
 
+        // std::pair<double, double> GetMouseScreenCoordinates() const; // top left = 0, 0
+
         // window
         std::shared_ptr<WindowSystem> mWindow;
 
@@ -136,6 +138,8 @@ namespace IS {
             ratio_width =  (float)width / widthR;
             ratio_height =  (float)height / heightR;
         }
+
+        void mouse_pick_entity();
 
     private:
 

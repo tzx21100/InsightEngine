@@ -31,22 +31,26 @@ namespace IS {
             layout(location = 6) in vec3  aMtxRow3;
             layout(location = 7) in vec2  aAnimDim;
             layout(location = 8) in vec2  aAnimIndex;
+            layout(location = 9) in float aEntityID;
 
             layout(location = 0) out vec3  vColor;
             layout(location = 1) out vec2  vTexCoord;
             layout(location = 2) out float vTexID;
             layout(location = 3) out vec2  vAnimDim;
             layout(location = 4) out vec2  vAnimIndex;
+            layout(location = 5) out flat float vEntityID;
+
             void main()
             {
                 mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
                 //model_to_NDC_xform = transpose(model_to_NDC_xform);
                 gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-				vColor = aVertexColor;  
+		        vColor = aVertexColor;  
                 vTexCoord = aVertexTexCoord;
                 vTexID = aTexIndex;
                 vAnimDim = aAnimDim;
                 vAnimIndex = aAnimIndex;
+                vEntityID = aEntityID;
             }
         )";
 
@@ -58,10 +62,13 @@ namespace IS {
             layout(location = 2) in float vTexID;
             layout(location = 3) in vec2  vAnimDim;
             layout(location = 4) in vec2  vAnimIndex;
+            layout(location = 5) in flat float vEntityID;
+
             layout(location = 0) out vec4 fFragColor;
+            layout(location = 1) out int fEntityID;
 
             uniform sampler2D uTex2d[32];
-          
+  
             void main()
             {
                 bool textured = false;
@@ -77,8 +84,11 @@ namespace IS {
                     //fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * 1, vTexCoord.y * 1) + vec2(1 * vAnimIndex.x, 1 * vAnimIndex.y));
                     //fFragColor = texture(uTex2d[texIdx], vTexCoord);
                 }
+                int id = int(vEntityID);
+                fEntityID = id;
             }
         )";
+
 
         // Compile and link the shaders into a shader program
         compileShaderString(GL_VERTEX_SHADER, vtx_shdr);

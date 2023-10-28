@@ -131,12 +131,41 @@ namespace IS {
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
        
 
-        double newX = (xPos - center_x)*ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - yPos)*ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
-       // IS_CORE_DEBUG("{}, {}", newX, newY);
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+        //InsightEngine& engine = InsightEngine::Instance();
+        //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+        //auto [width, height] = window_sys->GetWindowSize();
+
+        //newX += width / 2.f;
+        //newY -= height / 2.f;
+
+
+        // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         return { newX, newY };
     }
+
+    // was testing for mouse picking -yk
+    //std::pair<double, double> InputManager::GetMouseScreenCoordinates() const {
+    //    double xPos, yPos;
+    //    glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+
+
+    //    double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+    //    double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+    //    InsightEngine& engine = InsightEngine::Instance();
+    //    auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+    //    auto [width, height] = window_sys->GetWindowSize();
+
+    //    newX += width / 2.f;
+    //    newY += height / 2.f;
+    //    // IS_CORE_DEBUG("{}, {}", newX, newY);
+
+    //    return { newX, newY };
+    //}
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
@@ -163,6 +192,38 @@ namespace IS {
             inputManager->released_mouse_buttons.insert(button);
             inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
         }
+    }
+
+    void InputManager::mouse_pick_entity() {
+       /* double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        std::cout << "xPos: " << xPos << "yPos: " << yPos << std::endl;*/
+
+        double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+
+
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+
+        InsightEngine& engine = InsightEngine::Instance();
+        auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+        auto [width, height] = window_sys->GetWindowSize();
+
+        newX += width / 2.f;
+        newY += height / 2.f;
+
+        if (engine.mUsingGUI) ISGraphics::mFramebuffer->Bind(); // bind fb
+
+        int entityID{};
+        // Read the entityID value at the specified pixel coordinates
+        glReadBuffer(GL_COLOR_ATTACHMENT1);
+        glReadPixels(1195, 620, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
+        //GLuint entityIDR = entityID.x;
+        //std::cout << entityID << std::endl;
+        IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
+
+        if (engine.mUsingGUI) ISGraphics::mFramebuffer->Unbind();
     }
 
 }

@@ -37,7 +37,8 @@ namespace IS {
             x_form_row2_attrib,
             x_form_row3_attrib,
             anim_dim_attrib,
-            anim_index_attrib
+            anim_index_attrib,
+            ent_ID_attib
         };
 
         GLuint vao_ID{};            // The OpenGL vertex array object ID.

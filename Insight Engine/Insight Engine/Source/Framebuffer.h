@@ -33,7 +33,8 @@ namespace IS {
     public:
         struct FramebufferProps {
             GLuint mColorAttachment; /**< Color attachment ID. */
-            GLuint mDepthAttachment; /**< Depth attachment ID. */
+            GLuint mEntIDAttachment;
+            //GLuint mDepthAttachment; /**< Depth attachment ID. */
             GLuint mWidth; /**< Width of the framebuffer. */
             GLuint mHeight; /**< Height of the framebuffer. */
         };
@@ -88,6 +89,8 @@ namespace IS {
          \param color_attachment The color attachment ID to set.
          */
         void SetColorAttachment(GLuint color_attachment);
+
+        
 
     private:
         GLuint mFramebufferID;  /**< ID of the framebuffer. */
