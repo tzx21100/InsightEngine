@@ -23,6 +23,7 @@
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
+#include "Editor.h"
 
 // Dependencies
 #include <imgui.h>
@@ -141,6 +142,8 @@ namespace IS {
 
     void InspectorPanel::RenderComponentNodes(Entity entity)
     {
+        ImGui::PushID(entity);
+
         // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
@@ -152,27 +155,40 @@ namespace IS {
         // Sprite Component
         RenderComponent<Sprite>("Sprite", entity, [FONT_BOLD, entity](Sprite& sprite)
         {
-            // Render Color Picker if does not have texture
-            if (!sprite.img.texture_id)
-            {
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Color");
-                ImGui::PopFont();
-                ImGui::SameLine();
-                ImGui::ColorEdit3(("##Color" + std::to_string(entity)).c_str(), &sprite.color[0]);
-                return;
-            }
+            auto& engine = InsightEngine::Instance();
+            auto const editor = engine.GetSystem<Editor>("Editor");
+            auto const editor_layer = editor->GetEditorLayer();
 
-            // Rendert Texture and its dimension data
+            // Render color
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Color");
+            ImGui::PopFont();
+            ImGui::ColorEdit3("##Color", &sprite.color[0]);
+            ImGui::Spacing();
+
+            // Render Texture and its dimension data
             // Header
             ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Texture");
             ImGui::PopFont();
 
             // Parameters
-            ImTextureID texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
-            const float texture_width = static_cast<float>(sprite.img.width);
-            const float texture_height = static_cast<float>(sprite.img.height);
+            ImTextureID texture_id;
+            float texture_width;
+            float texture_height;
+
+            // Use placeholder if no texture attached
+            if (sprite.img.texture_id)
+            {
+                texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
+                texture_width = static_cast<float>(sprite.img.width);
+                texture_height = static_cast<float>(sprite.img.height);
+            }
+            else
+            {
+                texture_id = editor_layer->GetIcon("TexturePlaceholder");
+                texture_width = texture_height = 512.f;
+            }
             const float texture_aspect_ratio = texture_width / texture_height;
             const float draw_size = 40.f;
             ImGuiIO& io = ImGui::GetIO();
@@ -183,7 +199,21 @@ namespace IS {
             ImVec4 border_color = ImGui::GetStyleColorVec4(ImGuiCol_Border);
 
             // Render Texture as Image
+            ImGui::BeginGroup();
             ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
+
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
+                {
+                    std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                    auto asset = engine.GetSystem<AssetManager>("Asset");
+                    IS_CORE_DEBUG("Image : {} ", path.string());
+                    sprite.img = *asset->GetImage(path.string());
+                }
+                ImGui::EndDragDropTarget();
+            }
+            ImGui::EndGroup();
 
             // Texture Tooltip
             if (ImGui::BeginItemTooltip())
@@ -278,7 +308,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##AngularVelocity" + std::to_string(entity)).c_str(), &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat("##AngularVelocity", &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Body Type
@@ -304,7 +334,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##Mass" + std::to_string(entity)).c_str(), &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat("##Mass", &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Inverse Mass
@@ -314,7 +344,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##InvMass" + std::to_string(entity)).c_str(), &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat("##InvMass", &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Inertia
@@ -324,7 +354,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat(("##Inertia" + std::to_string(entity)).c_str(), &rigidbody.mInertia, 1.f, 0.f, 0.f, "%.2f");
+                ImGui::DragFloat("##Inertia", &rigidbody.mInertia, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Restitution
@@ -398,6 +428,7 @@ namespace IS {
         }); // end render Script Component
 
         ImGui::PopStyleVar(); // end style rounding
+        ImGui::PopID();
 
     } // end RenderComponentNodes()
 
@@ -415,6 +446,7 @@ namespace IS {
 
             // Display Component Config
             ImGui::SameLine(ImGui::GetWindowWidth() - 20.f);
+
             if (ImGui::Button("..."))
                 ImGui::OpenPopup("ComponentConfig");
 

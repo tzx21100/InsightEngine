@@ -122,7 +122,7 @@ namespace IS {
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
         // Help tooltip
-        if (!editor->GetEditorLayer()->IsGamePanelFocused())
+        if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
         {
             RenderHelp();
             RenderCameraZoom();
@@ -234,8 +234,8 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.f);
         ImGui::Begin("##Camera Zoom", nullptr, window_flags);
 
-        float size = 16.f;
-        float xpos = (ImGui::GetContentRegionMax().x - size) / 2.f;
+        const float size = 16.f;
+        const float xpos = (ImGui::GetContentRegionMax().x - size) / 2.f;
 
         ImGui::SetCursorPosX(xpos);
         ImGui::Image(editor->GetEditorLayer()->GetIcon("ZoomIn"), { size, size });

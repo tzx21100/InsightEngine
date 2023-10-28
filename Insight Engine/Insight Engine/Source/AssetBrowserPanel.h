@@ -52,7 +52,8 @@ namespace IS {
          */
         void RenderPanel() override;
 
-        /*! \brief Renders the controls for configuring the asset browser's appearance and behavior.
+        /*!
+         * \brief Renders the controls for configuring the asset browser's appearance and behavior.
          */
         void RenderControls();
 
@@ -65,6 +66,8 @@ namespace IS {
 
         /// Maximum padding between thumbnails in the asset browser.
         static constexpr inline float MAX_PADDING = 32.f;
+
+        static std::filesystem::path ASSETS_PATH;
 
         /*! \struct Controls
          *
@@ -81,13 +84,18 @@ namespace IS {
         std::filesystem::path mCurrentDirectory; ///< The currently selected directory.
         Controls mControls; ///< Configuration controls for the asset browser.
 
-        /*! \brief A map of asset type names to their corresponding icon images.
-         *
-         * This map stores associations between asset type names and the icon images representing them.
+        /*!
+         * \brief Renders path from ASSETS_PATH as text.
          */
-        std::unordered_map<std::string, ImTextureID> mIcons;
-    };
+        void RenderPath();
 
+        /*!
+         * \brief Renders file browser.
+         */
+        void RenderAllAssetsBrowser();
+
+        void RenderImportedAssets();
+    };
 
 } // end namespace IS
 

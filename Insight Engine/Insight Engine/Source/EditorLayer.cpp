@@ -40,13 +40,17 @@ namespace IS {
         auto asset = engine.GetSystem<AssetManager>("Asset");
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
-        mIcons["PlayButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
-        mIcons["PauseButton"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
-        mIcons["StopButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
-        mIcons["StepButton"]  = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
-        mIcons["SaveFile"]    = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
-        mIcons["ZoomIn"]      = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_in.png")->texture_id);
-        mIcons["ZoomOut"]     = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_out.png")->texture_id);
+        mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
+        mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
+        mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
+        mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
+        mIcons["SaveFile"]           = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
+        mIcons["ZoomIn"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_in.png")->texture_id);
+        mIcons["ZoomOut"]            = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_out.png")->texture_id);
+        mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "folder_icon.png")->texture_id);
+        mIcons["File"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "file_icon.png")->texture_id);
+        mIcons["BackButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "back_icon.png")->texture_id);
+        mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "texture_placeholder.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached", GetName());
     }
@@ -101,7 +105,7 @@ namespace IS {
 
     void EditorLayer::OnRender()
     {
-        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_NoResize;
+        ImGuiDockNodeFlags dockspace_flags = 0;
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
 
