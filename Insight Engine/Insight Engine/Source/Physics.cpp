@@ -58,7 +58,17 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-		if (InsightEngine::Instance().mRuntime == false) { return; }
+		if (InsightEngine::Instance().mRuntime == false) {
+
+			// body collider always follow the sprite trans (FOR DEMO FIRST)
+			for (auto const& entity : mEntities) {
+				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+					body.BodyFollowTransform(trans);
+				}
+			}
+			return; }
 		mContactPointsList.clear();
 
 		// add new entity inside grid
@@ -770,9 +780,6 @@ namespace IS {
 		time /= static_cast<float>(mTotalIterations);
 
 		for (auto const& entity : entities) {
-			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-			// check input for applying gravity
-			//UpdateGravity(input);
 
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {

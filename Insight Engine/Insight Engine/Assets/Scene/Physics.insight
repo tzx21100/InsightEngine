@@ -22,20 +22,20 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : 646.7850341796875,
-						"y" : -129.701416015625
+						"x" : 645.57757568359375,
+						"y" : -116.40846252441406
 					},
 					{
-						"x" : 1122.313232421875,
-						"y" : 24.807075500488281
+						"x" : 1128.54052734375,
+						"y" : 13.001052856445312
 					},
 					{
-						"x" : 1153.2149658203125,
-						"y" : -70.298576354980469
+						"x" : 1154.42236328125,
+						"y" : -83.591537475585938
 					},
 					{
-						"x" : 677.68670654296875,
-						"y" : -224.80706787109375
+						"x" : 671.45947265625,
+						"y" : -213.00105285644531
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -73,7 +73,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTransformRotation" : 18.0,
+				"SpriteTransformRotation" : 15.000000953674316,
 				"SpriteTransformScalingX" : 500.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 900.0,
@@ -81,7 +81,7 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 18.0,
+				"TransformRotation" : 15.000000953674316,
 				"TransformScalingX" : 500.0,
 				"TransformScalingY" : 100.0,
 				"TransformWorldPositionX" : 900.0,
