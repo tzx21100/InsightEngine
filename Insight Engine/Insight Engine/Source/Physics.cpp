@@ -185,11 +185,9 @@ namespace IS {
 				//std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
 				//size_t totalEntities = test_cell.count();
 
-				// need check with all the overlap entities, in case the entities having outrageous width / heigth
-				mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
-
 				// at least more than 1 entity to avoid self checking
-				if (totalEntities > 1 || mImplicitGrid.mInGridList.size() > 1) {
+				// in case one entity overlaps on the grid check collide with one in grid entity
+				if (totalEntities > 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
 					// emplace all the entities in current cell
 					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
 						if (test_cell.test(e)) { // if the current bit entity is true
@@ -202,6 +200,8 @@ namespace IS {
 							}
 						}
 					}
+					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
+					mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
 					//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
 					if (mImplicitGrid.mInGridList.size() > 1) {
 						CollisionDetect(mImplicitGrid.mInGridList);
