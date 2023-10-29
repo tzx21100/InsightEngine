@@ -166,9 +166,21 @@ namespace IS {
 
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
-            body_player.mMass = 100.f;
-            //body_player.mAngularVelocity = 0.f;
-            body_player.mRestitution = 0.1f;
+            auto& trans_player = engine.GetComponent<Transform>(player);
+            body_player.mMass = 500.f;
+
+            // limit angle of the player
+            float angle = trans_player.getRotation();
+            if (angle != 0.f && angle != 360.f) {
+                if (angle < 90.f) {
+                    angle = (angle < 15.f) ? angle : 15.f;
+                }
+                else if (angle >= 90.f) {
+                    angle = (angle > 345.f) ? angle : 345.f;
+                }
+            }
+            trans_player.setRotation(angle, body_player.mAngularVelocity);
+            body_player.mRestitution = 0.f;
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
@@ -207,7 +219,7 @@ namespace IS {
                 if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
                     //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
                     if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
-                        body_player.AddVelocity(Vector2D(0.f, 700.f));
+                        body_player.AddVelocity(Vector2D(0.f, 800.f));
                         body_player.mState = BodyState::JUMP;
                     }
                 }

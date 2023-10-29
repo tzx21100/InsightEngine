@@ -58,7 +58,17 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-		if (InsightEngine::Instance().mRuntime == false) { return; }
+		if (InsightEngine::Instance().mRuntime == false) {
+
+			// body collider always follow the sprite trans (FOR DEMO FIRST)
+			for (auto const& entity : mEntities) {
+				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+					body.BodyFollowTransform(trans);
+				}
+			}
+			return; }
 		mContactPointsList.clear();
 
 		// add new entity inside grid
@@ -201,7 +211,8 @@ namespace IS {
 						}
 					}
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
-					mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+					//mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
+					mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
 					//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
 					if (mImplicitGrid.mInGridList.size() > 1) {
 						CollisionDetect(mImplicitGrid.mInGridList);
@@ -303,7 +314,7 @@ namespace IS {
 	void Physics::BroadPhase() {
 		// detect collision through Implicit Grid
 		ImplicitGridCollisionDetect();
-		if (mImplicitGrid.mOutsideGridList.size() > 1 || mImplicitGrid.mOverlapGridList.size() > 1) {
+		if (mImplicitGrid.mOutsideGridList.size() >= 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
 			CollisionDetect(mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList);
 		}
 	}
@@ -770,9 +781,6 @@ namespace IS {
 		time /= static_cast<float>(mTotalIterations);
 
 		for (auto const& entity : entities) {
-			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-			// check input for applying gravity
-			//UpdateGravity(input);
 
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {

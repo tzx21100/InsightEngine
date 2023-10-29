@@ -22,15 +22,18 @@ namespace IS
 
         static public void Init()
         {
-             backGround = InternalCalls.GetSpriteImage("Assets/Textures/black_background.png");
-             player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
-             player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
+            backGround = InternalCalls.GetSpriteImage("Assets/Textures/black_background.png");
+            //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
+            //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
+
+            player_walk = InternalCalls.GetSpriteImage("Assets/Textures/Player run 1R12C.png");
+            player_idle = InternalCalls.GetSpriteImage("Assets/Textures/Player idle 1R12C.png");
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1,4,1f);
-            InternalCalls.CreateAnimationFromSprite(1,8,3f);
+            InternalCalls.CreateAnimationFromSprite(1,12,3f);
+            InternalCalls.CreateAnimationFromSprite(1,12,3f);
 
         }
 
@@ -57,8 +60,8 @@ namespace IS
             Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             Vector2D trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
-            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
-            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);
 
             int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));

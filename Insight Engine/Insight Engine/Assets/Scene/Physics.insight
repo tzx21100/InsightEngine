@@ -8,9 +8,9 @@
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
 				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 50000.0,
+				"RigidBodyArea" : 80000.0,
 				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -22,20 +22,20 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : 646.7850341796875,
-						"y" : -129.701416015625
+						"x" : 600.688720703125,
+						"y" : -135.2313232421875
 					},
 					{
-						"x" : 1122.313232421875,
-						"y" : 24.807075500488281
+						"x" : 1373.429443359375,
+						"y" : 71.82391357421875
 					},
 					{
-						"x" : 1153.2149658203125,
-						"y" : -70.298576354980469
+						"x" : 1399.311279296875,
+						"y" : -24.768672943115234
 					},
 					{
-						"x" : 677.68670654296875,
-						"y" : -224.80706787109375
+						"x" : 626.57061767578125,
+						"y" : -231.82391357421875
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -43,19 +43,19 @@
 				"RigidBodyVertices" : 
 				[
 					{
-						"x" : -250.0,
+						"x" : -400.0,
 						"y" : 50.0
 					},
 					{
-						"x" : 250.0,
+						"x" : 400.0,
 						"y" : 50.0
 					},
 					{
-						"x" : 250.0,
+						"x" : 400.0,
 						"y" : -50.0
 					},
 					{
-						"x" : -250.0,
+						"x" : -400.0,
 						"y" : -50.0
 					}
 				],
@@ -72,22 +72,20 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : 18.0,
-				"SpriteTransformScalingX" : 500.0,
+				"SpriteTransformRotation" : 15.000000953674316,
+				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
-				"SpriteTransformWorldPositionX" : 900.0,
-				"SpriteTransformWorldPositionY" : -100.0
+				"SpriteTransformWorldPositionX" : 1000.0,
+				"SpriteTransformWorldPositionY" : -80.0
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 18.0,
-				"TransformScalingX" : 500.0,
+				"TransformRotation" : 15.000000953674316,
+				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 100.0,
-				"TransformWorldPositionX" : 900.0,
-				"TransformWorldPositionY" : -100.0
+				"TransformWorldPositionX" : 1000.0,
+				"TransformWorldPositionY" : -80.0
 			}
 		},
 		{
@@ -96,59 +94,59 @@
 			{
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 9199.1044921875,
+				"RigidBodyAngularVelocity" : -0.0011677764123305678,
+				"RigidBodyArea" : 36000.0,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
-				"RigidBodyDensity" : 919910.4375,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 18000000.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0099999997764825821,
-				"RigidBodyMass" : 100.0,
-				"RigidBodyRestitution" : 0.10000000149011612,
+				"RigidBodyInvMass" : 0.0020000000949949026,
+				"RigidBodyMass" : 500.0,
+				"RigidBodyRestitution" : 0.0,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -48.0,
-						"y" : 47.912002563476562
+						"x" : 127.1195068359375,
+						"y" : 119.39903259277344
 					},
 					{
-						"x" : 48.0,
-						"y" : 47.912002563476562
+						"x" : -72.8804931640625,
+						"y" : 119.39968872070312
 					},
 					{
-						"x" : 48.0,
-						"y" : -47.912002563476562
+						"x" : -72.881072998046875,
+						"y" : -60.600315093994141
 					},
 					{
-						"x" : -48.0,
-						"y" : -47.912002563476562
+						"x" : 127.11892700195312,
+						"y" : -60.600971221923828
 					}
 				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVelocityX" : -2.9252023696899414,
+				"RigidBodyVelocityY" : -56.640869140625,
 				"RigidBodyVertices" : 
 				[
 					{
-						"x" : -48.0,
-						"y" : 47.912002563476562
+						"x" : 100.0,
+						"y" : 90.0
 					},
 					{
-						"x" : 48.0,
-						"y" : 47.912002563476562
+						"x" : -100.0,
+						"y" : 90.0
 					},
 					{
-						"x" : 48.0,
-						"y" : -47.912002563476562
+						"x" : -100.0,
+						"y" : -90.0
 					},
 					{
-						"x" : -48.0,
-						"y" : -47.912002563476562
+						"x" : 100.0,
+						"y" : -90.0
 					}
 				],
-				"mInertia" : 153318.6875
+				"mInertia" : 3016666.75
 			},
 			"Script" : 
 			{
@@ -164,21 +162,21 @@
 				"SpriteDrawing" : true,
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 6,
-				"SpriteTextureIndex" : 5,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 96.0,
-				"SpriteTransformScalingY" : 95.824005126953125,
-				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : 0.0
+				"SpriteTexture" : 7,
+				"SpriteTextureIndex" : 6,
+				"SpriteTransformRotation" : -0.00018674266175366938,
+				"SpriteTransformScalingX" : -200.0,
+				"SpriteTransformScalingY" : 180.0,
+				"SpriteTransformWorldPositionX" : 27.119216918945312,
+				"SpriteTransformWorldPositionY" : 29.399356842041016
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 96.0,
-				"TransformScalingY" : 95.824005126953125,
-				"TransformWorldPositionX" : 0.0,
-				"TransformWorldPositionY" : 0.0
+				"TransformRotation" : -0.00018674266175366938,
+				"TransformScalingX" : -200.0,
+				"TransformScalingY" : 180.0,
+				"TransformWorldPositionX" : 27.119216918945312,
+				"TransformWorldPositionY" : 29.399356842041016
 			}
 		},
 		{
@@ -190,7 +188,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 150000.0,
 				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -252,9 +250,7 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1500.0,
 				"SpriteTransformScalingY" : 100.0,
@@ -271,40 +267,40 @@
 			}
 		},
 		{
-			"Name" : "Slope",
+			"Name" : "Platform1",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
 				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 50000.0,
+				"RigidBodyArea" : 80000.0,
 				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : false,
-				"RigidBodyDensity" : 4999949824.0,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 99999.0,
+				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : 446.7850341796875,
-						"y" : -29.701423645019531
+						"x" : 1700.0,
+						"y" : -450.0
 					},
 					{
-						"x" : 922.31329345703125,
-						"y" : 124.80707550048828
+						"x" : 2500.0,
+						"y" : -450.0
 					},
 					{
-						"x" : 953.2149658203125,
-						"y" : 29.701423645019531
+						"x" : 2500.0,
+						"y" : -550.0
 					},
 					{
-						"x" : 477.68670654296875,
-						"y" : -124.80707550048828
+						"x" : 1700.0,
+						"y" : -550.0
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -312,23 +308,23 @@
 				"RigidBodyVertices" : 
 				[
 					{
-						"x" : -250.0,
+						"x" : -400.0,
 						"y" : 50.0
 					},
 					{
-						"x" : 250.0,
+						"x" : 400.0,
 						"y" : 50.0
 					},
 					{
-						"x" : 250.0,
+						"x" : 400.0,
 						"y" : -50.0
 					},
 					{
-						"x" : -250.0,
+						"x" : -400.0,
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 2166644992.0
+				"mInertia" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -341,24 +337,283 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : -18.0,
-				"SpriteTransformScalingX" : 500.0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
-				"SpriteTransformWorldPositionX" : -700.0,
-				"SpriteTransformWorldPositionY" : 0.0
+				"SpriteTransformWorldPositionX" : 2100.0,
+				"SpriteTransformWorldPositionY" : -500.0
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : -18.0,
-				"TransformScalingX" : 500.0,
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 100.0,
-				"TransformWorldPositionX" : -700.0,
-				"TransformWorldPositionY" : 0.0
+				"TransformWorldPositionX" : 2100.0,
+				"TransformWorldPositionY" : -500.0
+			}
+		},
+		{
+			"Name" : "Platform2",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 80000.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.80000001192092896,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : 2900.0,
+						"y" : -150.0
+					},
+					{
+						"x" : 3700.0,
+						"y" : -150.0
+					},
+					{
+						"x" : 3700.0,
+						"y" : -250.0
+					},
+					{
+						"x" : 2900.0,
+						"y" : -250.0
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : -50.0
+					},
+					{
+						"x" : -400.0,
+						"y" : -50.0
+					}
+				],
+				"mInertia" : 0.0
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.54492461681365967,
+				"SpriteColorY" : 0.27639034390449524,
+				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 800.0,
+				"SpriteTransformScalingY" : 100.0,
+				"SpriteTransformWorldPositionX" : 3300.0,
+				"SpriteTransformWorldPositionY" : -200.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 800.0,
+				"TransformScalingY" : 100.0,
+				"TransformWorldPositionX" : 3300.0,
+				"TransformWorldPositionY" : -200.0
+			}
+		},
+		{
+			"Name" : "Platform3",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 80000.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.80000001192092896,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : 4100.0,
+						"y" : -550.0
+					},
+					{
+						"x" : 4900.0,
+						"y" : -550.0
+					},
+					{
+						"x" : 4900.0,
+						"y" : -650.0
+					},
+					{
+						"x" : 4100.0,
+						"y" : -650.0
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : -50.0
+					},
+					{
+						"x" : -400.0,
+						"y" : -50.0
+					}
+				],
+				"mInertia" : 0.0
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.54492461681365967,
+				"SpriteColorY" : 0.27639034390449524,
+				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 800.0,
+				"SpriteTransformScalingY" : 100.0,
+				"SpriteTransformWorldPositionX" : 4500.0,
+				"SpriteTransformWorldPositionY" : -600.0
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 800.0,
+				"TransformScalingY" : 100.0,
+				"TransformWorldPositionX" : 4500.0,
+				"TransformWorldPositionY" : -600.0
+			}
+		},
+		{
+			"Name" : "Platform4",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 80000.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.80000001192092896,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : 4904.68212890625,
+						"y" : -548.5228271484375
+					},
+					{
+						"x" : 5125.19189453125,
+						"y" : 220.48652648925781
+					},
+					{
+						"x" : 5221.31787109375,
+						"y" : 192.92280578613281
+					},
+					{
+						"x" : 5000.80810546875,
+						"y" : -576.0865478515625
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : 50.0
+					},
+					{
+						"x" : 400.0,
+						"y" : -50.0
+					},
+					{
+						"x" : -400.0,
+						"y" : -50.0
+					}
+				],
+				"mInertia" : 0.0
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.54492461681365967,
+				"SpriteColorY" : 0.27639034390449524,
+				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTransformRotation" : 74.000007629394531,
+				"SpriteTransformScalingX" : 800.0,
+				"SpriteTransformScalingY" : 100.0,
+				"SpriteTransformWorldPositionX" : 5063.0,
+				"SpriteTransformWorldPositionY" : -177.80000305175781
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 74.000007629394531,
+				"TransformScalingX" : 800.0,
+				"TransformScalingY" : 100.0,
+				"TransformWorldPositionX" : 5063.0,
+				"TransformWorldPositionY" : -177.80000305175781
 			}
 		}
 	],
-	"EntityAmount" : 4
+	"EntityAmount" : 7
 }

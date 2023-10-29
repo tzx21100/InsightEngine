@@ -136,7 +136,7 @@ namespace IS
          * \param height The height of the box.
          * \return A vector containing the vertices of the box.
          */
-        std::vector<Vector2D> CreateBoxVertices(float width, float height);
+        void CreateBoxVertices(float width, float height);
 
         /*!
          * \brief Calculate all the updated transformed vertices based on the transform center position.

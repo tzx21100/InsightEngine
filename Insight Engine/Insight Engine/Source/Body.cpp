@@ -53,7 +53,7 @@ namespace IS
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-            mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
+            CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
             // making the transform mVertices same size as the mVertices
             mTransformedVertices = mVertices;
         }
@@ -99,10 +99,9 @@ namespace IS
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-            //mVertices = CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y);
-            
+            CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
             // making the transform mVertices same size as the mVertices
-            //mTransformedVertices = mVertices;
+            mTransformedVertices = mVertices;
         }
         else if (mBodyShape == BodyShape::Circle) {
             CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
@@ -115,7 +114,6 @@ namespace IS
 
         mTransformUpdateRequired = true;
 
-        //Grid::AddIntoCell(*this);
 	}
 
     // Updates the rigid body's transformation data to match the texture sprite Transform
@@ -125,7 +123,7 @@ namespace IS
     }
 
     // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)
-    std::vector<Vector2D> RigidBody::CreateBoxVertices(float width, float height) {
+    void RigidBody::CreateBoxVertices(float width, float height) {
         // the vertices are calculated based on origin (not transform yet)
         float left = - width / 2.f;
         float right = left + width;
@@ -138,7 +136,7 @@ namespace IS
         box_vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
         box_vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
 
-        return box_vertices;
+        mVertices = box_vertices;
     }
 
     // Calculate all the updated transformed vertices based on the transform center position
@@ -270,7 +268,7 @@ namespace IS
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
         //if (!RigidBody::mCheckTransform) { // if body havent been transform for once
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
-            mVertices = CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y);
+            CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y); // for vertices
             RigidBody::mCheckTransform = true; // true means update and transform for at least one time
             //IS_CORE_DEBUG("Transform");
         //}

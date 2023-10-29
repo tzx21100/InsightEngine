@@ -47,6 +47,8 @@ namespace IS
 
 		static void DrawGrid(Sprite const& sprite);
 
+		void EmplaceEntity(std::vector<Entity>& result, std::vector<Entity> const& source);
+
 		static const int MIN_GRID_COLS = 1;
 		static const int MAX_GRID_COLS = 20;
 		static const int MIN_GRID_ROWS = 1;
