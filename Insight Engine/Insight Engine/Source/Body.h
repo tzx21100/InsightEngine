@@ -272,6 +272,10 @@ namespace IS
 
             prefab["RigidBodyCheckTransform"] = mCheckTransform;
             prefab["mInertia"] = mInertia;
+            prefab["mInvInertia"] = mInvInertia;
+            prefab["mStaticFriction"] = mStaticFriction;
+            prefab["mDynamicFriction"] = mDynamicFriction;
+
             // Serializing transformUpdateRequired
             prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
 
@@ -333,6 +337,9 @@ namespace IS
 
             mCheckTransform= data["RigidBodyCheckTransform"].asBool();
             mInertia= data["mInertia"].asFloat();
+            mInvInertia = data["mInvInertia"].asFloat();
+            mStaticFriction = data["mStaticFriction"].asFloat();
+            mDynamicFriction = data["mDynamicFriction"].asFloat();
 
             // Deserializing transformUpdateRequired
             mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
