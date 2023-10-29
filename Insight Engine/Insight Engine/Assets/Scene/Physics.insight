@@ -72,12 +72,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 15.000000953674316,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 1000.0,
-				"SpriteTransformWorldPositionY" : -80.0
+				"SpriteTransformWorldPositionY" : -80.0,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -154,21 +157,37 @@
 			},
 			"Sprite" : 
 			{
-				"AnimationIndex" : 1,
+				"AnimationIndex" : 0,
 				"SpriteColorX" : 0.85964435338973999,
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
-				"SpriteCurrentTexIndex" : 1,
+				"SpriteCurrentTexIndex" : 0,
 				"SpriteDrawing" : true,
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 7,
+				"SpriteTextureHeight" : 932,
 				"SpriteTextureIndex" : 6,
+				"SpriteTextureWidth" : 15684,
 				"SpriteTransformRotation" : -0.00018674266175366938,
 				"SpriteTransformScalingX" : -200.0,
 				"SpriteTransformScalingY" : 180.0,
 				"SpriteTransformWorldPositionX" : 27.119216918945312,
-				"SpriteTransformWorldPositionY" : 29.399356842041016
+				"SpriteTransformWorldPositionY" : 29.399356842041016,
+				"animations" : 
+				[
+					{
+						"animation_duration" : 3.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.008208700455725193,
+						"time_per_frame" : 0.25,
+						"x_frames" : 12,
+						"y_frames" : 1
+					}
+				]
 			},
 			"Transform" : 
 			{
@@ -250,12 +269,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1500.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : -400.0
+				"SpriteTransformWorldPositionY" : -400.0,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -337,12 +359,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 2100.0,
-				"SpriteTransformWorldPositionY" : -500.0
+				"SpriteTransformWorldPositionY" : -500.0,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -424,12 +449,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 3300.0,
-				"SpriteTransformWorldPositionY" : -200.0
+				"SpriteTransformWorldPositionY" : -200.0,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -511,12 +539,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 4500.0,
-				"SpriteTransformWorldPositionY" : -600.0
+				"SpriteTransformWorldPositionY" : -600.0,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -598,12 +629,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 74.000007629394531,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 100.0,
 				"SpriteTransformWorldPositionX" : 5063.0,
-				"SpriteTransformWorldPositionY" : -177.80000305175781
+				"SpriteTransformWorldPositionY" : -177.80000305175781,
+				"animations" : []
 			},
 			"Transform" : 
 			{
