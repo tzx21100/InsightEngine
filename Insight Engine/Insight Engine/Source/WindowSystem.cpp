@@ -255,14 +255,12 @@ namespace IS {
 
     void WindowSystem::SaveProperties()
     {
-        if (mProps.mWidth == 0 || mProps.mHeight)
+        if (mProps.mWidth == 0 || mProps.mHeight == 0)
             return;
         std::string filepath = "Properties/WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];
         win_props["Title"]      = mProps.mTitle;
-        win_props["Xpos"]       = mProps.mXpos;
-        win_props["Ypos"]       = mProps.mYpos;
         win_props["Width"]      = mProps.mWidth;
         win_props["Height"]     = mProps.mHeight;
         win_props["TargetFPS"]  = mProps.mTargetFPS;

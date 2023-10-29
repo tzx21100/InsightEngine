@@ -4,11 +4,9 @@
 		"Fullscreen" : false,
 		"Height" : 1057,
 		"Maximized" : true,
-		"TargetFPS" : 9999,
+		"TargetFPS" : 60,
 		"Title" : "Insight Engine",
-		"Vsync" : false,
-		"Width" : 1920,
-		"Xpos" : 1920,
-		"Ypos" : 20
+		"Vsync" : true,
+		"Width" : 1920
 	}
 }
