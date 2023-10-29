@@ -51,7 +51,6 @@ namespace IS {
         io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto_Mono/static/RobotoMono-Bold.ttf", FONT_SIZE); // log console bold
 
         // Setup Dear ImGui style
-
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

@@ -94,6 +94,9 @@ namespace IS {
          */
         void RenderAllAssetsBrowser();
 
+        /*!
+         * \brief Renders assets browser for imported assets.
+         */
         void RenderImportedAssets();
     };
 

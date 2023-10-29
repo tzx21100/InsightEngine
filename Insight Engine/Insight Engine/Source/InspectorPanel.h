@@ -76,8 +76,6 @@ namespace IS {
          */
         template <typename Component, typename RenderFunc>
         void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
-
-        void RenderOutline(Entity entity);
     };
 
 } // end namespace IS

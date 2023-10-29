@@ -41,7 +41,6 @@ namespace IS {
         if (mSceneHierarchyPanel->mSelectedEntity)
         {
             RenderComponentNodes(*mSceneHierarchyPanel->mSelectedEntity);
-            RenderOutline(*mSceneHierarchyPanel->mSelectedEntity);
         }
         ImGui::End(); // end window Inspector
     }
@@ -142,17 +141,6 @@ namespace IS {
         ImGui::Spacing();
 
     } // end RenderEntityConfig()
-
-    void InspectorPanel::RenderOutline(Entity entity)
-    {
-        auto& engine = InsightEngine::Instance();
-        if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<RigidBody>(entity))
-        {
-            auto& sprite = engine.GetComponent<Sprite>(entity);
-            auto& body = engine.GetComponent<RigidBody>(entity);
-            ISGraphics::DrawOutLine(body, sprite, { 1.f, 1.f, 0.f }, 3.f);
-        }
-    }
 
     void InspectorPanel::RenderComponentNodes(Entity entity)
     {

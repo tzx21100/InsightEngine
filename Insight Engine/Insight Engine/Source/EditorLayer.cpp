@@ -96,9 +96,10 @@ namespace IS {
         {
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
             
-            // Right mouse drag
+            // Right mouse drag to pan camera
             if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
             {
+                ImVec2 mouse_position = ImGui::GetMousePos();
                 Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
                 auto const& [x_drag, y_drag] = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
                 camera.PanCamera(dt, x_drag, y_drag);
@@ -111,36 +112,30 @@ namespace IS {
             engine.mRuntime = false;
 
             auto [mx, my] = ImGui::GetMousePos();
-            mx -= mScenePanel->mViewportBounds[0].x;
-            my -= mScenePanel->mViewportBounds[0].y;
-            Vec2 viewportSize = mScenePanel->mViewportBounds[1] - mScenePanel->mViewportBounds[0];
+            mx -= mScenePanel->GetViewportBounds()[0].x;
+            my -= mScenePanel->GetViewportBounds()[0].y;
+            Vec2 viewportSize = mScenePanel->GetViewportBounds()[1] - mScenePanel->GetViewportBounds()[0];
             my = viewportSize.y - my;
-            int mouseX = (int)mx;
-            int mouseY = (int)my;
+            int mouse_x = static_cast<int>(mx);
+            int mouse_y = static_cast<int>(my);
 
-            if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+            // Check if mouse is within bounds of the scene panel for mouse picking.
+            if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
+                0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
             {
-                int pixelData = ISGraphics::mFramebuffer->ReadPixel(mouseX, mouseY);
-                if (pixelData == -1)
-                {
-                    mHoveredEntity = {};
-                } else
-                {
-                    mHoveredEntity = std::make_shared<Entity>(pixelData);
-                }
+                int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
+                mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
 
+                // Set hovered entity as the selected entity
                 if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                {
                     mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
-                    //IS_CORE_DEBUG("Entity : {}", mHoveredEntity ? std::to_string(*mHoveredEntity) : "none");
-                }
             }
         }
     }
 
     void EditorLayer::OnRender()
     {
-        ImGuiDockNodeFlags dockspace_flags = 0;
+        ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_NoResize; // disable resizing of panels in dockspace
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
 
@@ -185,7 +180,7 @@ namespace IS {
         for (auto& panel : mPanels)
             panel->RenderPanel();
 
-        RenderGizmo();
+        //RenderGizmo();
 
         //style.WindowMinSize = min_window_size;
 
@@ -394,24 +389,24 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<LogConsolePanel>());
     }
 
-    void EditorLayer::RenderGizmo()
-    {
-        if (!mSceneHierarchyPanel->GetSelectedEntity())
-            return;
+    //void EditorLayer::RenderGizmo()
+    //{
+    //    if (!mSceneHierarchyPanel->GetSelectedEntity())
+    //        return;
 
-        //Entity selected_entity = *mSceneHierarchyPanel->GetSelectedEntity();
+    //    //Entity selected_entity = *mSceneHierarchyPanel->GetSelectedEntity();
 
-        ImGuizmo::SetOrthographic(true);
-        ImGuizmo::SetDrawlist();
+    //    ImGuizmo::SetOrthographic(true);
+    //    ImGuizmo::SetDrawlist();
 
-        ImGuizmo::SetRect(mScenePanel->mViewportBounds[0].x, mScenePanel->mViewportBounds[0].y,
-                          mScenePanel->mViewportBounds[1].x - mScenePanel->mViewportBounds[0].x,
-                          mScenePanel->mViewportBounds[1].y - mScenePanel->mViewportBounds[0].y);
+    //    ImGuizmo::SetRect(mScenePanel->GetViewportBounds()[0].x, mScenePanel->GetViewportBounds()[0].y,
+    //                      mScenePanel->GetViewportBounds()[1].x - mScenePanel->GetViewportBounds()[0].x,
+    //                      mScenePanel->GetViewportBounds()[1].y - mScenePanel->GetViewportBounds()[0].y);
 
-        //Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-        //glm::mat3 view_matrix = camera.xform;
-        ImGuizmo::SetOrthographic(true);
-    }
+    //    //Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+    //    //glm::mat3 view_matrix = camera.xform;
+    //    ImGuizmo::SetOrthographic(true);
+    //}
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
     {
@@ -441,8 +436,7 @@ namespace IS {
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
             auto const& relative_path = std::filesystem::relative(filepath);
-            auto& scene_manager = SceneManager::Instance();
-            scene_manager.LoadScene(relative_path.string());
+            SceneManager::Instance().LoadScene(relative_path.string());
             IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
         }
     }
@@ -450,18 +444,19 @@ namespace IS {
     void EditorLayer::OpenScene(std::string const& path)
     {
         std::filesystem::path filepath(path);
-        auto& scene_manager = SceneManager::Instance();
-        scene_manager.LoadScene(filepath.string());
+        SceneManager::Instance().LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
     }
 
+    bool EditorLayer::IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
+
+    bool EditorLayer::IsScenePanelFocused() const { return mScenePanel->IsFocused(); }
+
     ImTextureID EditorLayer::GetIcon(const char* icon) const { return mIcons.at(icon); }
 
-    void EditorLayer::SaveScene() 
-    {
-        auto& scene_manager = SceneManager::Instance();
-        scene_manager.SaveScene();
-    }
+    void EditorLayer::RenderSelectedEntityOutline() const { mSceneHierarchyPanel->RenderSelectedEntityOutline(); }
+
+    void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
 
     void EditorLayer::SaveSceneAs()
     {

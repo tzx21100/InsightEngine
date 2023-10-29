@@ -131,6 +131,10 @@ namespace IS {
          */
         bool WantCaptureKeyboard() const;
 
+        /*!
+         * \brief Get the instance of editor layer.
+         * \return the instance of editor layer.
+         */
         std::shared_ptr<EditorLayer> GetEditorLayer();
 
     private:

@@ -17,6 +17,8 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#include "Graphics.h"
+#include "Editor.h"
 #include <stb_image.h>
 
 namespace IS {
@@ -214,6 +216,11 @@ namespace IS {
             }
 
         }
+
+        // Draw outline for selected entity
+        auto const editor = engine.GetSystem<Editor>("Editor");
+        auto const editor_layer = editor->GetEditorLayer();
+        editor_layer->RenderSelectedEntityOutline();
 
         // Render text when GUI is disabled
         if (!engine.mUsingGUI) {

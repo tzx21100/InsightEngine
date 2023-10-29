@@ -50,21 +50,32 @@ namespace IS {
 
     class SceneHierarchyPanel; ///< Forward declaration
 
+    /*!
+     * \brief A derived class representing a game panel in a dockspace.
+     */
     class GamePanel : public Panel
     {
     public:
+
+        /*!
+         * \brief Default constructor of game panel.
+         */
         GamePanel() = default;
 
+        /*!
+         * \brief Overrides the base class method to render the game panel.
+         */
         void RenderPanel() override;
 
+        /*!
+         * \brief Check if the game panel is in focus.
+         * \return boolean flag indicating if game panel is in focus.
+         */
         bool IsFocused() const;
 
-        Vec2 GetViewportSize() const { return mViewportSize; }
-
     private:
-        bool mFocused{};
-        Vec2 mViewportSize{};
-        Vec2 mViewportBounds[2];
+        bool mFocused{}; ///< Boolean flag indicating if the game panel is in focus.
+        Vec2 mViewportSize{}; ///< The size of the game panel.
     };
 
     /*!
@@ -72,6 +83,10 @@ namespace IS {
      */
     class ScenePanel : public Panel {
     public:
+
+        /*!
+         * \brief Default constructor of scene panel.
+         */
         ScenePanel() = default;
 
         /*!
@@ -79,14 +94,28 @@ namespace IS {
          */
         void RenderPanel() override;
 
+        /*!
+         * \brief Check if the scene panel is in focus.
+         * \return boolean flag indicating if scene panel is in focus.
+         */
         bool IsFocused() const;
 
+        /*!
+         * \brief Get the size of the viewport.
+         * \return vec2 containing the width and height of the viewport.
+         */
         Vec2 GetViewportSize() const { return mViewportSize; }
-        Vec2 mViewportBounds[2];
+
+        /*!
+         * \brief Get upper and lower bounds of the viewport.
+         * \return an array of 2 vec2 containing the upper and lower bounds of the viewport.
+         */
+        std::array<Vec2, 2> const& GetViewportBounds() const { return mViewportBounds; }
 
     private:
-        bool mFocused{};
+        bool mFocused{}; ///< Boolean flag indicating if scene panel is in focus.
         Vec2 mViewportSize{}; ///< Size of the scene panel.
+        std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
 
         /*!
          * \brief Renders a help tooltip overlay.

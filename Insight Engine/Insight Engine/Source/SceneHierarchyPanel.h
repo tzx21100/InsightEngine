@@ -66,7 +66,16 @@ namespace IS {
          */
         EntityPtr GetSelectedEntity();
 
-        void SetSelectedEntity(EntityPtr entity);
+        /*!
+         * \brief Setter for entity selected currently.
+         * \param entity_ptr Pointer to the entity hovered currently.
+         */
+        void SetSelectedEntity(EntityPtr entity_ptr);
+
+        /*!
+         * \brief Renders an orange outline for the selected entity.
+         */
+        void RenderSelectedEntityOutline();
 
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
@@ -102,9 +111,22 @@ namespace IS {
         // */
         //void RenderConfirmDelete(Entity entity, bool& show);
 
+        /*!
+         * \brief Clone an existing entity.
+         * \param entity The Entity to be cloned.
+         */
         void CloneEntity(Entity entity);
+
+        /*!
+         * \brief Delete an existing entity.
+         * \param entity The Entity to be deleted.
+         */
         void DeleteEntity(Entity entity);
 
+        /*!
+         * \brief Renders gui to add component to an entity.
+         * \param entity The Entity to add components to.
+         */
         static void RenderAddComponent(Entity entity);
 
         friend class InspectorPanel; ///< Grant InspectorPanel access to private data members.

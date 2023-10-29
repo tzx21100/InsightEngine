@@ -78,11 +78,32 @@ namespace IS {
          */
         void OpenScene(std::string const& path);
 
-        bool IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
+        /*!
+         * \brief Check if the game panel is in focus.
+         *
+         * \return Boolean flag indicating focus.
+         */
+        bool IsGamePanelFocused() const;
 
-        bool IsScenePanelFocused() const { return mScenePanel->IsFocused(); }
+        /*!
+         * \brief Check if the scene panel is in focus.
+         *
+         * \return Boolean flag indicating focus.
+         */
+        bool IsScenePanelFocused() const;
 
+        /*!
+         * \brief Get the texture id of an icon.
+         *
+         * \param icon The key for the icon.
+         * \return texture id to the icon.
+         */
         ImTextureID GetIcon(const char* icon) const;
+
+        /*!
+         * \brief Render outline of the selected entity.
+         */
+        void RenderSelectedEntityOutline() const;
 
     private:
         // Internal Flags
@@ -109,7 +130,10 @@ namespace IS {
          */
         void RenderToolBar();
 
-        void RenderGizmo();
+        ///*!
+        // * \brief Render the gizmo.
+        // */
+        //void RenderGizmo();
 
         /*!
          * \brief Attach panels.

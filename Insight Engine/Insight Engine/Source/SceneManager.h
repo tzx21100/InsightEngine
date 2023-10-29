@@ -142,9 +142,27 @@ namespace IS {
          */
         SceneID GetSceneCount() const;
 
+        /*!
+         * \brief Add entity with given name.
+         * \param The name of the entity.
+         */
         void AddEntity(const char* name);
+
+        /*!
+         * \brief Add a random entity.
+         */
         void AddRandomEntity();
+
+        /*!
+         * \brief Clone an existing entity.
+         * \param enttity Entity to be cloned.
+         */
         void CloneEntity(Entity entity);
+
+        /*!
+         * \brief Delete an existing entity.
+         * \param enttity Entity to be deleted.
+         */
         void DeleteEntity(Entity entity);
 
 	private:

@@ -354,6 +354,22 @@ namespace IS {
 
     SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
-    void SceneHierarchyPanel::SetSelectedEntity(EntityPtr entity) { mSelectedEntity = entity; }
+    void SceneHierarchyPanel::SetSelectedEntity(EntityPtr entity_ptr) { mSelectedEntity = entity_ptr; }
+
+    void SceneHierarchyPanel::RenderSelectedEntityOutline()
+    {
+        if (!mSelectedEntity)
+            return;
+
+        Entity entity = *mSelectedEntity;
+
+        auto& engine = InsightEngine::Instance();
+        if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<RigidBody>(entity))
+        {
+            auto& sprite = engine.GetComponent<Sprite>(entity);
+            auto& body = engine.GetComponent<RigidBody>(entity);
+            ISGraphics::DrawOutLine(body, sprite, { 1.f, .675f, .11f }, 3.f);
+        }
+    }
 
 } // end namespace IS
