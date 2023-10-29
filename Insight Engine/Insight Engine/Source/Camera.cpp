@@ -4,8 +4,8 @@
 namespace IS {
 
 	aCameraType Camera::mActiveCamera;
-	float Camera::mMinX = -2000.f;
-	float Camera::mMaxX =  2000.f;
+	float Camera::mMinX = -5000.f;
+	float Camera::mMaxX =  5000.f;
 	float Camera::mMinY = -2000.f;
 	float Camera::mMaxY =  2000.f;
 	float Camera::mMinZoom = .1f;
@@ -75,6 +75,10 @@ namespace IS {
 		new_zoom = glm::clamp(new_zoom, mMinZoom, mMaxZoom);
 		mZoomLevel = new_zoom;
 		UpdateCamXform();
+		//auto& engine = InsightEngine::Instance();
+		//auto input = engine.GetSystem<InputManager>("Input");
+		//input->setCenterPos(world_position.x, world_position.y);
+		//input->setRatio(camera_dim.x, camera_dim.y);
 	}
 
 	void Camera::PanCamera(float dt, float delta_x, float delta_y)
@@ -82,5 +86,9 @@ namespace IS {
 		float new_position_x = world_position.x - delta_x * mMoveSpeed * dt;
 		float new_position_y = world_position.y + delta_y * mMoveSpeed * dt;
 		UpdateCamPos(new_position_x, new_position_y);
+		//auto& engine = InsightEngine::Instance();
+		//auto input = engine.GetSystem<InputManager>("Input");
+		//input->setCenterPos(world_position.x, world_position.y);
+		//input->setRatio(camera_dim.x, camera_dim.y);
 	}
 }

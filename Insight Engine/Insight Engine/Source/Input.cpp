@@ -33,6 +33,7 @@ namespace IS {
         glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(native_window, KeyCallback);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
+        glfwSetCursorPosCallback(native_window, MousePositionCallback);
 
         // Window size callback
         glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
@@ -179,6 +180,13 @@ namespace IS {
             inputManager->released_mouse_buttons.insert(button);
             inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
         }
+    }
+
+    void InputManager::MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
+    {
+        InputManager* input = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+        input->current_mouse_x = xpos;
+        input->current_mouse_y = ypos;
     }
 
     void InputManager::mouse_pick_entity() {

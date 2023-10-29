@@ -33,7 +33,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
         auto editor = engine.GetSystem<Editor>("Editor");
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(1.f, 1.f));
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Game", nullptr, window_flags);
@@ -51,12 +51,12 @@ namespace IS {
         ImVec2 scene_pos = ImGui::GetWindowPos();
 
         // Scene pos for the input
-        ImVec2 actual_scene_pos;
-        actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
-        actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
-        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f,
-                            actual_scene_pos.y + (float)scene_size.y / 2.f);
-        input->setRatio(scene_size.x, scene_size.y);
+        //ImVec2 actual_scene_pos;
+        //actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
+        //actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
+        //input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f,
+        //                    actual_scene_pos.y + (float)scene_size.y / 2.f);
+        //input->setRatio(scene_size.x, scene_size.y);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
@@ -82,11 +82,11 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
         ImGui::Begin("Scene", nullptr, window_flags);
 
-        auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
-        auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
-        auto viewportOffset = ImGui::GetWindowPos();
-        mViewportBounds[0] = { viewportMinRegion.x + viewportOffset.x, viewportMinRegion.y + viewportOffset.y };
-        mViewportBounds[1] = { viewportMaxRegion.x + viewportOffset.x, viewportMaxRegion.y + viewportOffset.y };
+        auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
+        auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
+        auto viewport_offset      = ImGui::GetWindowPos();
+        mViewportBounds[0]        = { viewport_lower_bound.x + viewport_offset.x, viewport_lower_bound.y + viewport_offset.y };
+        mViewportBounds[1]        = { viewport_upper_bound.x + viewport_offset.x, viewport_upper_bound.y + viewport_offset.y };
 
         // Allow key/mouse event pass through only in this panel
         mFocused = ImGui::IsWindowFocused();
@@ -105,13 +105,17 @@ namespace IS {
         ImVec2 actual_scene_pos;
         actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
         actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
+        //auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        //input->setCenterPos(scene_size.x - camera.GetCamPos().x, scene_size.y - camera.GetCamPos().y);
+        //input->setRatio(camera.GetCamDim().x, camera.GetCamDim().y);
+        //IS_CORE_DEBUG("center x : {}, center y : {}", camera.GetCamPos().x, camera.GetCamPos().y);
         //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
-        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f ,
-            actual_scene_pos.y + (float)scene_size.y / 2.f );
-       input->setRatio(scene_size.x, scene_size.y);
+        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f, actual_scene_pos.y + (float)scene_size.y / 2.f );
+        input->setRatio(scene_size.x, scene_size.y);
         //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
 
-        //input->setRatio(ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().y);
+        //input->setRatio(ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().x * , ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().y);
+        IS_CORE_DEBUG("x:{}, y:{}", input->GetMousePosition().first, input->GetMousePosition().second);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();

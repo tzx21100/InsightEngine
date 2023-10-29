@@ -172,6 +172,8 @@ namespace IS {
         * Updates the state of pressed, held, and released mouse buttons.
         */
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+
+        static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos);
     };
 
 }
