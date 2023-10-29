@@ -180,80 +180,84 @@ namespace IS {
 			const Entity& entityA = entities[i];
 
 			// no need check HasComponent as AddIntoCell function did
-			auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
 
-			for (size_t j = i + 1; j < entities.size(); ++j) {
-				const Entity& entityB = entities[j];
+				for (size_t j = i + 1; j < entities.size(); ++j) {
+					const Entity& entityB = entities[j];
 
-				if (entityA == entityB) { // if self checking, continue
-					continue;
-				}
-
-				// no need check HasComponent as AddIntoCell function did
-				auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-
-				if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
-					// continue if collision happens between two non dynamic entities
-					continue;
-				}
-
-				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
-				auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
-				bodyA.BodyFollowTransform(transA);
-				bodyB.BodyFollowTransform(transB);
-
-				// static AABB collision check, continue to the next loop if not colliding
-				if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
-				{
-					continue;
-				}
-
-				bool isColliding = false;
-				switch (bodyA.mBodyShape)
-				{
-				case BodyShape::Box:
-					switch (bodyB.mBodyShape)
-					{
-						// box vs box
-					case BodyShape::Box:
-						isColliding = IntersectionPolygons(bodyA.mTransformedVertices, bodyA.mBodyTransform.getWorldPosition(), bodyB.mTransformedVertices, bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-						break;
-						// box vs circle
-					case BodyShape::Circle:
-						break;
-					default:
-						break;
+					if (entityA == entityB) { // if self checking, continue
+						continue;
 					}
-					break;
-				case BodyShape::Circle:
-					switch (bodyB.mBodyShape)
-					{
-						// circle vs box
-					case BodyShape::Box:
-						break;
-						// circle vs circle
-					case BodyShape::Circle:
-						break;
-					default:
-						break;
+
+					// no need check HasComponent as AddIntoCell function did
+					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+
+						if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
+							// continue if collision happens between two non dynamic entities
+							continue;
+						}
+
+						auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						bodyA.BodyFollowTransform(transA);
+						bodyB.BodyFollowTransform(transB);
+
+						// static AABB collision check, continue to the next loop if not colliding
+						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
+						{
+							continue;
+						}
+
+						bool isColliding = false;
+						switch (bodyA.mBodyShape)
+						{
+						case BodyShape::Box:
+							switch (bodyB.mBodyShape)
+							{
+								// box vs box
+							case BodyShape::Box:
+								isColliding = IntersectionPolygons(bodyA.mTransformedVertices, bodyA.mBodyTransform.getWorldPosition(), bodyB.mTransformedVertices, bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+								break;
+								// box vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						case BodyShape::Circle:
+							switch (bodyB.mBodyShape)
+							{
+								// circle vs box
+							case BodyShape::Box:
+								break;
+								// circle vs circle
+							case BodyShape::Circle:
+								break;
+							default:
+								break;
+							}
+							break;
+						default:
+							break;
+						}
+						// if body A and body B colliding
+						if (isColliding) {
+
+							// vector of penetration depth to move entities apart
+							SeparateBodies(&bodyA, &bodyB, &transA, &transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
+
+							// calculate the contact point information
+							mManifoldInfo.FindContactPoints(bodyA, bodyB);
+							Manifold contact = Manifold(&bodyA, &bodyB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
+							mContactList.emplace_back(contact);
+						}
+						else { //not colliding
+
+						}
 					}
-					break;
-				default:
-					break;
-				}
-				// if body A and body B colliding
-				if (isColliding) {
-
-					// vector of penetration depth to move entities apart
-					SeparateBodies(&bodyA, &bodyB, &transA, &transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
-
-					// calculate the contact point information
-					mManifoldInfo.FindContactPoints(bodyA, bodyB);
-					Manifold contact = Manifold(&bodyA, &bodyB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
-					mContactList.emplace_back(contact);
-				}
-				else { //not colliding
-
 				}
 			}
 		}
