@@ -137,7 +137,9 @@ namespace IS {
 
                     // need to add if hovering on top of selected but
                     // mHoveredEntity == mSceneHierarchyPanel->GetSelectedEntity() is not working
-                    if (mSceneHierarchyPanel->GetSelectedEntity() != nullptr) { // if left click held on selected entity
+                    if (mSceneHierarchyPanel->GetSelectedEntity() != nullptr && 
+                        mHoveredEntity != nullptr && 
+                        *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity()) { // if left click held on selected entity
 
                         Vec2D mousePosChange = { // need to GetMousePosition() once to update the previous and current values
                             static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
