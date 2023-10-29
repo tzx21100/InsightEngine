@@ -220,7 +220,8 @@ namespace IS {
         // Draw outline for selected entity
         auto const editor = engine.GetSystem<Editor>("Editor");
         auto const editor_layer = editor->GetEditorLayer();
-        editor_layer->RenderSelectedEntityOutline();
+        if (!editor_layer->IsGamePanelFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
+            editor_layer->RenderSelectedEntityOutline();
 
         // Render text when GUI is disabled
         if (!engine.mUsingGUI) {

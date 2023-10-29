@@ -72,7 +72,7 @@ namespace IS {
         }
 
         InsightEngine& engine = InsightEngine::Instance();
-        auto input = engine.GetSystem<InputManager>("Input");
+        auto const input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
         const bool CTRL_HELD       = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
@@ -107,7 +107,7 @@ namespace IS {
         }
 
         // Auto pause game if game panel is in focus
-        if (!mGamePanel->IsFocused())
+        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
         {
             engine.mRuntime = false;
 

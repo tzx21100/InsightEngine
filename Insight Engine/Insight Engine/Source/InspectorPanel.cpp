@@ -48,95 +48,114 @@ namespace IS {
     void InspectorPanel::RenderEntityConfig(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
-
-        // Edit Entity Name
-        std::string& name = engine.GetEntityName(entity);
-        char buffer[256]{};
-        auto source = name | std::ranges::views::take(name.size());
-        std::ranges::copy(source, std::begin(buffer));
-
         ImGuiIO& io = ImGui::GetIO();
-        auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+        auto const FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
-        if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
-            name = std::string(buffer);
-
-        // Prefabs
-        ImGui::TextUnformatted("Prefab");
-
-        // Save Prefab
-        ImGui::SameLine();
-        ImGui::PushFont(FONT_BOLD);
-        if (ImGui::Button("Save"))
-            engine.SaveAsPrefab(entity, name);
-
-        // Load Prefab
-        ImGui::SameLine();
-        if (ImGui::Button("Load"))
-            mShowPrefabs = true;
-
-        // Render Prefab Combo
-        ImGui::PopFont();
-        if (mShowPrefabs)
+        if (ImGui::BeginTable("Details", 2))
         {
+            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+            ImGui::TableSetupColumn("Label", column_flags, 50.f);
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Name");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+
+            // Edit Entity Name
+            std::string& name = engine.GetEntityName(entity);
+            char buffer[256]{};
+            auto source = name | std::ranges::views::take(name.size());
+            std::ranges::copy(source, std::begin(buffer));
+            ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
+                name = std::string(buffer);
+
+            ImGui::TableNextColumn(); // skip column
+
+            ImGui::TableNextColumn();
+            // Save Prefab
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("Save As Prefab"))
+                engine.SaveAsPrefab(entity, name);
+
+            // Load Prefab
             ImGui::SameLine();
-            ImGui::PushItemWidth(100.f);
-            bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
-            if (begin_combo)
+            if (ImGui::Button("Load Prefab"))
+                mShowPrefabs = true;
+            ImGui::PopFont();
+
+            // Prefab combo
+            if (mShowPrefabs)
             {
-                auto asset = engine.GetSystem<AssetManager>("Asset");
-                for (auto const& [prefab_name, prefab] : asset->mPrefabList)
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Prefabs");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(100.f);
+                bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
+                if (begin_combo)
                 {
-                    const bool is_selected = (name == prefab_name);
-                    if (ImGui::Selectable(prefab_name.c_str(), is_selected))
+                    auto asset = engine.GetSystem<AssetManager>("Asset");
+                    for (auto const& [prefab_name, prefab] : asset->mPrefabList)
                     {
-                        engine.LoadFromPrefab(prefab);
-                        mShowPrefabs = false;
+                        const bool is_selected = (name == prefab_name);
+                        if (ImGui::Selectable(prefab_name.c_str(), is_selected))
+                        {
+                            engine.LoadFromPrefab(prefab);
+                            mShowPrefabs = false;
+                        }
+                        if (is_selected)
+                            ImGui::SetItemDefaultFocus();
                     }
-                    if (is_selected)
-                        ImGui::SetItemDefaultFocus();
+                    ImGui::EndCombo(); // end combo Prefabs
                 }
-                ImGui::EndCombo(); // end combo Prefabs
+
+                if (ImGui::IsAnyMouseDown() && !ImGui::IsItemHovered() && !begin_combo)
+                    mShowPrefabs = false;
             }
-            ImGui::PopItemWidth();
 
-            if (ImGui::IsAnyMouseDown() && !ImGui::IsItemHovered() && !begin_combo)
-                mShowPrefabs = false;
+            ImGui::TableNextColumn(); // skip column
+
+            // Add Component
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("Add Component"))
+                ImGui::OpenPopup("AddComponent");
+            ImGui::PopFont();
+
+            // Check whether entity already has the component
+            if (ImGui::BeginPopup("AddComponent"))
+            {
+                SceneHierarchyPanel::RenderAddComponent(entity);
+                ImGui::EndPopup();
+            }
+
+            ImGui::TableNextColumn(); // skip column
+
+            // Clone Entity
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("Clone Entity"))
+                engine.CopyEntity(entity);
+            ImGui::SameLine();
+
+            // Destroy Entity
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+            if (ImGui::Button("Destroy Entity"))
+            {
+                engine.DeleteEntity(entity);
+                mSceneHierarchyPanel->ResetSelection();
+            }
+            ImGui::PopStyleColor(3);
+            ImGui::PopFont();
+
+            ImGui::EndTable();
         }
-
-        // Add Component
-        ImGui::PushFont(FONT_BOLD);
-        if (ImGui::Button("Add Component"))
-            ImGui::OpenPopup("AddComponent");
-        ImGui::PopFont();
-
-        ImGui::SameLine();
-
-        // Check whether entity already has the component
-        if (ImGui::BeginPopup("AddComponent"))
-        {
-            SceneHierarchyPanel::RenderAddComponent(entity);
-            ImGui::EndPopup();
-        }
-
-        // Clone Entity
-        ImGui::PushFont(FONT_BOLD);
-        if (ImGui::Button("Clone Entity"))
-            engine.CopyEntity(entity);
-        ImGui::SameLine();
-
-        // Destroy Entity
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
-        if (ImGui::Button("Destroy Entity"))
-        {
-            engine.DeleteEntity(entity);
-            mSceneHierarchyPanel->ResetSelection();
-        }
-        ImGui::PopStyleColor(3);
-        ImGui::PopFont();
 
         ImGui::Spacing();
 
@@ -155,11 +174,12 @@ namespace IS {
         RenderEntityConfig(entity);
 
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [FONT_BOLD, entity](Sprite& sprite)
+        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity](Sprite& sprite)
         {
             auto& engine = InsightEngine::Instance();
             auto const editor = engine.GetSystem<Editor>("Editor");
             auto const editor_layer = editor->GetEditorLayer();
+            std::filesystem::path img_path(sprite.img.mFileName);
 
             // Render color
             ImGui::PushFont(FONT_BOLD);
@@ -170,31 +190,43 @@ namespace IS {
 
             // Render Texture and its dimension data
             // Header
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Texture");
-            ImGui::PopFont();
+
+            if (ImGui::BeginTable("Texture", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(50.f);
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Texture");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s", img_path.filename().string().c_str());
+
+                ImGui::EndTable();
+            }
 
             // Parameters
             ImTextureID texture_id;
             float texture_width;
             float texture_height;
+            bool has_texture = sprite.img.texture_id;
+            bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
 
-            // Use placeholder if no texture attached
-            if (sprite.img.texture_id)
+            // Use placeholder if width or height of texture
+            if (no_dimensions)
+            {
+                texture_id = editor_layer->GetIcon("TexturePlaceholder");
+                texture_width = texture_height = 512.f;
+            }
+            else
             {
                 texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
                 texture_width = static_cast<float>(sprite.img.width);
                 texture_height = static_cast<float>(sprite.img.height);
             }
-            else
-            {
-                texture_id = editor_layer->GetIcon("TexturePlaceholder");
-                texture_width = texture_height = 512.f;
-            }
 
             const float texture_aspect_ratio = texture_width / texture_height;
             const float draw_size = 40.f;
-            ImGuiIO& io = ImGui::GetIO();
             ImVec2 pos = ImGui::GetCursorPos();
             ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
             ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
@@ -204,10 +236,18 @@ namespace IS {
             // Render Texture as Image
             ImGui::BeginGroup();
             ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
+            if (has_texture && no_dimensions)
+            {
+                ImGui::SameLine();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextColored({ 1.f, .675f, .11f, 1.f }, "Texture attached missing dimensions!");
+                ImGui::PopFont();
+            }
 
+            // Accept file drop
             if (ImGui::BeginDragDropTarget())
             {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_ASSET"))
                 {
                     std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                     auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -219,7 +259,7 @@ namespace IS {
             ImGui::EndGroup();
 
             // Texture Tooltip
-            if (ImGui::BeginItemTooltip())
+            if (!no_dimensions && ImGui::BeginItemTooltip())
             {
                 float region_size = draw_size;
                 float region_x = io.MousePos.x - pos.x - region_size * 0.5f;

@@ -260,11 +260,11 @@ namespace IS {
                         if (ImGui::BeginDragDropSource())
                         {
                             const wchar_t* item_path = path.c_str();
-                            ImGui::SetDragDropPayload("ASSET_BROWSER_ITEM", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+                            ImGui::SetDragDropPayload("IMPORTED_ASSET", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
                             // Tooltip
                             const ImVec2 image_size = { 48.f * aspect_ratio, 48.f };
-                            ImGui::Image(icon, image_size);
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f});
 
                             ImGui::EndDragDropSource();
                         }
