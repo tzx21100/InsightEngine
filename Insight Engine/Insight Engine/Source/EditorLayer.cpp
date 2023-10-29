@@ -75,14 +75,14 @@ namespace IS {
         auto const input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
-        const bool CTRL_HELD       = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
-        const bool SHIFT_HELD      = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT)   || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
-        const bool ALT_HELD        = input->IsKeyHeld(GLFW_KEY_LEFT_ALT)     || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
-        const bool N_PRESSED       = input->IsKeyPressed(GLFW_KEY_N);
-        const bool O_PRESSED       = input->IsKeyPressed(GLFW_KEY_O);
-        const bool S_PRESSED       = input->IsKeyPressed(GLFW_KEY_S);
-        const bool F4_PRESSED      = input->IsKeyPressed(GLFW_KEY_F4);
-        const bool F11_PRESSED     = input->IsKeyPressed(GLFW_KEY_F11);
+        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool SHIFT_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
+        const bool ALT_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+        const bool N_PRESSED = input->IsKeyPressed(GLFW_KEY_N);
+        const bool O_PRESSED = input->IsKeyPressed(GLFW_KEY_O);
+        const bool S_PRESSED = input->IsKeyPressed(GLFW_KEY_S);
+        const bool F4_PRESSED = input->IsKeyPressed(GLFW_KEY_F4);
+        const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -91,11 +91,14 @@ namespace IS {
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
 
+        // Auto pause game if game panel is not in focus
+        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR) { engine.mRuntime = false; }
+
         // Controls for scene panel
         if (mScenePanel->IsFocused())
         {
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-            
+
             // Right mouse drag to pan camera
             if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
             {
@@ -104,13 +107,8 @@ namespace IS {
                 auto const& [x_drag, y_drag] = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
                 camera.PanCamera(dt, x_drag, y_drag);
             }
-        }
 
-        // Auto pause game if game panel is in focus
-        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
-        {
-            engine.mRuntime = false;
-
+            // Mouse picking/dragging
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
             my -= mScenePanel->GetViewportBounds()[0].y;
@@ -119,45 +117,48 @@ namespace IS {
             int mouse_x = static_cast<int>(mx);
             int mouse_y = static_cast<int>(my);
 
-            // Check if mouse is within bounds of the scene panel for mouse picking.
+            // Check if mouse is within bounds of the scene panel for mouse picking
             if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
                 0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
             {
-               
-
-                // Set hovered entity as the selected entity
-                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                // Mouse picking - set hovered entity as the selected entity
+                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
+                {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
                     mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
                 }
-                else if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+
+                // Mouse dragging - change selected/hovered entity translation
+                else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
                     mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
 
-                    // need to add if hovering on top of selected but
-                    // mHoveredEntity == mSceneHierarchyPanel->GetSelectedEntity() is not working
-                    if (mSceneHierarchyPanel->GetSelectedEntity() != nullptr && 
-                        mHoveredEntity != nullptr && 
-                        *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity()) { // if left click held on selected entity
-
-                        Vec2D mousePosChange = { // need to GetMousePosition() once to update the previous and current values
+                    // Validate hovered and selected entity
+                    if (mSceneHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
+                        *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity())
+                    {
+                        Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
                             static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
                             static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
 
                         Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
 
-                        if (engine.HasComponent<Transform>(entity)) {
+                        // Translate entity position
+                        if (engine.HasComponent<Transform>(entity))
+                        {
                             auto& transform = engine.GetComponent<Transform>(entity);
-                            transform.world_position.x += mousePosChange.x;
-                            transform.world_position.y += mousePosChange.y;
+                            transform.world_position.x += mouse_position_delta.x;
+                            transform.world_position.y += mouse_position_delta.y;
                         }
                     }
                 }
-                    
+
             }
         }
-    }
+
+    } // end OnUpdate()
 
     void EditorLayer::OnRender()
     {
