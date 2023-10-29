@@ -87,17 +87,14 @@ namespace IS {
          */
         ~Physics() {}
 
-        void CellCollisionDetect();
-
         void ImplicitGridCollisionDetect();
 
         /*!
          * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
         *
-        * \param mEntities The set of entities to consider for collision detection.
+        * \param mEntities The vector of entities to consider for collision detection.
         */
         void CollisionDetect(std::vector<Entity> const& entities);
-        void CollisionDetect(std::set<Entity> const& entities);
 
         void BroadPhase();
 

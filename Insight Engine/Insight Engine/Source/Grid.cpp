@@ -167,10 +167,10 @@ namespace IS
 			case GridState::Inside: // if the body inside grid
 
 				// if the moving dynamic body min & max move but still within the same cell
-				if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell) &&
-					body.mBodyType == BodyType::Dynamic) {
-					return; // no update on cell
-				}
+				//if (areCellsEqual(prev_min_cell, prev_max_cell, next_min_cell, next_max_cell) &&
+				//	body.mBodyType == BodyType::Dynamic) {
+				//	return; // no update on cell
+				//} // remove due to the bugs when changing grid dimensions
 
 				// remove the cell from previous cell
 				RemoveFromBitArray(prev_min_cell, prev_max_cell, entity);

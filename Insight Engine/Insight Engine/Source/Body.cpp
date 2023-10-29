@@ -67,8 +67,6 @@ namespace IS
         }
 
         mTransformUpdateRequired = true;
-
-        //Grid::AddIntoCell(*this);
     }
 
     // Parameterized constructor to initialize rigid body properties.
@@ -212,15 +210,13 @@ namespace IS
     // Move the game object by a specified vector
     void RigidBody::Move(Vector2D const& val) {
         mBodyTransform.world_position += val;
-        //mTransformUpdateRequired = true;
-        //mTransformedVertices = GetTransformedVertices();
+        /*mTransformUpdateRequired = true;
+        UpdateTransformedVertices();*/
     }
 
     // Rotate the game object by a specified angle
     void RigidBody::Rotate(float val) {
         mBodyTransform.rotation += val;
-        //mTransformUpdateRequired = true;
-        //mTransformedVertices = GetTransformedVertices();
     }
 
     // Add a force to the rigid body
