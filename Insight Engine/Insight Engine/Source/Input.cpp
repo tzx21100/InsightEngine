@@ -137,22 +137,26 @@ namespace IS {
         return held_mouse_buttons.count(button) > 0;
     }
 
-    std::pair<double, double> InputManager::GetMousePosition() const {
-
-        //double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        //double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
-
-        //InsightEngine& engine = InsightEngine::Instance();
-        //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-        //auto [width, height] = window_sys->GetWindowSize();
-
-        //newX += width / 2.f;
-        //newY -= height / 2.f;
-
-
+    std::pair<double, double> InputManager::GetMousePosition() {
+        previousWorldMousePos = currentWorldMousePos;
+        
+        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
-        return { world_mouse_x, world_mouse_y };
+        currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };
+        //current_mouse_x = newX;
+        //current_mouse_y = newY;
+
+       /* if (currentWorldMousePos.x != previousWorldMousePos.x) {
+            std::cout << "change!" << std::endl;
+        }*/
+
+        return { newX, newY };
+    }
+
+    std::pair<double, double> InputManager::GetPreviousMousePosition() const {
+        return { previous_mouse_x, previous_mouse_y };
     }
 
     void InputManager::PrintMouseWorldPos() {
@@ -187,7 +191,7 @@ namespace IS {
         // step 5: translate to camera pos
         WorldMouseX += cameraInUse.GetCamPos().x;
         WorldMouseY += cameraInUse.GetCamPos().y;
-        IS_CORE_DEBUG("World mouse pos: {:.2f}, {:.2f}", WorldMouseX, WorldMouseY);
+        //IS_CORE_DEBUG("World mouse pos: {:.2f}, {:.2f}", WorldMouseX, WorldMouseY);
 
         world_mouse_x = WorldMouseX;
         world_mouse_y = WorldMouseY;

@@ -59,7 +59,10 @@
 						"y" : -47.912002563476562
 					}
 				],
-				"mInertia" : 766593.375
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 766593.375,
+				"mInvInertia" : 1.3044725619693054e-06,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -75,9 +78,9 @@
 				"SpriteDrawing" : true,
 				"SpriteName" : "Player idle 1R12C",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 7,
+				"SpriteTexture" : 8,
 				"SpriteTextureHeight" : 932,
-				"SpriteTextureIndex" : 6,
+				"SpriteTextureIndex" : 7,
 				"SpriteTextureWidth" : 15684,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 96.0,
@@ -90,9 +93,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.107558973133564,
+						"frame_timer" : 0.12570869922637939,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -10484,7 +10487,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -10574,7 +10580,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -10664,7 +10673,10 @@
 						"y" : -60.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -10754,7 +10766,10 @@
 						"y" : -60.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -10844,7 +10859,10 @@
 						"y" : -60.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -10934,7 +10952,10 @@
 						"y" : -60.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11024,7 +11045,10 @@
 						"y" : -60.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11114,7 +11138,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11204,7 +11231,10 @@
 						"y" : -2500.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11294,7 +11324,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11384,7 +11417,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11474,7 +11510,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -11564,7 +11603,10 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{

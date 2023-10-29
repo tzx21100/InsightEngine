@@ -112,7 +112,9 @@ namespace IS {
          *
          * \return A pair representing the x and y coordinates of the mouse cursor.
          */
-        std::pair<double, double> GetMousePosition() const;
+        std::pair<double, double> GetMousePosition();
+
+        std::pair<double, double> GetPreviousMousePosition() const;
 
         /**
          * \brief Sets the center world position for the mouse relative to the GLFW window
@@ -135,6 +137,10 @@ namespace IS {
         }
         void PrintMouseWorldPos();
         void mouse_pick_entity();
+
+        // for mouse dragging testing
+        Vec2D previousWorldMousePos{ 0.0,0.0 };
+        Vec2D currentWorldMousePos{ 0.0,0.0 };
 
     private:
         // window

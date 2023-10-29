@@ -213,12 +213,12 @@ namespace IS {
             bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
 
             //placeholder for animations for now YIMING TAKE NOTE!!! JUST FOR DEMO!!!
-            if (sprite.img.mFileName == "Assets/Textures/Player idle 1R12C.png") {
+            /*if (sprite.img.mFileName == "Assets/Textures/Player idle 1R12C.png") {
                 sprite.anims.clear();
                 Animation a; a.initAnimation(1, 12, 3);
                 sprite.anims.emplace_back(a);
                 sprite.animation_index = 0;
-            }
+            }*/
 
             // Use placeholder if width or height of texture
             if (no_dimensions)

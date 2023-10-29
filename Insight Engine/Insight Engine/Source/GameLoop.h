@@ -297,7 +297,7 @@ namespace IS {
 
             }
 
-            input->PrintMouseWorldPos();
+            // input->PrintMouseWorldPos();
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {
@@ -308,11 +308,11 @@ namespace IS {
                     //for (auto const& ent : test) {
                     //    //IS_CORE_INFO("entity selected: {}", ent);
                     //}
-                    std::vector<Entity> test;
+                    /*std::vector<Entity> test;
                     test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
                     for (auto const& ent : test) {
                         IS_CORE_INFO("(Zekai's algo) entity selected: {}", ent);
-                    }
+                    }*/
                     //IS_CORE_INFO("end of click");
                 }
 
@@ -328,7 +328,7 @@ namespace IS {
 
                 }
 
-                if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {
+                if (input->IsKeyPressed(GLFW_KEY_R)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);

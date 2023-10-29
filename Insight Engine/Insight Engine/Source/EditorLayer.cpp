@@ -123,12 +123,36 @@ namespace IS {
             if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
                 0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
             {
-                int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
-                mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
+               
 
                 // Set hovered entity as the selected entity
-                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
+                    mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
+                }
+                else if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
+                    mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
+
+                    // need to add if hovering on top of selected but
+                    // mHoveredEntity == mSceneHierarchyPanel->GetSelectedEntity() is not working
+                    if (mSceneHierarchyPanel->GetSelectedEntity() != nullptr) { // if left click held on selected entity
+
+                        Vec2D mousePosChange = { // need to GetMousePosition() once to update the previous and current values
+                            static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
+                            static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
+
+                        Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
+
+                        if (engine.HasComponent<Transform>(entity)) {
+                            auto& transform = engine.GetComponent<Transform>(entity);
+                            transform.world_position.x += mousePosChange.x;
+                            transform.world_position.y += mousePosChange.y;
+                        }
+                    }
+                }
+                    
             }
         }
     }
