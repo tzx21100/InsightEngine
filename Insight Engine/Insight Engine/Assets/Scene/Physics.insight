@@ -13,57 +13,28 @@
 				"SpriteDrawing" : true,
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 5,
-				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 4,
-				"SpriteTextureWidth" : 3840,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 16000.0,
-				"SpriteTransformScalingY" : 9000.0,
-				"SpriteTransformWorldPositionX" : -5.2644948959350586,
-				"SpriteTransformWorldPositionY" : 96.503631591796875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 16000.0,
-				"TransformScalingY" : 9000.0,
-				"TransformWorldPositionX" : -5.2644948959350586,
-				"TransformWorldPositionY" : 96.503631591796875
-			}
-		},
-		{
-			"Name" : "GameBG",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
 				"SpriteTextureHeight" : 2160,
 				"SpriteTextureIndex" : 1,
 				"SpriteTextureWidth" : 11700,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 4865.39990234375,
-				"SpriteTransformScalingY" : 1168.199951171875,
-				"SpriteTransformWorldPositionX" : 3199.2890625,
-				"SpriteTransformWorldPositionY" : -100.30000305175781,
+				"SpriteTransformScalingX" : 11700.0,
+				"SpriteTransformScalingY" : 2160.0,
+				"SpriteTransformWorldPositionX" : 536.83575439453125,
+				"SpriteTransformWorldPositionY" : 339.91360473632812,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 4865.39990234375,
-				"TransformScalingY" : 1168.199951171875,
-				"TransformWorldPositionX" : 3199.2890625,
-				"TransformWorldPositionY" : -100.30000305175781
+				"TransformScalingX" : 11700.0,
+				"TransformScalingY" : 2160.0,
+				"TransformWorldPositionX" : 536.83575439453125,
+				"TransformWorldPositionY" : 339.91360473632812
 			}
+		},
+		{
+			"Name" : ""
 		},
 		{
 			"Name" : "Slope",
@@ -86,20 +57,20 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : 581.2928466796875,
-						"y" : -164.760498046875
+						"x" : 573.62237548828125,
+						"y" : -53.502975463867188
 					},
 					{
-						"x" : 1259.7313232421875,
-						"y" : 259.1749267578125
+						"x" : 1338.6661376953125,
+						"y" : 180.3944091796875
 					},
 					{
-						"x" : 1418.7071533203125,
-						"y" : 4.760498046875
+						"x" : 1426.377685546875,
+						"y" : -106.49702453613281
 					},
 					{
-						"x" : 740.2686767578125,
-						"y" : -419.1749267578125
+						"x" : 661.3338623046875,
+						"y" : -340.3944091796875
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -142,7 +113,7 @@
 				"SpriteTextureHeight" : 565,
 				"SpriteTextureIndex" : 5,
 				"SpriteTextureWidth" : 1481,
-				"SpriteTransformRotation" : 32.0,
+				"SpriteTransformRotation" : 17.000001907348633,
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 300.0,
 				"SpriteTransformWorldPositionX" : 1000.0,
@@ -151,7 +122,7 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 32.0,
+				"TransformRotation" : 17.000001907348633,
 				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 300.0,
 				"TransformWorldPositionX" : 1000.0,
@@ -261,9 +232,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.11444758623838425,
+						"frame_timer" : 0.23475009202957153,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -1394,100 +1365,7 @@
 				"TransformWorldPositionX" : -2181.735107421875,
 				"TransformWorldPositionY" : 1037.15625
 			}
-		},
-		{
-			"Name" : "Platform4",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 20000.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : true,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -2834.366943359375,
-						"y" : 775.37530517578125
-					},
-					{
-						"x" : -2634.366943359375,
-						"y" : 775.37530517578125
-					},
-					{
-						"x" : -2634.366943359375,
-						"y" : 675.37530517578125
-					},
-					{
-						"x" : -2834.366943359375,
-						"y" : 675.37530517578125
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -100.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 100.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 100.0,
-						"y" : -50.0
-					},
-					{
-						"x" : -100.0,
-						"y" : -50.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 7,
-				"SpriteTextureHeight" : 1283,
-				"SpriteTextureIndex" : 6,
-				"SpriteTextureWidth" : 610,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 200.0,
-				"SpriteTransformScalingY" : 100.0,
-				"SpriteTransformWorldPositionX" : -2734.366943359375,
-				"SpriteTransformWorldPositionY" : 725.37530517578125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 200.0,
-				"TransformScalingY" : 100.0,
-				"TransformWorldPositionX" : -2734.366943359375,
-				"TransformWorldPositionY" : 725.37530517578125
-			}
 		}
 	],
-	"EntityAmount" : 17
+	"EntityAmount" : 16
 }

@@ -61,9 +61,9 @@ namespace IS {
             glPointSize(1.f);
             break;
         case GL_LINES:
-            glLineWidth(3.f);
-            glDrawArrays(primitive_type, 0, mesh_used.draw_count);
-            glLineWidth(1.f);
+            //glLineWidth(3.f);
+            //glDrawArrays(primitive_type, 0, mesh_used.draw_count);
+            //glLineWidth(1.f);
             break;
         case GL_TRIANGLE_FAN:
             glDrawArrays(primitive_type, 0, mesh_used.draw_count);

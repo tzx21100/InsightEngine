@@ -605,7 +605,7 @@ namespace IS {
 
 		// draw the velocity line in blue
 		if (mShowVelocity)
-			sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 0.f, 0.f, 1.f });
+			sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
 
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
