@@ -297,7 +297,7 @@ namespace IS {
 
             }
 
-            //input->mouse_pick_entity();
+            input->PrintMouseWorldPos();
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {

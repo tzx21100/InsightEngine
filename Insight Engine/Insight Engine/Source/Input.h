@@ -133,7 +133,7 @@ namespace IS {
             ratio_width =  (float)width / widthR;
             ratio_height =  (float)height / heightR;
         }
-
+        void PrintMouseWorldPos();
         void mouse_pick_entity();
 
     private:

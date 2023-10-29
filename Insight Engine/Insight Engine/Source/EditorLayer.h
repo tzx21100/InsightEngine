@@ -105,6 +105,8 @@ namespace IS {
          */
         void RenderSelectedEntityOutline() const;
 
+        Vec2 GetViewportSize();
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
