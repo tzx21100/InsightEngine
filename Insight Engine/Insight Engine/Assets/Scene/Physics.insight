@@ -2,6 +2,70 @@
 	"Entities" : 
 	[
 		{
+			"Name" : "EditorBG",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.54492461681365967,
+				"SpriteColorY" : 0.27639034390449524,
+				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 1,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 1920,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1600.0,
+				"SpriteTransformScalingY" : 900.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1600.0,
+				"TransformScalingY" : 900.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"Name" : "GameBG",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"SpriteColorX" : 0.54492461681365967,
+				"SpriteColorY" : 0.27639034390449524,
+				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 1,
+				"SpriteTextureWidth" : 11700,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 4798.89990234375,
+				"SpriteTransformScalingY" : 1100.0,
+				"SpriteTransformWorldPositionX" : 3199.300048828125,
+				"SpriteTransformWorldPositionY" : -100.30000305175781,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 4798.89990234375,
+				"TransformScalingY" : 1100.0,
+				"TransformWorldPositionX" : 3199.300048828125,
+				"TransformWorldPositionY" : -100.30000305175781
+			}
+		},
+		{
 			"Name" : "Slope",
 			"RigidBody" : 
 			{
@@ -112,24 +176,24 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : 127.1195068359375,
-						"y" : 119.39903259277344
+						"x" : 100.0,
+						"y" : 90.0
 					},
 					{
-						"x" : -72.8804931640625,
-						"y" : 119.39968872070312
+						"x" : -100.0,
+						"y" : 90.0
 					},
 					{
-						"x" : -72.881072998046875,
-						"y" : -60.600315093994141
+						"x" : -100.0,
+						"y" : -90.0
 					},
 					{
-						"x" : 127.11892700195312,
-						"y" : -60.600971221923828
+						"x" : 100.0,
+						"y" : -90.0
 					}
 				],
-				"RigidBodyVelocityX" : -2.9252023696899414,
-				"RigidBodyVelocityY" : -56.640869140625,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
 				"RigidBodyVertices" : 
 				[
 					{
@@ -165,24 +229,24 @@
 				"SpriteDrawing" : true,
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 7,
+				"SpriteTexture" : 8,
 				"SpriteTextureHeight" : 932,
-				"SpriteTextureIndex" : 6,
+				"SpriteTextureIndex" : 7,
 				"SpriteTextureWidth" : 15684,
-				"SpriteTransformRotation" : -0.00018674266175366938,
+				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : -200.0,
 				"SpriteTransformScalingY" : 180.0,
-				"SpriteTransformWorldPositionX" : 27.119216918945312,
-				"SpriteTransformWorldPositionY" : 29.399356842041016,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : 
 				[
 					{
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.008208700455725193,
+						"frame_timer" : 0.13080157339572906,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -191,11 +255,11 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : -0.00018674266175366938,
+				"TransformRotation" : 0.0,
 				"TransformScalingX" : -200.0,
 				"TransformScalingY" : 180.0,
-				"TransformWorldPositionX" : 27.119216918945312,
-				"TransformWorldPositionY" : 29.399356842041016
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
 			}
 		},
 		{
@@ -649,5 +713,5 @@
 			}
 		}
 	],
-	"EntityAmount" : 7
+	"EntityAmount" : 9
 }
