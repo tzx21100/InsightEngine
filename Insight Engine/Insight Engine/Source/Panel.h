@@ -148,6 +148,11 @@ namespace IS {
          * \brief Overrides the base class method to render the log console panel.
          */
         void RenderPanel() override;
+
+        Vec2 GetPanelSize() const;
+
+    private:
+        Vec2 mPanelSize; ///< Size of the panel.
     };
 
     /*!

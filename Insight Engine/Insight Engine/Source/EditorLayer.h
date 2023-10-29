@@ -107,6 +107,9 @@ namespace IS {
 
         Vec2 GetViewportSize();
 
+        Vec2 GetLogConsolePanelSize() const { return mLogConsolePanel->GetPanelSize(); }
+        Vec2 GetSceneHierarchyPanelSize() const { return mSceneHierarchyPanel->GetPanelSize(); }
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
@@ -118,6 +121,7 @@ namespace IS {
         std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
         std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
+        std::shared_ptr<LogConsolePanel> mLogConsolePanel;
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.

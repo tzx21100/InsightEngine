@@ -47,8 +47,8 @@ namespace IS {
         }
 
         // Size of scene panel
-        ImVec2 scene_size = ImGui::GetWindowSize();
-        ImVec2 scene_pos = ImGui::GetWindowPos();
+        //ImVec2 scene_size = ImGui::GetWindowSize();
+        //ImVec2 scene_pos = ImGui::GetWindowPos();
 
         // Scene pos for the input
         //ImVec2 actual_scene_pos;
@@ -399,7 +399,14 @@ namespace IS {
     }
 
     // Log Console Panel
-    void LogConsolePanel::RenderPanel() { Logger::LoggerGUI::Instance().Draw("Log Console"); }
+    void LogConsolePanel::RenderPanel() 
+    {
+        auto& logger_gui = Logger::LoggerGUI::Instance();
+        logger_gui.Draw("Log Console");
+        mPanelSize = logger_gui.mPanelSize;
+    }
+
+    Vec2 LogConsolePanel::GetPanelSize() const { return mPanelSize; }
 
     // Physics Control Panel
     void PhysicsControlPanel::RenderPanel()

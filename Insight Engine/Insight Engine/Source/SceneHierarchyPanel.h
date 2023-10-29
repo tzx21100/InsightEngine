@@ -77,9 +77,14 @@ namespace IS {
          */
         void RenderSelectedEntityOutline();
 
+        
+
+        Vec2 GetPanelSize() const;
+
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
+        Vec2 mPanelSize;
 
         /*!
          * \brief Renders details about the active scene.

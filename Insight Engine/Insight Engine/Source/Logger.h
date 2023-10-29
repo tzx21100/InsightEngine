@@ -23,6 +23,8 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
  // dependencies
+#include "ISMath.h"
+
 #include <mutex>
 #include <string>
 #include <sstream>
@@ -155,6 +157,7 @@ namespace IS {
             aLogLevel mSelectedFilter = aLogLevel::LOGLEVEL_ALL; ///< Selected filter
             std::deque<LogEntry> mLogEntries; ///< The log entries displayed
             bool mAutoScroll = true; ///< Boolean flag indicating auto scroll
+            Vec2 mPanelSize; ///< Size of the panel.
 
             static const int MAX_LOG_LINES = 1000; // Limit the number of log lines to prevent excessive memory usage
 
@@ -162,6 +165,8 @@ namespace IS {
              * \brief Constructor for the LoggerGUI class.
              */
             LoggerGUI() = default;
+
+            friend class LogConsolePanel;
         };
 
         /*!

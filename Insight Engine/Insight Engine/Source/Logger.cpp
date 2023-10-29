@@ -157,7 +157,7 @@ namespace IS {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
         ImGui::Begin(title, nullptr, window_flags);
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
-        
+        mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
         // Options
         if (ImGui::BeginPopup("Options"))
         {

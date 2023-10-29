@@ -40,6 +40,8 @@ namespace IS {
         ImGui::Begin("Scene Hierarchy");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
+        mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
+
         // Display details about active scene
         RenderActiveSceneDetails();
 
@@ -371,5 +373,7 @@ namespace IS {
             ISGraphics::DrawOutLine(body, sprite, { 1.f, .675f, .11f }, 3.f);
         }
     }
+
+    Vec2 SceneHierarchyPanel::GetPanelSize() const { return mPanelSize; }
 
 } // end namespace IS

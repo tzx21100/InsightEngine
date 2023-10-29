@@ -188,7 +188,7 @@ namespace IS {
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
                     engine.mRuntime = !engine.mRuntime;
-                    Camera::mActiveCamera = engine.mUsingGUI ? CAMERA_TYPE_SCENE : CAMERA_TYPE_EDITOR;
+                    Camera::mActiveCamera = engine.mUsingGUI ? CAMERA_TYPE_EDITOR : CAMERA_TYPE_SCENE;
                     IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
                 }
 

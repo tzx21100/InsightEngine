@@ -139,8 +139,8 @@ namespace IS {
 
     std::pair<double, double> InputManager::GetMousePosition() const {
 
-        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        //double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
+        //double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
 
         //InsightEngine& engine = InsightEngine::Instance();
         //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
@@ -152,7 +152,7 @@ namespace IS {
 
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
-        return { newX, newY };
+        return { world_mouse_x, world_mouse_y };
     }
 
     void InputManager::PrintMouseWorldPos() {
@@ -163,22 +163,23 @@ namespace IS {
         auto const editor_layer = editor->GetEditorLayer();
         auto const& viewport_size = editor_layer->GetViewportSize();
 
-        Camera cameraInUse = ISGraphics::cameras[Camera::mActiveCamera];
-        double SHw = 0; // change to scene hierarchy panel width
-        double LCh = 0; // change to log console height
+        Camera& cameraInUse = ISGraphics::cameras[Camera::mActiveCamera];
+        double SHw = editor_layer->GetSceneHierarchyPanelSize().x; // change to scene hierarchy panel width
+        double LCh = editor_layer->GetLogConsolePanelSize().y; // change to log console height
 
         // step 1: get screen coords
-        double mouseX{}, mouseY{};
-        glfwGetCursorPos(window->GetNativeWindow(), &mouseX, &mouseY);
-        IS_CORE_DEBUG("screen mouse pos: {}, {}", mouseX, mouseY);
+        //double mouseX{}, mouseY{};
+        //glfwGetCursorPos(window->GetNativeWindow(), &mouseX, &mouseY);
+        //IS_CORE_DEBUG("screen mouse pos: {}, {}", mouseX, mouseY);
+        //IS_CORE_DEBUG("screen mouse pos: {:.2f}, {:.2f}", current_mouse_x, current_mouse_y);
 
         // step 2: translate to cartesian
-        double cartesianMouseX{ mouseX - (engine.GetWindowWidth() / 2) }, cartesianMouseY{ mouseY + ((engine.GetWindowHeight()) / 2) }; // 40 is the height of window title
-        IS_CORE_DEBUG("cartesian screen mouse pos: {}, {}", cartesianMouseX, cartesianMouseY);
+        double cartesianMouseX{ current_mouse_x - (engine.GetWindowWidth() / 2) }, cartesianMouseY{ current_mouse_y + ((engine.GetWindowHeight()) / 2) }; // 40 is the height of window title
+        //IS_CORE_DEBUG("cartesian screen mouse pos: {:.2f}, {:.2f}", cartesianMouseX, cartesianMouseY);
 
         // step 3: normalize to VP coords
         double VPMouseX{ cartesianMouseX - SHw }, VPMouseY{ cartesianMouseY - LCh };
-        IS_CORE_DEBUG("VP mouse pos: {}, {}", VPMouseX, VPMouseY);
+        //IS_CORE_DEBUG("VP mouse pos: {:.2f}, {:.2f}", VPMouseX, VPMouseY);
 
         // step 4: scale to cam dim
         double WorldMouseX{ VPMouseX / viewport_size.x * cameraInUse.GetCamDim().x }, WorldMouseY{ VPMouseY / viewport_size.y * cameraInUse.GetCamDim().y };
@@ -186,7 +187,10 @@ namespace IS {
         // step 5: translate to camera pos
         WorldMouseX += cameraInUse.GetCamPos().x;
         WorldMouseY += cameraInUse.GetCamPos().y;
-        IS_CORE_DEBUG("World mouse pos: {}, {}", WorldMouseX, WorldMouseY);
+        IS_CORE_DEBUG("World mouse pos: {:.2f}, {:.2f}", WorldMouseX, WorldMouseY);
+
+        world_mouse_x = WorldMouseX;
+        world_mouse_y = WorldMouseY;
 
         //IS_CORE_DEBUG("Current mouse pos: {}, {}", current_mouse_x, current_mouse_y); //0 ,0 to 1919, 1016
         //double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;

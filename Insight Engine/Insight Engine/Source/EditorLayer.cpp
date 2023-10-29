@@ -378,6 +378,7 @@ namespace IS {
         mScenePanel = std::make_shared<ScenePanel>();
         mGamePanel = std::make_shared<GamePanel>();
         mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
+        mLogConsolePanel = std::make_shared<LogConsolePanel>();
 
         mPanels.emplace_back(mGamePanel);
         mPanels.emplace_back(mScenePanel);
@@ -386,7 +387,7 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<InspectorPanel>(mSceneHierarchyPanel));
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
         mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
-        mPanels.emplace_back(std::make_shared<LogConsolePanel>());
+        mPanels.emplace_back(mLogConsolePanel);
     }
 
     //void EditorLayer::RenderGizmo()

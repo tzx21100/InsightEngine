@@ -154,6 +154,8 @@ namespace IS {
         float ratio_width = 1.f;
         float ratio_height = 1.f;
 
+        double world_mouse_x = 0.0;
+        double world_mouse_y = 0.0;
         double current_mouse_x = 0.0;
         double current_mouse_y = 0.0;
         double previous_mouse_x = 0.0;
