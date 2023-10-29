@@ -167,7 +167,7 @@ namespace IS {
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
             auto& trans_player = engine.GetComponent<Transform>(player);
-            body_player.mMass = 500.f;
+            body_player.mMass = 5.f;
 
             // limit angle of the player
             float angle = trans_player.getRotation();
@@ -180,7 +180,10 @@ namespace IS {
                 }
             }
             trans_player.setRotation(angle, body_player.mAngularVelocity);
-            body_player.mRestitution = 0.f;
+            body_player.mRestitution = 0.1f;
+            body_player.mStaticFriction = 1.2f;
+            body_player.mDynamicFriction = 1.1f;
+
 
             // Process Keyboard Events
             if (!gui->WantCaptureKeyboard()) {
