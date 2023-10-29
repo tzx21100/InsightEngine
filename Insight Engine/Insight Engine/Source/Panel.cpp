@@ -115,7 +115,7 @@ namespace IS {
         //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
 
         //input->setRatio(ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().x * , ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().y);
-        IS_CORE_DEBUG("x:{}, y:{}", input->GetMousePosition().first, input->GetMousePosition().second);
+        //IS_CORE_DEBUG("x:{}, y:{}", input->GetMousePosition().first, input->GetMousePosition().second);
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();

@@ -480,4 +480,9 @@ namespace IS {
 
     void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
 
+    Vec2 EditorLayer::GetViewportSize() {
+        //IS_CORE_DEBUG("VP X: {}, VP Y: {}", mScenePanel->GetViewportSize().x, mScenePanel->GetViewportSize().y);
+        return { mScenePanel->GetViewportSize().x , mScenePanel->GetViewportSize().y };
+    }
+
 } // end namespace IS
