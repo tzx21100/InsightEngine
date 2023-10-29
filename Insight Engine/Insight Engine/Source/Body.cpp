@@ -92,8 +92,8 @@ namespace IS
         mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
-        mStaticFriction = 30.f;
-        mDynamicFriction = 20.f;
+        mStaticFriction = 0.6f;
+        mDynamicFriction = 0.6f;
 
         if (mBodyShape == BodyShape::Box) {
             CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);

@@ -36,8 +36,8 @@ namespace IS {
 		//mNormal = Vector2D();
 		//mDepth = std::numeric_limits<float>::max();
 		mGravity = Vector2D(0, -981.f);			// Gravity of the world
-		mMaxVelocity = 1000.f;					// Maximum velocity for game bodies
-		mMinVelocity = -1000.f;					// Minimum velocity for game bodies
+		mMaxVelocity = 800.f;					// Maximum velocity for game bodies
+		mMinVelocity = -800.f;					// Minimum velocity for game bodies
 		mCurrentIterations = 0;					// Number of current iterations for physics step
 		mTotalIterations = 20;						// Number of iterations for physics step
 		mContactList = std::vector<Manifold>();
@@ -199,8 +199,8 @@ namespace IS {
 
 				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
 				auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
-				bodyA.BodyFollowTransformPosition(transA);
-				bodyB.BodyFollowTransformPosition(transB);
+				bodyA.BodyFollowTransform(transA);
+				bodyB.BodyFollowTransform(transB);
 
 				// static AABB collision check, continue to the next loop if not colliding
 				if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
