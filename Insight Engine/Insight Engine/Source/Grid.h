@@ -41,6 +41,8 @@ namespace IS
 
 		void RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity);
 
+		bool CheckOverlap(Cell const& min, Cell const& max);
+
 		void UpdateCell(Entity const& entity, float const& dt);
 
 		bool GridContains(Cell const& cell);

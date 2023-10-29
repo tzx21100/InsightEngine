@@ -120,6 +120,10 @@ namespace IS {
 				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i) {
 					test_cell[i] = mImplicitGrid.mRowsBitArray[row][i] && mImplicitGrid.mColsBitArray[col][i];
 				}
+
+				if (test_cell == 0) { // no entity in current cell, continue
+					continue;
+				}
 				
 				
 				// getting entity number in this cell
@@ -149,6 +153,7 @@ namespace IS {
 							}
 						}
 					}
+
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
 					//mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
 					mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
@@ -176,8 +181,6 @@ namespace IS {
 
 			// no need check HasComponent as AddIntoCell function did
 			auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-			auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
-			bodyA.BodyFollowTransform(transA);
 
 			for (size_t j = i + 1; j < entities.size(); ++j) {
 				const Entity& entityB = entities[j];
@@ -188,14 +191,16 @@ namespace IS {
 
 				// no need check HasComponent as AddIntoCell function did
 				auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-				auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
 
 				if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
 					// continue if collision happens between two non dynamic entities
 					continue;
 				}
 
-				bodyB.BodyFollowTransform(transB);
+				auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+				auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+				bodyA.BodyFollowTransformPosition(transA);
+				bodyB.BodyFollowTransformPosition(transB);
 
 				// static AABB collision check, continue to the next loop if not colliding
 				if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
@@ -211,7 +216,7 @@ namespace IS {
 					{
 						// box vs box
 					case BodyShape::Box:
-						isColliding = IntersectionPolygons(bodyA.GetTransformedVertices(), bodyA.mBodyTransform.getWorldPosition(), bodyB.GetTransformedVertices(), bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+						isColliding = IntersectionPolygons(bodyA.mTransformedVertices, bodyA.mBodyTransform.getWorldPosition(), bodyB.mTransformedVertices, bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
 						break;
 						// box vs circle
 					case BodyShape::Circle:

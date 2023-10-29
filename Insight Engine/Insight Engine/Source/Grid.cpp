@@ -81,6 +81,7 @@ namespace IS
 					Box box = body.GetAABB();
 					Cell min_cell = GetCell(box.min);
 					Cell max_cell = GetCell(box.max);
+					Cell center = GetCell(body.mBodyTransform.world_position);
 
 					if (GridContains(min_cell) && GridContains(max_cell)) {
 						body.mGridState = GridState::Inside;
@@ -88,6 +89,11 @@ namespace IS
 					}else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
 							(!GridContains(min_cell) && GridContains(max_cell))) {
 						// body box overlap on the grid edge, half inside half outside
+						body.mGridState = GridState::Overlap;
+						mOverlapGridList.emplace_back(entity);
+					}
+					else if (GridContains(center) || CheckOverlap(min_cell, max_cell)) {
+						// the obj is too big, min and max both outside of the grid but a small part of the obj is inside the grid
 						body.mGridState = GridState::Overlap;
 						mOverlapGridList.emplace_back(entity);
 					}
@@ -139,6 +145,18 @@ namespace IS
 		}
 	}
 
+	bool ImplicitGrid::CheckOverlap(Cell const& min, Cell const& max) {
+		bool check = false;
+		for (int row = min.row; row >= max.row; row--) {
+			for (int col = min.col; col <= max.col; col++) {
+				if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
+					check = true;
+				}
+			}
+		}
+		return check;
+	}
+
 
 	void ImplicitGrid::UpdateCell(Entity const& entity, float const& dt) {
 		if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
@@ -161,6 +179,7 @@ namespace IS
 			Box next_box = body.GetAABB();
 			Cell next_min_cell = GetCell(next_box.min);
 			Cell next_max_cell = GetCell(next_box.max);
+			Cell center = GetCell(body.mBodyTransform.world_position);
 
 			switch (body.mGridState) // body's previous state for grid
 			{
@@ -182,6 +201,12 @@ namespace IS
 				else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
 					(!GridContains(next_min_cell) && GridContains(next_max_cell))) {
 					// body box overlap on the grid edge, half inside half outside
+					body.mGridState = GridState::Overlap;
+					mOverlapGridList.emplace_back(entity);
+				}
+				// overlap grid (special case)
+				else if (GridContains(center) || CheckOverlap(next_min_cell, next_max_cell)) {
+					// the obj is too big, min and max both outside of the grid but a small part of the obj is inside the grid
 					body.mGridState = GridState::Overlap;
 					mOverlapGridList.emplace_back(entity);
 				}
@@ -208,6 +233,12 @@ namespace IS
 					body.mGridState = GridState::Overlap;
 					mOverlapGridList.emplace_back(entity);
 				}
+				// overlap grid (special case)
+				else if (GridContains(center) || CheckOverlap(next_min_cell, next_max_cell)) {
+					// the obj is too big, min and max both outside of the grid but a small part of the obj is inside the grid
+					body.mGridState = GridState::Overlap;
+					mOverlapGridList.emplace_back(entity);
+				}
 				else { // outside grid
 					body.mGridState = GridState::Outside;
 					mOutsideGridList.emplace_back(entity);
@@ -228,6 +259,12 @@ namespace IS
 				else if ((GridContains(next_min_cell) && !GridContains(next_max_cell)) ||
 					(!GridContains(next_min_cell) && GridContains(next_max_cell))) {
 					// body box overlap on the grid edge, half inside half outside
+					body.mGridState = GridState::Overlap;
+					mOverlapGridList.emplace_back(entity);
+				}
+				// overlap grid (special case)
+				else if (GridContains(center) || CheckOverlap(next_min_cell, next_max_cell)) {
+					// the obj is too big, min and max both outside of the grid but a small part of the obj is inside the grid
 					body.mGridState = GridState::Overlap;
 					mOverlapGridList.emplace_back(entity);
 				}

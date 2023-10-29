@@ -114,10 +114,17 @@ namespace IS
 
 	}
 
-    // Updates the rigid body's transformation data to match the texture sprite Transform
+    // updates the rigid body's transformation data to match the texture sprite Transform
     void RigidBody::BodyFollowTransform(Transform const& trans) {
         mBodyTransform = trans;
         UpdateBoxBody(trans);
+    }
+
+    // update body position to match transform only
+    void RigidBody::BodyFollowTransformPosition(Transform const& trans) {
+        mBodyTransform = trans;
+        mTransformUpdateRequired = true;
+        UpdateTransformedVertices();
     }
 
     // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)

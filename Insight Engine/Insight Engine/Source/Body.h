@@ -130,6 +130,8 @@ namespace IS
          */
         void BodyFollowTransform(Transform const& trans);
 
+        void BodyFollowTransformPosition(Transform const& trans);
+
         /*!
          * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
          * \param width The width of the box.
