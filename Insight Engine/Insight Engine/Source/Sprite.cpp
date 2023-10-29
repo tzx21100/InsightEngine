@@ -256,6 +256,25 @@ namespace IS {
 
         spriteData["AnimationIndex"] = animation_index;
 
+        Json::Value animationsJson(Json::arrayValue);
+        for (const Animation& animation : anims) {
+            Json::Value animationData;
+
+            animationData["frame_dimension_x"] = animation.frame_dimension.x;
+            animationData["frame_dimension_y"] = animation.frame_dimension.y;
+            animationData["frame_index_x"] = animation.frame_index.x;
+            animationData["frame_index_y"] = animation.frame_index.y;
+            animationData["x_frames"] = animation.x_frames;
+            animationData["y_frames"] = animation.y_frames;
+            animationData["animation_duration"] = animation.animation_duration;
+            animationData["time_per_frame"] = animation.time_per_frame;
+            animationData["frame_timer"] = animation.frame_timer;
+
+            animationsJson.append(animationData);
+        }
+        spriteData["animations"] = animationsJson;
+
+
         return spriteData;
     }
 
@@ -287,6 +306,26 @@ namespace IS {
         drawing = data["SpriteDrawing"].asBool();
 
         animation_index = data["AnimationIndex"].asInt();
+
+        // Deserializing the vector of animations
+        anims.clear(); // Clear existing animations
+        Json::Value animationsJson = data["animations"];
+        for (const Json::Value& animationData : animationsJson) {
+            Animation animation;
+
+            animation.frame_dimension.x = animationData["frame_dimension_x"].asFloat();
+            animation.frame_dimension.y = animationData["frame_dimension_y"].asFloat();
+            animation.frame_index.x = animationData["frame_index_x"].asFloat();
+            animation.frame_index.y = animationData["frame_index_y"].asFloat();
+            animation.x_frames = animationData["x_frames"].asInt();
+            animation.y_frames = animationData["y_frames"].asInt();
+            animation.animation_duration = animationData["animation_duration"].asFloat();
+            animation.time_per_frame = animationData["time_per_frame"].asFloat();
+            animation.frame_timer = animationData["frame_timer"].asFloat();
+
+            anims.push_back(animation);
+        }
+
     }
 
     void Sprite::draw_instanced_lines() {
