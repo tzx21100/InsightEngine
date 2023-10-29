@@ -91,6 +91,7 @@ namespace IS {
 		return GlmMat3ToISMtx33(ISGraphics::cameras[Camera::mActiveCamera].xform * world_to_cam_xform);
 	}
 
+	// not in use
 	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
 		std::vector<Vector2D> vertices;
 		float left = world_position.x - (scaling.x / 2.f);
