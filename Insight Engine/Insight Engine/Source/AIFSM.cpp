@@ -1,3 +1,18 @@
+/* Start Header **************************************************************/
+/*!
+ * \file AIFSM.cpp
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date 02-11-2023
+ * \brief
+ * Definition of the AIFSMManager class for managing AI states.
+ *
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ */
+ /* End Header ****************************************************************/
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
@@ -21,64 +36,34 @@ namespace IS {
         //idleState.Update = []() { std::cout << "Updating Idle State" << std::endl; };
         //idleState.Exit = []() { std::cout << "Exiting Idle State" << std::endl; };
 
-        ////AIState patrolState;
-        ////patrolState.Enter = []() { std::cout << "Entering Patrol State" << std::endl; };
-        ////patrolState.Update = []() { std::cout << "Updating Patrol State" << std::endl; };
-        ////patrolState.Exit = []() { std::cout << "Exiting Patrol State" << std::endl; };
+        //AIState patrolState;
+        //patrolState.Enter = []() { std::cout << "Entering Patrol State" << std::endl; };
+        //patrolState.Update = []() { std::cout << "Updating Patrol State" << std::endl; };
+        //patrolState.Exit = []() { std::cout << "Exiting Patrol State" << std::endl; };
 
-        ////AIState chaseState;
-        ////chaseState.Enter = []() { std::cout << "Entering Chase State" << std::endl; };
-        ////chaseState.Update = []() { std::cout << "Updating Chase State" << std::endl; };
-        ////chaseState.Exit = []() { std::cout << "Exiting Chase State" << std::endl; };
+        //AIState chaseState;
+        //chaseState.Enter = []() { std::cout << "Entering Chase State" << std::endl; };
+        //chaseState.Update = []() { std::cout << "Updating Chase State" << std::endl; };
+        //chaseState.Exit = []() { std::cout << "Exiting Chase State" << std::endl; };
 
         ////// Add main states to the AI FSM.
         //aiFSM.AddState("Idle", &idleState);
-        ////aiFSM.AddState("Patrol", &patrolState);
-        ////aiFSM.AddState("Chase", &chaseState);
+        //aiFSM.AddState("Patrol", &patrolState);
+        //aiFSM.AddState("Chase", &chaseState);
 
         ////// Change and update AI states.
         //aiFSM.ChangeState("Idle");
         //aiFSM.UpdateCurrentState(); // Updates the Idle state
 
-        ////aiFSM.ChangeState("Patrol");
-        ////aiFSM.UpdateCurrentState(); // Updates the Patrol state
+        //aiFSM.ChangeState("Patrol");
+        //aiFSM.UpdateCurrentState(); // Updates the Patrol state
 
-        ////aiFSM.ChangeState("Chase");
-        ////aiFSM.UpdateCurrentState(); // Updates the Chase state
+        //aiFSM.ChangeState("Chase");
+        //aiFSM.UpdateCurrentState(); // Updates the Chase state
 
-        ////// Retrieve and print the current state.
-        ////AIState* currentState = aiFSM.GetCurrentState();
-        ////if (currentState != nullptr) {
-        ////    std::cout << "Current State: " << typeid(*currentState).name() << std::endl;
-        ////}
-        ////else {
-        ////    std::cout << "No Current State" << std::endl;
-        ////}
-
-        ////// Add substates.
-        //AIState jumpState;
-        //jumpState.Enter = []() { std::cout << "Entering Jump State" << std::endl; };
-        //jumpState.Update = []() { std::cout << "Updating Jump State" << std::endl; };
-        //jumpState.Exit = []() { std::cout << "Exiting Jump State" << std::endl; };
-
-        //aiFSM.AddSubstate("Jump", "Idle", &jumpState);
-
-        ////// Change and update substates.
-        //aiFSM.ChangeSubstate("Jump", "Idle");
-        //aiFSM.UpdateCurrentSubstate("Idle"); // Updates the Jump substate within the Idle state
-
-        ////// Retrieve and print the current substate.
-        ////AIState* currentSubstate = aiFSM.GetCurrentSubstate("Idle");
-        ////if (currentSubstate != nullptr) {
-        ////    std::cout << "Current Substate: " << typeid(*currentSubstate).name() << std::endl;
-        ////}
-        ////else {
-        ////    std::cout << "No Current Substate" << std::endl;
-        ////}
-
-        ////// Remove substates.
-        //aiFSM.RemoveSubstate("Jump", "Idle");
         //aiFSM.RemoveState("Idle");
+        //aiFSM.RemoveState("Patrol");
+        //aiFSM.RemoveState("Chase");
     }
 
     void AIFSMManager::HandleMessage(const Message& message) {
@@ -182,9 +167,9 @@ namespace IS {
     void AIFSMManager::UpdateCurrentSubstate(const std::string& parent_state_name) {
         AIState* parent_state = GetState(parent_state_name);
         if (parent_state != nullptr) {
-            AIState* currentSubstate = parent_state->substates[mCurrentSubstateName];
-            if (currentSubstate != nullptr && currentSubstate->Update) {
-                currentSubstate->Update(); // Update the current substate
+            AIState* current_substate = parent_state->substates[mCurrentSubstateName];
+            if (current_substate != nullptr && current_substate->Update) {
+                current_substate->Update(); // Update the current substate
                 
             }
             
