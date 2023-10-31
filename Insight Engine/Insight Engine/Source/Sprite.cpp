@@ -329,7 +329,7 @@ namespace IS {
 
     }
 
-    void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, float angleInDegrees, std::tuple<float, float, float> const& color, float lineLength) {
+    void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float lineLength, float angleInDegrees) {
         // Translation
         Vector2D midpoint = (p0 + p1) / 2.f;
 
@@ -337,6 +337,12 @@ namespace IS {
         if (lineLength < 0.f) {
             lineLength = ISVector2DDistance(p0, p1); // will not save
         }
+
+        // Rotation
+        float delta_x = p1.x - p0.x;
+        float delta_y = p1.y - p0.y;
+        if (angleInDegrees < 0.f) angleInDegrees = glm::degrees(atan2f(delta_y, delta_x));
+
         Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
 
         // get line scaling matrix
@@ -372,7 +378,7 @@ namespace IS {
         glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[5].vao_ID);
 
-        glLineWidth(5.f);
+        glLineWidth(3.f);
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
         ISGraphics::lineInstances.clear();
     }

@@ -366,11 +366,11 @@ namespace IS {
         Entity entity = *mSelectedEntity;
 
         auto& engine = InsightEngine::Instance();
-        if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<RigidBody>(entity))
+        if (engine.HasComponent<Sprite>(entity))
         {
             auto& sprite = engine.GetComponent<Sprite>(entity);
-            auto& body = engine.GetComponent<RigidBody>(entity);
-            ISGraphics::DrawOutLine(body, sprite, { 1.f, .675f, .11f }, 3.f);
+            //auto& body = engine.GetComponent<RigidBody>(entity);
+            ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f }, 3.f);
         }
     }
 

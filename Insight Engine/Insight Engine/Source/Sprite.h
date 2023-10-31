@@ -187,7 +187,8 @@ namespace IS {
          */
         static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f }, float thickness = 1.f);
 
-        static void drawDebugLine(Vector2D const& p0, Vector2D const& p1, float angleInDegrees, std::tuple<float, float, float> const& color, float length = -1.f);
+        static void drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, 
+            float length = -1.f, float angleInDegrees = -1.f); // Use non-default values only when values will never change!
 
         static void drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color);
 

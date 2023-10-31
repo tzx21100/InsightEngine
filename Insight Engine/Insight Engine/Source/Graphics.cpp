@@ -170,8 +170,8 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
-        Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+        //Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
+        //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
         Sprite::draw_instanced_lines();
         Sprite::draw_instanced_circles(); // layering how?
@@ -347,13 +347,29 @@ namespace IS {
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
 
-    void ISGraphics::DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness)
+    void ISGraphics::DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness)
     {
-        for (size_t i = 0; i < body.mTransformedVertices.size(); i++)
+        Vector2D TL{ sprite.model_TRS.world_position.x - (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y + (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D TR{ sprite.model_TRS.world_position.x + (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y + (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D BR{ sprite.model_TRS.world_position.x + (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y - (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D BL{ sprite.model_TRS.world_position.x - (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y - (sprite.model_TRS.scaling.y / 2.f) };
+
+        std::array<Vector2D, 4> vertices { TL, TR, BR, BL };
+
+
+        for (size_t i = 0; i < vertices.size(); i++)
         {
-            Vector2D va = body.mTransformedVertices[i];
-            Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
-            sprite.drawLine(va, vb, color, thickness);
+            Vector2D va = vertices[i];
+            Vector2D vb = vertices[(i + 1) % vertices.size()]; // modules by the size of the vector to avoid going out of the range
+
+            if (!(i % 2)) {
+                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.x);
+            }
+            else {
+                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.y);
+            }
+            thickness = thickness;
+            //sprite.drawLine(va, vb, color, thickness);
         }
     }
 
