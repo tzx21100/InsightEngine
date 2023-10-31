@@ -22,32 +22,63 @@
 #include "FileUtils.h"
 #include "Editor.h"
 
-#include <regex>
-
 namespace IS {
 
     std::filesystem::path AssetBrowserPanel::ASSETS_PATH = "Assets";
 
-    AssetBrowserPanel::AssetBrowserPanel() : mCurrentDirectory(ASSETS_PATH) {}
+    const std::string AssetBrowserPanel::IMPORTED = "Imported";
+
+    AssetBrowserPanel::AssetBrowserPanel() : mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
 
     void AssetBrowserPanel::RenderPanel()
     {
         auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
         if (ImGui::Begin("Asset Browser"))
         {
             RenderControls();
-            if (ImGui::BeginTable("TwoAssetBrowser", 2))
+
+            ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
+            if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))
             {
                 ImGui::TableNextColumn();
-                RenderImportedAssets();
+                if (ImGui::BeginChild("Tree Browser", { 0, 0 }, false, ImGuiWindowFlags_HorizontalScrollbar))
+                {
+                    if (ImGui::BeginTable("Tree Browser Table", 1, ImGuiTableFlags_BordersInnerH))
+                    {
+                        ImGui::TableNextColumn();
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+                        ImGui::PushFont(FONT_BOLD);
+                        if (ImGui::Button(IMPORTED.c_str())) { SwitchImportedAsset(IMPORTED); }
+                        ImGui::PopFont();
+                        ImGui::PopStyleColor();
+
+                        ImGui::TableNextColumn();
+                        RenderImportedAssetsTree();
+
+                        ImGui::Dummy({ 0.f, 20.f });
+
+                        ImGui::TableNextColumn();
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+                        ImGui::PushFont(FONT_BOLD);
+                        if (ImGui::Button("All Assets")) { SwitchCurrentDirectory(ASSETS_PATH); }
+                        ImGui::PopFont();
+                        ImGui::PopStyleColor();
+
+                        ImGui::TableNextColumn();
+                        RenderDirectoryContents(ASSETS_PATH);
+
+                        ImGui::EndTable(); // end table Tree Browser Table
+                    }
+                }
+                ImGui::EndChild(); // end child window Tree Browser
 
                 ImGui::TableNextColumn();
-                RenderPath();
-                RenderAllAssetsBrowser();
+                mShowImportedAssets ? RenderImportedAssets() : RenderAllAssetsBrowser();
 
-                ImGui::EndTable(); // end table TwoAssetBrowser
+                ImGui::EndTable(); // end table Assets Browser Table
             }
         }
 
@@ -89,30 +120,37 @@ namespace IS {
 
     void AssetBrowserPanel::RenderPath()
     {
-        // Replace backslashes with " >"
-        std::string path_records = mCurrentDirectory.string();
-        std::replace(path_records.begin(), path_records.end(), '\\', ' ');
-        path_records = std::regex_replace(path_records, std::regex(" "), " > ");
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::Button(ASSETS_PATH.filename().string().c_str())) { SwitchCurrentDirectory(ASSETS_PATH); }
+        ImGui::PopStyleColor();
 
-        ImVec2 cursor_pos = ImGui::GetCursorScreenPos();
-        ImVec2 path_records_textsize = ImGui::CalcTextSize(path_records.c_str());
-        ImDrawList* draw_list = ImGui::GetWindowDrawList();
+        if (mCurrentDirectory == ASSETS_PATH)
+            return;
 
-        // Calculate the background rectangle's position and size
-        ImGuiStyle& style = ImGui::GetStyle();
-        float padding_width = style.FramePadding.x;
-        ImVec2 background_pos = { cursor_pos.x - padding_width / 2.f, cursor_pos.y };
-        ImVec2 background_size = ImVec2(path_records_textsize.x + padding_width, path_records_textsize.y);
+        std::vector<std::filesystem::path> path_components;
 
-        // Draw the background rectangle with the specified color
-        draw_list->AddRectFilled(background_pos,
-                                 ImVec2(background_pos.x + background_size.x, background_pos.y + background_size.y),
-                                 IM_COL32(255, 255, 255, 80), 2.f);
-        ImGui::Text("%s >", path_records.c_str());
+        // Traverse the path from current diretory back to assets directory
+        for (std::filesystem::path path = mCurrentDirectory; path != ASSETS_PATH; path = path.parent_path())
+        {
+            path_components.push_back(path);
+        }
+
+        // Render buttons for each directory component in reverse order
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        for (auto it = path_components.rbegin(); it != path_components.rend(); ++it)
+        {
+            ImGui::SameLine();
+            ImGui::TextUnformatted(">");
+            ImGui::SameLine();
+            if (ImGui::Button(it->filename().string().c_str())) { SwitchCurrentDirectory(*it); }
+        }
+        ImGui::PopStyleColor();
     }
 
     void AssetBrowserPanel::RenderAllAssetsBrowser()
     {
+        RenderPath();
+
         auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
 
         float cell_size = mControls.mThumbnailSize + mControls.mPadding;
@@ -151,7 +189,7 @@ namespace IS {
                     ImGui::TableNextColumn();
                     ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
                     ImTextureID icon = editor_layer->GetIcon(is_directory ? "Folder" : "File");
-                    ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     ImGui::PopStyleColor();
 
                     // Start file drag
@@ -166,6 +204,9 @@ namespace IS {
 
                         ImGui::EndDragDropSource();
                     }
+
+                    if (selected)
+                        ImGui::SetKeyboardFocusHere(-1);
 
                     // Clicking Item
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
@@ -192,54 +233,188 @@ namespace IS {
         ImGui::EndChild(); // end child window Assets
     }
 
+    void AssetBrowserPanel::RenderImportedAssetsTree()
+    {
+        const std::string textures = "Textures";
+        const std::string sounds = "Sounds";
+        const std::string prefabs = "Prefabs";
+
+        ImGuiTreeNodeFlags textures_tree_flags = (textures == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags sounds_tree_flags = (sounds == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags prefabs_tree_flags = (prefabs == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+
+        if (ImGui::TreeNodeEx(textures.c_str(), textures_tree_flags))
+        {
+            if (ImGui::IsItemClicked())
+                SwitchImportedAsset(textures);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNodeEx(sounds.c_str(), sounds_tree_flags))
+        {
+            if (ImGui::IsItemClicked())
+                SwitchImportedAsset(sounds);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNodeEx(prefabs.c_str(), prefabs_tree_flags))
+        {
+            if (ImGui::IsItemClicked())
+                SwitchImportedAsset(prefabs);
+            ImGui::TreePop();
+        }
+    }
+
+    void AssetBrowserPanel::SwitchImportedAsset(std::string const& asset)
+    {
+        mSelectedImportedAsset = asset;
+        mCurrentDirectory = ASSETS_PATH;
+        mShowImportedAssets = true;
+    }
+
+    void AssetBrowserPanel::RenderDirectoryContents(std::filesystem::path const& directory)
+    {
+        for (auto const& entry : std::filesystem::directory_iterator(directory))
+        {
+            std::filesystem::path const& path = entry.path();
+            bool is_directory = entry.is_directory();
+
+            if (is_directory)
+            {
+                HasSubDirectory(path) ? RenderDirectoryNode(path) : RenderDirectoryLeafNode(path);
+            }
+        }
+    }
+
+    void AssetBrowserPanel::RenderDirectoryNode(std::filesystem::path const& directory)
+    {
+        std::string const& filename_string = directory.filename().string();
+        ImGuiTreeNodeFlags tree_flags = directory == mCurrentDirectory ? ImGuiTreeNodeFlags_Selected : 0;
+        bool opened = ImGui::TreeNodeEx(filename_string.c_str(), tree_flags);
+
+        if (ImGui::IsItemClicked())
+        {
+            mCurrentDirectory = directory;
+            IS_CORE_DEBUG("{}", mCurrentDirectory.string());
+        }
+
+        if (opened)
+        {
+            RenderDirectoryContents(directory);
+            ImGui::TreePop();
+        }
+    }
+
+    void AssetBrowserPanel::RenderDirectoryLeafNode(std::filesystem::path const& directory)
+    {
+        std::string const& filename_string = directory.filename().string();
+        ImGuiTreeNodeFlags tree_flags = directory == mCurrentDirectory ? ImGuiTreeNodeFlags_Selected : 0;
+        tree_flags |= ImGuiTreeNodeFlags_Leaf;
+        bool opened = ImGui::TreeNodeEx(filename_string.c_str(), tree_flags);
+        
+        if (ImGui::IsItemClicked())
+            SwitchCurrentDirectory(directory);
+        
+        if (opened)
+        {
+            ImGui::TreePop();
+        }
+    }
+
+    void AssetBrowserPanel::SwitchCurrentDirectory(std::filesystem::path const& directory)
+    {
+        mCurrentDirectory = directory;
+        mSelectedImportedAsset = IMPORTED;
+        mShowImportedAssets = false;
+    }
+
+    bool AssetBrowserPanel::HasSubDirectory(std::filesystem::path const& directory)
+    {
+        for (auto const& entry : std::filesystem::directory_iterator(directory))
+        {
+            if (entry.is_directory())
+                return true;
+        }
+        return false;
+    }
+
+    void AssetBrowserPanel::RenderImportedPath()
+    {
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::Button(IMPORTED.c_str())) { SwitchImportedAsset(IMPORTED); }
+        ImGui::PopStyleColor();
+
+        if (mSelectedImportedAsset == IMPORTED)
+            return;
+
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        ImGui::SameLine();
+        ImGui::TextUnformatted(">");
+        ImGui::SameLine();
+        if (ImGui::Button(mSelectedImportedAsset.c_str())) { SwitchImportedAsset(mSelectedImportedAsset); }
+        ImGui::PopStyleColor();
+    }
+
     void AssetBrowserPanel::RenderImportedAssets()
     {
         auto& engine = InsightEngine::Instance();
         auto const editor = engine.GetSystem<Editor>("Editor");
         auto const asset = engine.GetSystem<AssetManager>("Asset");
         auto const editor_layer = editor->GetEditorLayer();
-        auto const font_bold = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         float cell_size = mControls.mThumbnailSize + mControls.mPadding;
         float panel_width = ImGui::GetContentRegionAvail().x;
         int column_count = std::clamp(static_cast<int>(panel_width / cell_size), 1, static_cast<int>(panel_width));
         static bool show_alltextures = false;
 
-        ImGuiWindowFlags child_window_flags = ImGuiWindowFlags_AlwaysUseWindowPadding;
+        RenderImportedPath();
 
-        ImGui::SetNextWindowBgAlpha(.3f);
-
-        ImGui::PushFont(font_bold);
-        ImGui::TextUnformatted("Imported");
-        ImGui::PopFont();
-
-        if (show_alltextures)
+        if (mSelectedImportedAsset != IMPORTED)
         {
-            if (ImGui::ImageButton("TexturesBack", editor_layer->GetIcon("BackButton"), { 16.f, 16.f }))
+            if (ImGui::ImageButton("ImportedBack", editor_layer->GetIcon("BackButton"), { 16.f, 16.f }))
             {
-                show_alltextures = false;
+                SwitchImportedAsset(IMPORTED);
             }
             ImGui::SameLine();
         }
 
+        ImGuiWindowFlags child_window_flags = ImGuiWindowFlags_AlwaysUseWindowPadding;
+        ImGui::SetNextWindowBgAlpha(.3f);
         if (ImGui::BeginChild("Imported Assets Browser", { 0.f, 0.f }, false, child_window_flags))
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_None;
             if (ImGui::BeginTable("Imported Assets Layout", column_count, table_flags))
             {
                 ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                if (!show_alltextures)
+                if (mSelectedImportedAsset == IMPORTED)
                 {
                     ImGui::TableNextColumn();
                     ImGui::ImageButton("##Textures", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
-                        show_alltextures = true;
+                        SwitchImportedAsset("Textures");
                     }
                     ImGui::TextWrapped("Textures");
+
+                    ImGui::TableNextColumn();
+                    ImGui::ImageButton("##Sounds", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                    {
+                        SwitchImportedAsset("Sounds");
+                    }
+                    ImGui::TextWrapped("Sounds");
+
+                    ImGui::TableNextColumn();
+                    ImGui::ImageButton("##Prefabs", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                    {
+                        SwitchImportedAsset("Prefabs");
+                    }
+                    ImGui::TextWrapped("Prefabs");
                 }
 
-                if (show_alltextures)
+                // Show all imported textures
+                if (mSelectedImportedAsset == "Textures")
                 {
                     for (auto const& [name, img] : asset->mImageList)
                     {
@@ -260,7 +435,7 @@ namespace IS {
                         if (ImGui::BeginDragDropSource())
                         {
                             const wchar_t* item_path = path.c_str();
-                            ImGui::SetDragDropPayload("IMPORTED_ASSET", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+                            ImGui::SetDragDropPayload("IMPORTED_TEXTURE", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
                             // Tooltip
                             const ImVec2 image_size = { 48.f * aspect_ratio, 48.f };
@@ -269,7 +444,61 @@ namespace IS {
                             ImGui::EndDragDropSource();
                         }
 
-                        ImGui::TextWrapped(path.stem().string().c_str());
+                        ImGui::TextWrapped(path.filename().string().c_str());
+                    }
+                }
+
+                // Show all imported sounds
+                else if (mSelectedImportedAsset == "Sounds")
+                {
+                    for (auto const& [name, sound] : asset->mSoundList)
+                    {
+                        std::filesystem::path path(name);
+                        ImTextureID icon = editor_layer->GetIcon("File");
+                        ImGui::TableNextColumn();
+                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Start file drag
+                        if (ImGui::BeginDragDropSource())
+                        {
+                            const wchar_t* item_path = path.c_str();
+                            ImGui::SetDragDropPayload("IMPORTED_SOUND", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+
+                            // Tooltip
+                            const ImVec2 image_size = { 48.f , 48.f };
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
+
+                            ImGui::EndDragDropSource();
+                        }
+
+                        ImGui::TextWrapped(path.filename().string().c_str());
+                    }
+                }
+
+                // Show all imported prefabs
+                else if (mSelectedImportedAsset == "Prefabs")
+                {
+                    for (auto const& [name, prefab] : asset->mPrefabList)
+                    {
+                        std::filesystem::path path(name);
+                        ImTextureID icon = editor_layer->GetIcon("File");
+                        ImGui::TableNextColumn();
+                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Start file drag
+                        if (ImGui::BeginDragDropSource())
+                        {
+                            const wchar_t* item_path = path.c_str();
+                            ImGui::SetDragDropPayload("IMPORTED_PREFAB", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+
+                            // Tooltip
+                            const ImVec2 image_size = { 48.f , 48.f };
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
+
+                            ImGui::EndDragDropSource();
+                        }
+
+                        ImGui::TextWrapped(path.filename().string().c_str());
                     }
                 }
 
