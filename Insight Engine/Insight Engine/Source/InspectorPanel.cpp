@@ -338,9 +338,6 @@ namespace IS {
             }
             ImGui::EndChild();
 
-            ImGui::BeginGroup();
-            ImGui::EndGroup();
-
             // Texture Dimensions
             ImGuiTableFlags table_flags = 0;
             if (ImGui::BeginTable("Texture", 2, table_flags))
@@ -406,7 +403,7 @@ namespace IS {
                                 ImGui::TextUnformatted("Frame Duration");
                                 ImGui::PopFont();
                                 ImGui::TableNextColumn();
-                                ImGui::SliderFloat("##Frame Duration", &animation.time_per_frame, 0.001f, 1.f, "%.2f sec");
+                                ImGui::SliderFloat("##Frame Duration", &animation.time_per_frame, 0.01f, 1.f, "%.2f sec");
 
                                 ImGui::TableNextColumn();
                                 ImGui::PushFont(FONT_BOLD);

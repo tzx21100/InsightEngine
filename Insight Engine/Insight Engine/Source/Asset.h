@@ -167,6 +167,10 @@ namespace IS {
             mSceneList.clear();
         }
 
+        void LoadImage(std::string const& filepath);
+        void LoadAudio(std::string const& filepath);
+        void LoadPrefab(std::string const& filepath);
+
         /*!
          * \brief Retrieves image data by file name.
          *

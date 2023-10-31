@@ -65,6 +65,9 @@ namespace IS {
                 input.mWindow->SetMaximized(false);
             }
         });
+
+        // Accept file payload
+        glfwSetDropCallback(native_window, FileDropCallback);
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {
@@ -86,6 +89,9 @@ namespace IS {
         for (auto const& button : pressed_mouse_buttons) {
             held_mouse_buttons.insert(button);
         }
+
+        ProcessPayloads();
+        payloads.clear();
     }
 
     void InputManager::HandleMessage(const Message& message) {
@@ -204,6 +210,49 @@ namespace IS {
         //IS_CORE_DEBUG("world mouse pos: {}, {}", engine.GetWindowWidth(), engine.GetWindowHeight());
     }
 
+    void InputManager::ProcessPayloads()
+    {
+        for (auto const& payload : payloads)
+        {
+            ProcessPayloadDirectory(payload);
+        }
+    }
+
+    void InputManager::ProcessPayloadDirectory(std::filesystem::path const& directory)
+    {
+        if (!std::filesystem::is_directory(directory))
+        {
+            ProcessPayloadFile(directory);
+            return;
+        }
+
+        for (auto const& entry : std::filesystem::directory_iterator(directory))
+        {
+            std::filesystem::path path = std::filesystem::relative(entry);
+            const bool is_directory = entry.is_directory();
+            is_directory ? ProcessPayloadDirectory(path) : ProcessPayloadFile(path);
+        }
+    }
+
+    void InputManager::ProcessPayloadFile(std::filesystem::path const& filepath)
+    {
+        auto& scene_manager = SceneManager::Instance();
+        auto& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
+        std::string const& filename = std::filesystem::relative(filepath).string();
+        std::filesystem::path const& extension = filepath.extension();
+
+        // Scene file
+        if (extension == ".insight") { scene_manager.LoadScene(filename); }
+        // Texture file
+        else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") { asset->LoadImage(filename); }
+        // Audio file
+        else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") { /* asset->LoadAudio(filename); */ }
+        // Prefab file
+        else if (extension == ".json") { asset->LoadPrefab(filename); }
+        else { IS_CORE_WARN("File type \"{}\" not supported!", extension.string()); }
+    }
+
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
@@ -236,6 +285,16 @@ namespace IS {
         InputManager* input = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         input->current_mouse_x = xpos;
         input->current_mouse_y = ypos;
+    }
+
+    void InputManager::FileDropCallback(GLFWwindow* window, int count, const char** paths)
+    {
+        InputManager* input = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
+        for (int i{}; i < count; ++i)
+        {
+            std::filesystem::path path = std::filesystem::relative(paths[i]);
+            input->payloads.emplace(path);
+        }
     }
 
     void InputManager::mouse_pick_entity() {
