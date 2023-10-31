@@ -162,18 +162,21 @@ namespace IS {
         shader.unUse();
     }
 
-
-
-
     void Sprite::draw_instanced_quads() {
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[4].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
         Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        std::vector<Sprite::instanceData> tempData;
 
         if (buffer) {
+            // Copy the instance data from the multiset to the vector
+            for (const auto& data : ISGraphics::layeredQuadInstances) {
+                tempData.push_back(data);
+            }
+
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::quadInstances.data(), ISGraphics::quadInstances.size() * sizeof(Sprite::instanceData));
+            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
 
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
@@ -203,7 +206,7 @@ namespace IS {
             std::cout << "uTex2d Uniform not found" << std::endl;
 
 
-        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[4].draw_count, static_cast<GLsizei>(ISGraphics::quadInstances.size()));
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[4].draw_count, static_cast<GLsizei>(tempData.size()));
     }
 
     //glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
@@ -256,6 +259,7 @@ namespace IS {
         spriteData["SpriteDrawing"] = drawing;
 
         spriteData["AnimationIndex"] = animation_index;
+        spriteData["Layer"] = layer;
 
         Json::Value animationsJson(Json::arrayValue);
         for (const Animation& animation : anims) {
@@ -307,6 +311,7 @@ namespace IS {
         drawing = data["SpriteDrawing"].asBool();
 
         animation_index = data["AnimationIndex"].asInt();
+        layer = data["Layer"].asInt();
 
         // Deserializing the vector of animations
         anims.clear(); // Clear existing animations

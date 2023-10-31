@@ -109,7 +109,7 @@ namespace IS {
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 
 		// Static objects
-		static std::vector<Sprite::instanceData> quadInstances;
+		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 		// Sprites (models) to render

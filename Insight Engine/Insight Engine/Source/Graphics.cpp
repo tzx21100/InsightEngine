@@ -25,7 +25,7 @@ namespace IS {
 
     /// Static objects ///
     std::vector<Image> ISGraphics::textures;
-    std::vector<Sprite::instanceData> ISGraphics::quadInstances;
+    std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
     Camera ISGraphics::cameras[2];
@@ -106,7 +106,7 @@ namespace IS {
         ice_cream_truck_ani.updateAnimation(delta_time);*/
         
         // fill up instancing vector
-        quadInstances.clear();
+        layeredQuadInstances.clear();
         for (auto& entity : mEntities) { // for each intentity
             // get sprite and transform components
             auto& sprite = engine.GetComponent<Sprite>(entity);
@@ -131,6 +131,7 @@ namespace IS {
                 Sprite::instanceData instData;
                 instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
                 instData.entID = static_cast<float>(entity);
+                instData.layer = sprite.layer;
                 if (sprite.img.texture_id == 0) { // no texture
                     instData.color = sprite.color;
                     instData.tex_index = -1.f;
@@ -144,9 +145,10 @@ namespace IS {
                 }
                 // no need for else as default values of instData will stay
 
-                quadInstances.emplace_back(instData);
+                layeredQuadInstances.insert(instData);
             }
         }
+
         // draw
         Draw(delta_time);
     }
@@ -173,59 +175,9 @@ namespace IS {
         //Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
         //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
-        Sprite::draw_instanced_lines();
-        Sprite::draw_instanced_circles(); // layering how?
         Sprite::draw_instanced_quads();
-
-
-        for (auto& entity : mEntities) { // for each intentity
-            // get sprite and transform components
-            auto& sprite = engine.GetComponent<Sprite>(entity);
-            //auto& trans = engine.GetComponent<Transform>(entity);
-
-            //// update sprite's transform
-            //sprite.followTransform(trans);
-            //sprite.transform();
-
-            //Mesh::InstanceData instanceData;
-            //instanceData.modelXformMatrix = sprite.model_TRS.mdl_to_ndc_xform;
-            //instanceData.color = sprite.color;
-            //instanceData.texIndex = sprite.texture; // Set the appropriate texture index
-
-            //// Add the instance data to the array
-            //quadInstances.push_back(instanceData);
-
-            // for each type
-            switch (sprite.primitive_type) {
-            case GL_TRIANGLE_STRIP: // quads
-                //if (sprite.name == "player_sprite") { // if drawing player
-                //    // swap animations based on index
-                //    if (sprite.animation_index == 0) sprite.drawAnimation(meshes[0], mesh_shader_pgm, idle_ani, sprite.texture);
-                //    else sprite.drawAnimation(meshes[0], mesh_shader_pgm, walking_ani, sprite.texture);
-                //}
-                //else if (sprite.name == "ice_cream_truck") { // if drawing truck
-                //    sprite.drawAnimation(meshes[0], mesh_shader_pgm, ice_cream_truck_ani, sprite.texture); // draw animation
-                //}
-                //else { // every other textured box
-                //    sprite.drawSprite(meshes[0], mesh_shader_pgm, sprite.texture);
-                //}
-                //break;
-            case GL_POINTS: // points
-                sprite.drawSprite(meshes[1], mesh_shader_pgm, sprite.img.texture_id);
-                break;
-            case GL_LINES: // lines
-                /*sprite.drawSprite(meshes[2], mesh_shader_pgm, sprite.img.texture_id);
-                break;*/
-            case GL_TRIANGLE_FAN: // circle
-                sprite.drawSprite(meshes[3], mesh_shader_pgm, sprite.img.texture_id);
-                break;
-            }
-            if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
-                auto& body = engine.GetComponent<RigidBody>(entity);
-                Physics::DrawOutLine(body, sprite);
-            }
-
-        }
+        Sprite::draw_instanced_circles(); // layering how?
+        Sprite::draw_instanced_lines();
 
         // Draw outline for selected entity
         auto const editor = engine.GetSystem<Editor>("Editor");

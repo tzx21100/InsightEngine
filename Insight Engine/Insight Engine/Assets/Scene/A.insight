@@ -9,6 +9,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.95607423782348633,
 				"SpriteColorY" : 0.84343373775482178,
 				"SpriteColorZ" : 0.15176370739936829,
@@ -17,12 +18,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 339.05368041992188,
 				"SpriteTransformScalingX" : 13.288753509521484,
 				"SpriteTransformScalingY" : 6.9347143173217773,
 				"SpriteTransformWorldPositionX" : 54.59405517578125,
-				"SpriteTransformWorldPositionY" : 110.40728759765625
+				"SpriteTransformWorldPositionY" : 110.40728759765625,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -42,7 +46,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 0.0,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -91,7 +95,10 @@
 						"y" : -0.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -100,6 +107,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.22345063090324402,
 				"SpriteColorY" : 0.50597834587097168,
 				"SpriteColorZ" : 0.68776369094848633,
@@ -108,12 +116,15 @@
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 2,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1.0,
 				"SpriteTransformScalingY" : 1.0,
 				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : 0.0
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
 			}
 		},
 		{
@@ -125,7 +136,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -174,7 +185,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 3682.15380859375,
+				"mInvInertia" : 0.00027158018201589584,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -183,6 +197,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.43643993139266968,
 				"SpriteColorY" : 0.3395516574382782,
 				"SpriteColorZ" : 0.37266439199447632,
@@ -191,12 +206,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : -1337.368408203125,
-				"SpriteTransformWorldPositionY" : 150.98175048828125
+				"SpriteTransformWorldPositionY" : 150.98175048828125,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -216,7 +234,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -265,7 +283,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 3682.15380859375,
+				"mInvInertia" : 0.00027158018201589584,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -274,6 +295,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.97419703006744385,
 				"SpriteColorY" : 0.37568524479866028,
 				"SpriteColorZ" : 0.60596537590026855,
@@ -282,12 +304,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : -1081.5789794921875,
-				"SpriteTransformWorldPositionY" : 422.01239013671875
+				"SpriteTransformWorldPositionY" : 422.01239013671875,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -307,7 +332,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -356,7 +381,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 3682.15380859375,
+				"mInvInertia" : 0.00027158018201589584,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -365,6 +393,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.68224173784255981,
 				"SpriteColorY" : 0.51981955766677856,
 				"SpriteColorZ" : 0.75831907987594604,
@@ -373,12 +402,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : -549.47369384765625,
-				"SpriteTransformWorldPositionY" : 33.142333984375
+				"SpriteTransformWorldPositionY" : 33.142333984375,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -398,7 +430,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -447,7 +479,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 3682.15380859375,
+				"mInvInertia" : 0.00027158018201589584,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -456,6 +491,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.32510218024253845,
 				"SpriteColorY" : 0.6751212477684021,
 				"SpriteColorZ" : 0.022680323570966721,
@@ -464,12 +500,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : -427.89474487304688,
-				"SpriteTransformWorldPositionY" : 204.00947570800781
+				"SpriteTransformWorldPositionY" : 204.00947570800781,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -489,7 +528,7 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
+				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 22041.94140625,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -538,7 +577,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 3682.15380859375,
+				"mInvInertia" : 0.00027158018201589584,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -547,6 +589,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.1070050373673439,
 				"SpriteColorY" : 0.75573402643203735,
 				"SpriteColorZ" : 0.12488724291324615,
@@ -555,12 +598,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : -334.73684692382812,
-				"SpriteTransformWorldPositionY" : -268.8211669921875
+				"SpriteTransformWorldPositionY" : -268.8211669921875,
+				"animations" : []
 			},
 			"Transform" : 
 			{
@@ -580,13 +626,13 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 22041.94140625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : false,
-				"RigidBodyDensity" : 22041.94140625,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 110209.703125,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
+				"RigidBodyInvMass" : 0.20000000298023224,
+				"RigidBodyMass" : 5.0,
+				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
 				"RigidBodyTransformedVertices" : 
@@ -629,7 +675,10 @@
 						"y" : -71.751113891601562
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 1.1000000238418579,
+				"mInertia" : 18410.76953125,
+				"mInvInertia" : 5.4316034947987646e-05,
+				"mStaticFriction" : 1.2000000476837158
 			},
 			"Script" : 
 			{
@@ -638,6 +687,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.052888538688421249,
 				"SpriteColorY" : 0.23723474144935608,
 				"SpriteColorZ" : 0.96529912948608398,
@@ -646,12 +696,15 @@
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 4,
+				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 153.59999084472656,
 				"SpriteTransformScalingY" : 143.50222778320312,
 				"SpriteTransformWorldPositionX" : 172.10527038574219,
-				"SpriteTransformWorldPositionY" : -254.09123229980469
+				"SpriteTransformWorldPositionY" : -254.09123229980469,
+				"animations" : []
 			},
 			"Transform" : 
 			{

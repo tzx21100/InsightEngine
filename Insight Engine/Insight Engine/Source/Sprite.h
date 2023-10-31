@@ -49,6 +49,7 @@ namespace IS {
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
             float entID{}; // initialize with invalid entity id
+            int layer{};
         };
 
         struct nonQuadInstanceData {
@@ -60,12 +61,16 @@ namespace IS {
 
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
-        //uint8_t texture_id{};      // The texture ID for the sprite. (randomly given by OpenGL)
         int animation_index{};     // The current texture index for switching animations (0 is the default texture).
-        // std::vector<Animation> anim_vect{};
         Image img{};
-        // Animation anim{};
         std::vector<Animation> anims{};
+        int layer{};
+
+        struct GfxLayerComparator {
+            bool operator()(instanceData const& a, instanceData const& b) const {
+                return a.layer < b.layer;
+            }
+        };
 
 
         // ImGui properties

@@ -71,6 +71,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.85964435338973999,
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
@@ -93,9 +94,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.12191303074359894,
+						"frame_timer" : 0.22613108158111572,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -10498,6 +10499,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.364705890417099,
 				"SpriteColorY" : 0.22352941334247589,
 				"SpriteColorZ" : 0.047058824449777603,
@@ -10591,6 +10593,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.28627452254295349,
 				"SpriteColorY" : 0.25882354378700256,
 				"SpriteColorZ" : 0.23529411852359772,
@@ -10684,6 +10687,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.28691983222961426,
 				"SpriteColorY" : 0.25726699829101562,
 				"SpriteColorZ" : 0.23486264050006866,
@@ -10777,6 +10781,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.28691983222961426,
 				"SpriteColorY" : 0.25726699829101562,
 				"SpriteColorZ" : 0.23486264050006866,
@@ -10870,6 +10875,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.28691983222961426,
 				"SpriteColorY" : 0.25726699829101562,
 				"SpriteColorZ" : 0.23486264050006866,
@@ -10963,6 +10969,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.28691983222961426,
 				"SpriteColorY" : 0.25726699829101562,
 				"SpriteColorZ" : 0.23486264050006866,
@@ -11056,6 +11063,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.364705890417099,
 				"SpriteColorY" : 0.22352941334247589,
 				"SpriteColorZ" : 0.047058824449777603,
@@ -11149,6 +11157,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.73417723178863525,
 				"SpriteColorY" : 0.23500104248523712,
 				"SpriteColorZ" : 0.14559632539749146,
@@ -11242,6 +11251,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.75105488300323486,
 				"SpriteColorY" : 0.19471347332000732,
 				"SpriteColorZ" : 0.095070227980613708,
@@ -11335,6 +11345,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.94514769315719604,
 				"SpriteColorY" : 0.28713348507881165,
 				"SpriteColorZ" : 0.0,
@@ -11428,6 +11439,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.43278318643569946,
 				"SpriteColorZ" : 0.0042194128036499023,
@@ -11521,6 +11533,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.63446027040481567,
 				"SpriteColorZ" : 0.0042194128036499023,
@@ -11614,6 +11627,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.364705890417099,
 				"SpriteColorY" : 0.22352941334247589,
 				"SpriteColorZ" : 0.047058824449777603,
