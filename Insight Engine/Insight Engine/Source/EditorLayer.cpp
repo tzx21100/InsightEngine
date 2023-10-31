@@ -40,12 +40,12 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
-
+        
+        mIcons["SaveFile"]           = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
         mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
         mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
         mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
         mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
-        mIcons["SaveFile"]           = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id); // TODO: use icon font instead
         mIcons["ZoomIn"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_in.png")->texture_id);
         mIcons["ZoomOut"]            = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_out.png")->texture_id);
         mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "folder_icon.png")->texture_id);
@@ -368,8 +368,10 @@ namespace IS {
 
         auto& style = ImGui::GetStyle();
         const char* play_pause_button = engine.mRuntime ? "PauseButton" : "PlayButton";
+        const char* play_pause_tooltip = engine.mRuntime ? "Pause" : "Play";
         const int BUTTON_COUNT = 3;
         const char* buttons[BUTTON_COUNT] = { play_pause_button, "StopButton", "StepButton" };
+        const char* tooltips[BUTTON_COUNT] = { play_pause_tooltip, "Stop", "Step" };
         bool button_clicked[BUTTON_COUNT] = {};
         const ImVec2 button_size = { 16.f, 16.f };
         const ImVec4 grey_color = ImVec4(.5f, .5f, .5f, 1.f);
@@ -394,6 +396,7 @@ namespace IS {
                 }
 
                 button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
+                ImGui::SetItemTooltip(tooltips[i]);
             }
 
             // Render camera zoom controls

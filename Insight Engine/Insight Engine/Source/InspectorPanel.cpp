@@ -173,160 +173,6 @@ namespace IS {
         // Entity configurations
         RenderEntityConfig(entity);
 
-        // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity](Sprite& sprite)
-        {
-            auto& engine = InsightEngine::Instance();
-            auto const editor = engine.GetSystem<Editor>("Editor");
-            auto const editor_layer = editor->GetEditorLayer();
-            std::filesystem::path img_path(sprite.img.mFileName);
-
-            // Render color
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Color");
-            ImGui::PopFont();
-            ImGui::ColorEdit3("##Color", &sprite.color[0]);
-            ImGui::Spacing();
-
-            // Render Texture and its dimension data
-            // Header
-
-            if (ImGui::BeginTable("Texture", 2))
-            {
-                ImGui::TableNextColumn();
-                ImGui::SetNextItemWidth(50.f);
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Texture");
-                ImGui::PopFont();
-
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", img_path.filename().string().c_str());
-
-                ImGui::EndTable();
-            }
-
-            // Parameters
-            ImTextureID texture_id;
-            float texture_width;
-            float texture_height;
-            bool has_texture = sprite.img.texture_id;
-            bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
-
-            //placeholder for animations for now YIMING TAKE NOTE!!! JUST FOR DEMO!!!
-            /*if (sprite.img.mFileName == "Assets/Textures/Player idle 1R12C.png") {
-                sprite.anims.clear();
-                Animation a; a.initAnimation(1, 12, 3);
-                sprite.anims.emplace_back(a);
-                sprite.animation_index = 0;
-            }*/
-
-            // Use placeholder if width or height of texture
-            if (no_dimensions)
-            {
-                texture_id = editor_layer->GetIcon("TexturePlaceholder");
-                texture_width = texture_height = 512.f;
-            }
-            else
-            {
-                texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
-                texture_width = static_cast<float>(sprite.img.width);
-                texture_height = static_cast<float>(sprite.img.height);
-            }
-
-            const float texture_aspect_ratio = texture_width / texture_height;
-            const float draw_size = 40.f;
-            ImVec2 pos = ImGui::GetCursorPos();
-            ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
-            ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
-            ImVec4 tint_color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-            ImVec4 border_color = ImGui::GetStyleColorVec4(ImGuiCol_Border);
-
-            // Render Texture as Image
-            ImGui::BeginGroup();
-            ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
-            if (has_texture && no_dimensions)
-            {
-                ImGui::SameLine();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextColored({ 1.f, .675f, .11f, 1.f }, "Texture attached missing dimensions!");
-                ImGui::PopFont();
-            }
-
-            // Accept file drop
-            if (ImGui::BeginDragDropTarget())
-            {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
-                {
-                    std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                    auto asset = engine.GetSystem<AssetManager>("Asset");
-                    IS_CORE_DEBUG("Image : {} ", path.string());
-                    sprite.img = *asset->GetImage(path.string());
-                }
-                ImGui::EndDragDropTarget();
-            }
-            ImGui::EndGroup();
-
-            // Texture Tooltip
-            if (!no_dimensions && ImGui::BeginItemTooltip())
-            {
-                float region_size = draw_size;
-                float region_x = io.MousePos.x - pos.x - region_size * 0.5f;
-                float region_y = io.MousePos.y - pos.y - region_size * 0.5f;
-                float zoom = 4.f;
-                if (region_x < 0.0f) { region_x = 0.0f; } else if (region_x > texture_width - region_size) { region_x = texture_width - region_size; }
-                if (region_y < 0.0f) { region_y = 0.0f; } else if (region_y > texture_height - region_size) { region_y = texture_height - region_size; }
-                ImGui::Text("Min: (%.2f, %.2f)", region_x, region_y);
-                ImGui::Text("Max: (%.2f, %.2f)", region_x + region_size, region_y + region_size);
-                ImVec2 uv0 = ImVec2((region_x) / texture_width, (region_y) / texture_height);
-                ImVec2 uv1 = ImVec2((region_x + region_size) / texture_width, (region_y + region_size) / texture_height);
-                float zoomed_in_height = region_size * zoom;
-                float zoomed_in_width = zoomed_in_height * texture_aspect_ratio;
-                ImGui::Image(texture_id, ImVec2(zoomed_in_width, zoomed_in_height)); // still WIP
-                ImGui::EndTooltip();
-            }
-
-            // Texture Dimensions
-            ImGuiTableFlags table_flags = 0;
-            ImGui::BeginTable("Texture", 2, table_flags);
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Width");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Text("%dpx", sprite.img.width);
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Height");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Text("%dpx", sprite.img.height);
-            ImGui::EndTable();
-
-            //// Render Animation stuff
-            //if (!sprite.anims.empty())
-            //{
-            //    ImGui::PushFont(FONT_BOLD);
-            //    ImGui::TextUnformatted("Animation");
-            //    ImGui::PopFont();
-
-            //    for (Animation& animation : sprite.anims)
-            //    {
-            //        if (ImGui::BeginTable("Animation", 2))
-            //        {
-            //            ImGui::TableNextColumn();
-            //            ImGui::PushFont(FONT_BOLD);
-            //            ImGui::TextUnformatted("Columns");
-            //            ImGui::PopFont();
-            //            ImGui::TableNextColumn();
-            //            ImGui::SliderInt("##Columns", &animation.x_frames, 1, 20);
-
-            //            ImGui::EndTable();
-            //        }
-            //    }
-            //}
-
-        }); // end render Sprite Component
-
         // Transform Component
         RenderComponent<Transform>("Transform", entity, [FONT_BOLD](Transform& transform)
         {
@@ -359,6 +205,240 @@ namespace IS {
             transform.setWorldPosition(position.x, position.y);
 
         }); // end render Transform Component
+
+        // Sprite Component
+        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity](Sprite& sprite)
+        {
+            auto& engine = InsightEngine::Instance();
+            auto const editor = engine.GetSystem<Editor>("Editor");
+            auto const editor_layer = editor->GetEditorLayer();
+            std::filesystem::path filepath(sprite.img.mFileName);
+            ImTextureID texture_id;
+            float texture_width;
+            float texture_height;
+            bool has_texture = sprite.img.texture_id;
+            bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
+            bool missing_filename = !filepath.has_filename() && has_texture;
+            bool has_animation = !sprite.anims.empty();
+            std::string const& filename = missing_filename ? "Missing filename!" : filepath.filename().string();
+
+            if (ImGui::BeginTable("Sprite Table", 2))
+            {
+                ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Layer");
+                ImGui::PopFont();
+                
+                ImGui::TableNextColumn();
+                if (ImGui::BeginCombo("##Layer", std::to_string(sprite.layer).c_str()))
+                {
+                    for (int i{}; i < 3; ++i)
+                    {
+                        const bool is_selected = (sprite.layer == i);
+                        if (ImGui::Selectable(std::to_string(i).c_str(), is_selected))
+                        {
+                            sprite.layer = i;
+                        }
+                        if (is_selected)
+                            ImGui::SetItemDefaultFocus();
+                    }
+                    ImGui::EndCombo();
+                }
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Color");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::ColorEdit3("##Color", &sprite.color[0]);
+                ImGui::Spacing();
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Texture");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::TextColored(missing_filename ? ImVec4(1.f, .675f, .11f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f), filename.c_str());
+
+                ImGui::EndTable();
+            }
+
+            //placeholder for animations for now YIMING TAKE NOTE!!! JUST FOR DEMO!!!
+            /*if (sprite.img.mFileName == "Assets/Textures/Player idle 1R12C.png") {
+                sprite.anims.clear();
+                Animation a; a.initAnimation(1, 12, 3);
+                sprite.anims.emplace_back(a);
+                sprite.animation_index = 0;
+            }*/
+
+            // Use placeholder if width or height of texture
+            if (no_dimensions)
+            {
+                texture_id = editor_layer->GetIcon("TexturePlaceholder");
+                texture_width = texture_height = 512.f;
+            }
+            else
+            {
+                texture_id = EditorUtils::ConvertTextureID(sprite.img.texture_id);
+                texture_width = static_cast<float>(sprite.img.width);
+                texture_height = static_cast<float>(sprite.img.height);
+            }
+
+            const float texture_aspect_ratio = texture_width / texture_height;
+            const float draw_size = 40.f;
+            ImVec2 pos = ImGui::GetCursorPos();
+            ImVec2 uv_min = ImVec2(0.0f, 0.0f);                 // Top-left
+            ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
+            ImVec4 tint_color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+            ImVec4 border_color = ImGui::GetStyleColorVec4(ImGuiCol_Border);
+
+            // Render Texture as Image
+            ImGuiWindowFlags child_window_flags = ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysUseWindowPadding;
+            ImGuiStyle& style = ImGui::GetStyle();
+            if (ImGui::BeginChild("Texture Preview", { ImGui::GetContentRegionAvail().x, draw_size + 2 * (style.FramePadding.y + style.ScrollbarSize) }, false, child_window_flags))
+            {
+                ImGui::Image(texture_id, ImVec2(draw_size * texture_aspect_ratio, draw_size), uv_min, uv_max, tint_color, border_color);
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        auto asset = engine.GetSystem<AssetManager>("Asset");
+                        IS_CORE_DEBUG("Image : {} ", path.string());
+                        sprite.img = *asset->GetImage(path.string());
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                if (has_texture && no_dimensions)
+                {
+                    ImGui::SameLine();
+                    ImGui::PushFont(FONT_BOLD);
+                    ImGui::TextColored({ 1.f, .675f, .11f, 1.f }, "Texture attached missing dimensions!");
+                    ImGui::PopFont();
+                }
+
+                // Texture Tooltip
+                if (!no_dimensions && ImGui::BeginItemTooltip())
+                {
+                    float region_size = draw_size;
+                    float zoom = 2.f;
+                    float zoomed_in_height = region_size * zoom;
+                    float zoomed_in_width = zoomed_in_height * texture_aspect_ratio;
+                    ImGui::Image(texture_id, ImVec2(zoomed_in_width, zoomed_in_height)); // still WIP
+
+                    ImGui::EndTooltip();
+                }
+            }
+            ImGui::EndChild();
+
+            ImGui::BeginGroup();
+            ImGui::EndGroup();
+
+            // Texture Dimensions
+            ImGuiTableFlags table_flags = 0;
+            if (ImGui::BeginTable("Texture", 2, table_flags))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Width");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%dpx", sprite.img.width);
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Height");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%dpx", sprite.img.height);
+
+                ImGui::EndTable();
+            }
+            // Render animation details
+            if (has_animation)
+            {
+                ImGuiTreeNodeFlags animation_tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
+                bool animation_opened = ImGui::TreeNodeEx("Animation", animation_tree_flags);
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%zu)", sprite.anims.size());
+                if (animation_opened)
+                {
+                    ImGui::PushFont(FONT_BOLD);
+                    ImGui::SetNextItemWidth(100.f);
+                    ImGui::TextUnformatted("Active Index");
+                    ImGui::PopFont();
+                    ImGui::SameLine();
+                    ImGui::Text("%d", sprite.animation_index);
+
+                    if (ImGui::BeginTable("Animations Table", 1))
+                    {
+                        int i{};
+                        for (Animation& animation : sprite.anims)
+                        {
+                            ImGui::TableNextColumn();
+                            ImGui::PushID(i);
+                            if (ImGui::BeginTable("Animation Data", 2))
+                            {
+                                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                                ImGui::PushFont(FONT_BOLD);
+                                ImGui::TableSetupColumn("Index", column_flags, 100.f);
+                                ImGui::PopFont();
+                                ImGui::TableSetupColumn(std::to_string(i).c_str());
+                                ImGui::TableHeadersRow();
+
+                                ImGui::TableNextColumn();
+                                ImGui::PushFont(FONT_BOLD);
+                                ImGui::TextUnformatted("Duration");
+                                ImGui::PopFont();
+                                ImGui::TableNextColumn();
+                                ImGui::SliderFloat("##Duration", &animation.animation_duration, 1.f, 10.f, "%.2f sec");
+
+                                ImGui::TableNextColumn();
+                                ImGui::PushFont(FONT_BOLD);
+                                ImGui::TextUnformatted("Frame Duration");
+                                ImGui::PopFont();
+                                ImGui::TableNextColumn();
+                                ImGui::SliderFloat("##Frame Duration", &animation.time_per_frame, 0.001f, 1.f, "%.2f sec");
+
+                                ImGui::TableNextColumn();
+                                ImGui::PushFont(FONT_BOLD);
+                                ImGui::TextUnformatted("Columns");
+                                ImGui::PopFont();
+                                ImGui::TableNextColumn();
+                                ImGui::SliderInt("##Columns", &animation.x_frames, 1, 20);
+
+                                ImGui::TableNextColumn();
+                                ImGui::PushFont(FONT_BOLD);
+                                ImGui::TextUnformatted("Rows");
+                                ImGui::PopFont();
+                                ImGui::TableNextColumn();
+                                ImGui::SliderInt("##Rows", &animation.y_frames, 1, 20);
+
+                                ImGui::EndTable(); // end table Animation Data
+                            }
+                            Vector2D temp = { animation.frame_dimension.x, animation.frame_dimension.y };
+                            EditorUtils::RenderControlVec2("Frame Size", temp);
+                            animation.frame_dimension = { temp.x, temp.y };
+
+                            ImGui::PopID();
+                            ++i;
+                        }
+                        ImGui::EndTable(); // end table Animations
+                    }
+
+                    ImGui::TreePop(); // end tree Animation
+                }
+            }
+
+        }); // end render Sprite Component
 
         // Rigidbody Component
         RenderComponent<RigidBody>("Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)

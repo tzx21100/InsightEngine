@@ -6,7 +6,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 1,
+				"Layer" : 0,
 				"SpriteColorX" : 0.54492461681365967,
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
@@ -235,9 +235,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.18622210621833801,
+						"frame_timer" : 0.095837101340293884,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
