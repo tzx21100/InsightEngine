@@ -139,6 +139,12 @@
     <ClCompile Include="Source\InspectorPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionSystem.cpp">
+      <Filter>Physics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -323,6 +329,12 @@
     </ClInclude>
     <ClInclude Include="Source\InspectorPanel.h">
       <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
+      <Filter>Physics\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionSystem.h">
+      <Filter>Physics\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

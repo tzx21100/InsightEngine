@@ -60,6 +60,7 @@ namespace IS {
 
         void setupInstancedQuadVAO();
         void setupInstancedLineVAO();
+        void setupInstancedCircleVAO();
 
         /*!
          * \brief Initializes various types of meshes for rendering.

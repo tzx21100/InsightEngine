@@ -163,16 +163,20 @@ namespace IS {
     }
 
     void Sprite::draw_instanced_quads() {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[4].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
         Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        std::vector<Sprite::instanceData> tempData;
 
         if (buffer) {
+            // Copy the instance data from the multiset to the vector
+            for (const auto& data : ISGraphics::layeredQuadInstances) {
+                tempData.push_back(data);
+            }
+
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::quadInstances.data(), ISGraphics::quadInstances.size() * sizeof(Sprite::instanceData));
+            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
 
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
@@ -202,7 +206,7 @@ namespace IS {
             std::cout << "uTex2d Uniform not found" << std::endl;
 
 
-        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[4].draw_count, static_cast<GLsizei>(ISGraphics::quadInstances.size()));
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[4].draw_count, static_cast<GLsizei>(tempData.size()));
     }
 
     //glm::mat3 Sprite::lineTransform(Vector2D const& midpoint_translate, float rotate_angle_rad, float length_scale) {
@@ -255,6 +259,7 @@ namespace IS {
         spriteData["SpriteDrawing"] = drawing;
 
         spriteData["AnimationIndex"] = animation_index;
+        spriteData["Layer"] = layer;
 
         Json::Value animationsJson(Json::arrayValue);
         for (const Animation& animation : anims) {
@@ -306,6 +311,7 @@ namespace IS {
         drawing = data["SpriteDrawing"].asBool();
 
         animation_index = data["AnimationIndex"].asInt();
+        layer = data["Layer"].asInt();
 
         // Deserializing the vector of animations
         anims.clear(); // Clear existing animations
@@ -328,17 +334,40 @@ namespace IS {
 
     }
 
-    void Sprite::draw_instanced_lines() {
-        glClear(GL_COLOR_BUFFER_BIT);
+    void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float lineLength, float angleInDegrees) {
+        // Translation
+        Vector2D midpoint = (p0 + p1) / 2.f;
 
+        // Scaling
+        if (lineLength < 0.f) {
+            lineLength = ISVector2DDistance(p0, p1); // will not save
+        }
+
+        // Rotation
+        float delta_x = p1.x - p0.x;
+        float delta_y = p1.y - p0.y;
+        if (angleInDegrees < 0.f) angleInDegrees = glm::degrees(atan2f(delta_y, delta_x));
+
+        Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
+
+        // get line scaling matrix
+        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+        Sprite::nonQuadInstanceData lineData;
+        lineData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        lineData.model_to_ndc_xform = world_to_NDC_xform;
+
+        ISGraphics::lineInstances.emplace_back(lineData);
+    }
+
+    void Sprite::draw_instanced_lines() {
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[5].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
-        Sprite::lineInstanceData* buffer = reinterpret_cast<Sprite::lineInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        Sprite::nonQuadInstanceData* buffer = reinterpret_cast<Sprite::nonQuadInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
         if (buffer) {
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::lineInstances.data(), ISGraphics::lineInstances.size() * sizeof(Sprite::lineInstanceData));
+            std::memcpy(buffer, ISGraphics::lineInstances.data(), ISGraphics::lineInstances.size() * sizeof(Sprite::nonQuadInstanceData));
 
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
@@ -354,7 +383,47 @@ namespace IS {
         glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[5].vao_ID);
 
-
+        glLineWidth(3.f);
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
+        ISGraphics::lineInstances.clear();
+    }
+
+    void Sprite::drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color) {
+        Transform CircleTRS(worldPos, 0.f, scale);
+        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(CircleTRS.ReturnXformMatrix());
+
+        Sprite::nonQuadInstanceData circleData;
+        circleData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        circleData.model_to_ndc_xform = world_to_NDC_xform;
+
+        ISGraphics::circleInstances.emplace_back(circleData);
+    }
+
+    void Sprite::draw_instanced_circles() {
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[6].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::nonQuadInstanceData* buffer = reinterpret_cast<Sprite::nonQuadInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::circleInstances.data(), ISGraphics::circleInstances.size() * sizeof(Sprite::nonQuadInstanceData));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[6].vao_ID);
+
+        glDrawArraysInstanced(GL_LINE_LOOP, 0, ISGraphics::meshes[6].draw_count, static_cast<GLsizei>(ISGraphics::circleInstances.size()));
+        ISGraphics::circleInstances.clear();
     }
 }

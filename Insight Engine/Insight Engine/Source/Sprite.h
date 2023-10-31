@@ -49,9 +49,10 @@ namespace IS {
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
             float entID{}; // initialize with invalid entity id
+            int layer{};
         };
 
-        struct lineInstanceData {
+        struct nonQuadInstanceData {
             glm::vec3 color{};
             glm::mat3 model_to_ndc_xform{};
         };
@@ -60,12 +61,16 @@ namespace IS {
 
         GLenum primitive_type{};   // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};     // Transformation values for the sprite.
-        //uint8_t texture_id{};      // The texture ID for the sprite. (randomly given by OpenGL)
         int animation_index{};     // The current texture index for switching animations (0 is the default texture).
-        // std::vector<Animation> anim_vect{};
         Image img{};
-        // Animation anim{};
         std::vector<Animation> anims{};
+        int layer{};
+
+        struct GfxLayerComparator {
+            bool operator()(instanceData const& a, instanceData const& b) const {
+                return a.layer < b.layer;
+            }
+        };
 
 
         // ImGui properties
@@ -187,6 +192,11 @@ namespace IS {
          */
         static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f }, float thickness = 1.f);
 
+        static void drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, 
+            float length = -1.f, float angleInDegrees = -1.f); // Use non-default values only when values will never change!
+
+        static void drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color);
+
         /*!
          * \brief Calculates the transformation matrix for a line sprite.
          *
@@ -213,8 +223,10 @@ namespace IS {
         Json::Value Serialize() override;
 
 
-        static void draw_instanced_lines();
+        
         static void draw_instanced_quads();
+        static void draw_instanced_lines();
+        static void draw_instanced_circles();
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

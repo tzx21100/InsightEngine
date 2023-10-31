@@ -103,14 +103,15 @@ namespace IS {
 		 * \param color The color of the outline.
 		 * \param thickness The width of the outline.
 		 */
-		static void DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
+		static void DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
 
 		static std::vector<Image> textures;
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 
 		// Static objects
-		static std::vector<Sprite::instanceData> quadInstances;
-		static std::vector<Sprite::lineInstanceData> lineInstances;
+		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
+		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
+		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 		// Sprites (models) to render
 		static std::vector<Sprite> sprites;
 		// Animation objects

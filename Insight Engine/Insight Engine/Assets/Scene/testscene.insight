@@ -59,11 +59,15 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.54492461681365967,
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
@@ -101,12 +105,12 @@
 				"RigidBodyArea" : 9199.1044921875,
 				"RigidBodyBodyType" : 1,
 				"RigidBodyCheckTransform" : true,
-				"RigidBodyDensity" : 4599552.0,
+				"RigidBodyDensity" : 45995.5234375,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0020000000949949026,
-				"RigidBodyMass" : 500.0,
-				"RigidBodyRestitution" : 0.0,
+				"RigidBodyInvMass" : 0.20000000298023224,
+				"RigidBodyMass" : 5.0,
+				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
 				"RigidBodyTransformedVertices" : 
@@ -149,7 +153,10 @@
 						"y" : -47.912002563476562
 					}
 				],
-				"mInertia" : 766593.375
+				"mDynamicFriction" : 1.1000000238418579,
+				"mInertia" : 7665.93359375,
+				"mInvInertia" : 0.00013044725346844643,
+				"mStaticFriction" : 1.2000000476837158
 			},
 			"Script" : 
 			{
@@ -158,6 +165,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.85964435338973999,
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
@@ -180,9 +188,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.13168175518512726,
+						"frame_timer" : 0.12416773289442062,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -25094,11 +25102,15 @@
 						"y" : -50.0
 					}
 				],
-				"mInertia" : 0.0
+				"mDynamicFriction" : 0.0,
+				"mInertia" : 0.0,
+				"mInvInertia" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 0,
 				"SpriteColorX" : 0.54492461681365967,
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
