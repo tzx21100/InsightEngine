@@ -51,7 +51,7 @@ namespace IS {
             float entID{}; // initialize with invalid entity id
         };
 
-        struct lineInstanceData {
+        struct nonQuadInstanceData {
             glm::vec3 color{};
             glm::mat3 model_to_ndc_xform{};
         };
@@ -187,6 +187,10 @@ namespace IS {
          */
         static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f }, float thickness = 1.f);
 
+        static void drawDebugLine(Vector2D const& p0, Vector2D const& p1, float angleInDegrees, std::tuple<float, float, float> const& color, float length = -1.f);
+
+        static void drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color);
+
         /*!
          * \brief Calculates the transformation matrix for a line sprite.
          *
@@ -213,8 +217,10 @@ namespace IS {
         Json::Value Serialize() override;
 
 
-        static void draw_instanced_lines();
+        
         static void draw_instanced_quads();
+        static void draw_instanced_lines();
+        static void draw_instanced_circles();
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

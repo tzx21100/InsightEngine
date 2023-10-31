@@ -110,7 +110,8 @@ namespace IS {
 
 		// Static objects
 		static std::vector<Sprite::instanceData> quadInstances;
-		static std::vector<Sprite::lineInstanceData> lineInstances;
+		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
+		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 		// Sprites (models) to render
 		static std::vector<Sprite> sprites;
 		// Animation objects

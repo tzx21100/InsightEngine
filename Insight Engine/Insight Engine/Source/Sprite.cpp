@@ -162,6 +162,9 @@ namespace IS {
         shader.unUse();
     }
 
+
+
+
     void Sprite::draw_instanced_quads() {
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -328,17 +331,36 @@ namespace IS {
 
     }
 
+    void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, float angleInDegrees, std::tuple<float, float, float> const& color, float lineLength) {
+        // Translation
+        Vector2D midpoint = (p0 + p1) / 2.f;
+
+        // Scaling
+        if (lineLength != -1.f) {
+            lineLength = ISVector2DDistance(p0, p1); // will not save
+        }
+        Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
+
+        // get line scaling matrix
+        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+        Sprite::nonQuadInstanceData lineData;
+        lineData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        lineData.model_to_ndc_xform = world_to_NDC_xform;
+
+        ISGraphics::lineInstances.emplace_back(lineData);
+    }
+
     void Sprite::draw_instanced_lines() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[5].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
-        Sprite::lineInstanceData* buffer = reinterpret_cast<Sprite::lineInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        Sprite::nonQuadInstanceData* buffer = reinterpret_cast<Sprite::nonQuadInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
         if (buffer) {
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::lineInstances.data(), ISGraphics::lineInstances.size() * sizeof(Sprite::lineInstanceData));
+            std::memcpy(buffer, ISGraphics::lineInstances.data(), ISGraphics::lineInstances.size() * sizeof(Sprite::nonQuadInstanceData));
 
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
@@ -356,5 +378,47 @@ namespace IS {
 
 
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
+        ISGraphics::lineInstances.clear();
+    }
+
+    void Sprite::drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color) {
+        Transform CircleTRS(worldPos, 0.f, scale);
+        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(CircleTRS.ReturnXformMatrix());
+
+        Sprite::nonQuadInstanceData circleData;
+        circleData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        circleData.model_to_ndc_xform = world_to_NDC_xform;
+
+        ISGraphics::circleInstances.emplace_back(circleData);
+    }
+
+    void Sprite::draw_instanced_circles() {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[6].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::nonQuadInstanceData* buffer = reinterpret_cast<Sprite::nonQuadInstanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::circleInstances.data(), ISGraphics::circleInstances.size() * sizeof(Sprite::nonQuadInstanceData));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[6].vao_ID);
+
+        glDrawArraysInstanced(GL_LINE_LOOP, 0, ISGraphics::meshes[6].draw_count, static_cast<GLsizei>(ISGraphics::circleInstances.size()));
+        ISGraphics::circleInstances.clear();
     }
 }

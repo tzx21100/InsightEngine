@@ -26,7 +26,8 @@ namespace IS {
     /// Static objects ///
     std::vector<Image> ISGraphics::textures;
     std::vector<Sprite::instanceData> ISGraphics::quadInstances;
-    std::vector<Sprite::lineInstanceData> ISGraphics::lineInstances;
+    std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
+    std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
     Camera ISGraphics::cameras[2];
     
     // Sprites (models) to render
@@ -93,6 +94,13 @@ namespace IS {
     void ISGraphics::Update(float delta_time) {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
+
+        GLenum error;
+        while ((error = glGetError()) != GL_NO_ERROR) {
+            IS_CORE_ERROR("OpenGL Error: {}", error);
+        }
+        IS_CORE_ERROR("test");
+
         // update animations
         /*idle_ani.updateAnimation(delta_time);
         walking_ani.updateAnimation(delta_time);
@@ -113,12 +121,12 @@ namespace IS {
                 sprite.anims[sprite.animation_index].updateAnimation(delta_time);
             }
 
-            if (sprite.primitive_type == GL_LINES) {
-                Sprite::lineInstanceData instLineData;
+           /* if (sprite.primitive_type == GL_LINES || sprite.primitive_type == GL_LINE_LOOP) {
+                Sprite::nonQuadInstanceData instLineData;
                 instLineData.color = sprite.color;
                 instLineData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
                 lineInstances.emplace_back(instLineData);
-            }
+            }*/
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
@@ -140,7 +148,6 @@ namespace IS {
                 quadInstances.emplace_back(instData);
             }
         }
-
         // draw
         Draw(delta_time);
     }
@@ -164,7 +171,11 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
+        Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 0.0f, 1.0f, 0.0f });
+        Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+
         Sprite::draw_instanced_lines();
+        Sprite::draw_instanced_circles(); // layering how?
         Sprite::draw_instanced_quads();
 
 
