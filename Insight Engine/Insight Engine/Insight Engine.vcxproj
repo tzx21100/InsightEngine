@@ -18,7 +18,9 @@
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collision.cpp" />
+    <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
     <ClCompile Include="Source\EditorLayer.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
@@ -69,7 +71,9 @@
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collision.h" />
+    <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\AssetBrowserPanel.h" />
     <ClInclude Include="Source\CoreEngine.h" />
