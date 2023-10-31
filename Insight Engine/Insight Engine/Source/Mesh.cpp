@@ -133,7 +133,7 @@ namespace IS {
         std::vector<glm::vec2> pos_vtx;
 
         // Generate circle vertices using GL_LINE_LOOP
-        const int segments = 20;
+        const int segments = 50;
         for (int i = 0; i < segments; i++) {
             float theta = static_cast<float>(i) / static_cast<float>(segments) * 2.0f * PI;
             float x = std::cos(theta);

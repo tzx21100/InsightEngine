@@ -166,8 +166,6 @@ namespace IS {
 
 
     void Sprite::draw_instanced_quads() {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[4].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
@@ -336,7 +334,7 @@ namespace IS {
         Vector2D midpoint = (p0 + p1) / 2.f;
 
         // Scaling
-        if (lineLength != -1.f) {
+        if (lineLength < 0.f) {
             lineLength = ISVector2DDistance(p0, p1); // will not save
         }
         Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
@@ -351,8 +349,6 @@ namespace IS {
     }
 
     void Sprite::draw_instanced_lines() {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[5].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
@@ -376,7 +372,7 @@ namespace IS {
         glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[5].vao_ID);
 
-
+        glLineWidth(5.f);
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
         ISGraphics::lineInstances.clear();
     }
@@ -393,8 +389,6 @@ namespace IS {
     }
 
     void Sprite::draw_instanced_circles() {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[6].instance_vbo_ID);
         // Upload the quadInstances data to the GPU

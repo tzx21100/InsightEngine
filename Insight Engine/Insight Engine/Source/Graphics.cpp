@@ -99,7 +99,6 @@ namespace IS {
         while ((error = glGetError()) != GL_NO_ERROR) {
             IS_CORE_ERROR("OpenGL Error: {}", error);
         }
-        IS_CORE_ERROR("test");
 
         // update animations
         /*idle_ani.updateAnimation(delta_time);
@@ -156,7 +155,7 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
         if (engine.mUsingGUI)
             mFramebuffer->Bind(); // bind fb
-
+        glClear(GL_COLOR_BUFFER_BIT);
 
         //int entityID{};
         //// Read the entityID value at the specified pixel coordinates
@@ -171,7 +170,7 @@ namespace IS {
             glViewport(0, 0, width, height);
         }
 
-        Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 0.0f, 1.0f, 0.0f });
+        Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
         Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
         Sprite::draw_instanced_lines();
