@@ -378,11 +378,17 @@ namespace IS {
         const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
         ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
             ImVec2 window_size = ImGui::GetContentRegionMax();
             ImVec2 start_position = ImVec2((window_size.x - (button_size.x * BUTTON_COUNT)) / 2, (window_size.y - button_size.y) / 2);
+
+            ImGui::SetCursorPosY(start_position.y + style.FramePadding.y);
+            ImGui::TextUnformatted("Text Animation");
+            ImGui::SameLine();
+            ImGui::SetCursorPosY(start_position.y);
+            ImGui::Checkbox("##Text Animation", &ISGraphics::mShowTextAnimation);
 
             // Render buttons
             for (int i{}; i < BUTTON_COUNT; ++i, start_position.x += button_size.x + style.ItemSpacing.x)
@@ -402,9 +408,9 @@ namespace IS {
             // Render camera zoom controls
             RenderCameraZoom();
 
-            // Play/Pause
             if (scene_loaded)
             {
+                // Play/Pause
                 if (button_clicked[0])
                 {
                     engine.mRuntime = !engine.mRuntime;
@@ -421,6 +427,7 @@ namespace IS {
                     scene_manager.ReloadActiveScene();
                 }
 
+                // Step
                 if (button_clicked[2])
                 {
 
@@ -433,7 +440,6 @@ namespace IS {
 
     void EditorLayer::RenderCameraZoom()
     {
-        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
         const float SIZE = 16.f;
         float zoom_level = camera.GetZoomLevel();
@@ -442,9 +448,7 @@ namespace IS {
         ImGui::SameLine();
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 12.f * SIZE);
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() + ImGui::GetStyle().FramePadding.y);
-        ImGui::PushFont(FONT_BOLD);
         ImGui::TextUnformatted("Camera Zoom:");
-        ImGui::PopFont();
 
         // Zoom out with - button
         ImGui::SameLine();

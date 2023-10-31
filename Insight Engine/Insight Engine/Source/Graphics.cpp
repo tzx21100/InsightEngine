@@ -24,6 +24,7 @@
 namespace IS {
 
     /// Static objects ///
+    bool ISGraphics::mShowTextAnimation = true;
     std::vector<Image> ISGraphics::textures;
     std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
@@ -224,7 +225,8 @@ namespace IS {
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
 
-        Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
+        if (mShowTextAnimation)
+            Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
 
         // if using ImGui, unbind fb at the end of draw
         if (engine.mUsingGUI)
