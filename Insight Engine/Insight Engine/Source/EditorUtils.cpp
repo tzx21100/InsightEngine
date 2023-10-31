@@ -31,6 +31,8 @@ namespace IS::EditorUtils {
 
     ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
 
+    bool operator==(ImVec2 const& lhs, ImVec2 const& rhs) { return lhs.x == rhs.x && lhs.y == rhs.y; }
+
     bool RenderIconMenuItem(const char* label, const char* shortcut, ImTextureID icon_texture)
     {
         bool clicked = false;

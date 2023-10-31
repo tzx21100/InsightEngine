@@ -122,7 +122,7 @@ namespace IS {
             //sprite_test.texture_height = backgroundTest->height;
             //sprite_test.img = *backgroundTest;
 
-            auto [width, height] = engine.GetWindowSize();
+            int width = engine.GetWindowWidth();
 
             //trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
             //trans_player.setScaling(width * 0.05375f, height * 0.13333333f);
@@ -190,14 +190,11 @@ namespace IS {
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
                     engine.mUsingGUI = !engine.mUsingGUI;
-                    engine.mRuntime = !engine.mRuntime;
-                    Camera::mActiveCamera = engine.mUsingGUI ? CAMERA_TYPE_EDITOR : CAMERA_TYPE_SCENE;
                     IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
                 }
 
                 // Offset mouse position
-                if (!engine.mUsingGUI) {
-                   
+                if (!engine.mUsingGUI) {                   
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }

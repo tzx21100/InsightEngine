@@ -98,24 +98,16 @@ namespace IS {
 
         // Size of scene panel
         ImVec2 scene_size = ImGui::GetWindowSize();
-        ImVec2 scene_pos = ImGui::GetWindowPos();
-       
+        ImVec2 scene_pos = ImGui::GetWindowPos();      
 
         // Scene pos for the input
-        ImVec2 actual_scene_pos;
-        actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
-        actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
-        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-        //input->setCenterPos(scene_size.x - camera.GetCamPos().x, scene_size.y - camera.GetCamPos().y);
-        //input->setRatio(camera.GetCamDim().x, camera.GetCamDim().y);
-        //IS_CORE_DEBUG("center x : {}, center y : {}", camera.GetCamPos().x, camera.GetCamPos().y);
-        //input->setCenterPos(scene_size.x - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, scene_size.y - ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
-        input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f, actual_scene_pos.y + (float)scene_size.y / 2.f );
-        input->setRatio(scene_size.x * camera.ZoomLevel(), scene_size.y * camera.ZoomLevel());
-        //IS_CORE_DEBUG("{}, {}", ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x, ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y);
+        mViewportPos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
+        mViewportPos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
 
-        //input->setRatio(ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().x * , ISGraphics::cameras[Camera::mActiveCamera].GetCamDim().y);
-        //IS_CORE_DEBUG("x:{}, y:{}", input->GetMousePosition().first, input->GetMousePosition().second);
+        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+
+        input->setCenterPos(mViewportPos.x + (float)scene_size.x / 2.f, mViewportPos.y + (float)scene_size.y / 2.f );
+        input->setRatio(scene_size.x * camera.GetZoomLevel(), scene_size.y * camera.GetZoomLevel());
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
@@ -128,7 +120,6 @@ namespace IS {
         if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
         {
             RenderHelp();
-            RenderCameraZoom();
         }
 
         ImGui::End(); // end window Scene
@@ -226,45 +217,6 @@ namespace IS {
         window_drawlist->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
         window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
         window_drawlist->AddText(text_position, IM_COL32_WHITE, display_text);
-    }
-
-    void ScenePanel::RenderCameraZoom()
-    {
-        auto& engine = InsightEngine::Instance();
-        auto editor = engine.GetSystem<Editor>("Editor");
-        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-        auto& style = ImGui::GetStyle();
-
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
-        ImGui::SetNextWindowBgAlpha(0.f);
-
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f);
-        ImGui::Begin("##Camera Zoom", nullptr, window_flags);
-
-        const float size = 16.f;
-        const float xpos = (ImGui::GetContentRegionAvail().x - size - style.ItemSpacing.x) / 2.f;
-
-        ImGui::SetCursorPosX(xpos);
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        if (ImGui::ImageButton("ZoomIn", editor->GetEditorLayer()->GetIcon("ZoomIn"), {size, size}))
-        {
-            camera.ZoomCamera(1.f);
-        }
-        ImGui::PopStyleColor();
-
-        ImGui::SetCursorPosX(xpos + style.ItemSpacing.x / 2.f);
-        ImGui::VSliderFloat("##Camera Zoom", { size, size * 10.f }, &camera.ZoomLevel(), Camera::mMinZoom, Camera::mMaxZoom, "##%.2f");
-        
-        ImGui::SetCursorPosX(xpos);
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        if (ImGui::ImageButton("ZoomOut", editor->GetEditorLayer()->GetIcon("ZoomOut"), {size, size}))
-        {
-            camera.ZoomCamera(-1.f);
-        }
-        ImGui::PopStyleColor();
-
-        ImGui::End(); // end window camera zoom
-        ImGui::PopStyleVar();
     }
 
     // Performance Viewer Panel

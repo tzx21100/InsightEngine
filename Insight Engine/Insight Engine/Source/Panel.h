@@ -115,17 +115,13 @@ namespace IS {
     private:
         bool mFocused{}; ///< Boolean flag indicating if scene panel is in focus.
         Vec2 mViewportSize{}; ///< Size of the scene panel.
+        Vec2 mViewportPos{};
         std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
 
         /*!
          * \brief Renders a help tooltip overlay.
          */
         void RenderHelp();
-
-        /*!
-         * \brief Renders the camera zoom level.
-         */
-        void RenderCameraZoom();
     };
 
     /*!

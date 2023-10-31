@@ -3,15 +3,15 @@
 
 namespace IS {
 
-	aCameraType Camera::mActiveCamera;
-	float Camera::mMinX = -5000.f;
-	float Camera::mMaxX =  5000.f;
-	float Camera::mMinY = -2000.f;
-	float Camera::mMaxY =  2000.f;
+	aCameraType Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+	float Camera::mMinX = -16000;
+	float Camera::mMaxX =  16000.f;
+	float Camera::mMinY = -9000.f;
+	float Camera::mMaxY =  9000.f;
 	float Camera::mMinZoom = .1f;
 	float Camera::mMaxZoom = 10.f;
-	float Camera::mZoomSpeed = .1f;
-	float Camera::mMoveSpeed = 20.f;
+	float Camera::mZoomSpeed = 0.1f;
+	float Camera::mMoveSpeed = 200.f;
 
 	Camera::Camera() {
 		mZoomLevel = 1.f;
@@ -37,9 +37,6 @@ namespace IS {
 		vVector = { -uVector.y, uVector.x };
 	}
 
-	float Camera::ZoomLevel() const { return mZoomLevel; }
-	float& Camera::ZoomLevel() { return mZoomLevel; }
-
 	glm::vec2 Camera::GetCamPos() {
 		return world_position;
 	}
@@ -57,10 +54,11 @@ namespace IS {
 	}
 
 	void Camera::UpdateCamXform() {
-		float scale = 1.f / mZoomLevel;
+		float scaled_width = camera_dim.x / mZoomLevel;
+		float scaled_height = camera_dim.y / mZoomLevel;
 
-		float twoOverWidth = 2.f / (camera_dim.x * scale);
-		float twoOverHeight = 2.f / (camera_dim.y * scale);
+		float twoOverWidth = 2.f / (scaled_width);
+		float twoOverHeight = 2.f / (scaled_height);
 
 		xform = glm::mat3 { 
 			(twoOverWidth * uVector.x),							 (twoOverHeight * vVector.x),						   0.f, // column 1
@@ -71,9 +69,8 @@ namespace IS {
 
 	void Camera::ZoomCamera(float yoffset)
 	{
-		float new_zoom = mZoomLevel + yoffset * mZoomSpeed;
-		new_zoom = glm::clamp(new_zoom, mMinZoom, mMaxZoom);
-		mZoomLevel = new_zoom;
+		mZoomLevel += yoffset * mZoomSpeed;
+		mZoomLevel = std::max(mMinZoom, std::min(10.f, mZoomLevel));
 		UpdateCamXform();
 		//auto& engine = InsightEngine::Instance();
 		//auto input = engine.GetSystem<InputManager>("Input");
