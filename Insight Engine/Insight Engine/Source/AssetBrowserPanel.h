@@ -39,6 +39,7 @@ namespace IS {
     class AssetBrowserPanel : public Panel
     {
     public:
+
         /*! \brief Constructor for the AssetBrowserPanel class.
          *
          * Initializes a new instance of the \c AssetBrowserPanel class.
@@ -67,6 +68,8 @@ namespace IS {
         /// Maximum padding between thumbnails in the asset browser.
         static constexpr inline float MAX_PADDING = 32.f;
 
+        static const std::string IMPORTED;
+
         static std::filesystem::path ASSETS_PATH;
 
         /*! \struct Controls
@@ -82,10 +85,33 @@ namespace IS {
         };
 
         std::filesystem::path mCurrentDirectory; ///< The currently selected directory.
+        std::string mSelectedImportedAsset; ///< The type of selected asset.
+        bool mShowImportedAssets; ///< Boolean flags indicating to show imported assets.
         Controls mControls; ///< Configuration controls for the asset browser.
 
         /*!
-         * \brief Renders path from ASSETS_PATH as text.
+         * \brief Renders path of imported assets.
+         */
+        void RenderImportedPath();
+
+        /*!
+         * \brief Renders assets browser for imported assets.
+         */
+        void RenderImportedAssets();
+
+        /*!
+         * \brief Renders assets tree browser for imported assets.
+         */
+        void RenderImportedAssetsTree();
+
+        /*!
+         * \brief Switches the current imported asset type.
+         * \param asset The type of asset to switch into.
+         */
+        void SwitchImportedAsset(std::string const& asset);
+
+        /*!
+         * \brief Renders path from ASSETS_PATH as buttons.
          */
         void RenderPath();
 
@@ -95,9 +121,35 @@ namespace IS {
         void RenderAllAssetsBrowser();
 
         /*!
-         * \brief Renders assets browser for imported assets.
+         * \brief Renders contents of a directory.
+         * \param directory The directory to render.
          */
-        void RenderImportedAssets();
+        void RenderDirectoryContents(std::filesystem::path const& directory);
+
+        /*!
+         * \brief Renders a directory as a tree node.
+         * \param directory The directory to render.
+         */
+        void RenderDirectoryNode(std::filesystem::path const& directory);
+
+        /*!
+         * \brief Renders a directory as a tree leaf node.
+         * \param directory The directory to render.
+         */
+        void RenderDirectoryLeafNode(std::filesystem::path const& directory);
+
+        /*!
+         * \brief Switches the current directory.
+         * \param directory The directory to switch into.
+         */
+        void SwitchCurrentDirectory(std::filesystem::path const& directory);
+
+        /*!
+         * \brief Checks whether a directory has sub directory.
+         * \param directory The directory to check for.
+         * \return Boolean flag indicating whether a sub directory has been found.
+         */
+        bool HasSubDirectory(std::filesystem::path const& directory);
     };
 
 } // end namespace IS

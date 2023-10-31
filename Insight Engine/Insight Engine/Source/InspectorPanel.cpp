@@ -255,7 +255,7 @@ namespace IS {
             // Accept file drop
             if (ImGui::BeginDragDropTarget())
             {
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_ASSET"))
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
                 {
                     std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                     auto asset = engine.GetSystem<AssetManager>("Asset");
