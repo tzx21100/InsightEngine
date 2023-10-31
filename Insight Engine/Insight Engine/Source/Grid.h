@@ -47,7 +47,7 @@ namespace IS
 
 		bool GridContains(Cell const& cell);
 
-		static void DrawGrid(Sprite const& sprite);
+		static void DrawGrid();
 
 		void EmplaceEntity(std::vector<Entity>& result, std::vector<Entity> const& source);
 

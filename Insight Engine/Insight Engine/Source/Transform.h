@@ -52,6 +52,8 @@ namespace IS {
 		 */
 		Vector2D getWorldPosition();
 
+		void getTransformedPoint(Vector2D& v) const;
+
 		/*!
 		 * \brief Get the rotation angle.
 		 *
@@ -73,6 +75,7 @@ namespace IS {
 		 * \param y The Y-coordinate of the world position.
 		 */
 		void setWorldPosition(float x, float y);
+
 
 		/*!
 		 * \brief Set the rotation angle.

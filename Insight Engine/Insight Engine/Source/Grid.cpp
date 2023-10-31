@@ -286,7 +286,7 @@ namespace IS
 		return (cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);
 	}
 
-	void ImplicitGrid::DrawGrid(Sprite const& sprite) {
+	void ImplicitGrid::DrawGrid() {
 		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
 		float width = camera_dimension.x;
 		float height = camera_dimension.y;
@@ -307,11 +307,14 @@ namespace IS
 
 				Vector2D vertical = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
 				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
-				sprite.drawLine(vertical, vertical + verticalend);
+				//sprite.drawLine(vertical, vertical + verticalend);
+				Sprite::drawDebugLine(vertical, vertical + verticalend, { 1.f, 1.f, 1.f }, width, 0.f);
 
 				Vector2D hori = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
 				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
-				sprite.drawLine(hori, hori + horiend);
+				//sprite.drawLine(hori, hori + horiend);
+				Sprite::drawDebugLine(hori, hori + horiend, { 1.f, 1.f, 1.f }, height, 90.f);
+
 			}
 		}
 	}

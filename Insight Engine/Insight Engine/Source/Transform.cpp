@@ -35,6 +35,13 @@ namespace IS {
 		return Vector2D(world_position.x, world_position.y);
 	}
 
+	void Transform::getTransformedPoint(Vector2D& v) const { // simia
+		Vector2D temp = v;
+		float angle = glm::radians(rotation);
+		v.x = cosf(angle) * temp.x - sinf(angle) * temp.y + world_position.x;
+		v.y = sinf(angle) * temp.x + cosf(angle) * temp.y + world_position.y;;
+	}
+
 	float Transform::getRotation() { 
 		return rotation;
 	}

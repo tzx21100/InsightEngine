@@ -190,7 +190,7 @@ namespace IS {
          * \param color The color of the line, white by default. TODO: Replace with Vector3D
          * \param thickness The thickness of the line.
          */
-        static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f }, float thickness = 1.f);
+        // static void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color = { 1.f, 1.f, 1.f }, float thickness = 1.f);
 
         static void drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, 
             float length = -1.f, float angleInDegrees = -1.f); // Use non-default values only when values will never change!

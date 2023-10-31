@@ -112,55 +112,55 @@ namespace IS {
         shader.unUse();
     }
 
-    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float thickness) {
-        // ensure line mesh is initialized
-        if (ISGraphics::meshes.empty()) {
-            std::cerr << "No mesh to draw line!" << std::endl;
-            return;
-        }
-        Mesh mesh_used = ISGraphics::meshes[2];
-        float delta_x = p1.x - p0.x;
-        float delta_y = p1.y - p0.y;
+    //void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float thickness) {
+    //    // ensure line mesh is initialized
+    //    if (ISGraphics::meshes.empty()) {
+    //        std::cerr << "No mesh to draw line!" << std::endl;
+    //        return;
+    //    }
+    //    Mesh mesh_used = ISGraphics::meshes[2];
+    //    float delta_x = p1.x - p0.x;
+    //    float delta_y = p1.y - p0.y;
 
-        // Translation
-        Vector2D midpoint = (p0 + p1) / 2.f;
+    //    // Translation
+    //    Vector2D midpoint = (p0 + p1) / 2.f;
 
-        // Rotation
-        float angle = atan2f(delta_y, delta_x);
-        angle += PI; // atan returns [-PI, PI]
+    //    // Rotation
+    //    float angle = atan2f(delta_y, delta_x);
+    //    angle += PI; // atan returns [-PI, PI]
 
-        // Scaling
-        float length = ISVector2DDistance(p0, p1);
-        Transform lineTRS(midpoint, glm::degrees(angle), { length, 0.f });
+    //    // Scaling
+    //    float length = ISVector2DDistance(p0, p1);
+    //    Transform lineTRS(midpoint, glm::degrees(angle), { length, 0.f });
 
-        // get line scaling matrix
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+    //    // get line scaling matrix
+    //    glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
 
-        // render
-        Shader shader = ISGraphics::mesh_shader_pgm;
-        shader.use();
+    //    // render
+    //    Shader shader = ISGraphics::mesh_shader_pgm;
+    //    shader.use();
 
-        // bind line mesh vao
-        glBindVertexArray(mesh_used.vao_ID);
+    //    // bind line mesh vao
+    //    glBindVertexArray(mesh_used.vao_ID);
 
-        // set uniforms
-        auto [r, g, b] = color;
-        glm::vec3 uniform_color{ r, g, b };
-        shader.setUniform("uColor", uniform_color);
-        shader.setUniform("uModel_to_NDC", world_to_NDC_xform);
-        shader.setUniform("uTexture", 0);
-        shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
-        shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
+    //    // set uniforms
+    //    auto [r, g, b] = color;
+    //    glm::vec3 uniform_color{ r, g, b };
+    //    shader.setUniform("uColor", uniform_color);
+    //    shader.setUniform("uModel_to_NDC", world_to_NDC_xform);
+    //    shader.setUniform("uTexture", 0);
+    //    shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
+    //    shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
 
-        // draw line
-        glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
-        glLineWidth(thickness);
+    //    // draw line
+    //    glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
+    //    glLineWidth(thickness);
 
-        // unbind texture and vao
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindVertexArray(0);
-        shader.unUse();
-    }
+    //    // unbind texture and vao
+    //    glBindTexture(GL_TEXTURE_2D, 0);
+    //    glBindVertexArray(0);
+    //    shader.unUse();
+    //}
 
     void Sprite::draw_instanced_quads() {
         // Bind the instance VBO
@@ -383,7 +383,6 @@ namespace IS {
         glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[5].vao_ID);
 
-        glLineWidth(3.f);
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
         ISGraphics::lineInstances.clear();
     }

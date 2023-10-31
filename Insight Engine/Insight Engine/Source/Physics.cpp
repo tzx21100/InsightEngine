@@ -583,29 +583,24 @@ namespace IS {
 		}
 	}
 
-	void Physics::DrawOutLine(RigidBody& body, Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness) {
+	void Physics::DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color) {
 		// draw colliders in green
 		if (mShowColliders) {
 			for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
 				Vector2D va = body.mTransformedVertices[i];
 				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
-				sprite.drawLine(va, vb, color, thickness);
-			}
 
-			/*for (int i = 0; i < mContactPointsList.size(); i++) {
-				Vector2D end = { 100.f, 100.f };
-				sprite.drawLine(mContactPointsList[i], mContactPointsList[i] + end, { 1.f, 1.f, 1.f });
-			}*/
+				Sprite::drawDebugLine(va, vb, color);
+			}
 		}
 
 		// draw grid cell line in white
 		if (mShowGrid)
 			//Grid::DrawGrid(sprite);
-			ImplicitGrid::DrawGrid(sprite);
+			ImplicitGrid::DrawGrid();
 
 		// draw the velocity line in blue
-		if (mShowVelocity)
-			sprite.drawLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
+		if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
 
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities

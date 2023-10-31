@@ -81,6 +81,8 @@ namespace IS {
             camera.UpdateCamPos(0, 0);
             camera.UpdateCamDim(static_cast<float>(width));
         });
+
+        setLineWidth(2.f);
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -178,6 +180,14 @@ namespace IS {
         Sprite::draw_instanced_quads();
         Sprite::draw_instanced_circles(); // layering how?
         Sprite::draw_instanced_lines();
+
+        for (auto& entity : mEntities) {
+            if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
+                auto& body = engine.GetComponent<RigidBody>(entity);
+                Physics::DrawOutLine(body);
+            }
+        }
+        
 
         // Draw outline for selected entity
         auto const editor = engine.GetSystem<Editor>("Editor");
@@ -301,13 +311,17 @@ namespace IS {
 
     void ISGraphics::DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness)
     {
-        Vector2D TL{ sprite.model_TRS.world_position.x - (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y + (sprite.model_TRS.scaling.y / 2.f) };
-        Vector2D TR{ sprite.model_TRS.world_position.x + (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y + (sprite.model_TRS.scaling.y / 2.f) };
-        Vector2D BR{ sprite.model_TRS.world_position.x + (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y - (sprite.model_TRS.scaling.y / 2.f) };
-        Vector2D BL{ sprite.model_TRS.world_position.x - (sprite.model_TRS.scaling.x / 2.f), sprite.model_TRS.world_position.y - (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D TL{ 0.f - (sprite.model_TRS.scaling.x / 2.f), 0.f + (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D TR{ 0.f + (sprite.model_TRS.scaling.x / 2.f), 0.f + (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D BR{ 0.f + (sprite.model_TRS.scaling.x / 2.f), 0.f - (sprite.model_TRS.scaling.y / 2.f) };
+        Vector2D BL{ 0.f - (sprite.model_TRS.scaling.x / 2.f), 0.f - (sprite.model_TRS.scaling.y / 2.f) };
+        
+        sprite.model_TRS.getTransformedPoint(TL);
+        sprite.model_TRS.getTransformedPoint(TR);
+        sprite.model_TRS.getTransformedPoint(BR);
+        sprite.model_TRS.getTransformedPoint(BL);
 
         std::array<Vector2D, 4> vertices { TL, TR, BR, BL };
-
 
         for (size_t i = 0; i < vertices.size(); i++)
         {
@@ -315,12 +329,12 @@ namespace IS {
             Vector2D vb = vertices[(i + 1) % vertices.size()]; // modules by the size of the vector to avoid going out of the range
 
             if (!(i % 2)) {
-                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.x);
+                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.x, sprite.model_TRS.rotation);
             }
             else {
-                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.y);
+                sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.y, sprite.model_TRS.rotation - 90.f);
             }
-            thickness = thickness;
+            thickness = thickness; /// remo
             //sprite.drawLine(va, vb, color, thickness);
         }
     }
