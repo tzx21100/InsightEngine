@@ -232,9 +232,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.23475009202957153,
+						"frame_timer" : 0.18532775342464447,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -365,19 +365,19 @@
 				[
 					{
 						"x" : 1104.210205078125,
-						"y" : -228.75177001953125
+						"y" : -230.0
 					},
 					{
 						"x" : 1904.210205078125,
-						"y" : -228.75177001953125
+						"y" : -230.0
 					},
 					{
 						"x" : 1904.210205078125,
-						"y" : -528.75177001953125
+						"y" : -530.0
 					},
 					{
 						"x" : 1104.210205078125,
-						"y" : -528.75177001953125
+						"y" : -530.0
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -424,7 +424,7 @@
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 300.0,
 				"SpriteTransformWorldPositionX" : 1504.210205078125,
-				"SpriteTransformWorldPositionY" : -378.75177001953125,
+				"SpriteTransformWorldPositionY" : -380.0,
 				"animations" : []
 			},
 			"Transform" : 
@@ -433,7 +433,7 @@
 				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 300.0,
 				"TransformWorldPositionX" : 1504.210205078125,
-				"TransformWorldPositionY" : -378.75177001953125
+				"TransformWorldPositionY" : -380.0
 			}
 		},
 		{
@@ -923,19 +923,19 @@
 				[
 					{
 						"x" : 1683.1572265625,
-						"y" : -231.22622680664062
+						"y" : -230.0
 					},
 					{
 						"x" : 2483.1572265625,
-						"y" : -231.22622680664062
+						"y" : -230.0
 					},
 					{
 						"x" : 2483.1572265625,
-						"y" : -531.2261962890625
+						"y" : -530.0
 					},
 					{
 						"x" : 1683.1572265625,
-						"y" : -531.2261962890625
+						"y" : -530.0
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -982,7 +982,7 @@
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 300.0,
 				"SpriteTransformWorldPositionX" : 2083.1572265625,
-				"SpriteTransformWorldPositionY" : -381.22622680664062,
+				"SpriteTransformWorldPositionY" : -380.0,
 				"animations" : []
 			},
 			"Transform" : 
@@ -991,7 +991,7 @@
 				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 300.0,
 				"TransformWorldPositionX" : 2083.1572265625,
-				"TransformWorldPositionY" : -381.22622680664062
+				"TransformWorldPositionY" : -380.0
 			}
 		},
 		{
@@ -1016,19 +1016,19 @@
 				[
 					{
 						"x" : 2356.841552734375,
-						"y" : -228.75177001953125
+						"y" : -230.0
 					},
 					{
 						"x" : 3156.841552734375,
-						"y" : -228.75177001953125
+						"y" : -230.0
 					},
 					{
 						"x" : 3156.841552734375,
-						"y" : -528.75177001953125
+						"y" : -530.0
 					},
 					{
 						"x" : 2356.841552734375,
-						"y" : -528.75177001953125
+						"y" : -530.0
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -1075,7 +1075,7 @@
 				"SpriteTransformScalingX" : 800.0,
 				"SpriteTransformScalingY" : 300.0,
 				"SpriteTransformWorldPositionX" : 2756.841552734375,
-				"SpriteTransformWorldPositionY" : -378.75177001953125,
+				"SpriteTransformWorldPositionY" : -380.0,
 				"animations" : []
 			},
 			"Transform" : 
@@ -1084,7 +1084,7 @@
 				"TransformScalingX" : 800.0,
 				"TransformScalingY" : 300.0,
 				"TransformWorldPositionX" : 2756.841552734375,
-				"TransformWorldPositionY" : -378.75177001953125
+				"TransformWorldPositionY" : -380.0
 			}
 		},
 		{

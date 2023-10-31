@@ -75,14 +75,14 @@ namespace IS {
         auto const input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
-        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
-        const bool SHIFT_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
-        const bool ALT_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
-        const bool N_PRESSED = input->IsKeyPressed(GLFW_KEY_N);
-        const bool O_PRESSED = input->IsKeyPressed(GLFW_KEY_O);
-        const bool S_PRESSED = input->IsKeyPressed(GLFW_KEY_S);
-        const bool F4_PRESSED = input->IsKeyPressed(GLFW_KEY_F4);
-        const bool F11_PRESSED = input->IsKeyPressed(GLFW_KEY_F11);
+        const bool CTRL_HELD    = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool SHIFT_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
+        const bool ALT_HELD     = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+        const bool N_PRESSED    = input->IsKeyPressed(GLFW_KEY_N);
+        const bool O_PRESSED    = input->IsKeyPressed(GLFW_KEY_O);
+        const bool S_PRESSED    = input->IsKeyPressed(GLFW_KEY_S);
+        const bool F4_PRESSED   = input->IsKeyPressed(GLFW_KEY_F4);
+        const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -97,18 +97,10 @@ namespace IS {
         // Controls for scene panel
         if (mScenePanel->IsFocused())
         {
+            // Set active camera to editor camera
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+            Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
 
-            // Right mouse drag to pan camera
-            if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
-            {
-                ImVec2 mouse_position = ImGui::GetMousePos();
-                Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                auto const& [x_drag, y_drag] = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
-                camera.PanCamera(dt, x_drag, y_drag);
-            }
-
-            // Mouse picking/dragging
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
             my -= mScenePanel->GetViewportBounds()[0].y;
@@ -117,10 +109,41 @@ namespace IS {
             int mouse_x = static_cast<int>(mx);
             int mouse_y = static_cast<int>(my);
 
-            // Check if mouse is within bounds of the scene panel for mouse picking
+            // Check if mouse is within bounds of the scene panel
             if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
                 0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
             {
+                // Camera zoom
+                ImGuiIO& io = ImGui::GetIO();
+                float scroll_delta = io.MouseWheel;
+                float zoom_level = camera.GetZoomLevel();
+                if (scroll_delta != 0)
+                {
+                    zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
+                }
+                camera.SetZoomLevel(zoom_level);
+
+                // Camera panning
+                static ImVec2 last_mouse_position = ImGui::GetMousePos();
+                static ImVec2 mouse_delta = {};
+                static bool is_moving = false;
+                if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
+                {
+                    ImVec2 current_mouse_position = ImGui::GetMousePos();
+                    using namespace EditorUtils;
+                    is_moving = current_mouse_position != last_mouse_position;
+                    mouse_delta = current_mouse_position - last_mouse_position;
+                    last_mouse_position = current_mouse_position;
+                }
+                if (is_moving)
+                {
+                    camera.PanCamera(dt, mouse_delta.x, mouse_delta.y);
+                }
+                else
+                {
+                    last_mouse_position = ImGui::GetMousePos();
+                }
+
                 // Mouse picking - set hovered entity as the selected entity
                 if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
                 {
@@ -162,7 +185,7 @@ namespace IS {
 
     void EditorLayer::OnRender()
     {
-        ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_NoResize; // disable resizing of panels in dockspace
+        ImGuiDockNodeFlags dockspace_flags = 0;
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
 
@@ -349,24 +372,32 @@ namespace IS {
         const char* buttons[BUTTON_COUNT] = { play_pause_button, "StopButton", "StepButton" };
         bool button_clicked[BUTTON_COUNT] = {};
         const ImVec2 button_size = { 16.f, 16.f };
+        const ImVec4 grey_color = ImVec4(.5f, .5f, .5f, 1.f);
+        const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
+        ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse;
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
-            ImVec2 window_size = ImVec2(ImGui::GetContentRegionMax().x, ImGui::GetContentRegionMax().y);
+            ImVec2 window_size = ImGui::GetContentRegionMax();
             ImVec2 start_position = ImVec2((window_size.x - (button_size.x * BUTTON_COUNT)) / 2, (window_size.y - button_size.y) / 2);
-
-            // Remove button background
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
             // Render buttons
             for (int i{}; i < BUTTON_COUNT; ++i, start_position.x += button_size.x + style.ItemSpacing.x)
             {
                 ImGui::SetCursorPos(start_position);
-                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size);
+
+                // Grey out step button when not in game view
+                if (i == BUTTON_COUNT - 1)
+                {
+                    tint_color = (scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
+                }
+
+                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
             }
 
-            ImGui::PopStyleColor();
+            // Render camera zoom controls
+            RenderCameraZoom();
 
             // Play/Pause
             if (scene_loaded)
@@ -374,9 +405,8 @@ namespace IS {
                 if (button_clicked[0])
                 {
                     engine.mRuntime = !engine.mRuntime;
-                    Camera::mActiveCamera = CAMERA_TYPE_SCENE;
+                    Camera::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus("Game");
-                    IS_CORE_DEBUG("Button 0");
                 }
 
                 // Stop
@@ -386,18 +416,62 @@ namespace IS {
                     Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
                     ImGui::SetWindowFocus("Scene");
                     scene_manager.ReloadActiveScene();
-                    IS_CORE_DEBUG("Button 1");
                 }
 
-                // Step
                 if (button_clicked[2])
                 {
-                    IS_CORE_DEBUG("Button 2");
+
                 }
             }
 
             ImGui::End(); // end window Runtime
         }
+    }
+
+    void EditorLayer::RenderCameraZoom()
+    {
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        const float SIZE = 16.f;
+        float zoom_level = camera.GetZoomLevel();
+
+        // Label
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 12.f * SIZE);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + ImGui::GetStyle().FramePadding.y);
+        ImGui::PushFont(FONT_BOLD);
+        ImGui::TextUnformatted("Camera Zoom:");
+        ImGui::PopFont();
+
+        // Zoom out with - button
+        ImGui::SameLine();
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
+        {
+            zoom_level *= (1 - Camera::mZoomSpeed);
+            camera.SetZoomLevel(zoom_level);
+        }
+        ImGui::PopStyleColor();
+
+        // Slider to adjust camera zoom
+        ImGui::SameLine();
+        ImGui::SetNextItemWidth(SIZE * 10.f);
+        if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+                                (Camera::mMinZoom), (Camera::mMaxZoom), "%.2fx", ImGuiSliderFlags_Logarithmic))
+        {
+            // Update the camera's zoom level directly
+            camera.SetZoomLevel(zoom_level);
+        }
+
+        // Zoom in with + button
+        ImGui::SameLine();
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
+        {
+            zoom_level *= (1 + Camera::mZoomSpeed);
+            camera.SetZoomLevel(zoom_level);
+        }
+        ImGui::PopStyleColor();
     }
 
     void EditorLayer::AttachPanels()

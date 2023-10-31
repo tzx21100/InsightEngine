@@ -11,7 +11,7 @@
 
 namespace IS {
 
-	enum aCameraType { CAMERA_TYPE_SCENE = 0, CAMERA_TYPE_EDITOR };
+	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
 
 	class Camera {
 	public:		
@@ -24,9 +24,12 @@ namespace IS {
 		void UpdateCamXform();
 		void ZoomCamera(float yoffset);
 		void PanCamera(float dt, float delta_x, float delta_y);
-
-		float ZoomLevel() const;
-		float& ZoomLevel();
+		
+		float GetZoomLevel() const { return mZoomLevel; }
+		void SetZoomLevel(float zoom_level)
+		{
+			mZoomLevel = std::min(Camera::mMaxZoom, std::max(zoom_level, Camera::mMinZoom));
+		}
 
 		glm::vec2 GetCamPos();
 		glm::vec2 GetCamDim();
@@ -38,6 +41,8 @@ namespace IS {
 		glm::mat3 xform{};
 		static float mMinZoom; ///< minimum zoom level
 		static float mMaxZoom; ///< maximum zoom level
+		static float mZoomSpeed; ///< rate of zoom
+		static float mMoveSpeed; ///< rate of camera pan
 
 	private:
 		float mZoomLevel;
@@ -50,8 +55,6 @@ namespace IS {
 		static float mMaxX; ///< maximum x bound of camera
 		static float mMinY; ///< minimum y bound of camera
 		static float mMaxY; ///< maximum y bound of camera
-		static float mZoomSpeed; ///< rate of zoom
-		static float mMoveSpeed; ///< rate of camera pan
 	};
 }
 

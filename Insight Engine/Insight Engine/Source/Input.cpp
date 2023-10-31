@@ -65,19 +65,6 @@ namespace IS {
                 input.mWindow->SetMaximized(false);
             }
         });
-
-        // Mouse scroll callback
-        glfwSetScrollCallback(native_window, []([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] double xoffset, double yoffset)
-        {
-            // Do nothing if it's using scene camera
-            if (Camera::mActiveCamera == CAMERA_TYPE_SCENE)
-                return;
-
-            auto& engine = InsightEngine::Instance();
-            auto editor = engine.GetSystem<Editor>("Editor");
-            if (editor->GetEditorLayer()->IsScenePanelFocused())
-                ISGraphics::cameras[Camera::mActiveCamera].ZoomCamera(static_cast<float>(yoffset));
-        });
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {

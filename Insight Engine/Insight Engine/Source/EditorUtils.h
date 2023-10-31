@@ -64,6 +64,8 @@ namespace IS {
          */
         ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs);
 
+        bool operator==(ImVec2 const& lhs, ImVec2 const& rhs);
+
         /*!
          * \brief Render menu item with icon.
          * \param label Display text for menu item.
