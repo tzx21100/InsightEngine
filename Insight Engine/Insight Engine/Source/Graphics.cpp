@@ -93,13 +93,14 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
-        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+        for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
+            InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
 
-        GLenum error;
-        while ((error = glGetError()) != GL_NO_ERROR) {
-            IS_CORE_ERROR("OpenGL Error: {}", error);
-        }
+            GLenum error;
+            while ((error = glGetError()) != GL_NO_ERROR) {
+                IS_CORE_ERROR("OpenGL Error: {}", error);
+            }
 
         // update animations
         /*idle_ani.updateAnimation(delta_time);
@@ -113,20 +114,20 @@ namespace IS {
             auto& sprite = engine.GetComponent<Sprite>(entity);
             auto& trans = engine.GetComponent<Transform>(entity);
 
-            // update sprite's transform
-            sprite.followTransform(trans);
-            sprite.transform();
-           
-            if (!sprite.anims.empty()) {
-                sprite.anims[sprite.animation_index].updateAnimation(delta_time);
-            }
+                // update sprite's transform
+                sprite.followTransform(trans);
+                sprite.transform();
 
-           /* if (sprite.primitive_type == GL_LINES || sprite.primitive_type == GL_LINE_LOOP) {
-                Sprite::nonQuadInstanceData instLineData;
-                instLineData.color = sprite.color;
-                instLineData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
-                lineInstances.emplace_back(instLineData);
-            }*/
+                if (!sprite.anims.empty()) {
+                    sprite.anims[sprite.animation_index].updateAnimation(delta_time);
+                }
+
+                /* if (sprite.primitive_type == GL_LINES || sprite.primitive_type == GL_LINE_LOOP) {
+                     Sprite::nonQuadInstanceData instLineData;
+                     instLineData.color = sprite.color;
+                     instLineData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
+                     lineInstances.emplace_back(instLineData);
+                 }*/
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                 Sprite::instanceData instData;
@@ -152,6 +153,8 @@ namespace IS {
 
         // draw
         Draw(delta_time);
+    }
+
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {

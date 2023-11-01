@@ -568,6 +568,7 @@ namespace IS {
         //! Unique pointer to the System Manager.
         std::unique_ptr<SystemManager> mSystemManager;
 
+        static int currentNumberOfSteps;
 
     private:
         //! Counter for the number of frames.
@@ -587,6 +588,9 @@ namespace IS {
 
         //! Duration of the delta time between frames.
         std::chrono::duration<float> mDeltaTime{ 0.f };
+
+        //! Fixed delta time between frames
+        std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
 
         /**
          * \brief Default private constructor for the Singleton pattern.

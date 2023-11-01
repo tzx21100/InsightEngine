@@ -56,7 +56,7 @@ namespace IS {
 	}
 
 	// Updates the physics simulation for the given time step
-	void Physics::Update(float dt)
+	void Physics::Update([[maybe_unused]]float dt)
 	{
 		if (InsightEngine::Instance().mRuntime == false) {
 
@@ -68,45 +68,49 @@ namespace IS {
 					body.BodyFollowTransform(trans);
 				}
 			}
-			return; }
-		mContactPointsList.clear();
-
-		// add new entity inside grid
-		mImplicitGrid.AddIntoCell(mEntities);
-		
-		// for testing grid
-		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-		if (input->IsKeyPressed(GLFW_KEY_3)) {
-			for (int i = 0; i < ImplicitGrid::mRows; i++) {
-				std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
-					
-			}
-			for (int j = 0; j < ImplicitGrid::mCols; j++) {
-				std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
-			}
-			IS_CORE_DEBUG({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
-			IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
-			IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
+			return; 
 		}
 
-		// physics update iteration
-		for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
-			// empty contact list before going into collision step
-			mContactList.clear();
-			
-			// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
-			Step(dt, mEntities);
+		//Loop used in systems that have time-based formula
+		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
+			mContactPointsList.clear();
 
-			// Collision Detection
-			BroadPhase();
+			// add new entity inside grid
+			mImplicitGrid.AddIntoCell(mEntities);
 
-			// Collision Resolution
-			NarrowPhase();
+			// for testing grid
+			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+			if (input->IsKeyPressed(GLFW_KEY_3)) {
+				for (int i = 0; i < ImplicitGrid::mRows; i++) {
+					std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
+
+				}
+				for (int j = 0; j < ImplicitGrid::mCols; j++) {
+					std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
+				}
+				IS_CORE_DEBUG({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
+				IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
+				IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
+			}
+
+			// physics update iteration
+			//for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
+				// empty contact list before going into collision step
+				mContactList.clear();
+
+				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
+				Step(dt, mEntities);
+
+				// Collision Detection
+				BroadPhase();
+
+				// Collision Resolution
+				NarrowPhase();
+			//}
+
+			// set it back to 0 for next iteration loop
+			mCurrentIterations = 0;
 		}
-
-		// set it back to 0 for next iteration loop
-		mCurrentIterations = 0;
-
 	}
 
 	// collision detect for implicit grid
@@ -611,7 +615,7 @@ namespace IS {
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
 		// divide by iterations to increase precision
-		time /= static_cast<float>(mTotalIterations);
+		//time /= static_cast<float>(mTotalIterations);
 
 		for (auto const& entity : entities) {
 
