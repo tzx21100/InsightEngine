@@ -89,18 +89,8 @@ namespace IS {
         ImGui::PopStyleVar();
 
         // Accept file drop
-        if (ImGui::BeginDragDropTarget())
-        {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
-            {
-                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                ResetSelection();
-
-                auto editor = engine.GetSystem<Editor>("Editor");
-                editor->GetEditorLayer()->OpenScene(path.string());
-            }
-            ImGui::EndDragDropTarget();
-        }
+        auto editor = engine.GetSystem<Editor>("Editor");
+        editor->GetEditorLayer()->AcceptAssetBrowserPayload();
 
         ImGui::End(); // end window Scene Hierarchy
 
@@ -213,21 +203,7 @@ namespace IS {
             ProcessSelectedEntityShortcuts();
 
         // Right click on entity
-        if (ImGui::BeginPopupContextItem())
-        {
-            // Add Component
-            if (ImGui::BeginMenu("Add Component"))
-            {
-                RenderAddComponent(entity);
-                ImGui::EndMenu();
-            }
-
-            // Clone/Delete entity
-            if (ImGui::MenuItem("Clone"))  { CloneEntity(entity); }
-            if (ImGui::MenuItem("Delete", "Del")) { DeleteEntity(entity); }
-
-            ImGui::EndPopup();
-        }
+        RenderEntityConfig(entity);
 
         if (opened)
             ImGui::TreePop();
@@ -371,6 +347,25 @@ namespace IS {
             auto& sprite = engine.GetComponent<Sprite>(entity);
             //auto& body = engine.GetComponent<RigidBody>(entity);
             ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f }, 3.f);
+        }
+    }
+
+    void SceneHierarchyPanel::RenderEntityConfig(Entity entity)
+    {
+        if (ImGui::BeginPopupContextItem(nullptr, ImGuiPopupFlags_MouseButtonRight))
+        {
+            // Add Component
+            if (ImGui::BeginMenu("Add Component"))
+            {
+                RenderAddComponent(entity);
+                ImGui::EndMenu();
+            }
+
+            // Clone/Delete entity
+            if (ImGui::MenuItem("Clone")) { CloneEntity(entity); }
+            if (ImGui::MenuItem("Delete", "Del")) { DeleteEntity(entity); }
+
+            ImGui::EndPopup();
         }
     }
 

@@ -78,6 +78,8 @@ namespace IS {
          */
         void OpenScene(std::string const& path);
 
+        void AcceptAssetBrowserPayload();
+
         /*!
          * \brief Check if the game panel is in focus.
          *
@@ -137,9 +139,9 @@ namespace IS {
         void RenderToolBar();
 
         /*!
-         * \brief Render the controls for camera zoom.
+         * \brief Render the controls for camera.
          */
-        void RenderCameraZoom();
+        void RenderCameraControls();
 
         ///*!
         // * \brief Render the gizmo.
@@ -195,6 +197,8 @@ namespace IS {
          * \brief Exit current program.
          */
         void ExitProgram();
+
+        void PanCamera();
     };
 
 } // end namespace IS

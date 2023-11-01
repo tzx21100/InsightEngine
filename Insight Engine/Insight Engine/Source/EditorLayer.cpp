@@ -62,7 +62,7 @@ namespace IS {
         IS_CORE_DEBUG("{} detached", GetName());
     }
 
-    void EditorLayer::OnUpdate(float dt)
+    void EditorLayer::OnUpdate(float)
     {
         if (auto const& [fb_width, fb_height] = ISGraphics::mFramebuffer->GetSize();
             mScenePanel->GetViewportSize().x > 0.f && mScenePanel->GetViewportSize().y > 0.f &&
@@ -124,25 +124,26 @@ namespace IS {
                 camera.SetZoomLevel(zoom_level);
 
                 // Camera panning
-                static ImVec2 last_mouse_position = ImGui::GetMousePos();
-                static ImVec2 mouse_delta = {};
-                static bool is_moving = false;
-                if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
-                {
-                    ImVec2 current_mouse_position = ImGui::GetMousePos();
-                    using namespace EditorUtils;
-                    is_moving = current_mouse_position != last_mouse_position;
-                    mouse_delta = current_mouse_position - last_mouse_position;
-                    last_mouse_position = current_mouse_position;
-                }
-                if (is_moving)
-                {
-                    camera.PanCamera(dt, mouse_delta.x, mouse_delta.y);
-                }
-                else
-                {
-                    last_mouse_position = ImGui::GetMousePos();
-                }
+                //static ImVec2 last_mouse_position = ImGui::GetMousePos();
+                //static ImVec2 mouse_delta = {};
+                //static bool is_moving = false;
+                //if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
+                //{
+                //    ImVec2 current_mouse_position = ImGui::GetMousePos();
+                //    using namespace EditorUtils;
+                //    is_moving = current_mouse_position != last_mouse_position;
+                //    mouse_delta = current_mouse_position - last_mouse_position;
+                //    last_mouse_position = current_mouse_position;
+                //}
+                //if (is_moving)
+                //{
+                //    camera.PanCamera(dt, mouse_delta.x, mouse_delta.y);
+                //}
+                //else
+                //{
+                //    last_mouse_position = ImGui::GetMousePos();
+                //}
+                PanCamera();
 
                 // Mouse picking - set hovered entity as the selected entity
                 if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
@@ -229,6 +230,13 @@ namespace IS {
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
+
+        if (mSceneHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
+            *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity())
+        {
+            Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
+            mSceneHierarchyPanel->RenderEntityConfig(entity);
+        }
 
         //RenderGizmo();
 
@@ -406,7 +414,7 @@ namespace IS {
             }
 
             // Render camera zoom controls
-            RenderCameraZoom();
+            RenderCameraControls();
 
             if (scene_loaded)
             {
@@ -438,47 +446,119 @@ namespace IS {
         }
     }
 
-    void EditorLayer::RenderCameraZoom()
+    void EditorLayer::RenderCameraControls()
     {
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
         const float SIZE = 16.f;
         float zoom_level = camera.GetZoomLevel();
 
-        // Label
         ImGui::SameLine();
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 12.f * SIZE);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + ImGui::GetStyle().FramePadding.y);
-        ImGui::TextUnformatted("Camera Zoom:");
-
-        // Zoom out with - button
-        ImGui::SameLine();
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 4.f * ImGui::GetStyle().ItemSpacing.x);
+        if (ImGui::BeginTable("Camera Controls", 6, ImGuiTableFlags_Resizable))
         {
-            zoom_level *= (1 - Camera::mZoomSpeed);
-            camera.SetZoomLevel(zoom_level);
-        }
-        ImGui::PopStyleColor();
+            ImGui::TableNextColumn();
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + ImGui::GetStyle().FramePadding.y);
+            ImGui::TextUnformatted("Zoom");
+            ImGui::SetItemTooltip("Adjust camera zoom level");
 
-        // Slider to adjust camera zoom
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(SIZE * 10.f);
-        if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
-                                (Camera::mMinZoom), (Camera::mMaxZoom), "%.2fx", ImGuiSliderFlags_Logarithmic))
-        {
-            // Update the camera's zoom level directly
-            camera.SetZoomLevel(zoom_level);
+            // Zoom out with - button
+            ImGui::TableNextColumn();
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
+            {
+                zoom_level *= (1 - Camera::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::PopStyleColor();
+            ImGui::SetItemTooltip("Zooms out camera");
+
+            // Slider to adjust camera zoom
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(SIZE * 10.f);
+            if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+                                   (Camera::CAMERA_ZOOM_MIN), (Camera::CAMERA_ZOOM_MAX), "%.2fx", ImGuiSliderFlags_Logarithmic))
+            {
+                // Update the camera's zoom level directly
+                camera.SetZoomLevel(zoom_level);
+            }
+
+            // Zoom in with + button
+            ImGui::SameLine();
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
+            {
+                zoom_level *= (1 + Camera::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::PopStyleColor();
+            ImGui::SetItemTooltip("Zooms in camera");
+
+            // Zoom speed
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Zoom Speed");
+            ImGui::SetItemTooltip("Adjust zoom speed of camera");
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(SIZE * 4.f);
+            ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, Camera::CAMERA_ZOOM_SPEED_MIN, Camera::CAMERA_ZOOM_SPEED_MAX, "%.2f");
+
+            // Pan speed
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Pan Speed");
+            ImGui::SetItemTooltip("Adjust pan speed of camera");
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(SIZE * 4.f);
+            ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, Camera::CAMERA_MOVE_SPEED_MIN, Camera::CAMERA_MOVE_SPEED_MAX, "%.2f");
+
+            ImGui::EndTable(); // end table Camera Controls
         }
 
-        // Zoom in with + button
-        ImGui::SameLine();
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
-        {
-            zoom_level *= (1 + Camera::mZoomSpeed);
-            camera.SetZoomLevel(zoom_level);
-        }
-        ImGui::PopStyleColor();
+        //ImGui::TextUnformatted("Camera:");
+
+        //// Zoom out with - button
+        //ImGui::SameLine();
+        //ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        //if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
+        //{
+        //    zoom_level *= (1 - Camera::mZoomSpeed);
+        //    camera.SetZoomLevel(zoom_level);
+        //}
+        //ImGui::PopStyleColor();
+
+        //// Slider to adjust camera zoom
+        //ImGui::SameLine();
+        //ImGui::SetNextItemWidth(SIZE * 10.f);
+        //if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+        //                        (Camera::mMinZoom), (Camera::mMaxZoom), "%.2fx", ImGuiSliderFlags_Logarithmic))
+        //{
+        //    // Update the camera's zoom level directly
+        //    camera.SetZoomLevel(zoom_level);
+        //}
+
+        //// Zoom in with + button
+        //ImGui::SameLine();
+        //ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        //if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
+        //{
+        //    zoom_level *= (1 + Camera::mZoomSpeed);
+        //    camera.SetZoomLevel(zoom_level);
+        //}
+        //ImGui::PopStyleColor();
+
+        //// Zoom speed
+        //ImGui::SameLine();
+        //ImGui::TextUnformatted("Zoom Speed:");
+        //ImGui::SameLine();
+        //ImGui::SetNextItemWidth(SIZE * 4.f);
+        //ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, 0.01f, 0.2f, "%.2f");
+        //ImGui::SameLine();
+
+        //// Pan speed
+        //ImGui::SameLine();
+        //ImGui::TextUnformatted("Pan Speed:");
+        //ImGui::SameLine();
+        //ImGui::SetNextItemWidth(SIZE * 4.f);
+        //ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, 1.f, 10.f, "%.2f");
+        //ImGui::SameLine();
     }
 
     void EditorLayer::AttachPanels()
@@ -538,6 +618,35 @@ namespace IS {
         }
     }
 
+    void EditorLayer::PanCamera()
+    {
+        static bool isPanning = false;
+        static ImVec2 previousMousePosition;
+        ImGuiIO& io = ImGui::GetIO();
+        ImVec2 mousePos = io.MousePos;
+        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
+
+        if (io.MouseDown[1])
+        {
+            if (!isPanning)
+            {
+                isPanning = true;
+                previousMousePosition = mousePos;
+            }
+
+            // Calculate the panning offset
+            ImVec2 delta = ImVec2(mousePos.x - previousMousePosition.x, mousePos.y - previousMousePosition.y);
+            camera.PanCamera(delta.x, delta.y);
+            IS_CORE_DEBUG("x: {:.2f}, y : {:.2f}", delta.x, delta.y);
+
+            previousMousePosition = mousePos;
+        }
+        else
+        {
+            isPanning = false;
+        }
+    }
+
     void EditorLayer::OpenScene()
     {
         mSceneHierarchyPanel->ResetSelection();
@@ -555,6 +664,20 @@ namespace IS {
         std::filesystem::path filepath(path);
         SceneManager::Instance().LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
+    }
+
+    void EditorLayer::AcceptAssetBrowserPayload()
+    {
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
+            {
+                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                mSceneHierarchyPanel->ResetSelection();
+                OpenScene(path.string());
+            }
+            ImGui::EndDragDropTarget();
+        }
     }
 
     bool EditorLayer::IsGamePanelFocused() const { return mGamePanel->IsFocused(); }

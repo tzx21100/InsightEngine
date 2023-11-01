@@ -46,18 +46,6 @@ namespace IS {
             io.WantCaptureMouse = io.WantCaptureKeyboard = false;
         }
 
-        // Size of scene panel
-        //ImVec2 scene_size = ImGui::GetWindowSize();
-        //ImVec2 scene_pos = ImGui::GetWindowPos();
-
-        // Scene pos for the input
-        //ImVec2 actual_scene_pos;
-        //actual_scene_pos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
-        //actual_scene_pos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
-        //input->setCenterPos(actual_scene_pos.x + (float)scene_size.x / 2.f,
-        //                    actual_scene_pos.y + (float)scene_size.y / 2.f);
-        //input->setRatio(scene_size.x, scene_size.y);
-
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
         mViewportSize = { panel_size.x, panel_size.y };
@@ -79,7 +67,7 @@ namespace IS {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysUseWindowPadding;
         ImGui::Begin("Scene", nullptr, window_flags);
 
         auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
@@ -115,6 +103,9 @@ namespace IS {
         
         // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
+
+        // Accept asset browser payload
+        editor->GetEditorLayer()->AcceptAssetBrowserPayload();
 
         // Help tooltip
         if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)

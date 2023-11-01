@@ -232,20 +232,9 @@ namespace IS {
                 ImGui::PopFont();
                 
                 ImGui::TableNextColumn();
-                if (ImGui::BeginCombo("##Layer", std::to_string(sprite.layer).c_str()))
-                {
-                    for (int i{}; i < 3; ++i)
-                    {
-                        const bool is_selected = (sprite.layer == i);
-                        if (ImGui::Selectable(std::to_string(i).c_str(), is_selected))
-                        {
-                            sprite.layer = i;
-                        }
-                        if (is_selected)
-                            ImGui::SetItemDefaultFocus();
-                    }
-                    ImGui::EndCombo();
-                }
+                Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(sprite.layer);
+                EditorUtils::RenderComboBoxEnum<Sprite::DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
+                sprite.layer = layer;
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
@@ -336,7 +325,7 @@ namespace IS {
                     ImGui::EndTooltip();
                 }
             }
-            ImGui::EndChild();
+            ImGui::EndChild(); // end child window Texture Preview
 
             // Texture Dimensions
             ImGuiTableFlags table_flags = 0;
@@ -348,17 +337,18 @@ namespace IS {
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("%dpx", sprite.img.width);
+                ImGui::Text("%d px", sprite.img.width);
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Height");
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::Text("%dpx", sprite.img.height);
+                ImGui::Text("%d px", sprite.img.height);
 
-                ImGui::EndTable();
+                ImGui::EndTable(); // end table Texture
             }
+
             // Render animation details
             if (has_animation)
             {
