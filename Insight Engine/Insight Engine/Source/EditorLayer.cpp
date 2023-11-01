@@ -620,31 +620,28 @@ namespace IS {
 
     void EditorLayer::PanCamera()
     {
-        static bool isPanning = false;
-        static ImVec2 previousMousePosition;
+        static bool is_panning = false;
+        static ImVec2 previous_mouse_position;
         ImGuiIO& io = ImGui::GetIO();
-        ImVec2 mousePos = io.MousePos;
+        ImVec2 mouse_position = io.MousePos;
         Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
 
-        if (io.MouseDown[1])
+        if (!io.MouseDown[1])
         {
-            if (!isPanning)
-            {
-                isPanning = true;
-                previousMousePosition = mousePos;
-            }
-
-            // Calculate the panning offset
-            ImVec2 delta = ImVec2(mousePos.x - previousMousePosition.x, mousePos.y - previousMousePosition.y);
-            camera.PanCamera(delta.x, delta.y);
-            IS_CORE_DEBUG("x: {:.2f}, y : {:.2f}", delta.x, delta.y);
-
-            previousMousePosition = mousePos;
+            is_panning = false;
+            return;
         }
-        else
+
+        if (!is_panning)
         {
-            isPanning = false;
+            is_panning = true;
+            previous_mouse_position = mouse_position;
         }
+
+        // Calculate the panning offset
+        ImVec2 delta = ImVec2(mouse_position.x - previous_mouse_position.x, mouse_position.y - previous_mouse_position.y);
+        camera.PanCamera(delta.x, delta.y);
+        previous_mouse_position = mouse_position;
     }
 
     void EditorLayer::OpenScene()
