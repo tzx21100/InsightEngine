@@ -158,8 +158,8 @@ namespace IS {
     }
 
     static float GetDeltaTime() {
-         auto system=InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
-         return system->mScriptDeltaTime;
+        auto system = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+         return 1.f / 60.f/*system->mScriptDeltaTime*/;
     }
 
     static void SetSpriteImage(SimpleImage image) {
