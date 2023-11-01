@@ -173,9 +173,9 @@
 				"SpriteDrawing" : true,
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 7,
-				"SpriteTextureHeight" : 932,
-				"SpriteTextureIndex" : 6,
+				"SpriteTexture" : 8,
+				"SpriteTextureHeight" : 800,
+				"SpriteTextureIndex" : 7,
 				"SpriteTextureWidth" : 15684,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 96.0,
@@ -188,9 +188,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 9.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.12416773289442062,
+						"frame_timer" : 0.083983704447746277,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -25137,7 +25137,14 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : -400.0
 			}
+		},
+		{
+			"Name" : "AudioEntity",
+			"Script" : 
+			{
+				"ScriptName" : "AudioScript"
+			}
 		}
 	],
-	"EntityAmount" : 3
+	"EntityAmount" : 4
 }
