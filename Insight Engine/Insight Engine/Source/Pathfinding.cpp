@@ -31,16 +31,19 @@ namespace IS {
         Waypoint waypointB;
         Waypoint waypointC;
         waypointA.mPosition = Vector2D(0.f, 0.f);
-        waypointA.mNeighbors.emplace_back(&waypointB);
+        //waypointA.mNeighbors.emplace_back(&waypointB);
         waypointA.mIsObstacle = false;
         waypointB.mPosition = Vector2D(100.f, 10.f);
-        waypointB.mNeighbors.emplace_back(&waypointA);
-        waypointB.mNeighbors.emplace_back(&waypointC);
+        //waypointB.mNeighbors.emplace_back(&waypointA);
+        //waypointB.mNeighbors.emplace_back(&waypointC);
         waypointB.mIsObstacle = false;
         waypointC.mPosition = Vector2D(200.f, 0.f);
-        waypointC.mNeighbors.emplace_back(&waypointB);
+        //waypointC.mNeighbors.emplace_back(&waypointB);
         waypointC.mIsObstacle = false;
 
+        ConnectWaypoints(waypointA, waypointB);
+        ConnectWaypoints(waypointB, waypointC);
+        
         AddWaypoint(waypointA);
         AddWaypoint(waypointB);
         AddWaypoint(waypointC);
