@@ -39,8 +39,8 @@ namespace IS {
     Animation ISGraphics::ice_cream_truck_ani;
     // Shaders
     Shader ISGraphics::mesh_shader_pgm;
-    Shader ISGraphics::mesh_inst_shader_pgm;
-    Shader ISGraphics::mesh_inst_line_shader_pgm;
+    Shader ISGraphics::inst_quad_shader_pgm;
+    Shader ISGraphics::inst_non_quad_shader_pgm;
     /*Shader ISGraphics::TNR_text_shader_pgm;
     Shader ISGraphics::CS_text_shader_pgm;*/
 
@@ -62,8 +62,8 @@ namespace IS {
         Mesh::initMeshes(meshes); // init 4 meshes
         
         mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
-        mesh_inst_shader_pgm.setupInstSpriteShaders();
-        mesh_inst_line_shader_pgm.setupInstLineShaders();
+        inst_quad_shader_pgm.setupInstSpriteShaders();
+        inst_non_quad_shader_pgm.setupInstLineShaders();
         Times_New_Roman_font.shader.setupTextShaders();
         Brush_Script_font.shader.setupTextShaders();
         
