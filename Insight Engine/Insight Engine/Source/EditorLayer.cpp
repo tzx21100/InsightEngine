@@ -124,28 +124,20 @@ namespace IS {
                 }
 
                 // Mouse dragging - change selected/hovered entity translation
-                else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                else if (mSceneHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
-                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
-                    mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
+                    Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
+                        static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
+                        static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
 
-                    // Validate hovered and selected entity
-                    if (mSceneHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
-                        *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity())
+                    Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
+
+                    // Translate entity position
+                    if (engine.HasComponent<Transform>(entity))
                     {
-                        Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
-                            static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
-                            static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
-
-                        Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
-
-                        // Translate entity position
-                        if (engine.HasComponent<Transform>(entity))
-                        {
-                            auto& transform = engine.GetComponent<Transform>(entity);
-                            transform.world_position.x += mouse_position_delta.x;
-                            transform.world_position.y += mouse_position_delta.y;
-                        }
+                        auto& transform = engine.GetComponent<Transform>(entity);
+                        transform.world_position.x += mouse_position_delta.x;
+                        transform.world_position.y += mouse_position_delta.y;
                     }
                 }
 
