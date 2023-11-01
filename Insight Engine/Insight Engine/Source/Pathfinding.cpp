@@ -31,18 +31,18 @@ namespace IS {
         Waypoint waypointB;
         Waypoint waypointC;
         waypointA.mPosition = Vector2D(0.f, 0.f);
-        //waypointA.mNeighbors.emplace_back(&waypointB);
+        waypointA.mNeighbors.emplace_back(&waypointB);
         waypointA.mIsObstacle = false;
-        waypointB.mPosition = Vector2D(100.f, 10.f);
-        //waypointB.mNeighbors.emplace_back(&waypointA);
-        //waypointB.mNeighbors.emplace_back(&waypointC);
+        waypointB.mPosition = Vector2D(100.f, 100.f);
+        waypointB.mNeighbors.emplace_back(&waypointA);
+        waypointB.mNeighbors.emplace_back(&waypointC);
         waypointB.mIsObstacle = false;
         waypointC.mPosition = Vector2D(200.f, 0.f);
-        //waypointC.mNeighbors.emplace_back(&waypointB);
+        waypointC.mNeighbors.emplace_back(&waypointB);
         waypointC.mIsObstacle = false;
 
-        ConnectWaypoints(waypointA, waypointB);
-        ConnectWaypoints(waypointB, waypointC);
+       /* ConnectWaypoints(waypointA, waypointB);
+        ConnectWaypoints(waypointB, waypointC);*/
         
         AddWaypoint(waypointA);
         AddWaypoint(waypointB);
@@ -54,32 +54,31 @@ namespace IS {
             if (InsightEngine::Instance().HasComponent<Pathfinder>(entity)) {
                 auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 
+
                 if (i < mWaypoints.size()) {
                     Vector2D curr_waypoint = mWaypoints[i].mPosition;
                     Vector2D goal = curr_waypoint - trans.getWorldPosition();
 
-                    if (goal.x || goal.y) {
-                        // Entity has reached the current waypoint, find the next waypoint using A*
+                    if ((goal.x > -10.f && goal.x < 10.f) && (goal.y > -10.f && goal.y < 10.f)) {
                         i++;
                     }
 
                     if (i < mWaypoints.size()) {
-                        const Waypoint& currentWaypoint = mWaypoints[i];
-                        const Waypoint& goalWaypoint = mWaypoints.back();
+                        //const Waypoint& currentWaypoint = mWaypoints[i];
+                        //const Waypoint& goalWaypoint = mWaypoints.back();
 
                         // Call A* pathfinding to get the path from the current waypoint to the goal
-                        std::vector<Waypoint*> path = AStarPathfinding(currentWaypoint, goalWaypoint);
+                       // std::vector<Waypoint*> path = AStarPathfinding(currentWaypoint, goalWaypoint);
 
-                        if (!path.empty()) {
+                        if (!mWaypoints.empty()) {
                             // Move towards the next waypoint in the path
-                            Vector2D nextWaypointPosition = path[0]->mPosition;
+                            Vector2D nextWaypointPosition = mWaypoints[i].mPosition;
                             Vector2D nextGoal = nextWaypointPosition - trans.getWorldPosition();
 
                             trans.world_position += nextGoal * deltaTime;
                         }
                     }
                 }
-
                 if (i == mWaypoints.size()) {
                     // Entity has reached the last waypoint. You can handle this case here.
                     i = 0;
