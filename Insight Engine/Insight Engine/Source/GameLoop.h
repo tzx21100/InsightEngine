@@ -31,6 +31,7 @@ namespace IS {
         //Entity entity_circle{};
         //Entity entity_quad{};
         //Entity entity_button{};
+        Entity entity_ai{};
 
         //singleton engine
         InsightEngine& engine = InsightEngine::Instance();
@@ -61,12 +62,12 @@ namespace IS {
             //idle_anim_image->texture_index = 2;
             //walking_anim_image = asset->GetImage("Assets/player_walking.png");
             //walking_anim_image->texture_index = 3;
-            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            //truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
             //truck_anim_image->texture_index = 0;
 
             //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
             //idle_ani.initAnimation(1, 8, 3.f);
-            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+            //ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
             //ISGraphics::textures.emplace_back(*backgroundTest);
             //ISGraphics::textures.emplace_back(*black_background);
@@ -97,6 +98,7 @@ namespace IS {
 
             //auto& body_player = engine.GetComponent<RigidBody>(entity_player);
             //auto& body_floor = engine.GetComponent<RigidBody>(entity_floor);
+            
 
             //auto& sprite_background = engine.GetComponent<Sprite>(entity_quad);
             //auto& sprite_player = engine.GetComponent<Sprite>(entity_player);
@@ -108,6 +110,9 @@ namespace IS {
             //sprite_background.texture_width = black_background->width;
             //sprite_background.texture_height = black_background->height;
             //sprite_background.img = *black_background;
+           /* sprite_ai.texture_width = black_background->width;
+            sprite_ai.texture_height = black_background->height;*/
+            
 
             //sprite_player.name = "player_sprite";
             //sprite_player.texture_width = idle_anim_image->width;
@@ -122,17 +127,20 @@ namespace IS {
             //sprite_test.texture_height = backgroundTest->height;
             //sprite_test.img = *backgroundTest;
 
-            int width = engine.GetWindowWidth();
+            //int width = engine.GetWindowWidth();
+            //int height = engine.GetWindowHeight();
 
             //trans_quad.setScaling(static_cast<float>(width), static_cast<float>(height));
             //trans_player.setScaling(width * 0.05375f, height * 0.13333333f);
             //trans_player.setWorldPosition(width * 0.f, height * 0.f);
+       
             //trans_test.setScaling(width * -0.0625f, height * 0.11111111f);
             //trans_test.setWorldPosition(width * -0.25f, height * 0.f);
             //trans_floor.setScaling(width * 0.56034f, height * 0.10441f);
             //trans_floor.setWorldPosition(width * -0.00050056f, height * -0.443105f);
             //body_player.mAngularVelocity = 10.f;
             //body_player.mRestitution = 0.1f;
+            
             //body_floor.mBodyType = BodyType::Static;
             //body_floor.mMass = 99999.f;
             //body_floor.mInvMass = 1.f / 99999.f;
@@ -150,7 +158,20 @@ namespace IS {
             //trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             //sprite_point.primitive_type = GL_POINTS;
 
-            
+            int width = engine.GetWindowWidth();
+            /*int height = engine.GetWindowHeight();
+            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+            entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
+            auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
+            auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
+            auto& sprite_ai = engine.GetComponent<Sprite>(entity_ai);
+            sprite_ai.img = *truck_anim_image;
+            trans_ai.setScaling(width * 0.05375f, height * 0.13333333f);
+            trans_ai.setWorldPosition(width * 0.f, height * 0.f);
+            body_ai.mAngularVelocity = 10.f;
+            body_ai.mRestitution = 0.1f;*/
+
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
         }

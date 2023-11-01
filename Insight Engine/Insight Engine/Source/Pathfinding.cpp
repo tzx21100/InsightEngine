@@ -1,8 +1,25 @@
-/*                                                                   includes
+/* Start Header **************************************************************/
+/*!
+ * \file Pathfinding.cpp
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date 02-11-2023
+ * \brief
+ * Definition of the Pathfinding class for managing pathfinding for AI (will be incoorporated in M3)
+ *
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ */
+ /* End Header ****************************************************************/
+ /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 
 namespace IS {
+    static int i = 0;
+
     std::string Pathfinding::GetName() {
         return "Pathfinding";
     }
@@ -10,47 +27,64 @@ namespace IS {
     void Pathfinding::Initialize() {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
+        Waypoint waypointA;
+        Waypoint waypointB;
+        Waypoint waypointC;
+        waypointA.mPosition = Vector2D(0.f, 0.f);
+        waypointA.mNeighbors.emplace_back(&waypointB);
+        waypointA.mIsObstacle = false;
+        waypointB.mPosition = Vector2D(100.f, 10.f);
+        waypointB.mNeighbors.emplace_back(&waypointA);
+        waypointB.mNeighbors.emplace_back(&waypointC);
+        waypointB.mIsObstacle = false;
+        waypointC.mPosition = Vector2D(200.f, 0.f);
+        waypointC.mNeighbors.emplace_back(&waypointB);
+        waypointC.mIsObstacle = false;
+
+        AddWaypoint(waypointA);
+        AddWaypoint(waypointB);
+        AddWaypoint(waypointC);
     }
 
     void Pathfinding::Update([[maybe_unused]] float deltaTime) {
-        // Create and add waypoints
-        //Waypoint waypointA;
-        //Waypoint waypointB;
-        //Waypoint waypointC;
+        for (auto const& entity : mEntities) {
+            if (InsightEngine::Instance().HasComponent<Pathfinder>(entity)) {
+                auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 
-        //// Add waypoints to the pathfinding system
-        //AddWaypoint(waypointA);
-        //AddWaypoint(waypointB);
-        //AddWaypoint(waypointC);
+                if (i < mWaypoints.size()) {
+                    Vector2D curr_waypoint = mWaypoints[i].mPosition;
+                    Vector2D goal = curr_waypoint - trans.getWorldPosition();
 
-        //// Connect waypoints to define the navigation graph
-        //ConnectWaypoints(waypointA, waypointB);
-        //ConnectWaypoints(waypointB, waypointC);
+                    if (goal.x || goal.y) {
+                        // Entity has reached the current waypoint, find the next waypoint using A*
+                        i++;
+                    }
 
-        //// Define a start and goal waypoint
-        //Waypoint startWaypoint = waypointA;
-        //Waypoint goalWaypoint = waypointC;
+                    if (i < mWaypoints.size()) {
+                        const Waypoint& currentWaypoint = mWaypoints[i];
+                        const Waypoint& goalWaypoint = mWaypoints.back();
 
-        //// Perform pathfinding for an entity
-        //Entity entity; // Create an entity
-        //PerformPathfinding(entity, startWaypoint, goalWaypoint);
+                        // Call A* pathfinding to get the path from the current waypoint to the goal
+                        std::vector<Waypoint*> path = AStarPathfinding(currentWaypoint, goalWaypoint);
 
-        //// Get the path for the entity
-        //std::vector<Waypoint*> path = GetPathForEntity(entity);
+                        if (!path.empty()) {
+                            // Move towards the next waypoint in the path
+                            Vector2D nextWaypointPosition = path[0]->mPosition;
+                            Vector2D nextGoal = nextWaypointPosition - trans.getWorldPosition();
 
-        //// Check if a valid path was found
-        //if (!path.empty()) {
-        //    // Path found, now you can use the path for entity navigation
-        //    // The 'path' vector contains the ordered waypoints from start to goal.
-        //    for (Waypoint* waypoint : path) {
-        //        // Navigate the entity to 'waypoint'
-        //        // You may have your own entity navigation logic here.
-        //    }
-        //}
-        //else {
-        //    // No path found, handle this case
-        //}
+                            trans.world_position += nextGoal * deltaTime;
+                        }
+                    }
+                }
+
+                if (i == mWaypoints.size()) {
+                    // Entity has reached the last waypoint. You can handle this case here.
+                    i = 0;
+                }
+            }
+        }
     }
+
 
     void Pathfinding::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {
@@ -59,11 +93,11 @@ namespace IS {
         }
     }
 
-    double Pathfinding::distance_between_waypoints(const Waypoint& a, const Waypoint& b) {
+    double Pathfinding::DistanceBetweenWaypoints(const Waypoint& a, const Waypoint& b) {
         return ISVector2DDistance(a.mPosition, b.mPosition);
     }
 
-    bool Pathfinding::ClosedListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>> &closed_list, Waypoint* waypoint) {
+    bool Pathfinding::ClosedListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>>& closed_list, Waypoint* waypoint) {
         while (!closed_list.empty()) {
             if (closed_list.top() == waypoint) {
                 return true;
@@ -73,8 +107,7 @@ namespace IS {
         return false;
     }
 
-    // check if a waypoint is in the open set
-    bool Pathfinding::OpenListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>> &open_list, Waypoint* waypoint) {
+    bool Pathfinding::OpenListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>>& open_list, Waypoint* waypoint) {
         while (!open_list.empty()) {
             if (open_list.top() == waypoint) {
                 return true;
@@ -82,7 +115,7 @@ namespace IS {
             open_list.pop();
         }
         return false;
-    } 
+    }
 
     std::vector<Waypoint*> Pathfinding::AStarPathfinding(const Waypoint& start, const Waypoint& goal) {
 
@@ -127,7 +160,7 @@ namespace IS {
                     continue; // Skip waypoints in the closed set
                 }
 
-                double tentative_g_cost = g_cost[current] + distance_between_waypoints(*current, *neighbor);
+                double tentative_g_cost = g_cost[current] + DistanceBetweenWaypoints(*current, *neighbor);
 
                 if (!OpenListContains(open_list, neighbor) || tentative_g_cost < g_cost[neighbor]) {
                     // Update the parent and g-cost for the neighbor
@@ -143,23 +176,23 @@ namespace IS {
 
         return std::vector<Waypoint*>();
     }
-    
-    void Pathfinding::AddWaypoint(const Waypoint& waypoint){
-        mWaypoints.push_back(waypoint);
+
+    void Pathfinding::AddWaypoint(const Waypoint& waypoint) {
+        mWaypoints.emplace_back(waypoint);
     }
 
-    void Pathfinding::ConnectWaypoints(Waypoint& waypoint1, Waypoint& waypoint2){
-        if(!waypoint1.mIsObstacle && !waypoint2.mIsObstacle){
-            waypoint1.mNeighbors.push_back(&waypoint2);
-            waypoint2.mNeighbors.push_back(&waypoint1);
+    void Pathfinding::ConnectWaypoints(Waypoint& waypoint1, Waypoint& waypoint2) {
+        if (!waypoint1.mIsObstacle && !waypoint2.mIsObstacle) {
+            waypoint1.mNeighbors.emplace_back(&waypoint2);
+            waypoint2.mNeighbors.emplace_back(&waypoint1);
         }
     }
 
-    void Pathfinding::PerformPathfinding(Entity& entity, const Waypoint& start, const Waypoint& goal){
+    void Pathfinding::PerformPathfinding(Entity& entity, const Waypoint& start, const Waypoint& goal) {
         auto& engine = InsightEngine::Instance();
 
         if (engine.HasComponent<Pathfinder>(entity)) {
-            // Perform pathfinding and store the result in the component
+            // Perform pathfinding and store the result
             std::vector<Waypoint*> path = AStarPathfinding(start, goal);
             // Store the path in the system's mPathStorage
             mPathStorage[entity] = path;
@@ -174,5 +207,5 @@ namespace IS {
         return std::vector<Waypoint*>();
     }
 
-    
+
 }
