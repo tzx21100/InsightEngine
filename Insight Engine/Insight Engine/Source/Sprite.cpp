@@ -76,6 +76,22 @@ namespace IS {
         shader.unUse();
     }
 
+    void Sprite::addAnimation(Animation const& anim) {
+        anims.emplace_back(anim);
+    }
+
+    void Sprite::removeAnimation(int index) {
+        if (index < 0 || index >= anims.size()) {
+            IS_CORE_WARN("Invalid animation index selected.");
+            return;
+        }
+        anims.erase(anims.begin() + index);
+    }
+
+    void Sprite::removeAllAnimations() {
+        anims.clear();
+    }
+
     void Sprite::drawAnimation(const Mesh& mesh_used, Shader shader, Animation const& animation, GLuint texture_ID) {
         // use sprite shader
         shader.use();
@@ -265,6 +281,7 @@ namespace IS {
         for (const Animation& animation : anims) {
             Json::Value animationData;
 
+            animationData["Name"] = animation.name;
             animationData["frame_dimension_x"] = animation.frame_dimension.x;
             animationData["frame_dimension_y"] = animation.frame_dimension.y;
             animationData["frame_index_x"] = animation.frame_index.x;
@@ -319,6 +336,7 @@ namespace IS {
         for (const Json::Value& animationData : animationsJson) {
             Animation animation;
 
+            animation.name = animationData["Name"].asString();
             animation.frame_dimension.x = animationData["frame_dimension_x"].asFloat();
             animation.frame_dimension.y = animationData["frame_dimension_y"].asFloat();
             animation.frame_index.x = animationData["frame_index_x"].asFloat();

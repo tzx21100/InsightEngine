@@ -78,6 +78,7 @@ namespace IS {
         void resetAnimation();
 
         // need to be accessed by shader
+        std::string name{};
         glm::vec2 frame_dimension{1.f, 1.f};
         glm::vec2 frame_index{0.f, 0.f};
         int x_frames{};             // The total number of columns in the sprite sheet.
