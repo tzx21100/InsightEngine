@@ -38,8 +38,8 @@ namespace IS {
 		void(*Exit)();
 
 		/* to store substates that the main state may have
-		// e.g attack state can have two substates. Smash and swinging.
-		NOTE: Substate implementation buggy */
+		   e.g attack state can have two substates. Smash and swinging.
+		NOTE: Substate implementation WIP */
 		std::unordered_map<std::string, AIState*> substates{};
 	};
 }

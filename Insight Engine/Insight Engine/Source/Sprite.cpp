@@ -213,7 +213,7 @@ namespace IS {
             std::cerr << "Failed to map the buffer for writing." << std::endl;
         }
 
-        glUseProgram(ISGraphics::mesh_inst_shader_pgm.getHandle());
+        glUseProgram(ISGraphics::inst_quad_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[4].vao_ID);
 
 
@@ -223,7 +223,7 @@ namespace IS {
             tex_array_index_vect.emplace_back(texture.texture_index);
         }
 
-        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::mesh_inst_shader_pgm.getHandle(), "uTex2d");
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_quad_shader_pgm.getHandle(), "uTex2d");
         if (tex_arr_uniform >= 0)
             glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
         else
@@ -406,7 +406,7 @@ namespace IS {
             std::cerr << "Failed to map the buffer for writing." << std::endl;
         }
 
-        glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
+        glUseProgram(ISGraphics::inst_non_quad_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[5].vao_ID);
 
         glDrawArraysInstanced(GL_LINES, 0, ISGraphics::meshes[5].draw_count, static_cast<GLsizei>(ISGraphics::lineInstances.size()));
@@ -445,7 +445,7 @@ namespace IS {
             std::cerr << "Failed to map the buffer for writing." << std::endl;
         }
 
-        glUseProgram(ISGraphics::mesh_inst_line_shader_pgm.getHandle());
+        glUseProgram(ISGraphics::inst_non_quad_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[6].vao_ID);
 
         glDrawArraysInstanced(GL_LINE_LOOP, 0, ISGraphics::meshes[6].draw_count, static_cast<GLsizei>(ISGraphics::circleInstances.size()));
