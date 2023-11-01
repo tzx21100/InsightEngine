@@ -122,7 +122,7 @@ namespace IS {
 		static Animation walking_ani;
 		static Animation ice_cream_truck_ani;
 		// Shaders
-		static Shader mesh_shader_pgm;
+		// static Shader mesh_shader_pgm;
 		static Shader inst_quad_shader_pgm;
 		static Shader inst_non_quad_shader_pgm;
 		static Text Times_New_Roman_font;

@@ -38,11 +38,9 @@ namespace IS {
     Animation ISGraphics::walking_ani;
     Animation ISGraphics::ice_cream_truck_ani;
     // Shaders
-    Shader ISGraphics::mesh_shader_pgm;
+    // Shader ISGraphics::mesh_shader_pgm;
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
-    /*Shader ISGraphics::TNR_text_shader_pgm;
-    Shader ISGraphics::CS_text_shader_pgm;*/
 
     Text ISGraphics::Times_New_Roman_font;
     Text ISGraphics::Brush_Script_font;
@@ -61,7 +59,7 @@ namespace IS {
         // init graphics systems
         Mesh::initMeshes(meshes); // init 4 meshes
         
-        mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        // mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
         inst_quad_shader_pgm.setupInstSpriteShaders();
         inst_non_quad_shader_pgm.setupInstLineShaders();
         Times_New_Roman_font.shader.setupTextShaders();
@@ -155,7 +153,7 @@ namespace IS {
 
         // draw
         Draw(delta_time);
-    }
+        }
 
     }
 
