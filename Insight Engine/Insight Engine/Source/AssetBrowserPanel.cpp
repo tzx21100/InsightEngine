@@ -105,7 +105,7 @@ namespace IS {
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(100.f);
-            ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f");
+            ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f", ImGuiSliderFlags_NoInput);
 
             ImGui::TableNextColumn();
             ImGui::PushFont(FONT_BOLD);
@@ -113,7 +113,7 @@ namespace IS {
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(100.f);
-            ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f");
+            ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f", ImGuiSliderFlags_NoInput);
 
             ImGui::EndTable();
         }
@@ -184,14 +184,30 @@ namespace IS {
                 {
                     auto const& path = entry.path();
                     auto const& relative_path = std::filesystem::relative(path, ASSETS_PATH);
+                    auto const& extension = path.extension();
                     std::string filename_string = relative_path.filename().string();
                     const bool is_directory = entry.is_directory();
 
                     ImGui::TableNextColumn();
                     ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                    ImTextureID icon = editor_layer->GetIcon(is_directory ? "Folder" : "File");
+                    std::string icon_name = is_directory ? "Folder" :
+                                extension == ".insight" ? "Insight" :
+                                extension == ".json" ? "Json" :
+                                extension == ".mp3" || extension == ".MP3" ? "MP3" :
+                                extension == ".wav" || extension == ".WAV" ? "WAV" :
+                                extension == ".png" ? "PNG" :
+                                extension == ".jpeg" ? "JPEG" : "File";
+
+                    ImTextureID icon = editor_layer->GetIcon(icon_name.c_str());
                     bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     ImGui::PopStyleColor();
+
+                    // Image Tooltip
+                    if (ImGui::BeginItemTooltip())
+                    {
+                        ImGui::Image(icon, { 96.f, 96.f });
+                        ImGui::EndTooltip();
+                    }
 
                     // Start file drag
                     if (ImGui::BeginDragDropSource())

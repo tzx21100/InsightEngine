@@ -80,7 +80,7 @@ namespace IS {
          */
         struct Controls
         {
-            float mThumbnailSize = MIN_THUMBNAIL_SIZE; ///< The size of thumbnails in the browser.
+            float mThumbnailSize = 2 * MIN_THUMBNAIL_SIZE; ///< The size of thumbnails in the browser.
             float mPadding = 16.f; ///< The padding between thumbnails.
         };
 
