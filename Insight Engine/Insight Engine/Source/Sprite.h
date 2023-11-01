@@ -192,6 +192,8 @@ namespace IS {
 
         void addAnimation(Animation const& anim);
 
+        void AddAnimation(std::string const& name, int columns, int rows, float animation_time);
+
         void removeAnimation(int animIndex);
 
         void removeAllAnimations();

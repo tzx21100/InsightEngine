@@ -152,19 +152,19 @@
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -100.10000610351562,
+						"x" : -100.09982299804688,
 						"y" : 89.888755798339844
 					},
 					{
-						"x" : 99.899871826171875,
+						"x" : 99.900054931640625,
 						"y" : 90.111137390136719
 					},
 					{
-						"x" : 100.10000610351562,
+						"x" : 100.10018920898438,
 						"y" : -89.888755798339844
 					},
 					{
-						"x" : -99.899871826171875,
+						"x" : -99.899688720703125,
 						"y" : -90.111137390136719
 					}
 				],
@@ -216,12 +216,12 @@
 				"SpriteTransformRotation" : 0.063706956803798676,
 				"SpriteTransformScalingX" : 200.0,
 				"SpriteTransformScalingY" : 180.0,
-				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionX" : 0.00018107891082763672,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : 
 				[
 					{
-						"Name" : "",
+						"Name" : "Idle",
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
@@ -233,13 +233,13 @@
 						"y_frames" : 1
 					},
 					{
-						"Name" : "",
+						"Name" : "Running",
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.14901858568191528,
+						"frame_timer" : 0.065685257315635681,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -251,7 +251,7 @@
 				"TransformRotation" : 0.063706956803798676,
 				"TransformScalingX" : 200.0,
 				"TransformScalingY" : 180.0,
-				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionX" : 0.00018107891082763672,
 				"TransformWorldPositionY" : 0.0
 			}
 		},

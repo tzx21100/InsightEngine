@@ -208,7 +208,7 @@ namespace IS {
         }); // end render Transform Component
 
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity](Sprite& sprite)
+        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity, this](Sprite& sprite)
         {
             auto& engine = InsightEngine::Instance();
             auto const editor = engine.GetSystem<Editor>("Editor");
@@ -350,6 +350,12 @@ namespace IS {
                 ImGui::EndTable(); // end table Texture
             }
 
+            if (has_texture)
+            {
+                if (ImGui::Button("Add Animation"))
+                    mShowAddAnimation = true;
+            }
+
             // Render animation details
             if (has_animation)
             {
@@ -361,10 +367,11 @@ namespace IS {
                 {
                     ImGui::PushFont(FONT_BOLD);
                     ImGui::SetNextItemWidth(100.f);
-                    ImGui::TextUnformatted("Active Index");
+                    ImGui::TextUnformatted("Active Animation: ");
                     ImGui::PopFont();
                     ImGui::SameLine();
-                    ImGui::Text("%d", sprite.animation_index);
+                    std::string const& active_animation = sprite.anims[sprite.animation_index].name;
+                    ImGui::TextUnformatted(active_animation.c_str());
 
                     if (ImGui::BeginTable("Animations Table", 1))
                     {
@@ -373,14 +380,26 @@ namespace IS {
                         {
                             ImGui::TableNextColumn();
                             ImGui::PushID(i);
+
+                            ImGui::Separator();
                             if (ImGui::BeginTable("Animation Data", 2))
                             {
                                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                                ImGui::TableSetupColumn("Labels", column_flags, 100.f);
+
+                                ImGui::TableNextColumn();
                                 ImGui::PushFont(FONT_BOLD);
-                                ImGui::TableSetupColumn("Index", column_flags, 100.f);
+                                ImGui::TextUnformatted("Name");
                                 ImGui::PopFont();
-                                ImGui::TableSetupColumn(std::to_string(i).c_str());
-                                ImGui::TableHeadersRow();
+
+                                ImGui::TableNextColumn();
+                                char buffer[256]{};
+                                std::memcpy(buffer, animation.name.c_str(), animation.name.length());
+
+                                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+                                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                                if (ImGui::InputText("##AnimationName", buffer, sizeof(buffer), input_text_flags))
+                                    animation.name = buffer;
 
                                 ImGui::TableNextColumn();
                                 ImGui::PushFont(FONT_BOLD);
@@ -425,6 +444,9 @@ namespace IS {
                     ImGui::TreePop(); // end tree Animation
                 }
             }
+
+            if (mShowAddAnimation)
+                AddAnimation(sprite);
 
         }); // end render Sprite Component
 
@@ -645,5 +667,84 @@ namespace IS {
         }
 
     } // end RenderComponent()
+
+    void InspectorPanel::AddAnimation(Sprite& sprite)
+    {
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        ImGui::OpenPopup("Add Animation");
+
+        if (ImGui::BeginPopupModal("Add Animation", &mShowAddAnimation, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            static char name[256]{};
+            static int grid[2]{};
+            static float time{};
+            static bool show_warning = false;
+
+            if (ImGui::BeginTable("Add Animation Table", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Name");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::InputText("##Animation Name", name, sizeof(name));
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Columns/Rows");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::InputInt2("##Animation Grid", grid);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Time");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Animation Time", &time);
+
+                if (ImGui::Button("Add"))
+                {
+                    if (strcmp(name, "") == 0 || grid[0] == 0 || grid[1] == 0 || time == 0.f)
+                    {
+                        show_warning = true;
+                    }
+                    else
+                    {
+                        sprite.AddAnimation(name, grid[0], grid[1], time);
+                        mShowAddAnimation = false;
+                        // Reset the static variables when the popup is closed or canceled
+                        std::memset(name, 0, sizeof(name));
+                        std::memset(grid, 0, sizeof(grid));
+                        time = 0.0f;
+                        show_warning = false;
+                    }
+                }
+
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel"))
+                {
+                    mShowAddAnimation = false;
+                    // Reset the static variables when the popup is closed or canceled
+                    std::memset(name, 0, sizeof(name));
+                    std::memset(grid, 0, sizeof(grid));
+                    time = 0.0f;
+                    show_warning = false;
+                }
+
+                if (show_warning)
+                {
+                    ImGui::TextColored({ 1.f, 0.f, 0.f, 1.f }, "One or more fields are invalid");
+                }
+
+
+                ImGui::EndTable();
+            }
+            ImGui::EndPopup();
+        }
+    }
 
 } // end namespace IS

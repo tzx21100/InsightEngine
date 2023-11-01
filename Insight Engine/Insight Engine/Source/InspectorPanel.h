@@ -53,6 +53,7 @@ namespace IS {
     private:
         std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
         bool mShowPrefabs = false; ///< Flag indicating show prefabs
+        bool mShowAddAnimation = false; ///< Flag indicating show add animation
 
         /*!
          * \brief Renders component nodes for the specified Entity.
@@ -76,6 +77,8 @@ namespace IS {
          */
         template <typename Component, typename RenderFunc>
         void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
+
+        void AddAnimation(Sprite& sprite);
     };
 
 } // end namespace IS

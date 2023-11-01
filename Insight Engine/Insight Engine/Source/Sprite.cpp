@@ -80,6 +80,14 @@ namespace IS {
         anims.emplace_back(anim);
     }
 
+    void Sprite::AddAnimation(std::string const& anim_name, int columns, int rows, float animation_time)
+    {
+        Animation animation;
+        animation.name = anim_name;
+        animation.initAnimation(rows, columns, animation_time);
+        anims.emplace_back(animation);
+    }
+
     void Sprite::removeAnimation(int index) {
         if (index < 0 || index >= anims.size()) {
             IS_CORE_WARN("Invalid animation index selected.");
