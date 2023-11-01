@@ -296,26 +296,30 @@ namespace IS
 		float start_x = camera_center.x - width / 2.f;
 		float start_y = camera_center.y + height / 2.f;
 
-		for (int i = 0; i < ImplicitGrid::mRows; i++) {
-			for (int j = 0; j < ImplicitGrid::mCols; j++) {
-				/*Vector2D vertical = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
-				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
-				sprite.drawLine(vertical, vertical + verticalend);
-				Vector2D hori = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
-				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
-				sprite.drawLine(hori, hori + horiend);*/
+		for (int i = 1; i < ImplicitGrid::mRows; i++) {
+			Vector2D hori = { start_x, -(i * ImplicitGrid::mCellSize.y) + start_y };
+			Vector2D horiend = { width,0.f };
+			//sprite.drawLine(vertical, vertical + verticalend);
+			Sprite::drawDebugLine(hori, hori + horiend, { 1.f, 1.f, 1.f }, width, 0.f);
+		}
 
-				Vector2D vertical = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
-				Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
-				//sprite.drawLine(vertical, vertical + verticalend);
-				Sprite::drawDebugLine(vertical, vertical + verticalend, { 1.f, 1.f, 1.f }, width, 0.f);
+		for (int i = 1; i < ImplicitGrid::mCols; i++) {
+			/*Vector2D vertical = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
+			Vector2D verticalend = { 0.f,-(ImplicitGrid::mCellSize.y) };
+			sprite.drawLine(vertical, vertical + verticalend);
+			Vector2D hori = { (j * ImplicitGrid::mCellSize.x) - (width / 2), -(i * ImplicitGrid::mCellSize.y) + (height / 2) };
+			Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
+			sprite.drawLine(hori, hori + horiend);*/
 
-				Vector2D hori = { start_x + (j * ImplicitGrid::mCellSize.x), -(i * ImplicitGrid::mCellSize.y) + start_y };
-				Vector2D horiend = { ImplicitGrid::mCellSize.x, 0.f };
-				//sprite.drawLine(hori, hori + horiend);
-				Sprite::drawDebugLine(hori, hori + horiend, { 1.f, 1.f, 1.f }, height, 90.f);
+			
 
-			}
+			Vector2D vertical = { start_x + (i * ImplicitGrid::mCellSize.x), start_y };
+			Vector2D verticalend = { 0.f, -height };
+			//sprite.drawLine(hori, hori + horiend);
+			Sprite::drawDebugLine(vertical, vertical + verticalend, { 1.f, 1.f, 1.f }, height, 90.f);
+
+
+
 		}
 	}
 
