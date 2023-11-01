@@ -41,9 +41,11 @@ namespace IS {
             drawFirst = !drawFirst;
         }
 
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+
         // draw either text strings
-        if (drawFirst) font1.renderText(str1, -150.f, 450.f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
-        else font2.renderText(str2, -205.f, 425.f, 24.f, glm::vec3(0.255f, 0.412f, 0.882f));
+        if (drawFirst) font1.renderText(str1, width * -0.078125f, height * 0.417f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
+        else font2.renderText(str2, width * -0.10677f, height * 0.39352f, 24.f, glm::vec3(0.255f, 0.412f, 0.882f));
     }
 
     void Text::initText(std::string const& filepath) {
