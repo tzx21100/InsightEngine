@@ -109,14 +109,14 @@ namespace IS {
         void AddWaypoint(const Waypoint& waypoint);
 
         /*!
-         * \brief Connect two waypoints in the navigation graph.
+         * \brief Connect two waypoints in the navigation graph. [not used/wip]
          * \param waypoint1 The first waypoint to connect.
          * \param waypoint2 The second waypoint to connect.
          */
         void ConnectWaypoints(Waypoint& waypoint1, Waypoint& waypoint2);
 
         /*!
-         * \brief Perform pathfinding for an entity
+         * \brief Perform pathfinding for an entity [not used/wip]
          * \param entity The entity for which to perform pathfinding.
          * \param start The starting waypoint.
          * \param goal The goal waypoint.
@@ -124,7 +124,7 @@ namespace IS {
         void PerformPathfinding(Entity& entity, const Waypoint& start, const Waypoint& goal);
 
         /*!
-         * \brief Get the path for a specific entity.
+         * \brief Get the path for a specific entity. [not used/wip]
          * \param entity The entity for which to retrieve the path.
          * \return A vector of waypoints representing the path for the entity.
          */
