@@ -39,7 +39,7 @@ namespace IS {
 		mMaxVelocity = 800.f;					// Maximum velocity for game bodies
 		mMinVelocity = -800.f;					// Minimum velocity for game bodies
 		mCurrentIterations = 0;					// Number of current iterations for physics step
-		mTotalIterations = 20;						// Number of iterations for physics step
+		mTotalIterations = 10;						// Number of iterations for physics step
 		mContactList = std::vector<Manifold>();
 		
 		mManifoldInfo;
@@ -93,8 +93,15 @@ namespace IS {
 				IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
 			}
 
+			/*if (InsightEngine::currentNumberOfSteps > 10) {
+				mTotalIterations = 1;
+			}
+			else {
+				mTotalIterations = 10;
+			}*/
+
 			// physics update iteration
-			//for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
+			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
 				// empty contact list before going into collision step
 				mContactList.clear();
 
@@ -106,7 +113,7 @@ namespace IS {
 
 				// Collision Resolution
 				NarrowPhase();
-			//}
+			}
 
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
@@ -185,7 +192,6 @@ namespace IS {
 
 			// no need check HasComponent as AddIntoCell function did
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
-				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
 
 				for (size_t j = i + 1; j < entities.size(); ++j) {
 					const Entity& entityB = entities[j];
@@ -196,6 +202,8 @@ namespace IS {
 
 					// no need check HasComponent as AddIntoCell function did
 					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+
+						auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
 						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
 
 						if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
@@ -270,8 +278,10 @@ namespace IS {
 	void Physics::BroadPhase() {
 		// detect collision through Implicit Grid
 		ImplicitGridCollisionDetect();
-		if (mImplicitGrid.mOutsideGridList.size() >= 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
-			CollisionDetect(mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList);
+
+		std::vector<Entity> temp_list = mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList;
+		if (temp_list.size() > 1) {
+			CollisionDetect(temp_list);
 		}
 	}
 
@@ -610,7 +620,7 @@ namespace IS {
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities) {
 		// divide by iterations to increase precision
-		//time /= static_cast<float>(mTotalIterations);
+		time /= static_cast<float>(mTotalIterations);
 
 		for (auto const& entity : entities) {
 
