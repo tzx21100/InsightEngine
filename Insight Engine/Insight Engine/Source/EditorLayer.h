@@ -198,6 +198,8 @@ namespace IS {
          */
         void ExitProgram();
 
+        void ZoomCamera();
+
         void PanCamera();
     };
 

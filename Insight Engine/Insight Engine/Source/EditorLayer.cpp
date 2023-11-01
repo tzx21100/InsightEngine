@@ -99,7 +99,6 @@ namespace IS {
         {
             // Set active camera to editor camera
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-            Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
 
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
@@ -113,36 +112,7 @@ namespace IS {
             if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
                 0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
             {
-                // Camera zoom
-                ImGuiIO& io = ImGui::GetIO();
-                float scroll_delta = io.MouseWheel;
-                float zoom_level = camera.GetZoomLevel();
-                if (scroll_delta != 0)
-                {
-                    zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
-                }
-                camera.SetZoomLevel(zoom_level);
-
-                // Camera panning
-                //static ImVec2 last_mouse_position = ImGui::GetMousePos();
-                //static ImVec2 mouse_delta = {};
-                //static bool is_moving = false;
-                //if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
-                //{
-                //    ImVec2 current_mouse_position = ImGui::GetMousePos();
-                //    using namespace EditorUtils;
-                //    is_moving = current_mouse_position != last_mouse_position;
-                //    mouse_delta = current_mouse_position - last_mouse_position;
-                //    last_mouse_position = current_mouse_position;
-                //}
-                //if (is_moving)
-                //{
-                //    camera.PanCamera(dt, mouse_delta.x, mouse_delta.y);
-                //}
-                //else
-                //{
-                //    last_mouse_position = ImGui::GetMousePos();
-                //}
+                ZoomCamera();
                 PanCamera();
 
                 // Mouse picking - set hovered entity as the selected entity
@@ -616,6 +586,19 @@ namespace IS {
 
             ImGui::EndPopup();
         }
+    }
+
+    void EditorLayer::ZoomCamera()
+    {
+        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
+        ImGuiIO& io = ImGui::GetIO();
+        float scroll_delta = io.MouseWheel;
+        float zoom_level = camera.GetZoomLevel();
+        if (scroll_delta != 0)
+        {
+            zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
+        }
+        camera.SetZoomLevel(zoom_level);
     }
 
     void EditorLayer::PanCamera()
