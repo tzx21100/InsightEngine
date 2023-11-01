@@ -67,9 +67,11 @@ namespace IS {
         //run the game
         mIsRunning = true;
     }
-
+    double accumulatedTime = 0.0;//one time definition
+    int InsightEngine::currentNumberOfSteps = 0;
     //This is the update portion of the game
     void InsightEngine::Update() {
+
         //i get the start time 
         auto frameStart = std::chrono::high_resolution_clock::now();
 
@@ -80,14 +82,29 @@ namespace IS {
         const bool to_update = mFrameCount == 0 || elapsed_time >= UPDATE_FREQUENCY;
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
+
+
+        currentNumberOfSteps = 0;
+
+        accumulatedTime += mDeltaTime.count(); //adding actual game loop time
+
+        while (accumulatedTime >= mFixedDeltaTime.count()) {
+            accumulatedTime -= mFixedDeltaTime.count(); //this will store the
+            //exact accumulated time differences, among all game loops
+            currentNumberOfSteps++;
+        }
         
         // Update all systems
         for (const auto& system : mSystemList) {
             if (!mUsingGUI && system->GetName() == "Editor")
                 continue;
+            /*if (system->GetName() == "Physics") {
+                system->Update(mFixedDeltaTime.count());
+                continue;
+            }*/
 
             Timer timer(system->GetName() + " System", false);
-            system->Update(mDeltaTime.count());
+            system->Update(mFixedDeltaTime.count());
             timer.Stop();
 
             if (to_update) {

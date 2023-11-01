@@ -30,13 +30,8 @@ namespace IS {
         mCoreLogger = std::make_shared<Logger>("Insight");
         mClientLogger = std::make_shared<Logger>("Fragments");
 
-    #if defined(_DEBUG)
         mCoreLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
         mClientLogger->SetLogLevel(aLogLevel::LOGLEVEL_TRACE);
-    #else
-        mCoreLogger->SetLogLevel(aLogLevel::LOGLEVEL_INFO);
-        mClientLogger->SetLogLevel(aLogLevel::LOGLEVEL_INFO);
-    #endif
 
         if (enable_output)
         {

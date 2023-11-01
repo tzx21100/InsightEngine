@@ -106,6 +106,7 @@ namespace IS {
 		static void DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
 
 		static void setLineWidth(float lWidth) { glLineWidth(lWidth); }
+		static bool mShowTextAnimation;
 
 		static std::vector<Image> textures;
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]

@@ -4,14 +4,19 @@
 namespace IS {
 
 	aCameraType Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-	float Camera::mMinX = -16000;
-	float Camera::mMaxX =  16000.f;
-	float Camera::mMinY = -9000.f;
-	float Camera::mMaxY =  9000.f;
-	float Camera::mMinZoom = .1f;
-	float Camera::mMaxZoom = 10.f;
+	const float Camera::CAMERA_X_MIN = -16000;
+	const float Camera::CAMERA_X_MAX =  16000.f;
+	const float Camera::CAMERA_Y_MIN = -9000.f;
+	const float Camera::CAMERA_Y_MAX =  9000.f;
+	const float Camera::CAMERA_ZOOM_MIN = .1f;
+	const float Camera::CAMERA_ZOOM_MAX = 10.f;
+	const float Camera::CAMERA_ZOOM_SPEED_MIN = 0.01f;
+	const float Camera::CAMERA_ZOOM_SPEED_MAX = 0.2f;
+	const float Camera::CAMERA_MOVE_SPEED_MIN = 1.f;
+	const float Camera::CAMERA_MOVE_SPEED_MAX = 10.f;
+
 	float Camera::mZoomSpeed = 0.1f;
-	float Camera::mMoveSpeed = 200.f;
+	float Camera::mMoveSpeed = 5.f;
 
 	Camera::Camera() {
 		mZoomLevel = 1.f;
@@ -22,8 +27,8 @@ namespace IS {
 	}
 
 	void Camera::UpdateCamPos(float newX, float newY) {
-		world_position.x = std::clamp(newX, mMinX, mMaxX);
-		world_position.y = std::clamp(newY, mMinY, mMaxY);
+		world_position.x = std::clamp(newX, CAMERA_X_MIN, CAMERA_X_MAX);
+		world_position.y = std::clamp(newY, CAMERA_Y_MIN, CAMERA_Y_MAX);
 		UpdateCamXform();
 	}
 
@@ -70,7 +75,7 @@ namespace IS {
 	void Camera::ZoomCamera(float yoffset)
 	{
 		mZoomLevel += yoffset * mZoomSpeed;
-		mZoomLevel = std::max(mMinZoom, std::min(10.f, mZoomLevel));
+		mZoomLevel = std::max(CAMERA_ZOOM_MIN, std::min(10.f, mZoomLevel));
 		UpdateCamXform();
 		//auto& engine = InsightEngine::Instance();
 		//auto input = engine.GetSystem<InputManager>("Input");
@@ -78,14 +83,10 @@ namespace IS {
 		//input->setRatio(camera_dim.x, camera_dim.y);
 	}
 
-	void Camera::PanCamera(float dt, float delta_x, float delta_y)
+	void Camera::PanCamera(float delta_x, float delta_y)
 	{
-		float new_position_x = world_position.x - delta_x * mMoveSpeed * dt;
-		float new_position_y = world_position.y + delta_y * mMoveSpeed * dt;
+		float new_position_x = world_position.x - delta_x * mMoveSpeed;
+		float new_position_y = world_position.y + delta_y * mMoveSpeed;
 		UpdateCamPos(new_position_x, new_position_y);
-		//auto& engine = InsightEngine::Instance();
-		//auto input = engine.GetSystem<InputManager>("Input");
-		//input->setCenterPos(world_position.x, world_position.y);
-		//input->setRatio(camera_dim.x, camera_dim.y);
 	}
 }

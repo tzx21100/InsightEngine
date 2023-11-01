@@ -48,11 +48,7 @@ namespace IS {
 
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                ImageLoad(file_path);
-                Image* img=GetImage(file_path);
-                img->texture_index = mCurrentTexId;
-                mCurrentTexId++;
-                ISGraphics::textures.emplace_back(*img);
+                LoadImage(file_path);
             }
         }
 
@@ -62,8 +58,7 @@ namespace IS {
 
             // Check image extensions
             if (extension == ".png") {
-                IconLoad(file_path);
-                
+                IconLoad(file_path);                
             }
         }
 
@@ -75,9 +70,7 @@ namespace IS {
 
             // Check for json extensions
             if (extension == ".json") {
-                Prefab to_list = engine.LoadPrefabFromFile(file_path);
-                mPrefabList[to_list.mName] = to_list;
-                IS_CORE_INFO("Loaded Prefab: {} ", file_path);
+                LoadPrefab(file_path);
             }
         }
 
@@ -104,7 +97,6 @@ namespace IS {
                 SaveSound(sound_name, sound);
                 SaveChannel(sound_name, channel);
                 IS_CORE_INFO("Loaded Sound: {} ", sound_name);
-                
             }
         }
     }
@@ -154,6 +146,35 @@ namespace IS {
         }
     }
     
+    void AssetManager::LoadImage(std::string const& filepath)
+    {
+        ImageLoad(filepath);
+        Image* img = GetImage(filepath);
+        img->texture_index = mCurrentTexId;
+        mCurrentTexId++;
+        ISGraphics::textures.emplace_back(*img);
+    }
+
+    void AssetManager::LoadAudio(std::string const&)
+    {
+        //auto& engine = InsightEngine::Instance();
+        //auto audio = engine.GetSystem<ISAudio>("Aduio");
+        //FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.c_str());
+        //FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.c_str());
+        //std::string sound_name = filepath;
+        //SaveSound(sound_name, sound);
+        //SaveChannel(sound_name, channel);
+        //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+    }
+
+    void AssetManager::LoadPrefab(std::string const& filepath)
+    {
+        auto& engine = InsightEngine::Instance();
+        Prefab to_list = engine.LoadPrefabFromFile(filepath);
+        mPrefabList[to_list.mName] = to_list;
+        IS_CORE_INFO("Loaded Prefab: {} ", filepath);
+    }
+
     Image* AssetManager::GetImage(const std::string& file_name)  {
         auto iter = mImageList.find(file_name);
         if (iter != mImageList.end()) {

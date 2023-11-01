@@ -42,6 +42,28 @@ namespace IS {
             return "Sprite";
         }
 
+        enum DrawLayer : int
+        {
+            BACKGROUND_LAYER = 0,
+            DEFAULT_LAYER,
+            FOREGROUND_LAYER,
+            UI_LAYER,
+            INVALID_LAYER // always the last
+        };
+
+        static std::string LayerToString(DrawLayer layer)
+        {
+            switch (layer)
+            {
+            case BACKGROUND_LAYER:  return "Background";
+            case DEFAULT_LAYER:     return "Default";
+            case FOREGROUND_LAYER:  return "Foreground";
+            case UI_LAYER:          return "UI";
+            default: break;
+            }
+            return "Invalid";
+        }
+
         struct instanceData {
             glm::vec3 color{};
             float tex_index{};

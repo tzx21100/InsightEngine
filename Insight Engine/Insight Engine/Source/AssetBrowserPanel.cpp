@@ -39,6 +39,7 @@ namespace IS {
         if (ImGui::Begin("Asset Browser"))
         {
             RenderControls();
+            ImGui::Separator();
 
             ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
             if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))

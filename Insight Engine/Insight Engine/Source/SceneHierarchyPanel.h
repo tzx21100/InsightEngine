@@ -77,7 +77,7 @@ namespace IS {
          */
         void RenderSelectedEntityOutline();
 
-        
+        void RenderEntityConfig(Entity entity);
 
         Vec2 GetPanelSize() const;
 

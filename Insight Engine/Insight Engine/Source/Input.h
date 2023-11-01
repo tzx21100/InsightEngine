@@ -154,6 +154,9 @@ namespace IS {
         std::unordered_set<int> pressed_mouse_buttons;
         std::unordered_set<int> released_mouse_buttons;
         std::unordered_set<int> held_mouse_buttons;
+
+        std::unordered_set<std::filesystem::path> payloads;
+
         // variables to calculate and translate the mouse position relative to the GLFW window
         float center_x = 0.f;
         float center_y = 0.f;
@@ -166,6 +169,11 @@ namespace IS {
         double current_mouse_y = 0.0;
         double previous_mouse_x = 0.0;
         double previous_mouse_y = 0.0;
+
+        void ProcessPayloads();
+
+        void ProcessPayloadDirectory(std::filesystem::path const& directory);
+        void ProcessPayloadFile(std::filesystem::path const& filepath);
 
         /**
          * \brief GLFW callback for key events.
@@ -182,6 +190,8 @@ namespace IS {
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
         static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos);
+
+        static void FileDropCallback(GLFWwindow* window, int count, const char** paths);
     };
 
 }
