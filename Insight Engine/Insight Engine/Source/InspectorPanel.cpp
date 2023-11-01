@@ -24,6 +24,7 @@
 #include "EditorLayer.h"
 #include "FileUtils.h"
 #include "Editor.h"
+#include "GameGui.h"
 
 // Dependencies
 #include <imgui.h>
@@ -528,6 +529,10 @@ namespace IS {
             // Display Sprite Name
             if (ImGui::BeginTable("ScriptTable", 2))
             {
+                // Set Table and its flags
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn("ScriptTable", column_flags, 100.f);
+
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Script Name:");
@@ -567,6 +572,31 @@ namespace IS {
                 InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
 
         }); // end render Script Component
+
+        // Button Component
+        RenderComponent<ButtonComponent>("Button", entity, [entity, FONT_BOLD](ButtonComponent& button)
+        {
+            if (ImGui::BeginTable("Button Table", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Text");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+
+                // Edit button text
+                std::string& text = button.mButtonText;
+                char buffer[256]{};
+                auto source = text | std::ranges::views::take(text.size());
+                std::ranges::copy(source, std::begin(buffer));
+                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+                if (ImGui::InputText("##ButtonText", buffer, sizeof(buffer), input_text_flags))
+                    text = std::string(buffer);
+
+                ImGui::EndTable(); // end table Button Table
+            }
+        }); // end render Button Component
 
         ImGui::PopStyleVar(); // end style rounding
         ImGui::PopID();

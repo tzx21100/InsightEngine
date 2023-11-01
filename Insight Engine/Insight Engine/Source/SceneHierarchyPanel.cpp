@@ -25,6 +25,7 @@
 #include "EditorLayer.h"
 #include "FileUtils.h"
 #include "Editor.h"
+#include "GameGui.h"
 
 // Dependencies
 #include <imgui.h>
@@ -272,23 +273,16 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
 
         // Entity already has all the components
-        if (engine.HasComponent<Sprite>(entity) && engine.HasComponent<Transform>(entity) &&
-            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<ScriptComponent>(entity))
+        if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
+            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<ScriptComponent>(entity) &&
+            engine.HasComponent<ButtonComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
                 ImGui::CloseCurrentPopup();
+            return;
         }
 
         // Choose Available Component to add
-        // Add Sprite Component
-        if (!engine.HasComponent<Sprite>(entity))
-        {
-            if (ImGui::MenuItem("Sprite"))
-            {
-                engine.AddComponent<Sprite>(entity, Sprite());
-                ImGui::CloseCurrentPopup();
-            }
-        }
 
         // Add Transform Component
         if (!engine.HasComponent<Transform>(entity))
@@ -296,6 +290,16 @@ namespace IS {
             if (ImGui::MenuItem("Transform"))
             {
                 engine.AddComponent<Transform>(entity, Transform());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Sprite Component
+        if (!engine.HasComponent<Sprite>(entity))
+        {
+            if (ImGui::MenuItem("Sprite"))
+            {
+                engine.AddComponent<Sprite>(entity, Sprite());
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -322,6 +326,16 @@ namespace IS {
                     auto& script = engine.GetComponent<ScriptComponent>(entity);
                     script.mScriptName = filepath.stem().string();
                 }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Button Component
+        if (!engine.HasComponent<ButtonComponent>(entity))
+        {
+            if (ImGui::MenuItem("Button"))
+            {
+                engine.AddComponent<ButtonComponent>(entity, ButtonComponent());
                 ImGui::CloseCurrentPopup();
             }
         }
