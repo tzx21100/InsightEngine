@@ -190,6 +190,12 @@ namespace IS {
          */
         void drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
 
+        void addAnimation(Animation const& anim);
+
+        void removeAnimation(int animIndex);
+
+        void removeAllAnimations();
+
         /*!
          * \brief Draws an animated sprite.
          *
