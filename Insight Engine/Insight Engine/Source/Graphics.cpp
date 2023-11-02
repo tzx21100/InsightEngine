@@ -130,7 +130,7 @@ namespace IS {
                  }*/
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
-                if (Sprite::layersToIgnore.find(sprite.layer) != Sprite::layersToIgnore.end() && sprite.toRender) {
+                if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
                     Sprite::instanceData instData;
                     instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
                     instData.entID = static_cast<float>(entity);

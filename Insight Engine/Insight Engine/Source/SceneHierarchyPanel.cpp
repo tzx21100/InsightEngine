@@ -46,6 +46,10 @@ namespace IS {
         // Display details about active scene
         RenderActiveSceneDetails();
 
+        ImGui::Spacing();
+        RenderLayers();
+        ImGui::Spacing();
+
         // Filter entity hierarchy
         EditorUtils::RenderFilterWithHint(mFilter, "Search Entity...");
         ImGui::Spacing();
@@ -134,6 +138,34 @@ namespace IS {
         }
 
     } // end RenderSceneDetails()
+
+    void SceneHierarchyPanel::RenderLayers()
+    {
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        
+        ImGui::PushFont(FONT_BOLD);
+        ImGui::TextUnformatted("Layers");
+        ImGui::PopFont();
+
+        static bool to_render[Sprite::INVALID_LAYER]{ true };
+
+        for (int i{}; i < Sprite::INVALID_LAYER; ++i)
+        {
+            if (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end())
+            {
+                to_render[i] = true;
+            }
+            else
+            {
+                to_render[i] = false;
+            }
+            Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(i);
+            if (ImGui::Checkbox(("##" + std::to_string(i) + "RenderLayer").c_str(), &to_render[i]))
+                Sprite::toggleLayer(layer);
+            ImGui::SameLine();
+            ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
+        }
+    }
 
     void SceneHierarchyPanel::RenderSceneNode(SceneID scene)
     {
