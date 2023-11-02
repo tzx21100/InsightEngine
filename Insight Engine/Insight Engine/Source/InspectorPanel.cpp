@@ -229,6 +229,14 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Rendering");
+                ImGui::PopFont();
+
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##Rendering", &sprite.toRender);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Layer");
                 ImGui::PopFont();
                 

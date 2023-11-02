@@ -25,9 +25,6 @@
 
 namespace IS
 {    
-    int RigidBody::mNextId = 0;
-    bool RigidBody::mCheckTransform = false;
-
     // Default constructor for the RigidBody class
     RigidBody::RigidBody() {
         mVelocity = Vector2D(); // (0,0)
@@ -44,7 +41,6 @@ namespace IS
         mState = BodyState::IDLE;
         mBodyShape = BodyShape::Box;
         mTransformUpdateRequired = false;
-        mId = mNextId++;
         mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
@@ -88,7 +84,6 @@ namespace IS
         mState = BodyState::IDLE;
         mBodyShape = body_shape;
         mTransformUpdateRequired = false;
-        mId = mNextId++;
         mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
@@ -116,15 +111,8 @@ namespace IS
 
     // updates the rigid body's transformation data to match the texture sprite Transform
     void RigidBody::BodyFollowTransform(Transform const& trans) {
-        mBodyTransform = trans;
         UpdateBoxBody(trans);
-    }
-
-    // update body position to match transform only
-    void RigidBody::BodyFollowTransformPosition(Transform const& trans) {
         mBodyTransform = trans;
-        mTransformUpdateRequired = true;
-        UpdateTransformedVertices();
     }
 
     // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)
@@ -269,16 +257,16 @@ namespace IS
 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
-        //if (!RigidBody::mCheckTransform) { // if body havent been transform for once
+        if (mBodyTransform.scaling != body_transform.scaling) { 
+            // the box scaling will be updating only when it is different from transform scaling
             CreateBoxBody(body_transform.scaling.x, body_transform.scaling.y, mMass, mRestitution);
             CreateBoxVertices(body_transform.scaling.x, body_transform.scaling.y); // for vertices
-            RigidBody::mCheckTransform = true; // true means update and transform for at least one time
-            //IS_CORE_DEBUG("Transform");
-        //}
+        }
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
     }
 
+    // Get the axis-aligned bounding box (AABB) of the rigid body.
     Box RigidBody::GetAABB() {
             float minX = std::numeric_limits<float>::max();
             float minY = std::numeric_limits<float>::max();
@@ -311,11 +299,6 @@ namespace IS
             Box aabb = Box(minX, minY, maxX, maxY);
 
         return aabb;
-    }
-
-    // Define the equality operator
-    bool RigidBody::operator==(const RigidBody& other) const {
-        return mId == other.mId;
     }
 
 }

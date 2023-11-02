@@ -1,20 +1,28 @@
+/*!
+ * \file Physics.cpp
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 01-11-2023
+ * \brief
+ * This header file contains the definitions of the Manifold class, which represents contact information
+ * between two objects in a physics simulation.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CoreEngine.h"
 
 namespace IS 
 {
-	/*Manifold::Manifold(Manifold const& other) {
-		mBodyA = other.mBodyA;
-		mBodyB = other.mBodyB;
-		mNormal = Vector2D();
-		mDepth = 0.f;
-		mContact1 = Vector2D();
-		mContact2 = Vector2D();
-		mContactCount = 0;
-	}*/
-
+	// Default constructor for the Manifold class.
 	Manifold::Manifold() {
-
 		mBodyA = nullptr;
 		mBodyB = nullptr;
 		mNormal = Vector2D();
@@ -24,10 +32,10 @@ namespace IS
 		mContactCount = 0;
 	}
 
+	// Constructor for the Manifold class that initializes its members.
 	Manifold::Manifold(RigidBody* bodyA, RigidBody* bodyB,
 		Vector2D const& normal, float const& depth,
 		Vector2D const& contact1, Vector2D const& contact2, int const& contact_count) {
-
 		mBodyA = bodyA;
 		mBodyB = bodyB;
 		mNormal = normal;
@@ -37,6 +45,7 @@ namespace IS
 		mContactCount = contact_count;
 	}
 
+	// Calculates the contact points for the collision between two rigid bodies.
 	void Manifold::FindContactPoints(RigidBody & bodyA, RigidBody & bodyB) {
 		mContact1 = Vector2D();
 		mContact2 = Vector2D();
@@ -77,16 +86,14 @@ namespace IS
 		}
 	}
 
+	// Calculates contact points for a collision between two polygons.
 	void Manifold::FindPolygonsContactPoints(std::vector<Vector2D> const& verticesA, std::vector<Vector2D> const& verticesB, Vector2D& contact1, Vector2D& contact2, int& contactCount) {
-		
-		contact1 = Vector2D();
-		contact2 = Vector2D();
-		contactCount = 0;
 
 		Vector2D closest_point = Vector2D();
 		float dis_sq = 0.f;
 		float min_dis_sq = std::numeric_limits<float>::max();
 
+		// each vertice on A need to do check with each line segment of B
 		for (int i = 0; i < verticesA.size(); i++)
 		{
 			Vector2D check_point = verticesA[i];
@@ -99,7 +106,7 @@ namespace IS
 				// calculate distance squared and closest point
 				PointSegmentDistance(check_point, va, vb, dis_sq, closest_point);
 
-				if (NearlyEqual(dis_sq, min_dis_sq)) // if the dis is same as the min dis, add second contact point
+				if (NearlyEqual(dis_sq, min_dis_sq)) // if the dis is nearly same as the min dis, means they close enough, add second contact point
 				{
 					if (!NearlyEqual(closest_point, contact1))
 					{ // only add the second contact point when it is different from the first contact point
@@ -145,12 +152,14 @@ namespace IS
 		}
 	}
 
+	// Compares two floating - point values for near equality.
 	bool Manifold::NearlyEqual(float const& a, float const& b) {
-		return std::abs(a - b) < 0.05f; // less than 5 centimeter
+		return std::abs(a - b) < 0.005f; // less than half cm
 	}
 
+	// Compares two 2D vectors for near equality.
 	bool Manifold::NearlyEqual(Vector2D const& a, Vector2D const& b) {
-		return ISVector2DSquareDistance(a, b) < 0.5f * 0.5f ; // less than half meter square
+		return ISVector2DSquareDistance(a, b) < 0.005f * 0.005f ; // less than half cm square
 	}
 
 }

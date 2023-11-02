@@ -87,6 +87,10 @@ namespace IS {
          */
         ~Physics() {}
 
+        /*!
+         * \brief Spatial partitioning by implicit grid
+        *
+        */
         void ImplicitGridCollisionDetect();
 
         /*!
@@ -96,25 +100,48 @@ namespace IS {
         */
         void CollisionDetect(std::vector<Entity> const& entities);
 
+        /*!
+         * \brief Detects collisions among all the possible entities
+        *
+        */
         void BroadPhase();
 
+        /*!
+         * \brief Resloves collisions among all the entities
+        *
+        */
         void NarrowPhase();
 
+        /*!
+         * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
+        *
+        * \param bodyA pointer to the first body.
+        * \param bodyB pointer to the second body.
+        * \param transA pointer to the first transform.
+        * \param transB pointer to the second transform.
+        * \param vec vector of penetration depth to move entities apart (normal * penetration depth)
+        */
         void SeparateBodies(RigidBody* bodyA, RigidBody* bodyB, Transform* transA, Transform* transB, Vector2D const& vec);
 
         /*!
          * \brief Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
          *
-         * \param bodyA The first rigid body involved in the collision.
-         * \param bodyB The second rigid body involved in the collision.
-         * \param normal The collision normal vector.
-         * \param depth The depth of collision penetration.
+         * \param contact The manifold containing collision information.
          */
-        //void ResolveCollision(RigidBody& bodyA, RigidBody& bodyB, Vector2D const& normal, float depth);
         void ResolveCollision(Manifold & contact);
 
+        /*!
+        * \brief Resolves collisions between two rigid bodies, including rotation effects, by calculating and applying the impulse force to update the velocities and angular velocities of colliding entities.
+        *
+        * \param contact The manifold containing collision information.
+        */
         void ResolveCollisionWithRotation(Manifold & contact);
 
+        /*!
+         * \brief Resolves collisions between two rigid bodies, including rotation and friction effects, by calculating and applying the impulse force to update the velocities, angular velocities, and angular impulses of colliding entities.
+         *
+         * \param contact The manifold containing collision information.
+         */
         void ResolveCollisionWithRotationAndFriction(Manifold& contact);
 
         /*!
@@ -127,13 +154,6 @@ namespace IS {
          */
         static void DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
-        ///*!
-        // * \brief Updates the gravity vector based on user input.
-        // *
-        // * \param key_input The input related to gravity control.
-        // */
-        //void UpdateGravity(auto const& key_input);
-
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.
          *
@@ -141,20 +161,17 @@ namespace IS {
          * \param entities The set of entities to consider in the physics step.
          */
         void Step(float time, std::set<Entity> const& entities);
-
-        static std::vector<Entity> GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities);
-
         
 	private:
-        Vector2D mGravity;                              // Gravity of the world
-        float mMaxVelocity;                             // Maximum velocity for game bodies
-        float mMinVelocity;                             // Minimum velocity for game bodies
-        int mTotalIterations;                                // Number of iterations for physics step
-        int mCurrentIterations;                         // Number of current iterations for physics step
-        std::vector<Manifold> mContactList;
-        static std::vector<Vector2D> mContactPointsList;
-        Manifold mManifoldInfo;
-        ImplicitGrid mImplicitGrid;
+        Vector2D mGravity;                                  // Gravity of the world
+        float mMaxVelocity;                                 // Maximum velocity for game bodies
+        float mMinVelocity;                                 // Minimum velocity for game bodies
+        int mTotalIterations;                               // Number of iterations for physics step
+        int mCurrentIterations;                             // Number of current iterations for physics step
+        std::vector<Manifold> mContactList;                 // vector list of Manifold to store all the contact information
+        static std::vector<Vector2D> mContactPointsList;    // vector list of Vec2D to store all the contact points
+        Manifold mManifoldInfo;                             // instance of Manifold
+        ImplicitGrid mImplicitGrid;                         // instance of ImplicitGrid
 	};
 
 }

@@ -104,7 +104,6 @@ namespace IS {
         // ImGui properties
         std::string name;          // The name of the sprite.
         glm::vec3 color{};         // The color of the sprite.
-        bool drawing{ true };      // Whether the sprite is currently set to be drawn.
 
         /*!
          * \brief Default constructor for the Sprite class.
@@ -148,7 +147,6 @@ namespace IS {
             anims(other.anims),
             name(other.name),
             color(other.color),
-            drawing(other.drawing),
             sscounter(other.sscounter)
         {
             img.texture_id = other.img.texture_id;

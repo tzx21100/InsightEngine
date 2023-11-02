@@ -137,22 +137,23 @@ namespace IS
 		return 0;
 	}
 
+	// calculate the shortest distance from a point to the line segment. (for getting contact points)
 	void PointSegmentDistance(Vector2D const& point, Vector2D const& a, Vector2D const& b, float& distance_squared, Vector2D& closest_point) {
-		Vector2D ab = b - a;
-		Vector2D ap = point - a;
+		Vector2D line = b - a; // line segment
+		Vector2D ap = point - a; // for use of projecting onto ab
 
-		float proj = ISVector2DDotProduct(ap, ab);
-		float abLenSq = ISVector2DSquareLength(ab);
-		float d = proj / abLenSq;
+		float proj = ISVector2DDotProduct(ap, line); // project ap onto line segement
+		float ab_lenSq = ISVector2DSquareLength(line);
+		float d = proj / ab_lenSq; // d is the portion of proj on abLensq with range from 0 to 1
 
-		if (d <= 0.0f) { // heading opposite of ab from a
+		if (d <= 0.0f) { // heading opposite of line from a
 			closest_point = a;
 		}
-		else if (d >= 1.0f) { // out of ab from b
+		else if (d >= 1.0f) { // out of line from b
 			closest_point = b;
 		}
 		else { // between a and b
-			closest_point = a + ab * d;
+			closest_point = a + line * d;
 		}
 
 		// getting the distance from point to the line segment
@@ -165,7 +166,7 @@ namespace IS
 			a.max.y < b.min.y || b.max.y < a.min.y) {
 			return false;
 		}
-
+		
 		return true;
 	}
 

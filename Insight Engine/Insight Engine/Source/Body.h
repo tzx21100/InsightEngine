@@ -16,6 +16,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+ /*                                                                   guard
+ ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_BODY_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_BODY_H
 
@@ -80,14 +82,11 @@ namespace IS
         std::vector<Vector2D> mVertices;            /**< Vertices defining the polygon shape (for polygons). */
         std::vector<Vector2D> mTransformedVertices; /**< Transformed vertices of the polygon shape. */
         bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
-        int mId; // To compare then add/remove from the grid cell
-        static int mNextId;
-        GridState mGridState;
-        static bool mCheckTransform;
-        float mInertia;
-        float mInvInertia;
-        float mStaticFriction;
-        float mDynamicFriction;
+        GridState mGridState;                       /**< State of the body according to Grid (Inside, Overlap, Outside) */
+        float mInertia;                             /**< Inertia of the body. */
+        float mInvInertia;                          /**< Inverse Inertia of the body. */
+        float mStaticFriction;                      /**< Static friction of the body. */
+        float mDynamicFriction;                     /**< Dynamic friction of the body. */
 
         /*Dynamic friction is the friction which occurs once the static friction is overcome.
         The static friction conceptually is what is keeping our objects in place while grounded 
@@ -117,11 +116,6 @@ namespace IS
         RigidBody(Vector2D position, BodyType body_type, float mass, float restitution,
             float width, float height, BodyShape body_shape);
 
-        /**
-         * \brief Destructor for the RigidBody class.
-         */
-        //~RigidBody() { mNextId--; }
-
         // Member functions for rigid body operations
 
         /**
@@ -129,8 +123,6 @@ namespace IS
          * \param trans The Transform representing the new position and orientation.
          */
         void BodyFollowTransform(Transform const& trans);
-
-        void BodyFollowTransformPosition(Transform const& trans);
 
         /*!
          * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
@@ -146,6 +138,9 @@ namespace IS
          */
         std::vector<Vector2D> GetTransformedVertices();
 
+        /*!
+         * \brief Updated transformed vertices based on the transform center position.
+         */
         void UpdateTransformedVertices();
 
         /*!
@@ -210,10 +205,11 @@ namespace IS
          */
         void UpdateBoxBody(Transform const& body_transform);
 
+        /**
+         * \brief Get the axis-aligned bounding box (AABB) of the rigid body.
+         * \return The AABB box of the rigid body.
+         */
         Box GetAABB();
-
-        // Define the equality operator
-        bool operator==(const RigidBody& other) const;
 
 
         /*!
@@ -270,7 +266,7 @@ namespace IS
             }
             prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
 
-            prefab["RigidBodyCheckTransform"] = mCheckTransform;
+            //prefab["RigidBodyCheckTransform"] = mCheckTransform;
             prefab["mInertia"] = mInertia;
             prefab["mInvInertia"] = mInvInertia;
             prefab["mStaticFriction"] = mStaticFriction;
@@ -335,7 +331,7 @@ namespace IS
             }
 
 
-            mCheckTransform= data["RigidBodyCheckTransform"].asBool();
+            //mCheckTransform= data["RigidBodyCheckTransform"].asBool();
             mInertia= data["mInertia"].asFloat();
             mInvInertia = data["mInvInertia"].asFloat();
             mStaticFriction = data["mStaticFriction"].asFloat();

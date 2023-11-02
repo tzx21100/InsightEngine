@@ -104,6 +104,8 @@ namespace IS {
          */
         void RenderActiveSceneDetails();
 
+        void RenderLayers();
+
         /*!
          * \brief Renders a node for the specified scene in the scene hierarchy.
          * \param scene The scene to be rendered.
