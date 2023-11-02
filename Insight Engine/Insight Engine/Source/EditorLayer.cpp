@@ -130,7 +130,7 @@ namespace IS {
                 if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
                 {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
-                    mHoveredEntity = (pixel_data == -1) ? nullptr : std::make_shared<Entity>(pixel_data);
+                    mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
                 }
 

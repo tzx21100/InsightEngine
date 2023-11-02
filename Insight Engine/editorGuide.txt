@@ -1,0 +1,102 @@
+Insight Engine - M2 Editor Guide
+
+Layout (Rubric : Steps to test)
+
+1201 :	New Scene: File > New > Scene...
+
+		Load Scene (3 ways):
+		1. File > Open > Scene…
+		2. Drag/drop from editor's Asset Browser.
+		3. Drag/drop from Windows file explorer.
+	
+		Save Scene:
+		1. File > Save Scene/ Save Scene As…
+	
+		Create Entity:
+		1. Expand scenes tree node.
+		2. Select a scene.
+		3. Right click on selected scene > Add Entity.
+		
+		Delete Entity:
+		1. Expand the selected scene tree node.
+		2. Select an entity.
+		3. Right click on entity > Delete Entity.
+		
+1202 :	Scene (.insight) files encoded in JSON format contain the list of entities and its components in the scene.
+		
+		Refer to rubric 1201 on how to create a new scene and entity.
+		
+		1. Right click on selected entity > Add Component > Choose a component to add.
+		   (Component should show up in Inspector Panel)
+		2. Modify the attributes of a component via the Inspector Panel.
+		3. Save the current scene.
+		4. Load scene.
+		5. Expand the scenes tree node.
+		6. Select the scene loaded.
+		7. Expand the selected scene tree node.
+		8. Select the previously edited entity.
+		9. Previously edited values should be reflected in the Inspector Panel.
+		
+1203 :	Refer to Rubric 1202 on how to select an entity.
+		Each component can be modified via the Inspector Panel.
+
+1204 :	Refer to Rubric 1201 on how the Scene Hierarchy Panel is used.
+
+1205 :	Refer to Rubric 1201 on how to Load/Edit/Save scene.
+
+1206 :	
+
+1207 :	UI Docking (using imgui-docking branch): 
+		Pick and drag panels from the panel's tab and the editor will show areas that can
+		be docked highlighted in orange as the panel is moved around within the window.
+
+		Play/Stop button are located in the toolbar located below the window's menu bar.
+		Play: Saves the current scene, switches from editor mode to runtim and switches
+		the camera from editor camera to scene camera.
+
+		Note: Pressing the 'Tab' key on the keyboard will disable rendering the
+		editor layer and only show the game view.
+
+1208 :	Free Editor Camera:
+		On startup, the editor uses the editor's free camera by default.
+		Pressing the stop button will automatically switch from the in-game camera to the free editor camera.
+
+		Controls:
+		Zoom: Scroll up to zoom in and scroll down to zoom out or via editor UI in toolbar.
+
+		Zoom speed: via editor UI in toolbar.
+
+		Pan Speed: via editor UI in toolbar.
+
+		Panning: Hold down right mouse button and move around the scene view to pan the camera around the world.
+		
+1209 :	Under Asset Browser (bottom of window),
+		Drag and drop scenes into Scene Hierarchy Panel/Scene View (left and center of window) will load the selected scene.
+
+		Under imported in assets browser,
+		Drag and drop assets into the texture image in the Inspector Panel's sprite component will overwrite the current texture used by the entity.
+
+		In Windows file explorer,
+		Drag and drop scenes into the window will load the scenes.
+		Drag and drop textures will load textures into the engine.
+		Drag and drop prefab files will load prefabs into the engine.
+		
+1210 :	Pick Entity:
+		In Scene Panel, left click on entity to select an entity.
+		(Selected entity with an orange outline)
+		
+		In Scene Panel, after picking an entity, keep the left mouse button
+		and move around in the scene panel, the entity's translation will follow suit.
+		
+1211 :	Asset Browser (bottom of window):
+
+		Under the navigation pane (tree view):
+		Imported shows all of the imported assets in folders based on the type of asset.
+
+		All Assets will display all folders in the "Assets" directory in the working directory.
+		Directories that contain sub directories are indicated with an arrow on the right.
+
+		Under file and folder listing:
+		It displays the files and folders as icons for thumbnail.
+
+		Note: Drag and drop features were explained previously in rubric 1209.

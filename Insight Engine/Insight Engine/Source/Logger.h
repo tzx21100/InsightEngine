@@ -364,7 +364,9 @@ namespace IS {
 
         std::scoped_lock lock(mLogMutex);
 
+    #ifdef _DEBUG
         SetColor(level);
+    #endif
 
         // Construct log
         std::ostringstream log;
@@ -375,7 +377,9 @@ namespace IS {
         log << timestamp << name << ' ' << all_args << '\n';
 
         // Print to console
-        std::clog << log.str() << RESET;
+    #ifdef _DEBUG
+            std::clog << log.str() << RESET;
+        #endif
 
         LoggerGUI::Instance().AddLog(level, log.str().c_str());
 
