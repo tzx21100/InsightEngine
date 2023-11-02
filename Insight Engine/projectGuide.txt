@@ -1,0 +1,31 @@
+Insight Engine - M2 Project Guide
+
+Input Keys:
+W, A, S, D 			- player movement
+Left mouse button click 	- pick entity 
+Left mouse button held + drag 	- move entity (must be picked)
+Right click button held + drag 	- pan camera
+R 				- spawn Ice Cream Truck with animation & rigid body
+Tab				- enter fullscreen (game view)
+F11				- enter fullscreen (editor view)
+
+Shortcuts:
+ALT+F4 	     - exit
+CTRL+N       - new scene
+CTRL+S 	     - save scene
+CTRL+SHIFT+N - save scene as
+
+Tests:
+Mainly explained in M2 rubrics in detail, but will list the scenes and their main purpose
+
+1. basicLevel - A mini prototype, with all components fully integrated. User can playtest the level using this scene.
+2. testLayering - Multiple sprites stacked on top of each other to show layering. User can change/toggle the layers to see difference.
+3. testScene - Shows that player script is controlling player. Audio can be played using "Z" and "X" keys as well.
+4. ButtonTest - Showcase an example of in-game GUI. Pressing on the button will make a sound. Hovering over it will output information as well.
+
+How to Exit:
+1. Click on close button on the top right
+2. ALT+F4
+3. File->Exit
+
+
