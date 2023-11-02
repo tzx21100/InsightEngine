@@ -265,7 +265,9 @@ namespace IS {
 
                 // Pan speed
                 ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Pan Speed");
+                ImGui::PopFont();
                 ImGui::SetItemTooltip("Adjust pan speed of camera");
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
