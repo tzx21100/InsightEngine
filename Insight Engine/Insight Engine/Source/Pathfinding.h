@@ -55,6 +55,24 @@ namespace IS {
             mNeighbors = neighbors;
             mIsObstacle = obstacle;
         };
+        
+        // Copy constructor
+        Waypoint(const Waypoint& other) {
+            mPosition = other.mPosition;
+            // Note: we're copying pointers to the neighbors, not the actual neighbors
+            mNeighbors = other.mNeighbors;
+            mIsObstacle = other.mIsObstacle;
+        }
+
+        // Copy assignment operator
+        Waypoint& operator=(const Waypoint& other) {
+            if (this != &other) {  // self-assignment check
+                mPosition = other.mPosition;
+                mNeighbors = other.mNeighbors;
+                mIsObstacle = other.mIsObstacle;
+            }
+            return *this;
+        }
 
         //int mId{}; //id of waypoint
         Vector2D mPosition; //pos of waypoint
@@ -139,6 +157,11 @@ namespace IS {
          * \return A vector of waypoints representing the path for the entity.
          */
         std::vector<Waypoint*> GetPathForEntity(Entity entity);
+
+        //find the closest waypoint by vector pos
+        Waypoint* FindClosestWaypoint(const Vector2D& position);
+        //distance between 2 points (just the raw value)
+        double DistanceBetweenPoints(const Vector2D& a, const Vector2D& b);
 
     private:
         std::vector<Waypoint> mWaypoints{}; // Store all waypoints

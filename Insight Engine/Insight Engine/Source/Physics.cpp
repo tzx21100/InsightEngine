@@ -33,7 +33,7 @@ namespace IS {
 	// Constructs a Physics instance
 	Physics::Physics() 
 	{
-		mGravity = Vector2D(0, -98.1f);					// Gravity of the world
+		mGravity = Vector2D(0, -981.f);					// Gravity of the world
 		mMaxVelocity = 800.f;							// Maximum velocity for game bodies
 		mMinVelocity = -800.f;							// Minimum velocity for game bodies
 		mCurrentIterations = 0;							// Number of current iterations for physics step

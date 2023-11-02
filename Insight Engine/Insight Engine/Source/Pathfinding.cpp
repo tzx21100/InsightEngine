@@ -49,42 +49,62 @@ namespace IS {
         AddWaypoint(waypointC);
     }
 
-    void Pathfinding::Update([[maybe_unused]] float deltaTime) {
+    void Pathfinding::Update(float deltaTime) {
         for (auto const& entity : mEntities) {
             if (InsightEngine::Instance().HasComponent<Pathfinder>(entity)) {
+                auto& pathfinder = InsightEngine::Instance().GetComponent<Pathfinder>(entity);
                 auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 
+                // Find the waypoints closest to the start and end positions
+                Waypoint* startWaypoint = FindClosestWaypoint(pathfinder.mInitPos);
+                Waypoint* endWaypoint = FindClosestWaypoint(pathfinder.mEndPos);
 
-                if (i < mWaypoints.size()) {
-                    Vector2D curr_waypoint = mWaypoints[i].mPosition;
-                    Vector2D goal = curr_waypoint - trans.getWorldPosition();
+                if (!startWaypoint || !endWaypoint) {
+                    // Handle error: No waypoints found
+                    continue;
+                }
+
+                // Call A* pathfinding to get the path from the start waypoint to the goal
+                std::vector<Waypoint*> path = AStarPathfinding(*startWaypoint, *endWaypoint);
+
+                if (!path.empty()) {
+                    // Move towards the next waypoint in the path
+                    Vector2D nextWaypointPosition = path.front()->mPosition;
+                    Vector2D goal = nextWaypointPosition - trans.getWorldPosition();
 
                     if ((goal.x > -10.f && goal.x < 10.f) && (goal.y > -10.f && goal.y < 10.f)) {
-                        i++;
+                        // Entity has reached the waypoint. You can handle this case here.
+                        path.erase(path.begin());
                     }
 
-                    if (i < mWaypoints.size()) {
-                        //const Waypoint& currentWaypoint = mWaypoints[i];
-                        //const Waypoint& goalWaypoint = mWaypoints.back();
-
-                        // Call A* pathfinding to get the path from the current waypoint to the goal
-                       // std::vector<Waypoint*> path = AStarPathfinding(currentWaypoint, goalWaypoint);
-
-                        if (!mWaypoints.empty()) {
-                            // Move towards the next waypoint in the path
-                            Vector2D nextWaypointPosition = mWaypoints[i].mPosition;
-                            Vector2D nextGoal = nextWaypointPosition - trans.getWorldPosition();
-
-                            trans.world_position += nextGoal * deltaTime;
-                        }
+                    if (!path.empty()) {
+                        Vector2D nextGoal = path.front()->mPosition - trans.getWorldPosition();
+                        trans.world_position += nextGoal * deltaTime;
                     }
-                }
-                if (i == mWaypoints.size()) {
-                    // Entity has reached the last waypoint. You can handle this case here.
-                    i = 0;
                 }
             }
         }
+    }
+
+    Waypoint* Pathfinding::FindClosestWaypoint(const Vector2D& position) {
+        Waypoint* closest = nullptr;
+        double minDistance = std::numeric_limits<double>::max();
+
+        for (auto& waypoint : mWaypoints) {
+            double distance = DistanceBetweenPoints(position, waypoint.mPosition);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = &waypoint;
+            }
+        }
+
+        return closest;
+    }
+
+    double Pathfinding::DistanceBetweenPoints(const Vector2D& a, const Vector2D& b) {
+        double dx = a.x - b.x;
+        double dy = a.y - b.y;
+        return std::sqrt(dx * dx + dy * dy);
     }
 
 

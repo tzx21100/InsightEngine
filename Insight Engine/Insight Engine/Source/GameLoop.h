@@ -238,7 +238,7 @@ namespace IS {
                 if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
                     //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
                     if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
-                        body_player.AddVelocity(Vector2D(0.f, 250.f));
+                        body_player.AddVelocity(Vector2D(0.f, 800.f));
                         body_player.mState = BodyState::JUMP;
                     }
                 }

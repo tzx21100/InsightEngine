@@ -54,7 +54,6 @@ namespace IS {
 
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
         if (InsightEngine::Instance().mRuntime == false) { return; }
-        for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
             mScriptDeltaTime = deltaTime;
             auto& engine = InsightEngine::Instance();
             for (auto& entity : mEntities) {
@@ -67,7 +66,6 @@ namespace IS {
 
                 }
             }
-        }
 
     }
 

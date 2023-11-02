@@ -159,7 +159,8 @@ namespace IS {
 
     static float GetDeltaTime() {
         auto system = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
-         return 1.f / 60.f/*system->mScriptDeltaTime*/;
+        //fast way to get delta with steps.
+        return InsightEngine::Instance().currentNumberOfSteps / 60.f;/*system->mScriptDeltaTime*/
     }
 
     static void SetSpriteImage(SimpleImage image) {
