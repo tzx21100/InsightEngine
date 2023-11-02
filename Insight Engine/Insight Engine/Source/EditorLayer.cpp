@@ -402,6 +402,7 @@ namespace IS {
                     engine.mRuntime = !engine.mRuntime;
                     Camera::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus("Game");
+                    scene_manager.SaveScene();
                 }
 
                 // Stop
