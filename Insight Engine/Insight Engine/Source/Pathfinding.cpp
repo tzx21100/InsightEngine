@@ -61,6 +61,7 @@ namespace IS {
 
                 if (!startWaypoint || !endWaypoint) {
                     // Handle error: No waypoints found
+                    IS_CORE_DEBUG("NO WAYPOINTS FOUND");
                     continue;
                 }
 
@@ -79,7 +80,7 @@ namespace IS {
 
                     if (!path.empty()) {
                         Vector2D nextGoal = path.front()->mPosition - trans.getWorldPosition();
-                        trans.world_position += nextGoal * deltaTime;
+                        trans.world_position += nextGoal * deltaTime *2;
                     }
                 }
             }

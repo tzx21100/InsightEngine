@@ -350,7 +350,7 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
                     for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent,Pathfinder>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.05f, height * 0.094222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
@@ -368,8 +368,29 @@ namespace IS {
 
                     }
 
-
                 }
+
+                if (input->IsKeyPressed(GLFW_KEY_P)) {
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Ice Cream Truck");
+                    auto& transl = engine.GetComponent<Transform>(a);
+                    transl.setScaling(width * 0.05f, height * 0.094222222f);
+                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                    auto& spr = engine.GetComponent<Sprite>(a);
+                    spr.name = "ice_cream_truck";
+                    spr.img = *truck_anim_image;
+                    //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
+                    spr.anims.emplace_back(ice_cream_truck_ani);
+                    spr.animation_index = 0;
+                    IS_CORE_DEBUG("PATH FINDING TRUCK SPAWNED");
+                    Waypoint target;
+                    auto& pathcomponent = engine.GetComponent<Pathfinder>(a);
+                    auto& transcomp = engine.GetComponent<Transform>(a);
+                    pathcomponent.mInitPos = Vector2D(transcomp.world_position);
+                    auto sys = engine.GetSystem<Pathfinding>("Pathfinding");
+
+                    pathcomponent.mEndPos = Vector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+                }
+
             }
 
             // rotate lines on clock
