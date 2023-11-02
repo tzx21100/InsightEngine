@@ -1,5 +1,26 @@
-#pragma once
+/*!
+ * \file SceneManager.h
+ * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \par Course: CSD2401
+ * \date 02-11-2023
+ * \brief
+ * This header file declares the ScriptManager system and ScriptComponent for
+ * our scripting engine to be incorporated with the ECS.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
+ /*                                                                      guard
+ ----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_EDITOR_SCENE_SCRIPTMANAGER_H
+#define GAM200_INSIGHT_ENGINE_EDITOR_SCENE_SCRIPTMANAGER_H
+
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "System.h"
 #include "ScriptEngine.h"
 #include <iostream>
@@ -83,3 +104,5 @@ namespace IS {
 
     };
 }
+
+#endif

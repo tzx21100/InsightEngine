@@ -639,7 +639,14 @@ namespace IS {
         std::unordered_set<Entity> mEntitiesToDelete;
 
 
+        /**
+         * \brief Function To Deserialize All components
+         */
         void DeserializeAllComponents(Entity entity, Json::Value& loaded);
+
+        /**
+         * \brief Function for serializing all components.
+         */
         void SerializeAllComponents(Entity entity, Json::Value& loaded);
 
 

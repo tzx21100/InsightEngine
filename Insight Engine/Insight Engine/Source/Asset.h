@@ -254,7 +254,7 @@ namespace IS {
          * \param pitch The pitch at which to play the music (default is 1.0f).
          * \return A pointer to the FMOD::Channel playing the music.
          */
-        FMOD::Channel* PlayMusicByName(const std::string& sound_name, bool loop = false, float volume = 1.0f, float pitch = 1.0f);
+        FMOD::Channel* PlayMusicByName(const std::string& sound_name, bool loop = true, float volume = 1.0f, float pitch = 1.0f);
 
         /*!
          * \brief Saves a sound by name.

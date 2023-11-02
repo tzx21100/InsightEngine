@@ -99,48 +99,44 @@ namespace IS {
         return ISVector2DDistance(a.mPosition, b.mPosition);
     }
 
-    bool Pathfinding::ClosedListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>>& closed_list, Waypoint* waypoint) {
-        while (!closed_list.empty()) {
-            if (closed_list.top() == waypoint) {
-                return true;
-            }
-            closed_list.pop();
-        }
-        return false;
+    // Modify the OpenListContains and ClosedListContains to use the new data structures
+    bool Pathfinding::ClosedListContains(std::unordered_set<Waypoint*>& closed_list, Waypoint* waypoint) {
+        return closed_list.find(waypoint) != closed_list.end();
     }
 
-    bool Pathfinding::OpenListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>>& open_list, Waypoint* waypoint) {
-        while (!open_list.empty()) {
-            if (open_list.top() == waypoint) {
+    bool Pathfinding::OpenListContains(std::priority_queue<std::pair<Waypoint*, double>, std::vector<std::pair<Waypoint*, double>>, CompareCost>& open_list, Waypoint* waypoint) {
+        auto temp = open_list;
+        while (!temp.empty()) {
+            if (temp.top().first == waypoint) {
                 return true;
             }
-            open_list.pop();
+            temp.pop();
         }
         return false;
     }
 
     std::vector<Waypoint*> Pathfinding::AStarPathfinding(const Waypoint& start, const Waypoint& goal) {
-
-        // Create open and closed sets as priority queues
-        std::priority_queue<Waypoint*, std::vector<Waypoint*>> open_list;
-        std::priority_queue<Waypoint*, std::vector<Waypoint*>> closed_list;
-
-        // Map to store g-cost values for each waypoint
+        std::priority_queue<std::pair<Waypoint*, double>, std::vector<std::pair<Waypoint*, double>>, CompareCost> open_list;
+        std::unordered_set<Waypoint*> closed_list;
         std::unordered_map<const Waypoint*, double> g_cost;
-
-        // Map to store parent waypoints
         std::unordered_map<Waypoint*, Waypoint*> parent;
+        std::unordered_set<Waypoint*> open_set;  // Additional set to check for existence in open list
 
-        // Initialize the open set with the start waypoint
-        open_list.push(const_cast<Waypoint*>(&start));
+        // Initialize g_cost with a high value for all waypoints
+        for (const auto& waypoint : mWaypoints) {
+            g_cost[&waypoint] = std::numeric_limits<double>::max();
+        }
+
+        // Initialize the open set with the start waypoint and its cost
+        open_list.push({ const_cast<Waypoint*>(&start), 0.0 });
+        open_set.insert(const_cast<Waypoint*>(&start));  // Add to open set
         g_cost[&start] = 0.0;
 
         while (!open_list.empty()) {
-            Waypoint* current = open_list.top();
+            Waypoint* current = open_list.top().first;
             open_list.pop();
-
-            // Add the current waypoint to the closed set
-            closed_list.push(current);
+            open_set.erase(current);  // Remove from open set
+            closed_list.insert(current);  // Add to closed set
 
             // If the current waypoint is the goal, reconstruct and return the path
             if (current == &goal) {
@@ -155,22 +151,21 @@ namespace IS {
 
             // Loop through neighboring waypoints
             for (Waypoint* neighbor : current->mNeighbors) {
-                if (neighbor->mIsObstacle) {
-                    continue; // Skip if obstacle
-                }
-                if (ClosedListContains(closed_list, neighbor)) {
-                    continue; // Skip waypoints in the closed set
+                if (neighbor->mIsObstacle || closed_list.find(neighbor) != closed_list.end()) {
+                    continue;  // Skip if obstacle or in the closed set
                 }
 
                 double tentative_g_cost = g_cost[current] + DistanceBetweenWaypoints(*current, *neighbor);
+                double h_cost = DistanceBetweenWaypoints(*neighbor, goal);
+                double f_cost = tentative_g_cost + h_cost;
 
-                if (!OpenListContains(open_list, neighbor) || tentative_g_cost < g_cost[neighbor]) {
-                    // Update the parent and g-cost for the neighbor
+                if (open_set.find(neighbor) == open_set.end() || tentative_g_cost < g_cost[neighbor]) {
                     parent[neighbor] = current;
                     g_cost[neighbor] = tentative_g_cost;
 
-                    if (!OpenListContains(open_list, neighbor)) {
-                        open_list.push(neighbor);
+                    if (open_set.find(neighbor) == open_set.end()) {
+                        open_list.push({ neighbor, f_cost });
+                        open_set.insert(neighbor);  // Add to open set
                     }
                 }
             }
@@ -178,6 +173,7 @@ namespace IS {
 
         return std::vector<Waypoint*>();
     }
+
 
     void Pathfinding::AddWaypoint(const Waypoint& waypoint) {
         mWaypoints.emplace_back(waypoint);
@@ -208,6 +204,8 @@ namespace IS {
         }
         return std::vector<Waypoint*>();
     }
+
+
 
 
 }

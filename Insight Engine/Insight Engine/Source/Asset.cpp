@@ -105,34 +105,49 @@ namespace IS {
 
     Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
 
-    FMOD::Channel* AssetManager::PlaySoundByName(const std::string& sound_name, bool loop , float volume, float pitch ) {
+    FMOD::Channel* AssetManager::PlaySoundByName(const std::string& sound_name, bool loop, float volume, float pitch) {
         FMOD::Sound* sound = GetSound(sound_name);
-        if (sound){
-            auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
-            return audio->PlaySound(sound, loop, volume, pitch);
+        if (!sound) {
+            // Handle error: sound not found
+            return nullptr;
         }
-        return nullptr;
+
+        auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        if (!audio) {
+            // Handle error: audio system not found
+            return nullptr;
+        }
+
+        return audio->PlaySound(sound, loop, volume, pitch);
     }
 
     FMOD::Channel* AssetManager::PlayMusicByName(const std::string& sound_name, bool loop, float volume, float pitch) {
         FMOD::Sound* sound = GetSound(sound_name);
-        FMOD::Channel* channel = GetChannel(sound_name);
+        if (!sound) {
+            // Handle error: sound not found
+            return nullptr;
+        }
+
         auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        if (!audio) {
+            // Handle error: audio system not found
+            return nullptr;
+        }
+
+        FMOD::Channel* channel = GetChannel(sound_name);
         if (audio->IsSoundPlaying(channel)) {
             bool is_paused = false;
             channel->getPaused(&is_paused);
-            if (is_paused) {
-                channel->setPaused(false);
-            }
-            else {
-                channel->setPaused(true);
-            }
+            channel->setPaused(!is_paused);
+            return channel;
         }
         else {
-            mChannelList[sound_name]= audio->PlaySound(sound, loop, volume, pitch);
-            return mChannelList[sound_name];
+            FMOD::Channel* newChannel = audio->PlaySound(sound, loop, volume, pitch);
+            if (newChannel) {
+                mChannelList[sound_name] = newChannel;
+            }
+            return newChannel;
         }
-        return nullptr;
     }
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame

@@ -2,9 +2,11 @@
  * \file GameGui.h
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
  * \par Course: CSD2401
- * \date 26-09-2023
+ * \date 02-11-2023
  * \brief
- *
+ * This is a simple inGameGui system that defines a single button component and the 
+ * possible states that it could be in. To be updated in the future when text can be
+ * drawn more freely.
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
  * All rights reserved.
@@ -14,8 +16,8 @@
 
  /*                                                                   guard
  ----------------------------------------------------------------------------- */
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_GUI_H
-#define GAM200_INSIGHT_ENGINE_SOURCE_GUI_H
+#ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMEGUI_H
+#define GAM200_INSIGHT_ENGINE_SOURCE_GAMEGUI_H
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
@@ -134,4 +136,4 @@ namespace IS {
 }
 //didn't include a destructor because theres nothing to free.
 
-#endif // GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H  
+#endif 

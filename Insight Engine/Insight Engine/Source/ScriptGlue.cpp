@@ -239,7 +239,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName("music.wav");
+        asset->PlayMusicByName(str);
     }
 
     static int GetButtonState() {
