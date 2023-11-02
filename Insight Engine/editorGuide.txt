@@ -44,7 +44,9 @@ Layout (Rubric : Steps to test)
 
 1205 :	Refer to Rubric 1201 on how to Load/Edit/Save scene.
 
-1206 :	
+1206 :	Refer to Rubric 1203 to modify an entity.
+		Save As Prefab: prefab is saved with the entity's name.
+		Load Prefab: select a prefab from the list to load and overwrites the entity.
 
 1207 :	UI Docking (using imgui-docking branch): 
 		Pick and drag panels from the panel's tab and the editor will show areas that can

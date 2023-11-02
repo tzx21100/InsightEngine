@@ -188,9 +188,9 @@ namespace IS {
         ImGui::PopStyleVar(3);
 
         ImGuiIO& io = ImGui::GetIO();
-        //ImGuiStyle& style = ImGui::GetStyle();
-        //ImVec2 min_window_size = style.WindowMinSize;
-        //style.WindowMinSize = ImVec2(350.f, 300.f);
+        ImGuiStyle& style = ImGui::GetStyle();
+        ImVec2 min_window_size = style.WindowMinSize;
+        style.WindowMinSize = ImVec2(350.f, 300.f);
 
         // Enable dockspace
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -218,7 +218,7 @@ namespace IS {
 
         //RenderGizmo();
 
-        //style.WindowMinSize = min_window_size;
+        style.WindowMinSize = min_window_size;
 
         ImGui::End(); // end dockspace
     }
@@ -391,9 +391,6 @@ namespace IS {
                 ImGui::SetItemTooltip(tooltips[i]);
             }
 
-            // Render camera zoom controls
-            RenderCameraControls();
-
             if (scene_loaded)
             {
                 // Play/Pause
@@ -423,121 +420,6 @@ namespace IS {
 
             ImGui::End(); // end window Runtime
         }
-    }
-
-    void EditorLayer::RenderCameraControls()
-    {
-        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-        const float SIZE = 16.f;
-        float zoom_level = camera.GetZoomLevel();
-
-        ImGui::SameLine();
-        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 4.f * ImGui::GetStyle().ItemSpacing.x);
-        if (ImGui::BeginTable("Camera Controls", 6, ImGuiTableFlags_Resizable))
-        {
-            ImGui::TableNextColumn();
-            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + ImGui::GetStyle().FramePadding.y);
-            ImGui::TextUnformatted("Zoom");
-            ImGui::SetItemTooltip("Adjust camera zoom level");
-
-            // Zoom out with - button
-            ImGui::TableNextColumn();
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
-            {
-                zoom_level *= (1 - Camera::mZoomSpeed);
-                camera.SetZoomLevel(zoom_level);
-            }
-            ImGui::PopStyleColor();
-            ImGui::SetItemTooltip("Zooms out camera");
-
-            // Slider to adjust camera zoom
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(SIZE * 10.f);
-            if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
-                                   (Camera::CAMERA_ZOOM_MIN), (Camera::CAMERA_ZOOM_MAX), "%.2fx", ImGuiSliderFlags_Logarithmic))
-            {
-                // Update the camera's zoom level directly
-                camera.SetZoomLevel(zoom_level);
-            }
-
-            // Zoom in with + button
-            ImGui::SameLine();
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
-            {
-                zoom_level *= (1 + Camera::mZoomSpeed);
-                camera.SetZoomLevel(zoom_level);
-            }
-            ImGui::PopStyleColor();
-            ImGui::SetItemTooltip("Zooms in camera");
-
-            // Zoom speed
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Zoom Speed");
-            ImGui::SetItemTooltip("Adjust zoom speed of camera");
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(SIZE * 4.f);
-            ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, Camera::CAMERA_ZOOM_SPEED_MIN, Camera::CAMERA_ZOOM_SPEED_MAX, "%.2f");
-
-            // Pan speed
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Pan Speed");
-            ImGui::SetItemTooltip("Adjust pan speed of camera");
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(SIZE * 4.f);
-            ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, Camera::CAMERA_MOVE_SPEED_MIN, Camera::CAMERA_MOVE_SPEED_MAX, "%.2f");
-
-            ImGui::EndTable(); // end table Camera Controls
-        }
-
-        //ImGui::TextUnformatted("Camera:");
-
-        //// Zoom out with - button
-        //ImGui::SameLine();
-        //ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        //if (ImGui::ImageButton("ZoomOut", mIcons.at("ZoomOut"), { SIZE, SIZE }))
-        //{
-        //    zoom_level *= (1 - Camera::mZoomSpeed);
-        //    camera.SetZoomLevel(zoom_level);
-        //}
-        //ImGui::PopStyleColor();
-
-        //// Slider to adjust camera zoom
-        //ImGui::SameLine();
-        //ImGui::SetNextItemWidth(SIZE * 10.f);
-        //if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
-        //                        (Camera::mMinZoom), (Camera::mMaxZoom), "%.2fx", ImGuiSliderFlags_Logarithmic))
-        //{
-        //    // Update the camera's zoom level directly
-        //    camera.SetZoomLevel(zoom_level);
-        //}
-
-        //// Zoom in with + button
-        //ImGui::SameLine();
-        //ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        //if (ImGui::ImageButton("ZoomIn", mIcons.at("ZoomIn"), { SIZE, SIZE }))
-        //{
-        //    zoom_level *= (1 + Camera::mZoomSpeed);
-        //    camera.SetZoomLevel(zoom_level);
-        //}
-        //ImGui::PopStyleColor();
-
-        //// Zoom speed
-        //ImGui::SameLine();
-        //ImGui::TextUnformatted("Zoom Speed:");
-        //ImGui::SameLine();
-        //ImGui::SetNextItemWidth(SIZE * 4.f);
-        //ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, 0.01f, 0.2f, "%.2f");
-        //ImGui::SameLine();
-
-        //// Pan speed
-        //ImGui::SameLine();
-        //ImGui::TextUnformatted("Pan Speed:");
-        //ImGui::SameLine();
-        //ImGui::SetNextItemWidth(SIZE * 4.f);
-        //ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, 1.f, 10.f, "%.2f");
-        //ImGui::SameLine();
     }
 
     void EditorLayer::AttachPanels()

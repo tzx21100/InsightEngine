@@ -159,11 +159,6 @@ namespace IS {
          */
         void RenderToolBar();
 
-        /*!
-         * \brief Render the controls for camera.
-         */
-        void RenderCameraControls();
-
         ///*!
         // * \brief Render the gizmo.
         // */

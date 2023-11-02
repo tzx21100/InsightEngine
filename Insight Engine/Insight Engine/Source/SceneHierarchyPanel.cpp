@@ -47,7 +47,13 @@ namespace IS {
         RenderActiveSceneDetails();
 
         ImGui::Spacing();
-        RenderLayers();
+
+        RenderLayerControls();
+
+        ImGui::Spacing();
+
+        RenderCameraControls();
+
         ImGui::Spacing();
 
         // Filter entity hierarchy
@@ -139,33 +145,139 @@ namespace IS {
 
     } // end RenderSceneDetails()
 
-    void SceneHierarchyPanel::RenderLayers()
+    void SceneHierarchyPanel::RenderLayerControls()
     {
-        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
-        
-        ImGui::PushFont(FONT_BOLD);
-        ImGui::TextUnformatted("Layers");
-        ImGui::PopFont();
-
+        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
+        bool layers_opened = ImGui::TreeNodeEx("Layers", tree_flags);
         static bool to_render[Sprite::INVALID_LAYER]{ true };
-
-        for (int i{}; i < Sprite::INVALID_LAYER; ++i)
+        
+        if (layers_opened)
         {
-            if (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end())
+            if (ImGui::BeginTable("LayersTable", 2, ImGuiTableFlags_BordersInnerV))
             {
-                to_render[i] = true;
+                ImGui::TableSetupColumn("Checkbox", ImGuiTableColumnFlags_WidthFixed, 50.f);
+                for (int i{}; i < Sprite::INVALID_LAYER; ++i)
+                {
+                    to_render[i] = (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end());
+
+                    Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(i);
+                    ImGui::TableNextColumn();
+                    if (ImGui::Checkbox(("##" + std::to_string(i) + "RenderLayer").c_str(), &to_render[i]))
+                        Sprite::toggleLayer(layer);
+                    ImGui::TableNextColumn();
+                    ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
+                }
+                ImGui::EndTable(); // end table LayersTable
             }
-            else
-            {
-                to_render[i] = false;
-            }
-            Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(i);
-            if (ImGui::Checkbox(("##" + std::to_string(i) + "RenderLayer").c_str(), &to_render[i]))
-                Sprite::toggleLayer(layer);
-            ImGui::SameLine();
-            ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
+            ImGui::TreePop(); // pop tree Layers
         }
-    }
+    } // end RenderLayers()
+
+    void SceneHierarchyPanel::RenderCameraControls()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const editor = engine.GetSystem<Editor>("Editor");
+        auto const editor_layer = editor->GetEditorLayer();
+        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        const float SIZE = 16.f;
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        auto& style = ImGui::GetStyle();
+        float zoom_level = camera.GetZoomLevel();
+
+        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
+        bool camera_opened = ImGui::TreeNodeEx("Camera", tree_flags);
+        ImGui::SameLine();
+        ImGui::TextColored({ .8f, .8f, .8f, .8f }, Camera::mActiveCamera == CAMERA_TYPE_EDITOR ? "(Editor)" : "(Game)");
+
+        if (camera_opened)
+        {
+            // Camera Position
+            Vector2D position = { camera.GetCamPos().x, camera.GetCamPos().y };
+            EditorUtils::RenderControlVec2("Position", position);
+            ImGui::SetItemTooltip("Adjust the position of the camera in world space");
+            camera.UpdateCamPos(position.x, position.y);
+
+            if (ImGui::BeginTable("CameraTable", 2))
+            {
+                ImGui::TableSetupColumn("CameraLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+                // Camera Width
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Width");
+                ImGui::PopFont();
+                ImGui::SetItemTooltip("Adjust the width of the camera\nAspect ratio is fixed at 16:9");
+
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+                float width = camera.GetCamDim().x;
+                ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f");
+                camera.UpdateCamDim(width);
+
+                // Camera Zoom
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Zoom");
+                ImGui::PopFont();
+                ImGui::SetItemTooltip("Adjust the zoom level of the camera");
+
+                // Zoom out with - button
+                ImGui::TableNextColumn();
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+                if (ImGui::ImageButton("ZoomOut", editor_layer->GetIcon("ZoomOut"), { SIZE, SIZE }))
+                {
+                    zoom_level *= (1 - Camera::mZoomSpeed);
+                    camera.SetZoomLevel(zoom_level);
+                }
+                ImGui::PopStyleColor();
+                ImGui::SetItemTooltip("Zooms out camera");
+
+                // Slider to adjust camera zoom
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (2 * SIZE +  3 * style.ItemSpacing.x));
+                if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+                                       (Camera::CAMERA_ZOOM_MIN), (Camera::CAMERA_ZOOM_MAX), "%.2fx", ImGuiSliderFlags_Logarithmic))
+                {
+                    // Update the camera's zoom level directly
+                    camera.SetZoomLevel(zoom_level);
+                }
+
+                // Zoom in with + button
+                ImGui::SameLine();
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+                if (ImGui::ImageButton("ZoomIn", editor_layer->GetIcon("ZoomIn"), { SIZE, SIZE }))
+                {
+                    zoom_level *= (1 + Camera::mZoomSpeed);
+                    camera.SetZoomLevel(zoom_level);
+                }
+                ImGui::PopStyleColor();
+                ImGui::SetItemTooltip("Zooms in camera");
+
+                // Zoom speed
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Zoom Speed");
+                ImGui::PopFont();
+                ImGui::SetItemTooltip("Adjust zoom speed of camera");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+                ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, Camera::CAMERA_ZOOM_SPEED_MIN, Camera::CAMERA_ZOOM_SPEED_MAX, "%.2f");
+
+                // Pan speed
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Pan Speed");
+                ImGui::SetItemTooltip("Adjust pan speed of camera");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+                ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, Camera::CAMERA_MOVE_SPEED_MIN, Camera::CAMERA_MOVE_SPEED_MAX, "%.2f");
+
+                ImGui::EndTable(); // end table CameraTable
+            }
+
+            ImGui::TreePop(); // pop tree Camera
+        }
+
+    } // end RenderCamera()
 
     void SceneHierarchyPanel::RenderSceneNode(SceneID scene)
     {

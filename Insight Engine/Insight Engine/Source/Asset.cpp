@@ -164,7 +164,7 @@ namespace IS {
         auto audio = engine.GetSystem<ISAudio>("Audio");
         FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.c_str());
         FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.c_str());
-        std::string sound_name = filepath;
+        std::string sound_name = path.filename().string();
         SaveSound(sound_name, sound);
         SaveChannel(sound_name, channel);
         IS_CORE_INFO("Loaded Sound: {} ", sound_name);

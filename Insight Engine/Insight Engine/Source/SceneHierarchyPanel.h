@@ -104,7 +104,15 @@ namespace IS {
          */
         void RenderActiveSceneDetails();
 
-        void RenderLayers();
+        /*!
+         * \brief Renders a tree node displaying all layers.
+         */
+        void RenderLayerControls();
+
+        /*!
+         * \brief Renders controls for camera.
+         */
+        void RenderCameraControls();
 
         /*!
          * \brief Renders a node for the specified scene in the scene hierarchy.
