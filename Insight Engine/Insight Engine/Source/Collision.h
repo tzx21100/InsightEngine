@@ -15,6 +15,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+ /*                                                                   guard
+ ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_H
 
@@ -90,10 +92,24 @@ namespace IS
 	bool CollisionIntersectionAABB(const Box& aabb1, const Vector2D& vel1,
 		const Box& aabb2, const Vector2D& vel2, const float& dt);
 
-    // calculate the shortest distance from a point to the line segment
+    /*!
+     * \brief calculate the shortest distance from a point to the line segment. (for getting contact points)
+     *
+     * \param point The point to be calculated.
+     * \param a p0 of the line segment.
+     * \param b p1 of the line segment.
+     * \param distance_squared the square distance from the point to the line segment.
+     * \param closest_point closest point from the point to the line segement.
+     */
     void PointSegmentDistance(Vector2D const& point, Vector2D const& a, Vector2D const& b, float & distance_squared, Vector2D & closest_point);
 
-    // static AABB
+    /*!
+     * \brief Detects the static collision between two AABB box.
+     *
+     * \param a The first AABBb box.
+     * \param b The second AABB box.
+     * \return True if the two AABBs are colliding, false otherwise.
+     */
     bool StaticIntersectAABB(const Box& a, const Box& b);
 
      /*!

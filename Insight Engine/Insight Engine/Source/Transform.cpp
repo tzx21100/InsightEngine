@@ -63,7 +63,6 @@ namespace IS {
 	void Transform::setScaling(float width, float height) { // set S
 		scaling.x = width;
 		scaling.y = height;
-		RigidBody::mCheckTransform = false; // transform the size of rigidbody is needed
 	}
 
 	void Transform::Move(Vector2D const& val) {

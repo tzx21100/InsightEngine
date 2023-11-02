@@ -33,17 +33,15 @@ namespace IS {
 	// Constructs a Physics instance
 	Physics::Physics() 
 	{
-		//mNormal = Vector2D();
-		//mDepth = std::numeric_limits<float>::max();
-		mGravity = Vector2D(0, -981.f);			// Gravity of the world
-		mMaxVelocity = 800.f;					// Maximum velocity for game bodies
-		mMinVelocity = -800.f;					// Minimum velocity for game bodies
-		mCurrentIterations = 0;					// Number of current iterations for physics step
-		mTotalIterations = 10;						// Number of iterations for physics step
-		mContactList = std::vector<Manifold>();
-		
-		mManifoldInfo;
-		mImplicitGrid;
+		mGravity = Vector2D(0, -981.f);					// Gravity of the world
+		mMaxVelocity = 800.f;							// Maximum velocity for game bodies
+		mMinVelocity = -800.f;							// Minimum velocity for game bodies
+		mCurrentIterations = 0;							// Number of current iterations for physics step
+		mTotalIterations = 10;							// Number of iterations for physics step
+		mContactList = std::vector<Manifold>();			// vector list of Manifold to store all the contact information
+		mContactPointsList = std::vector<Vector2D>();	// vector list of Vec2D to store all the contact points
+		mManifoldInfo;									// instance of Manifold
+		mImplicitGrid;									// instance of ImplicitGrid
 	}
 
 	// Initializes the physics system
@@ -51,12 +49,12 @@ namespace IS {
 	{
 		// Initialization logic here
 		Subscribe(MessageType::Collide);
-		//mGrid.ClearGrid();
+
 		mImplicitGrid.ClearGrid();
 	}
 
 	// Updates the physics simulation for the given time step
-	void Physics::Update([[maybe_unused]]float dt)
+	void Physics::Update(float dt)
 	{
 		if (InsightEngine::Instance().mRuntime == false) {
 
@@ -71,7 +69,14 @@ namespace IS {
 			return; 
 		}
 
-		//Loop used in systems that have time-based formula
+		/*if (InsightEngine::currentNumberOfSteps > 1) {
+			mTotalIterations = 1;
+		}
+		else {
+			mTotalIterations = 10;
+		}*/
+
+		//Loop using Fixed DT
 		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
 			mContactPointsList.clear();
 
@@ -79,7 +84,7 @@ namespace IS {
 			mImplicitGrid.AddIntoCell(mEntities);
 
 			// for testing grid
-			auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+			/*auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
 			if (input->IsKeyPressed(GLFW_KEY_3)) {
 				for (int i = 0; i < ImplicitGrid::mRows; i++) {
 					std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
@@ -91,13 +96,6 @@ namespace IS {
 				IS_CORE_DEBUG({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
 				IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
 				IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
-			}
-
-			/*if (InsightEngine::currentNumberOfSteps > 10) {
-				mTotalIterations = 1;
-			}
-			else {
-				mTotalIterations = 10;
 			}*/
 
 			// physics update iteration
@@ -146,9 +144,6 @@ namespace IS {
 					}
 				}
 
-				//std::bitset<MAX_ENTITIES> test_cell = mImplicitGrid.mRowsBitArray[row] & mImplicitGrid.mColsBitArray[col];
-				//size_t totalEntities = test_cell.count();
-
 				// at least more than 1 entity to avoid self checking
 				// in case one entity overlaps on the grid check collide with one in grid entity
 				if (totalEntities > 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
@@ -166,12 +161,8 @@ namespace IS {
 					}
 
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
-					//mImplicitGrid.mInGridList = mImplicitGrid.mInGridList + mImplicitGrid.mOverlapGridList;
 					mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
-					//IS_CORE_DEBUG({ "inGridSize - {}" }, mImplicitGrid.mInGridList.size());
-					//for (Entity const& e : mImplicitGrid.mInGridList) {
-						//IS_CORE_DEBUG("e - {}", e);
-					//}
+
 					if (mImplicitGrid.mInGridList.size() > 1) {
 						CollisionDetect(mImplicitGrid.mInGridList);
 					}
@@ -190,7 +181,6 @@ namespace IS {
 		for (size_t i = 0; i < entities.size() - 1; ++i) {
 			const Entity& entityA = entities[i];
 
-			// no need check HasComponent as AddIntoCell function did
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
 
 				for (size_t j = i + 1; j < entities.size(); ++j) {
@@ -200,7 +190,6 @@ namespace IS {
 						continue;
 					}
 
-					// no need check HasComponent as AddIntoCell function did
 					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
 
 						auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
@@ -210,17 +199,16 @@ namespace IS {
 							// continue if collision happens between two non dynamic entities
 							continue;
 						}
-
-						auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
-						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
-						bodyA.BodyFollowTransform(transA);
-						bodyB.BodyFollowTransform(transB);
-
 						// static AABB collision check, continue to the next loop if not colliding
 						if (!StaticIntersectAABB(bodyA.GetAABB(), bodyB.GetAABB()))
 						{
 							continue;
 						}
+
+						auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+						bodyA.BodyFollowTransform(transA);
+						bodyB.BodyFollowTransform(transB);
 
 						bool isColliding = false;
 						switch (bodyA.mBodyShape)
@@ -275,16 +263,19 @@ namespace IS {
 		}
 	}
 
+	// Detects collisions among all the possible entities
 	void Physics::BroadPhase() {
 		// detect collision through Implicit Grid
 		ImplicitGridCollisionDetect();
 
+		// for collision outside or overlap of the grid
 		std::vector<Entity> temp_list = mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList;
 		if (temp_list.size() > 1) {
 			CollisionDetect(temp_list);
 		}
 	}
 
+	// Resloves collisions among all the entities
 	void Physics::NarrowPhase() {
 		for (int i = 0; i < mContactList.size(); i++) {
 			Manifold contact = mContactList[i];
@@ -310,6 +301,7 @@ namespace IS {
 		}
 	}
 
+	// separate body when penetrating during colliding
 	void Physics::SeparateBodies(RigidBody* bodyA, RigidBody* bodyB, Transform* transA, Transform* transB, Vector2D const& vec) {
 		// vector of penetration depth to move entities apart
 		
@@ -362,6 +354,7 @@ namespace IS {
 		bodyB.mVelocity += impulse * bodyB.mInvMass;
 	}
 
+	// Resolves collisions between two rigid bodies, including rotation effects, by calculating and applying the impulse force to update the velocities and angular velocities of colliding entities.
 	void Physics::ResolveCollisionWithRotation(Manifold& contact) {
 		// init
 		RigidBody* bodyA = contact.mBodyA;
@@ -370,9 +363,6 @@ namespace IS {
 		Vector2D contact1 = contact.mContact1;
 		Vector2D contact2 = contact.mContact2;
 		int contactCount = contact.mContactCount;
-
-		// getting the lower restitution
-		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
 
 		std::vector<Vector2D> temp_contact_list;
 		std::vector<Vector2D> temp_impulse_list;
@@ -388,41 +378,47 @@ namespace IS {
 			temp_rb_list.emplace_back(Vector2D());
 		}
 
+		// getting the lower restitution
+		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
+
 		for (int i = 0; i < contactCount; i++) {
+			// for calculating angular linear velocity in Vector2D
 			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
 			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
 
 			temp_ra_list[i] = ra;
 			temp_rb_list[i] = rb;
 
-			Vector2D raPerp = Vector2D(-ra.y, ra.x);
-			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+			Vector2D ra_perp = Vector2D(-ra.y, ra.x);
+			Vector2D rb_perp = Vector2D(-rb.y, rb.x);
 
-			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
-			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+			Vector2D angular_linear_velocityA = ra_perp * bodyA->mAngularVelocity;
+			Vector2D angular_linear_velocityB = rb_perp * bodyB->mAngularVelocity;
 
-			Vector2D relativeVelocity =
-				(bodyB->mVelocity + angularLinearVelocityB) -
-				(bodyA->mVelocity + angularLinearVelocityA);
+			Vector2D relative_velocity =
+				(bodyB->mVelocity + angular_linear_velocityB) -
+				(bodyA->mVelocity + angular_linear_velocityA);
 
-			float contactVelocityMag = ISVector2DDotProduct(relativeVelocity, normal);
+			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contactVelocityMag > 0.f)
+			if (contact_velocity_mag > 0.f) // bodys moving away each other
 			{
 				continue;
 			}
 
-			float raPerpDotN = ISVector2DDotProduct(raPerp, normal);
-			float rbPerpDotN = ISVector2DDotProduct(rbPerp, normal);
+			float ra_perp_dotN = ISVector2DDotProduct(ra_perp, normal);
+			float rb_perp_dotN = ISVector2DDotProduct(rb_perp, normal);
 
+			// follow the formula
 			float denom = bodyA->mInvMass + bodyB->mInvMass +
-				(raPerpDotN * raPerpDotN) * bodyA->mInvInertia +
-				(rbPerpDotN * rbPerpDotN) * bodyB->mInvInertia;
+				(ra_perp_dotN * ra_perp_dotN) * bodyA->mInvInertia +
+				(rb_perp_dotN * rb_perp_dotN) * bodyB->mInvInertia;
 
-			float j = -(1.f + e) * contactVelocityMag;
+			float j = -(1.f + e) * contact_velocity_mag;
 			j /= denom;
-			j /= (float)contactCount;
+			j /= static_cast<float>(contactCount);
 
+			// save into impulse list
 			Vector2D impulse = j * normal;
 			temp_impulse_list[i] = impulse;
 		}
@@ -441,6 +437,7 @@ namespace IS {
 
 	}
 
+	// Resolves collisions between two rigid bodies, including rotation and friction effects, by calculating and applying the impulse force to update the velocities, angular velocities, and angular impulses of colliding entities.
 	void Physics::ResolveCollisionWithRotationAndFriction(Manifold& contact) {
 		// init
 		RigidBody* bodyA = contact.mBodyA;
@@ -449,12 +446,6 @@ namespace IS {
 		Vector2D contact1 = contact.mContact1;
 		Vector2D contact2 = contact.mContact2;
 		int contactCount = contact.mContactCount;
-
-		// getting the lower restitution
-		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
-
-		float sf = (bodyA->mStaticFriction + bodyB->mStaticFriction) * 0.5f;
-		float df = (bodyA->mDynamicFriction + bodyB->mDynamicFriction) * 0.5f;
 
 		std::vector<Vector2D> temp_contact_list;
 		std::vector<Vector2D> temp_impulse_list;
@@ -474,42 +465,51 @@ namespace IS {
 			temp_j_list.emplace_back(0.f);
 		}
 
+		// getting the lower restitution
+		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
+
+		float sf = (bodyA->mStaticFriction + bodyB->mStaticFriction) * 0.5f;
+		float df = (bodyA->mDynamicFriction + bodyB->mDynamicFriction) * 0.5f;
+
 		// calculation for rotational velocity
 		for (int i = 0; i < contactCount; i++) {
+			// for calculating angular linear velocity in Vector2D
 			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
 			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
 
 			temp_ra_list[i] = ra;
 			temp_rb_list[i] = rb;
 
-			Vector2D raPerp = Vector2D(-ra.y, ra.x);
-			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+			Vector2D ra_perp = Vector2D(-ra.y, ra.x);
+			Vector2D rb_perp = Vector2D(-rb.y, rb.x);
 
-			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
-			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+			Vector2D angular_linear_velocityA = ra_perp * bodyA->mAngularVelocity;
+			Vector2D angular_linear_velocityB = rb_perp * bodyB->mAngularVelocity;
 
-			Vector2D relativeVelocity =
-				(bodyB->mVelocity + angularLinearVelocityB) -
-				(bodyA->mVelocity + angularLinearVelocityA);
+			Vector2D relative_velocity =
+				(bodyB->mVelocity + angular_linear_velocityB) -
+				(bodyA->mVelocity + angular_linear_velocityA);
 
-			float contactVelocityMag = ISVector2DDotProduct(relativeVelocity, normal);
+			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contactVelocityMag > 0.f)
+			if (contact_velocity_mag > 0.f) // moving away
 			{
 				continue;
 			}
 
-			float raPerpDotN = ISVector2DDotProduct(raPerp, normal);
-			float rbPerpDotN = ISVector2DDotProduct(rbPerp, normal);
+			float ra_perp_dotN = ISVector2DDotProduct(ra_perp, normal);
+			float rb_perp_dotN = ISVector2DDotProduct(rb_perp, normal);
 
+			// follow the formula
 			float denom = bodyA->mInvMass + bodyB->mInvMass +
-				(raPerpDotN * raPerpDotN) * bodyA->mInvInertia +
-				(rbPerpDotN * rbPerpDotN) * bodyB->mInvInertia;
+				(ra_perp_dotN * ra_perp_dotN) * bodyA->mInvInertia +
+				(rb_perp_dotN * rb_perp_dotN) * bodyB->mInvInertia;
 
-			float j = -(1.f + e) * contactVelocityMag;
+			float j = -(1.f + e) * contact_velocity_mag;
 			j /= denom;
 			j /= static_cast<float>(contactCount);
 
+			// for friction impulse below
 			temp_j_list[i] = j;
 
 			Vector2D impulse = j * normal;
@@ -536,67 +536,70 @@ namespace IS {
 			temp_ra_list[i] = ra;
 			temp_rb_list[i] = rb;
 
-			Vector2D raPerp = Vector2D(-ra.y, ra.x);
-			Vector2D rbPerp = Vector2D(-rb.y, rb.x);
+			Vector2D ra_perp = Vector2D(-ra.y, ra.x);
+			Vector2D rb_perp = Vector2D(-rb.y, rb.x);
 
-			Vector2D angularLinearVelocityA = raPerp * bodyA->mAngularVelocity;
-			Vector2D angularLinearVelocityB = rbPerp * bodyB->mAngularVelocity;
+			Vector2D angular_linear_velocityA = ra_perp * bodyA->mAngularVelocity;
+			Vector2D angular_linear_velocityB = rb_perp * bodyB->mAngularVelocity;
 
-			Vector2D relativeVelocity =
-				(bodyB->mVelocity + angularLinearVelocityB) -
-				(bodyA->mVelocity + angularLinearVelocityA);
+			Vector2D relative_velocity =
+				(bodyB->mVelocity + angular_linear_velocityB) -
+				(bodyA->mVelocity + angular_linear_velocityA);
 
-			Vector2D tangent = relativeVelocity - ISVector2DDotProduct(relativeVelocity, normal) * normal;
+			Vector2D tangent = relative_velocity - ISVector2DDotProduct(relative_velocity, normal) * normal;
 
 			if (mManifoldInfo.NearlyEqual(tangent, Vector2D()))
 			{
-				continue;
+				continue; // continue if the friction tangent is close to 0, no friction will be applied
 			}
 			else
 			{
 				ISVector2DNormalize(tangent, tangent);
 			}
 
-			float raPerpDotT = ISVector2DDotProduct(raPerp, tangent);
-			float rbPerpDotT = ISVector2DDotProduct(rbPerp, tangent);
+			float ra_perp_dotT = ISVector2DDotProduct(ra_perp, tangent);
+			float rb_perp_dotT = ISVector2DDotProduct(rb_perp, tangent);
 
+			// formula ustage
 			float denom = bodyA->mInvMass + bodyB->mInvMass +
-				(raPerpDotT * raPerpDotT) * bodyA->mInvInertia +
-				(rbPerpDotT * rbPerpDotT) * bodyB->mInvInertia;
+				(ra_perp_dotT * ra_perp_dotT) * bodyA->mInvInertia +
+				(rb_perp_dotT * rb_perp_dotT) * bodyB->mInvInertia;
 
-			float jt = -ISVector2DDotProduct(relativeVelocity, tangent);
+			float jt = -ISVector2DDotProduct(relative_velocity, tangent);
 			jt /= denom;
 			jt /= static_cast<float>(contactCount);
 
-			Vector2D firction_impulse;
+			Vector2D friction_impulse;
 			float j = temp_j_list[i];
 
+			// Coulomb's law, clamp the friction to a certain value
 			if (std::abs(jt) <= j * sf)
 			{
-				firction_impulse = jt * tangent;
+				friction_impulse = jt * tangent;
 			}
 			else
 			{
-				firction_impulse = -j * tangent * df;
+				friction_impulse = -j * tangent * df;
 			}
 
-
-			temp_impulse_list[i] = firction_impulse;
+			temp_impulse_list[i] = friction_impulse;
 		}
 
+		// apply on velocity and angular velocity
 		for (int i = 0; i < contactCount; i++)
 		{
-			Vector2D firction_impulse = temp_impulse_list[i];
+			Vector2D friction_impulse = temp_impulse_list[i];
 			Vector2D ra = temp_ra_list[i];
 			Vector2D rb = temp_rb_list[i];
 
-			bodyA->mVelocity += -firction_impulse * bodyA->mInvMass;
-			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, firction_impulse) * bodyA->mInvInertia;
-			bodyB->mVelocity += firction_impulse * bodyB->mInvMass;
-			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, firction_impulse) * bodyB->mInvInertia;
+			bodyA->mVelocity += -friction_impulse * bodyA->mInvMass;
+			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, friction_impulse) * bodyA->mInvInertia;
+			bodyB->mVelocity += friction_impulse * bodyB->mInvMass;
+			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, friction_impulse) * bodyB->mInvInertia;
 		}
 	}
 
+	// Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
 	void Physics::DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color) {
 		// draw colliders in green
 		if (mShowColliders) {
@@ -609,9 +612,7 @@ namespace IS {
 		}
 
 		// draw grid cell line in white
-		if (mShowGrid)
-			//Grid::DrawGrid(sprite);
-			ImplicitGrid::DrawGrid();
+		if (mShowGrid) ImplicitGrid::DrawGrid();
 
 		// draw the velocity line in blue
 		if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
@@ -627,8 +628,6 @@ namespace IS {
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-				//auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				//body.BodyFollowTransform(trans);
 				
 				//// if the entity is static or kinematic, skip
 				//if (body.mBodyType != BodyType::Dynamic) {
@@ -649,7 +648,6 @@ namespace IS {
 				if (mExertingGravity) {
 					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
 					body.mVelocity += body.mAcceleration * time;
-					//body.mVelocity += mGravity * time;
 				}
 
 				// set range
@@ -666,25 +664,8 @@ namespace IS {
 				// update position
 				mImplicitGrid.UpdateCell(entity, time);
 				//trans.world_position += body.mVelocity * time;
-				//mGrid.UpdateCell(entity, time);
 			}
 		}
-	}
-
-	std::vector<Entity> Physics::GetSelectedEntities(Vector2D const& position, std::set<Entity> const& entities) {
-		std::vector<Entity> entities_list;
-		entities_list.clear();
-		// AABB only
-		for (auto const& entity : entities) {
-			auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-			if (position.x >= trans.world_position.x - (trans.scaling.x / 2.f) && 
-				position.x <= trans.world_position.x + (trans.scaling.x / 2.f) &&
-				position.y >= trans.world_position.y - (trans.scaling.y / 2.f) &&
-				position.y <= trans.world_position.y + (trans.scaling.y / 2.f)) {
-				entities_list.emplace_back(entity);
-			}
-		}
-		return entities_list;
 	}
 }
 
