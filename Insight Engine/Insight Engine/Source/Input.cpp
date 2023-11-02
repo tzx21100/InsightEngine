@@ -247,7 +247,7 @@ namespace IS {
         // Texture file
         else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") { asset->LoadImage(filename); }
         // Audio file
-        else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") { /* asset->LoadAudio(filename); */ }
+        else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") {  asset->LoadAudio(filename);  }
         // Prefab file
         else if (extension == ".json") { asset->LoadPrefab(filename); }
         else { IS_CORE_WARN("File type \"{}\" not supported!", extension.string()); }
