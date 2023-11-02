@@ -155,6 +155,11 @@ namespace IS {
             }
         }
 
+        else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+        {
+            mHoveredEntity = {};
+        }
+
     } // end OnUpdate()
 
     void EditorLayer::OnRender()
