@@ -1,5 +1,5 @@
 /*!
- * \file Physics.cpp
+ * \file Manifold.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
  * \date 01-11-2023
