@@ -42,28 +42,6 @@ namespace IS {
             return "Sprite";
         }
 
-        enum DrawLayer : int
-        {
-            BACKGROUND_LAYER = 0,
-            DEFAULT_LAYER,
-            FOREGROUND_LAYER,
-            UI_LAYER,
-            INVALID_LAYER // always the last
-        };
-
-        static std::string LayerToString(DrawLayer layer)
-        {
-            switch (layer)
-            {
-            case BACKGROUND_LAYER:  return "Background";
-            case DEFAULT_LAYER:     return "Default";
-            case FOREGROUND_LAYER:  return "Foreground";
-            case UI_LAYER:          return "UI";
-            default: break;
-            }
-            return "Invalid";
-        }
-
         struct instanceData {
             glm::vec3 color{};
             float tex_index{};
@@ -86,14 +64,42 @@ namespace IS {
         int animation_index{};     // The current texture index for switching animations (0 is the default texture).
         Image img{};
         std::vector<Animation> anims{};
+        bool toRender{ true };
+
+        // For layering
         int layer{};
+        enum DrawLayer : int
+        {
+            BACKGROUND_LAYER = 0,
+            DEFAULT_LAYER,
+            FOREGROUND_LAYER,
+            UI_LAYER,
+            INVALID_LAYER // always the last
+        };
+
+        static std::unordered_set<int> layersToIgnore;
+
+        static void toggleLayer(DrawLayer layer);
+        void toggleRender();
+
+        static std::string LayerToString(DrawLayer layer)
+        {
+            switch (layer)
+            {
+            case BACKGROUND_LAYER:  return "Background";
+            case DEFAULT_LAYER:     return "Default";
+            case FOREGROUND_LAYER:  return "Foreground";
+            case UI_LAYER:          return "UI";
+            default: break;
+            }
+            return "Invalid";
+        }
 
         struct GfxLayerComparator {
             bool operator()(instanceData const& a, instanceData const& b) const {
                 return a.layer < b.layer;
             }
         };
-
 
         // ImGui properties
         std::string name;          // The name of the sprite.
