@@ -29,6 +29,15 @@ namespace IS {
     }
 
     void AIFSMManager::Update([[maybe_unused]] float deltaTime) {
+
+        for (auto const& entity : mEntities) {
+            auto state_component = InsightEngine::Instance().GetComponent<AIState>(entity);
+            state_component.Update();
+
+        }
+
+        // Below should eventually be shifted to scripting, leave as reference and example
+        
         //AIFSMManager aiFSM;
 
         //AIState idleState;
