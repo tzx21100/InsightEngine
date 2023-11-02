@@ -159,9 +159,7 @@ namespace IS {
             //sprite_point.primitive_type = GL_POINTS;
 
             int width = engine.GetWindowWidth();
-            /*int height = engine.GetWindowHeight();
-            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
-            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+            int height = engine.GetWindowHeight();
             entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
             auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
             auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
@@ -170,7 +168,7 @@ namespace IS {
             trans_ai.setScaling(width * 0.05375f, height * 0.13333333f);
             trans_ai.setWorldPosition(200.f,-200.f);
             body_ai.mAngularVelocity = 10.f;
-            body_ai.mRestitution = 0.1f;*/
+            body_ai.mRestitution = 0.1f;
 
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
