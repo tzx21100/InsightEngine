@@ -255,21 +255,25 @@ namespace IS {
     Entity InsightEngine::GenerateRandomEntity(bool with_texture) {
         PRNG& prng = PRNG::Instance();
         InsightEngine& engine = Instance();
-        auto const& window = engine.GetSystem<WindowSystem>("Window");
-        auto [width, height] = window->GetWindowSize();
+        Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        Vector2D window_size = { static_cast<float>(GetWindowWidth()), static_cast<float>(GetWindowHeight())};
+        window_size /= camera.GetZoomLevel();
 
         Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
         auto& trans = engine.GetComponent<Transform>(e);
 
         // Constants
-        constexpr float MAX_SCALE = 16.f;
-        constexpr float MIN_SCALE = 2.f;
         constexpr float MAX_ROTATION = 720.f;
         constexpr float MIN_ROTATION = -360.f;
+        float MAX_SCALE = 16.f;
+        float MIN_SCALE = 2.f;
+
+        MAX_SCALE /= camera.GetZoomLevel();
+        MIN_SCALE /= camera.GetZoomLevel();
 
         // scale [2, 16], pos [viewport], orientation [-360, 360]
         trans.setScaling((prng.generate() * (MAX_SCALE - MIN_SCALE)) + MIN_SCALE, (prng.generate() * (MAX_SCALE - MIN_SCALE)) + MIN_SCALE);
-        trans.setWorldPosition((prng.generate() * width) - width * .5f, (prng.generate()* height) - height * .5f);
+        trans.setWorldPosition((prng.generate() * window_size.x) - window_size.x * .5f, (prng.generate()* window_size.y) - window_size.y * .5f);
         trans.setRotation((prng.generate() * (MAX_ROTATION - MIN_ROTATION)) + MIN_ROTATION);
 
         // with texture
@@ -277,15 +281,15 @@ namespace IS {
             auto& sprite = engine.GetComponent<Sprite>(e);
             auto asset = engine.GetSystem<AssetManager>("Asset");
             float gacha = prng.generate(); // [0, 1]
-            constexpr float ULTRA_RARE = 0.3f;
-            constexpr float SUPER_RARE = 0.6f;
-            constexpr float RARE = 0.8f;
+            constexpr float ULTRA_RARE = .25f;
+            constexpr float SUPER_RARE = .5f;
+            constexpr float RARE = .75f;
 
             Image random_img =
                 (gacha <= ULTRA_RARE) ? *asset->GetImage("Assets/Textures/icecream_truck_frame.png") :
                 (gacha <= SUPER_RARE) ? *asset->GetImage("Assets/Textures/player_frame.png") :
                 (gacha <= RARE) ? *asset->GetImage("Assets/Textures/wii.png") : *asset->GetImage("Assets/Textures/placeholder_background.png");
-            sprite.img.texture_id = static_cast<uint8_t>(random_img.mTextureData);
+            sprite.img = random_img;
         }
 
         return e;

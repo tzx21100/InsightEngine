@@ -410,13 +410,6 @@ namespace IS {
 
                                 ImGui::TableNextColumn();
                                 ImGui::PushFont(FONT_BOLD);
-                                ImGui::TextUnformatted("Frame Duration");
-                                ImGui::PopFont();
-                                ImGui::TableNextColumn();
-                                ImGui::SliderFloat("##Frame Duration", &animation.time_per_frame, 0.01f, 1.f, "%.2f sec");
-
-                                ImGui::TableNextColumn();
-                                ImGui::PushFont(FONT_BOLD);
                                 ImGui::TextUnformatted("Columns");
                                 ImGui::PopFont();
                                 ImGui::TableNextColumn();
@@ -431,10 +424,6 @@ namespace IS {
 
                                 ImGui::EndTable(); // end table Animation Data
                             }
-                            Vector2D temp = { animation.frame_dimension.x, animation.frame_dimension.y };
-                            EditorUtils::RenderControlVec2("Frame Size", temp);
-                            animation.frame_dimension = { temp.x, temp.y };
-
                             ImGui::PopID();
                             ++i;
                         }
