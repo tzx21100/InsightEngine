@@ -3,10 +3,9 @@
 \file    ScriptGlue.cpp
 \author  Matthew Ng, matthewdeen.ng@digipen.edu
 \par     Course: CSD2401
-\date    27-09-2023
+\date    2-11-2023
 \brief   This source file defines the implementation of the ScriptGlue class, which
-         registers C++ functions to be accessible from C# scripts. It includes
-         functions for logging messages and vectors.
+         registers C++ functions to be accessible from C# scripts. 
 
 \copyright
 All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -91,7 +90,7 @@ namespace IS {
     }
 
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
-        auto &engine = InsightEngine::Instance();
+        auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(entity_id);
         Vector2D vec(x, y);
         body_component.AddVelocity(vec);
