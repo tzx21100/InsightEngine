@@ -350,7 +350,7 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
                     for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent,Pathfinder>("Ice Cream Truck");
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.05f, height * 0.094222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
@@ -371,7 +371,7 @@ namespace IS {
                 }
 
                 if (input->IsKeyPressed(GLFW_KEY_P)) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Ice Cream Truck");
+                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Pathing Ice Cream Truck");
                     auto& transl = engine.GetComponent<Transform>(a);
                     transl.setScaling(width * 0.05f, height * 0.094222222f);
                     transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
