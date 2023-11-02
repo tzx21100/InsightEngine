@@ -1,4 +1,114 @@
 {
-	"Entities" : [],
-	"EntityAmount" : 0
+	"Entities" : 
+	[
+		{
+			"Name" : "IceCream Truck",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 40000.0,
+				"RigidBodyBodyType" : 1,
+				"RigidBodyCheckTransform" : true,
+				"RigidBodyDensity" : 200000.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.20000000298023224,
+				"RigidBodyMass" : 5.0,
+				"RigidBodyRestitution" : 0.10000000149011612,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : -100.000732421875,
+						"y" : -201.61715698242188
+					},
+					{
+						"x" : 99.999267578125,
+						"y" : -201.61715698242188
+					},
+					{
+						"x" : 99.999267578125,
+						"y" : -401.61715698242188
+					},
+					{
+						"x" : -100.000732421875,
+						"y" : -401.61715698242188
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : -768.45269775390625,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -100.0,
+						"y" : 100.0
+					},
+					{
+						"x" : 100.0,
+						"y" : 100.0
+					},
+					{
+						"x" : 100.0,
+						"y" : -100.0
+					},
+					{
+						"x" : -100.0,
+						"y" : -100.0
+					}
+				],
+				"mDynamicFriction" : 1.1000000238418579,
+				"mInertia" : 33333.3359375,
+				"mInvInertia" : 2.9999997423146851e-05,
+				"mStaticFriction" : 1.2000000476837158
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorX" : 0.72267067432403564,
+				"SpriteColorY" : 0.26101464033126831,
+				"SpriteColorZ" : 0.18636052310466766,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteDrawing" : true,
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 3,
+				"SpriteTextureHeight" : 175,
+				"SpriteTextureIndex" : 2,
+				"SpriteTextureWidth" : 1050,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 200.0,
+				"SpriteTransformScalingY" : 200.0,
+				"SpriteTransformWorldPositionX" : -0.00073611736297607422,
+				"SpriteTransformWorldPositionY" : -301.61715698242188,
+				"animations" : 
+				[
+					{
+						"Name" : "bounce",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 1.0,
+						"frame_dimension_y" : 0.1666666716337204,
+						"frame_index_x" : 130.0,
+						"frame_index_y" : 21.0,
+						"frame_timer" : 0.10000000149011612,
+						"time_per_frame" : 0.1666666716337204,
+						"x_frames" : 6,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 200.0,
+				"TransformScalingY" : 200.0,
+				"TransformWorldPositionX" : -0.00073611736297607422,
+				"TransformWorldPositionY" : -301.61715698242188
+			}
+		}
+	],
+	"EntityAmount" : 1
 }

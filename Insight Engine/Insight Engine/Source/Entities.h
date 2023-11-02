@@ -208,6 +208,13 @@ namespace IS {
 			return mEntityIds[entity];
 		}
 
+		void SetName(Entity entity, std::string name) {
+			std::string entityName = mEntityIds[entity];
+			mEntityNames.erase(entityName);
+			mEntityNames[name] = entity;
+			mEntityIds[entity] = name;
+		}
+
 		/**
 		 * \brief Gets the number of currently alive entities.
 		 *

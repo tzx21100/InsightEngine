@@ -105,7 +105,7 @@ namespace IS {
                         const bool is_selected = (name == prefab_name);
                         if (ImGui::Selectable(prefab_name.c_str(), is_selected))
                         {
-                            engine.LoadFromPrefab(prefab);
+                            engine.LoadFromPrefab(prefab,entity);
                             mShowPrefabs = false;
                         }
                         if (is_selected)

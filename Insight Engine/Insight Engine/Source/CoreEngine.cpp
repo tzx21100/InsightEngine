@@ -336,13 +336,15 @@ namespace IS {
     /* This directly Loads an entity from an absolute filepath
     *  This is so that it can be used easily by other functions since its not for  a specific use case
     */
-    Entity InsightEngine::LoadEntityFromJson(std::string name) {
+    Entity InsightEngine::LoadEntityFromJson(std::string name, Entity entity) {
         std::string filename = name;
         Json::Value loaded;
         LoadJsonFromFile(loaded, filename);
         std::string str_sig = loaded["Signature"].asString();
         std::string entity_name = loaded["Name"].asString();
-        Entity entity = CreateEntity(entity_name);
+        mComponentManager->EntityDestroyed(entity);
+        mSystemManager->EntityDestroyed(entity);
+        mEntityManager->SetName(entity, entity_name);
         //add in future components: the DeserializeComponent is defined in the .h as a helper function to make calling easier
         DeserializeAllComponents(entity, loaded);
         return entity;
@@ -358,9 +360,8 @@ namespace IS {
     }
 
     //creating an entity from prefab
-    Entity InsightEngine::LoadFromPrefab(Prefab prefab) {
-        Entity entity = CreateEntity(prefab.mName);
-        PrefabSignatureToEntity(prefab.mSignature, entity);
+    Entity InsightEngine::LoadFromPrefab(Prefab prefab ,Entity entity) {
+        LoadEntityFromJson("Assets/Prefabs/"+prefab.mName + ".json",entity);
         return entity;
 
     }
