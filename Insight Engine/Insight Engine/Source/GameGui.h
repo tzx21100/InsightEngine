@@ -21,7 +21,6 @@
  ----------------------------------------------------------------------------- */
 #include "System.h"
 #include "Component.h"
-#include "CoreEngine.h"
 
 
 namespace IS {
@@ -44,9 +43,26 @@ namespace IS {
             return "ButtonComponent";
         }
         std::string mButtonText;
-        int mButtonType;
-        int mButtonState;
+        int mButtonType{};
+        int mButtonState{};
         std::string ImageName;
+
+        Json::Value Serialize() {
+           Json::Value button_data;
+           button_data["ButtonText"] = mButtonText;
+           button_data["ButtonType"] = mButtonType;
+           button_data["ButtonState"] = mButtonState;
+           button_data["ButtonImageName"] = ImageName;
+           return button_data;
+        }
+
+        void Deserialize(Json::Value data) {
+            
+            mButtonText = data["ButtonText"].asString();
+            mButtonType = data["ButtonType"].asInt();
+            mButtonState = data["ButtonState"].asInt();
+            ImageName = data["ButtonImageName"].asString();
+        }
     };
 
 
