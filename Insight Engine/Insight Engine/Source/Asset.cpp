@@ -86,17 +86,19 @@ namespace IS {
         path = SOUND_DIRECTORY;
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().string();
+            auto const& filepath = entry.path();
+            //std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
             if (extension == ".MP3" || extension == ".WAV" || extension ==".wav" || extension==".mp3") {
-                FMOD::Channel* channel = audio->ISAudioLoadSound(file_path.c_str());
-                FMOD::Sound* sound = audio->ISAudioLoadSoundS(file_path.c_str());
-                std::string sound_name = entry.path().filename().string();
-                SaveSound(sound_name, sound);
-                SaveChannel(sound_name, channel);
-                IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+                //FMOD::Channel* channel = audio->ISAudioLoadSound(file_path.c_str());
+                //FMOD::Sound* sound = audio->ISAudioLoadSoundS(file_path.c_str());
+                //std::string sound_name = entry.path().filename().string();
+                //SaveSound(sound_name, sound);
+                //SaveChannel(sound_name, channel);
+                //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+                LoadAudio(filepath);
             }
         }
     }
@@ -155,16 +157,17 @@ namespace IS {
         ISGraphics::textures.emplace_back(*img);
     }
 
-    void AssetManager::LoadAudio(std::string const&)
+    void AssetManager::LoadAudio(std::filesystem::path const& path)
     {
-        //auto& engine = InsightEngine::Instance();
-        //auto audio = engine.GetSystem<ISAudio>("Aduio");
-        //FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.c_str());
-        //FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.c_str());
-        //std::string sound_name = filepath;
-        //SaveSound(sound_name, sound);
-        //SaveChannel(sound_name, channel);
-        //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+        std::string const& filepath = path.string();
+        auto& engine = InsightEngine::Instance();
+        auto audio = engine.GetSystem<ISAudio>("Audio");
+        FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.c_str());
+        FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.c_str());
+        std::string sound_name = filepath;
+        SaveSound(sound_name, sound);
+        SaveChannel(sound_name, channel);
+        IS_CORE_INFO("Loaded Sound: {} ", sound_name);
     }
 
     void AssetManager::LoadPrefab(std::string const& filepath)

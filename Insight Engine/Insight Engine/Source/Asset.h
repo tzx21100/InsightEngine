@@ -168,7 +168,7 @@ namespace IS {
         }
 
         void LoadImage(std::string const& filepath);
-        void LoadAudio(std::string const& filepath);
+        void LoadAudio(std::filesystem::path const& filepath);
         void LoadPrefab(std::string const& filepath);
 
         /*!

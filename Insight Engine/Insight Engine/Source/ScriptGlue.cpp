@@ -20,6 +20,7 @@ consent of DigiPen Institute of Technology is prohibited.
 
 /* includes */
 #include "Pch.h"
+#include "GameGui.h"
 #include <mono/metadata/object.h>
 
 namespace IS {
@@ -242,6 +243,11 @@ namespace IS {
         asset->PlayMusicByName("music.wav");
     }
 
+    static int GetButtonState() {
+        auto& button=InsightEngine::Instance().GetComponent<ButtonComponent>(InsightEngine::Instance().GetScriptCaller());
+        return button.mButtonState;
+    }
+
 
 
     /**
@@ -293,7 +299,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
         IS_ADD_INTERNAL_CALL(AudioPlayMusic);
 
-
+        // Button
+        IS_ADD_INTERNAL_CALL(GetButtonState);
 
     }
 }
