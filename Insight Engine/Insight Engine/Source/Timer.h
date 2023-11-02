@@ -34,6 +34,7 @@ namespace IS {
     public:
         /*!
          * \brief Constructs a Timer object.
+         * 
          * \param name The name of the timer.
          * \param console_print Flag indicating whether to print timer information to the console (default is true).
          */
@@ -46,6 +47,7 @@ namespace IS {
 
         /*!
          * \brief Gets the time elapsed since the timer was started.
+         * 
          * \return The time elapsed in seconds since the timer was started.
          */
         float GetDeltaTime() const;

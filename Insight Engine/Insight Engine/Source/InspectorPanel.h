@@ -41,6 +41,7 @@ namespace IS {
 
         /*!
          * \brief Constructs an InspectorPanel object.
+         * 
          * \param scene_hierarchy_panel The instance of scene hierarchy panel.
          */
         InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel);
@@ -57,20 +58,24 @@ namespace IS {
 
         /*!
          * \brief Renders component nodes for the specified Entity.
+         * 
          * \param entity The Entity for which components will be rendered.
          */
         void RenderComponentNodes(Entity entity);
 
         /*!
          * \brief Renders configuration for the specified Entity.
+         * 
          * \param entity The Entity for which configuration will be rendered.
          */
         void RenderEntityConfig(Entity entity);
 
         /*!
          * \brief Renders a specific component for the specified Entity.
+         * 
          * \tparam Component The type of the component to render.
          * \tparam RenderFunc The type of the rendering function for the component.
+         * 
          * \param label The label for the component.
          * \param entity The Entity for which the component will be rendered.
          * \param render The rendering function for the component.
@@ -78,6 +83,11 @@ namespace IS {
         template <typename Component, typename RenderFunc>
         void RenderComponent(std::string const& label, Entity entity, RenderFunc render);
 
+        /*!
+         * \brief Add animation to a sprite component.
+         * 
+         * \param sprite Sprite to add animation to.
+         */
         void AddAnimation(Sprite& sprite);
     };
 

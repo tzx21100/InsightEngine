@@ -43,6 +43,7 @@ namespace IS {
 
         /*!
          * \brief Converts tex id from GLuint to ImTextureID.
+         * 
          * \param tex_id Texture id to be converted.
          * \return The ImTextureID version of the given texture id.
          */
@@ -50,6 +51,7 @@ namespace IS {
 
         /*!
          * \brief -operator overload for ImVec2.
+         * 
          * \param lhs Left hand side of the binary operation.
          * \param rhs Right hand side of the binary operation.
          * \return The resulting subtracted value.
@@ -58,6 +60,7 @@ namespace IS {
 
         /*!
          * \brief +operator overload for ImVec2.
+         * 
          * \param lhs Left hand side of the binary operation.
          * \param rhs Right hand side of the binary operation.
          * \return The resulting added value.
@@ -68,6 +71,7 @@ namespace IS {
 
         /*!
          * \brief Render menu item with icon.
+         * 
          * \param label Display text for menu item.
          * \param shortcut Display text for shortcut.
          * \param icon_texture Texture of icon.
@@ -77,6 +81,7 @@ namespace IS {
 
         /*!
          * \brief Testing if point is within a circle.
+         * 
          * \param point Position of the point.
          * \param center Center of the circle.
          * \param radius Radius of the circle.
@@ -86,6 +91,7 @@ namespace IS {
 
         /*!
          * \brief Renders the filter input text box with hint text.
+         * 
          * \param filter The imgui text filter to render.
          * \param hint The hint to render in the filter input text box.
          */
@@ -111,6 +117,7 @@ namespace IS {
          * This function renders a combo box for an enumeration type with provided label and options using ImGui.
          *
          * \tparam EnumType The enumeration type.
+         * 
          * \param label The label for the combo box.
          * \param enum_value The reference to the enumeration value to be controlled and displayed.
          * \param item_list The list of item names for the combo box.

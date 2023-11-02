@@ -55,6 +55,7 @@ namespace IS {
 
         /*!
          * \brief Updates the Editor.
+         * 
          * \param delta_time The time difference since the last update.
          */
         void Update(float delta_time) override;
@@ -66,12 +67,14 @@ namespace IS {
 
         /*!
          * \brief Handles a message.
+         * 
          * \param message The message to be handled.
          */
         void HandleMessage(Message const& message) override;
 
         /*!
          * \brief Gets the name of the Editor.
+         * 
          * \return The name of the Editor.
          */
         std::string GetName() override;
@@ -92,24 +95,28 @@ namespace IS {
 
         /*!
          * \brief Pushes a layer to the GUI layer stack.
+         * 
          * \param layer The layer to be pushed.
          */
         void PushLayer(layer_type layer);
 
         /*!
          * \brief Pushes an overlay to the GUI layer stack.
+         * 
          * \param overlay The overlay to be pushed.
          */
         void PushOverlay(layer_type overlay);
 
         /*!
          * \brief Pops a layer from the GUI layer stack.
+         * 
          * \param layer The layer to be popped.
          */
         void PopLayer(layer_type layer);
 
         /*!
          * \brief Pops an overlay from the GUI layer stack.
+         * 
          * \param overlay The overlay to be popped.
          */
         void PopOverlay(layer_type overlay);
@@ -121,18 +128,21 @@ namespace IS {
 
         /*!
          * \brief Checks if current context wants to capture mouse.
+         * 
          * \return true if current context wants to capture mouse, else false.
          */
         bool WantCaptureMouse() const;
 
         /*!
          * \brief Checks if current context wants to capture keyboard.
+         * 
          * \return true if current context wants to capture keyboard, else false.
          */
         bool WantCaptureKeyboard() const;
 
         /*!
          * \brief Get the instance of editor layer.
+         * 
          * \return the instance of editor layer.
          */
         std::shared_ptr<EditorLayer> GetEditorLayer();

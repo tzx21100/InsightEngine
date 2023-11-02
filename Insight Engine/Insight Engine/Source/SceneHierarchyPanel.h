@@ -62,12 +62,14 @@ namespace IS {
 
         /*!
          * \brief Getter for entity selected currently.
+         * 
          * \return Pointer to the entity selected currently.
          */
         EntityPtr GetSelectedEntity();
 
         /*!
          * \brief Setter for entity selected currently.
+         * 
          * \param entity_ptr Pointer to the entity hovered currently.
          */
         void SetSelectedEntity(EntityPtr entity_ptr);
@@ -77,14 +79,25 @@ namespace IS {
          */
         void RenderSelectedEntityOutline();
 
+        /*!
+         * \brief Renders configuration for entities.
+         * 
+         * Configurations include rename, save/load prefab,
+         * add component, clone/delete entity.
+         */
         void RenderEntityConfig(Entity entity);
 
+        /*!
+         * \brief Gets the size of the scene hierarchy panel.
+         * 
+         * \return Size of the scene hierarchy panel.
+         */
         Vec2 GetPanelSize() const;
 
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
         EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
-        Vec2 mPanelSize;
+        Vec2 mPanelSize; ///< The size of the scene hierarchy panel.
 
         /*!
          * \brief Renders details about the active scene.
@@ -94,23 +107,27 @@ namespace IS {
         /*!
          * \brief Renders a node for the specified scene in the scene hierarchy.
          * \param scene The scene to be rendered.
+         * 
          */
         void RenderSceneNode(SceneID scene);
 
         /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
+         * 
          * \param entity The Entity to be rendered.
          */
         void RenderEntityNode(Entity entity);
 
         /*!
          * \brief Renders a node for the specified Entity in the scene hierarchy.
+         * 
          * \param entity The Entity to be rendered.
          */
         void ProcessSelectedEntityShortcuts();
 
         ///*!
         // * \brief Renders configuration for the specified Entity.
+        // 
         // * \param entity The Entity to be deleted.
         // * \param show Boolean flag to determine where to show window.
         // */
@@ -118,18 +135,21 @@ namespace IS {
 
         /*!
          * \brief Clone an existing entity.
+         * 
          * \param entity The Entity to be cloned.
          */
         void CloneEntity(Entity entity);
 
         /*!
          * \brief Delete an existing entity.
+         * 
          * \param entity The Entity to be deleted.
          */
         void DeleteEntity(Entity entity);
 
         /*!
          * \brief Renders gui to add component to an entity.
+         * 
          * \param entity The Entity to add components to.
          */
         static void RenderAddComponent(Entity entity);

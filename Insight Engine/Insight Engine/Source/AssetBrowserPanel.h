@@ -106,6 +106,7 @@ namespace IS {
 
         /*!
          * \brief Switches the current imported asset type.
+         * 
          * \param asset The type of asset to switch into.
          */
         void SwitchImportedAsset(std::string const& asset);
@@ -122,30 +123,35 @@ namespace IS {
 
         /*!
          * \brief Renders contents of a directory.
+         * 
          * \param directory The directory to render.
          */
         void RenderDirectoryContents(std::filesystem::path const& directory);
 
         /*!
          * \brief Renders a directory as a tree node.
+         * 
          * \param directory The directory to render.
          */
         void RenderDirectoryNode(std::filesystem::path const& directory);
 
         /*!
          * \brief Renders a directory as a tree leaf node.
+         * 
          * \param directory The directory to render.
          */
         void RenderDirectoryLeafNode(std::filesystem::path const& directory);
 
         /*!
          * \brief Switches the current directory.
+         * 
          * \param directory The directory to switch into.
          */
         void SwitchCurrentDirectory(std::filesystem::path const& directory);
 
         /*!
          * \brief Checks whether a directory has sub directory.
+         * 
          * \param directory The directory to check for.
          * \return Boolean flag indicating whether a sub directory has been found.
          */

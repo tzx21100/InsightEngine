@@ -69,6 +69,7 @@ namespace IS {
 
         /*!
          * \brief Check if the game panel is in focus.
+         * 
          * \return boolean flag indicating if game panel is in focus.
          */
         bool IsFocused() const;
@@ -96,18 +97,21 @@ namespace IS {
 
         /*!
          * \brief Check if the scene panel is in focus.
+         * 
          * \return boolean flag indicating if scene panel is in focus.
          */
         bool IsFocused() const;
 
         /*!
          * \brief Get the size of the viewport.
+         * 
          * \return vec2 containing the width and height of the viewport.
          */
         Vec2 GetViewportSize() const { return mViewportSize; }
 
         /*!
          * \brief Get upper and lower bounds of the viewport.
+         * 
          * \return an array of 2 vec2 containing the upper and lower bounds of the viewport.
          */
         std::array<Vec2, 2> const& GetViewportBounds() const { return mViewportBounds; }
@@ -145,6 +149,11 @@ namespace IS {
          */
         void RenderPanel() override;
 
+        /*!
+         * \brief Gets the size of the log console panel.
+         * 
+         * \return The size of the log console panel.
+         */
         Vec2 GetPanelSize() const;
 
     private:

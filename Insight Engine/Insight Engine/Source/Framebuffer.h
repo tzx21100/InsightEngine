@@ -27,7 +27,7 @@
 namespace IS {
 
     /*!
-     \brief The Framebuffer class represents an OpenGL framebuffer object.
+     * \brief The Framebuffer class represents an OpenGL framebuffer object.
      */
     class Framebuffer {
     public:
@@ -40,61 +40,72 @@ namespace IS {
         };
 
         /*!
-         \brief Constructs a Framebuffer object with the specified properties.
-         \param properties The properties for configuring the framebuffer.
+         * \brief Constructs a Framebuffer object with the specified properties.
+         * 
+         * \param properties The properties for configuring the framebuffer.
          */
         Framebuffer(FramebufferProps const& properties);
 
         /*!
-         \brief Destructor for cleaning up the framebuffer resources.
+         * \brief Destructor for cleaning up the framebuffer resources.
          */
         ~Framebuffer();
 
         /*!
-         \brief Creates the framebuffer object.
+         * \brief Creates the framebuffer object.
          */
         void Create();
 
         /*!
-         \brief Binds the framebuffer for rendering.
+         * \brief Binds the framebuffer for rendering.
          */
         void Bind();
 
         /*!
-         \brief Unbinds the currently bound framebuffer.
+         * \brief Unbinds the currently bound framebuffer.
          */
         void Unbind();
 
+        /*!
+         * \brief Reads the pixel at given location.
+         * 
+         * \param x The x coordinate of the pixel.
+         * \param y The y coordinate of the pixel.
+         * \return The integer value at the given location.
+         */
         int ReadPixel(GLint x, GLint y);
 
         /*!
-         \brief Gets the width and height of the framebuffer.
-         \return A pair containing the width and height of the framebuffer.
+         * \brief Gets the width and height of the framebuffer.
+         * 
+         * \return A pair containing the width and height of the framebuffer.
          */
         std::pair<GLuint, GLuint> GetSize() const;
 
         /*!
-         \brief Resizes the framebuffer to the specified width and height.
-         \param w The new width of the framebuffer.
-         \param h The new height of the framebuffer.
+         * \brief Resizes the framebuffer to the specified width and height.
+         * \param w The new width of the framebuffer.
+         * \param h The new height of the framebuffer.
          */
         void Resize(GLuint w, GLuint h);
 
         /*!
-         \brief Gets the color attachment ID.
-         \return The color attachment ID.
+         * \brief Gets the color attachment ID.
+         * 
+         * \return The color attachment ID.
          */
         GLuint GetColorAttachment() const;
 
         /*!
-         \brief Sets the color attachment ID.
-         \param color_attachment The color attachment ID to set.
+         * \brief Sets the color attachment ID.
+         * 
+         * \param color_attachment The color attachment ID to set.
          */
         void SetColorAttachment(GLuint color_attachment);        
 
     private:
-        GLuint mFramebufferID;  /**< ID of the framebuffer. */
-        FramebufferProps mProps; /**< Properties of the framebuffer. */
+        GLuint mFramebufferID;  ///< ID of the framebuffer
+        FramebufferProps mProps; ///< Properties of the framebuffer.
     };
 
 } // end namespace IS

@@ -56,6 +56,7 @@ namespace IS {
 
         /*!
          * \brief Called on every frame update.
+         * 
          * \param dt The time elapsed since the last frame (in seconds).
          */
         void OnUpdate(float dt) override;
@@ -67,6 +68,7 @@ namespace IS {
 
         /*!
          * \brief Get the dockspace position.
+         * 
          * \return Dockspace position.
          */
         Vec2 GetDockspacePosition();
@@ -78,6 +80,9 @@ namespace IS {
          */
         void OpenScene(std::string const& path);
 
+        /*!
+         * \brief Accept and process payload from asset browser.
+         */
         void AcceptAssetBrowserPayload();
 
         /*!
@@ -107,9 +112,25 @@ namespace IS {
          */
         void RenderSelectedEntityOutline() const;
 
+        /*!
+         * \brief Get size of viewport.
+         * 
+         * \return Size of viewport.
+         */
         Vec2 GetViewportSize();
 
+        /*!
+         * \brief Get size of log console panel.
+         *
+         * \return Size of log console panel.
+         */
         Vec2 GetLogConsolePanelSize() const { return mLogConsolePanel->GetPanelSize(); }
+
+        /*!
+         * \brief Get size of scene hierarchy panel.
+         *
+         * \return Size of scene hierarchy panel.
+         */
         Vec2 GetSceneHierarchyPanelSize() const { return mSceneHierarchyPanel->GetPanelSize(); }
 
     private:
@@ -198,8 +219,14 @@ namespace IS {
          */
         void ExitProgram();
 
+        /*!
+         * \brief Processes camera zoom.
+         */
         void ZoomCamera();
 
+        /*!
+         * \brief Processes camera panning.
+         */
         void PanCamera();
     };
 

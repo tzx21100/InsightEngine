@@ -39,6 +39,7 @@ namespace IS {
 
         /*!
          * \brief Constructs a Layer with a given name.
+         * 
          * \param name The name of the layer.
          */
         explicit Layer(std::string const& name) : mDebugName(name) {}
@@ -50,18 +51,21 @@ namespace IS {
 
         /*!
          * \brief Called when the layer is attached to the application.
+         * 
          * Derived classes should implement this method to perform initialization upon attachment.
          */
         virtual void OnAttach() = 0;
 
         /*!
          * \brief Called when the layer is detached from the application.
+         * 
          * Derived classes should implement this method to perform cleanup upon detachment.
          */
         virtual void OnDetach() = 0;
 
         /*!
          * \brief Called when the layer needs to update its state.
+         * 
          * \param dt The time in seconds since the last update.
          * Derived classes should implement this method to handle update logic.
          */
@@ -69,12 +73,14 @@ namespace IS {
 
         /*!
          * \brief Called when the layer needs to render its content.
+         * 
          * Derived classes should implement this method to handle rendering logic.
          */
         virtual void OnRender() = 0;
 
         /*!
          * \brief Gets the name of the layer.
+         * 
          * \return The name of the layer.
          */
         inline std::string const& GetName() const { return mDebugName; }
