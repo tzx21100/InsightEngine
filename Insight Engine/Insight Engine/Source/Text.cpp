@@ -2,7 +2,7 @@
  * \file Text.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the Text class, which provides functionality for rendering text in OpenGL.
  *

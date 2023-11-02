@@ -2,7 +2,7 @@
  * \file Animation.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the Animation class, which manages sprite animations.
  *
@@ -32,21 +32,29 @@ namespace IS {
 
         while (frame_timer >= time_per_frame) {
             frame_timer -= time_per_frame;
-            ++frame_index.x; // go to next column
-            if (frame_index.x == x_frames) { // after last column
-                frame_index.x = 0; // return to first 
-                ++frame_index.y; // go to next row
-                if (frame_index.y == y_frames) frame_index.y = 0; // after last frame, reset to first
+            // go to next column
+            ++frame_index.x; 
+
+            // after last column
+            if (frame_index.x == x_frames) { 
+                // return to first 
+                frame_index.x = 0; 
+                // go to next row
+                ++frame_index.y; 
+                // after last frame, reset to first
+                if (frame_index.y == y_frames) frame_index.y = 0; 
             }
         }
     }
 
     float Animation::getFrameWidth() const {
-        return 1.f / x_frames; // returns width of each frame
+        // returns width of each frame
+        return 1.f / x_frames; 
     }
 
     float Animation::getFrameHeight() const {
-        return 1.f / y_frames; // returns height of each frame
+        // returns height of each frame
+        return 1.f / y_frames; 
     }
 
     void Animation::resetAnimation() {

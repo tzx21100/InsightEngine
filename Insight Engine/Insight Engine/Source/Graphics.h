@@ -2,7 +2,7 @@
  * \file Graphics.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the implementation for class ISGraphics which
  * encapsulates the functionalities of a Graphics Engine.
@@ -47,12 +47,6 @@ namespace IS {
 		void Initialize() override;
 
 		/*!
-		* \brief Updates the ISGraphics system.
-		* \param delta_time The time difference since the last update.
-		*/
-		void Update(float deltaTime) override;
-
-		/*!
 		 * \brief Gets the name of the ISGraphics system.
 		 * \return The name of the ISGraphics system.
 		 */
@@ -63,6 +57,12 @@ namespace IS {
 		 * \param msg The message to be handled.
 		 */
 		void HandleMessage(const Message& msg) override;
+
+		/*!
+		* \brief Updates the ISGraphics system.
+		* \param delta_time The time difference since the last update.
+		*/
+		void Update(float deltaTime) override;
 
 		/*!
 		* \brief Draws the graphics based on the current state of the application.
@@ -103,35 +103,50 @@ namespace IS {
 		 * \param color The color of the outline.
 		 * \param thickness The width of the outline.
 		 */
-		static void DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f }, float thinkness = 1.f);
+		static void DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
+		/**
+		 * Set the line width for OpenGL rendering using glLineWidth.
+		 *
+		 * @param lWidth - The desired line width to set in OpenGL.
+		 */
 		static void setLineWidth(float lWidth) { glLineWidth(lWidth); }
-		static bool mShowTextAnimation;
 
+		
+		/// Static objects /// 
+
+		// Frame Buffer
+		static std::shared_ptr<Framebuffer> mFramebuffer;
+
+		// Meshes vector
+		static std::vector<Mesh> meshes;
+
+		// Shaders
+		static Shader inst_quad_shader_pgm;
+		static Shader inst_non_quad_shader_pgm;
+
+		// Texture vector
 		static std::vector<Image> textures;
-		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 
-		// Static objects
-		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
-		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
-		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
-		// Sprites (models) to render
-		static std::vector<Sprite> sprites;
 		// Animation objects
 		static Animation idle_ani;
 		static Animation walking_ani;
 		static Animation ice_cream_truck_ani;
-		// Shaders
-		// static Shader mesh_shader_pgm;
-		static Shader inst_quad_shader_pgm;
-		static Shader inst_non_quad_shader_pgm;
+
+		// instance data containers
+		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
+		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
+		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
+
+		// Editor and entity camera
+		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
+
+		// Text Objects
 		static Text Times_New_Roman_font;
 		static Text Brush_Script_font;
 
-		// Mesh vector
-		static std::vector<Mesh> meshes;
-		// Frame Buffer
-		static std::shared_ptr<Framebuffer> mFramebuffer;
+		// Text animation boolean
+		static bool mShowTextAnimation;
 	};
 } // end namespace IS
 

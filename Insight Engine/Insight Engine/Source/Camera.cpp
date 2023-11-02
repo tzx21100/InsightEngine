@@ -1,8 +1,27 @@
+/*!
+ * \file Camera.cpp
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 02-11-2023
+ * \brief
+ * This file defines the Camera class used for managing view and projection in graphics systems.
+ *
+ * The Camera class provides functions to update the camera's position, dimensions, rotation, and transformation.
+ * It also supports zooming and panning operations, and allows access to various camera properties like zoom level
+ * and camera vectors. This file defines the Camera class and its associated constants.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
 #include "Pch.h"
 #include "Camera.h"
 
 namespace IS {
-
+	// Static members initialization
 	aCameraType Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
 	const float Camera::CAMERA_X_MIN = -16000;
 	const float Camera::CAMERA_X_MAX =  16000.f;
@@ -19,6 +38,7 @@ namespace IS {
 	float Camera::mMoveSpeed = 5.f;
 
 	Camera::Camera() {
+		// default values for construction
 		mZoomLevel = 1.f;
 		world_position = { 0.f, 0.f };
 		camera_dim = { 0.f, 0.f };
@@ -27,13 +47,15 @@ namespace IS {
 	}
 
 	void Camera::UpdateCamPos(float newX, float newY) {
+		// Update the camera position while clamping it within specified limits.
 		world_position.x = std::clamp(newX, CAMERA_X_MIN, CAMERA_X_MAX);
 		world_position.y = std::clamp(newY, CAMERA_Y_MIN, CAMERA_Y_MAX);
 		UpdateCamXform();
 	}
 
 	void Camera::UpdateCamDim(float newWidth) {
-		camera_dim = glm::vec2(newWidth, newWidth * 0.5625f); // follow [16:9] aspect ratio
+		// follow [16:9] aspect ratio
+		camera_dim = glm::vec2(newWidth, newWidth * 0.5625f); 
 		UpdateCamXform();
 	}
 
@@ -59,12 +81,15 @@ namespace IS {
 	}
 
 	void Camera::UpdateCamXform() {
+		// map scaling
 		float scaled_width = camera_dim.x / mZoomLevel;
 		float scaled_height = camera_dim.y / mZoomLevel;
 
+		// save on calculations
 		float twoOverWidth = 2.f / (scaled_width);
 		float twoOverHeight = 2.f / (scaled_height);
 
+		// camera xform calculation
 		xform = glm::mat3 { 
 			(twoOverWidth * uVector.x),							 (twoOverHeight * vVector.x),						   0.f, // column 1
 			(twoOverWidth * uVector.y),							 (twoOverHeight * vVector.y),						   0.f, // column 2
@@ -72,19 +97,15 @@ namespace IS {
 		}; 
 	}
 
-	void Camera::ZoomCamera(float yoffset)
-	{
+	void Camera::ZoomCamera(float yoffset) {
+		// zoom based on positive or negative yOffset
 		mZoomLevel += yoffset * mZoomSpeed;
 		mZoomLevel = std::max(CAMERA_ZOOM_MIN, std::min(10.f, mZoomLevel));
 		UpdateCamXform();
-		//auto& engine = InsightEngine::Instance();
-		//auto input = engine.GetSystem<InputManager>("Input");
-		//input->setCenterPos(world_position.x, world_position.y);
-		//input->setRatio(camera_dim.x, camera_dim.y);
 	}
 
-	void Camera::PanCamera(float delta_x, float delta_y)
-	{
+	void Camera::PanCamera(float delta_x, float delta_y) {
+		// pan camera by adjusting pos in world coords
 		float new_position_x = world_position.x - delta_x * mMoveSpeed;
 		float new_position_y = world_position.y + delta_y * mMoveSpeed;
 		UpdateCamPos(new_position_x, new_position_y);

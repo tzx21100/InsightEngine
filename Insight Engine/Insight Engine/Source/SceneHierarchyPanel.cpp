@@ -392,7 +392,7 @@ namespace IS {
         {
             auto& sprite = engine.GetComponent<Sprite>(entity);
             //auto& body = engine.GetComponent<RigidBody>(entity);
-            ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f }, 3.f);
+            ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f });
         }
     }
 

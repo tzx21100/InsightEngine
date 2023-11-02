@@ -2,7 +2,7 @@
  * \file Mesh.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This header file defines the Mesh class, which represents OpenGL vertex array objects and buffers for rendering.
  *
@@ -28,13 +28,16 @@ namespace IS {
      */
     class Mesh {
     public:
+        /*!
+         * \brief Enumeration of attribute locations within the shader program.
+         */
         enum attribs {
             pos_attrib,
             tex_coord_attrib,
             color_attrib,
             tex_index_attrib,
-            x_form_row1_attrib,
-            x_form_row2_attrib,
+            x_form_row1_attrib, // shader only able to take in max 4 values at a time
+            x_form_row2_attrib, // so we will have to break a 3x3 matrix into 3 vec3
             x_form_row3_attrib,
             anim_dim_attrib,
             anim_index_attrib,
@@ -43,9 +46,8 @@ namespace IS {
 
         GLuint vao_ID{};            // The OpenGL vertex array object ID.
         GLuint vbo_ID{};            // The OpenGL vertex buffer object ID.
-        GLuint instance_vbo_ID{};
+        GLuint instance_vbo_ID{};   // The OpenGL instance vertex buffer object ID.
         GLuint draw_count{};        // The number of vertices to be drawn.
-        GLuint instance_count{};
 
         /*!
          * \brief Represents a vertex with position and texture coordinates.
@@ -55,17 +57,31 @@ namespace IS {
             glm::vec2 texCoord; // The texture coordinates.
         };
 
-
-        //std::vector<Vertex> vertices{};
-
+        /*!
+        * \brief Set up an instanced quad mesh.
+        *
+        * This function initializes the vertex and instance data for rendering an instanced quad.
+        */
         void setupInstancedQuadVAO();
+
+        /*!
+         * \brief Set up an instanced line mesh.
+         *
+         * This function initializes the vertex and instance data for rendering an instanced line.
+         */
         void setupInstancedLineVAO();
+
+        /*!
+        * \brief Set up an instanced circle mesh.
+        *
+        * This function initializes the vertex and instance data for rendering an instanced circle.
+        */
         void setupInstancedCircleVAO();
 
         /*!
          * \brief Initializes various types of meshes for rendering.
          *
-         * Initializes the necessary VAOs and VBOs for rendering a quad, point, line, and circle mesh.
+         * Initializes the necessary VAOs, VBOs abd IVBOs for rendering a quad, line, and circle mesh.
          *
          * \param meshes A vector of Mesh objects to store the initialized meshes.
          */
@@ -80,6 +96,7 @@ namespace IS {
          */
         static void cleanupMeshes(std::vector<Mesh>& meshes);
 
+        /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
         /*!
          * \brief Sets up a quad mesh with predefined vertices and texture coordinates.
          *
@@ -98,5 +115,4 @@ namespace IS {
         void setupNonQuadVAO(GLenum mesh_primitive_type);
     };
 } // end namespace IS
-
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_MESH_H

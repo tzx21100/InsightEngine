@@ -2,7 +2,7 @@
  * \file Animation.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This header file defines the Animation class, which manages sprite animations.
  *
@@ -13,6 +13,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+ /*                                                                      guard
+ ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_ANIMATION_H
 #define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_ANIMATION_H
 

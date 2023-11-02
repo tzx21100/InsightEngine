@@ -2,7 +2,7 @@
  * \file Graphics.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the implementation for class ISGraphics which
  * encapsulates the functionalities of a Graphics Engine.
@@ -24,31 +24,39 @@
 namespace IS {
 
     /// Static objects ///
-    bool ISGraphics::mShowTextAnimation = true;
+
+    // Frame Buffer
+    std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
+
+    // Meshes vector
+    std::vector<Mesh> ISGraphics::meshes;
+
+    // Shaders
+    Shader ISGraphics::inst_quad_shader_pgm;
+    Shader ISGraphics::inst_non_quad_shader_pgm;
+
+    // Texture vector
     std::vector<Image> ISGraphics::textures;
-    std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
-    std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
-    std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
-    Camera ISGraphics::cameras[2];
-    
-    // Sprites (models) to render
-    std::vector<Sprite> ISGraphics::sprites;
+
     // Animation objects
     Animation ISGraphics::idle_ani;
     Animation ISGraphics::walking_ani;
     Animation ISGraphics::ice_cream_truck_ani;
-    // Shaders
-    // Shader ISGraphics::mesh_shader_pgm;
-    Shader ISGraphics::inst_quad_shader_pgm;
-    Shader ISGraphics::inst_non_quad_shader_pgm;
 
+    // instance data containers
+    std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
+    std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
+    std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
+
+    // Editor and entity camera
+    Camera ISGraphics::cameras[2];
+    
+    // Text Objects
     Text ISGraphics::Times_New_Roman_font;
     Text ISGraphics::Brush_Script_font;
 
-    // Mesh vector
-    std::vector<Mesh> ISGraphics::meshes;
-    // Frame Buffer
-    std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
+    // Text animation boolean
+    bool ISGraphics::mShowTextAnimation = true;
 
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
@@ -57,23 +65,29 @@ namespace IS {
         glViewport(0, 0, width, height); // set viewport to window size
 
         // init graphics systems
-        Mesh::initMeshes(meshes); // init 4 meshes
+        Mesh::initMeshes(meshes); // init 3 meshes
         
-        // mesh_shader_pgm.setupSpriteShaders(); // init 2 shaders
+        // init quad shader
         inst_quad_shader_pgm.setupInstSpriteShaders();
+
+        // init debugging lines and circles shaders
         inst_non_quad_shader_pgm.setupInstLineShaders();
+
+        // init font shaders
         Times_New_Roman_font.shader.setupTextShaders();
         Brush_Script_font.shader.setupTextShaders();
+
+        // init text object
+        Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
+        Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
         
-        walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
+        // init 3 animations
+        walking_ani.initAnimation(1, 4, 1.f); 
         idle_ani.initAnimation(1, 8, 3.f);
         ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
-        // init text system
-        Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
-        Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
-
-        Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; // create framebuffer
+        // create framebuffer
+        Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
         mFramebuffer = std::make_shared<Framebuffer>(props);
         std::for_each_n(cameras, 2, [width](Camera& camera)
         {
@@ -81,6 +95,7 @@ namespace IS {
             camera.UpdateCamDim(static_cast<float>(width));
         });
 
+        // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
     }
 
@@ -93,107 +108,113 @@ namespace IS {
     }
 
     void ISGraphics::Update(float delta_time) {
-        for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
+        // macro to catch graphics error
+        GLenum error;
+        while ((error = glGetError()) != GL_NO_ERROR) {
+            IS_CORE_ERROR("OpenGL Error: {}", error);
+        }
+
+        for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
             InsightEngine& engine = InsightEngine::Instance(); // get engine instance
-
-
-            GLenum error;
-            while ((error = glGetError()) != GL_NO_ERROR) {
-                IS_CORE_ERROR("OpenGL Error: {}", error);
-            }
-
-        // update animations
-        /*idle_ani.updateAnimation(delta_time);
-        walking_ani.updateAnimation(delta_time);
-        ice_cream_truck_ani.updateAnimation(delta_time);*/
         
-        // fill up instancing vector
-        layeredQuadInstances.clear();
-        for (auto& entity : mEntities) { // for each intentity
-            // get sprite and transform components
-            auto& sprite = engine.GetComponent<Sprite>(entity);
-            auto& trans = engine.GetComponent<Transform>(entity);
+            // empty quad instance data
+            layeredQuadInstances.clear();
 
-                // update sprite's transform
+            // for each entity
+            for (auto& entity : mEntities) {
+                // get sprite and transform components
+                auto& sprite = engine.GetComponent<Sprite>(entity);
+                auto& trans = engine.GetComponent<Transform>(entity);
+
+                // update sprite's transform [will be changed]
                 sprite.followTransform(trans);
                 sprite.transform();
 
+                // if a sprite has animations, update their values with dt
                 if (!sprite.anims.empty()) {
                     sprite.anims[sprite.animation_index].updateAnimation(delta_time);
                 }
 
-                /* if (sprite.primitive_type == GL_LINES || sprite.primitive_type == GL_LINE_LOOP) {
-                     Sprite::nonQuadInstanceData instLineData;
-                     instLineData.color = sprite.color;
-                     instLineData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
-                     lineInstances.emplace_back(instLineData);
-                 }*/
+                // quad entities
+                if (sprite.primitive_type == GL_TRIANGLE_STRIP) { 
+                    // if sprite and it's layer is to be rendered
+                    if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
+                        // empty instance data
+                        Sprite::instanceData instData; 
+                        
+                        // all quads will have xform, entityID, layer
+                        instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
+                        instData.entID = static_cast<float>(entity);
+                        instData.layer = sprite.layer;
 
-            if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
-                if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
-                    Sprite::instanceData instData;
-                    instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
-                    instData.entID = static_cast<float>(entity);
-                    instData.layer = sprite.layer;
-                    if (sprite.img.texture_id == 0) { // no texture
-                        instData.color = sprite.color;
-                        instData.tex_index = -1.f;
-                    }
-                    else {
-                        instData.tex_index = static_cast<float>(sprite.img.texture_index);
-                    }
-                    if (!sprite.anims.empty()) {
-                        instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
-                        instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
-                    }
-                    // no need for else as default values of instData will stay
+                        // quads with no texture
+                        if (sprite.img.texture_id == 0) {
+                            // copy sprite's color to instance data
+                            instData.color = sprite.color;
+                            // set to -1 to represent no texture
+                            instData.tex_index = -1.f;
+                        }
+                        // quad has a texture (animation too)
+                        else {
+                            // copy texture index
+                            instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                        }
 
-                    layeredQuadInstances.insert(instData);
+                        // if sprite is an animation
+                        if (!sprite.anims.empty()) {
+                            // copy animation data
+                            instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                            instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                        }
+                        // insert to multiset with comparator function
+                        layeredQuadInstances.insert(instData);
+                    }
                 }
             }
+            // Graphics system's draw
+            Draw(delta_time);
         }
-
-        // draw
-        Draw(delta_time);
-        }
-
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
-        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
-        if (engine.mUsingGUI)
-            mFramebuffer->Bind(); // bind fb
+        // get engine instance
+        InsightEngine& engine = InsightEngine::Instance();
+
+        // bind fb
+        if (engine.mUsingGUI) mFramebuffer->Bind(); 
+
+        // clear color buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
-        //int entityID{};
-        //// Read the entityID value at the specified pixel coordinates
-        //glReadBuffer(GL_COLOR_ATTACHMENT1);
-        //glReadPixels(0, 0, 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
-        ////GLuint entityIDR = entityID.x;
-        //std::cout << entityID << std::endl;
-
-
+        /// get width and height, set viewport size
         if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mUsingGUI) {
             auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
             glViewport(0, 0, width, height);
         }
 
+        // can enable to test drawing of debug line / circles
         //Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
         //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
+        // quads will be drawn first
         Sprite::draw_instanced_quads();
-        Sprite::draw_instanced_circles(); // layering how?
+
+        // followed by debugging circles and lines
+        Sprite::draw_instanced_circles();
         Sprite::draw_instanced_lines();
 
+        // for each entity
         for (auto& entity : mEntities) {
-            if (engine.HasComponent<RigidBody>(entity)) { // for sprites with rigidBody
+            // if they have a rigidbody component
+            if (engine.HasComponent<RigidBody>(entity)) {
                 auto& body = engine.GetComponent<RigidBody>(entity);
+
+                // draw their outline if activated
                 Physics::DrawOutLine(body);
             }
         }
         
-
-        // Draw outline for selected entity
+        // Draw outline for selected entity (mousepicked / selected in hierarchy)
         auto const editor = engine.GetSystem<Editor>("Editor");
         auto const editor_layer = editor->GetEditorLayer();
         if (!editor_layer->IsGamePanelFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
@@ -238,12 +259,12 @@ namespace IS {
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
 
+        // Double font animation
         if (mShowTextAnimation)
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
 
         // if using ImGui, unbind fb at the end of draw
-        if (engine.mUsingGUI)
-            mFramebuffer->Unbind();
+        if (engine.mUsingGUI) mFramebuffer->Unbind();
     }
 
     void ISGraphics::cleanup() {
@@ -251,11 +272,14 @@ namespace IS {
     }
 
     void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+        // get asset manager
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
         int width, height, channels;
-        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); // load texture
+        // load texture
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); 
 
+        // error checking
         if (!data) {
             IS_CORE_ERROR("Failed to load image: {}", filepath.empty() ? "No filepath provided!" : filepath);
             return;
@@ -293,7 +317,8 @@ namespace IS {
             IS_CORE_DEBUG("OpenGL error: {}", err);
         }
 
-        stbi_image_free(data);  // Use stbi_image_free instead of delete[]
+        // Use stbi_image_free instead of delete[]
+        stbi_image_free(data);  
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -312,15 +337,18 @@ namespace IS {
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
+
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
 
-    void ISGraphics::DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color, float thickness)
+    void ISGraphics::DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color)
     {
+        // Define the four corners of the sprite's bounding box (rectangular shape) relative to its center
         Vector2D TL{ 0.f - (sprite.model_TRS.scaling.x / 2.f), 0.f + (sprite.model_TRS.scaling.y / 2.f) };
         Vector2D TR{ 0.f + (sprite.model_TRS.scaling.x / 2.f), 0.f + (sprite.model_TRS.scaling.y / 2.f) };
         Vector2D BR{ 0.f + (sprite.model_TRS.scaling.x / 2.f), 0.f - (sprite.model_TRS.scaling.y / 2.f) };
         Vector2D BL{ 0.f - (sprite.model_TRS.scaling.x / 2.f), 0.f - (sprite.model_TRS.scaling.y / 2.f) };
         
+        // Transform the corners using the sprite's transformation (model_TRS) to account for any rotation or translation
         sprite.model_TRS.getTransformedPoint(TL);
         sprite.model_TRS.getTransformedPoint(TR);
         sprite.model_TRS.getTransformedPoint(BR);
@@ -328,22 +356,19 @@ namespace IS {
 
         std::array<Vector2D, 4> vertices { TL, TR, BR, BL };
 
+        // Iterate through the vertices and draw lines to create the outline
         for (size_t i = 0; i < vertices.size(); i++)
         {
             Vector2D va = vertices[i];
             Vector2D vb = vertices[(i + 1) % vertices.size()]; // modules by the size of the vector to avoid going out of the range
 
+            // Determine whether to draw a horizontal or vertical line based on the vertex index
             if (!(i % 2)) {
                 sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.x, sprite.model_TRS.rotation);
             }
             else {
                 sprite.drawDebugLine(va, vb, color, sprite.model_TRS.scaling.y, sprite.model_TRS.rotation - 90.f);
             }
-            thickness = thickness; /// remo
-            //sprite.drawLine(va, vb, color, thickness);
         }
     }
-
-
-
 } // end namespace IS

@@ -2,7 +2,7 @@
  * \file Mesh.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the Mesh class, which represents OpenGL vertex array objects and buffers for rendering.
  *
@@ -20,9 +20,9 @@ namespace IS {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
             Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
-            Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
-            Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+            Vertex{glm::vec2(1.0f, -1.0f),  glm::vec2(1.0f, 1.0f)},
+            Vertex{glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f)},
+            Vertex{glm::vec2(1.0f, 1.0f),   glm::vec2(1.0f, 0.0f)}
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -39,7 +39,7 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, tex_coord_attrib);
 
         // Bind attributes
-        glVertexAttribPointer(pos_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+        glVertexAttribPointer(pos_attrib,       2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
         glVertexAttribPointer(tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid*>(offsetof(Vertex, texCoord)));
 
         // Create Instance Buffer Object
@@ -57,23 +57,25 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
         glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
 
-        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
-        glVertexAttribPointer(tex_index_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
+        // Specify instance data layout
+        glVertexAttribPointer(color_attrib,       3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
+        glVertexAttribPointer(tex_index_attrib,   1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
         glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
         glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 7));
         glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 10));
-        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 13));
-        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
-        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
+        glVertexAttribPointer(anim_dim_attrib,    2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 13));
+        glVertexAttribPointer(anim_index_attrib,  2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
+        glVertexAttribPointer(ent_ID_attib,       1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
 
-        glVertexAttribDivisor(color_attrib, 1);
-        glVertexAttribDivisor(tex_index_attrib, 1);
+        // Specify instance data divisor for attribute instancing
+        glVertexAttribDivisor(color_attrib,       1);
+        glVertexAttribDivisor(tex_index_attrib,   1);
         glVertexAttribDivisor(x_form_row1_attrib, 1);
         glVertexAttribDivisor(x_form_row2_attrib, 1);
         glVertexAttribDivisor(x_form_row3_attrib, 1);
-        glVertexAttribDivisor(anim_dim_attrib, 1);
-        glVertexAttribDivisor(anim_index_attrib, 1);
-        glVertexAttribDivisor(ent_ID_attib, 1);
+        glVertexAttribDivisor(anim_dim_attrib,    1);
+        glVertexAttribDivisor(anim_index_attrib,  1);
+        glVertexAttribDivisor(ent_ID_attib,       1);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -113,12 +115,14 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row2_attrib);
         glEnableVertexArrayAttrib(vao_ID, x_form_row3_attrib);
 
-        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
+        // Specify instance data layout
+        glVertexAttribPointer(color_attrib,       3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
         glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
         glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 6));
         glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 9));
 
-        glVertexAttribDivisor(color_attrib, 1);
+        // Specify instance data divisor for attribute instancing
+        glVertexAttribDivisor(color_attrib,       1);
         glVertexAttribDivisor(x_form_row1_attrib, 1);
         glVertexAttribDivisor(x_form_row2_attrib, 1);
         glVertexAttribDivisor(x_form_row3_attrib, 1);
@@ -167,12 +171,14 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row2_attrib);
         glEnableVertexArrayAttrib(vao_ID, x_form_row3_attrib);
 
-        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
+        // Specify instance data layout
+        glVertexAttribPointer(color_attrib,       3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
         glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
         glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 6));
         glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 9));
 
-        glVertexAttribDivisor(color_attrib, 1);
+        // Specify instance data divisor for attribute instancing
+        glVertexAttribDivisor(color_attrib,       1);
         glVertexAttribDivisor(x_form_row1_attrib, 1);
         glVertexAttribDivisor(x_form_row2_attrib, 1);
         glVertexAttribDivisor(x_form_row3_attrib, 1);
@@ -182,6 +188,7 @@ namespace IS {
         draw_count = static_cast<GLuint>(pos_vtx.size());
     }
 
+    // now unused
 	void Mesh::setupQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
@@ -223,6 +230,7 @@ namespace IS {
         draw_count = static_cast<GLuint>(vertices.size());
 	}
 
+    // now unused
     void Mesh::setupNonQuadVAO(GLenum mesh_primitive_type) {
 
         std::vector<glm::vec2> pos_vtx; // vector for vertice positions
@@ -278,19 +286,21 @@ namespace IS {
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // 4 meshes for 4 different models
         Mesh quad_mesh, point_mesh, line_mesh, circle_mesh, inst_quad_mesh, inst_line_mesh, inst_circle_mesh;
-        //quad_mesh.setupQuadVAO();
-        quad_mesh.setupQuadVAO();
-        point_mesh.setupNonQuadVAO(GL_POINTS);
-        line_mesh.setupNonQuadVAO(GL_LINES);
-        circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+        /// non instanced meshes
+        // quad_mesh.setupQuadVAO();
+        // quad_mesh.setupQuadVAO();
+        // point_mesh.setupNonQuadVAO(GL_POINTS);
+        // line_mesh.setupNonQuadVAO(GL_LINES);
+        // circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+
         inst_quad_mesh.setupInstancedQuadVAO();
         inst_line_mesh.setupInstancedLineVAO();
         inst_circle_mesh.setupInstancedCircleVAO();
 
-        meshes.emplace_back(quad_mesh);
-        meshes.emplace_back(point_mesh);
-        meshes.emplace_back(line_mesh);
-        meshes.emplace_back(circle_mesh);
+        // meshes.emplace_back(quad_mesh);
+        // meshes.emplace_back(point_mesh);
+        // meshes.emplace_back(line_mesh);
+        // meshes.emplace_back(circle_mesh);
         meshes.emplace_back(inst_quad_mesh);
         meshes.emplace_back(inst_line_mesh);
         meshes.emplace_back(inst_circle_mesh);
@@ -303,26 +313,4 @@ namespace IS {
             glDeleteBuffers(1, &mesh.vbo_ID);
         }
     }
-
-    //void Mesh::uploadInstanceData(const std::vector<InstanceData>& instanceData, Mesh const& mesh_used) {
-    //    glBindBuffer(GL_ARRAY_BUFFER, mesh_used.instance_vbo_ID);
-
-    //    // Map the buffer for writing
-    //    InstanceData* bufferData = (InstanceData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-
-    //    if (bufferData) {
-    //        // Copy the instance data to the mapped buffer
-    //        std::memcpy(bufferData, instanceData.data(), instanceData.size() * sizeof(InstanceData));
-
-    //        // Unmap the buffer
-    //        glUnmapBuffer(GL_ARRAY_BUFFER);
-    //    }
-    //    else {
-    //        // Handle buffer mapping error
-    //        std::cerr << "Failed to map the instance buffer for writing." << std::endl;
-    //    }
-
-    //    // Unbind the buffer
-    //    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //}
 }

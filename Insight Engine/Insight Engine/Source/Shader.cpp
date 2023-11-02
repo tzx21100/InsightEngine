@@ -2,7 +2,7 @@
  * \file Shader.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the Shader class, which encapsulates shader compilation,
  * linking, and usage in OpenGL applications.
@@ -43,7 +43,6 @@ namespace IS {
             void main()
             {
                 mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
-                //model_to_NDC_xform = transpose(model_to_NDC_xform);
                 gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
 		        vColor = aVertexColor;  
                 vTexCoord = aVertexTexCoord;
@@ -81,8 +80,6 @@ namespace IS {
                 {
                     int texIdx = int(vTexID);
                     fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
-                    //fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * 1, vTexCoord.y * 1) + vec2(1 * vAnimIndex.x, 1 * vAnimIndex.y));
-                    //fFragColor = texture(uTex2d[texIdx], vTexCoord);
                 }
                 int id = int(vEntityID);
                 fEntityID = id + 1;
@@ -133,67 +130,7 @@ namespace IS {
 
             void main()
             {
-                fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
-            }
-        )";
-
-        // Compile and link the shaders into a shader program
-        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-        link();
-        validate();
-
-        // Check if the shader program compilation and linking was successful
-        if (GL_FALSE == isLinked())
-        {
-            std::cout << "Unable to compile/link/validate shader programs\n";
-            std::cout << getLog() << "\n";
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    void Shader::setupSpriteShaders() {
-        // vertex shader
-        std::string vtx_shdr = R"(
-            #version 450 core
-            layout(location = 0) in vec2 aVertexPosition;
-            layout(location = 2) in vec2 aTexCoord;
-            out vec2 vTexCoord;
-
-            uniform mat3 uModel_to_NDC;
-
-            void main()
-            {
-                gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-                vTexCoord = aTexCoord;
-            }
-        )";
-
-        // fragment shader
-        std::string frag_shdr = R"(
-            #version 450 core
-
-            layout(location = 0) out vec4 fFragColor;
-            uniform vec3 uColor;
-            uniform sampler2D uTex2d;
-            in vec2 vTexCoord; // Input variable for texture coordinates
-            uniform int uTexture; // Flag to indicate whether to use texture or color
-
-            // animation uniforms - default unless drawing animation
-            uniform vec2 uFrameDim = vec2(1.0, 1.0); 
-            uniform vec2 uFrameIndex = vec2(0.0, 0.0);
-
-            void main()
-            {
-                if (uTexture == 0)
-                {
-                    fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
-                }
-                else
-                {
-                    //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
-                    fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
-                }
+                fFragColor = vec4(vColor, 1.0);
             }
         )";
 
@@ -510,5 +447,66 @@ namespace IS {
             std::cout << loc << "\t\t" << pname.data() << std::endl;
         }
         std::cout << "----------------------------------------------------------------------\n";
+    }
+
+    /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
+    void Shader::setupSpriteShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2 aVertexPosition;
+            layout(location = 2) in vec2 aTexCoord;
+            out vec2 vTexCoord;
+
+            uniform mat3 uModel_to_NDC;
+
+            void main()
+            {
+                gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+                vTexCoord = aTexCoord;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+
+            layout(location = 0) out vec4 fFragColor;
+            uniform vec3 uColor;
+            uniform sampler2D uTex2d;
+            in vec2 vTexCoord; // Input variable for texture coordinates
+            uniform int uTexture; // Flag to indicate whether to use texture or color
+
+            // animation uniforms - default unless drawing animation
+            uniform vec2 uFrameDim = vec2(1.0, 1.0); 
+            uniform vec2 uFrameIndex = vec2(0.0, 0.0);
+
+            void main()
+            {
+                if (uTexture == 0)
+                {
+                    fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
+                }
+                else
+                {
+                    //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
+                    fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
+                }
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
     }
 }

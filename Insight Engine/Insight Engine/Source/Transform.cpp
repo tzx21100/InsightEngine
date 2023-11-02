@@ -2,7 +2,7 @@
  * \file Transform.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This source file defines the Transform class, which represents transformation properties
  * for game objects in an OpenGL-based application.
@@ -35,7 +35,7 @@ namespace IS {
 		return Vector2D(world_position.x, world_position.y);
 	}
 
-	void Transform::getTransformedPoint(Vector2D& v) const { // simia
+	void Transform::getTransformedPoint(Vector2D& v) const {
 		Vector2D temp = v;
 		float angle = glm::radians(rotation);
 		v.x = cosf(angle) * temp.x - sinf(angle) * temp.y + world_position.x;
@@ -77,14 +77,15 @@ namespace IS {
 		// to scale to world coordinates
 		auto [width, height] = InsightEngine::Instance().GetWindowSize();
 
+		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
 		float model_scale_x = scaling.x / 2.f;
 		float model_scale_y = scaling.y / 2.f;
-
 		float tx = world_position.x;
 		float ty = world_position.y;
 
+		// dont calculate camera xform every frame
 		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
 		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
 		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3

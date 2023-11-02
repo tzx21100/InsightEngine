@@ -2,7 +2,7 @@
  * \file Shader.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This header file defines the Shader class, which encapsulates shader compilation,
  * linking, and usage in OpenGL applications.
@@ -42,15 +42,21 @@ namespace IS {
      */
     class Shader {
     public:
-        void setupInstSpriteShaders();
-        void setupInstLineShaders();
         /*!
-         * \brief Creates and sets up shaders for sprite rendering.
+         * \brief Creates and sets up shaders for instanced quad rendering.
          *
-         * This function creates and sets up shaders for rendering sprites. It compiles
+         * This function creates and sets up shaders for rendering quads. It compiles
          * both the vertex and fragment shaders and links them into a program.
          */
-        void setupSpriteShaders();
+        void setupInstSpriteShaders();
+
+        /*!
+         * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.
+         *
+         * This function creates and sets up shaders for rendering non-textured sprites. It compiles
+         * both the vertex and fragment shaders and links them into a program.
+         */
+        void setupInstLineShaders();
 
         /*!
          * \brief Creates and sets up shaders for text rendering.
@@ -156,6 +162,15 @@ namespace IS {
          * \brief Prints the list of active uniform variables.
          */
         void printUniforms() const;
+
+        /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
+        /*!
+         * \brief Creates and sets up shaders for sprite rendering.
+         *
+         * This function creates and sets up shaders for rendering sprites. It compiles
+         * both the vertex and fragment shaders and links them into a program.
+         */
+        void setupSpriteShaders();
 
     private:
         GLuint pgm_hdl = 0;          // Handle to the linked shader program object.

@@ -2,7 +2,7 @@
  * \file Transform.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This header file defines the Transform class, which represents transformation properties
  * for game objects in an OpenGL-based application.
@@ -27,6 +27,17 @@
 namespace IS {
 	class Transform : public IComponent {
 	public:
+		// Member variables
+		Vec2D world_position{};	// world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
+		float rotation{};		// z-axis rotation in degrees
+		float angle_speed{};	// rotation speed
+		Vec2D scaling{};		// x = width, y = height
+		Mtx33 mdl_to_ndc_xform; // identity matrix default
+
+		/*!
+		 * \brief Gets the type of the Transform component.
+		 * \return The name of the Transform component.
+		 */
 		static std::string GetType() {
 			return "Transform";
 		}
@@ -52,6 +63,13 @@ namespace IS {
 		 */
 		Vector2D getWorldPosition();
 
+		/**
+		 * Transforms a 2D point `v` into world coordinates using the transformation 
+		 * represented by this Transform object.
+		 * The transformation includes rotation and translation.
+		 *
+		 * @param v A reference to a Vector2D point to be transformed.
+		 */
 		void getTransformedPoint(Vector2D& v) const;
 
 		/*!
@@ -100,16 +118,13 @@ namespace IS {
 		 */
 		void Move(Vector2D const& val);
 
+		/**
+		 * Returns a transformation matrix (Mtx33) representing the combined transformation
+		 * of the object's rotation, scaling, and translation in world coordinates, relative to the active camera.
+		 *
+		 * @return An Mtx33 transformation matrix that represents the object's transformation.
+		 */
 		Mtx33 ReturnXformMatrix();
-
-		std::vector<Vector2D> GetSquareTransformVertices();
-
-		// members
-		Vec2D world_position{};	// world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]
-		float rotation{};		// z-axis rotation in degrees
-		float angle_speed{};	// rotation speed
-		Vec2D scaling{};		// x = width, y = height
-		Mtx33 mdl_to_ndc_xform; // identity matrix default
 
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.
@@ -128,9 +143,25 @@ namespace IS {
 		 * \param data The JSON Value containing the serialized data.
 		 */
 		void Deserialize(Json::Value data) override;
+
+		// not in use
+		std::vector<Vector2D> GetSquareTransformVertices();
 	};
 
+	/**
+	 * Converts a custom 3x3 matrix (Matrix3x3) to a glm 3x3 matrix (glm::mat3).
+	 *
+	 * @param mat The custom 3x3 matrix to be converted.
+	 * @return A glm 3x3 matrix that represents the same transformation as the custom matrix.
+	 */
 	glm::mat3 ISMtx33ToGlmMat3(Matrix3x3 const& mat);
+
+	/**
+	 * Converts a glm 3x3 matrix (glm::mat3) to a custom 3x3 matrix (Matrix3x3).
+	 *
+	 * @param mat The glm 3x3 matrix to be converted.
+	 * @return A custom 3x3 matrix that represents the same transformation as the glm matrix.
+	 */
 	Matrix3x3 GlmMat3ToISMtx33(glm::mat3 const& mat);
 }
 

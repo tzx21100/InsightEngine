@@ -2,7 +2,7 @@
  * \file Text.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 27-09-2023
+ * \date 02-11-2023
  * \brief
  * This header file defines the Text class, which provides functionality for rendering text in OpenGL.
  *
@@ -88,6 +88,7 @@ namespace IS {
             unsigned int Advance;   // Horizontal offset to advance to next glyph
         };
 
+        // Member variables
         Shader shader;
         std::map<GLchar, Text::Character> Characters; // A map of character information loaded from FreeType.
         unsigned int text_vao{};                        // VAO for text rendering.
