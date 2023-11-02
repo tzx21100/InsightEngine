@@ -16,6 +16,7 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) {
                 InternalCalls.NativeLog("Button Clicked", 0);
+                InternalCalls.AudioPlaySound("Assets/Sounds/sound.MP3");
             }
         }
         

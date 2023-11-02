@@ -130,24 +130,26 @@ namespace IS {
                  }*/
 
             if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
-                Sprite::instanceData instData;
-                instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
-                instData.entID = static_cast<float>(entity);
-                instData.layer = sprite.layer;
-                if (sprite.img.texture_id == 0) { // no texture
-                    instData.color = sprite.color;
-                    instData.tex_index = -1.f;
-                }
-                else {
-                    instData.tex_index = static_cast<float>(sprite.img.texture_index);
-                }
-                if (!sprite.anims.empty()) {
-                    instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
-                    instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
-                }
-                // no need for else as default values of instData will stay
+                if (Sprite::layersToIgnore.find(sprite.layer) != Sprite::layersToIgnore.end() && sprite.toRender) {
+                    Sprite::instanceData instData;
+                    instData.model_to_ndc_xform = ISMtx33ToGlmMat3(sprite.model_TRS.mdl_to_ndc_xform);
+                    instData.entID = static_cast<float>(entity);
+                    instData.layer = sprite.layer;
+                    if (sprite.img.texture_id == 0) { // no texture
+                        instData.color = sprite.color;
+                        instData.tex_index = -1.f;
+                    }
+                    else {
+                        instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                    }
+                    if (!sprite.anims.empty()) {
+                        instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                        instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                    }
+                    // no need for else as default values of instData will stay
 
-                layeredQuadInstances.insert(instData);
+                    layeredQuadInstances.insert(instData);
+                }
             }
         }
 

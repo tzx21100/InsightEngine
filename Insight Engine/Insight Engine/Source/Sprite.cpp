@@ -18,6 +18,7 @@
 
 namespace IS {
     int Sprite::texture_count = 0;
+    std::unordered_set<int> Sprite::layersToIgnore{};
 
     void Sprite::transform() {
         model_TRS.mdl_to_ndc_xform = model_TRS.ReturnXformMatrix();
@@ -252,6 +253,18 @@ namespace IS {
 
     //    return world_to_NDC_xform;
     //}
+
+    void Sprite::toggleLayer(DrawLayer layer) {
+        auto found = layersToIgnore.find(layer);
+
+        if (found == layersToIgnore.end()) layersToIgnore.insert(layer);
+
+        else layersToIgnore.erase(found);
+    }
+
+    void Sprite::toggleRender() {
+        toRender = !toRender;
+    }
 
     Json::Value Sprite::Serialize() {
         Json::Value spriteData;
