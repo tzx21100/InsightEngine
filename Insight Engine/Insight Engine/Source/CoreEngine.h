@@ -268,14 +268,14 @@ namespace IS {
          * \param filename The name of the JSON file to load the entity from.
          * \return The loaded entity.
          */
-        Entity LoadEntityFromJson(std::string filename);
+        Entity LoadEntityFromJson(std::string filename, Entity entity);
 
         /**
          * \brief Loads an entity from a prefab.
          * \param prefab The prefab to load the entity from.
          * \return The loaded entity.
          */
-        Entity LoadFromPrefab(Prefab prefab);
+        Entity LoadFromPrefab(Prefab prefab, Entity entity);
 
         /**
          * \brief Loads a prefab from a specified file.

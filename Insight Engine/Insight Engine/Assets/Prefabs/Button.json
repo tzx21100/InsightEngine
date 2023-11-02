@@ -1,0 +1,45 @@
+{
+	"ButtonComponent" : 
+	{
+		"ButtonImageName" : "",
+		"ButtonState" : 0,
+		"ButtonText" : "",
+		"ButtonType" : 0
+	},
+	"Name" : "Button",
+	"Script" : 
+	{
+		"ScriptName" : "ButtonScript"
+	},
+	"Signature" : "00000000000000000000000001100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 0,
+		"SpriteColorX" : 0.58227849006652832,
+		"SpriteColorY" : 0.53704303503036499,
+		"SpriteColorZ" : 0.39801314473152161,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureIndex" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 95.0,
+		"SpriteTransformScalingY" : 120.0,
+		"SpriteTransformWorldPositionX" : -34.482872009277344,
+		"SpriteTransformWorldPositionY" : 29.233091354370117,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 95.0,
+		"TransformScalingY" : 120.0,
+		"TransformWorldPositionX" : -34.482872009277344,
+		"TransformWorldPositionY" : 29.233091354370117
+	}
+}

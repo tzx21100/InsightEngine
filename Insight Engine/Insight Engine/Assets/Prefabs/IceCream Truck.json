@@ -1,0 +1,109 @@
+{
+	"Name" : "IceCream Truck",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 10000.0,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyCheckTransform" : true,
+		"RigidBodyDensity" : 50000.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.20000000298023224,
+		"RigidBodyMass" : 5.0,
+		"RigidBodyRestitution" : 0.10000000149011612,
+		"RigidBodyShapeType" : 0,
+		"RigidBodyTransformUpdateRequired" : false,
+		"RigidBodyTransformedVertices" : 
+		[
+			{
+				"x" : -13.951610565185547,
+				"y" : 18.441892623901367
+			},
+			{
+				"x" : 86.048385620117188,
+				"y" : 18.441892623901367
+			},
+			{
+				"x" : 86.048385620117188,
+				"y" : -81.55810546875
+			},
+			{
+				"x" : -13.951610565185547,
+				"y" : -81.55810546875
+			}
+		],
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : -768.45269775390625,
+		"RigidBodyVertices" : 
+		[
+			{
+				"x" : -50.0,
+				"y" : 50.0
+			},
+			{
+				"x" : 50.0,
+				"y" : 50.0
+			},
+			{
+				"x" : 50.0,
+				"y" : -50.0
+			},
+			{
+				"x" : -50.0,
+				"y" : -50.0
+			}
+		],
+		"mDynamicFriction" : 1.1000000238418579,
+		"mInertia" : 8333.333984375,
+		"mInvInertia" : 0.00011999998969258741,
+		"mStaticFriction" : 1.2000000476837158
+	},
+	"Signature" : "00000000000000000000000000000111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 0,
+		"SpriteColorX" : 0.4651484489440918,
+		"SpriteColorY" : 0.61472731828689575,
+		"SpriteColorZ" : 0.13033992052078247,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteDrawing" : true,
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 3,
+		"SpriteTextureHeight" : 175,
+		"SpriteTextureIndex" : 2,
+		"SpriteTextureWidth" : 1050,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 100.0,
+		"SpriteTransformScalingY" : 100.0,
+		"SpriteTransformWorldPositionX" : 36.048389434814453,
+		"SpriteTransformWorldPositionY" : -31.558107376098633,
+		"animations" : 
+		[
+			{
+				"Name" : "idle",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.1666666716337204,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.166671022772789,
+				"time_per_frame" : 0.3333333432674408,
+				"x_frames" : 6,
+				"y_frames" : 1
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 100.0,
+		"TransformScalingY" : 100.0,
+		"TransformWorldPositionX" : 36.048389434814453,
+		"TransformWorldPositionY" : -31.558107376098633
+	}
+}
