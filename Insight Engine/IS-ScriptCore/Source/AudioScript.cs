@@ -39,7 +39,7 @@ namespace IS
                 }
 
             }
-            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("Assets/Sounds/JOHN_Mindy-Theme2_Consequence-Finale_Loop_80bpm.wav"); }
+            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("Assets/Sounds/JOHN_Company History_Loop_120bpm.wav"); }
         }
         
         static public void CleanUp(){

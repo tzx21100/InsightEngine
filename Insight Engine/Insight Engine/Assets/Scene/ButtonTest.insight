@@ -22,7 +22,6 @@
 				"SpriteColorY" : 0.53704303503036499,
 				"SpriteColorZ" : 0.39801314473152161,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
@@ -32,7 +31,7 @@
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 95.0,
 				"SpriteTransformScalingY" : 120.0,
-				"SpriteTransformWorldPositionX" : -34.482872009277344,
+				"SpriteTransformWorldPositionX" : -34.482810974121094,
 				"SpriteTransformWorldPositionY" : 29.233091354370117,
 				"animations" : []
 			},
@@ -41,7 +40,7 @@
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 95.0,
 				"TransformScalingY" : 120.0,
-				"TransformWorldPositionX" : -34.482872009277344,
+				"TransformWorldPositionX" : -34.482810974121094,
 				"TransformWorldPositionY" : 29.233091354370117
 			}
 		},
@@ -57,7 +56,6 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 0.0,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
@@ -123,7 +121,6 @@
 				"SpriteColorY" : 0.80928856134414673,
 				"SpriteColorZ" : 0.47665062546730042,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,

@@ -86,13 +86,14 @@ namespace IS {
 
         currentNumberOfSteps = 0;
 
-        accumulatedTime += mDeltaTime.count(); //adding actual game loop time
+        accumulatedTime += mDeltaTime.count();
 
-        while (accumulatedTime >= mFixedDeltaTime.count()) {
-            accumulatedTime -= mFixedDeltaTime.count(); //this will store the
-            //exact accumulated time differences, among all game loops
+        // Ensure that systems are updated at least once per frame
+        do {
+            accumulatedTime -= mFixedDeltaTime.count();
             currentNumberOfSteps++;
-        }
+        } while (accumulatedTime >= mFixedDeltaTime.count());
+
         
         // Update all systems
         for (const auto& system : mSystemList) {

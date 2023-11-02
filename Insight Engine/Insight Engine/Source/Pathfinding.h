@@ -24,6 +24,9 @@
 #include "Pathfinder.h"
 
 namespace IS {
+
+
+
     
     /*!
      * \brief Waypoint class representing a navigation point in the pathfinding system.
@@ -59,6 +62,13 @@ namespace IS {
         bool mIsObstacle; //is this an obstacle
     };
 
+    // Define a comparator for the priority queue
+    struct CompareCost {
+        bool operator()(const std::pair<Waypoint*, double>& a, const std::pair<Waypoint*, double>& b) const {
+            return a.second > b.second;
+        }
+    };
+
     /*!
      * \brief Pathfinding class responsible for managing pathfinding operations.
      */
@@ -84,7 +94,7 @@ namespace IS {
         * \param waypoint The waypoint to check.
         * \return `true` if the waypoint is in the closed queue, `false` otherwise.
         */
-        bool ClosedListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>> &closed_list, Waypoint* waypoint);
+        bool ClosedListContains(std::unordered_set<Waypoint*>& closed_list, Waypoint* waypoint);
         
         /*!
          * \brief Check if a waypoint is in the open queue.
@@ -92,7 +102,7 @@ namespace IS {
          * \param waypoint The waypoint to check.
          * \return `true` if the waypoint is in the open queue, `false` otherwise.
          */
-        bool OpenListContains(std::priority_queue<Waypoint*, std::vector<Waypoint*>> &open_list, Waypoint* waypoint);
+        bool OpenListContains(std::priority_queue<std::pair<Waypoint*, double>, std::vector<std::pair<Waypoint*, double>>, CompareCost>& open_list, Waypoint* waypoint);
 
         /*!
          * \brief Find a path using the A* algorithm.

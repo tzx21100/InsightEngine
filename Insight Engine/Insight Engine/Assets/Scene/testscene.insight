@@ -6,7 +6,7 @@
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAccelerationY" : -98.099998474121094,
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 50000.0,
 				"RigidBodyBodyType" : 0,
@@ -14,7 +14,7 @@
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 5.0,
+				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
@@ -94,14 +94,133 @@
 			}
 		},
 		{
-			"Name" : ""
+			"Name" : "Player",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -98.099998474121094,
+				"RigidBodyAngularVelocity" : -1.2561213225126266e-07,
+				"RigidBodyArea" : 36000.0,
+				"RigidBodyBodyType" : 1,
+				"RigidBodyDensity" : 180000.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.20000000298023224,
+				"RigidBodyMass" : 5.0,
+				"RigidBodyRestitution" : 0.10000000149011612,
+				"RigidBodyShapeType" : 0,
+				"RigidBodyTransformUpdateRequired" : false,
+				"RigidBodyTransformedVertices" : 
+				[
+					{
+						"x" : -85.321395874023438,
+						"y" : 221.16015625
+					},
+					{
+						"x" : 114.6785888671875,
+						"y" : 221.21720886230469
+					},
+					{
+						"x" : 114.72993469238281,
+						"y" : 41.21722412109375
+					},
+					{
+						"x" : -85.270050048828125,
+						"y" : 41.160171508789062
+					}
+				],
+				"RigidBodyVelocityX" : 0.003220684826374054,
+				"RigidBodyVelocityY" : -0.033997457474470139,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -100.0,
+						"y" : 90.0
+					},
+					{
+						"x" : 100.0,
+						"y" : 90.0
+					},
+					{
+						"x" : 100.0,
+						"y" : -90.0
+					},
+					{
+						"x" : -100.0,
+						"y" : -90.0
+					}
+				],
+				"mDynamicFriction" : 1.1000000238418579,
+				"mInertia" : 30166.66796875,
+				"mInvInertia" : 3.3149168302770704e-05,
+				"mStaticFriction" : 1.2000000476837158
+			},
+			"Script" : 
+			{
+				"ScriptName" : "PlayerScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 1,
+				"Layer" : 1,
+				"SpriteColorX" : 0.85964435338973999,
+				"SpriteColorY" : 0.86737102270126343,
+				"SpriteColorZ" : 0.80789142847061157,
+				"SpriteCurrentTexIndex" : 1,
+				"SpriteName" : "ice_cream_truck",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 8,
+				"SpriteTextureHeight" : 800,
+				"SpriteTextureIndex" : 7,
+				"SpriteTextureWidth" : 15684,
+				"SpriteTransformRotation" : 0.016345683485269547,
+				"SpriteTransformScalingX" : 200.0,
+				"SpriteTransformScalingY" : 180.0,
+				"SpriteTransformWorldPositionX" : 14.704270362854004,
+				"SpriteTransformWorldPositionY" : 131.18869018554688,
+				"animations" : 
+				[
+					{
+						"Name" : "",
+						"animation_duration" : 3.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.0,
+						"time_per_frame" : 0.25,
+						"x_frames" : 12,
+						"y_frames" : 1
+					},
+					{
+						"Name" : "",
+						"animation_duration" : 3.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.15000000596046448,
+						"time_per_frame" : 0.25,
+						"x_frames" : 12,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.016345683485269547,
+				"TransformScalingX" : 200.0,
+				"TransformScalingY" : 180.0,
+				"TransformWorldPositionX" : 14.704270362854004,
+				"TransformWorldPositionY" : 131.18869018554688
+			}
 		},
 		{
 			"Name" : "Floor",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAccelerationY" : -98.099998474121094,
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 150000.0,
 				"RigidBodyBodyType" : 0,
@@ -193,7 +312,7 @@
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAccelerationY" : -98.099998474121094,
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 50000.0,
 				"RigidBodyBodyType" : 0,
@@ -201,27 +320,27 @@
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 5.0,
+				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyShapeType" : 0,
 				"RigidBodyTransformUpdateRequired" : false,
 				"RigidBodyTransformedVertices" : 
 				[
 					{
-						"x" : -230.22836303710938,
-						"y" : 0.68060302734375
+						"x" : -124.34648132324219,
+						"y" : -74.357009887695312
 					},
 					{
-						"x" : 269.77163696289062,
-						"y" : 0.68060302734375
+						"x" : -609.49432373046875,
+						"y" : 46.603923797607422
 					},
 					{
-						"x" : 269.77163696289062,
-						"y" : -99.31939697265625
+						"x" : -585.3021240234375,
+						"y" : 143.63349914550781
 					},
 					{
-						"x" : -230.22836303710938,
-						"y" : -99.31939697265625
+						"x" : -100.15428161621094,
+						"y" : 22.672565460205078
 					}
 				],
 				"RigidBodyVelocityX" : 0.0,
@@ -264,22 +383,29 @@
 				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformRotation" : 166.0,
 				"SpriteTransformScalingX" : 500.0,
 				"SpriteTransformScalingY" : 100.0,
-				"SpriteTransformWorldPositionX" : 19.771642684936523,
-				"SpriteTransformWorldPositionY" : -49.31939697265625,
+				"SpriteTransformWorldPositionX" : -354.82431030273438,
+				"SpriteTransformWorldPositionY" : 34.63824462890625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 0.0,
+				"TransformRotation" : 166.0,
 				"TransformScalingX" : 500.0,
 				"TransformScalingY" : 100.0,
-				"TransformWorldPositionX" : 19.771642684936523,
-				"TransformWorldPositionY" : -49.31939697265625
+				"TransformWorldPositionX" : -354.82431030273438,
+				"TransformWorldPositionY" : 34.63824462890625
+			}
+		},
+		{
+			"Name" : "AudioEntity",
+			"Script" : 
+			{
+				"ScriptName" : "AudioScript"
 			}
 		}
 	],
-	"EntityAmount" : 4
+	"EntityAmount" : 5
 }
