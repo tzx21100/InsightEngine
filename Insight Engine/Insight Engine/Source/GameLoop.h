@@ -62,12 +62,12 @@ namespace IS {
             //idle_anim_image->texture_index = 2;
             //walking_anim_image = asset->GetImage("Assets/player_walking.png");
             //walking_anim_image->texture_index = 3;
-            //truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
             //truck_anim_image->texture_index = 0;
 
             //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
             //idle_ani.initAnimation(1, 8, 3.f);
-            //ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
             //ISGraphics::textures.emplace_back(*backgroundTest);
             //ISGraphics::textures.emplace_back(*black_background);
@@ -159,18 +159,16 @@ namespace IS {
             //sprite_point.primitive_type = GL_POINTS;
 
             int width = engine.GetWindowWidth();
-            /*int height = engine.GetWindowHeight();
-            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
-            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
-            entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
-            auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
-            auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
-            auto& sprite_ai = engine.GetComponent<Sprite>(entity_ai);
-            sprite_ai.img = *truck_anim_image;
-            trans_ai.setScaling(width * 0.05375f, height * 0.13333333f);
-            trans_ai.setWorldPosition(200.f,-200.f);
-            body_ai.mAngularVelocity = 10.f;
-            body_ai.mRestitution = 0.1f;*/
+            //int height = engine.GetWindowHeight();
+            //entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
+            //auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
+            //auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
+            //auto& sprite_ai = engine.GetComponent<Sprite>(entity_ai);
+            //sprite_ai.img = *truck_anim_image;
+            //trans_ai.setScaling(width * 0.05375f, height * 0.13333333f);
+            //trans_ai.setWorldPosition(200.f,-200.f);
+            //body_ai.mAngularVelocity = 10.f;
+            //body_ai.mRestitution = 0.1f;
 
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
