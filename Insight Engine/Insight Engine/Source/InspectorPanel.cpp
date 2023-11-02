@@ -422,6 +422,11 @@ namespace IS {
                                 ImGui::TableNextColumn();
                                 ImGui::SliderInt("##Rows", &animation.y_frames, 1, 20);
 
+                                if (ImGui::Button("Remove Animation"))
+                                {
+                                    sprite.removeAnimation(i);
+                                }
+
                                 ImGui::EndTable(); // end table Animation Data
                             }
                             ImGui::PopID();

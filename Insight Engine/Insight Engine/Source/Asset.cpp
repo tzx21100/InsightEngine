@@ -86,11 +86,13 @@ namespace IS {
         path = SOUND_DIRECTORY;
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
+            //std::filesystem::path filepath = entry.path();
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
             if (extension == ".MP3" || extension == ".WAV" || extension ==".wav" || extension==".mp3") {
+                //LoadAudio(filepath);
                 FMOD::Channel* channel = audio->ISAudioLoadSound(file_path.c_str());
                 FMOD::Sound* sound = audio->ISAudioLoadSoundS(file_path.c_str());
                 std::string sound_name = entry.path().filename().string();
@@ -155,16 +157,16 @@ namespace IS {
         ISGraphics::textures.emplace_back(*img);
     }
 
-    void AssetManager::LoadAudio(std::string const&)
+    void AssetManager::LoadAudio(std::filesystem::path const& filepath)
     {
-        //auto& engine = InsightEngine::Instance();
-        //auto audio = engine.GetSystem<ISAudio>("Aduio");
-        //FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.c_str());
-        //FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.c_str());
-        //std::string sound_name = filepath;
-        //SaveSound(sound_name, sound);
-        //SaveChannel(sound_name, channel);
-        //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+        auto& engine = InsightEngine::Instance();
+        auto audio = engine.GetSystem<ISAudio>("Aduio");
+        FMOD::Channel* channel = audio->ISAudioLoadSound(filepath.string().c_str());
+        FMOD::Sound* sound = audio->ISAudioLoadSoundS(filepath.string().c_str());
+        std::string sound_name = filepath.filename().string();
+        SaveSound(sound_name, sound);
+        SaveChannel(sound_name, channel);
+        IS_CORE_INFO("Loaded Sound: {} ", sound_name);
     }
 
     void AssetManager::LoadPrefab(std::string const& filepath)
