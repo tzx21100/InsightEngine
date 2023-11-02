@@ -179,11 +179,13 @@ namespace IS {
 
 		// Loop through all Entities registered by the System
 		for (size_t i = 0; i < entities.size() - 1; ++i) {
+		//for (size_t i = 0; i < entities.size(); ++i) {
 			const Entity& entityA = entities[i];
 
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
 
 				for (size_t j = i + 1; j < entities.size(); ++j) {
+				//for (size_t j = 0; j < entities.size(); ++j) {
 					const Entity& entityB = entities[j];
 
 					if (entityA == entityB) { // if self checking, continue
@@ -265,13 +267,23 @@ namespace IS {
 
 	// Detects collisions among all the possible entities
 	void Physics::BroadPhase() {
-		// detect collision through Implicit Grid
-		ImplicitGridCollisionDetect();
+		// if using implicit grid
+		if (mShowGrid) {
+			// detect collision through Implicit Grid
+			ImplicitGridCollisionDetect();
 
-		// for collision outside or overlap of the grid
-		std::vector<Entity> temp_list = mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList;
-		if (temp_list.size() > 1) {
-			CollisionDetect(temp_list);
+			// for collision outside or overlap of the grid
+			std::vector<Entity> temp_list = mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList;
+			if (temp_list.size() > 1) {
+				CollisionDetect(temp_list);
+			}
+		}
+		else { // not using implict grid
+			std::vector<Entity> list;
+			for (auto const& entity : mEntities) {
+				list.emplace_back(entity);
+			}
+			CollisionDetect(list);
 		}
 	}
 
