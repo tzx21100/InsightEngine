@@ -62,12 +62,12 @@ namespace IS {
             //idle_anim_image->texture_index = 2;
             //walking_anim_image = asset->GetImage("Assets/player_walking.png");
             //walking_anim_image->texture_index = 3;
-            //truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
             //truck_anim_image->texture_index = 0;
 
             //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
             //idle_ani.initAnimation(1, 8, 3.f);
-            //ice_cream_truck_ani.initAnimation(1, 6, 2.f);
+            ice_cream_truck_ani.initAnimation(1, 6, 2.f);
 
             //ISGraphics::textures.emplace_back(*backgroundTest);
             //ISGraphics::textures.emplace_back(*black_background);
