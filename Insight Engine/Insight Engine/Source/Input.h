@@ -1,6 +1,7 @@
 /*!
  * \file Input.h
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ *         Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
