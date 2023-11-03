@@ -1,6 +1,7 @@
 /*!
  * \file Input.h
- * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu,
+ *         Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
@@ -114,6 +115,11 @@ namespace IS {
          */
         std::pair<double, double> GetMousePosition();
 
+        /**
+         * \brief Gets the current mouse position in world coordinates.
+         *
+         * \return A pair representing the previous x and y coordinates of the mouse cursor.
+         */
         std::pair<double, double> GetPreviousMousePosition() const;
 
         /**
@@ -155,6 +161,7 @@ namespace IS {
         std::unordered_set<int> released_mouse_buttons;
         std::unordered_set<int> held_mouse_buttons;
 
+        //for file explorer drag/drop
         std::unordered_set<std::filesystem::path> payloads;
 
         // variables to calculate and translate the mouse position relative to the GLFW window
@@ -163,16 +170,28 @@ namespace IS {
         float ratio_width = 1.f;
         float ratio_height = 1.f;
 
-        double world_mouse_x = 0.0;
-        double world_mouse_y = 0.0;
-        double current_mouse_x = 0.0;
-        double current_mouse_y = 0.0;
-        double previous_mouse_x = 0.0;
-        double previous_mouse_y = 0.0;
+        double world_mouse_x = 0.0; ///< world mouse x-position
+        double world_mouse_y = 0.0; ///< world mouse y-position
+        double current_mouse_x = 0.0; ///< current mouse x-position
+        double current_mouse_y = 0.0; ///< current mouse y-position
+        double previous_mouse_x = 0.0; ///< previous mouse x-position
+        double previous_mouse_y = 0.0; ///< previous mouse y-position
 
+        /**
+         * \brief Process payloads from file explorer drag/drop.
+         */
         void ProcessPayloads();
 
+        /**
+         * \brief Process directory payloads
+         * \param directory The path to the directory.
+         */
         void ProcessPayloadDirectory(std::filesystem::path const& directory);
+
+        /**
+         * \brief Process file payloads
+         * \param filepath The path to the file.
+         */
         void ProcessPayloadFile(std::filesystem::path const& filepath);
 
         /**
@@ -189,8 +208,19 @@ namespace IS {
         */
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
+        /**
+        * \brief GLFW callback for mouse position events.
+        * \param window Pointer to GLFWwindow.
+        * \param xpos X coordinate of the mouse position.
+        */
         static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 
+        /**
+        * \brief GLFW callback for mouse position events.
+        * \param window Pointer to GLFWwindow.
+        * \param count Number of files dropped.
+        * \param paths The filepaths for the files dropped
+        */
         static void FileDropCallback(GLFWwindow* window, int count, const char** paths);
     };
 
