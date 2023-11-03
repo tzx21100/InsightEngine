@@ -29,6 +29,7 @@
 
 // Dependencies
 #include <imgui.h>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -38,7 +39,7 @@ namespace IS {
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
-        ImGui::Begin("Scene Hierarchy");
+        ImGui::Begin(ICON_LC_LIST_TREE "  Hierarchy");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
@@ -57,7 +58,7 @@ namespace IS {
         ImGui::Spacing();
 
         // Filter entity hierarchy
-        EditorUtils::RenderFilterWithHint(mFilter, "Search Entity...");
+        EditorUtils::RenderFilterWithHint(mFilter, "Filter Entity...");
         ImGui::Spacing();
 
         // Render list of scenes and its entities in child window
@@ -65,8 +66,8 @@ namespace IS {
         if (ImGui::BeginChild("Scene Hierarchy Tree"))
         {
             // Set up scene tree
-            ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
-            bool opened = ImGui::TreeNodeEx("Scenes", tree_flags);
+            ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+            bool opened = ImGui::TreeNodeEx(ICON_LC_BOXES "  Scenes", tree_flags);
             if (ImGui::BeginPopupContextItem())
             {
                 if (ImGui::MenuItem("Add Scene")) { scene_manager.NewScene("NewScene"); }
@@ -147,23 +148,29 @@ namespace IS {
 
     void SceneHierarchyPanel::RenderLayerControls()
     {
+        auto& style = ImGui::GetStyle();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
-        bool layers_opened = ImGui::TreeNodeEx("Layers", tree_flags);
+        bool layers_opened = ImGui::TreeNodeEx(ICON_LC_LAYERS "  Layers", tree_flags);
         static bool to_render[Sprite::INVALID_LAYER]{ true };
         
         if (layers_opened)
         {
-            if (ImGui::BeginTable("LayersTable", 2, ImGuiTableFlags_BordersInnerV))
+            if (ImGui::BeginTable("LayersTable", 2, ImGuiTableFlags_BordersH))
             {
-                ImGui::TableSetupColumn("Checkbox", ImGuiTableColumnFlags_WidthFixed, 50.f);
+                ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
                 for (int i{}; i < Sprite::INVALID_LAYER; ++i)
                 {
                     to_render[i] = (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end());
 
                     Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(i);
                     ImGui::TableNextColumn();
-                    if (ImGui::Checkbox(("##" + std::to_string(i) + "RenderLayer").c_str(), &to_render[i]))
+                    const char* icon = to_render[i] ? ICON_LC_EYE : ICON_LC_EYE_OFF;
+                    ImGui::PushID(i);
+                    ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
+                    if (ImGui::Button(icon))
                         Sprite::toggleLayer(layer);
+                    ImGui::PopStyleColor();
+                    ImGui::PopID();
                     ImGui::TableNextColumn();
                     ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
                 }
@@ -185,7 +192,7 @@ namespace IS {
         float zoom_level = camera.GetZoomLevel();
 
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
-        bool camera_opened = ImGui::TreeNodeEx("Camera", tree_flags);
+        bool camera_opened = ImGui::TreeNodeEx(ICON_LC_CAMERA "  Camera", tree_flags);
         ImGui::SameLine();
         ImGui::TextColored({ .8f, .8f, .8f, .8f }, Camera::mActiveCamera == CAMERA_TYPE_EDITOR ? "(Editor)" : "(Game)");
 
@@ -223,13 +230,11 @@ namespace IS {
 
                 // Zoom out with - button
                 ImGui::TableNextColumn();
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-                if (ImGui::ImageButton("ZoomOut", editor_layer->GetIcon("ZoomOut"), { SIZE, SIZE }))
+                if (ImGui::Button(ICON_LC_ZOOM_OUT))
                 {
                     zoom_level *= (1 - Camera::mZoomSpeed);
                     camera.SetZoomLevel(zoom_level);
                 }
-                ImGui::PopStyleColor();
                 ImGui::SetItemTooltip("Zooms out camera");
 
                 // Slider to adjust camera zoom
@@ -244,13 +249,11 @@ namespace IS {
 
                 // Zoom in with + button
                 ImGui::SameLine();
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-                if (ImGui::ImageButton("ZoomIn", editor_layer->GetIcon("ZoomIn"), { SIZE, SIZE }))
+                if (ImGui::Button(ICON_LC_ZOOM_IN))
                 {
                     zoom_level *= (1 + Camera::mZoomSpeed);
                     camera.SetZoomLevel(zoom_level);
                 }
-                ImGui::PopStyleColor();
                 ImGui::SetItemTooltip("Zooms in camera");
 
                 // Zoom speed
@@ -284,16 +287,16 @@ namespace IS {
     void SceneHierarchyPanel::RenderSceneNode(SceneID scene)
     {
         auto& scene_manager = SceneManager::Instance();        
-        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
-        bool opened = ImGui::TreeNodeEx(scene_manager.GetSceneName(scene), tree_flags);
+        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+        bool opened = ImGui::TreeNodeEx((ICON_LC_BOXES "  " + std::string(scene_manager.GetSceneName(scene))).c_str(), tree_flags);
 
         // Right click on scene
         if (ImGui::BeginPopupContextItem())
         {
             if (ImGui::BeginMenu("Add"))
             {
-                if (ImGui::MenuItem("Entity"))        { scene_manager.AddEntity("Entity"); }
-                if (ImGui::MenuItem("Random Entity")) { scene_manager.AddRandomEntity(); }
+                if (ImGui::MenuItem(ICON_LC_BOX "  Entity"))        { scene_manager.AddEntity("Entity"); }
+                if (ImGui::MenuItem(ICON_LC_SHUFFLE "  Random Entity")) { scene_manager.AddRandomEntity(); }
 
                 ImGui::EndMenu(); // end menu Add
             }
@@ -340,7 +343,7 @@ namespace IS {
         tree_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth;
 
         ImGui::PushID(entity);
-        bool opened = ImGui::TreeNodeEx(engine.GetEntityName(entity).c_str(), tree_flags);
+        bool opened = ImGui::TreeNodeEx((ICON_LC_BOX "  " + engine.GetEntityName(entity)).c_str(), tree_flags);
 
         // Set as selected entity
         if (ImGui::IsItemClicked())
@@ -433,7 +436,7 @@ namespace IS {
         // Add Transform Component
         if (!engine.HasComponent<Transform>(entity))
         {
-            if (ImGui::MenuItem("Transform"))
+            if (ImGui::MenuItem(ICON_LC_MOVE "  Transform"))
             {
                 engine.AddComponent<Transform>(entity, Transform());
                 ImGui::CloseCurrentPopup();
@@ -443,7 +446,7 @@ namespace IS {
         // Add Sprite Component
         if (!engine.HasComponent<Sprite>(entity))
         {
-            if (ImGui::MenuItem("Sprite"))
+            if (ImGui::MenuItem(ICON_LC_IMAGE "  Sprite"))
             {
                 engine.AddComponent<Sprite>(entity, Sprite());
                 ImGui::CloseCurrentPopup();
@@ -453,7 +456,7 @@ namespace IS {
         // Add Rigidbody Component
         if (!engine.HasComponent<RigidBody>(entity))
         {
-            if (ImGui::MenuItem("Rigidbody"))
+            if (ImGui::MenuItem(ICON_LC_PERSON_STANDING "  Rigidbody"))
             {
                 engine.AddComponent<RigidBody>(entity, RigidBody());
                 ImGui::CloseCurrentPopup();
@@ -463,7 +466,7 @@ namespace IS {
         // Add Script Component
         if (!engine.HasComponent<ScriptComponent>(entity))
         {
-            if (ImGui::MenuItem("Script"))
+            if (ImGui::MenuItem(ICON_LC_BRACES "  Script"))
             {
                 // Browse for script to add
                 if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
@@ -479,7 +482,7 @@ namespace IS {
         // Add Button Component
         if (!engine.HasComponent<ButtonComponent>(entity))
         {
-            if (ImGui::MenuItem("Button"))
+            if (ImGui::MenuItem(ICON_LC_SQUARE "  Button"))
             {
                 engine.AddComponent<ButtonComponent>(entity, ButtonComponent());
                 ImGui::CloseCurrentPopup();
@@ -522,8 +525,8 @@ namespace IS {
             }
 
             // Clone/Delete entity
-            if (ImGui::MenuItem("Clone")) { CloneEntity(entity); }
-            if (ImGui::MenuItem("Delete", "Del")) { DeleteEntity(entity); }
+            if (ImGui::MenuItem(ICON_LC_COPY "  Clone")) { CloneEntity(entity); }
+            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete", "Del")) { DeleteEntity(entity); }
 
             ImGui::EndPopup();
         }

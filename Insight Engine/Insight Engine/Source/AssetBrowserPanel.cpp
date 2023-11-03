@@ -22,6 +22,9 @@
 #include "FileUtils.h"
 #include "Editor.h"
 
+#include <imgui.h>
+#include <IconsLucide.h>
+
 namespace IS {
 
     std::filesystem::path AssetBrowserPanel::ASSETS_PATH = "Assets";
@@ -36,7 +39,7 @@ namespace IS {
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
-        if (ImGui::Begin("Asset Browser"))
+        if (ImGui::Begin(ICON_LC_FOLDER_SEARCH_2 "  Browser"))
         {
             RenderControls();
             ImGui::Separator();
@@ -52,7 +55,7 @@ namespace IS {
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
                         ImGui::PushFont(FONT_BOLD);
-                        if (ImGui::Button(IMPORTED.c_str())) { SwitchImportedAsset(IMPORTED); }
+                        if (ImGui::Button((ICON_LC_IMPORT "  " + IMPORTED).c_str())) { SwitchImportedAsset(IMPORTED); }
                         ImGui::PopFont();
                         ImGui::PopStyleColor();
 
@@ -64,7 +67,7 @@ namespace IS {
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
                         ImGui::PushFont(FONT_BOLD);
-                        if (ImGui::Button("All Assets")) { SwitchCurrentDirectory(ASSETS_PATH); }
+                        if (ImGui::Button(ICON_LC_FOLDERS "  All Assets")) { SwitchCurrentDirectory(ASSETS_PATH); }
                         ImGui::PopFont();
                         ImGui::PopStyleColor();
 
@@ -163,13 +166,13 @@ namespace IS {
         // Back Button
         if (mCurrentDirectory != std::filesystem::path(ASSETS_PATH))
         {
-            bool back_pressed = ImGui::ImageButton("AssetsBack", editor_layer->GetIcon("BackButton"), { 16.f, 16.f });
-
-            if (back_pressed)
+            ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
+            if (ImGui::Button(ICON_LC_ARROW_LEFT))
             {
                 mCurrentDirectory = mCurrentDirectory.parent_path();
                 IS_CORE_TRACE("Returned to Directory: {}", mCurrentDirectory.string());
             }
+            ImGui::PopStyleColor();
             ImGui::SameLine();
         }
 
@@ -201,13 +204,6 @@ namespace IS {
                     ImTextureID icon = editor_layer->GetIcon(icon_name.c_str());
                     bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     ImGui::PopStyleColor();
-
-                    // Image Tooltip
-                    if (ImGui::BeginItemTooltip())
-                    {
-                        ImGui::Image(icon, { 96.f, 96.f });
-                        ImGui::EndTooltip();
-                    }
 
                     // Start file drag
                     if (ImGui::BeginDragDropSource())
@@ -260,21 +256,21 @@ namespace IS {
         ImGuiTreeNodeFlags sounds_tree_flags = (sounds == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
         ImGuiTreeNodeFlags prefabs_tree_flags = (prefabs == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
 
-        if (ImGui::TreeNodeEx(textures.c_str(), textures_tree_flags))
+        if (ImGui::TreeNodeEx((ICON_LC_IMAGE "  " + textures).c_str(), textures_tree_flags))
         {
             if (ImGui::IsItemClicked())
                 SwitchImportedAsset(textures);
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNodeEx(sounds.c_str(), sounds_tree_flags))
+        if (ImGui::TreeNodeEx((ICON_LC_MUSIC "  " + sounds).c_str(), sounds_tree_flags))
         {
             if (ImGui::IsItemClicked())
                 SwitchImportedAsset(sounds);
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNodeEx(prefabs.c_str(), prefabs_tree_flags))
+        if (ImGui::TreeNodeEx((ICON_LC_PACKAGE "  " + prefabs).c_str(), prefabs_tree_flags))
         {
             if (ImGui::IsItemClicked())
                 SwitchImportedAsset(prefabs);
@@ -306,8 +302,9 @@ namespace IS {
     void AssetBrowserPanel::RenderDirectoryNode(std::filesystem::path const& directory)
     {
         std::string const& filename_string = directory.filename().string();
-        ImGuiTreeNodeFlags tree_flags = directory == mCurrentDirectory ? ImGuiTreeNodeFlags_Selected : 0;
-        bool opened = ImGui::TreeNodeEx(filename_string.c_str(), tree_flags);
+        const bool is_current = directory == mCurrentDirectory;
+        ImGuiTreeNodeFlags tree_flags = is_current ? ImGuiTreeNodeFlags_Selected : 0;
+        bool opened = ImGui::TreeNodeEx(((is_current ? ICON_LC_FOLDER_OPEN "  " : ICON_LC_FOLDER "  ") + filename_string).c_str(), tree_flags);
 
         if (ImGui::IsItemClicked())
         {
@@ -325,9 +322,9 @@ namespace IS {
     void AssetBrowserPanel::RenderDirectoryLeafNode(std::filesystem::path const& directory)
     {
         std::string const& filename_string = directory.filename().string();
-        ImGuiTreeNodeFlags tree_flags = directory == mCurrentDirectory ? ImGuiTreeNodeFlags_Selected : 0;
-        tree_flags |= ImGuiTreeNodeFlags_Leaf;
-        bool opened = ImGui::TreeNodeEx(filename_string.c_str(), tree_flags);
+        const bool is_current = directory == mCurrentDirectory;
+        ImGuiTreeNodeFlags tree_flags = (is_current ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        bool opened = ImGui::TreeNodeEx(((is_current ? ICON_LC_FOLDER_OPEN "  " : ICON_LC_FOLDER "  ") + filename_string).c_str(), tree_flags);
         
         if (ImGui::IsItemClicked())
             SwitchCurrentDirectory(directory);
@@ -388,10 +385,9 @@ namespace IS {
 
         if (mSelectedImportedAsset != IMPORTED)
         {
-            if (ImGui::ImageButton("ImportedBack", editor_layer->GetIcon("BackButton"), { 16.f, 16.f }))
-            {
-                SwitchImportedAsset(IMPORTED);
-            }
+            ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
+            if (ImGui::Button(ICON_LC_ARROW_LEFT)) { SwitchImportedAsset(IMPORTED); }
+            ImGui::PopStyleColor();
             ImGui::SameLine();
         }
 

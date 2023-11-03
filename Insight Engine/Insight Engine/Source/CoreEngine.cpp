@@ -403,7 +403,7 @@ namespace IS {
             SerializeAllComponents(id, entity);
 
             entities.append(entity);
-            /*std::string entity_names = "Assets/Scene/" + filename + "/Entities/entity_" + std::to_string(id.first) + ".json";
+            /*std::string entity_names = "Assets/Scenes/" + filename + "/Entities/entity_" + std::to_string(id.first) + ".json";
             SaveEntityToJson(id.first, entity_names);*/
         }
         scene["Entities"] = entities;

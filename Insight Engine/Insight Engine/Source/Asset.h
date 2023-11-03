@@ -330,7 +330,7 @@ namespace IS {
         static constexpr const char* TEXTURE_DIRECTORY  = "Assets/Textures/";
         static constexpr const char* ICON_DIRECTORY     = "Assets/Icons/";
         static constexpr const char* PREFAB_DIRECTORY   = "Assets/Prefabs/";
-        static constexpr const char* SCENE_DIRECTORY    = "Assets/Scene/";
+        static constexpr const char* SCENE_DIRECTORY    = "Assets/Scenes/";
         static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
 
     private:

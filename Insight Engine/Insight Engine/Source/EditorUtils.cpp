@@ -22,6 +22,7 @@
 // Dependencies
 #include <imgui.h>
 #include <imgui_internal.h> // PushMultiItemsWidths
+#include <IconsLucide.h>
 
 namespace IS::EditorUtils {
 
@@ -32,26 +33,6 @@ namespace IS::EditorUtils {
     ImVec2 operator+(ImVec2 const& lhs, ImVec2 const& rhs) { return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y); }
 
     bool operator==(ImVec2 const& lhs, ImVec2 const& rhs) { return lhs.x == rhs.x && lhs.y == rhs.y; }
-
-    bool RenderIconMenuItem(const char* label, const char* shortcut, ImTextureID icon_texture)
-    {
-        bool clicked = false;
-
-        float button_height = ImGui::GetTextLineHeightWithSpacing() - 2 * ImGui::GetStyle().FramePadding.y;
-        ImVec2 icon_size = ImVec2(button_height, button_height);
-        
-        // Display the icon to the left of the text with a fixed height
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        ImGui::SetNextItemAllowOverlap();
-        if (ImGui::ImageButton(icon_texture, icon_size))
-            clicked = true;
-        ImGui::PopStyleColor();
-        ImGui::SameLine();
-        if (ImGui::MenuItem(label, shortcut))
-            clicked = true;
-
-        return clicked;
-    }
 
     bool TestPointCircle(const ImVec2& point, const ImVec2& center, float radius)
     {
@@ -78,7 +59,7 @@ namespace IS::EditorUtils {
             ImGui::SameLine();
             ImGui::SetCursorPosX(original_cursor_xpos + ImGui::GetStyle().FramePadding.x);
             ImGui::PushFont(font_italic);
-            ImGui::TextColored({ .8f, .8f, .8f, .8f }, hint);
+            ImGui::TextColored({ .8f, .8f, .8f, .8f }, (ICON_LC_FILTER "  " + std::string(hint)).c_str());
             ImGui::PopFont();
         }
     }

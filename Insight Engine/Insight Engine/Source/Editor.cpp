@@ -25,6 +25,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <ImGuizmo.h>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -44,15 +45,28 @@ namespace IS {
 
         // Add Fonts
         const float FONT_SIZE = 16.f;
-        io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Regular.ttf", FONT_SIZE); // default
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Bold.ttf", FONT_SIZE); // bold
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto/Roboto-Italic.ttf", FONT_SIZE); // italic
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf", FONT_SIZE); // log console default
-        io.Fonts->AddFontFromFileTTF("Assets/fonts/Roboto_Mono/static/RobotoMono-Bold.ttf", FONT_SIZE); // log console bold
+
+        // Icon font config
+        ImGuiStyle& style = ImGui::GetStyle();
+        ImFontConfig config;
+        config.MergeMode = true;
+        config.GlyphOffset.y = style.FramePadding.y;
+        static const ImWchar icon_ranges[] = { ICON_MIN_LC, ICON_MAX_LC, 0};
+
+        // Editor fonts
+        io.FontDefault =io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto/Roboto-Regular.ttf", FONT_SIZE); // default
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/IconFont/" FONT_ICON_FILE_NAME_LC, FONT_SIZE, &config, icon_ranges); // add icon font
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto/Roboto-Bold.ttf", FONT_SIZE); // bold
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/IconFont/" FONT_ICON_FILE_NAME_LC, FONT_SIZE, &config, icon_ranges);; // add icon font
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto/Roboto-Italic.ttf", FONT_SIZE); // italic
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/IconFont/" FONT_ICON_FILE_NAME_LC, FONT_SIZE, &config, icon_ranges);; // add icon font
+
+        // Log console fonts
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto_Mono/static/RobotoMono-Regular.ttf", FONT_SIZE); // default
+        io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto_Mono/static/RobotoMono-Bold.ttf", FONT_SIZE); // bold
 
         // Setup Dear ImGui style
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-        ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             style.WindowRounding = 0.0f;

@@ -70,16 +70,6 @@ namespace IS {
         bool operator==(ImVec2 const& lhs, ImVec2 const& rhs);
 
         /*!
-         * \brief Render menu item with icon.
-         * 
-         * \param label Display text for menu item.
-         * \param shortcut Display text for shortcut.
-         * \param icon_texture Texture of icon.
-         * \return True if menu item is clicked, false otherwise.
-         */
-        bool RenderIconMenuItem(const char* label, const char* shortcut, ImTextureID icon_texture);
-
-        /*!
          * \brief Testing if point is within a circle.
          * 
          * \param point Position of the point.

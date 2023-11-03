@@ -25,6 +25,7 @@
 
 // Dependencies
 #include <imgui.h>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -35,8 +36,8 @@ namespace IS {
         auto editor = engine.GetSystem<Editor>("Editor");
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove;
-        ImGui::Begin("Game", nullptr, window_flags);
+        ImGuiWindowFlags window_flags = 0;
+        ImGui::Begin(ICON_LC_GAMEPAD_2 "  Game", nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
         mFocused = ImGui::IsWindowFocused();
@@ -67,8 +68,8 @@ namespace IS {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysUseWindowPadding;
-        ImGui::Begin("Scene", nullptr, window_flags);
+        ImGuiWindowFlags window_flags = 0;
+        ImGui::Begin(ICON_LC_VIEW "  Scene", nullptr, window_flags);
 
         auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
         auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
@@ -221,7 +222,7 @@ namespace IS {
         const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
         const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
 
-        ImGui::Begin("Performance");
+        ImGui::Begin(ICON_LC_GAUGE "  Performance");
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         
         if (ImGui::BeginTable("Engine", 2))
@@ -345,7 +346,7 @@ namespace IS {
     void LogConsolePanel::RenderPanel() 
     {
         auto& logger_gui = Logger::LoggerGUI::Instance();
-        logger_gui.Draw("Log Console");
+        logger_gui.Draw(ICON_LC_TERMINAL_SQUARE "  Console");
         mPanelSize = logger_gui.mPanelSize;
     }
 
@@ -357,66 +358,67 @@ namespace IS {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
-        ImGui::Begin("Physics");
+        ImGui::Begin(ICON_LC_ATOM "  Physics");
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
-        ImGuiTableFlags table_flags = 0;
-        if (ImGui::BeginTable("Grid", 2, table_flags))
+
+        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen;
+        if (ImGui::TreeNodeEx("Grid", tree_flags))
         {
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TableSetupColumn("Grid");
-            ImGui::TableHeadersRow();
+            if (ImGui::BeginTable("GridTable", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Show Grid");
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Show Grid");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Columns");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
 
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Columns");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Rows");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Rows");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
-
-            ImGui::EndTable(); // end table Grid
+                ImGui::EndTable(); // end table Grid
+            }
+            ImGui::TreePop();
         }
 
-        if (ImGui::BeginTable("Other Options", 2, table_flags))
+        if (ImGui::TreeNodeEx("Other Options", tree_flags))
         {
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TableSetupColumn("Other Options");
-            ImGui::TableHeadersRow();
+            if (ImGui::BeginTable("OtherTable", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Exert Gravity");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
 
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Exert Gravity");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Show Colliders");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Show Colliders");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Show Velocity");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Show Velocity");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
-
-            ImGui::EndTable(); // end table Other Options
+                ImGui::EndTable(); // end table Other Options
+            }
+            ImGui::TreePop();
         }
 
         ImGui::PopStyleVar();

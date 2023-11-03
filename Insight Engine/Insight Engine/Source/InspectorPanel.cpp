@@ -28,6 +28,7 @@
 
 // Dependencies
 #include <imgui.h>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -38,7 +39,7 @@ namespace IS {
 
     void InspectorPanel::RenderPanel()
     {
-        ImGui::Begin("Inspector");
+        ImGui::Begin(ICON_LC_INFO "  Inspector");
         if (mSceneHierarchyPanel->mSelectedEntity)
         {
             RenderComponentNodes(*mSceneHierarchyPanel->mSelectedEntity);
@@ -62,7 +63,6 @@ namespace IS {
             ImGui::TextUnformatted("Name");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
 
             // Edit Entity Name
             std::string& name = engine.GetEntityName(entity);
@@ -73,19 +73,44 @@ namespace IS {
             if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
                 name = std::string(buffer);
 
-            ImGui::TableNextColumn(); // skip column
+            ImGui::SameLine();
 
-            ImGui::TableNextColumn();
             // Save Prefab
-            ImGui::PushFont(FONT_BOLD);
-            if (ImGui::Button("Save As Prefab"))
+            if (ImGui::Button(ICON_LC_FOLDER_UP))
                 engine.SaveAsPrefab(entity, name);
+            ImGui::SetItemTooltip("Save as Prefab");
 
             // Load Prefab
             ImGui::SameLine();
-            if (ImGui::Button("Load Prefab"))
+            if (ImGui::Button(ICON_LC_FOLDER_DOWN))
                 mShowPrefabs = true;
-            ImGui::PopFont();
+            ImGui::SetItemTooltip("Load Prefab");
+
+            ImGui::SameLine();
+
+            if (ImGui::Button(ICON_LC_MORE_VERTICAL))
+                ImGui::OpenPopup("Entity Options");
+
+            if (ImGui::BeginPopup("Entity Options"))
+            {
+                if (ImGui::BeginMenu("Add Component"))
+                {
+                    SceneHierarchyPanel::RenderAddComponent(entity);
+
+                    ImGui::EndMenu();
+                }
+                if (ImGui::MenuItem("Clone Entity"))
+                {
+                    engine.CopyEntity(entity);
+                }
+                if (ImGui::MenuItem("Delete Entity"))
+                {
+                    engine.DeleteEntity(entity);
+                    mSceneHierarchyPanel->ResetSelection();
+                }
+
+                ImGui::EndPopup();
+            }
 
             // Prefab combo
             if (mShowPrefabs)
@@ -105,7 +130,7 @@ namespace IS {
                         const bool is_selected = (name == prefab_name);
                         if (ImGui::Selectable(prefab_name.c_str(), is_selected))
                         {
-                            engine.LoadFromPrefab(prefab,entity);
+                            engine.LoadFromPrefab(prefab, entity);
                             mShowPrefabs = false;
                         }
                         if (is_selected)
@@ -117,43 +142,6 @@ namespace IS {
                 if (ImGui::IsAnyMouseDown() && !ImGui::IsItemHovered() && !begin_combo)
                     mShowPrefabs = false;
             }
-
-            ImGui::TableNextColumn(); // skip column
-
-            // Add Component
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            if (ImGui::Button("Add Component"))
-                ImGui::OpenPopup("AddComponent");
-            ImGui::PopFont();
-
-            // Check whether entity already has the component
-            if (ImGui::BeginPopup("AddComponent"))
-            {
-                SceneHierarchyPanel::RenderAddComponent(entity);
-                ImGui::EndPopup();
-            }
-
-            ImGui::TableNextColumn(); // skip column
-
-            // Clone Entity
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            if (ImGui::Button("Clone Entity"))
-                engine.CopyEntity(entity);
-            ImGui::SameLine();
-
-            // Destroy Entity
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
-            if (ImGui::Button("Destroy Entity"))
-            {
-                engine.DeleteEntity(entity);
-                mSceneHierarchyPanel->ResetSelection();
-            }
-            ImGui::PopStyleColor(3);
-            ImGui::PopFont();
 
             ImGui::EndTable();
         }
@@ -175,7 +163,7 @@ namespace IS {
         RenderEntityConfig(entity);
 
         // Transform Component
-        RenderComponent<Transform>("Transform", entity, [FONT_BOLD](Transform& transform)
+        RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [FONT_BOLD](Transform& transform)
         {
             // Render Translation
             Vector2D position = { transform.world_position.x, transform.world_position.y };
@@ -208,7 +196,7 @@ namespace IS {
         }); // end render Transform Component
 
         // Sprite Component
-        RenderComponent<Sprite>("Sprite", entity, [io, FONT_BOLD, entity, this](Sprite& sprite)
+        RenderComponent<Sprite>(ICON_LC_IMAGE "  Sprite", entity, [io, FONT_BOLD, entity, this](Sprite& sprite)
         {
             auto& engine = InsightEngine::Instance();
             auto const editor = engine.GetSystem<Editor>("Editor");
@@ -264,14 +252,6 @@ namespace IS {
 
                 ImGui::EndTable();
             }
-
-            //placeholder for animations for now YIMING TAKE NOTE!!! JUST FOR DEMO!!!
-            /*if (sprite.img.mFileName == "Assets/Textures/Player idle 1R12C.png") {
-                sprite.anims.clear();
-                Animation a; a.initAnimation(1, 12, 3);
-                sprite.anims.emplace_back(a);
-                sprite.animation_index = 0;
-            }*/
 
             // Use placeholder if width or height of texture
             if (no_dimensions)
@@ -368,7 +348,7 @@ namespace IS {
             if (has_animation)
             {
                 ImGuiTreeNodeFlags animation_tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
-                bool animation_opened = ImGui::TreeNodeEx("Animation", animation_tree_flags);
+                bool animation_opened = ImGui::TreeNodeEx(ICON_LC_FILM  " Animation", animation_tree_flags);
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%zu)", sprite.anims.size());
                 if (animation_opened)
@@ -448,7 +428,7 @@ namespace IS {
         }); // end render Sprite Component
 
         // Rigidbody Component
-        RenderComponent<RigidBody>("Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
+        RenderComponent<RigidBody>(ICON_LC_PERSON_STANDING "  Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
@@ -543,7 +523,7 @@ namespace IS {
         }); // end render Rigidbody Component
 
         // Script Component
-        RenderComponent<ScriptComponent>("Script", entity, [FONT_BOLD](ScriptComponent& script)
+        RenderComponent<ScriptComponent>(ICON_LC_BRACES "  Script", entity, [FONT_BOLD](ScriptComponent& script)
         {
             // Display Sprite Name
             if (ImGui::BeginTable("ScriptTable", 2))
@@ -558,42 +538,31 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::Text("%s", script.mScriptName.c_str());
+
+                ImGui::SameLine();
+
+                // Modify Script
+                if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                {
+                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                        script.mScriptName = filepath.stem().string();
+                }
+                ImGui::SetItemTooltip("Browse and replace the existing script");
+
+                ImGui::SameLine();
+
+                // Edit Script
+                if (ImGui::Button(ICON_LC_FILE_EDIT))
+                    InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
+                ImGui::SetItemTooltip("Open and edit script in default application");
+
                 ImGui::EndTable();
             }
-
-            // Modify Script
-            bool modify_button = ImGui::Button("Modify");
-            if (ImGui::BeginItemTooltip())
-            {
-                ImGui::SetTooltip("Browse and replace the existing script");
-                ImGui::EndTooltip();
-            }
-
-            // Clicking the modfiy button
-            if (modify_button)
-            {
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
-                    script.mScriptName = filepath.stem().string();
-            }
-
-            ImGui::SameLine();
-
-            // Edit Script
-            bool edit_button = ImGui::Button("Edit");
-            if (ImGui::BeginItemTooltip())
-            {
-                ImGui::SetTooltip("Open and edit script in default application");
-                ImGui::EndTooltip();
-            }
-
-            // Clicking the edit button
-            if (edit_button)
-                InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
 
         }); // end render Script Component
 
         // Button Component
-        RenderComponent<ButtonComponent>("Button", entity, [entity, FONT_BOLD](ButtonComponent& button)
+        RenderComponent<ButtonComponent>(ICON_LC_SQUARE "  Button", entity, [entity, FONT_BOLD](ButtonComponent& button)
         {
             if (ImGui::BeginTable("Button Table", 2))
             {
@@ -628,6 +597,7 @@ namespace IS {
         // Engine instance
         InsightEngine& engine = InsightEngine::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+        ImGuiStyle& style = ImGui::GetStyle();
 
         // Render Component Tree
         if (engine.HasComponent<Component>(entity))
@@ -635,9 +605,9 @@ namespace IS {
             bool opened = ImGui::TreeNodeEx(std::bit_cast<void*>(typeid(Component).hash_code()), tree_flags, label.c_str());
 
             // Display Component Config
-            ImGui::SameLine(ImGui::GetWindowWidth() - 20.f);
+            ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - style.ItemSpacing.x);
 
-            if (ImGui::Button("..."))
+            if (ImGui::Button(ICON_LC_MORE_VERTICAL))
                 ImGui::OpenPopup("ComponentConfig");
 
             // Set Remove Component

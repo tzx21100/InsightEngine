@@ -29,6 +29,7 @@
 #include <ranges>
 #include <imgui.h>
 #include <ImGuizmo.h>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -41,17 +42,11 @@ namespace IS {
         auto asset = engine.GetSystem<AssetManager>("Asset");
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
-        // TODO: use icon font instead
-        mIcons["SaveFile"]           = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "save_button.png")->texture_id);
-
         // Other icons
         mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
         mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
         mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
         mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
-        mIcons["ZoomIn"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_in.png")->texture_id);
-        mIcons["ZoomOut"]            = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "zoom_out.png")->texture_id);
-        mIcons["BackButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "back_icon.png")->texture_id);
         mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "texture_placeholder.png")->texture_id);
 
         // File icons
@@ -228,8 +223,6 @@ namespace IS {
     void EditorLayer::RenderMenuBar()
     {
         InsightEngine& engine = InsightEngine::Instance();
-        std::string fullscreen_label = engine.IsFullScreen() ? "Exit Fullscreen" : "Enter Fullscreen";
-
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("File"))
@@ -238,44 +231,42 @@ namespace IS {
                 if (ImGui::BeginMenu("New"))
                 {
                     //if (EditorUtils::RenderIconMenuItem("Scene", "Ctrl+N", mIcons["SaveFile"])) { mShowNewScene = true; }
-                    if (ImGui::MenuItem("Scene", "Ctrl+N")) 
-                    {
-                        mShowNewScene = true;
-                    }
-                    if (ImGui::MenuItem("Script...")) { mShowNewScript = true; }
+                    if (ImGui::MenuItem(ICON_LC_FILE "  Scene", "Ctrl+N")) { mShowNewScene = true; }
+                    if (ImGui::MenuItem(ICON_LC_FILE_JSON "  Script...")) { mShowNewScript = true; }
                     ImGui::EndMenu();
                 } // end menu New
 
                 // Open File
                 if (ImGui::BeginMenu("Open"))
                 {
-                    if (ImGui::MenuItem("Scene...", "Ctrl+O")) { OpenScene(); }
-                    if (ImGui::MenuItem("Script...")) { FileUtils::OpenScript(); }
+                    if (ImGui::MenuItem(ICON_LC_FILE "  Scene...", "Ctrl+O")) { OpenScene(); }
+                    if (ImGui::MenuItem(ICON_LC_FILE_JSON "  Script...")) { FileUtils::OpenScript(); }
                     ImGui::EndMenu();
                 } // end menu Open
 
                 ImGui::Separator();
 
                 // Saving Scene
-                if (ImGui::MenuItem("Save Scene", "Ctrl+S")) { SaveScene(); }
-                if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
+                if (ImGui::MenuItem(ICON_LC_SAVE "  Save Scene", "Ctrl+S")) { SaveScene(); }
+                if (ImGui::MenuItem(ICON_LC_PEN_SQUARE "  Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
 
                 ImGui::Separator();
 
                 // Toggle fullscreen mode
-                if (ImGui::MenuItem(fullscreen_label.c_str(), "F11")) { ToggleFullscreen(); }
+                if (ImGui::MenuItem((engine.IsFullScreen() ? ICON_LC_FULLSCREEN "  Exit Fullscreen" : ICON_LC_FULLSCREEN "  Fullscreen"), "F11")) { ToggleFullscreen(); }
 
                 ImGui::Separator();
 
                 // Exit current program
-                if (ImGui::MenuItem("Exit", "Alt+F4")) { ExitProgram(); }
+                if (ImGui::MenuItem(ICON_LC_LOG_OUT "  Exit", "Alt+F4")) { ExitProgram(); }
 
                 ImGui::EndMenu();
             } // end menu File
 
             if (ImGui::BeginMenu("Edit"))
             {
-                ImGui::MenuItem("(Empty)");
+                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) {}
+                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) {}
                 ImGui::EndMenu();
             } // end menu Edit
 
@@ -294,10 +285,10 @@ namespace IS {
             // Render menu Test
             if (open_testing)
             {
-                if (ImGui::BeginMenu("Add Entity"))
+                if (ImGui::BeginMenu(ICON_LC_BOX "  Add Entity"))
                 {
                     // Create random entities without texture
-                    if (ImGui::BeginMenu("Random Color"))
+                    if (ImGui::BeginMenu(ICON_LC_PALETTE "  Random Color"))
                     {
                         if (ImGui::MenuItem("100")) { for (int i{}; i < 100; ++i) { engine.GenerateRandomEntity(); } }
                         if (ImGui::MenuItem("500")) { for (int i{}; i < 500; ++i) { engine.GenerateRandomEntity(); } }
@@ -308,7 +299,7 @@ namespace IS {
                     } // end menu Random Color
 
                     // Create random entities with texture
-                    if (ImGui::BeginMenu("Random Texture"))
+                    if (ImGui::BeginMenu(ICON_LC_IMAGE "  Random Texture"))
                     {
                         if (ImGui::MenuItem("100")) { for (int i{}; i < 100; ++i) { engine.GenerateRandomEntity(true); } }
                         if (ImGui::MenuItem("500")) { for (int i{}; i < 500; ++i) { engine.GenerateRandomEntity(true); } }

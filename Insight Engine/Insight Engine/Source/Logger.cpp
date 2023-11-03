@@ -25,6 +25,7 @@
 #include <chrono>
 #include <iomanip>
 #include <filesystem>
+#include <IconsLucide.h>
 
 namespace IS {
 
@@ -166,10 +167,14 @@ namespace IS {
         }
 
         // Display Options
-        if (ImGui::Button("Options"))
+        bool options = ImGui::Button(ICON_LC_SETTINGS);
+        ImGui::SetItemTooltip("Options");
+
+        if (options)
             ImGui::OpenPopup("Options");
         ImGui::SameLine();
-        bool clear_flag = ImGui::Button("Clear");
+        bool clear_flag = ImGui::Button(ICON_LC_TRASH_2);
+        ImGui::SetItemTooltip("Clear");
 
         // Filter based on log level
         ImGuiStyle& style = ImGui::GetStyle();
@@ -193,7 +198,7 @@ namespace IS {
         }
 
         ImGui::SameLine();
-        EditorUtils::RenderFilterWithHint(mFilter, "Search Log...");
+        EditorUtils::RenderFilterWithHint(mFilter, "Filter Log...");
 
         ImGui::Spacing();
 
