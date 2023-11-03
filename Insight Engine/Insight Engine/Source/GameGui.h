@@ -27,17 +27,33 @@
 
 namespace IS {
 
+    /*!
+     * \enum ButtonTypes
+     * \brief Enumerates the types of buttons.
+     */
     enum ButtonTypes {
         Click,
         Slide
     };
 
+    /*!
+     * \enum ButtonStates
+     * \brief Enumerates the possible states of a button.
+     */ 
     enum ButtonStates {
         Idle,
         Hovered,
         Pressed
     };
 
+
+    /*!
+     * \class ButtonComponent
+     * \brief Represents an entity as a button in the GUI.
+     * \details
+     * This component is used to represent an entity as a button with different states
+     * in the GUI system.
+     */
     //Components for GUI (to represent an entity as a button)
     class ButtonComponent : IComponent {
     public:
@@ -68,6 +84,13 @@ namespace IS {
     };
 
 
+    /*!
+     * \class GuiSystem
+     * \brief A system to manage the GUI components and interactions.
+     * \details
+     * This system manages the initialization, update, and interaction of GUI components
+     * such as buttons.
+     */
     class GuiSystem : public ParentSystem {
     public:
 
@@ -77,6 +100,14 @@ namespace IS {
             return "GuiSystem";
         }
 
+
+        /*!
+         * \brief Checks if a game button contains the mouse cursor.
+         * \param mouse_x The x-coordinate of the mouse cursor.
+         * \param mouse_y The y-coordinate of the mouse cursor.
+         * \param entity The entity representing the button.
+         * \return True if the mouse cursor is over the button, false otherwise.
+         */
         bool GameButtonContainsMouse(float mouse_x,float mouse_y, Entity entity) {
             auto& engine = InsightEngine::Instance();
             auto& trans = engine.GetComponent<Transform>(entity);
@@ -95,6 +126,10 @@ namespace IS {
 
         void Initialize() {}
 
+        /*!
+         * \brief Updates the GUI system.
+         * \param delta_time The time elapsed since the last frame.
+         */
         void Update([[maybe_unused]] float delta_time) {
             auto& engine = InsightEngine::Instance();
             //get the input system
