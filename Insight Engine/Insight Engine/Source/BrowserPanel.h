@@ -53,11 +53,6 @@ namespace IS {
          */
         void RenderPanel() override;
 
-        /*!
-         * \brief Renders the controls for configuring the asset browser's appearance and behavior.
-         */
-        void RenderControls();
-
     private:
         /// Minimum size for thumbnails displayed in the asset browser.
         static constexpr inline float MIN_THUMBNAIL_SIZE = 62.f;
@@ -156,6 +151,11 @@ namespace IS {
          * \return Boolean flag indicating whether a sub directory has been found.
          */
         bool HasSubDirectory(std::filesystem::path const& directory);
+
+        /*!
+         * \brief Renders the controls for configuring the asset browser's appearance and behavior.
+         */
+        void RenderControls();
     };
 
 } // end namespace IS

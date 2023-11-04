@@ -41,9 +41,6 @@ namespace IS {
         // Render asset browser window
         if (ImGui::Begin(mName.c_str()))
         {
-            RenderControls();
-            ImGui::Separator();
-
             ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
             if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))
             {
@@ -62,7 +59,7 @@ namespace IS {
                         ImGui::TableNextColumn();
                         RenderImportedAssetsTree();
 
-                        ImGui::Dummy({ 0.f, 20.f });
+                        ImGui::Spacing();
 
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -87,39 +84,6 @@ namespace IS {
         }
 
         ImGui::End(); // end window Asset Browser
-    }
-
-    void BrowserPanel::RenderControls()
-    {
-        // Browser Controls
-        float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
-        if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
-        {
-            ImGuiIO& io = ImGui::GetIO();
-            ImFont* const FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-            float panel_width = ImGui::GetContentRegionAvail().x;
-            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-
-            ImGui::TableSetupColumn("Browser Control", column_flags, label_width);
-
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Thumbnail Size");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(100.f);
-            ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f", ImGuiSliderFlags_NoInput);
-
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Padding");
-            ImGui::PopFont();
-            ImGui::TableNextColumn();
-            ImGui::SetNextItemWidth(100.f);
-            ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f", ImGuiSliderFlags_NoInput);
-
-            ImGui::EndTable();
-        }
     }
 
     void BrowserPanel::RenderPath()
@@ -154,6 +118,7 @@ namespace IS {
     void BrowserPanel::RenderAllAssetsBrowser()
     {
         RenderPath();
+        RenderControls();
 
         auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
 
@@ -382,6 +347,7 @@ namespace IS {
         static bool show_alltextures = false;
 
         RenderImportedPath();
+        RenderControls();
 
         if (mSelectedImportedAsset != IMPORTED)
         {
@@ -517,11 +483,48 @@ namespace IS {
 
                 ImGui::PopStyleColor();
 
-                ImGui::EndTable(); // Imported Assets Layout
+                ImGui::EndTable(); // end table Imported Assets Layout
             }
         }
 
-        ImGui::EndChild();
+        ImGui::EndChild(); // end child window Imported Assets Browser
+    }
+
+    void BrowserPanel::RenderControls()
+    {
+        auto& style = ImGui::GetStyle();
+        ImGui::SameLine(ImGui::GetContentRegionAvail().x - style.FramePadding.x - style.ItemSpacing.x);
+        if (ImGui::Button(ICON_LC_MORE_VERTICAL))
+            ImGui::OpenPopup("BrowserSettings");
+
+        if (ImGui::BeginPopup("BrowserSettings"))
+        {
+            // Browser Controls
+            float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
+            if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
+            {
+                float panel_width = ImGui::GetContentRegionAvail().x;
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+
+                ImGui::TableSetupColumn("Browser Control", column_flags, label_width);
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Thumbnail Size");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(100.f);
+                ImGui::SliderFloat("##thumbnail size", &mControls.mThumbnailSize, MIN_THUMBNAIL_SIZE, panel_width, "%.2f", ImGuiSliderFlags_NoInput);
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Padding");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(100.f);
+                ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f", ImGuiSliderFlags_NoInput);
+
+                ImGui::EndTable(); // end table Browser Control
+            }
+
+            ImGui::EndPopup(); // end popup BrowserSettings
+        }
     }
 
 } // end namespace IS
