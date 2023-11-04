@@ -1,10 +1,10 @@
 /*!
- * \file SceneHierarchyPanel.h
+ * \file HierarchyPanel.h
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This header file declares the interface for class SceneHierarchyPanel,
+ * This header file declares the interface for class HierarchyPanel,
  * which encapsulates the functionalities of a scene hierarchy panel
  * akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
  * manages the entities in a scene.
@@ -34,21 +34,21 @@
 namespace IS {
 
     /*!
-     * \brief The SceneHierarchyPanel class provides a panel for managing scene entities.
+     * \brief The HierarchyPanel class provides a panel for managing scene entities.
      */
-    class SceneHierarchyPanel : public Panel {
+    class HierarchyPanel : public Panel {
     public:
         using EntityPtr = std::shared_ptr<Entity>; ///< Type alias for a shared pointer to an Entity.
 
         /*!
-         * \brief Constructs a SceneHierarchyPanel object.
+         * \brief Constructs a HierarchyPanel object.
          */
-        SceneHierarchyPanel() = default;
+        HierarchyPanel() : Panel(ICON_LC_LIST_TREE "  Hierarchy") {}
 
         /*!
-         * \brief Destroys the SceneHierarchyPanel object.
+         * \brief Destroys the HierarchyPanel object.
          */
-        ~SceneHierarchyPanel() = default;
+        ~HierarchyPanel() = default;
 
         /*!
          * \brief Renders the panel for the scene hierarchy.

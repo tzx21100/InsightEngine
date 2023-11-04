@@ -24,6 +24,7 @@
 #include "Entities.h"
 
 #include <string>
+#include <IconsLucide.h> // for icon fonts
 
 namespace IS {
 
@@ -32,10 +33,13 @@ namespace IS {
      */
     class Panel {
     public:
+
         /*!
          * \brief Default constructor.
+         * 
+         * \param name Name of the panel.
          */
-        Panel() = default;
+        Panel(std::string const& name) : mName(name) {}
 
         /*!
          * \brief Virtual destructor.
@@ -46,9 +50,12 @@ namespace IS {
          * \brief Pure virtual function to render the panel.
          */
         virtual void RenderPanel() = 0;
+
+    protected:
+        std::string mName; ///< Name of the panel.
     };
 
-    class SceneHierarchyPanel; ///< Forward declaration
+    class HierarchyPanel; ///< Forward declaration
 
     /*!
      * \brief A derived class representing a game panel in a dockspace.
@@ -60,7 +67,7 @@ namespace IS {
         /*!
          * \brief Default constructor of game panel.
          */
-        GamePanel() = default;
+        GamePanel() : Panel(ICON_LC_GAMEPAD_2 "  Game") {}
 
         /*!
          * \brief Overrides the base class method to render the game panel.
@@ -88,7 +95,7 @@ namespace IS {
         /*!
          * \brief Default constructor of scene panel.
          */
-        ScenePanel() = default;
+        ScenePanel() : Panel(ICON_LC_VIEW "  Scene") {}
 
         /*!
          * \brief Overrides the base class method to render the scene panel.
@@ -133,6 +140,12 @@ namespace IS {
      */
     class PerformancePanel : public Panel {
     public:
+
+        /*!
+         * \brief Default constructor of performance panel.
+         */
+        PerformancePanel() : Panel(ICON_LC_GAUGE "  Performance") {}
+
         /*!
          * \brief Overrides the base class method to render the performance panel.
          */
@@ -142,8 +155,14 @@ namespace IS {
     /*!
      * \brief A derived class representing a log console panel in a dockspace.
      */
-    class LogConsolePanel : public Panel {
+    class ConsolePanel : public Panel {
     public:
+
+        /*!
+         * \brief Default constructor of console panel.
+         */
+        ConsolePanel() : Panel(ICON_LC_TERMINAL_SQUARE "  Console") {}
+
         /*!
          * \brief Overrides the base class method to render the log console panel.
          */
@@ -161,12 +180,18 @@ namespace IS {
     };
 
     /*!
-     * \brief A derived class representing a physics control panel in a dockspace.
+     * \brief A derived class representing a settings panel in a dockspace.
      */
-    class PhysicsControlPanel : public Panel {
+    class SettingsPanel : public Panel {
     public:
+
         /*!
-         * \brief Overrides the base class method to render the physics control panel.
+         * \brief Default constructor of settings panel.
+         */
+        SettingsPanel() : Panel(ICON_LC_SETTINGS "  Settings") {}
+
+        /*!
+         * \brief Overrides the base class method to render the settings panel.
          */
         void RenderPanel() override;
     };

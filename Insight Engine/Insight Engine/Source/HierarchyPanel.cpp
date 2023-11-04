@@ -1,10 +1,10 @@
 /*!
- * \file SceneHierarchyPanel.cpp
+ * \file HierarchyPanel.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This source file defines the implementation for class SceneHierarchyPanel,
+ * This source file defines the implementation for class HierarchyPanel,
  * which encapsulates the functionalities of a scene hierarchy panel
  * akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
  * manages the entities in a scene.
@@ -19,7 +19,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "SceneHierarchyPanel.h"
+#include "HierarchyPanel.h"
 #include "EditorUtils.h"
 #include "CoreEngine.h"
 #include "EditorLayer.h"
@@ -29,17 +29,16 @@
 
 // Dependencies
 #include <imgui.h>
-#include <IconsLucide.h>
 
 namespace IS {
 
-    void SceneHierarchyPanel::RenderPanel()
+    void HierarchyPanel::RenderPanel()
     {
         auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
-        ImGui::Begin(ICON_LC_LIST_TREE "  Hierarchy");
+        ImGui::Begin(mName.c_str());
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
@@ -67,10 +66,14 @@ namespace IS {
         {
             // Set up scene tree
             ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-            bool opened = ImGui::TreeNodeEx(ICON_LC_BOXES "  Scenes", tree_flags);
+            bool opened = ImGui::TreeNodeEx(ICON_LC_NETWORK "  Scenes", tree_flags);
             if (ImGui::BeginPopupContextItem())
             {
-                if (ImGui::MenuItem("Add Scene")) { scene_manager.NewScene("NewScene"); }
+                if (ImGui::BeginMenu("Add"))
+                {
+                    if (ImGui::MenuItem(ICON_LC_BOXES "  Scene")) { scene_manager.NewScene("NewScene"); }
+                    ImGui::EndMenu();
+                }                
 
                 ImGui::EndPopup();
             }
@@ -108,7 +111,7 @@ namespace IS {
 
     } // end RenderPanel()
 
-    void SceneHierarchyPanel::RenderActiveSceneDetails()
+    void HierarchyPanel::RenderActiveSceneDetails()
     {
         auto& scene_manager = SceneManager::Instance();
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
@@ -146,7 +149,7 @@ namespace IS {
 
     } // end RenderSceneDetails()
 
-    void SceneHierarchyPanel::RenderLayerControls()
+    void HierarchyPanel::RenderLayerControls()
     {
         auto& style = ImGui::GetStyle();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
@@ -180,7 +183,7 @@ namespace IS {
         }
     } // end RenderLayers()
 
-    void SceneHierarchyPanel::RenderCameraControls()
+    void HierarchyPanel::RenderCameraControls()
     {
         auto& engine = InsightEngine::Instance();
         auto const editor = engine.GetSystem<Editor>("Editor");
@@ -284,7 +287,7 @@ namespace IS {
 
     } // end RenderCamera()
 
-    void SceneHierarchyPanel::RenderSceneNode(SceneID scene)
+    void HierarchyPanel::RenderSceneNode(SceneID scene)
     {
         auto& scene_manager = SceneManager::Instance();        
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
@@ -335,7 +338,7 @@ namespace IS {
         }
     }
 
-    void SceneHierarchyPanel::RenderEntityNode(Entity entity)
+    void HierarchyPanel::RenderEntityNode(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
         bool is_selected_entity = mSelectedEntity && (*mSelectedEntity == entity);
@@ -361,7 +364,7 @@ namespace IS {
 
     } // end RenderEntityNode()
 
-    void SceneHierarchyPanel::ProcessSelectedEntityShortcuts()
+    void HierarchyPanel::ProcessSelectedEntityShortcuts()
     {
         if (!mSelectedEntity)
             return;
@@ -378,7 +381,7 @@ namespace IS {
         if (DELETE_PRESSED) { DeleteEntity(entity); } // Delete
     }
 
-    //void SceneHierarchyPanel::RenderConfirmDelete(Entity entity, bool& show)
+    //void HierarchyPanel::RenderConfirmDelete(Entity entity, bool& show)
     //{
     //    InsightEngine& engine = InsightEngine::Instance();
     //    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
@@ -408,16 +411,16 @@ namespace IS {
     //    }
     //}
 
-    void SceneHierarchyPanel::CloneEntity(Entity entity) { SceneManager::Instance().CloneEntity(entity); }
+    void HierarchyPanel::CloneEntity(Entity entity) { SceneManager::Instance().CloneEntity(entity); }
 
-    void SceneHierarchyPanel::DeleteEntity(Entity entity)
+    void HierarchyPanel::DeleteEntity(Entity entity)
     {
         SceneManager::Instance().DeleteEntity(entity);
         if (mSelectedEntity && *mSelectedEntity == entity)
             mSelectedEntity.reset();
     }
 
-    void SceneHierarchyPanel::RenderAddComponent(Entity entity)
+    void HierarchyPanel::RenderAddComponent(Entity entity)
     {
         auto& engine = InsightEngine::Instance();
 
@@ -491,13 +494,13 @@ namespace IS {
 
     } // end RenderAddComponent()
 
-    void SceneHierarchyPanel::ResetSelection() { mSelectedEntity.reset(); }
+    void HierarchyPanel::ResetSelection() { mSelectedEntity.reset(); }
 
-    SceneHierarchyPanel::EntityPtr SceneHierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
+    HierarchyPanel::EntityPtr HierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
 
-    void SceneHierarchyPanel::SetSelectedEntity(EntityPtr entity_ptr) { mSelectedEntity = entity_ptr; }
+    void HierarchyPanel::SetSelectedEntity(EntityPtr entity_ptr) { mSelectedEntity = entity_ptr; }
 
-    void SceneHierarchyPanel::RenderSelectedEntityOutline()
+    void HierarchyPanel::RenderSelectedEntityOutline()
     {
         if (!mSelectedEntity)
             return;
@@ -513,7 +516,7 @@ namespace IS {
         }
     }
 
-    void SceneHierarchyPanel::RenderEntityConfig(Entity entity)
+    void HierarchyPanel::RenderEntityConfig(Entity entity)
     {
         if (ImGui::BeginPopupContextItem(nullptr, ImGuiPopupFlags_MouseButtonRight))
         {
@@ -532,6 +535,6 @@ namespace IS {
         }
     }
 
-    Vec2 SceneHierarchyPanel::GetPanelSize() const { return mPanelSize; }
+    Vec2 HierarchyPanel::GetPanelSize() const { return mPanelSize; }
 
 } // end namespace IS

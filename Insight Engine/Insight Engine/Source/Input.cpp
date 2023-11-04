@@ -161,8 +161,8 @@ namespace IS {
         auto const& viewport_size = editor_layer->GetViewportSize();
 
         Camera& cameraInUse = ISGraphics::cameras[Camera::mActiveCamera];
-        double SHw = editor_layer->GetSceneHierarchyPanelSize().x; // change to scene hierarchy panel width
-        double LCh = editor_layer->GetLogConsolePanelSize().y; // change to log console height
+        double SHw = editor_layer->GetHierarchyPanel().x; // change to scene hierarchy panel width
+        double LCh = editor_layer->GetConsolePanelSize().y; // change to log console height
 
         // step 1: get screen coords
         //double mouseX{}, mouseY{};

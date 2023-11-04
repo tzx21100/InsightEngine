@@ -25,7 +25,6 @@
 
 // Dependencies
 #include <imgui.h>
-#include <IconsLucide.h>
 
 namespace IS {
 
@@ -37,7 +36,7 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = 0;
-        ImGui::Begin(ICON_LC_GAMEPAD_2 "  Game", nullptr, window_flags);
+        ImGui::Begin(mName.c_str(), nullptr, window_flags);
 
         // Allow key/mouse event pass through only in this panel
         mFocused = ImGui::IsWindowFocused();
@@ -69,7 +68,7 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = 0;
-        ImGui::Begin(ICON_LC_VIEW "  Scene", nullptr, window_flags);
+        ImGui::Begin(mName.c_str(), nullptr, window_flags);
 
         auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
         auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
@@ -222,7 +221,7 @@ namespace IS {
         const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
         const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
 
-        ImGui::Begin(ICON_LC_GAUGE "  Performance");
+        ImGui::Begin(mName.c_str());
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         
         if (ImGui::BeginTable("Engine", 2))
@@ -343,30 +342,62 @@ namespace IS {
     }
 
     // Log Console Panel
-    void LogConsolePanel::RenderPanel() 
+    void ConsolePanel::RenderPanel() 
     {
         auto& logger_gui = Logger::LoggerGUI::Instance();
-        logger_gui.Draw(ICON_LC_TERMINAL_SQUARE "  Console");
+        logger_gui.Draw(mName.c_str());
         mPanelSize = logger_gui.mPanelSize;
     }
 
-    Vec2 LogConsolePanel::GetPanelSize() const { return mPanelSize; }
+    Vec2 ConsolePanel::GetPanelSize() const { return mPanelSize; }
 
     // Physics Control Panel
-    void PhysicsControlPanel::RenderPanel()
+    void SettingsPanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
-        ImGui::Begin(ICON_LC_ATOM "  Physics");
+        ImGui::Begin(mName.c_str());
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen;
-        if (ImGui::TreeNodeEx("Grid", tree_flags))
+
+        if (ImGui::TreeNodeEx(ICON_LC_PERSON_STANDING "  Ridgidbody", tree_flags))
         {
-            if (ImGui::BeginTable("GridTable", 2))
+            if (ImGui::BeginTable("RigidbodyTable", 2))
             {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Exert Gravity");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Show Velocity");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
+
+                ImGui::EndTable(); // end table RigidbodyTable
+            }
+
+            ImGui::TreePop(); // end tree Ridgidbody
+        }
+
+        if (ImGui::TreeNodeEx(ICON_LC_FLIP_HORIZONTAL_2 "  Collision", tree_flags))
+        {
+            if (ImGui::BeginTable("CollisionTable", 2))
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Show Colliders");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
+
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Show Grid");
@@ -386,43 +417,30 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
 
-                ImGui::EndTable(); // end table Grid
+                ImGui::EndTable(); // end table CollisionTable
             }
+
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNodeEx("Other Options", tree_flags))
+        if (ImGui::TreeNodeEx(ICON_LC_IMAGE "  Graphics", tree_flags))
         {
-            if (ImGui::BeginTable("OtherTable", 2))
+            if (ImGui::BeginTable("GraphicsTable", 2))
             {
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Exert Gravity");
+                ImGui::TextUnformatted("Text Animation");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
-
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Show Colliders");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
-
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Show Velocity");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
+                ImGui::Checkbox("##TextAnimation", &ISGraphics::mShowTextAnimation);
 
                 ImGui::EndTable(); // end table Other Options
             }
-            ImGui::TreePop();
+            ImGui::TreePop(); // end tree Graphics
         }
 
         ImGui::PopStyleVar();
-        ImGui::End(); // end window Physics
+        ImGui::End(); // end window Settings
     }
 
 } // end namespace IS

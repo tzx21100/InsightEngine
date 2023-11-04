@@ -73,7 +73,7 @@
     <ClCompile Include="Source\Text.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneHierarchyPanel.cpp">
+    <ClCompile Include="Source\HierarchyPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Source\ScriptEngine.cpp">
@@ -121,7 +121,7 @@
     <ClCompile Include="Source\EditorUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AssetBrowserPanel.cpp">
+    <ClCompile Include="Source\BrowserPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
@@ -255,7 +255,7 @@
     <ClInclude Include="Source\Text.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneHierarchyPanel.h">
+    <ClInclude Include="Source\HierarchyPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Source\ScriptEngine.h">
@@ -312,7 +312,7 @@
     <ClInclude Include="Source\EditorUtils.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AssetBrowserPanel.h">
+    <ClInclude Include="Source\BrowserPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">

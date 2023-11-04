@@ -22,7 +22,7 @@
 #include "Graphics.h"
 #include "CoreEngine.h"
 #include "InspectorPanel.h"
-#include "AssetBrowserPanel.h"
+#include "BrowserPanel.h"
 #include "FileUtils.h"
 
 // Dependencies
@@ -98,11 +98,10 @@ namespace IS {
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
 
         // Auto pause game if game panel is not in focus
-        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR) { engine.mRuntime = false; }
-
-        // Controls for scene panel
-        if (mScenePanel->IsFocused())
+        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
         {
+            engine.mRuntime = false;
+
             // Set active camera to editor camera
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
 
@@ -126,17 +125,17 @@ namespace IS {
                 {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
                     mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
-                    mSceneHierarchyPanel->SetSelectedEntity(mHoveredEntity);
+                    mHierarchyPanel->SetSelectedEntity(mHoveredEntity);
                 }
 
                 // Mouse dragging - change selected/hovered entity translation
-                else if (mSceneHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
                     Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
                         static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
                         static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
 
-                    Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
+                    Entity entity = *mHierarchyPanel->GetSelectedEntity();
 
                     // Translate entity position
                     if (engine.HasComponent<Transform>(entity))
@@ -148,6 +147,12 @@ namespace IS {
                 }
 
             }
+        }
+
+        // Controls for scene panel
+        if (mScenePanel->IsFocused())
+        {
+            engine.mRuntime = false;
         }
 
         else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
@@ -204,11 +209,11 @@ namespace IS {
         for (auto& panel : mPanels)
             panel->RenderPanel();
 
-        if (mSceneHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
-            *mHoveredEntity == *mSceneHierarchyPanel->GetSelectedEntity())
+        if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
+            *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
         {
-            Entity entity = *mSceneHierarchyPanel->GetSelectedEntity();
-            mSceneHierarchyPanel->RenderEntityConfig(entity);
+            Entity entity = *mHierarchyPanel->GetSelectedEntity();
+            mHierarchyPanel->RenderEntityConfig(entity);
         }
 
         //RenderGizmo();
@@ -323,7 +328,7 @@ namespace IS {
             ShowCreatePopup("Create new scene", "NewScene", &mShowNewScene, [this](const char* scene_name)
             {
                 SceneManager& scene_manager = SceneManager::Instance();
-                mSceneHierarchyPanel->ResetSelection();
+                mHierarchyPanel->ResetSelection();
                 scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
@@ -361,12 +366,6 @@ namespace IS {
             ImVec2 window_size = ImGui::GetContentRegionMax();
             ImVec2 start_position = ImVec2((window_size.x - (button_size.x * BUTTON_COUNT)) / 2, (window_size.y - button_size.y) / 2);
 
-            ImGui::SetCursorPosY(start_position.y + style.FramePadding.y);
-            ImGui::TextUnformatted("Text Animation");
-            ImGui::SameLine();
-            ImGui::SetCursorPosY(start_position.y);
-            ImGui::Checkbox("##Text Animation", &ISGraphics::mShowTextAnimation);
-
             // Render buttons
             for (int i{}; i < BUTTON_COUNT; ++i, start_position.x += button_size.x + style.ItemSpacing.x)
             {
@@ -389,7 +388,7 @@ namespace IS {
                 {
                     engine.mRuntime = !engine.mRuntime;
                     Camera::mActiveCamera = CAMERA_TYPE_GAME;
-                    ImGui::SetWindowFocus("Game");
+                    ImGui::SetWindowFocus(ICON_LC_GAMEPAD_2 "  Game");
                     scene_manager.SaveScene();
                 }
 
@@ -398,7 +397,7 @@ namespace IS {
                 {
                     engine.mRuntime = false;
                     Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-                    ImGui::SetWindowFocus("Scene");
+                    ImGui::SetWindowFocus(ICON_LC_VIEW "  Scene");
                     scene_manager.ReloadActiveScene();
                 }
 
@@ -415,27 +414,27 @@ namespace IS {
 
     void EditorLayer::AttachPanels()
     {
-        mScenePanel = std::make_shared<ScenePanel>();
-        mGamePanel = std::make_shared<GamePanel>();
-        mSceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>();
-        mLogConsolePanel = std::make_shared<LogConsolePanel>();
+        mGamePanel      = std::make_shared<GamePanel>();
+        mScenePanel     = std::make_shared<ScenePanel>();
+        mHierarchyPanel = std::make_shared<HierarchyPanel>();
+        mConsolePanel   = std::make_shared<ConsolePanel>();
 
         mPanels.emplace_back(mGamePanel);
         mPanels.emplace_back(mScenePanel);
-        mPanels.emplace_back(std::make_shared<PhysicsControlPanel>());
-        mPanels.emplace_back(mSceneHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<InspectorPanel>(mSceneHierarchyPanel));
+        mPanels.emplace_back(mHierarchyPanel);
         mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<AssetBrowserPanel>());
-        mPanels.emplace_back(mLogConsolePanel);
+        mPanels.emplace_back(std::make_shared<BrowserPanel>());
+        mPanels.emplace_back(mConsolePanel);
+        mPanels.emplace_back(std::make_shared<InspectorPanel>(mHierarchyPanel));
+        mPanels.emplace_back(std::make_shared<SettingsPanel>());
     }
 
     //void EditorLayer::RenderGizmo()
     //{
-    //    if (!mSceneHierarchyPanel->GetSelectedEntity())
+    //    if (!mHierarchyPanel->GetSelectedEntity())
     //        return;
 
-    //    //Entity selected_entity = *mSceneHierarchyPanel->GetSelectedEntity();
+    //    //Entity selected_entity = *mHierarchyPanel->GetSelectedEntity();
 
     //    ImGuizmo::SetOrthographic(true);
     //    ImGuizmo::SetDrawlist();
@@ -511,7 +510,7 @@ namespace IS {
 
     void EditorLayer::OpenScene()
     {
-        mSceneHierarchyPanel->ResetSelection();
+        mHierarchyPanel->ResetSelection();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
@@ -535,7 +534,7 @@ namespace IS {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
             {
                 std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                mSceneHierarchyPanel->ResetSelection();
+                mHierarchyPanel->ResetSelection();
                 OpenScene(path.string());
             }
             ImGui::EndDragDropTarget();
@@ -548,7 +547,7 @@ namespace IS {
 
     ImTextureID EditorLayer::GetIcon(const char* icon) const { return mIcons.at(icon); }
 
-    void EditorLayer::RenderSelectedEntityOutline() const { mSceneHierarchyPanel->RenderSelectedEntityOutline(); }
+    void EditorLayer::RenderSelectedEntityOutline() const { mHierarchyPanel->RenderSelectedEntityOutline(); }
 
     void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
 

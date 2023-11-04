@@ -23,7 +23,7 @@
 ----------------------------------------------------------------------------- */
 #include "Layer.h"
 #include "Panel.h"
-#include "SceneHierarchyPanel.h"
+#include "HierarchyPanel.h"
 
 #include <functional>
 
@@ -120,18 +120,18 @@ namespace IS {
         Vec2 GetViewportSize();
 
         /*!
-         * \brief Get size of log console panel.
+         * \brief Get size of console panel.
          *
-         * \return Size of log console panel.
+         * \return Size of console panel.
          */
-        Vec2 GetLogConsolePanelSize() const { return mLogConsolePanel->GetPanelSize(); }
+        Vec2 GetConsolePanelSize() const { return mConsolePanel->GetPanelSize(); }
 
         /*!
          * \brief Get size of scene hierarchy panel.
          *
          * \return Size of scene hierarchy panel.
          */
-        Vec2 GetSceneHierarchyPanelSize() const { return mSceneHierarchyPanel->GetPanelSize(); }
+        Vec2 GetHierarchyPanel() const { return mHierarchyPanel->GetPanelSize(); }
 
     private:
         // Internal Flags
@@ -143,8 +143,8 @@ namespace IS {
         std::shared_ptr<Entity> mHoveredEntity;
         std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
         std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
-        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Instance of scene hierarchy panel.
-        std::shared_ptr<LogConsolePanel> mLogConsolePanel;
+        std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Instance of hierarchy panel.
+        std::shared_ptr<ConsolePanel> mConsolePanel; ///< Instance of console panel.
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.

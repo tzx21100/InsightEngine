@@ -1,10 +1,10 @@
 /*!
- * \file AssetBrowserPanel.cpp
+ * \file BrowserPanel.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 24-10-2023
  * \brief
- * This source file defines the implementation for class AssetBrowserPanel which
+ * This source file defines the implementation for class BrowserPanel which
  * encapsulates the functionalities of an asset browser panel.
  *
  * \copyright
@@ -17,29 +17,29 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "AssetBrowserPanel.h"
+#include "BrowserPanel.h"
 #include "EditorUtils.h"
 #include "FileUtils.h"
 #include "Editor.h"
 
 #include <imgui.h>
-#include <IconsLucide.h>
 
 namespace IS {
 
-    std::filesystem::path AssetBrowserPanel::ASSETS_PATH = "Assets";
+    std::filesystem::path BrowserPanel::ASSETS_PATH = "Assets";
 
-    const std::string AssetBrowserPanel::IMPORTED = "Imported";
+    const std::string BrowserPanel::IMPORTED = "Imported";
 
-    AssetBrowserPanel::AssetBrowserPanel() : mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
+    BrowserPanel::BrowserPanel()
+        : Panel(ICON_LC_FOLDER_SEARCH_2 "  Browser"), mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
 
-    void AssetBrowserPanel::RenderPanel()
+    void BrowserPanel::RenderPanel()
     {
         auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
-        if (ImGui::Begin(ICON_LC_FOLDER_SEARCH_2 "  Browser"))
+        if (ImGui::Begin(mName.c_str()))
         {
             RenderControls();
             ImGui::Separator();
@@ -89,7 +89,7 @@ namespace IS {
         ImGui::End(); // end window Asset Browser
     }
 
-    void AssetBrowserPanel::RenderControls()
+    void BrowserPanel::RenderControls()
     {
         // Browser Controls
         float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
@@ -122,7 +122,7 @@ namespace IS {
         }
     }
 
-    void AssetBrowserPanel::RenderPath()
+    void BrowserPanel::RenderPath()
     {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         if (ImGui::Button(ASSETS_PATH.filename().string().c_str())) { SwitchCurrentDirectory(ASSETS_PATH); }
@@ -151,7 +151,7 @@ namespace IS {
         ImGui::PopStyleColor();
     }
 
-    void AssetBrowserPanel::RenderAllAssetsBrowser()
+    void BrowserPanel::RenderAllAssetsBrowser()
     {
         RenderPath();
 
@@ -246,7 +246,7 @@ namespace IS {
         ImGui::EndChild(); // end child window Assets
     }
 
-    void AssetBrowserPanel::RenderImportedAssetsTree()
+    void BrowserPanel::RenderImportedAssetsTree()
     {
         const std::string textures = "Textures";
         const std::string sounds = "Sounds";
@@ -278,14 +278,14 @@ namespace IS {
         }
     }
 
-    void AssetBrowserPanel::SwitchImportedAsset(std::string const& asset)
+    void BrowserPanel::SwitchImportedAsset(std::string const& asset)
     {
         mSelectedImportedAsset = asset;
         mCurrentDirectory = ASSETS_PATH;
         mShowImportedAssets = true;
     }
 
-    void AssetBrowserPanel::RenderDirectoryContents(std::filesystem::path const& directory)
+    void BrowserPanel::RenderDirectoryContents(std::filesystem::path const& directory)
     {
         for (auto const& entry : std::filesystem::directory_iterator(directory))
         {
@@ -299,7 +299,7 @@ namespace IS {
         }
     }
 
-    void AssetBrowserPanel::RenderDirectoryNode(std::filesystem::path const& directory)
+    void BrowserPanel::RenderDirectoryNode(std::filesystem::path const& directory)
     {
         std::string const& filename_string = directory.filename().string();
         const bool is_current = directory == mCurrentDirectory;
@@ -319,7 +319,7 @@ namespace IS {
         }
     }
 
-    void AssetBrowserPanel::RenderDirectoryLeafNode(std::filesystem::path const& directory)
+    void BrowserPanel::RenderDirectoryLeafNode(std::filesystem::path const& directory)
     {
         std::string const& filename_string = directory.filename().string();
         const bool is_current = directory == mCurrentDirectory;
@@ -335,14 +335,14 @@ namespace IS {
         }
     }
 
-    void AssetBrowserPanel::SwitchCurrentDirectory(std::filesystem::path const& directory)
+    void BrowserPanel::SwitchCurrentDirectory(std::filesystem::path const& directory)
     {
         mCurrentDirectory = directory;
         mSelectedImportedAsset = IMPORTED;
         mShowImportedAssets = false;
     }
 
-    bool AssetBrowserPanel::HasSubDirectory(std::filesystem::path const& directory)
+    bool BrowserPanel::HasSubDirectory(std::filesystem::path const& directory)
     {
         for (auto const& entry : std::filesystem::directory_iterator(directory))
         {
@@ -352,7 +352,7 @@ namespace IS {
         return false;
     }
 
-    void AssetBrowserPanel::RenderImportedPath()
+    void BrowserPanel::RenderImportedPath()
     {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         if (ImGui::Button(IMPORTED.c_str())) { SwitchImportedAsset(IMPORTED); }
@@ -369,7 +369,7 @@ namespace IS {
         ImGui::PopStyleColor();
     }
 
-    void AssetBrowserPanel::RenderImportedAssets()
+    void BrowserPanel::RenderImportedAssets()
     {
         auto& engine = InsightEngine::Instance();
         auto const editor = engine.GetSystem<Editor>("Editor");

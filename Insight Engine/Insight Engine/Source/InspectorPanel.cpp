@@ -1,10 +1,10 @@
 /*!
- * \file SceneHierarchyPanel.cpp
+ * \file HierarchyPanel.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This source file defines the implementation for class SceneHierarchyPanel,
+ * This source file defines the implementation for class HierarchyPanel,
  * which encapsulates the functionalities of a scene hierarchy panel
  * akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
  * manages the entities in a scene.
@@ -28,21 +28,18 @@
 
 // Dependencies
 #include <imgui.h>
-#include <IconsLucide.h>
 
 namespace IS {
 
-    class SceneHierarchyPanel;
-
-    InspectorPanel::InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel)
-        : mSceneHierarchyPanel(scene_hierarchy_panel) {}
+    InspectorPanel::InspectorPanel(std::shared_ptr<HierarchyPanel> hierarchy_panel)
+        : Panel(ICON_LC_INFO "  Inspector"), mHierarchyPanel(hierarchy_panel) {}
 
     void InspectorPanel::RenderPanel()
     {
-        ImGui::Begin(ICON_LC_INFO "  Inspector");
-        if (mSceneHierarchyPanel->mSelectedEntity)
+        ImGui::Begin(mName.c_str());
+        if (mHierarchyPanel->mSelectedEntity)
         {
-            RenderComponentNodes(*mSceneHierarchyPanel->mSelectedEntity);
+            RenderComponentNodes(*mHierarchyPanel->mSelectedEntity);
         }
         ImGui::End(); // end window Inspector
     }
@@ -95,7 +92,7 @@ namespace IS {
             {
                 if (ImGui::BeginMenu("Add Component"))
                 {
-                    SceneHierarchyPanel::RenderAddComponent(entity);
+                    HierarchyPanel::RenderAddComponent(entity);
 
                     ImGui::EndMenu();
                 }
@@ -106,7 +103,7 @@ namespace IS {
                 if (ImGui::MenuItem("Delete Entity"))
                 {
                     engine.DeleteEntity(entity);
-                    mSceneHierarchyPanel->ResetSelection();
+                    mHierarchyPanel->ResetSelection();
                 }
 
                 ImGui::EndPopup();

@@ -14,7 +14,7 @@
     <ClCompile Include="Source\AIFSM.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Asset.cpp" />
-    <ClCompile Include="Source\AssetBrowserPanel.cpp" />
+    <ClCompile Include="Source\BrowserPanel.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -32,7 +32,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Panel.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
-    <ClCompile Include="Source\SceneHierarchyPanel.cpp" />
+    <ClCompile Include="Source\HierarchyPanel.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
@@ -75,7 +75,7 @@
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\Component.h" />
-    <ClInclude Include="Source\AssetBrowserPanel.h" />
+    <ClInclude Include="Source\BrowserPanel.h" />
     <ClInclude Include="Source\CoreEngine.h" />
     <ClInclude Include="Source\Assertion.h" />
     <ClInclude Include="Source\EditorLayer.h" />
@@ -99,7 +99,7 @@
     <ClInclude Include="Source\Prefab.h" />
     <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\InsightEngine.h" />
-    <ClInclude Include="Source\SceneHierarchyPanel.h" />
+    <ClInclude Include="Source\HierarchyPanel.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
     <ClInclude Include="Source\ScriptGlue.h" />

@@ -23,7 +23,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
-#include "SceneHierarchyPanel.h"
+#include "HierarchyPanel.h"
 #include "Entities.h"
 
 // Dependencies
@@ -31,6 +31,8 @@
 #include <imgui.h>
 
 namespace IS {
+
+    class HierarchyPanel;
 
     /*!
      * \brief The InspectorPanel class provides a panel for managing selected entity and its components.
@@ -42,9 +44,9 @@ namespace IS {
         /*!
          * \brief Constructs an InspectorPanel object.
          * 
-         * \param scene_hierarchy_panel The instance of scene hierarchy panel.
+         * \param hierarchy_panel The instance of hierarchy panel.
          */
-        InspectorPanel(std::shared_ptr<SceneHierarchyPanel> scene_hierarchy_panel);
+        InspectorPanel(std::shared_ptr<HierarchyPanel> hierarchy_panel);
 
         /*!
          * \brief Renders the panel for the inspector.
@@ -52,7 +54,7 @@ namespace IS {
         void RenderPanel() override;
 
     private:
-        std::shared_ptr<SceneHierarchyPanel> mSceneHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
+        std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
         bool mShowPrefabs = false; ///< Flag indicating show prefabs
         bool mShowAddAnimation = false; ///< Flag indicating show add animation
 

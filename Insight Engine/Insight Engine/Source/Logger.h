@@ -166,7 +166,7 @@ namespace IS {
              */
             LoggerGUI() = default;
 
-            friend class LogConsolePanel;
+            friend class ConsolePanel;
         };
 
         /*!

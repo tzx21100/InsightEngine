@@ -1,10 +1,10 @@
 /*!
- * \file AssetBrowserPanel.h
+ * \file BrowserPanel.h
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 24-10-2023
  * \brief
- * This header file declares the interface for class AssetBrowserPanel which
+ * This header file declares the interface for class BrowserPanel which
  * encapsulates the functionalities of an asset browser panel.
  *
  * \copyright
@@ -28,23 +28,23 @@
 
 namespace IS {
 
-    /*! \class AssetBrowserPanel
+    /*! \class BrowserPanel
      *
      * \brief A class representing an asset browser panel for managing and viewing assets.
      *
-     * The \c AssetBrowserPanel class is derived from the \c Panel class and provides functionality
+     * The \c BrowserPanel class is derived from the \c Panel class and provides functionality
      * to browse and manage assets within a user interface. It includes features to render the panel
      * and various controls for configuring the asset browser's appearance and behavior.
      */
-    class AssetBrowserPanel : public Panel
+    class BrowserPanel : public Panel
     {
     public:
 
-        /*! \brief Constructor for the AssetBrowserPanel class.
+        /*! \brief Constructor for the BrowserPanel class.
          *
-         * Initializes a new instance of the \c AssetBrowserPanel class.
+         * Initializes a new instance of the \c BrowserPanel class.
          */
-        AssetBrowserPanel();
+        BrowserPanel();
 
         /*! \brief Renders the asset browser panel.
          *
@@ -80,8 +80,8 @@ namespace IS {
          */
         struct Controls
         {
-            float mThumbnailSize = 2 * MIN_THUMBNAIL_SIZE; ///< The size of thumbnails in the browser.
-            float mPadding = 16.f; ///< The padding between thumbnails.
+            float mThumbnailSize = MIN_THUMBNAIL_SIZE; ///< The size of thumbnails in the browser.
+            float mPadding = MAX_PADDING * 0.5f; ///< The padding between thumbnails.
         };
 
         std::filesystem::path mCurrentDirectory; ///< The currently selected directory.
