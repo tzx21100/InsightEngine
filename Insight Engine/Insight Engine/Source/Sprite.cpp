@@ -20,24 +20,13 @@ namespace IS {
     // set of layers to NOT render
     std::unordered_set<int> Sprite::layersToIgnore{};
 
-    Sprite::Sprite() {
-        name = "Quad";
-        primitive_type = GL_TRIANGLE_STRIP;
-        PRNG& prng = PRNG::Instance();
-        for (int i{}; i < 3; ++i) {
-            color[i] = prng.generate();
-        }
+    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f) {
         // Give it a default size of 1 by 1
         setSpriteSize(1, 1);
         setWorldPos(0, 0);
     }
 
-    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {
-        PRNG& prng = PRNG::Instance();
-        for (int i{}; i < 3; ++i) {
-            color[i] = prng.generate();
-        }
-    }
+    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f) {}
 
     Sprite::Sprite(const Sprite& other)
         : primitive_type(other.primitive_type),
@@ -466,7 +455,7 @@ namespace IS {
         glBindVertexArray(mesh_used.vao_ID);
 
         // set uniforms
-        auto [r, g, b] = clr;
+        auto& [r, g, b] = clr;
         glm::vec3 uniform_color{ r, g, b };
         shader.setUniform("uColor", uniform_color);
         shader.setUniform("uModel_to_NDC", world_to_NDC_xform);

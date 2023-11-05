@@ -81,6 +81,7 @@ namespace IS {
          * \brief Boolean flag to exert gravity
          */
         static bool mExertingGravity;
+        static Vector2D mGravity;                                  // Gravity of the world
 
         /*!
          * \brief Destructor for the Physics class.
@@ -163,7 +164,6 @@ namespace IS {
         void Step(float time, std::set<Entity> const& entities);
         
 	private:
-        Vector2D mGravity;                                  // Gravity of the world
         float mMaxVelocity;                                 // Maximum velocity for game bodies
         float mMinVelocity;                                 // Minimum velocity for game bodies
         int mTotalIterations;                               // Number of iterations for physics step

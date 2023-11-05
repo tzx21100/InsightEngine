@@ -277,9 +277,10 @@ namespace IS {
         trans.setWorldPosition((prng.generate() * window_size.x) - window_size.x * .5f, (prng.generate()* window_size.y) - window_size.y * .5f);
         trans.setRotation((prng.generate() * (MAX_ROTATION - MIN_ROTATION)) + MIN_ROTATION);
 
+        auto& sprite = engine.GetComponent<Sprite>(e);
+        sprite.color = { prng.generate(), prng.generate(), prng.generate() };
         // with texture
         if (with_texture) {
-            auto& sprite = engine.GetComponent<Sprite>(e);
             auto asset = engine.GetSystem<AssetManager>("Asset");
             float gacha = prng.generate(); // [0, 1]
             constexpr float ULTRA_RARE = .25f;

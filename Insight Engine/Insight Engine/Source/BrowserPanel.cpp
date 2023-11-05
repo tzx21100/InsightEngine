@@ -107,9 +107,9 @@ namespace IS {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         for (auto it = path_components.rbegin(); it != path_components.rend(); ++it)
         {
-            ImGui::SameLine();
-            ImGui::TextUnformatted(">");
-            ImGui::SameLine();
+            ImGui::SameLine(0.f, 0.f);
+            ImGui::TextUnformatted(ICON_LC_CHEVRON_RIGHT);
+            ImGui::SameLine(0.f, 0.f);
             if (ImGui::Button(it->filename().string().c_str())) { SwitchCurrentDirectory(*it); }
         }
         ImGui::PopStyleColor();
@@ -132,11 +132,7 @@ namespace IS {
         if (mCurrentDirectory != std::filesystem::path(ASSETS_PATH))
         {
             ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
-            if (ImGui::Button(ICON_LC_ARROW_LEFT))
-            {
-                mCurrentDirectory = mCurrentDirectory.parent_path();
-                IS_CORE_TRACE("Returned to Directory: {}", mCurrentDirectory.string());
-            }
+            if (ImGui::Button(ICON_LC_ARROW_LEFT)) { mCurrentDirectory = mCurrentDirectory.parent_path(); }
             ImGui::PopStyleColor();
             ImGui::SameLine();
         }
@@ -189,11 +185,8 @@ namespace IS {
                     // Clicking Item
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
-                        if (is_directory)
-                        {
-                            mCurrentDirectory /= path.filename();
-                            IS_CORE_TRACE("Entered Directory: {}", mCurrentDirectory.string());
-                        } else
+                        if (is_directory) { mCurrentDirectory /= path.filename(); }
+                        else
                         {
                             std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
                             path.extension() == ".insight" ? SceneManager::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
@@ -271,11 +264,7 @@ namespace IS {
         ImGuiTreeNodeFlags tree_flags = is_current ? ImGuiTreeNodeFlags_Selected : 0;
         bool opened = ImGui::TreeNodeEx(((is_current ? ICON_LC_FOLDER_OPEN "  " : ICON_LC_FOLDER "  ") + filename_string).c_str(), tree_flags);
 
-        if (ImGui::IsItemClicked())
-        {
-            mCurrentDirectory = directory;
-            IS_CORE_DEBUG("{}", mCurrentDirectory.string());
-        }
+        if (ImGui::IsItemClicked()) { mCurrentDirectory = directory; }
 
         if (opened)
         {
@@ -494,8 +483,11 @@ namespace IS {
     {
         auto& style = ImGui::GetStyle();
         ImGui::SameLine(ImGui::GetContentRegionAvail().x - style.FramePadding.x - style.ItemSpacing.x);
+
+        ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
         if (ImGui::Button(ICON_LC_MORE_VERTICAL))
             ImGui::OpenPopup("BrowserSettings");
+        ImGui::PopStyleColor();
 
         if (ImGui::BeginPopup("BrowserSettings"))
         {

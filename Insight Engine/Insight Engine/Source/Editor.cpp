@@ -172,7 +172,6 @@ namespace IS {
         colors[ImGuiCol_Button] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
         colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
         colors[ImGuiCol_ButtonActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-
         // Frame BG
         colors[ImGuiCol_FrameBg] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
         colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
@@ -207,7 +206,7 @@ namespace IS {
         colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
 
         // Menubar
-        colors[ImGuiCol_MenuBarBg] = ImVec4{ .1137f, .1137f, .1137f, 1.f };
+        colors[ImGuiCol_MenuBarBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
     }
 
     bool Editor::WantCaptureMouse() const { return ImGui::GetIO().WantCaptureMouse; }

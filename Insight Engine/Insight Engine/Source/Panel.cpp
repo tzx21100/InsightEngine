@@ -363,10 +363,13 @@ namespace IS {
 
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen;
 
-        if (ImGui::TreeNodeEx(ICON_LC_PERSON_STANDING "  Ridgidbody", tree_flags))
+        if (ImGui::TreeNodeEx(ICON_LC_PERSON_STANDING "  Physics", tree_flags))
         {
-            if (ImGui::BeginTable("RigidbodyTable", 2))
+            EditorUtils::RenderControlVec2("Gravity", Physics::mGravity);
+            if (ImGui::BeginTable("PhysicsTable", 2))
             {
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Exert Gravity");
@@ -381,16 +384,18 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
 
-                ImGui::EndTable(); // end table RigidbodyTable
+                ImGui::EndTable(); // end table PhysicsTable
             }
 
-            ImGui::TreePop(); // end tree Ridgidbody
+            ImGui::TreePop(); // end tree Table
         }
 
         if (ImGui::TreeNodeEx(ICON_LC_FLIP_HORIZONTAL_2 "  Collision", tree_flags))
         {
             if (ImGui::BeginTable("CollisionTable", 2))
             {
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Show Colliders");
@@ -427,6 +432,8 @@ namespace IS {
         {
             if (ImGui::BeginTable("GraphicsTable", 2))
             {
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Text Animation");

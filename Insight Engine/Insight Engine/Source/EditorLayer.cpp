@@ -89,6 +89,8 @@ namespace IS {
         const bool S_PRESSED    = input->IsKeyPressed(GLFW_KEY_S);
         const bool F4_PRESSED   = input->IsKeyPressed(GLFW_KEY_F4);
         const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
+        const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
+        const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -96,14 +98,28 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
+        if (CTRL_HELD && Z_PRESSED) {} // Ctrl + Z
+        if (CTRL_HELD && Y_PRESSED) {} // Ctrl + Y
+
+        if (mGamePanel->IsFocused())
+        {
+            Camera::mActiveCamera = CAMERA_TYPE_GAME;
+        }
 
         // Auto pause game if game panel is not in focus
-        if (!mGamePanel->IsFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
+        else
         {
-            engine.mRuntime = false;
+            if (mScenePanel->IsFocused())
+            {
+                engine.mRuntime = false;
 
-            // Set active camera to editor camera
-            Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                // Set active camera to editor camera
+                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+            }
+            else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            {
+                mHoveredEntity = {};
+            }
 
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
@@ -147,17 +163,6 @@ namespace IS {
                 }
 
             }
-        }
-
-        // Controls for scene panel
-        if (mScenePanel->IsFocused())
-        {
-            engine.mRuntime = false;
-        }
-
-        else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-        {
-            mHoveredEntity = {};
         }
 
     } // end OnUpdate()
