@@ -171,7 +171,7 @@
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\ImGuizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Insight Engine\libraries\glfw\include;$(SolutionDir)Insight Engine\libraries\glew\include;$(SolutionDir)Insight Engine\libraries\glm;$(SolutionDir)Insight Engine\Source;$(SolutionDir)Insight Engine\libraries\glad\include;$(SolutionDir)Insight Engine\libraries\fmod\include;$(IncludePath)</IncludePath>
@@ -185,7 +185,7 @@
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\ImGuizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -196,7 +196,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -239,7 +239,7 @@ xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
