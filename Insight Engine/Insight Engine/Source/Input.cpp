@@ -1,6 +1,7 @@
 /*!
  * \file Input.cpp
- * \author Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \author Tan Zheng Xun, t.zhengxun@digipen.edu,
+ *         Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 26-09-2023
  * \brief
@@ -90,7 +91,10 @@ namespace IS {
             held_mouse_buttons.insert(button);
         }
 
+        // process file payloads
         ProcessPayloads();
+
+        // clear the file payloads after processing
         payloads.clear();
     }
 

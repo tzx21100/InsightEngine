@@ -29,7 +29,13 @@
 
 namespace IS {
 
-
+    /*!
+     * \class ScriptComponent
+     * \brief Represents a script component in the entity-component system.
+     * \details
+     * This component holds information related to a script, including the script name,
+     * initialization state, and the instance of the script object.
+     */
     class ScriptComponent : IComponent {
     public:
         static std::string GetType() {
@@ -55,6 +61,13 @@ namespace IS {
 
     };
 
+    /*!
+     * \class ScriptManager
+     * \brief A system to manage script components and interactions.
+     * \details
+     * This system manages the initialization, update, and interaction of script components,
+     * as well as the creation and management of C# class files.
+     */
     class ScriptManager :public ParentSystem {
     public:
 
@@ -62,7 +75,9 @@ namespace IS {
         std::array<int, 32> mTextureIndexList;
         std::stack<int> availableIndices;
 
-        // Initialize the available indices
+        /*!
+         * \brief Initializes the available texture indices.
+         */
         void InitializeTextureIndices() {
             for (int i = 31; i >= 0; i--) {
                 availableIndices.push(i);
@@ -74,27 +89,48 @@ namespace IS {
         void Initialize() override;
         void Update(float deltatime) override;
 
-        //all scripts
+        /*!
+         * \brief Initializes all scripts.
+         */
         void InitScripts();
-        //specific script
+
+        /*!
+         * \brief Initializes a specific script.
+         * \param scriptcomponent The script component to initialize.
+         * \return True if the script is successfully initialized, false otherwise.
+         */
         bool InitScript(ScriptComponent& scriptcomponent);
 
-        // Function to create a C# class file from a template
+        /*!
+         * \brief Creates a C# class file from a template.
+         * \param className The name of the class.
+         * \param filePath The file path where the class file will be created.
+         */
         void CreateClassFile(const std::string& className, const std::string& filePath);
 
-        // Function to open a C# class file in default application (i.e. Visual Studio Code)
+        /*!
+         * \brief Opens a C# class file in the default application (e.g., Visual Studio Code).
+         * \param class_name The name of the class file to open.
+         */
         void OpenClassFile(std::string const& class_name);
 
     // Usage example...
     //CreateClassFile("MyClass", "MyClass.cs");
 
-        //accessor funciton to get entity calling script
+        /*!
+         * \brief Gets the entity that called the script.
+         * \return The entity that called the script.
+         */
         Entity GetScriptEntity() {
             return mEntityScriptCaller;
         }
 
         float mScriptDeltaTime{};
 
+
+        /*!
+         * \brief Cleans up the script manager.
+         */
         void CleanUp();
 
 

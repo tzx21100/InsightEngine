@@ -62,8 +62,13 @@ namespace IS
 		// Set cell size based on current window size
 		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
 		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
-		float width = camera_dimension.x;
-		float height = camera_dimension.y;
+
+		// set the grid's width and height as 2 times bigger than camera's width and height
+		float width = camera_dimension.x * 2;
+		float height = camera_dimension.y * 2;
+
+		/*float width = 12000.f;
+		float height = 5000.f;*/
 
 		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
@@ -85,7 +90,7 @@ namespace IS
 	bool ImplicitGrid::areCellsEqual(Cell const& c1, Cell const& c2, Cell const& c3, Cell const& c4) {
 		return (c1.row == c2.row == c1.col == c2.col == c3.row == c4.row == c3.col == c4.col);
 	}
-
+#if 0
 	// Add entities into the appropriate cell of the grid.
 	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
 
@@ -129,7 +134,92 @@ namespace IS
 			}
 		}
 	}
+#endif
 
+	// Add entities into the appropriate cell of the grid.
+	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
+
+		InsightEngine& engine = InsightEngine::Instance();
+		// loop through all the entities
+		for (auto const& entity : Entities) {
+			if (engine.HasComponent<RigidBody>(entity)) { // if entity has rigidbody component
+				//getting rigidbody component for each entity
+				auto& body = engine.GetComponent<RigidBody>(entity);
+
+				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				body.BodyFollowTransform(trans);
+				// getting the min & max for checking which cell contain the entity
+				Box box = body.GetAABB();
+				Cell min_cell = GetCell(box.min);
+				Cell max_cell = GetCell(box.max);
+				Cell center = GetCell(body.mBodyTransform.world_position);
+
+				if (GridContains(min_cell) && GridContains(max_cell)) {
+					// fully in grid
+					AddToBitArray(min_cell, max_cell, entity);
+				}
+				else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
+					(!GridContains(min_cell) && GridContains(max_cell))) {
+					// body box overlap on the grid edge, half inside half outside
+					AddToBitArray(min_cell, max_cell, entity);
+					mOutsideGridList.emplace_back(entity);
+				}
+				else if (GridContains(center) || CheckOverlap(min_cell, max_cell)) {
+					// the obj is too big, min and max both outside of the grid but a 
+					// small part of the obj is inside the grid
+					AddToBitArray(min_cell, max_cell, entity);
+					mOutsideGridList.emplace_back(entity);
+				}
+				else { // body box fully outside of the grid
+					mOutsideGridList.emplace_back(entity);
+				}
+			}
+		}
+	}
+
+	// Add entities into the bit arrays representing grid cells.
+	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+
+		// add from min to max
+		for (int row = min.row; row >= max.row; row--) {
+			for (int col = min.col; col <= max.col; col++) {
+				if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
+
+					std::bitset<MAX_ENTITIES> mask1;
+					// set the specific entity index position to 1
+					mask1.set(entity, true);
+					mRowsBitArray[row] |= mask1;
+
+					std::bitset<MAX_ENTITIES> mask2;
+					// set the specific entity index position to 1
+					mask2.set(entity, true);
+					mColsBitArray[col] |= mask2;
+				}
+			}
+		}
+		
+			
+		
+	}
+
+	// Remove entities from the bit arrays representing grid cells.
+	void ImplicitGrid::RemoveFromBitArray(Cell const& min, Cell const& max, Entity const& entity) {
+
+		// remove from min to max
+		for (int row = min.row; row >= max.row; row--) {
+			for (int col = min.col; col <= max.col; col++) {
+				if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
+					// set the entity index position in array to 0, like XOR
+					mRowsBitArray[row].reset(entity);
+					// set the entity index position in array to 0, like XOR
+					mColsBitArray[col].reset(entity);
+				}
+			}
+		}
+		
+	}
+
+#if 0
 	// Add entities into the bit arrays representing grid cells.
 	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
 
@@ -167,7 +257,7 @@ namespace IS
 			mColsBitArray[col].reset(entity);
 		}
 	}
-
+#endif
 	// Check if there is an overlap at the edge of the grid.
 	bool ImplicitGrid::CheckOverlap(Cell const& min, Cell const& max) {
 		bool check = false;
@@ -316,8 +406,12 @@ namespace IS
 	// Draw the grid for visualization purposes.
 	void ImplicitGrid::DrawGrid() {
 		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
-		float width = camera_dimension.x;
-		float height = camera_dimension.y;
+		// set the grid's width and height as 2 times bigger than camera's width and height
+		float width = camera_dimension.x * 2;
+		float height = camera_dimension.y * 2;
+
+		/*float width = 12000.f;
+		float height = 5000.f;*/
 		ImplicitGrid::mCellSize = { static_cast<float>(width) / ImplicitGrid::mCols, static_cast<float>(height) / ImplicitGrid::mRows };
 
 		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();

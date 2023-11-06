@@ -123,7 +123,7 @@ namespace IS
 		 * \param entity The entity to update.
 		 * \param dt The time step.
 		 */
-		void UpdateCell(Entity const& entity, float const& dt);
+		void UpdateCell(Entity const& entity, float const& dt); // not in use
 
 		/**
 		 * \brief Check if the grid contains a specific cell.

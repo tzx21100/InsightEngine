@@ -78,6 +78,11 @@ namespace IS {
         static bool mShowGrid;
 
         /*!
+         * \brief Boolean flag to enable implicit grid for collision detect.
+         */
+        static bool mEnableImplicitGrid;
+
+        /*!
          * \brief Boolean flag to exert gravity
          */
         static bool mExertingGravity;
@@ -168,8 +173,7 @@ namespace IS {
         float mMinVelocity;                                 // Minimum velocity for game bodies
         int mTotalIterations;                               // Number of iterations for physics step
         int mCurrentIterations;                             // Number of current iterations for physics step
-        std::vector<Manifold> mContactList;                 // vector list of Manifold to store all the contact information
-        static std::vector<Vector2D> mContactPointsList;    // vector list of Vec2D to store all the contact points
+        std::vector<std::pair<Entity, Entity>> mContactPair;// vector list of each two contact entities
         Manifold mManifoldInfo;                             // instance of Manifold
         ImplicitGrid mImplicitGrid;                         // instance of ImplicitGrid
 	};

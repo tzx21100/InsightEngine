@@ -19,27 +19,27 @@ namespace IS
 
                 if (randomNumber < 25)
                 {
-                    InternalCalls.AudioPlaySound("Assets/Sounds/sound.MP3");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav");
                     return;
                 }
                 if(randomNumber < 50)
                 {
-                    InternalCalls.AudioPlaySound("Assets/Sounds/Footsteps-Grass-Far-Small_1.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
                     return;
                 }
                 if (randomNumber < 75)
                 {
-                    InternalCalls.AudioPlaySound("Assets/Sounds/Footsteps-Grass-Far-Small_2.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav");
                     return;
                 }
                 if (randomNumber < 100)
                 {
-                    InternalCalls.AudioPlaySound("Assets/Sounds/Footsteps-Grass-Far-Small_3.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav");
                     return;
                 }
 
             }
-            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("Assets/Sounds/JOHN_Company History_Loop_120bpm.wav"); }
+            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("JOHN_Company History_Loop_120bpm.wav"); }
         }
         
         static public void CleanUp(){
