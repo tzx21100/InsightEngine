@@ -435,14 +435,16 @@ namespace IS {
                         ImGui::TextUnformatted("Columns");
                         ImGui::PopFont();
                         ImGui::TableNextColumn();
-                        ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+                        if (ImGui::InputInt("##GridColumns", &ImplicitGrid::mCols))
+                            ImplicitGrid::mCols = std::clamp(ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
 
                         ImGui::TableNextColumn();
                         ImGui::PushFont(FONT_BOLD);
                         ImGui::TextUnformatted("Rows");
                         ImGui::PopFont();
                         ImGui::TableNextColumn();
-                        ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
+                        if (ImGui::InputInt("##GridRows", &ImplicitGrid::mRows))
+                            ImplicitGrid::mRows = std::clamp(ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
 
                         ImGui::EndTable(); // end table Implicit Grid Table
                     }
