@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\krake\\.nuget\\packages\\": {}
+    "C:\\Users\\77458\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "projectUniqueName": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
       "projectName": "IS-ScriptCore",
-      "projectPath": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
-      "packagesPath": "C:\\Users\\krake\\.nuget\\packages\\",
-      "outputPath": "C:\\sandbox\\Trimester 4\\CSD2141\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
+      "projectPath": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "packagesPath": "C:\\Users\\77458\\.nuget\\packages\\",
+      "outputPath": "D:\\SIT\\2.1\\CSD2401 Software Engineering Project 3\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\krake\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\77458\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

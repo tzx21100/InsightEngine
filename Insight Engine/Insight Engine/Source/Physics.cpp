@@ -27,21 +27,20 @@ namespace IS {
 	bool Physics::mShowColliders = false;
 	bool Physics::mShowVelocity = false;
 	bool Physics::mShowGrid = false;
+	bool Physics::mEnableImplicitGrid = false;
 	bool Physics::mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
-	std::vector<Vector2D> Physics::mContactPointsList = std::vector<Vector2D>();
 
 	// Constructs a Physics instance
 	Physics::Physics() 
 	{
-		mGravity = Vector2D(0, -981.f);					// Gravity of the world
-		mMaxVelocity = 800.f;							// Maximum velocity for game bodies
-		mMinVelocity = -800.f;							// Minimum velocity for game bodies
-		mCurrentIterations = 0;							// Number of current iterations for physics step
-		mTotalIterations = 10;							// Number of iterations for physics step
-		mContactList = std::vector<Manifold>();			// vector list of Manifold to store all the contact information
-		mContactPointsList = std::vector<Vector2D>();	// vector list of Vec2D to store all the contact points
-		mManifoldInfo;									// instance of Manifold
-		mImplicitGrid;									// instance of ImplicitGrid
+		mGravity = Vector2D(0, -981.f);							// Gravity of the world
+		mMaxVelocity = 800.f;									// Maximum velocity for game bodies
+		mMinVelocity = -800.f;									// Minimum velocity for game bodies
+		mCurrentIterations = 0;									// Number of current iterations for physics step
+		mTotalIterations = 10;									// Number of iterations for physics step
+		mContactPair = std::vector<std::pair<Entity, Entity>>();// vector list of each two contact entities
+		mManifoldInfo;											// instance of Manifold
+		mImplicitGrid;											// instance of ImplicitGrid
 	}
 
 	// Initializes the physics system
@@ -69,6 +68,24 @@ namespace IS {
 			return; 
 		}
 
+		// add new entity inside grid
+		mImplicitGrid.AddIntoCell(mEntities);
+
+		// for testing grid
+		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+		if (input->IsKeyPressed(GLFW_KEY_3)) {
+			for (int i = 0; i < ImplicitGrid::mRows; i++) {
+				std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
+
+			}
+			for (int j = 0; j < ImplicitGrid::mCols; j++) {
+				std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
+			}
+			IS_CORE_INFO({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
+			IS_CORE_INFO({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
+			IS_CORE_INFO({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
+		}
+
 		/*if (InsightEngine::currentNumberOfSteps > 1) {
 			mTotalIterations = 1;
 		}
@@ -78,30 +95,12 @@ namespace IS {
 
 		//Loop using Fixed DT
 		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
-			mContactPointsList.clear();
-
-			// add new entity inside grid
-			mImplicitGrid.AddIntoCell(mEntities);
-
-			// for testing grid
-			/*auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-			if (input->IsKeyPressed(GLFW_KEY_3)) {
-				for (int i = 0; i < ImplicitGrid::mRows; i++) {
-					std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
-
-				}
-				for (int j = 0; j < ImplicitGrid::mCols; j++) {
-					std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
-				}
-				IS_CORE_DEBUG({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
-				IS_CORE_DEBUG({ "OverlapSize - {}" }, mImplicitGrid.mOverlapGridList.size());
-				IS_CORE_DEBUG({ "OutSize - {}" }, mImplicitGrid.mOutsideGridList.size());
-			}*/
 
 			// physics update iteration
 			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
-				// empty contact list before going into collision step
-				mContactList.clear();
+
+				// empty contact pair before going into collision step
+				mContactPair.clear();
 
 				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 				Step(dt, mEntities);
@@ -116,6 +115,7 @@ namespace IS {
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
 		}
+		mImplicitGrid.ClearGrid();
 	}
 
 	// collision detect for implicit grid
@@ -146,7 +146,7 @@ namespace IS {
 
 				// at least more than 1 entity to avoid self checking
 				// in case one entity overlaps on the grid check collide with one in grid entity
-				if (totalEntities > 1 || mImplicitGrid.mOverlapGridList.size() >= 1) {
+				if (totalEntities > 1) {
 					// emplace all the entities in current cell
 					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
 						if (test_cell.test(e)) { // if the current bit entity is true
@@ -161,16 +161,23 @@ namespace IS {
 					}
 
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
-					mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
+					//mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
 
 					if (mImplicitGrid.mInGridList.size() > 1) {
 						CollisionDetect(mImplicitGrid.mInGridList);
+
+						// empty the list
+						mImplicitGrid.mInGridList.clear();
 					}
 				}
 
-				// empty the list
-				mImplicitGrid.mInGridList.clear();
+				
 			}
+		}
+
+		// for collision outside or overlap of the grid
+		if (mImplicitGrid.mOutsideGridList.size() > 1) {
+			CollisionDetect(mImplicitGrid.mOutsideGridList);
 		}
 	}
 
@@ -206,59 +213,7 @@ namespace IS {
 						{
 							continue;
 						}
-
-						auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
-						auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
-						bodyA.BodyFollowTransform(transA);
-						bodyB.BodyFollowTransform(transB);
-
-						bool isColliding = false;
-						switch (bodyA.mBodyShape)
-						{
-						case BodyShape::Box:
-							switch (bodyB.mBodyShape)
-							{
-								// box vs box
-							case BodyShape::Box:
-								isColliding = IntersectionPolygons(bodyA.mTransformedVertices, bodyA.mBodyTransform.getWorldPosition(), bodyB.mTransformedVertices, bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-								break;
-								// box vs circle
-							case BodyShape::Circle:
-								break;
-							default:
-								break;
-							}
-							break;
-						case BodyShape::Circle:
-							switch (bodyB.mBodyShape)
-							{
-								// circle vs box
-							case BodyShape::Box:
-								break;
-								// circle vs circle
-							case BodyShape::Circle:
-								break;
-							default:
-								break;
-							}
-							break;
-						default:
-							break;
-						}
-						// if body A and body B colliding
-						if (isColliding) {
-
-							// vector of penetration depth to move entities apart
-							SeparateBodies(&bodyA, &bodyB, &transA, &transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
-
-							// calculate the contact point information
-							mManifoldInfo.FindContactPoints(bodyA, bodyB);
-							Manifold contact = Manifold(&bodyA, &bodyB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
-							mContactList.emplace_back(contact);
-						}
-						else { //not colliding
-
-						}
+						mContactPair.emplace_back(std::make_pair(entityA, entityB));
 					}
 				}
 			}
@@ -268,17 +223,11 @@ namespace IS {
 	// Detects collisions among all the possible entities
 	void Physics::BroadPhase() {
 		// if using implicit grid
-		if (mShowGrid) {
+		if (mEnableImplicitGrid) {
 			// detect collision through Implicit Grid
 			ImplicitGridCollisionDetect();
-
-			// for collision outside or overlap of the grid
-			std::vector<Entity> temp_list = mImplicitGrid.mOutsideGridList + mImplicitGrid.mOverlapGridList;
-			if (temp_list.size() > 1) {
-				CollisionDetect(temp_list);
-			}
 		}
-		else { // not using implict grid
+		else { // not using implict grid (Brute Force)
 			std::vector<Entity> list;
 			for (auto const& entity : mEntities) {
 				list.emplace_back(entity);
@@ -289,26 +238,62 @@ namespace IS {
 
 	// Resloves collisions among all the entities
 	void Physics::NarrowPhase() {
-		for (int i = 0; i < mContactList.size(); i++) {
-			Manifold contact = mContactList[i];
-			//ResolveCollision(contact);
-			//ResolveCollisionWithRotation(contact);
-			ResolveCollisionWithRotationAndFriction(contact);
 
-			// add contact points only at the last iteration
-			if (mCurrentIterations == mTotalIterations - 1) {
-				// emplace the contact point
-				if (std::find(mContactPointsList.begin(), mContactPointsList.end(), contact.mContact1) == mContactPointsList.end()) {
-					// if first contact point not found in the list, emplace it
-					mContactPointsList.emplace_back(contact.mContact1);
-				}
+		for (int i = 0; i < mContactPair.size(); i++) {
+			std::pair<Entity, Entity> pair = mContactPair[i];
+			Entity entityA = pair.first;
+			Entity entityB = pair.second;
 
-				if (contact.mContactCount > 1) { // if more than 1 contact point
-					if (std::find(mContactPointsList.begin(), mContactPointsList.end(), contact.mContact2) == mContactPointsList.end()) {
-						// emplace second contact point
-						mContactPointsList.emplace_back(contact.mContact2);
-					}
+			auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+			auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+			auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
+			auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
+			bodyA.BodyFollowTransform(transA);
+			bodyB.BodyFollowTransform(transB);
+
+			bool isColliding = false;
+			switch (bodyA.mBodyShape)
+			{
+			case BodyShape::Box:
+				switch (bodyB.mBodyShape)
+				{
+					// box vs box
+				case BodyShape::Box:
+					isColliding = IntersectionPolygons(bodyA.mTransformedVertices, bodyA.mBodyTransform.getWorldPosition(), bodyB.mTransformedVertices, bodyB.mBodyTransform.getWorldPosition(), mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					break;
+					// box vs circle
+				case BodyShape::Circle:
+					break;
+				default:
+					break;
 				}
+				break;
+			case BodyShape::Circle:
+				switch (bodyB.mBodyShape)
+				{
+					// circle vs box
+				case BodyShape::Box:
+					break;
+					// circle vs circle
+				case BodyShape::Circle:
+					break;
+				default:
+					break;
+				}
+				break;
+			default:
+				break;
+			}
+			// if body A and body B colliding
+			if (isColliding) {
+				// vector of penetration depth to move entities apart
+				SeparateBodies(&bodyA, &bodyB, &transA, &transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
+
+				// calculate the contact point information
+				mManifoldInfo.FindContactPoints(bodyA, bodyB);
+				Manifold contact = Manifold(&bodyA, &bodyB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
+				ResolveCollisionWithRotationAndFriction(contact);
+
 			}
 		}
 	}
@@ -640,7 +625,8 @@ namespace IS {
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-				
+				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				body.BodyFollowTransform(trans);
 				//// if the entity is static or kinematic, skip
 				//if (body.mBodyType != BodyType::Dynamic) {
 				//	continue;
@@ -674,7 +660,13 @@ namespace IS {
 				}
 
 				// update position
-				mImplicitGrid.UpdateCell(entity, time);
+				//mImplicitGrid.UpdateCell(entity, time);
+				body.mBodyTransform.world_position += body.mVelocity * time;
+				trans.world_position = body.mBodyTransform.world_position;
+
+				float angle = trans.getRotation();
+				angle += body.mAngularVelocity * time * 10.f;
+				trans.setRotation(angle, body.mAngularVelocity);
 				//trans.world_position += body.mVelocity * time;
 			}
 		}
