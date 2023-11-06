@@ -14,8 +14,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
-/*                                                                   includes
------------------------------------------------------------------------------ */
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Panel.h"
 #include "EditorUtils.h"
@@ -23,7 +23,7 @@
 #include "FileUtils.h"
 #include "Editor.h"
 
-// Dependencies
+ // Dependencies
 #include <imgui.h>
 
 namespace IS {
@@ -72,9 +72,9 @@ namespace IS {
 
         auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
         auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
-        auto viewport_offset      = ImGui::GetWindowPos();
-        mViewportBounds[0]        = { viewport_lower_bound.x + viewport_offset.x, viewport_lower_bound.y + viewport_offset.y };
-        mViewportBounds[1]        = { viewport_upper_bound.x + viewport_offset.x, viewport_upper_bound.y + viewport_offset.y };
+        auto viewport_offset = ImGui::GetWindowPos();
+        mViewportBounds[0] = { viewport_lower_bound.x + viewport_offset.x, viewport_lower_bound.y + viewport_offset.y };
+        mViewportBounds[1] = { viewport_upper_bound.x + viewport_offset.x, viewport_upper_bound.y + viewport_offset.y };
 
         // Allow key/mouse event pass through only in this panel
         mFocused = ImGui::IsWindowFocused();
@@ -86,7 +86,7 @@ namespace IS {
 
         // Size of scene panel
         ImVec2 scene_size = ImGui::GetWindowSize();
-        ImVec2 scene_pos = ImGui::GetWindowPos();      
+        ImVec2 scene_pos = ImGui::GetWindowPos();
 
         // Scene pos for the input
         mViewportPos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
@@ -94,13 +94,13 @@ namespace IS {
 
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
 
-        input->setCenterPos(mViewportPos.x + (float)scene_size.x / 2.f, mViewportPos.y + (float)scene_size.y / 2.f );
+        input->setCenterPos(mViewportPos.x + (float)scene_size.x / 2.f, mViewportPos.y + (float)scene_size.y / 2.f);
         input->setRatio(scene_size.x * camera.GetZoomLevel(), scene_size.y * camera.GetZoomLevel());
 
         // Resize framebuffer
         ImVec2 panel_size = ImGui::GetContentRegionAvail();
         mViewportSize = { panel_size.x, panel_size.y };
-        
+
         // Display actual scene
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
@@ -203,7 +203,7 @@ namespace IS {
                 ImGui::EndTooltip();
             }
         }
-        
+
         // Icon to be displayed as overlay
         window_drawlist->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
         window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
@@ -223,7 +223,7 @@ namespace IS {
 
         ImGui::Begin(mName.c_str());
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
-        
+
         if (ImGui::BeginTable("Engine", 2))
         {
             InsightEngine& engine = InsightEngine::Instance();
@@ -247,7 +247,7 @@ namespace IS {
             ImGui::TableNextColumn();
 
             static int selected_fps_index = -1;
-            const char* fps_options[] = { "30", "60", "120", "240", "9999"};
+            const char* fps_options[] = { "30", "60", "120", "240", "9999" };
             int fps_values[] = { 30, 60, 120, 240, 9999 };
 
             for (int i{}; i < IM_ARRAYSIZE(fps_values); ++i)
@@ -342,7 +342,7 @@ namespace IS {
     }
 
     // Log Console Panel
-    void ConsolePanel::RenderPanel() 
+    void ConsolePanel::RenderPanel()
     {
         auto& logger_gui = Logger::LoggerGUI::Instance();
         logger_gui.Draw(mName.c_str());
@@ -363,12 +363,14 @@ namespace IS {
 
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen;
 
+        const float COLUMN_WIDTH = 100.f;
+
         if (ImGui::TreeNodeEx(ICON_LC_PERSON_STANDING "  Physics", tree_flags))
         {
             EditorUtils::RenderControlVec2("Gravity", Physics::mGravity);
             if (ImGui::BeginTable("PhysicsTable", 2))
             {
-                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
@@ -394,7 +396,7 @@ namespace IS {
         {
             if (ImGui::BeginTable("CollisionTable", 2))
             {
-                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
@@ -405,34 +407,58 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Show Grid");
-                ImGui::TableNextColumn();
-                ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
-
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Columns");
+                ImGui::TextUnformatted("Implicit Grid");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
-
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Rows");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
+                ImGui::Checkbox("##ImplicitGrid", &Physics::mEnableImplicitGrid);
 
                 ImGui::EndTable(); // end table CollisionTable
             }
 
-            ImGui::TreePop();
+            if (Physics::mEnableImplicitGrid)
+            {
+                if (ImGui::TreeNodeEx(ICON_LC_GRID_2X2 "  Implicit Grid", tree_flags))
+                {
+                    if (ImGui::BeginTable("Implicit Grid Table", 2))
+                    {
+                        ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
+
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Show Grid");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
+
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Columns");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        ImGui::SliderInt("##GridColumns", &ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Rows");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        ImGui::SliderInt("##GridRows", &ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
+
+                        ImGui::EndTable(); // end table Implicit Grid Table
+                    }
+
+                    ImGui::TreePop(); // end tree Implicit Grid
+                }
+            }
+
+            ImGui::TreePop(); // end tree Collision
         }
 
         if (ImGui::TreeNodeEx(ICON_LC_IMAGE "  Graphics", tree_flags))
         {
             if (ImGui::BeginTable("GraphicsTable", 2))
             {
-                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.f);
+                ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);

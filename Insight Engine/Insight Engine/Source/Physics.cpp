@@ -5,8 +5,8 @@
  * \date 28-09-2023
  * \brief
  * This header file contains the Physics class and related functions. It is responsible
- * for managing physics simulations and collision handling, including collision 
- * detection, collision response, and updating entity states based on physics 
+ * for managing physics simulations and collision handling, including collision
+ * detection, collision response, and updating entity states based on physics
  * calculations for game entities.
  *
  * \copyright
@@ -16,8 +16,8 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
-/*                                                                   includes
------------------------------------------------------------------------------ */
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CoreEngine.h"
 #include "Sprite.h"
@@ -29,11 +29,11 @@ namespace IS {
 	bool Physics::mShowGrid = false;
 	bool Physics::mEnableImplicitGrid = false;
 	bool Physics::mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
+	Vector2D Physics::mGravity = Vector2D(0, -981.f);							// Gravity of the world
 
 	// Constructs a Physics instance
-	Physics::Physics() 
+	Physics::Physics()
 	{
-		mGravity = Vector2D(0, -981.f);							// Gravity of the world
 		mMaxVelocity = 800.f;									// Maximum velocity for game bodies
 		mMinVelocity = -800.f;									// Minimum velocity for game bodies
 		mCurrentIterations = 0;									// Number of current iterations for physics step
@@ -55,17 +55,20 @@ namespace IS {
 	// Updates the physics simulation for the given time step
 	void Physics::Update(float dt)
 	{
-		if (InsightEngine::Instance().mRuntime == false) {
+		if (InsightEngine::Instance().mRuntime == false)
+		{
 
 			// body collider always follow the sprite trans (FOR DEMO FIRST)
-			for (auto const& entity : mEntities) {
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+			for (auto const& entity : mEntities)
+			{
+				if (InsightEngine::Instance().HasComponent<RigidBody>(entity))
+				{
 					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 					body.BodyFollowTransform(trans);
 				}
 			}
-			return; 
+			return;
 		}
 
 		// add new entity inside grid
@@ -73,12 +76,15 @@ namespace IS {
 
 		// for testing grid
 		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-		if (input->IsKeyPressed(GLFW_KEY_3)) {
-			for (int i = 0; i < ImplicitGrid::mRows; i++) {
+		if (input->IsKeyPressed(GLFW_KEY_3))
+		{
+			for (int i = 0; i < ImplicitGrid::mRows; i++)
+			{
 				std::cout << "[ " << i << " row ]" << mImplicitGrid.mRowsBitArray[i].count() << std::endl;
 
 			}
-			for (int j = 0; j < ImplicitGrid::mCols; j++) {
+			for (int j = 0; j < ImplicitGrid::mCols; j++)
+			{
 				std::cout << "[ " << j << " col ]" << mImplicitGrid.mColsBitArray[j].count() << std::endl;
 			}
 			IS_CORE_INFO({ "InGridSize - {}" }, mImplicitGrid.mInGridList.size());
@@ -94,10 +100,12 @@ namespace IS {
 		}*/
 
 		//Loop using Fixed DT
-		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) {
+		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step)
+		{
 
 			// physics update iteration
-			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++) {
+			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++)
+			{
 
 				// empty contact pair before going into collision step
 				mContactPair.clear();
@@ -119,41 +127,52 @@ namespace IS {
 	}
 
 	// collision detect for implicit grid
-	void Physics::ImplicitGridCollisionDetect() {
+	void Physics::ImplicitGridCollisionDetect()
+	{
 		// loop through each row with each col
-		for (int row = 0; row < ImplicitGrid::mRows; row++) {
-			for (int col = 0; col < ImplicitGrid::mCols; col++) {
+		for (int row = 0; row < ImplicitGrid::mRows; row++)
+		{
+			for (int col = 0; col < ImplicitGrid::mCols; col++)
+			{
 				// check the existence of the objects in a cell, simply perform a bitwise AND operation
 				std::bitset<MAX_ENTITIES> test_cell;
-				
-				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i) {
+
+				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i)
+				{
 					test_cell[i] = mImplicitGrid.mRowsBitArray[row][i] && mImplicitGrid.mColsBitArray[col][i];
 				}
 
-				if (test_cell == 0) { // no entity in current cell, continue
+				if (test_cell == 0)
+				{ // no entity in current cell, continue
 					continue;
 				}
-				
-				
+
+
 				// getting entity number in this cell
 				size_t totalEntities = 0;
-				
-				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i) {
-					if (test_cell[i]) {
+
+				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i)
+				{
+					if (test_cell[i])
+					{
 						totalEntities++;
 					}
 				}
 
 				// at least more than 1 entity to avoid self checking
 				// in case one entity overlaps on the grid check collide with one in grid entity
-				if (totalEntities > 1) {
+				if (totalEntities > 1)
+				{
 					// emplace all the entities in current cell
-					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
-						if (test_cell.test(e)) { // if the current bit entity is true
-							// emplace into InGridList
+					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e)
+					{
+						if (test_cell.test(e))
+						{ // if the current bit entity is true
+	// emplace into InGridList
 							mImplicitGrid.mInGridList.emplace_back(e);
 							totalEntities--;
-							if (totalEntities <= 0) {
+							if (totalEntities <= 0)
+							{
 								// if there is no more entities in this cell, break
 								break;
 							}
@@ -163,7 +182,8 @@ namespace IS {
 					// need check with all the overlap entities, in case the entities having outrageous width / heigth				
 					//mImplicitGrid.EmplaceEntity(mImplicitGrid.mInGridList, mImplicitGrid.mOverlapGridList);
 
-					if (mImplicitGrid.mInGridList.size() > 1) {
+					if (mImplicitGrid.mInGridList.size() > 1)
+					{
 						CollisionDetect(mImplicitGrid.mInGridList);
 
 						// empty the list
@@ -171,40 +191,48 @@ namespace IS {
 					}
 				}
 
-				
+
 			}
 		}
 
 		// for collision outside or overlap of the grid
-		if (mImplicitGrid.mOutsideGridList.size() > 1) {
+		if (mImplicitGrid.mOutsideGridList.size() > 1)
+		{
 			CollisionDetect(mImplicitGrid.mOutsideGridList);
 		}
 	}
 
 	// Detects collisions among a set of entities, running different collision detect function based on the body shape (box, circle or line)
-	void Physics::CollisionDetect(std::vector<Entity> const& entities) {
+	void Physics::CollisionDetect(std::vector<Entity> const& entities)
+	{
 
 		// Loop through all Entities registered by the System
-		for (size_t i = 0; i < entities.size() - 1; ++i) {
-		//for (size_t i = 0; i < entities.size(); ++i) {
+		for (size_t i = 0; i < entities.size() - 1; ++i)
+		{
+			//for (size_t i = 0; i < entities.size(); ++i) {
 			const Entity& entityA = entities[i];
 
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA))
+			{
 
-				for (size_t j = i + 1; j < entities.size(); ++j) {
-				//for (size_t j = 0; j < entities.size(); ++j) {
+				for (size_t j = i + 1; j < entities.size(); ++j)
+				{
+					//for (size_t j = 0; j < entities.size(); ++j) {
 					const Entity& entityB = entities[j];
 
-					if (entityA == entityB) { // if self checking, continue
+					if (entityA == entityB)
+					{ // if self checking, continue
 						continue;
 					}
 
-					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
+					if (InsightEngine::Instance().HasComponent<RigidBody>(entityB))
+					{
 
 						auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
 						auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
 
-						if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
+						if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic)
+						{
 							// continue if collision happens between two non dynamic entities
 							continue;
 						}
@@ -221,15 +249,18 @@ namespace IS {
 	}
 
 	// Detects collisions among all the possible entities
-	void Physics::BroadPhase() {
+	void Physics::BroadPhase()
+	{
 		// if using implicit grid
-		if (mEnableImplicitGrid) {
+		if (mEnableImplicitGrid)
+		{
 			// detect collision through Implicit Grid
 			ImplicitGridCollisionDetect();
-		}
-		else { // not using implict grid (Brute Force)
+		} else
+		{ // not using implict grid (Brute Force)
 			std::vector<Entity> list;
-			for (auto const& entity : mEntities) {
+			for (auto const& entity : mEntities)
+			{
 				list.emplace_back(entity);
 			}
 			CollisionDetect(list);
@@ -237,9 +268,11 @@ namespace IS {
 	}
 
 	// Resloves collisions among all the entities
-	void Physics::NarrowPhase() {
+	void Physics::NarrowPhase()
+	{
 
-		for (int i = 0; i < mContactPair.size(); i++) {
+		for (int i = 0; i < mContactPair.size(); i++)
+		{
 			std::pair<Entity, Entity> pair = mContactPair[i];
 			Entity entityA = pair.first;
 			Entity entityB = pair.second;
@@ -285,7 +318,8 @@ namespace IS {
 				break;
 			}
 			// if body A and body B colliding
-			if (isColliding) {
+			if (isColliding)
+			{
 				// vector of penetration depth to move entities apart
 				SeparateBodies(&bodyA, &bodyB, &transA, &transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 
@@ -299,9 +333,10 @@ namespace IS {
 	}
 
 	// separate body when penetrating during colliding
-	void Physics::SeparateBodies(RigidBody* bodyA, RigidBody* bodyB, Transform* transA, Transform* transB, Vector2D const& vec) {
+	void Physics::SeparateBodies(RigidBody* bodyA, RigidBody* bodyB, Transform* transA, Transform* transB, Vector2D const& vec)
+	{
 		// vector of penetration depth to move entities apart
-		
+
 		// if body A is static 
 		if (bodyA->mBodyType != BodyType::Dynamic)
 		{
@@ -315,8 +350,7 @@ namespace IS {
 			transA->Move(-vec);
 			// to be optimize
 			bodyA->mState = BodyState::GROUNDED;
-		}
-		else // both are dynamic
+		} else // both are dynamic
 		{
 			transA->Move(-vec / 2.f);
 			transB->Move(vec / 2.f);
@@ -324,12 +358,13 @@ namespace IS {
 	}
 
 	// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities
-	void Physics::ResolveCollision(Manifold & contact) {
+	void Physics::ResolveCollision(Manifold& contact)
+	{
 
 		RigidBody& bodyA = *(contact.mBodyA);
 		RigidBody& bodyB = *(contact.mBodyB);
 		Vector2D normal = contact.mNormal;
-		
+
 		// calculate the relative velocity of two bodies
 		Vector2D relativeVelocity = bodyB.mVelocity - bodyA.mVelocity;
 
@@ -352,7 +387,8 @@ namespace IS {
 	}
 
 	// Resolves collisions between two rigid bodies, including rotation effects, by calculating and applying the impulse force to update the velocities and angular velocities of colliding entities.
-	void Physics::ResolveCollisionWithRotation(Manifold& contact) {
+	void Physics::ResolveCollisionWithRotation(Manifold& contact)
+	{
 		// init
 		RigidBody* bodyA = contact.mBodyA;
 		RigidBody* bodyB = contact.mBodyB;
@@ -369,7 +405,8 @@ namespace IS {
 		temp_contact_list.emplace_back(contact1);
 		temp_contact_list.emplace_back(contact2);
 
-		for (int i = 0; i < contactCount; i++) {
+		for (int i = 0; i < contactCount; i++)
+		{
 			temp_impulse_list.emplace_back(Vector2D());
 			temp_ra_list.emplace_back(Vector2D());
 			temp_rb_list.emplace_back(Vector2D());
@@ -378,7 +415,8 @@ namespace IS {
 		// getting the lower restitution
 		float e = std::min(bodyA->mRestitution, bodyB->mRestitution);
 
-		for (int i = 0; i < contactCount; i++) {
+		for (int i = 0; i < contactCount; i++)
+		{
 			// for calculating angular linear velocity in Vector2D
 			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
 			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
@@ -435,7 +473,8 @@ namespace IS {
 	}
 
 	// Resolves collisions between two rigid bodies, including rotation and friction effects, by calculating and applying the impulse force to update the velocities, angular velocities, and angular impulses of colliding entities.
-	void Physics::ResolveCollisionWithRotationAndFriction(Manifold& contact) {
+	void Physics::ResolveCollisionWithRotationAndFriction(Manifold& contact)
+	{
 		// init
 		RigidBody* bodyA = contact.mBodyA;
 		RigidBody* bodyB = contact.mBodyB;
@@ -454,7 +493,8 @@ namespace IS {
 		temp_contact_list.emplace_back(contact1);
 		temp_contact_list.emplace_back(contact2);
 
-		for (int i = 0; i < contactCount; i++) {
+		for (int i = 0; i < contactCount; i++)
+		{
 			temp_impulse_list.emplace_back(Vector2D());
 			temp_ra_list.emplace_back(Vector2D());
 			temp_rb_list.emplace_back(Vector2D());
@@ -469,7 +509,8 @@ namespace IS {
 		float df = (bodyA->mDynamicFriction + bodyB->mDynamicFriction) * 0.5f;
 
 		// calculation for rotational velocity
-		for (int i = 0; i < contactCount; i++) {
+		for (int i = 0; i < contactCount; i++)
+		{
 			// for calculating angular linear velocity in Vector2D
 			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
 			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
@@ -526,7 +567,8 @@ namespace IS {
 		}
 
 		// calculation for static and dynamic friction
-		for (int i = 0; i < contactCount; i++) {
+		for (int i = 0; i < contactCount; i++)
+		{
 			Vector2D ra = temp_contact_list[i] - bodyA->mBodyTransform.world_position;
 			Vector2D rb = temp_contact_list[i] - bodyB->mBodyTransform.world_position;
 
@@ -548,8 +590,7 @@ namespace IS {
 			if (mManifoldInfo.NearlyEqual(tangent, Vector2D()))
 			{
 				continue; // continue if the friction tangent is close to 0, no friction will be applied
-			}
-			else
+			} else
 			{
 				ISVector2DNormalize(tangent, tangent);
 			}
@@ -573,8 +614,7 @@ namespace IS {
 			if (std::abs(jt) <= j * sf)
 			{
 				friction_impulse = jt * tangent;
-			}
-			else
+			} else
 			{
 				friction_impulse = -j * tangent * df;
 			}
@@ -597,10 +637,13 @@ namespace IS {
 	}
 
 	// Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
-	void Physics::DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color) {
+	void Physics::DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color)
+	{
 		// draw colliders in green
-		if (mShowColliders) {
-			for (size_t i = 0; i < body.mTransformedVertices.size(); i++) {
+		if (mShowColliders)
+		{
+			for (size_t i = 0; i < body.mTransformedVertices.size(); i++)
+			{
 				Vector2D va = body.mTransformedVertices[i];
 				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 
@@ -616,14 +659,17 @@ namespace IS {
 	}
 
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
-	void Physics::Step(float time, std::set<Entity> const& entities) {
+	void Physics::Step(float time, std::set<Entity> const& entities)
+	{
 		// divide by iterations to increase precision
 		time /= static_cast<float>(mTotalIterations);
 
-		for (auto const& entity : entities) {
+		for (auto const& entity : entities)
+		{
 
 			// check if having rigidbody component
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entity))
+			{
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				body.BodyFollowTransform(trans);
@@ -637,13 +683,15 @@ namespace IS {
 				IS_CORE_DEBUG({ "col - {}" }, test.col);*/
 
 				//freeze
-				if (InsightEngine::Instance().mFreezeFrame) {
+				if (InsightEngine::Instance().mFreezeFrame)
+				{
 					if (!InsightEngine::Instance().mContinueFrame)
 						return;
 				}
-				
+
 				// update the velocity if gravity exists
-				if (mExertingGravity) {
+				if (mExertingGravity)
+				{
 					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
 					body.mVelocity += body.mAcceleration * time;
 				}
@@ -655,7 +703,8 @@ namespace IS {
 				body.mVelocity.y = std::max(body.mVelocity.y, mMinVelocity);
 
 				// if the entity is static or kinematic, skip
-				if (body.mBodyType != BodyType::Dynamic) {
+				if (body.mBodyType != BodyType::Dynamic)
+				{
 					body.mVelocity = Vector2D(0.f, 0.f);
 				}
 
