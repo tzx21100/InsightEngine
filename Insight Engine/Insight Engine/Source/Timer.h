@@ -65,7 +65,7 @@ namespace IS {
          */
         struct ProfileResult {
             std::string mName; ///< The name associated with the profile result.
-            std::chrono::duration<float> mTime; ///< The time duration for profiling.
+            std::chrono::duration<float> mTime{}; ///< The time duration for profiling.
         };
 
         ProfileResult mResult; ///< The profile result.

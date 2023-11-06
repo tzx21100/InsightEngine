@@ -323,7 +323,7 @@ namespace IS {
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
-                    ImGui::TextColored(text_color, "%.3f ms", dt * 1000.f);
+                    ImGui::TextColored(text_color, "%.3lf ms", dt * 1000.0);
 
                     ImGui::TableNextColumn();
                     ImGui::Spacing();
