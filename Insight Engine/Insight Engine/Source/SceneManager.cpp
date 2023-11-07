@@ -68,6 +68,7 @@ namespace IS {
 
 	void SceneManager::SwitchScene(SceneID scene_id)
 	{
+
 		// Nothing to do if scene already active
 		if (scene_id == mActiveSceneID)
 			return;

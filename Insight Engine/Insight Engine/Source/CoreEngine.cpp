@@ -450,6 +450,8 @@ namespace IS {
     }
 
     void InsightEngine::NewScene() {
+        auto scriptsystem = GetSystem<ScriptManager>("ScriptManager");
+        scriptsystem->CleanUp();
         // Destroy all existing entities
         mComponentManager->ClearEntities();
         mSystemManager->ClearEntities();
