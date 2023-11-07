@@ -145,6 +145,9 @@
     <ClCompile Include="Source\CollisionSystem.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EditManager.cpp">
+      <Filter>Editor\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -336,6 +339,9 @@
     <ClInclude Include="Source\CollisionSystem.h">
       <Filter>Physics\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\EditManager.h">
+      <Filter>Editor\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -442,6 +448,9 @@
     </Filter>
     <Filter Include="Editor\Scene">
       <UniqueIdentifier>{af6e24eb-8858-4a53-9442-61aca5bc19b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Manager">
+      <UniqueIdentifier>{bd2566b6-d6fe-456e-8e04-4b6b53d5f72c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

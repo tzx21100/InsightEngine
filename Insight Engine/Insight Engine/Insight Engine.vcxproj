@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\CoreEngine.cpp" />
+    <ClCompile Include="Source\EditManager.cpp" />
     <ClCompile Include="Source\EditorLayer.cpp" />
     <ClCompile Include="Source\EventManager.cpp" />
     <ClCompile Include="Source\Framebuffer.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="Source\Text.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\EditorUtils.h" />
+    <ClInclude Include="Source\EditManager.h" />
     <ClInclude Include="Source\WindowSystem.h" />
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Input.h" />
