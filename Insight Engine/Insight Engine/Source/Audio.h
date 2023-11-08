@@ -2,6 +2,7 @@
 /*!
  * \file Audio.h
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ *          Tan Zheng Xun, t.zhengxun@digipen.edu
  * \par Course: CSD2401
  * \date 27-09-2023
  * \brief
@@ -21,9 +22,38 @@
 
 /*includes */
 #include "System.h"
+#include "Component.h"
 #include "fmod.hpp"
 
 namespace IS {
+
+    class AudioListener : public IComponent {
+    public:
+        float volume=1;
+        float pitch_correctness;
+        float hearing_range;
+
+        static std::string GetType() {
+            return "AudioListener";
+        }
+    };
+
+    class AudioEmitter : public IComponent {
+    public:
+        bool isLoop;
+        float falloff_factor=1;
+        float volumeLevel=1;
+        float pitch = 1;
+        std::string soundName;
+        //we are going to use the formula
+        //gain=1/distance+fall-off factor higher the falloff factor faster the sound disappears
+
+        static std::string GetType() {
+            return "AudioEmitter";
+        }
+    };
+
+
     /*!
      * \brief The ISAudio class handles audio in the game engine.
      *
