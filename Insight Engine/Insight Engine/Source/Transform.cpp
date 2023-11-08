@@ -94,6 +94,7 @@ namespace IS {
 										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle),  0.f,   // column 2
 										 tx,                           ty,                           1.f }; // column 3
 
+
 		// save matrix
 		return GlmMat3ToISMtx33(ISGraphics::cameras[Camera::mActiveCamera].xform * world_to_cam_xform);
 	}

@@ -31,6 +31,7 @@
 #include "Framebuffer.h"
 #include "Animation.h"
 #include "Camera.h"
+#include "Camera3D.h"
 
 namespace IS {
 	/*!
@@ -140,6 +141,7 @@ namespace IS {
 
 		// Editor and entity camera
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
+		static Camera3D cameras3D[2];
 
 		// Text Objects
 		static Text Times_New_Roman_font;

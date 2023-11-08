@@ -50,6 +50,7 @@ namespace IS {
 
     // Editor and entity camera
     Camera ISGraphics::cameras[2];
+    Camera3D ISGraphics::cameras3D[2];
     
     // Text Objects
     Text ISGraphics::Times_New_Roman_font;
@@ -94,6 +95,10 @@ namespace IS {
             camera.UpdateCamPos(0, 0);
             camera.UpdateCamDim(static_cast<float>(width),static_cast<float>(InsightEngine::Instance().GetWindowHeight()));
         });
+
+        for (int i{}; i < 2; ++i) {
+            cameras3D[i].init3DCamera(width, height, 60.f);
+        }
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);

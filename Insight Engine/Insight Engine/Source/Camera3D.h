@@ -26,145 +26,75 @@
  ----------------------------------------------------------------------------- */
 #include "CoreEngine.h"
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace IS {
 	// Enumeration for camera type
-	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
 
-	class Camera {
+	class Camera3D {
 	public:
-		/**
-		 * Constructor for the Camera class.
-		 */
-		Camera();
+		void init3DCamera(int width, int height, float fieldOfView) {
+			initialFov = fieldOfView;
+			fov = initialFov;
+			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-		/**
-		 * Destructor for the Camera class.
-		 */
-		~Camera() = default;
+			// calculate camDist to see the entire game world of 1920 units width
+			float camDist = ((static_cast<float>(width) / 2.f) / tanf(fov / 2.f));
 
-		/**
-		 * Update the camera position.
-		 *
-		 * @param newX - The new X-coordinate of the camera position.
-		 * @param newY - The new Y-coordinate of the camera position.
-		 */
-		void UpdateCamPos(float newX, float newY);
+			position = glm::vec3(0.f, 0.f, camDist);
+			near = 0.1f;
+			far = camDist * 2.f; // to cover zooming in and out
 
-
-		/**
-		 * Update the camera dimensions.
-		 *
-		 * @param newWidth - The new width of the camera's view.
-		 */
-		void UpdateCamDim(float newWidth, float newHeight);
-
-		/**
-		 * Update the camera rotation.
-		 *
-		 * @param newAngle - The new rotation angle in degrees.
-		 */
-		void UpdateCamRotation(float newAngle);
-
-		/**
-		* Update the camera transformation matrix.
-		*/
-		void UpdateCamXform();
-
-		/**
-		 * Zoom the camera in or out.
-		 *
-		 * @param yoffset - The zoom factor.
-		 */
-		void ZoomCamera(float yoffset);
-
-		/**
-		 * Pan the camera.
-		 *
-		 * @param delta_x - The change in X-coordinate for panning.
-		 * @param delta_y - The change in Y-coordinate for panning.
-		 */
-		void PanCamera(float delta_x, float delta_y);
-
-		/**
-		 * Get the current zoom level of the camera.
-		 *
-		 * @return The current zoom level.
-		 */
-		float GetZoomLevel() const { return mZoomLevel; }
-
-		/**
-		 * Set the zoom level for the camera, clamped within the specified bounds.
-		 *
-		 * @param zoom_level - The desired zoom level to set.
-		 */
-		void SetZoomLevel(float zoom_level)
-		{
-			mZoomLevel = std::min(Camera::CAMERA_ZOOM_MAX, std::max(zoom_level, Camera::CAMERA_ZOOM_MIN));
+			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
+			view = glm::lookAt(position, position + target, up);
 		}
 
-		/**
-		 * Get the current camera position.
-		 *
-		 * @return A glm::vec2 containing the camera's position (X and Y coordinates).
-		 */
-		glm::vec2 GetCamPos();
+		void update3DCameraPos(float newX, float newY) {
+			position.x += newX;
+			position.y += newY;
 
-		/**
-		 * Get the current camera dimensions.
-		 *
-		 * @return A glm::vec2 containing the camera's dimensions (width and height).
-		 */
-		glm::vec2 GetCamDim();
+			target.x += newX;
+			target.y += newY;
 
-		/**
-		 * Get the U vector of the camera.
-		 *
-		 * @return A glm::vec2 representing the U vector.
-		 */
-		glm::vec2 GetUVector();
+			view = glm::lookAt(position, position + target, up);
+		}
 
-		/**
-		 * Get the V vector of the camera.
-		 *
-		 * @return A glm::vec2 representing the V vector.
-		 */
-		glm::vec2 GetVVector();
+		void update3DCameraZoom(float zoomLevel) {
+			fov = initialFov / zoomLevel;
+			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
+		}
 
-		/**
-		* The transformation matrix of the camera.
-		*/
-		glm::mat3 xform{};
+		void update3DCameraAspectRatio(float ar) {
+			aspectRatio = ar; 
+			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
+		}
+
+		glm::mat4 getViewMatrix() { return view; }
+
+		glm::mat4 getPerspectiveMatrix() { return projection; }
+		
+		glm::mat4 getCameraToNDCXform() { return view * projection; }
 
 		/// Static members
 		static aCameraType mActiveCamera;
-
-		/**
-		* Constants defining camera properties and limits.
-		*/
-		static const float CAMERA_X_MIN; ///< minimum x bound of camera
-		static const float CAMERA_X_MAX; ///< maximum x bound of camera
-		static const float CAMERA_Y_MIN; ///< minimum y bound of camera
-		static const float CAMERA_Y_MAX; ///< maximum y bound of camera
-		static const float CAMERA_ZOOM_MIN; ///< minimum zoom level
-		static const float CAMERA_ZOOM_MAX; ///< maximum zoom level
-		static const float CAMERA_ZOOM_SPEED_MIN; ///< minimum rate of zoom
-		static const float CAMERA_ZOOM_SPEED_MAX; ///< maximum rate of zoom
-		static const float CAMERA_MOVE_SPEED_MIN; ///< minimum rate of pan
-		static const float CAMERA_MOVE_SPEED_MAX; ///< maximum rate of pan
 
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
 
 	private:
-		float mZoomLevel;
-		glm::vec2 world_position{};
-		glm::vec2 camera_dim{};
+		glm::vec3 position{};
+		glm::vec3 target = glm::vec3(0.f, 0.f, 0.f);
+		glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);;
 
-		// camera's x/y axis
-		glm::vec2 uVector{};
-		glm::vec2 vVector{};
+		float aspectRatio{};
+		float initialFov{};
+		float fov{};
+		float near{};
+		float far{};
+		
+		glm::mat4 view{};
+		glm::mat4 projection{};
 	};
 }
 
-#endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_CAMERA_H
+#endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_CAMERA3D_H
