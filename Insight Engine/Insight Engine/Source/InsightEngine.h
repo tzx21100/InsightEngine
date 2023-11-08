@@ -44,6 +44,8 @@ void RegisterComponents() {
     engine.RegisterComponent<ScriptComponent>();
     engine.RegisterComponent<ButtonComponent>();
     engine.RegisterComponent<Pathfinder>();
+    engine.RegisterComponent<AudioEmitter>();
+    engine.RegisterComponent<AudioListener>();
 
 }
 
@@ -60,6 +62,7 @@ void RegisterSystems() {
     Signature sign_script = engine.GenerateSignature<ScriptComponent>();
     Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
     Signature sign_pathfinding = engine.GenerateSignature<Pathfinder>();
+    Signature sign_audio = engine.GenerateSignature<AudioEmitter, AudioListener, Transform>();
 
 
     // Register each system to Insight Engine
@@ -78,7 +81,7 @@ void RegisterSystems() {
 
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
-    engine.AddSystem(insight_audio, sign_default);
+    engine.AddSystem(insight_audio, sign_audio);
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_physics, sign_physics);
     engine.AddSystem(insight_graphics, sign_graphics);
