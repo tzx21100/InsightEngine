@@ -145,6 +145,9 @@
     <ClCompile Include="Source\CollisionSystem.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera3D.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -335,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="Source\CollisionSystem.h">
       <Filter>Physics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera3D.h">
+      <Filter>Graphics\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

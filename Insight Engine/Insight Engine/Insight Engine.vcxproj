@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\CollisionSystem.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="Source\Audio.h" />
     <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
