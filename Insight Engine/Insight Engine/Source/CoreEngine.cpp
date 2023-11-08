@@ -22,6 +22,7 @@
 #include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
 #include "WindowSystem.h" // Access to window
+#include "EditorLayer.h"
 
 #include <iostream>
 #include <thread>
@@ -60,6 +61,11 @@ namespace IS {
     void InsightEngine::Initialize() {
         //initialize all systems first
         InitializeAllSystems();
+
+    #ifdef USING_IMGUI
+        PushImGuiLayers();
+    #endif
+
         auto window = GetSystem<WindowSystem>("Window");
         mTargetFPS = window->GetTargetFPS();
         //subscirbe to messages
@@ -96,7 +102,7 @@ namespace IS {
         
         // Update all systems
         for (const auto& system : mSystemList) {
-            if (!mUsingGUI && system->GetName() == "Editor")
+            if (!mRenderGUI && system->GetName() == "Editor")
                 continue;
             /*if (system->GetName() == "Physics") {
                 system->Update(mFixedDeltaTime.count());
@@ -111,6 +117,15 @@ namespace IS {
                 mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                 mSystemDeltas["Engine"] += timer.GetDeltaTime();
             }
+        }
+
+        // Update and render GUI
+        if (mRenderGUI)
+        {
+            mImGuiLayer->Begin();
+            mLayers.Update(mFixedDeltaTime.count());
+            mLayers.Render();
+            mImGuiLayer->End();
         }
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
@@ -136,6 +151,7 @@ namespace IS {
         auto script = GetSystem<ScriptManager>("ScriptManager");
         script->CleanUp();
         DestroyAllSystems();
+        mLayers.ClearStack();
     }
 
     //We quit
@@ -481,6 +497,39 @@ namespace IS {
     void InsightEngine::OpenGameScript(const std::string& ScriptName) {
         auto script = GetSystem<ScriptManager>("ScriptManager");
         script->OpenClassFile(ScriptName);
+    }
+
+    void InsightEngine::PushLayer(layer_type layer)
+    {
+        mLayers.PushLayer(layer);
+        layer->OnAttach();
+    }
+
+    void InsightEngine::PushOverlay(layer_type overlay)
+    {
+        mLayers.PushOverlay(overlay);
+        overlay->OnAttach();
+    }
+
+    void InsightEngine::PopLayer(layer_type layer)
+    {
+        mLayers.PopLayer(layer);
+        layer->OnDetach();
+    }
+
+    void InsightEngine::PopOverlay(layer_type overlay)
+    {
+        mLayers.PopOverlay(overlay);
+        overlay->OnDetach();
+    }
+
+    void InsightEngine::PushImGuiLayers()
+    {
+        mImGuiLayer = std::make_shared<ImGuiLayer>();
+        PushOverlay(mImGuiLayer);
+        PushLayer(std::make_shared<EditorLayer>());
+        mUsingGUI = true;
+        mRenderGUI = true;
     }
 
 

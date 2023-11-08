@@ -1,10 +1,10 @@
 /*!
- * \file Editor.cpp
+ * \file ImGuiLayer.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This source file defines the implementation for class Editor, which
+ * This source file defines the implementation for class ImGuiLayer, which
  * encapsulates the functionalities of a graphical user interface (GUI)
  * using the Dear ImGui libary.
  * 
@@ -18,7 +18,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "Editor.h"
+#include "ImGuiLayer.h"
 
 // Dependencies
 #include <imgui.h>
@@ -29,11 +29,7 @@
 
 namespace IS {
 
-    Editor::Editor() {}
-
-    Editor::~Editor() { Terminate(); }
-
-    void Editor::Initialize()
+    void ImGuiLayer::OnAttach()
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -79,33 +75,16 @@ namespace IS {
         const char* glsl_version = "#version 450";
         ImGui_ImplGlfw_InitForOpenGL(InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetNativeWindow(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
-
-        mEditorLayer = std::make_shared<EditorLayer>();
-        PushLayer(mEditorLayer);
     }
 
-    void Editor::Update(float delta_time)
+    void ImGuiLayer::OnDetach()
     {
-        Begin();
-        mLayers.Update(delta_time);
-        mLayers.Render();
-        End();
-    }
-
-    void Editor::Terminate()
-    {
-        mLayers.ClearStack();
-
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
 
-    void Editor::HandleMessage(Message const&) {}
-
-    std::string Editor::GetName() { return "Editor"; }
-
-    void Editor::Begin()
+    void ImGuiLayer::Begin()
     {
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -114,7 +93,7 @@ namespace IS {
         ImGuizmo::BeginFrame();
     }
 
-    void Editor::End()
+    void ImGuiLayer::End()
     {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -130,31 +109,7 @@ namespace IS {
         }
     }
 
-    void Editor::PushLayer(layer_type layer)
-    {
-        mLayers.PushLayer(layer);
-        layer->OnAttach();
-    }
-
-    void Editor::PushOverlay(layer_type overlay)
-    {
-        mLayers.PushOverlay(overlay);
-        overlay->OnAttach();
-    }
-
-    void Editor::PopLayer(layer_type layer)
-    {
-        mLayers.PopLayer(layer);
-        layer->OnDetach();
-    }
-
-    void Editor::PopOverlay(layer_type overlay)
-    {
-        mLayers.PopOverlay(overlay);
-        overlay->OnDetach();
-    }
-
-    void Editor::SetDarkThemeColors() const
+    void ImGuiLayer::SetDarkThemeColors() const
     {
         auto& style = ImGui::GetStyle();
         auto& colors = style.Colors;
@@ -209,10 +164,20 @@ namespace IS {
         colors[ImGuiCol_MenuBarBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
     }
 
-    bool Editor::WantCaptureMouse() const { return ImGui::GetIO().WantCaptureMouse; }
+    bool ImGuiLayer::WantCaptureMouse() const 
+    {
+        if (InsightEngine::Instance().mUsingGUI)
+            return ImGui::GetIO().WantCaptureMouse;
 
-    bool Editor::WantCaptureKeyboard() const { return ImGui::GetIO().WantCaptureKeyboard; }
+        return false;
+    }
 
-    std::shared_ptr<EditorLayer> Editor::GetEditorLayer() { return mEditorLayer; }
+    bool ImGuiLayer::WantCaptureKeyboard() const 
+    {
+        if (InsightEngine::Instance().mUsingGUI)
+            return ImGui::GetIO().WantCaptureKeyboard;
+
+        return false;
+    }
 
 } // end namespace IS

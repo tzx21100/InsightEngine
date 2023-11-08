@@ -23,16 +23,12 @@
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
-#include "Editor.h"
 #include "GameGui.h"
 
 // Dependencies
 #include <imgui.h>
 
 namespace IS {
-
-    InspectorPanel::InspectorPanel(std::shared_ptr<HierarchyPanel> hierarchy_panel)
-        : Panel(ICON_LC_INFO "  Inspector"), mHierarchyPanel(hierarchy_panel) {}
 
     void InspectorPanel::RenderPanel()
     {
@@ -196,8 +192,6 @@ namespace IS {
         RenderComponent<Sprite>(ICON_LC_IMAGE "  Sprite", entity, [io, FONT_BOLD, entity, this](Sprite& sprite)
         {
             auto& engine = InsightEngine::Instance();
-            auto const editor = engine.GetSystem<Editor>("Editor");
-            auto const editor_layer = editor->GetEditorLayer();
             std::filesystem::path filepath(sprite.img.mFileName);
             ImTextureID texture_id;
             float texture_width;
@@ -253,7 +247,7 @@ namespace IS {
             // Use placeholder if width or height of texture
             if (no_dimensions)
             {
-                texture_id = editor_layer->GetIcon("TexturePlaceholder");
+                texture_id = mEditorLayer.GetIcon("TexturePlaceholder");
                 texture_width = texture_height = 512.f;
             }
             else

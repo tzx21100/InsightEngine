@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {}
+    "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {
+    "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+        "projectUniqueName": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
         "projectName": "IS-ScriptCore",
-        "projectPath": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
-        "packagesPath": "C:\\Users\\tzx87\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tzx87\\Documents\\GitHub\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
+        "projectPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+        "packagesPath": "C:\\Users\\guoyi\\.nuget\\packages\\",
+        "outputPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tzx87\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\guoyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -43,9 +43,6 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Editor.cpp">
-      <Filter>Editor\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EditorLayer.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
@@ -145,6 +142,9 @@
     <ClCompile Include="Source\CollisionSystem.cpp">
       <Filter>Physics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ImGuiLayer.cpp">
+      <Filter>Editor\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -218,9 +218,6 @@
     </ClInclude>
     <ClInclude Include="Source\ISContainers.h">
       <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Editor.h">
-      <Filter>Editor\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\EditorLayer.h">
       <Filter>Editor\Layers</Filter>
@@ -336,6 +333,9 @@
     <ClInclude Include="Source\CollisionSystem.h">
       <Filter>Physics\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ImGuiLayer.h">
+      <Filter>Editor\Layers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -388,9 +388,6 @@
     </Filter>
     <Filter Include="Engine\JSON">
       <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\System">
-      <UniqueIdentifier>{cc28fd07-1305-4d66-ab4c-785d75fa5a6b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Editor\Layers">
       <UniqueIdentifier>{468e4dd2-5b0a-45d8-bbe0-505ecf85fc13}</UniqueIdentifier>

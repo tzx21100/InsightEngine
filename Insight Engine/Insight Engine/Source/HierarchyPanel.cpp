@@ -24,7 +24,6 @@
 #include "CoreEngine.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
-#include "Editor.h"
 #include "GameGui.h"
 
 // Dependencies
@@ -34,7 +33,6 @@ namespace IS {
 
     void HierarchyPanel::RenderPanel()
     {
-        auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
@@ -104,8 +102,7 @@ namespace IS {
         ImGui::PopStyleVar();
 
         // Accept file drop
-        auto editor = engine.GetSystem<Editor>("Editor");
-        editor->GetEditorLayer()->AcceptAssetBrowserPayload();
+        mEditorLayer.AcceptAssetBrowserPayload();
 
         ImGui::End(); // end window Scene Hierarchy
 
@@ -185,9 +182,6 @@ namespace IS {
 
     void HierarchyPanel::RenderCameraControls()
     {
-        auto& engine = InsightEngine::Instance();
-        auto const editor = engine.GetSystem<Editor>("Editor");
-        auto const editor_layer = editor->GetEditorLayer();
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
         const float SIZE = 16.f;
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
