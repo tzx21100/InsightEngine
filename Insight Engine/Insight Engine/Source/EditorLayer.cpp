@@ -70,13 +70,6 @@ namespace IS {
 
     void EditorLayer::OnUpdate(float)
     {
-        if (auto const& [fb_width, fb_height] = ISGraphics::mFramebuffer->GetSize();
-            mScenePanel->GetViewportSize().x > 0.f && mScenePanel->GetViewportSize().y > 0.f &&
-            (fb_width != mScenePanel->GetViewportSize().x || fb_height != mScenePanel->GetViewportSize().y))
-        {
-            ISGraphics::ResizeFramebuffer(static_cast<GLuint>(mScenePanel->GetViewportSize().x), static_cast<GLuint>(mScenePanel->GetViewportSize().y));
-        }
-
         InsightEngine& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
