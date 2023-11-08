@@ -44,7 +44,8 @@ namespace IS {
          *
          * Initializes a new instance of the \c BrowserPanel class.
          */
-        BrowserPanel();
+        BrowserPanel(EditorLayer& editor_layer)
+            : Panel(ICON_LC_FOLDER_SEARCH_2 "  Browser", editor_layer), mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
 
         /*! \brief Renders the asset browser panel.
          *

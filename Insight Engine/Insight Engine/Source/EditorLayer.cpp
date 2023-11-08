@@ -70,13 +70,6 @@ namespace IS {
 
     void EditorLayer::OnUpdate(float)
     {
-        if (auto const& [fb_width, fb_height] = ISGraphics::mFramebuffer->GetSize();
-            mScenePanel->GetViewportSize().x > 0.f && mScenePanel->GetViewportSize().y > 0.f &&
-            (fb_width != mScenePanel->GetViewportSize().x || fb_height != mScenePanel->GetViewportSize().y))
-        {
-            ISGraphics::ResizeFramebuffer(static_cast<GLuint>(mScenePanel->GetViewportSize().x), static_cast<GLuint>(mScenePanel->GetViewportSize().y));
-        }
-
         InsightEngine& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
@@ -212,6 +205,9 @@ namespace IS {
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
+
+        // Render outline for selected entity
+        RenderSelectedEntityOutline();
 
         if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
             *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
@@ -418,19 +414,19 @@ namespace IS {
 
     void EditorLayer::AttachPanels()
     {
-        mGamePanel      = std::make_shared<GamePanel>();
-        mScenePanel     = std::make_shared<ScenePanel>();
-        mHierarchyPanel = std::make_shared<HierarchyPanel>();
-        mConsolePanel   = std::make_shared<ConsolePanel>();
+        mGamePanel      = std::make_shared<GamePanel>(*this);
+        mScenePanel     = std::make_shared<ScenePanel>(*this);
+        mHierarchyPanel = std::make_shared<HierarchyPanel>(*this);
+        mConsolePanel   = std::make_shared<ConsolePanel>(*this);
 
         mPanels.emplace_back(mGamePanel);
         mPanels.emplace_back(mScenePanel);
         mPanels.emplace_back(mHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<BrowserPanel>());
+        mPanels.emplace_back(std::make_shared<PerformancePanel>(*this));
+        mPanels.emplace_back(std::make_shared<BrowserPanel>(*this));
         mPanels.emplace_back(mConsolePanel);
-        mPanels.emplace_back(std::make_shared<InspectorPanel>(mHierarchyPanel));
-        mPanels.emplace_back(std::make_shared<SettingsPanel>());
+        mPanels.emplace_back(std::make_shared<InspectorPanel>(*this, mHierarchyPanel));
+        mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
     }
 
     //void EditorLayer::RenderGizmo()

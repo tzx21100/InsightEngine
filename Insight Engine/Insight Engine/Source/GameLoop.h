@@ -177,7 +177,7 @@ namespace IS {
         virtual void Update([[maybe_unused]] float delta) override {
             //if (InsightEngine::Instance().mRuntime == false) { return; }
             // Disable mouse/key event when GUI is using them
-            auto const& gui = engine.GetSystem<Editor>("Editor");
+            auto const& gui = engine.GetImGuiLayer();
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
             // transform camera
@@ -208,12 +208,12 @@ namespace IS {
             if (!gui->WantCaptureKeyboard()) {
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
-                    engine.mUsingGUI = !engine.mUsingGUI;
-                    IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
+                    engine.mRenderGUI = !engine.mRenderGUI;
+                    IS_CORE_DEBUG("GUI {}", engine.mRenderGUI ? "Enabled" : "Disabled");
                 }
 
                 // Offset mouse position
-                if (!engine.mUsingGUI) {                   
+                if (!engine.mRenderGUI) {                   
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }

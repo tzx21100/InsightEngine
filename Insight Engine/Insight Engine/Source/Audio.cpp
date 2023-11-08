@@ -51,7 +51,7 @@ namespace IS {
 
     // Function to calculate distance between two points in 2D
     float CalculateDistance(float x1, float y1, float x2, float y2) {
-        return std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
+        return std::sqrtf(std::powf(x2 - x1, 2) + std::powf(y2 - y1, 2));
     }
 
     // Function to calculate the gain (volume level) based on distance
