@@ -147,9 +147,7 @@ namespace IS {
                 // Mouse dragging - change selected/hovered entity translation
                 else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
-                    Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
-                        static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
-                        static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
+                    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
 
                     Entity entity = *mHierarchyPanel->GetSelectedEntity();
 
@@ -157,9 +155,10 @@ namespace IS {
                     if (engine.HasComponent<Transform>(entity))
                     {
                         auto& transform = engine.GetComponent<Transform>(entity);
-                        transform.world_position.x += mouse_position_delta.x;
-                        transform.world_position.y += mouse_position_delta.y;
+                        transform.world_position.x += mouse_position_delta.x * InsightEngine::Instance().GetWindowWidth()/mScenePanel->GetViewportSize().x / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
+                        transform.world_position.y -= mouse_position_delta.y * InsightEngine::Instance().GetWindowHeight() / mScenePanel->GetViewportSize().y / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
                     }
+                    ImGui::ResetMouseDragDelta();
                 }
 
             }

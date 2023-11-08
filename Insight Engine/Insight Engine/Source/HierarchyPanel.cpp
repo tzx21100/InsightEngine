@@ -221,8 +221,10 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
                 float width = camera.GetCamDim().x;
-                ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f");
-                camera.UpdateCamDim(width);
+                float height = camera.GetCamDim().y;
+                if (ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f")) {
+                    camera.UpdateCamDim(width, height);
+                }
 
                 // Camera Zoom
                 ImGui::TableNextColumn();

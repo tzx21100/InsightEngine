@@ -92,7 +92,7 @@ namespace IS {
         std::for_each_n(cameras, 2, [width](Camera& camera)
         {
             camera.UpdateCamPos(0, 0);
-            camera.UpdateCamDim(static_cast<float>(width));
+            camera.UpdateCamDim(static_cast<float>(width),static_cast<float>(InsightEngine::Instance().GetWindowHeight()));
         });
 
         // set line width for all GL_LINES and GL_LINE_LOOP

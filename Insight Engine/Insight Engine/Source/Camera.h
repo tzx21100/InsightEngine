@@ -57,7 +57,7 @@ namespace IS {
 		 *
 		 * @param newWidth - The new width of the camera's view.
 		 */
-		void UpdateCamDim(float newWidth);
+		void UpdateCamDim(float newWidth, float newHeight);
 
 		/**
 		 * Update the camera rotation.

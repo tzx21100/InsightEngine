@@ -53,9 +53,9 @@ namespace IS {
 		UpdateCamXform();
 	}
 
-	void Camera::UpdateCamDim(float newWidth) {
+	void Camera::UpdateCamDim(float newWidth,float newHeight) {
 		// follow [16:9] aspect ratio
-		camera_dim = glm::vec2(newWidth, newWidth * 0.5625f); 
+		camera_dim = glm::vec2(newWidth, newHeight);
 		UpdateCamXform();
 	}
 

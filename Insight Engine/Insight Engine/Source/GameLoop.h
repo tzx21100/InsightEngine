@@ -159,7 +159,7 @@ namespace IS {
             //sprite_point.primitive_type = GL_POINTS;
 
             int width = engine.GetWindowWidth();
-            //int height = engine.GetWindowHeight();
+            int height = engine.GetWindowHeight();
             //entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
             //auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
             //auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
@@ -170,7 +170,7 @@ namespace IS {
             //body_ai.mAngularVelocity = 10.f;
             //body_ai.mRestitution = 0.1f;
 
-            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
+            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width,(float)height);
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
         }
 
