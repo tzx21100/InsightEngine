@@ -16,14 +16,15 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                   includes
- ----------------------------------------------------------------------------- */
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "InspectorPanel.h"
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
 #include "GameGui.h"
+#include "Audio.h"
 
 // Dependencies
 #include <imgui.h>
@@ -551,6 +552,114 @@ namespace IS {
             }
 
         }); // end render Script Component
+
+        // Audio Listener Component
+        RenderComponent<AudioListener>(ICON_LC_EAR "  Audio Listener", entity, [entity, FONT_BOLD](AudioListener& listener)
+        {
+            if (ImGui::BeginTable("Audio Listener Table", 2))
+            {
+                // Set Table and its flags
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn("ListenerLabel", column_flags, 100.f);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Volume");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                int volume = static_cast<int>(listener.volume * 100);
+                if (ImGui::SliderInt("##Volume", &volume, 0, 100, "%d%%"))
+                {
+                    listener.volume = static_cast<float>(volume) / 100.f;
+                }
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Pitch Correctness");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Pitch Correctness", &listener.pitch_correctness);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Hearing Range");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Hearing Range", &listener.hearing_range);
+
+                ImGui::EndTable(); // end table Audio Listener Table
+            }
+        }); // end render Audio Listener Component
+
+        // Aduio Emitter Component
+        RenderComponent<AudioEmitter>(ICON_LC_SPEAKER "  Audio Emitter", entity, [entity, FONT_BOLD](AudioEmitter& emitter)
+        {
+            if (ImGui::BeginTable("Audio Emitter Table", 2))
+            {
+                // Set Table and its flags
+                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+                ImGui::TableSetupColumn("EmitterLabel", column_flags, 100.f);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Looped");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::Checkbox("##Looped", &emitter.isLoop);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Falloff Factor");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Falloff Factor", &emitter.falloff_factor);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Volume Level");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Volume Level", &emitter.volumeLevel);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Pitch");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Pitch", &emitter.pitch);
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Name");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+
+                ImGui::BeginGroup();
+
+                // Edit Audio text
+                std::string& text = emitter.soundName;
+                char buffer[256]{};
+                auto source = text | std::ranges::views::take(text.size());
+                std::ranges::copy(source, std::begin(buffer));
+                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+                if (ImGui::InputText("##EmitterSoundName", buffer, sizeof(buffer), input_text_flags))
+                    text = std::string(buffer);
+
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_AUDIO"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        IS_CORE_DEBUG("Audio : {} ", path.string());
+                        emitter.soundName = path.string();
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+                ImGui::EndGroup();
+
+                ImGui::EndTable(); // end table Audio Emitter Table
+            }
+        }); // end render Audio Emitter component
 
         // Button Component
         RenderComponent<ButtonComponent>(ICON_LC_SQUARE "  Button", entity, [entity, FONT_BOLD](ButtonComponent& button)

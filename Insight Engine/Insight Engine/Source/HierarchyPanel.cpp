@@ -215,8 +215,10 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
                 float width = camera.GetCamDim().x;
-                ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f");
-                camera.UpdateCamDim(width);
+                if (ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f"))
+                {
+                    camera.UpdateCamDim(width);
+                }
 
                 // Camera Zoom
                 ImGui::TableNextColumn();
@@ -421,6 +423,7 @@ namespace IS {
         // Entity already has all the components
         if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
             engine.HasComponent<RigidBody>(entity) && engine.HasComponent<ScriptComponent>(entity) &&
+            engine.HasComponent<AudioListener>(entity) && engine.HasComponent<AudioEmitter>(entity) &&
             engine.HasComponent<ButtonComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
@@ -472,6 +475,26 @@ namespace IS {
                     auto& script = engine.GetComponent<ScriptComponent>(entity);
                     script.mScriptName = filepath.stem().string();
                 }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Audio Listener Component
+        if (!engine.HasComponent<AudioListener>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_EAR "  Audio Listener"))
+            {
+                engine.AddComponent<AudioListener>(entity, AudioListener());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Audio Emitter Component
+        if (!engine.HasComponent<AudioEmitter>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_SPEAKER "  Audio Emitter"))
+            {
+                engine.AddComponent<AudioEmitter>(entity, AudioEmitter());
                 ImGui::CloseCurrentPopup();
             }
         }

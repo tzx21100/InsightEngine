@@ -381,7 +381,9 @@ namespace IS {
                         ImTextureID icon = EditorUtils::ConvertTextureID(img.texture_id);
                         float aspect_ratio = static_cast<float>(img.width) / static_cast<float>(img.height);
                         ImGui::TableNextColumn();
+                        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize * aspect_ratio, mControls.mThumbnailSize });
+                        ImGui::PopStyleVar();
 
                         // Texture Tooltip
                         if (ImGui::BeginItemTooltip())
@@ -390,7 +392,7 @@ namespace IS {
                             ImGui::EndTooltip();
                         }
 
-                        // Start file drag
+                        // Start texture drag
                         if (ImGui::BeginDragDropSource())
                         {
                             const wchar_t* item_path = path.c_str();
@@ -416,7 +418,6 @@ namespace IS {
                         ImTextureID icon = mEditorLayer.GetIcon("File");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
-
                         // Start file drag
                         if (ImGui::BeginDragDropSource())
                         {

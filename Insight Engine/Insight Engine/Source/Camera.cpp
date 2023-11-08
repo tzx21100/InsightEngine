@@ -21,9 +21,10 @@
 #include "Camera.h"
 
 namespace IS {
+
 	// Static members initialization
 	aCameraType Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-	const float Camera::CAMERA_X_MIN = -16000;
+	const float Camera::CAMERA_X_MIN = -16000.f;
 	const float Camera::CAMERA_X_MAX =  16000.f;
 	const float Camera::CAMERA_Y_MIN = -9000.f;
 	const float Camera::CAMERA_Y_MAX =  9000.f;
