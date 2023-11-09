@@ -39,6 +39,7 @@ namespace IS {
             x_form_row1_attrib, // shader only able to take in max 4 values at a time
             x_form_row2_attrib, // so we will have to break a 3x3 matrix into 3 vec3
             x_form_row3_attrib,
+            x_form_row4_attrib,
             anim_dim_attrib,
             anim_index_attrib,
             ent_ID_attib
@@ -63,6 +64,8 @@ namespace IS {
         * This function initializes the vertex and instance data for rendering an instanced quad.
         */
         void setupInstancedQuadVAO();
+
+        void setupInstanced3DQuadVAO();
 
         /*!
          * \brief Set up an instanced line mesh.

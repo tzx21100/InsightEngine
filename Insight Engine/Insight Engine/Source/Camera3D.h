@@ -39,7 +39,7 @@ namespace IS {
 			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 			// calculate camDist to see the entire game world of 1920 units width
-			float camDist = ((static_cast<float>(width) / 2.f) / tanf(fov / 2.f));
+			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
 
 			position = glm::vec3(0.f, 0.f, camDist);
 			near = 0.1f;
