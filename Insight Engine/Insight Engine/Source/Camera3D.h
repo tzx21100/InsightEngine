@@ -42,11 +42,12 @@ namespace IS {
 			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
 
 			position = glm::vec3(0.f, 0.f, camDist);
+			target = glm::vec3(0.f, 0.f, 0.f);
 			near = 0.1f;
 			far = camDist * 2.f; // to cover zooming in and out
 
 			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-			view = glm::lookAt(position, position + target, up);
+			view = glm::lookAt(position, target, up);
 		}
 
 		void update3DCameraPos(float newX, float newY) {
@@ -56,7 +57,7 @@ namespace IS {
 			target.x += newX;
 			target.y += newY;
 
-			view = glm::lookAt(position, position + target, up);
+			view = glm::lookAt(position, target, up);
 		}
 
 		void update3DCameraZoom(float zoomLevel) {
