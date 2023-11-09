@@ -84,8 +84,13 @@ namespace IS {
             if (opened)
             {
                 // Render all scenes
-                scene_manager.RunSceneFunction([this](SceneID scene_id)
+                scene_manager.RunSceneFunction([this, &scene_manager](SceneID scene_id)
                 {
+                    if (scene_id != scene_manager.GetActiveScene())
+                    {
+                        ImGui::SetNextItemOpen(false);
+                    }
+
                     RenderSceneNode(scene_id);
                 });
 
