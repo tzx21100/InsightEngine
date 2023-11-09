@@ -98,8 +98,9 @@ namespace IS {
          * \param x_reset The value to reset the x-component to (default is 0.0f).
          * \param y_reset The value to reset the y-component to (default is 0.0f).
          * \param column_width The width of the control column (default is 100.0f).
+         * \return Boolean value indicating whether control has been adjusted.
          */
-        void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
+        bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
 
         /*!
          * \brief Renders a combo box for an enumeration type using ImGui.

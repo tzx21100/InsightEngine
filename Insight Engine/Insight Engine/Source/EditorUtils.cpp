@@ -64,8 +64,10 @@ namespace IS::EditorUtils {
         }
     }
 
-    void RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
+    bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
+        bool adjusted = false;
+
         ImGuiIO& io = ImGui::GetIO();
         ImFont* const& FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
@@ -96,12 +98,18 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
             ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("X", button_size))
+            {
                 values.x = x_reset;
+                adjusted = true;
+            }
             ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
-            ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f");
+            if (ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f"))
+            {
+                adjusted = true;
+            }
             ImGui::PopItemWidth();
             ImGui::SameLine();
 
@@ -111,12 +119,18 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.44f, .67f, .01f, 1.f));
             ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Y", button_size))
+            {
                 values.y = y_reset;
+                adjusted = true;
+            }
             ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
-            ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f");
+            if (ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f"))
+            {
+                adjusted = true;
+            }
             ImGui::PopItemWidth();
 
             ImGui::PopStyleVar();
@@ -124,6 +138,7 @@ namespace IS::EditorUtils {
         }
 
         ImGui::PopID();
+        return adjusted;
     }
 
 } // end namespace IS::EditorUtils

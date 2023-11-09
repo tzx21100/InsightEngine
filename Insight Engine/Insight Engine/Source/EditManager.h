@@ -13,150 +13,101 @@ namespace IS {
     class Command
     {
     public:
+        Command(std::string const& name) : mName(name) {}
+        std::string GetName() const { return mName; }
+
+    private:
         virtual void Execute() = 0;
         virtual void Undo() = 0;
+
+        friend class EditManager;
+
+    protected:
+        std::string mName;
     };
 
     class TranslateCommand : public Command
     {
     public:
-        TranslateCommand(Entity entity, Vector2D new_translation) : mEntity(entity), mNewTranslation(new_translation)
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(entity);
-            mOldTranslation = transform.getWorldPosition();
-        }
-
-        void Execute() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setWorldPosition(mNewTranslation.x, mNewTranslation.y);
-        }
-
-        void Undo() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setWorldPosition(mOldTranslation.x, mOldTranslation.y);
-        }
+        TranslateCommand(Entity entity, Vector2D old_translation, Vector2D new_translation);
 
     private:
         Entity mEntity;
         Vector2D mOldTranslation;
         Vector2D mNewTranslation;
+
+        void Execute() override;
+        void Undo() override;
     };
 
     class ScaleCommand : public Command
     {
     public:
-        ScaleCommand(Entity entity, Vector2D new_scale) : mEntity(entity), mNewScale(new_scale)
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(entity);
-            mOldScale = transform.getScaling();
-        }
-
-        void Execute() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setScaling(mNewScale.x, mNewScale.y);
-        }
-
-        void Undo() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setScaling(mOldScale.x, mOldScale.y);
-        }
+        ScaleCommand(Entity entity, Vector2D new_scale);
 
     private:
         Entity mEntity;
         Vector2D mOldScale;
         Vector2D mNewScale;
+
+        void Execute() override;
+        void Undo() override;
     };
 
     class RotateCommand : public Command
     {
     public:
-        RotateCommand(Entity entity, float new_rotation) : mEntity(entity), mNewRotation(new_rotation)
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(entity);
-            mOldRotation = transform.getRotation();
-        }
-
-        void Execute() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setRotation(mNewRotation);
-        }
-
-        void Undo() override
-        {
-            auto& engine = InsightEngine::Instance();
-            auto& transform = engine.GetComponent<Transform>(mEntity);
-            transform.setRotation(mOldRotation);
-        }
+        RotateCommand(Entity entity, float new_rotation);
 
     private:
         Entity mEntity;
         float mOldRotation;
         float mNewRotation;
+
+        void Execute() override;
+        void Undo() override;
     };
 
     class CreateEntityCommand : public Command
     {
     public:
-        CreateEntityCommand(Entity entity) : mEntity(entity) {}
-
-        void Execute() override
-        {
-            auto& engine = InsightEngine::Instance();
-        }
-
-        void Undo() override
-        {
-            auto& engine = InsightEngine::Instance();
-            engine.DeleteEntity(mEntity);
-        }
+        CreateEntityCommand(Entity entity);
 
     private:
         Entity mEntity;
+
+        void Execute() override;
+        void Undo() override;
     };
 
     class DestroyEntityComannd : public Command
     {
     public:
-        DestroyEntityComannd(Entity entity) : mEntity(entity) {}
-
-        void Execute() override
-        {
-            auto& engine = InsightEngine::Instance();
-            engine.DeleteEntity(mEntity);
-        }
-
-        void Undo() override
-        {
-            auto& engine = InsightEngine::Instance();
-        }
+        DestroyEntityComannd(Entity entity);
 
     private:
         Entity mEntity;
+
+        void Execute() override;
+        void Undo() override;
     };
 
     class EditManager
     {
     public:
+        using CommandType = std::shared_ptr<Command>;
+        using StackType = std::list<CommandType>;
+
         void ExecuteCommand(std::shared_ptr<Command> command);
         void Undo();
         void Redo();
 
-    private:
-        std::list<std::shared_ptr<Command>> mUndoStack;
-        std::list<std::shared_ptr<Command>> mRedoStack;
+    //private:
+        const size_t MAX_COMMANDS = 20;
+        StackType mUndoStack;
+        StackType mRedoStack;
+
+        void LimitStackSize(StackType& stack, size_t max_size);
     };
 
 } // end namespace IS

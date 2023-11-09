@@ -38,6 +38,8 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
+        mEditManager = std::make_shared<EditManager>();
+
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
@@ -65,6 +67,7 @@ namespace IS {
     void EditorLayer::OnDetach()
     {
         mPanels.clear();
+        mIcons.clear();
         IS_CORE_DEBUG("{} detached", mDebugName);
     }
 
@@ -91,8 +94,8 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
-        if (CTRL_HELD && Z_PRESSED) {} // Ctrl + Z
-        if (CTRL_HELD && Y_PRESSED) {} // Ctrl + Y
+        if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
+        if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
 
         if (mGamePanel->IsFocused())
         {
@@ -138,21 +141,63 @@ namespace IS {
                 }
 
                 // Mouse dragging - change selected/hovered entity translation
-                else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                //else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                //{
+                //    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
+
+                //    Entity entity = *mHierarchyPanel->GetSelectedEntity();
+
+                //    // Translate entity position
+                //    if (engine.HasComponent<Transform>(entity))
+                //    {
+                //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+                //        auto& transform = engine.GetComponent<Transform>(entity);
+                //        transform.world_position.x += mouse_position_delta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
+                //        transform.world_position.y -= mouse_position_delta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
+                //    }
+                //    ImGui::ResetMouseDragDelta();
+                //}
+                else if (mHierarchyPanel->GetSelectedEntity())
                 {
-                    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
+                    static bool wasMouseDown = false;
+                    ImVec2 mousePositionDelta = ImGui::GetMouseDragDelta();
 
                     Entity entity = *mHierarchyPanel->GetSelectedEntity();
 
                     // Translate entity position
                     if (engine.HasComponent<Transform>(entity))
                     {
+                        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
                         auto& transform = engine.GetComponent<Transform>(entity);
-                        transform.world_position.x += mouse_position_delta.x * InsightEngine::Instance().GetWindowWidth()/mScenePanel->GetViewportSize().x / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
-                        transform.world_position.y -= mouse_position_delta.y * InsightEngine::Instance().GetWindowHeight() / mScenePanel->GetViewportSize().y / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
+
+                        // Store the old translation for the command
+                        Vector2D oldTranslation = transform.world_position;
+
+                        // Translate entity position
+                        transform.world_position.x += mousePositionDelta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
+                        transform.world_position.y -= mousePositionDelta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
+
+                        // Check if the mouse was down in the previous frame and is released in the current frame
+                        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                        {
+                            // Calculate the new translation for the command
+                            Vector2D newTranslation = transform.world_position;
+
+                            // Execute TranslateCommand
+                            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, newTranslation));
+
+                            // Reset the mouse down flag
+                            wasMouseDown = false;
+                        } else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                        {
+                            // Set the mouse down flag
+                            wasMouseDown = true;
+                        }
                     }
+
                     ImGui::ResetMouseDragDelta();
                 }
+
 
             }
         }
@@ -270,8 +315,23 @@ namespace IS {
 
             if (ImGui::BeginMenu("Edit"))
             {
-                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) {}
-                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) {}
+                //if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { mEditManager->Undo(); }
+                if (mEditManager->mUndoStack.size())
+                {
+
+                    if (ImGui::BeginMenu(ICON_LC_UNDO "  Undo"))
+                    {
+                        int i{};
+                        for (auto& command : mEditManager->mUndoStack)
+                        {
+                            ImGui::MenuItem((command->GetName() + std::to_string(i)).c_str());
+                            ++i;
+                        }
+
+                        ImGui::EndMenu();
+                    }
+                }
+                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) { mEditManager->Redo(); }
                 ImGui::EndMenu();
             } // end menu Edit
 

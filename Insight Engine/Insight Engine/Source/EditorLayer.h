@@ -24,6 +24,7 @@
 #include "Layer.h"
 #include "Panel.h"
 #include "HierarchyPanel.h"
+#include "EditManager.h"
 
 #include <functional>
 
@@ -133,6 +134,8 @@ namespace IS {
          */
         Vec2 GetHierarchyPanel() const { return mHierarchyPanel->GetPanelSize(); }
 
+        void ExecuteCommand(std::shared_ptr<Command> command) { mEditManager->ExecuteCommand(command); }
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
@@ -145,6 +148,7 @@ namespace IS {
         std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
         std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Instance of hierarchy panel.
         std::shared_ptr<ConsolePanel> mConsolePanel; ///< Instance of console panel.
+        std::shared_ptr<EditManager> mEditManager; ///< Instance of edit manager.
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.

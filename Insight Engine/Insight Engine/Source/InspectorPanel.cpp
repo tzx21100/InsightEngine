@@ -157,11 +157,14 @@ namespace IS {
         RenderEntityConfig(entity);
 
         // Transform Component
-        RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [FONT_BOLD](Transform& transform)
+        RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
             // Render Translation
-            Vector2D position = { transform.world_position.x, transform.world_position.y };
-            EditorUtils::RenderControlVec2("Translation", position);
+            Vector2D old_translate = transform.world_position;
+            if (EditorUtils::RenderControlVec2("Translation", transform.world_position))
+            {
+                mEditorLayer.ExecuteCommand(std::make_shared<TranslateCommand>(entity, old_translate, transform.world_position));
+            }
 
             // Render Rotation
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
@@ -175,17 +178,20 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 float rotation = transform.rotation * (PI / 180.f);
-                ImGui::SliderAngle("##Rotation", &rotation, 0.f);
-                transform.rotation = rotation / (PI / 180.f);
+                if (ImGui::SliderAngle("##Rotation", &rotation, 0.f))
+                {
+                    transform.rotation = rotation / (PI / 180.f);
+
+                    mEditorLayer.ExecuteCommand(std::make_shared<RotateCommand>(entity, transform.rotation));
+                }
                 ImGui::EndTable();
             }
 
             // Render Scale
-            Vector2D scale = { transform.scaling.x, transform.scaling.y };
-            EditorUtils::RenderControlVec2("Scale", scale, 95.f, 120.f);
-
-            transform.setScaling(scale.x, scale.y);
-            transform.setWorldPosition(position.x, position.y);
+            if (EditorUtils::RenderControlVec2("Scale", transform.scaling, 95.f, 120.f))
+            {
+                mEditorLayer.ExecuteCommand(std::make_shared<ScaleCommand>(entity, transform.scaling));
+            }
 
         }); // end render Transform Component
 
