@@ -34,12 +34,15 @@ namespace IS {
 	class Camera3D {
 	public:
 		void init3DCamera(int width, int height, float fieldOfView) {
-			initialFov = fieldOfView;
+			fieldOfView = fieldOfView;
+
+			initialFov = 90;
 			fov = initialFov;
 			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 			// calculate camDist to see the entire game world of 1920 units width
-			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
+			//float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
+			float camDist = 50000.f;
 
 			position = glm::vec3(0.f, 0.f, camDist);
 			target = glm::vec3(0.f, 0.f, 0.f);
@@ -70,11 +73,16 @@ namespace IS {
 			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}
 
+		void update3DCameraXform() { 
+			view = glm::lookAt(position, target, up);
+			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far); 
+		}
+
 		glm::mat4 getViewMatrix() { return view; }
 
 		glm::mat4 getPerspectiveMatrix() { return projection; }
 		
-		glm::mat4 getCameraToNDCXform() { return view * projection; }
+		glm::mat4 getCameraToNDCXform() { return projection * view; }
 
 		/// Static members
 		static aCameraType mActiveCamera;
@@ -82,8 +90,9 @@ namespace IS {
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
 
-	private:
 		glm::vec3 position{};
+
+	private:
 		glm::vec3 target = glm::vec3(0.f, 0.f, 0.f);
 		glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);;
 

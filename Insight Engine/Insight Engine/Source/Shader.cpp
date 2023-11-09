@@ -129,7 +129,7 @@ namespace IS {
             {
                 mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
                 //gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-                gl_Position = vec4(vec3(model_to_NDC_xform * vec4(aVertexPosition, 0.0, 1.0)), 1.0);
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 0.0, 1.0);
 		        vColor = aVertexColor;  
                 vTexCoord = aVertexTexCoord;
                 vTexID = aTexIndex;
