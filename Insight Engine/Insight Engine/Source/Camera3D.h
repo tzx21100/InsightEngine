@@ -34,15 +34,13 @@ namespace IS {
 	class Camera3D {
 	public:
 		void init3DCamera(int width, int height, float fieldOfView) {
-			fieldOfView = fieldOfView;
+			initialFov = fieldOfView;
 
-			initialFov = 90;
 			fov = initialFov;
 			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 			// calculate camDist to see the entire game world of 1920 units width
-			//float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
-			float camDist = 50000.f;
+			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
 
 			position = glm::vec3(0.f, 0.f, camDist);
 			target = glm::vec3(0.f, 0.f, 0.f);

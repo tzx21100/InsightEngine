@@ -257,8 +257,8 @@ namespace IS {
                 }
             }
 
-            //cameras3D[0].position.z += 1.f;
-            //cameras3D[0].update3DCameraXform();
+            /*cameras3D[0].position.z -= 1.f;
+            cameras3D[0].update3DCameraXform();*/
 
             // Graphics system's draw
             Draw(delta_time);

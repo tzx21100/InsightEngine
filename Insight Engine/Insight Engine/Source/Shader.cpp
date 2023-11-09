@@ -120,7 +120,7 @@ namespace IS {
 
             layout(location = 0) out vec3  vColor;
             layout(location = 1) out vec2  vTexCoord;
-            layout(location = 2) out float vTexID;
+            layout(location = 2) out flat float vTexID;
             layout(location = 3) out vec2  vAnimDim;
             layout(location = 4) out vec2  vAnimIndex;
             layout(location = 5) out flat float vEntityID;
@@ -144,7 +144,7 @@ namespace IS {
             #version 450 core
             layout(location = 0) in vec3  vColor;
             layout(location = 1) in vec2  vTexCoord;
-            layout(location = 2) in float vTexID;
+            layout(location = 2) in flat float vTexID;
             layout(location = 3) in vec2  vAnimDim;
             layout(location = 4) in vec2  vAnimIndex;
             layout(location = 5) in flat float vEntityID;

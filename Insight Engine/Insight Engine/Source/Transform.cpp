@@ -121,8 +121,8 @@ namespace IS {
 
 		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,  // column 1
 										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,  // column 2
-										 tx,                           ty,                          0.f, 0.f,   
-										 0.f,					       0.f,						    0.f, 1.f }; // column 3
+										 0.f,                          0.f,                         1.f, 0.f,   
+										 tx,					       ty,						    0.f, 1.f }; // column 3
 
 
 		// save matrix
