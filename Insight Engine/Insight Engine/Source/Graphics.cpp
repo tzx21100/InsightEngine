@@ -18,7 +18,6 @@
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Graphics.h"
-#include "Editor.h"
 #include <stb_image.h>
 
 namespace IS {
@@ -50,6 +49,7 @@ namespace IS {
 
     // Editor and entity camera
     Camera ISGraphics::cameras[2];
+    Camera3D ISGraphics::cameras3D[2];
     
     // Text Objects
     Text ISGraphics::Times_New_Roman_font;
@@ -92,8 +92,12 @@ namespace IS {
         std::for_each_n(cameras, 2, [width](Camera& camera)
         {
             camera.UpdateCamPos(0, 0);
-            camera.UpdateCamDim(static_cast<float>(width));
+            camera.UpdateCamDim(static_cast<float>(width),static_cast<float>(InsightEngine::Instance().GetWindowHeight()));
         });
+
+        for (int i{}; i < 2; ++i) {
+            cameras3D[i].init3DCamera(width, height, 60.f);
+        }
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
@@ -114,8 +118,30 @@ namespace IS {
             IS_CORE_ERROR("OpenGL Error: {}", error);
         }
 
+        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+
+        if (engine.mRenderGUI)
+        {
+            if (auto const& [fb_width, fb_height] = mFramebuffer->GetSize();
+                engine.GetEditorLayer()->GetViewportSize().x > 0.f && engine.GetEditorLayer()->GetViewportSize().y > 0.f &&
+                (fb_width != engine.GetEditorLayer()->GetViewportSize().x || fb_height != engine.GetEditorLayer()->GetViewportSize().y))
+            {
+                // resize framebuffer based on panel size
+                ResizeFramebuffer(static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().x),
+                                  static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
+
+                // bind framebuffer after resize
+                mFramebuffer->Bind();
+
+                // set clear color
+                glClearColor(0.f, 0.f, 0.f, 0.f);
+
+                // clear color buffer
+                glClear(GL_COLOR_BUFFER_BIT);
+            }
+        }
+
         for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
-            InsightEngine& engine = InsightEngine::Instance(); // get engine instance
         
             // empty quad instance data
             layeredQuadInstances.clear();
@@ -181,13 +207,16 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
 
         // bind fb
-        if (engine.mUsingGUI) mFramebuffer->Bind(); 
+        if (engine.mRenderGUI) mFramebuffer->Bind();
+
+        // set clear color
+        glClearColor(0.f, 0.f, 0.f, 0.f);
 
         // clear color buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
         /// get width and height, set viewport size
-        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mUsingGUI) {
+        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mRenderGUI) {
             auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
             glViewport(0, 0, width, height);
         }
@@ -213,17 +242,11 @@ namespace IS {
                 Physics::DrawOutLine(body);
             }
         }
-        
-        // Draw outline for selected entity (mousepicked / selected in hierarchy)
-        auto const editor = engine.GetSystem<Editor>("Editor");
-        auto const editor_layer = editor->GetEditorLayer();
-        if (!editor_layer->IsGamePanelFocused() && Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
-            editor_layer->RenderSelectedEntityOutline();
 
         // Render text when GUI is disabled
-        if (!engine.mUsingGUI) {
+        if (!engine.mRenderGUI) {
             // Shared Attributes
-            const float scale = 5.f;
+            const float scale = 20.f;
             const float x_padding = scale;
             const float y_padding = (scale * 3.f);
             auto [width, height] = InsightEngine::Instance().GetWindowSize();
@@ -236,24 +259,8 @@ namespace IS {
 
             // Text Attribute
             std::ostringstream render_text;
-            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time << '\n';
-            render_text << "Entities Alive: " << engine.EntitiesAlive() << '\n';
-            render_text.imbue(std::locale("")); // comma separated numbers
-            render_text << "Max Entities: " << std::fixed << MAX_ENTITIES << "\n\n";
-            render_text << "General Controls\n"
-                           "- Press 'Tab' to toggle GUI\n"
-                           "- Click mouse scrollwheel to spawn entity\n"
-                           "- Click right mouse button to spawn rigidbody entity\n\n";
-            render_text << "Player Controls\n"
-                "- Press 'WASD' to move in the four directions\n"
-                "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
-            render_text << "Physics Controls\n"
-                "- Press '2' to enable draw collision boxes, '1' to disable\n"
-                "- Press 'G' to enable gravity, 'F' to disable\n"
-                "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
-            render_text << "Audio Controls\n"
-                "- Press 'Z' to play sfx\n"
-                "- Press 'X' to play music";
+            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << '\n';
+            render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
 
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
@@ -264,7 +271,7 @@ namespace IS {
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
 
         // if using ImGui, unbind fb at the end of draw
-        if (engine.mUsingGUI) mFramebuffer->Unbind();
+        if (engine.mRenderGUI) mFramebuffer->Unbind();
     }
 
     void ISGraphics::cleanup() {

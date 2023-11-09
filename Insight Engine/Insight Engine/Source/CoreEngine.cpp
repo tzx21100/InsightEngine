@@ -22,6 +22,7 @@
 #include "CoreEngine.h"   // Include the header file
 #include "JsonSaveLoad.h" // This is for Saving and Loading
 #include "WindowSystem.h" // Access to window
+#include "EditorLayer.h"
 
 #include <iostream>
 #include <thread>
@@ -29,6 +30,8 @@
 namespace IS {
 
     constexpr int DEFAULT_FPS(60);
+
+    int InsightEngine::currentNumberOfSteps = 0;
 
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
     InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0) {
@@ -60,6 +63,11 @@ namespace IS {
     void InsightEngine::Initialize() {
         //initialize all systems first
         InitializeAllSystems();
+
+    #ifdef USING_IMGUI
+        PushImGuiLayers();
+    #endif
+
         auto window = GetSystem<WindowSystem>("Window");
         mTargetFPS = window->GetTargetFPS();
         //subscirbe to messages
@@ -67,26 +75,26 @@ namespace IS {
         //run the game
         mIsRunning = true;
     }
-    double accumulatedTime = 0.0;//one time definition
-    int InsightEngine::currentNumberOfSteps = 0;
+
     //This is the update portion of the game
     void InsightEngine::Update() {
 
         //i get the start time 
-        auto frameStart = std::chrono::high_resolution_clock::now();
+        //auto frameStart = std::chrono::high_resolution_clock::now();
+        auto frameStart = glfwGetTime();
 
         // Update System deltas every 1s
         static const float UPDATE_FREQUENCY = 1.f;
         static float elapsed_time = 0.f;
-        elapsed_time += mDeltaTime.count();
+        elapsed_time += static_cast<float>(mDeltaTime);
         const bool to_update = mFrameCount == 0 || elapsed_time >= UPDATE_FREQUENCY;
+
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
 
-
         currentNumberOfSteps = 0;
 
-        accumulatedTime += mDeltaTime.count(); //adding actual game loop time
+        accumulatedTime += mDeltaTime; //adding actual game loop time
 
         while (accumulatedTime >= mFixedDeltaTime.count()) {
             accumulatedTime -= mFixedDeltaTime.count(); //this will store the
@@ -96,8 +104,6 @@ namespace IS {
         
         // Update all systems
         for (const auto& system : mSystemList) {
-            if (!mUsingGUI && system->GetName() == "Editor")
-                continue;
             /*if (system->GetName() == "Physics") {
                 system->Update(mFixedDeltaTime.count());
                 continue;
@@ -113,10 +119,19 @@ namespace IS {
             }
         }
 
+        // Update and render GUI
+        if (mRenderGUI)
+        {
+            mImGuiLayer->Begin();
+            mLayers.Update(mFixedDeltaTime.count());
+            mLayers.Render();
+            mImGuiLayer->End();
+        }
+
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
 
-        mDeltaTime = frameEnd - frameStart;
+        mDeltaTime = (frameEnd - frameStart);
 
         ++mFrameCount;
     }
@@ -136,6 +151,7 @@ namespace IS {
         auto script = GetSystem<ScriptManager>("ScriptManager");
         script->CleanUp();
         DestroyAllSystems();
+        mLayers.ClearStack();
     }
 
     //We quit
@@ -231,6 +247,19 @@ namespace IS {
             auto frameDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - frameStart);
             if (frameDuration >= targetFrameTime) {
                 return now;  // Return the updated frame end time
+            }
+        }
+    }
+
+    double InsightEngine::LimitFPS(double frame_start)
+    {
+        while (true)
+        {
+            double now = glfwGetTime();
+            double dt = (now - frame_start);
+            if (dt >= mFixedDeltaTime.count())
+            {
+                return now;
             }
         }
     }
@@ -481,6 +510,40 @@ namespace IS {
     void InsightEngine::OpenGameScript(const std::string& ScriptName) {
         auto script = GetSystem<ScriptManager>("ScriptManager");
         script->OpenClassFile(ScriptName);
+    }
+
+    void InsightEngine::PushLayer(layer_type layer)
+    {
+        mLayers.PushLayer(layer);
+        layer->OnAttach();
+    }
+
+    void InsightEngine::PushOverlay(layer_type overlay)
+    {
+        mLayers.PushOverlay(overlay);
+        overlay->OnAttach();
+    }
+
+    void InsightEngine::PopLayer(layer_type layer)
+    {
+        mLayers.PopLayer(layer);
+        layer->OnDetach();
+    }
+
+    void InsightEngine::PopOverlay(layer_type overlay)
+    {
+        mLayers.PopOverlay(overlay);
+        overlay->OnDetach();
+    }
+
+    void InsightEngine::PushImGuiLayers()
+    {
+        mImGuiLayer = std::make_shared<ImGuiLayer>();
+        mEditorLayer = std::make_shared<EditorLayer>();
+        PushOverlay(mImGuiLayer);
+        PushLayer(mEditorLayer);
+        mUsingGUI = true;
+        mRenderGUI = true;
     }
 
 

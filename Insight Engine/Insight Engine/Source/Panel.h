@@ -28,6 +28,8 @@
 
 namespace IS {
 
+    class EditorLayer; ///< Forward declare class EditorLayer.
+
     /*!
      * \brief A base class representing a panel in a dockspace.
      */
@@ -39,7 +41,7 @@ namespace IS {
          * 
          * \param name Name of the panel.
          */
-        Panel(std::string const& name) : mName(name) {}
+        Panel(std::string const& name, EditorLayer& editor_layer) : mName(name), mEditorLayer(editor_layer) {}
 
         /*!
          * \brief Virtual destructor.
@@ -53,6 +55,7 @@ namespace IS {
 
     protected:
         std::string mName; ///< Name of the panel.
+        EditorLayer& mEditorLayer; ///< Reference to owner.
     };
 
     class HierarchyPanel; ///< Forward declaration
@@ -67,7 +70,7 @@ namespace IS {
         /*!
          * \brief Default constructor of game panel.
          */
-        GamePanel() : Panel(ICON_LC_GAMEPAD_2 "  Game") {}
+        GamePanel(EditorLayer& editor_layer) : Panel(ICON_LC_GAMEPAD_2 "  Game", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to render the game panel.
@@ -95,7 +98,7 @@ namespace IS {
         /*!
          * \brief Default constructor of scene panel.
          */
-        ScenePanel() : Panel(ICON_LC_VIEW "  Scene") {}
+        ScenePanel(EditorLayer& editor_layer) : Panel(ICON_LC_VIEW "  Scene", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to render the scene panel.
@@ -144,7 +147,7 @@ namespace IS {
         /*!
          * \brief Default constructor of performance panel.
          */
-        PerformancePanel() : Panel(ICON_LC_GAUGE "  Performance") {}
+        PerformancePanel(EditorLayer& editor_layer) : Panel(ICON_LC_GAUGE "  Performance", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to render the performance panel.
@@ -161,7 +164,7 @@ namespace IS {
         /*!
          * \brief Default constructor of console panel.
          */
-        ConsolePanel() : Panel(ICON_LC_TERMINAL_SQUARE "  Console") {}
+        ConsolePanel(EditorLayer& editor_layer) : Panel(ICON_LC_TERMINAL_SQUARE "  Console", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to render the log console panel.
@@ -188,7 +191,7 @@ namespace IS {
         /*!
          * \brief Default constructor of settings panel.
          */
-        SettingsPanel() : Panel(ICON_LC_SETTINGS "  Settings") {}
+        SettingsPanel(EditorLayer& editor_layer) : Panel(ICON_LC_SETTINGS "  Settings", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to render the settings panel.

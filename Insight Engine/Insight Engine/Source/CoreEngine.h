@@ -27,6 +27,9 @@
 #include "Component.h"
 #include "Prefab.h"
 #include "ScriptManager.h"
+#include "LayerStack.h"
+#include "ImGuiLayer.h"
+
 #include <unordered_map>
 #include <chrono>
 #include <unordered_set>
@@ -42,18 +45,21 @@ namespace IS {
        */
     class InsightEngine : public MessageListener {
     public:
+        using layer_type = LayerStack::value_type;
 
         /*!
          * \brief Flags to control the freeze and continuation of game frames.
          */
         bool mFreezeFrame = false;
         bool mContinueFrame = false;
+    #ifdef USING_IMGUI
         bool mRuntime = false;
+    #else
+        bool mRuntime = true;
+    #endif // USING_IMGUI
 
-        /*!
-         * \brief Flag indicating if the GUI is in use.
-         */
-        bool mUsingGUI = true;
+        bool mUsingGUI = false; ///< Flag indicating if using GUI.
+        bool mRenderGUI = false; ///< Flag indicating if render GUI.
 
         /*!
          * \brief Handles incoming messages for the core engine.
@@ -559,6 +565,34 @@ namespace IS {
             }
         }
 
+        /*!
+         * \brief Pushes a layer to the GUI layer stack.
+         *
+         * \param layer The layer to be pushed.
+         */
+        void PushLayer(layer_type layer);
+
+        /*!
+         * \brief Pushes an overlay to the GUI layer stack.
+         *
+         * \param overlay The overlay to be pushed.
+         */
+        void PushOverlay(layer_type overlay);
+
+        /*!
+         * \brief Pops a layer from the GUI layer stack.
+         *
+         * \param layer The layer to be popped.
+         */
+        void PopLayer(layer_type layer);
+
+        /*!
+         * \brief Pops an overlay from the GUI layer stack.
+         *
+         * \param overlay The overlay to be popped.
+         */
+        void PopOverlay(layer_type overlay);
+
         //! Unique pointer to the Component Manager.
         std::unique_ptr<ComponentManager> mComponentManager;
 
@@ -568,8 +602,14 @@ namespace IS {
         //! Unique pointer to the System Manager.
         std::unique_ptr<SystemManager> mSystemManager;
 
-        static int currentNumberOfSteps;
+        std::shared_ptr<ImGuiLayer> GetImGuiLayer() { return mImGuiLayer; }
+        std::shared_ptr<EditorLayer> GetEditorLayer() { return mEditorLayer; }
 
+        static int currentNumberOfSteps;
+        double LimitFPS(double frame_start);
+
+        //! Duration of the delta time between frames.
+        double mDeltaTime{ 0.f };
     private:
         //! Counter for the number of frames.
         unsigned mFrameCount = 0;
@@ -583,14 +623,18 @@ namespace IS {
         //! Tracks the last runtime of the engine.
         unsigned mLastRuntime;
 
+        double accumulatedTime = 0.0;
+
         //! Pointer to the target frames per second for the game.
         int* mTargetFPS = nullptr;
 
-        //! Duration of the delta time between frames.
-        std::chrono::duration<float> mDeltaTime{ 0.f };
-
         //! Fixed delta time between frames
         std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
+
+        std::shared_ptr<ImGuiLayer> mImGuiLayer;
+        std::shared_ptr<EditorLayer> mEditorLayer;
+
+        LayerStack mLayers;
 
         /**
          * \brief Default private constructor for the Singleton pattern.
@@ -648,6 +692,8 @@ namespace IS {
          * \brief Function for serializing all components.
          */
         void SerializeAllComponents(Entity entity, Json::Value& loaded);
+
+        void PushImGuiLayers();
 
 
     };

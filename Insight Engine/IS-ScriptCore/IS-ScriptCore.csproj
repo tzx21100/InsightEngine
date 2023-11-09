@@ -8,6 +8,7 @@
   <!--  <BaseOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts</BaseOutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates</BaseIntermediateOutputPath>-->
     <OutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\</OutputPath>
+    <Configurations>Debug;Release;GameRelease</Configurations>
 
   </PropertyGroup>
 

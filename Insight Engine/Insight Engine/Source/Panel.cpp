@@ -21,7 +21,6 @@
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
-#include "Editor.h"
 
  // Dependencies
 #include <imgui.h>
@@ -32,7 +31,7 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
-        auto editor = engine.GetSystem<Editor>("Editor");
+        auto editor = engine.GetSystem<ImGuiLayer>("Editor");
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = 0;
@@ -63,7 +62,7 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
-        auto editor = engine.GetSystem<Editor>("Editor");
+        auto editor = engine.GetSystem<ImGuiLayer>("Editor");
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
@@ -89,8 +88,8 @@ namespace IS {
         ImVec2 scene_pos = ImGui::GetWindowPos();
 
         // Scene pos for the input
-        mViewportPos.x = scene_pos.x - editor->GetEditorLayer()->GetDockspacePosition().x;
-        mViewportPos.y = scene_pos.y - editor->GetEditorLayer()->GetDockspacePosition().y;
+        mViewportPos.x = scene_pos.x - mEditorLayer.GetDockspacePosition().x;
+        mViewportPos.y = scene_pos.y - mEditorLayer.GetDockspacePosition().y;
 
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
 
@@ -105,7 +104,7 @@ namespace IS {
         ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
 
         // Accept asset browser payload
-        editor->GetEditorLayer()->AcceptAssetBrowserPayload();
+        mEditorLayer.AcceptAssetBrowserPayload();
 
         // Help tooltip
         if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
@@ -281,7 +280,7 @@ namespace IS {
             ImGui::TextUnformatted("Time:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::TextColored(text_color, "%.3f ms", 1000.f / io.Framerate);
+            ImGui::TextColored(text_color, "%.3lf ms", io.DeltaTime * 1000.0);
 
             ImGui::EndTable(); // end table Engine
         }

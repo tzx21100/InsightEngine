@@ -24,7 +24,6 @@
 #include "CoreEngine.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
-#include "Editor.h"
 #include "GameGui.h"
 
 // Dependencies
@@ -34,7 +33,6 @@ namespace IS {
 
     void HierarchyPanel::RenderPanel()
     {
-        auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
@@ -86,8 +84,13 @@ namespace IS {
             if (opened)
             {
                 // Render all scenes
-                scene_manager.RunSceneFunction([this](SceneID scene_id)
+                scene_manager.RunSceneFunction([this, &scene_manager](SceneID scene_id)
                 {
+                    if (scene_id != scene_manager.GetActiveScene())
+                    {
+                        ImGui::SetNextItemOpen(false);
+                    }
+
                     RenderSceneNode(scene_id);
                 });
 
@@ -104,8 +107,7 @@ namespace IS {
         ImGui::PopStyleVar();
 
         // Accept file drop
-        auto editor = engine.GetSystem<Editor>("Editor");
-        editor->GetEditorLayer()->AcceptAssetBrowserPayload();
+        mEditorLayer.AcceptAssetBrowserPayload();
 
         ImGui::End(); // end window Scene Hierarchy
 
@@ -185,9 +187,6 @@ namespace IS {
 
     void HierarchyPanel::RenderCameraControls()
     {
-        auto& engine = InsightEngine::Instance();
-        auto const editor = engine.GetSystem<Editor>("Editor");
-        auto const editor_layer = editor->GetEditorLayer();
         auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
         const float SIZE = 16.f;
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
@@ -221,8 +220,10 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
                 float width = camera.GetCamDim().x;
-                ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f");
-                camera.UpdateCamDim(width);
+                float height = camera.GetCamDim().y;
+                if (ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f")) {
+                    camera.UpdateCamDim(width, height);
+                }
 
                 // Camera Zoom
                 ImGui::TableNextColumn();

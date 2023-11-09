@@ -2,6 +2,7 @@
 /*!
  * \file Audio.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ *          Tan Zheng Xun, t.zhengxun@digipen.edu
  * \par Course: CSD2401
  * \date 27-09-2023
  * \brief
@@ -48,14 +49,63 @@ namespace IS {
         }
     }
 
+    // Function to calculate distance between two points in 2D
+    float CalculateDistance(float x1, float y1, float x2, float y2) {
+        return std::sqrtf(std::powf(x2 - x1, 2) + std::powf(y2 - y1, 2));
+    }
+
+    // Function to calculate the gain (volume level) based on distance
+    float CalculateGain(float distance, float rollOffFactor = 1.0f) {
+        // Make sure distance is never zero to avoid division by zero
+        distance = std::max(distance, 0.0001f);
+        return 1.0f / (distance + rollOffFactor);
+    }
+
+    /*!
+     * \brief Updates the ISAudio system.
+     *
+     * This function is called each frame to update the ISAudio system.
+     *
+     * \param deltaTime The time elapsed since the last frame in seconds.
+     */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
-        /*!
-         * \brief Updates the ISAudio system.
-         *
-         * This function is called each frame to update the ISAudio system.
-         *
-         * \param deltaTime The time elapsed since the last frame in seconds.
-         */
+        auto& engine = InsightEngine::Instance();
+        auto assetsys = engine.GetSystem<AssetManager>("asset");
+        for (auto entity : mEntities) {
+            if (engine.HasComponent<AudioListener>(entity)) {
+                auto listener = engine.GetComponent<AudioListener>(entity);
+                auto current_entity_transform = engine.GetComponent<Transform>(entity);
+                for (auto emittingEntities : mEntities) {
+                    if(emittingEntities==entity || !engine.HasComponent<AudioEmitter>(emittingEntities)){
+                        continue;
+                    }
+                    auto emitting_transform = engine.GetComponent<Transform>(emittingEntities);
+                    auto emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
+                    float distance = CalculateDistance(current_entity_transform.world_position.x,
+                                                       current_entity_transform.world_position.y,
+                                                       emitting_transform.world_position.x,
+                                                       emitting_transform.world_position.y
+                                                      );
+                    if (distance > listener.hearing_range) {
+                        assetsys->GetChannel(emitter.soundName)->stop();
+                        continue;
+                    }
+                    //If they are close enough
+                    
+                    float volume = CalculateGain(distance, emitter.falloff_factor);
+                    FMOD::Channel* soundChannel = assetsys->GetChannel(emitter.soundName);
+                    if (IsSoundPlaying(soundChannel)) {
+                        soundChannel->setVolume(volume);
+                    }
+                    else {
+                        PlaySound(assetsys->GetSound(emitter.soundName), emitter.isLoop, volume * emitter.volumeLevel *listener .volume, emitter.pitch);
+                    }
+
+                }
+
+            }
+        
+        }
         system->update();
     }
 

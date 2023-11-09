@@ -59,25 +59,18 @@ namespace IS {
         mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "png_file_icon.png")->texture_id);
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
 
-        IS_CORE_DEBUG("{} attached", GetName());
+        IS_CORE_DEBUG("{} attached", mDebugName);
     }
 
     void EditorLayer::OnDetach()
     {
         mPanels.clear();
-        IS_CORE_DEBUG("{} detached", GetName());
+        IS_CORE_DEBUG("{} detached", mDebugName);
     }
 
     void EditorLayer::OnUpdate(float)
     {
-        if (auto const& [fb_width, fb_height] = ISGraphics::mFramebuffer->GetSize();
-            mScenePanel->GetViewportSize().x > 0.f && mScenePanel->GetViewportSize().y > 0.f &&
-            (fb_width != mScenePanel->GetViewportSize().x || fb_height != mScenePanel->GetViewportSize().y))
-        {
-            ISGraphics::ResizeFramebuffer(static_cast<GLuint>(mScenePanel->GetViewportSize().x), static_cast<GLuint>(mScenePanel->GetViewportSize().y));
-        }
-
-        InsightEngine& engine = InsightEngine::Instance();
+        auto& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
@@ -147,9 +140,7 @@ namespace IS {
                 // Mouse dragging - change selected/hovered entity translation
                 else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
-                    Vec2D mouse_position_delta = { // need to GetMousePosition() once to update the previous and current values
-                        static_cast<float>(input->GetMousePosition().first - input->previousWorldMousePos.x),
-                        static_cast<float>(input->currentWorldMousePos.y - input->previousWorldMousePos.y) };
+                    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
 
                     Entity entity = *mHierarchyPanel->GetSelectedEntity();
 
@@ -157,9 +148,10 @@ namespace IS {
                     if (engine.HasComponent<Transform>(entity))
                     {
                         auto& transform = engine.GetComponent<Transform>(entity);
-                        transform.world_position.x += mouse_position_delta.x;
-                        transform.world_position.y += mouse_position_delta.y;
+                        transform.world_position.x += mouse_position_delta.x * InsightEngine::Instance().GetWindowWidth()/mScenePanel->GetViewportSize().x / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
+                        transform.world_position.y -= mouse_position_delta.y * InsightEngine::Instance().GetWindowHeight() / mScenePanel->GetViewportSize().y / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
                     }
+                    ImGui::ResetMouseDragDelta();
                 }
 
             }
@@ -213,6 +205,9 @@ namespace IS {
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
+
+        // Render outline for selected entity
+        RenderSelectedEntityOutline();
 
         if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
             *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
@@ -419,19 +414,19 @@ namespace IS {
 
     void EditorLayer::AttachPanels()
     {
-        mGamePanel      = std::make_shared<GamePanel>();
-        mScenePanel     = std::make_shared<ScenePanel>();
-        mHierarchyPanel = std::make_shared<HierarchyPanel>();
-        mConsolePanel   = std::make_shared<ConsolePanel>();
+        mGamePanel      = std::make_shared<GamePanel>(*this);
+        mScenePanel     = std::make_shared<ScenePanel>(*this);
+        mHierarchyPanel = std::make_shared<HierarchyPanel>(*this);
+        mConsolePanel   = std::make_shared<ConsolePanel>(*this);
 
         mPanels.emplace_back(mGamePanel);
         mPanels.emplace_back(mScenePanel);
         mPanels.emplace_back(mHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<PerformancePanel>());
-        mPanels.emplace_back(std::make_shared<BrowserPanel>());
+        mPanels.emplace_back(std::make_shared<PerformancePanel>(*this));
+        mPanels.emplace_back(std::make_shared<BrowserPanel>(*this));
         mPanels.emplace_back(mConsolePanel);
-        mPanels.emplace_back(std::make_shared<InspectorPanel>(mHierarchyPanel));
-        mPanels.emplace_back(std::make_shared<SettingsPanel>());
+        mPanels.emplace_back(std::make_shared<InspectorPanel>(*this, mHierarchyPanel));
+        mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
     }
 
     //void EditorLayer::RenderGizmo()

@@ -26,6 +26,7 @@
 #include "Panel.h"
 #include "InspectorPanel.h"
 #include "Entities.h"
+#include "SceneManager.h"
 
 // Dependencies
 #include <memory> // for std::shared_ptr
@@ -43,7 +44,7 @@ namespace IS {
         /*!
          * \brief Constructs a HierarchyPanel object.
          */
-        HierarchyPanel() : Panel(ICON_LC_LIST_TREE "  Hierarchy") {}
+        HierarchyPanel(EditorLayer& editor_layer) : Panel(ICON_LC_LIST_TREE "  Hierarchy", editor_layer) {}
 
         /*!
          * \brief Destroys the HierarchyPanel object.

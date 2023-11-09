@@ -20,7 +20,6 @@
 #include "BrowserPanel.h"
 #include "EditorUtils.h"
 #include "FileUtils.h"
-#include "Editor.h"
 
 #include <imgui.h>
 
@@ -30,12 +29,8 @@ namespace IS {
 
     const std::string BrowserPanel::IMPORTED = "Imported";
 
-    BrowserPanel::BrowserPanel()
-        : Panel(ICON_LC_FOLDER_SEARCH_2 "  Browser"), mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
-
     void BrowserPanel::RenderPanel()
     {
-        auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
@@ -120,8 +115,6 @@ namespace IS {
         RenderPath();
         RenderControls();
 
-        auto const editor_layer = InsightEngine::Instance().GetSystem<Editor>("Editor")->GetEditorLayer();
-
         float cell_size = mControls.mThumbnailSize + mControls.mPadding;
         float panel_width = ImGui::GetContentRegionAvail().x;
         int column_count = std::clamp(static_cast<int>(panel_width / cell_size), 1, static_cast<int>(panel_width));
@@ -162,7 +155,7 @@ namespace IS {
                                 extension == ".png" ? "PNG" :
                                 extension == ".jpeg" ? "JPEG" : "File";
 
-                    ImTextureID icon = editor_layer->GetIcon(icon_name.c_str());
+                    ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
                     bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     ImGui::PopStyleColor();
 
@@ -326,9 +319,7 @@ namespace IS {
     void BrowserPanel::RenderImportedAssets()
     {
         auto& engine = InsightEngine::Instance();
-        auto const editor = engine.GetSystem<Editor>("Editor");
         auto const asset = engine.GetSystem<AssetManager>("Asset");
-        auto const editor_layer = editor->GetEditorLayer();
 
         float cell_size = mControls.mThumbnailSize + mControls.mPadding;
         float panel_width = ImGui::GetContentRegionAvail().x;
@@ -357,7 +348,7 @@ namespace IS {
                 if (mSelectedImportedAsset == IMPORTED)
                 {
                     ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Textures", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    ImGui::ImageButton("##Textures", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
                         SwitchImportedAsset("Textures");
@@ -365,7 +356,7 @@ namespace IS {
                     ImGui::TextWrapped("Textures");
 
                     ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Sounds", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    ImGui::ImageButton("##Sounds", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
                         SwitchImportedAsset("Sounds");
@@ -373,7 +364,7 @@ namespace IS {
                     ImGui::TextWrapped("Sounds");
 
                     ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Prefabs", editor_layer->GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    ImGui::ImageButton("##Prefabs", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
                         SwitchImportedAsset("Prefabs");
@@ -390,7 +381,9 @@ namespace IS {
                         ImTextureID icon = EditorUtils::ConvertTextureID(img.texture_id);
                         float aspect_ratio = static_cast<float>(img.width) / static_cast<float>(img.height);
                         ImGui::TableNextColumn();
+                        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize * aspect_ratio, mControls.mThumbnailSize });
+                        ImGui::PopStyleVar();
 
                         // Texture Tooltip
                         if (ImGui::BeginItemTooltip())
@@ -399,7 +392,7 @@ namespace IS {
                             ImGui::EndTooltip();
                         }
 
-                        // Start file drag
+                        // Start texture drag
                         if (ImGui::BeginDragDropSource())
                         {
                             const wchar_t* item_path = path.c_str();
@@ -422,10 +415,9 @@ namespace IS {
                     for (auto const& [name, sound] : asset->mSoundList)
                     {
                         std::filesystem::path path(name);
-                        ImTextureID icon = editor_layer->GetIcon("File");
+                        ImTextureID icon = mEditorLayer.GetIcon("File");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
-
                         // Start file drag
                         if (ImGui::BeginDragDropSource())
                         {
@@ -449,7 +441,7 @@ namespace IS {
                     for (auto const& [name, prefab] : asset->mPrefabList)
                     {
                         std::filesystem::path path(name);
-                        ImTextureID icon = editor_layer->GetIcon("File");
+                        ImTextureID icon = mEditorLayer.GetIcon("File");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
 

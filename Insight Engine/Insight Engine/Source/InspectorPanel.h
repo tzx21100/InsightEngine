@@ -33,6 +33,7 @@
 namespace IS {
 
     class HierarchyPanel;
+    class Sprite;
 
     /*!
      * \brief The InspectorPanel class provides a panel for managing selected entity and its components.
@@ -46,7 +47,8 @@ namespace IS {
          * 
          * \param hierarchy_panel The instance of hierarchy panel.
          */
-        InspectorPanel(std::shared_ptr<HierarchyPanel> hierarchy_panel);
+        InspectorPanel(EditorLayer& editor_layer, std::shared_ptr<HierarchyPanel> hierarchy_panel)
+            : Panel(ICON_LC_INFO "  Inspector", editor_layer), mHierarchyPanel(hierarchy_panel) {}
 
         /*!
          * \brief Renders the panel for the inspector.

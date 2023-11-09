@@ -159,7 +159,7 @@ namespace IS {
             //sprite_point.primitive_type = GL_POINTS;
 
             int width = engine.GetWindowWidth();
-            //int height = engine.GetWindowHeight();
+            int height = engine.GetWindowHeight();
             //entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
             //auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
             //auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
@@ -170,14 +170,21 @@ namespace IS {
             //body_ai.mAngularVelocity = 10.f;
             //body_ai.mRestitution = 0.1f;
 
-            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width);
+            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width,(float)height);
+        #ifdef USING_IMGUI
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+        #else
+            Camera::mActiveCamera = CAMERA_TYPE_GAME;
+        #endif // USING_IMGUI
+
+            auto& scene_manager = SceneManager::Instance();
+            scene_manager.LoadScene("Assets\\Scenes\\basicLevel.insight");
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
             //if (InsightEngine::Instance().mRuntime == false) { return; }
             // Disable mouse/key event when GUI is using them
-            auto const& gui = engine.GetSystem<Editor>("Editor");
+            auto const& gui = engine.GetImGuiLayer();
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
             // transform camera
@@ -208,12 +215,12 @@ namespace IS {
             if (!gui->WantCaptureKeyboard()) {
                 // Enable/disable GUI
                 if (input->IsKeyPressed(GLFW_KEY_TAB)) {
-                    engine.mUsingGUI = !engine.mUsingGUI;
-                    IS_CORE_DEBUG("GUI {}", engine.mUsingGUI ? "Enabled" : "Disabled");
+                    engine.mRenderGUI = !engine.mRenderGUI;
+                    IS_CORE_DEBUG("GUI {}", engine.mRenderGUI ? "Enabled" : "Disabled");
                 }
 
                 // Offset mouse position
-                if (!engine.mUsingGUI) {                   
+                if (!engine.mRenderGUI) {                   
                     input->setCenterPos(width / 2.f, height / 2.f);
                     input->setRatio(static_cast<float>(width), static_cast<float>(height));
                 }
