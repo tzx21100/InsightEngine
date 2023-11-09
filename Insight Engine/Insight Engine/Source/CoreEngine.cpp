@@ -526,8 +526,9 @@ namespace IS {
     void InsightEngine::PushImGuiLayers()
     {
         mImGuiLayer = std::make_shared<ImGuiLayer>();
+        mEditorLayer = std::make_shared<EditorLayer>();
         PushOverlay(mImGuiLayer);
-        PushLayer(std::make_shared<EditorLayer>());
+        PushLayer(mEditorLayer);
         mUsingGUI = true;
         mRenderGUI = true;
     }

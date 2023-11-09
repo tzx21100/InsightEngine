@@ -599,6 +599,7 @@ namespace IS {
         std::unique_ptr<SystemManager> mSystemManager;
 
         std::shared_ptr<ImGuiLayer> GetImGuiLayer() { return mImGuiLayer; }
+        std::shared_ptr<EditorLayer> GetEditorLayer() { return mEditorLayer; }
 
         static int currentNumberOfSteps;
 
@@ -625,6 +626,7 @@ namespace IS {
         std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
 
         std::shared_ptr<ImGuiLayer> mImGuiLayer;
+        std::shared_ptr<EditorLayer> mEditorLayer;
 
         LayerStack mLayers;
 

@@ -118,8 +118,30 @@ namespace IS {
             IS_CORE_ERROR("OpenGL Error: {}", error);
         }
 
+        InsightEngine& engine = InsightEngine::Instance(); // get engine instance
+
+        if (engine.mRenderGUI)
+        {
+            if (auto const& [fb_width, fb_height] = mFramebuffer->GetSize();
+                engine.GetEditorLayer()->GetViewportSize().x > 0.f && engine.GetEditorLayer()->GetViewportSize().y > 0.f &&
+                (fb_width != engine.GetEditorLayer()->GetViewportSize().x || fb_height != engine.GetEditorLayer()->GetViewportSize().y))
+            {
+                // resize framebuffer based on panel size
+                ResizeFramebuffer(static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().x),
+                                  static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
+
+                // bind framebuffer after resize
+                mFramebuffer->Bind();
+
+                // set clear color
+                glClearColor(0.f, 0.f, 0.f, 0.f);
+
+                // clear color buffer
+                glClear(GL_COLOR_BUFFER_BIT);
+            }
+        }
+
         for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
-            InsightEngine& engine = InsightEngine::Instance(); // get engine instance
         
             // empty quad instance data
             layeredQuadInstances.clear();
@@ -185,7 +207,10 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
 
         // bind fb
-        if (engine.mRenderGUI) mFramebuffer->Bind(); 
+        if (engine.mRenderGUI) mFramebuffer->Bind();
+
+        // set clear color
+        glClearColor(0.f, 0.f, 0.f, 0.f);
 
         // clear color buffer
         glClear(GL_COLOR_BUFFER_BIT);

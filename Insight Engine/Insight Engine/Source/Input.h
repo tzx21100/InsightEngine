@@ -232,4 +232,4 @@ namespace IS {
 }
 //didn't include a destructor because theres nothing to free.
 
-#endif // GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H  
+#endif // GAM200_INSIGHT_ENGINE_SOURCE_INPUT_H

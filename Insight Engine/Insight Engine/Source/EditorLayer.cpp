@@ -70,7 +70,7 @@ namespace IS {
 
     void EditorLayer::OnUpdate(float)
     {
-        InsightEngine& engine = InsightEngine::Instance();
+        auto& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
         // Shortcuts
