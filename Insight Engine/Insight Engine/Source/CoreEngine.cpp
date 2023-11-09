@@ -31,6 +31,8 @@ namespace IS {
 
     constexpr int DEFAULT_FPS(60);
 
+    int InsightEngine::currentNumberOfSteps = 0;
+
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
     InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0) {
         IS_PROFILE_FUNCTION();
@@ -73,26 +75,26 @@ namespace IS {
         //run the game
         mIsRunning = true;
     }
-    double accumulatedTime = 0.0;//one time definition
-    int InsightEngine::currentNumberOfSteps = 0;
+
     //This is the update portion of the game
     void InsightEngine::Update() {
 
         //i get the start time 
-        auto frameStart = std::chrono::high_resolution_clock::now();
+        //auto frameStart = std::chrono::high_resolution_clock::now();
+        auto frameStart = glfwGetTime();
 
         // Update System deltas every 1s
         static const float UPDATE_FREQUENCY = 1.f;
         static float elapsed_time = 0.f;
-        elapsed_time += mDeltaTime.count();
+        elapsed_time += static_cast<float>(mDeltaTime);
         const bool to_update = mFrameCount == 0 || elapsed_time >= UPDATE_FREQUENCY;
+
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
 
-
         currentNumberOfSteps = 0;
 
-        accumulatedTime += mDeltaTime.count(); //adding actual game loop time
+        accumulatedTime += mDeltaTime; //adding actual game loop time
 
         while (accumulatedTime >= mFixedDeltaTime.count()) {
             accumulatedTime -= mFixedDeltaTime.count(); //this will store the
@@ -102,8 +104,6 @@ namespace IS {
         
         // Update all systems
         for (const auto& system : mSystemList) {
-            if (!mRenderGUI && system->GetName() == "Editor")
-                continue;
             /*if (system->GetName() == "Physics") {
                 system->Update(mFixedDeltaTime.count());
                 continue;
@@ -131,7 +131,7 @@ namespace IS {
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         auto frameEnd = LimitFPS(frameStart);
 
-        mDeltaTime = frameEnd - frameStart;
+        mDeltaTime = (frameEnd - frameStart);
 
         ++mFrameCount;
     }
@@ -247,6 +247,19 @@ namespace IS {
             auto frameDuration = std::chrono::duration_cast<std::chrono::nanoseconds>(now - frameStart);
             if (frameDuration >= targetFrameTime) {
                 return now;  // Return the updated frame end time
+            }
+        }
+    }
+
+    double InsightEngine::LimitFPS(double frame_start)
+    {
+        while (true)
+        {
+            double now = glfwGetTime();
+            double dt = (now - frame_start);
+            if (dt >= mFixedDeltaTime.count())
+            {
+                return now;
             }
         }
     }

@@ -75,6 +75,8 @@ namespace IS {
         const char* glsl_version = "#version 450";
         ImGui_ImplGlfw_InitForOpenGL(InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetNativeWindow(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
+
+        IS_CORE_DEBUG("{} attached.", mDebugName);
     }
 
     void ImGuiLayer::OnDetach()
@@ -82,6 +84,8 @@ namespace IS {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
+
+        IS_CORE_DEBUG("{} detached.", mDebugName);
     }
 
     void ImGuiLayer::Begin()
@@ -169,7 +173,7 @@ namespace IS {
         if (InsightEngine::Instance().mUsingGUI)
             return ImGui::GetIO().WantCaptureMouse;
 
-        return false;
+        return true;
     }
 
     bool ImGuiLayer::WantCaptureKeyboard() const 
@@ -177,7 +181,7 @@ namespace IS {
         if (InsightEngine::Instance().mUsingGUI)
             return ImGui::GetIO().WantCaptureKeyboard;
 
-        return false;
+        return true;
     }
 
 } // end namespace IS

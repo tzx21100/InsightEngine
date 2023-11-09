@@ -85,7 +85,7 @@ namespace IS {
          */
         inline std::string const& GetName() const { return mDebugName; }
 
-    private:
+    protected:
         std::string mDebugName; ///< The debug name of the layer.
     };
 

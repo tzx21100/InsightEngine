@@ -280,7 +280,7 @@ namespace IS {
             ImGui::TextUnformatted("Time:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::TextColored(text_color, "%.3f ms", 1000.f / io.Framerate);
+            ImGui::TextColored(text_color, "%.3lf ms", io.DeltaTime * 1000.0);
 
             ImGui::EndTable(); // end table Engine
         }

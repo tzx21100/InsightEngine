@@ -59,13 +59,13 @@ namespace IS {
         mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "png_file_icon.png")->texture_id);
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
 
-        IS_CORE_DEBUG("{} attached", GetName());
+        IS_CORE_DEBUG("{} attached", mDebugName);
     }
 
     void EditorLayer::OnDetach()
     {
         mPanels.clear();
-        IS_CORE_DEBUG("{} detached", GetName());
+        IS_CORE_DEBUG("{} detached", mDebugName);
     }
 
     void EditorLayer::OnUpdate(float)

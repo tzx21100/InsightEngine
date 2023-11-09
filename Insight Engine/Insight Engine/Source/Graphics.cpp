@@ -246,7 +246,7 @@ namespace IS {
         // Render text when GUI is disabled
         if (!engine.mRenderGUI) {
             // Shared Attributes
-            const float scale = 5.f;
+            const float scale = 20.f;
             const float x_padding = scale;
             const float y_padding = (scale * 3.f);
             auto [width, height] = InsightEngine::Instance().GetWindowSize();
@@ -259,24 +259,8 @@ namespace IS {
 
             // Text Attribute
             std::ostringstream render_text;
-            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / delta_time << '\n';
-            render_text << "Entities Alive: " << engine.EntitiesAlive() << '\n';
-            render_text.imbue(std::locale("")); // comma separated numbers
-            render_text << "Max Entities: " << std::fixed << MAX_ENTITIES << "\n\n";
-            render_text << "General Controls\n"
-                           "- Press 'Tab' to toggle GUI\n"
-                           "- Click mouse scrollwheel to spawn entity\n"
-                           "- Click right mouse button to spawn rigidbody entity\n\n";
-            render_text << "Player Controls\n"
-                "- Press 'WASD' to move in the four directions\n"
-                "- Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise\n\n";
-            render_text << "Physics Controls\n"
-                "- Press '2' to enable draw collision boxes, '1' to disable\n"
-                "- Press 'G' to enable gravity, 'F' to disable\n"
-                "- Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame\n\n";
-            render_text << "Audio Controls\n"
-                "- Press 'Z' to play sfx\n"
-                "- Press 'X' to play music";
+            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << '\n';
+            render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
 
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);

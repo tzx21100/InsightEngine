@@ -171,7 +171,14 @@ namespace IS {
             //body_ai.mRestitution = 0.1f;
 
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width,(float)height);
+        #ifdef USING_IMGUI
             Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+        #else
+            Camera::mActiveCamera = CAMERA_TYPE_GAME;
+        #endif // USING_IMGUI
+
+            auto& scene_manager = SceneManager::Instance();
+            scene_manager.LoadScene("Assets\\Scenes\\basicLevel.insight");
         }
 
         virtual void Update([[maybe_unused]] float delta) override {

@@ -52,7 +52,11 @@ namespace IS {
          */
         bool mFreezeFrame = false;
         bool mContinueFrame = false;
+    #ifdef USING_IMGUI
         bool mRuntime = false;
+    #else
+        bool mRuntime = true;
+    #endif // USING_IMGUI
 
         bool mUsingGUI = false; ///< Flag indicating if using GUI.
         bool mRenderGUI = false; ///< Flag indicating if render GUI.
@@ -602,7 +606,10 @@ namespace IS {
         std::shared_ptr<EditorLayer> GetEditorLayer() { return mEditorLayer; }
 
         static int currentNumberOfSteps;
+        double LimitFPS(double frame_start);
 
+        //! Duration of the delta time between frames.
+        double mDeltaTime{ 0.f };
     private:
         //! Counter for the number of frames.
         unsigned mFrameCount = 0;
@@ -616,11 +623,10 @@ namespace IS {
         //! Tracks the last runtime of the engine.
         unsigned mLastRuntime;
 
+        double accumulatedTime = 0.0;
+
         //! Pointer to the target frames per second for the game.
         int* mTargetFPS = nullptr;
-
-        //! Duration of the delta time between frames.
-        std::chrono::duration<float> mDeltaTime{ 0.f };
 
         //! Fixed delta time between frames
         std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };

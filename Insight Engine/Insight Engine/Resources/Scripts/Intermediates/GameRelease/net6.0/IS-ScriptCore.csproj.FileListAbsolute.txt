@@ -9,3 +9,15 @@ C:\sandbox\Trimester 4\CSD2401 GAM200\GAM200\Insight Engine\Insight Engine\Resou
 C:\sandbox\Trimester 4\CSD2401 GAM200\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\refint\IS-ScriptCore.dll
 C:\sandbox\Trimester 4\CSD2401 GAM200\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.pdb
 C:\sandbox\Trimester 4\CSD2401 GAM200\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\ref\IS-ScriptCore.dll
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\net6.0\IS-ScriptCore.deps.json
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\net6.0\IS-ScriptCore.dll
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\net6.0\IS-ScriptCore.pdb
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.csproj.AssemblyReference.cache
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.AssemblyInfoInputs.cache
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.AssemblyInfo.cs
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.csproj.CoreCompileInputs.cache
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.dll
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\refint\IS-ScriptCore.dll
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\IS-ScriptCore.pdb
+C:\sandbox\GAM200\Insight Engine\Insight Engine\Resources\Scripts\Intermediates\GameRelease\net6.0\ref\IS-ScriptCore.dll
