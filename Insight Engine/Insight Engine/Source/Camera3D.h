@@ -24,16 +24,16 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "CoreEngine.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
 
 namespace IS {
 	// Enumeration for camera type
 
 	class Camera3D {
 	public:
-		void init3DCamera(int width, int height, float fieldOfView) {
+		void init_camera(int width, int height, float fieldOfView) {
 			initialFov = fieldOfView;
 
 			fov = initialFov;
@@ -43,37 +43,69 @@ namespace IS {
 			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
 
 			position = glm::vec3(0.f, 0.f, camDist);
-			target = glm::vec3(0.f, 0.f, 0.f);
 			near = 0.1f;
 			far = camDist * 2.f; // to cover zooming in and out
-
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-			view = glm::lookAt(position, target, up);
 		}
 
-		void update3DCameraPos(float newX, float newY) {
-			position.x += newX;
-			position.y += newY;
-
-			target.x += newX;
-			target.y += newY;
-
-			view = glm::lookAt(position, target, up);
+		// can use camera_keyboard_callback instead
+		void update_camera_pos(float newX, float newY) {
+			position.x = newX;
+			position.y = newY;
 		}
 
-		void update3DCameraZoom(float zoomLevel) {
+		void update_camera_zoom(float zoomLevel) {
 			fov = initialFov / zoomLevel;
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}
 
-		void update3DCameraAspectRatio(float ar) {
+		void update_camera_aspect_ratio(float ar) {
 			aspectRatio = ar; 
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}
 
-		void update3DCameraXform() { 
-			view = glm::lookAt(position, target, up);
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far); 
+		void update_camera_xform() { 
+			view = glm::lookAt(position, position + front, up);
+			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
+		}
+		
+		/*void camera_keyboard_callback(float cameraSpeed) {
+			auto& engine = InsightEngine::Instance();
+			auto input = engine.GetSystem<InputManager>("Input");
+
+			if (input->IsKeyPressed(GLFW_KEY_W)) {
+				position += front * cameraSpeed;
+			}
+			if (input->IsKeyPressed(GLFW_KEY_S)) {
+				position -= front * cameraSpeed;
+			}
+			if (input->IsKeyPressed(GLFW_KEY_A)) {
+				position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
+			}
+			if (input->IsKeyPressed(GLFW_KEY_D)) {
+				position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
+			}
+		}*/
+
+		void camera_mouse_callback(float xOffset, float yOffset) {
+			const float sensitivity = 0.1f;
+			
+			xOffset *= sensitivity;
+			yOffset *= sensitivity;
+
+			yaw += xOffset;
+			pitch += yOffset;
+
+			// clamp pitch
+			if (pitch > 89.0f) pitch = 89.0f;
+			else if (pitch < -89.0f) pitch = -89.0f;
+
+			// new direction camera is facing
+			front = glm::vec3{
+				cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
+				sin(glm::radians(pitch)),
+				sin(glm::radians(yaw)) * cos(glm::radians(pitch))
+			};
+
+			// normalize
+			front = glm::normalize(front);
 		}
 
 		glm::mat4 getViewMatrix() { return view; }
@@ -91,15 +123,17 @@ namespace IS {
 		glm::vec3 position{};
 
 	private:
-		glm::vec3 target = glm::vec3(0.f, 0.f, 0.f);
-		glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);;
+		const glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);
+		glm::vec3 front = glm::vec3(0.f, 0.f, -1.f);	
 
 		float aspectRatio{};
 		float initialFov{};
 		float fov{};
 		float near{};
 		float far{};
-		
+		float pitch{ 0.f };
+		float yaw{ -90.f };
+
 		glm::mat4 view{};
 		glm::mat4 projection{};
 	};

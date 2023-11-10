@@ -99,7 +99,7 @@ namespace IS {
         });
 
         for (int i{}; i < 2; ++i) {
-            cameras3D[i].init3DCamera(width, height, 60.f);
+            cameras3D[i].init_camera(width, height, 60.f);
         }
 
         // set line width for all GL_LINES and GL_LINE_LOOP
@@ -257,9 +257,10 @@ namespace IS {
                 }
             }
 
-            /*cameras3D[0].position.z -= 1.f;
-            cameras3D[0].update3DCameraXform();*/
-
+            cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y);
+            
+            cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
+            cameras3D[1].update_camera_xform();
             // Graphics system's draw
             Draw(delta_time);
         }
