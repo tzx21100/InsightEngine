@@ -80,8 +80,8 @@ namespace IS {
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x / 2.f;
-		float model_scale_y = scaling.y / 2.f;
+		float model_scale_x = scaling.x;
+		float model_scale_y = scaling.y;
 		float tx = world_position.x;
 		float ty = world_position.y;
 
@@ -109,8 +109,8 @@ namespace IS {
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x / 2.f;
-		float model_scale_y = scaling.y / 2.f;
+		float model_scale_x = scaling.x;
+		float model_scale_y = scaling.y;
 		float tx = world_position.x;
 		float ty = world_position.y;
 
@@ -132,10 +132,10 @@ namespace IS {
 	// not in use
 	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
 		std::vector<Vector2D> vertices;
-		float left = world_position.x - (scaling.x / 2.f);
-		float right = world_position.x + (scaling.x / 2.f);
-		float bottom = world_position.y - (scaling.y / 2.f);
-		float top = world_position.y + (scaling.y / 2.f);
+		float left = world_position.x - (scaling.x);
+		float right = world_position.x + (scaling.x);
+		float bottom = world_position.y - (scaling.y);
+		float top = world_position.y + (scaling.y);
 
 		vertices.emplace_back(Vector2D(left, top)); // 0 top left
 		vertices.emplace_back(Vector2D(right, top)); // 1 top right
