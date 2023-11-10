@@ -74,6 +74,8 @@ namespace IS {
          */
         void setupInstancedLineVAO();
 
+        void setupOutlineVAO();
+
         /*!
         * \brief Set up an instanced circle mesh.
         *

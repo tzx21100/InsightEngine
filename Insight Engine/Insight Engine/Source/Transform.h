@@ -35,7 +35,7 @@ namespace IS {
 		Mtx33 mdl_to_ndc_xform; // identity matrix default
 
 		// 3D cam test
-		glm::mat4 mdl_to_3dcam_to_ndc_xform;
+		glm::mat4 mdl_to_3dcam_to_ndc_xform{};
 
 		/*!
 		 * \brief Gets the type of the Transform component.

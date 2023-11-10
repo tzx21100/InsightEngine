@@ -86,9 +86,9 @@ namespace IS {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
             Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
-                Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.0f, 1.0f) },
-                Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
-                Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.0f, 0.0f) }
+            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.0f, 1.0f) },
+            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
+            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.0f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -198,6 +198,42 @@ namespace IS {
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+        draw_count = static_cast<GLuint>(vertices.size());
+    }
+
+    void Mesh::setupOutlineVAO() {
+        // Define the vertices of the quad as a triangle strip
+        std::array<Vertex, 4> vertices{
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
+            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.0f, 1.0f) },
+            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.0f, 0.0f) },
+            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) }
+        };
+
+        // Generate a VAO handle to encapsulate the VBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
+
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
+
+        // Bind the VBO to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Enable the position attribute
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Unbind the VAO (not necessary to unbind buffers individually)
+        glBindVertexArray(0);
+
+        // save VAO, VBO and draw count
+        vao_ID = vao_hdl;
+        vbo_ID = vbo_hdl;
         draw_count = static_cast<GLuint>(vertices.size());
     }
 
@@ -354,7 +390,7 @@ namespace IS {
 
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // 4 meshes for 4 different models
-        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh;
+        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh;
         /// non instanced meshes
         // quad_mesh.setupQuadVAO();
         // quad_mesh.setupQuadVAO();
@@ -366,6 +402,7 @@ namespace IS {
         inst_line_mesh.setupInstancedLineVAO();
         inst_circle_mesh.setupInstancedCircleVAO();
         inst_3d_quad_mesh.setupInstanced3DQuadVAO();
+        outline_mesh.setupOutlineVAO();
 
         // meshes.emplace_back(quad_mesh);
         // meshes.emplace_back(point_mesh);
@@ -375,6 +412,7 @@ namespace IS {
         meshes.emplace_back(inst_line_mesh);
         meshes.emplace_back(inst_circle_mesh);
         meshes.emplace_back(inst_3d_quad_mesh);
+        meshes.emplace_back(outline_mesh);
     }
 
     void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {

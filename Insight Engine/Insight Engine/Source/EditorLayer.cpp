@@ -210,8 +210,8 @@ namespace IS {
         for (auto& panel : mPanels)
             panel->RenderPanel();
 
-        // Render outline for selected entity
-        RenderSelectedEntityOutline();
+        // Render outline for selected entity (moved to graphics)
+        // RenderSelectedEntityOutline();
 
         if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
             *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())

@@ -65,6 +65,12 @@ namespace IS {
             glm::mat3 model_to_ndc_xform{};
         };
 
+        // Instance data of outlines (mouse picked entities)
+        struct nonQuad3DInstanceData {
+            glm::vec3 color{};
+            glm::mat4 model_to_ndc_xform{};
+        };
+
         // Member variables
         GLenum primitive_type{};        // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
         Transform model_TRS{};          // Transformation values for the sprite.
@@ -188,6 +194,8 @@ namespace IS {
          */
         static void draw_instanced_quads();
         static void draw_instanced_3D_quads();
+
+        static void draw_picked_entity_border();
 
         /*!
          * \brief "Draws" a debug line between two specified points.

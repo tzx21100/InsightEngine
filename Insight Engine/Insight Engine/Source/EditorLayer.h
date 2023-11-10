@@ -133,6 +133,8 @@ namespace IS {
          */
         Vec2 GetHierarchyPanel() const { return mHierarchyPanel->GetPanelSize(); }
 
+        std::shared_ptr<Entity> GetSelectedEntity() const { return mHierarchyPanel->GetSelectedEntity(); }
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
