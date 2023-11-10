@@ -336,17 +336,17 @@ namespace IS {
                     //IS_CORE_INFO("end of click");
                 }
 
-                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
-                    for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
-                        auto& transl = engine.GetComponent<Transform>(a);
-                        transl.setScaling(width * 0.01875f, height * 0.042222222f);
-                        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
-                        //add the image in
-                        //spr.texture = backgroundTest.texture_id;
-                    }
+                //if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
+                //    for (int i = 0; i < 1; i++) {
+                //        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
+                //        auto& transl = engine.GetComponent<Transform>(a);
+                //        transl.setScaling(width * 0.01875f, height * 0.042222222f);
+                //        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                //        //add the image in
+                //        //spr.texture = backgroundTest.texture_id;
+                //    }
 
-                }
+                //}
 
                 if (input->IsKeyPressed(GLFW_KEY_R)) {
                     for (int i = 0; i < 1; i++) {

@@ -61,7 +61,18 @@ namespace IS {
 			aspectRatio = ar; 
 		}
 
-		void update_camera_xform() { 
+		void update_camera_xform() {
+			// new direction camera is facing
+			front = glm::vec3{
+				cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
+				sin(glm::radians(pitch)),
+				sin(glm::radians(yaw)) * cos(glm::radians(pitch))
+			};
+
+			// normalize
+			front = glm::normalize(front);
+
+
 			view = glm::lookAt(position, position + front, up);
 			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}
@@ -91,7 +102,7 @@ namespace IS {
 			yOffset *= sensitivity;
 
 			yaw += xOffset;
-			pitch += yOffset;
+			pitch -= yOffset;
 
 			// clamp pitch
 			if (pitch > 89.0f) pitch = 89.0f;
