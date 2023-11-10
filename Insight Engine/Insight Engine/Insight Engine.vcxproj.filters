@@ -148,6 +148,9 @@
     <ClCompile Include="Source\ImGuiLayer.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Engine\Systems\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -342,6 +345,12 @@
     <ClInclude Include="Source\Camera3D.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Particle.h">
+      <Filter>Engine\Systems\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleEmitter.h">
+      <Filter>Engine\Systems\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -445,6 +454,9 @@
     </Filter>
     <Filter Include="Editor\Scene">
       <UniqueIdentifier>{af6e24eb-8858-4a53-9442-61aca5bc19b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Particle">
+      <UniqueIdentifier>{c56f3f61-4209-4647-b8ee-d504305003b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

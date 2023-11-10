@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Manifold.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Panel.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\HierarchyPanel.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -101,6 +102,8 @@
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Panel.h" />
+    <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleEmitter.h" />
     <ClInclude Include="Source\Pathfinder.h" />
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Prefab.h" />
