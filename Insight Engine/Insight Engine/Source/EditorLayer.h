@@ -136,6 +136,11 @@ namespace IS {
 
         void ExecuteCommand(std::shared_ptr<Command> command) { mEditManager->ExecuteCommand(command); }
 
+        /*!
+         * \brief Render the gizmo.
+         */
+        void RenderGizmo();
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
@@ -153,6 +158,9 @@ namespace IS {
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
 
+        int mGizmoType = -1;
+        bool mGizmoInUse = false;
+
         /*!
          * \brief Render the menu bar.
          */
@@ -162,11 +170,6 @@ namespace IS {
          * \brief Render the tool bar.
          */
         void RenderToolBar();
-
-        ///*!
-        // * \brief Render the gizmo.
-        // */
-        //void RenderGizmo();
 
         /*!
          * \brief Attach panels.

@@ -72,7 +72,6 @@ namespace IS {
 			// normalize
 			front = glm::normalize(front);
 
-
 			view = glm::lookAt(position, position + front, up);
 			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}

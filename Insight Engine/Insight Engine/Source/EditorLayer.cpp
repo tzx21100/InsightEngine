@@ -30,6 +30,10 @@
 #include <imgui.h>
 #include <ImGuizmo.h>
 #include <IconsLucide.h>
+#pragma warning(push)
+#pragma warning(disable: 4201) // nonstandard nameless struct
+#include <glm/gtc/type_ptr.hpp>
+#pragma warning(pop)
 
 namespace IS {
 
@@ -87,6 +91,9 @@ namespace IS {
         const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
         const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
         const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
+        const bool W_PRESSED    = input->IsKeyPressed(GLFW_KEY_W);
+        const bool E_PRESSED    = input->IsKeyPressed(GLFW_KEY_E);
+        const bool R_PRESSED    = input->IsKeyPressed(GLFW_KEY_R);
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -96,6 +103,12 @@ namespace IS {
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
         if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
         if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
+
+        if (!mGizmoInUse) {
+            if (W_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::TRANSLATE); }
+            if (E_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::ROTATE_Z); }
+            if (R_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::SCALE); }
+        }
 
         ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
         ISGraphics::cameras3D[1].camera_mouse_callback(yk_test_delta.x, yk_test_delta.y);
@@ -161,55 +174,56 @@ namespace IS {
                 //    }
                 //    ImGui::ResetMouseDragDelta();
                 //}
-                else if (mHierarchyPanel->GetSelectedEntity())
-                {
-                    static bool wasMouseDown = false;
-                    ImVec2 mousePositionDelta = ImGui::GetMouseDragDelta();
+                
+                //else if (mHierarchyPanel->GetSelectedEntity())
+                //{
+                //    static bool wasMouseDown = false;
+                //    ImVec2 mousePositionDelta = ImGui::GetMouseDragDelta();
 
-                    Entity entity = *mHierarchyPanel->GetSelectedEntity();
-                    static Entity last_entity = entity;
+                //    Entity entity = *mHierarchyPanel->GetSelectedEntity();
+                //    static Entity last_entity = entity;
 
-                    // Translate entity position
-                    if (engine.HasComponent<Transform>(entity))
-                    {
-                        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                        auto& transform = engine.GetComponent<Transform>(entity);
+                //    // Translate entity position
+                //    if (engine.HasComponent<Transform>(entity))
+                //    {
+                //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+                //        auto& transform = engine.GetComponent<Transform>(entity);
 
-                        // Store the old translation for the command
-                        static Vector2D oldTranslation = {};
-                        if (last_entity != entity)
-                        {
-                            last_entity = entity;
-                            oldTranslation = transform.world_position;
-                            IS_CORE_WARN("Selected entity changed!");
-                        }
+                //        // Store the old translation for the command
+                //        static Vector2D oldTranslation = {};
+                //        if (last_entity != entity)
+                //        {
+                //            last_entity = entity;
+                //            oldTranslation = transform.world_position;
+                //            IS_CORE_WARN("Selected entity changed!");
+                //        }
 
-                        // Translate entity position
-                        transform.world_position.x += mousePositionDelta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
-                        transform.world_position.y -= mousePositionDelta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
+                //        // Translate entity position
+                //        transform.world_position.x += mousePositionDelta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
+                //        transform.world_position.y -= mousePositionDelta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
 
-                        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                        {
-                            oldTranslation = transform.world_position;
-                        }
+                //        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                //        {
+                //            oldTranslation = transform.world_position;
+                //        }
 
-                        // Check if the mouse was down in the previous frame and is released in the current frame
-                        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left) && oldTranslation != transform.world_position)
-                        {
-                            // Execute TranslateCommand
-                            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, transform.world_position));
+                //        // Check if the mouse was down in the previous frame and is released in the current frame
+                //        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left) && oldTranslation != transform.world_position)
+                //        {
+                //            // Execute TranslateCommand
+                //            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, transform.world_position));
 
-                            // Reset the mouse down flag
-                            wasMouseDown = false;
-                        } else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
-                        {
-                            // Set the mouse down flag
-                            wasMouseDown = true;
-                        }
-                    }
+                //            // Reset the mouse down flag
+                //            wasMouseDown = false;
+                //        } else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                //        {
+                //            // Set the mouse down flag
+                //            wasMouseDown = true;
+                //        }
+                //    }
 
-                    ImGui::ResetMouseDragDelta();
-                }
+                //    ImGui::ResetMouseDragDelta();
+                //}
 
 
             }
@@ -277,8 +291,6 @@ namespace IS {
             Entity entity = *mHierarchyPanel->GetSelectedEntity();
             mHierarchyPanel->RenderEntityConfig(entity);
         }
-
-        //RenderGizmo();
 
         style.WindowMinSize = min_window_size;
 
@@ -506,24 +518,48 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
     }
 
-    //void EditorLayer::RenderGizmo()
-    //{
-    //    if (!mHierarchyPanel->GetSelectedEntity())
-    //        return;
+    void EditorLayer::RenderGizmo()
+    {
+        if (!mHierarchyPanel->GetSelectedEntity() || mGizmoType == -1)
+        {
+            mGizmoInUse = false;
+            return;
+        }
 
-    //    //Entity selected_entity = *mHierarchyPanel->GetSelectedEntity();
+        auto& engine = InsightEngine::Instance();
+        Entity selected_entity = *mHierarchyPanel->GetSelectedEntity();
 
-    //    ImGuizmo::SetOrthographic(true);
-    //    ImGuizmo::SetDrawlist();
+        ImGuizmo::SetOrthographic(false);
+        ImGuizmo::SetDrawlist();
 
-    //    ImGuizmo::SetRect(mScenePanel->GetViewportBounds()[0].x, mScenePanel->GetViewportBounds()[0].y,
-    //                      mScenePanel->GetViewportBounds()[1].x - mScenePanel->GetViewportBounds()[0].x,
-    //                      mScenePanel->GetViewportBounds()[1].y - mScenePanel->GetViewportBounds()[0].y);
+        ImGuizmo::SetRect(mScenePanel->GetViewportBounds()[0].x, mScenePanel->GetViewportBounds()[0].y,
+                          mScenePanel->GetViewportBounds()[1].x - mScenePanel->GetViewportBounds()[0].x,
+                          mScenePanel->GetViewportBounds()[1].y - mScenePanel->GetViewportBounds()[0].y);
 
-    //    //Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-    //    //glm::mat3 view_matrix = camera.xform;
-    //    ImGuizmo::SetOrthographic(true);
-    //}
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        const glm::mat4 view = camera.getViewMatrix();
+        const glm::mat4 projection = camera.getPerspectiveMatrix();
+        auto& transform = engine.GetComponent<Transform>(selected_entity);
+        glm::mat4 transform_matrix = transform.FUCKYK();
+
+        ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
+            static_cast<ImGuizmo::OPERATION>(mGizmoType), ImGuizmo::WORLD, glm::value_ptr(transform_matrix));
+
+        if (!ImGuizmo::IsUsing()) {
+            mGizmoInUse = false;
+            return;
+        }
+
+        glm::vec3 translation, rotation, scale;
+        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation), glm::value_ptr(rotation), glm::value_ptr(scale));
+        float delta_rot = rotation.z - transform.rotation;
+
+        transform.world_position = { translation.x, translation.y };
+        transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
+        transform.scaling = { std::max(scale.x, 1.f), std::max(scale.y, 1.f) };
+
+        mGizmoInUse = true;
+    }
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
     {

@@ -32,10 +32,10 @@ namespace IS {
 		float rotation{};		// z-axis rotation in degrees
 		float angle_speed{};	// rotation speed
 		Vec2D scaling{};		// x = width, y = height
-		Mtx33 mdl_to_ndc_xform; // identity matrix default
+		Mtx33 mdl_to_ndc_xform{}; // identity matrix default
 
 		// 3D cam test
-		glm::mat4 mdl_to_3dcam_to_ndc_xform;
+		glm::mat4 mdl_to_3dcam_to_ndc_xform{};
 
 		/*!
 		 * \brief Gets the type of the Transform component.
@@ -151,6 +151,7 @@ namespace IS {
 
 		// not in use
 		std::vector<Vector2D> GetSquareTransformVertices();
+		glm::mat4 FUCKYK();
 	};
 
 	/**

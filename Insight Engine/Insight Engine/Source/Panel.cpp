@@ -134,11 +134,26 @@ namespace IS {
             RenderHelp();
         }
 
+        mEditorLayer.RenderGizmo();
+
         ImGui::End(); // end window Scene
         ImGui::PopStyleVar();
     }
 
     bool ScenePanel::IsFocused() const { return mFocused; }
+
+    bool ScenePanel::MouseWithinViewport() const
+    {
+        auto [mx, my] = ImGui::GetMousePos();
+        mx -= mViewportBounds[0].x;
+        my -= mViewportBounds[0].y;
+        my = mViewportSize.y - my;
+        int mouse_x = static_cast<int>(mx);
+        int mouse_y = static_cast<int>(my);
+
+        return (0 <= mouse_x && mouse_x < static_cast<int>(mViewportSize.x) &&
+                0 <= mouse_y && mouse_y < static_cast<int>(mViewportSize.y));
+    }
 
     void ScenePanel::RenderHelp()
     {

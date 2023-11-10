@@ -192,23 +192,23 @@ namespace IS {
 
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
-            auto& trans_player = engine.GetComponent<Transform>(player);
+            //auto& trans_player = engine.GetComponent<Transform>(player);
             body_player.mMass = 5.f;
 
             // limit angle of the player
-            float angle = trans_player.getRotation();
-            if (angle != 0.f && angle != 360.f) {
-                if (angle < 90.f) {
-                    angle = (angle < 15.f) ? angle : 15.f;
-                }
-                else if (angle >= 90.f) {
-                    angle = (angle > 345.f) ? angle : 345.f;
-                }
-            }
-            trans_player.setRotation(angle, body_player.mAngularVelocity);
-            body_player.mRestitution = 0.1f;
-            body_player.mStaticFriction = 1.2f;
-            body_player.mDynamicFriction = 1.1f;
+            //float angle = trans_player.getRotation();
+            //if (angle != 0.f && angle != 360.f) {
+            //    if (angle < 90.f) {
+            //        angle = (angle < 15.f) ? angle : 15.f;
+            //    }
+            //    else if (angle >= 90.f) {
+            //        angle = (angle > 345.f) ? angle : 345.f;
+            //    }
+            //}
+            //trans_player.setRotation(angle, body_player.mAngularVelocity);
+            //body_player.mRestitution = 0.1f;
+            //body_player.mStaticFriction = 1.2f;
+            //body_player.mDynamicFriction = 1.1f;
 
 
             // Process Keyboard Events
@@ -355,7 +355,7 @@ namespace IS {
 
                 //}
 
-                if (input->IsKeyPressed(GLFW_KEY_R)) {
+                if (input->IsKeyPressed(GLFW_KEY_9)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);

@@ -126,6 +126,8 @@ namespace IS {
          */
         std::array<Vec2, 2> const& GetViewportBounds() const { return mViewportBounds; }
 
+        bool MouseWithinViewport() const;
+
     private:
         bool mFocused{}; ///< Boolean flag indicating if scene panel is in focus.
         Vec2 mViewportSize{}; ///< Size of the scene panel.
