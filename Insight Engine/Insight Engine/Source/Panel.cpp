@@ -106,6 +106,28 @@ namespace IS {
         // Accept asset browser payload
         mEditorLayer.AcceptAssetBrowserPayload();
 
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
+            {
+                std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                Entity entity = SceneManager::Instance().AddEntity("Imported Entity").value();
+                engine.AddComponent<Sprite>(entity, Sprite());
+                engine.AddComponent<Transform>(entity, Transform());
+                auto& sprite = engine.GetComponent<Sprite>(entity);
+                auto& transform = engine.GetComponent<Transform>(entity);
+                auto const asset = engine.GetSystem<AssetManager>("Asset");
+                IS_CORE_DEBUG("Image : {} ", path.string());
+                sprite.img = *asset->GetImage(path.string());
+
+                transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
+                transform.world_position = { static_cast<float>(input->GetMousePosition().first),
+                static_cast<float>(input->GetMousePosition().second) };
+            }
+
+            ImGui::EndDragDropTarget();
+        }
+
         // Help tooltip
         if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
         {

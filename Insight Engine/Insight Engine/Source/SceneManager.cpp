@@ -129,25 +129,25 @@ namespace IS {
 	SceneID SceneManager::GetSceneCount() const { return mSceneCount; }
 
 	// Entity management
-	void SceneManager::AddEntity(const char* name) 
+	std::optional<Entity> SceneManager::AddEntity(const char* name) 
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().CreateEntity(name); 
+			return std::nullopt;
+		return InsightEngine::Instance().CreateEntity(name); 
 	}
 
-	void SceneManager::AddRandomEntity() 
+	std::optional<Entity> SceneManager::AddRandomEntity()
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().GenerateRandomEntity(); 
+			return std::nullopt;
+		return InsightEngine::Instance().GenerateRandomEntity(); 
 	}
 
-	void SceneManager::CloneEntity(Entity entity) 
+	std::optional<Entity> SceneManager::CloneEntity(Entity entity)
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().CopyEntity(entity);
+			return std::nullopt;
+		return InsightEngine::Instance().CopyEntity(entity);
 	}
 
 	void SceneManager::DeleteEntity(Entity entity) 
