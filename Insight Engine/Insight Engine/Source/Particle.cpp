@@ -3,7 +3,7 @@
 namespace IS {
 
     std::string Particle::GetName() {
-        return "AIFSM";
+        return "Particle";
     }
 
     void Particle::Initialize() {

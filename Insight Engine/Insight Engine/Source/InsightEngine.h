@@ -26,6 +26,7 @@
 #include "ScriptManager.h"
 #include "GameGui.h"
 #include "Pathfinder.h"
+#include "Particle.h"
 
 using namespace IS;
 
@@ -45,6 +46,7 @@ void RegisterComponents() {
     engine.RegisterComponent<Pathfinder>();
     engine.RegisterComponent<AudioEmitter>();
     engine.RegisterComponent<AudioListener>();
+    engine.RegisterComponent<ParticleEmitter>();
 
 }
 
@@ -62,7 +64,7 @@ void RegisterSystems() {
     Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
     Signature sign_pathfinding = engine.GenerateSignature<Pathfinder>();
     Signature sign_audio = engine.GenerateSignature<AudioEmitter, AudioListener, Transform>();
-
+    Signature sign_particle = engine.GenerateSignature<ParticleEmitter>();
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -75,6 +77,7 @@ void RegisterSystems() {
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
     auto insight_guisystem = std::make_shared<GuiSystem>();
     auto insight_pathfinding = std::make_shared<Pathfinding>();
+    auto insight_particle = std::make_shared <Particle> ();
 
 
     engine.AddSystem(insight_window, sign_default);
@@ -87,6 +90,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_scriptmanager, sign_script);
     engine.AddSystem(insight_guisystem, sign_gui);
     engine.AddSystem(insight_pathfinding, sign_pathfinding);
+    engine.AddSystem(insight_particle, sign_particle);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 
