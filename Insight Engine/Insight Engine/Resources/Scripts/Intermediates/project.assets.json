@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\guoyi\\.nuget\\packages\\": {}
+    "C:\\Users\\Chxxy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "projectUniqueName": "C:\\Users\\Chxxy\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
       "projectName": "IS-ScriptCore",
-      "projectPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
-      "packagesPath": "C:\\Users\\guoyi\\.nuget\\packages\\",
-      "outputPath": "C:\\sandbox\\Trimester 4\\CSD2401 GAM200\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
+      "projectPath": "C:\\Users\\Chxxy\\Documents\\GitHub\\GAM200\\Insight Engine\\IS-ScriptCore\\IS-ScriptCore.csproj",
+      "packagesPath": "C:\\Users\\Chxxy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Chxxy\\Documents\\GitHub\\GAM200\\Insight Engine\\Insight Engine\\Resources\\Scripts\\Intermediates\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\guoyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Chxxy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
