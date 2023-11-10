@@ -49,6 +49,7 @@ namespace IS {
          * both the vertex and fragment shaders and links them into a program.
          */
         void setupInstSpriteShaders();
+        void setup3DInstSpriteShaders();
 
         /*!
          * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.

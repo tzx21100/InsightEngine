@@ -32,6 +32,7 @@ namespace IS {
 
     // Shaders
     Shader ISGraphics::inst_quad_shader_pgm;
+    Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
 
     // Texture vector
@@ -44,6 +45,7 @@ namespace IS {
 
     // instance data containers
     std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
+    std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> ISGraphics::layered3DQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
 
@@ -69,6 +71,7 @@ namespace IS {
         
         // init quad shader
         inst_quad_shader_pgm.setupInstSpriteShaders();
+        inst_3d_quad_shader_pgm.setup3DInstSpriteShaders();
 
         // init debugging lines and circles shaders
         inst_non_quad_shader_pgm.setupInstLineShaders();
@@ -96,7 +99,7 @@ namespace IS {
         });
 
         for (int i{}; i < 2; ++i) {
-            cameras3D[i].init3DCamera(width, height, 60.f);
+            cameras3D[i].init_camera(width, height, 60.f);
         }
 
         // set line width for all GL_LINES and GL_LINE_LOOP
@@ -142,7 +145,7 @@ namespace IS {
         }
 
         for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
-        
+            /*
             // empty quad instance data
             layeredQuadInstances.clear();
 
@@ -197,6 +200,67 @@ namespace IS {
                     }
                 }
             }
+            */
+
+            // empty quad instance data
+            layered3DQuadInstances.clear();
+
+            // for each entity
+            for (auto& entity : mEntities) {
+                // get sprite and transform components
+                auto& sprite = engine.GetComponent<Sprite>(entity);
+                auto& trans = engine.GetComponent<Transform>(entity);
+
+                // update sprite's transform [will be changed]
+                sprite.followTransform(trans);
+                sprite.transform();
+
+                // if a sprite has animations, update their values with dt
+                if (!sprite.anims.empty()) {
+                    sprite.anims[sprite.animation_index].updateAnimation(delta_time);
+                }
+
+                // quad entities
+                if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
+                    // if sprite and it's layer is to be rendered
+                    if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
+                        // empty instance data
+                        Sprite::instanceData3D instData;
+
+                        // all quads will have xform, entityID, layer
+                        instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_3dcam_to_ndc_xform;
+                        instData.entID = static_cast<float>(entity);
+                        instData.layer = sprite.layer;
+
+                        // quads with no texture
+                        if (sprite.img.texture_id == 0) {
+                            // copy sprite's color to instance data
+                            instData.color = sprite.color;
+                            // set to -1 to represent no texture
+                            instData.tex_index = -1.f;
+                        }
+                        // quad has a texture (animation too)
+                        else {
+                            // copy texture index
+                            instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                        }
+
+                        // if sprite is an animation
+                        if (!sprite.anims.empty()) {
+                            // copy animation data
+                            instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                            instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                        }
+                        // insert to multiset with comparator function
+                        layered3DQuadInstances.insert(instData);
+                    }
+                }
+            }
+
+            cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y);
+            
+            cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
+            cameras3D[1].update_camera_xform();
             // Graphics system's draw
             Draw(delta_time);
         }
@@ -226,7 +290,8 @@ namespace IS {
         //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
         // quads will be drawn first
-        Sprite::draw_instanced_quads();
+        // Sprite::draw_instanced_quads();
+        Sprite::draw_instanced_3D_quads();
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
