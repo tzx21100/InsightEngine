@@ -163,6 +163,7 @@ namespace IS {
                     ImVec2 mousePositionDelta = ImGui::GetMouseDragDelta();
 
                     Entity entity = *mHierarchyPanel->GetSelectedEntity();
+                    static Entity last_entity = entity;
 
                     // Translate entity position
                     if (engine.HasComponent<Transform>(entity))
@@ -171,20 +172,28 @@ namespace IS {
                         auto& transform = engine.GetComponent<Transform>(entity);
 
                         // Store the old translation for the command
-                        Vector2D oldTranslation = transform.world_position;
+                        static Vector2D oldTranslation = {};
+                        if (last_entity != entity)
+                        {
+                            last_entity = entity;
+                            oldTranslation = transform.world_position;
+                            IS_CORE_WARN("Selected entity changed!");
+                        }
 
                         // Translate entity position
                         transform.world_position.x += mousePositionDelta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
                         transform.world_position.y -= mousePositionDelta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
 
-                        // Check if the mouse was down in the previous frame and is released in the current frame
-                        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
                         {
-                            // Calculate the new translation for the command
-                            Vector2D newTranslation = transform.world_position;
+                            oldTranslation = transform.world_position;
+                        }
 
+                        // Check if the mouse was down in the previous frame and is released in the current frame
+                        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left) && oldTranslation != transform.world_position)
+                        {
                             // Execute TranslateCommand
-                            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, newTranslation));
+                            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, transform.world_position));
 
                             // Reset the mouse down flag
                             wasMouseDown = false;
@@ -250,6 +259,10 @@ namespace IS {
         // Render Panels
         for (auto& panel : mPanels)
             panel->RenderPanel();
+
+        static bool show = true;
+
+        ImGui::ShowDemoWindow(&show);
 
         // Render outline for selected entity
         RenderSelectedEntityOutline();

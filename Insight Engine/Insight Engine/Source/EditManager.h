@@ -44,6 +44,7 @@ namespace IS {
     {
     public:
         ScaleCommand(Entity entity, Vector2D new_scale);
+        ScaleCommand(Entity entity, Vector2D, Vector2D new_scale);
 
     private:
         Entity mEntity;
@@ -57,7 +58,7 @@ namespace IS {
     class RotateCommand : public Command
     {
     public:
-        RotateCommand(Entity entity, float new_rotation);
+        RotateCommand(Entity entity, float, float new_rotation);
 
     private:
         Entity mEntity;
@@ -75,6 +76,7 @@ namespace IS {
 
     private:
         Entity mEntity;
+        std::string mFileName;
 
         void Execute() override;
         void Undo() override;
@@ -87,6 +89,7 @@ namespace IS {
 
     private:
         Entity mEntity;
+        std::string mFileName;
 
         void Execute() override;
         void Undo() override;

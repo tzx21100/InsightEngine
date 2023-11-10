@@ -13,6 +13,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto& transform = engine.GetComponent<Transform>(mEntity);
         transform.setWorldPosition(mNewTranslation.x, mNewTranslation.y);
+        IS_CORE_DEBUG("{},  ID : {}", engine.GetEntityName(mEntity), mEntity);
     }
 
     void TranslateCommand::Undo()
@@ -20,6 +21,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto& transform = engine.GetComponent<Transform>(mEntity);
         transform.setWorldPosition(mOldTranslation.x, mOldTranslation.y);
+        IS_CORE_DEBUG("{},  ID : {}", engine.GetEntityName(mEntity), mEntity);
     }
 
     ScaleCommand::ScaleCommand(Entity entity, Vector2D new_scale) : Command("Scale"), mEntity(entity), mNewScale(new_scale)
@@ -27,6 +29,13 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto& transform = engine.GetComponent<Transform>(entity);
         mOldScale = transform.getScaling();
+    }
+
+    ScaleCommand::ScaleCommand(Entity entity, Vector2D old_scale, Vector2D new_scale) : Command("Scale"), mEntity(entity), mOldScale(old_scale), mNewScale(new_scale)
+    {
+        //auto& engine = InsightEngine::Instance();
+        //auto& transform = engine.GetComponent<Transform>(entity);
+        //mOldScale = transform.getScaling();
     }
 
     void ScaleCommand::Execute()
@@ -43,11 +52,11 @@ namespace IS {
         transform.setScaling(mOldScale.x, mOldScale.y);
     }
 
-    RotateCommand::RotateCommand(Entity entity, float new_rotation) : Command("Rotate"), mEntity(entity), mNewRotation(new_rotation)
+    RotateCommand::RotateCommand(Entity entity, float old_rotation, float new_rotation) : Command("Rotate"), mEntity(entity), mOldRotation(old_rotation), mNewRotation(new_rotation)
     {
-        auto& engine = InsightEngine::Instance();
-        auto& transform = engine.GetComponent<Transform>(entity);
-        mOldRotation = transform.getRotation();
+        //auto& engine = InsightEngine::Instance();
+        //auto& transform = engine.GetComponent<Transform>(mEntity);
+        //mOldRotation = transform.rotation;
     }
 
     void RotateCommand::Execute()
@@ -64,11 +73,16 @@ namespace IS {
         transform.setRotation(mOldRotation);
     }
 
-    CreateEntityCommand::CreateEntityCommand(Entity entity) : Command("Create Entity"), mEntity(entity) {}
+    CreateEntityCommand::CreateEntityCommand(Entity entity) : Command("Create Entity"), mEntity(entity) 
+    {
+        auto& engine = InsightEngine::Instance();
+        mFileName = "Assets\\Temp\\" + engine.GetEntityName(mEntity) + "Save State";
+    }
 
     void CreateEntityCommand::Execute()
     {
-        //auto& engine = InsightEngine::Instance();
+        auto& engine = InsightEngine::Instance();
+        engine.SaveEntityToJson(mEntity, mFileName);
     }
 
     void CreateEntityCommand::Undo()
@@ -106,6 +120,7 @@ namespace IS {
             mUndoStack.pop_back();
             command->Undo();
             mRedoStack.push_back(command);
+            IS_CORE_DEBUG("Undo {}, undo stack : {}, redo stack : {}", command->GetName(), mUndoStack.size(), mRedoStack.size());
         }
     }
 
@@ -118,12 +133,13 @@ namespace IS {
             command->Execute();
             mUndoStack.push_back(command);
             LimitStackSize(mUndoStack, MAX_COMMANDS);
+            IS_CORE_DEBUG("Redo {}, undo stack : {}, redo stack : {}", command->GetName(), mUndoStack.size(), mRedoStack.size());
         }
     }
 
     void EditManager::LimitStackSize(StackType& stack, size_t max_size)
     {
-        while (stack.size() >= max_size)
+        while (stack.size() > max_size)
         {
             stack.pop_front();
         }

@@ -160,10 +160,21 @@ namespace IS {
         RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
             // Render Translation
-            Vector2D old_translate = transform.world_position;
-            if (EditorUtils::RenderControlVec2("Translation", transform.world_position))
+            static Vector2D old_translate = {};
+            EditorUtils::RenderControlVec2("Translation", transform.world_position);
+            if (ImGui::IsItemActivated())
+            {
+                old_translate = transform.world_position;
+
+                IS_CORE_DEBUG("UPDATED OLD TRANSLATION");
+            }
+
+            // Save as undoable command
+            if (ImGui::IsItemDeactivatedAfterEdit())
             {
                 mEditorLayer.ExecuteCommand(std::make_shared<TranslateCommand>(entity, old_translate, transform.world_position));
+                IS_CORE_DEBUG("old: {:.2f}, {:.2f}, new: {:.2f}, {:.2f}", old_translate.x, old_translate.y, transform.world_position.x, transform.world_position.y);
+                IS_CORE_DEBUG("DEACTIVATED AFTER EDIT");
             }
 
             // Render Rotation
@@ -177,13 +188,32 @@ namespace IS {
                 ImGui::TextUnformatted("Rotation");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
+
+                static float old_rotation = 0.f;
                 float rotation = transform.rotation * (PI / 180.f);
+
+                // Apply modification
                 if (ImGui::SliderAngle("##Rotation", &rotation, 0.f))
                 {
                     transform.rotation = rotation / (PI / 180.f);
-
-                    mEditorLayer.ExecuteCommand(std::make_shared<RotateCommand>(entity, transform.rotation));
                 }
+
+                // Save modified value
+                if (ImGui::IsItemActivated())
+                {
+                    old_rotation = transform.rotation;
+
+                    IS_CORE_DEBUG("UPDATED OLD ROTATION");
+                }
+
+                // Save as undoable command
+                if (ImGui::IsItemDeactivatedAfterEdit() && old_rotation != transform.rotation)
+                {
+                    mEditorLayer.ExecuteCommand(std::make_shared<RotateCommand>(entity, old_rotation, transform.rotation));
+                    IS_CORE_DEBUG("old: {:.2f}, new: {:.2f}", old_rotation, transform.rotation);
+                    IS_CORE_DEBUG("DEACTIVATED AFTER EDIT");
+                }
+
                 ImGui::EndTable();
             }
 
@@ -192,6 +222,19 @@ namespace IS {
             {
                 mEditorLayer.ExecuteCommand(std::make_shared<ScaleCommand>(entity, transform.scaling));
             }
+
+            //static Vector2D old_scale{};
+            //EditorUtils::RenderControlVec2("Scale", transform.scaling, 95.f, 120.f);
+            //if (ImGui::IsItemActivated())
+            //{
+            //    old_scale = transform.scaling;
+            //}
+
+            //if (ImGui::IsItemDeactivated())
+            //{
+            //    mEditorLayer.ExecuteCommand(std::make_shared<ScaleCommand>(entity, old_scale, transform.scaling));
+            //    IS_CORE_DEBUG("old: {:.2f}, {:.2f}, new: {:.2f}, {:.2f}", old_scale.x, old_scale.y, transform.scaling.x, transform.scaling.y);
+            //}
 
         }); // end render Transform Component
 
