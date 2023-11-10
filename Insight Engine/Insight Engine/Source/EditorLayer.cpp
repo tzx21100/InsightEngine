@@ -97,6 +97,10 @@ namespace IS {
         if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
         if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
 
+        ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
+        ISGraphics::cameras3D[1].camera_mouse_callback(yk_test_delta.x, yk_test_delta.y);
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
+
         if (mGamePanel->IsFocused())
         {
             Camera::mActiveCamera = CAMERA_TYPE_GAME;

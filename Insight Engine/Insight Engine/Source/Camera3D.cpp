@@ -21,7 +21,7 @@
 #include "Camera3D.h"
 
 namespace IS {
-
+	aCameraType Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
 	float Camera3D::mZoomSpeed = 0.1f;
 	float Camera3D::mMoveSpeed = 5.f;
 }

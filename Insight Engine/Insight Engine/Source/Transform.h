@@ -34,6 +34,9 @@ namespace IS {
 		Vec2D scaling{};		// x = width, y = height
 		Mtx33 mdl_to_ndc_xform; // identity matrix default
 
+		// 3D cam test
+		glm::mat4 mdl_to_3dcam_to_ndc_xform;
+
 		/*!
 		 * \brief Gets the type of the Transform component.
 		 * \return The name of the Transform component.
@@ -125,6 +128,8 @@ namespace IS {
 		 * @return An Mtx33 transformation matrix that represents the object's transformation.
 		 */
 		Mtx33 ReturnXformMatrix();
+
+		glm::mat4 Return3DXformMatrix();
 
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.
