@@ -202,4 +202,25 @@ namespace IS {
 
 		return ret;
 	}
+
+	glm::mat4 ISMtx44ToGlmMat4(Matrix4x4 const& mat) {
+		glm::mat4 ret{
+			mat.m00, mat.m10, mat.m20, mat.m30, // col 0
+			mat.m01, mat.m11, mat.m21, mat.m31, // col 1
+			mat.m02, mat.m12, mat.m22, mat.m32, // col 2
+			mat.m03, mat.m13, mat.m23, mat.m33  // col 3
+		};
+		return ret;
+	}
+
+	Matrix4x4 GlmMat4ToISMtx44(glm::mat4 const& mat) {
+		Matrix4x4 ret;
+
+		ret.m00 = mat[0][0]; ret.m01 = mat[1][0]; ret.m02 = mat[2][0]; ret.m03 = mat[3][0]; // row 0
+		ret.m10 = mat[0][1]; ret.m11 = mat[1][1]; ret.m12 = mat[2][1]; ret.m13 = mat[3][1]; // row 1
+		ret.m20 = mat[0][2]; ret.m21 = mat[1][2]; ret.m22 = mat[2][2]; ret.m23 = mat[3][2]; // row 2
+		ret.m30 = mat[0][3]; ret.m31 = mat[1][3]; ret.m32 = mat[2][3]; ret.m33 = mat[3][3]; // row 3
+
+		return ret;
+	}
 }
