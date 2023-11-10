@@ -34,8 +34,10 @@ namespace IS
      */
 	class Manifold {
 	public:
-        RigidBody* mBodyA;     //!< Pointer to the first rigid body involved in the collision.
-        RigidBody* mBodyB;     //!< Pointer to the second rigid body involved in the collision.
+        //RigidBody* mBodyA;     //!< Pointer to the first rigid body involved in the collision.
+        //RigidBody* mBodyB;     //!< Pointer to the second rigid body involved in the collision.
+        Collider* mColliderA;
+        Collider* mColliderB;
         Vector2D mNormal;      //!< Normal vector of the contact.
         float mDepth;          //!< Penetration depth of the collision.
         Vector2D mContact1;    //!< First contact point in world space.
@@ -58,7 +60,7 @@ namespace IS
          * \param contact2 The second contact point in world space.
          * \param contactCount The number of contact points.
          */
-        Manifold(RigidBody* bodyA, RigidBody* bodyB,
+        Manifold(Collider* colliderA, Collider* colliderB,
             Vector2D const& normal, float const& depth,
             Vector2D const& contact1, Vector2D const& contact2, int const& contactCount);
 
@@ -71,7 +73,7 @@ namespace IS
          * \param bodyA The first rigid body involved in the collision.
          * \param bodyB The second rigid body involved in the collision.
          */
-        void FindContactPoints(RigidBody & bodyA, RigidBody & bodyB);
+        void FindContactPoints(Collider & colliderA, Collider& colliderB);
 
         /*!
          * \brief Calculates contact points for a collision between two polygons.

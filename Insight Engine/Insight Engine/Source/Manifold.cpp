@@ -23,8 +23,8 @@ namespace IS
 {
 	// Default constructor for the Manifold class.
 	Manifold::Manifold() {
-		mBodyA = nullptr;
-		mBodyB = nullptr;
+		mColliderA = nullptr;
+		mColliderB = nullptr;
 		mNormal = Vector2D();
 		mDepth = 0.f;
 		mContact1 = Vector2D();
@@ -33,11 +33,11 @@ namespace IS
 	}
 
 	// Constructor for the Manifold class that initializes its members.
-	Manifold::Manifold(RigidBody* bodyA, RigidBody* bodyB,
+	Manifold::Manifold(Collider* colliderA, Collider* colliderB,
 		Vector2D const& normal, float const& depth,
 		Vector2D const& contact1, Vector2D const& contact2, int const& contact_count) {
-		mBodyA = bodyA;
-		mBodyB = bodyB;
+		mColliderA = colliderA;
+		mColliderB = colliderB;
 		mNormal = normal;
 		mDepth = depth;
 		mContact1 = contact1;
@@ -45,14 +45,27 @@ namespace IS
 		mContactCount = contact_count;
 	}
 
+#if 0
 	// Calculates the contact points for the collision between two rigid bodies.
-	void Manifold::FindContactPoints(RigidBody & bodyA, RigidBody & bodyB) {
+	void Manifold::FindContactPoints(Collider& colliderA, Collider& colliderB) {
 		mContact1 = Vector2D();
 		mContact2 = Vector2D();
 		mContactCount = 0;
 
-		BodyShape shapeA = bodyA.mBodyShape;
-		BodyShape shapeB = bodyB.mBodyShape;
+		Collider colliderA = colliderA;
+		Collider colliderB = colliderB;
+
+		if (colliderA.mSelectedCollider.test(ColliderShape::BOX)) {
+			if (colliderB.mSelectedCollider.test(ColliderShape::BOX)) { // box vs box
+				FindPolygonsContactPoints(bodyA.GetTransformedVertices(), bodyB.GetTransformedVertices(), mContact1, mContact2, mContactCount);
+			}
+			if () {
+
+			}
+			if () {
+
+			}
+		}
 
 		switch (shapeA)
 		{
@@ -85,7 +98,7 @@ namespace IS
 			break;
 		}
 	}
-
+#endif
 	// Calculates contact points for a collision between two polygons.
 	void Manifold::FindPolygonsContactPoints(std::vector<Vector2D> const& verticesA, std::vector<Vector2D> const& verticesB, Vector2D& contact1, Vector2D& contact2, int& contactCount) {
 

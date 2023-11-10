@@ -27,9 +27,11 @@ namespace IS
 {    
     // Default constructor for the RigidBody class
     RigidBody::RigidBody() {
-        mVelocity = Vector2D(); // (0,0)
+        mPosition = Vector2D();
+        mRotation = 0.f;
         mAngularVelocity = 0.f;
-        mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
+        mVelocity = Vector2D(); // (0,0)
+        //mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
         mBodyType = BodyType::Dynamic;
         mForce = Vector2D();
         mAcceleration = Vector2D();
@@ -39,9 +41,9 @@ namespace IS
         mRestitution = 0.5f;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        mBodyShape = BodyShape::Box;
-        mTransformUpdateRequired = false;
-        mGridState = GridState::Uninitialized;
+        //mBodyShape = BodyShape::Box;
+        //mTransformUpdateRequired = false;
+        //mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;

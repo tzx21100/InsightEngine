@@ -66,9 +66,12 @@ namespace IS
         }
         // Member variables for rigid body properties
 
-        Vector2D mVelocity;                         /**< Linear velocity of the rigid body. */
+        Vector2D mPosition;
+        float mRotation;
         float mAngularVelocity;                     /**< Angular velocity of the rigid body. */
-        Transform mBodyTransform;                   /**< Transformation data (position, ratation, angle speed, scaling). */
+
+        Vector2D mVelocity;                         /**< Linear velocity of the rigid body. */
+        //Transform mBodyTransform;                   /**< Transformation data (position, ratation, angle speed, scaling). */
         BodyType mBodyType;                         /**< Type of the rigid body (Static, Dynamic, Kinematic). */
         Vector2D mForce;                            /**< Force applied to the rigid body. */
         Vector2D mAcceleration;                     /**< Acceleration of the rigid body. */
@@ -78,11 +81,11 @@ namespace IS
         float mRestitution;                         /**< Restitution coefficient (bounciness 0 to 1). */
         float mArea;                                /**< Area of the rigid body. */
         BodyState mState;                           /**< State of the rigid body. */
-        BodyShape mBodyShape;                           /**< Shape of the rigid body (Box, Circle, etc.). */
-        std::vector<Vector2D> mVertices;            /**< Vertices defining the polygon shape (for polygons). */
-        std::vector<Vector2D> mTransformedVertices; /**< Transformed vertices of the polygon shape. */
-        bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
-        GridState mGridState;                       /**< State of the body according to Grid (Inside, Overlap, Outside) */
+        //BodyShape mBodyShape;                           /**< Shape of the rigid body (Box, Circle, etc.). */
+        //std::vector<Vector2D> mVertices;            /**< Vertices defining the polygon shape (for polygons). */
+        //std::vector<Vector2D> mTransformedVertices; /**< Transformed vertices of the polygon shape. */
+        //bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
+
         float mInertia;                             /**< Inertia of the body. */
         float mInvInertia;                          /**< Inverse Inertia of the body. */
         float mStaticFriction;                      /**< Static friction of the body. */
