@@ -92,6 +92,8 @@ namespace IS
 
 		void CreateBoxCollider();
 
+		void CreateBoxVertices(float width, float height);
+
 		void UpdateBoxCollider(Transform const& trans);
 
 

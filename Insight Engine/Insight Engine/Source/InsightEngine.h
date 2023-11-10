@@ -45,6 +45,7 @@ void RegisterComponents() {
     engine.RegisterComponent<Pathfinder>();
     engine.RegisterComponent<AudioEmitter>();
     engine.RegisterComponent<AudioListener>();
+    engine.RegisterComponent<Collider>();
 
 }
 
@@ -62,6 +63,7 @@ void RegisterSystems() {
     Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
     Signature sign_pathfinding = engine.GenerateSignature<Pathfinder>();
     Signature sign_audio = engine.GenerateSignature<AudioEmitter, AudioListener, Transform>();
+    Signature sign_collision = engine.GenerateSignature<Transform, Collider>();
 
 
     // Register each system to Insight Engine
@@ -75,6 +77,7 @@ void RegisterSystems() {
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
     auto insight_guisystem = std::make_shared<GuiSystem>();
     auto insight_pathfinding = std::make_shared<Pathfinding>();
+    auto insight_collision = std::make_shared<CollisionSystem>();
 
 
     engine.AddSystem(insight_window, sign_default);
@@ -82,6 +85,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_audio, sign_audio);
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_physics, sign_physics);
+    engine.AddSystem(insight_collision, sign_collision);
     engine.AddSystem(insight_graphics, sign_graphics);
     engine.AddSystem(insight_fsm, sign_fsm);
     engine.AddSystem(insight_scriptmanager, sign_script);

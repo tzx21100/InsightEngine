@@ -427,7 +427,8 @@ namespace IS {
 
         // Entity already has all the components
         if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
-            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<ScriptComponent>(entity) &&
+            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
+            engine.HasComponent<ScriptComponent>(entity) &&
             engine.HasComponent<ButtonComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
@@ -463,6 +464,16 @@ namespace IS {
             if (ImGui::MenuItem(ICON_LC_PERSON_STANDING "  Rigidbody"))
             {
                 engine.AddComponent<RigidBody>(entity, RigidBody());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Collider Component
+        if (!engine.HasComponent<Collider>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_FLIP_HORIZONTAL_2 "  Collider"))
+            {
+                engine.AddComponent<Collider>(entity, Collider());
                 ImGui::CloseCurrentPopup();
             }
         }

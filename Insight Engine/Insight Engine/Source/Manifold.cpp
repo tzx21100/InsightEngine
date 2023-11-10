@@ -23,6 +23,8 @@ namespace IS
 {
 	// Default constructor for the Manifold class.
 	Manifold::Manifold() {
+		mBodyA = nullptr;
+		mBodyB = nullptr;
 		mColliderA = nullptr;
 		mColliderB = nullptr;
 		mNormal = Vector2D();
@@ -33,9 +35,12 @@ namespace IS
 	}
 
 	// Constructor for the Manifold class that initializes its members.
-	Manifold::Manifold(Collider* colliderA, Collider* colliderB,
+	Manifold::Manifold(RigidBody* bodyA, RigidBody* bodyB,
+		Collider* colliderA, Collider* colliderB,
 		Vector2D const& normal, float const& depth,
 		Vector2D const& contact1, Vector2D const& contact2, int const& contact_count) {
+		mBodyA = bodyA;
+		mBodyB = bodyB;
 		mColliderA = colliderA;
 		mColliderB = colliderB;
 		mNormal = normal;

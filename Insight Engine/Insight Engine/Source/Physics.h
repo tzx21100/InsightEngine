@@ -158,7 +158,7 @@ namespace IS {
          * \param color The color of the outline.
          * \param thickness The width of the outline.
          */
-        static void DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
+        static void DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.

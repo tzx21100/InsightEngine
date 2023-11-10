@@ -34,8 +34,8 @@ namespace IS
      */
 	class Manifold {
 	public:
-        //RigidBody* mBodyA;     //!< Pointer to the first rigid body involved in the collision.
-        //RigidBody* mBodyB;     //!< Pointer to the second rigid body involved in the collision.
+        RigidBody* mBodyA;     //!< Pointer to the first rigid body involved in the collision.
+        RigidBody* mBodyB;     //!< Pointer to the second rigid body involved in the collision.
         Collider* mColliderA;
         Collider* mColliderB;
         Vector2D mNormal;      //!< Normal vector of the contact.
@@ -60,7 +60,8 @@ namespace IS
          * \param contact2 The second contact point in world space.
          * \param contactCount The number of contact points.
          */
-        Manifold(Collider* colliderA, Collider* colliderB,
+        Manifold(RigidBody* bodyA, RigidBody* bodyB,
+            Collider* colliderA, Collider* colliderB,
             Vector2D const& normal, float const& depth,
             Vector2D const& contact1, Vector2D const& contact2, int const& contactCount);
 

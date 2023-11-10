@@ -116,8 +116,9 @@ namespace IS
          * \param height The height of the body (if applicable).
          * \param body_shape The shape of the rigid body (Box, Circle, etc.).
          */
-        RigidBody(Vector2D position, BodyType body_type, float mass, float restitution,
-            float width, float height, BodyShape body_shape);
+        RigidBody(Vector2D position, BodyType body_type, float mass, float restitution);
+
+        void CreateStaticBody(Vector2D const& position, float restitution);
 
         // Member functions for rigid body operations
 
@@ -248,35 +249,35 @@ namespace IS
             prefab["RigidBodyArea"] = mArea;
 
             // Serializing bodyShape (casted to int)
-            prefab["RigidBodyShapeType"] = static_cast<int>(mBodyShape);
+            //prefab["RigidBodyShapeType"] = static_cast<int>(mBodyShape);
 
-            // Serializing vertices and transformedVertices
-            Json::Value verticesArray(Json::arrayValue);
-            for (const auto& vertex : mVertices) {
-                Json::Value v;
-                v["x"] = vertex.x;
-                v["y"] = vertex.y;
-                verticesArray.append(v);
-            }
-            prefab["RigidBodyVertices"] = verticesArray;
+            //// Serializing vertices and transformedVertices
+            //Json::Value verticesArray(Json::arrayValue);
+            //for (const auto& vertex : mVertices) {
+            //    Json::Value v;
+            //    v["x"] = vertex.x;
+            //    v["y"] = vertex.y;
+            //    verticesArray.append(v);
+            //}
+            //prefab["RigidBodyVertices"] = verticesArray;
 
-            Json::Value transformedVerticesArray(Json::arrayValue);
-            for (const auto& vertex : mTransformedVertices) {
-                Json::Value v;
-                v["x"] = vertex.x;
-                v["y"] = vertex.y;
-                transformedVerticesArray.append(v);
-            }
-            prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
+            //Json::Value transformedVerticesArray(Json::arrayValue);
+            //for (const auto& vertex : mTransformedVertices) {
+            //    Json::Value v;
+            //    v["x"] = vertex.x;
+            //    v["y"] = vertex.y;
+            //    transformedVerticesArray.append(v);
+            //}
+            //prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
 
-            //prefab["RigidBodyCheckTransform"] = mCheckTransform;
-            prefab["mInertia"] = mInertia;
-            prefab["mInvInertia"] = mInvInertia;
-            prefab["mStaticFriction"] = mStaticFriction;
-            prefab["mDynamicFriction"] = mDynamicFriction;
+            ////prefab["RigidBodyCheckTransform"] = mCheckTransform;
+            //prefab["mInertia"] = mInertia;
+            //prefab["mInvInertia"] = mInvInertia;
+            //prefab["mStaticFriction"] = mStaticFriction;
+            //prefab["mDynamicFriction"] = mDynamicFriction;
 
-            // Serializing transformUpdateRequired
-            prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
+            //// Serializing transformUpdateRequired
+            //prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
 
             return prefab;
         }
@@ -312,26 +313,26 @@ namespace IS
             mArea = data["RigidBodyArea"].asFloat();
 
             // Deserializing bodyShape (assuming it's an enum or similar that can be cast from int)
-            mBodyShape = static_cast<BodyShape>(data["RigidBodyShapeType"].asInt());
+            //mBodyShape = static_cast<BodyShape>(data["RigidBodyShapeType"].asInt());
 
-            // Deserializing vertices and transformedVertices
-            const Json::Value verticesArray = data["RigidBodyVertices"];
-            mVertices.clear();
-            for (const auto& v : verticesArray) {
-                Vector2D vertex;
-                vertex.x = v["x"].asFloat();
-                vertex.y = v["y"].asFloat();
-                mVertices.push_back(vertex);
-            }
+            //// Deserializing vertices and transformedVertices
+            //const Json::Value verticesArray = data["RigidBodyVertices"];
+            //mVertices.clear();
+            //for (const auto& v : verticesArray) {
+            //    Vector2D vertex;
+            //    vertex.x = v["x"].asFloat();
+            //    vertex.y = v["y"].asFloat();
+            //    mVertices.push_back(vertex);
+            //}
 
-            const Json::Value transformedVerticesArray = data["RigidBodyTransformedVertices"];
-            mTransformedVertices.clear();
-            for (const auto& v : transformedVerticesArray) {
-                Vector2D vertex;
-                vertex.x = v["x"].asFloat();
-                vertex.y = v["y"].asFloat();
-                mTransformedVertices.push_back(vertex);
-            }
+            //const Json::Value transformedVerticesArray = data["RigidBodyTransformedVertices"];
+            //mTransformedVertices.clear();
+            //for (const auto& v : transformedVerticesArray) {
+            //    Vector2D vertex;
+            //    vertex.x = v["x"].asFloat();
+            //    vertex.y = v["y"].asFloat();
+            //    mTransformedVertices.push_back(vertex);
+            //}
 
 
             //mCheckTransform= data["RigidBodyCheckTransform"].asBool();
@@ -341,7 +342,7 @@ namespace IS
             mDynamicFriction = data["mDynamicFriction"].asFloat();
 
             // Deserializing transformUpdateRequired
-            mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
+            //mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
         }
 
 

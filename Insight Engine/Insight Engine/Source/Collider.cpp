@@ -7,8 +7,11 @@ namespace IS
 		center = Vector2D(0.f, 0.f);
 		offset = Vector2D(0.f, 0.f);
 		sizeScale = Vector2D(1.f, 1.f);
-		vertices.reserve(4);
-		transformedVertices.reserve(4);
+		vertices.emplace_back(Vector2D(0.f, 0.f));
+		vertices.emplace_back(Vector2D(0.f, 0.f));
+		vertices.emplace_back(Vector2D(0.f, 0.f));
+		vertices.emplace_back(Vector2D(0.f, 0.f));
+		transformedVertices = vertices;
 	}
 
 	BoxCollider::BoxCollider(Vector2D const& center_, Vector2D const& offset_, Vector2D const& sizeScale_, std::vector<Vector2D> const& vertices_, std::vector<Vector2D> const& transformedVertices_) {
@@ -34,6 +37,7 @@ namespace IS
 	Collider::Collider() {
 		mBoxCollider = BoxCollider();
 		mSelectedCollider.reset(); // Reset all bits to 0
+		mSelectedCollider.set(ColliderShape::BOX);
 	}
 
 	void Collider::CreateCollider() {
@@ -76,12 +80,7 @@ namespace IS
 
 	}
 
-	void Collider::UpdateBoxCollider(Transform const& trans) {
-
-		mBoxCollider.center = trans.world_position + mBoxCollider.offset;
-		float width = trans.scaling.x * mBoxCollider.sizeScale.x;
-		float height = trans.scaling.y * mBoxCollider.sizeScale.y;
-
+	void Collider::CreateBoxVertices(float width, float height) {
 		// the vertices are calculated based on origin (not transform yet)
 		float left = -width / 2.f;
 		float right = left + width;
@@ -95,10 +94,20 @@ namespace IS
 		box_vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
 
 		mBoxCollider.vertices = box_vertices;
+	}
+
+	void Collider::UpdateBoxCollider(Transform const& trans) {
+
+		mBoxCollider.center = trans.world_position + mBoxCollider.offset;
+		float width = trans.scaling.x * mBoxCollider.sizeScale.x;
+		float height = trans.scaling.y * mBoxCollider.sizeScale.y;
+
+		CreateBoxVertices(width, height);
 
 		for (int i = 0; i < mBoxCollider.vertices.size(); i++) {
-			mBoxCollider.transformedVertices[i].x = cosf(trans.rotation) * trans.world_position.x - sinf(trans.rotation) * trans.world_position.y + trans.world_position.x;
-			mBoxCollider.transformedVertices[i].y = sinf(trans.rotation) * trans.world_position.x + cosf(trans.rotation) * trans.world_position.y + trans.world_position.y;
+			float angle = glm::radians(trans.rotation);
+			mBoxCollider.transformedVertices[i].x = cosf(angle) * mBoxCollider.vertices[i].x - sinf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.x;
+			mBoxCollider.transformedVertices[i].y = sinf(angle) * mBoxCollider.vertices[i].x + cosf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.y;
 		}
 	}
 
