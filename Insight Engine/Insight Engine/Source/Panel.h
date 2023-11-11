@@ -101,10 +101,10 @@ namespace IS {
          */
         enum class aGizmoType
         {
-            GIZMO_TYPE_INVALID = -1,
-            GIZMO_TYPE_TRANSLATE = ImGuizmo::TRANSLATE,
-            GIZMO_TYPE_ROTATE = ImGuizmo::ROTATE_SCREEN,
-            GIZMO_TYPE_SCALE = ImGuizmo::SCALE
+            GIZMO_TYPE_INVALID      = -1,
+            GIZMO_TYPE_TRANSLATE    = ImGuizmo::TRANSLATE,
+            GIZMO_TYPE_ROTATE       = ImGuizmo::ROTATE_SCREEN,
+            GIZMO_TYPE_SCALE        = ImGuizmo::SCALE
         };
 
         /*!
