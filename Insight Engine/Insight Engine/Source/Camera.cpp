@@ -24,10 +24,6 @@ namespace IS {
 
 	// Static members initialization
 	aCameraType Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-	const float Camera::CAMERA_X_MIN = -16000.f;
-	const float Camera::CAMERA_X_MAX =  16000.f;
-	const float Camera::CAMERA_Y_MIN = -9000.f;
-	const float Camera::CAMERA_Y_MAX =  9000.f;
 	const float Camera::CAMERA_ZOOM_MIN = .1f;
 	const float Camera::CAMERA_ZOOM_MAX = 10.f;
 	const float Camera::CAMERA_ZOOM_SPEED_MIN = 0.01f;
@@ -49,8 +45,8 @@ namespace IS {
 
 	void Camera::UpdateCamPos(float newX, float newY) {
 		// Update the camera position while clamping it within specified limits.
-		world_position.x = std::clamp(newX, CAMERA_X_MIN, CAMERA_X_MAX);
-		world_position.y = std::clamp(newY, CAMERA_Y_MIN, CAMERA_Y_MAX);
+		world_position.x = newX;
+		world_position.y = newY;
 		UpdateCamXform();
 	}
 
@@ -101,7 +97,7 @@ namespace IS {
 	void Camera::ZoomCamera(float yoffset) {
 		// zoom based on positive or negative yOffset
 		mZoomLevel += yoffset * mZoomSpeed;
-		mZoomLevel = std::max(CAMERA_ZOOM_MIN, std::min(10.f, mZoomLevel));
+		mZoomLevel = std::clamp(mZoomLevel, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX);
 		UpdateCamXform();
 	}
 

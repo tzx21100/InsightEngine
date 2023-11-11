@@ -142,10 +142,6 @@ namespace IS {
 		/**
 		* Constants defining camera properties and limits.
 		*/
-		static const float CAMERA_X_MIN; ///< minimum x bound of camera
-		static const float CAMERA_X_MAX; ///< maximum x bound of camera
-		static const float CAMERA_Y_MIN; ///< minimum y bound of camera
-		static const float CAMERA_Y_MAX; ///< maximum y bound of camera
 		static const float CAMERA_ZOOM_MIN; ///< minimum zoom level
 		static const float CAMERA_ZOOM_MAX; ///< maximum zoom level
 		static const float CAMERA_ZOOM_SPEED_MIN; ///< minimum rate of zoom
