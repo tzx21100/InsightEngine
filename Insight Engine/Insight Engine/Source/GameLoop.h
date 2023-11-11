@@ -157,9 +157,7 @@ namespace IS {
 
             //trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             //sprite_point.primitive_type = GL_POINTS;
-
-            int width = engine.GetWindowWidth();
-            int height = engine.GetWindowHeight();
+            
             //entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
             //auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
             //auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
@@ -169,13 +167,6 @@ namespace IS {
             //trans_ai.setWorldPosition(200.f,-200.f);
             //body_ai.mAngularVelocity = 10.f;
             //body_ai.mRestitution = 0.1f;
-
-            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width,(float)height);
-        #ifdef USING_IMGUI
-            Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-        #else
-            Camera::mActiveCamera = CAMERA_TYPE_GAME;
-        #endif // USING_IMGUI
 
             auto& scene_manager = SceneManager::Instance();
             scene_manager.LoadScene("Assets\\Scenes\\basicLevel.insight");

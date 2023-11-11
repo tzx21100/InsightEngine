@@ -104,6 +104,8 @@ namespace IS {
          */
         bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
 
+        bool RenderControlVec3(std::string const& label, Vector3D& values, float x_reset = 0.f, float y_reset = 0.f, float z_reset = 0.f, float column_width = 100.f);
+
         /*!
          * \brief Renders a combo box for an enumeration type using ImGui.
          *

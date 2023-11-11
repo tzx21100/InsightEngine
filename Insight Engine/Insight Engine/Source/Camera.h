@@ -29,7 +29,7 @@
 
 namespace IS {
 	// Enumeration for camera type
-	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
+	
 
 	class Camera {
 	public:		

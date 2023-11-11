@@ -92,9 +92,10 @@ namespace IS::EditorUtils {
             ImVec2 button_size = { line_height + 3.f, line_height };
 
             // Render the X component with red color
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.77f, .16f, .04f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.84f, .31f, .25f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.77f, .16f, .04f, 1.f));
+            
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(196, 41, 10, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(214, 79, 64, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(196, 41, 10, 255));
             ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("X", button_size))
             {
@@ -112,10 +113,10 @@ namespace IS::EditorUtils {
             ImGui::PopItemWidth();
             ImGui::SameLine();
 
-            // Render the Y component with green color
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.44f, .67f, .01f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.55f, .74f, .21f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.44f, .67f, .01f, 1.f));
+            // Render the Y component with green color            
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(112, 170, 2, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(140, 189, 53, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(112, 170, 2, 255));
             ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Y", button_size))
             {
@@ -127,6 +128,104 @@ namespace IS::EditorUtils {
 
             ImGui::SameLine();
             if (ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f"))
+            {
+                adjusted = true;
+            }
+            ImGui::PopItemWidth();
+
+            ImGui::PopStyleVar();
+            ImGui::EndTable();
+        }
+
+        ImGui::PopID();
+        return adjusted;
+    }
+
+    bool RenderControlVec3(std::string const& label, Vector3D& values, float x_reset, float y_reset, float z_reset, float column_width)
+    {
+        bool adjusted = false;
+
+        ImGuiIO& io = ImGui::GetIO();
+        ImFont* const& FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
+
+        ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
+
+        ImGui::PushID(label.c_str());
+
+        if (ImGui::BeginTable(label.c_str(), 2, table_flags))
+        {
+            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+            ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted(label.c_str());
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+
+            // Set the width for both columns
+            ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+            float line_height = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
+            ImVec2 button_size = { line_height + 3.f, line_height };
+
+            // Render the X component with red color
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(196, 41, 10, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(214, 79, 64, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(196, 41, 10, 255));
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("X", button_size))
+            {
+                values.x = x_reset;
+                adjusted = true;
+            }
+            ImGui::PopFont();
+            ImGui::PopStyleColor(3);
+
+            ImGui::SameLine();
+            if (ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f"))
+            {
+                adjusted = true;
+            }
+            ImGui::PopItemWidth();
+
+            // Render the Y component with green color
+            ImGui::SameLine();
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(112, 170, 2, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(140, 189, 53, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(112, 170, 2, 255));
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("Y", button_size))
+            {
+                values.y = y_reset;
+                adjusted = true;
+            }
+            ImGui::PopFont();
+            ImGui::PopStyleColor(3);
+
+            ImGui::SameLine();
+            if (ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f"))
+            {
+                adjusted = true;
+            }
+            ImGui::PopItemWidth();
+
+            // Render the Z component with blue color
+            ImGui::SameLine();
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(59, 119, 214, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(78, 145, 223, 255));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(59, 119, 214, 255));
+            ImGui::PushFont(FONT_BOLD);
+            if (ImGui::Button("Z", button_size))
+            {
+                values.z = z_reset;
+                adjusted = true;
+            }
+            ImGui::PopFont();
+            ImGui::PopStyleColor(3);
+
+            ImGui::SameLine();
+            if (ImGui::DragFloat("##Z", &values.z, .1f, 0.f, 0.f, "%.2f"))
             {
                 adjusted = true;
             }

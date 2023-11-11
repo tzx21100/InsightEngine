@@ -158,6 +158,8 @@ namespace IS {
         void SetInspectMode(InspectorPanel::aInspectMode inspect_mode) { mInspectorPanel->mInspectMode = inspect_mode; }
         void ResetInspectMode() { mInspectorPanel->mInspectMode = InspectorPanel::aInspectMode::INSPECT_NONE; }
 
+        bool IsViewportHovered();
+
     private:
         // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
@@ -245,6 +247,11 @@ namespace IS {
          * \brief Processes camera panning.
          */
         void PanCamera();
+
+        /*!
+         * \brief Processes camera movement.
+         */
+        void MoveCamera(float move_speed);
     };
 
 } // end namespace IS

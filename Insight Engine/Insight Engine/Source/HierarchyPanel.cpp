@@ -66,7 +66,10 @@ namespace IS {
 
                 bool camera_tree_opened = ImGui::TreeNodeEx(ICON_LC_CAMERA "  Camera", camera_tree_flags);
                 if (ImGui::IsItemClicked())
+                {
                     mEditorLayer.SetInspectMode(INSPECT_CAMERA);
+                    mEditorLayer.ResetEntitySelection();
+                }
 
                 ImGui::Separator();
 

@@ -119,29 +119,15 @@ namespace IS {
 
         // @YIMING TO CHANGE ACCORDINGLY
         ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
-        ISGraphics::cameras3D[1].camera_mouse_callback(yk_test_delta.x, yk_test_delta.y);
+        ISGraphics::cameras3D[1].Rotate(yk_test_delta.x, yk_test_delta.y);
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
 
         if (mGamePanel->IsFocused())
         {
-            Camera::mActiveCamera = CAMERA_TYPE_GAME;
+            Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
         }
-
-        // Auto pause game if game panel is not in focus
         else
         {
-            if (mScenePanel->IsFocused())
-            {
-                engine.mRuntime = false;
-
-                // Set active camera to editor camera
-                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-            }
-            else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-            {
-                mHoveredEntity = {};
-            }
-
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
             my -= mScenePanel->GetViewportBounds()[0].y;
@@ -156,6 +142,7 @@ namespace IS {
             {
                 ZoomCamera();
                 PanCamera();
+                MoveCamera(10.f);
 
                 // Mouse picking - set hovered entity as the selected entity
                 if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGuizmo::IsOver())
@@ -169,6 +156,19 @@ namespace IS {
                         SetInspectMode(InspectorPanel::aInspectMode::INSPECT_ENTITY);
                 }
             }
+        }
+
+        // Auto pause game if game panel is not in focus
+        if (mScenePanel->IsFocused())
+        {
+            engine.mRuntime = false;
+
+            // Set active camera to editor camera
+            Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
+        }
+        else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+        {
+            mHoveredEntity = {};
         }
 
     } // end OnUpdate()
@@ -241,6 +241,20 @@ namespace IS {
     } // end OnRender()
 
     Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
+
+    bool EditorLayer::IsViewportHovered()
+    {
+        auto [mx, my] = ImGui::GetMousePos();
+        mx -= mScenePanel->GetViewportBounds()[0].x;
+        my -= mScenePanel->GetViewportBounds()[0].y;
+        Vector2D viewport_size = mScenePanel->GetViewportSize();
+        my = viewport_size.y - my;
+        int mouse_x = static_cast<int>(mx);
+        int mouse_y = static_cast<int>(my);
+
+        return (0 <= mouse_x && mouse_x < static_cast<int>(viewport_size.x) &&
+                0 <= mouse_y && mouse_y < static_cast<int>(viewport_size.y));
+    }
 
     void EditorLayer::RenderMenuBar()
     {
@@ -394,8 +408,8 @@ namespace IS {
                 // Grey out step button when not in game view
                 if (i == BUTTON_COUNT - 1)
                 {
-                    tint_color = (scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
-                    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME));
+                    tint_color = (scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
+                    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera == CAMERA_TYPE_GAME));
                 }
 
                 ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
@@ -415,7 +429,7 @@ namespace IS {
                 if (button_clicked[0])
                 {
                     engine.mRuntime = !engine.mRuntime;
-                    Camera::mActiveCamera = CAMERA_TYPE_GAME;
+                    Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus(ICON_LC_GAMEPAD_2 "  Game");
                     scene_manager.SaveScene();
                 }
@@ -424,7 +438,7 @@ namespace IS {
                 if (button_clicked[1])
                 {
                     engine.mRuntime = false;
-                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                    Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
                     ImGui::SetWindowFocus(ICON_LC_VIEW "  Scene");
                     scene_manager.ReloadActiveScene();
                 }
@@ -484,7 +498,7 @@ namespace IS {
 
     void EditorLayer::ZoomCamera()
     {
-        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
+        Camera3D& camera = ISGraphics::cameras3D[CAMERA_TYPE_EDITOR];
         ImGuiIO& io = ImGui::GetIO();
         float scroll_delta = io.MouseWheel;
         float zoom_level = camera.GetZoomLevel();
@@ -502,7 +516,7 @@ namespace IS {
         static ImVec2 previous_mouse_position;
         ImGuiIO& io = ImGui::GetIO();
         ImVec2 mouse_position = io.MousePos;
-        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
+        Camera3D& camera = ISGraphics::cameras3D[CAMERA_TYPE_EDITOR];
 
         if (!io.MouseDown[1])
         {
@@ -522,6 +536,12 @@ namespace IS {
         previous_mouse_position = mouse_position;
 
     } // end PanCamera()
+
+    void EditorLayer::MoveCamera(float move_speed)
+    {
+        Camera3D& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        camera.MoveCamera(move_speed);
+    }
 
     void EditorLayer::OpenScene()
     {

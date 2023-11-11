@@ -94,15 +94,22 @@ namespace IS {
         // create framebuffer
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
         mFramebuffer = std::make_shared<Framebuffer>(props);
-        std::for_each_n(cameras, 2, [width](Camera& camera)
-        {
-            camera.UpdateCamPos(0, 0);
-            camera.UpdateCamDim(static_cast<float>(width),static_cast<float>(InsightEngine::Instance().GetWindowHeight()));
-        });
+        //std::for_each_n(cameras, 2, [width](Camera& camera)
+        //{
+        //    camera.UpdateCamPos(0, 0);
+        //    camera.UpdateCamDim(static_cast<float>(width),static_cast<float>(InsightEngine::Instance().GetWindowHeight()));
+        //});
 
         for (int i{}; i < 2; ++i) {
-            cameras3D[i].init_camera(width, height, 60.f);
+            cameras3D[i].Init(width, height, 60.f);
         }
+
+    #ifdef USING_IMGUI
+        Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
+    #else
+        Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
+    #endif // USING_IMGUI
+
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
@@ -260,10 +267,10 @@ namespace IS {
             }
 
             // @YIMING TO CHANGE ACCORDINGLY
-            cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y); // follows 2d camera's position for now
-            cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
+            //cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y); // follows 2d camera's position for now
+            //cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
             // cameras3D[1].camera_keyboard_callback(1500.f * delta_time); // follows keyboard's input to change pos, must comment line 263 coz it overrides
-            cameras3D[1].update_camera_xform();
+            cameras3D[Camera3D::mActiveCamera].Update();
             // Graphics system's draw
             Draw(delta_time);
         }

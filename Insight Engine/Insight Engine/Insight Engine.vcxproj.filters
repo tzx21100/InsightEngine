@@ -121,9 +121,6 @@
     <ClCompile Include="Source\BrowserPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FileUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
@@ -159,6 +156,9 @@
     </ClCompile>
     <ClCompile Include="Source\EditManager.cpp">
       <Filter>Editor\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Graphics\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +327,6 @@
     <ClInclude Include="Source\BrowserPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FileUtils.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
@@ -368,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="Source\EditManager.h">
       <Filter>Editor\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Graphics\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

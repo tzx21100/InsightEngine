@@ -21,7 +21,96 @@
 #include "Camera3D.h"
 
 namespace IS {
+
 	aCameraType Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
+	const float Camera3D::CAMERA_ZOOM_MIN = .34f;
+	const float Camera3D::CAMERA_ZOOM_MAX = 10.f;
+	const float Camera3D::CAMERA_ZOOM_SPEED_MIN = 0.01f;
+	const float Camera3D::CAMERA_ZOOM_SPEED_MAX = 0.2f;
+	const float Camera3D::CAMERA_MOVE_SPEED_MIN = 1.f;
+	const float Camera3D::CAMERA_MOVE_SPEED_MAX = 10.f;
+	const float Camera3D::CAMERA_FOV_MIN = 0.f;
+	const float Camera3D::CAMERA_FOV_MAX = 176.f;
+
 	float Camera3D::mZoomSpeed = 0.1f;
 	float Camera3D::mMoveSpeed = 5.f;
-}
+
+	void Camera3D::Init(int width, int height, float fov)
+	{
+		mFOV = fov;
+		mAspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
+		// calculate camDist to see the entire game world of 1920 units width
+		float distance = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(mFOV) / 2.f));
+
+		mPosition = glm::vec3(0.f, 0.f, distance);
+		mNear = 0.1f;
+		mFar = distance * 2.f; // to cover zooming in and out
+	}
+
+	void Camera3D::Update()
+	{
+		float adjusted_fov = std::clamp(mFOV / mZoomLevel, CAMERA_FOV_MIN, CAMERA_FOV_MAX);
+		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
+		mProjection = glm::perspective(glm::radians(adjusted_fov), mAspectRatio, mNear, mFar);
+	}
+
+	void Camera3D::PanCamera(float delta_x, float delta_y)
+	{
+		// pan camera by adjusting pos in world coords
+		float new_position_x = mPosition.x - delta_x * mMoveSpeed / mZoomLevel;
+		float new_position_y = mPosition.y + delta_y * mMoveSpeed / mZoomLevel;
+		SetPosition(new_position_x, new_position_y);
+	}
+
+	void Camera3D::MoveCamera(float move_speed)
+	{
+		auto& engine = InsightEngine::Instance();
+		auto input = engine.GetSystem<InputManager>("Input");
+		float camera_speed = move_speed / mZoomLevel;
+
+		if (input->IsKeyHeld(GLFW_KEY_UP))
+		{
+			mPosition += mFront * camera_speed;
+		}
+		if (input->IsKeyHeld(GLFW_KEY_DOWN))
+		{
+			mPosition -= mFront * camera_speed;
+		}
+		if (input->IsKeyHeld(GLFW_KEY_LEFT))
+		{
+			mPosition -= glm::normalize(glm::cross(mFront, mUp)) * camera_speed;
+		}
+		if (input->IsKeyHeld(GLFW_KEY_RIGHT))
+		{
+			mPosition += glm::normalize(glm::cross(mFront, mUp)) * camera_speed;
+		}
+
+		mPosition.z = std::clamp(mPosition.z, 10.f, 3300.f);
+	}
+
+	void Camera3D::Rotate(float xoffset, float yoffset)
+	{
+		const float sensitivity = 0.1f;
+
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		mYaw += xoffset;
+		mPitch -= yoffset;
+
+		// clamp pitch
+		mPitch = std::clamp(mPitch, -90.f, 90.f);
+
+		// new direction camera is facing
+		mFront = glm::vec3{
+			cos(glm::radians(mYaw)) * cos(glm::radians(mPitch)),
+			sin(glm::radians(mPitch)),
+			sin(glm::radians(mYaw)) * cos(glm::radians(mPitch))
+		};
+
+		// normalize
+		mFront = glm::normalize(mFront);
+	}
+
+} // end namespace IS

@@ -30,92 +30,36 @@
 #include "Input.h"
 
 namespace IS {
+
 	// Enumeration for camera type
+	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
 
 	class Camera3D {
 	public:
-		void init_camera(int width, int height, float fieldOfView) {
-			initialFov = fieldOfView;
+		void Init(int width, int height, float fov);
 
-			fov = initialFov;
-			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-
-			// calculate camDist to see the entire game world of 1920 units width
-			float camDist = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(fov) / 2.f));
-
-			position = glm::vec3(0.f, 0.f, camDist);
-			near = 0.1f;
-			far = camDist * 2.f; // to cover zooming in and out
-		}
+		void Update();
 
 		// can use camera_keyboard_callback instead
-		void update_camera_pos(float newX, float newY) {
-			position.x = newX;
-			position.y = newY;
-		}
+		void SetPosition(float x, float y) { mPosition.x = x; mPosition.y = y; }
+		void SetPosition(float x, float y, float z) { mPosition = { x, y, z }; }
 
-		void update_camera_zoom(float zoomLevel) {
-			fov = initialFov / zoomLevel;
-		}
+		void SetZoomLevel(float zoom_level) { mZoomLevel = std::clamp(zoom_level, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX); }
+		float GetZoomLevel() const { return mZoomLevel; }
 
-		void update_camera_aspect_ratio(float ar) {
-			aspectRatio = ar; 
-		}
+		void PanCamera(float delta_x, float delta_y);
 
-		void update_camera_xform() {
-			
-			view = glm::lookAt(position, position + front, up);
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-		}
+		void SetAspectRatio(float ar) { mAspectRatio = ar;  }
 		
-		void camera_keyboard_callback(float cameraSpeed) {
+		void MoveCamera(float move_speed);
 
-			auto& engine = InsightEngine::Instance();
-			auto input = engine.GetSystem<InputManager>("Input");
+		void Rotate(float xoffset, float yoffset);
 
-			if (input->IsKeyHeld(GLFW_KEY_W)) {
-				position += front * cameraSpeed;
-			}
-			if (input->IsKeyHeld(GLFW_KEY_S)) {
-				position -= front * cameraSpeed;
-			}
-			if (input->IsKeyHeld(GLFW_KEY_A)) {
-				position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
-			}
-			if (input->IsKeyHeld(GLFW_KEY_D)) {
-				position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
-			}
-		}
+		glm::mat4 GetViewMatrix() { return mView; }
 
-		void camera_mouse_callback(float xOffset, float yOffset) {
-			const float sensitivity = 0.1f;
-			
-			xOffset *= sensitivity;
-			yOffset *= sensitivity;
-
-			yaw += xOffset;
-			pitch -= yOffset;
-
-			// clamp pitch
-			if (pitch > 89.0f) pitch = 89.0f;
-			else if (pitch < -89.0f) pitch = -89.0f;
-
-			// new direction camera is facing
-			front = glm::vec3{
-				cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
-				sin(glm::radians(pitch)),
-				sin(glm::radians(yaw)) * cos(glm::radians(pitch))
-			};
-
-			// normalize
-			front = glm::normalize(front);
-		}
-
-		glm::mat4 getViewMatrix() { return view; }
-
-		glm::mat4 getPerspectiveMatrix() { return projection; }
+		glm::mat4 GetProjectionMatrix() { return mProjection; }
 		
-		glm::mat4 getCameraToNDCXform() { return projection * view; }
+		glm::mat4 getCameraToNDCXform() { return mProjection * mView; }
 
 		/// Static members
 		static aCameraType mActiveCamera;
@@ -123,22 +67,38 @@ namespace IS {
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
 
-		glm::vec3 position{};
+		glm::vec3 mPosition{};
 
 	private:
-		const glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);
-		glm::vec3 front = glm::vec3(0.f, 0.f, -1.f);	
 
-		float aspectRatio{};
-		float initialFov{};
-		float fov{};
-		float near{};
-		float far{};
-		float pitch{ 0.f };
-		float yaw{ -90.f };
+		/**
+		* Constants defining camera properties and limits.
+		*/
+		static const float CAMERA_ZOOM_MIN; ///< minimum zoom level
+		static const float CAMERA_ZOOM_MAX; ///< maximum zoom level
+		static const float CAMERA_ZOOM_SPEED_MIN; ///< minimum rate of zoom
+		static const float CAMERA_ZOOM_SPEED_MAX; ///< maximum rate of zoom
+		static const float CAMERA_MOVE_SPEED_MIN; ///< minimum rate of pan
+		static const float CAMERA_MOVE_SPEED_MAX; ///< maximum rate of pan
+		static const float CAMERA_FOV_MIN; ///< minimum fov
+		static const float CAMERA_FOV_MAX; ///< maximum fov
 
-		glm::mat4 view{};
-		glm::mat4 projection{};
+		const glm::vec3 mUp = glm::vec3(0.f, 1.f, 0.f);
+		glm::vec3 mFront = glm::vec3(0.f, 0.f, -1.f);	
+
+		float mAspectRatio{};
+		float mFOV{};
+		float mNear{};
+		float mFar{};
+		float mPitch{ 0.f };
+		float mYaw{ -90.f };
+
+		float mZoomLevel = 1.f;
+
+		glm::mat4 mView{};
+		glm::mat4 mProjection{};
+
+		friend class InspectorPanel;
 	};
 }
 

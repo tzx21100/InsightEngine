@@ -96,7 +96,7 @@ namespace IS {
         mViewportPos.x = scene_pos.x - mEditorLayer.GetDockspacePosition().x;
         mViewportPos.y = scene_pos.y - mEditorLayer.GetDockspacePosition().y;
 
-        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 
         input->setCenterPos(mViewportPos.x + (float)scene_size.x / 2.f, mViewportPos.y + (float)scene_size.y / 2.f);
         input->setRatio(scene_size.x * camera.GetZoomLevel(), scene_size.y * camera.GetZoomLevel());
@@ -184,66 +184,66 @@ namespace IS {
 
             // Create a custom tooltip window
             ImGui::SetNextWindowSize(TOOLTIP_SIZE);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 5.0f);
             if (ImGui::BeginTooltip())
             {
                 // Set padding and indetation
                 const float PADDING = 10.f;
-                ImGui::Spacing();
+                ImGui::Dummy({ PADDING, PADDING });
                 ImGui::Indent(PADDING);
 
                 // Tooltip content
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("The following controls ONLY work if scene panel focused!");
-                ImGui::PopFont();
 
-                ImGui::Separator();
+                ImGui::Dummy({ PADDING, PADDING });
+
+                ImGui::SeparatorText("Editor Controls");
+                ImGui::PopFont();
+                ImGui::BulletText("Press 'Tab' to toggle editor");
+                ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("General Controls");
+                ImGui::SeparatorText("Gizmo Controls");
                 ImGui::PopFont();
-                ImGui::BulletText("Press 'Tab' to toggle GUI");
-                ImGui::BulletText("Click mouse scrollwheel to spawn entity");
-                ImGui::BulletText("Click right mouse button to spawn rigidbody entity");
-
-                ImGui::Separator();
+                ImGui::BulletText("Press 'Q' to disable gizmo");
+                ImGui::BulletText("Press 'W' to switch gizmo to translation mode");
+                ImGui::BulletText("Press 'E' to switch gizmo to rotation mode");
+                ImGui::BulletText("Press 'R' to switch gizmo to scaling mode");
+                ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Camera Controls");
+                ImGui::SeparatorText("Camera Controls");
                 ImGui::PopFont();
-                ImGui::BulletText("Hold Ctrl+Scroll to zoom in/out");
-                ImGui::BulletText("Drag mouse to move around");
-
-                ImGui::Separator();
+                ImGui::BulletText("Scroll to zoom in/out");
+                ImGui::BulletText("Drag right mouse button to pan around");
+                ImGui::BulletText("Press 'Up' to move camera closer");
+                ImGui::BulletText("Press 'Down' key to move further");
+                ImGui::BulletText("Press 'Left' key to move left");
+                ImGui::BulletText("Press 'Right' key to move right");
+                ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Player Controls");
+                ImGui::SeparatorText("Physics Controls");
                 ImGui::PopFont();
-                ImGui::BulletText("Press 'WASD' to move in the four directions");
-                ImGui::BulletText("Press 'Q' to rotate clockwise, 'E' to rotate counter-clockwise");
-
-                ImGui::Separator();
+                ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame");
+                ImGui::BulletText("Press 'Enter' to step frame");
+                ImGui::BulletText("Press '9' to spawn rigidbody+collider entity");
+                ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Physics Controls");
-                ImGui::PopFont();
-                ImGui::BulletText("Press '2' to enable draw collision boxes, '1' to disable");
-                ImGui::BulletText("Press 'G' to enable gravity, 'F' to disable");
-                ImGui::BulletText("Press 'Shift' + 'Enter' to freeze frame, 'Enter' to step frame");
-
-                ImGui::Separator();
-
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Audio Controls");
+                ImGui::SeparatorText("Audio Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'Z' to play sfx");
                 ImGui::BulletText("Press 'X' to play music");
 
                 // Reset padding and indentation
                 ImGui::Unindent(PADDING);
-                ImGui::Spacing();
+                ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::EndTooltip();
             }
+            ImGui::PopStyleVar();
         }
 
         // Icon to be displayed as overlay
@@ -270,8 +270,8 @@ namespace IS {
                           mViewportBounds[1].y - mViewportBounds[0].y);
 
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-        const glm::mat4 view = camera.getViewMatrix();
-        const glm::mat4 projection = camera.getPerspectiveMatrix();
+        const glm::mat4 view = camera.GetViewMatrix();
+        const glm::mat4 projection = camera.GetProjectionMatrix();
         auto& transform = engine.GetComponent<Transform>(selected_entity);
         glm::mat4 transform_matrix = transform.FUCKYK();
 
