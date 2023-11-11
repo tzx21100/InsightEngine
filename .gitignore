@@ -361,6 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Insight Engine/Insight Engine/Source/Body.h
-/Insight Engine/Insight Engine/Source/Grid.cpp
-/Insight Engine/Insight Engine/Source/Grid.cpp
