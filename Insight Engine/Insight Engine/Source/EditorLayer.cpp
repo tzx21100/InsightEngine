@@ -163,6 +163,10 @@ namespace IS {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
                     mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mHierarchyPanel->SetSelectedEntity(mHoveredEntity);
+
+                    // Set inspect mode to inspect entity
+                    if (IsAnyEntitySelected())
+                        SetInspectMode(InspectorPanel::aInspectMode::INSPECT_ENTITY);
                 }
             }
         }
