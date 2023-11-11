@@ -21,8 +21,8 @@ Insight Engine/Insight Engine/libraries/imgui/lib/
 Insight Engine/Insight Engine/libraries/imguizmo/lib/
 Insight Engine/Insight Engine/libraries/glad/lib/
 
-# Mono generated DLLs
-
+# Mono generated files
+Insight Engine/Insight Engine/Resources/
 
 # Build results
 [Dd]ebug/
