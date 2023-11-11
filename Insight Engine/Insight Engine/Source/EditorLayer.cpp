@@ -30,6 +30,7 @@
 #include <imgui.h>
 #include <ImGuizmo.h>
 #include <IconsLucide.h>
+
 #pragma warning(push)
 #pragma warning(disable: 4201) // nonstandard nameless struct
 #include <glm/gtc/type_ptr.hpp>
@@ -66,31 +67,40 @@ namespace IS {
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached", mDebugName);
-    }
+
+    } // end OnAttach()
 
     void EditorLayer::OnDetach()
     {
         mPanels.clear();
         mIcons.clear();
         IS_CORE_DEBUG("{} detached", mDebugName);
-    }
+
+    } // end OnDetach()
 
     void EditorLayer::OnUpdate(float)
     {
         auto& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
-        // Shortcuts
+        // Modifier keys
         const bool CTRL_HELD    = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
         const bool SHIFT_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
         const bool ALT_HELD     = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+
+        // File
         const bool N_PRESSED    = input->IsKeyPressed(GLFW_KEY_N);
         const bool O_PRESSED    = input->IsKeyPressed(GLFW_KEY_O);
         const bool S_PRESSED    = input->IsKeyPressed(GLFW_KEY_S);
         const bool F4_PRESSED   = input->IsKeyPressed(GLFW_KEY_F4);
         const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
+
+        // Edit
         const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
         const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
+
+        // Gizmos
+        const bool Q_PRESSED    = input->IsKeyPressed(GLFW_KEY_Q);
         const bool W_PRESSED    = input->IsKeyPressed(GLFW_KEY_W);
         const bool E_PRESSED    = input->IsKeyPressed(GLFW_KEY_E);
         const bool R_PRESSED    = input->IsKeyPressed(GLFW_KEY_R);
@@ -105,9 +115,10 @@ namespace IS {
         if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
 
         if (!mGizmoInUse) {
-            if (W_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::TRANSLATE); }
-            if (E_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::ROTATE_Z); }
-            if (R_PRESSED) { mGizmoType = static_cast<int>(ImGuizmo::SCALE); }
+            if (Q_PRESSED) { mGizmoType = -1; }
+            if (W_PRESSED) { mGizmoType = ImGuizmo::TRANSLATE; }
+            if (E_PRESSED) { mGizmoType = ImGuizmo::ROTATE_Z; }
+            if (R_PRESSED) { mGizmoType = ImGuizmo::SCALE; }
         }
 
         ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
@@ -137,95 +148,25 @@ namespace IS {
             auto [mx, my] = ImGui::GetMousePos();
             mx -= mScenePanel->GetViewportBounds()[0].x;
             my -= mScenePanel->GetViewportBounds()[0].y;
-            Vec2 viewportSize = mScenePanel->GetViewportBounds()[1] - mScenePanel->GetViewportBounds()[0];
-            my = viewportSize.y - my;
+            Vector2D viewport_size = mScenePanel->GetViewportSize();
+            my = viewport_size.y - my;
             int mouse_x = static_cast<int>(mx);
             int mouse_y = static_cast<int>(my);
 
             // Check if mouse is within bounds of the scene panel
-            if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
+            if (0 <= mouse_x && mouse_x < static_cast<int>(viewport_size.x) &&
+                0 <= mouse_y && mouse_y < static_cast<int>(viewport_size.y))
             {
                 ZoomCamera();
                 PanCamera();
 
                 // Mouse picking - set hovered entity as the selected entity
-                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
+                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGuizmo::IsOver())
                 {
                     int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
                     mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mHierarchyPanel->SetSelectedEntity(mHoveredEntity);
                 }
-
-                // Mouse dragging - change selected/hovered entity translation
-                //else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
-                //{
-                //    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
-
-                //    Entity entity = *mHierarchyPanel->GetSelectedEntity();
-
-                //    // Translate entity position
-                //    if (engine.HasComponent<Transform>(entity))
-                //    {
-                //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                //        auto& transform = engine.GetComponent<Transform>(entity);
-                //        transform.world_position.x += mouse_position_delta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
-                //        transform.world_position.y -= mouse_position_delta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
-                //    }
-                //    ImGui::ResetMouseDragDelta();
-                //}
-                
-                //else if (mHierarchyPanel->GetSelectedEntity())
-                //{
-                //    static bool wasMouseDown = false;
-                //    ImVec2 mousePositionDelta = ImGui::GetMouseDragDelta();
-
-                //    Entity entity = *mHierarchyPanel->GetSelectedEntity();
-                //    static Entity last_entity = entity;
-
-                //    // Translate entity position
-                //    if (engine.HasComponent<Transform>(entity))
-                //    {
-                //        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
-                //        auto& transform = engine.GetComponent<Transform>(entity);
-
-                //        // Store the old translation for the command
-                //        static Vector2D oldTranslation = {};
-                //        if (last_entity != entity)
-                //        {
-                //            last_entity = entity;
-                //            oldTranslation = transform.world_position;
-                //            IS_CORE_WARN("Selected entity changed!");
-                //        }
-
-                //        // Translate entity position
-                //        transform.world_position.x += mousePositionDelta.x * engine.GetWindowWidth() / mScenePanel->GetViewportSize().x / camera.GetZoomLevel();
-                //        transform.world_position.y -= mousePositionDelta.y * engine.GetWindowHeight() / mScenePanel->GetViewportSize().y / camera.GetZoomLevel();
-
-                //        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                //        {
-                //            oldTranslation = transform.world_position;
-                //        }
-
-                //        // Check if the mouse was down in the previous frame and is released in the current frame
-                //        if (wasMouseDown && !ImGui::IsMouseDown(ImGuiMouseButton_Left) && oldTranslation != transform.world_position)
-                //        {
-                //            // Execute TranslateCommand
-                //            ExecuteCommand(std::make_shared<TranslateCommand>(entity, oldTranslation, transform.world_position));
-
-                //            // Reset the mouse down flag
-                //            wasMouseDown = false;
-                //        } else if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
-                //        {
-                //            // Set the mouse down flag
-                //            wasMouseDown = true;
-                //        }
-                //    }
-
-                //    ImGui::ResetMouseDragDelta();
-                //}
-
-
             }
         }
 
@@ -252,50 +193,51 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(0.f);
 
         // Start Rendering dockspace
-        ImGui::Begin("EditorDockSpace", nullptr, window_flags);
-        mDockspacePosition = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
-        ImGui::PopStyleVar(3);
-
-        ImGuiIO& io = ImGui::GetIO();
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec2 min_window_size = style.WindowMinSize;
-        style.WindowMinSize = ImVec2(350.f, 300.f);
-
-        // Enable dockspace
-        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+        if (ImGui::Begin("EditorDockSpace", nullptr, window_flags))
         {
-            ImGuiID dockspace_id = ImGui::GetID("Editor");
-            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+            mDockspacePosition = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
+            ImGui::PopStyleVar(3);
+
+            ImGuiIO& io = ImGui::GetIO();
+            ImGuiStyle& style = ImGui::GetStyle();
+            ImVec2 min_window_size = style.WindowMinSize;
+            style.WindowMinSize = ImVec2(350.f, 300.f);
+
+            // Enable dockspace
+            if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+            {
+                ImGuiID dockspace_id = ImGui::GetID("Editor");
+                ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+            }
+
+            // Menu bar
+            RenderMenuBar();
+
+            // Tool bar
+            RenderToolBar();
+
+            // Render Panels
+            for (auto& panel : mPanels)
+                panel->RenderPanel();
+
+            // Render outline for selected entity
+            RenderSelectedEntityOutline();
+
+            if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
+                *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
+            {
+                Entity entity = *mHierarchyPanel->GetSelectedEntity();
+                mHierarchyPanel->RenderEntityConfig(entity);
+            }
+
+            style.WindowMinSize = min_window_size;
         }
-
-        // Menu bar
-        RenderMenuBar();
-
-        // Tool bar
-        RenderToolBar();
-
-        // Render Panels
-        for (auto& panel : mPanels)
-            panel->RenderPanel();
-
-        static bool show = true;
-
-        ImGui::ShowDemoWindow(&show);
-
-        // Render outline for selected entity
-        RenderSelectedEntityOutline();
-
-        if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
-            *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
-        {
-            Entity entity = *mHierarchyPanel->GetSelectedEntity();
-            mHierarchyPanel->RenderEntityConfig(entity);
-        }
-
-        style.WindowMinSize = min_window_size;
 
         ImGui::End(); // end dockspace
-    }
+
+        ImGui::ShowDemoWindow();
+
+    } // end OnRender()
 
     Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
 
@@ -344,23 +286,9 @@ namespace IS {
 
             if (ImGui::BeginMenu("Edit"))
             {
-                //if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { mEditManager->Undo(); }
-                if (mEditManager->mUndoStack.size())
-                {
-
-                    if (ImGui::BeginMenu(ICON_LC_UNDO "  Undo"))
-                    {
-                        int i{};
-                        for (auto& command : mEditManager->mUndoStack)
-                        {
-                            ImGui::MenuItem((command->GetName() + std::to_string(i)).c_str());
-                            ++i;
-                        }
-
-                        ImGui::EndMenu();
-                    }
-                }
+                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { mEditManager->Undo(); }
                 if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) { mEditManager->Redo(); }
+
                 ImGui::EndMenu();
             } // end menu Edit
 
@@ -428,7 +356,8 @@ namespace IS {
                 engine.CreateGameScript(script_name);
                 engine.OpenGameScript(script_name);
             });
-    }
+
+    } // end RenderMenuBar()
 
     void EditorLayer::RenderToolBar()
     {
@@ -449,7 +378,8 @@ namespace IS {
         const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
         ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
+                                        ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
             ImVec2 window_size = ImGui::GetContentRegionMax();
@@ -464,9 +394,16 @@ namespace IS {
                 if (i == BUTTON_COUNT - 1)
                 {
                     tint_color = (scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
+                    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME));
                 }
-
+                ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
                 button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
+                ImGui::PopStyleColor();
+
+                if (i == BUTTON_COUNT - 1)
+                {
+                    ImGui::PopItemFlag();
+                }
                 ImGui::SetItemTooltip(tooltips[i]);
             }
 
@@ -499,7 +436,8 @@ namespace IS {
 
             ImGui::End(); // end window Runtime
         }
-    }
+
+    } // end RenderToolBar()
 
     void EditorLayer::AttachPanels()
     {
@@ -516,7 +454,8 @@ namespace IS {
         mPanels.emplace_back(mConsolePanel);
         mPanels.emplace_back(std::make_shared<InspectorPanel>(*this, mHierarchyPanel));
         mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
-    }
+
+    } // end AttachPanels
 
     void EditorLayer::RenderGizmo()
     {
@@ -543,7 +482,8 @@ namespace IS {
         glm::mat4 transform_matrix = transform.FUCKYK();
 
         ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
-            static_cast<ImGuizmo::OPERATION>(mGizmoType), ImGuizmo::WORLD, glm::value_ptr(transform_matrix));
+                             static_cast<ImGuizmo::OPERATION>(mGizmoType),
+                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix));
 
         if (!ImGuizmo::IsUsing()) {
             mGizmoInUse = false;
@@ -559,7 +499,8 @@ namespace IS {
         transform.scaling = { std::max(scale.x, 1.f), std::max(scale.y, 1.f) };
 
         mGizmoInUse = true;
-    }
+
+    } // end RenderGizmo()
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
     {
@@ -580,7 +521,8 @@ namespace IS {
 
             ImGui::EndPopup();
         }
-    }
+
+    } // end ShowCreatePopup()
 
     void EditorLayer::ZoomCamera()
     {
@@ -593,7 +535,8 @@ namespace IS {
             zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
         }
         camera.SetZoomLevel(zoom_level);
-    }
+
+    } // end ZoomCamera()
 
     void EditorLayer::PanCamera()
     {
@@ -619,7 +562,8 @@ namespace IS {
         ImVec2 delta = ImVec2(mouse_position.x - previous_mouse_position.x, mouse_position.y - previous_mouse_position.y);
         camera.PanCamera(delta.x, delta.y);
         previous_mouse_position = mouse_position;
-    }
+
+    } // end PanCamera()
 
     void EditorLayer::OpenScene()
     {
@@ -631,14 +575,16 @@ namespace IS {
             SceneManager::Instance().LoadScene(relative_path.string());
             IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
         }
-    }
+
+    } // end OpenScene()
 
     void EditorLayer::OpenScene(std::string const& path)
     {
         std::filesystem::path filepath(path);
         SceneManager::Instance().LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
-    }
+
+    } // end OpenScene()
 
     void EditorLayer::AcceptAssetBrowserPayload()
     {
@@ -652,7 +598,8 @@ namespace IS {
             }
             ImGui::EndDragDropTarget();
         }
-    }
+
+    } // end AcceptAssetBrowserPayload()
 
     bool EditorLayer::IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
 
@@ -686,9 +633,6 @@ namespace IS {
 
     void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
 
-    Vec2 EditorLayer::GetViewportSize() {
-        //IS_CORE_DEBUG("VP X: {}, VP Y: {}", mScenePanel->GetViewportSize().x, mScenePanel->GetViewportSize().y);
-        return { mScenePanel->GetViewportSize().x , mScenePanel->GetViewportSize().y };
-    }
+    Vec2 EditorLayer::GetViewportSize() { return { mScenePanel->GetViewportSize().x , mScenePanel->GetViewportSize().y }; }
 
 } // end namespace IS

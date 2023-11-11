@@ -37,7 +37,6 @@ namespace IS {
 
         // Begin creating the scene hierarchy panel
         ImGui::Begin(mName.c_str());
-        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
 
@@ -103,8 +102,6 @@ namespace IS {
         // Deselect entity
         if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && (ImGui::IsItemHovered() || ImGui::IsWindowHovered()))
             ResetSelection();
-
-        ImGui::PopStyleVar();
 
         // Accept file drop
         mEditorLayer.AcceptAssetBrowserPayload();

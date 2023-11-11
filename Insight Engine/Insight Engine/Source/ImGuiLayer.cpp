@@ -118,54 +118,66 @@ namespace IS {
         auto& style = ImGui::GetStyle();
         auto& colors = style.Colors;
 
-        // Colors
-        //------------------------------------------------------------------------
-        colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
+        constexpr ImColor DARK_SHARK    = ImColor( 25,  26, 28);
+        constexpr ImColor LIGHT_SHARK   = ImColor( 51,  52, 53);
+        constexpr ImColor ABBEY         = ImColor( 76,  77, 79);
+        constexpr ImColor MINE_SHAFT    = ImColor( 38,  38, 38);
+        constexpr ImColor DOVE_GRAY     = ImColor( 97,  97, 97);
+        constexpr ImColor TUNDORA       = ImColor( 71,  71, 71);
+        constexpr ImColor WEB_ORANGE    = ImColor(255, 165,  0);
+
+        colors[ImGuiCol_WindowBg]           = DARK_SHARK;
 
         // Headers
-        colors[ImGuiCol_Header] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-        colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-        colors[ImGuiCol_HeaderActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+        colors[ImGuiCol_Header]             = LIGHT_SHARK;
+        colors[ImGuiCol_HeaderHovered]      = ABBEY;
+        colors[ImGuiCol_HeaderActive]       = MINE_SHAFT;
 
         // Buttons
-        colors[ImGuiCol_Button] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-        colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-        colors[ImGuiCol_ButtonActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+        colors[ImGuiCol_Button]             = LIGHT_SHARK;
+        colors[ImGuiCol_ButtonHovered]      = ABBEY;
+        colors[ImGuiCol_ButtonActive]       = MINE_SHAFT;
+
         // Frame BG
-        colors[ImGuiCol_FrameBg] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
-        colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.3f, 0.305f, 0.31f, 1.0f };
-        colors[ImGuiCol_FrameBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+        colors[ImGuiCol_FrameBg]            = LIGHT_SHARK;
+        colors[ImGuiCol_FrameBgHovered]     = ABBEY;
+        colors[ImGuiCol_FrameBgActive]      = MINE_SHAFT;
+        style.FrameRounding                 = 3.f;
 
         // Tabs
-        colors[ImGuiCol_Tab] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-        colors[ImGuiCol_TabHovered] = ImVec4{ 0.38f, 0.3805f, 0.381f, 1.0f };
-        colors[ImGuiCol_TabActive] = ImVec4{ 0.28f, 0.2805f, 0.281f, 1.0f };
-        colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-        colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.2f, 0.205f, 0.21f, 1.0f };
+        colors[ImGuiCol_Tab]                = MINE_SHAFT;
+        colors[ImGuiCol_TabHovered]         = DOVE_GRAY;
+        colors[ImGuiCol_TabActive]          = TUNDORA;
+        colors[ImGuiCol_TabUnfocused]       = MINE_SHAFT;
+        colors[ImGuiCol_TabUnfocusedActive] = LIGHT_SHARK;
 
         // Title
-        colors[ImGuiCol_TitleBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-        colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
-        colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+        colors[ImGuiCol_TitleBg]            = MINE_SHAFT;
+        colors[ImGuiCol_TitleBgActive]      = MINE_SHAFT;
+        colors[ImGuiCol_TitleBgCollapsed]   = MINE_SHAFT;
 
         // Scrollbar
-        colors[ImGuiCol_SliderGrab] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
-        colors[ImGuiCol_SliderGrabActive] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+        colors[ImGuiCol_SliderGrab]         = WEB_ORANGE;
+        colors[ImGuiCol_SliderGrabActive]   = WEB_ORANGE;
+        style.GrabMinSize                   = 5.f;
+        style.GrabRounding                  = 5.f;
 
         // Check Mark
-        colors[ImGuiCol_CheckMark] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+        colors[ImGuiCol_CheckMark]          = WEB_ORANGE;
 
         // Resize Grip
-        colors[ImGuiCol_ResizeGripHovered] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
-        colors[ImGuiCol_ResizeGripActive] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
-        style.GrabMinSize = 5.f;
-        style.GrabRounding = 5.f;
+        colors[ImGuiCol_ResizeGripHovered]  = WEB_ORANGE;
+        colors[ImGuiCol_ResizeGripActive]   = WEB_ORANGE;
 
         // Dockspace
-        colors[ImGuiCol_DockingPreview] = ImVec4{ 1.f, 0.647f, 0.f, 1.f };
+        colors[ImGuiCol_DockingPreview]     = WEB_ORANGE;
+        style.DockingSeparatorSize          = 1.f;
 
         // Menubar
-        colors[ImGuiCol_MenuBarBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+        colors[ImGuiCol_MenuBarBg]          = LIGHT_SHARK;
+
+        // Drop/drop
+        colors[ImGuiCol_DragDropTarget]     = WEB_ORANGE;
     }
 
     bool ImGuiLayer::WantCaptureMouse() const 

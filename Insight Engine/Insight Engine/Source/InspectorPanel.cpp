@@ -149,7 +149,6 @@ namespace IS {
         ImGui::PushID(entity);
 
         // Make everything rounded
-        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
         ImGuiIO& io = ImGui::GetIO();
         auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
@@ -735,7 +734,6 @@ namespace IS {
             }
         }); // end render Button Component
 
-        ImGui::PopStyleVar(); // end style rounding
         ImGui::PopID();
 
     } // end RenderComponentNodes()
