@@ -34,6 +34,7 @@ namespace IS {
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
+    Shader ISGraphics::quad_border_shader_pgm;
 
     // Texture vector
     std::vector<Image> ISGraphics::textures;
@@ -72,6 +73,7 @@ namespace IS {
         // init quad shader
         inst_quad_shader_pgm.setupInstSpriteShaders();
         inst_3d_quad_shader_pgm.setup3DInstSpriteShaders();
+        quad_border_shader_pgm.setupPickedQuadShaders();
 
         // init debugging lines and circles shaders
         inst_non_quad_shader_pgm.setupInstLineShaders();
@@ -257,9 +259,10 @@ namespace IS {
                 }
             }
 
-            cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y);
-            
+            // @YIMING TO CHANGE ACCORDINGLY
+            cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y); // follows 2d camera's position for now
             cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
+            // cameras3D[1].camera_keyboard_callback(1500.f * delta_time); // follows keyboard's input to change pos, must comment line 263 coz it overrides
             cameras3D[1].update_camera_xform();
             // Graphics system's draw
             Draw(delta_time);
@@ -292,7 +295,9 @@ namespace IS {
         // quads will be drawn first
         // Sprite::draw_instanced_quads();
         Sprite::draw_instanced_3D_quads();
-
+        setLineWidth(3.f);
+        Sprite::draw_picked_entity_border();
+        setLineWidth(2.f);
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
         Sprite::draw_instanced_lines();

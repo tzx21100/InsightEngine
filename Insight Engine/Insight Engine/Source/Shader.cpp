@@ -188,6 +188,47 @@ namespace IS {
         }
     }
 
+    void Shader::setupPickedQuadShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0)  in vec2  aVertexPosition;
+
+            uniform mat4 model_to_ndc_xform;
+
+            void main()
+            {
+                gl_Position = model_to_ndc_xform * vec4(aVertexPosition, 0.0, 1.0);
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+            layout(location = 0) out vec4 fFragColor;
+  
+            void main()
+            {
+                fFragColor = vec4(1.0, 0.675, 0.11, 1.0);
+            }
+        )";
+
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
     void Shader::setupInstLineShaders() {
         // vertex shader
         std::string vtx_shdr = R"(
@@ -340,6 +381,7 @@ namespace IS {
                 glGetShaderInfoLog(shader_hdl, log_len, &written_log_len, log_vect.data());
 
                 log = "Vertex shader compilation failed\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
+                IS_CORE_ERROR("Shader compilation failed!");
             }
             // Clean up the shader object and return GL_FALSE
             glDeleteShader(shader_hdl);
@@ -487,6 +529,12 @@ namespace IS {
     void Shader::setUniform(GLchar const* name, glm::mat3 const& val) {
         GLint loc = glGetUniformLocation(pgm_hdl, name);
         if (loc >= 0) glUniformMatrix3fv(loc, 1, GL_FALSE, &val[0][0]);
+        else std::cout << "Uniform variable " << name << " doesn't exist.\n";
+    }
+
+    void Shader::setUniform(GLchar const* name, glm::mat4 const& val) {
+        GLint loc = glGetUniformLocation(pgm_hdl, name);
+        if (loc >= 0) glUniformMatrix4fv(loc, 1, GL_FALSE, &val[0][0]);
         else std::cout << "Uniform variable " << name << " doesn't exist.\n";
     }
 

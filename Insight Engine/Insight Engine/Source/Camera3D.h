@@ -27,6 +27,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
+#include "Input.h"
 
 namespace IS {
 	// Enumeration for camera type
@@ -62,37 +63,29 @@ namespace IS {
 		}
 
 		void update_camera_xform() {
-			// new direction camera is facing
-			front = glm::vec3{
-				cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
-				sin(glm::radians(pitch)),
-				sin(glm::radians(yaw)) * cos(glm::radians(pitch))
-			};
-
-			// normalize
-			front = glm::normalize(front);
-
+			
 			view = glm::lookAt(position, position + front, up);
 			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 		}
 		
-		/*void camera_keyboard_callback(float cameraSpeed) {
+		void camera_keyboard_callback(float cameraSpeed) {
+
 			auto& engine = InsightEngine::Instance();
 			auto input = engine.GetSystem<InputManager>("Input");
 
-			if (input->IsKeyPressed(GLFW_KEY_W)) {
+			if (input->IsKeyHeld(GLFW_KEY_W)) {
 				position += front * cameraSpeed;
 			}
-			if (input->IsKeyPressed(GLFW_KEY_S)) {
+			if (input->IsKeyHeld(GLFW_KEY_S)) {
 				position -= front * cameraSpeed;
 			}
-			if (input->IsKeyPressed(GLFW_KEY_A)) {
+			if (input->IsKeyHeld(GLFW_KEY_A)) {
 				position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
 			}
-			if (input->IsKeyPressed(GLFW_KEY_D)) {
+			if (input->IsKeyHeld(GLFW_KEY_D)) {
 				position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
 			}
-		}*/
+		}
 
 		void camera_mouse_callback(float xOffset, float yOffset) {
 			const float sensitivity = 0.1f;

@@ -139,7 +139,7 @@ namespace IS {
 
         inline bool IsAnyEntitySelected() const { return mHierarchyPanel->IsAnyEntitySelected(); }
 
-        Entity GetSelectedEntity() const { return *mHierarchyPanel->mSelectedEntity; }
+        inline Entity GetSelectedEntity() const { return *mHierarchyPanel->mSelectedEntity; }
 
         void ResetEntitySelection() { mHierarchyPanel->ResetSelection(); }
 

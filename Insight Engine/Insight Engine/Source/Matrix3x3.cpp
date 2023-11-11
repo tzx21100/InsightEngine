@@ -19,6 +19,8 @@
 #include "Pch.h"
 #include "Matrix3x3.h"
 
+#pragma warning(disable : 26495)
+
 namespace IS
 {
 	// copy constructor

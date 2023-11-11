@@ -141,6 +141,27 @@ namespace IS {
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
     }
 
+    void Sprite::draw_picked_entity_border() {
+        InsightEngine& engine = InsightEngine::Instance();
+
+        // No entity selected, do nothing
+        if (!engine.GetEditorLayer()->IsAnyEntitySelected())
+            return;
+
+        Entity entity = engine.GetEditorLayer()->GetSelectedEntity();
+        auto& sprite = engine.GetComponent<Sprite>(entity);
+
+        // use sprite shader
+        Shader shader = ISGraphics::quad_border_shader_pgm;
+        shader.use();
+
+        // bind vao
+        glBindVertexArray(ISGraphics::meshes[4].vao_ID);
+
+        shader.setUniform("model_to_ndc_xform", sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
+        glDrawArrays(GL_LINE_LOOP, 0, ISGraphics::meshes[4].draw_count);
+    }
+
     void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float lineLength, float angleInDegrees) {
         // Translation
         Vector2D midpoint = (p0 + p1) / 2.f;

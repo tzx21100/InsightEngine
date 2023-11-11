@@ -436,6 +436,8 @@ namespace IS {
             auto& sprite = engine.GetComponent<Sprite>(entity);
             //auto& body = engine.GetComponent<RigidBody>(entity);
             ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f });
+
+            //Sprite::draw_picked_entity_border(sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
         }
     }
 

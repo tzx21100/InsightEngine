@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\InspectorPanel.cpp" />
     <ClCompile Include="Source\Manifold.cpp" />
+    <ClCompile Include="Source\Matrix4x4.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Panel.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
@@ -49,6 +50,7 @@
     <ClCompile Include="Source\Text.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\EditorUtils.cpp" />
+    <ClCompile Include="Source\Vector3D.cpp" />
     <ClCompile Include="Source\WindowSystem.cpp" />
     <ClCompile Include="Source\Graphics.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -100,6 +102,7 @@
     <ClInclude Include="Source\ISContainers.h" />
     <ClInclude Include="Source\JsonSaveLoad.h" />
     <ClInclude Include="Source\Manifold.h" />
+    <ClInclude Include="Source\Matrix4x4.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Panel.h" />
@@ -120,6 +123,7 @@
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\EditorUtils.h" />
     <ClInclude Include="Source\EditManager.h" />
+    <ClInclude Include="Source\Vector3D.h" />
     <ClInclude Include="Source\WindowSystem.h" />
     <ClInclude Include="Source\Graphics.h" />
     <ClInclude Include="Source\Input.h" />
