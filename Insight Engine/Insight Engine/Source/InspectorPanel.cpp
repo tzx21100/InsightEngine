@@ -33,10 +33,24 @@ namespace IS {
 
     void InspectorPanel::RenderPanel()
     {
-        ImGui::Begin(mName.c_str());
-        if (mHierarchyPanel->mSelectedEntity)
+        if (ImGui::Begin(mName.c_str()))
         {
-            RenderComponentNodes(*mHierarchyPanel->mSelectedEntity);
+            switch (mInspectMode)
+            {
+            case aInspectMode::INSPECT_CAMERA:
+                RenderCameraControls();
+                break;
+            case aInspectMode::INSPECT_SCENE:
+                break;
+            case aInspectMode::INSPECT_ENTITY:
+                if (mEditorLayer.IsAnyEntitySelected())
+                {
+                    RenderComponentNodes(mEditorLayer.GetSelectedEntity());
+                }
+                break;
+            default:
+                break;
+            }
         }
         ImGui::End(); // end window Inspector
     }
@@ -100,7 +114,7 @@ namespace IS {
                 if (ImGui::MenuItem("Delete Entity"))
                 {
                     engine.DeleteEntity(entity);
-                    mHierarchyPanel->ResetSelection();
+                    mEditorLayer.ResetEntitySelection();
                 }
 
                 ImGui::EndPopup();
@@ -147,6 +161,8 @@ namespace IS {
     void InspectorPanel::RenderComponentNodes(Entity entity)
     {
         ImGui::PushID(entity);
+
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
         // Make everything rounded
         ImGuiIO& io = ImGui::GetIO();
@@ -734,6 +750,7 @@ namespace IS {
             }
         }); // end render Button Component
 
+        ImGui::PopStyleVar(); // end style rounding
         ImGui::PopID();
 
     } // end RenderComponentNodes()
@@ -859,6 +876,117 @@ namespace IS {
             }
             ImGui::EndPopup();
         }
-    }
+    } // end AddAnimation()
+
+    void InspectorPanel::RenderCameraControls()
+    {
+        auto& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        const float SIZE = 16.f;
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        auto& style = ImGui::GetStyle();
+        float zoom_level = camera.GetZoomLevel();
+
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
+        if (ImGui::BeginTable("CameraType", 2))
+        {
+            ImGui::TableSetupColumn("CameraTypeLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Camera Type");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Perspective");
+
+            ImGui::EndTable(); // end camera type table
+        }
+
+        // Camera Position
+        Vector2D position = { camera.GetCamPos().x, camera.GetCamPos().y };
+        EditorUtils::RenderControlVec2("Position", position);
+        ImGui::SetItemTooltip("Adjust the position of the camera in world space");
+        camera.UpdateCamPos(position.x, position.y);
+
+        if (ImGui::BeginTable("CameraTable", 2))
+        {
+            ImGui::TableSetupColumn("CameraLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+            // Camera Width
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Width");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust the width of the camera\nAspect ratio is fixed at 16:9");
+
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+            float width = camera.GetCamDim().x;
+            float height = camera.GetCamDim().y;
+            if (ImGui::SliderFloat("##CameraWidth", &width, 1280.f, 3200.f, "%.0f"))
+            {
+                camera.UpdateCamDim(width, height);
+            }
+
+            // Camera Zoom
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Zoom");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust the zoom level of the camera");
+
+            // Zoom out with - button
+            ImGui::TableNextColumn();
+            if (ImGui::Button(ICON_LC_ZOOM_OUT))
+            {
+                zoom_level *= (1 - Camera::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::SetItemTooltip("Zooms out camera");
+
+            // Slider to adjust camera zoom
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (2 * SIZE + 3 * style.ItemSpacing.x));
+            if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+                                   (Camera::CAMERA_ZOOM_MIN), (Camera::CAMERA_ZOOM_MAX), "%.2fx", ImGuiSliderFlags_Logarithmic))
+            {
+                // Update the camera's zoom level directly
+                camera.SetZoomLevel(zoom_level);
+            }
+
+            // Zoom in with + button
+            ImGui::SameLine();
+            if (ImGui::Button(ICON_LC_ZOOM_IN))
+            {
+                zoom_level *= (1 + Camera::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::SetItemTooltip("Zooms in camera");
+
+            // Zoom speed
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Zoom Speed");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust zoom speed of camera");
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+            ImGui::SliderFloat("##CameraZoomSpeed", &Camera::mZoomSpeed, Camera::CAMERA_ZOOM_SPEED_MIN, Camera::CAMERA_ZOOM_SPEED_MAX, "%.2f");
+
+            // Pan speed
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Pan Speed");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust pan speed of camera");
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (SIZE + style.ItemSpacing.x));
+            ImGui::SliderFloat("##CameraPanSpeed", &Camera::mMoveSpeed, Camera::CAMERA_MOVE_SPEED_MIN, Camera::CAMERA_MOVE_SPEED_MAX, "%.2f");
+
+            ImGui::EndTable(); // end table CameraTable
+        }
+
+        ImGui::PopStyleVar(); // end style rounding
+
+    } // end RenderCameraControls()
 
 } // end namespace IS

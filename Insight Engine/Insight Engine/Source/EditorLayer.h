@@ -24,6 +24,7 @@
 #include "Layer.h"
 #include "Panel.h"
 #include "HierarchyPanel.h"
+#include "InspectorPanel.h"
 #include "EditManager.h"
 
 #include <functional>
@@ -136,10 +137,26 @@ namespace IS {
 
         void ExecuteCommand(std::shared_ptr<Command> command) { mEditManager->ExecuteCommand(command); }
 
+        inline bool IsAnyEntitySelected() const { return mHierarchyPanel->IsAnyEntitySelected(); }
+
+        Entity GetSelectedEntity() const { return *mHierarchyPanel->mSelectedEntity; }
+
+        void ResetEntitySelection() { mHierarchyPanel->ResetSelection(); }
+
         /*!
-         * \brief Render the gizmo.
+         * \brief Gets the current inspect mode.
+         *
+         * \return The current inspect mode.
          */
-        void RenderGizmo();
+        InspectorPanel::aInspectMode GetInspectMode() const { return mInspectorPanel->mInspectMode; }
+
+        /*!
+         * \brief Sets the current inspect mode.
+         *
+         * \param inspect_mode The inspect mode to set to.
+         */
+        void SetInspectMode(InspectorPanel::aInspectMode inspect_mode) { mInspectorPanel->mInspectMode = inspect_mode; }
+        void ResetInspectMode() { mInspectorPanel->mInspectMode = InspectorPanel::aInspectMode::INSPECT_NONE; }
 
     private:
         // Internal Flags
@@ -152,14 +169,12 @@ namespace IS {
         std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
         std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
         std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Instance of hierarchy panel.
+        std::shared_ptr<InspectorPanel> mInspectorPanel; ///< Instance of inspector panel.
         std::shared_ptr<ConsolePanel> mConsolePanel; ///< Instance of console panel.
         std::shared_ptr<EditManager> mEditManager; ///< Instance of edit manager.
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
-
-        int mGizmoType = -1;
-        bool mGizmoInUse = false;
 
         /*!
          * \brief Render the menu bar.

@@ -24,7 +24,6 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
-#include "InspectorPanel.h"
 #include "Entities.h"
 #include "SceneManager.h"
 
@@ -61,6 +60,8 @@ namespace IS {
          */
         void ResetSelection();
 
+        inline bool IsAnyEntitySelected() const { return mSelectedEntity ? true : false; }
+
         /*!
          * \brief Getter for entity selected currently.
          * 
@@ -89,6 +90,13 @@ namespace IS {
         void RenderEntityConfig(Entity entity);
 
         /*!
+         * \brief Renders gui to add component to an entity.
+         *
+         * \param entity The Entity to add components to.
+         */
+        static void RenderAddComponent(Entity entity);
+
+        /*!
          * \brief Gets the size of the scene hierarchy panel.
          * 
          * \return Size of the scene hierarchy panel.
@@ -109,11 +117,6 @@ namespace IS {
          * \brief Renders a tree node displaying all layers.
          */
         void RenderLayerControls();
-
-        /*!
-         * \brief Renders controls for camera.
-         */
-        void RenderCameraControls();
 
         /*!
          * \brief Renders a node for the specified scene in the scene hierarchy.
@@ -158,14 +161,7 @@ namespace IS {
          */
         void DeleteEntity(Entity entity);
 
-        /*!
-         * \brief Renders gui to add component to an entity.
-         * 
-         * \param entity The Entity to add components to.
-         */
-        static void RenderAddComponent(Entity entity);
-
-        friend class InspectorPanel; ///< Grant InspectorPanel access to private data members.
+        friend class EditorLayer; ///< Grant EditorLayer access to private data members.
     };
 
 } // end namespace IS

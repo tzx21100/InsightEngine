@@ -142,7 +142,6 @@ namespace IS {
         colors[ImGuiCol_FrameBg]            = LIGHT_SHARK;
         colors[ImGuiCol_FrameBgHovered]     = ABBEY;
         colors[ImGuiCol_FrameBgActive]      = MINE_SHAFT;
-        style.FrameRounding                 = 3.f;
 
         // Tabs
         colors[ImGuiCol_Tab]                = MINE_SHAFT;

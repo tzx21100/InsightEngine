@@ -107,8 +107,8 @@ namespace IS {
 
 	void Camera::PanCamera(float delta_x, float delta_y) {
 		// pan camera by adjusting pos in world coords
-		float new_position_x = world_position.x - delta_x * mMoveSpeed;
-		float new_position_y = world_position.y + delta_y * mMoveSpeed;
+		float new_position_x = world_position.x - delta_x * mMoveSpeed / mZoomLevel;
+		float new_position_y = world_position.y + delta_y * mMoveSpeed / mZoomLevel;
 		UpdateCamPos(new_position_x, new_position_y);
 	}
 }

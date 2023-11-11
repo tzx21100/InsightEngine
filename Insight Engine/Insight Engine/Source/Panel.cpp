@@ -25,6 +25,11 @@
  // Dependencies
 #include <imgui.h>
 
+#pragma warning(push)
+#pragma warning(disable: 4201) // nonstandard nameless struct
+#include <glm/gtc/type_ptr.hpp> // glm::value_ptr
+#pragma warning(pop)
+
 namespace IS {
 
     void GamePanel::RenderPanel()
@@ -134,7 +139,8 @@ namespace IS {
             RenderHelp();
         }
 
-        mEditorLayer.RenderGizmo();
+        // Render gizmo
+        RenderGizmo();
 
         ImGui::End(); // end window Scene
         ImGui::PopStyleVar();
@@ -245,6 +251,51 @@ namespace IS {
         window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
         window_drawlist->AddText(text_position, IM_COL32_WHITE, display_text);
     }
+
+    void ScenePanel::RenderGizmo()
+    {
+        if (!mEditorLayer.IsAnyEntitySelected() || mGizmoType == aGizmoType::GIZMO_TYPE_INVALID)
+        {
+            mGizmoInUse = false;
+            return;
+        }
+
+        auto& engine = InsightEngine::Instance();
+        Entity selected_entity = mEditorLayer.GetSelectedEntity();
+
+        ImGuizmo::SetOrthographic(false);
+        ImGuizmo::SetDrawlist();
+        ImGuizmo::SetRect(mViewportBounds[0].x, mViewportBounds[0].y,
+                          mViewportBounds[1].x - mViewportBounds[0].x,
+                          mViewportBounds[1].y - mViewportBounds[0].y);
+
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        const glm::mat4 view = camera.getViewMatrix();
+        const glm::mat4 projection = camera.getPerspectiveMatrix();
+        auto& transform = engine.GetComponent<Transform>(selected_entity);
+        glm::mat4 transform_matrix = transform.FUCKYK();
+
+        ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
+                             static_cast<ImGuizmo::OPERATION>(mGizmoType),
+                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix));
+
+        if (!ImGuizmo::IsUsing())
+        {
+            mGizmoInUse = false;
+            return;
+        }
+
+        glm::vec3 translation, rotation, scale;
+        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation), glm::value_ptr(rotation), glm::value_ptr(scale));
+        float delta_rot = rotation.z - transform.rotation;
+
+        transform.world_position = { translation.x, translation.y };
+        transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
+        transform.scaling = { std::max(scale.x, 1.f), std::max(scale.y, 1.f) };
+
+        mGizmoInUse = true;
+
+    } // end RenderGizmo()
 
     // Performance Viewer Panel
     void PerformancePanel::RenderPanel()

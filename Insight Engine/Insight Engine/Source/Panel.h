@@ -25,6 +25,7 @@
 
 #include <string>
 #include <IconsLucide.h> // for icon fonts
+#include <ImGuizmo.h>
 
 namespace IS {
 
@@ -96,9 +97,21 @@ namespace IS {
     public:
 
         /*!
+         * \brief Represents type of gizmo to render.
+         */
+        enum class aGizmoType
+        {
+            GIZMO_TYPE_INVALID = -1,
+            GIZMO_TYPE_TRANSLATE = ImGuizmo::TRANSLATE,
+            GIZMO_TYPE_ROTATE = ImGuizmo::ROTATE_SCREEN,
+            GIZMO_TYPE_SCALE = ImGuizmo::SCALE
+        };
+
+        /*!
          * \brief Default constructor of scene panel.
          */
-        ScenePanel(EditorLayer& editor_layer) : Panel(ICON_LC_VIEW "  Scene", editor_layer) {}
+        ScenePanel(EditorLayer& editor_layer) : Panel(ICON_LC_VIEW "  Scene", editor_layer), mFocused(false), 
+            mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false), mViewportSize(), mViewportPos() {}
 
         /*!
          * \brief Overrides the base class method to render the scene panel.
@@ -129,15 +142,24 @@ namespace IS {
         bool MouseWithinViewport() const;
 
     private:
-        bool mFocused{}; ///< Boolean flag indicating if scene panel is in focus.
-        Vec2 mViewportSize{}; ///< Size of the scene panel.
-        Vec2 mViewportPos{};
+        bool mFocused; ///< Boolean flag indicating if scene panel is in focus.
+        aGizmoType mGizmoType; ///< Type gizmo used.
+        bool mGizmoInUse; ///< Boolean flag indicating if Gizmo is in use.
+        Vec2 mViewportSize; ///< Size of the scene panel.
+        Vec2 mViewportPos;
         std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
 
         /*!
          * \brief Renders a help tooltip overlay.
          */
         void RenderHelp();
+
+        /*!
+         * \brief Render the gizmo.
+         */
+        void RenderGizmo();
+
+        friend class EditorLayer;
     };
 
     /*!

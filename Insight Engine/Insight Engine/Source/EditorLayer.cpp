@@ -28,13 +28,8 @@
 // Dependencies
 #include <ranges>
 #include <imgui.h>
-#include <ImGuizmo.h>
 #include <IconsLucide.h>
-
-#pragma warning(push)
-#pragma warning(disable: 4201) // nonstandard nameless struct
-#include <glm/gtc/type_ptr.hpp>
-#pragma warning(pop)
+#include <ImGuizmo.h>
 
 namespace IS {
 
@@ -114,11 +109,12 @@ namespace IS {
         if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
         if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
 
-        if (!mGizmoInUse) {
-            if (Q_PRESSED) { mGizmoType = -1; }
-            if (W_PRESSED) { mGizmoType = ImGuizmo::TRANSLATE; }
-            if (E_PRESSED) { mGizmoType = ImGuizmo::ROTATE_Z; }
-            if (R_PRESSED) { mGizmoType = ImGuizmo::SCALE; }
+        if (!mScenePanel->mGizmoInUse) {
+            using enum ScenePanel::aGizmoType;
+            if (Q_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_INVALID; }
+            if (W_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_TRANSLATE; }
+            if (E_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_ROTATE; }
+            if (R_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_SCALE; }
         }
 
         ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
@@ -396,6 +392,7 @@ namespace IS {
                     tint_color = (scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
                     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME));
                 }
+
                 ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
                 button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
                 ImGui::PopStyleColor();
@@ -444,6 +441,7 @@ namespace IS {
         mGamePanel      = std::make_shared<GamePanel>(*this);
         mScenePanel     = std::make_shared<ScenePanel>(*this);
         mHierarchyPanel = std::make_shared<HierarchyPanel>(*this);
+        mInspectorPanel = std::make_shared<InspectorPanel>(*this);
         mConsolePanel   = std::make_shared<ConsolePanel>(*this);
 
         mPanels.emplace_back(mGamePanel);
@@ -452,55 +450,10 @@ namespace IS {
         mPanels.emplace_back(std::make_shared<PerformancePanel>(*this));
         mPanels.emplace_back(std::make_shared<BrowserPanel>(*this));
         mPanels.emplace_back(mConsolePanel);
-        mPanels.emplace_back(std::make_shared<InspectorPanel>(*this, mHierarchyPanel));
+        mPanels.emplace_back(mInspectorPanel);
         mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
 
     } // end AttachPanels
-
-    void EditorLayer::RenderGizmo()
-    {
-        if (!mHierarchyPanel->GetSelectedEntity() || mGizmoType == -1)
-        {
-            mGizmoInUse = false;
-            return;
-        }
-
-        auto& engine = InsightEngine::Instance();
-        Entity selected_entity = *mHierarchyPanel->GetSelectedEntity();
-
-        ImGuizmo::SetOrthographic(false);
-        ImGuizmo::SetDrawlist();
-
-        ImGuizmo::SetRect(mScenePanel->GetViewportBounds()[0].x, mScenePanel->GetViewportBounds()[0].y,
-                          mScenePanel->GetViewportBounds()[1].x - mScenePanel->GetViewportBounds()[0].x,
-                          mScenePanel->GetViewportBounds()[1].y - mScenePanel->GetViewportBounds()[0].y);
-
-        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-        const glm::mat4 view = camera.getViewMatrix();
-        const glm::mat4 projection = camera.getPerspectiveMatrix();
-        auto& transform = engine.GetComponent<Transform>(selected_entity);
-        glm::mat4 transform_matrix = transform.FUCKYK();
-
-        ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
-                             static_cast<ImGuizmo::OPERATION>(mGizmoType),
-                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix));
-
-        if (!ImGuizmo::IsUsing()) {
-            mGizmoInUse = false;
-            return;
-        }
-
-        glm::vec3 translation, rotation, scale;
-        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation), glm::value_ptr(rotation), glm::value_ptr(scale));
-        float delta_rot = rotation.z - transform.rotation;
-
-        transform.world_position = { translation.x, translation.y };
-        transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
-        transform.scaling = { std::max(scale.x, 1.f), std::max(scale.y, 1.f) };
-
-        mGizmoInUse = true;
-
-    } // end RenderGizmo()
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
     {
