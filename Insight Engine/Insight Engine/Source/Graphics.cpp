@@ -296,7 +296,9 @@ namespace IS {
         // Sprite::draw_instanced_quads();
         Sprite::draw_instanced_3D_quads();
         setLineWidth(3.f);
+    #ifdef USING_IMGUI
         Sprite::draw_picked_entity_border();
+    #endif // USING_IMGUI
         setLineWidth(2.f);
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
