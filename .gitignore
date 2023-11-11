@@ -16,9 +16,13 @@
 # Mono auto generated files
 mono_crash.*
 
+# Project generated libs
 Insight Engine/Insight Engine/libraries/imgui/lib/
 Insight Engine/Insight Engine/libraries/imguizmo/lib/
 Insight Engine/Insight Engine/libraries/glad/lib/
+
+# Mono generated DLLs
+
 
 # Build results
 [Dd]ebug/
