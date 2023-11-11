@@ -16,6 +16,10 @@
 # Mono auto generated files
 mono_crash.*
 
+Insight Engine/Insight Engine/libraries/imgui/lib/
+Insight Engine/Insight Engine/libraries/imguizmo/lib/
+Insight Engine/Insight Engine/libraries/glad/lib/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
