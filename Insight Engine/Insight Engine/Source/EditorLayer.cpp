@@ -28,6 +28,7 @@
 // Dependencies
 #include <ranges>
 #include <imgui.h>
+#include <imgui_internal.h>
 
 namespace IS {
 
@@ -129,6 +130,12 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::SetNextWindowBgAlpha(0.f);
 
+        // Set minimum window size within dockspace
+        //ImGuiStyle& style = ImGui::GetStyle();
+        //const ImVec2 default_min_window_size = style.WindowMinSize;
+        //const ImVec2 min_window_size = { 350.f, 300.f };
+        //ImGui::GetStyle().WindowMinSize = min_window_size;
+
         // Start Rendering dockspace
         if (ImGui::Begin("EditorDockSpace", nullptr, window_flags))
         {
@@ -136,9 +143,6 @@ namespace IS {
             ImGui::PopStyleVar(3);
 
             ImGuiIO& io = ImGui::GetIO();
-            ImGuiStyle& style = ImGui::GetStyle();
-            ImVec2 min_window_size = style.WindowMinSize;
-            style.WindowMinSize = ImVec2(350.f, 300.f);
 
             // Enable dockspace
             if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
@@ -166,11 +170,10 @@ namespace IS {
                 Entity entity = *mSelectedEntity;
                 mPanels.Get<HierarchyPanel>("Hierarchy")->RenderEntityConfig(entity);
             }
-
-            style.WindowMinSize = min_window_size;
         }
 
         ImGui::End(); // end dockspace
+        //style.WindowMinSize = default_min_window_size;
 
         ImGui::ShowDemoWindow();
 
@@ -300,7 +303,6 @@ namespace IS {
     {
         auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
-        auto input = engine.GetSystem<InputManager>("Input");
         const bool scene_loaded = (0 != scene_manager.GetSceneCount());
 
         auto& style = ImGui::GetStyle();
@@ -315,8 +317,17 @@ namespace IS {
         const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
         ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
+        ImGuiDockNodeFlags docknode_flags = ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoTabBar |
+            ImGuiDockNodeFlags_NoDockingSplitMe | ImGuiDockNodeFlags_NoDockingOverMe | ImGuiDockNodeFlags_NoDockingOverOther | ImGuiDockNodeFlags_NoResize;
+
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
-                                        ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
+            ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
+
+        ImGuiWindowClass window_class;
+        window_class.DockingAllowUnclassed = true;
+        window_class.DockNodeFlagsOverrideSet |= docknode_flags;
+        ImGui::SetNextWindowClass(&window_class);
+
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
             ImVec2 window_size = ImGui::GetContentRegionMax();

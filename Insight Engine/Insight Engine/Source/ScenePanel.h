@@ -41,15 +41,15 @@ namespace IS {
         {
             GIZMO_TYPE_INVALID = -1,
             GIZMO_TYPE_TRANSLATE = ImGuizmo::TRANSLATE,
-            GIZMO_TYPE_ROTATE = ImGuizmo::ROTATE_SCREEN,
-            GIZMO_TYPE_SCALE = ImGuizmo::SCALE
+            GIZMO_TYPE_ROTATE    = ImGuizmo::ROTATE_SCREEN,
+            GIZMO_TYPE_SCALE     = ImGuizmo::SCALE
         };
 
         /*!
          * \brief Default constructor of scene panel.
          */
         ScenePanel(EditorLayer& editor_layer) 
-            : Panel("Scene", editor_layer), mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false) {}
+            : Panel("Scene", editor_layer), mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false), mToolbarInUse(false) {}
 
         /*!
          * \brief Overrides the base class method to update the scene panel.
@@ -79,12 +79,18 @@ namespace IS {
         std::shared_ptr<Entity> mHoveredEntity; ///< Entity hovered.
         aGizmoType mGizmoType; ///< Type gizmo used.
         bool mGizmoInUse; ///< Boolean flag indicating if Gizmo is in use.
+        bool mToolbarInUse; ///< Boolean flag indicating if toolbar is in use.
         std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
 
         /*!
          * \brief Renders a help tooltip overlay.
          */
         void RenderHelp();
+
+        /*!
+         * \brief Renders a toolbar overlay.
+         */
+        void RenderToolbar();
 
         /*!
          * \brief Render the gizmo.

@@ -20,6 +20,9 @@
 #include "ScenePanel.h"
 #include "EditorUtils.h"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #pragma warning(push)
 #pragma warning(disable: 4201) // nonstandard nameless struct
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
@@ -53,7 +56,8 @@ namespace IS {
 
             // Set active camera to editor camera
             Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
-        } else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+        }
+        else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
         {
             mHoveredEntity.reset();
         }
@@ -69,7 +73,7 @@ namespace IS {
 
             // Check if mouse is within bounds of the scene panel
             if (0 <= mouse_x && mouse_x < static_cast<int>(mSize.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(mSize.y))
+                0 <= mouse_y && mouse_y < static_cast<int>(mSize.y) && !mToolbarInUse)
             {
                 ZoomCamera();
                 PanCamera();
@@ -171,6 +175,8 @@ namespace IS {
         mFocused = ImGui::IsWindowFocused();
         ImGui::End(); // end window Scene
         ImGui::PopStyleVar();
+
+        RenderToolbar();
 
     } // end RenderPanel()
 
@@ -276,6 +282,128 @@ namespace IS {
         window_drawlist->AddCircleFilled(circle_center, CIRCLE_RADIUS, IM_COL32(255, 255, 255, 50));
         window_drawlist->AddCircle(circle_center, CIRCLE_RADIUS, IM_COL32_WHITE);
         window_drawlist->AddText(text_position, IM_COL32_WHITE, display_text);
+    }
+
+    void ScenePanel::RenderToolbar()
+    {
+        const bool TOOLBAR_AUTO_DIRECTION_WHEN_DOCKED = true;
+
+        // ImGuiAxis_X = horizontal toolbar
+        // ImGuiAxis_Y = vertical toolbar
+        static ImGuiAxis toolbar_axis = ImGuiAxis_Y;
+        ImVec2 requested_size = (toolbar_axis == ImGuiAxis_X) ? ImVec2(-1.0f, 0.0f) : ImVec2(0.0f, -1.0f);
+        ImGui::SetNextWindowSize(requested_size);
+        ImGui::SetNextWindowBgAlpha(0.5f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 5.f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 5.f, 5.f});
+
+        // 2. Specific docking options for toolbars.
+        // Currently they add some constraint we ideally wouldn't want, but this is simplifying our first implementation
+        ImGuiWindowClass window_class;
+        window_class.DockingAllowUnclassed = true;
+        window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoCloseButton;
+        window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_HiddenTabBar; // ImGuiDockNodeFlags_NoTabBar // FIXME: Will need a working Undock widget for _NoTabBar to work
+        window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingSplitMe;
+        window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingOverMe;
+        window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingOverOther;
+
+
+        if (toolbar_axis == ImGuiAxis_X)
+            window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoResizeY;
+        else
+            window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoResizeX;
+        ImGui::SetNextWindowClass(&window_class);
+
+        // 3. Begin into the window
+        const float font_size = ImGui::GetFontSize();
+        const ImVec2 icon_size(ImFloor(font_size * 1.7f), ImFloor(font_size * 1.7f));
+        ImGui::Begin("ScenePanelToolbar", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar);
+        mToolbarInUse = ImGui::IsWindowHovered() || ImGui::IsWindowFocused();
+        // 4. Overwrite node size
+        ImGuiDockNode* node = ImGui::GetWindowDockNode();
+        if (node != NULL)
+        {
+            // Overwrite size of the node
+            ImGuiStyle& style = ImGui::GetStyle();
+            const ImGuiAxis toolbar_axis_perp = (ImGuiAxis)(toolbar_axis ^ 1);
+            const float TOOLBAR_SIZE_WHEN_DOCKED = style.WindowPadding[toolbar_axis_perp] * 2.0f + icon_size[toolbar_axis_perp];
+            node->WantLockSizeOnce = true;
+            node->Size[toolbar_axis_perp] = node->SizeRef[toolbar_axis_perp] = TOOLBAR_SIZE_WHEN_DOCKED;
+
+            if (TOOLBAR_AUTO_DIRECTION_WHEN_DOCKED)
+                if (node->ParentNode && node->ParentNode->SplitAxis != ImGuiAxis_None)
+                    toolbar_axis = (ImGuiAxis)(node->ParentNode->SplitAxis ^ 1);
+        }
+
+        // Populate tab bar
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.f, .0f));
+        ImGuiStyle& style = ImGui::GetStyle();
+
+        if (toolbar_axis == ImGuiAxis_X)
+        {
+            ImGui::SetCursorPosY((ImGui::GetCursorPos().y + ImGui::CalcTextSize(ICON_LC_GRIP_VERTICAL).y) / 2.f);
+            ImGui::TextUnformatted(ICON_LC_GRIP_VERTICAL);
+            ImGui::SameLine();
+            ImGui::SetCursorPosY((ImGui::GetCursorPos().y - style.FramePadding.y * 2));
+        }
+        else
+        {
+            ImGui::SetCursorPosX((ImGui::GetCursorPos().x + ImGui::CalcTextSize(ICON_LC_GRIP_HORIZONTAL).x) / 2.f);
+            ImGui::TextUnformatted(ICON_LC_GRIP_HORIZONTAL);
+        }
+
+        std::array<aGizmoType, 4> gizmo_types = { aGizmoType::GIZMO_TYPE_INVALID, aGizmoType::GIZMO_TYPE_TRANSLATE, aGizmoType::GIZMO_TYPE_ROTATE, aGizmoType::GIZMO_TYPE_SCALE };
+        std::array<const char*, gizmo_types.size()> icons = { ICON_LC_HAND, ICON_LC_MOVE, ICON_LC_REFRESH_CCW, ICON_LC_SCALING };
+        std::array<bool, gizmo_types.size()> buttons{};
+        std::array<const char*, gizmo_types.size()> tooltips = { "View Tool", "Move Tool", "Rotate Tool", "Scale Tool" };
+
+        for (size_t i{}; i < gizmo_types.size(); ++i)
+        {
+            // Set item default focus
+            if (gizmo_types[i] == mGizmoType)
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonActive]);
+            }
+
+            if (i > 0 && toolbar_axis == ImGuiAxis_X)
+            {
+                ImGui::SameLine();
+                ImGui::SetCursorPosY((ImGui::GetCursorPos().y - style.FramePadding.y * 2));
+            }
+            buttons[i] = ImGui::Button(icons[i], icon_size);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
+            ImGui::SetItemTooltip(tooltips[i]);
+            ImGui::PopStyleVar();
+
+            if (gizmo_types[i] == mGizmoType)
+                ImGui::PopStyleColor(2);
+        }
+        ImGui::PopStyleVar();
+
+        // Context-menu to change axis
+        if (!node || !TOOLBAR_AUTO_DIRECTION_WHEN_DOCKED)
+        {
+            if (ImGui::BeginPopupContextWindow())
+            {
+                if (ImGui::MenuItem("Horizontal", "", (toolbar_axis == ImGuiAxis_X)))
+                    toolbar_axis = ImGuiAxis_X;
+                if (ImGui::MenuItem("Vertical", "", (toolbar_axis == ImGuiAxis_Y)))
+                    toolbar_axis = ImGuiAxis_Y;
+                ImGui::EndPopup();
+            }
+        }
+
+        // Change gizmo type
+        mGizmoType = buttons[0] ? gizmo_types[0] :
+                     buttons[1] ? gizmo_types[1] :
+                     buttons[2] ? gizmo_types[2] :
+                     buttons[3] ? gizmo_types[3] : mGizmoType;
+
+        ImGui::End();
+
+        ImGui::PopStyleVar(3);
     }
 
     void ScenePanel::RenderGizmo()

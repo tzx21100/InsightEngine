@@ -23,8 +23,6 @@
 ----------------------------------------------------------------------------- */
 #include "ISMath.h"
 
-#include <imgui_internal.h>
-
 namespace IS {
 
     /*!
@@ -146,8 +144,6 @@ namespace IS {
                 ImGui::EndCombo();
             }
         }
-
-        void DockingToolbar(const char* name, ImGuiAxis* p_toolbar_axis);
 
     } // end namespace EditorUtils
 
