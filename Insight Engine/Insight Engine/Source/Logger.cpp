@@ -230,6 +230,7 @@ namespace IS {
         ImGui::EndChild(); // end child window Log Entries
 
         ImGui::PopStyleVar(); // end rounding
+        
         ImGui::End(); // end main window
     }
 

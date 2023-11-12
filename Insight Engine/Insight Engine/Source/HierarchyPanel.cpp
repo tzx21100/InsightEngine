@@ -36,7 +36,7 @@ namespace IS {
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
-        if (ImGui::Begin(mName.c_str()))
+        if (ImGui::Begin((ICON_LC_LIST_TREE "  " + mName).c_str()))
         {
 
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
@@ -119,7 +119,7 @@ namespace IS {
             // Deselect entity and reset inpect mode
             if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && (ImGui::IsItemHovered() || ImGui::IsWindowHovered()))
             {
-                ResetSelection();
+                mEditorLayer.ResetEntitySelection();
                 mEditorLayer.ResetInspectMode();
             }
 
@@ -128,7 +128,7 @@ namespace IS {
 
             ImGui::PopStyleVar(); // frame rounding
         }
-
+        mFocused = ImGui::IsWindowFocused();
         ImGui::End(); // end window Scene Hierarchy
 
     } // end RenderPanel()
@@ -230,7 +230,7 @@ namespace IS {
         // Switch scenes
         if (ImGui::IsItemClicked())
         {
-            ResetSelection();
+            mEditorLayer.ResetEntitySelection();
             scene_manager.SwitchScene(scene);
             IS_CORE_DEBUG("Scene {} : {} clicked", scene, scene_manager.GetSceneName(scene));
             IS_CORE_DEBUG("Active Scene {}", scene_manager.GetActiveScene());
@@ -262,7 +262,7 @@ namespace IS {
     {
         using enum InspectorPanel::aInspectMode;
         InsightEngine& engine = InsightEngine::Instance();
-        const bool is_selected_entity = mSelectedEntity && (*mSelectedEntity == entity);
+        const bool is_selected_entity = mEditorLayer.IsAnyEntitySelected() && (mEditorLayer.GetSelectedEntity() == entity);
         const bool is_inspect_entity = mEditorLayer.GetInspectMode() == INSPECT_ENTITY;
 
         ImGuiTreeNodeFlags tree_flags = is_selected_entity && is_inspect_entity ? ImGuiTreeNodeFlags_Selected : 0;
@@ -274,7 +274,7 @@ namespace IS {
         // Set as selected entity
         if (ImGui::IsItemClicked())
         {
-            mSelectedEntity = std::make_shared<Entity>(entity);
+            mEditorLayer.SetSelectedEntity(std::make_shared<Entity>(entity));
             mEditorLayer.SetInspectMode(INSPECT_ENTITY);
         }
 
@@ -292,10 +292,10 @@ namespace IS {
 
     void HierarchyPanel::ProcessSelectedEntityShortcuts()
     {
-        if (!mSelectedEntity)
+        if (!mEditorLayer.IsAnyEntitySelected())
             return;
 
-        Entity entity = *mSelectedEntity;
+        Entity entity = mEditorLayer.GetSelectedEntity();
 
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
@@ -342,8 +342,8 @@ namespace IS {
     void HierarchyPanel::DeleteEntity(Entity entity)
     {
         SceneManager::Instance().DeleteEntity(entity);
-        if (mSelectedEntity && *mSelectedEntity == entity)
-            mSelectedEntity.reset();
+        if (mEditorLayer.IsAnyEntitySelected() && mEditorLayer.GetSelectedEntity() == entity)
+            mEditorLayer.ResetEntitySelection();
     }
 
     void HierarchyPanel::RenderAddComponent(Entity entity)
@@ -419,30 +419,6 @@ namespace IS {
         }
 
     } // end RenderAddComponent()
-
-    void HierarchyPanel::ResetSelection() { mSelectedEntity.reset(); }
-
-    HierarchyPanel::EntityPtr HierarchyPanel::GetSelectedEntity() { return mSelectedEntity; }
-
-    void HierarchyPanel::SetSelectedEntity(EntityPtr entity_ptr) { mSelectedEntity = entity_ptr; }
-
-    void HierarchyPanel::RenderSelectedEntityOutline()
-    {
-        if (!mSelectedEntity)
-            return;
-
-        Entity entity = *mSelectedEntity;
-
-        auto& engine = InsightEngine::Instance();
-        if (engine.HasComponent<Sprite>(entity))
-        {
-            auto& sprite = engine.GetComponent<Sprite>(entity);
-            //auto& body = engine.GetComponent<RigidBody>(entity);
-            ISGraphics::DrawOutLine(sprite, { 1.f, .675f, .11f });
-
-            //Sprite::draw_picked_entity_border(sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
-        }
-    }
 
     void HierarchyPanel::RenderEntityConfig(Entity entity)
     {

@@ -27,6 +27,7 @@ namespace IS {
 
 	void SceneManager::NewScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		InsightEngine::Instance().NewScene();
 		CreateScene(scene_filename);
 	}
@@ -35,6 +36,7 @@ namespace IS {
 
 	void SceneManager::SaveSceneAs(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		mSceneNames[mActiveSceneID] = scene_filename;
 		UpdateActiveScene();
 		SaveScene();
@@ -42,6 +44,7 @@ namespace IS {
 
 	void SceneManager::LoadScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		auto& engine = InsightEngine::Instance();
 
 		// Construct filepath
@@ -68,7 +71,7 @@ namespace IS {
 
 	void SceneManager::SwitchScene(SceneID scene_id)
 	{
-
+		IS_PROFILE_FUNCTION();
 		// Nothing to do if scene already active
 		if (scene_id == mActiveSceneID)
 			return;
@@ -159,6 +162,7 @@ namespace IS {
 
 	void SceneManager::CreateScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();

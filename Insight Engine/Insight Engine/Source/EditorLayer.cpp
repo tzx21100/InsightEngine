@@ -28,8 +28,6 @@
 // Dependencies
 #include <ranges>
 #include <imgui.h>
-#include <IconsLucide.h>
-#include <ImGuizmo.h>
 
 namespace IS {
 
@@ -38,7 +36,7 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
-        mEditManager = std::make_shared<EditManager>();
+        mEditManager = std::make_unique<EditManager>();
 
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -61,15 +59,15 @@ namespace IS {
         mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "png_file_icon.png")->texture_id);
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
 
-        IS_CORE_DEBUG("{} attached", mDebugName);
+        IS_CORE_DEBUG("{} attached.", mDebugName);
 
     } // end OnAttach()
 
     void EditorLayer::OnDetach()
     {
-        mPanels.clear();
+        mPanels.Clear();
         mIcons.clear();
-        IS_CORE_DEBUG("{} detached", mDebugName);
+        IS_CORE_DEBUG("{} detached.", mDebugName);
 
     } // end OnDetach()
 
@@ -94,12 +92,6 @@ namespace IS {
         const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
         const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
 
-        // Gizmos
-        const bool Q_PRESSED    = input->IsKeyPressed(GLFW_KEY_Q);
-        const bool W_PRESSED    = input->IsKeyPressed(GLFW_KEY_W);
-        const bool E_PRESSED    = input->IsKeyPressed(GLFW_KEY_E);
-        const bool R_PRESSED    = input->IsKeyPressed(GLFW_KEY_R);
-
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
         if (CTRL_HELD && S_PRESSED) { SaveScene(); }                 // Ctrl+S
@@ -109,66 +101,10 @@ namespace IS {
         if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
         if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
 
-        if (!mScenePanel->mGizmoInUse) {
-            using enum ScenePanel::aGizmoType;
-            if (Q_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_INVALID; }
-            if (W_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_TRANSLATE; }
-            if (E_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_ROTATE; }
-            if (R_PRESSED) { mScenePanel->mGizmoType = GIZMO_TYPE_SCALE; }
-        }
-
-        // @YIMING TO CHANGE ACCORDINGLY
-        ImVec2 yk_test_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Middle);
-        ISGraphics::cameras3D[1].Rotate(yk_test_delta.x, yk_test_delta.y);
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Middle);
-
-        if (mGamePanel->IsFocused())
+        // Update panels
+        for (auto& panel : mPanels)
         {
-            Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
-        }
-        else
-        {
-            auto [mx, my] = ImGui::GetMousePos();
-            mx -= mScenePanel->GetViewportBounds()[0].x;
-            my -= mScenePanel->GetViewportBounds()[0].y;
-            Vector2D viewport_size = mScenePanel->GetViewportSize();
-            my = viewport_size.y - my;
-            int mouse_x = static_cast<int>(mx);
-            int mouse_y = static_cast<int>(my);
-
-            // Check if mouse is within bounds of the scene panel
-            if (0 <= mouse_x && mouse_x < static_cast<int>(viewport_size.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(viewport_size.y))
-            {
-                ZoomCamera();
-                PanCamera();
-                MoveCamera(10.f);
-
-                // Mouse picking - set hovered entity as the selected entity
-                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGuizmo::IsOver())
-                {
-                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
-                    mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
-                    mHierarchyPanel->SetSelectedEntity(mHoveredEntity);
-
-                    // Set inspect mode to inspect entity
-                    if (IsAnyEntitySelected())
-                        SetInspectMode(InspectorPanel::aInspectMode::INSPECT_ENTITY);
-                }
-            }
-        }
-
-        // Auto pause game if game panel is not in focus
-        if (mScenePanel->IsFocused())
-        {
-            engine.mRuntime = false;
-
-            // Set active camera to editor camera
-            Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
-        }
-        else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-        {
-            mHoveredEntity = {};
+            panel->UpdatePanel();
         }
 
     } // end OnUpdate()
@@ -219,16 +155,16 @@ namespace IS {
 
             // Render Panels
             for (auto& panel : mPanels)
-                panel->RenderPanel();
-
-        // Render outline for selected entity (moved to graphics)
-        // RenderSelectedEntityOutline();
-
-            if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
-                *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
             {
-                Entity entity = *mHierarchyPanel->GetSelectedEntity();
-                mHierarchyPanel->RenderEntityConfig(entity);
+                panel->RenderPanel();
+            }
+
+            auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
+
+            if (mSelectedEntity && hovered_entity && *mSelectedEntity == *hovered_entity)
+            {
+                Entity entity = *mSelectedEntity;
+                mPanels.Get<HierarchyPanel>("Hierarchy")->RenderEntityConfig(entity);
             }
 
             style.WindowMinSize = min_window_size;
@@ -241,20 +177,6 @@ namespace IS {
     } // end OnRender()
 
     Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
-
-    bool EditorLayer::IsViewportHovered()
-    {
-        auto [mx, my] = ImGui::GetMousePos();
-        mx -= mScenePanel->GetViewportBounds()[0].x;
-        my -= mScenePanel->GetViewportBounds()[0].y;
-        Vector2D viewport_size = mScenePanel->GetViewportSize();
-        my = viewport_size.y - my;
-        int mouse_x = static_cast<int>(mx);
-        int mouse_y = static_cast<int>(my);
-
-        return (0 <= mouse_x && mouse_x < static_cast<int>(viewport_size.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(viewport_size.y));
-    }
 
     void EditorLayer::RenderMenuBar()
     {
@@ -360,7 +282,7 @@ namespace IS {
             ShowCreatePopup("Create new scene", "NewScene", &mShowNewScene, [this](const char* scene_name)
             {
                 SceneManager& scene_manager = SceneManager::Instance();
-                mHierarchyPanel->ResetSelection();
+                ResetEntitySelection();
                 scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
@@ -457,20 +379,14 @@ namespace IS {
 
     void EditorLayer::AttachPanels()
     {
-        mGamePanel      = std::make_shared<GamePanel>(*this);
-        mScenePanel     = std::make_shared<ScenePanel>(*this);
-        mHierarchyPanel = std::make_shared<HierarchyPanel>(*this);
-        mInspectorPanel = std::make_shared<InspectorPanel>(*this);
-        mConsolePanel   = std::make_shared<ConsolePanel>(*this);
-
-        mPanels.emplace_back(mGamePanel);
-        mPanels.emplace_back(mScenePanel);
-        mPanels.emplace_back(mHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<PerformancePanel>(*this));
-        mPanels.emplace_back(std::make_shared<BrowserPanel>(*this));
-        mPanels.emplace_back(mConsolePanel);
-        mPanels.emplace_back(mInspectorPanel);
-        mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
+        mPanels.Emplace<GamePanel>          ("Game",        *this);
+        mPanels.Emplace<ScenePanel>         ("Scene",       *this);
+        mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
+        mPanels.Emplace<PerformancePanel>   ("Performance", *this);
+        mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
+        mPanels.Emplace<ConsolePanel>       ("Console",     *this);
+        mPanels.Emplace<InspectorPanel>     ("Inspector",   *this);
+        mPanels.Emplace<SettingsPanel>      ("Settings",    *this);
 
     } // end AttachPanels
 
@@ -496,56 +412,9 @@ namespace IS {
 
     } // end ShowCreatePopup()
 
-    void EditorLayer::ZoomCamera()
-    {
-        Camera3D& camera = ISGraphics::cameras3D[CAMERA_TYPE_EDITOR];
-        ImGuiIO& io = ImGui::GetIO();
-        float scroll_delta = io.MouseWheel;
-        float zoom_level = camera.GetZoomLevel();
-        if (scroll_delta != 0)
-        {
-            zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
-        }
-        camera.SetZoomLevel(zoom_level);
-
-    } // end ZoomCamera()
-
-    void EditorLayer::PanCamera()
-    {
-        static bool is_panning = false;
-        static ImVec2 previous_mouse_position;
-        ImGuiIO& io = ImGui::GetIO();
-        ImVec2 mouse_position = io.MousePos;
-        Camera3D& camera = ISGraphics::cameras3D[CAMERA_TYPE_EDITOR];
-
-        if (!io.MouseDown[1])
-        {
-            is_panning = false;
-            return;
-        }
-
-        if (!is_panning)
-        {
-            is_panning = true;
-            previous_mouse_position = mouse_position;
-        }
-
-        // Calculate the panning offset
-        ImVec2 delta = ImVec2(mouse_position.x - previous_mouse_position.x, mouse_position.y - previous_mouse_position.y);
-        camera.PanCamera(delta.x, delta.y);
-        previous_mouse_position = mouse_position;
-
-    } // end PanCamera()
-
-    void EditorLayer::MoveCamera(float move_speed)
-    {
-        Camera3D& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-        camera.MoveCamera(move_speed);
-    }
-
     void EditorLayer::OpenScene()
     {
-        mHierarchyPanel->ResetSelection();
+        ResetEntitySelection();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
@@ -571,21 +440,13 @@ namespace IS {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
             {
                 std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                mHierarchyPanel->ResetSelection();
+                ResetEntitySelection();
                 OpenScene(path.string());
             }
             ImGui::EndDragDropTarget();
         }
 
     } // end AcceptAssetBrowserPayload()
-
-    bool EditorLayer::IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
-
-    bool EditorLayer::IsScenePanelFocused() const { return mScenePanel->IsFocused(); }
-
-    ImTextureID EditorLayer::GetIcon(const char* icon) const { return mIcons.at(icon); }
-
-    void EditorLayer::RenderSelectedEntityOutline() const { mHierarchyPanel->RenderSelectedEntityOutline(); }
 
     void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
 
@@ -610,7 +471,5 @@ namespace IS {
     }
 
     void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
-
-    Vec2 EditorLayer::GetViewportSize() { return { mScenePanel->GetViewportSize().x , mScenePanel->GetViewportSize().y }; }
 
 } // end namespace IS

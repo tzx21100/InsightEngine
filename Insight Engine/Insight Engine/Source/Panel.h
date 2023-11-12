@@ -41,8 +41,10 @@ namespace IS {
          * \brief Default constructor.
          * 
          * \param name Name of the panel.
+         * \param editor_layer Reference to the editor layer that owns the panel.
          */
-        Panel(std::string const& name, EditorLayer& editor_layer) : mName(name), mEditorLayer(editor_layer) {}
+        Panel(std::string const& name, EditorLayer& editor_layer) 
+            : mName(name), mPosition(), mSize(), mFocused(false), mEditorLayer(editor_layer) {}
 
         /*!
          * \brief Virtual destructor.
@@ -50,16 +52,50 @@ namespace IS {
         virtual ~Panel() = default;
 
         /*!
+         * \brief Pure virtual function to update the panel.
+         */
+        virtual void UpdatePanel() = 0;
+
+        /*!
          * \brief Pure virtual function to render the panel.
          */
         virtual void RenderPanel() = 0;
 
+        /*!
+         * \brief Gets the name of the panel.
+         *
+         * \return The name of the panel.
+         */
+        std::string GetName() const { return mName; }
+
+        /*!
+         * \brief Gets the position of the panel.
+         * 
+         * \return The position of the panel.
+         */
+        Vector2D GetPosition() const { return mPosition; }
+
+        /*!
+         * \brief Gets the size of the panel.
+         *
+         * \return The size of the panel.
+         */
+        Vector2D GetSize() const { return mSize; }
+
+        /*!
+         * \brief Checks if the panel is focus.
+         *
+         * \return Boolean flag indicating if panel is focus.
+         */
+        bool IsFocused() const { return mFocused; }
+
     protected:
-        std::string mName; ///< Name of the panel.
+        std::string mName; /// < Name of the panel.
+        Vector2D mPosition; ///< Position of panel.
+        Vector2D mSize; ///< Size of panel.
+        bool mFocused; ///< Boolean flag indicating if panel is in focus.
         EditorLayer& mEditorLayer; ///< Reference to owner.
     };
-
-    class HierarchyPanel; ///< Forward declaration
 
     /*!
      * \brief A derived class representing a game panel in a dockspace.
@@ -71,95 +107,17 @@ namespace IS {
         /*!
          * \brief Default constructor of game panel.
          */
-        GamePanel(EditorLayer& editor_layer) : Panel(ICON_LC_GAMEPAD_2 "  Game", editor_layer) {}
+        GamePanel(EditorLayer& editor_layer) : Panel("Game", editor_layer) {}
+
+        /*!
+         * \brief Overrides the base class method to update the game panel.
+         */
+        void UpdatePanel() override;
 
         /*!
          * \brief Overrides the base class method to render the game panel.
          */
         void RenderPanel() override;
-
-        /*!
-         * \brief Check if the game panel is in focus.
-         * 
-         * \return boolean flag indicating if game panel is in focus.
-         */
-        bool IsFocused() const;
-
-    private:
-        bool mFocused{}; ///< Boolean flag indicating if the game panel is in focus.
-        Vec2 mViewportSize{}; ///< The size of the game panel.
-    };
-
-    /*!
-     * \brief A derived class representing a scene panel in a dockspace.
-     */
-    class ScenePanel : public Panel {
-    public:
-
-        /*!
-         * \brief Represents type of gizmo to render.
-         */
-        enum class aGizmoType
-        {
-            GIZMO_TYPE_INVALID      = -1,
-            GIZMO_TYPE_TRANSLATE    = ImGuizmo::TRANSLATE,
-            GIZMO_TYPE_ROTATE       = ImGuizmo::ROTATE_SCREEN,
-            GIZMO_TYPE_SCALE        = ImGuizmo::SCALE
-        };
-
-        /*!
-         * \brief Default constructor of scene panel.
-         */
-        ScenePanel(EditorLayer& editor_layer) : Panel(ICON_LC_VIEW "  Scene", editor_layer), mFocused(false), 
-            mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false), mViewportSize(), mViewportPos() {}
-
-        /*!
-         * \brief Overrides the base class method to render the scene panel.
-         */
-        void RenderPanel() override;
-
-        /*!
-         * \brief Check if the scene panel is in focus.
-         * 
-         * \return boolean flag indicating if scene panel is in focus.
-         */
-        bool IsFocused() const;
-
-        /*!
-         * \brief Get the size of the viewport.
-         * 
-         * \return vec2 containing the width and height of the viewport.
-         */
-        Vec2 GetViewportSize() const { return mViewportSize; }
-
-        /*!
-         * \brief Get upper and lower bounds of the viewport.
-         * 
-         * \return an array of 2 vec2 containing the upper and lower bounds of the viewport.
-         */
-        std::array<Vec2, 2> const& GetViewportBounds() const { return mViewportBounds; }
-
-        bool MouseWithinViewport() const;
-
-    private:
-        bool mFocused; ///< Boolean flag indicating if scene panel is in focus.
-        aGizmoType mGizmoType; ///< Type gizmo used.
-        bool mGizmoInUse; ///< Boolean flag indicating if Gizmo is in use.
-        Vec2 mViewportSize; ///< Size of the scene panel.
-        Vec2 mViewportPos;
-        std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
-
-        /*!
-         * \brief Renders a help tooltip overlay.
-         */
-        void RenderHelp();
-
-        /*!
-         * \brief Render the gizmo.
-         */
-        void RenderGizmo();
-
-        friend class EditorLayer;
     };
 
     /*!
@@ -171,7 +129,12 @@ namespace IS {
         /*!
          * \brief Default constructor of performance panel.
          */
-        PerformancePanel(EditorLayer& editor_layer) : Panel(ICON_LC_GAUGE "  Performance", editor_layer) {}
+        PerformancePanel(EditorLayer& editor_layer) : Panel("Performance", editor_layer) {}
+
+        /*!
+         * \brief Overrides the base class method to update the performance panel.
+         */
+        void UpdatePanel() override {}
 
         /*!
          * \brief Overrides the base class method to render the performance panel.
@@ -188,22 +151,17 @@ namespace IS {
         /*!
          * \brief Default constructor of console panel.
          */
-        ConsolePanel(EditorLayer& editor_layer) : Panel(ICON_LC_TERMINAL_SQUARE "  Console", editor_layer) {}
+        ConsolePanel(EditorLayer& editor_layer) : Panel("Console", editor_layer) {}
 
         /*!
-         * \brief Overrides the base class method to render the log console panel.
+         * \brief Overrides the base class method to update the console panel.
+         */
+        void UpdatePanel() override {}
+
+        /*!
+         * \brief Overrides the base class method to render the console panel.
          */
         void RenderPanel() override;
-
-        /*!
-         * \brief Gets the size of the log console panel.
-         * 
-         * \return The size of the log console panel.
-         */
-        Vec2 GetPanelSize() const;
-
-    private:
-        Vec2 mPanelSize; ///< Size of the panel.
     };
 
     /*!
@@ -215,7 +173,12 @@ namespace IS {
         /*!
          * \brief Default constructor of settings panel.
          */
-        SettingsPanel(EditorLayer& editor_layer) : Panel(ICON_LC_SETTINGS "  Settings", editor_layer) {}
+        SettingsPanel(EditorLayer& editor_layer) : Panel("Settings", editor_layer) {}
+
+        /*!
+         * \brief Overrides the base class method to update the settings panel.
+         */
+        void UpdatePanel() override {}
 
         /*!
          * \brief Overrides the base class method to render the settings panel.

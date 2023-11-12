@@ -42,6 +42,7 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\HierarchyPanel.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\ScenePanel.cpp" />
     <ClCompile Include="Source\ScriptEngine.cpp" />
     <ClCompile Include="Source\JsonSaveLoad.cpp" />
     <ClCompile Include="Source\ScriptGlue.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Source\Matrix4x4.h" />
     <ClInclude Include="Source\MemoryLeakCheck.h" />
     <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\OrderedMap.h" />
     <ClInclude Include="Source\Panel.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\ParticleEmitter.h" />
@@ -115,6 +117,7 @@
     <ClInclude Include="Source\InsightEngine.h" />
     <ClInclude Include="Source\HierarchyPanel.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\ScenePanel.h" />
     <ClInclude Include="Source\ScriptEngine.h" />
     <ClInclude Include="Source\ScriptGlue.h" />
     <ClInclude Include="Source\ScriptManager.h" />

@@ -51,7 +51,9 @@ namespace IS {
          * \param hierarchy_panel The instance of hierarchy panel.
          */
         InspectorPanel(EditorLayer& editor_layer)
-            : Panel(ICON_LC_INFO "  Inspector", editor_layer), mInspectMode(aInspectMode::INSPECT_NONE) {}
+            : Panel("Inspector", editor_layer), mInspectMode(aInspectMode::INSPECT_NONE) {}
+
+        void UpdatePanel() override {}
 
         /*!
          * \brief Renders the panel for the inspector.

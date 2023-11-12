@@ -33,7 +33,7 @@ namespace IS {
 
     void InspectorPanel::RenderPanel()
     {
-        if (ImGui::Begin(mName.c_str()))
+        if (ImGui::Begin((ICON_LC_INFO "  " + mName).c_str()))
         {
             switch (mInspectMode)
             {
@@ -52,6 +52,7 @@ namespace IS {
                 break;
             }
         }
+        mFocused = ImGui::IsWindowFocused();
         ImGui::End(); // end window Inspector
     }
 
