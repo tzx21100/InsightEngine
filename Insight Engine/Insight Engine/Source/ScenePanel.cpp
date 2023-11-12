@@ -167,6 +167,7 @@ namespace IS {
             if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
             {
                 RenderHelp();
+                RenderToolbar();
             }
 
             // Render gizmo
@@ -176,7 +177,7 @@ namespace IS {
         ImGui::End(); // end window Scene
         ImGui::PopStyleVar();
 
-        RenderToolbar();
+        
 
     } // end RenderPanel()
 
