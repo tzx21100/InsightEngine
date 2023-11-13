@@ -105,8 +105,8 @@ namespace IS {
                 ImGui::TableNextColumn();
 
                 static int selected_fps_index = -1;
-                const char* fps_options[] = { "30", "60", "120", "240", "9999" };
-                int fps_values[] = { 30, 60, 120, 240, 9999 };
+                const char* fps_options[] = { "15", "30", "60", "90", "120", "144", "240", "No Limit"};
+                int fps_values[] = { 15, 30, 60, 90, 120, 144, 240, 9999 };
 
                 for (int i{}; i < IM_ARRAYSIZE(fps_values); ++i)
                 {
