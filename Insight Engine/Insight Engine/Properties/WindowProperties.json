@@ -6,7 +6,7 @@
 		"Maximized" : true,
 		"TargetFPS" : 9999,
 		"Title" : "Insight Engine",
-		"Vsync" : true,
+		"Vsync" : false,
 		"Width" : 1920,
 		"Xpos" : 0,
 		"Ypos" : 23

@@ -24,6 +24,7 @@
 #include "InspectorPanel.h"
 #include "BrowserPanel.h"
 #include "FileUtils.h"
+#include "CommandHistory.h"
 
 // Dependencies
 #include <ranges>
@@ -37,7 +38,6 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
-        mEditManager = std::make_unique<EditManager>();
 
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -99,8 +99,8 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
-        if (CTRL_HELD && Z_PRESSED) { mEditManager->Undo(); }        // Ctrl + Z
-        if (CTRL_HELD && Y_PRESSED) { mEditManager->Redo(); }        // Ctrl + Y
+        if (CTRL_HELD && Z_PRESSED) { CommandHistory::Undo(); }      // Ctrl + Z
+        if (CTRL_HELD && Y_PRESSED) { CommandHistory::Redo(); }      // Ctrl + Y
 
         // Update panels
         for (auto& panel : mPanels)
@@ -226,8 +226,8 @@ namespace IS {
 
             if (ImGui::BeginMenu("Edit"))
             {
-                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { mEditManager->Undo(); }
-                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) { mEditManager->Redo(); }
+                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { CommandHistory::Undo(); }
+                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) { CommandHistory::Redo(); }
 
                 ImGui::EndMenu();
             } // end menu Edit
@@ -386,8 +386,8 @@ namespace IS {
     {
         mPanels.Emplace<GamePanel>          ("Game",        *this);
         mPanels.Emplace<ScenePanel>         ("Scene",       *this);
-        mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
         mPanels.Emplace<PerformancePanel>   ("Performance", *this);
+        mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
         mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
         mPanels.Emplace<ConsolePanel>       ("Console",     *this);
         mPanels.Emplace<InspectorPanel>     ("Inspector",   *this);

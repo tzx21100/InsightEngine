@@ -35,10 +35,13 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
+        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
         const bool Q_PRESSED = input->IsKeyPressed(GLFW_KEY_Q);
         const bool W_PRESSED = input->IsKeyPressed(GLFW_KEY_W);
         const bool E_PRESSED = input->IsKeyPressed(GLFW_KEY_E);
         const bool R_PRESSED = input->IsKeyPressed(GLFW_KEY_R);
+
+        mSnap = CTRL_HELD;
 
         // Keyboard inputs
         if (!mGizmoInUse)
@@ -245,6 +248,7 @@ namespace IS {
                 ImGui::BulletText("Press 'W' to switch gizmo to translation mode");
                 ImGui::BulletText("Press 'E' to switch gizmo to rotation mode");
                 ImGui::BulletText("Press 'R' to switch gizmo to scaling mode");
+                ImGui::BulletText("Hold 'Ctrl' to snap gizmo");
                 ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
@@ -433,9 +437,20 @@ namespace IS {
         auto& transform = engine.GetComponent<Transform>(selected_entity);
         glm::mat4 transform_matrix = transform.FUCKYK();
 
+        float snap_value{};
+        switch (mGizmoType)
+        {
+        case aGizmoType::GIZMO_TYPE_TRANSLATE:  snap_value = 50.f; break;
+        case aGizmoType::GIZMO_TYPE_ROTATE:     snap_value = 15.f; break;
+        case aGizmoType::GIZMO_TYPE_SCALE:      snap_value = 1.f; break;
+        default: break;
+        }
+        float snap_values[3] = { snap_value, snap_value, snap_value };
+
         ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
                              static_cast<ImGuizmo::OPERATION>(mGizmoType),
-                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix));
+                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
+                             nullptr, mSnap ? snap_values : nullptr);
 
         if (!ImGuizmo::IsUsing())
         {

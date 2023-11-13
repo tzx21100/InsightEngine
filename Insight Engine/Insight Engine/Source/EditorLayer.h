@@ -26,7 +26,6 @@
 #include "ScenePanel.h"
 #include "HierarchyPanel.h"
 #include "InspectorPanel.h"
-#include "EditManager.h"
 #include "OrderedMap.h"
 
 #include <functional>
@@ -121,15 +120,6 @@ namespace IS {
         inline Vec2 GetViewportSize() { return mPanels.Get<ScenePanel>("Scene")->GetSize(); }
 
         /*!
-         * \brief Executes a command using the provided shared pointer to a Command.
-         *
-         * This function delegates the execution of the command to the EditManager.
-         *
-         * \param command A shared pointer to the Command to be executed.
-         */
-        void ExecuteCommand(std::shared_ptr<Command> command) { mEditManager->ExecuteCommand(command); }
-
-        /*!
          * \brief Checks if any entity is currently selected.
          *
          * \return `true` if any entity is selected, `false` otherwise.
@@ -197,7 +187,6 @@ namespace IS {
         Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
 
         std::shared_ptr<Entity> mSelectedEntity; ///< Pointer to the selected entity.
-        std::unique_ptr<EditManager> mEditManager; ///< Instance of edit manager.
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         OrderedMap<std::string, Panel> mPanels; ///< An ordered map of panels.

@@ -146,10 +146,12 @@ namespace IS {
             ImGui::Separator();
             ImGui::Spacing();
 
-            if (ImGui::BeginChild("Systems"))
+            ImGui::BeginChild("Systems");
+            
+            // Child window contents
             {
                 // Create a table for system usage
-                ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV;
+                ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
                 if (ImGui::BeginTable("System Usage", 3, flags))
                 {
                     // Table headers
@@ -169,7 +171,7 @@ namespace IS {
                             continue;
 
                         // Compute usage percent
-                        double percent = (dt / engine.GetSystemDeltas().at("Engine")) * 100.0;
+                        float percent = (dt / engine.GetSystemDeltas().at("Engine"));
                         ImVec4 text_color = dt < 1.f / 60.f ? WHITE_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
 
                         // Display system usage
@@ -181,19 +183,17 @@ namespace IS {
 
                         ImGui::TableNextColumn();
                         ImGui::Spacing();
-                        ImGui::TextColored(text_color, "%.3lf ms", dt * 1000.0);
+                        ImGui::TextColored(text_color, "%.3lf ms", dt * 10'000.0);
 
                         ImGui::TableNextColumn();
-                        ImGui::Spacing();
-                        ImGui::TextColored(text_color, "%.2lf%%", percent);
-                        ImGui::Spacing();
+                        ImGui::ProgressBar(percent);
                     }
 
                     ImGui::EndTable(); // end table System Usage
                 }
-
-                ImGui::EndChild(); // end child window Systems
             }
+
+            ImGui::EndChild(); // end child window Systems
 
             ImGui::PopStyleVar();
         }

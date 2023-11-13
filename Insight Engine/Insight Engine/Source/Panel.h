@@ -44,7 +44,7 @@ namespace IS {
          * \param editor_layer Reference to the editor layer that owns the panel.
          */
         Panel(std::string const& name, EditorLayer& editor_layer) 
-            : mName(name), mPosition(), mSize(), mFocused(false), mEditorLayer(editor_layer) {}
+            : mName(name), mPosition(), mSize(), mFocused(false), mAppearing(false), mHovered(false), mEditorLayer(editor_layer) {}
 
         /*!
          * \brief Virtual destructor.

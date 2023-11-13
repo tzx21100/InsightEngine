@@ -49,7 +49,7 @@ namespace IS {
          * \brief Default constructor of scene panel.
          */
         ScenePanel(EditorLayer& editor_layer) 
-            : Panel("Scene", editor_layer), mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false), mToolbarInUse(false) {}
+            : Panel("Scene", editor_layer), mGizmoType(aGizmoType::GIZMO_TYPE_INVALID), mGizmoInUse(false), mSnap(false), mToolbarInUse(false) {}
 
         /*!
          * \brief Overrides the base class method to update the scene panel.
@@ -79,6 +79,7 @@ namespace IS {
         std::shared_ptr<Entity> mHoveredEntity; ///< Entity hovered.
         aGizmoType mGizmoType; ///< Type gizmo used.
         bool mGizmoInUse; ///< Boolean flag indicating if Gizmo is in use.
+        bool mSnap; ///< Boolean flag indicating if gizmo snapping is enabled.
         bool mToolbarInUse; ///< Boolean flag indicating if toolbar is in use.
         std::array<Vec2, 2> mViewportBounds; ///< The upper and lower bounds of the scene panel.
 
