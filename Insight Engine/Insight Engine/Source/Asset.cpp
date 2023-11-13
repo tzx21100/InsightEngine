@@ -166,7 +166,7 @@ namespace IS {
     void AssetManager::LoadImage(std::string const& filepath)
     {
         ImageLoad(filepath);
-        Image* img = GetImage(filepath);
+        Image* img = GetImage(std::filesystem::path(filepath).filename().string());
         img->texture_index = mCurrentTexId;
         mCurrentTexId++;
         ISGraphics::textures.emplace_back(*img);

@@ -237,9 +237,7 @@ namespace IS {
             float texture_height;
             bool has_texture = sprite.img.texture_id;
             bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
-            bool missing_filename = !filepath.has_filename() && has_texture;
             bool has_animation = !sprite.anims.empty();
-            std::string const& filename = missing_filename ? "Missing filename!" : filepath.filename().string();
 
             if (ImGui::BeginTable("Sprite Table", 2))
             {
@@ -278,9 +276,39 @@ namespace IS {
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::TextColored(missing_filename ? ImVec4(1.f, .675f, .11f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f), filename.c_str());
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo("##TextureCombo", sprite.img.mFileName.c_str()))
+                {
+                    auto const asset = engine.GetSystem<AssetManager>("Asset");
+                    for (auto const& [name, img] : asset->mImageList)
+                    {
+                        std::filesystem::path path(name);
+                        std::string filename = path.filename().string();
 
-                ImGui::EndTable();
+                        if (ImGui::Selectable(filename.c_str(), filename == name))
+                        {
+                            sprite.img = img;
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+
+                    ImGui::EndCombo(); // end combo TextureCombo
+                }
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        auto asset = engine.GetSystem<AssetManager>("Asset");
+                        IS_CORE_DEBUG("Image : {} ", path.string());
+                        sprite.img = *asset->GetImage(path.string());
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::EndTable(); // end table Sprite Table
             }
 
             // Use placeholder if width or height of texture
@@ -640,6 +668,39 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Sound");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo("##SoundName", emitter.soundName.c_str()))
+                {
+                    auto& engine = InsightEngine::Instance();
+                    auto const asset = engine.GetSystem<AssetManager>("Asset");
+
+                    for (auto const& [sound_name, sound] : asset->mSoundList)
+                    {
+                        if (ImGui::Selectable(sound_name.c_str(), emitter.soundName == sound_name))
+                        {
+                            emitter.soundName = sound_name;
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+
+                    ImGui::EndCombo(); // end combo SoundName
+                }
+                // Accept payload
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SOUND"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        emitter.soundName = path.string();
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Looped");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -665,35 +726,6 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Pitch", &emitter.pitch);
-
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Name");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-
-                ImGui::BeginGroup();
-
-                // Edit Audio text
-                std::string& text = emitter.soundName;
-                char buffer[256]{};
-                auto source = text | std::ranges::views::take(text.size());
-                std::ranges::copy(source, std::begin(buffer));
-                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-                if (ImGui::InputText("##EmitterSoundName", buffer, sizeof(buffer), input_text_flags))
-                    text = std::string(buffer);
-
-                if (ImGui::BeginDragDropTarget())
-                {
-                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_AUDIO"))
-                    {
-                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                        IS_CORE_DEBUG("Audio : {} ", path.string());
-                        emitter.soundName = path.string();
-                    }
-                    ImGui::EndDragDropTarget();
-                }
-                ImGui::EndGroup();
 
                 ImGui::EndTable(); // end table Audio Emitter Table
             }

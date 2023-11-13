@@ -62,7 +62,7 @@ namespace IS {
             //idle_anim_image->texture_index = 2;
             //walking_anim_image = asset->GetImage("Assets/player_walking.png");
             //walking_anim_image->texture_index = 3;
-            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            truck_anim_image = asset->GetImage("icecream_truck.png");
             //truck_anim_image->texture_index = 0;
 
             //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations

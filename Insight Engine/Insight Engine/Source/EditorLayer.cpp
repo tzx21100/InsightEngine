@@ -44,21 +44,21 @@ namespace IS {
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
         // Other icons
-        mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
-        mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
-        mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
-        mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
-        mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "texture_placeholder.png")->texture_id);
+        mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("play_button.png")->texture_id);
+        mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon("pause_button.png")->texture_id);
+        mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("stop_button.png")->texture_id);
+        mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("step_button.png")->texture_id);
+        mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon("texture_placeholder.png")->texture_id);
 
         // File icons
-        mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "folder_icon.png")->texture_id);
-        mIcons["File"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "default_file_icon.png")->texture_id);
-        mIcons["Insight"]            = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "insight_file_icon.png")->texture_id);
-        mIcons["Json"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "json_file_icon.png")->texture_id);
-        mIcons["MP3"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "mp3_file_icon.png")->texture_id);
-        mIcons["WAV"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "wav_file_icon.png")->texture_id);
-        mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "png_file_icon.png")->texture_id);
-        mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
+        mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon("folder_icon.png")->texture_id);
+        mIcons["File"]               = EditorUtils::ConvertTextureID(asset->GetIcon("default_file_icon.png")->texture_id);
+        mIcons["Insight"]            = EditorUtils::ConvertTextureID(asset->GetIcon("insight_file_icon.png")->texture_id);
+        mIcons["Json"]               = EditorUtils::ConvertTextureID(asset->GetIcon("json_file_icon.png")->texture_id);
+        mIcons["MP3"]                = EditorUtils::ConvertTextureID(asset->GetIcon("mp3_file_icon.png")->texture_id);
+        mIcons["WAV"]                = EditorUtils::ConvertTextureID(asset->GetIcon("wav_file_icon.png")->texture_id);
+        mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon("png_file_icon.png")->texture_id);
+        mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon("jpeg_file_icon.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached.", mDebugName);
 

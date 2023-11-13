@@ -22,12 +22,12 @@ namespace IS
 
         static public void Init()
         {
-            backGround = InternalCalls.GetSpriteImage("Assets/Textures/black_background.png");
+            backGround = InternalCalls.GetSpriteImage("black_background.png");
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
-            player_walk = InternalCalls.GetSpriteImage("Assets/Textures/Player run 1R12C.png");
-            player_idle = InternalCalls.GetSpriteImage("Assets/Textures/Player idle 1R12C.png");
+            player_walk = InternalCalls.GetSpriteImage("Player run 1R12C.png");
+            player_idle = InternalCalls.GetSpriteImage("Player idle 1R12C.png");
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);

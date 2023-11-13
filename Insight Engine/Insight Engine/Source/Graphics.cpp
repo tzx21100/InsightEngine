@@ -418,7 +418,7 @@ namespace IS {
         image.width = width;
         image.height = height;
         image.channels = channels;
-        image.mFileName = filepath;
+        image.mFileName = std::filesystem::path(filepath).filename().string();
         image.texture_id = textureID;
     }
 
