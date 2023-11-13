@@ -83,17 +83,33 @@ namespace IS {
         Vector2D GetSize() const { return mSize; }
 
         /*!
-         * \brief Checks if the panel is focus.
+         * \brief Checks if the panel is in focus.
          *
-         * \return Boolean flag indicating if panel is focus.
+         * \return Boolean flag indicating if panel is in focus.
          */
         bool IsFocused() const { return mFocused; }
+
+        /*!
+         * \brief Checks if the panel is appearing.
+         *
+         * \return Boolean flag indicating if panel is appearing.
+         */
+        bool IsAppearing() const { return mAppearing; }
+
+        /*!
+         * \brief Checks if the panel is hovered.
+         *
+         * \return Boolean flag indicating if panel is hovered.
+         */
+        bool IsHovered() const { return mHovered; }
 
     protected:
         std::string mName; /// < Name of the panel.
         Vector2D mPosition; ///< Position of panel.
         Vector2D mSize; ///< Size of panel.
         bool mFocused; ///< Boolean flag indicating if panel is in focus.
+        bool mAppearing; ///< Boolean flag indicating if panel is appearing.
+        bool mHovered; ///< Boolean flag indicating if panel is hovered.
         EditorLayer& mEditorLayer; ///< Reference to owner.
     };
 

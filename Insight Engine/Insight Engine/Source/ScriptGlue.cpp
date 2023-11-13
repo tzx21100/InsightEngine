@@ -223,8 +223,9 @@ namespace IS {
     
     static void AttachCamera() {
         auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
-        ISGraphics::cameras[Camera::mActiveCamera].UpdateCamPos(transform_component.world_position.x, transform_component.world_position.y);
-
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        camera.SetPosition(transform_component.world_position.x, transform_component.world_position.y);
+        camera.SetZoomLevel(1.2f);
     }
 
     static void AudioPlaySound(MonoString* name) {

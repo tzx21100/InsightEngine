@@ -29,7 +29,7 @@ namespace IS {
 
     void GamePanel::UpdatePanel()
     {
-        if (mFocused)
+        if (mAppearing)
         {
             Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
         }
@@ -40,7 +40,9 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = 0;
-        if (ImGui::Begin((ICON_LC_GAMEPAD_2 "  " + mName).c_str(), nullptr, window_flags))
+        ImGui::Begin((ICON_LC_GAMEPAD_2 "  " + mName).c_str(), nullptr, window_flags);
+        
+        // Window contents
         {
             if (mFocused)
             {
@@ -55,7 +57,10 @@ namespace IS {
             ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
         }
 
+        // Save window states
         mFocused = ImGui::IsWindowFocused();
+        mAppearing = ImGui::IsWindowAppearing();
+        mHovered = ImGui::IsItemHovered();
         ImGui::End(); // end window Game
         ImGui::PopStyleVar();
     }
@@ -71,7 +76,9 @@ namespace IS {
         const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
         const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
 
-        if (ImGui::Begin((ICON_LC_GAUGE "  " + mName).c_str()))
+        ImGui::Begin((ICON_LC_GAUGE "  " + mName).c_str());
+        
+        // Window contents
         {
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
@@ -190,7 +197,11 @@ namespace IS {
 
             ImGui::PopStyleVar();
         }
+
+        // Save window states
         mFocused = ImGui::IsWindowFocused();
+        mAppearing = ImGui::IsWindowAppearing();
+        mHovered = ImGui::IsItemHovered();
         ImGui::End(); // end window Performance
     }
 
@@ -208,7 +219,9 @@ namespace IS {
         ImGuiIO& io = ImGui::GetIO();
         ImFont* FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
-        if (ImGui::Begin((ICON_LC_SETTINGS "  " + mName).c_str()))
+        ImGui::Begin((ICON_LC_SETTINGS "  " + mName).c_str());
+        
+        // Window contents
         {
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
@@ -327,7 +340,11 @@ namespace IS {
 
             ImGui::PopStyleVar();
         }
-        mFocused = ImGui::IsWindowFocused();
+        
+        // Save window states
+        mFocused    = ImGui::IsWindowFocused();
+        mAppearing  = ImGui::IsWindowAppearing();
+        mHovered    = ImGui::IsItemHovered();
         ImGui::End(); // end window Settings
     }
 

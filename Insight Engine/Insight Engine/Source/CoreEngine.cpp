@@ -103,12 +103,8 @@ namespace IS {
         }
         
         // Update all systems
-        for (const auto& system : mSystemList) {
-            /*if (system->GetName() == "Physics") {
-                system->Update(mFixedDeltaTime.count());
-                continue;
-            }*/
-
+        for (const auto& system : mSystemList)
+        {
             Timer timer(system->GetName() + " System", false);
             system->Update(mFixedDeltaTime.count());
             timer.Stop();

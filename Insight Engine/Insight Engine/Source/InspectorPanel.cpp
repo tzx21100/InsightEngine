@@ -33,7 +33,11 @@ namespace IS {
 
     void InspectorPanel::RenderPanel()
     {
-        if (ImGui::Begin((ICON_LC_INFO "  " + mName).c_str()))
+        ImGui::BeginDisabled(Camera3D::mActiveCamera == CAMERA_TYPE_GAME);
+
+        ImGui::Begin((ICON_LC_INFO "  " + mName).c_str());
+
+        // Window contents
         {
             switch (mInspectMode)
             {
@@ -52,8 +56,13 @@ namespace IS {
                 break;
             }
         }
+
+        // Save window states
         mFocused = ImGui::IsWindowFocused();
+        mAppearing = ImGui::IsWindowAppearing();
+        mHovered = ImGui::IsItemHovered();
         ImGui::End(); // end window Inspector
+        ImGui::EndDisabled();
     }
 
     void InspectorPanel::RenderEntityConfig(Entity entity)

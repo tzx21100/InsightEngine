@@ -50,13 +50,12 @@ namespace IS {
         }
 
         // Auto pause game if game panel is not in focus
-        if (mFocused)
+        if (mAppearing)
         {
             engine.mRuntime = false;
-
-            // Set active camera to editor camera
             Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
         }
+
         else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
         {
             mHoveredEntity.reset();
@@ -72,8 +71,7 @@ namespace IS {
             int mouse_y = static_cast<int>(my);
 
             // Check if mouse is within bounds of the scene panel
-            if (0 <= mouse_x && mouse_x < static_cast<int>(mSize.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(mSize.y) && !mToolbarInUse)
+            if (mHovered && !mToolbarInUse)
             {
                 ZoomCamera();
                 PanCamera();
@@ -103,7 +101,9 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 
         ImGuiWindowFlags window_flags = 0;
-        if (ImGui::Begin((ICON_LC_VIEW "  " + mName).c_str(), nullptr, window_flags))
+        ImGui::Begin((ICON_LC_VIEW "  " + mName).c_str(), nullptr, window_flags);
+        
+        // Window contents
         {
             auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
             auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
@@ -112,11 +112,11 @@ namespace IS {
             mViewportBounds[1] = { viewport_upper_bound.x + viewport_offset.x, viewport_upper_bound.y + viewport_offset.y };
 
             // Allow key/mouse event pass through only in this panel
-            if (mFocused)
-            {
-                ImGuiIO& io = ImGui::GetIO();
-                io.WantCaptureMouse = io.WantCaptureKeyboard = false;
-            }
+            //if (mFocused)
+            //{
+            //    ImGuiIO& io = ImGui::GetIO();
+            //    io.WantCaptureMouse = io.WantCaptureKeyboard = false;
+            //}
 
             // Size of scene panel
             ImVec2 scene_size = ImGui::GetWindowSize();
@@ -164,7 +164,7 @@ namespace IS {
             }
 
             // Help tooltip
-            if (Camera::mActiveCamera == CAMERA_TYPE_EDITOR)
+            if (Camera3D::mActiveCamera == CAMERA_TYPE_EDITOR)
             {
                 RenderHelp();
                 RenderToolbar();
@@ -173,11 +173,13 @@ namespace IS {
             // Render gizmo
             RenderGizmo();
         }
+
+        // Save window states
         mFocused = ImGui::IsWindowFocused();
+        mAppearing = ImGui::IsWindowAppearing();
+        mHovered = ImGui::IsItemHovered();
         ImGui::End(); // end window Scene
         ImGui::PopStyleVar();
-
-        
 
     } // end RenderPanel()
 

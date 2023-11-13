@@ -36,9 +36,10 @@ namespace IS {
         auto& scene_manager = SceneManager::Instance();
 
         // Begin creating the scene hierarchy panel
-        if (ImGui::Begin((ICON_LC_LIST_TREE "  " + mName).c_str()))
-        {
+        ImGui::Begin((ICON_LC_LIST_TREE "  " + mName).c_str());
 
+        // Window COntents
+        {
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
             mPanelSize = { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y };
@@ -128,7 +129,11 @@ namespace IS {
 
             ImGui::PopStyleVar(); // frame rounding
         }
-        mFocused = ImGui::IsWindowFocused();
+
+        // Save window states
+        mFocused    = ImGui::IsWindowFocused();
+        mAppearing  = ImGui::IsWindowAppearing();
+        mHovered    = ImGui::IsItemHovered();
         ImGui::End(); // end window Scene Hierarchy
 
     } // end RenderPanel()

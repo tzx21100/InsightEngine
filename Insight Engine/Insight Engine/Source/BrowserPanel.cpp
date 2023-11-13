@@ -34,7 +34,9 @@ namespace IS {
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
-        if (ImGui::Begin((ICON_LC_FOLDER_SEARCH_2 "  " + mName).c_str()))
+        ImGui::Begin((ICON_LC_FOLDER_SEARCH_2 "  " + mName).c_str());
+        
+        // Window Contents
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
             if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))
@@ -77,7 +79,11 @@ namespace IS {
                 ImGui::EndTable(); // end table Assets Browser Table
             }
         }
-        mFocused = ImGui::IsWindowFocused();
+
+        // Save window states
+        mFocused    = ImGui::IsWindowFocused();
+        mAppearing  = ImGui::IsWindowAppearing();
+        mHovered    = ImGui::IsItemHovered();
         ImGui::End(); // end window Asset Browser
     }
 

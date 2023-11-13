@@ -314,8 +314,6 @@ namespace IS {
         bool button_clicked[BUTTON_COUNT] = {};
         const ImVec2 button_size = { 16.f, 16.f };
         const ImVec4 grey_color = ImVec4(.5f, .5f, .5f, 1.f);
-        const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
-        ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
         ImGuiDockNodeFlags docknode_flags = ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoTabBar |
             ImGuiDockNodeFlags_NoDockingSplitMe | ImGuiDockNodeFlags_NoDockingOverMe | ImGuiDockNodeFlags_NoDockingOverOther | ImGuiDockNodeFlags_NoResize;
@@ -338,21 +336,12 @@ namespace IS {
             {
                 ImGui::SetCursorPos(start_position);
 
-                // Grey out step button when not in game view
-                if (i == BUTTON_COUNT - 1)
-                {
-                    tint_color = (scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
-                    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !(scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera == CAMERA_TYPE_GAME));
-                }
+                ImGui::BeginDisabled(i == BUTTON_COUNT - 1 && scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera != CAMERA_TYPE_GAME);
 
                 ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
-                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
+                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size);
                 ImGui::PopStyleColor();
-
-                if (i == BUTTON_COUNT - 1)
-                {
-                    ImGui::PopItemFlag();
-                }
+                ImGui::EndDisabled();
                 ImGui::SetItemTooltip(tooltips[i]);
             }
 
@@ -364,7 +353,11 @@ namespace IS {
                     engine.mRuntime = !engine.mRuntime;
                     Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus(ICON_LC_GAMEPAD_2 "  Game");
-                    scene_manager.SaveScene();
+                    if (!strcmp(play_pause_tooltip, "Play"))
+                    {
+                        scene_manager.SaveScene();
+                    }
+                    ISGraphics::mShowTextAnimation = false;
                 }
 
                 // Stop
@@ -374,6 +367,7 @@ namespace IS {
                     Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
                     ImGui::SetWindowFocus(ICON_LC_VIEW "  Scene");
                     scene_manager.ReloadActiveScene();
+                    ISGraphics::mShowTextAnimation = true;
                 }
 
                 // Step
