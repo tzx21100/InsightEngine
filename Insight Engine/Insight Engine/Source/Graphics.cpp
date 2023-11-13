@@ -266,10 +266,6 @@ namespace IS {
                 }
             }
 
-            // @YIMING TO CHANGE ACCORDINGLY
-            //cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y); // follows 2d camera's position for now
-            //cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
-            // cameras3D[1].camera_keyboard_callback(1500.f * delta_time); // follows keyboard's input to change pos, must comment line 263 coz it overrides
             cameras3D[Camera3D::mActiveCamera].Update();
             // Graphics system's draw
             Draw(delta_time);
