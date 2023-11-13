@@ -125,9 +125,7 @@ namespace IS {
         }
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
-        auto frameEnd = LimitFPS(frameStart);
-
-        mDeltaTime = (frameEnd - frameStart);
+        mDeltaTime = LimitFPS(frameStart) - frameStart;
 
         ++mFrameCount;
     }
@@ -253,7 +251,8 @@ namespace IS {
         {
             double now = glfwGetTime();
             double dt = (now - frame_start);
-            if (dt >= mFixedDeltaTime.count())
+            double target = (1.0 / *mTargetFPS);
+            if (dt >= target)
             {
                 return now;
             }

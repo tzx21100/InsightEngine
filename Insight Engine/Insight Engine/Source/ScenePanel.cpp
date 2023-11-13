@@ -19,6 +19,7 @@
 #include "Pch.h"
 #include "ScenePanel.h"
 #include "EditorUtils.h"
+#include "CommandHistory.h"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -44,7 +45,7 @@ namespace IS {
         mSnap = CTRL_HELD;
 
         // Keyboard inputs
-        if (!mGizmoInUse)
+        if (mHovered && !mGizmoInUse)
         {
             if (Q_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_INVALID; }
             if (W_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_TRANSLATE; }
@@ -315,7 +316,6 @@ namespace IS {
         window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingOverMe;
         window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingOverOther;
 
-
         if (toolbar_axis == ImGuiAxis_X)
             window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoResizeY;
         else
@@ -347,18 +347,21 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.f, .0f));
         ImGuiStyle& style = ImGui::GetStyle();
 
+        const ImColor GREY_COLOR = ImColor(150, 150, 150);
+        static ImColor color = GREY_COLOR;
         if (toolbar_axis == ImGuiAxis_X)
         {
             ImGui::SetCursorPosY((ImGui::GetCursorPos().y + ImGui::CalcTextSize(ICON_LC_GRIP_VERTICAL).y) / 2.f);
-            ImGui::TextUnformatted(ICON_LC_GRIP_VERTICAL);
+            ImGui::TextColored(color, ICON_LC_GRIP_VERTICAL);
             ImGui::SameLine();
             ImGui::SetCursorPosY((ImGui::GetCursorPos().y - style.FramePadding.y * 2));
         }
         else
         {
             ImGui::SetCursorPosX((ImGui::GetCursorPos().x + ImGui::CalcTextSize(ICON_LC_GRIP_HORIZONTAL).x) / 2.f);
-            ImGui::TextUnformatted(ICON_LC_GRIP_HORIZONTAL);
+            ImGui::TextColored(color, ICON_LC_GRIP_HORIZONTAL);
         }
+        color = mToolbarInUse ? ImColor(IM_COL32_WHITE) : GREY_COLOR;
 
         const int BUTTON_COUNT = 4;
         aGizmoType gizmo_types[BUTTON_COUNT] = { aGizmoType::GIZMO_TYPE_INVALID, aGizmoType::GIZMO_TYPE_TRANSLATE, aGizmoType::GIZMO_TYPE_ROTATE, aGizmoType::GIZMO_TYPE_SCALE };
@@ -391,7 +394,7 @@ namespace IS {
         ImGui::PopStyleVar();
 
         // Context-menu to change axis
-        if (!node || !TOOLBAR_AUTO_DIRECTION_WHEN_DOCKED)
+        if (node == nullptr || !TOOLBAR_AUTO_DIRECTION_WHEN_DOCKED)
         {
             if (ImGui::BeginPopupContextWindow())
             {
@@ -447,10 +450,11 @@ namespace IS {
         }
         float snap_values[3] = { snap_value, snap_value, snap_value };
 
-        ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
-                             static_cast<ImGuizmo::OPERATION>(mGizmoType),
-                             ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
-                             nullptr, mSnap ? snap_values : nullptr);
+        static bool manipulating = false;
+        bool manipulated = ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
+                                                static_cast<ImGuizmo::OPERATION>(mGizmoType),
+                                                ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
+                                                nullptr, mSnap ? snap_values : nullptr);
 
         if (!ImGuizmo::IsUsing())
         {
@@ -458,13 +462,22 @@ namespace IS {
             return;
         }
 
-        glm::vec3 translation, rotation, scale;
-        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation), glm::value_ptr(rotation), glm::value_ptr(scale));
-        float delta_rot = rotation.z - transform.rotation;
+        if (manipulating)
 
-        transform.world_position = { translation.x, translation.y };
-        transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
-        transform.scaling = { std::max(scale.x, 1.f), std::max(scale.y, 1.f) };
+        if (manipulated)
+        {
+            glm::vec3 translation3D, rotation3D, scale3D;
+            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation3D), glm::value_ptr(rotation3D), glm::value_ptr(scale3D));
+
+            float delta_rot = rotation3D.z - transform.rotation;
+            Vec2 translation{ translation3D.x, translation3D.y }, scale{ std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
+            float rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
+
+            transform.world_position = translation;
+            transform.rotation = rotation;
+            transform.scaling = scale;
+        }
+
 
         mGizmoInUse = true;
 

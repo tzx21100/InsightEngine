@@ -186,7 +186,12 @@ namespace IS {
         RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
             // Render Translation
-            EditorUtils::RenderControlVec2("Translation", transform.world_position);
+            Vec2 position = transform.world_position;
+            if (EditorUtils::RenderControlVec2("Translation", position))
+            {
+                if (position != transform.world_position)
+                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, position));
+            }
 
             // Render Rotation
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
@@ -213,7 +218,12 @@ namespace IS {
             }
 
             // Render Scale
-            EditorUtils::RenderControlVec2("Scale", transform.scaling, 95.f, 120.f);
+            Vec2 scaling = transform.scaling;
+            if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
+            {
+                if (scaling != transform.scaling)
+                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scaling));
+            }
 
         }); // end render Transform Component
 

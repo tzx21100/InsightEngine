@@ -20,19 +20,18 @@ namespace IS {
     {
     public:
         Vec2Command(Vec2& value, Vec2 new_value)
-            : mValue(value), mNewValue(new_value), mOldValue(Vec2()) {}
+            : mValue(value), mNewValue(new_value), mOldValue(value) {}
 
         void Execute() override
         {
-            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mValue.x, mValue.y, mNewValue.x, mNewValue.y);
-            mOldValue = mValue;
             mValue = mNewValue;
+            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mOldValue.x, mOldValue.y, mValue.x, mValue.y);
         }
 
         void Undo() override 
         {
-            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mValue.x, mValue.y, mOldValue.x, mOldValue.y);
             mValue = mOldValue;
+            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mNewValue.x, mNewValue.y, mValue.x, mValue.y);
         }
 
     private:
@@ -45,19 +44,18 @@ namespace IS {
     {
     public:
         FloatCommand(float& value, float new_value)
-            : mValue(value), mNewValue(new_value), mOldValue(float()) {}
+            : mValue(value), mNewValue(new_value), mOldValue(value) {}
 
         void Execute() override
         {
-            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mValue, mNewValue);
-            mOldValue = mValue;
             mValue = mNewValue;
+            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mOldValue, mValue);
         }
 
         void Undo() override 
         {
-            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mValue, mNewValue);
             mValue = mOldValue;
+            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mNewValue, mValue);
         }
 
     private:

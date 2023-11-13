@@ -65,19 +65,19 @@ namespace IS {
         ImGui::PopStyleVar();
     }
 
-    // Performance Viewer Panel
-    void PerformancePanel::RenderPanel()
+    // Profiler Panel
+    void ProfilerPanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
         auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Text Colors
-        const ImVec4 RED_COLOR = { 1.f, 0.3f, 0.2f, 1.f };
-        const ImVec4 YELLOW_COLOR = { 1.f, .98f, 0.5f, 1.f };
-        const ImVec4 WHITE_COLOR = { 1.f, 1.f, 1.f, 1.f };
+        const ImU32 GREEN_COLOR = IM_COL32(45, 201, 55, 255);
+        const ImU32 YELLOW_COLOR = IM_COL32(231, 180, 22, 255);
+        const ImU32 RED_COLOR = IM_COL32(204, 50, 50, 255);
 
         ImGui::Begin((ICON_LC_GAUGE "  " + mName).c_str());
-        
+
         // Window contents
         {
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
@@ -85,7 +85,7 @@ namespace IS {
             if (ImGui::BeginTable("Engine", 2))
             {
                 InsightEngine& engine = InsightEngine::Instance();
-                const ImVec4 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : WHITE_COLOR;
+                const ImU32 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : IM_COL32_WHITE;
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
@@ -131,7 +131,7 @@ namespace IS {
                 ImGui::TextUnformatted("Current FPS:");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::TextColored(text_color, "%.0f FPS", io.Framerate);
+                ImGui::TextColored(ImColor(text_color), "%.0f FPS", io.Framerate);
 
                 // Delta Time
                 ImGui::TableNextColumn();
@@ -139,7 +139,7 @@ namespace IS {
                 ImGui::TextUnformatted("Time:");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::TextColored(text_color, "%.3lf ms", io.DeltaTime * 1000.0);
+                ImGui::TextColored(ImColor(text_color), "%.3lf ms", io.DeltaTime * 1000.0);
 
                 ImGui::EndTable(); // end table Engine
             }
@@ -166,27 +166,27 @@ namespace IS {
                     for (InsightEngine& engine = InsightEngine::Instance();
                          auto const& [system, dt] : engine.GetSystemDeltas())
                     {
-                        // Skip engine delta time
                         if (system == "Engine")
                             continue;
 
                         // Compute usage percent
-                        float percent = (dt / engine.GetSystemDeltas().at("Engine"));
-                        ImVec4 text_color = dt < 1.f / 60.f ? WHITE_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
+                        float percent = dt / (engine.GetSystemDeltas().at("Engine"));
+                        ImU32 text_color = dt < 1.f / 60.f ? IM_COL32_WHITE : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
+                        ImU32 bar_color = dt < 1.f / 60.f ? GREEN_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
 
                         // Display system usage
                         ImGui::TableNextColumn();
                         ImGui::Spacing();
-                        ImGui::PushFont(FONT_BOLD);
-                        ImGui::TextColored(text_color, "%s", system.c_str());
-                        ImGui::PopFont();
+                        ImGui::TextColored(ImColor(text_color), "%s", system.c_str());
 
                         ImGui::TableNextColumn();
                         ImGui::Spacing();
-                        ImGui::TextColored(text_color, "%.3lf ms", dt * 10'000.0);
+                        ImGui::TextColored(ImColor(text_color), "%.3lf ms", dt * 1'000.0);
 
                         ImGui::TableNextColumn();
+                        ImGui::PushStyleColor(ImGuiCol_PlotHistogram, bar_color);
                         ImGui::ProgressBar(percent);
+                        ImGui::PopStyleColor();
                     }
 
                     ImGui::EndTable(); // end table System Usage

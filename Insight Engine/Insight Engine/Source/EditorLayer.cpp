@@ -386,12 +386,12 @@ namespace IS {
     {
         mPanels.Emplace<GamePanel>          ("Game",        *this);
         mPanels.Emplace<ScenePanel>         ("Scene",       *this);
-        mPanels.Emplace<PerformancePanel>   ("Performance", *this);
         mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
-        mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
-        mPanels.Emplace<ConsolePanel>       ("Console",     *this);
         mPanels.Emplace<InspectorPanel>     ("Inspector",   *this);
         mPanels.Emplace<SettingsPanel>      ("Settings",    *this);
+        mPanels.Emplace<ProfilerPanel>   ("Performance", *this);
+        mPanels.Emplace<ConsolePanel>       ("Console",     *this);
+        mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
 
     } // end AttachPanels
 

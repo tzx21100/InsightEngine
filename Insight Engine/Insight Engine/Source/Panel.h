@@ -139,13 +139,13 @@ namespace IS {
     /*!
      * \brief A derived class representing a performannce panel in a dockspace.
      */
-    class PerformancePanel : public Panel {
+    class ProfilerPanel : public Panel {
     public:
 
         /*!
          * \brief Default constructor of performance panel.
          */
-        PerformancePanel(EditorLayer& editor_layer) : Panel("Performance", editor_layer) {}
+        ProfilerPanel(EditorLayer& editor_layer) : Panel("Profiler", editor_layer) {}
 
         /*!
          * \brief Overrides the base class method to update the performance panel.

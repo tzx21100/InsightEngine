@@ -173,7 +173,7 @@ namespace IS {
         style.DockingSeparatorSize          = 1.f;
 
         // Menubar
-        colors[ImGuiCol_MenuBarBg]          = LIGHT_SHARK;
+        colors[ImGuiCol_MenuBarBg]          = DARK_SHARK;
 
         // Drop/drop
         colors[ImGuiCol_DragDropTarget]     = WEB_ORANGE;
