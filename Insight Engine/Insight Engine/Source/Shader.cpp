@@ -188,6 +188,53 @@ namespace IS {
         }
     }
 
+    void Shader::setupLightingShader() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2 aVertexPosition;
+
+            uniform mat4 model_to_ndc_xform;
+
+            void main()
+            {
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 0.0, 1.0);
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+
+            layout(location = 0) out vec4 fFragColor;
+
+            uniform vec2 uLightPos;
+            uniform vec4 uLightColor;
+            uniform float uLightSize;
+
+            void main()
+            {
+                float distance = length(uLightPos - gl_FragCoord.xy);
+                float attenuation = (uLightSize / 10) / distance;
+                fFragColor = vec4(attenuation, attenuation, attenuation, pow(attenuation * 3)) * vec4(uLightColor, 1);
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
     void Shader::setupPickedQuadShaders() {
         // vertex shader
         std::string vtx_shdr = R"(

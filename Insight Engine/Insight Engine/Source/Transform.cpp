@@ -129,36 +129,6 @@ namespace IS {
 		return ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform() * world_to_cam_xform;
 	}
 
-	glm::mat4 Transform::FUCKYK() {
-		// convert angle to radians
-		float angle_rad = glm::radians(rotation);
-
-		// to scale to world coordinates
-		//auto [width, height] = InsightEngine::Instance().GetWindowSize();
-
-		// math variables used often
-		float sin_angle = sinf(angle_rad);
-		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x;
-		float model_scale_y = scaling.y;
-		float tx = world_position.x;
-		float ty = world_position.y;
-
-		// dont calculate camera xform every frame
-		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-
-		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,  // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,  // column 2
-										 0.f,                          0.f,                         1.f, 0.f,
-										 tx,					       ty,						    1.f, 1.f }; // column 3
-
-
-		// save matrix
-		return world_to_cam_xform;
-	}
-
 	// not in use
 	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
 		std::vector<Vector2D> vertices;
@@ -252,5 +222,71 @@ namespace IS {
 		ret.m30 = mat[0][3]; ret.m31 = mat[1][3]; ret.m32 = mat[2][3]; ret.m33 = mat[3][3]; // row 3
 
 		return ret;
+	}
+
+	glm::vec2 screenToWorld(glm::vec2 const& screenPosition) {
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		float x = (2.f * screenPosition.x) / width - 1.f;
+		float y = 1.f - (2.f * screenPosition.y) / height;
+
+		glm::vec4 clipCoords{ x, y, 1.f, 1.f };
+		glm::mat4 invProjection = glm::inverse(ISGraphics::cameras3D[Camera3D::mActiveCamera].GetProjectionMatrix());
+		glm::vec4 eyeCoords = invProjection * clipCoords;
+		eyeCoords = glm::vec4(eyeCoords.x, eyeCoords.y, -1.f, 0.f);
+
+		glm::mat4 invView = glm::inverse(ISGraphics::cameras3D[Camera3D::mActiveCamera].GetViewMatrix());
+		glm::vec3 worldCoords = glm::vec3(invView * eyeCoords);
+		worldCoords /= eyeCoords.w;
+
+		return worldCoords;
+	}
+
+	glm::vec2 NDCToScreen(glm::vec2 NDCPos) {
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		glm::mat4 toScreen = glm::mat4(1.f);
+
+		toScreen = glm::scale(toScreen, glm::vec3(width * 0.5f, -height * 0.5f, 1.0f));
+		//toScreen = glm::translate(toScreen, glm::vec3(1.0f, -1.0f, 0.0f));
+		toScreen = glm::translate(toScreen, glm::vec3(width * 0.5f, height * 0.5f, 0.0f));
+
+		glm::vec4 ret = (toScreen * glm::vec4(NDCPos, 1.f, 1.f));
+
+		return { ret.x, ret.y };
+	}
+
+	glm::vec2 worldToNDC(glm::vec2 worldPos) {
+		// math variables used often
+		float tx = worldPos.x;
+		float ty = worldPos.y;
+
+		glm::mat4 world_to_cam_xform = { 1.f, 0.f, 0.f, 0.f,   // column 1
+										 0.f, 1.f, 0.f, 0.f,   // column 2
+										 0.f, 0.f, 1.f, 0.f,   // column 3
+										 tx,  ty,  1.f, 1.f }; // column 4 (set all entities' z to 1)
+
+		glm::vec4 ret = (ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform() * world_to_cam_xform) * glm::vec4(worldPos, 1.f, 1.f);
+
+		// save matrix
+		return { ret.x, ret.y };
+	}
+
+	glm::vec2 worldToScreen(glm::vec2 const& worldPosition) {
+		/*glm::vec4 clipCoords = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetProjectionMatrix() *
+			(ISGraphics::cameras3D[Camera3D::mActiveCamera].GetViewMatrix() * glm::vec4(worldPosition, 0.f, 1.f));
+
+		clipCoords /= clipCoords.w;
+
+		glm::vec2 screenCoords{};
+
+		auto [width, height] = InsightEngine::Instance().GetWindowSize();
+		screenCoords.x = ((clipCoords.x + 1.f) / 2.f) * width + width / 2.f;
+		screenCoords.y = -(((clipCoords.y + 1.f) / 2.f) * height + height / 2.f);
+
+		return screenCoords;*/
+
+		glm::vec2 NDCCoords = worldToNDC(worldPosition);
+		glm::vec2 screenCoords = NDCToScreen(NDCCoords);
+
+		return screenCoords;
 	}
 }

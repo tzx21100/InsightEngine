@@ -315,7 +315,7 @@ namespace IS {
 
             }
 
-            // input->PrintMouseWorldPos();
+            input->PrintMouseWorldPos();
 
             // Process Mouse Events
             if (!gui->WantCaptureMouse()) {

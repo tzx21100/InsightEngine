@@ -151,7 +151,6 @@ namespace IS {
 
 		// not in use
 		std::vector<Vector2D> GetSquareTransformVertices();
-		glm::mat4 FUCKYK();
 	};
 
 	/**
@@ -171,7 +170,12 @@ namespace IS {
 	Matrix3x3 GlmMat3ToISMtx33(glm::mat3 const& mat);
 
 	glm::mat4 ISMtx44ToGlmMat4(Matrix4x4 const& mat);
+
 	Matrix4x4 GlmMat4ToISMtx44(glm::mat4 const& mat);
+
+	glm::vec2 worldToScreen(glm::vec2 const& worldPosition);
+
+	glm::vec2 screenToWorld(glm::vec2 const& screenPosition);
 }
 
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_TRANSFORM_H

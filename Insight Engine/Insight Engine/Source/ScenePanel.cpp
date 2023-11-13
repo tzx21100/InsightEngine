@@ -431,7 +431,7 @@ namespace IS {
         const glm::mat4 view = camera.GetViewMatrix();
         const glm::mat4 projection = camera.GetProjectionMatrix();
         auto& transform = engine.GetComponent<Transform>(selected_entity);
-        glm::mat4 transform_matrix = transform.FUCKYK();
+        glm::mat4 transform_matrix = transform.Return3DXformMatrix();
 
         ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
                              static_cast<ImGuizmo::OPERATION>(mGizmoType),

@@ -156,6 +156,12 @@ namespace IS {
     }
 
     void InputManager::PrintMouseWorldPos() {
+        double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        IS_CORE_ERROR("Screen  X: {}, Screen  Y: {}", xPos, yPos);
+        glm::vec2 testScreenToWorld = worldToScreen({ 200.f, 200.f });
+        IS_CORE_ERROR("Screen2 X: {}, Screen2 Y: {}", testScreenToWorld.x, testScreenToWorld.y);
+
        // auto& engine = InsightEngine::Instance();
        // auto const window = engine.GetSystem<WindowSystem>("Window");
 
@@ -301,10 +307,6 @@ namespace IS {
     }
 
     void InputManager::mouse_pick_entity() {
-       /* double xPos, yPos;
-        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-        std::cout << "xPos: " << xPos << "yPos: " << yPos << std::endl;*/
-
         double xPos, yPos;
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 

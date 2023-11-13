@@ -52,6 +52,8 @@ namespace IS {
         void setup3DInstSpriteShaders();
 
         void setupPickedQuadShaders();
+        
+        void setupLightingShader();
 
         /*!
          * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.
