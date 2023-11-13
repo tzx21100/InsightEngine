@@ -356,12 +356,13 @@ namespace IS {
             ImGui::TextUnformatted(ICON_LC_GRIP_HORIZONTAL);
         }
 
-        std::array<aGizmoType, 4> gizmo_types = { aGizmoType::GIZMO_TYPE_INVALID, aGizmoType::GIZMO_TYPE_TRANSLATE, aGizmoType::GIZMO_TYPE_ROTATE, aGizmoType::GIZMO_TYPE_SCALE };
-        std::array<const char*, gizmo_types.size()> icons = { ICON_LC_HAND, ICON_LC_MOVE, ICON_LC_REFRESH_CCW, ICON_LC_SCALING };
-        std::array<bool, gizmo_types.size()> buttons{};
-        std::array<const char*, gizmo_types.size()> tooltips = { "View Tool", "Move Tool", "Rotate Tool", "Scale Tool" };
+        const int BUTTON_COUNT = 4;
+        aGizmoType gizmo_types[BUTTON_COUNT] = { aGizmoType::GIZMO_TYPE_INVALID, aGizmoType::GIZMO_TYPE_TRANSLATE, aGizmoType::GIZMO_TYPE_ROTATE, aGizmoType::GIZMO_TYPE_SCALE };
+        const char* icons[BUTTON_COUNT] = { ICON_LC_HAND, ICON_LC_MOVE, ICON_LC_REFRESH_CCW, ICON_LC_SCALING };
+        const char* tooltips[BUTTON_COUNT] = { "View Tool", "Move Tool", "Rotate Tool", "Scale Tool" };
+        bool buttons[BUTTON_COUNT] = {};
 
-        for (size_t i{}; i < gizmo_types.size(); ++i)
+        for (int i{}; i < BUTTON_COUNT; ++i)
         {
             // Set item default focus
             if (gizmo_types[i] == mGizmoType)
