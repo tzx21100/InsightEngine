@@ -70,7 +70,7 @@ namespace IS {
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
         auto& engine = InsightEngine::Instance();
-        auto assetsys = engine.GetSystem<AssetManager>("asset");
+        auto assetsys = engine.GetSystem<AssetManager>("Asset");
         for (auto entity : mEntities) {
             if (engine.HasComponent<AudioListener>(entity)) {
                 auto listener = engine.GetComponent<AudioListener>(entity);
@@ -397,6 +397,44 @@ namespace IS {
         bool is_playing = false;
         Cchannel->isPlaying(&is_playing);
         return is_playing;
+    }
+
+    Json::Value AudioListener::Serialize()
+    {
+        Json::Value data;
+        data["AudioVolume"]           = volume;
+        data["AudioPitchCorrectness"] = pitch_correctness;
+        data["AudioHearingRange"]     = hearing_range;
+
+        return data;
+    }
+
+    void AudioListener::Deserialize(Json::Value data)
+    {
+        volume            = data["AudioVolume"].asFloat();
+        pitch_correctness = data["AudioPitechCorrectness"].asFloat();
+        hearing_range     = data["AudioHearinRange"].asFloat();
+    }
+
+    Json::Value AudioEmitter::Serialize()
+    {
+        Json::Value data;
+        data["AudioIsLoop"]        = isLoop;
+        data["AudioFalloffFactor"] = falloff_factor;
+        data["AudioVolumeLevel"]   = volumeLevel;
+        data["AudioPitch"]         = pitch;
+        data["AudioSoundName"]     = soundName;
+
+        return data;
+    }
+
+    void AudioEmitter::Deserialize(Json::Value data)
+    {
+        isLoop         = data["AudioIsLoop"].asBool();
+        falloff_factor = data["AudioFalloffFactor"].asFloat();
+        volumeLevel    = data["AudioVolumeLevel"].asFloat();
+        pitch          = data["AudioPitch"].asFloat();
+        soundName      = data["AudioSoundName"].asString();
     }
 
 }

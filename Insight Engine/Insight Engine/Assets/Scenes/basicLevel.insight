@@ -91,6 +91,16 @@
 		},
 		{
 			"Collider" : 
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : true,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "Footsteps-Grass-Far-Small_1.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Player",
+			"RigidBody" : 
 			{
 				"ColliderCenterX" : 0.0,
 				"ColliderCenterY" : -400.0,
@@ -117,6 +127,104 @@
 						"y" : -150.0
 					}
 				]
+			},
+						"x" : -199.7996826171875,
+						"y" : -180.22232055664062
+					}
+				],
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVertices" : 
+				[
+					{
+						"x" : -200.00001525878906,
+						"y" : 180.0
+					},
+					{
+						"x" : 200.00001525878906,
+						"y" : 180.0
+					},
+					{
+						"x" : 200.00001525878906,
+						"y" : -180.0
+					},
+					{
+						"x" : -200.00001525878906,
+						"y" : -180.0
+					}
+				],
+				"mDynamicFriction" : 1.1000000238418579,
+				"mInertia" : 120666.6875,
+				"mInvInertia" : 8.2872911661979742e-06,
+				"mStaticFriction" : 1.2000000476837158
+			},
+			"Script" : 
+			{
+				"ScriptName" : "PlayerScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 1,
+				"Layer" : 2,
+				"SpriteColorX" : 0.85964435338973999,
+				"SpriteColorY" : 0.86737102270126343,
+				"SpriteColorZ" : 0.80789142847061157,
+				"SpriteCurrentTexIndex" : 1,
+				"SpriteFilename" : "Player idle 1R12C.png",
+				"SpriteName" : "ice_cream_truck",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 8,
+				"SpriteTextureHeight" : 800,
+				"SpriteTextureIndex" : 7,
+				"SpriteTextureWidth" : 15684,
+				"SpriteTransformRotation" : 0.063720703125,
+				"SpriteTransformScalingX" : 400.00003051757812,
+				"SpriteTransformScalingY" : 360.0,
+				"SpriteTransformWorldPositionX" : 2.6226043701171875e-05,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : 
+				[
+					{
+						"Name" : "",
+						"animation_duration" : 3.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13596269488334656,
+						"time_per_frame" : 0.25,
+						"x_frames" : 12,
+						"y_frames" : 1
+					},
+					{
+						"Name" : "",
+						"animation_duration" : 3.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.12917044758796692,
+						"time_per_frame" : 0.25,
+						"x_frames" : 12,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.063720703125,
+				"TransformScalingX" : 400.00003051757812,
+				"TransformScalingY" : 360.0,
+				"TransformWorldPositionX" : 2.6226043701171875e-05,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"AudioListener" : 
+			{
+				"AudioHearingRange" : 0.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
 			},
 			"Name" : "Floor",
 			"RigidBody" : 
@@ -752,5 +860,5 @@
 			}
 		}
 	],
-	"EntityAmount" : 16
+	"EntityAmount" : 14
 }
