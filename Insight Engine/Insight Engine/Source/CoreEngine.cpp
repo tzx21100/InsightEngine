@@ -333,6 +333,7 @@ namespace IS {
         DeserializeComponent<Transform>(entity, loaded, "Transform");
         DeserializeComponent<ScriptComponent>(entity, loaded, "Script");
         DeserializeComponent<ButtonComponent>(entity, loaded, "ButtonComponent");
+        DeserializeComponent<Collider>(entity, loaded, "Collider");
     }
 
     void InsightEngine::SerializeAllComponents(Entity entity, Json::Value &saved_entity) {
@@ -341,6 +342,7 @@ namespace IS {
         SerializeComponent<Transform>(entity, saved_entity, "Transform");
         SerializeComponent<ScriptComponent>(entity, saved_entity, "Script");
         SerializeComponent<ButtonComponent>(entity, saved_entity, "ButtonComponent");
+        SerializeComponent<Collider>(entity, saved_entity, "Collider");
     }
 
     /* This will save the entity to a string file.The string file is not defined with a path so it can save it

@@ -52,52 +52,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 573.62237548828125,
-						"y" : -53.502975463867188
-					},
-					{
-						"x" : 1338.6661376953125,
-						"y" : 180.3944091796875
-					},
-					{
-						"x" : 1426.377685546875,
-						"y" : -106.49702453613281
-					},
-					{
-						"x" : 661.3338623046875,
-						"y" : -340.3944091796875
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -131,129 +87,37 @@
 			}
 		},
 		{
-			"Name" : "Player",
-			"RigidBody" : 
+			"Name" : ""
+		},
+		{
+			"Collider" : 
 			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : -2.2747553884983063e-06,
-				"RigidBodyArea" : 144000.015625,
-				"RigidBodyBodyType" : 1,
-				"RigidBodyDensity" : 720000.0625,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.20000000298023224,
-				"RigidBodyMass" : 5.0,
-				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
+				"ColliderCenterX" : 0.0,
+				"ColliderCenterY" : -400.0,
+				"ColliderOffsetX" : 0.0,
+				"ColliderOffsetY" : 0.0,
+				"ColliderSizeScaleX" : 1.0,
+				"ColliderSizeScaleY" : 1.0,
+				"ColliderVertices" : 
 				[
 					{
-						"x" : -200.20004272460938,
-						"y" : 179.7774658203125
+						"x" : -500.0,
+						"y" : 150.0
 					},
 					{
-						"x" : 199.79974365234375,
-						"y" : 180.22232055664062
+						"x" : 500.0,
+						"y" : 150.0
 					},
 					{
-						"x" : 200.20010375976562,
-						"y" : -179.7774658203125
+						"x" : 500.0,
+						"y" : -150.0
 					},
 					{
-						"x" : -199.7996826171875,
-						"y" : -180.22232055664062
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -200.00001525878906,
-						"y" : 180.0
-					},
-					{
-						"x" : 200.00001525878906,
-						"y" : 180.0
-					},
-					{
-						"x" : 200.00001525878906,
-						"y" : -180.0
-					},
-					{
-						"x" : -200.00001525878906,
-						"y" : -180.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 120666.6875,
-				"mInvInertia" : 8.2872911661979742e-06,
-				"mStaticFriction" : 1.2000000476837158
-			},
-			"Script" : 
-			{
-				"ScriptName" : "PlayerScript"
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 1,
-				"Layer" : 2,
-				"SpriteColorX" : 0.85964435338973999,
-				"SpriteColorY" : 0.86737102270126343,
-				"SpriteColorZ" : 0.80789142847061157,
-				"SpriteCurrentTexIndex" : 1,
-				"SpriteFilename" : "Player idle 1R12C.png",
-				"SpriteName" : "ice_cream_truck",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 8,
-				"SpriteTextureHeight" : 800,
-				"SpriteTextureIndex" : 7,
-				"SpriteTextureWidth" : 15684,
-				"SpriteTransformRotation" : 0.063720703125,
-				"SpriteTransformScalingX" : 400.00003051757812,
-				"SpriteTransformScalingY" : 360.0,
-				"SpriteTransformWorldPositionX" : 2.6226043701171875e-05,
-				"SpriteTransformWorldPositionY" : 0.0,
-				"animations" : 
-				[
-					{
-						"Name" : "",
-						"animation_duration" : 3.0,
-						"frame_dimension_x" : 0.083333335816860199,
-						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.13596269488334656,
-						"time_per_frame" : 0.25,
-						"x_frames" : 12,
-						"y_frames" : 1
-					},
-					{
-						"Name" : "",
-						"animation_duration" : 3.0,
-						"frame_dimension_x" : 0.083333335816860199,
-						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 8.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.029170440509915352,
-						"time_per_frame" : 0.25,
-						"x_frames" : 12,
-						"y_frames" : 1
+						"x" : -500.0,
+						"y" : -150.0
 					}
 				]
 			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.063720703125,
-				"TransformScalingX" : 400.00003051757812,
-				"TransformScalingY" : 360.0,
-				"TransformWorldPositionX" : 2.6226043701171875e-05,
-				"TransformWorldPositionY" : 0.0
-			}
-		},
-		{
 			"Name" : "Floor",
 			"RigidBody" : 
 			{
@@ -268,52 +132,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -500.0,
-						"y" : -250.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -250.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -550.0
-					},
-					{
-						"x" : -500.0,
-						"y" : -550.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -500.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -361,52 +181,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 1104.210205078125,
-						"y" : -230.0
-					},
-					{
-						"x" : 1904.210205078125,
-						"y" : -230.0
-					},
-					{
-						"x" : 1904.210205078125,
-						"y" : -530.0
-					},
-					{
-						"x" : 1104.210205078125,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -454,52 +230,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 3155.262939453125,
-						"y" : 44.029190063476562
-					},
-					{
-						"x" : 3955.262939453125,
-						"y" : 44.029190063476562
-					},
-					{
-						"x" : 3955.262939453125,
-						"y" : -255.97080993652344
-					},
-					{
-						"x" : 3155.262939453125,
-						"y" : -255.97080993652344
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -547,52 +279,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 4100.0,
-						"y" : -450.0
-					},
-					{
-						"x" : 4900.0,
-						"y" : -450.0
-					},
-					{
-						"x" : 4900.0,
-						"y" : -750.0
-					},
-					{
-						"x" : 4100.0,
-						"y" : -750.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -640,52 +328,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 5200.11865234375,
-						"y" : 280.2181396484375
-					},
-					{
-						"x" : 5488.4970703125,
-						"y" : 197.52687072753906
-					},
-					{
-						"x" : 5267.98681640625,
-						"y" : -571.482421875
-					},
-					{
-						"x" : 4979.6083984375,
-						"y" : -488.7911376953125
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : -400.0
-					},
-					{
-						"x" : -150.0,
-						"y" : -400.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -733,52 +377,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -1092.10546875,
-						"y" : -50.080337524414062
-					},
-					{
-						"x" : -592.10540771484375,
-						"y" : -50.080337524414062
-					},
-					{
-						"x" : -592.10540771484375,
-						"y" : -250.08033752441406
-					},
-					{
-						"x" : -1092.10546875,
-						"y" : -250.08033752441406
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -100.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -100.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -826,52 +426,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -1671.052734375,
-						"y" : 160.24810791015625
-					},
-					{
-						"x" : -1171.052734375,
-						"y" : 160.24810791015625
-					},
-					{
-						"x" : -1171.052734375,
-						"y" : -39.751884460449219
-					},
-					{
-						"x" : -1671.052734375,
-						"y" : -39.751884460449219
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -100.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -100.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -919,52 +475,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 1683.1572265625,
-						"y" : -230.0
-					},
-					{
-						"x" : 2483.1572265625,
-						"y" : -230.0
-					},
-					{
-						"x" : 2483.1572265625,
-						"y" : -530.0
-					},
-					{
-						"x" : 1683.1572265625,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -1012,52 +524,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 2356.841552734375,
-						"y" : -230.0
-					},
-					{
-						"x" : 3156.841552734375,
-						"y" : -230.0
-					},
-					{
-						"x" : 3156.841552734375,
-						"y" : -530.0
-					},
-					{
-						"x" : 2356.841552734375,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -1105,52 +573,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -3715.788818359375,
-						"y" : 738.83929443359375
-					},
-					{
-						"x" : -1715.788818359375,
-						"y" : 738.83929443359375
-					},
-					{
-						"x" : -1715.788818359375,
-						"y" : 138.83929443359375
-					},
-					{
-						"x" : -3715.788818359375,
-						"y" : 138.83929443359375
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -1000.0,
-						"y" : 300.0
-					},
-					{
-						"x" : 1000.0,
-						"y" : 300.0
-					},
-					{
-						"x" : 1000.0,
-						"y" : -300.0
-					},
-					{
-						"x" : -1000.0,
-						"y" : -300.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -1198,52 +622,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -3484.36669921875,
-						"y" : 1437.1561279296875
-					},
-					{
-						"x" : -3184.36669921875,
-						"y" : 1437.1561279296875
-					},
-					{
-						"x" : -3184.36669921875,
-						"y" : 637.1561279296875
-					},
-					{
-						"x" : -3484.36669921875,
-						"y" : 637.1561279296875
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : -400.0
-					},
-					{
-						"x" : -150.0,
-						"y" : -400.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -1277,96 +657,98 @@
 			}
 		},
 		{
-			"Name" : "Platform4",
+			"Collider" : 
+			{
+				"ColliderCenterX" : 0.0,
+				"ColliderCenterY" : 0.0,
+				"ColliderOffsetX" : 0.0,
+				"ColliderOffsetY" : 0.0,
+				"ColliderSizeScaleX" : 1.0,
+				"ColliderSizeScaleY" : 1.0,
+				"ColliderVertices" : 
+				[
+					{
+						"x" : -56.25,
+						"y" : 64.699996948242188
+					},
+					{
+						"x" : 56.25,
+						"y" : 64.699996948242188
+					},
+					{
+						"x" : 56.25,
+						"y" : -64.699996948242188
+					},
+					{
+						"x" : -56.25,
+						"y" : -64.699996948242188
+					}
+				]
+			},
+			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAccelerationY" : 0.0,
 				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 240000.0,
-				"RigidBodyBodyType" : 0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 1,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -2331.735107421875,
-						"y" : 1437.15625
-					},
-					{
-						"x" : -2031.735107421875,
-						"y" : 1437.15625
-					},
-					{
-						"x" : -2031.735107421875,
-						"y" : 637.15625
-					},
-					{
-						"x" : -2331.735107421875,
-						"y" : 637.15625
-					}
-				],
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 5.0,
+				"RigidBodyRestitution" : 0.5,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : -400.0
-					},
-					{
-						"x" : -150.0,
-						"y" : -400.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
+			},
+			"Script" : 
+			{
+				"ScriptName" : "PlayerScript"
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteColorX" : 0.60000002384185791,
+				"SpriteColorY" : 0.60000002384185791,
+				"SpriteColorZ" : 0.60000002384185791,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
-				"SpriteName" : "Box",
+				"SpriteFilename" : "Player idle 1R12C.png",
+				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 7,
-				"SpriteTextureHeight" : 1283,
-				"SpriteTextureIndex" : 6,
-				"SpriteTextureWidth" : 610,
+				"SpriteTexture" : 8,
+				"SpriteTextureHeight" : 800,
+				"SpriteTextureIndex" : 7,
+				"SpriteTextureWidth" : 15684,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 300.0,
-				"SpriteTransformScalingY" : 800.0,
-				"SpriteTransformWorldPositionX" : -2181.735107421875,
-				"SpriteTransformWorldPositionY" : 1037.15625,
-				"animations" : []
+				"SpriteTransformScalingX" : 112.5,
+				"SpriteTransformScalingY" : 129.39999389648438,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.076923079788684845,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 186.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.043588858097791672,
+						"time_per_frame" : 0.076923079788684845,
+						"x_frames" : 12,
+						"y_frames" : 1
+					}
+				]
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 300.0,
-				"TransformScalingY" : 800.0,
-				"TransformWorldPositionX" : -2181.735107421875,
-				"TransformWorldPositionY" : 1037.15625
+				"TransformScalingX" : 112.5,
+				"TransformScalingY" : 129.39999389648438,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
 			}
 		}
 	],

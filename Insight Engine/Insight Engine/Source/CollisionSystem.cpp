@@ -18,10 +18,13 @@ namespace IS
 		// empty contact pair before going into collision step
 		mContactPair.clear();
 
+		// Step update, collider update transform
 		Step();
 		
+		// Collision Detection
 		BroadPhase();
 
+		// Collision Resolution
 		NarrowPhase();
 	}
 
@@ -93,8 +96,8 @@ namespace IS
 				mManifoldInfo.mContactCount = 0;
 				mManifoldInfo.FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 				Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
-				ResolveCollision(contact);
-				//ResolveRotation(contact, transA, transB);
+				//ResolveCollision(contact);
+				ResolveCollisionWithRotation(contact, transA, transB);
 
 			}
 		}
@@ -224,7 +227,7 @@ namespace IS
 		bodyB->mVelocity += impulse * bodyB->mInvMass;
 	}
 
-	void CollisionSystem::ResolveRotation(Manifold& contact, Transform const& transA, Transform const& transB) 
+	void CollisionSystem::ResolveCollisionWithRotation(Manifold& contact, Transform const& transA, Transform const& transB)
 	{
 		// init
 		RigidBody* bodyA = nullptr;

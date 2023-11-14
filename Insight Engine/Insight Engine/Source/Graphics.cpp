@@ -313,13 +313,17 @@ namespace IS {
 
         // for each entity
         for (auto& entity : mEntities) {
-            // if they have a rigidbody component
+            // if they have a collider component
             if (engine.HasComponent<Collider>(entity)) {
-                //auto& body = engine.GetComponent<RigidBody>(entity);
                 auto& collider = engine.GetComponent<Collider>(entity);
-
                 // draw their outline if activated
                 Physics::DrawOutLine(collider);
+            }
+            // if they have a collider component
+            if (engine.HasComponent<RigidBody>(entity)) {
+                auto& body = engine.GetComponent<RigidBody>(entity);
+                // draw their outline if activated
+                if (Physics::mShowVelocity) Sprite::drawDebugLine(body.mPosition, body.mPosition + body.mVelocity, { 1.f, 0.f, 0.f });
             }
         }
 

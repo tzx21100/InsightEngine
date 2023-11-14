@@ -5,7 +5,7 @@
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#define MAX_COLLIDER 2
+#define MAX_COLLIDER 4 // 3 colliders
 namespace IS
 {
 	//enum ColliderShape
@@ -38,6 +38,8 @@ namespace IS
 
 		BoxCollider();
 		BoxCollider(Vector2D const& center_, Vector2D const& offset_, Vector2D const& sizeScale_, std::vector<Vector2D> const& vertices_, std::vector<Vector2D> const& transformedVertices_);
+
+
 	};
 
 	/*!
@@ -95,6 +97,50 @@ namespace IS
 		void CreateBoxVertices(float width, float height);
 
 		void UpdateBoxCollider(Transform const& trans);
+
+		Json::Value Serialize() override{
+			Json::Value prefab;
+
+			prefab["ColliderCenterX"] = mBoxCollider.center.x;
+			prefab["ColliderCenterY"] = mBoxCollider.center.y;
+			prefab["ColliderOffsetX"] = mBoxCollider.offset.x;
+			prefab["ColliderOffsetY"] = mBoxCollider.offset.y;
+			prefab["ColliderSizeScaleX"] = mBoxCollider.sizeScale.x;
+			prefab["ColliderSizeScaleY"] = mBoxCollider.sizeScale.y;
+
+			// Serialize vertices if needed
+			Json::Value vertices_array(Json::arrayValue);
+			for (const auto& vertex : mBoxCollider.vertices) {
+				Json::Value v;
+				v["x"] = vertex.x;
+				v["y"] = vertex.y;
+				vertices_array.append(v);
+			}
+			prefab["ColliderVertices"] = vertices_array;
+
+			return prefab;
+
+		}
+
+		void Deserialize(Json::Value data) override{
+
+			mBoxCollider.center.x = data["ColliderCenterX"].asFloat();
+			mBoxCollider.center.y = data["ColliderCenterY"].asFloat();
+			mBoxCollider.offset.x = data["ColliderOffsetX"].asFloat();
+			mBoxCollider.offset.y = data["ColliderOffsetY"].asFloat();
+			mBoxCollider.sizeScale.x = data["ColliderSizeScaleX"].asFloat();
+			mBoxCollider.sizeScale.y =data["ColliderSizeScaleY"].asFloat();
+
+			Json::Value vertices_array = data["ColliderVertices"];
+			for (const auto& v : vertices_array) {
+				Vector2D vertex;
+				vertex.x = v["x"].asFloat();
+				vertex.y = v["y"].asFloat();
+				mBoxCollider.vertices.push_back(vertex);
+			}
+
+
+		}
 
 
 	};

@@ -244,7 +244,7 @@ namespace IS {
             void main()
             {
                 mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
-                gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+                gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 2.0, 1.0);
 				vColor = aVertexColor;
             }
         )";

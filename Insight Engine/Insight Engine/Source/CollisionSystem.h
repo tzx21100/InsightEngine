@@ -35,8 +35,8 @@ namespace IS
 		void SeparateColliders(BodyType typeA, BodyType typeB, Transform& transA, Transform& transB, Vector2D const& vec);
 		
 		void ResolveCollision(Manifold& contact);
-		void ResolveRotation(Manifold& contact, Transform const& transA, Transform const& transB);
-		void ResolveFriction(Manifold& contact);
+		void ResolveCollisionWithRotation(Manifold& contact, Transform const& transA, Transform const& transB);
+		void ResolveCollisionWithRotationAndFriction(Manifold& contact);
 	private:
 		std::vector<std::pair<Entity, Entity>> mContactPair;// vector list of each two contact entities
 		Manifold mManifoldInfo;
