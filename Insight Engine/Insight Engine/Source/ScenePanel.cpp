@@ -458,7 +458,6 @@ namespace IS {
         }
         float snap_values[3] = { snap_value, snap_value, snap_value };
 
-        static bool manipulating = false;
         bool manipulated = ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
                                                 static_cast<ImGuizmo::OPERATION>(mGizmoType),
                                                 ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
@@ -469,8 +468,6 @@ namespace IS {
             mGizmoInUse = false;
             return;
         }
-
-        if (manipulating)
 
         if (manipulated)
         {
