@@ -95,6 +95,14 @@ namespace IS {
                 }
             }
         }
+
+        // Maintain aspect ratio of camera
+        if (mSize != Vector2D())
+        {
+            auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+            camera.SetAspectRatio(mSize.x / mSize.y);
+        }
+
     } // end UpdatePanel()
 
     void ScenePanel::RenderPanel()
@@ -450,7 +458,6 @@ namespace IS {
         }
         float snap_values[3] = { snap_value, snap_value, snap_value };
 
-        static bool manipulating = false;
         bool manipulated = ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
                                                 static_cast<ImGuizmo::OPERATION>(mGizmoType),
                                                 ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
@@ -461,8 +468,6 @@ namespace IS {
             mGizmoInUse = false;
             return;
         }
-
-        if (manipulating)
 
         if (manipulated)
         {

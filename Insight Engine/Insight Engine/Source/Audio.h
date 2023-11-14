@@ -36,6 +36,9 @@ namespace IS {
         static std::string GetType() {
             return "AudioListener";
         }
+
+        Json::Value Serialize() override;
+        void Deserialize(Json::Value data) override;
     };
 
     class AudioEmitter : public IComponent {
@@ -51,6 +54,9 @@ namespace IS {
         static std::string GetType() {
             return "AudioEmitter";
         }
+
+        Json::Value Serialize() override;
+        void Deserialize(Json::Value data) override;
     };
 
 
