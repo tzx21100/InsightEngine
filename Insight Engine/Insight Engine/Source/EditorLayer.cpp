@@ -24,12 +24,12 @@
 #include "InspectorPanel.h"
 #include "BrowserPanel.h"
 #include "FileUtils.h"
+#include "CommandHistory.h"
 
 // Dependencies
 #include <ranges>
 #include <imgui.h>
-#include <ImGuizmo.h>
-#include <IconsLucide.h>
+#include <imgui_internal.h>
 
 namespace IS {
 
@@ -38,50 +38,58 @@ namespace IS {
     void EditorLayer::OnAttach()
     {
         AttachPanels();
+
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
         std::string ICON_DIRECTORY = AssetManager::ICON_DIRECTORY;
 
         // Other icons
-        mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "play_button.png")->texture_id);
-        mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "pause_button.png")->texture_id);
-        mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "stop_button.png")->texture_id);
-        mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "step_button.png")->texture_id);
-        mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "texture_placeholder.png")->texture_id);
+        mIcons["PlayButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("play_button.png")->texture_id);
+        mIcons["PauseButton"]        = EditorUtils::ConvertTextureID(asset->GetIcon("pause_button.png")->texture_id);
+        mIcons["StopButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("stop_button.png")->texture_id);
+        mIcons["StepButton"]         = EditorUtils::ConvertTextureID(asset->GetIcon("step_button.png")->texture_id);
+        mIcons["TexturePlaceholder"] = EditorUtils::ConvertTextureID(asset->GetIcon("texture_placeholder.png")->texture_id);
 
         // File icons
-        mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "folder_icon.png")->texture_id);
-        mIcons["File"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "default_file_icon.png")->texture_id);
-        mIcons["Insight"]            = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "insight_file_icon.png")->texture_id);
-        mIcons["Json"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "json_file_icon.png")->texture_id);
-        mIcons["MP3"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "mp3_file_icon.png")->texture_id);
-        mIcons["WAV"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "wav_file_icon.png")->texture_id);
-        mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "png_file_icon.png")->texture_id);
-        mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon(ICON_DIRECTORY + "jpeg_file_icon.png")->texture_id);
+        mIcons["Folder"]             = EditorUtils::ConvertTextureID(asset->GetIcon("folder_icon.png")->texture_id);
+        mIcons["File"]               = EditorUtils::ConvertTextureID(asset->GetIcon("default_file_icon.png")->texture_id);
+        mIcons["Insight"]            = EditorUtils::ConvertTextureID(asset->GetIcon("insight_file_icon.png")->texture_id);
+        mIcons["Json"]               = EditorUtils::ConvertTextureID(asset->GetIcon("json_file_icon.png")->texture_id);
+        mIcons["MP3"]                = EditorUtils::ConvertTextureID(asset->GetIcon("mp3_file_icon.png")->texture_id);
+        mIcons["WAV"]                = EditorUtils::ConvertTextureID(asset->GetIcon("wav_file_icon.png")->texture_id);
+        mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon("png_file_icon.png")->texture_id);
+        mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon("jpeg_file_icon.png")->texture_id);
 
-        IS_CORE_DEBUG("{} attached", mDebugName);
-    }
+        IS_CORE_DEBUG("{} attached.", mDebugName);
+
+    } // end OnAttach()
 
     void EditorLayer::OnDetach()
     {
-        mPanels.clear();
-        IS_CORE_DEBUG("{} detached", mDebugName);
-    }
+        mPanels.Clear();
+        mIcons.clear();
+        IS_CORE_DEBUG("{} detached.", mDebugName);
+
+    } // end OnDetach()
 
     void EditorLayer::OnUpdate(float)
     {
         auto& engine = InsightEngine::Instance();
         auto const input = engine.GetSystem<InputManager>("Input");
 
-        // Shortcuts
+        // Modifier keys
         const bool CTRL_HELD    = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
         const bool SHIFT_HELD   = input->IsKeyHeld(GLFW_KEY_LEFT_SHIFT) || input->IsKeyHeld(GLFW_KEY_RIGHT_SHIFT);
         const bool ALT_HELD     = input->IsKeyHeld(GLFW_KEY_LEFT_ALT) || input->IsKeyHeld(GLFW_KEY_RIGHT_ALT);
+
+        // File
         const bool N_PRESSED    = input->IsKeyPressed(GLFW_KEY_N);
         const bool O_PRESSED    = input->IsKeyPressed(GLFW_KEY_O);
         const bool S_PRESSED    = input->IsKeyPressed(GLFW_KEY_S);
         const bool F4_PRESSED   = input->IsKeyPressed(GLFW_KEY_F4);
         const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
+
+        // Edit
         const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
         const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
 
@@ -91,70 +99,13 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
-        if (CTRL_HELD && Z_PRESSED) {} // Ctrl + Z
-        if (CTRL_HELD && Y_PRESSED) {} // Ctrl + Y
+        if (CTRL_HELD && Z_PRESSED) { CommandHistory::Undo(); }      // Ctrl + Z
+        if (CTRL_HELD && Y_PRESSED) { CommandHistory::Redo(); }      // Ctrl + Y
 
-        if (mGamePanel->IsFocused())
+        // Update panels
+        for (auto& panel : mPanels)
         {
-            Camera::mActiveCamera = CAMERA_TYPE_GAME;
-        }
-
-        // Auto pause game if game panel is not in focus
-        else
-        {
-            if (mScenePanel->IsFocused())
-            {
-                engine.mRuntime = false;
-
-                // Set active camera to editor camera
-                Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-            }
-            else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-            {
-                mHoveredEntity = {};
-            }
-
-            auto [mx, my] = ImGui::GetMousePos();
-            mx -= mScenePanel->GetViewportBounds()[0].x;
-            my -= mScenePanel->GetViewportBounds()[0].y;
-            Vec2 viewportSize = mScenePanel->GetViewportBounds()[1] - mScenePanel->GetViewportBounds()[0];
-            my = viewportSize.y - my;
-            int mouse_x = static_cast<int>(mx);
-            int mouse_y = static_cast<int>(my);
-
-            // Check if mouse is within bounds of the scene panel
-            if (0 <= mouse_x && mouse_x < static_cast<int>(viewportSize.x) &&
-                0 <= mouse_y && mouse_y < static_cast<int>(viewportSize.y))
-            {
-                ZoomCamera();
-                PanCamera();
-
-                // Mouse picking - set hovered entity as the selected entity
-                if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
-                {
-                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
-                    mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
-                    mHierarchyPanel->SetSelectedEntity(mHoveredEntity);
-                }
-
-                // Mouse dragging - change selected/hovered entity translation
-                else if (mHierarchyPanel->GetSelectedEntity() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
-                {
-                    ImVec2 mouse_position_delta = ImGui::GetMouseDragDelta();
-
-                    Entity entity = *mHierarchyPanel->GetSelectedEntity();
-
-                    // Translate entity position
-                    if (engine.HasComponent<Transform>(entity))
-                    {
-                        auto& transform = engine.GetComponent<Transform>(entity);
-                        transform.world_position.x += mouse_position_delta.x * InsightEngine::Instance().GetWindowWidth()/mScenePanel->GetViewportSize().x / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
-                        transform.world_position.y -= mouse_position_delta.y * InsightEngine::Instance().GetWindowHeight() / mScenePanel->GetViewportSize().y / ISGraphics::cameras[Camera::mActiveCamera].GetZoomLevel();
-                    }
-                    ImGui::ResetMouseDragDelta();
-                }
-
-            }
+            panel->UpdatePanel();
         }
 
     } // end OnUpdate()
@@ -179,49 +130,54 @@ namespace IS {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::SetNextWindowBgAlpha(0.f);
 
+        // Set minimum window size within dockspace
+        //ImGuiStyle& style = ImGui::GetStyle();
+        //const ImVec2 default_min_window_size = style.WindowMinSize;
+        //const ImVec2 min_window_size = { 350.f, 300.f };
+        //ImGui::GetStyle().WindowMinSize = min_window_size;
+
         // Start Rendering dockspace
-        ImGui::Begin("EditorDockSpace", nullptr, window_flags);
-        mDockspacePosition = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
-        ImGui::PopStyleVar(3);
-
-        ImGuiIO& io = ImGui::GetIO();
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImVec2 min_window_size = style.WindowMinSize;
-        style.WindowMinSize = ImVec2(350.f, 300.f);
-
-        // Enable dockspace
-        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+        if (ImGui::Begin("EditorDockSpace", nullptr, window_flags))
         {
-            ImGuiID dockspace_id = ImGui::GetID("Editor");
-            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+            mDockspacePosition = { ImGui::GetWindowPos().x, ImGui::GetWindowPos().y };
+            ImGui::PopStyleVar(3);
+
+            ImGuiIO& io = ImGui::GetIO();
+
+            // Enable dockspace
+            if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+            {
+                ImGuiID dockspace_id = ImGui::GetID("Editor");
+                ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+            }
+
+            // Menu bar
+            RenderMenuBar();
+
+            // Tool bar
+            RenderToolBar();
+
+            // Render Panels
+            for (auto& panel : mPanels)
+            {
+                panel->RenderPanel();
+            }
+
+            auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
+
+            if (mSelectedEntity && hovered_entity && *mSelectedEntity == *hovered_entity)
+            {
+                Entity entity = *mSelectedEntity;
+                mPanels.Get<HierarchyPanel>("Hierarchy")->RenderEntityConfig(entity);
+            }
         }
-
-        // Menu bar
-        RenderMenuBar();
-
-        // Tool bar
-        RenderToolBar();
-
-        // Render Panels
-        for (auto& panel : mPanels)
-            panel->RenderPanel();
-
-        // Render outline for selected entity
-        RenderSelectedEntityOutline();
-
-        if (mHierarchyPanel->GetSelectedEntity() && mHoveredEntity &&
-            *mHoveredEntity == *mHierarchyPanel->GetSelectedEntity())
-        {
-            Entity entity = *mHierarchyPanel->GetSelectedEntity();
-            mHierarchyPanel->RenderEntityConfig(entity);
-        }
-
-        //RenderGizmo();
-
-        style.WindowMinSize = min_window_size;
 
         ImGui::End(); // end dockspace
-    }
+        //style.WindowMinSize = default_min_window_size;
+
+        ImGui::ShowDemoWindow();
+
+    } // end OnRender()
 
     Vec2 EditorLayer::GetDockspacePosition() { return mDockspacePosition; }
 
@@ -270,8 +226,9 @@ namespace IS {
 
             if (ImGui::BeginMenu("Edit"))
             {
-                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) {}
-                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) {}
+                if (ImGui::MenuItem(ICON_LC_UNDO "  Undo", "Ctrl+Z")) { CommandHistory::Undo(); }
+                if (ImGui::MenuItem(ICON_LC_REDO "  Redo", "Ctrl+Y")) { CommandHistory::Redo(); }
+
                 ImGui::EndMenu();
             } // end menu Edit
 
@@ -328,7 +285,7 @@ namespace IS {
             ShowCreatePopup("Create new scene", "NewScene", &mShowNewScene, [this](const char* scene_name)
             {
                 SceneManager& scene_manager = SceneManager::Instance();
-                mHierarchyPanel->ResetSelection();
+                ResetEntitySelection();
                 scene_manager.NewScene(scene_name);
                 IS_CORE_TRACE("Current Scene: {}", scene_name);
                 
@@ -339,13 +296,13 @@ namespace IS {
                 engine.CreateGameScript(script_name);
                 engine.OpenGameScript(script_name);
             });
-    }
+
+    } // end RenderMenuBar()
 
     void EditorLayer::RenderToolBar()
     {
         auto& engine = InsightEngine::Instance();
         auto& scene_manager = SceneManager::Instance();
-        auto input = engine.GetSystem<InputManager>("Input");
         const bool scene_loaded = (0 != scene_manager.GetSceneCount());
 
         auto& style = ImGui::GetStyle();
@@ -357,10 +314,18 @@ namespace IS {
         bool button_clicked[BUTTON_COUNT] = {};
         const ImVec2 button_size = { 16.f, 16.f };
         const ImVec4 grey_color = ImVec4(.5f, .5f, .5f, 1.f);
-        const ImVec4 white_color = ImVec4(1.f, 1.f, 1.f, 1.f);
-        ImVec4 tint_color = scene_manager.GetSceneCount() == 0 ? grey_color : white_color;
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
+        ImGuiDockNodeFlags docknode_flags = ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoTabBar |
+            ImGuiDockNodeFlags_NoDockingSplitMe | ImGuiDockNodeFlags_NoDockingOverMe | ImGuiDockNodeFlags_NoDockingOverOther | ImGuiDockNodeFlags_NoResize;
+
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysUseWindowPadding;
+
+        ImGuiWindowClass window_class;
+        window_class.DockingAllowUnclassed = true;
+        window_class.DockNodeFlagsOverrideSet |= docknode_flags;
+        ImGui::SetNextWindowClass(&window_class);
+
         if (ImGui::Begin("##Runtime", nullptr, window_flags))
         {
             ImVec2 window_size = ImGui::GetContentRegionMax();
@@ -371,13 +336,12 @@ namespace IS {
             {
                 ImGui::SetCursorPos(start_position);
 
-                // Grey out step button when not in game view
-                if (i == BUTTON_COUNT - 1)
-                {
-                    tint_color = (scene_manager.GetSceneCount() > 0 && Camera::mActiveCamera == CAMERA_TYPE_GAME) ? white_color : grey_color;
-                }
+                ImGui::BeginDisabled(i == BUTTON_COUNT - 1 && scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera != CAMERA_TYPE_GAME);
 
-                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size, { 0, 0 }, { 1, 1 }, {0, 0, 0, 0}, tint_color);
+                ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
+                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size);
+                ImGui::PopStyleColor();
+                ImGui::EndDisabled();
                 ImGui::SetItemTooltip(tooltips[i]);
             }
 
@@ -387,18 +351,23 @@ namespace IS {
                 if (button_clicked[0])
                 {
                     engine.mRuntime = !engine.mRuntime;
-                    Camera::mActiveCamera = CAMERA_TYPE_GAME;
+                    Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus(ICON_LC_GAMEPAD_2 "  Game");
-                    scene_manager.SaveScene();
+                    if (!strcmp(play_pause_tooltip, "Play"))
+                    {
+                        scene_manager.SaveScene();
+                    }
+                    ISGraphics::mShowTextAnimation = false;
                 }
 
                 // Stop
                 if (button_clicked[1])
                 {
                     engine.mRuntime = false;
-                    Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
+                    Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
                     ImGui::SetWindowFocus(ICON_LC_VIEW "  Scene");
                     scene_manager.ReloadActiveScene();
+                    ISGraphics::mShowTextAnimation = true;
                 }
 
                 // Step
@@ -410,43 +379,21 @@ namespace IS {
 
             ImGui::End(); // end window Runtime
         }
-    }
+
+    } // end RenderToolBar()
 
     void EditorLayer::AttachPanels()
     {
-        mGamePanel      = std::make_shared<GamePanel>(*this);
-        mScenePanel     = std::make_shared<ScenePanel>(*this);
-        mHierarchyPanel = std::make_shared<HierarchyPanel>(*this);
-        mConsolePanel   = std::make_shared<ConsolePanel>(*this);
+        mPanels.Emplace<GamePanel>          ("Game",        *this);
+        mPanels.Emplace<ScenePanel>         ("Scene",       *this);
+        mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
+        mPanels.Emplace<InspectorPanel>     ("Inspector",   *this);
+        mPanels.Emplace<SettingsPanel>      ("Settings",    *this);
+        mPanels.Emplace<ProfilerPanel>   ("Performance", *this);
+        mPanels.Emplace<ConsolePanel>       ("Console",     *this);
+        mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
 
-        mPanels.emplace_back(mGamePanel);
-        mPanels.emplace_back(mScenePanel);
-        mPanels.emplace_back(mHierarchyPanel);
-        mPanels.emplace_back(std::make_shared<PerformancePanel>(*this));
-        mPanels.emplace_back(std::make_shared<BrowserPanel>(*this));
-        mPanels.emplace_back(mConsolePanel);
-        mPanels.emplace_back(std::make_shared<InspectorPanel>(*this, mHierarchyPanel));
-        mPanels.emplace_back(std::make_shared<SettingsPanel>(*this));
-    }
-
-    //void EditorLayer::RenderGizmo()
-    //{
-    //    if (!mHierarchyPanel->GetSelectedEntity())
-    //        return;
-
-    //    //Entity selected_entity = *mHierarchyPanel->GetSelectedEntity();
-
-    //    ImGuizmo::SetOrthographic(true);
-    //    ImGuizmo::SetDrawlist();
-
-    //    ImGuizmo::SetRect(mScenePanel->GetViewportBounds()[0].x, mScenePanel->GetViewportBounds()[0].y,
-    //                      mScenePanel->GetViewportBounds()[1].x - mScenePanel->GetViewportBounds()[0].x,
-    //                      mScenePanel->GetViewportBounds()[1].y - mScenePanel->GetViewportBounds()[0].y);
-
-    //    //Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
-    //    //glm::mat3 view_matrix = camera.xform;
-    //    ImGuizmo::SetOrthographic(true);
-    //}
+    } // end AttachPanels
 
     void EditorLayer::ShowCreatePopup(const char* popup_name, const char* default_text, bool* show, std::function<void(const char*)> CreateAction)
     {
@@ -467,50 +414,12 @@ namespace IS {
 
             ImGui::EndPopup();
         }
-    }
 
-    void EditorLayer::ZoomCamera()
-    {
-        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
-        ImGuiIO& io = ImGui::GetIO();
-        float scroll_delta = io.MouseWheel;
-        float zoom_level = camera.GetZoomLevel();
-        if (scroll_delta != 0)
-        {
-            zoom_level *= (scroll_delta > 0) ? (1 + Camera::mZoomSpeed) : (1 - Camera::mZoomSpeed);
-        }
-        camera.SetZoomLevel(zoom_level);
-    }
-
-    void EditorLayer::PanCamera()
-    {
-        static bool is_panning = false;
-        static ImVec2 previous_mouse_position;
-        ImGuiIO& io = ImGui::GetIO();
-        ImVec2 mouse_position = io.MousePos;
-        Camera& camera = ISGraphics::cameras[CAMERA_TYPE_EDITOR];
-
-        if (!io.MouseDown[1])
-        {
-            is_panning = false;
-            return;
-        }
-
-        if (!is_panning)
-        {
-            is_panning = true;
-            previous_mouse_position = mouse_position;
-        }
-
-        // Calculate the panning offset
-        ImVec2 delta = ImVec2(mouse_position.x - previous_mouse_position.x, mouse_position.y - previous_mouse_position.y);
-        camera.PanCamera(delta.x, delta.y);
-        previous_mouse_position = mouse_position;
-    }
+    } // end ShowCreatePopup()
 
     void EditorLayer::OpenScene()
     {
-        mHierarchyPanel->ResetSelection();
+        ResetEntitySelection();
                 
         if (std::filesystem::path filepath(FileUtils::OpenFile("Insight Scene (*.insight)\0*.insight\0", "Assets\\Scene")); !filepath.empty())
         {
@@ -518,14 +427,16 @@ namespace IS {
             SceneManager::Instance().LoadScene(relative_path.string());
             IS_CORE_DEBUG("Active Scene: {}", relative_path.string());
         }
-    }
+
+    } // end OpenScene()
 
     void EditorLayer::OpenScene(std::string const& path)
     {
         std::filesystem::path filepath(path);
         SceneManager::Instance().LoadScene(filepath.string());
         IS_CORE_DEBUG("Active Scene: {}", filepath.stem().string());
-    }
+
+    } // end OpenScene()
 
     void EditorLayer::AcceptAssetBrowserPayload()
     {
@@ -534,20 +445,13 @@ namespace IS {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_BROWSER_ITEM"))
             {
                 std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                mHierarchyPanel->ResetSelection();
+                ResetEntitySelection();
                 OpenScene(path.string());
             }
             ImGui::EndDragDropTarget();
         }
-    }
 
-    bool EditorLayer::IsGamePanelFocused() const { return mGamePanel->IsFocused(); }
-
-    bool EditorLayer::IsScenePanelFocused() const { return mScenePanel->IsFocused(); }
-
-    ImTextureID EditorLayer::GetIcon(const char* icon) const { return mIcons.at(icon); }
-
-    void EditorLayer::RenderSelectedEntityOutline() const { mHierarchyPanel->RenderSelectedEntityOutline(); }
+    } // end AcceptAssetBrowserPayload()
 
     void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
 
@@ -572,10 +476,5 @@ namespace IS {
     }
 
     void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
-
-    Vec2 EditorLayer::GetViewportSize() {
-        //IS_CORE_DEBUG("VP X: {}, VP Y: {}", mScenePanel->GetViewportSize().x, mScenePanel->GetViewportSize().y);
-        return { mScenePanel->GetViewportSize().x , mScenePanel->GetViewportSize().y };
-    }
 
 } // end namespace IS

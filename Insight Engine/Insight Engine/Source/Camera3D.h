@@ -24,56 +24,42 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "CoreEngine.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
+#include "Input.h"
 
 namespace IS {
+
 	// Enumeration for camera type
+	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
 
 	class Camera3D {
 	public:
-		void init3DCamera(int width, int height, float fieldOfView) {
-			initialFov = fieldOfView;
-			fov = initialFov;
-			aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		void Init(int width, int height, float fov);
 
-			// calculate camDist to see the entire game world of 1920 units width
-			float camDist = ((static_cast<float>(width) / 2.f) / tanf(fov / 2.f));
+		void Update();
 
-			position = glm::vec3(0.f, 0.f, camDist);
-			near = 0.1f;
-			far = camDist * 2.f; // to cover zooming in and out
+		// can use camera_keyboard_callback instead
+		void SetPosition(float x, float y) { mPosition.x = x; mPosition.y = y; }
+		void SetPosition(float x, float y, float z) { mPosition = { x, y, z }; }
 
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-			view = glm::lookAt(position, position + target, up);
-		}
+		void SetZoomLevel(float zoom_level) { mZoomLevel = std::clamp(zoom_level, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX); }
+		float GetZoomLevel() const { return mZoomLevel; }
 
-		void update3DCameraPos(float newX, float newY) {
-			position.x += newX;
-			position.y += newY;
+		void PanCamera(float delta_x, float delta_y);
 
-			target.x += newX;
-			target.y += newY;
-
-			view = glm::lookAt(position, position + target, up);
-		}
-
-		void update3DCameraZoom(float zoomLevel) {
-			fov = initialFov / zoomLevel;
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-		}
-
-		void update3DCameraAspectRatio(float ar) {
-			aspectRatio = ar; 
-			projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
-		}
-
-		glm::mat4 getViewMatrix() { return view; }
-
-		glm::mat4 getPerspectiveMatrix() { return projection; }
+		void SetAspectRatio(float ar) { mAspectRatio = ar;  }
 		
-		glm::mat4 getCameraToNDCXform() { return view * projection; }
+		void MoveCamera(float move_speed);
+
+		void Rotate(float xoffset, float yoffset);
+
+		glm::mat4 GetViewMatrix() { return mView; }
+
+		glm::mat4 GetProjectionMatrix() { return mProjection; }
+		
+		glm::mat4 getCameraToNDCXform() { return mProjection * mView; }
 
 		/// Static members
 		static aCameraType mActiveCamera;
@@ -81,19 +67,38 @@ namespace IS {
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
 
-	private:
-		glm::vec3 position{};
-		glm::vec3 target = glm::vec3(0.f, 0.f, 0.f);
-		glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);;
+		glm::vec3 mPosition{};
 
-		float aspectRatio{};
-		float initialFov{};
-		float fov{};
-		float near{};
-		float far{};
-		
-		glm::mat4 view{};
-		glm::mat4 projection{};
+	private:
+
+		/**
+		* Constants defining camera properties and limits.
+		*/
+		static const float CAMERA_ZOOM_MIN; ///< minimum zoom level
+		static const float CAMERA_ZOOM_MAX; ///< maximum zoom level
+		static const float CAMERA_ZOOM_SPEED_MIN; ///< minimum rate of zoom
+		static const float CAMERA_ZOOM_SPEED_MAX; ///< maximum rate of zoom
+		static const float CAMERA_MOVE_SPEED_MIN; ///< minimum rate of pan
+		static const float CAMERA_MOVE_SPEED_MAX; ///< maximum rate of pan
+		static const float CAMERA_FOV_MIN; ///< minimum fov
+		static const float CAMERA_FOV_MAX; ///< maximum fov
+
+		const glm::vec3 mUp = glm::vec3(0.f, 1.f, 0.f);
+		glm::vec3 mFront = glm::vec3(0.f, 0.f, -1.f);	
+
+		float mAspectRatio{};
+		float mFOV{};
+		float mNear{};
+		float mFar{};
+		float mPitch{ 0.f };
+		float mYaw{ -90.f };
+
+		float mZoomLevel = 1.f;
+
+		glm::mat4 mView{};
+		glm::mat4 mProjection{};
+
+		friend class InspectorPanel;
 	};
 }
 

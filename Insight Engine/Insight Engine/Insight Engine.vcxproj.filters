@@ -121,9 +121,6 @@
     <ClCompile Include="Source\BrowserPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FileUtils.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
@@ -150,6 +147,24 @@
     </ClCompile>
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Engine\Systems\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Matrix4x4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector3D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CommandHistory.cpp">
+      <Filter>Editor\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScenePanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Command.cpp">
+      <Filter>Editor\Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -318,9 +333,6 @@
     <ClInclude Include="Source\BrowserPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FileUtils.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
@@ -350,6 +362,27 @@
     </ClInclude>
     <ClInclude Include="Source\ParticleEmitter.h">
       <Filter>Engine\Systems\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matrix4x4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CommandHistory.h">
+      <Filter>Editor\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ScenePanel.h">
+      <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OrderedMap.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Command.h">
+      <Filter>Editor\Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -457,6 +490,12 @@
     </Filter>
     <Filter Include="Engine\Systems\Particle">
       <UniqueIdentifier>{c56f3f61-4209-4647-b8ee-d504305003b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{0fd8b7d6-2261-4c10-9dac-e912a8d1f35c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Commands">
+      <UniqueIdentifier>{bd2566b6-d6fe-456e-8e04-4b6b53d5f72c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

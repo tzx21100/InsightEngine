@@ -23,7 +23,10 @@
 ----------------------------------------------------------------------------- */
 #include "Layer.h"
 #include "Panel.h"
+#include "ScenePanel.h"
 #include "HierarchyPanel.h"
+#include "InspectorPanel.h"
+#include "OrderedMap.h"
 
 #include <functional>
 
@@ -38,6 +41,8 @@ namespace IS {
      */
     class EditorLayer : public Layer {
     public:
+        template <typename PanelType>
+        using PanelPointer = std::shared_ptr<PanelType>;
 
         /*!
          * \brief Constructor for the EditorLayer class.
@@ -90,14 +95,14 @@ namespace IS {
          *
          * \return Boolean flag indicating focus.
          */
-        bool IsGamePanelFocused() const;
+        inline bool IsGamePanelFocused() const { return mPanels.Get<GamePanel>("Game")->IsFocused(); }
 
         /*!
          * \brief Check if the scene panel is in focus.
          *
          * \return Boolean flag indicating focus.
          */
-        bool IsScenePanelFocused() const;
+        inline bool IsScenePanelFocused() const { return mPanels.Get<ScenePanel>("Scene")->IsFocused(); }
 
         /*!
          * \brief Get the texture id of an icon.
@@ -105,49 +110,86 @@ namespace IS {
          * \param icon The key for the icon.
          * \return texture id to the icon.
          */
-        ImTextureID GetIcon(const char* icon) const;
-
-        /*!
-         * \brief Render outline of the selected entity.
-         */
-        void RenderSelectedEntityOutline() const;
+        inline ImTextureID GetIcon(const char* icon) const { return mIcons.at(icon); }
 
         /*!
          * \brief Get size of viewport.
          * 
          * \return Size of viewport.
          */
-        Vec2 GetViewportSize();
+        inline Vec2 GetViewportSize() { return mPanels.Get<ScenePanel>("Scene")->GetSize(); }
 
         /*!
-         * \brief Get size of console panel.
+         * \brief Checks if any entity is currently selected.
          *
-         * \return Size of console panel.
+         * \return `true` if any entity is selected, `false` otherwise.
          */
-        Vec2 GetConsolePanelSize() const { return mConsolePanel->GetPanelSize(); }
+        inline bool IsAnyEntitySelected() const { return mSelectedEntity ? true : false; }
 
         /*!
-         * \brief Get size of scene hierarchy panel.
+         * \brief Gets the selected entity.
          *
-         * \return Size of scene hierarchy panel.
+         * \return The selected entity.
          */
-        Vec2 GetHierarchyPanel() const { return mHierarchyPanel->GetPanelSize(); }
+        inline Entity GetSelectedEntity() const { return *mSelectedEntity; }
+
+        /*!
+         * \brief Resets the currently selected entity.
+         *
+         * This function clears the selected entity by resetting the associated shared pointer.
+         */
+        void ResetEntitySelection() { mSelectedEntity.reset(); }
+
+        /*!
+         * \brief Sets the selected entity using a shared pointer to an Entity.
+         *
+         * \param entity_ptr A shared pointer to the Entity to be set as the selected entity.
+         */
+        void SetSelectedEntity(std::shared_ptr<Entity> entity_ptr) { mSelectedEntity = entity_ptr; }
+
+        /*!
+         * \brief Gets the current inspect mode.
+         *
+         * \return The current inspect mode.
+         */
+        InspectorPanel::aInspectMode GetInspectMode() const { return mPanels.Get<InspectorPanel>("Inspector")->mInspectMode; }
+
+        /*!
+         * \brief Sets the current inspect mode.
+         *
+         * \param inspect_mode The inspect mode to set to.
+         */
+        void SetInspectMode(InspectorPanel::aInspectMode inspect_mode) { mPanels.Get<InspectorPanel>("Inspector")->mInspectMode = inspect_mode; }
+
+        /*!
+         * \brief Resets the inspect mode of the InspectorPanel.
+         *
+         * This function sets the inspect mode of the InspectorPanel to INSPECT_NONE.
+         */
+        void ResetInspectMode() { mPanels.Get<InspectorPanel>("Inspector")->mInspectMode = InspectorPanel::aInspectMode::INSPECT_NONE; }
+
+        /*!
+         * \brief Retrieves a pointer to a panel of the specified type using the panel name.
+         *
+         * This function performs a dynamic cast to obtain a pointer of the specified PanelType.
+         *
+         * \tparam PanelType The type of the panel to retrieve.
+         * \param panel_name The name of the panel to retrieve.
+         * \return A PanelPointer<PanelType> pointing to the retrieved panel.
+         */
+        template <typename PanelType>
+        PanelPointer<PanelType> GetPanel(std::string const& panel_name) { return std::dynamic_pointer_cast<PanelType>(mPanels[panel_name]); }
 
     private:
-        // Internal Flags
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
         bool mShowNewScript = false; ///< Flag indicating to show new script.
 
         Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
 
-        std::shared_ptr<Entity> mHoveredEntity;
-        std::shared_ptr<GamePanel> mGamePanel; ///< Instance of game panel.
-        std::shared_ptr<ScenePanel> mScenePanel; ///< Instance of scene panel.
-        std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Instance of hierarchy panel.
-        std::shared_ptr<ConsolePanel> mConsolePanel; ///< Instance of console panel.
+        std::shared_ptr<Entity> mSelectedEntity; ///< Pointer to the selected entity.
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
-        std::vector<std::shared_ptr<Panel>> mPanels; ///< Panels in the dockspace.
+        OrderedMap<std::string, Panel> mPanels; ///< An ordered map of panels.
 
         /*!
          * \brief Render the menu bar.
@@ -158,11 +200,6 @@ namespace IS {
          * \brief Render the tool bar.
          */
         void RenderToolBar();
-
-        ///*!
-        // * \brief Render the gizmo.
-        // */
-        //void RenderGizmo();
 
         /*!
          * \brief Attach panels.
@@ -213,16 +250,6 @@ namespace IS {
          * \brief Exit current program.
          */
         void ExitProgram();
-
-        /*!
-         * \brief Processes camera zoom.
-         */
-        void ZoomCamera();
-
-        /*!
-         * \brief Processes camera panning.
-         */
-        void PanCamera();
     };
 
 } // end namespace IS

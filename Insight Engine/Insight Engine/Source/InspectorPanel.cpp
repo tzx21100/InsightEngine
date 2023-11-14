@@ -25,6 +25,7 @@
 #include "FileUtils.h"
 #include "GameGui.h"
 #include "Audio.h"
+#include "CommandHistory.h"
 
 // Dependencies
 #include <imgui.h>
@@ -33,12 +34,36 @@ namespace IS {
 
     void InspectorPanel::RenderPanel()
     {
-        ImGui::Begin(mName.c_str());
-        if (mHierarchyPanel->mSelectedEntity)
+        ImGui::BeginDisabled(Camera3D::mActiveCamera == CAMERA_TYPE_GAME);
+
+        ImGui::Begin((ICON_LC_INFO "  " + mName).c_str());
+
+        // Window contents
         {
-            RenderComponentNodes(*mHierarchyPanel->mSelectedEntity);
+            switch (mInspectMode)
+            {
+            case aInspectMode::INSPECT_CAMERA:
+                RenderCameraControls();
+                break;
+            case aInspectMode::INSPECT_SCENE:
+                break;
+            case aInspectMode::INSPECT_ENTITY:
+                if (mEditorLayer.IsAnyEntitySelected())
+                {
+                    RenderComponentNodes(mEditorLayer.GetSelectedEntity());
+                }
+                break;
+            default:
+                break;
+            }
         }
+
+        // Save window states
+        mFocused = ImGui::IsWindowFocused();
+        mAppearing = ImGui::IsWindowAppearing();
+        mHovered = ImGui::IsItemHovered();
         ImGui::End(); // end window Inspector
+        ImGui::EndDisabled();
     }
 
     void InspectorPanel::RenderEntityConfig(Entity entity)
@@ -100,7 +125,7 @@ namespace IS {
                 if (ImGui::MenuItem("Delete Entity"))
                 {
                     engine.DeleteEntity(entity);
-                    mHierarchyPanel->ResetSelection();
+                    mEditorLayer.ResetEntitySelection();
                 }
 
                 ImGui::EndPopup();
@@ -148,8 +173,9 @@ namespace IS {
     {
         ImGui::PushID(entity);
 
-        // Make everything rounded
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
+
+        // Make everything rounded
         ImGuiIO& io = ImGui::GetIO();
         auto FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
@@ -157,11 +183,15 @@ namespace IS {
         RenderEntityConfig(entity);
 
         // Transform Component
-        RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [FONT_BOLD](Transform& transform)
+        RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
             // Render Translation
-            Vector2D position = { transform.world_position.x, transform.world_position.y };
-            EditorUtils::RenderControlVec2("Translation", position);
+            Vec2 position = transform.world_position;
+            if (EditorUtils::RenderControlVec2("Translation", position))
+            {
+                if (position != transform.world_position)
+                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, position));
+            }
 
             // Render Rotation
             ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
@@ -174,18 +204,26 @@ namespace IS {
                 ImGui::TextUnformatted("Rotation");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
+
                 float rotation = transform.rotation * (PI / 180.f);
-                ImGui::SliderAngle("##Rotation", &rotation, 0.f);
-                transform.rotation = rotation / (PI / 180.f);
+                // Apply modification
+                if (ImGui::SliderAngle("##Rotation", &rotation, 0.f))
+                {
+                    float new_rotation = rotation / (PI / 180.f);
+                    if (new_rotation != transform.rotation)
+                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, new_rotation));
+                }
+
                 ImGui::EndTable();
             }
 
             // Render Scale
-            Vector2D scale = { transform.scaling.x, transform.scaling.y };
-            EditorUtils::RenderControlVec2("Scale", scale, 95.f, 120.f);
-
-            transform.setScaling(scale.x, scale.y);
-            transform.setWorldPosition(position.x, position.y);
+            Vec2 scaling = transform.scaling;
+            if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
+            {
+                if (scaling != transform.scaling)
+                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scaling));
+            }
 
         }); // end render Transform Component
 
@@ -199,9 +237,7 @@ namespace IS {
             float texture_height;
             bool has_texture = sprite.img.texture_id;
             bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
-            bool missing_filename = !filepath.has_filename() && has_texture;
             bool has_animation = !sprite.anims.empty();
-            std::string const& filename = missing_filename ? "Missing filename!" : filepath.filename().string();
 
             if (ImGui::BeginTable("Sprite Table", 2))
             {
@@ -240,9 +276,39 @@ namespace IS {
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::TextColored(missing_filename ? ImVec4(1.f, .675f, .11f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f), filename.c_str());
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo("##TextureCombo", sprite.img.mFileName.c_str()))
+                {
+                    auto const asset = engine.GetSystem<AssetManager>("Asset");
+                    for (auto const& [name, img] : asset->mImageList)
+                    {
+                        std::filesystem::path path(name);
+                        std::string filename = path.filename().string();
 
-                ImGui::EndTable();
+                        if (ImGui::Selectable(filename.c_str(), filename == name))
+                        {
+                            sprite.img = img;
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+
+                    ImGui::EndCombo(); // end combo TextureCombo
+                }
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        auto asset = engine.GetSystem<AssetManager>("Asset");
+                        IS_CORE_DEBUG("Image : {} ", path.string());
+                        sprite.img = *asset->GetImage(path.string());
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::EndTable(); // end table Sprite Table
             }
 
             // Use placeholder if width or height of texture
@@ -607,6 +673,39 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Sound");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+                if (ImGui::BeginCombo("##SoundName", emitter.soundName.c_str()))
+                {
+                    auto& engine = InsightEngine::Instance();
+                    auto const asset = engine.GetSystem<AssetManager>("Asset");
+
+                    for (auto const& [sound_name, sound] : asset->mSoundList)
+                    {
+                        if (ImGui::Selectable(sound_name.c_str(), emitter.soundName == sound_name))
+                        {
+                            emitter.soundName = sound_name;
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+
+                    ImGui::EndCombo(); // end combo SoundName
+                }
+                // Accept payload
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SOUND"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        emitter.soundName = path.string();
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Looped");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
@@ -632,35 +731,6 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Pitch", &emitter.pitch);
-
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Name");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-
-                ImGui::BeginGroup();
-
-                // Edit Audio text
-                std::string& text = emitter.soundName;
-                char buffer[256]{};
-                auto source = text | std::ranges::views::take(text.size());
-                std::ranges::copy(source, std::begin(buffer));
-                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-                if (ImGui::InputText("##EmitterSoundName", buffer, sizeof(buffer), input_text_flags))
-                    text = std::string(buffer);
-
-                if (ImGui::BeginDragDropTarget())
-                {
-                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_AUDIO"))
-                    {
-                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                        IS_CORE_DEBUG("Audio : {} ", path.string());
-                        emitter.soundName = path.string();
-                    }
-                    ImGui::EndDragDropTarget();
-                }
-                ImGui::EndGroup();
 
                 ImGui::EndTable(); // end table Audio Emitter Table
             }
@@ -817,6 +887,138 @@ namespace IS {
             }
             ImGui::EndPopup();
         }
-    }
+    } // end AddAnimation()
+
+    void InspectorPanel::RenderCameraControls()
+    {
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        const float SIZE = 16.f;
+        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        auto& style = ImGui::GetStyle();
+        float zoom_level = camera.GetZoomLevel();
+
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
+        if (ImGui::BeginTable("CameraType", 2))
+        {
+            ImGui::TableSetupColumn("CameraTypeLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Type");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted(Camera3D::mActiveCamera == CAMERA_TYPE_EDITOR ? "Editor Camera" : "In-game Camera");
+
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Projection");
+            ImGui::PopFont();
+            ImGui::TableNextColumn();
+            ImGui::TextUnformatted("Perspective");
+
+            ImGui::EndTable(); // end camera type table
+        }
+
+        // Camera Position
+        //Vector2D position = { camera.mPosition.x, camera.mPosition.y };
+        //EditorUtils::RenderControlVec2("Position", position);
+        Vector3D position = { camera.mPosition.x, camera.mPosition.y, camera.mPosition.z };
+        EditorUtils::RenderControlVec3("Position", position);
+        ImGui::SetItemTooltip("Adjust the position of the camera in world space");
+        camera.SetPosition(position.x, position.y, position.z);
+
+        if (ImGui::BeginTable("CameraTable", 2))
+        {
+            ImGui::TableSetupColumn("CameraLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
+
+            // Camera Clipping Planes
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Clipping Planes");
+            ImGui::PopFont();
+
+            ImGui::TableNextColumn();
+            if (ImGui::BeginTable("Clipping Planes", 2))
+            {
+                ImGui::TableSetupColumn("PlaneLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Near").x);
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Near");
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Near", &camera.mNear);
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Far");
+                ImGui::TableNextColumn();
+                ImGui::InputFloat("##Far", &camera.mFar);
+
+                ImGui::EndTable(); // end table Clipping Planes
+            }
+
+            // Camera Zoom
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Zoom");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust the zoom level of the camera");
+
+            // Zoom out with - button
+            ImGui::TableNextColumn();
+            if (ImGui::Button(ICON_LC_ZOOM_OUT))
+            {
+                zoom_level *= (1 - Camera3D::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::SetItemTooltip("Zooms out camera");
+
+            // Slider to adjust camera zoom
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - (2 * SIZE + 3 * style.ItemSpacing.x));
+            if (ImGui::SliderFloat("##CameraZoomSlider", &zoom_level,
+                                   (Camera3D::CAMERA_ZOOM_MIN), (Camera3D::CAMERA_ZOOM_MAX), "%.2fx", ImGuiSliderFlags_Logarithmic))
+            {
+                // Update the camera's zoom level directly
+                camera.SetZoomLevel(zoom_level);
+            }
+
+            // Zoom in with + button
+            ImGui::SameLine();
+            if (ImGui::Button(ICON_LC_ZOOM_IN))
+            {
+                zoom_level *= (1 + Camera::mZoomSpeed);
+                camera.SetZoomLevel(zoom_level);
+            }
+            ImGui::SetItemTooltip("Zooms in camera");
+
+            // Speed
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Speed");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Adjust speed of camera");
+            ImGui::TableNextColumn();
+            if (ImGui::BeginTable("CameraSpeedTable", 2))
+            {
+                ImGui::TableSetupColumn("SpeedLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Zoom").x);
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Zoom");
+                ImGui::TableNextColumn();
+                ImGui::SliderFloat("##CameraZoomSpeed", &Camera3D::mZoomSpeed, Camera3D::CAMERA_ZOOM_SPEED_MIN, Camera3D::CAMERA_ZOOM_SPEED_MAX, "%.2f");
+
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted("Pan");
+                ImGui::TableNextColumn();
+                ImGui::SliderFloat("##CameraPanSpeed", &Camera3D::mMoveSpeed, Camera3D::CAMERA_MOVE_SPEED_MIN, Camera3D::CAMERA_MOVE_SPEED_MAX, "%.2f");
+
+                ImGui::EndTable(); // end table CameraSpeedTable
+            }
+
+            ImGui::EndTable(); // end table CameraTable
+        }
+
+        ImGui::PopStyleVar(); // end style rounding
+
+    } // end RenderCameraControls()
 
 } // end namespace IS

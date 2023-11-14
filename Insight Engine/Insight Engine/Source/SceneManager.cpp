@@ -27,6 +27,7 @@ namespace IS {
 
 	void SceneManager::NewScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		InsightEngine::Instance().NewScene();
 		CreateScene(scene_filename);
 	}
@@ -35,6 +36,7 @@ namespace IS {
 
 	void SceneManager::SaveSceneAs(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		mSceneNames[mActiveSceneID] = scene_filename;
 		UpdateActiveScene();
 		SaveScene();
@@ -42,6 +44,7 @@ namespace IS {
 
 	void SceneManager::LoadScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		auto& engine = InsightEngine::Instance();
 
 		// Construct filepath
@@ -68,7 +71,7 @@ namespace IS {
 
 	void SceneManager::SwitchScene(SceneID scene_id)
 	{
-
+		IS_PROFILE_FUNCTION();
 		// Nothing to do if scene already active
 		if (scene_id == mActiveSceneID)
 			return;
@@ -129,25 +132,25 @@ namespace IS {
 	SceneID SceneManager::GetSceneCount() const { return mSceneCount; }
 
 	// Entity management
-	void SceneManager::AddEntity(const char* name) 
+	std::optional<Entity> SceneManager::AddEntity(const char* name) 
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().CreateEntity(name); 
+			return std::nullopt;
+		return InsightEngine::Instance().CreateEntity(name); 
 	}
 
-	void SceneManager::AddRandomEntity() 
+	std::optional<Entity> SceneManager::AddRandomEntity()
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().GenerateRandomEntity(); 
+			return std::nullopt;
+		return InsightEngine::Instance().GenerateRandomEntity(); 
 	}
 
-	void SceneManager::CloneEntity(Entity entity) 
+	std::optional<Entity> SceneManager::CloneEntity(Entity entity)
 	{
 		if (mSceneCount == 0)
-			return;
-		InsightEngine::Instance().CopyEntity(entity);
+			return std::nullopt;
+		return InsightEngine::Instance().CopyEntity(entity);
 	}
 
 	void SceneManager::DeleteEntity(Entity entity) 
@@ -159,6 +162,7 @@ namespace IS {
 
 	void SceneManager::CreateScene(std::string const& scene_filename)
 	{
+		IS_PROFILE_FUNCTION();
 		// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();

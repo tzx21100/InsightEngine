@@ -16,6 +16,14 @@
 # Mono auto generated files
 mono_crash.*
 
+# Project generated libs
+Insight Engine/Insight Engine/libraries/imgui/lib/
+Insight Engine/Insight Engine/libraries/imguizmo/lib/
+Insight Engine/Insight Engine/libraries/glad/lib/
+
+# Mono generated files
+Insight Engine/Insight Engine/Resources/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -361,6 +369,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Insight Engine/Insight Engine/Source/Body.h
-/Insight Engine/Insight Engine/Source/Grid.cpp
-/Insight Engine/Insight Engine/Source/Grid.cpp

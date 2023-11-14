@@ -24,7 +24,6 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
-#include "InspectorPanel.h"
 #include "Entities.h"
 #include "SceneManager.h"
 
@@ -44,41 +43,14 @@ namespace IS {
         /*!
          * \brief Constructs a HierarchyPanel object.
          */
-        HierarchyPanel(EditorLayer& editor_layer) : Panel(ICON_LC_LIST_TREE "  Hierarchy", editor_layer) {}
+        HierarchyPanel(EditorLayer& editor_layer) : Panel("Hierarchy", editor_layer) {}
 
-        /*!
-         * \brief Destroys the HierarchyPanel object.
-         */
-        ~HierarchyPanel() = default;
+        void UpdatePanel() override {}
 
         /*!
          * \brief Renders the panel for the scene hierarchy.
          */
         void RenderPanel() override;
-
-        /*!
-         * \brief Resets the current selection.
-         */
-        void ResetSelection();
-
-        /*!
-         * \brief Getter for entity selected currently.
-         * 
-         * \return Pointer to the entity selected currently.
-         */
-        EntityPtr GetSelectedEntity();
-
-        /*!
-         * \brief Setter for entity selected currently.
-         * 
-         * \param entity_ptr Pointer to the entity hovered currently.
-         */
-        void SetSelectedEntity(EntityPtr entity_ptr);
-
-        /*!
-         * \brief Renders an orange outline for the selected entity.
-         */
-        void RenderSelectedEntityOutline();
 
         /*!
          * \brief Renders configuration for entities.
@@ -89,6 +61,13 @@ namespace IS {
         void RenderEntityConfig(Entity entity);
 
         /*!
+         * \brief Renders gui to add component to an entity.
+         *
+         * \param entity The Entity to add components to.
+         */
+        static void RenderAddComponent(Entity entity);
+
+        /*!
          * \brief Gets the size of the scene hierarchy panel.
          * 
          * \return Size of the scene hierarchy panel.
@@ -97,7 +76,6 @@ namespace IS {
 
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
-        EntityPtr mSelectedEntity; ///< The selected Entity in the hierarchy.
         Vec2 mPanelSize; ///< The size of the scene hierarchy panel.
 
         /*!
@@ -109,11 +87,6 @@ namespace IS {
          * \brief Renders a tree node displaying all layers.
          */
         void RenderLayerControls();
-
-        /*!
-         * \brief Renders controls for camera.
-         */
-        void RenderCameraControls();
 
         /*!
          * \brief Renders a node for the specified scene in the scene hierarchy.
@@ -158,14 +131,7 @@ namespace IS {
          */
         void DeleteEntity(Entity entity);
 
-        /*!
-         * \brief Renders gui to add component to an entity.
-         * 
-         * \param entity The Entity to add components to.
-         */
-        static void RenderAddComponent(Entity entity);
-
-        friend class InspectorPanel; ///< Grant InspectorPanel access to private data members.
+        friend class EditorLayer; ///< Grant EditorLayer access to private data members.
     };
 
 } // end namespace IS

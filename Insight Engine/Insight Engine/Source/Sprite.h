@@ -48,11 +48,27 @@ namespace IS {
             float entID{}; // initialize with invalid entity id
             int layer{};
         };
+
+        struct instanceData3D {
+            glm::vec3 color{};
+            float tex_index{};
+            glm::mat4 model_to_ndc_xform{};
+            glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
+            glm::vec2 anim_frame_index{ 0.f, 0.f };
+            float entID{}; // initialize with invalid entity id
+            int layer{};
+        };
         
         // Instance data of debug non-quad entity (line, circle)
         struct nonQuadInstanceData {
             glm::vec3 color{};
             glm::mat3 model_to_ndc_xform{};
+        };
+
+        // Instance data of outlines (mouse picked entities)
+        struct nonQuad3DInstanceData {
+            glm::vec3 color{};
+            glm::mat4 model_to_ndc_xform{};
         };
 
         // Member variables
@@ -95,6 +111,10 @@ namespace IS {
         // Unordered set insert comparator
         struct GfxLayerComparator {
             bool operator()(instanceData const& a, instanceData const& b) const {
+                return a.layer < b.layer;
+            }
+
+            bool operator()(instanceData3D const& a, instanceData3D const& b) const {
                 return a.layer < b.layer;
             }
         };
@@ -173,6 +193,9 @@ namespace IS {
          * multiple sprites with different transformations in a single draw call.
          */
         static void draw_instanced_quads();
+        static void draw_instanced_3D_quads();
+
+        static void draw_picked_entity_border();
 
         /*!
          * \brief "Draws" a debug line between two specified points.

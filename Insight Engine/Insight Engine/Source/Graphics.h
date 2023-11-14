@@ -124,7 +124,9 @@ namespace IS {
 
 		// Shaders
 		static Shader inst_quad_shader_pgm;
+		static Shader inst_3d_quad_shader_pgm;
 		static Shader inst_non_quad_shader_pgm;
+		static Shader quad_border_shader_pgm;
 
 		// Texture vector
 		static std::vector<Image> textures;
@@ -136,6 +138,7 @@ namespace IS {
 
 		// instance data containers
 		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
+		static std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> layered3DQuadInstances;
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 

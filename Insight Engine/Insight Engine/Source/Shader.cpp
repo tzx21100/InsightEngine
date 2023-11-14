@@ -22,16 +22,16 @@ namespace IS {
         // vertex shader
         std::string vtx_shdr = R"(
             #version 450 core
-            layout(location = 0) in vec2  aVertexPosition;
-            layout(location = 1) in vec2  aVertexTexCoord;
-            layout(location = 2) in vec3  aVertexColor;
-            layout(location = 3) in float aTexIndex;
-            layout(location = 4) in vec3  aMtxRow1;
-            layout(location = 5) in vec3  aMtxRow2;
-            layout(location = 6) in vec3  aMtxRow3;
-            layout(location = 7) in vec2  aAnimDim;
-            layout(location = 8) in vec2  aAnimIndex;
-            layout(location = 9) in float aEntityID;
+            layout(location = 0)  in vec2  aVertexPosition;
+            layout(location = 1)  in vec2  aVertexTexCoord;
+            layout(location = 2)  in vec3  aVertexColor;
+            layout(location = 3)  in float aTexIndex;
+            layout(location = 4)  in vec3  aMtxRow1;
+            layout(location = 5)  in vec3  aMtxRow2;
+            layout(location = 6)  in vec3  aMtxRow3;
+            layout(location = 8)  in vec2  aAnimDim;
+            layout(location = 9)  in vec2  aAnimIndex;
+            layout(location = 10) in float aEntityID;
 
             layout(location = 0) out vec3  vColor;
             layout(location = 1) out vec2  vTexCoord;
@@ -83,6 +83,133 @@ namespace IS {
                 }
                 int id = int(vEntityID);
                 fEntityID = id + 1;
+            }
+        )";
+
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    void Shader::setup3DInstSpriteShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0)  in vec2  aVertexPosition;
+            layout(location = 1)  in vec2  aVertexTexCoord;
+            layout(location = 2)  in vec3  aVertexColor;
+            layout(location = 3)  in float aTexIndex;
+            layout(location = 4)  in vec4  aMtxRow1;
+            layout(location = 5)  in vec4  aMtxRow2;
+            layout(location = 6)  in vec4  aMtxRow3;
+            layout(location = 7)  in vec4  aMtxRow4;
+            layout(location = 8)  in vec2  aAnimDim;
+            layout(location = 9)  in vec2  aAnimIndex;
+            layout(location = 10) in float aEntityID;
+
+            layout(location = 0) out vec3  vColor;
+            layout(location = 1) out vec2  vTexCoord;
+            layout(location = 2) out flat float vTexID;
+            layout(location = 3) out vec2  vAnimDim;
+            layout(location = 4) out vec2  vAnimIndex;
+            layout(location = 5) out flat float vEntityID;
+
+            void main()
+            {
+                mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
+                //gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 0.0, 1.0);
+		        vColor = aVertexColor;  
+                vTexCoord = aVertexTexCoord;
+                vTexID = aTexIndex;
+                vAnimDim = aAnimDim;
+                vAnimIndex = aAnimIndex;
+                vEntityID = aEntityID;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec3  vColor;
+            layout(location = 1) in vec2  vTexCoord;
+            layout(location = 2) in flat float vTexID;
+            layout(location = 3) in vec2  vAnimDim;
+            layout(location = 4) in vec2  vAnimIndex;
+            layout(location = 5) in flat float vEntityID;
+
+            layout(location = 0) out vec4 fFragColor;
+            layout(location = 1) out int fEntityID;
+
+            uniform sampler2D uTex2d[32];
+  
+            void main()
+            {
+                bool textured = false;
+                if (vTexID >= 0) textured = true;
+                if (!textured)
+                {
+                    fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+                }
+                else
+                {
+                    int texIdx = int(vTexID);
+                    fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
+                }
+                int id = int(vEntityID);
+                fEntityID = id + 1;
+            }
+        )";
+
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    void Shader::setupPickedQuadShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0)  in vec2  aVertexPosition;
+
+            uniform mat4 model_to_ndc_xform;
+
+            void main()
+            {
+                gl_Position = model_to_ndc_xform * vec4(aVertexPosition, 0.0, 1.0);
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+            layout(location = 0) out vec4 fFragColor;
+  
+            void main()
+            {
+                fFragColor = vec4(1.0, 0.675, 0.11, 1.0);
             }
         )";
 
@@ -254,6 +381,7 @@ namespace IS {
                 glGetShaderInfoLog(shader_hdl, log_len, &written_log_len, log_vect.data());
 
                 log = "Vertex shader compilation failed\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
+                IS_CORE_ERROR("Shader compilation failed!");
             }
             // Clean up the shader object and return GL_FALSE
             glDeleteShader(shader_hdl);
@@ -401,6 +529,12 @@ namespace IS {
     void Shader::setUniform(GLchar const* name, glm::mat3 const& val) {
         GLint loc = glGetUniformLocation(pgm_hdl, name);
         if (loc >= 0) glUniformMatrix3fv(loc, 1, GL_FALSE, &val[0][0]);
+        else std::cout << "Uniform variable " << name << " doesn't exist.\n";
+    }
+
+    void Shader::setUniform(GLchar const* name, glm::mat4 const& val) {
+        GLint loc = glGetUniformLocation(pgm_hdl, name);
+        if (loc >= 0) glUniformMatrix4fv(loc, 1, GL_FALSE, &val[0][0]);
         else std::cout << "Uniform variable " << name << " doesn't exist.\n";
     }
 

@@ -62,7 +62,7 @@ namespace IS {
             //idle_anim_image->texture_index = 2;
             //walking_anim_image = asset->GetImage("Assets/player_walking.png");
             //walking_anim_image->texture_index = 3;
-            truck_anim_image = asset->GetImage("Assets/Textures/icecream_truck.png");
+            truck_anim_image = asset->GetImage("icecream_truck.png");
             //truck_anim_image->texture_index = 0;
 
             //walking_ani.initAnimation(1, 4, 1.f); // init 3 animations
@@ -157,9 +157,7 @@ namespace IS {
 
             //trans_point.setWorldPosition(width * 0.406f, height * 0.33333333f);
             //sprite_point.primitive_type = GL_POINTS;
-
-            int width = engine.GetWindowWidth();
-            int height = engine.GetWindowHeight();
+            
             //entity_ai = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Pathfinder>("ai");
             //auto& trans_ai = engine.GetComponent<Transform>(entity_ai);
             //auto& body_ai = engine.GetComponent<RigidBody>(entity_ai);
@@ -169,13 +167,6 @@ namespace IS {
             //trans_ai.setWorldPosition(200.f,-200.f);
             //body_ai.mAngularVelocity = 10.f;
             //body_ai.mRestitution = 0.1f;
-
-            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamDim((float)width,(float)height);
-        #ifdef USING_IMGUI
-            Camera::mActiveCamera = CAMERA_TYPE_EDITOR;
-        #else
-            Camera::mActiveCamera = CAMERA_TYPE_GAME;
-        #endif // USING_IMGUI
 
             auto& scene_manager = SceneManager::Instance();
             scene_manager.LoadScene("Assets\\Scenes\\basicLevel.insight");
@@ -192,23 +183,23 @@ namespace IS {
 
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
-            auto& trans_player = engine.GetComponent<Transform>(player);
+            //auto& trans_player = engine.GetComponent<Transform>(player);
             body_player.mMass = 5.f;
 
             // limit angle of the player
-            float angle = trans_player.getRotation();
-            if (angle != 0.f && angle != 360.f) {
-                if (angle < 90.f) {
-                    angle = (angle < 15.f) ? angle : 15.f;
-                }
-                else if (angle >= 90.f) {
-                    angle = (angle > 345.f) ? angle : 345.f;
-                }
-            }
-            trans_player.setRotation(angle, body_player.mAngularVelocity);
-            body_player.mRestitution = 0.1f;
-            body_player.mStaticFriction = 1.2f;
-            body_player.mDynamicFriction = 1.1f;
+            //float angle = trans_player.getRotation();
+            //if (angle != 0.f && angle != 360.f) {
+            //    if (angle < 90.f) {
+            //        angle = (angle < 15.f) ? angle : 15.f;
+            //    }
+            //    else if (angle >= 90.f) {
+            //        angle = (angle > 345.f) ? angle : 345.f;
+            //    }
+            //}
+            //trans_player.setRotation(angle, body_player.mAngularVelocity);
+            //body_player.mRestitution = 0.1f;
+            //body_player.mStaticFriction = 1.2f;
+            //body_player.mDynamicFriction = 1.1f;
 
 
             // Process Keyboard Events
@@ -343,19 +334,19 @@ namespace IS {
                     //IS_CORE_INFO("end of click");
                 }
 
-                if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
-                    for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
-                        auto& transl = engine.GetComponent<Transform>(a);
-                        transl.setScaling(width * 0.01875f, height * 0.042222222f);
-                        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
-                        //add the image in
-                        //spr.texture = backgroundTest.texture_id;
-                    }
+                //if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_3)) {
+                //    for (int i = 0; i < 1; i++) {
+                //        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
+                //        auto& transl = engine.GetComponent<Transform>(a);
+                //        transl.setScaling(width * 0.01875f, height * 0.042222222f);
+                //        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                //        //add the image in
+                //        //spr.texture = backgroundTest.texture_id;
+                //    }
 
-                }
+                //}
 
-                if (input->IsKeyPressed(GLFW_KEY_R)) {
+                if (input->IsKeyPressed(GLFW_KEY_9)) {
                     for (int i = 0; i < 1; i++) {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Collider,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);

@@ -42,6 +42,7 @@ namespace IS {
 
     void Sprite::transform() {
         model_TRS.mdl_to_ndc_xform = model_TRS.ReturnXformMatrix();
+        model_TRS.mdl_to_3dcam_to_ndc_xform = model_TRS.Return3DXformMatrix();
     }
 
     void Sprite::draw_instanced_quads() {
@@ -90,6 +91,75 @@ namespace IS {
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[0].draw_count, static_cast<GLsizei>(tempData.size()));
+    }
+
+    void Sprite::draw_instanced_3D_quads() {
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        std::vector<Sprite::instanceData3D> tempData;
+
+        if (buffer) {
+            // Copy the instance data from the multiset to the vector
+            for (const auto& data : ISGraphics::layered3DQuadInstances) {
+                tempData.push_back(data);
+            }
+
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        // bind shader
+        glUseProgram(ISGraphics::inst_3d_quad_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
+
+        // store texture array indices
+        std::vector<int> tex_array_index_vect;
+        for (auto const& texture : ISGraphics::textures) {
+            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            tex_array_index_vect.emplace_back(texture.texture_index);
+        }
+
+        // upload to uniform variable
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_3d_quad_shader_pgm.getHandle(), "uTex2d");
+        if (tex_arr_uniform >= 0)
+            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        else std::cout << "uTex2d Uniform not found" << std::endl;
+
+        // draw instanced quads
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
+    }
+
+    void Sprite::draw_picked_entity_border() {
+        InsightEngine& engine = InsightEngine::Instance();
+
+        // No entity selected, do nothing
+        if (!engine.GetEditorLayer()->IsAnyEntitySelected())
+            return;
+
+        Entity entity = engine.GetEditorLayer()->GetSelectedEntity();
+        auto& sprite = engine.GetComponent<Sprite>(entity);
+
+        // use sprite shader
+        Shader shader = ISGraphics::quad_border_shader_pgm;
+        shader.use();
+
+        // bind vao
+        glBindVertexArray(ISGraphics::meshes[4].vao_ID);
+
+        shader.setUniform("model_to_ndc_xform", sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
+        glDrawArrays(GL_LINE_LOOP, 0, ISGraphics::meshes[4].draw_count);
     }
 
     void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float lineLength, float angleInDegrees) {
@@ -278,6 +348,7 @@ namespace IS {
         // Note: Not serializing mdl_to_ndc_xform as it's a matrix and the specific serialization might depend on further needs
 
         // Serializing texture-related properties
+        spriteData["SpriteFilename"] = img.mFileName;
         spriteData["SpriteTexture"] = img.texture_id;
         spriteData["SpriteTextureWidth"] = img.width;
         spriteData["SpriteTextureHeight"] = img.height;
@@ -330,6 +401,7 @@ namespace IS {
         // Note: Not deserializing mdl_to_ndc_xform as it's a matrix and the specific deserialization might depend on further needs
 
         // Deserializing texture-related properties
+        img.mFileName = data["SpriteFilename"].asString();
         img.texture_id = static_cast<uint8_t>(data["SpriteTexture"].asUInt());
         img.width = data["SpriteTextureWidth"].asInt();
         img.height = data["SpriteTextureHeight"].asInt();

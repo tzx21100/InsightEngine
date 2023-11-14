@@ -262,13 +262,13 @@ namespace IS
 	// Check if there is an overlap at the edge of the grid.
 	bool ImplicitGrid::CheckOverlap(Cell const& min, Cell const& max) {
 		bool check = false;
-		for (int row = min.row; row >= max.row; row--) {
-			for (int col = min.col; col <= max.col; col++) {
-				if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
-					check = true;
-				}
-			}
-		}
+		//for (int row = min.row; row >= max.row; row--) {
+		//	for (int col = min.col; col <= max.col; col++) {
+		//		if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
+		//			check = true;
+		//		}
+		//	}
+		//}
 		return check;
 	}
 

@@ -49,7 +49,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "Mesh.h"
 #include "Sprite.h"
 #include "Transform.h"
-#include "Camera.h"
 #include "Camera3D.h"
 #include "Input.h"
 #include "Text.h"
@@ -60,4 +59,5 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "GameGui.h"
 #include "Pathfinding.h"
 #include "SceneManager.h"
+#include "Particle.h"
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

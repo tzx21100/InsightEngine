@@ -49,6 +49,9 @@ namespace IS {
          * both the vertex and fragment shaders and links them into a program.
          */
         void setupInstSpriteShaders();
+        void setup3DInstSpriteShaders();
+
+        void setupPickedQuadShaders();
 
         /*!
          * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.
@@ -152,6 +155,7 @@ namespace IS {
         void setUniform(GLchar const* name, glm::vec2 const& val);
         void setUniform(GLchar const* name, glm::vec3 const& val);
         void setUniform(GLchar const* name, glm::mat3 const& val);
+        void setUniform(GLchar const* name, glm::mat4 const& val);
 
         /*!
          * \brief Prints the list of active vertex attributes used by the vertex shader.

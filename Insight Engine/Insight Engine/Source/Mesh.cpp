@@ -19,10 +19,10 @@ namespace IS {
     void Mesh::setupInstancedQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
-            Vertex{glm::vec2(1.0f, -1.0f),  glm::vec2(1.0f, 1.0f)},
-            Vertex{glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(1.0f, 1.0f),   glm::vec2(1.0f, 0.0f)}
+            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
+            Vertex{glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f)},
+            Vertex{glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f)},
+            Vertex{glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f)}
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -82,11 +82,80 @@ namespace IS {
         draw_count = static_cast<GLuint>(vertices.size());
     }
 
+    void Mesh::setupInstanced3DQuadVAO() {
+        // Define the vertices of the quad as a triangle strip
+        std::array<Vertex, 4> vertices{
+            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
+            Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
+            Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) },
+            Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) }
+        };
+
+        // Generate a VAO handle to encapsulate the VBO
+        glCreateVertexArrays(1, &vao_ID);
+        glBindVertexArray(vao_ID);
+
+        // Create and bind a VBO to store the vertex data
+        glCreateBuffers(1, &vbo_ID);
+        glNamedBufferStorage(vbo_ID, sizeof(Vertex) * vertices.size(), vertices.data(), GL_DYNAMIC_STORAGE_BIT);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo_ID);
+
+        // Enable attributes
+        glEnableVertexArrayAttrib(vao_ID, pos_attrib);
+        glEnableVertexArrayAttrib(vao_ID, tex_coord_attrib);
+
+        // Bind attributes
+        glVertexAttribPointer(pos_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+        glVertexAttribPointer(tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid*>(offsetof(Vertex, texCoord)));
+
+        // Create Instance Buffer Object
+        glCreateBuffers(1, &instance_vbo_ID);
+        glNamedBufferStorage(instance_vbo_ID, sizeof(Sprite::instanceData3D) * MAX_ENTITIES, NULL, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+        glBindBuffer(GL_ARRAY_BUFFER, instance_vbo_ID);
+
+        // Enable attributes
+        glEnableVertexArrayAttrib(vao_ID, color_attrib);
+        glEnableVertexArrayAttrib(vao_ID, tex_index_attrib);
+        glEnableVertexArrayAttrib(vao_ID, x_form_row1_attrib);
+        glEnableVertexArrayAttrib(vao_ID, x_form_row2_attrib);
+        glEnableVertexArrayAttrib(vao_ID, x_form_row3_attrib);
+        glEnableVertexArrayAttrib(vao_ID, x_form_row4_attrib);
+        glEnableVertexArrayAttrib(vao_ID, anim_dim_attrib);
+        glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
+        glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
+
+        // Specify instance data layout
+        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), 0);
+        glVertexAttribPointer(tex_index_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
+        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 8));
+        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 12));
+        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
+        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 20));
+        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 22));
+        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 24));
+
+        // Specify instance data divisor for attribute instancing
+        glVertexAttribDivisor(color_attrib, 1);
+        glVertexAttribDivisor(tex_index_attrib, 1);
+        glVertexAttribDivisor(x_form_row1_attrib, 1);
+        glVertexAttribDivisor(x_form_row2_attrib, 1);
+        glVertexAttribDivisor(x_form_row3_attrib, 1);
+        glVertexAttribDivisor(x_form_row4_attrib, 1);
+        glVertexAttribDivisor(anim_dim_attrib, 1);
+        glVertexAttribDivisor(anim_index_attrib, 1);
+        glVertexAttribDivisor(ent_ID_attib, 1);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        draw_count = static_cast<GLuint>(vertices.size());
+    }
+
     void Mesh::setupInstancedLineVAO() {
         // Define the vertices of the quad as a triangle strip
         std::vector<glm::vec2> vertices = { // start horizontal
-            glm::vec2(-1.f, 0.f),
-            glm::vec2(1.f, 0.f)
+            glm::vec2(-0.5f, 0.f),
+            glm::vec2(0.5f, 0.f)
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -132,16 +201,53 @@ namespace IS {
         draw_count = static_cast<GLuint>(vertices.size());
     }
 
+    void Mesh::setupOutlineVAO() {
+        // Define the vertices of the quad as a triangle strip
+        std::array<Vertex, 4> vertices{
+            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
+            Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
+            Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) },
+            Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) }
+        };
+
+        // Generate a VAO handle to encapsulate the VBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
+
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
+
+        // Bind the VBO to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Enable the position attribute
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Unbind the VAO (not necessary to unbind buffers individually)
+        glBindVertexArray(0);
+
+        // save VAO, VBO and draw count
+        vao_ID = vao_hdl;
+        vbo_ID = vbo_hdl;
+        draw_count = static_cast<GLuint>(vertices.size());
+    }
+
     void Mesh::setupInstancedCircleVAO() {
         // Define the vertices of the quad as a triangle strip
         std::vector<glm::vec2> pos_vtx;
 
         // Generate circle vertices using GL_LINE_LOOP
         const int segments = 50;
+        const float radius = 0.5f;
         for (int i = 0; i < segments; i++) {
             float theta = static_cast<float>(i) / static_cast<float>(segments) * 2.0f * PI;
-            float x = std::cos(theta);
-            float y = std::sin(theta);
+            float x = radius * std::cos(theta);
+            float y = radius * std::sin(theta);
             pos_vtx.emplace_back(glm::vec2(x, y));
         }
 
@@ -192,10 +298,10 @@ namespace IS {
 	void Mesh::setupQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
-            Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
-            Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 0.5f)},
+            Vertex{glm::vec2(0.5f, -0.5f), glm::vec2(0.5f, 0.5f)},
+            Vertex{glm::vec2(-0.5f, 0.5f), glm::vec2(0.0f, 0.0f)},
+            Vertex{glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.0f)}
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -229,6 +335,41 @@ namespace IS {
         vbo_ID = vbo_hdl;
         draw_count = static_cast<GLuint>(vertices.size());
 	}
+
+    void Mesh::initMeshes(std::vector<Mesh>& meshes) {
+        // 4 meshes for 4 different models
+        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh;
+        /// non instanced meshes
+        // quad_mesh.setupQuadVAO();
+        // quad_mesh.setupQuadVAO();
+        // point_mesh.setupNonQuadVAO(GL_POINTS);
+        // line_mesh.setupNonQuadVAO(GL_LINES);
+        // circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
+
+        inst_quad_mesh.setupInstancedQuadVAO();
+        inst_line_mesh.setupInstancedLineVAO();
+        inst_circle_mesh.setupInstancedCircleVAO();
+        inst_3d_quad_mesh.setupInstanced3DQuadVAO();
+        outline_mesh.setupOutlineVAO();
+
+        // meshes.emplace_back(quad_mesh);
+        // meshes.emplace_back(point_mesh);
+        // meshes.emplace_back(line_mesh);
+        // meshes.emplace_back(circle_mesh);
+        meshes.emplace_back(inst_quad_mesh);
+        meshes.emplace_back(inst_line_mesh);
+        meshes.emplace_back(inst_circle_mesh);
+        meshes.emplace_back(inst_3d_quad_mesh);
+        meshes.emplace_back(outline_mesh);
+    }
+
+    void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {
+        // delete arrays and buffers
+        for (auto& mesh : meshes) {
+            glDeleteVertexArrays(1, &mesh.vao_ID);
+            glDeleteBuffers(1, &mesh.vbo_ID);
+        }
+    }
 
     // now unused
     void Mesh::setupNonQuadVAO(GLenum mesh_primitive_type) {
@@ -281,36 +422,5 @@ namespace IS {
         // save VAO and VBO to free
         vao_ID = vao_hdl;
         vbo_ID = vbo_hdl;
-    }
-
-    void Mesh::initMeshes(std::vector<Mesh>& meshes) {
-        // 4 meshes for 4 different models
-        Mesh quad_mesh, point_mesh, line_mesh, circle_mesh, inst_quad_mesh, inst_line_mesh, inst_circle_mesh;
-        /// non instanced meshes
-        // quad_mesh.setupQuadVAO();
-        // quad_mesh.setupQuadVAO();
-        // point_mesh.setupNonQuadVAO(GL_POINTS);
-        // line_mesh.setupNonQuadVAO(GL_LINES);
-        // circle_mesh.setupNonQuadVAO(GL_TRIANGLE_FAN);
-
-        inst_quad_mesh.setupInstancedQuadVAO();
-        inst_line_mesh.setupInstancedLineVAO();
-        inst_circle_mesh.setupInstancedCircleVAO();
-
-        // meshes.emplace_back(quad_mesh);
-        // meshes.emplace_back(point_mesh);
-        // meshes.emplace_back(line_mesh);
-        // meshes.emplace_back(circle_mesh);
-        meshes.emplace_back(inst_quad_mesh);
-        meshes.emplace_back(inst_line_mesh);
-        meshes.emplace_back(inst_circle_mesh);
-    }
-
-    void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {
-        // delete arrays and buffers
-        for (auto& mesh : meshes) {
-            glDeleteVertexArrays(1, &mesh.vao_ID);
-            glDeleteBuffers(1, &mesh.vbo_ID);
-        }
     }
 }

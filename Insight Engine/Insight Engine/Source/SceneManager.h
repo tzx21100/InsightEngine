@@ -162,19 +162,19 @@ namespace IS {
          * 
          * \param The name of the entity.
          */
-        void AddEntity(const char* name);
+        std::optional<Entity> AddEntity(const char* name);
 
         /*!
          * \brief Add a random entity.
          */
-        void AddRandomEntity();
+        std::optional<Entity> AddRandomEntity();
 
         /*!
          * \brief Clone an existing entity.
          * 
          * \param enttity Entity to be cloned.
          */
-        void CloneEntity(Entity entity);
+        std::optional<Entity> CloneEntity(Entity entity);
 
         /*!
          * \brief Delete an existing entity.

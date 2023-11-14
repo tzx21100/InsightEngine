@@ -34,7 +34,9 @@ namespace IS {
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Render asset browser window
-        if (ImGui::Begin(mName.c_str()))
+        ImGui::Begin((ICON_LC_FOLDER_SEARCH_2 "  " + mName).c_str());
+        
+        // Window Contents
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
             if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))
@@ -78,6 +80,10 @@ namespace IS {
             }
         }
 
+        // Save window states
+        mFocused    = ImGui::IsWindowFocused();
+        mAppearing  = ImGui::IsWindowAppearing();
+        mHovered    = ImGui::IsItemHovered();
         ImGui::End(); // end window Asset Browser
     }
 
@@ -139,14 +145,17 @@ namespace IS {
             {
                 for (auto const& entry : std::filesystem::directory_iterator(mCurrentDirectory))
                 {
+                    static std::string selected_file;
                     auto const& path = entry.path();
                     auto const& relative_path = std::filesystem::relative(path, ASSETS_PATH);
                     auto const& extension = path.extension();
                     std::string filename_string = relative_path.filename().string();
                     const bool is_directory = entry.is_directory();
-
                     ImGui::TableNextColumn();
-                    ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
+                    if (selected_file != filename_string)
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
+                    }
                     std::string icon_name = is_directory ? "Folder" :
                                 extension == ".insight" ? "Insight" :
                                 extension == ".json" ? "Json" :
@@ -157,7 +166,10 @@ namespace IS {
 
                     ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
                     bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    ImGui::PopStyleColor();
+                    if (selected_file != filename_string)
+                    {
+                        ImGui::PopStyleColor();
+                    }
 
                     // Start file drag
                     if (ImGui::BeginDragDropSource())
@@ -173,7 +185,9 @@ namespace IS {
                     }
 
                     if (selected)
-                        ImGui::SetKeyboardFocusHere(-1);
+                    {
+                        selected_file = filename_string;
+                    }
 
                     // Clicking Item
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))

@@ -23,7 +23,6 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
-#include "HierarchyPanel.h"
 #include "Entities.h"
 
 // Dependencies
@@ -32,7 +31,6 @@
 
 namespace IS {
 
-    class HierarchyPanel;
     class Sprite;
 
     /*!
@@ -43,12 +41,19 @@ namespace IS {
     public:
 
         /*!
+         * \brief Represents the inspect mode.
+         */
+        enum class aInspectMode { INSPECT_NONE = -1, INSPECT_CAMERA, INSPECT_SCENE, INSPECT_ENTITY };
+
+        /*!
          * \brief Constructs an InspectorPanel object.
          * 
          * \param hierarchy_panel The instance of hierarchy panel.
          */
-        InspectorPanel(EditorLayer& editor_layer, std::shared_ptr<HierarchyPanel> hierarchy_panel)
-            : Panel(ICON_LC_INFO "  Inspector", editor_layer), mHierarchyPanel(hierarchy_panel) {}
+        InspectorPanel(EditorLayer& editor_layer)
+            : Panel("Inspector", editor_layer), mInspectMode(aInspectMode::INSPECT_NONE) {}
+
+        void UpdatePanel() override {}
 
         /*!
          * \brief Renders the panel for the inspector.
@@ -56,7 +61,7 @@ namespace IS {
         void RenderPanel() override;
 
     private:
-        std::shared_ptr<HierarchyPanel> mHierarchyPanel; ///< Reference to instance of scene hierarchy panel.
+        aInspectMode mInspectMode; ///< Mode of inspection.
         bool mShowPrefabs = false; ///< Flag indicating show prefabs
         bool mShowAddAnimation = false; ///< Flag indicating show add animation
 
@@ -93,6 +98,13 @@ namespace IS {
          * \param sprite Sprite to add animation to.
          */
         void AddAnimation(Sprite& sprite);
+
+        /*!
+         * \brief Renders controls for camera.
+         */
+        void RenderCameraControls();
+
+        friend class EditorLayer;
     };
 
 } // end namespace IS

@@ -103,12 +103,8 @@ namespace IS {
         }
         
         // Update all systems
-        for (const auto& system : mSystemList) {
-            /*if (system->GetName() == "Physics") {
-                system->Update(mFixedDeltaTime.count());
-                continue;
-            }*/
-
+        for (const auto& system : mSystemList)
+        {
             Timer timer(system->GetName() + " System", false);
             system->Update(mFixedDeltaTime.count());
             timer.Stop();
@@ -129,9 +125,7 @@ namespace IS {
         }
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
-        auto frameEnd = LimitFPS(frameStart);
-
-        mDeltaTime = (frameEnd - frameStart);
+        mDeltaTime = LimitFPS(frameStart) - frameStart;
 
         ++mFrameCount;
     }
@@ -257,7 +251,8 @@ namespace IS {
         {
             double now = glfwGetTime();
             double dt = (now - frame_start);
-            if (dt >= mFixedDeltaTime.count())
+            double target = (1.0 / *mTargetFPS);
+            if (dt >= target)
             {
                 return now;
             }
@@ -284,7 +279,7 @@ namespace IS {
     Entity InsightEngine::GenerateRandomEntity(bool with_texture) {
         PRNG& prng = PRNG::Instance();
         InsightEngine& engine = Instance();
-        Camera& camera = ISGraphics::cameras[Camera::mActiveCamera];
+        Camera3D& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         Vector2D window_size = { static_cast<float>(GetWindowWidth()), static_cast<float>(GetWindowHeight())};
         window_size /= camera.GetZoomLevel();
 
@@ -421,7 +416,7 @@ namespace IS {
     *  As our scene is made up of entities, we simply just have to save every entity in the scene.
     */
     void InsightEngine::SaveCurrentScene(std::string filename) {
-        std::string file_path = "Assets\\Scene\\" + filename + ".insight";
+        std::string file_path = "Assets\\Scenes\\" + filename + ".insight";
         int EntitiesAlive = mEntityManager->EntitiesAlive();
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
@@ -436,9 +431,11 @@ namespace IS {
             SaveEntityToJson(id.first, entity_names);*/
         }
         scene["Entities"] = entities;
-        SaveJsonToFile(scene, file_path);
-        IS_CORE_INFO("Saving scene {} successful!", file_path);
-        IS_CORE_INFO("{} entities saved.", EntitiesAlive);
+        if (SaveJsonToFile(scene, file_path))
+        {
+            IS_CORE_INFO("Saving scene {} successful!", file_path);
+            IS_CORE_INFO("{} entities saved.", EntitiesAlive);
+        }
     }
 
     // Using the same format defined above, we simply reverse it and load in our entities.
