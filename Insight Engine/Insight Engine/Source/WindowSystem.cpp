@@ -84,7 +84,6 @@ namespace IS {
 
         // Set window size limites and aspect ratio
         glfwSetWindowSizeLimits(mWindow, DEFAULT_PROPERTIES.mWidth, DEFAULT_PROPERTIES.mHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
-        glfwSetWindowAspectRatio(mWindow, DEFAULT_PROPERTIES.mWidth, DEFAULT_PROPERTIES.mHeight);
 
         // Load OpenGL function pointers using GLAD
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));

@@ -95,6 +95,14 @@ namespace IS {
                 }
             }
         }
+
+        // Maintain aspect ratio of camera
+        if (mSize != Vector2D())
+        {
+            auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+            camera.SetAspectRatio(mSize.x / mSize.y);
+        }
+
     } // end UpdatePanel()
 
     void ScenePanel::RenderPanel()
