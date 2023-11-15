@@ -7,6 +7,8 @@ namespace IS
 	CollisionSystem::CollisionSystem() {
 		mContactPair = std::vector<std::pair<Entity, Entity>>();// vector list of each two contact entities
 		mManifoldInfo;
+		mColliding = false;
+		mCollidingCollection.reset();
 	}
 
 	void CollisionSystem::Initialize() {
@@ -50,38 +52,14 @@ namespace IS
 			colliderA.UpdateCollider(transA);
 			colliderB.UpdateCollider(transB);
 
-			bool colliding = false;
-			std::bitset<MAX_COLLIDING_CASE> colliding_collection; // collection of all possible collision happens between two colliders
-			colliding_collection.reset();
-
-			if (colliderA.mSelectedCollider.test(ColliderShape::BOX)) {
-				if (colliderB.mSelectedCollider.test(ColliderShape::BOX)) { // box vs box
-					colliding = IntersectionPolygons(colliderA.mBoxCollider.transformedVertices, colliderA.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, colliderB.mBoxCollider.center, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-					colliding_collection.set(CollidingStatus::BOX_A_BOX_B);
-				}
-				if (colliderB.mSelectedCollider.test(ColliderShape::CIRCLE)) { // box vs circle
-					colliding = IntersectionCirlcecPolygon(colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, colliderA.mBoxCollider.center, colliderA.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-					mManifoldInfo.mNormal *= -1; // to be fixed
-					colliding_collection.set(CollidingStatus::BOX_A_CIRCLE_B);
-				}
-			}
-
-			// circle collider check
-			if (colliderA.mSelectedCollider.test(ColliderShape::CIRCLE)) {
-				if (colliderB.mSelectedCollider.test(ColliderShape::BOX)) { // circle vs box
-					colliding = IntersectionCirlcecPolygon(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-					colliding_collection.set(CollidingStatus::CIRCLE_A_BOX_B);
-				}
-				if (colliderB.mSelectedCollider.test(ColliderShape::CIRCLE)) { // circle vs circle
-					colliding = IntersectionCircles(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-					colliding_collection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
-				}
-			}
-			// TO DO:
-			// line collider check
+			mColliding = false;
+			// collection of all possible collision happens between two colliders
+			mCollidingCollection.reset();
+			// check collide between two colliders, if colliding, calculate info like normal and depth
+			Colliding(colliderA, colliderB);
 
 			// if collider A and collider B colliding
-			if (colliding) {
+			if (mColliding) {
 				
 				BodyType typeA = BodyType::Static;
 				BodyType typeB = BodyType::Static;
@@ -103,13 +81,8 @@ namespace IS
 				// vector of penetration depth to move entities apart
 				SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 
-
 				// calculate the contact point information
-				mManifoldInfo.FindContactPoints(colliderA, colliderB, colliding_collection);
-				/*mManifoldInfo.mContact1 = Vector2D();
-				mManifoldInfo.mContact2 = Vector2D();
-				mManifoldInfo.mContactCount = 0;*/
-				//mManifoldInfo.FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
+				mManifoldInfo.FindContactPoints(colliderA, colliderB, mCollidingCollection);
 				Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 				ResolveCollision(contact);
 				//ResolveCollisionWithRotation(contact, transA, transB);
@@ -344,6 +317,67 @@ namespace IS
 			//bodyA->mAngularVelocity = (std::abs(bodyA->mAngularVelocity) < 0.13f) ? 0.f : bodyA->mAngularVelocity;
 			//bodyB->mAngularVelocity = (std::abs(bodyB->mAngularVelocity) < 0.13f) ? 0.f : bodyB->mAngularVelocity;
 		}
+	}
+
+	void CollisionSystem::Colliding(Collider& collider_a, Collider& collider_b) {
+		// box collider check
+		if (collider_a.IsBoxColliderEnable()) {
+			if (collider_b.IsBoxColliderEnable()) { // box vs box
+				mColliding = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+				mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
+			}
+			if (collider_b.IsCircleColliderEnable()) { // box vs circle
+				mColliding = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+				mManifoldInfo.mNormal *= -1; // to be fixed
+				mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
+			}
+		}
+
+		// circle collider check
+		if (collider_a.IsCircleColliderEnable()) {
+			if (collider_b.IsBoxColliderEnable()) { // circle vs box
+				mColliding = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+				mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
+			}
+			if (collider_b.IsCircleColliderEnable()) { // circle vs circle
+				mColliding = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+				mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
+			}
+		}
+	}
+
+	bool CollisionSystem::CheckCollide(Collider& collider_a, Collider& collider_b) {
+		bool result = false;
+
+		Vector2D normal = Vector2D();
+		float depth = 0.f;
+
+		// box collider check
+		if (collider_a.IsBoxColliderEnable()) {
+			if (collider_b.IsBoxColliderEnable()) { // box vs box
+				result = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
+				//mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
+			}
+			if (collider_b.IsCircleColliderEnable()) { // box vs circle
+				result = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
+				//mManifoldInfo.mNormal *= -1; // to be fixed
+				//mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
+			}
+		}
+
+		// circle collider check
+		if (collider_a.IsCircleColliderEnable()) {
+			if (collider_b.IsBoxColliderEnable()) { // circle vs box
+				result = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
+				//mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
+			}
+			if (collider_b.IsCircleColliderEnable()) { // circle vs circle
+				result = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
+				//mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
+			}
+		}
+
+		return result;
 	}
 
 	void CollisionSystem::Step() {

@@ -86,6 +86,7 @@ namespace IS {
          * \brief Boolean flag to exert gravity
          */
         static bool mExertingGravity;
+
         static Vector2D mGravity;                                  // Gravity of the world
 
         /*!
@@ -119,7 +120,7 @@ namespace IS {
         void NarrowPhase();
 
         /*!
-         * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
+         * \brief separate two bodies if they colliding and penetrating
         *
         * \param bodyA pointer to the first body.
         * \param bodyB pointer to the second body.

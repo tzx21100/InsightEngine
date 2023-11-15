@@ -37,36 +37,36 @@ namespace IS
 
 	Collider::Collider() {
 		mBoxCollider = BoxCollider();
-		mSelectedCollider.reset(); // Reset all bits to 0
-		mSelectedCollider.set(ColliderShape::BOX);
+		DisableAllColliders(); // Reset all bits to 0
+		EnableBoxCollider();
 	}
 
 	void Collider::CreateCollider() {
-		if (mSelectedCollider.test(ColliderShape::BOX)) {
+		if (IsBoxColliderEnable()) {
 			CreateBoxCollider();
 		}
 
-		if (mSelectedCollider.test(ColliderShape::CIRCLE)) {
+		if (IsCircleColliderEnable()) {
 			//CreateCircleCollider();
 		}
 
-		if (mSelectedCollider.test(ColliderShape::LINE)) {
-			//CreateLineCollider();
-		}
+		//if (mSelectedCollider.test(ColliderShape::LINE)) {
+		//	//CreateLineCollider();
+		//}
 	}
 
 	void Collider::UpdateCollider(Transform const& trans) {
-		if (mSelectedCollider.test(ColliderShape::BOX)) {
+		if (IsBoxColliderEnable()) {
 			UpdateBoxCollider(trans);
 		}
 
-		if (mSelectedCollider.test(ColliderShape::CIRCLE)) {
+		if (IsCircleColliderEnable()) {
 			UpdateCircleCollider(trans);
 		}
 
-		if (mSelectedCollider.test(ColliderShape::LINE)) {
-			//UpdateLineCollider();
-		}
+		//if (mSelectedCollider.test(ColliderShape::LINE)) {
+		//	//UpdateLineCollider();
+		//}
 	}
 
 	void Collider::CreateBoxCollider() {
@@ -116,6 +116,42 @@ namespace IS
 		mCircleCollider.center = trans.world_position + mCircleCollider.offset;
 		// radius calculation will follows the larger scale of x/y
 		mCircleCollider.radius = std::max(trans.scaling.x, trans.scaling.y) * mCircleCollider.radiusScale;
+	}
+
+	void Collider::EnableAllColliders() {
+		mSelectedCollider.set();
+	}
+
+	void Collider::DisableAllColliders() {
+		mSelectedCollider.reset();
+	}
+
+	// HELPER FUNCTION FOR BOX COLLIDER
+
+	void Collider::EnableBoxCollider() {
+		mSelectedCollider.set(ColliderShape::BOX);
+	}
+
+	void Collider::DisableBoxCollider() {
+		mSelectedCollider.reset(ColliderShape::BOX);
+	}
+
+	bool Collider::IsBoxColliderEnable() {
+		return mSelectedCollider.test(ColliderShape::BOX);
+	}
+
+	// HELPER FUNCTION FOR CIRCLE COLLIDER
+
+	void Collider::EnableCircleCollider() {
+		mSelectedCollider.set(ColliderShape::CIRCLE);
+	}
+
+	void Collider::DisableCircleCollider() {
+		mSelectedCollider.reset(ColliderShape::CIRCLE);
+	}
+
+	bool Collider::IsCircleColliderEnable() {
+		return mSelectedCollider.test(ColliderShape::CIRCLE);
 	}
 
 }

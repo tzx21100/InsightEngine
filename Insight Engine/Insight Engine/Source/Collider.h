@@ -101,6 +101,32 @@ namespace IS
 
 		void UpdateCircleCollider(Transform const& trans);
 
+		// set all colliders active
+		void EnableAllColliders();
+
+		// set all colliders deactive
+		void DisableAllColliders();
+
+		// HELPER FUNCTION FOR BOX COLLIDER
+		// set box collider active
+		void EnableBoxCollider();
+
+		// set box collider deactive
+		void DisableBoxCollider();
+
+		// check if box collider is enable or not
+		bool IsBoxColliderEnable();
+
+		// HELPER FUNCTION FOR CIRCLE COLLIDER
+		// set circle collider active
+		void EnableCircleCollider();
+
+		// set circle collider deactive
+		void DisableCircleCollider();
+
+		// check if circle collider is enable or not
+		bool IsCircleColliderEnable();
+
 		Json::Value Serialize() override{
 			Json::Value prefab;
 

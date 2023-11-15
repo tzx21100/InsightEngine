@@ -8,6 +8,7 @@
 
 namespace IS
 {
+	// enum for saving all the possible colliding situations/cases
 	enum CollidingStatus {
 		BOX_A_BOX_B = 1,
 		BOX_A_CIRCLE_B,
@@ -30,23 +31,38 @@ namespace IS
 
 		~CollisionSystem() {}
 
-		void Step();
-
+		// Detects collisions among all the possible entities
 		void BroadPhase();
 
+		// Resloves collisions among all the entities
 		void NarrowPhase();
 
 		void CollisionDetect(std::vector<Entity> const& entities);
+
+		// Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
 		void CollisionDetect(std::set<Entity> const& entities);
 
+		// separate two bodies if they colliding and penetrating
 		void SeparateColliders(BodyType typeA, BodyType typeB, Transform& transA, Transform& transB, Vector2D const& vec);
 		
+		// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
 		void ResolveCollision(Manifold& contact);
 		void ResolveCollisionWithRotation(Manifold& contact, Transform const& transA, Transform const& transB);
 		void ResolveCollisionWithRotationAndFriction(Manifold& contact);
+
+		// check collding between two colliders, calculate and collect the colliding data like normal and depth
+		void Colliding(Collider& collider_a, Collider& collider_b);
+
+		// helper function to check whether two colliders are collding
+		static bool CheckCollide(Collider& collider_a, Collider& collider_b);
+
+		void Step();
+
 	private:
-		std::vector<std::pair<Entity, Entity>> mContactPair;// vector list of each two contact entities
+		std::vector<std::pair<Entity, Entity>> mContactPair;	// vector list of each two contact entities
 		Manifold mManifoldInfo;
+		bool mColliding;										// boolean status between two colliders in one collide
+		std::bitset<MAX_COLLIDING_CASE> mCollidingCollection;	// collection of all possible collision happens between two colliders in one collide
 	};
 }
 #endif
