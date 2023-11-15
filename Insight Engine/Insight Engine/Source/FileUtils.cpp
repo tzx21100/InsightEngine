@@ -97,14 +97,14 @@ namespace IS::FileUtils {
     void OpenScript()
     {
         InsightEngine& engine = InsightEngine::Instance();
-        std::string filepath = FileUtils::OpenFile("C# Script File (*.cs)\0*.cs\0", "..\\IS-ScriptCore\\Source");
+        std::string filepath = FileUtils::OpenFile("C# Script File (*.cs)\0*.cs\0", "..\\Insight Engine\\Assets\\Scripts");
         if (!filepath.empty())
             engine.OpenGameScript(filepath);
     }
 
     std::string OpenAndGetScript()
     {
-        return FileUtils::OpenFile("C# Script File (*.cs)\0*.cs\0", "..\\IS-ScriptCore\\Source");
+        return FileUtils::OpenFile("C# Script File (*.cs)\0*.cs\0", "..\\Insight Engine\\Assets\\Scripts");
     }
 
 } // end namespcae IS

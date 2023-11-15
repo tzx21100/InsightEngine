@@ -241,6 +241,19 @@ namespace IS {
         return button.mButtonState;
     }
 
+    static int CreateEntity(MonoString* name) {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity=InsightEngine::Instance().CreateEntity(str);
+        return static_cast<int>(entity);
+    }
+
+    static void DestroyEntity(int entity) {
+        static_cast<Entity>(entity);
+        InsightEngine::Instance().DeleteEntity(entity);
+    }
+
 
 
     /**
@@ -291,6 +304,10 @@ namespace IS {
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);
+
+        //Entity Manipulations
+        IS_ADD_INTERNAL_CALL(CreateEntity);
+        IS_ADD_INTERNAL_CALL(DestroyEntity);
 
     }
 }

@@ -12,4 +12,23 @@
 
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Source\**" />
+    <EmbeddedResource Remove="Source\**" />
+    <None Remove="Source\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<AvailableItemName Include="LinkedFiles" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Add links to the external script files -->
+		<Compile Include="..\Insight Engine\Assets\Scripts\**\*.cs" LinkBase="ExternalScripts" />
+	</ItemGroup>
+
+
+
+
+
 </Project>

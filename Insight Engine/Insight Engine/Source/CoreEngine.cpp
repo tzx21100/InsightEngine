@@ -508,7 +508,7 @@ namespace IS {
     //abstracted function to make game script
     void InsightEngine::CreateGameScript(const std::string& ScriptName) {
         auto script = GetSystem<ScriptManager>("ScriptManager");
-        script->CreateClassFile(ScriptName, "../IS-ScriptCore/Source/" + ScriptName + ".cs");
+        script->CreateClassFile(ScriptName, "/Insight Engine/Assets/Scripts" + ScriptName + ".cs");
     }
 
     void InsightEngine::OpenGameScript(const std::string& ScriptName) {
