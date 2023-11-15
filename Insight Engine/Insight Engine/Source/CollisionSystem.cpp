@@ -15,17 +15,19 @@ namespace IS
 
 	void CollisionSystem::Update([[maybe_unused]] float dt)
 	{
-		// empty contact pair before going into collision step
-		mContactPair.clear();
+		for (int i = 0; i < 1; i++) {
+			// empty contact pair before going into collision step
+			mContactPair.clear();
 
-		// Step update, collider update transform
-		Step();
-		
-		// Collision Detection
-		BroadPhase();
+			// Step update, collider update transform
+			Step();
 
-		// Collision Resolution
-		NarrowPhase();
+			// Collision Detection
+			BroadPhase();
+
+			// Collision Resolution
+			NarrowPhase();
+		}
 	}
 
 	void CollisionSystem::BroadPhase() 
@@ -96,8 +98,8 @@ namespace IS
 				mManifoldInfo.mContactCount = 0;
 				mManifoldInfo.FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 				Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
-				//ResolveCollision(contact);
-				ResolveCollisionWithRotation(contact, transA, transB);
+				ResolveCollision(contact);
+				//ResolveCollisionWithRotation(contact, transA, transB);
 
 			}
 		}
@@ -150,9 +152,6 @@ namespace IS
 	}
 
 	void CollisionSystem::SeparateColliders(BodyType typeA, BodyType typeB, Transform& transA, Transform& transB, Vector2D const& vec) {
-
-
-
 		// if body A is static 
 		if (typeA != BodyType::Dynamic)
 		{
@@ -172,10 +171,8 @@ namespace IS
 			transA.Move(-vec / 2.f);
 			transB.Move(vec / 2.f);
 		}
-		
 	}
 
-	
 
 	void CollisionSystem::ResolveCollision(Manifold& contact) 
 	{
@@ -237,7 +234,7 @@ namespace IS
 		Vector2D contact2 = contact.mContact2;
 		int contactCount = contact.mContactCount;
 
-		if (contact.mBodyA) { // if entity A got rigidbody component
+		if (contact.mBodyA != nullptr) { // if entity A got rigidbody component
 			bodyA = contact.mBodyA;
 		}
 		else { // entity A has no body, default static
@@ -249,7 +246,7 @@ namespace IS
 			bodyA->CreateStaticBody(transA.world_position, 0.5f);
 		}
 
-		if (contact.mBodyB) { // if entity B got rigidbody component
+		if (contact.mBodyB != nullptr) { // if entity B got rigidbody component
 			bodyB = contact.mBodyB;
 		}
 		else { // entity B has no body component, default static
@@ -328,6 +325,11 @@ namespace IS
 			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * bodyA->mInvInertia;
 			bodyB->mVelocity += impulse * bodyB->mInvMass;
 			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * bodyB->mInvInertia;
+			// clamp if angular velocity nearly equal to 0
+			//bodyA->mVelocity.y = (std::abs(bodyA->mVelocity.y) < 0.13f) ? 0.f : bodyA->mVelocity.y;
+			//bodyB->mVelocity.y = (std::abs(bodyB->mVelocity.y) < 0.13f) ? 0.f : bodyB->mVelocity.y;
+			//bodyA->mAngularVelocity = (std::abs(bodyA->mAngularVelocity) < 0.13f) ? 0.f : bodyA->mAngularVelocity;
+			//bodyB->mAngularVelocity = (std::abs(bodyB->mAngularVelocity) < 0.13f) ? 0.f : bodyB->mAngularVelocity;
 		}
 	}
 

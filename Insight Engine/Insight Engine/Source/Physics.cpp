@@ -723,8 +723,8 @@ namespace IS {
 				body.mPosition += body.mVelocity * time;
 				trans.world_position = body.mPosition;
 
-				body.mRotation = trans.getRotation();
-				body.mRotation += body.mAngularVelocity * time * 10.f;
+				//body.mRotation = trans.getRotation();
+				body.mRotation += body.mAngularVelocity * time * 5.f;
 				trans.setRotation(body.mRotation, body.mAngularVelocity);
 				//trans.world_position += body.mVelocity * time;
 			}

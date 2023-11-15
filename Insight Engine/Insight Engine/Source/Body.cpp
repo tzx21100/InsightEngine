@@ -36,7 +36,7 @@ namespace IS
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = 1.f;
+        mMass = 10.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
@@ -48,7 +48,7 @@ namespace IS
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
-
+        //CreateBoxBody(0.f, 0.f, mMass, mRestitution);
         //if (mBodyShape == BodyShape::Box) {
         //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
         //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
@@ -137,7 +137,8 @@ namespace IS
         //mBodyTransform = trans;
         mPosition = trans.world_position;
         mRotation = trans.rotation;
-        mAngularVelocity = trans.angle_speed;
+        //mAngularVelocity = trans.angle_speed;
+        CreateBoxBody(trans.scaling.x / 1, trans.scaling.y / 1, mMass, mRestitution);
 
     }
 #if 0

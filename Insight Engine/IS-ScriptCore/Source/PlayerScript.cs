@@ -67,7 +67,7 @@ namespace IS
             int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
             trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();
             trans_rotate = trans_rotate < 0 ? 360 : trans_rotate %= 360;
-            InternalCalls.TransformSetRotation(trans_rotate, 10);
+            InternalCalls.TransformSetRotation(trans_rotate, 0);
 
             if (hori_movement != 0 || verti_movement != 0) {
                 InternalCalls.SetSpriteAnimationIndex(0);
