@@ -182,7 +182,7 @@ namespace IS
     * \param radiusB Radius of the second circle.
     * \return True if the two circles are intersecting, false otherwise.
     */
-    bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB);
+    bool IntersectionCircles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB, Vector2D& normal, float& depth);
 
     /*!
     * \brief Builds a line segment from two given points, p0 - start, p1 - end.

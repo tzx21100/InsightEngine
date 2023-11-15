@@ -125,8 +125,8 @@
 			},
 			"Collider" : 
 			{
-				"ColliderCenterX" : 54.047771453857422,
-				"ColliderCenterY" : 456.83383178710938,
+				"ColliderCenterX" : 952.93487548828125,
+				"ColliderCenterY" : 716.832763671875,
 				"ColliderOffsetX" : 0.0,
 				"ColliderOffsetY" : 0.0,
 				"ColliderSizeScaleX" : 1.0,
@@ -190,8 +190,8 @@
 				"SpriteTransformRotation" : 0.063720703125,
 				"SpriteTransformScalingX" : 400.00003051757812,
 				"SpriteTransformScalingY" : 360.0,
-				"SpriteTransformWorldPositionX" : 54.047771453857422,
-				"SpriteTransformWorldPositionY" : 456.83383178710938,
+				"SpriteTransformWorldPositionX" : 952.93487548828125,
+				"SpriteTransformWorldPositionY" : 716.832763671875,
 				"animations" : 
 				[
 					{
@@ -211,7 +211,7 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.22917044162750244,
 						"time_per_frame" : 0.25,
@@ -225,8 +225,8 @@
 				"TransformRotation" : 0.063720703125,
 				"TransformScalingX" : 400.00003051757812,
 				"TransformScalingY" : 360.0,
-				"TransformWorldPositionX" : 54.047771453857422,
-				"TransformWorldPositionY" : 456.83383178710938
+				"TransformWorldPositionX" : 952.93487548828125,
+				"TransformWorldPositionY" : 716.832763671875
 			}
 		},
 		{

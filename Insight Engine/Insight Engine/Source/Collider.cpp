@@ -24,8 +24,9 @@ namespace IS
 
 	CircleCollider::CircleCollider() {
 		center = Vector2D(0.f, 0.f);
-		radius = 0.5f;
+		radius = 0.f;
 		offset = Vector2D(0.f, 0.f);
+		radiusScale = 0.5f;
 	}
 
 	CircleCollider::CircleCollider(Vector2D const& center_, float const& radius_, Vector2D const& offset_) {
@@ -60,7 +61,7 @@ namespace IS
 		}
 
 		if (mSelectedCollider.test(ColliderShape::CIRCLE)) {
-			//UpdateCircleCollider();
+			UpdateCircleCollider(trans);
 		}
 
 		if (mSelectedCollider.test(ColliderShape::LINE)) {
@@ -109,6 +110,12 @@ namespace IS
 			mBoxCollider.transformedVertices[i].x = cosf(angle) * mBoxCollider.vertices[i].x - sinf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.x;
 			mBoxCollider.transformedVertices[i].y = sinf(angle) * mBoxCollider.vertices[i].x + cosf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.y;
 		}
+	}
+
+	void Collider::UpdateCircleCollider(Transform const& trans) {
+		mCircleCollider.center = trans.world_position + mCircleCollider.offset;
+		// radius calculation will follows the larger scale of x/y
+		mCircleCollider.radius = std::max(trans.scaling.x, trans.scaling.y) * mCircleCollider.radiusScale;
 	}
 
 }

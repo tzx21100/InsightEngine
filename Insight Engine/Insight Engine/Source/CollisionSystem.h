@@ -8,6 +8,13 @@
 
 namespace IS
 {
+	enum CollidingStatus {
+		BOX_A_BOX_B = 1,
+		BOX_A_CIRCLE_B,
+		CIRCLE_A_BOX_B,
+		CIRCLE_A_CIRCLE_B
+	};
+
 	class CollisionSystem : public ParentSystem
 	{
 	public:

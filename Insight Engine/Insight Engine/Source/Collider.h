@@ -51,6 +51,7 @@ namespace IS
 		Vector2D center; // Center of the circle
 		float    radius; // Radius of the circle
 		Vector2D offset;
+		float radiusScale;
 
 		CircleCollider();
 		CircleCollider(Vector2D const& center_, float const& radius_, Vector2D const& offset_);
@@ -82,7 +83,7 @@ namespace IS
 		std::vector<Vector2D> mTransformedVertices;
 		GridState mGridState;*/
 		BoxCollider mBoxCollider;
-		//CircleCollider mCircleCollider;
+		CircleCollider mCircleCollider;
 		//LineCollider mLineCollider;
 		std::bitset<MAX_COLLIDER> mSelectedCollider;
 
@@ -97,6 +98,8 @@ namespace IS
 		void CreateBoxVertices(float width, float height);
 
 		void UpdateBoxCollider(Transform const& trans);
+
+		void UpdateCircleCollider(Transform const& trans);
 
 		Json::Value Serialize() override{
 			Json::Value prefab;

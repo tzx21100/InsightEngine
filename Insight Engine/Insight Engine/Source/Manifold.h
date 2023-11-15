@@ -22,7 +22,7 @@
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
 #include "Pch.h"
-
+#define MAX_COLLIDING_CASE 5 // 4 cases
 namespace IS 
 {
      /*!
@@ -74,7 +74,7 @@ namespace IS
          * \param bodyA The first rigid body involved in the collision.
          * \param bodyB The second rigid body involved in the collision.
          */
-        void FindContactPoints(Collider & colliderA, Collider& colliderB);
+        void FindContactPoints(Collider & colliderA, Collider& colliderB, std::bitset<MAX_COLLIDING_CASE> colliding_collection);
 
         /*!
          * \brief Calculates contact points for a collision between two polygons.
@@ -89,6 +89,8 @@ namespace IS
          * \param contactCount Output parameter to store the number of contact points.
          */
         void FindPolygonsContactPoints(std::vector<Vector2D> const& verticesA, std::vector<Vector2D> const& verticesB, Vector2D & contact1, Vector2D & contact2, int & contactCount);
+        void FindCirclePolygonContactPoints(Vector2D const& circle_center, float const& circle_radius, Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point);
+        void FindCirlcesContactPoints(Vector2D const& center_a, float const& radius_a, Vector2D const& center_b, Vector2D & contact_point);
 
         /*!
          * \brief Compares two floating-point values for near equality.

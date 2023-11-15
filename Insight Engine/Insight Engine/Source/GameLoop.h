@@ -183,8 +183,11 @@ namespace IS {
 
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
+            auto& collider_player = engine.GetComponent<Collider>(player);
             //auto& trans_player = engine.GetComponent<Transform>(player);
             body_player.mMass = 20.f;
+            collider_player.mSelectedCollider.reset();
+            collider_player.mSelectedCollider.set(ColliderShape::BOX);
             //body_player.mInertia = 2.f;
 
             // limit angle of the player

@@ -47,34 +47,46 @@ namespace IS
 			auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
 			auto& colliderA = InsightEngine::Instance().GetComponent<Collider>(entityA);
 			auto& colliderB = InsightEngine::Instance().GetComponent<Collider>(entityB);
-			colliderA.UpdateBoxCollider(transA);
-			colliderB.UpdateBoxCollider(transB);
+			colliderA.UpdateCollider(transA);
+			colliderB.UpdateCollider(transB);
 
-			bool boxes_colliding = false;
+			bool colliding = false;
+			std::bitset<MAX_COLLIDING_CASE> colliding_collection; // collection of all possible collision happens between two colliders
+			colliding_collection.reset();
 
 			if (colliderA.mSelectedCollider.test(ColliderShape::BOX)) {
 				if (colliderB.mSelectedCollider.test(ColliderShape::BOX)) { // box vs box
-					boxes_colliding = IntersectionPolygons(colliderA.mBoxCollider.transformedVertices, colliderA.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, colliderB.mBoxCollider.center, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					colliding = IntersectionPolygons(colliderA.mBoxCollider.transformedVertices, colliderA.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, colliderB.mBoxCollider.center, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					colliding_collection.set(CollidingStatus::BOX_A_BOX_B);
 				}
-				// to be fixed
-				//if (colliderB.mSelectedCollider.test(ColliderShape::CIRCLE)) { // box vs circle
-
-				//}
-				//if (colliderB.mSelectedCollider.test(ColliderShape::LINE)) { // box vs line
-
-				//}
+				if (colliderB.mSelectedCollider.test(ColliderShape::CIRCLE)) { // box vs circle
+					colliding = IntersectionCirlcecPolygon(colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, colliderA.mBoxCollider.center, colliderA.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					mManifoldInfo.mNormal *= -1; // to be fixed
+					colliding_collection.set(CollidingStatus::BOX_A_CIRCLE_B);
+				}
 			}
 
-			// TO DO:
 			// circle collider check
+			if (colliderA.mSelectedCollider.test(ColliderShape::CIRCLE)) {
+				if (colliderB.mSelectedCollider.test(ColliderShape::BOX)) { // circle vs box
+					colliding = IntersectionCirlcecPolygon(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					colliding_collection.set(CollidingStatus::CIRCLE_A_BOX_B);
+				}
+				if (colliderB.mSelectedCollider.test(ColliderShape::CIRCLE)) { // circle vs circle
+					colliding = IntersectionCircles(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+					colliding_collection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
+				}
+			}
+			// TO DO:
 			// line collider check
 
 			// if collider A and collider B colliding
-			if (boxes_colliding) {
+			if (colliding) {
 				
 				BodyType typeA = BodyType::Static;
 				BodyType typeB = BodyType::Static;
 				RigidBody* contact_bodyA = nullptr;
+
 				RigidBody* contact_bodyB = nullptr;
 				if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
 					auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
@@ -91,12 +103,13 @@ namespace IS
 				// vector of penetration depth to move entities apart
 				SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 
+
 				// calculate the contact point information
-				//mManifoldInfo.FindContactPoints(colliderA, colliderB);
-				mManifoldInfo.mContact1 = Vector2D();
+				mManifoldInfo.FindContactPoints(colliderA, colliderB, colliding_collection);
+				/*mManifoldInfo.mContact1 = Vector2D();
 				mManifoldInfo.mContact2 = Vector2D();
-				mManifoldInfo.mContactCount = 0;
-				mManifoldInfo.FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
+				mManifoldInfo.mContactCount = 0;*/
+				//mManifoldInfo.FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 				Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 				ResolveCollision(contact);
 				//ResolveCollisionWithRotation(contact, transA, transB);
@@ -338,7 +351,12 @@ namespace IS
 			if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
-				collider.UpdateBoxCollider(trans);
+				collider.UpdateCollider(trans);
+				/*if (InsightEngine::Instance().HasComponent<Sprite>(entity))
+				{
+					InsightEngine::Instance().GetComponent<Sprite>(entity).drawDebugCircle(trans.world_position,
+						{ collider.mCircleCollider.radius, collider.mCircleCollider.radius }, { 1.f, 0.f, 0.f });
+				}*/
 			}
 		}
 	}

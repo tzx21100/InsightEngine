@@ -276,10 +276,20 @@ namespace IS
         mArea = fabs(radius * radius * PI);
         // set the range to be [0,1]
         mRestitution = std::max(0.0f, std::min(restitution, 1.0f));
+
+        mMass = 0.f;
+        mInertia = 0.f;
+
+        if (mBodyType == BodyType::Dynamic) {
+            mMass = mass;
+            // static obj should have 0 mass and inertia
+            mInertia = (1.f / 2.f) * mass * radius * radius;
+        }
+
         // p = m * v
-        mDensity = mass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
-        // static obj should have 0 mass and inertia
-        mInertia = (1.f / 2.f) * mass * radius * radius;
+        mDensity = mMass * mArea; // m=p/v => m=p/A*depth => assume the depth for all objects are same in 2D world
+        mInvMass = mMass > 0.f ? (1.f / mMass) : 0.f;
+        mInvInertia = mInertia > 0.f ? (1.f / mInertia) : 0.f;
     }
 #if 0 
     // Update the parameters of a box-shaped rigid body based on its current Transform

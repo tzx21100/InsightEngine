@@ -398,15 +398,19 @@ namespace IS
 	// FOR CIRCLE
 
 	// Checks if two circles are intersecting
-	bool Intersection_Circles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB) {
+	bool IntersectionCircles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB, Vector2D& normal, float& depth) {
+		normal = Vector2D();
+		depth = std::numeric_limits<float>::max();
+
 		float distance = ISVector2DDistance(centerA, centerB);
 		float totalRadius = radiusA + radiusB;
 
 		if (distance >= totalRadius) {
 			return false;
 		}
-		//calculate normal to be done
-
+		//calculate normal
+		ISVector2DNormalize(normal, (centerB - centerA));
+		depth = totalRadius - distance;
 		return true;
 	}
 
