@@ -333,6 +333,7 @@ namespace IS {
         DeserializeComponent<Transform>(entity, loaded, "Transform");
         DeserializeComponent<ScriptComponent>(entity, loaded, "Script");
         DeserializeComponent<ButtonComponent>(entity, loaded, "ButtonComponent");
+        DeserializeComponent<Collider>(entity, loaded, "Collider");
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
     }
@@ -343,6 +344,7 @@ namespace IS {
         SerializeComponent<Transform>(entity, saved_entity, "Transform");
         SerializeComponent<ScriptComponent>(entity, saved_entity, "Script");
         SerializeComponent<ButtonComponent>(entity, saved_entity, "ButtonComponent");
+        SerializeComponent<Collider>(entity, saved_entity, "Collider");
         SerializeComponent<AudioListener>(entity, saved_entity, "AudioListener");
         SerializeComponent<AudioEmitter>(entity, saved_entity, "AudioEmitter");
     }

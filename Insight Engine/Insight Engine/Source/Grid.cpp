@@ -136,6 +136,7 @@ namespace IS
 	}
 #endif
 
+#if 0 
 	// Add entities into the appropriate cell of the grid.
 	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
 
@@ -176,7 +177,7 @@ namespace IS
 			}
 		}
 	}
-
+#endif
 	// Add entities into the bit arrays representing grid cells.
 	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
 
@@ -270,6 +271,8 @@ namespace IS
 		//}
 		return check;
 	}
+
+#if 0
 
 	// Update the cell for an entity in the grid.
 	void ImplicitGrid::UpdateCell(Entity const& entity, float const& dt) {
@@ -398,6 +401,7 @@ namespace IS
 		}
 	}
 
+#endif
 	// Check if the grid contains a specific cell.
 	bool ImplicitGrid::GridContains(Cell const& cell) {
 		return (cell.col >= 0 && cell.col < mCols && cell.row >= 0 && cell.row < mRows);

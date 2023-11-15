@@ -519,12 +519,12 @@ namespace IS {
                 EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
 
                 // Body Shape
-                ImGui::TableNextColumn();
+                /*ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Body Shape");
                 ImGui::PopFont();
-                ImGui::TableNextColumn();
-                EditorUtils::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
+                ImGui::TableNextColumn();*/
+                //EditorUtils::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
 
                 // Mass
                 ImGui::TableNextColumn();
@@ -579,6 +579,11 @@ namespace IS {
                 ImGui::EndTable(); // end table RigidbodyTable
             }
         }); // end render Rigidbody Component
+
+        RenderComponent<Collider>(ICON_LC_FLIP_HORIZONTAL_2 "  Collider", entity, [FONT_BOLD](Collider& collider) {
+            EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
+            EditorUtils::RenderControlVec2("Sclae", collider.mBoxCollider.sizeScale);
+        });
 
         // Script Component
         RenderComponent<ScriptComponent>(ICON_LC_BRACES "  Script", entity, [FONT_BOLD](ScriptComponent& script)

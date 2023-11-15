@@ -184,7 +184,8 @@ namespace IS {
             Entity player = engine.GetEntityByName("Player");
             auto& body_player = engine.GetComponent<RigidBody>(player);
             //auto& trans_player = engine.GetComponent<Transform>(player);
-            body_player.mMass = 5.f;
+            body_player.mMass = 20.f;
+            //body_player.mInertia = 2.f;
 
             // limit angle of the player
             //float angle = trans_player.getRotation();
@@ -348,7 +349,7 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_9)) {
                     for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Collider,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.05f, height * 0.094222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));

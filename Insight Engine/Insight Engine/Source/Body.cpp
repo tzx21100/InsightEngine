@@ -27,52 +27,55 @@ namespace IS
 {    
     // Default constructor for the RigidBody class
     RigidBody::RigidBody() {
-        mVelocity = Vector2D(); // (0,0)
+        mPosition = Vector2D();
+        mRotation = 0.f;
         mAngularVelocity = 0.f;
-        mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
+        mVelocity = Vector2D(); // (0,0)
+        //mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
         mBodyType = BodyType::Dynamic;
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = 1.f;
+        mMass = 10.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        mBodyShape = BodyShape::Box;
-        mTransformUpdateRequired = false;
-        mGridState = GridState::Uninitialized;
+        //mBodyShape = BodyShape::Box;
+        //mTransformUpdateRequired = false;
+        //mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
+        //CreateBoxBody(0.f, 0.f, mMass, mRestitution);
+        //if (mBodyShape == BodyShape::Box) {
+        //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
+        //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
+        //    // making the transform mVertices same size as the mVertices
+        //    mTransformedVertices = mVertices;
+        //}
+        //else if (mBodyShape == BodyShape::Circle) {
+        //    CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
+        //}
+        //else {
+        //    // make sure the vector array is empty
+        //    mVertices.clear();
+        //    mTransformedVertices.clear();
+        //}
 
-        if (mBodyShape == BodyShape::Box) {
-            CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-            CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
-            // making the transform mVertices same size as the mVertices
-            mTransformedVertices = mVertices;
-        }
-        else if (mBodyShape == BodyShape::Circle) {
-            CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
-        }
-        else {
-            // make sure the vector array is empty
-            mVertices.clear();
-            mTransformedVertices.clear();
-        }
-
-        mTransformUpdateRequired = true;
+        //mTransformUpdateRequired = true;
     }
 
     // Parameterized constructor to initialize rigid body properties.
-	RigidBody::RigidBody(Vector2D position, BodyType body_type, float mass, float restitution,
-        float width, float height, BodyShape body_shape) {
-        mVelocity = Vector2D(); // (0,0)
+	RigidBody::RigidBody(Vector2D position, BodyType body_type, float mass, float restitution) {
+        mPosition = position;
+        mRotation = 0.f;
         mAngularVelocity = 0.f;
-        mBodyTransform.world_position = position;
-        mBodyTransform.rotation = 0.f;
-        mBodyTransform.scaling = Vector2D(width, height);
+        mVelocity = Vector2D(); // (0,0)
+        //mBodyTransform.world_position = position;
+        //mBodyTransform.rotation = 0.f;
+        //mBodyTransform.scaling = Vector2D(width, height);
         mBodyType = body_type;
         mForce = Vector2D(); // (0,0)
         mAcceleration = Vector2D();
@@ -82,39 +85,63 @@ namespace IS
         mRestitution = restitution;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        mBodyShape = body_shape;
-        mTransformUpdateRequired = false;
-        mGridState = GridState::Uninitialized;
+        //mBodyShape = body_shape;
+        //mTransformUpdateRequired = false;
+        //mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
-        mDynamicFriction = 0.6f;
+        mDynamicFriction = 0.4f;
 
-        if (mBodyShape == BodyShape::Box) {
-            CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-            CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
-            // making the transform mVertices same size as the mVertices
-            mTransformedVertices = mVertices;
-        }
-        else if (mBodyShape == BodyShape::Circle) {
-            CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
-        }
-        else {
-            // make sure the vector array is empty
-            mVertices.clear();
-            mTransformedVertices.clear();
-        }
+        //if (mBodyShape == BodyShape::Box) {
+        //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
+        //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
+        //    // making the transform mVertices same size as the mVertices
+        //    mTransformedVertices = mVertices;
+        //}
+        //else if (mBodyShape == BodyShape::Circle) {
+        //    CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
+        //}
+        //else {
+        //    // make sure the vector array is empty
+        //    mVertices.clear();
+        //    mTransformedVertices.clear();
+        //}
 
-        mTransformUpdateRequired = true;
+        //mTransformUpdateRequired = true;
 
 	}
 
-    // updates the rigid body's transformation data to match the texture sprite Transform
-    void RigidBody::BodyFollowTransform(Transform const& trans) {
-        UpdateBoxBody(trans);
-        mBodyTransform = trans;
+    void RigidBody::CreateStaticBody(Vector2D const& position, float restitution) {
+        mPosition = position;
+        mRotation = 0.f;
+        mAngularVelocity = 0.f;
+        mVelocity = Vector2D();
+        mBodyType = BodyType::Static;
+        mForce = Vector2D();
+        mAcceleration = Vector2D();
+        mDensity = 0.f;
+        mMass = 0.f;
+        mInvMass = 0.f;
+        mRestitution = restitution;
+        mArea = 0.f;
+        mInertia = 0.f;
+        mInvInertia = 0.f;
+        mStaticFriction = 0.6f;
+        mDynamicFriction = 0.4f;
     }
 
+    // updates the rigid body's transformation data to match the texture sprite Transform
+    void RigidBody::BodyFollowTransform(Transform const& trans) {
+        //UpdateBoxBody(trans);
+        //mBodyTransform = trans;
+        mPosition = trans.world_position;
+        mRotation = trans.rotation;
+        //mAngularVelocity = trans.angle_speed;
+        CreateBoxBody(trans.scaling.x / 1, trans.scaling.y / 1, mMass, mRestitution);
+
+    }
+#if 0
     // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)
     void RigidBody::CreateBoxVertices(float width, float height) {
         // the vertices are calculated based on origin (not transform yet)
@@ -201,17 +228,17 @@ namespace IS
 
         mTransformUpdateRequired = true;
     }
-
+#endif
     // Move the game object by a specified vector
     void RigidBody::Move(Vector2D const& val) {
-        mBodyTransform.world_position += val;
+        mPosition += val;
         /*mTransformUpdateRequired = true;
         UpdateTransformedVertices();*/
     }
 
     // Rotate the game object by a specified angle
     void RigidBody::Rotate(float val) {
-        mBodyTransform.rotation += val;
+        mRotation += val;
     }
 
     // Add a force to the rigid body
@@ -254,7 +281,7 @@ namespace IS
         // static obj should have 0 mass and inertia
         mInertia = (1.f / 2.f) * mass * radius * radius;
     }
-
+#if 0 
     // Update the parameters of a box-shaped rigid body based on its current Transform
     void RigidBody::UpdateBoxBody(Transform const& body_transform) {
         if (mBodyTransform.scaling != body_transform.scaling) { 
@@ -300,5 +327,5 @@ namespace IS
 
         return aabb;
     }
-
+#endif
 }
