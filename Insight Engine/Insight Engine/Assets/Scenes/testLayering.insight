@@ -11,7 +11,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
@@ -35,12 +35,6 @@
 			}
 		},
 		{
-			"Name" : ""
-		},
-		{
-			"Name" : ""
-		},
-		{
 			"Name" : "Player",
 			"RigidBody" : 
 			{
@@ -49,59 +43,14 @@
 				"RigidBodyAngularVelocity" : -2.2747553884983063e-06,
 				"RigidBodyArea" : 200000.0,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 1000000.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.20000000298023224,
 				"RigidBodyMass" : 5.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -250.21946716308594,
-						"y" : 197.21731567382812
-					},
-					{
-						"x" : 249.78022766113281,
-						"y" : 197.77325439453125
-					},
-					{
-						"x" : 250.22499084472656,
-						"y" : -202.22650146484375
-					},
-					{
-						"x" : -249.77470397949219,
-						"y" : -202.78244018554688
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 200.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 200.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -200.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -200.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 170833.34375,
-				"mInvInertia" : 5.8536579672363587e-06,
-				"mStaticFriction" : 1.2000000476837158
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Script" : 
 			{
@@ -115,7 +64,7 @@
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
 				"SpriteCurrentTexIndex" : 1,
-				"SpriteDrawing" : true,
+				"SpriteFilename" : "",
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 8,
@@ -173,59 +122,14 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 300000.0,
 				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -458.34860229492188,
-						"y" : 105.32550048828125
-					},
-					{
-						"x" : 541.6513671875,
-						"y" : 105.32550048828125
-					},
-					{
-						"x" : 541.6513671875,
-						"y" : -194.67449951171875
-					},
-					{
-						"x" : -458.34860229492188,
-						"y" : -194.67449951171875
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -500.0,
-						"y" : -150.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -235,7 +139,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -267,59 +171,14 @@
 				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 38000.0,
 				"RigidBodyBodyType" : 0,
-				"RigidBodyCheckTransform" : true,
 				"RigidBodyDensity" : 0.0,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -95.246688842773438,
-						"y" : 88.226341247558594
-					},
-					{
-						"x" : 104.75331115722656,
-						"y" : 88.226341247558594
-					},
-					{
-						"x" : 104.75331115722656,
-						"y" : -101.77365875244141
-					},
-					{
-						"x" : -95.246688842773438,
-						"y" : -101.77365875244141
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -100.0,
-						"y" : 95.0
-					},
-					{
-						"x" : 100.0,
-						"y" : 95.0
-					},
-					{
-						"x" : 100.0,
-						"y" : -95.0
-					},
-					{
-						"x" : -100.0,
-						"y" : -95.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -329,7 +188,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteDrawing" : true,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 4,
@@ -353,5 +212,5 @@
 			}
 		}
 	],
-	"EntityAmount" : 6
+	"EntityAmount" : 4
 }

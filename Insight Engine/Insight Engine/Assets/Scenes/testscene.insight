@@ -16,52 +16,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 440.87554931640625,
-						"y" : -18.109134674072266
-					},
-					{
-						"x" : 923.8385009765625,
-						"y" : 111.30038452148438
-					},
-					{
-						"x" : 949.72039794921875,
-						"y" : 14.707798004150391
-					},
-					{
-						"x" : 466.7574462890625,
-						"y" : -114.70172119140625
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -50.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -50.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 1.2000000476837158
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -71,6 +27,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
@@ -108,52 +65,8 @@
 				"RigidBodyInvMass" : 0.20000000298023224,
 				"RigidBodyMass" : 5.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -85.321395874023438,
-						"y" : 221.16015625
-					},
-					{
-						"x" : 114.6785888671875,
-						"y" : 221.21720886230469
-					},
-					{
-						"x" : 114.72993469238281,
-						"y" : 41.21722412109375
-					},
-					{
-						"x" : -85.270050048828125,
-						"y" : 41.160171508789062
-					}
-				],
 				"RigidBodyVelocityX" : 0.003220684826374054,
-				"RigidBodyVelocityY" : -0.033997457474470139,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -100.0,
-						"y" : 90.0
-					},
-					{
-						"x" : 100.0,
-						"y" : 90.0
-					},
-					{
-						"x" : 100.0,
-						"y" : -90.0
-					},
-					{
-						"x" : -100.0,
-						"y" : -90.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 30166.66796875,
-				"mInvInertia" : 3.3149168302770704e-05,
-				"mStaticFriction" : 1.2000000476837158
+				"RigidBodyVelocityY" : -0.033997457474470139
 			},
 			"Script" : 
 			{
@@ -167,6 +80,7 @@
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
 				"SpriteCurrentTexIndex" : 1,
+				"SpriteFilename" : "",
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 8,
@@ -197,9 +111,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 7.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.083333335816860199,
+						"frame_timer" : 0.050000004470348358,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -230,52 +144,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -750.0,
-						"y" : -350.0
-					},
-					{
-						"x" : 750.0,
-						"y" : -350.0
-					},
-					{
-						"x" : 750.0,
-						"y" : -450.0
-					},
-					{
-						"x" : -750.0,
-						"y" : -450.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -750.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 750.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 750.0,
-						"y" : -50.0
-					},
-					{
-						"x" : -750.0,
-						"y" : -50.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -285,6 +155,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
@@ -322,52 +193,8 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -124.34648132324219,
-						"y" : -74.357009887695312
-					},
-					{
-						"x" : -609.49432373046875,
-						"y" : 46.603923797607422
-					},
-					{
-						"x" : -585.3021240234375,
-						"y" : 143.63349914550781
-					},
-					{
-						"x" : -100.15428161621094,
-						"y" : 22.672565460205078
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 50.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -50.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -50.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 1.2000000476837158
+				"RigidBodyVelocityY" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -377,6 +204,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
