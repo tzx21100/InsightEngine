@@ -81,14 +81,6 @@ namespace IS {
         return input->IsMouseButtonReleased(mousebutton);
     }
 
-    static Entity GetCurrentEntity(MonoString* name) {
-        auto& engine = InsightEngine::Instance();
-        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
-        std::string str(c_str); // Convert char* to C++ string
-        mono_free(c_str); // Free the allocated char*
-        return engine.GetEntityByName(str);
-    }
-
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(entity_id);
@@ -266,9 +258,6 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
-
-        // Get the entity by name
-        IS_ADD_INTERNAL_CALL(GetCurrentEntity);
 
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);

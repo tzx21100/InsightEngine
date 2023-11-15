@@ -191,7 +191,7 @@ namespace IS {
 		SceneMap<std::string> mSceneNames;
 		SceneMap<Entity> mSceneEntities;
 		SceneMap<Map<Entity, Signature>> mSceneEntitySignatures;
-		SceneMap<Map<std::string, Entity>> mSceneEntityNames;
+		SceneMap<Map<std::string, std::vector<Entity>>> mSceneEntityNames;
         SceneMap<Map<Entity, std::string>> mSceneEntityIds;
 		SceneMap<ECSMap> mSceneComponents; // some data structure its an unordered tree :)
 

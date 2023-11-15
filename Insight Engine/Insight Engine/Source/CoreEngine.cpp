@@ -427,7 +427,8 @@ namespace IS {
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
         Json::Value entities(Json::arrayValue);
-        for (Entity id = 0 ; id < mEntityManager->EntitiesAlive(); id++) {
+        auto& aliveEntities = mEntityManager->GetEntitiesAlive();
+        for (const auto& [id, name] : aliveEntities) {
             Json::Value entity;
             entity["Name"] = mEntityManager->FindNames(id);
             SerializeAllComponents(id, entity);

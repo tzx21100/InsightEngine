@@ -66,17 +66,25 @@ namespace IS {
 		 * \return The ID of the newly created entity.
 		 */
 		Entity CreateEntity(const std::string& name) {
-			if (mEntitiesAlive >= MAX_ENTITIES) {
-				IS_CORE_WARN("Too many entities in existence.");
-				return MAX_ENTITIES + 1;
+
+			Entity id;
+
+			if (!mAvailableEntityIDs.empty()) {
+				// Reuse an available entity ID
+				id = mAvailableEntityIDs.front();
+				mAvailableEntityIDs.pop_front();
+			}
+			else {
+				if (mEntitiesAlive >= MAX_ENTITIES) {
+					IS_CORE_WARN("Too many entities in existence.");
+					return MAX_ENTITIES + 1;
+				}
+				id = mEntitiesAlive;
 			}
 
-			// Generate a new entity ID. This can be simply the current count of entities.
-			Entity id = mEntitiesAlive;
 			mEntitiesAlive++;
-
 			// Set the name for the entity
-			mEntityNames[name] = id;
+			mEntityNames[name].push_back(id);
 			// Set the entity for the name
 			mEntityIds[id] = name;
 
@@ -102,8 +110,17 @@ namespace IS {
 
 			// Remove the mappings for this entity from the maps
 			std::string entityName = mEntityIds[entity];
-			mEntityNames.erase(entityName);
 			mEntityIds.erase(entity);
+
+			// Remove the entity from the list of entities with its name
+			auto& entitiesWithName = mEntityNames[entityName];
+			entitiesWithName.erase(std::remove(entitiesWithName.begin(), entitiesWithName.end(), entity), entitiesWithName.end());
+
+			if (entitiesWithName.empty()) {
+				mEntityNames.erase(entityName);
+			}
+
+			mAvailableEntityIDs.push_back(entity);
 
 			// Decrement the count of living entities
 			--mEntitiesAlive;
@@ -169,6 +186,7 @@ namespace IS {
 		void ResetEntityID() {
 			mEntitiesAlive = 0;
 
+			mAvailableEntityIDs.clear();
 			// Clear all entity signatures
 			mSignatures.clear();
 			// Clear the name to entity and entity to name mappings
@@ -184,8 +202,11 @@ namespace IS {
 		 * \param name The name of the entity to find.
 		 * \return The ID of the entity with the specified name.
 		 */
-		Entity FindEntity(const std::string& name) {
-			return mEntityNames[name];
+		std::vector<Entity> FindEntitiesByName(const std::string& name) {
+			if (mEntityNames.find(name) != mEntityNames.end()) {
+				return mEntityNames[name];
+			}
+			return {};  // Return an empty vector if no entities found
 		}
 
 		/**
@@ -210,8 +231,14 @@ namespace IS {
 
 		void SetName(Entity entity, std::string name) {
 			std::string entityName = mEntityIds[entity];
-			mEntityNames.erase(entityName);
-			mEntityNames[name] = entity;
+			auto& entitiesWithName = mEntityNames[entityName];
+			entitiesWithName.erase(std::remove(entitiesWithName.begin(), entitiesWithName.end(), entity), entitiesWithName.end());
+
+			if (entitiesWithName.empty()) {
+				mEntityNames.erase(entityName);
+			}
+
+			mEntityNames[name].push_back(entity);
 			mEntityIds[entity] = name;
 		}
 
@@ -231,10 +258,12 @@ namespace IS {
 
 		// Total living entities
 		uint32_t mEntitiesAlive;
+		// Store available entities
+		std::deque<Entity> mAvailableEntityIDs;
 		// Entity and signature
 		std::unordered_map<Entity, Signature> mSignatures;
-		// The name of entities
-		std::unordered_map<std::string, Entity >mEntityNames;
+		// The name of entities are now stored like this to handle multiple names :)
+		std::unordered_map<std::string, std::vector<Entity>> mEntityNames;
 		// Finding the name by the id
 		std::unordered_map<Entity, std::string>mEntityIds;
 	private:
