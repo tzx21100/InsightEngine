@@ -35,9 +35,6 @@ namespace IS
         internal extern static bool MouseReleased(int mouseButton);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static uint GetCurrentEntity(string name);
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodyAddForce(float x, float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

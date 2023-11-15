@@ -181,10 +181,10 @@ namespace IS {
             // transform camera
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
-            Entity player = engine.GetEntityByName("Player");
-            auto& body_player = engine.GetComponent<RigidBody>(player);
+            //Entity player = engine.GetEntityByName("Player");
+            //auto& body_player = engine.GetComponent<RigidBody>(player);
             //auto& trans_player = engine.GetComponent<Transform>(player);
-            body_player.mMass = 20.f;
+            //body_player.mMass = 20.f;
             //body_player.mInertia = 2.f;
 
             // limit angle of the player
@@ -234,13 +234,13 @@ namespace IS {
                 }
 
                 // for jumping
-                if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
-                    //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
-                    if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
-                        body_player.AddVelocity(Vector2D(0.f, 800.f));
-                        body_player.mState = BodyState::JUMP;
-                    }
-                }
+                //if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
+                //    //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
+                //    if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
+                //        body_player.AddVelocity(Vector2D(0.f, 800.f));
+                //        body_player.mState = BodyState::JUMP;
+                //    }
+                //}
 
                 //if (engine.HasComponent<Transform>(entity_player)) {
                 //    auto& trans_player = engine.GetComponent<Transform>(entity_player);
