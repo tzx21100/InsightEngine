@@ -66,15 +66,23 @@ namespace IS {
 		 * \return The ID of the newly created entity.
 		 */
 		Entity CreateEntity(const std::string& name) {
-			if (mEntitiesAlive >= MAX_ENTITIES) {
-				IS_CORE_WARN("Too many entities in existence.");
-				return MAX_ENTITIES + 1;
+
+			Entity id;
+
+			if (!mAvailableEntityIDs.empty()) {
+				// Reuse an available entity ID
+				id = mAvailableEntityIDs.front();
+				mAvailableEntityIDs.pop_front();
+			}
+			else {
+				if (mEntitiesAlive >= MAX_ENTITIES) {
+					IS_CORE_WARN("Too many entities in existence.");
+					return MAX_ENTITIES + 1;
+				}
+				id = mEntitiesAlive;
 			}
 
-			// Generate a new entity ID. This can be simply the current count of entities.
-			Entity id = mEntitiesAlive;
 			mEntitiesAlive++;
-
 			// Set the name for the entity
 			mEntityNames[name].push_back(id);
 			// Set the entity for the name
@@ -111,6 +119,8 @@ namespace IS {
 			if (entitiesWithName.empty()) {
 				mEntityNames.erase(entityName);
 			}
+
+			mAvailableEntityIDs.push_back(entity);
 
 			// Decrement the count of living entities
 			--mEntitiesAlive;
@@ -176,6 +186,7 @@ namespace IS {
 		void ResetEntityID() {
 			mEntitiesAlive = 0;
 
+			mAvailableEntityIDs.clear();
 			// Clear all entity signatures
 			mSignatures.clear();
 			// Clear the name to entity and entity to name mappings
@@ -247,6 +258,8 @@ namespace IS {
 
 		// Total living entities
 		uint32_t mEntitiesAlive;
+		// Store available entities
+		std::deque<Entity> mAvailableEntityIDs;
 		// Entity and signature
 		std::unordered_map<Entity, Signature> mSignatures;
 		// The name of entities are now stored like this to handle multiple names :)
