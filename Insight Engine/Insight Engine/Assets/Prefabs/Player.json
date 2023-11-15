@@ -1,4 +1,32 @@
 {
+	"Collider" : 
+	{
+		"ColliderCenterX" : 0.00018107891082763672,
+		"ColliderCenterY" : 0.0,
+		"ColliderOffsetX" : 0.0,
+		"ColliderOffsetY" : 0.0,
+		"ColliderSizeScaleX" : 1.0,
+		"ColliderSizeScaleY" : 1.0,
+		"ColliderVertices" : 
+		[
+			{
+				"x" : -100.0,
+				"y" : 90.0
+			},
+			{
+				"x" : 100.0,
+				"y" : 90.0
+			},
+			{
+				"x" : 100.0,
+				"y" : -90.0
+			},
+			{
+				"x" : -100.0,
+				"y" : -90.0
+			}
+		]
+	},
 	"Name" : "Player",
 	"RigidBody" : 
 	{
@@ -7,65 +35,20 @@
 		"RigidBodyAngularVelocity" : -2.2747553884983063e-06,
 		"RigidBodyArea" : 36000.0,
 		"RigidBodyBodyType" : 1,
-		"RigidBodyCheckTransform" : true,
 		"RigidBodyDensity" : 180000.0,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
 		"RigidBodyInvMass" : 0.20000000298023224,
 		"RigidBodyMass" : 5.0,
 		"RigidBodyRestitution" : 0.10000000149011612,
-		"RigidBodyShapeType" : 0,
-		"RigidBodyTransformUpdateRequired" : false,
-		"RigidBodyTransformedVertices" : 
-		[
-			{
-				"x" : -100.09982299804688,
-				"y" : 89.888755798339844
-			},
-			{
-				"x" : 99.900054931640625,
-				"y" : 90.111137390136719
-			},
-			{
-				"x" : 100.10018920898438,
-				"y" : -89.888755798339844
-			},
-			{
-				"x" : -99.899688720703125,
-				"y" : -90.111137390136719
-			}
-		],
 		"RigidBodyVelocityX" : 0.0,
-		"RigidBodyVelocityY" : 0.0,
-		"RigidBodyVertices" : 
-		[
-			{
-				"x" : -100.0,
-				"y" : 90.0
-			},
-			{
-				"x" : 100.0,
-				"y" : 90.0
-			},
-			{
-				"x" : 100.0,
-				"y" : -90.0
-			},
-			{
-				"x" : -100.0,
-				"y" : -90.0
-			}
-		],
-		"mDynamicFriction" : 1.1000000238418579,
-		"mInertia" : 30166.66796875,
-		"mInvInertia" : 3.3149168302770704e-05,
-		"mStaticFriction" : 1.2000000476837158
+		"RigidBodyVelocityY" : 0.0
 	},
 	"Script" : 
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000000000000100111",
+	"Signature" : "00000000000000000000010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 1,
@@ -74,7 +57,7 @@
 		"SpriteColorY" : 0.86737102270126343,
 		"SpriteColorZ" : 0.80789142847061157,
 		"SpriteCurrentTexIndex" : 1,
-		"SpriteDrawing" : true,
+		"SpriteFilename" : "",
 		"SpriteName" : "ice_cream_truck",
 		"SpritePrimitiveType" : 5,
 		"SpriteTexture" : 8,
@@ -105,9 +88,9 @@
 				"animation_duration" : 3.0,
 				"frame_dimension_x" : 0.083333335816860199,
 				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 6.0,
+				"frame_index_x" : 10.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.23235191404819489,
+				"frame_timer" : 0.18235191702842712,
 				"time_per_frame" : 0.25,
 				"x_frames" : 12,
 				"y_frames" : 1

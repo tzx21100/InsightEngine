@@ -1,0 +1,62 @@
+{
+	"Collider" : 
+	{
+		"ColliderCenterX" : -1180.8946533203125,
+		"ColliderCenterY" : -248.2230224609375,
+		"ColliderOffsetX" : 0.0,
+		"ColliderOffsetY" : 0.0,
+		"ColliderSizeScaleX" : 1.0,
+		"ColliderSizeScaleY" : 1.0,
+		"ColliderVertices" : 
+		[
+			{
+				"x" : -371.48880004882812,
+				"y" : 141.92390441894531
+			},
+			{
+				"x" : 371.48880004882812,
+				"y" : 141.92390441894531
+			},
+			{
+				"x" : 371.48880004882812,
+				"y" : -141.92390441894531
+			},
+			{
+				"x" : -371.48880004882812,
+				"y" : -141.92390441894531
+			}
+		]
+	},
+	"Name" : "Platform",
+	"Signature" : "00000000000000000000010000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorX" : 0.60000002384185791,
+		"SpriteColorY" : 0.60000002384185791,
+		"SpriteColorZ" : 0.60000002384185791,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Platform01_Tileable.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 6,
+		"SpriteTextureHeight" : 565,
+		"SpriteTextureIndex" : 5,
+		"SpriteTextureWidth" : 1481,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 742.97760009765625,
+		"SpriteTransformScalingY" : 283.84780883789062,
+		"SpriteTransformWorldPositionX" : -1180.8946533203125,
+		"SpriteTransformWorldPositionY" : -248.2230224609375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 742.97760009765625,
+		"TransformScalingY" : 283.84780883789062,
+		"TransformWorldPositionX" : -1180.8946533203125,
+		"TransformWorldPositionY" : -248.2230224609375
+	}
+}
