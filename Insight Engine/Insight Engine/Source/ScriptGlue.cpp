@@ -20,6 +20,7 @@ consent of DigiPen Institute of Technology is prohibited.
 /* includes */
 #include "Pch.h"
 #include "GameGui.h"
+#include "CollisionSystem.h"
 #include <mono/metadata/object.h>
 
 namespace IS {
@@ -254,7 +255,12 @@ namespace IS {
         InsightEngine::Instance().DeleteEntity(entity);
     }
 
-
+    static bool EntityCheckCollide(int entity) {
+        //auto system = InsightEngine::Instance().GetSystem<CollisionSystem>("CollisionSystem");
+        //return system->CheckColliding(static_cast<Entity>(entity));
+        auto const& component=InsightEngine::Instance().GetComponent<Collider>(entity);
+        return component.mIsColliding;
+    }
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -308,6 +314,9 @@ namespace IS {
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
+
+        // Entity Collisions
+        IS_ADD_INTERNAL_CALL(EntityCheckCollide);
 
     }
 }

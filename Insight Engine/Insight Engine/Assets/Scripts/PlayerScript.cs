@@ -13,7 +13,8 @@ namespace IS
         static SimpleImage backGround;
         static SimpleImage player_walk;
         static SimpleImage player_idle;
-       
+
+        private static int entityA;
 
         public static int BoolToInt(bool boolValue)
         {
@@ -34,6 +35,10 @@ namespace IS
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(1,12,3f);
             InternalCalls.CreateAnimationFromSprite(1,12,3f);
+
+            entityA = InternalCalls.CreateEntity("HELLO I AM CREATED FROM C#");
+
+
 
         }
 
@@ -84,6 +89,7 @@ namespace IS
             }
 
 
+
         }
 
         static public void CleanUp()
@@ -91,6 +97,7 @@ namespace IS
             InternalCalls.FreeSpriteImage(backGround);
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
+            InternalCalls.DestroyEntity(entityA);
         }
        
 

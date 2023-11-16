@@ -27,6 +27,10 @@
 		<Compile Include="..\Insight Engine\Assets\Scripts\**\*.cs" LinkBase="ExternalScripts" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DefaultScripts\" />
+	</ItemGroup>
+
 
 
 
