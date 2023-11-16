@@ -58,7 +58,7 @@ namespace IS {
     float CalculateGain(float distance, float rollOffFactor = 1.0f) {
         // Make sure distance is never zero to avoid division by zero
         distance = std::max(distance, 0.0001f);
-        return 1.0f / (distance + rollOffFactor);
+        return 1.0f / (distance/100 * rollOffFactor);
     }
 
     /*!
@@ -69,16 +69,19 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
+        if (InsightEngine::Instance().mRuntime == false) { return; }
+
+
         auto& engine = InsightEngine::Instance();
         auto assetsys = engine.GetSystem<AssetManager>("Asset");
-        for (auto entity : mEntities) {
+        for (auto const &entity : mEntities) {
             if (engine.HasComponent<AudioListener>(entity)) {
                 auto listener = engine.GetComponent<AudioListener>(entity);
                 auto current_entity_transform = engine.GetComponent<Transform>(entity);
                 for (auto emittingEntities : mEntities) {
-                    if(emittingEntities==entity || !engine.HasComponent<AudioEmitter>(emittingEntities)){
-                        continue;
-                    }
+                    //if(emittingEntities==entity || !engine.HasComponent<AudioEmitter>(emittingEntities)){
+                    //    continue;
+                    //}
                     auto emitting_transform = engine.GetComponent<Transform>(emittingEntities);
                     auto emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
                     float distance = CalculateDistance(current_entity_transform.world_position.x,
@@ -86,6 +89,8 @@ namespace IS {
                                                        emitting_transform.world_position.x,
                                                        emitting_transform.world_position.y
                                                       );
+
+
                     if (distance > listener.hearing_range) {
                         assetsys->GetChannel(emitter.soundName)->stop();
                         continue;
@@ -98,7 +103,7 @@ namespace IS {
                         soundChannel->setVolume(volume);
                     }
                     else {
-                        PlaySound(assetsys->GetSound(emitter.soundName), emitter.isLoop, volume * emitter.volumeLevel *listener .volume, emitter.pitch);
+                        assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel *listener .volume * volume, emitter.pitch);
                     }
 
                 }
@@ -412,8 +417,8 @@ namespace IS {
     void AudioListener::Deserialize(Json::Value data)
     {
         volume            = data["AudioVolume"].asFloat();
-        pitch_correctness = data["AudioPitechCorrectness"].asFloat();
-        hearing_range     = data["AudioHearinRange"].asFloat();
+        pitch_correctness = data["AudioPitchCorrectness"].asFloat();
+        hearing_range     = data["AudioHearingRange"].asFloat();
     }
 
     Json::Value AudioEmitter::Serialize()

@@ -112,13 +112,11 @@
 			}
 		},
 		{
-			"AudioEmitter" : 
+			"AudioListener" : 
 			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : true,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "Footsteps-Grass-Far-Small_1.wav",
-				"AudioVolumeLevel" : 1.0
+				"AudioHearingRange" : 1000.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
 			},
 			"Collider" : 
 			{
@@ -208,9 +206,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.24583710730075836,
+						"frame_timer" : 0.22917044162750244,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -227,11 +225,13 @@
 			}
 		},
 		{
-			"AudioListener" : 
+			"AudioEmitter" : 
 			{
-				"AudioHearingRange" : 0.0,
-				"AudioPitchCorrectness" : 0.0,
-				"AudioVolume" : 1.0
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
 			},
 			"Collider" : 
 			{
