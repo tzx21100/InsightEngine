@@ -390,7 +390,7 @@ namespace IS
 	}
 #endif
 
-	bool CheckColliding(Entity& entity) {
+	bool CheckColliding(Entity entity) {
 		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 			auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 			return collider.mIsColliding;

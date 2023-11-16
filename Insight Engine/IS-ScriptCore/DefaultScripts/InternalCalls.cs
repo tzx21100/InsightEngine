@@ -98,10 +98,13 @@ namespace IS
         internal extern static int GetButtonState();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int CreateEntity();
+        internal extern static int CreateEntity(string str);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DestroyEntity();
+        internal extern static void DestroyEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool EntityCheckCollide(int entity);
 
     }
 }
