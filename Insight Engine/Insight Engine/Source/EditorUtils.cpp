@@ -64,6 +64,15 @@ namespace IS::EditorUtils {
         }
     }
 
+    void AddTableBoldLabel(const char* label)
+    {
+        ImFont* FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        ImGui::TableNextColumn();
+        ImGui::PushFont(FONT_BOLD);
+        ImGui::TextUnformatted(label);
+        ImGui::PopFont();
+    }
+
     bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
         bool adjusted = false;
