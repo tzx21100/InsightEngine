@@ -141,6 +141,36 @@ namespace IS {
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
     }
 
+    void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector3D const& color, int layer) {
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData3D instData;
+            instData.color = glm::vec3(color.x, color.y, color.z);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
+    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer) {
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData3D instData;
+            instData.tex_index = static_cast<float>(texture.texture_index);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
     void Sprite::draw_picked_entity_border() {
         InsightEngine& engine = InsightEngine::Instance();
 
