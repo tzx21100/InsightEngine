@@ -202,12 +202,14 @@ namespace IS
 
 	// Compares two floating - point values for near equality.
 	bool Manifold::NearlyEqual(float const& a, float const& b) {
-		return std::abs(a - b) < 0.005f; // less than half cm
+		//return std::abs(a - b) < 0.005f; // less than half cm
+		return std::abs(a - b) < 0.5f;
 	}
 
 	// Compares two 2D vectors for near equality.
 	bool Manifold::NearlyEqual(Vector2D const& a, Vector2D const& b) {
-		return ISVector2DSquareDistance(a, b) < 0.005f * 0.005f ; // less than half cm square
+		//return ISVector2DSquareDistance(a, b) < 0.005f * 0.005f ; // less than half cm square
+		return ISVector2DSquareDistance(a, b) < 0.5f * 0.5f ;
 	}
 
 }

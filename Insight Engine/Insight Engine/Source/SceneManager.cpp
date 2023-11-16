@@ -197,6 +197,12 @@ namespace IS {
 		IS_CORE_DEBUG("Scene {} created successfully!", filename);
 	}
 
+	void SceneManager::SaveAllScenes() {
+		for (auto const& scene : mSceneNames) {
+			InsightEngine::Instance().SaveCurrentScene(scene.second);
+		}
+	}
+
 	void SceneManager::UpdateActiveScene()
 	{
 		// Instance of game engine
