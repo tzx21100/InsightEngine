@@ -183,6 +183,8 @@ namespace IS {
          */
         void DeleteEntity(Entity entity);
 
+        void SaveAllScenes();
+
 	private:
 		SceneID mActiveSceneID	= 0; ///< Unique identifier for active scene
 		SceneID mSceneCount		= 0; ///< Keep track of number of scenes
