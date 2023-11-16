@@ -210,9 +210,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.22917044162750244,
+						"frame_timer" : 0.1958371102809906,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -622,6 +622,14 @@
 			}
 		},
 		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_Winston-Theme_Loop_81bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
 			"Name" : "Platform1",
 			"RigidBody" : 
 			{
