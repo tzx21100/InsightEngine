@@ -399,9 +399,9 @@ namespace IS
 
 			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contact_velocity_mag > 0.f) // moving away
+			if (contact_velocity_mag > 0.f || std::abs(contact_velocity_mag) < 1.f) // moving away
 			{
-				continue;
+				continue; // continue if moving away or value nearly 0 (1 or 5)
 			}
 
 			float ra_perp_dotN = ISVector2DDotProduct(ra_perp, normal);
