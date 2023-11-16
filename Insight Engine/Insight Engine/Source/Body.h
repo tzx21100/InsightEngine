@@ -273,8 +273,8 @@ namespace IS
             ////prefab["RigidBodyCheckTransform"] = mCheckTransform;
             //prefab["mInertia"] = mInertia;
             //prefab["mInvInertia"] = mInvInertia;
-            //prefab["mStaticFriction"] = mStaticFriction;
-            //prefab["mDynamicFriction"] = mDynamicFriction;
+            prefab["mStaticFriction"] = mStaticFriction;
+            prefab["mDynamicFriction"] = mDynamicFriction;
 
             //// Serializing transformUpdateRequired
             //prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;

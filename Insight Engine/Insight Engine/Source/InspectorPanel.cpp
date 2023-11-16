@@ -579,6 +579,22 @@ namespace IS {
                 ImGui::Text("%.2f", rigidbody.mDensity);
                 ImGui::PopItemWidth();
 
+                // Static Friction
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Static Friction");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SliderFloat("##Static Friction", &rigidbody.mStaticFriction, 0.f, 10.f);
+
+                // Dynamic Friction
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Dynamic Friction");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::SliderFloat("##Dynamic Friction", &rigidbody.mDynamicFriction, 0.f, 10.f);
+
                 ImGui::EndTable(); // end table RigidbodyTable
             }
         }); // end render Rigidbody Component
