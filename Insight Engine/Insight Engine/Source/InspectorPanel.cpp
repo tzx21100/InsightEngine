@@ -29,6 +29,7 @@
 #include "Body.h"
 #include "Collider.h"
 #include "CommandHistory.h"
+#include "CollisionSystem.h"
 
 // Dependencies
 #include <imgui.h>
@@ -583,9 +584,67 @@ namespace IS {
             }
         }); // end render Rigidbody Component
 
-        RenderComponent<Collider>(ICON_LC_FLIP_HORIZONTAL_2 "  Collider", entity, [FONT_BOLD](Collider& collider) {
-            EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
-            EditorUtils::RenderControlVec2("Sclae", collider.mBoxCollider.sizeScale);
+        RenderComponent<Collider>(ICON_LC_FLIP_HORIZONTAL_2 "  Collider", entity, [FONT_BOLD](Collider& collider)
+        {
+            bool box_enabled = collider.IsBoxColliderEnable();
+            bool circle_enabled = collider.IsCircleColliderEnable();
+
+            if (!(box_enabled && circle_enabled))
+            {
+                if (ImGui::Button("Add Collider"))
+                {
+                    ImGui::OpenPopup("Collider Popup");
+                }
+            }
+
+            if (ImGui::BeginPopupContextItem("Collider Popup"))
+            {
+                if (!box_enabled)
+                {
+                    if (ImGui::MenuItem("Box Collider"))
+                    {
+                        collider.EnableBoxCollider();
+                    }
+                }
+
+                if (!circle_enabled)
+                {
+                    if (ImGui::MenuItem("Circle Collider"))
+                    {
+                        collider.EnableCircleCollider();
+                    }
+                }
+
+                ImGui::EndPopup();
+            }
+
+            ImGui::Spacing();
+
+            if (box_enabled)
+            {
+                ImGui::SeparatorText("Box Collider");
+                EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
+                EditorUtils::RenderControlVec2("Scale", collider.mBoxCollider.sizeScale);
+            }
+
+            if (circle_enabled)
+            {
+                ImGui::SeparatorText("Circle Collider");
+                EditorUtils::RenderControlVec2("Offset", collider.mCircleCollider.offset);
+                if (ImGui::BeginTable("Circle Radius Scale Table", 2))
+                {
+                    ImGui::TableSetupColumn("Collider Table Column", ImGuiTableColumnFlags_WidthFixed, 100.f);
+                    ImGui::TableNextColumn();
+                    ImGui::PushFont(FONT_BOLD);
+                    ImGui::TextUnformatted("Radius Scale");
+                    ImGui::PopFont();
+
+                    ImGui::TableNextColumn();
+                    ImGui::InputFloat("##Radius Scale", &collider.mCircleCollider.radiusScale);
+
+                    ImGui::EndTable(); // end table Circle Radius Scale Table
+                }
+            }
         });
 
         // Script Component
