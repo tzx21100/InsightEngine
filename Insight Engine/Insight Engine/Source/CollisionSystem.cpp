@@ -60,7 +60,8 @@ namespace IS
 
 			// if collider A and collider B colliding
 			if (mColliding) {
-				
+				colliderA.mIsColliding = true;
+				colliderB.mIsColliding = true;
 				BodyType typeA = BodyType::Static;
 				BodyType typeB = BodyType::Static;
 				RigidBody* contact_bodyA = nullptr;
@@ -87,6 +88,10 @@ namespace IS
 				ResolveCollision(contact);
 				//ResolveCollisionWithRotation(contact, transA, transB);
 
+			}
+			else {
+				colliderA.mIsColliding = false;
+				colliderB.mIsColliding = false;
 			}
 		}
 	}
@@ -345,39 +350,53 @@ namespace IS
 			}
 		}
 	}
+#if 0
+	bool CollisionSystem::CheckCollide(Entity& entity) {
+		for(){
+			if (InsightEngine::Instance().HasComponent<Collider>(entityA)) {}
 
-	bool CollisionSystem::CheckCollide(Collider& collider_a, Collider& collider_b) {
-		bool result = false;
+			bool result = false;
 
-		Vector2D normal = Vector2D();
-		float depth = 0.f;
+			Vector2D normal = Vector2D();
+			float depth = 0.f;
 
-		// box collider check
-		if (collider_a.IsBoxColliderEnable()) {
-			if (collider_b.IsBoxColliderEnable()) { // box vs box
-				result = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
-				//mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
+			// box collider check
+			if (collider_a.IsBoxColliderEnable()) {
+				if (collider_b.IsBoxColliderEnable()) { // box vs box
+					result = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
+					//mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
+				}
+				if (collider_b.IsCircleColliderEnable()) { // box vs circle
+					result = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
+					//mManifoldInfo.mNormal *= -1; // to be fixed
+					//mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
+				}
 			}
-			if (collider_b.IsCircleColliderEnable()) { // box vs circle
-				result = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
-				//mManifoldInfo.mNormal *= -1; // to be fixed
-				//mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
+
+			// circle collider check
+			if (collider_a.IsCircleColliderEnable()) {
+				if (collider_b.IsBoxColliderEnable()) { // circle vs box
+					result = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
+					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
+				}
+				if (collider_b.IsCircleColliderEnable()) { // circle vs circle
+					result = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
+					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
+				}
 			}
 		}
-
-		// circle collider check
-		if (collider_a.IsCircleColliderEnable()) {
-			if (collider_b.IsBoxColliderEnable()) { // circle vs box
-				result = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
-				//mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
-			}
-			if (collider_b.IsCircleColliderEnable()) { // circle vs circle
-				result = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
-				//mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
-			}
-		}
-
 		return result;
+	}
+#endif
+
+	bool CheckColliding(Entity& entity) {
+		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
+			auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+			return collider.mIsColliding;
+		}
+		else {
+			return false;
+		}
 	}
 
 	void CollisionSystem::Step() {

@@ -86,6 +86,7 @@ namespace IS
 		CircleCollider mCircleCollider;
 		//LineCollider mLineCollider;
 		std::bitset<MAX_COLLIDER> mSelectedCollider;
+		bool mIsColliding;
 
 		Collider();
 

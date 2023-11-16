@@ -53,8 +53,10 @@ namespace IS
 		// check collding between two colliders, calculate and collect the colliding data like normal and depth
 		void Colliding(Collider& collider_a, Collider& collider_b);
 
-		// helper function to check whether two colliders are collding
-		static bool CheckCollide(Collider& collider_a, Collider& collider_b);
+		// helper function to check if the current entity colliding with any other entities
+		static bool CheckCollide(Entity& entity);
+
+		static bool CheckColliding(Entity& entity);
 
 		void Step();
 
