@@ -103,7 +103,7 @@ namespace IS {
                         soundChannel->setVolume(volume);
                     }
                     else {
-                        assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel *listener .volume * volume, emitter.pitch);
+                        assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
                     }
 
                 }

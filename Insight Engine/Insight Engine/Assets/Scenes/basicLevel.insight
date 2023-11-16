@@ -78,7 +78,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -161,7 +163,9 @@
 				"RigidBodyMass" : 20.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.56000000238418579,
+				"mStaticFriction" : 0.93300002813339233
 			},
 			"Script" : 
 			{
@@ -208,7 +212,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.079170443117618561,
+						"frame_timer" : 0.1958371102809906,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -276,7 +280,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -325,7 +331,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -374,7 +382,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -423,7 +433,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -472,7 +484,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -521,7 +535,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -570,7 +586,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -604,6 +622,14 @@
 			}
 		},
 		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_Winston-Theme_Loop_81bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
 			"Name" : "Platform1",
 			"RigidBody" : 
 			{
@@ -619,7 +645,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -668,7 +696,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
@@ -717,7 +747,9 @@
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
