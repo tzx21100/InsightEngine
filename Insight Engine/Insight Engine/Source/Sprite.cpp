@@ -179,7 +179,7 @@ namespace IS {
         Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
 
         // get line scaling matrix
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+        glm::mat4 world_to_NDC_xform = lineTRS.Return3DXformMatrix();
         Sprite::nonQuadInstanceData lineData;
         lineData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
         lineData.model_to_ndc_xform = world_to_NDC_xform;
@@ -223,7 +223,7 @@ namespace IS {
     void Sprite::drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color) {
         // TRS (0 rotation for circles)
         Transform CircleTRS(worldPos, 0.f, scale);
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(CircleTRS.ReturnXformMatrix());
+        glm::mat4 world_to_NDC_xform = CircleTRS.Return3DXformMatrix();
 
         // set up instance data
         Sprite::nonQuadInstanceData circleData;

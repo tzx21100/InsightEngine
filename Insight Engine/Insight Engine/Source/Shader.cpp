@@ -128,8 +128,7 @@ namespace IS {
             void main()
             {
                 mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
-                //gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 0.0, 1.0);
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
 		        vColor = aVertexColor;  
                 vTexCoord = aVertexTexCoord;
                 vTexID = aTexIndex;
@@ -229,22 +228,23 @@ namespace IS {
         }
     }
 
-    void Shader::setupInstLineShaders() {
+    void Shader::setupInstNonQuadShaders() {
         // vertex shader
         std::string vtx_shdr = R"(
             #version 450 core
             layout(location = 0) in vec2  aVertexPosition;
             layout(location = 2) in vec3  aVertexColor;
-            layout(location = 4) in vec3  aMtxRow1;
-            layout(location = 5) in vec3  aMtxRow2;
-            layout(location = 6) in vec3  aMtxRow3;
+            layout(location = 4) in vec4  aMtxRow1;
+            layout(location = 5) in vec4  aMtxRow2;
+            layout(location = 6) in vec4  aMtxRow3;
+            layout(location = 7) in vec4  aMtxRow4;
 
             layout(location = 0) out vec3  vColor;
 
             void main()
             {
-                mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
-                gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 2.0, 1.0);
+                mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
 				vColor = aVertexColor;
             }
         )";

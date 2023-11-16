@@ -59,7 +59,7 @@ namespace IS {
          * This function creates and sets up shaders for rendering non-textured sprites. It compiles
          * both the vertex and fragment shaders and links them into a program.
          */
-        void setupInstLineShaders();
+        void setupInstNonQuadShaders();
 
         /*!
          * \brief Creates and sets up shaders for text rendering.

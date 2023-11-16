@@ -62,12 +62,6 @@ namespace IS {
         // Instance data of debug non-quad entity (line, circle)
         struct nonQuadInstanceData {
             glm::vec3 color{};
-            glm::mat3 model_to_ndc_xform{};
-        };
-
-        // Instance data of outlines (mouse picked entities)
-        struct nonQuad3DInstanceData {
-            glm::vec3 color{};
             glm::mat4 model_to_ndc_xform{};
         };
 

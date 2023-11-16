@@ -80,7 +80,7 @@ namespace IS {
         quad_border_shader_pgm.setupPickedQuadShaders();
 
         // init debugging lines and circles shaders
-        inst_non_quad_shader_pgm.setupInstLineShaders();
+        inst_non_quad_shader_pgm.setupInstNonQuadShaders();
 
         // init font shaders
         Times_New_Roman_font.shader.setupTextShaders();
@@ -300,8 +300,8 @@ namespace IS {
         }
 
         // can enable to test drawing of debug line / circles
-        //Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
-        //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+        Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
+        Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
 
         // quads will be drawn first
         // Sprite::draw_instanced_quads();
@@ -311,6 +311,7 @@ namespace IS {
         Sprite::draw_picked_entity_border();
     #endif // USING_IMGUI
         setLineWidth(2.f);
+
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
         Sprite::draw_instanced_lines();
