@@ -22,8 +22,6 @@
 
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
-
-#include "Pch.h"
 #include "Component.h"
 
 namespace IS

@@ -19,10 +19,11 @@
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_GRID_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_GRID_H
 
- /*                                                                   includes
-   ----------------------------------------------------------------------------- */
-#include "Pch.h"
-#include "Sprite.h"
+/*                                                                   includes
+----------------------------------------------------------------------------- */
+#include "Entities.h"
+
+#include <vector>
 
 namespace IS
 {

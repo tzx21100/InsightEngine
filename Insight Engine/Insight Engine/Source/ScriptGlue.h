@@ -15,7 +15,6 @@ Reproduction or disclosure of this file or its contents without the prior writte
 consent of DigiPen Institute of Technology is prohibited.
 *____________________________________________________________________________*/
 /* End Header ****************************************************************/
-#pragma once
  /* Include Guard */
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H

@@ -17,6 +17,7 @@
 #define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_MESH_H
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 namespace IS {
     /*!

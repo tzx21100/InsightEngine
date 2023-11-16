@@ -25,6 +25,8 @@
 #include "EditorLayer.h"
 #include "FileUtils.h"
 #include "GameGui.h"
+#include "Body.h"
+#include "Collider.h"
 
 // Dependencies
 #include <imgui.h>

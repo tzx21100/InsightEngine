@@ -27,6 +27,8 @@
 #include "GameGui.h"
 #include "Pathfinder.h"
 #include "Particle.h"
+#include "Physics.h"
+#include "CollisionSystem.h"
 
 using namespace IS;
 

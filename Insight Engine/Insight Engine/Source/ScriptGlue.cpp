@@ -15,11 +15,12 @@ consent of DigiPen Institute of Technology is prohibited.
 *____________________________________________________________________________*/
 /* End Header ****************************************************************/
 
-#pragma once
-
 /* includes */
 #include "Pch.h"
+#include "ScriptGlue.h"
+#include "Body.h"
 #include "GameGui.h"
+
 #include <mono/metadata/object.h>
 
 namespace IS {

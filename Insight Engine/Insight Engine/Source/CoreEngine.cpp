@@ -23,6 +23,8 @@
 #include "JsonSaveLoad.h" // This is for Saving and Loading
 #include "WindowSystem.h" // Access to window
 #include "EditorLayer.h"
+#include "Body.h"
+#include "Collider.h"
 
 #include <iostream>
 #include <thread>

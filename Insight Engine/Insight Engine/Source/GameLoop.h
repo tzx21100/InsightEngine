@@ -15,8 +15,11 @@
  *____________________________________________________________________________*/
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
+
 #include "CoreEngine.h"
 #include "GameGui.h"
+#include "Body.h"
+#include "Collider.h"
 
 namespace IS {
     class GameLoop :public ParentSystem {

@@ -21,8 +21,9 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include "Pch.h"
-#include "Sprite.h"
+#include "System.h"
+#include "Body.h"
+#include "Manifold.h"
 
 namespace IS {
     /*!

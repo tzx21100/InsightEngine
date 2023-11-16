@@ -17,7 +17,7 @@
  /*                                                                   includes
    ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
+#include "Grid.h"
 
 namespace IS
 {
@@ -260,7 +260,7 @@ namespace IS
 	}
 #endif
 	// Check if there is an overlap at the edge of the grid.
-	bool ImplicitGrid::CheckOverlap(Cell const& min, Cell const& max) {
+	bool ImplicitGrid::CheckOverlap([[maybe_unused]] Cell const& min, [[maybe_unused]] Cell const& max) {
 		bool check = false;
 		//for (int row = min.row; row >= max.row; row--) {
 		//	for (int col = min.col; col <= max.col; col++) {

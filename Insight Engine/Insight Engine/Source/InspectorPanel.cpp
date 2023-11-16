@@ -20,11 +20,14 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "InspectorPanel.h"
+
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
 #include "GameGui.h"
 #include "Audio.h"
+#include "Body.h"
+#include "Collider.h"
 #include "CommandHistory.h"
 
 // Dependencies

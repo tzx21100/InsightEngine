@@ -23,11 +23,11 @@
 
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
-#include "Pch.h"
 #include "Entities.h"
 #include "Component.h"
 #include "Transform.h"
 #include "Grid.h"
+#include "Collision.h"
 
 namespace IS
 {

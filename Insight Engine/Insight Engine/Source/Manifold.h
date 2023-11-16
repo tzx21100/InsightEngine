@@ -14,14 +14,18 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                   guard
- ----------------------------------------------------------------------------- */
+/*                                                                   guard
+----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 
- /*                                                                   includes
-  ----------------------------------------------------------------------------- */
-#include "Pch.h"
+#include "Body.h"
+#include "Collider.h"
+#include "ISMath.h"
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
+
 #define MAX_COLLIDING_CASE 5 // 4 cases
 namespace IS 
 {

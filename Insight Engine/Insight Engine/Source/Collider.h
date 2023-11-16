@@ -4,8 +4,12 @@
 
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "Pch.h"
+#include "Vector2D.h"
+#include <vector>
+#include <bitset>
+
 #define MAX_COLLIDER 4 // 3 colliders
+
 namespace IS
 {
 	//enum ColliderShape

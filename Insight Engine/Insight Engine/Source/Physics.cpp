@@ -19,8 +19,7 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
-#include "Sprite.h"
+#include "Physics.h"
 
 namespace IS {
 

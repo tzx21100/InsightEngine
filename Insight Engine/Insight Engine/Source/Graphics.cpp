@@ -18,6 +18,10 @@
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Graphics.h"
+#include "Body.h"
+#include "Collider.h"
+#include "Physics.h"
+
 #include <stb_image.h>
 
 namespace IS {

@@ -86,8 +86,8 @@ namespace IS {
     }
 
     Color Particle::RandomColor(){
-        return RandomColor();
-      
+        // TODO(Matthew) : Implement this.
+        return Color();
     }
 
     float Particle::RandomAlpha(const float& min_alpha, const float& max_alpha){

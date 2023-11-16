@@ -10,6 +10,7 @@
 #include "Component.h"
 
 namespace IS {
+
 	enum class Color : int
 	{
 		BLACK,

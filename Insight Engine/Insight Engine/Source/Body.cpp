@@ -19,9 +19,7 @@
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
-#include "Graphics.h"
-#include "Shader.h"
+#include "Body.h"
 
 namespace IS
 {    

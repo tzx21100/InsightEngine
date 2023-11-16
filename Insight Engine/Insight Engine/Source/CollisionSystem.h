@@ -2,9 +2,15 @@
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_SYSTEM_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLISION_SYSTEM_H
 
+#include "Entities.h"
+#include "Body.h"
+#include "Collider.h"
+#include "Manifold.h"
+
+#include <vector>
+
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "Pch.h"
 
 namespace IS
 {

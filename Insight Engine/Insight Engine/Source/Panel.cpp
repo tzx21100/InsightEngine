@@ -21,6 +21,8 @@
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
+#include "Physics.h"
+#include "Grid.h"
 
 // Dependencies
 #include <imgui.h>

@@ -17,7 +17,9 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
+#include "Manifold.h"
+#include "CollisionSystem.h"
+#include "Collision.h"
 
 namespace IS 
 {
@@ -171,7 +173,7 @@ namespace IS
 		}
 	}
 
-	void Manifold::FindCirclePolygonContactPoints(Vector2D const& circle_center, float const& circle_radius, Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point) {
+	void Manifold::FindCirclePolygonContactPoints(Vector2D const& circle_center, [[maybe_unused]] float const& circle_radius, [[maybe_unused]] Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point) {
 		Vector2D closest_point = Vector2D();
 		float dis_sq = 0.f;
 		float minDistSq = std::numeric_limits<float>::max();
