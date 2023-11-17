@@ -123,13 +123,6 @@ namespace IS {
             mViewportBounds[0] = { viewport_lower_bound.x + viewport_offset.x, viewport_lower_bound.y + viewport_offset.y };
             mViewportBounds[1] = { viewport_upper_bound.x + viewport_offset.x, viewport_upper_bound.y + viewport_offset.y };
 
-            // Allow key/mouse event pass through only in this panel
-            //if (mFocused)
-            //{
-            //    ImGuiIO& io = ImGui::GetIO();
-            //    io.WantCaptureMouse = io.WantCaptureKeyboard = false;
-            //}
-
             // Size of scene panel
             ImVec2 scene_size = ImGui::GetWindowSize();
             ImVec2 scene_pos = ImGui::GetWindowPos();
@@ -382,8 +375,7 @@ namespace IS {
             // Set item default focus
             if (gizmo_types[i] == mGizmoType)
             {
-                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonActive]);
+                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
             }
 
             if (i > 0 && toolbar_axis == ImGuiAxis_X)
@@ -397,7 +389,7 @@ namespace IS {
             ImGui::PopStyleVar();
 
             if (gizmo_types[i] == mGizmoType)
-                ImGui::PopStyleColor(2);
+                ImGui::PopStyleColor();
         }
         ImGui::PopStyleVar();
 

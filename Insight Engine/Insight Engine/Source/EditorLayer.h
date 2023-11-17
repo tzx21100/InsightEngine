@@ -237,6 +237,11 @@ namespace IS {
         void SaveScene();
 
         /*!
+         * \brief Save all scenes.
+         */
+        void SaveAllScenes();
+
+        /*!
          * \brief Save current scene as.
          */
         void SaveSceneAs();

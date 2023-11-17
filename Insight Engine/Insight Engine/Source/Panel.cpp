@@ -172,129 +172,42 @@ namespace IS {
             ImVec2 histogram_size = { ImGui::GetContentRegionAvail().x, 100.f };
             ImGui::PlotLines("##Current FPS", fps_data.data(), static_cast<int>(fps_data.size()), 0, nullptr, 0.f, FLT_MAX, histogram_size);
 
-            //if (ImGui::BeginTable("Engine", 2))
-            //{
-            //    const ImU32 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : IM_COL32_WHITE;
-
-            //    ImGui::TableNextColumn();
-            //    ImGui::PushFont(FONT_BOLD);
-            //    ImGui::TextUnformatted("V-Sync");
-            //    ImGui::PopFont();
-            //    ImGui::TableNextColumn();
-            //    static bool vsync_enabled = engine.IsVSync();
-            //    if (ImGui::Checkbox("##V-Sync", &vsync_enabled))
-            //    {
-            //        engine.EnableVSync(vsync_enabled);
-            //    }
-
-            //    // Target FPS
-            //    ImGui::TableNextColumn();
-            //    ImGui::PushFont(FONT_BOLD);
-            //    ImGui::SetNextItemWidth(20);
-            //    ImGui::TextUnformatted("Target FPS:");
-            //    ImGui::PopFont();
-            //    ImGui::TableNextColumn();
-
-            //    static int selected_fps_index = -1;
-            //    const char* fps_options[] = { "15", "30", "60", "90", "120", "144", "240", "No Limit"};
-            //    int fps_values[] = { 15, 30, 60, 90, 120, 144, 240, 9999 };
-
-            //    for (int i{}; i < IM_ARRAYSIZE(fps_values); ++i)
-            //    {
-            //        if (fps_values[i] == engine.GetTargetFPS())
-            //        {
-            //            selected_fps_index = i;
-            //            break;
-            //        }
-            //    }
-            //    if (selected_fps_index == -1)
-            //        selected_fps_index = 1; // Default to 60 FPS
-
-            //    if (ImGui::Combo("FPS", &selected_fps_index, fps_options, IM_ARRAYSIZE(fps_options)))
-            //    {
-            //        int selected_fps = fps_values[selected_fps_index];
-            //        engine.SetFPS(selected_fps);
-            //    }
-
-            //    // Current FPS
-            //    ImGui::TableNextColumn();
-            //    ImGui::PushFont(FONT_BOLD);
-            //    ImGui::TextUnformatted("Current FPS:");
-            //    ImGui::PopFont();
-            //    ImGui::TableNextColumn();
-            //    //ImGui::TextColored(ImColor(text_color), "%.0f FPS", io.Framerate);
-            //    static std::vector<float> fps_data;
-            //    static constexpr int MAX_DATA_SIZE = 50;
-            //    static float UPDATE_FREQUENCY = .5f;
-            //    static float elapsed_time = 0.f;
-            //    elapsed_time += static_cast<float>(engine.mDeltaTime);
-            //    if (elapsed_time == 0.f || elapsed_time >= UPDATE_FREQUENCY)
-            //    {
-            //        fps_data.push_back(static_cast<float>(io.Framerate));
-            //        elapsed_time = 0.1f;
-            //        UPDATE_FREQUENCY = .6f;
-            //    }
-            //    if (fps_data.size() > MAX_DATA_SIZE)
-            //    {
-            //        fps_data.erase(fps_data.begin());
-            //    }
-
-            //    ImGui::PlotHistogram("##Current FPS", fps_data.data(), static_cast<int>(fps_data.size()));
-
-            //    // Delta Time
-            //    ImGui::TableNextColumn();
-            //    ImGui::PushFont(FONT_BOLD);
-            //    ImGui::TextUnformatted("Time:");
-            //    ImGui::PopFont();
-            //    ImGui::TableNextColumn();
-            //    ImGui::TextColored(ImColor(text_color), "%.3lf ms", io.DeltaTime * 1000.0);
-
-            //    ImGui::EndTable(); // end table Engine
-            //}
-            ImGui::Separator();
             ImGui::Spacing();
+                        
+            ImGui::SeparatorText("System Usage");
 
-            //ImGui::BeginChild("Systems");
-            
-            // Child window contents
+            // Create a table for system usage
+            ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
+            if (ImGui::BeginTable("System Usage", 3, flags))
             {
-                ImGui::SeparatorText("System Usage");
-
-                // Create a table for system usage
-                ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
-                if (ImGui::BeginTable("System Usage", 3, flags))
+                // Table values
+                for (auto const& [system, dt] : engine.GetSystemDeltas())
                 {
-                    // Table values
-                    for (auto const& [system, dt] : engine.GetSystemDeltas())
-                    {
-                        if (system == "Engine")
-                            continue;
+                    if (system == "Engine")
+                        continue;
 
-                        // Compute usage percent
-                        float percent = dt / (engine.GetSystemDeltas().at("Engine"));
-                        text_color = dt < 1.f / 60.f ? IM_COL32_WHITE : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
-                        ImU32 bar_color = dt < 1.f / 60.f ? GREEN_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
+                    // Compute usage percent
+                    float percent = dt / (engine.GetSystemDeltas().at("Engine"));
+                    text_color = dt < 1.f / 60.f ? IM_COL32_WHITE : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
+                    ImU32 bar_color = dt < 1.f / 60.f ? GREEN_COLOR : dt < 1.f / 30.f ? YELLOW_COLOR : RED_COLOR;
 
-                        // Display system usage
-                        ImGui::TableNextColumn();
-                        ImGui::Spacing();
-                        ImGui::TextColored(ImColor(text_color), "%s", system.c_str());
+                    // Display system usage
+                    ImGui::TableNextColumn();
+                    ImGui::Spacing();
+                    ImGui::TextColored(ImColor(text_color), "%s", system.c_str());
 
-                        ImGui::TableNextColumn();
-                        ImGui::Spacing();
-                        ImGui::TextColored(ImColor(text_color), "%.3lf ms", dt * 1'000.0);
+                    ImGui::TableNextColumn();
+                    ImGui::Spacing();
+                    ImGui::TextColored(ImColor(text_color), "%.3lf ms", dt * 1'000.0);
 
-                        ImGui::TableNextColumn();
-                        ImGui::PushStyleColor(ImGuiCol_PlotHistogram, bar_color);
-                        ImGui::ProgressBar(percent);
-                        ImGui::PopStyleColor();
-                    }
-
-                    ImGui::EndTable(); // end table System Usage
+                    ImGui::TableNextColumn();
+                    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, bar_color);
+                    ImGui::ProgressBar(percent);
+                    ImGui::PopStyleColor();
                 }
-            }
 
-            //ImGui::EndChild(); // end child window Systems
+                ImGui::EndTable(); // end table System Usage
+            }
 
             ImGui::PopStyleVar();
         }

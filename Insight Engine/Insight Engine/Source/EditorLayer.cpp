@@ -209,7 +209,8 @@ namespace IS {
 
                 // Saving Scene
                 if (ImGui::MenuItem(ICON_LC_SAVE "  Save Scene", "Ctrl+S")) { SaveScene(); }
-                if (ImGui::MenuItem(ICON_LC_PEN_SQUARE "  Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
+                if (ImGui::MenuItem(ICON_LC_SAVE_ALL "  Save All Scene", "Ctrl+Shift+S")) {}
+                if (ImGui::MenuItem(ICON_LC_PEN_SQUARE "  Save Scene As...")) { SaveSceneAs(); }
 
                 ImGui::Separator();
 
@@ -453,7 +454,15 @@ namespace IS {
 
     } // end AcceptAssetBrowserPayload()
 
-    void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
+    void EditorLayer::SaveScene()
+    {
+        SceneManager::Instance().SaveScene();
+    }
+
+    void EditorLayer::SaveAllScenes()
+    {
+        SceneManager::Instance().SaveAllScenes();
+    }
 
     void EditorLayer::SaveSceneAs()
     {

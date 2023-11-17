@@ -209,16 +209,17 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
 
-                float rotation = transform.rotation * (PI / 180.f);
                 // Apply modification
-                if (ImGui::SliderAngle("##Rotation", &rotation, 0.f))
+                float rotation = transform.rotation;
+                if (ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
                 {
-                    float new_rotation = rotation / (PI / 180.f);
-                    if (new_rotation != transform.rotation)
-                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, new_rotation));
+                    if (rotation != transform.rotation)
+                    {
+                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, rotation));
+                    }
                 }
 
-                ImGui::EndTable();
+                ImGui::EndTable(); // end table TransformRotation
             }
 
             // Render Scale
@@ -226,7 +227,9 @@ namespace IS {
             if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
             {
                 if (scaling != transform.scaling)
+                {
                     CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scaling));
+                }                    
             }
 
         }); // end render Transform Component
@@ -403,7 +406,9 @@ namespace IS {
             if (has_texture)
             {
                 if (ImGui::Button("Add Animation"))
+                {
                     mShowAddAnimation = true;
+                }                    
             }
 
             // Render animation details
@@ -485,7 +490,9 @@ namespace IS {
             }
 
             if (mShowAddAnimation)
+            {
                 AddAnimation(sprite);
+            }                
 
         }); // end render Sprite Component
 
@@ -578,7 +585,9 @@ namespace IS {
                 ImGui::TextUnformatted("Static Friction");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
+                ImGui::PushItemWidth(80.f);
                 ImGui::InputFloat("##Static Friction", &rigidbody.mStaticFriction);
+                ImGui::PopItemWidth();
 
                 // Dynamic Friction
                 ImGui::TableNextColumn();
@@ -586,7 +595,9 @@ namespace IS {
                 ImGui::TextUnformatted("Dynamic Friction");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
+                ImGui::PushItemWidth(80.f);
                 ImGui::InputFloat("##Dynamic Friction", &rigidbody.mDynamicFriction);
+                ImGui::PopItemWidth();
 
                 ImGui::EndTable(); // end table RigidbodyTable
             }
@@ -626,7 +637,7 @@ namespace IS {
                 EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
                 EditorUtils::RenderControlVec2("Scale", collider.mBoxCollider.sizeScale);
             }
-
+            
             if (circle_enabled)
             {
                 ImGui::SeparatorText(ICON_LC_CIRCLE_DASHED "  Circle Collider");
@@ -638,11 +649,14 @@ namespace IS {
                     EditorUtils::AddTableBoldLabel("Radius Scale");
 
                     ImGui::TableNextColumn();
+                    ImGui::PushItemWidth(80.f);
                     ImGui::InputFloat("##Radius Scale", &collider.mCircleCollider.radiusScale);
+                    ImGui::PopItemWidth();
 
                     ImGui::EndTable(); // end table Circle Radius Scale Table
                 }
             }
+
         }); // end render Collider Component
 
         // Script Component
@@ -763,7 +777,7 @@ namespace IS {
                     }
                     ImGui::EndDragDropTarget();
                 }
-
+                
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Looped");
