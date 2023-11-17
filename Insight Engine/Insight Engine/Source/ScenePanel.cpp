@@ -91,7 +91,9 @@ namespace IS {
 
                     // Set inspect mode to inspect entity
                     if (mEditorLayer.IsAnyEntitySelected())
+                    {
                         mEditorLayer.SetInspectMode(InspectorPanel::aInspectMode::INSPECT_ENTITY);
+                    }
                 }
             }
         }
@@ -318,17 +320,22 @@ namespace IS {
         window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoDockingOverOther;
 
         if (toolbar_axis == ImGuiAxis_X)
+        {
             window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoResizeY;
+        }
         else
+        {
             window_class.DockNodeFlagsOverrideSet |= ImGuiDockNodeFlags_NoResizeX;
+        }
         ImGui::SetNextWindowClass(&window_class);
 
-        // 3. Begin into the window
+        // Begin window
         const float font_size = ImGui::GetFontSize();
         const ImVec2 icon_size(ImFloor(font_size * 1.7f), ImFloor(font_size * 1.7f));
         ImGui::Begin("ScenePanelToolbar", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar);
         mToolbarInUse = ImGui::IsWindowHovered() || ImGui::IsWindowFocused();
-        // 4. Overwrite node size
+        
+        // Overwrite node size
         ImGuiDockNode* node = ImGui::GetWindowDockNode();
         if (node != NULL)
         {
@@ -399,9 +406,13 @@ namespace IS {
             if (ImGui::BeginPopupContextWindow())
             {
                 if (ImGui::MenuItem("Horizontal", "", (toolbar_axis == ImGuiAxis_X)))
+                {
                     toolbar_axis = ImGuiAxis_X;
+                }
                 if (ImGui::MenuItem("Vertical", "", (toolbar_axis == ImGuiAxis_Y)))
+                {
                     toolbar_axis = ImGuiAxis_Y;
+                }
                 ImGui::EndPopup();
             }
         }
@@ -455,12 +466,6 @@ namespace IS {
                                                 ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
                                                 nullptr, mSnap ? snap_values : nullptr);
 
-        if (!ImGuizmo::IsUsing())
-        {
-            mGizmoInUse = false;
-            return;
-        }
-
         if (manipulated)
         {
             glm::vec3 translation3D, rotation3D, scale3D;
@@ -470,11 +475,28 @@ namespace IS {
             Vec2 translation{ translation3D.x, translation3D.y }, scale{ std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
             float rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
 
+            static Vec2 old_position = transform.world_position;
+            ImGuiIO& io = ImGui::GetIO();
+            if (io.MouseClicked[ImGuiMouseButton_Left])
+            {
+                old_position = transform.world_position;
+                IS_CORE_DEBUG("CLICKED");
+            }
+            else if (io.MouseReleased[ImGuiMouseButton_Left])
+            {
+                Vec2 new_position = transform.world_position;
+                transform.world_position = old_position;
+                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, new_position));
+                old_position = {};
+                IS_CORE_DEBUG("RELEASED");
+            }
             transform.world_position = translation;
             transform.rotation = rotation;
             transform.scaling = scale;
+            //CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, translation));
+            //CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, rotation));
+            //CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scale));
         }
-
 
         mGizmoInUse = true;
 

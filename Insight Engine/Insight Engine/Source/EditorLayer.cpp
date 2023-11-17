@@ -484,6 +484,9 @@ namespace IS {
         IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
     }
 
-    void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
+    void EditorLayer::ExitProgram()
+    { 
+        InsightEngine::Instance().Exit();
+    }
 
 } // end namespace IS

@@ -68,6 +68,16 @@ namespace IS {
 
         // Accept file payload
         glfwSetDropCallback(native_window, FileDropCallback);
+
+        // Minimize window if ALT+TAB / CTRL+ALT_DEL
+        glfwSetWindowFocusCallback(native_window, [](GLFWwindow* window, int focused)
+        {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            if (!focused && InsightEngine::Instance().mRuntime)
+            {
+                input.mWindow->SetMinimized();
+            }
+        });
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {
