@@ -69,7 +69,7 @@ namespace IS {
         // Accept file payload
         glfwSetDropCallback(native_window, FileDropCallback);
 
-        // Minimize window if ALT+TAB / CTRL+ALT_DEL
+        // Minimize window if ALT+TAB / CTRL+ALT+DEL
         glfwSetWindowFocusCallback(native_window, [](GLFWwindow* window, int focused)
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
