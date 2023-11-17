@@ -61,6 +61,8 @@ namespace IS {
          */
         void setupInstNonQuadShaders();
 
+        void setupLightingShaders();
+
         /*!
          * \brief Creates and sets up shaders for text rendering.
          *

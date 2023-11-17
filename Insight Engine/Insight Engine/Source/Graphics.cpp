@@ -39,6 +39,7 @@ namespace IS {
     Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
+    Shader ISGraphics::light_shader_pgm;
 
     // Texture vector
     std::vector<Image> ISGraphics::textures;
@@ -53,6 +54,7 @@ namespace IS {
     std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> ISGraphics::layered3DQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
+    std::vector<Sprite::instanceData3D> ISGraphics::lightInstances;
 
     // Editor and entity camera
     Camera ISGraphics::cameras[2];
@@ -64,6 +66,8 @@ namespace IS {
 
     // Text animation boolean
     bool ISGraphics::mShowTextAnimation = true;
+
+    Light testLight, testLight2, testLight3, testLight4;
 
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
@@ -81,6 +85,8 @@ namespace IS {
 
         // init debugging lines and circles shaders
         inst_non_quad_shader_pgm.setupInstNonQuadShaders();
+
+        light_shader_pgm.setupLightingShaders();
 
         // init font shaders
         Times_New_Roman_font.shader.setupTextShaders();
@@ -117,6 +123,11 @@ namespace IS {
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
+
+        testLight.init({ 0.f, 0.f }, { 1.f, 1.f, 1.f }, 0.8f, 1000.f);
+        testLight2.init({ -100.f, 100.f }, { 1.f, 0.f, 0.f }, 1.0f, 300.f);
+        testLight3.init({ 0.f, 100.f }, { 0.f, 1.f, 0.f }, 1.0f, 300.f);
+        testLight4.init({ 100.f, 100.f }, { 0.f, 0.f, 1.f }, 1.0f, 300.f);
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -224,6 +235,9 @@ namespace IS {
                 auto& sprite = engine.GetComponent<Sprite>(entity);
                 auto& trans = engine.GetComponent<Transform>(entity);
 
+                // to remove, just testing
+                if (engine.GetEntityName(entity) == "Player") testLight.position = { trans.getWorldPosition().x, trans.getWorldPosition().y }; 
+
                 // update sprite's transform [will be changed]
                 sprite.followTransform(trans);
                 sprite.transform();
@@ -302,7 +316,7 @@ namespace IS {
         // can enable to test drawing of debug line / circles
         // Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
         // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
-        Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
+        //Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
 
         //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         //Image* img = system->GetImage("icecream_truck_frame.png");
@@ -321,6 +335,11 @@ namespace IS {
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
         Sprite::draw_instanced_lines();
+        testLight.draw();
+        testLight2.draw();
+        testLight3.draw();
+        testLight4.draw();
+        Sprite::draw_lights();
 
         // for each entity
         for (auto& entity : mEntities) {

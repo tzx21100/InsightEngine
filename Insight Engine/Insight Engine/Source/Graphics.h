@@ -127,6 +127,7 @@ namespace IS {
 		static Shader inst_3d_quad_shader_pgm;
 		static Shader inst_non_quad_shader_pgm;
 		static Shader quad_border_shader_pgm;
+		static Shader light_shader_pgm;
 
 		// Texture vector
 		static std::vector<Image> textures;
@@ -141,6 +142,7 @@ namespace IS {
 		static std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> layered3DQuadInstances;
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
+		static std::vector<Sprite::instanceData3D> lightInstances;
 
 		// Editor and entity camera
 		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]

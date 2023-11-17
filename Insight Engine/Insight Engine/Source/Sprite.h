@@ -193,6 +193,8 @@ namespace IS {
         static void draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer = DrawLayer::DEFAULT_LAYER);
         static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer = DrawLayer::DEFAULT_LAYER);
 
+        static void draw_lights();
+
         static void draw_picked_entity_border();
 
         /*!

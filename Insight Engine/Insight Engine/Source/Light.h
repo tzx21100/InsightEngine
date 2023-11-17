@@ -8,9 +8,13 @@
 namespace IS {
 	class Light {
 	public:
-		Light(glm::vec3 clr, float inten, float sz) : color{ clr }, intensity{ inten }, size{ sz } {};
+		Light() = default;
+		Light(glm::vec2 pos, glm::vec3 clr, float inten, float sz) : position{ pos }, color { clr }, intensity{ inten }, size{ sz } {};
+
+		void init(glm::vec2 pos, glm::vec3 clr, float inten, float sz);
 		void draw();
 
+		glm::vec2 position{};
 		glm::vec3 color{};
 		float intensity{}; // 0 - 1.f
 		float size{};

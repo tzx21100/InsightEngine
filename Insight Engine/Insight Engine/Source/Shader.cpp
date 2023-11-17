@@ -276,6 +276,70 @@ namespace IS {
         }
     }
 
+    void Shader::setupLightingShaders() {
+        // vertex shader
+        std::string vtx_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec2 aVertexPosition;
+            layout(location = 1) in vec2 aVertexTexCoord;
+            layout(location = 2) in vec4 aVertexColor;
+            layout(location = 4) in vec4 aMtxRow1;
+            layout(location = 5) in vec4 aMtxRow2;
+            layout(location = 6) in vec4 aMtxRow3;
+            layout(location = 7) in vec4 aMtxRow4;
+
+            layout(location = 0) out vec4 vColor;
+            layout(location = 1) out vec2 vTexCoord;
+            
+
+            void main()
+            {
+                mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
+                gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
+                vTexCoord = aVertexTexCoord;
+				vColor = aVertexColor;
+            }
+        )";
+
+        // fragment shader
+        std::string frag_shdr = R"(
+            #version 450 core
+            layout(location = 0) in vec4 vColor;
+            layout(location = 1) in vec2 vTexCoord;
+
+            layout(location = 0) out vec4 fFragColor;
+
+            void main()
+            {
+                vec2 center = vec2(0.5, 0.5);
+                float distance = length(vTexCoord - center);
+
+                // Set the radius to be half of the smaller dimension of the quad
+                float radius = min(0.5, 0.5 * length(vec2(1.0, 1.0)));
+
+                // Use a step function to make the light only render in a circle
+                float inCircle = step(distance, radius);
+
+                // Apply the original attenuation formula with the step function
+                fFragColor = vec4(vColor.rgb, vColor.a * inCircle * (pow(0.01, distance) - 0.01));
+            }
+        )";
+
+        // Compile and link the shaders into a shader program
+        compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
+        compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
+        link();
+        validate();
+
+        // Check if the shader program compilation and linking was successful
+        if (GL_FALSE == isLinked())
+        {
+            std::cout << "Unable to compile/link/validate shader programs\n";
+            std::cout << getLog() << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
+
     void Shader::setupTextShaders() {
         // vertex shader
         std::string vtx_shdr = R"(

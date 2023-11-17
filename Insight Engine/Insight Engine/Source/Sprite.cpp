@@ -174,6 +174,37 @@ namespace IS {
         }
     }
 
+    void Sprite::draw_lights() {
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData3D));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        // bind shader
+        glUseProgram(ISGraphics::light_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
+
+        // draw instanced quads
+
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size()));
+        ISGraphics::lightInstances.clear();
+    }
+
     void Sprite::draw_picked_entity_border() {
         InsightEngine& engine = InsightEngine::Instance();
 
