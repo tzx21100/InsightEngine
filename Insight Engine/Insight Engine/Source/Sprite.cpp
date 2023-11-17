@@ -20,13 +20,13 @@ namespace IS {
     // set of layers to NOT render
     std::unordered_set<int> Sprite::layersToIgnore{};
 
-    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f) {
+    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f, 1.f) {
         // Give it a default size of 1 by 1
         setSpriteSize(1, 1);
         setWorldPos(0, 0);
     }
 
-    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f) {}
+    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f, 1.f) {}
 
     Sprite::Sprite(const Sprite& other)
         : primitive_type(other.primitive_type),
@@ -141,14 +141,17 @@ namespace IS {
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
     }
 
-    void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector3D const& color, int layer) {
+    // draw light quad here similar to old non-layered instance quad drawing
+    
+
+    void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer) {
         if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
             Sprite::instanceData3D instData;
-            instData.color = glm::vec3(color.x, color.y, color.z);
+            instData.color = glm::vec4(color.x, color.y, color.z, color.w);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;
 
@@ -211,7 +214,7 @@ namespace IS {
         // get line scaling matrix
         glm::mat4 world_to_NDC_xform = lineTRS.Return3DXformMatrix();
         Sprite::nonQuadInstanceData lineData;
-        lineData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        lineData.color = glm::vec4(std::get<0>(color), std::get<1>(color), std::get<2>(color), 1.f);
         lineData.model_to_ndc_xform = world_to_NDC_xform;
 
         // adds to vector of lines to draw
@@ -257,7 +260,7 @@ namespace IS {
 
         // set up instance data
         Sprite::nonQuadInstanceData circleData;
-        circleData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        circleData.color = glm::vec4(std::get<0>(color), std::get<1>(color), std::get<2>(color), 1.f);
         circleData.model_to_ndc_xform = world_to_NDC_xform;
 
         // adds to vector of circles to draw

@@ -302,7 +302,7 @@ namespace IS {
         // can enable to test drawing of debug line / circles
         // Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
         // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
-        //Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f }, 4);
+        Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
 
         //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         //Image* img = system->GetImage("icecream_truck_frame.png");

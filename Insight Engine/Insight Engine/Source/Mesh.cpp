@@ -58,14 +58,14 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
 
         // Specify instance data layout
-        glVertexAttribPointer(color_attrib,       3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
-        glVertexAttribPointer(tex_index_attrib,   1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
-        glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
-        glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 7));
-        glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 10));
-        glVertexAttribPointer(anim_dim_attrib,    2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 13));
-        glVertexAttribPointer(anim_index_attrib,  2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
-        glVertexAttribPointer(ent_ID_attib,       1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
+        glVertexAttribPointer(color_attrib,       4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
+        glVertexAttribPointer(tex_index_attrib,   1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row1_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 5));
+        glVertexAttribPointer(x_form_row2_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 8));
+        glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 11));
+        glVertexAttribPointer(anim_dim_attrib,    2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 14));
+        glVertexAttribPointer(anim_index_attrib,  2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
+        glVertexAttribPointer(ent_ID_attib,       1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 18));
 
         // Specify instance data divisor for attribute instancing
         glVertexAttribDivisor(color_attrib,       1);
@@ -125,15 +125,15 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
 
         // Specify instance data layout
-        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), 0);
-        glVertexAttribPointer(tex_index_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
-        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
-        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 8));
-        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 12));
-        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
-        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 20));
-        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 22));
-        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 24));
+        glVertexAttribPointer(color_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), 0);
+        glVertexAttribPointer(tex_index_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 5));
+        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 9));
+        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 13));
+        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
+        glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 21));
+        glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 23));
+        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData3D), reinterpret_cast<GLvoid*>(sizeof(float) * 25));
 
         // Specify instance data divisor for attribute instancing
         glVertexAttribDivisor(color_attrib, 1);
@@ -186,11 +186,11 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row4_attrib);
 
         // Specify instance data layout
-        glVertexAttribPointer(color_attrib,       3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
-        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
-        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 7));
-        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 11));
-        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
+        glVertexAttribPointer(color_attrib,       4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
+        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 8));
+        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 12));
+        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
 
         // Specify instance data divisor for attribute instancing
         glVertexAttribDivisor(color_attrib,       1);
@@ -246,11 +246,11 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row4_attrib);
 
         // Specify instance data layout
-        glVertexAttribPointer(color_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
-        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 3));
-        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 7));
-        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 11));
-        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 15));
+        glVertexAttribPointer(color_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), 0);
+        glVertexAttribPointer(x_form_row1_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 4));
+        glVertexAttribPointer(x_form_row2_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 8));
+        glVertexAttribPointer(x_form_row3_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 12));
+        glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::nonQuadInstanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
 
         // Specify instance data divisor for attribute instancing
         glVertexAttribDivisor(color_attrib, 1);

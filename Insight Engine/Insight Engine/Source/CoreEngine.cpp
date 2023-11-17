@@ -303,7 +303,7 @@ namespace IS {
         trans.setRotation((prng.generate() * (MAX_ROTATION - MIN_ROTATION)) + MIN_ROTATION);
 
         auto& sprite = engine.GetComponent<Sprite>(e);
-        sprite.color = { prng.generate(), prng.generate(), prng.generate() };
+        sprite.color = { prng.generate(), prng.generate(), prng.generate(), 1.f };
         // with texture
         if (with_texture) {
             auto asset = engine.GetSystem<AssetManager>("Asset");

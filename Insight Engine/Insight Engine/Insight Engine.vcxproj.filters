@@ -166,6 +166,12 @@
     <ClCompile Include="Source\Command.cpp">
       <Filter>Editor\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Light.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector4D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pch.h">
@@ -383,6 +389,12 @@
     </ClInclude>
     <ClInclude Include="Source\Command.h">
       <Filter>Editor\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector4D.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

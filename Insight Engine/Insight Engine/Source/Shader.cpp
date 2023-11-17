@@ -24,7 +24,7 @@ namespace IS {
             #version 450 core
             layout(location = 0)  in vec2  aVertexPosition;
             layout(location = 1)  in vec2  aVertexTexCoord;
-            layout(location = 2)  in vec3  aVertexColor;
+            layout(location = 2)  in vec4  aVertexColor;
             layout(location = 3)  in float aTexIndex;
             layout(location = 4)  in vec3  aMtxRow1;
             layout(location = 5)  in vec3  aMtxRow2;
@@ -33,7 +33,7 @@ namespace IS {
             layout(location = 9)  in vec2  aAnimIndex;
             layout(location = 10) in float aEntityID;
 
-            layout(location = 0) out vec3  vColor;
+            layout(location = 0) out vec4  vColor;
             layout(location = 1) out vec2  vTexCoord;
             layout(location = 2) out float vTexID;
             layout(location = 3) out vec2  vAnimDim;
@@ -56,7 +56,7 @@ namespace IS {
         // fragment shader
         std::string frag_shdr = R"(
             #version 450 core
-            layout(location = 0) in vec3  vColor;
+            layout(location = 0) in vec4  vColor;
             layout(location = 1) in vec2  vTexCoord;
             layout(location = 2) in float vTexID;
             layout(location = 3) in vec2  vAnimDim;
@@ -74,7 +74,7 @@ namespace IS {
                 if (vTexID >= 0) textured = true;
                 if (!textured)
                 {
-                    fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+                    fFragColor = vec4(vColor); // Use vColor if no texture is bound
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace IS {
             #version 450 core
             layout(location = 0)  in vec2  aVertexPosition;
             layout(location = 1)  in vec2  aVertexTexCoord;
-            layout(location = 2)  in vec3  aVertexColor;
+            layout(location = 2)  in vec4  aVertexColor;
             layout(location = 3)  in float aTexIndex;
             layout(location = 4)  in vec4  aMtxRow1;
             layout(location = 5)  in vec4  aMtxRow2;
@@ -118,7 +118,7 @@ namespace IS {
             layout(location = 9)  in vec2  aAnimIndex;
             layout(location = 10) in float aEntityID;
 
-            layout(location = 0) out vec3  vColor;
+            layout(location = 0) out vec4  vColor;
             layout(location = 1) out vec2  vTexCoord;
             layout(location = 2) out flat float vTexID;
             layout(location = 3) out vec2  vAnimDim;
@@ -141,7 +141,7 @@ namespace IS {
         // fragment shader
         std::string frag_shdr = R"(
             #version 450 core
-            layout(location = 0) in vec3  vColor;
+            layout(location = 0) in vec4  vColor;
             layout(location = 1) in vec2  vTexCoord;
             layout(location = 2) in flat float vTexID;
             layout(location = 3) in vec2  vAnimDim;
@@ -159,7 +159,7 @@ namespace IS {
                 if (vTexID >= 0) textured = true;
                 if (!textured)
                 {
-                    fFragColor = vec4(vColor, 1.0); // Use vColor if no texture is bound
+                    fFragColor = vec4(vColor); // Use vColor if no texture is bound
                 }
                 else
                 {
@@ -233,13 +233,13 @@ namespace IS {
         std::string vtx_shdr = R"(
             #version 450 core
             layout(location = 0) in vec2  aVertexPosition;
-            layout(location = 2) in vec3  aVertexColor;
+            layout(location = 2) in vec4  aVertexColor;
             layout(location = 4) in vec4  aMtxRow1;
             layout(location = 5) in vec4  aMtxRow2;
             layout(location = 6) in vec4  aMtxRow3;
             layout(location = 7) in vec4  aMtxRow4;
 
-            layout(location = 0) out vec3  vColor;
+            layout(location = 0) out vec4  vColor;
 
             void main()
             {
@@ -252,12 +252,12 @@ namespace IS {
         // fragment shader
         std::string frag_shdr = R"(
             #version 450 core
-            layout(location = 0) in vec3 vColor;
+            layout(location = 0) in vec4 vColor;
             layout(location = 0) out vec4 fFragColor;
 
             void main()
             {
-                fFragColor = vec4(vColor, 1.0);
+                fFragColor = vec4(vColor);
             }
         )";
 
@@ -525,6 +525,13 @@ namespace IS {
         if (loc >= 0) glUniform3f(loc, val.x, val.y, val.z);
         else std::cout << "Uniform variable " << name << " doesn't exist.\n";
     }
+
+    void Shader::setUniform(GLchar const* name, glm::vec4 const& val) {
+        GLint loc = glGetUniformLocation(pgm_hdl, name);
+        if (loc >= 0) glUniform4f(loc, val.x, val.y, val.z, val.w);
+        else std::cout << "Uniform variable " << name << " doesn't exist.\n";
+    }
+
 
     void Shader::setUniform(GLchar const* name, glm::mat3 const& val) {
         GLint loc = glGetUniformLocation(pgm_hdl, name);

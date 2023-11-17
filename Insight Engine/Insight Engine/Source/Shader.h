@@ -154,6 +154,7 @@ namespace IS {
         void setUniform(GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
         void setUniform(GLchar const* name, glm::vec2 const& val);
         void setUniform(GLchar const* name, glm::vec3 const& val);
+        void setUniform(GLchar const* name, glm::vec4 const& val);
         void setUniform(GLchar const* name, glm::mat3 const& val);
         void setUniform(GLchar const* name, glm::mat4 const& val);
 
