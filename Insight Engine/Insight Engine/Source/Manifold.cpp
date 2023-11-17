@@ -67,12 +67,15 @@ namespace IS
 		}
 		if (colliding_collection.test(CollidingStatus::BOX_A_CIRCLE_B)) { // box vs circle
 			FindCirclePolygonContactPoints(colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, colliderA.mBoxCollider.center, colliderA.mBoxCollider.transformedVertices, mContact1);
+			mContactCount = 1;
 		}
 		if (colliding_collection.test(CollidingStatus::CIRCLE_A_BOX_B)) { // circle vs box
 			FindCirclePolygonContactPoints(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, mContact1);
+			mContactCount = 1;
 		}
 		if (colliding_collection.test(CollidingStatus::CIRCLE_A_CIRCLE_B)) { // circle vs circle
 			FindCirlcesContactPoints(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mCircleCollider.center, mContact1);
+			mContactCount = 1;
 		}
 
 		//switch (shapeA)

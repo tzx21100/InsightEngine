@@ -77,20 +77,16 @@ namespace IS
 	class Collider : public IComponent
 	{
 	public:
-		static std::string GetType() { return "Collider"; }
-
-
-		/*uint16_t mShape;
-		Vector2D mOffset;
-		Vector2D mSizeScale;
-		std::vector<Vector2D> mVertices;
-		std::vector<Vector2D> mTransformedVertices;
-		GridState mGridState;*/
 		BoxCollider mBoxCollider;
 		CircleCollider mCircleCollider;
 		//LineCollider mLineCollider;
 		std::bitset<MAX_COLLIDER> mSelectedCollider;
 		bool mIsColliding;
+
+		Json::Value Serialize() override;
+		void Deserialize(Json::Value data) override;
+
+		static std::string GetType() { return "Collider"; }
 
 		Collider();
 
@@ -132,53 +128,7 @@ namespace IS
 		// check if circle collider is enable or not
 		bool IsCircleColliderEnable();
 
-		Json::Value Serialize() override{
-			Json::Value prefab;
-
-			prefab["ColliderCenterX"] = mBoxCollider.center.x;
-			prefab["ColliderCenterY"] = mBoxCollider.center.y;
-			prefab["ColliderOffsetX"] = mBoxCollider.offset.x;
-			prefab["ColliderOffsetY"] = mBoxCollider.offset.y;
-			prefab["ColliderSizeScaleX"] = mBoxCollider.sizeScale.x;
-			prefab["ColliderSizeScaleY"] = mBoxCollider.sizeScale.y;
-
-			// Serialize vertices if needed
-			Json::Value vertices_array(Json::arrayValue);
-			for (const auto& vertex : mBoxCollider.vertices) {
-				Json::Value v;
-				v["x"] = vertex.x;
-				v["y"] = vertex.y;
-				vertices_array.append(v);
-			}
-			prefab["ColliderVertices"] = vertices_array;
-
-			return prefab;
-
-		}
-
-		void Deserialize(Json::Value data) override{
-
-			mBoxCollider.center.x = data["ColliderCenterX"].asFloat();
-			mBoxCollider.center.y = data["ColliderCenterY"].asFloat();
-			mBoxCollider.offset.x = data["ColliderOffsetX"].asFloat();
-			mBoxCollider.offset.y = data["ColliderOffsetY"].asFloat();
-			mBoxCollider.sizeScale.x = data["ColliderSizeScaleX"].asFloat();
-			mBoxCollider.sizeScale.y =data["ColliderSizeScaleY"].asFloat();
-
-			Json::Value vertices_array = data["ColliderVertices"];
-			for (const auto& v : vertices_array) {
-				Vector2D vertex;
-				vertex.x = v["x"].asFloat();
-				vertex.y = v["y"].asFloat();
-				mBoxCollider.vertices.push_back(vertex);
-			}
-
-
-		}
-
-
 	};
 
-	
 }
-#endif
+#endif // !GAM200_INSIGHT_ENGINE_
