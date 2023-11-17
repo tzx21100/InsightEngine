@@ -168,6 +168,8 @@ namespace IS {
         ImageLoad(filepath);
         Image* img = GetImage(std::filesystem::path(filepath).filename().string());
         img->texture_index = mCurrentTexId;
+        img->mFileName = std::filesystem::path(filepath).filename().string();
+        IS_CORE_DEBUG("&s", img->mFileName);
         mCurrentTexId++;
         ISGraphics::textures.emplace_back(*img);
     }
@@ -198,7 +200,7 @@ namespace IS {
         if (iter != mImageList.end()) {
             return &(iter->second);
         }
-        throw std::runtime_error("Image not found.");
+        return &mImageList.find(file_name)->second;
     }
 
     Image* AssetManager::GetIcon(const std::string& file_name) {

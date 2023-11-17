@@ -50,6 +50,15 @@ namespace IS
         internal extern static void TransformSetScale(float x, float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetRotationEntity(float angle, float angle_speed,int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetPositionEntity(float x, float y, int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void TransformSetScaleEntity(float x, float y, int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetRigidBodyAngularVelocity();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -59,7 +68,16 @@ namespace IS
         internal extern static SimpleVector2D GetTransformScaling();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static float GetTransformRotation();
+        internal extern static float GetTransformRotation();        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetTransformPositionEntity( int entity );
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetTransformScalingEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetTransformRotationEntity(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetDeltaTime();
@@ -105,6 +123,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool EntityCheckCollide(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AddCollider(int entity);
 
     }
 }

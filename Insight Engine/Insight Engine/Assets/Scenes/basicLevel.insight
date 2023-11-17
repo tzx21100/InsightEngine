@@ -210,9 +210,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.1958371102809906,
+						"frame_timer" : 0.06250377744436264,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1

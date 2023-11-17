@@ -104,9 +104,24 @@ namespace IS {
         trans_component.world_position.y = y;
     }
 
+    static void TransformSetPositionEntity(float x, float y, int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        trans_component.world_position.x = x;
+        trans_component.world_position.y = y;
+    }
+
+
     static void TransformSetScale(float x, float y) {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        trans_component.scaling.x = x;
+        trans_component.scaling.y = y;
+    }
+
+    static void TransformSetScaleEntity(float x, float y,int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
         trans_component.scaling.x = x;
         trans_component.scaling.y = y;
     }
@@ -116,6 +131,14 @@ namespace IS {
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
         trans_component.setRotation(angle,angle_speed);
     }
+
+    static void TransformSetRotationEntity(float angle, float angle_speed, int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        trans_component.setRotation(angle, angle_speed);
+    }
+
+
 
     static SimpleVector2D GetTransformPosition() {
         auto& engine = InsightEngine::Instance();
@@ -138,6 +161,32 @@ namespace IS {
     static float GetTransformRotation() {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        float vec;
+        vec = trans_component.getRotation();
+        return vec;
+    }
+
+    static SimpleVector2D GetTransformPositionEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        SimpleVector2D vec;
+        vec.x = trans_component.getWorldPosition().x;
+        vec.y = trans_component.getWorldPosition().y;
+        return vec;
+    }
+
+    static SimpleVector2D GetTransformScalingEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        SimpleVector2D vec;
+        vec.x = trans_component.getScaling().x;
+        vec.y = trans_component.getScaling().y;
+        return vec;
+    }
+
+    static float GetTransformRotationEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
         float vec;
         vec = trans_component.getRotation();
         return vec;
@@ -248,6 +297,7 @@ namespace IS {
         std::string str(c_str);
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponent<Transform>(entity,Transform());
         return static_cast<int>(entity);
     }
 
@@ -262,6 +312,21 @@ namespace IS {
         auto const& component=InsightEngine::Instance().GetComponent<Collider>(entity);
         return component.mIsColliding;
     }
+
+    //static void AddComponent(MonoString *name) {
+    //    char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+    //    std::string str(c_str);
+    //    mono_free(c_str);
+    //
+    //}
+
+    static void AddCollider(int entity) {
+        if (!InsightEngine::Instance().HasComponent<Collider>(entity))
+            
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
+    }
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -286,11 +351,17 @@ namespace IS {
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);
+        IS_ADD_INTERNAL_CALL(TransformSetPositionEntity);
         IS_ADD_INTERNAL_CALL(TransformSetRotation);
+        IS_ADD_INTERNAL_CALL(TransformSetRotationEntity);
         IS_ADD_INTERNAL_CALL(TransformSetScale);
+        IS_ADD_INTERNAL_CALL(TransformSetScaleEntity);
         IS_ADD_INTERNAL_CALL(GetTransformPosition);
+        IS_ADD_INTERNAL_CALL(GetTransformPositionEntity);
         IS_ADD_INTERNAL_CALL(GetTransformScaling);
+        IS_ADD_INTERNAL_CALL(GetTransformScalingEntity);
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
+        IS_ADD_INTERNAL_CALL(GetTransformRotationEntity);
         IS_ADD_INTERNAL_CALL(GetDeltaTime);
 
         // Images and Sprite
@@ -315,6 +386,7 @@ namespace IS {
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
+        IS_ADD_INTERNAL_CALL(AddCollider);
 
         // Entity Collisions
         IS_ADD_INTERNAL_CALL(EntityCheckCollide);
