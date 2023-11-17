@@ -38,6 +38,7 @@ namespace IS
 
 	Collider::Collider() {
 		mBoxCollider = BoxCollider();
+		mCircleCollider = CircleCollider();
 		DisableAllColliders(); // Reset all bits to 0
 		EnableBoxCollider();
 		mIsColliding = false;
@@ -117,7 +118,7 @@ namespace IS
 	void Collider::UpdateCircleCollider(Transform const& trans) {
 		mCircleCollider.center = trans.world_position + mCircleCollider.offset;
 		// radius calculation will follows the larger scale of x/y
-		mCircleCollider.radius = std::max(trans.scaling.x, trans.scaling.y) * mCircleCollider.radiusScale;
+		mCircleCollider.radius = std::max(std::abs(trans.scaling.x), std::abs(trans.scaling.y)) * mCircleCollider.radiusScale;
 	}
 
 	void Collider::EnableAllColliders() {
@@ -154,6 +155,119 @@ namespace IS
 
 	bool Collider::IsCircleColliderEnable() {
 		return mSelectedCollider.test(ColliderShape::CIRCLE);
+	}
+
+
+	
+	Json::Value Collider::Serialize()
+	{
+		Json::Value data;
+		bool box_enabled = IsBoxColliderEnable() ? true : false;
+		bool circle_enabled = IsCircleColliderEnable() ? true : false;
+
+		// Save Box Collider
+		data["BoxColliderEnabled"] = box_enabled;
+		if (box_enabled)
+		{
+			Json::Value box_collider;
+
+			Json::Value collider_center;
+			collider_center["X"] = mBoxCollider.center.x;
+			collider_center["Y"] = mBoxCollider.center.y;
+			box_collider["BoxColliderCenter"] = collider_center;
+
+			Json::Value collider_offset;
+			collider_offset["X"] = mBoxCollider.offset.x;
+			collider_offset["Y"] = mBoxCollider.offset.y;
+			box_collider["BoxColliderOffset"] = collider_offset;
+
+			Json::Value collider_scale;
+			collider_scale["X"] = mBoxCollider.sizeScale.x;
+			collider_scale["Y"] = mBoxCollider.sizeScale.y;
+			box_collider["BoxColliderSizeScale"] = collider_scale;
+
+			Json::Value vertices_array(Json::arrayValue);
+			for (const auto& vertex : mBoxCollider.vertices)
+			{
+				Json::Value v;
+				v["x"] = vertex.x;
+				v["y"] = vertex.y;
+				vertices_array.append(v);
+			}
+			box_collider["BoxColliderVertices"] = vertices_array;
+
+			data["BoxCollider"] = box_collider;
+		}
+
+		// Save Circle Collider
+		data["CircleColliderEnabled"] = circle_enabled;
+		if (circle_enabled)
+		{
+			Json::Value circle_collider;
+
+			Json::Value collider_center;
+			collider_center["X"] = mBoxCollider.center.x;
+			collider_center["Y"] = mBoxCollider.center.y;
+			circle_collider["CircleColliderCenter"] = collider_center;
+
+			Json::Value collider_offset;
+			collider_offset["X"] = mBoxCollider.offset.x;
+			collider_offset["Y"] = mBoxCollider.offset.y;
+			circle_collider["CircleColliderOffset"] = collider_offset;
+
+			circle_collider["CircleColliderRadius"] = mCircleCollider.radius;
+			circle_collider["CircleColliderRadiusScale"] = mCircleCollider.radiusScale;
+
+			data["CircleCollider"] = circle_collider;
+		}
+
+		// Save other colliders...
+
+		return data;
+	}
+
+	void Collider::Deserialize(Json::Value data)
+	{
+		// Disable all colliders
+		DisableAllColliders();
+
+		bool box_enabled = data["BoxColliderEnabled"].asBool();
+		bool circle_enabled = data["CircleColliderEnabled"].asBool();
+
+		// Load Box Collider
+		if (box_enabled)
+		{
+			EnableBoxCollider();
+			mBoxCollider.center.x = data["BoxCollider"]["BoxColliderCenter"]["X"].asFloat();
+			mBoxCollider.center.y = data["BoxCollider"]["BoxColliderCenter"]["Y"].asFloat();
+			mBoxCollider.offset.x = data["BoxCollider"]["BoxColliderOffset"]["X"].asFloat();
+			mBoxCollider.offset.y = data["BoxCollider"]["BoxColliderOffset"]["Y"].asFloat();
+			mBoxCollider.sizeScale.x = data["BoxCollider"]["BoxColliderSizeScale"]["X"].asFloat();
+			mBoxCollider.sizeScale.y = data["BoxCollider"]["BoxColliderSizeScale"]["Y"].asFloat();
+
+			Json::Value vertices_array = data["BoxCollider"]["BoxColliderVertices"];
+			for (const auto& v : vertices_array)
+			{
+				Vector2D vertex;
+				vertex.x = v["X"].asFloat();
+				vertex.y = v["Y"].asFloat();
+				mBoxCollider.vertices.push_back(vertex);
+			}
+		}
+
+		// Load Circle Collider
+		if (circle_enabled)
+		{
+			EnableCircleCollider();
+			mCircleCollider.center.x = data["CircleCollider"]["CircleColliderCenter"]["X"].asFloat();
+			mCircleCollider.center.y = data["CircleCollider"]["CircleColliderCenter"]["Y"].asFloat();
+			mCircleCollider.offset.x = data["CircleCollider"]["CircleColliderOffset"]["X"].asFloat();
+			mCircleCollider.offset.y = data["CircleCollider"]["CircleColliderOffset"]["Y"].asFloat();
+			mCircleCollider.radius = data["CircleCollider"]["CircleColliderRadius"].asFloat();
+			mCircleCollider.radiusScale = data["CircleCollider"]["CircleColliderRadiusScale"].asFloat();
+		}
+
+		// Load other colliders...
 	}
 
 }

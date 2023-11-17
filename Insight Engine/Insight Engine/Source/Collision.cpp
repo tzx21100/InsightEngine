@@ -279,7 +279,6 @@ namespace IS
 		depth = std::numeric_limits<float>::max();
 
 		Vector2D axis;
-		Vector2D axisnormalized;
 		float axisDepth = 0.f;
 
 		for (int i = 0; i < trans_vertices.size(); i++)
@@ -290,15 +289,15 @@ namespace IS
 
 			Vector2D edge = vb - va;
 			axis = Vector2D(-edge.y, edge.x);
-			ISVector2DNormalize(axisnormalized, axis); // normalize the axis
+			ISVector2DNormalize(axis, axis); // normalize the axis
 
 			//float minA, maxA, minB, maxB;
 			float minA = std::numeric_limits<float>::max();
 			float maxA = -std::numeric_limits<float>::max(); // negative max
 			float minB = std::numeric_limits<float>::max();
 			float maxB = -std::numeric_limits<float>::max(); // negative max
-			ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
-			ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
+			ProjectVertices(trans_vertices, axis, minA, maxA);
+			ProjectCircle(circle_center, radius, axis, minB, maxB);
 
 			if (minA >= maxB || minB >= maxA) // not intersecting
 			{
@@ -310,7 +309,7 @@ namespace IS
 			if (axisDepth < depth)
 			{
 				depth = axisDepth;
-				normal = axisnormalized;
+				normal = axis;
 			}
 		}
 
@@ -319,15 +318,15 @@ namespace IS
 		Vector2D cp = trans_vertices[FindClosestPointOnPolygon(circle_center, trans_vertices)];
 
 		axis = cp - circle_center;
-		ISVector2DNormalize(axisnormalized, axis);
+		ISVector2DNormalize(axis, axis);
 
 		//float minA, maxA, minB, maxB;
 		float minA = std::numeric_limits<float>::max();
 		float maxA = -std::numeric_limits<float>::max(); // negative max
 		float minB = std::numeric_limits<float>::max();
 		float maxB = -std::numeric_limits<float>::max(); // negative max
-		ProjectVertices(trans_vertices, axisnormalized, minA, maxA);
-		ProjectCircle(circle_center, radius, axisnormalized, minB, maxB);
+		ProjectVertices(trans_vertices, axis, minA, maxA);
+		ProjectCircle(circle_center, radius, axis, minB, maxB);
 
 		if (minA >= maxB || minB >= maxA)
 		{

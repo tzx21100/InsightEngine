@@ -645,13 +645,19 @@ namespace IS {
 		// draw colliders in green
 		if (mShowColliders)
 		{
-			for (size_t i = 0; i < collider.mBoxCollider.transformedVertices.size(); i++)
-			{
-				Vector2D va = collider.mBoxCollider.transformedVertices[i];
-				Vector2D vb = collider.mBoxCollider.transformedVertices[(i + 1) % collider.mBoxCollider.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
+			if (collider.IsBoxColliderEnable()) {
+				for (size_t i = 0; i < collider.mBoxCollider.transformedVertices.size(); i++)
+				{
+					Vector2D va = collider.mBoxCollider.transformedVertices[i];
+					Vector2D vb = collider.mBoxCollider.transformedVertices[(i + 1) % collider.mBoxCollider.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 
-				Sprite::drawDebugLine(va, vb, color);
+					Sprite::drawDebugLine(va, vb, color);
+				}
 			}
+			if (collider.IsCircleColliderEnable()) {
+				Sprite::drawDebugCircle(collider.mCircleCollider.center, { collider.mCircleCollider.radius * 2.f, collider.mCircleCollider.radius * 2.f }, color);
+			}
+
 		}
 
 		// draw grid cell line in white

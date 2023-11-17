@@ -14,7 +14,26 @@ namespace IS
         static SimpleImage player_walk;
         static SimpleImage player_idle;
 
-        private static int entityA;
+
+
+        //private variables for entity
+
+        static private float xCoord;
+        static private float yCoord;
+        static private float width;
+        static private float height;
+
+        static private int jump_amount;
+        static private bool isJumping;
+        static private float dash_timer;
+        static private bool isDashing;
+
+        static private bool isGrounded;
+
+
+
+        static private int entityA;
+
 
         public static int BoolToInt(bool boolValue)
         {
@@ -36,25 +55,30 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,12,3f);
             InternalCalls.CreateAnimationFromSprite(1,12,3f);
 
-            entityA = InternalCalls.CreateEntity("HELLO I AM CREATED FROM C#");
-
+            entityA = InternalCalls.CreateEntity("FeetCollider");
+            width = InternalCalls.GetTransformScaling().x;
+            height = InternalCalls.GetTransformScaling().y;
+           // InternalCalls.AddCollider(entityA);
 
 
         }
 
         static public void Update()
         {
+            //Player x y coord
+            xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;
+
+            //Feet Collider
+            InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
+            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height,entityA);
+
             InternalCalls.AttachCamera();
 
             //player_walk.texture_index = 2;
             //player_idle.texture_index = 3;
 
             // Update code
-            if (InternalCalls.MouseHeld(1) == true)
-            {
-                InternalCalls.NativeLog("Calling Right Mouse Pressed From C#", 1);
-
-            }
 
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -89,6 +113,18 @@ namespace IS
             }
 
 
+            //if is grounded
+            if (InternalCalls.EntityCheckCollide(entityA))
+            {
+                isGrounded = true;
+            }
+
+            if (isGrounded)
+            {
+                if (InternalCalls.KeyPressed((int)KeyCodes.Space)) {
+                    Jump();
+                }
+            }
 
         }
 
@@ -98,6 +134,19 @@ namespace IS
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
             InternalCalls.DestroyEntity(entityA);
+        }
+
+
+
+        static private void Dashing() { 
+            
+
+            
+        }
+
+        static private void Jump()
+        {
+            InternalCalls.RigidBodyAddForce(0f, 2000f);
         }
        
 

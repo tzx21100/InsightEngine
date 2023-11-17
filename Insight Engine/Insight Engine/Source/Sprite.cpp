@@ -436,6 +436,9 @@ namespace IS {
         img.width = data["SpriteTextureWidth"].asInt();
         img.height = data["SpriteTextureHeight"].asInt();
         img.texture_index = data["SpriteTextureIndex"].asInt();
+        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        //img.texture_index = system->GetImage(img.mFileName)->texture_index;
+
         animation_index = data["SpriteCurrentTexIndex"].asInt();
 
         // Deserializing imgui-related properties
