@@ -138,5 +138,11 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetCollidedObjectAngle(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetMousePosition();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodySetForce(float x, float y);
     }
 }

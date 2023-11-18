@@ -83,6 +83,11 @@ namespace IS {
         return input->IsMouseButtonReleased(mousebutton);
     }
 
+    static SimpleVector2D GetMousePosition() {
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return SimpleVector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+    }
+
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(entity_id);
@@ -95,6 +100,13 @@ namespace IS {
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
         Vector2D vec(x, y);
         body_component.AddVelocity(vec);
+    }    
+    
+    static void RigidBodySetForce(float x, float y) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        Vector2D vec(x, y);
+        body_component.mVelocity=vec;
     }
 
     static void TransformSetPosition(float x, float y) {
@@ -367,9 +379,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
+        IS_ADD_INTERNAL_CALL(GetMousePosition);
 
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
+        IS_ADD_INTERNAL_CALL(RigidBodySetForce);
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
 

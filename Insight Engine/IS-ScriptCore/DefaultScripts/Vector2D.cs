@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IS;
+using System;
 using System.Runtime.InteropServices;
 
 
@@ -107,6 +108,20 @@ public class Vector2D
     private static float RadiansToDegrees(float radians)
     {
         return radians * 180f / (float)Math.PI;
+    }
+
+    public static Vector2D DirectionFromAngle(float angleRadians)
+    {
+        return new Vector2D(
+            CustomMath.Cos(angleRadians),  // x component
+            CustomMath.Sin(angleRadians)   // y component
+        );
+    }
+
+    public Vector2D ApplyForce(float angleRadians, float forceMagnitude)
+    {
+        Vector2D forceDirection = DirectionFromAngle(angleRadians);
+        return forceDirection.Multiply(forceMagnitude); // Scale the direction by the force magnitude
     }
 
 

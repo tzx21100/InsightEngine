@@ -146,8 +146,11 @@ namespace IS {
     std::pair<double, double> InputManager::GetMousePosition() {
         previousWorldMousePos = currentWorldMousePos;
         
-        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };
@@ -319,8 +322,8 @@ namespace IS {
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 
 
-        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
 
         InsightEngine& engine = InsightEngine::Instance();
         auto const& window_sys = engine.GetSystem<WindowSystem>("Window");

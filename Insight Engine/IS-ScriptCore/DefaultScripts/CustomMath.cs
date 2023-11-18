@@ -82,5 +82,35 @@ namespace IS
             return result;
         }
 
+        public static float Atan2(float y, float x)
+        {
+            if (x > 0) return Atan(y / x);
+            if (y >= 0 && x < 0) return Atan(y / x) + PI;
+            if (y < 0 && x < 0) return Atan(y / x) - PI;
+            if (y > 0 && x == 0) return PI / 2;
+            if (y < 0 && x == 0) return -PI / 2;
+            return 0; // Undefined, ideally should handle as an error
+        }
+
+        // Simple Atan approximation - Can be improved
+        private static float Atan(float z)
+        {
+            const float n1 = 0.97239411f;
+            const float n2 = -0.19194795f;
+            return (n1 + n2 * z * z) * z;
+        }
+
+        public static float AngleBetweenPoints(Vector2D point1, Vector2D point2)
+        {
+            float deltaY = point2.y - point1.y;
+            float deltaX = point2.x - point1.x;
+            return CustomMath.Atan2(deltaY, deltaX);
+        }
+
+        public static float ToDegrees(float radians)
+        {
+            return radians * 180.0f / PI;
+        }
+
     }
 }

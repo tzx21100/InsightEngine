@@ -24,13 +24,22 @@ namespace IS
         static private float width;
         static private float height;
 
+        //double jump and above
         static private int jump_amount;
-        static private bool isJumping;
+        static private int jump_amount_set = 1;
+
+        //dashing 
+        static private float bullet_time_timer = 1f;
+        static private float bullet_time_set = 1f;
         static private float dash_timer;
+        static private float dash_set = 0.5f;
+        static private bool canDash = false;
         static private bool isDashing;
+        static private float dashAngle;
+        static private float dashSpeed = 20000f;
 
         static private bool isGrounded;
-
+        static private Vector2D apply_force= new Vector2D(0,0);//dash dir
 
 
         static private int entityA;
@@ -60,7 +69,7 @@ namespace IS
             width = InternalCalls.GetTransformScaling().x /2f;
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entityA);
-            InternalCalls.CameraSetZoom(2f);
+            InternalCalls.CameraSetZoom(1.5f);
 
         }
 
@@ -116,7 +125,7 @@ namespace IS
             float trans_rotate = InternalCalls.GetTransformRotation();
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
-            InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);
+            
 
             /*            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
                         trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();*/
@@ -150,18 +159,61 @@ namespace IS
 
             if (isGrounded)
             {
+                jump_amount = jump_amount_set;
+                canDash = true;
+
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                 {
                     Jump();
                 }
             }
-            else {
+            else { //while in the air
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
+
+                if (jump_amount > 0)
+                {
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    {
+                        Jump();
+                        jump_amount--;
+                    }
+                }
             }
 
-            
+            if(canDash && isDashing==false)
+            {
+                if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift)) {
+                   isDashing = true;
+                }
 
+            }
+            if (isDashing) {
+
+                if (bullet_time_timer > 0)
+                {
+                    bullet_time_timer-=InternalCalls.GetDeltaTime();
+                    InternalCalls.RigidBodySetForce(0, 0);
+
+                    //Get mouse
+                    Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+                    Vector2D player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+                    float angle = CustomMath.AngleBetweenPoints(mouse_pos, player_pos);
+
+                    if (angle > -CustomMath.PI / 4 && angle < CustomMath.PI / 4) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+
+                    apply_force = Vector2D.DirectionFromAngle(angle);
+
+
+                }
+                else
+                {
+                    Dashing();
+                }
+            }
+
+
+            InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
         }
 
         static public void CleanUp()
@@ -174,10 +226,20 @@ namespace IS
 
 
 
-        static private void Dashing() { 
-            
+        static private void Dashing() {
+            canDash = false;
+            isDashing = true;
+            dash_timer -= InternalCalls.GetDeltaTime();
 
-            
+            if (dash_timer<=0)
+            {
+                isDashing = false;
+                dash_timer = dash_set;
+                bullet_time_timer = bullet_time_set;
+            }
+
+            InternalCalls.RigidBodySetForce(apply_force.x*dashSpeed  *-1, apply_force.y *dashSpeed *-1);
+
         }
 
         static private void Jump()
