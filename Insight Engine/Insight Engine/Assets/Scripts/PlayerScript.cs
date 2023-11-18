@@ -76,7 +76,7 @@ namespace IS
 
             //Feet Collider
             InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
-            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height,entityA);
+            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height/1.5f,entityA);
 
             InternalCalls.TransformSetRotationEntity(0, 0, entityA);   
 
@@ -124,6 +124,9 @@ namespace IS
             if (InternalCalls.EntityCheckCollide(entityA))
             {
                 isGrounded = true;
+            }
+            else {
+                isGrounded = false;
             }
 
             if (isGrounded)

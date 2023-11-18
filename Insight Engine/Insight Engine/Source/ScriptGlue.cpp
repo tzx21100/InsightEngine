@@ -324,12 +324,13 @@ namespace IS {
         if (!InsightEngine::Instance().HasComponent<Collider>(entity))
         InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
         auto comp = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        comp.mBodyType = BodyType::Static;
+        auto comp2 = InsightEngine::Instance().GetComponent<Transform>(entity);
+        comp.CreateStaticBody(comp2.world_position,0.5f);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
     }
 
     static void CameraSetZoom(float value) {
-        ISGraphics::cameras[Camera::mActiveCamera].SetZoomLevel(value);
+        ISGraphics::cameras[Camera3D::mActiveCamera].SetZoomLevel(value);
     }
 
 

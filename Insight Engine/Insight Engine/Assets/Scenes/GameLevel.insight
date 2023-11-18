@@ -76,9 +76,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.082351922988891602,
+						"frame_timer" : 0.18235191702842712,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -118,7 +118,7 @@
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 742.97760009765625,
-				"SpriteTransformScalingY" : 283.84780883789062,
+				"SpriteTransformScalingY" : 283.84780883789063,
 				"SpriteTransformWorldPositionX" : -600.6436767578125,
 				"SpriteTransformWorldPositionY" : -250.87692260742188,
 				"animations" : []
@@ -127,7 +127,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 742.97760009765625,
-				"TransformScalingY" : 283.84780883789062,
+				"TransformScalingY" : 283.84780883789063,
 				"TransformWorldPositionX" : -600.6436767578125,
 				"TransformWorldPositionY" : -250.87692260742188
 			}
@@ -156,7 +156,7 @@
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 742.97760009765625,
-				"SpriteTransformScalingY" : 283.84780883789062,
+				"SpriteTransformScalingY" : 283.84780883789063,
 				"SpriteTransformWorldPositionX" : -1180.8946533203125,
 				"SpriteTransformWorldPositionY" : -248.2230224609375,
 				"animations" : []
@@ -165,7 +165,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 742.97760009765625,
-				"TransformScalingY" : 283.84780883789062,
+				"TransformScalingY" : 283.84780883789063,
 				"TransformWorldPositionX" : -1180.8946533203125,
 				"TransformWorldPositionY" : -248.2230224609375
 			}
@@ -194,7 +194,7 @@
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 742.97760009765625,
-				"SpriteTransformScalingY" : 283.84780883789062,
+				"SpriteTransformScalingY" : 283.84780883789063,
 				"SpriteTransformWorldPositionX" : 0.17931365966796875,
 				"SpriteTransformWorldPositionY" : -250.87692260742188,
 				"animations" : []
@@ -203,7 +203,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 742.97760009765625,
-				"TransformScalingY" : 283.84780883789062,
+				"TransformScalingY" : 283.84780883789063,
 				"TransformWorldPositionX" : 0.17931365966796875,
 				"TransformWorldPositionY" : -250.87692260742188
 			}
@@ -232,7 +232,7 @@
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 742.97760009765625,
-				"SpriteTransformScalingY" : 283.84780883789062,
+				"SpriteTransformScalingY" : 283.84780883789063,
 				"SpriteTransformWorldPositionX" : 615.9576416015625,
 				"SpriteTransformWorldPositionY" : -250.87692260742188,
 				"animations" : []
@@ -241,7 +241,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 742.97760009765625,
-				"TransformScalingY" : 283.84780883789062,
+				"TransformScalingY" : 283.84780883789063,
 				"TransformWorldPositionX" : 615.9576416015625,
 				"TransformWorldPositionY" : -250.87692260742188
 			}
