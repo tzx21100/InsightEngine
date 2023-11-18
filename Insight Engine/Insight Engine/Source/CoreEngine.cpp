@@ -389,6 +389,8 @@ namespace IS {
     void InsightEngine::SaveAsPrefab(Entity entity,std::string PrefabName) {
         std::string file_path = "Assets/Prefabs/" + PrefabName + ".json";
         SaveEntityToJson(entity,file_path);
+        auto system=GetSystem<AssetManager>("Asset");
+        system->LoadPrefab(file_path);
         IS_CORE_INFO("Prefab \"{}\" saved at \"{}\"", PrefabName, file_path);
     }
 

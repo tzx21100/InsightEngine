@@ -2,33 +2,17 @@
 	"Entities" : 
 	[
 		{
+			"ButtonComponent" : 
+			{
+				"ButtonImageName" : "",
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonType" : 0
+			},
 			"Collider" : 
 			{
-				"ColliderCenterX" : 0.00018107891082763672,
-				"ColliderCenterY" : 0.0,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -100.0,
-						"y" : 90.0
-					},
-					{
-						"x" : 100.0,
-						"y" : 90.0
-					},
-					{
-						"x" : 100.0,
-						"y" : -90.0
-					},
-					{
-						"x" : -100.0,
-						"y" : -90.0
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Player",
 			"RigidBody" : 
@@ -45,7 +29,9 @@
 				"RigidBodyMass" : 5.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0
+				"RigidBodyVelocityY" : 0.0,
+				"mDynamicFriction" : 0.0,
+				"mStaticFriction" : 0.0
 			},
 			"Script" : 
 			{
@@ -59,11 +45,11 @@
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
 				"SpriteCurrentTexIndex" : 1,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Player idle 1R12C.png",
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 8,
-				"SpriteTextureHeight" : 932,
+				"SpriteTextureHeight" : 800,
 				"SpriteTextureIndex" : 7,
 				"SpriteTextureWidth" : 15684,
 				"SpriteTransformRotation" : 0.063706956803798676,
@@ -90,9 +76,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 11.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.01568526029586792,
+						"frame_timer" : 0.14901858568191528,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -111,31 +97,8 @@
 		{
 			"Collider" : 
 			{
-				"ColliderCenterX" : -600.6436767578125,
-				"ColliderCenterY" : -250.87692260742188,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : -141.92390441894531
-					},
-					{
-						"x" : -371.48880004882812,
-						"y" : -141.92390441894531
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Platform",
 			"Sprite" : 
@@ -172,31 +135,8 @@
 		{
 			"Collider" : 
 			{
-				"ColliderCenterX" : -1180.8946533203125,
-				"ColliderCenterY" : -248.2230224609375,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : -141.92390441894531
-					},
-					{
-						"x" : -371.48880004882812,
-						"y" : -141.92390441894531
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Platform",
 			"Sprite" : 
@@ -233,31 +173,8 @@
 		{
 			"Collider" : 
 			{
-				"ColliderCenterX" : 0.17931365966796875,
-				"ColliderCenterY" : -250.87692260742188,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : -141.92390441894531
-					},
-					{
-						"x" : -371.48880004882812,
-						"y" : -141.92390441894531
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Platform",
 			"Sprite" : 
@@ -294,31 +211,8 @@
 		{
 			"Collider" : 
 			{
-				"ColliderCenterX" : 615.9576416015625,
-				"ColliderCenterY" : -250.87692260742188,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : 141.92390441894531
-					},
-					{
-						"x" : 371.48880004882812,
-						"y" : -141.92390441894531
-					},
-					{
-						"x" : -371.48880004882812,
-						"y" : -141.92390441894531
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Platform",
 			"Sprite" : 

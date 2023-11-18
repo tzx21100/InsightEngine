@@ -1,96 +1,230 @@
 {
+	"AudioListener" : 
+	{
+		"AudioHearingRange" : 1000.0,
+		"AudioPitchCorrectness" : 0.0,
+		"AudioVolume" : 1.0
+	},
 	"Collider" : 
 	{
-		"ColliderCenterX" : 0.00018107891082763672,
-		"ColliderCenterY" : 0.0,
-		"ColliderOffsetX" : 0.0,
-		"ColliderOffsetY" : 0.0,
-		"ColliderSizeScaleX" : 1.0,
-		"ColliderSizeScaleY" : 1.0,
-		"ColliderVertices" : 
-		[
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
 			{
-				"x" : -100.0,
-				"y" : 90.0
+				"X" : -148.62359619140625,
+				"Y" : -69.999717712402344
 			},
+			"BoxColliderOffset" : 
 			{
-				"x" : 100.0,
-				"y" : 90.0
+				"X" : 0.0,
+				"Y" : 0.0
 			},
+			"BoxColliderSizeScale" : 
 			{
-				"x" : 100.0,
-				"y" : -90.0
+				"X" : 1.0,
+				"Y" : 1.0
 			},
-			{
-				"x" : -100.0,
-				"y" : -90.0
-			}
-		]
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false
 	},
 	"Name" : "Player",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : -981.0,
-		"RigidBodyAngularVelocity" : -2.2747553884983063e-06,
-		"RigidBodyArea" : 36000.0,
+		"RigidBodyAngularVelocity" : -2.9802322387695312e-08,
+		"RigidBodyArea" : 144000.015625,
 		"RigidBodyBodyType" : 1,
-		"RigidBodyDensity" : 180000.0,
+		"RigidBodyDensity" : 2880000.25,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
-		"RigidBodyInvMass" : 0.20000000298023224,
-		"RigidBodyMass" : 5.0,
+		"RigidBodyInvMass" : 0.05000000074505806,
+		"RigidBodyMass" : 20.0,
 		"RigidBodyRestitution" : 0.10000000149011612,
-		"RigidBodyVelocityX" : 0.0,
-		"RigidBodyVelocityY" : 0.0
+		"RigidBodyVelocityX" : 0.35581517219543457,
+		"RigidBodyVelocityY" : -3.399749755859375,
+		"mDynamicFriction" : 0.56000000238418579,
+		"mStaticFriction" : 0.93300002813339233
 	},
 	"Script" : 
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000000010000100111",
+	"Signature" : "00000000000000000000011000100111",
 	"Sprite" : 
 	{
-		"AnimationIndex" : 1,
-		"Layer" : 1,
+		"AnimationIndex" : 0,
+		"Layer" : 0,
 		"SpriteColorX" : 0.85964435338973999,
 		"SpriteColorY" : 0.86737102270126343,
 		"SpriteColorZ" : 0.80789142847061157,
-		"SpriteCurrentTexIndex" : 1,
-		"SpriteFilename" : "",
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Player run 1R12C.png",
 		"SpriteName" : "ice_cream_truck",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 8,
-		"SpriteTextureHeight" : 932,
-		"SpriteTextureIndex" : 7,
-		"SpriteTextureWidth" : 15684,
-		"SpriteTransformRotation" : 0.063706956803798676,
-		"SpriteTransformScalingX" : 200.0,
-		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : 0.00018107891082763672,
-		"SpriteTransformWorldPositionY" : 0.0,
+		"SpriteTexture" : 9,
+		"SpriteTextureHeight" : 800,
+		"SpriteTextureIndex" : 8,
+		"SpriteTextureWidth" : 15456,
+		"SpriteTransformRotation" : 8.3554310549516231e-05,
+		"SpriteTransformScalingX" : 400.00003051757812,
+		"SpriteTransformScalingY" : 360.0,
+		"SpriteTransformWorldPositionX" : -148.62359619140625,
+		"SpriteTransformWorldPositionY" : -69.999717712402344,
 		"animations" : 
 		[
 			{
-				"Name" : "Idle",
-				"animation_duration" : 3.0,
-				"frame_dimension_x" : 0.083333335816860199,
-				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 0.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.13596269488334656,
-				"time_per_frame" : 0.25,
-				"x_frames" : 12,
-				"y_frames" : 1
-			},
-			{
-				"Name" : "Running",
+				"Name" : "",
 				"animation_duration" : 3.0,
 				"frame_dimension_x" : 0.083333335816860199,
 				"frame_dimension_y" : 1.0,
 				"frame_index_x" : 10.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.18235191702842712,
+				"frame_timer" : 0.0,
+				"time_per_frame" : 0.25,
+				"x_frames" : 12,
+				"y_frames" : 1
+			},
+			{
+				"Name" : "",
+				"animation_duration" : 3.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 10.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.21666666865348816,
 				"time_per_frame" : 0.25,
 				"x_frames" : 12,
 				"y_frames" : 1
@@ -99,10 +233,10 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.063706956803798676,
-		"TransformScalingX" : 200.0,
-		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : 0.00018107891082763672,
-		"TransformWorldPositionY" : 0.0
+		"TransformRotation" : 8.3554310549516231e-05,
+		"TransformScalingX" : 400.00003051757812,
+		"TransformScalingY" : 360.0,
+		"TransformWorldPositionX" : -148.62359619140625,
+		"TransformWorldPositionY" : -69.999717712402344
 	}
 }

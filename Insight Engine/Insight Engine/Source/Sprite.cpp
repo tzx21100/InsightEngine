@@ -419,6 +419,8 @@ namespace IS {
         spriteData["SpriteCurrentTexIndex"] = animation_index;
         spriteData["SpriteTextureIndex"] = img.texture_index;
 
+        IS_CORE_DEBUG(" SAVED FILENAME {}", img.mFileName);
+
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
         spriteData["SpriteColorX"] = color.x;
@@ -470,8 +472,8 @@ namespace IS {
         img.width = data["SpriteTextureWidth"].asInt();
         img.height = data["SpriteTextureHeight"].asInt();
         img.texture_index = data["SpriteTextureIndex"].asInt();
-        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        //img.texture_index = system->GetImage(img.mFileName)->texture_index;
+        auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        img.texture_index = system->GetImage(img.mFileName)->texture_index;
 
         animation_index = data["SpriteCurrentTexIndex"].asInt();
 

@@ -11,7 +11,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Environment weird tree.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
@@ -37,31 +37,8 @@
 		{
 			"Collider" : 
 			{
-				"ColliderCenterX" : 1000.0,
-				"ColliderCenterY" : -80.0,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				]
+				"BoxColliderEnabled" : false,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Slope",
 			"RigidBody" : 
@@ -90,7 +67,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -122,38 +99,164 @@
 			},
 			"Collider" : 
 			{
-				"ColliderCenterX" : 952.93487548828125,
-				"ColliderCenterY" : 716.832763671875,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
 					{
-						"x" : -200.00001525878906,
-						"y" : 180.0
+						"X" : -148.62359619140625,
+						"Y" : -69.999717712402344
 					},
+					"BoxColliderOffset" : 
 					{
-						"x" : 200.00001525878906,
-						"y" : 180.0
+						"X" : 0.0,
+						"Y" : 0.0
 					},
+					"BoxColliderSizeScale" : 
 					{
-						"x" : 200.00001525878906,
-						"y" : -180.0
+						"X" : 1.0,
+						"Y" : 1.0
 					},
-					{
-						"x" : -200.00001525878906,
-						"y" : -180.0
-					}
-				]
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyAngularVelocity" : -2.9802322387695312e-08,
 				"RigidBodyArea" : 144000.015625,
 				"RigidBodyBodyType" : 1,
 				"RigidBodyDensity" : 2880000.25,
@@ -162,8 +265,8 @@
 				"RigidBodyInvMass" : 0.05000000074505806,
 				"RigidBodyMass" : 20.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
+				"RigidBodyVelocityX" : 0.35581517219543457,
+				"RigidBodyVelocityY" : -3.399749755859375,
 				"mDynamicFriction" : 0.56000000238418579,
 				"mStaticFriction" : 0.93300002813339233
 			},
@@ -173,24 +276,24 @@
 			},
 			"Sprite" : 
 			{
-				"AnimationIndex" : 1,
+				"AnimationIndex" : 0,
 				"Layer" : 0,
 				"SpriteColorX" : 0.85964435338973999,
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
-				"SpriteCurrentTexIndex" : 1,
-				"SpriteFilename" : "Player idle 1R12C.png",
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Player run 1R12C.png",
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 8,
+				"SpriteTexture" : 9,
 				"SpriteTextureHeight" : 800,
-				"SpriteTextureIndex" : 7,
-				"SpriteTextureWidth" : 15684,
-				"SpriteTransformRotation" : 0.063720703125,
+				"SpriteTextureIndex" : 8,
+				"SpriteTextureWidth" : 15456,
+				"SpriteTransformRotation" : 8.3554310549516231e-05,
 				"SpriteTransformScalingX" : 400.00003051757812,
 				"SpriteTransformScalingY" : 360.0,
-				"SpriteTransformWorldPositionX" : 952.93487548828125,
-				"SpriteTransformWorldPositionY" : 716.832763671875,
+				"SpriteTransformWorldPositionX" : -148.62359619140625,
+				"SpriteTransformWorldPositionY" : -69.999717712402344,
 				"animations" : 
 				[
 					{
@@ -198,9 +301,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.13596269488334656,
+						"frame_timer" : 0.1666666716337204,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -210,9 +313,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.06250377744436264,
+						"frame_timer" : 0.21666666865348816,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -221,11 +324,11 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 0.063720703125,
+				"TransformRotation" : 8.3554310549516231e-05,
 				"TransformScalingX" : 400.00003051757812,
 				"TransformScalingY" : 360.0,
-				"TransformWorldPositionX" : 952.93487548828125,
-				"TransformWorldPositionY" : 716.832763671875
+				"TransformWorldPositionX" : -148.62359619140625,
+				"TransformWorldPositionY" : -69.999717712402344
 			}
 		},
 		{
@@ -239,31 +342,157 @@
 			},
 			"Collider" : 
 			{
-				"ColliderCenterX" : 0.0,
-				"ColliderCenterY" : -400.0,
-				"ColliderOffsetX" : 0.0,
-				"ColliderOffsetY" : 0.0,
-				"ColliderSizeScaleX" : 1.0,
-				"ColliderSizeScaleY" : 1.0,
-				"ColliderVertices" : 
-				[
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
 					{
-						"x" : -500.0,
-						"y" : 150.0
+						"X" : 0.0,
+						"Y" : -400.0
 					},
+					"BoxColliderOffset" : 
 					{
-						"x" : 500.0,
-						"y" : 150.0
+						"X" : 0.0,
+						"Y" : 0.0
 					},
+					"BoxColliderSizeScale" : 
 					{
-						"x" : 500.0,
-						"y" : -150.0
+						"X" : 1.0,
+						"Y" : 1.0
 					},
-					{
-						"x" : -500.0,
-						"y" : -150.0
-					}
-				]
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false
 			},
 			"Name" : "Floor",
 			"RigidBody" : 
@@ -297,7 +526,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1000.0,
@@ -343,7 +572,7 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -399,7 +628,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -450,7 +679,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -501,7 +730,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 7,
 				"SpriteTextureHeight" : 1283,
-				"SpriteTextureIndex" : 6,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 610,
 				"SpriteTransformRotation" : 344.0,
 				"SpriteTransformScalingX" : 300.0,
@@ -542,13 +771,13 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 1,
+				"SpriteColorX" : 0.60000002384185791,
+				"SpriteColorY" : 0.60000002384185791,
+				"SpriteColorZ" : 0.60000002384185791,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
-				"SpriteName" : "Box",
+				"SpriteFilename" : "Platform01_Tileable.png",
+				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
@@ -603,7 +832,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 500.0,
@@ -662,7 +891,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -713,7 +942,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -764,7 +993,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2000.0,

@@ -1,0 +1,52 @@
+{
+	"Name" : "Platform1",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 240000.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.80000001192092896,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"mDynamicFriction" : 0.0,
+		"mStaticFriction" : 0.0
+	},
+	"Signature" : "00000000000000000000000000000111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 0,
+		"SpriteColorX" : 0.54492461681365967,
+		"SpriteColorY" : 0.27639034390449524,
+		"SpriteColorZ" : 0.28316143155097961,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Platform01_Tileable.png",
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 6,
+		"SpriteTextureHeight" : 565,
+		"SpriteTextureIndex" : 5,
+		"SpriteTextureWidth" : 1481,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 800.0,
+		"SpriteTransformScalingY" : 300.0,
+		"SpriteTransformWorldPositionX" : 1504.210205078125,
+		"SpriteTransformWorldPositionY" : -380.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 800.0,
+		"TransformScalingY" : 300.0,
+		"TransformWorldPositionX" : 1504.210205078125,
+		"TransformWorldPositionY" : -380.0
+	}
+}

@@ -169,7 +169,6 @@ namespace IS {
         Image* img = GetImage(std::filesystem::path(filepath).filename().string());
         img->texture_index = mCurrentTexId;
         img->mFileName = std::filesystem::path(filepath).filename().string();
-        IS_CORE_DEBUG("&s", img->mFileName);
         mCurrentTexId++;
         ISGraphics::textures.emplace_back(*img);
     }
