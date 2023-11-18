@@ -116,21 +116,7 @@ namespace IS {
 
             if (ImGui::BeginPopup("Entity Options"))
             {
-                if (ImGui::BeginMenu("Add Component"))
-                {
-                    HierarchyPanel::RenderAddComponent(entity);
-
-                    ImGui::EndMenu();
-                }
-                if (ImGui::MenuItem("Clone Entity"))
-                {
-                    engine.CopyEntity(entity);
-                }
-                if (ImGui::MenuItem("Delete Entity"))
-                {
-                    engine.DeleteEntity(entity);
-                    mEditorLayer.ResetEntitySelection();
-                }
+                mEditorLayer.RenderEntityConfig(entity);
 
                 ImGui::EndPopup();
             }
@@ -144,7 +130,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(100.f);
-                bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
+                bool begin_combo = ImGui::BeginCombo("##Prefabs", nullptr, ImGuiComboFlags_NoPreview);
                 if (begin_combo)
                 {
                     auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -385,6 +371,7 @@ namespace IS {
             ImGuiTableFlags table_flags = 0;
             if (ImGui::BeginTable("Texture", 2, table_flags))
             {
+                ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Width");

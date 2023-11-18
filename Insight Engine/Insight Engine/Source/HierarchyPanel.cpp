@@ -33,6 +33,11 @@
 
 namespace IS {
 
+    void HierarchyPanel::UpdatePanel()
+    {
+        ProcessSelectedEntityShortcuts();
+    }
+
     void HierarchyPanel::RenderPanel()
     {
         auto& scene_manager = SceneManager::Instance();
@@ -285,11 +290,12 @@ namespace IS {
             mEditorLayer.SetInspectMode(INSPECT_ENTITY);
         }
 
-        if (ImGui::IsWindowFocused())
-            ProcessSelectedEntityShortcuts();
-
         // Right click on entity
-        RenderEntityConfig(entity);
+        if (ImGui::BeginPopupContextItem(nullptr, ImGuiPopupFlags_MouseButtonRight))
+        {
+            mEditorLayer.RenderEntityConfig(entity);
+            ImGui::EndPopup();
+        }
 
         if (opened)
             ImGui::TreePop();
@@ -299,184 +305,19 @@ namespace IS {
 
     void HierarchyPanel::ProcessSelectedEntityShortcuts()
     {
-        if (!mEditorLayer.IsAnyEntitySelected())
+        if (!(mEditorLayer.IsAnyEntitySelected() && mHovered))
             return;
 
         Entity entity = mEditorLayer.GetSelectedEntity();
 
         auto& engine = InsightEngine::Instance();
         auto input = engine.GetSystem<InputManager>("Input");
-        //const bool CTRL_PRESSED = input->IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || input->IsKeyPressed(GLFW_KEY_RIGHT_CONTROL);
-        //const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
+        const bool CTRL_PRESSED = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
         const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
 
-        //if (CTRL_PRESSED && D_PRESSED) { CloneEntity(entity); }  // Ctrl+D
-        if (DELETE_PRESSED) { DeleteEntity(entity); } // Delete
+        if (CTRL_PRESSED && D_PRESSED) { mEditorLayer.CloneEntity(entity); }  // Ctrl+D
+        if (DELETE_PRESSED) { mEditorLayer.DeleteEntity(entity); } // Delete
     }
-
-    //void HierarchyPanel::RenderConfirmDelete(Entity entity, bool& show)
-    //{
-    //    InsightEngine& engine = InsightEngine::Instance();
-    //    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
-
-    //    if (ImGui::Begin("Confirm delete?", &show, window_flags))
-    //    {
-    //        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
-    //        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
-    //        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
-
-    //        ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
-    //        ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
-    //        ImGui::TableNextColumn();
-    //        if (ImGui::Button("CONFIRM"))
-    //        {
-    //            engine.DeleteEntity(entity);
-    //            if (mSelectedEntity && *mSelectedEntity == entity)
-    //                mSelectedEntity.reset();
-    //            show = false;
-    //        }
-    //        ImGui::PopStyleColor(3);
-    //        ImGui::TableNextColumn();
-    //        if (ImGui::Button("CANCEL"))
-    //            show = false;
-    //        ImGui::EndTable();
-    //        ImGui::End();
-    //    }
-    //}
-
-    void HierarchyPanel::CloneEntity(Entity entity) { SceneManager::Instance().CloneEntity(entity); }
-
-    void HierarchyPanel::DeleteEntity(Entity entity)
-    {
-        SceneManager::Instance().DeleteEntity(entity);
-        if (mEditorLayer.IsAnyEntitySelected() && mEditorLayer.GetSelectedEntity() == entity)
-            mEditorLayer.ResetEntitySelection();
-    }
-
-    void HierarchyPanel::RenderAddComponent(Entity entity)
-    {
-        auto& engine = InsightEngine::Instance();
-
-        // Entity already has all the components
-        if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
-            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
-            engine.HasComponent<ScriptComponent>(entity) && engine.HasComponent<AudioListener>(entity) && 
-            engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<ButtonComponent>(entity))
-        {
-            if (ImGui::MenuItem("Already have all components"))
-                ImGui::CloseCurrentPopup();
-            return;
-        }
-
-        // Choose Available Component to add
-
-        // Add Transform Component
-        if (!engine.HasComponent<Transform>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_MOVE "  Transform"))
-            {
-                engine.AddComponent<Transform>(entity, Transform());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Sprite Component
-        if (!engine.HasComponent<Sprite>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_IMAGE "  Sprite"))
-            {
-                engine.AddComponent<Sprite>(entity, Sprite());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Rigidbody Component
-        if (!engine.HasComponent<RigidBody>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_PERSON_STANDING "  Rigidbody"))
-            {
-                engine.AddComponent<RigidBody>(entity, RigidBody());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Collider Component
-        if (!engine.HasComponent<Collider>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_FLIP_HORIZONTAL_2 "  Collider"))
-            {
-                engine.AddComponent<Collider>(entity, Collider());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Script Component
-        if (!engine.HasComponent<ScriptComponent>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_BRACES "  Script"))
-            {
-                // Browse for script to add
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
-                {
-                    engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
-                    auto& script = engine.GetComponent<ScriptComponent>(entity);
-                    script.mScriptName = filepath.stem().string();
-                }
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Audio Listener Component
-        if (!engine.HasComponent<AudioListener>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_EAR "  Audio Listener"))
-            {
-                engine.AddComponent<AudioListener>(entity, AudioListener());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Audio Emitter Component
-        if (!engine.HasComponent<AudioEmitter>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_SPEAKER "  Audio Emitter"))
-            {
-                engine.AddComponent<AudioEmitter>(entity, AudioEmitter());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        // Add Button Component
-        if (!engine.HasComponent<ButtonComponent>(entity))
-        {
-            if (ImGui::MenuItem(ICON_LC_SQUARE "  Button"))
-            {
-                engine.AddComponent<ButtonComponent>(entity, ButtonComponent());
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-    } // end RenderAddComponent()
-
-    void HierarchyPanel::RenderEntityConfig(Entity entity)
-    {
-        if (ImGui::BeginPopupContextItem(nullptr, ImGuiPopupFlags_MouseButtonRight))
-        {
-            // Add Component
-            if (ImGui::BeginMenu("Add Component"))
-            {
-                RenderAddComponent(entity);
-                ImGui::EndMenu();
-            }
-
-            // Clone/Delete entity
-            if (ImGui::MenuItem(ICON_LC_COPY "  Clone")) { CloneEntity(entity); }
-            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete", "Del")) { DeleteEntity(entity); }
-
-            ImGui::EndPopup();
-        }
-    }
-
-    Vec2 HierarchyPanel::GetPanelSize() const { return mPanelSize; }
 
 } // end namespace IS
