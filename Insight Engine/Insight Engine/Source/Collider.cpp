@@ -42,6 +42,7 @@ namespace IS
 		DisableAllColliders(); // Reset all bits to 0
 		EnableBoxCollider();
 		mIsColliding = false;
+		mResponseEnable = true;
 	}
 
 	void Collider::CreateCollider() {

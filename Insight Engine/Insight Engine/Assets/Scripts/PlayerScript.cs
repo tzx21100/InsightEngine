@@ -58,20 +58,27 @@ namespace IS
             entityA = InternalCalls.CreateEntity("FeetCollider");
             width = InternalCalls.GetTransformScaling().x;
             height = InternalCalls.GetTransformScaling().y;
-           // InternalCalls.AddCollider(entityA);
+            InternalCalls.AddCollider(entityA);
+            InternalCalls.CameraSetZoom(300f);
 
 
         }
 
         static public void Update()
         {
+            if (GameManager.isGamePaused == true) {
+                return;
+            }
+
             //Player x y coord
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
 
             //Feet Collider
             InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
-            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height,entityA);
+            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height/1.5f,entityA);
+
+            InternalCalls.TransformSetRotationEntity(0, 0, entityA);   
 
             InternalCalls.AttachCamera();
 
@@ -118,9 +125,13 @@ namespace IS
             {
                 isGrounded = true;
             }
-
+            else {
+                isGrounded = false;
+            }
+            
             if (isGrounded)
             {
+                Console.WriteLine(isGrounded);
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space)) {
                     Jump();
                 }

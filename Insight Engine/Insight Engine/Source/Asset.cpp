@@ -199,7 +199,7 @@ namespace IS {
         if (iter != mImageList.end()) {
             return &(iter->second);
         }
-        return &mImageList.find(file_name)->second;
+        return nullptr;
     }
 
     Image* AssetManager::GetIcon(const std::string& file_name) {

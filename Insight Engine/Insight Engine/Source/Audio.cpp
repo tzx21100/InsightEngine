@@ -69,7 +69,10 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
-        if (InsightEngine::Instance().mRuntime == false) { return; }
+        if (InsightEngine::Instance().mRuntime == false) {
+            auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+            sys->ClearAllSounds();
+            return; }
 
 
         auto& engine = InsightEngine::Instance();
