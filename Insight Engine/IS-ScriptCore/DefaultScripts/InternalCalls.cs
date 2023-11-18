@@ -135,5 +135,8 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetCurrentEntityID();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetCollidedObjectAngle(int entity);
     }
 }

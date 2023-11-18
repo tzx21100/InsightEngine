@@ -50,6 +50,7 @@ namespace IS
 				for (auto entity: mEntities) {
 					auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 					collider.mIsColliding = false;
+					collider.mCollidedObjectAngle = 0.f;
 				}
 			}
 
@@ -101,6 +102,12 @@ namespace IS
 				if (InsightEngine::Instance().GetEntityName(entityB) == "FeetCollider") {
 					colliderB.mResponseEnable = false;
 				}*/
+
+				//for non-response enabled to check for angles of the collided object
+				if (!colliderA.mResponseEnable) {
+					colliderA.mCollidedObjectAngle = transB.getRotation();
+				}
+
 				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {
 					// vector of penetration depth to move entities apart
 					SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);

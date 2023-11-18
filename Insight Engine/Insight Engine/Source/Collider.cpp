@@ -211,13 +211,13 @@ namespace IS
 			Json::Value circle_collider;
 
 			Json::Value collider_center;
-			collider_center["X"] = mBoxCollider.center.x;
-			collider_center["Y"] = mBoxCollider.center.y;
+			collider_center["X"] = mCircleCollider.center.x;
+			collider_center["Y"] = mCircleCollider.center.y;
 			circle_collider["CircleColliderCenter"] = collider_center;
 
 			Json::Value collider_offset;
-			collider_offset["X"] = mBoxCollider.offset.x;
-			collider_offset["Y"] = mBoxCollider.offset.y;
+			collider_offset["X"] = mCircleCollider.offset.x;
+			collider_offset["Y"] = mCircleCollider.offset.y;
 			circle_collider["CircleColliderOffset"] = collider_offset;
 
 			circle_collider["CircleColliderRadius"] = mCircleCollider.radius;

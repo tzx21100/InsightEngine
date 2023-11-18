@@ -345,6 +345,12 @@ namespace IS {
         return InsightEngine::Instance().GetScriptCaller();
     }
 
+    static float GetCollidedObjectAngle(int entity) {
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        return collider.mCollidedObjectAngle;
+    }
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -411,6 +417,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(EntityCheckCollide);
         IS_ADD_INTERNAL_CALL(ColliderNone);
         IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
+        IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
 
     }
 }

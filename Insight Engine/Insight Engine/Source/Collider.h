@@ -83,6 +83,7 @@ namespace IS
 		std::bitset<MAX_COLLIDER> mSelectedCollider;
 		bool mIsColliding;
 		bool mResponseEnable;
+		float mCollidedObjectAngle;
 
 		Json::Value Serialize() override;
 		void Deserialize(Json::Value data) override;
