@@ -3,6 +3,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 
+
 namespace IS
 {
     public class PlayerScript
@@ -59,8 +60,7 @@ namespace IS
             width = InternalCalls.GetTransformScaling().x;
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entityA);
-            InternalCalls.CameraSetZoom(300f);
-
+            InternalCalls.CameraSetZoom(2f);
 
         }
 
@@ -69,16 +69,36 @@ namespace IS
             if (GameManager.isGamePaused == true) {
                 return;
             }
-
             //Player x y coord
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            float distanceBelow = height / 1.5f;
+
+            Vector2D relativePosition = new Vector2D(0, distanceBelow);
+
+            // Apply rotation to the relative position
+            // Rotation matrix in 2D: [cos(theta), -sin(theta); sin(theta), cos(theta)]
+            Vector2D rotatedRelativePosition =new Vector2D(
+                (float)(relativePosition.x* CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x* CustomMath.Sin(angleRadians)- relativePosition.y * CustomMath.Cos(angleRadians))
+                );
+
+
+            // Calculate the absolute position for the floor checker
+            Vector2D checkerPosition = new Vector2D(
+                xCoord + rotatedRelativePosition.x,
+                yCoord + rotatedRelativePosition.y
+            );
+
+            // Set the floor checker's position
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityA);
 
             //Feet Collider
             InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
-            InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height/1.5f,entityA);
 
-            InternalCalls.TransformSetRotationEntity(0, 0, entityA);   
+            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, entityA);   
 
             InternalCalls.AttachCamera();
 
@@ -131,7 +151,6 @@ namespace IS
             
             if (isGrounded)
             {
-                Console.WriteLine(isGrounded);
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space)) {
                     Jump();
                 }

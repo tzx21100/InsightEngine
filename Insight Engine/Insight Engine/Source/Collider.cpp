@@ -42,7 +42,7 @@ namespace IS
 		DisableAllColliders(); // Reset all bits to 0
 		EnableBoxCollider();
 		mIsColliding = false;
-		mResponseEnable = true;
+		mResponseEnable =  true;
 	}
 
 	void Collider::CreateCollider() {
@@ -166,6 +166,10 @@ namespace IS
 		bool box_enabled = IsBoxColliderEnable() ? true : false;
 		bool circle_enabled = IsCircleColliderEnable() ? true : false;
 
+		//save response
+		data["ResponseEnabled"] = mResponseEnable;
+
+
 		// Save Box Collider
 		data["BoxColliderEnabled"] = box_enabled;
 		if (box_enabled)
@@ -229,11 +233,15 @@ namespace IS
 
 	void Collider::Deserialize(Json::Value data)
 	{
+
 		// Disable all colliders
 		DisableAllColliders();
 
 		bool box_enabled = data["BoxColliderEnabled"].asBool();
 		bool circle_enabled = data["CircleColliderEnabled"].asBool();
+
+		// Load response
+		mResponseEnable = data["ResponseEnabled"].asBool();
 
 		// Load Box Collider
 		if (box_enabled)

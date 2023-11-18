@@ -130,5 +130,10 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void CameraSetZoom(float value);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ColliderNone(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetCurrentEntityID();
     }
 }

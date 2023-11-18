@@ -35,14 +35,81 @@
 				{
 					"x" : 0.0,
 					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
 				}
 			]
 		},
 		"BoxColliderEnabled" : true,
-		"CircleColliderEnabled" : false
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
 	},
 	"Name" : "Platform",
-	"Signature" : "00000000000000000000010000000011",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 210892.5625,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Signature" : "00000000000000000000010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -60,8 +127,8 @@
 		"SpriteTextureWidth" : 1481,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 742.97760009765625,
-		"SpriteTransformScalingY" : 283.84780883789062,
-		"SpriteTransformWorldPositionX" : -600.6436767578125,
+		"SpriteTransformScalingY" : 283.84780883789063,
+		"SpriteTransformWorldPositionX" : -19.064773559570313,
 		"SpriteTransformWorldPositionY" : -250.87692260742188,
 		"animations" : []
 	},
@@ -69,8 +136,8 @@
 	{
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 742.97760009765625,
-		"TransformScalingY" : 283.84780883789062,
-		"TransformWorldPositionX" : -600.6436767578125,
+		"TransformScalingY" : 283.84780883789063,
+		"TransformWorldPositionX" : -19.064773559570313,
 		"TransformWorldPositionY" : -250.87692260742188
 	}
 }

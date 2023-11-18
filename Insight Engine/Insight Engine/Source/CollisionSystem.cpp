@@ -43,8 +43,16 @@ namespace IS
 
 	void CollisionSystem::NarrowPhase() 
 	{
+
 		for (int i = 0; i < mContactPair.size(); i++)
 		{
+			if (i == 0) {
+				for (auto entity: mEntities) {
+					auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+					collider.mIsColliding = false;
+				}
+			}
+
 			std::pair<Entity, Entity> pair = mContactPair[i];
 			Entity entityA = pair.first;
 			Entity entityB = pair.second;
@@ -61,8 +69,7 @@ namespace IS
 			colliderB.UpdateCollider(transB);
 
 			mColliding = false;
-			colliderA.mIsColliding = false;
-			colliderB.mIsColliding = false;
+
 			// collection of all possible collision happens between two colliders
 			mCollidingCollection.reset();
 			// check collide between two colliders, if colliding, calculate info like normal and depth
@@ -105,10 +112,6 @@ namespace IS
 					//ResolveCollisionWithRotation(contact, transA, transB);
 					ResolveCollisionWithRotationAndFriction(contact, transA, transB);
 				}
-			}
-			else {
-				colliderA.mIsColliding = false;
-				colliderB.mIsColliding = false;
 			}
 		}
 	}

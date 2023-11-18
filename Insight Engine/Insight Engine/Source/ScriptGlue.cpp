@@ -268,7 +268,6 @@ namespace IS {
         auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         camera.SetPosition(transform_component.world_position.x, transform_component.world_position.y);
-        camera.SetZoomLevel(1.2f);
     }
 
     static void AudioPlaySound(MonoString* name) {
@@ -310,7 +309,7 @@ namespace IS {
         //auto system = InsightEngine::Instance().GetSystem<CollisionSystem>("CollisionSystem");
         //return system->CheckColliding(static_cast<Entity>(entity));
         auto const& component=InsightEngine::Instance().GetComponent<Collider>(entity);
-        return (component.mIsColliding ? true : false);
+        return component.mIsColliding;
     }
 
     //static void AddComponent(MonoString *name) {
@@ -323,19 +322,28 @@ namespace IS {
     static void AddCollider(int entity) {
         if (!InsightEngine::Instance().HasComponent<Collider>(entity))
         InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
-        auto body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        auto trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+        auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
         body.CreateStaticBody(trans.world_position,0.5f);
 
         InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
-        auto collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        collider.mResponseEnable = false;
+    }
+
+    static void ColliderNone(int entity) {
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        collider.mResponseEnable = false;
         collider.mResponseEnable = false;
     }
 
     static void CameraSetZoom(float value) {
-        ISGraphics::cameras[Camera3D::mActiveCamera].SetZoomLevel(value);
+        ISGraphics::cameras3D[Camera3D::mActiveCamera].SetZoomLevel(value);
     }
 
+    static int GetCurrentEntityID() {
+        return InsightEngine::Instance().GetScriptCaller();
+    }
 
 
     /**
@@ -401,6 +409,8 @@ namespace IS {
 
         // Entity Collisions
         IS_ADD_INTERNAL_CALL(EntityCheckCollide);
+        IS_ADD_INTERNAL_CALL(ColliderNone);
+        IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
 
     }
 }

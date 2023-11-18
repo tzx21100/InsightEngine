@@ -84,4 +84,30 @@ public class Vector2D
         return new Vector2D(simpleVec.x, simpleVec.y);
     }
 
+    // Rotate the vector by an angle in degrees
+    public Vector2D Rotate(float angleDegrees)
+    {
+        float angleRadians = DegreesToRadians(angleDegrees);
+        float cos = (float)Math.Cos(angleRadians);
+        float sin = (float)Math.Sin(angleRadians);
+
+        return new Vector2D(
+            this.x * cos - this.y * sin,
+            this.x * sin + this.y * cos
+        );
+    }
+
+    // Convert degrees to radians
+    private static float DegreesToRadians(float degrees)
+    {
+        return degrees * (float)Math.PI / 180f;
+    }
+
+    // Convert radians to degrees (if needed)
+    private static float RadiansToDegrees(float radians)
+    {
+        return radians * 180f / (float)Math.PI;
+    }
+
+
 }
