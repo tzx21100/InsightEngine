@@ -322,8 +322,14 @@ namespace IS {
 
     static void AddCollider(int entity) {
         if (!InsightEngine::Instance().HasComponent<Collider>(entity))
-            
+        InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
+        auto comp = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        comp.mBodyType = BodyType::Static;
         InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
+    }
+
+    static void CameraSetZoom(float value) {
+        ISGraphics::cameras[Camera::mActiveCamera].SetZoomLevel(value);
     }
 
 
@@ -375,6 +381,7 @@ namespace IS {
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
+        IS_ADD_INTERNAL_CALL(CameraSetZoom);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);

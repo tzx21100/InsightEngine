@@ -317,6 +317,13 @@ namespace IS {
             }
         }
 
+
+        void ClearAllSounds() {
+            for (auto sound : mChannelList) {
+                sound.second->stop();
+            }
+        }
+
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;

@@ -1,31 +1,45 @@
 {
 	"Collider" : 
 	{
-		"ColliderCenterX" : -1180.8946533203125,
-		"ColliderCenterY" : -248.2230224609375,
-		"ColliderOffsetX" : 0.0,
-		"ColliderOffsetY" : 0.0,
-		"ColliderSizeScaleX" : 1.0,
-		"ColliderSizeScaleY" : 1.0,
-		"ColliderVertices" : 
-		[
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
 			{
-				"x" : -371.48880004882812,
-				"y" : 141.92390441894531
+				"X" : 0.0,
+				"Y" : 0.0
 			},
+			"BoxColliderOffset" : 
 			{
-				"x" : 371.48880004882812,
-				"y" : 141.92390441894531
+				"X" : 0.0,
+				"Y" : 0.0
 			},
+			"BoxColliderSizeScale" : 
 			{
-				"x" : 371.48880004882812,
-				"y" : -141.92390441894531
+				"X" : 1.0,
+				"Y" : 1.0
 			},
-			{
-				"x" : -371.48880004882812,
-				"y" : -141.92390441894531
-			}
-		]
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false
 	},
 	"Name" : "Platform",
 	"Signature" : "00000000000000000000010000000011",
@@ -47,8 +61,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 742.97760009765625,
 		"SpriteTransformScalingY" : 283.84780883789062,
-		"SpriteTransformWorldPositionX" : -1180.8946533203125,
-		"SpriteTransformWorldPositionY" : -248.2230224609375,
+		"SpriteTransformWorldPositionX" : -600.6436767578125,
+		"SpriteTransformWorldPositionY" : -250.87692260742188,
 		"animations" : []
 	},
 	"Transform" : 
@@ -56,7 +70,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 742.97760009765625,
 		"TransformScalingY" : 283.84780883789062,
-		"TransformWorldPositionX" : -1180.8946533203125,
-		"TransformWorldPositionY" : -248.2230224609375
+		"TransformWorldPositionX" : -600.6436767578125,
+		"TransformWorldPositionY" : -250.87692260742188
 	}
 }

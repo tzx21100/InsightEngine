@@ -76,9 +76,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.14901858568191528,
+						"frame_timer" : 0.082351922988891602,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1

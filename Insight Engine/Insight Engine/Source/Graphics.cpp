@@ -124,10 +124,10 @@ namespace IS {
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
 
-        testLight.init({ 0.f, 0.f }, { 1.f, 1.f, 1.f }, 0.8f, 1000.f);
-        testLight2.init({ -100.f, 100.f }, { 1.f, 0.f, 0.f }, 1.0f, 300.f);
-        testLight3.init({ 0.f, 100.f }, { 0.f, 1.f, 0.f }, 1.0f, 300.f);
-        testLight4.init({ 100.f, 100.f }, { 0.f, 0.f, 1.f }, 1.0f, 300.f);
+        //testLight.init({ 0.f, 0.f }, { 1.f, 1.f, 1.f }, 0.8f, 1000.f);
+        //testLight2.init({ -100.f, 100.f }, { 1.f, 0.f, 0.f }, 1.0f, 300.f);
+        //testLight3.init({ 0.f, 100.f }, { 0.f, 1.f, 0.f }, 1.0f, 300.f);
+        //testLight4.init({ 100.f, 100.f }, { 0.f, 0.f, 1.f }, 1.0f, 300.f);
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };

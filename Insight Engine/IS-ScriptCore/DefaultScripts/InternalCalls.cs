@@ -127,5 +127,8 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AddCollider(int entity);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void CameraSetZoom(float value);
+
     }
 }
