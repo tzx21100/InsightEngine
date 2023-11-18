@@ -36,13 +36,23 @@ namespace IS
         static private bool canDash = false;
         static private bool isDashing;
         static private float dashAngle;
-        static private float dashSpeed = 20000f;
+        static private float dashSpeed = 2000f;
 
         static private bool isGrounded;
         static private Vector2D apply_force= new Vector2D(0,0);//dash dir
 
 
         static private int entityA;
+
+        //movement
+        static private float acceleration=0f;
+        static private float acceleration_base = 50f;
+        static private float acceleration_increment = 10f;
+        static private float max_acceleration=100;
+        static private float max_speed=500f;
+        static private float move_speed = 0f;
+
+
 
 
         public static int BoolToInt(bool boolValue)
@@ -117,7 +127,7 @@ namespace IS
 
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
-            InternalCalls.RigidBodyAddForce(hori_movement * 1000f * InternalCalls.GetDeltaTime(), 0f);
+           
 
             // scaling transform with movement
             Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
@@ -125,30 +135,47 @@ namespace IS
             float trans_rotate = InternalCalls.GetTransformRotation();
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
-            
+
 
             /*            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
                         trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();*/
-/*            if (trans_rotate > 45 && trans_rotate < 270) { trans_rotate = 45; }
-            if (trans_rotate < -45) { trans_rotate = -45; }*/
-            
+            /*            if (trans_rotate > 45 && trans_rotate < 270) { trans_rotate = 45; }
+                        if (trans_rotate < -45) { trans_rotate = -45; }*/
 
-            if (hori_movement != 0 ) {
+
+            if (hori_movement != 0) {
+                acceleration += acceleration_increment ;
+                if (acceleration > max_acceleration) { acceleration = max_acceleration; }
+                move_speed += acceleration;
+                if(move_speed>max_speed) { move_speed = max_speed;}
+
                 InternalCalls.SetSpriteAnimationIndex(0);
                 InternalCalls.SetSpriteImage(player_walk);
-                
+
             }
             else
             {
+                move_speed -= acceleration;
+                acceleration -= acceleration_increment ;
+                if (acceleration < acceleration_base) { acceleration = acceleration_base; }
+                if (move_speed < 0) { move_speed = 0; }
+
+
                 InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
                 
             }
 
 
+
+            InternalCalls.RigidBodyAddForce(hori_movement * move_speed  *InternalCalls.GetDeltaTime(), 0f);
+
             //if is grounded
             if (InternalCalls.EntityCheckCollide(entityA))
             {
+                //set move speed when grounded
+                InternalCalls.RigidBodySetForce(hori_movement * move_speed + ((BoolToInt(isDashing)) * dashSpeed), InternalCalls.RigidBodyGetVelocity().y);
+
                 // Set the rotation to be the same as the detected one
                 InternalCalls.TransformSetRotation(InternalCalls.GetCollidedObjectAngle(entityA), 0);
                 isGrounded = true;
@@ -175,6 +202,7 @@ namespace IS
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
+                        InternalCalls.RigidBodySetForce(hori_movement*move_speed, 0f);
                         Jump();
                         jump_amount--;
                     }
@@ -244,7 +272,7 @@ namespace IS
 
         static private void Jump()
         {
-            InternalCalls.RigidBodyAddForce(0f, 2000f);
+            InternalCalls.RigidBodyAddForce(0f, 1000f);
         }
        
 

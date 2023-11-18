@@ -40,7 +40,8 @@ namespace IS
     enum class BodyType : short {
         Static,
         Dynamic,
-        Kinematic
+        Kinematic,
+        Ghost
     };
 
     /**

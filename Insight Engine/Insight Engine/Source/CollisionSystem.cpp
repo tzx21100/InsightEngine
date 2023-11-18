@@ -96,6 +96,13 @@ namespace IS
 					typeB = bodyB.mBodyType;
 					contact_bodyB = &bodyB;
 				}
+
+				//for non-response enabled to check for angles of the collided object
+				if (!colliderA.mResponseEnable) {
+					colliderA.mCollidedObjectAngle = transB.getRotation();
+				}
+
+
 				if (contact_bodyA == nullptr && contact_bodyB == nullptr) {
 					continue; // skip if both entity have no body componet, default both static
 				}
@@ -114,10 +121,7 @@ namespace IS
 					colliderB.mResponseEnable = false;
 				}*/
 
-				//for non-response enabled to check for angles of the collided object
-				if (!colliderA.mResponseEnable) {
-					colliderA.mCollidedObjectAngle = transB.getRotation();
-				}
+
 
 				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {
 					// vector of penetration depth to move entities apart

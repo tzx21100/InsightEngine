@@ -109,6 +109,12 @@ namespace IS {
         body_component.mVelocity=vec;
     }
 
+    static SimpleVector2D RigidBodyGetVelocity() {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return SimpleVector2D(body_component.mVelocity.x,body_component.mVelocity.y);
+    }
+
     static void TransformSetPosition(float x, float y) {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
@@ -335,9 +341,8 @@ namespace IS {
         if (!InsightEngine::Instance().HasComponent<Collider>(entity))
         InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
         auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-        body.CreateStaticBody(trans.world_position,0.5f);
-
+        //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+        body.mBodyType = BodyType::Ghost;
         InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
         auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
         collider.mResponseEnable = false;
@@ -386,6 +391,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodySetForce);
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);
