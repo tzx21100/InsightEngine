@@ -488,9 +488,13 @@ namespace IS
 
 			temp_ra_list[i] = ra_f;
 			temp_rb_list[i] = rb_f;
-			std::cout << ra_f.x << " - " << ra_f.y << std::endl;
-			Vector2D ra_perp_f = { -ra_f.y, ra_f.x };
-			Vector2D rb_perp_f = { -rb_f.y, rb_f.x };
+			int a_x = static_cast<int>(ra_f.x);
+			int a_y = static_cast<int>(ra_f.y);
+			int b_x = static_cast<int>(rb_f.x);
+			int b_y = static_cast<int>(rb_f.y);
+			Vector2D ra_perp_f = { static_cast<float>(-a_y), static_cast<float>(a_x) };
+			Vector2D rb_perp_f = { static_cast<float>(-b_y), static_cast<float>(b_x) };
+			std::cout << ra_perp_f.x << " - " << ra_perp_f.y << std::endl;
 
 			Vector2D angular_linear_velocity_a = ra_perp_f * bodyA->mAngularVelocity;
 			Vector2D angular_linear_velocity_b = rb_perp_f * bodyB->mAngularVelocity;
