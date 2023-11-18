@@ -1,0 +1,42 @@
+{
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "",
+		"AudioVolumeLevel" : 1.0
+	},
+	"Name" : "Background",
+	"Signature" : "00000000000000000000000100000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 0,
+		"SpriteColorX" : 0.60000002384185791,
+		"SpriteColorY" : 0.60000002384185791,
+		"SpriteColorZ" : 0.60000002384185791,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Environment weird tree.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 2,
+		"SpriteTextureHeight" : 2160,
+		"SpriteTextureIndex" : 1,
+		"SpriteTextureWidth" : 11700,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 11700.0,
+		"SpriteTransformScalingY" : 2160.0,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 11700.0,
+		"TransformScalingY" : 2160.0,
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 0.0
+	}
+}

@@ -1,4 +1,78 @@
 {
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false
+	},
 	"Name" : "Platform1",
 	"RigidBody" : 
 	{
@@ -18,7 +92,7 @@
 		"mDynamicFriction" : 0.0,
 		"mStaticFriction" : 0.0
 	},
-	"Signature" : "00000000000000000000000000000111",
+	"Signature" : "00000000000000000000010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,

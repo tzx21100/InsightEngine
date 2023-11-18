@@ -41,16 +41,41 @@ namespace IS {
         const bool W_PRESSED = input->IsKeyPressed(GLFW_KEY_W);
         const bool E_PRESSED = input->IsKeyPressed(GLFW_KEY_E);
         const bool R_PRESSED = input->IsKeyPressed(GLFW_KEY_R);
+        const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
+        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
 
         mSnap = CTRL_HELD;
 
         // Keyboard inputs
         if (mHovered && !mGizmoInUse)
         {
-            if (Q_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_INVALID; }
-            if (W_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_TRANSLATE; }
-            if (E_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_ROTATE; }
-            if (R_PRESSED) { mGizmoType = aGizmoType::GIZMO_TYPE_SCALE; }
+            if (Q_PRESSED) 
+            { 
+                mGizmoType = aGizmoType::GIZMO_TYPE_INVALID; 
+            }
+            if (W_PRESSED) 
+            {
+                mGizmoType = aGizmoType::GIZMO_TYPE_TRANSLATE; 
+            }
+            if (E_PRESSED) 
+            {
+                mGizmoType = aGizmoType::GIZMO_TYPE_ROTATE; 
+            }
+            if (R_PRESSED) 
+            {
+                mGizmoType = aGizmoType::GIZMO_TYPE_SCALE;
+            }
+
+            if (DELETE_PRESSED && mEditorLayer.IsAnyEntitySelected())
+            {
+                engine.DeleteEntity(mEditorLayer.GetSelectedEntity());
+                mEditorLayer.ResetEntitySelection();
+            }
+
+            if (CTRL_HELD && D_PRESSED && mEditorLayer.IsAnyEntitySelected())
+            {
+                engine.CopyEntity(mEditorLayer.GetSelectedEntity());
+            }
         }
 
         // Auto pause game if game panel is not in focus
@@ -243,6 +268,8 @@ namespace IS {
                 ImGui::SeparatorText("Editor Controls");
                 ImGui::PopFont();
                 ImGui::BulletText("Press 'Tab' to toggle editor");
+                ImGui::BulletText("Press 'Ctrl+D' to clone selected entity");
+                ImGui::BulletText("Press 'Delete' to delete selected entity");
                 ImGui::Dummy({ PADDING, PADDING });
 
                 ImGui::PushFont(FONT_BOLD);
@@ -431,15 +458,12 @@ namespace IS {
     void ScenePanel::RenderGizmo()
     {
         if (!mEditorLayer.IsAnyEntitySelected() || mGizmoType == aGizmoType::GIZMO_TYPE_INVALID)
-        {
-            mGizmoInUse = false;
             return;
-        }
 
         auto& engine = InsightEngine::Instance();
         Entity selected_entity = mEditorLayer.GetSelectedEntity();
 
-        ImGuizmo::SetOrthographic(false);
+        ImGuizmo::SetOrthographic(true);
         ImGuizmo::SetDrawlist();
         ImGuizmo::SetRect(mViewportBounds[0].x, mViewportBounds[0].y,
                           mViewportBounds[1].x - mViewportBounds[0].x,
@@ -466,39 +490,58 @@ namespace IS {
                                                 ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
                                                 nullptr, mSnap ? snap_values : nullptr);
 
+        glm::vec3 translation3D, rotation3D, scale3D;
+        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation3D), glm::value_ptr(rotation3D), glm::value_ptr(scale3D));
+
+        static Transform old_transform = transform;
+        static Entity old_entity = selected_entity;
+        if (old_entity != selected_entity)
+        {
+            old_entity = selected_entity;
+            old_transform = transform;
+        }
+
+        ImGuiIO& io = ImGui::GetIO();
+        if (ImGuizmo::IsUsing() && io.MouseClicked[ImGuiMouseButton_Left])
+        {
+            old_transform = transform;
+            IS_CORE_DEBUG("CLICKED");
+        }
+        else if (!ImGuizmo::IsUsing() && io.MouseReleased[ImGuiMouseButton_Left])
+        {
+            if (old_transform.world_position != transform.world_position)
+            {
+                Vec2 new_position = transform.world_position;
+                transform.world_position = old_transform.world_position;
+                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, new_position));
+            }
+            if (old_transform.rotation != transform.rotation)
+            {
+                float new_rotation = transform.rotation;
+                transform.rotation = old_transform.rotation;
+                CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, new_rotation));
+            }
+            if (old_transform.scaling != transform.scaling)
+            {
+                Vec2 new_scaling = transform.scaling;
+                transform.scaling = old_transform.scaling;
+                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, new_scaling));
+            }
+            IS_CORE_DEBUG("RELEASED");
+        }
+
+        using namespace EditorUtils;
         if (manipulated)
         {
-            glm::vec3 translation3D, rotation3D, scale3D;
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation3D), glm::value_ptr(rotation3D), glm::value_ptr(scale3D));
-
             float delta_rot = rotation3D.z - transform.rotation;
             Vec2 translation{ translation3D.x, translation3D.y }, scale{ std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
             float rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
-
-            static Vec2 old_position = transform.world_position;
-            ImGuiIO& io = ImGui::GetIO();
-            if (io.MouseClicked[ImGuiMouseButton_Left])
-            {
-                old_position = transform.world_position;
-                IS_CORE_DEBUG("CLICKED");
-            }
-            else if (io.MouseReleased[ImGuiMouseButton_Left])
-            {
-                Vec2 new_position = transform.world_position;
-                transform.world_position = old_position;
-                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, new_position));
-                old_position = {};
-                IS_CORE_DEBUG("RELEASED");
-            }
             transform.world_position = translation;
             transform.rotation = rotation;
             transform.scaling = scale;
-            //CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, translation));
-            //CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, rotation));
-            //CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scale));
         }
 
-        mGizmoInUse = true;
+        mGizmoInUse = io.MouseDown[ImGuiMouseButton_Left] ? true : false;
 
     } // end RenderGizmo()
 

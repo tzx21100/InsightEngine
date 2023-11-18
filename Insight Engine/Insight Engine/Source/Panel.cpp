@@ -295,39 +295,36 @@ namespace IS {
 
                 if (Physics::mEnableImplicitGrid)
                 {
-                    if (ImGui::TreeNodeEx(ICON_LC_GRID_2X2 "  Implicit Grid", tree_flags))
+                    ImGui::SeparatorText(ICON_LC_GRID_2X2 "  Implicit Grid");
+
+                    if (ImGui::BeginTable("Implicit Grid Table", 2))
                     {
-                        if (ImGui::BeginTable("Implicit Grid Table", 2))
-                        {
-                            ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
+                        ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
-                            ImGui::TableNextColumn();
-                            ImGui::PushFont(FONT_BOLD);
-                            ImGui::TextUnformatted("Show Grid");
-                            ImGui::PopFont();
-                            ImGui::TableNextColumn();
-                            ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Show Grid");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
 
-                            ImGui::TableNextColumn();
-                            ImGui::PushFont(FONT_BOLD);
-                            ImGui::TextUnformatted("Columns");
-                            ImGui::PopFont();
-                            ImGui::TableNextColumn();
-                            if (ImGui::InputInt("##GridColumns", &ImplicitGrid::mCols))
-                                ImplicitGrid::mCols = std::clamp(ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Columns");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        if (ImGui::InputInt("##GridColumns", &ImplicitGrid::mCols))
+                            ImplicitGrid::mCols = std::clamp(ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
 
-                            ImGui::TableNextColumn();
-                            ImGui::PushFont(FONT_BOLD);
-                            ImGui::TextUnformatted("Rows");
-                            ImGui::PopFont();
-                            ImGui::TableNextColumn();
-                            if (ImGui::InputInt("##GridRows", &ImplicitGrid::mRows))
-                                ImplicitGrid::mRows = std::clamp(ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
+                        ImGui::TableNextColumn();
+                        ImGui::PushFont(FONT_BOLD);
+                        ImGui::TextUnformatted("Rows");
+                        ImGui::PopFont();
+                        ImGui::TableNextColumn();
+                        if (ImGui::InputInt("##GridRows", &ImplicitGrid::mRows))
+                            ImplicitGrid::mRows = std::clamp(ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
 
-                            ImGui::EndTable(); // end table Implicit Grid Table
-                        }
-
-                        ImGui::TreePop(); // end tree Implicit Grid
+                        ImGui::EndTable(); // end table Implicit Grid Table
                     }
                 }
 
