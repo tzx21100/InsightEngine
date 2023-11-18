@@ -78,6 +78,8 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
             InternalCalls.TransformSetPositionEntity(xCoord, yCoord-height,entityA);
 
+            InternalCalls.TransformSetRotationEntity(0, 0, entityA);   
+
             InternalCalls.AttachCamera();
 
             //player_walk.texture_index = 2;

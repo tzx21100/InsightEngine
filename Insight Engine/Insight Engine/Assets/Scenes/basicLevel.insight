@@ -22,7 +22,7 @@
 				"SpriteTransformScalingX" : 11700.0,
 				"SpriteTransformScalingY" : 2160.0,
 				"SpriteTransformWorldPositionX" : -0.004947662353515625,
-				"SpriteTransformWorldPositionY" : 279.85806274414062,
+				"SpriteTransformWorldPositionY" : 279.85806274414063,
 				"animations" : []
 			},
 			"Transform" : 
@@ -31,7 +31,7 @@
 				"TransformScalingX" : 11700.0,
 				"TransformScalingY" : 2160.0,
 				"TransformWorldPositionX" : -0.004947662353515625,
-				"TransformWorldPositionY" : 279.85806274414062
+				"TransformWorldPositionY" : 279.85806274414063
 			}
 		},
 		{
@@ -41,8 +41,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 0.0,
-						"Y" : 0.0
+						"X" : 1000.0,
+						"Y" : -80.0
 					},
 					"BoxColliderOffset" : 
 					{
@@ -56,38 +56,6 @@
 					},
 					"BoxColliderVertices" : 
 					[
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
 						{
 							"x" : 0.0,
 							"y" : 0.0
@@ -284,8 +252,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : -148.62359619140625,
-						"Y" : -69.999717712402344
+						"X" : 1698.5067138671875,
+						"Y" : 7689.99853515625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -299,294 +267,6 @@
 					},
 					"BoxColliderVertices" : 
 					[
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
 						{
 							"x" : 0.0,
 							"y" : 0.0
@@ -725,7 +405,7 @@
 			{
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : -2.9802322387695312e-08,
+				"RigidBodyAngularVelocity" : -2.0417211055755615,
 				"RigidBodyArea" : 144000.015625,
 				"RigidBodyBodyType" : 1,
 				"RigidBodyDensity" : 2880000.25,
@@ -734,8 +414,8 @@
 				"RigidBodyInvMass" : 0.05000000074505806,
 				"RigidBodyMass" : 20.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyVelocityX" : 0.35581517219543457,
-				"RigidBodyVelocityY" : -3.399749755859375,
+				"RigidBodyVelocityX" : 580.892822265625,
+				"RigidBodyVelocityY" : -800.0,
 				"mDynamicFriction" : 0.56000000238418579,
 				"mStaticFriction" : 0.93300002813339233
 			},
@@ -745,24 +425,24 @@
 			},
 			"Sprite" : 
 			{
-				"AnimationIndex" : 0,
+				"AnimationIndex" : 1,
 				"Layer" : 0,
 				"SpriteColorX" : 0.85964435338973999,
 				"SpriteColorY" : 0.86737102270126343,
 				"SpriteColorZ" : 0.80789142847061157,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Player run 1R12C.png",
+				"SpriteCurrentTexIndex" : 1,
+				"SpriteFilename" : "Player idle 1R12C.png",
 				"SpriteName" : "ice_cream_truck",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 9,
+				"SpriteTexture" : 8,
 				"SpriteTextureHeight" : 800,
-				"SpriteTextureIndex" : 8,
-				"SpriteTextureWidth" : 15456,
-				"SpriteTransformRotation" : 8.3554310549516231e-05,
-				"SpriteTransformScalingX" : 400.00003051757812,
+				"SpriteTextureIndex" : 7,
+				"SpriteTextureWidth" : 15684,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 400.00003051757813,
 				"SpriteTransformScalingY" : 360.0,
-				"SpriteTransformWorldPositionX" : -148.62359619140625,
-				"SpriteTransformWorldPositionY" : -69.999717712402344,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : 
 				[
 					{
@@ -770,9 +450,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.01666666753590107,
+						"frame_timer" : 0.10000000149011612,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -784,7 +464,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.21666666865348816,
+						"frame_timer" : 0.050000004470348358,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -793,11 +473,11 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 8.3554310549516231e-05,
-				"TransformScalingX" : 400.00003051757812,
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 400.00003051757813,
 				"TransformScalingY" : 360.0,
-				"TransformWorldPositionX" : -148.62359619140625,
-				"TransformWorldPositionY" : -69.999717712402344
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
 			}
 		},
 		{
@@ -830,294 +510,6 @@
 					},
 					"BoxColliderVertices" : 
 					[
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
 						{
 							"x" : 0.0,
 							"y" : 0.0
@@ -1278,12 +670,12 @@
 				"SpriteColorY" : 0.27639034390449524,
 				"SpriteColorZ" : 0.28316143155097961,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 0,
+				"SpriteTextureIndex" : 5,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1000.0,
