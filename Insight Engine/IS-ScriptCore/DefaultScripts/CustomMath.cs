@@ -95,9 +95,38 @@ namespace IS
         // Simple Atan approximation - Can be improved
         private static float Atan(float z)
         {
-            const float n1 = 0.97239411f;
-            const float n2 = -0.19194795f;
-            return (n1 + n2 * z * z) * z;
+            // Coefficients for a polynomial approximation
+            const float a1 = 0.9998660f;
+            const float a2 = -0.3302995f;
+            const float a3 = 0.1801410f;
+            const float a4 = -0.0851330f;
+            const float a5 = 0.0208351f;
+
+            float az = Abs(z);
+            bool large = az > 1.0f;
+
+            if (large)
+                az = 1.0f / az;
+
+            float az2 = az * az;
+            float az3 = az2 * az;
+            float az4 = az3 * az;
+            float az5 = az4 * az;
+
+            float atanApprox = a1 * az - a2 * az2 + a3 * az3 - a4 * az4 + a5 * az5;
+
+            if (large)
+                atanApprox = PI / 2 - atanApprox;
+
+            return z < 0 ? -atanApprox : atanApprox;
+        }
+
+        public static float Abs(float value)
+        {
+            if (value < 0)
+                return -value;
+            else
+                return value;
         }
 
         public static float AngleBetweenPoints(Vector2D point1, Vector2D point2)

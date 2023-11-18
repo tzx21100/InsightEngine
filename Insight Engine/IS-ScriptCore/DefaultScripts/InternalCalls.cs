@@ -147,5 +147,11 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodySetForce(float x, float y);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawLineBetweenPoints(float x1, float y1 ,float x2, float y2);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawCircle(float x1, float y1 ,float scale1, float scale2);
     }
 }

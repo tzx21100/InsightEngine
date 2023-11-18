@@ -367,6 +367,17 @@ namespace IS {
         return collider.mCollidedObjectAngle;
     }
 
+    static void DrawLineBetweenPoints(float x1, float y1, float x2, float y2) {
+        Vector2D point1 = Vector2D(x1, y1);
+        Vector2D point2 = Vector2D(x2, y2);
+        Vector2D dist = point1 - point2;
+        Sprite::drawDebugLine(point1, point1+dist, {1.f, 0.f, 0.f});
+    }
+
+    static void DrawCircle(float x1, float y1, float x2, float y2) {
+        Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
+    }
+
 
 
     /**
@@ -438,6 +449,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ColliderNone);
         IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
         IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
+
+        //Debug
+        IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
+        IS_ADD_INTERNAL_CALL(DrawCircle);
+
 
     }
 }

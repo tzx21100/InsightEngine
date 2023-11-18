@@ -2,7 +2,8 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
-
+using System.Diagnostics;
+using System.Reflection.Metadata;
 
 namespace IS
 {
@@ -49,7 +50,7 @@ namespace IS
         static private float acceleration_base = 50f;
         static private float acceleration_increment = 10f;
         static private float max_acceleration=100;
-        static private float max_speed=500f;
+        static private float max_speed=700f;
         static private float move_speed = 0f;
 
 
@@ -76,7 +77,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,12,1f);
 
             entityA = InternalCalls.CreateEntity("FeetCollider");
-            width = InternalCalls.GetTransformScaling().x /2f;
+            width = InternalCalls.GetTransformScaling().x /3f;
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entityA);
             InternalCalls.CameraSetZoom(1.5f);
@@ -88,42 +89,9 @@ namespace IS
             if (GameManager.isGamePaused == true) {
                 return;
             }
-            //Player x y coord
-            xCoord = InternalCalls.GetTransformPosition().x;
-            yCoord = InternalCalls.GetTransformPosition().y;
-            float rotationAngle = InternalCalls.GetTransformRotation();
-            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 1.8f;
-
-            Vector2D relativePosition = new Vector2D(0, distanceBelow);
-
-            // Apply rotation to the relative position
-            // Rotation matrix in 2D: [cos(theta), -sin(theta); sin(theta), cos(theta)]
-            Vector2D rotatedRelativePosition =new Vector2D(
-                (float)(relativePosition.x* CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
-                (float)(relativePosition.x* CustomMath.Sin(angleRadians)- relativePosition.y * CustomMath.Cos(angleRadians))
-                );
-
-
-            // Calculate the absolute position for the floor checker
-            Vector2D checkerPosition = new Vector2D(
-                xCoord + rotatedRelativePosition.x,
-                yCoord + rotatedRelativePosition.y
-            );
-
-            // Set the floor checker's position
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityA);
-
-            //Feet Collider
-            InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
-
-            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, entityA);
             
-
+            //Attach Camera
             InternalCalls.AttachCamera();
-
-
-            // Update code
 
             //movement
             int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -170,22 +138,35 @@ namespace IS
 
             InternalCalls.RigidBodyAddForce(hori_movement * move_speed  *InternalCalls.GetDeltaTime(), 0f);
 
-            //if is grounded
-            if (InternalCalls.EntityCheckCollide(entityA))
-            {
-                //set move speed when grounded
-                InternalCalls.RigidBodySetForce(hori_movement * move_speed + ((BoolToInt(isDashing)) * dashSpeed), InternalCalls.RigidBodyGetVelocity().y);
 
-                // Set the rotation to be the same as the detected one
-                InternalCalls.TransformSetRotation(InternalCalls.GetCollidedObjectAngle(entityA), 0);
+            //if is grounded
+            if (InternalCalls.EntityCheckCollide(entityA) && InternalCalls.RigidBodyGetVelocity().y > -100)
+            {
+
                 isGrounded = true;
             }
-            else {
+            else
+            {
                 isGrounded = false;
             }
 
+
+
             if (isGrounded)
             {
+                float aangle = InternalCalls.GetTransformRotation();
+/*                if (hori_movement != 0) {aangle+=180f; }*/
+                Vector2D f_angle=Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians( aangle));
+                //set move speed when grounded
+                
+                InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
+
+                // Set the rotation to be the same as the detected one
+                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
+                if (collided_angle < 45 || collided_angle > 315)
+                {
+                    InternalCalls.TransformSetRotation(collided_angle, 0);
+                }
                 jump_amount = jump_amount_set;
                 canDash = true;
 
@@ -209,7 +190,11 @@ namespace IS
                 }
             }
 
-            if(canDash && isDashing==false)
+            //check for ground
+
+
+
+            if (canDash && isDashing==false)
             {
                 if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift)) {
                    isDashing = true;
@@ -217,7 +202,7 @@ namespace IS
 
             }
             if (isDashing) {
-
+                isGrounded = false;
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer-=InternalCalls.GetDeltaTime();
@@ -226,12 +211,13 @@ namespace IS
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                     Vector2D player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
-                    float angle = CustomMath.AngleBetweenPoints(mouse_pos, player_pos);
+                    float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
 
                     if (angle > -CustomMath.PI / 4 && angle < CustomMath.PI / 4) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
-
+                    InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x,trans_scaling.y);
 
                 }
                 else
@@ -242,6 +228,10 @@ namespace IS
 
 
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
+            FloorCheckerUpdate();
+
+
+
         }
 
         static public void CleanUp()
@@ -273,6 +263,41 @@ namespace IS
         static private void Jump()
         {
             InternalCalls.RigidBodyAddForce(0f, 1000f);
+        }
+
+        static private void FloorCheckerUpdate()
+        {
+
+            //Player x y coord
+            xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            float distanceBelow = height / 1.8f;
+
+            Vector2D relativePosition = new Vector2D(0, distanceBelow);
+
+            // Apply rotation to the relative position
+            // Rotation matrix in 2D: [cos(theta), -sin(theta); sin(theta), cos(theta)]
+            Vector2D rotatedRelativePosition = new Vector2D(
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) - relativePosition.y * CustomMath.Cos(angleRadians))
+                );
+
+
+            // Calculate the absolute position for the floor checker
+            Vector2D checkerPosition = new Vector2D(
+                xCoord + rotatedRelativePosition.x,
+                yCoord + rotatedRelativePosition.y
+            );
+
+            // Set the floor checker's position
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityA);
+
+            InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
+            
+
+
         }
        
 
