@@ -310,7 +310,7 @@ namespace IS {
         //auto system = InsightEngine::Instance().GetSystem<CollisionSystem>("CollisionSystem");
         //return system->CheckColliding(static_cast<Entity>(entity));
         auto const& component=InsightEngine::Instance().GetComponent<Collider>(entity);
-        return component.mIsColliding;
+        return (component.mIsColliding ? true : false);
     }
 
     //static void AddComponent(MonoString *name) {
@@ -323,10 +323,13 @@ namespace IS {
     static void AddCollider(int entity) {
         if (!InsightEngine::Instance().HasComponent<Collider>(entity))
         InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
-        auto comp = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        auto comp2 = InsightEngine::Instance().GetComponent<Transform>(entity);
-        comp.CreateStaticBody(comp2.world_position,0.5f);
+        auto body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        auto trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+        body.CreateStaticBody(trans.world_position,0.5f);
+
         InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
+        auto collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        collider.mResponseEnable = false;
     }
 
     static void CameraSetZoom(float value) {

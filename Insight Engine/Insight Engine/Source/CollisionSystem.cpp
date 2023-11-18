@@ -49,6 +49,10 @@ namespace IS
 			Entity entityA = pair.first;
 			Entity entityB = pair.second;
 
+			if (entityA == entityB) { // if self checking, continue
+				continue;
+			}
+
 			auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
 			auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
 			auto& colliderA = InsightEngine::Instance().GetComponent<Collider>(entityA);
@@ -57,6 +61,8 @@ namespace IS
 			colliderB.UpdateCollider(transB);
 
 			mColliding = false;
+			colliderA.mIsColliding = false;
+			colliderB.mIsColliding = false;
 			// collection of all possible collision happens between two colliders
 			mCollidingCollection.reset();
 			// check collide between two colliders, if colliding, calculate info like normal and depth
@@ -82,16 +88,23 @@ namespace IS
 					typeB = bodyB.mBodyType;
 					contact_bodyB = &bodyB;
 				}
+				/*if (InsightEngine::Instance().GetEntityName(entityA) == "FeetCollider") {
+					colliderA.mResponseEnable = false;
+				}
+				if (InsightEngine::Instance().GetEntityName(entityB) == "FeetCollider") {
+					colliderB.mResponseEnable = false;
+				}*/
+				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {
+					// vector of penetration depth to move entities apart
+					SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 
-				// vector of penetration depth to move entities apart
-				SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
-
-				// calculate the contact point information
-				mManifoldInfo.FindContactPoints(colliderA, colliderB, mCollidingCollection);
-				Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
-				//ResolveCollision(contact);
-				//ResolveCollisionWithRotation(contact, transA, transB);
-				ResolveCollisionWithRotationAndFriction(contact, transA, transB);
+					// calculate the contact point information
+					mManifoldInfo.FindContactPoints(colliderA, colliderB, mCollidingCollection);
+					Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
+					//ResolveCollision(contact);
+					//ResolveCollisionWithRotation(contact, transA, transB);
+					ResolveCollisionWithRotationAndFriction(contact, transA, transB);
+				}
 			}
 			else {
 				colliderA.mIsColliding = false;

@@ -128,9 +128,10 @@ namespace IS
             else {
                 isGrounded = false;
             }
-
+            
             if (isGrounded)
             {
+                Console.WriteLine(isGrounded);
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space)) {
                     Jump();
                 }
