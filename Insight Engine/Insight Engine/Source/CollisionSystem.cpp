@@ -96,6 +96,17 @@ namespace IS
 					typeB = bodyB.mBodyType;
 					contact_bodyB = &bodyB;
 				}
+				if (contact_bodyA == nullptr && contact_bodyB == nullptr) {
+					continue; // skip if both entity have no body componet, default both static
+				}
+
+				if (contact_bodyA != nullptr && contact_bodyB != nullptr) {
+					auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+					auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+					if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
+						continue; // skip if collision happens between two non dynamic entities
+					}
+				}
 				/*if (InsightEngine::Instance().GetEntityName(entityA) == "FeetCollider") {
 					colliderA.mResponseEnable = false;
 				}
@@ -361,13 +372,21 @@ namespace IS
 		Vector2D contact1 = contact.mContact1;
 		Vector2D contact2 = contact.mContact2;
 		int contactCount = contact.mContactCount;
+		Vector2D test = { 100.f, 100.f };
+		if (contactCount == 1) {
+			Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
+		}
+		if (contactCount == 2) {
+			Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
+			Sprite::drawDebugLine(contact2, contact2 + test, { 1.f, 0.f, 0.f });
+		}
 
 		if (contact.mBodyA) { // if entity A got rigidbody component
 			bodyA = contact.mBodyA;
 		}
 		else { // entity A has no body, default static
 			bodyA = new RigidBody();
-			bodyB->CreateStaticBody(transA.world_position, 0.5f);
+			bodyA->CreateStaticBody(transA.world_position, 0.5f);
 		}
 
 		if (contact.mBodyB) { // if entity B got rigidbody component
@@ -425,7 +444,7 @@ namespace IS
 
 			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contact_velocity_mag > 0.f || std::abs(contact_velocity_mag) < 1.f) // moving away
+			if (contact_velocity_mag > 0.f) // moving away
 			{
 				continue; // continue if moving away or value nearly 0 (1 or 5)
 			}
@@ -464,24 +483,24 @@ namespace IS
 		// calculation for static and dynamic friction
 		for (int i = 0; i < contactCount; i++)
 		{
-			Vector2D ra = temp_contact_list[i] - bodyA->mPosition;
-			Vector2D rb = temp_contact_list[i] - bodyB->mPosition;
+			Vector2D ra_f = temp_contact_list[i] - bodyA->mPosition;
+			Vector2D rb_f = temp_contact_list[i] - bodyB->mPosition;
 
-			temp_ra_list[i] = ra;
-			temp_rb_list[i] = rb;
+			temp_ra_list[i] = ra_f;
+			temp_rb_list[i] = rb_f;
+			std::cout << ra_f.x << " - " << ra_f.y << std::endl;
+			Vector2D ra_perp_f = { -ra_f.y, ra_f.x };
+			Vector2D rb_perp_f = { -rb_f.y, rb_f.x };
 
-			Vector2D ra_perp = Vector2D(-ra.y, ra.x);
-			Vector2D rb_perp = Vector2D(-rb.y, rb.x);
-
-			Vector2D angular_linear_velocityA = ra_perp * bodyA->mAngularVelocity;
-			Vector2D angular_linear_velocityB = rb_perp * bodyB->mAngularVelocity;
+			Vector2D angular_linear_velocity_a = ra_perp_f * bodyA->mAngularVelocity;
+			Vector2D angular_linear_velocity_b = rb_perp_f * bodyB->mAngularVelocity;
 
 			Vector2D relative_velocity =
-				(bodyB->mVelocity + angular_linear_velocityB) -
-				(bodyA->mVelocity + angular_linear_velocityA);
+				(bodyB->mVelocity + angular_linear_velocity_b) -
+				(bodyA->mVelocity + angular_linear_velocity_a);
 
 			Vector2D tangent = relative_velocity - ISVector2DDotProduct(relative_velocity, normal) * normal;
-
+			
 			if (mManifoldInfo.NearlyEqual(tangent, Vector2D()))
 			{
 				continue; // continue if the friction tangent is close to 0, no friction will be applied
@@ -491,8 +510,8 @@ namespace IS
 				ISVector2DNormalize(tangent, tangent);
 			}
 
-			float ra_perp_dotT = ISVector2DDotProduct(ra_perp, tangent);
-			float rb_perp_dotT = ISVector2DDotProduct(rb_perp, tangent);
+			float ra_perp_dotT = ISVector2DDotProduct(ra_perp_f, tangent);
+			float rb_perp_dotT = ISVector2DDotProduct(rb_perp_f, tangent);
 
 			// formula ustage
 			float denom = bodyA->mInvMass + bodyB->mInvMass +
@@ -516,13 +535,13 @@ namespace IS
 				friction_impulse = -j * tangent * df;
 			}
 
-			temp_impulse_list[i] = friction_impulse;
+			temp_friction_impulse_list[i] = friction_impulse;
 		}
 
 		// apply on velocity and angular velocity
 		for (int i = 0; i < contactCount; i++)
 		{
-			Vector2D friction_impulse = temp_impulse_list[i];
+			Vector2D friction_impulse = temp_friction_impulse_list[i];
 			Vector2D ra = temp_ra_list[i];
 			Vector2D rb = temp_rb_list[i];
 

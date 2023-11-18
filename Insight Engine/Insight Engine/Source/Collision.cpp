@@ -399,7 +399,8 @@ namespace IS
 	// Checks if two circles are intersecting
 	bool IntersectionCircles(Vector2D centerA, float radiusA, Vector2D centerB, float radiusB, Vector2D& normal, float& depth) {
 		normal = Vector2D();
-		depth = std::numeric_limits<float>::max(); // issue
+		//depth = std::numeric_limits<float>::max(); // issue
+		depth = 0.f;
 
 		float distance = ISVector2DDistance(centerA, centerB);
 		float totalRadius = radiusA + radiusB;

@@ -33,8 +33,8 @@ namespace IS {
 	// Constructs a Physics instance
 	Physics::Physics()
 	{
-		mMaxVelocity = 800.f;									// Maximum velocity for game bodies
-		mMinVelocity = -800.f;									// Minimum velocity for game bodies
+		mMaxVelocity = 20000.f;									// Maximum velocity for game bodies
+		mMinVelocity = -20000.f;									// Minimum velocity for game bodies
 		mCurrentIterations = 0;									// Number of current iterations for physics step
 		mTotalIterations = 1;									// Number of iterations for physics step
 		mContactPair = std::vector<std::pair<Entity, Entity>>();// vector list of each two contact entities
@@ -662,7 +662,7 @@ namespace IS {
 
 		// draw grid cell line in white
 		if (mShowGrid) ImplicitGrid::DrawGrid();
-
+		
 		// draw the velocity line in blue
 		//if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
