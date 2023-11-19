@@ -9,7 +9,15 @@
     <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates</BaseIntermediateOutputPath>-->
     <OutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\</OutputPath>
     <Configurations>Debug;Release;GameRelease</Configurations>
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <EnableNETAnalyzers>False</EnableNETAnalyzers>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GameRelease|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +33,21 @@
 	<ItemGroup>
 		<!-- Add links to the external script files -->
 		<Compile Include="..\Insight Engine\Assets\Scripts\**\*.cs" LinkBase="ExternalScripts" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 

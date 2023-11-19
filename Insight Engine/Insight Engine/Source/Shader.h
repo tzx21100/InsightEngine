@@ -42,39 +42,14 @@ namespace IS {
      */
     class Shader {
     public:
-        /*!
-         * \brief Creates and sets up shaders for instanced quad rendering.
-         *
-         * This function creates and sets up shaders for rendering quads. It compiles
-         * both the vertex and fragment shaders and links them into a program.
-         */
-        void setupInstSpriteShaders();
-        void setup3DInstSpriteShaders();
-
-        void setupPickedQuadShaders();
-
-        /*!
-         * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.
-         *
-         * This function creates and sets up shaders for rendering non-textured sprites. It compiles
-         * both the vertex and fragment shaders and links them into a program.
-         */
-        void setupInstNonQuadShaders();
-
-        void setupLightingShaders();
-
-        /*!
-         * \brief Creates and sets up shaders for text rendering.
-         *
-         * This function creates and sets up shaders for rendering text. It compiles both
-         * the vertex and fragment shaders and links them into a program.
-         */
-        void setupTextShaders();
+        
 
         /*!
          * \brief Default constructor required to initialize Shader object to a safe state.
          */
         Shader() : pgm_hdl(0), linked(GL_FALSE) {}
+
+        static void compileAllShaders();
 
         /*!
          * \brief Compiles a shader from a provided source string.
@@ -84,6 +59,8 @@ namespace IS {
          * \return GL_TRUE if compilation was successful, GL_FALSE otherwise.
          */
         GLboolean compileShaderString(GLenum shader_type, std::string const& shader_src);
+
+        GLboolean compileShaderFromFile(GLenum shader_type, const std::string& file_name);
 
         /*!
          * \brief Links the shader program.
@@ -171,13 +148,43 @@ namespace IS {
         void printUniforms() const;
 
         /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
+
+        /*!
+         * \brief Creates and sets up shaders for instanced quad rendering.
+         *
+         * This function creates and sets up shaders for rendering quads. It compiles
+         * both the vertex and fragment shaders and links them into a program.
+         */
+        //void setupInstSpriteShaders();
+        //void setup3DInstSpriteShaders();
+        
+        //void setupPickedQuadShaders();
+
+        /*!
+         * \brief Creates and sets up shaders for instanced non-textured lines and circle rendering.
+         *
+         * This function creates and sets up shaders for rendering non-textured sprites. It compiles
+         * both the vertex and fragment shaders and links them into a program.
+         */
+        //void setupInstNonQuadShaders();
+
+        //void setupLightingShaders();
+
+        /*!
+         * \brief Creates and sets up shaders for text rendering.
+         *
+         * This function creates and sets up shaders for rendering text. It compiles both
+         * the vertex and fragment shaders and links them into a program.
+         */
+        //void setupTextShaders();
+
         /*!
          * \brief Creates and sets up shaders for sprite rendering.
          *
          * This function creates and sets up shaders for rendering sprites. It compiles
          * both the vertex and fragment shaders and links them into a program.
          */
-        void setupSpriteShaders();
+        //void setupSpriteShaders();
 
     private:
         GLuint pgm_hdl = 0;          // Handle to the linked shader program object.

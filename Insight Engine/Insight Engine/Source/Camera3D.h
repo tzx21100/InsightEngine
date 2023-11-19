@@ -68,6 +68,7 @@ namespace IS {
 
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
+		static bool isOrtho;
 
 		glm::vec3 mPosition{};
 

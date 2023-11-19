@@ -148,9 +148,15 @@ namespace IS {
         
         double xPos, yPos;
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        
+        double newX = (((xPos - center_x) * ratio_width * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (((center_y - yPos) * ratio_height * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
 
-        double newX = (xPos - center_x) * ratio_width * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel() + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
-        double newY = (center_y - yPos) * ratio_height * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel() + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
+        // WORKS WITH 1X CAMERA ZOOM, SO SHOULD BE SCALED BY RATIO / 2???
+        // double newX = 2.f * (xPos - center_x) * ratio_width  + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        // double newY = 2.f * (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
+        
+        //newY = -(newX * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetAspectRatio());
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };
