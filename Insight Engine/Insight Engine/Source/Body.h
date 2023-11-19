@@ -91,6 +91,7 @@ namespace IS
         float mInvInertia;                          /**< Inverse Inertia of the body. */
         float mStaticFriction;                      /**< Static friction of the body. */
         float mDynamicFriction;                     /**< Dynamic friction of the body. */
+        float mGravityScale;                        /**< Gravity Scale of the body. */
 
         /*Dynamic friction is the friction which occurs once the static friction is overcome.
         The static friction conceptually is what is keeping our objects in place while grounded 

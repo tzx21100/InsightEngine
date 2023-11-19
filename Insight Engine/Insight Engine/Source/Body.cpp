@@ -46,6 +46,7 @@ namespace IS
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
+        mGravityScale = 1.f;
         //CreateBoxBody(0.f, 0.f, mMass, mRestitution);
         //if (mBodyShape == BodyShape::Box) {
         //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
@@ -90,7 +91,7 @@ namespace IS
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
-
+        mGravityScale = 1.f;
         //if (mBodyShape == BodyShape::Box) {
         //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
         //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
@@ -127,6 +128,7 @@ namespace IS
         mInvInertia = 0.f;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
+        mGravityScale = 1.f;
     }
 
     // updates the rigid body's transformation data to match the texture sprite Transform
