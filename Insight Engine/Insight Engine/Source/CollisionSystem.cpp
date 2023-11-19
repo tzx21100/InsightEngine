@@ -366,7 +366,7 @@ namespace IS
 		}
 	}
 
-	void CollisionSystem::ResolveCollisionWithRotationAndFriction(Manifold& contact, Transform const& transA, Transform const& transB) 
+	void CollisionSystem::ResolveCollisionWithRotationAndFriction(Manifold& contact, Transform & transA, Transform & transB) 
 	{
 		
 		// init
@@ -448,7 +448,7 @@ namespace IS
 
 			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contact_velocity_mag > 0.f) // moving away
+			if (contact_velocity_mag > 0.f || std::abs(contact_velocity_mag) < 1.f) // moving away
 			{
 				continue; // continue if moving away or value nearly 0 (1 or 5)
 			}
@@ -482,6 +482,9 @@ namespace IS
 			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, impulse) * bodyA->mInvInertia;
 			bodyB->mVelocity += impulse * bodyB->mInvMass;
 			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, impulse) * bodyB->mInvInertia;
+			transA.angle_speed = bodyA->mAngularVelocity;
+			transB.angle_speed = bodyB->mAngularVelocity;
+
 		}
 
 		// calculation for static and dynamic friction
@@ -492,13 +495,9 @@ namespace IS
 
 			temp_ra_list[i] = ra_f;
 			temp_rb_list[i] = rb_f;
-			int a_x = static_cast<int>(ra_f.x);
-			int a_y = static_cast<int>(ra_f.y);
-			int b_x = static_cast<int>(rb_f.x);
-			int b_y = static_cast<int>(rb_f.y);
-			Vector2D ra_perp_f = { static_cast<float>(-a_y), static_cast<float>(a_x) };
-			Vector2D rb_perp_f = { static_cast<float>(-b_y), static_cast<float>(b_x) };
-			std::cout << ra_perp_f.x << " - " << ra_perp_f.y << std::endl;
+
+			Vector2D ra_perp_f = { -ra_f.y, ra_f.x };
+			Vector2D rb_perp_f = { -rb_f.y, rb_f.x };
 
 			Vector2D angular_linear_velocity_a = ra_perp_f * bodyA->mAngularVelocity;
 			Vector2D angular_linear_velocity_b = rb_perp_f * bodyB->mAngularVelocity;
@@ -506,7 +505,7 @@ namespace IS
 			Vector2D relative_velocity =
 				(bodyB->mVelocity + angular_linear_velocity_b) -
 				(bodyA->mVelocity + angular_linear_velocity_a);
-
+			
 			Vector2D tangent = relative_velocity - ISVector2DDotProduct(relative_velocity, normal) * normal;
 			
 			if (mManifoldInfo.NearlyEqual(tangent, Vector2D()))
@@ -557,6 +556,8 @@ namespace IS
 			bodyA->mAngularVelocity += -ISVector2DCrossProductMag(ra, friction_impulse) * bodyA->mInvInertia;
 			bodyB->mVelocity += friction_impulse * bodyB->mInvMass;
 			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, friction_impulse) * bodyB->mInvInertia;
+			transA.angle_speed = bodyA->mAngularVelocity;
+			transB.angle_speed = bodyB->mAngularVelocity;
 		}
 	}
 

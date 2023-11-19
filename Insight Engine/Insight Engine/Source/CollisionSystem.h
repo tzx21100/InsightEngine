@@ -54,7 +54,7 @@ namespace IS
 		// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
 		void ResolveCollision(Manifold& contact);
 		void ResolveCollisionWithRotation(Manifold& contact, Transform const& transA, Transform const& transB);
-		void ResolveCollisionWithRotationAndFriction(Manifold& contact, Transform const& transA, Transform const& transB);
+		void ResolveCollisionWithRotationAndFriction(Manifold& contact, Transform & transA, Transform & transB);
 
 		// check collding between two colliders, calculate and collect the colliding data like normal and depth
 		void Colliding(Collider& collider_a, Collider& collider_b);

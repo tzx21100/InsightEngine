@@ -34,7 +34,7 @@ namespace IS
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = 10.f;
+        mMass = 1.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
@@ -135,7 +135,7 @@ namespace IS
         //mBodyTransform = trans;
         mPosition = trans.world_position;
         mRotation = trans.rotation;
-        //mAngularVelocity = trans.angle_speed;
+        mAngularVelocity = trans.angle_speed;
         CreateBoxBody(trans.scaling.x / 1, trans.scaling.y / 1, mMass, mRestitution);
 
     }

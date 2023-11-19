@@ -159,7 +159,7 @@ namespace IS
                 Vector2D f_angle=Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians( aangle));
                 //set move speed when grounded
                 
-                InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
+                //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
 
                 // Set the rotation to be the same as the detected one
                 float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
