@@ -107,10 +107,11 @@ namespace IS {
             }
 
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+            if (!tempData.empty()) 
+                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
 
             // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
                 // Handle the case where unmap was not successful
                 std::cerr << "Failed to unmap the buffer." << std::endl;
             }

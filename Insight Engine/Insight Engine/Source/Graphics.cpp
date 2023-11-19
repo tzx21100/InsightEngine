@@ -79,18 +79,8 @@ namespace IS {
         Mesh::initMeshes(meshes); // init 3 meshes
         
         // init quad shader
-        inst_quad_shader_pgm.setupInstSpriteShaders();
-        inst_3d_quad_shader_pgm.setup3DInstSpriteShaders();
-        quad_border_shader_pgm.setupPickedQuadShaders();
 
-        // init debugging lines and circles shaders
-        inst_non_quad_shader_pgm.setupInstNonQuadShaders();
-
-        light_shader_pgm.setupLightingShaders();
-
-        // init font shaders
-        Times_New_Roman_font.shader.setupTextShaders();
-        Brush_Script_font.shader.setupTextShaders();
+        Shader::compileAllShaders();
 
         // init text object
         Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
