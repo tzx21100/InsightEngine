@@ -84,6 +84,8 @@ namespace IS {
         */
         void setupInstancedCircleVAO();
 
+        void setupFBVAO();
+
         /*!
          * \brief Initializes various types of meshes for rendering.
          *
@@ -92,6 +94,7 @@ namespace IS {
          * \param meshes A vector of Mesh objects to store the initialized meshes.
          */
         static void initMeshes(std::vector<Mesh>& meshes);
+
 
         /*!
          * \brief Cleans up the OpenGL resources associated with the initialized meshes.
