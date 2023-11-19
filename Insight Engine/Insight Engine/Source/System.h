@@ -158,7 +158,7 @@ namespace IS {
                 auto const& systemSignature = mSignatures[type];
 
                 //Any component that matches will be added to the system
-                if ((entitySignature & systemSignature)!=0) {
+                if ((entitySignature & systemSignature)==systemSignature) {
                     system->mEntities.insert(entity);
                 }
                 // Remove thoese that no longer match (even though we have an edge case of HasComponent in each system)

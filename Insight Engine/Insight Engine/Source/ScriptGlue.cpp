@@ -314,7 +314,7 @@ namespace IS {
         std::string str(c_str);
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
-        InsightEngine::Instance().AddComponent<Transform>(entity,Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
         return static_cast<int>(entity);
     }
 
