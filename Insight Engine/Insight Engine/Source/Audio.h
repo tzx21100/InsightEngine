@@ -201,5 +201,27 @@ namespace IS {
         FMOD::Sound* sound;
         FMOD::Channel* channel;
     };
+
+
+
+    class AudioEmitterSystem :public ParentSystem {
+    public:
+        //override parent sys
+        void Update([[maybe_unused]] float deltaTime) override {
+
+
+        }
+        std::string GetName() override { return "AudioEmitter"; }
+        void Initialize() override {}
+        void HandleMessage(const Message& message) override {
+            if (message.GetType() == MessageType::DebugInfo) {
+                IS_CORE_INFO("Handling Debug");
+            }
+        }
+
+        std::set<Entity> GetEntities() { return mEntities; }
+    };
+
+
 }
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_AUDIO_H  

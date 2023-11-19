@@ -128,6 +128,9 @@ namespace IS {
 
 		//static functions to be called wherever will be put here
 		void SpawnParticles(Particle part) {
+			if (mParticleAmount >= MAX_PARTICLES) {
+				return;
+			}
 			mParticleAmount++;
 			mParticleList[mParticleAmount] = part;
 		}

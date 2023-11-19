@@ -103,19 +103,23 @@ namespace IS {
             //exact accumulated time differences, among all game loops
             currentNumberOfSteps++;
         }
-        
-        // Update all systems
-        for (const auto& system : mSystemList)
-        {
-            Timer timer(system->GetName() + " System", false);
-            system->Update(1.f/60.f);
-            timer.Stop();
 
-            if (to_update) {
-                mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
-                mSystemDeltas["Engine"] += timer.GetDeltaTime();
+        if (currentNumberOfSteps > 0) {
+
+            // Update all systems
+            for (const auto& system : mSystemList)
+            {
+                Timer timer(system->GetName() + " System", false);
+                system->Update(1.f / 60.f);
+                timer.Stop();
+
+                if (to_update) {
+                    mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
+                    mSystemDeltas["Engine"] += timer.GetDeltaTime();
+                }
             }
         }
+
 
         // Update and render GUI
         if (mRenderGUI)

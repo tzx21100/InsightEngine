@@ -5,227 +5,101 @@
 		"AudioPitchCorrectness" : 0.0,
 		"AudioVolume" : 1.0
 	},
+	"ButtonComponent" : 
+	{
+		"ButtonImageName" : "",
+		"ButtonState" : 0,
+		"ButtonText" : "",
+		"ButtonType" : 0
+	},
 	"Collider" : 
 	{
-		"BoxCollider" : 
+		"BoxColliderEnabled" : false,
+		"CircleCollider" : 
 		{
-			"BoxColliderCenter" : 
+			"CircleColliderCenter" : 
 			{
-				"X" : -148.62359619140625,
-				"Y" : -69.999717712402344
+				"X" : 705.1229248046875,
+				"Y" : -20.187175750732422
 			},
-			"BoxColliderOffset" : 
+			"CircleColliderOffset" : 
 			{
 				"X" : 0.0,
-				"Y" : 0.0
+				"Y" : -20.0
 			},
-			"BoxColliderSizeScale" : 
-			{
-				"X" : 1.0,
-				"Y" : 1.0
-			},
-			"BoxColliderVertices" : 
-			[
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				}
-			]
+			"CircleColliderRadius" : 60.000007629394531,
+			"CircleColliderRadiusScale" : 0.30000001192092896
 		},
-		"BoxColliderEnabled" : true,
-		"CircleColliderEnabled" : false
+		"CircleColliderEnabled" : true,
+		"ResponseEnabled" : true
 	},
 	"Name" : "Player",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : -981.0,
-		"RigidBodyAngularVelocity" : -2.9802322387695312e-08,
-		"RigidBodyArea" : 144000.015625,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 36000.00390625,
 		"RigidBodyBodyType" : 1,
-		"RigidBodyDensity" : 2880000.25,
+		"RigidBodyDensity" : 180000.015625,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
-		"RigidBodyInvMass" : 0.05000000074505806,
-		"RigidBodyMass" : 20.0,
+		"RigidBodyInvMass" : 0.20000000298023224,
+		"RigidBodyMass" : 5.0,
 		"RigidBodyRestitution" : 0.10000000149011612,
-		"RigidBodyVelocityX" : 0.35581517219543457,
-		"RigidBodyVelocityY" : -3.399749755859375,
-		"mDynamicFriction" : 0.56000000238418579,
-		"mStaticFriction" : 0.93300002813339233
+		"RigidBodyVelocityX" : -1.6396814584732056,
+		"RigidBodyVelocityY" : 1.2837104797363281,
+		"mDynamicFriction" : 0.60000002384185791,
+		"mStaticFriction" : 0.69999998807907104
 	},
 	"Script" : 
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000000011000100111",
+	"Signature" : "00000000000000000000011001100111",
 	"Sprite" : 
 	{
-		"AnimationIndex" : 0,
-		"Layer" : 0,
+		"AnimationIndex" : 1,
+		"Layer" : 1,
 		"SpriteColorX" : 0.85964435338973999,
 		"SpriteColorY" : 0.86737102270126343,
 		"SpriteColorZ" : 0.80789142847061157,
-		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "Player run 1R12C.png",
+		"SpriteCurrentTexIndex" : 1,
+		"SpriteFilename" : "Player idle 1R12C.png",
 		"SpriteName" : "ice_cream_truck",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 9,
+		"SpriteTexture" : 8,
 		"SpriteTextureHeight" : 800,
-		"SpriteTextureIndex" : 8,
-		"SpriteTextureWidth" : 15456,
-		"SpriteTransformRotation" : 8.3554310549516231e-05,
-		"SpriteTransformScalingX" : 400.00003051757812,
-		"SpriteTransformScalingY" : 360.0,
-		"SpriteTransformWorldPositionX" : -148.62359619140625,
-		"SpriteTransformWorldPositionY" : -69.999717712402344,
+		"SpriteTextureIndex" : 7,
+		"SpriteTextureWidth" : 15684,
+		"SpriteTransformRotation" : 6.597503662109375,
+		"SpriteTransformScalingX" : -200.00001525878906,
+		"SpriteTransformScalingY" : 180.0,
+		"SpriteTransformWorldPositionX" : 705.1229248046875,
+		"SpriteTransformWorldPositionY" : -0.1871754378080368,
 		"animations" : 
 		[
 			{
 				"Name" : "",
-				"animation_duration" : 3.0,
+				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.083333335816860199,
 				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 10.0,
+				"frame_index_x" : 8.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.0,
-				"time_per_frame" : 0.25,
+				"frame_timer" : 0.01666666753590107,
+				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 12,
 				"y_frames" : 1
 			},
 			{
 				"Name" : "",
-				"animation_duration" : 3.0,
+				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.083333335816860199,
 				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 10.0,
+				"frame_index_x" : 3.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.21666666865348816,
-				"time_per_frame" : 0.25,
+				"frame_timer" : 0.0,
+				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 12,
 				"y_frames" : 1
 			}
@@ -233,10 +107,10 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 8.3554310549516231e-05,
-		"TransformScalingX" : 400.00003051757812,
-		"TransformScalingY" : 360.0,
-		"TransformWorldPositionX" : -148.62359619140625,
-		"TransformWorldPositionY" : -69.999717712402344
+		"TransformRotation" : 6.597503662109375,
+		"TransformScalingX" : -200.00001525878906,
+		"TransformScalingY" : 180.0,
+		"TransformWorldPositionX" : 705.1229248046875,
+		"TransformWorldPositionY" : -0.1871754378080368
 	}
 }

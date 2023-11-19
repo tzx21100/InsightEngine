@@ -67,7 +67,8 @@ void RegisterSystems() {
     Signature sign_script = engine.GenerateSignature<ScriptComponent>();
     Signature sign_gui = engine.GenerateSignature<ButtonComponent>();
     Signature sign_pathfinding = engine.GenerateSignature<Pathfinder>();
-    Signature sign_audio = engine.GenerateSignature<AudioEmitter, AudioListener, Transform>();
+    Signature sign_audio = engine.GenerateSignature<AudioListener, Transform>();
+    Signature sign_audio_emitter = engine.GenerateSignature<AudioEmitter, Transform>();
     Signature sign_collision = engine.GenerateSignature<Transform, Collider>();
 
     Signature sign_particle = engine.GenerateSignature<ParticleEmitter>();
@@ -76,6 +77,7 @@ void RegisterSystems() {
     auto insight_window = std::make_shared<WindowSystem>();
     auto insight_input = std::make_shared<InputManager>(insight_window);
     auto insight_audio = std::make_shared<ISAudio>();
+    auto insight_audio_emitter = std::make_shared<AudioEmitterSystem>();
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();
     auto insight_graphics = std::make_shared<ISGraphics>();
@@ -90,6 +92,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
     engine.AddSystem(insight_audio, sign_audio);
+    engine.AddSystem(insight_audio_emitter, sign_audio_emitter);
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_scriptmanager, sign_script);
     engine.AddSystem(insight_physics, sign_physics);

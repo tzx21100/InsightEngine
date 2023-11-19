@@ -69,49 +69,46 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
+
         if (InsightEngine::Instance().mRuntime == false) {
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
             sys->ClearAllSounds();
             return; }
 
-
         auto& engine = InsightEngine::Instance();
         auto assetsys = engine.GetSystem<AssetManager>("Asset");
+        auto mEmitterEntities = engine.GetSystem<AudioEmitterSystem>("AudioEmitter")->GetEntities();
         for (auto const &entity : mEntities) {
-            if (engine.HasComponent<AudioListener>(entity)) {
-                auto listener = engine.GetComponent<AudioListener>(entity);
-                auto current_entity_transform = engine.GetComponent<Transform>(entity);
-                for (auto emittingEntities : mEntities) {
-                    //if(emittingEntities==entity || !engine.HasComponent<AudioEmitter>(emittingEntities)){
-                    //    continue;
-                    //}
-                    auto emitting_transform = engine.GetComponent<Transform>(emittingEntities);
-                    auto emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
-                    float distance = CalculateDistance(current_entity_transform.world_position.x,
-                                                       current_entity_transform.world_position.y,
-                                                       emitting_transform.world_position.x,
-                                                       emitting_transform.world_position.y
-                                                      );
+            auto listener = engine.GetComponent<AudioListener>(entity);
+            auto current_entity_transform = engine.GetComponent<Transform>(entity);
+            for (auto emittingEntities : mEmitterEntities) {
+                auto emitting_transform = engine.GetComponent<Transform>(emittingEntities);
+                auto emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
+                float distance = CalculateDistance(current_entity_transform.world_position.x,
+                                                    current_entity_transform.world_position.y,
+                                                    emitting_transform.world_position.x,
+                                                    emitting_transform.world_position.y
+                                                    );
 
 
-                    if (distance > listener.hearing_range) {
-                        assetsys->GetChannel(emitter.soundName)->stop();
-                        continue;
-                    }
-                    //If they are close enough
+                if (distance > listener.hearing_range) {
+                    assetsys->GetChannel(emitter.soundName)->stop();
+                    continue;
+                }
+                //If they are close enough
                     
-                    float volume = CalculateGain(distance, emitter.falloff_factor);
-                    FMOD::Channel* soundChannel = assetsys->GetChannel(emitter.soundName);
-                    if (IsSoundPlaying(soundChannel)) {
-                        soundChannel->setVolume(volume);
-                    }
-                    else {
-                        assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
-                    }
-
+                float volume = CalculateGain(distance, emitter.falloff_factor);
+                FMOD::Channel* soundChannel = assetsys->GetChannel(emitter.soundName);
+                if (IsSoundPlaying(soundChannel)) {
+                    soundChannel->setVolume(volume);
+                }
+                else {
+                    assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
                 }
 
             }
+
+            
         
         }
         system->update();
