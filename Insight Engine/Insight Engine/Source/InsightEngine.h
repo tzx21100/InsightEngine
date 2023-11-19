@@ -27,6 +27,7 @@
 #include "GameGui.h"
 #include "Pathfinder.h"
 #include "Particle.h"
+#include "ParticleEmitter.h"
 #include "Physics.h"
 #include "CollisionSystem.h"
 

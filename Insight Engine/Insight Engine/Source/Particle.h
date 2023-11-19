@@ -125,7 +125,7 @@ namespace IS {
 
 
 		//static functions to be called wherever will be put here
-		static void SpawnParticles(Particle part) {
+		void SpawnParticles(Particle part) {
 			mParticleList.emplace_back(part);
 		}
 
@@ -152,7 +152,7 @@ namespace IS {
 
 
     private:
-        static std::vector<Particle> mParticleList;
+        std::vector<Particle> mParticleList;
     };
 }
 
