@@ -101,7 +101,7 @@ namespace IS {
 		 */
 		void DestroyEntity(Entity entity) {
 			if (mSignatures.find(entity) == mSignatures.end()) {
-				IS_WARN("Entity {} not found!", entity);
+				IS_CORE_WARN("Entity {} not found!", entity);
 				return;
 			}
 
@@ -125,7 +125,7 @@ namespace IS {
 			// Decrement the count of living entities
 			--mEntitiesAlive;
 
-			IS_WARN("Entity {} destroyed!", entity);
+			IS_CORE_WARN("Entity {} destroyed!", entity);
 		}
 
 		/**

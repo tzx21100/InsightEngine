@@ -260,7 +260,7 @@ namespace IS {
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::ColorEdit3("##Color", &sprite.color[0]);
+                ImGui::ColorEdit4("##Color", &sprite.color[0]);
                 ImGui::Spacing();
 
                 ImGui::TableNextColumn();

@@ -299,7 +299,10 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
 
         // bind fb
-        if (engine.mRenderGUI) mFramebuffer->Bind();
+        if (engine.mRenderGUI)
+        {
+            mFramebuffer->Bind();
+        }
 
         // set clear color
         glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -358,7 +361,9 @@ namespace IS {
         }
 
         // Render text when GUI is disabled
-        if (!engine.mRenderGUI) {
+    #ifdef USING_IMGUI
+        if (!engine.mRenderGUI)
+        {
             // Shared Attributes
             const float scale = 20.f;
             const float x_padding = scale;
@@ -379,13 +384,20 @@ namespace IS {
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
+    #endif // !USING_IMGUI
 
         // Double font animation
-        if (mShowTextAnimation)
+
+        if (engine.mRenderGUI && mShowTextAnimation)
+        {
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
+        }
 
         // if using ImGui, unbind fb at the end of draw
-        if (engine.mRenderGUI) mFramebuffer->Unbind();
+        if (engine.mRenderGUI)
+        {
+            mFramebuffer->Unbind();
+        }
     }
 
     void ISGraphics::cleanup() {

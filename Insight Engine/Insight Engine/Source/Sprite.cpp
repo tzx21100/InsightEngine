@@ -419,7 +419,7 @@ namespace IS {
         spriteData["SpriteCurrentTexIndex"] = animation_index;
         spriteData["SpriteTextureIndex"] = img.texture_index;
 
-        IS_CORE_DEBUG(" SAVED FILENAME {}", img.mFileName);
+        IS_CORE_DEBUG("SAVED FILENAME {}", img.mFileName);
 
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
