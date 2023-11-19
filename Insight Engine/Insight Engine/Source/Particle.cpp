@@ -66,7 +66,13 @@ namespace IS {
 
         }
 
-           
+        for (auto const& emitters : mEntities) {
+            auto emitter= engine.GetComponent<ParticleEmitter>(emitters);
+            for (int i = 0; i < emitter.mParticlesAmount; i++) {
+                SpawnParticles(emitter.mParticle);
+            }
+
+        }   
 
     }
 

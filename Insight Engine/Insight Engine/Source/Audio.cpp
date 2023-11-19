@@ -100,7 +100,7 @@ namespace IS {
                 float volume = CalculateGain(distance, emitter.falloff_factor);
                 FMOD::Channel* soundChannel = assetsys->GetChannel(emitter.soundName);
                 if (IsSoundPlaying(soundChannel)) {
-                    soundChannel->setVolume(volume);
+                    soundChannel->setVolume(emitter.volumeLevel * listener.volume * volume);
                 }
                 else {
                     assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
