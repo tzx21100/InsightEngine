@@ -56,9 +56,8 @@ namespace IS {
 
 		if (isOrtho) {
 			auto [width, height] = InsightEngine::Instance().GetWindowSize();
-
 			float fWidth = static_cast<float>(width) / GetZoomLevel();
-			float fHeight = static_cast<float>(height) / GetZoomLevel();
+			float fHeight = fWidth / GetAspectRatio();
 			mProjection = glm::ortho(-fWidth, fWidth, -fHeight, fHeight, mNear, mFar);
 		}
 		else mProjection = glm::perspective(glm::radians(adjusted_fov), mAspectRatio, mNear, mFar);
