@@ -687,15 +687,10 @@ namespace IS {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 
 				body.BodyFollowTransform(trans);
-				
-				//// if the entity is static or kinematic, skip
-				//if (body.mBodyType != BodyType::Dynamic) {
-				//	continue;
-				//}
 
-				/*Cell test = mImplicitGrid.GetCell(body.mBodyTransform.world_position);
-				IS_CORE_DEBUG({ "row - {}" }, test.row);
-				IS_CORE_DEBUG({ "col - {}" }, test.col);*/
+				if (body.mBodyType == BodyType::Static) {
+					continue; // skip the update for static entity
+				}
 
 				//freeze
 				if (InsightEngine::Instance().mFreezeFrame)
@@ -707,7 +702,7 @@ namespace IS {
 				// update the velocity if gravity exists
 				if (mExertingGravity)
 				{
-					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
+					body.mAcceleration = body.mForce * body.mInvMass + (mGravity * body.mGravityScale);
 					body.mVelocity += body.mAcceleration * time;
 				}
 
