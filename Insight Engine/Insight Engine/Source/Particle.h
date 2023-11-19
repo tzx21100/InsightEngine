@@ -6,6 +6,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "System.h"
+#include <array>
+#define MAX_PARTICLES 10000
 
 
 namespace IS {
@@ -126,7 +128,8 @@ namespace IS {
 
 		//static functions to be called wherever will be put here
 		void SpawnParticles(Particle part) {
-			mParticleList.emplace_back(part);
+			mParticleAmount++;
+			mParticleList[mParticleAmount] = part;
 		}
 
 
@@ -147,12 +150,18 @@ namespace IS {
 		}
 
 
+		void DeleteParticle(int id) {
+			mParticleList[id] = mParticleList[mParticleAmount];
+			mParticleAmount--;
 
-        void ClearParticles();
+		}
+
+		void ClearParticles() { mParticleAmount = 0; };
 
 
     private:
-        std::vector<Particle> mParticleList;
+		int mParticleAmount;
+		std::array<Particle,MAX_PARTICLES> mParticleList; //fixed array of particles
     };
 }
 

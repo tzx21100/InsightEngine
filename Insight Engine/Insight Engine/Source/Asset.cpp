@@ -100,6 +100,13 @@ namespace IS {
                 //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
                 LoadAudio(filepath);
             }
+            else {
+                IS_CORE_CRITICAL("Audio file mus be only .mp3 or .wav");
+            
+            }
+
+
+
         }
     }
 

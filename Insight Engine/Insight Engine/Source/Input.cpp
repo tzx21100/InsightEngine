@@ -149,8 +149,8 @@ namespace IS {
         double xPos, yPos;
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 
-        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
-        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x) * ratio_width * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel() + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (center_y - yPos) * ratio_height * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel() + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };

@@ -379,6 +379,12 @@ namespace IS {
     }
 
 
+    //static void CallIS_Trace(MonoString* string) {
+    //
+    //
+    //}
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -453,6 +459,9 @@ namespace IS {
         //Debug
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
+
+        // IStrace
+       // IS_ADD_INTERNAL_CALL(CallIS_Trace);
 
 
     }

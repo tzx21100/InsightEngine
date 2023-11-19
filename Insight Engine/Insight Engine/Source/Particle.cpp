@@ -13,53 +13,55 @@ namespace IS {
     }
 
     void ParticleSystem::Update(float deltaTime) {
+
+
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 
-        for (auto it = mParticleList.begin(); it != mParticleList.end(); it++) {
+        for (int id = 0; id < mParticleAmount;id++) {
 
             //particles death
 
-            if (it->mLifespan <= 0) {
-                it = mParticleList.erase(it);
+            if (mParticleList[id].mLifespan <= 0) {
+                DeleteParticle(id);
             }
 
-            if (it->mAlpha <= 0) {
-                it = mParticleList.erase(it);
+            if (mParticleList[id].mAlpha <= 0) {
+                DeleteParticle(id);
             }
                 
                 
             // particle types
 
-            switch (it->mParticleType) 
+            switch (mParticleList[id].mParticleType) 
             {
             case pt_square:
 
-                Sprite::draw_colored_quad(it->mParticlePos, it->mRotation, it->mScale, { it->mColor.R, it->mColor.G ,it->mColor.B ,it->mColor.A });
+                Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
                 break;
 
             case pt_circle:
 
                 for (int i = 0; i < 8; i++) {
-                    Sprite::draw_colored_quad(it->mParticlePos, it->mRotation +(i*45), it->mScale, {it->mColor.R, it->mColor.G ,it->mColor.B ,it->mColor.A});
+                    Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation +(i*45), mParticleList[id].mScale, {mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A});
                 }
 
                 break;
 
             case pt_texture:
 
-                Sprite::draw_textured_quad(it->mParticlePos, it->mRotation, it->mScale,*asset->GetImage(it->mImageName));
+                Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName));
 
                 break;
                 
             }
 
             //affectors
-            it->mLifespan -= deltaTime;
-            it->mParticlePos += it->mVelocity * deltaTime * DirectionToVector2D(it->mDirection);
-            it->mScale.x += it->mSizeGrowth * deltaTime;
-            it->mScale.y += it->mSizeGrowth * deltaTime;
-            it->mAlpha += it->mAlphaGrowth * deltaTime;
+            mParticleList[id].mLifespan -= deltaTime;
+            mParticleList[id].mParticlePos += mParticleList[id].mVelocity * deltaTime * DirectionToVector2D(mParticleList[id].mDirection);
+            mParticleList[id].mScale.x += mParticleList[id].mSizeGrowth * deltaTime;
+            mParticleList[id].mScale.y += mParticleList[id].mSizeGrowth * deltaTime;
+            mParticleList[id].mAlpha += mParticleList[id].mAlphaGrowth * deltaTime;
 
 
         }
@@ -67,6 +69,7 @@ namespace IS {
            
 
     }
+
 
 
 
@@ -79,9 +82,6 @@ namespace IS {
 
 
 
-    void ParticleSystem::ClearParticles(){
-        //mParticles.clear();
-    }
 
 
 }
