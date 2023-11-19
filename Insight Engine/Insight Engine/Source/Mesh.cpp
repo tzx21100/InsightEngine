@@ -110,7 +110,7 @@ namespace IS {
 
         // Create Instance Buffer Object
         glCreateBuffers(1, &instance_vbo_ID);
-        glNamedBufferStorage(instance_vbo_ID, sizeof(Sprite::instanceData3D) * MAX_ENTITIES, NULL, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+        glNamedBufferStorage(instance_vbo_ID, sizeof(Sprite::instanceData3D) * 100'000, NULL, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
         glBindBuffer(GL_ARRAY_BUFFER, instance_vbo_ID);
 
         // Enable attributes

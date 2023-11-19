@@ -98,22 +98,22 @@ namespace IS {
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
         Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-        std::vector<Sprite::instanceData3D> tempData;
+
+
+        // Copy the instance data from the multiset to the vector
+        std::vector<Sprite::instanceData3D> tempData(ISGraphics::layered3DQuadInstances.begin(), ISGraphics::layered3DQuadInstances.end());
 
         if (buffer) {
-            // Copy the instance data from the multiset to the vector
-            for (const auto& data : ISGraphics::layered3DQuadInstances) {
-                tempData.push_back(data);
-            }
 
             // Copy the instance data to the mapped buffer
-            if (!tempData.empty()) 
+            if (!tempData.empty()) {
                 std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
 
-            // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
-                // Handle the case where unmap was not successful
-                std::cerr << "Failed to unmap the buffer." << std::endl;
+                // Unmap the buffer
+                if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
+                    // Handle the case where unmap was not successful
+                    std::cerr << "Failed to unmap the buffer." << std::endl;
+                }
             }
         }
         else {
