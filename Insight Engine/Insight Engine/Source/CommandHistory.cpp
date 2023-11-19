@@ -39,6 +39,14 @@ namespace IS {
         }
     }
 
+    void CommandHistory::SetNotExplicitBack(bool changed)
+    {
+        if (!changed)
+            return;
+
+
+    }
+
     void CommandHistory::LimitStackSize(StackType& stack, size_t max_size)
     {
         while (stack.size() > max_size)
