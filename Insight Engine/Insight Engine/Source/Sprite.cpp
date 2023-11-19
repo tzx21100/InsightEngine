@@ -139,6 +139,7 @@ namespace IS {
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
+        ISGraphics::layered3DQuadInstances.clear();
     }
 
     // draw light quad here similar to old non-layered instance quad drawing
