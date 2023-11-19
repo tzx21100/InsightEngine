@@ -108,7 +108,7 @@ namespace IS {
         for (const auto& system : mSystemList)
         {
             Timer timer(system->GetName() + " System", false);
-            system->Update(mFixedDeltaTime.count());
+            system->Update(1.f/60.f);
             timer.Stop();
 
             if (to_update) {
@@ -121,7 +121,7 @@ namespace IS {
         if (mRenderGUI)
         {
             mImGuiLayer->Begin();
-            mLayers.Update(mFixedDeltaTime.count());
+            mLayers.Update(1.f / 60.f);
             mLayers.Render();
             mImGuiLayer->End();
         }

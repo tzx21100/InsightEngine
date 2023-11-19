@@ -32,7 +32,7 @@ namespace IS
         //dashing 
         static private float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
-        static private float dash_timer;
+        static private float dash_timer =0.2f;
         static private float dash_set = 0.2f;
         static private bool canDash = false;
         static private bool isDashing;
@@ -254,6 +254,8 @@ namespace IS
                 isDashing = false;
                 dash_timer = dash_set;
                 bullet_time_timer = bullet_time_set;
+                InternalCalls.RigidBodySetForce(0f, 0f);
+                return;
             }
 
             InternalCalls.RigidBodySetForce(apply_force.x*dashSpeed  *-1, apply_force.y *dashSpeed *-1);
