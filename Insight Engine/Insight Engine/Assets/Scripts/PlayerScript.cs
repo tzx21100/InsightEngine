@@ -33,11 +33,11 @@ namespace IS
         static private float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
         static private float dash_timer;
-        static private float dash_set = 0.5f;
+        static private float dash_set = 0.2f;
         static private bool canDash = false;
         static private bool isDashing;
         static private float dashAngle;
-        static private float dashSpeed = 2000f;
+        static private float dashSpeed = 3000f;
 
         static private bool isGrounded;
         static private Vector2D apply_force= new Vector2D(0,0);//dash dir

@@ -47,6 +47,7 @@ namespace IS
 		return *this;
 	}
 
+
 	// operator overloading for /=
 	Vector2D& Vector2D::operator /=(float rhs) {
 		x /= rhs;
@@ -88,6 +89,14 @@ namespace IS
 		Vector2D ret{ rhs };
 		ret.x *= lhs;
 		ret.y *= lhs;
+		return ret;
+	}
+
+	// operator overloading for *
+	Vector2D operator * (Vector2D lhs, Vector2D rhs) {
+		Vector2D ret{ rhs };
+		ret.x *= lhs.x;
+		ret.y *= lhs.y;
 		return ret;
 	}
 

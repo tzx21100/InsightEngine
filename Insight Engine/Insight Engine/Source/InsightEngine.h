@@ -83,7 +83,7 @@ void RegisterSystems() {
     auto insight_guisystem = std::make_shared<GuiSystem>();
     auto insight_pathfinding = std::make_shared<Pathfinding>();
     auto insight_collision = std::make_shared<CollisionSystem>();
-    auto insight_particle = std::make_shared <Particle> ();
+    auto insight_particle = std::make_shared <ParticleSystem> ();
 
 
     engine.AddSystem(insight_window, sign_default);
