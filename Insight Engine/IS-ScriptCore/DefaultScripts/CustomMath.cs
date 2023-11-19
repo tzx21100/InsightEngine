@@ -8,6 +8,9 @@ namespace IS
 {
     public static class CustomMath
     {
+        public static float min(float x, float y) { 
+            if(x < y) return x; return y;
+        }
         // Constants
         public const float PI = 3.14159265358979323846f;
 

@@ -12,9 +12,9 @@ namespace IS
         
         //private entity
 
-        static SimpleImage backGround;
         static SimpleImage player_walk;
         static SimpleImage player_idle;
+        static SimpleImage player_climb;
 
 
 
@@ -53,6 +53,12 @@ namespace IS
         static private float max_speed=700f;
         static private float move_speed = 0f;
 
+        static private int hori_movement;
+
+        // climbing
+        static private bool isClimbing = false;
+        static private float climbSpeed = 1500f;
+        static private int entityWall;
 
 
 
@@ -63,12 +69,13 @@ namespace IS
 
         static public void Init()
         {
-            backGround = InternalCalls.GetSpriteImage("black_background.png");
+
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
             player_walk = InternalCalls.GetSpriteImage("Player run 1R12C.png");
             player_idle = InternalCalls.GetSpriteImage("Player idle 1R12C.png");
+            player_climb = InternalCalls.GetSpriteImage("Player Climb.png");
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -77,9 +84,13 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,12,1f);
 
             entityA = InternalCalls.CreateEntity("FeetCollider");
+            entityWall = InternalCalls.CreateEntity("WallCollider");
             width = InternalCalls.GetTransformScaling().x /3f;
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entityA);
+            InternalCalls.AddCollider(entityWall);
+
+
             InternalCalls.CameraSetZoom(1.5f);
 
         }
@@ -94,7 +105,7 @@ namespace IS
             InternalCalls.AttachCamera();
 
             //movement
-            int hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
+            hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
            
 
             // scaling transform with movement
@@ -111,11 +122,15 @@ namespace IS
                         if (trans_rotate < -45) { trans_rotate = -45; }*/
 
 
-            if (hori_movement != 0) {
-                acceleration += acceleration_increment ;
+                
+            //SPRITE
+
+            if (hori_movement != 0)
+            {
+                acceleration += acceleration_increment;
                 if (acceleration > max_acceleration) { acceleration = max_acceleration; }
                 move_speed += acceleration;
-                if(move_speed>max_speed) { move_speed = max_speed;}
+                if (move_speed > max_speed) { move_speed = max_speed; }
 
                 InternalCalls.SetSpriteAnimationIndex(0);
                 InternalCalls.SetSpriteImage(player_walk);
@@ -124,23 +139,52 @@ namespace IS
             else
             {
                 move_speed -= acceleration;
-                acceleration -= acceleration_increment ;
+                acceleration -= acceleration_increment;
                 if (acceleration < acceleration_base) { acceleration = acceleration_base; }
                 if (move_speed < 0) { move_speed = 0; }
 
 
                 InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
-                
+
             }
+
 
 
 
             InternalCalls.RigidBodyAddForce(hori_movement * move_speed  *InternalCalls.GetDeltaTime(), 0f);
 
 
-            //if is grounded
-            if (InternalCalls.EntityCheckCollide(entityA) && InternalCalls.RigidBodyGetVelocity().y > -100)
+            //wall checking
+            if (InternalCalls.EntityCheckCollide(entityWall) && CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x) <100 && hori_movement!=0)
+            {
+                isClimbing = true;
+            }
+            else { isClimbing = false; }
+
+            if(isClimbing) {
+                InternalCalls.SetSpriteImage(player_climb);
+                InternalCalls.SetSpriteAnimationIndex(0);
+                InternalCalls.RigidBodyAddForce(0, climbSpeed * InternalCalls.GetDeltaTime());
+                InternalCalls.RigidBodySetForce(CustomMath.min(99,CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x))*hori_movement, InternalCalls.RigidBodyGetVelocity().y);
+                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall);
+                if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
+                {
+                    InternalCalls.TransformSetRotation(collided_angle, 0);
+                }
+                else
+                {
+                    InternalCalls.TransformSetRotation(0, 0);
+                }
+            }
+            else
+            {
+                InternalCalls.TransformSetScale(1f,1f);
+            }
+
+
+                //if is grounded
+            if (InternalCalls.EntityCheckCollide(entityA) && InternalCalls.RigidBodyGetVelocity().y > -100 && isClimbing==false)
             {
 
                 isGrounded = true;
@@ -159,14 +203,18 @@ namespace IS
                 Vector2D f_angle=Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians( aangle));
                 //set move speed when grounded
                 
-                //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
+                InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
 
                 // Set the rotation to be the same as the detected one
                 float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
-                if (collided_angle < 45 || collided_angle > 315)
+                if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                 {
                     InternalCalls.TransformSetRotation(collided_angle, 0);
                 }
+                else {
+                    InternalCalls.TransformSetRotation(0, 0);
+                }
+
                 jump_amount = jump_amount_set;
                 canDash = true;
 
@@ -175,7 +223,8 @@ namespace IS
                     Jump();
                 }
             }
-            else { //while in the air
+            else if(!isClimbing){ //while in the air
+
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
@@ -229,6 +278,7 @@ namespace IS
 
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
             FloorCheckerUpdate();
+            WallCheckerUpdate();
 
 
 
@@ -236,10 +286,11 @@ namespace IS
 
         static public void CleanUp()
         {
-            InternalCalls.FreeSpriteImage(backGround);
+            InternalCalls.FreeSpriteImage(player_climb);
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
             InternalCalls.DestroyEntity(entityA);
+            InternalCalls.DestroyEntity(entityWall);
         }
 
 
@@ -295,13 +346,43 @@ namespace IS
 
             // Set the floor checker's position
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityA);
-
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityA);
             InternalCalls.TransformSetScaleEntity(width, 2f, entityA);
-            
-
 
         }
-       
+
+        static private void WallCheckerUpdate()
+        {
+            if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-999, -99999, entityWall);  return; }
+            xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            float distanceLeft = width ;
+
+            Vector2D relativePosition = new Vector2D(distanceLeft *hori_movement , 0);
+
+            // Apply rotation to the relative position
+            Vector2D rotatedRelativePosition = new Vector2D(
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) - relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) + relativePosition.y * CustomMath.Cos(angleRadians))
+            );
+
+            // Calculate the absolute position for the wall checker
+            Vector2D checkerPosition = new Vector2D(
+                xCoord + rotatedRelativePosition.x,
+                yCoord + rotatedRelativePosition.y
+            );
+
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
+            InternalCalls.TransformSetScaleEntity(2f, height/2f, entityWall);
+            
+        }
+
+
+
+
 
     }
 
