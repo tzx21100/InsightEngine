@@ -76,6 +76,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Slope",
@@ -94,6 +95,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -110,7 +112,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 17.000001907348633,
 				"SpriteTransformScalingX" : 800.0,
@@ -154,6 +156,7 @@
 					"CircleColliderRadiusScale" : 0.40000000596046448
 				},
 				"CircleColliderEnabled" : true,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Player",
@@ -172,6 +175,7 @@
 				"RigidBodyRestitution" : 0.10000000149011612,
 				"RigidBodyVelocityX" : 0.33485323190689087,
 				"RigidBodyVelocityY" : 0.33997154235839844,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.56000000238418579,
 				"mStaticFriction" : 0.93300002813339233
 			},
@@ -218,7 +222,7 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 3.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.033333335071802139,
 						"time_per_frame" : 0.25,
@@ -286,6 +290,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Floor",
@@ -304,6 +309,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -320,7 +326,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1000.0,
@@ -380,6 +386,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 9,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform1",
@@ -398,6 +405,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -414,7 +422,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -474,6 +482,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform2",
@@ -492,6 +501,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -508,7 +518,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -568,6 +578,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform3",
@@ -586,6 +597,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -602,7 +614,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -662,6 +674,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform4",
@@ -680,6 +693,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -696,7 +710,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 7,
 				"SpriteTextureHeight" : 1283,
-				"SpriteTextureIndex" : 6,
+				"SpriteTextureIndex" : 9,
 				"SpriteTextureWidth" : 610,
 				"SpriteTransformRotation" : 344.0,
 				"SpriteTransformScalingX" : 300.0,
@@ -756,6 +770,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Floor",
@@ -774,6 +789,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -790,7 +806,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 500.0,
@@ -858,6 +874,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 10,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform1",
@@ -876,6 +893,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -892,7 +910,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -952,6 +970,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 9,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Platform1",
@@ -970,6 +989,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -986,7 +1006,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 800.0,
@@ -1046,6 +1066,7 @@
 				},
 				"BoxColliderEnabled" : true,
 				"CircleColliderEnabled" : false,
+				"CollidingEntity" : 0,
 				"ResponseEnabled" : true
 			},
 			"Name" : "Floor",
@@ -1064,6 +1085,7 @@
 				"RigidBodyRestitution" : 0.80000001192092896,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.0,
 				"mStaticFriction" : 0.0
 			},
@@ -1080,7 +1102,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
 				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1481,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2000.0,
