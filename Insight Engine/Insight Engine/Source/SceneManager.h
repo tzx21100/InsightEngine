@@ -183,6 +183,8 @@ namespace IS {
          */
         void DeleteEntity(Entity entity);
 
+        void SaveAllScenes();
+
 	private:
 		SceneID mActiveSceneID	= 0; ///< Unique identifier for active scene
 		SceneID mSceneCount		= 0; ///< Keep track of number of scenes
@@ -191,7 +193,7 @@ namespace IS {
 		SceneMap<std::string> mSceneNames;
 		SceneMap<Entity> mSceneEntities;
 		SceneMap<Map<Entity, Signature>> mSceneEntitySignatures;
-		SceneMap<Map<std::string, Entity>> mSceneEntityNames;
+		SceneMap<Map<std::string, std::vector<Entity>>> mSceneEntityNames;
         SceneMap<Map<Entity, std::string>> mSceneEntityIds;
 		SceneMap<ECSMap> mSceneComponents; // some data structure its an unordered tree :)
 

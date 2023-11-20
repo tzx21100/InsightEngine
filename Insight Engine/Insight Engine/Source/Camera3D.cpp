@@ -34,6 +34,7 @@ namespace IS {
 
 	float Camera3D::mZoomSpeed = 0.1f;
 	float Camera3D::mMoveSpeed = 5.f;
+	bool Camera3D::isOrtho = true;
 
 	void Camera3D::Init(int width, int height, float fov)
 	{
@@ -52,7 +53,14 @@ namespace IS {
 	{
 		float adjusted_fov = std::clamp(mFOV / mZoomLevel, CAMERA_FOV_MIN, CAMERA_FOV_MAX);
 		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
-		mProjection = glm::perspective(glm::radians(adjusted_fov), mAspectRatio, mNear, mFar);
+
+		if (isOrtho) {
+			auto [width, height] = InsightEngine::Instance().GetWindowSize();
+			float fWidth = static_cast<float>(width) / GetZoomLevel();
+			float fHeight = fWidth / GetAspectRatio();
+			mProjection = glm::ortho(-fWidth, fWidth, -fHeight, fHeight, mNear, mFar);
+		}
+		else mProjection = glm::perspective(glm::radians(adjusted_fov), mAspectRatio, mNear, mFar);
 	}
 
 	void Camera3D::PanCamera(float delta_x, float delta_y)

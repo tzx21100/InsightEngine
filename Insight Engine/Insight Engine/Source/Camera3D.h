@@ -60,12 +60,15 @@ namespace IS {
 		glm::mat4 GetProjectionMatrix() { return mProjection; }
 		
 		glm::mat4 getCameraToNDCXform() { return mProjection * mView; }
+		
+		float GetAspectRatio() { return mAspectRatio; }
 
 		/// Static members
 		static aCameraType mActiveCamera;
 
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
+		static bool isOrtho;
 
 		glm::vec3 mPosition{};
 

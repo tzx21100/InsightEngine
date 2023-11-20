@@ -91,6 +91,43 @@ namespace IS {
         void AcceptAssetBrowserPayload();
 
         /*!
+         * \brief Renders gui to add component to an entity.
+         *
+         * \param entity The Entity to add components to.
+         */
+        void RenderAddComponent(Entity entity);
+
+        /*!
+         * \brief Renders configuration for entities.
+         *
+         * Configurations include rename, save/load prefab,
+         * add component, clone/delete entity.
+         */
+        void RenderEntityConfig(Entity entity);
+
+        /*!
+         * \brief Renders configuration for the specified Entity.
+
+         * \param entity The Entity to be deleted.
+         * \param show Boolean flag to determine where to show window.
+         */
+        void RenderConfirmDelete(Entity entity);
+
+        /*!
+         * \brief Clone an existing entity.
+         *
+         * \param entity The Entity to be cloned.
+         */
+        void CloneEntity(Entity entity);
+
+        /*!
+         * \brief Delete an existing entity.
+         *
+         * \param entity The Entity to be deleted.
+         */
+        void DeleteEntity(Entity entity);
+
+        /*!
          * \brief Check if the game panel is in focus.
          *
          * \return Boolean flag indicating focus.
@@ -183,10 +220,12 @@ namespace IS {
     private:
         bool mShowNewScene = false; ///< Flag indicating to show new scene.
         bool mShowNewScript = false; ///< Flag indicating to show new script.
+        bool mShowDelete = false;
 
         Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
 
         std::shared_ptr<Entity> mSelectedEntity; ///< Pointer to the selected entity.
+        Entity mEntityToDelete;
 
         std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
         OrderedMap<std::string, Panel> mPanels; ///< An ordered map of panels.
@@ -235,6 +274,11 @@ namespace IS {
          * \brief Save current scene.
          */
         void SaveScene();
+
+        /*!
+         * \brief Save all scenes.
+         */
+        void SaveAllScenes();
 
         /*!
          * \brief Save current scene as.

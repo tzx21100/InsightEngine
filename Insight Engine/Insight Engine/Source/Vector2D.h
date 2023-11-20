@@ -75,6 +75,7 @@ namespace IS {
     Vector2D operator -  (const Vector2D& lhs, const Vector2D& rhs);
     Vector2D operator *  (const Vector2D& lhs, float rhs);
     Vector2D operator *  (float lhs, const Vector2D& rhs);
+    Vector2D operator *  (Vector2D lhs, Vector2D rhs);
     Vector2D operator /  (const Vector2D& lhs, float rhs);
     bool     operator == (const Vector2D& lhs, const Vector2D& rhs);
 

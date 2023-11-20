@@ -14,6 +14,13 @@ namespace IS {
         virtual ~ICommand() = default;
         virtual void Execute() = 0;
         virtual void Undo() = 0;
+        virtual bool Merge(ICommand*) = 0;
+
+        void SetMerge() { mCanMerge = false; }
+        bool CanMerge() const { return mCanMerge; }
+
+    protected:
+        bool mCanMerge = true;
     };
 
     class Vec2Command final : public ICommand
@@ -32,6 +39,21 @@ namespace IS {
         {
             mValue = mOldValue;
             IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mNewValue.x, mNewValue.y, mValue.x, mValue.y);
+        }
+
+        bool Merge(ICommand* other) override
+        {
+            Vec2Command* command = dynamic_cast<Vec2Command*>(other);
+            if (command)
+            {
+                if (&command->mValue == &mValue)
+                {
+                    command->mNewValue = mNewValue;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     private:
@@ -58,6 +80,21 @@ namespace IS {
             IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mNewValue, mValue);
         }
 
+        bool Merge(ICommand* other) override
+        {
+            FloatCommand* command = dynamic_cast<FloatCommand*>(other);
+            if (command)
+            {
+                if (&command->mValue == &mValue)
+                {
+                    command->mNewValue = mNewValue;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     private:
         float& mValue;
         float mOldValue;
@@ -71,6 +108,7 @@ namespace IS {
 
         void Execute() override {}
         void Undo() override {}
+        bool Merge(ICommand*) override {}
 
     private:
         Entity mEntity;
@@ -84,6 +122,7 @@ namespace IS {
 
         void Execute() override {}
         void Undo() override {}
+        bool Merge(ICommand*) override {}
 
     private:
         Entity mEntity;

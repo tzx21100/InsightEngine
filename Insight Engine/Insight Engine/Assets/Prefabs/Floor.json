@@ -1,0 +1,230 @@
+{
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+		"AudioVolumeLevel" : 1.0
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 0.0,
+				"Y" : -400.0
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false
+	},
+	"Name" : "Floor",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 300000.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.80000001192092896,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"mDynamicFriction" : 0.0,
+		"mStaticFriction" : 0.0
+	},
+	"Signature" : "00000000000000000000010100000111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 0,
+		"SpriteColorX" : 0.54492461681365967,
+		"SpriteColorY" : 0.27639034390449524,
+		"SpriteColorZ" : 0.28316143155097961,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Platform01_Tileable.png",
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 6,
+		"SpriteTextureHeight" : 565,
+		"SpriteTextureIndex" : 5,
+		"SpriteTextureWidth" : 1481,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1000.0,
+		"SpriteTransformScalingY" : 300.0,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : -400.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1000.0,
+		"TransformScalingY" : 300.0,
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : -400.0
+	}
+}

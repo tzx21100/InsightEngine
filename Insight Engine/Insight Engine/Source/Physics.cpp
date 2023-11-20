@@ -19,8 +19,7 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
-#include "Sprite.h"
+#include "Physics.h"
 
 namespace IS {
 
@@ -34,10 +33,10 @@ namespace IS {
 	// Constructs a Physics instance
 	Physics::Physics()
 	{
-		mMaxVelocity = 800.f;									// Maximum velocity for game bodies
-		mMinVelocity = -800.f;									// Minimum velocity for game bodies
+		mMaxVelocity = 20000.f;									// Maximum velocity for game bodies
+		mMinVelocity = -20000.f;									// Minimum velocity for game bodies
 		mCurrentIterations = 0;									// Number of current iterations for physics step
-		mTotalIterations = 10;									// Number of iterations for physics step
+		mTotalIterations = 1;									// Number of iterations for physics step
 		mContactPair = std::vector<std::pair<Entity, Entity>>();// vector list of each two contact entities
 		mManifoldInfo;											// instance of Manifold
 		mImplicitGrid;											// instance of ImplicitGrid
@@ -72,7 +71,7 @@ namespace IS {
 		}
 
 		// add new entity inside grid
-		mImplicitGrid.AddIntoCell(mEntities);
+		//mImplicitGrid.AddIntoCell(mEntities);
 
 		// for testing grid
 		auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
@@ -108,23 +107,24 @@ namespace IS {
 			{
 
 				// empty contact pair before going into collision step
-				mContactPair.clear();
+				//mContactPair.clear();
 
 				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 				Step(dt, mEntities);
 
 				// Collision Detection
-				BroadPhase();
+				//BroadPhase();
 
 				// Collision Resolution
-				NarrowPhase();
+				//NarrowPhase();
 			}
 
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
 		}
-		mImplicitGrid.ClearGrid();
+		//mImplicitGrid.ClearGrid();
 	}
+#if 0
 
 	// collision detect for implicit grid
 	void Physics::ImplicitGridCollisionDetect()
@@ -356,6 +356,8 @@ namespace IS {
 			transB->Move(vec / 2.f);
 		}
 	}
+
+
 
 	// Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities
 	void Physics::ResolveCollision(Manifold& contact)
@@ -635,29 +637,35 @@ namespace IS {
 			bodyB->mAngularVelocity += ISVector2DCrossProductMag(rb, friction_impulse) * bodyB->mInvInertia;
 		}
 	}
+#endif
 
 	// Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.
-	void Physics::DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color)
+	void Physics::DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color)
 	{
 		// draw colliders in green
 		if (mShowColliders)
 		{
-			for (size_t i = 0; i < body.mTransformedVertices.size(); i++)
-			{
-				Vector2D va = body.mTransformedVertices[i];
-				Vector2D vb = body.mTransformedVertices[(i + 1) % body.mTransformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
+			if (collider.IsBoxColliderEnable()) {
+				for (size_t i = 0; i < collider.mBoxCollider.transformedVertices.size(); i++)
+				{
+					Vector2D va = collider.mBoxCollider.transformedVertices[i];
+					Vector2D vb = collider.mBoxCollider.transformedVertices[(i + 1) % collider.mBoxCollider.transformedVertices.size()]; // modules by the size of the vector to avoid going out of the range
 
-				Sprite::drawDebugLine(va, vb, color);
+					Sprite::drawDebugLine(va, vb, color);
+				}
 			}
+			if (collider.IsCircleColliderEnable()) {
+				Sprite::drawDebugCircle(collider.mCircleCollider.center, { collider.mCircleCollider.radius * 2.f, collider.mCircleCollider.radius * 2.f }, color);
+			}
+
 		}
 
 		// draw grid cell line in white
 		if (mShowGrid) ImplicitGrid::DrawGrid();
-
+		
 		// draw the velocity line in blue
-		if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
+		//if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
-
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities)
 	{
@@ -666,21 +674,23 @@ namespace IS {
 
 		for (auto const& entity : entities)
 		{
+			auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+
+			if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
+				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+				collider.UpdateBoxCollider(trans);
+			}
 
 			// check if having rigidbody component
 			if (InsightEngine::Instance().HasComponent<RigidBody>(entity))
 			{
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				body.BodyFollowTransform(trans);
-				//// if the entity is static or kinematic, skip
-				//if (body.mBodyType != BodyType::Dynamic) {
-				//	continue;
-				//}
 
-				/*Cell test = mImplicitGrid.GetCell(body.mBodyTransform.world_position);
-				IS_CORE_DEBUG({ "row - {}" }, test.row);
-				IS_CORE_DEBUG({ "col - {}" }, test.col);*/
+				body.BodyFollowTransform(trans);
+
+				if (body.mBodyType == BodyType::Static) {
+					continue; // skip the update for static entity
+				}
 
 				//freeze
 				if (InsightEngine::Instance().mFreezeFrame)
@@ -692,7 +702,7 @@ namespace IS {
 				// update the velocity if gravity exists
 				if (mExertingGravity)
 				{
-					body.mAcceleration = body.mForce * body.mInvMass + mGravity;
+					body.mAcceleration = body.mForce * body.mInvMass + (mGravity * body.mGravityScale);
 					body.mVelocity += body.mAcceleration * time;
 				}
 
@@ -710,12 +720,12 @@ namespace IS {
 
 				// update position
 				//mImplicitGrid.UpdateCell(entity, time);
-				body.mBodyTransform.world_position += body.mVelocity * time;
-				trans.world_position = body.mBodyTransform.world_position;
+				body.mPosition += body.mVelocity * time;
+				trans.world_position = body.mPosition;
 
-				float angle = trans.getRotation();
-				angle += body.mAngularVelocity * time * 10.f;
-				trans.setRotation(angle, body.mAngularVelocity);
+				//body.mRotation = trans.getRotation();
+				body.mRotation += body.mAngularVelocity * time * 10.f;
+				trans.setRotation(body.mRotation, body.mAngularVelocity);
 				//trans.world_position += body.mVelocity * time;
 			}
 		}

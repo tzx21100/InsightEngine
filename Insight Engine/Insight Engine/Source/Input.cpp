@@ -68,6 +68,16 @@ namespace IS {
 
         // Accept file payload
         glfwSetDropCallback(native_window, FileDropCallback);
+
+        // Minimize window if ALT+TAB / CTRL+ALT+DEL
+        glfwSetWindowFocusCallback(native_window, [](GLFWwindow* window, int focused)
+        {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            if (!focused && InsightEngine::Instance().mRuntime)
+            {
+                input.mWindow->SetMinimized();
+            }
+        });
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {
@@ -136,8 +146,17 @@ namespace IS {
     std::pair<double, double> InputManager::GetMousePosition() {
         previousWorldMousePos = currentWorldMousePos;
         
-        double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - current_mouse_y) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        double xPos, yPos;
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        
+        double newX = (((xPos - center_x) * ratio_width * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (((center_y - yPos) * ratio_height * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
+
+        // WORKS WITH 1X CAMERA ZOOM, SO SHOULD BE SCALED BY RATIO / 2???
+        // double newX = 2.f * (xPos - center_x) * ratio_width  + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        // double newY = 2.f * (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
+        
+        //newY = -(newX * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetAspectRatio());
         // IS_CORE_DEBUG("{}, {}", newX, newY);
 
         currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };
@@ -309,8 +328,8 @@ namespace IS {
         glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 
 
-        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
+        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
+        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
 
         InsightEngine& engine = InsightEngine::Instance();
         auto const& window_sys = engine.GetSystem<WindowSystem>("Window");

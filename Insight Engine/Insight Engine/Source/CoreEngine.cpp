@@ -23,6 +23,8 @@
 #include "JsonSaveLoad.h" // This is for Saving and Loading
 #include "WindowSystem.h" // Access to window
 #include "EditorLayer.h"
+#include "Body.h"
+#include "Collider.h"
 
 #include <iostream>
 #include <thread>
@@ -101,25 +103,29 @@ namespace IS {
             //exact accumulated time differences, among all game loops
             currentNumberOfSteps++;
         }
-        
-        // Update all systems
-        for (const auto& system : mSystemList)
-        {
-            Timer timer(system->GetName() + " System", false);
-            system->Update(mFixedDeltaTime.count());
-            timer.Stop();
 
-            if (to_update) {
-                mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
-                mSystemDeltas["Engine"] += timer.GetDeltaTime();
+        if (currentNumberOfSteps > 0) {
+
+            // Update all systems
+            for (const auto& system : mSystemList)
+            {
+                Timer timer(system->GetName() + " System", false);
+                system->Update(1.f / 60.f);
+                timer.Stop();
+
+                if (to_update) {
+                    mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
+                    mSystemDeltas["Engine"] += timer.GetDeltaTime();
+                }
             }
         }
+
 
         // Update and render GUI
         if (mRenderGUI)
         {
             mImGuiLayer->Begin();
-            mLayers.Update(mFixedDeltaTime.count());
+            mLayers.Update(1.f / 60.f);
             mLayers.Render();
             mImGuiLayer->End();
         }
@@ -301,7 +307,7 @@ namespace IS {
         trans.setRotation((prng.generate() * (MAX_ROTATION - MIN_ROTATION)) + MIN_ROTATION);
 
         auto& sprite = engine.GetComponent<Sprite>(e);
-        sprite.color = { prng.generate(), prng.generate(), prng.generate() };
+        sprite.color = { prng.generate(), prng.generate(), prng.generate(), 1.f };
         // with texture
         if (with_texture) {
             auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -333,6 +339,7 @@ namespace IS {
         DeserializeComponent<Transform>(entity, loaded, "Transform");
         DeserializeComponent<ScriptComponent>(entity, loaded, "Script");
         DeserializeComponent<ButtonComponent>(entity, loaded, "ButtonComponent");
+        DeserializeComponent<Collider>(entity, loaded, "Collider");
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
     }
@@ -343,6 +350,7 @@ namespace IS {
         SerializeComponent<Transform>(entity, saved_entity, "Transform");
         SerializeComponent<ScriptComponent>(entity, saved_entity, "Script");
         SerializeComponent<ButtonComponent>(entity, saved_entity, "ButtonComponent");
+        SerializeComponent<Collider>(entity, saved_entity, "Collider");
         SerializeComponent<AudioListener>(entity, saved_entity, "AudioListener");
         SerializeComponent<AudioEmitter>(entity, saved_entity, "AudioEmitter");
     }
@@ -385,6 +393,8 @@ namespace IS {
     void InsightEngine::SaveAsPrefab(Entity entity,std::string PrefabName) {
         std::string file_path = "Assets/Prefabs/" + PrefabName + ".json";
         SaveEntityToJson(entity,file_path);
+        auto system=GetSystem<AssetManager>("Asset");
+        system->LoadPrefab(file_path);
         IS_CORE_INFO("Prefab \"{}\" saved at \"{}\"", PrefabName, file_path);
     }
 
@@ -425,7 +435,8 @@ namespace IS {
         Json::Value scene;
         scene["EntityAmount"] = EntitiesAlive; // This is needed for loading to tell how many entities there are.
         Json::Value entities(Json::arrayValue);
-        for (Entity id = 0 ; id < mEntityManager->EntitiesAlive(); id++) {
+        auto& aliveEntities = mEntityManager->GetEntitiesAlive();
+        for (const auto& [id, name] : aliveEntities) {
             Json::Value entity;
             entity["Name"] = mEntityManager->FindNames(id);
             SerializeAllComponents(id, entity);
@@ -505,7 +516,7 @@ namespace IS {
     //abstracted function to make game script
     void InsightEngine::CreateGameScript(const std::string& ScriptName) {
         auto script = GetSystem<ScriptManager>("ScriptManager");
-        script->CreateClassFile(ScriptName, "../IS-ScriptCore/Source/" + ScriptName + ".cs");
+        script->CreateClassFile(ScriptName, "/Insight Engine/Assets/Scripts" + ScriptName + ".cs");
     }
 
     void InsightEngine::OpenGameScript(const std::string& ScriptName) {

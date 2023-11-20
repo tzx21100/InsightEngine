@@ -40,8 +40,8 @@ namespace IS {
     public:
         // Instance data of quad entity (static color, textured, animated)
         struct instanceData {
-            glm::vec3 color{};
-            float tex_index{};
+            glm::vec4 color{};
+            float tex_index{-1.f};
             glm::mat3 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
@@ -50,8 +50,8 @@ namespace IS {
         };
 
         struct instanceData3D {
-            glm::vec3 color{};
-            float tex_index{};
+            glm::vec4 color{};
+            float tex_index{-1};
             glm::mat4 model_to_ndc_xform{};
             glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
             glm::vec2 anim_frame_index{ 0.f, 0.f };
@@ -61,13 +61,7 @@ namespace IS {
         
         // Instance data of debug non-quad entity (line, circle)
         struct nonQuadInstanceData {
-            glm::vec3 color{};
-            glm::mat3 model_to_ndc_xform{};
-        };
-
-        // Instance data of outlines (mouse picked entities)
-        struct nonQuad3DInstanceData {
-            glm::vec3 color{};
+            glm::vec4 color{};
             glm::mat4 model_to_ndc_xform{};
         };
 
@@ -78,10 +72,10 @@ namespace IS {
         Image img{};                    // Texture Object
         std::vector<Animation> anims{}; // Vector of animations attached to this sprite
         bool toRender{ true };          // Flag to control rendering
-        int layer{};                    // Layer value (lower is further back)
+        int layer{ DrawLayer::DEFAULT_LAYER };                    // Layer value (lower is further back)
         // ImGui properties
         std::string name;               // The name of the sprite.
-        glm::vec3 color{};              // The color of the sprite.
+        glm::vec4 color{};              // The color of the sprite.
 
         // For layering //
         enum DrawLayer : int
@@ -184,6 +178,7 @@ namespace IS {
         void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
         void setSpriteSize(float width, float height) { model_TRS.scaling = Vec2D(width, height); }
 
+
         /*!
          * \brief Renders instances of quads efficiently.
          *
@@ -194,6 +189,11 @@ namespace IS {
          */
         static void draw_instanced_quads();
         static void draw_instanced_3D_quads();
+
+        static void draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer = DrawLayer::DEFAULT_LAYER);
+        static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer = DrawLayer::DEFAULT_LAYER);
+
+        static void draw_lights();
 
         static void draw_picked_entity_border();
 

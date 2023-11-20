@@ -135,11 +135,15 @@ namespace IS {
          */
         void setRatio(float widthR, float heightR) {
             InsightEngine& engine = InsightEngine::Instance();
-            auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-            auto [width, height] = window_sys->GetWindowSize();
+            //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+            auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
             //glfwGetWindowSize(window, &width, &height);
-            ratio_width =  (float)width / widthR;
-            ratio_height =  (float)height / heightR;
+            // ratio_width =  (float)width / widthR;
+            // ratio_height =  (float)height / heightR;
+
+            ratio_width = widthR / static_cast<float>(width);
+            if (engine.IsFullScreen()) ratio_height = heightR / (static_cast<float>(height));
+            else ratio_height = heightR / (static_cast<float>(height) + 30.f); // 30.f for the white title bar
         }
         void PrintMouseWorldPos();
         void mouse_pick_entity();

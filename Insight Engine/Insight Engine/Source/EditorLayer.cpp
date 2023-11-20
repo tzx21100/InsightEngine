@@ -25,6 +25,8 @@
 #include "BrowserPanel.h"
 #include "FileUtils.h"
 #include "CommandHistory.h"
+#include "Body.h"
+#include "Collider.h"
 
 // Dependencies
 #include <ranges>
@@ -163,19 +165,26 @@ namespace IS {
                 panel->RenderPanel();
             }
 
-            auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
+            //auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
 
-            if (mSelectedEntity && hovered_entity && *mSelectedEntity == *hovered_entity)
-            {
-                Entity entity = *mSelectedEntity;
-                mPanels.Get<HierarchyPanel>("Hierarchy")->RenderEntityConfig(entity);
-            }
+            //if (mSelectedEntity && hovered_entity && *mSelectedEntity == *hovered_entity)
+            //{
+            //    if (io.MouseClicked[ImGuiMouseButton_Right])
+            //    {
+            //        ImGui::OpenPopup("Entity F");
+            //    }
+
+            //    if (ImGui::BeginPopup("Entity F"))
+            //    {
+            //        RenderEntityConfig(*hovered_entity);
+
+            //        ImGui::EndPopup();
+            //    }
+            //}
         }
 
         ImGui::End(); // end dockspace
         //style.WindowMinSize = default_min_window_size;
-
-        ImGui::ShowDemoWindow();
 
     } // end OnRender()
 
@@ -209,7 +218,8 @@ namespace IS {
 
                 // Saving Scene
                 if (ImGui::MenuItem(ICON_LC_SAVE "  Save Scene", "Ctrl+S")) { SaveScene(); }
-                if (ImGui::MenuItem(ICON_LC_PEN_SQUARE "  Save Scene As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
+                if (ImGui::MenuItem(ICON_LC_SAVE_ALL "  Save All Scene", "Ctrl+Shift+S")) {}
+                if (ImGui::MenuItem(ICON_LC_PEN_SQUARE "  Save Scene As...")) { SaveSceneAs(); }
 
                 ImGui::Separator();
 
@@ -417,6 +427,171 @@ namespace IS {
 
     } // end ShowCreatePopup()
 
+    void EditorLayer::RenderAddComponent(Entity entity)
+    {
+        auto& engine = InsightEngine::Instance();
+
+        // Entity already has all the components
+        if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
+            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
+            engine.HasComponent<ScriptComponent>(entity) && engine.HasComponent<AudioListener>(entity) &&
+            engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<ButtonComponent>(entity))
+        {
+            if (ImGui::MenuItem("Already have all components"))
+                ImGui::CloseCurrentPopup();
+            return;
+        }
+
+        // Choose Available Component to add
+
+        // Add Transform Component
+        if (!engine.HasComponent<Transform>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_MOVE "  Transform"))
+            {
+                engine.AddComponent<Transform>(entity, Transform());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Sprite Component
+        if (!engine.HasComponent<Sprite>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_IMAGE "  Sprite"))
+            {
+                engine.AddComponent<Sprite>(entity, Sprite());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Rigidbody Component
+        if (!engine.HasComponent<RigidBody>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_PERSON_STANDING "  Rigidbody"))
+            {
+                engine.AddComponent<RigidBody>(entity, RigidBody());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Collider Component
+        if (!engine.HasComponent<Collider>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_FLIP_HORIZONTAL_2 "  Collider"))
+            {
+                engine.AddComponent<Collider>(entity, Collider());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Script Component
+        if (!engine.HasComponent<ScriptComponent>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_BRACES "  Script"))
+            {
+                // Browse for script to add
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                {
+                    engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
+                    auto& script = engine.GetComponent<ScriptComponent>(entity);
+                    script.mScriptName = filepath.stem().string();
+                }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Audio Listener Component
+        if (!engine.HasComponent<AudioListener>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_EAR "  Audio Listener"))
+            {
+                engine.AddComponent<AudioListener>(entity, AudioListener());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Audio Emitter Component
+        if (!engine.HasComponent<AudioEmitter>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_SPEAKER "  Audio Emitter"))
+            {
+                engine.AddComponent<AudioEmitter>(entity, AudioEmitter());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Button Component
+        if (!engine.HasComponent<ButtonComponent>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_SQUARE "  Button"))
+            {
+                engine.AddComponent<ButtonComponent>(entity, ButtonComponent());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+    } // end RenderAddComponent()
+
+    void EditorLayer::RenderEntityConfig(Entity entity)
+    {
+        // Add Component
+        if (ImGui::BeginMenu("Add Component"))
+        {
+            RenderAddComponent(entity);
+            ImGui::EndMenu();
+        }
+
+        // Clone/Delete entity
+        if (ImGui::MenuItem(ICON_LC_COPY "  Clone", "Ctrl+D")) { CloneEntity(entity); }
+        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete", "Del")) { DeleteEntity(entity); }
+    }
+
+    void EditorLayer::RenderConfirmDelete(Entity entity)
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+        auto [width, height] = engine.GetWindowSize();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize;
+
+        ImGui::OpenPopup("Confirm Delete?");
+
+        ImGui::SetNextWindowPos({ width / 2.f, height / 2.f });
+        if (ImGui::BeginPopupModal("Confirm Delete?", &mShowDelete, window_flags))
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
+
+            ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
+            ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
+            ImGui::TableNextColumn();
+            if (ImGui::Button("CONFIRM"))
+            {
+                engine.DeleteEntity(entity);
+                if (IsAnyEntitySelected() && GetSelectedEntity() == entity)
+                {
+                    ResetEntitySelection();
+                }
+                mShowDelete = false;
+            }
+            ImGui::PopStyleColor(3);
+            ImGui::TableNextColumn();
+            if (ImGui::Button("CANCEL")) { mShowDelete = false; }
+            ImGui::EndTable();
+            ImGui::EndPopup();
+        }
+    }
+
+    void EditorLayer::CloneEntity(Entity entity) 
+    {
+        SceneManager::Instance().CloneEntity(entity);
+    }
+
+    void EditorLayer::DeleteEntity(Entity entity)
+    {
+        mShowDelete = true;
+        mEntityToDelete = entity;
+    }
+
     void EditorLayer::OpenScene()
     {
         ResetEntitySelection();
@@ -453,7 +628,15 @@ namespace IS {
 
     } // end AcceptAssetBrowserPayload()
 
-    void EditorLayer::SaveScene()  { SceneManager::Instance().SaveScene(); }
+    void EditorLayer::SaveScene()
+    {
+        SceneManager::Instance().SaveScene();
+    }
+
+    void EditorLayer::SaveAllScenes()
+    {
+        SceneManager::Instance().SaveAllScenes();
+    }
 
     void EditorLayer::SaveSceneAs()
     {
@@ -475,6 +658,9 @@ namespace IS {
         IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
     }
 
-    void EditorLayer::ExitProgram() { InsightEngine::Instance().Exit(); }
+    void EditorLayer::ExitProgram()
+    { 
+        InsightEngine::Instance().Exit();
+    }
 
 } // end namespace IS

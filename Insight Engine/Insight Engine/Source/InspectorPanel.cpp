@@ -20,6 +20,10 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "InspectorPanel.h"
+
+#include "Body.h"
+#include "Collider.h"
+#include "CollisionSystem.h"
 #include "EditorUtils.h"
 #include "EditorLayer.h"
 #include "FileUtils.h"
@@ -112,21 +116,7 @@ namespace IS {
 
             if (ImGui::BeginPopup("Entity Options"))
             {
-                if (ImGui::BeginMenu("Add Component"))
-                {
-                    HierarchyPanel::RenderAddComponent(entity);
-
-                    ImGui::EndMenu();
-                }
-                if (ImGui::MenuItem("Clone Entity"))
-                {
-                    engine.CopyEntity(entity);
-                }
-                if (ImGui::MenuItem("Delete Entity"))
-                {
-                    engine.DeleteEntity(entity);
-                    mEditorLayer.ResetEntitySelection();
-                }
+                mEditorLayer.RenderEntityConfig(entity);
 
                 ImGui::EndPopup();
             }
@@ -140,7 +130,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(100.f);
-                bool begin_combo = ImGui::BeginCombo("##Prefabs", name.c_str());
+                bool begin_combo = ImGui::BeginCombo("##Prefabs", nullptr, ImGuiComboFlags_NoPreview);
                 if (begin_combo)
                 {
                     auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -205,16 +195,17 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
 
-                float rotation = transform.rotation * (PI / 180.f);
                 // Apply modification
-                if (ImGui::SliderAngle("##Rotation", &rotation, 0.f))
+                float rotation = transform.rotation;
+                if (ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
                 {
-                    float new_rotation = rotation / (PI / 180.f);
-                    if (new_rotation != transform.rotation)
-                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, new_rotation));
+                    if (rotation != transform.rotation)
+                    {
+                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, rotation));
+                    }
                 }
 
-                ImGui::EndTable();
+                ImGui::EndTable(); // end table TransformRotation
             }
 
             // Render Scale
@@ -222,7 +213,9 @@ namespace IS {
             if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
             {
                 if (scaling != transform.scaling)
+                {
                     CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scaling));
+                }                    
             }
 
         }); // end render Transform Component
@@ -267,7 +260,7 @@ namespace IS {
                 ImGui::PopFont();
 
                 ImGui::TableNextColumn();
-                ImGui::ColorEdit3("##Color", &sprite.color[0]);
+                ImGui::ColorEdit4("##Color", &sprite.color[0]);
                 ImGui::Spacing();
 
                 ImGui::TableNextColumn();
@@ -378,6 +371,7 @@ namespace IS {
             ImGuiTableFlags table_flags = 0;
             if (ImGui::BeginTable("Texture", 2, table_flags))
             {
+                ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Width");
@@ -399,7 +393,9 @@ namespace IS {
             if (has_texture)
             {
                 if (ImGui::Button("Add Animation"))
+                {
                     mShowAddAnimation = true;
+                }                    
             }
 
             // Render animation details
@@ -481,7 +477,9 @@ namespace IS {
             }
 
             if (mShowAddAnimation)
+            {
                 AddAnimation(sprite);
+            }                
 
         }); // end render Sprite Component
 
@@ -517,14 +515,6 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
-
-                // Body Shape
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Body Shape");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                EditorUtils::RenderComboBoxEnum<BodyShape>("##Body Shape", rigidbody.mBodyShape, { "Box", "Circle", "Line" });
 
                 // Mass
                 ImGui::TableNextColumn();
@@ -576,9 +566,85 @@ namespace IS {
                 ImGui::Text("%.2f", rigidbody.mDensity);
                 ImGui::PopItemWidth();
 
+                // Static Friction
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Static Friction");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::PushItemWidth(80.f);
+                ImGui::InputFloat("##Static Friction", &rigidbody.mStaticFriction);
+                ImGui::PopItemWidth();
+
+                // Dynamic Friction
+                ImGui::TableNextColumn();
+                ImGui::PushFont(FONT_BOLD);
+                ImGui::TextUnformatted("Dynamic Friction");
+                ImGui::PopFont();
+                ImGui::TableNextColumn();
+                ImGui::PushItemWidth(80.f);
+                ImGui::InputFloat("##Dynamic Friction", &rigidbody.mDynamicFriction);
+                ImGui::PopItemWidth();
+
                 ImGui::EndTable(); // end table RigidbodyTable
             }
         }); // end render Rigidbody Component
+
+        // Collider Component
+        RenderComponent<Collider>(ICON_LC_FLIP_HORIZONTAL_2 "  Collider", entity, [FONT_BOLD](Collider& collider)
+        {
+            bool box_enabled = collider.IsBoxColliderEnable();
+            bool circle_enabled = collider.IsCircleColliderEnable();
+            bool all_enabled = box_enabled && circle_enabled;
+
+            if (ImGui::RadioButton("All", all_enabled))
+            {
+                all_enabled ? collider.DisableAllColliders() : collider.EnableAllColliders();
+            }
+
+            ImGui::SameLine();
+
+            if (ImGui::RadioButton("Box", box_enabled))
+            {
+                box_enabled ? collider.DisableBoxCollider() : collider.EnableBoxCollider();
+            }
+
+            ImGui::SameLine();
+
+            if (ImGui::RadioButton("Circle", circle_enabled))
+            {
+                circle_enabled ? collider.DisableCircleCollider() : collider.EnableCircleCollider();
+            }
+
+            ImGui::Spacing();
+
+            if (box_enabled)
+            {
+                ImGui::SeparatorText(ICON_LC_BOX_SELECT "  Box Collider");
+                EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
+                EditorUtils::RenderControlVec2("Scale", collider.mBoxCollider.sizeScale);
+            }
+            
+            if (circle_enabled)
+            {
+                ImGui::SeparatorText(ICON_LC_CIRCLE_DASHED "  Circle Collider");
+                EditorUtils::RenderControlVec2("Offset", collider.mCircleCollider.offset);
+
+                if (ImGui::BeginTable("Circle Radius Scale Table", 2))
+                {
+                    ImGui::TableSetupColumn("Collider Table Column", ImGuiTableColumnFlags_WidthFixed, 100.f);
+                    EditorUtils::AddTableBoldLabel("Radius Scale");
+
+                    ImGui::TableNextColumn();
+                    ImGui::PushItemWidth(80.f);
+                    ImGui::InputFloat("##Radius Scale", &collider.mCircleCollider.radiusScale);
+                    ImGui::PopItemWidth();
+
+                    ImGui::EndTable(); // end table Circle Radius Scale Table
+                }
+            }
+
+        }); // end render Collider Component
 
         // Script Component
         RenderComponent<ScriptComponent>(ICON_LC_BRACES "  Script", entity, [FONT_BOLD](ScriptComponent& script)
@@ -698,7 +764,7 @@ namespace IS {
                     }
                     ImGui::EndDragDropTarget();
                 }
-
+                
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);
                 ImGui::TextUnformatted("Looped");
@@ -750,7 +816,9 @@ namespace IS {
                 std::ranges::copy(source, std::begin(buffer));
                 ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
                 if (ImGui::InputText("##ButtonText", buffer, sizeof(buffer), input_text_flags))
+                {
                     text = std::string(buffer);
+                }                    
 
                 ImGui::EndTable(); // end table Button Table
             }
@@ -773,19 +841,25 @@ namespace IS {
         if (engine.HasComponent<Component>(entity))
         {
             bool opened = ImGui::TreeNodeEx(std::bit_cast<void*>(typeid(Component).hash_code()), tree_flags, label.c_str());
+            bool vertical_scroll_visible = ImGui::GetScrollMaxY() != 0;
+            float x_offset = ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x;
 
             // Display Component Config
-            ImGui::SameLine(ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - style.ItemSpacing.x);
+            ImGui::SameLine(x_offset);
 
             if (ImGui::Button(ICON_LC_MORE_VERTICAL))
+            {
                 ImGui::OpenPopup("ComponentConfig");
+            }
 
             // Set Remove Component
             bool remove_component = false;
             if (ImGui::BeginPopup("ComponentConfig"))
             {
                 if (ImGui::MenuItem("Remove Component"))
+                {
                     remove_component = true;
+                }
                 ImGui::EndPopup();
             }
 
@@ -800,7 +874,9 @@ namespace IS {
 
             // Remove Component
             if (remove_component)
+            {
                 engine.RemoveComponent<Component>(entity);
+            }
         }
 
     } // end RenderComponent()

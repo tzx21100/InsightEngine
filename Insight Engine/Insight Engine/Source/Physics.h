@@ -21,8 +21,9 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include "Pch.h"
-#include "Sprite.h"
+#include "System.h"
+#include "Body.h"
+#include "Manifold.h"
 
 namespace IS {
     /*!
@@ -86,6 +87,7 @@ namespace IS {
          * \brief Boolean flag to exert gravity
          */
         static bool mExertingGravity;
+
         static Vector2D mGravity;                                  // Gravity of the world
 
         /*!
@@ -119,7 +121,7 @@ namespace IS {
         void NarrowPhase();
 
         /*!
-         * \brief Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
+         * \brief separate two bodies if they colliding and penetrating
         *
         * \param bodyA pointer to the first body.
         * \param bodyB pointer to the second body.
@@ -158,7 +160,7 @@ namespace IS {
          * \param color The color of the outline.
          * \param thickness The width of the outline.
          */
-        static void DrawOutLine(RigidBody& body, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
+        static void DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.

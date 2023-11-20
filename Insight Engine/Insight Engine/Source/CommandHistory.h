@@ -17,6 +17,7 @@ namespace IS {
         static void AddCommand(CommandType command);
         static void Undo();
         static void Redo();
+        static void SetNotExplicitBack(bool changed);
 
     private:
         static constexpr size_t MAX_COMMANDS = 20;

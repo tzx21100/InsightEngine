@@ -20,13 +20,13 @@ namespace IS {
     // set of layers to NOT render
     std::unordered_set<int> Sprite::layersToIgnore{};
 
-    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f) {
+    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f, 1.f) {
         // Give it a default size of 1 by 1
         setSpriteSize(1, 1);
         setWorldPos(0, 0);
     }
 
-    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f) {}
+    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f, 1.f) {}
 
     Sprite::Sprite(const Sprite& other)
         : primitive_type(other.primitive_type),
@@ -98,21 +98,22 @@ namespace IS {
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
         Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-        std::vector<Sprite::instanceData3D> tempData;
+
+
+        // Copy the instance data from the multiset to the vector
+        std::vector<Sprite::instanceData3D> tempData(ISGraphics::layered3DQuadInstances.begin(), ISGraphics::layered3DQuadInstances.end());
 
         if (buffer) {
-            // Copy the instance data from the multiset to the vector
-            for (const auto& data : ISGraphics::layered3DQuadInstances) {
-                tempData.push_back(data);
-            }
 
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+            if (!tempData.empty()) {
+                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
 
-            // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
-                // Handle the case where unmap was not successful
-                std::cerr << "Failed to unmap the buffer." << std::endl;
+                // Unmap the buffer
+                if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
+                    // Handle the case where unmap was not successful
+                    std::cerr << "Failed to unmap the buffer." << std::endl;
+                }
             }
         }
         else {
@@ -139,6 +140,71 @@ namespace IS {
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
+        ISGraphics::layered3DQuadInstances.clear();
+    }
+
+    // draw light quad here similar to old non-layered instance quad drawing
+    
+
+    void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer) {
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData3D instData;
+            instData.color = glm::vec4(color.x, color.y, color.z, color.w);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
+    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer) {
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData3D instData;
+            instData.tex_index = static_cast<float>(texture.texture_index);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
+    void Sprite::draw_lights() {
+        // Bind the instance VBO
+        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
+        // Upload the quadInstances data to the GPU
+        Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+
+        if (buffer) {
+            // Copy the instance data to the mapped buffer
+            std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData3D));
+
+            // Unmap the buffer
+            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+                // Handle the case where unmap was not successful
+                std::cerr << "Failed to unmap the buffer." << std::endl;
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        // bind shader
+        glUseProgram(ISGraphics::light_shader_pgm.getHandle());
+        glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
+
+        // draw instanced quads
+
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size()));
+        ISGraphics::lightInstances.clear();
     }
 
     void Sprite::draw_picked_entity_border() {
@@ -179,9 +245,9 @@ namespace IS {
         Transform lineTRS(midpoint, angleInDegrees, { lineLength, 0.f });
 
         // get line scaling matrix
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+        glm::mat4 world_to_NDC_xform = lineTRS.Return3DXformMatrix();
         Sprite::nonQuadInstanceData lineData;
-        lineData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        lineData.color = glm::vec4(std::get<0>(color), std::get<1>(color), std::get<2>(color), 1.f);
         lineData.model_to_ndc_xform = world_to_NDC_xform;
 
         // adds to vector of lines to draw
@@ -223,11 +289,11 @@ namespace IS {
     void Sprite::drawDebugCircle(Vector2D const& worldPos, Vector2D const& scale, std::tuple<float, float, float> const& color) {
         // TRS (0 rotation for circles)
         Transform CircleTRS(worldPos, 0.f, scale);
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(CircleTRS.ReturnXformMatrix());
+        glm::mat4 world_to_NDC_xform = CircleTRS.Return3DXformMatrix();
 
         // set up instance data
         Sprite::nonQuadInstanceData circleData;
-        circleData.color = glm::vec3(std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        circleData.color = glm::vec4(std::get<0>(color), std::get<1>(color), std::get<2>(color), 1.f);
         circleData.model_to_ndc_xform = world_to_NDC_xform;
 
         // adds to vector of circles to draw
@@ -355,6 +421,8 @@ namespace IS {
         spriteData["SpriteCurrentTexIndex"] = animation_index;
         spriteData["SpriteTextureIndex"] = img.texture_index;
 
+        IS_CORE_DEBUG("SAVED FILENAME {}", img.mFileName);
+
         // Serializing imgui-related properties
         spriteData["SpriteName"] = name;
         spriteData["SpriteColorX"] = color.x;
@@ -406,6 +474,12 @@ namespace IS {
         img.width = data["SpriteTextureWidth"].asInt();
         img.height = data["SpriteTextureHeight"].asInt();
         img.texture_index = data["SpriteTextureIndex"].asInt();
+        auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto image = system->GetImage(img.mFileName);
+        if (image != nullptr) {
+            img.texture_index = system->GetImage(img.mFileName)->texture_index;
+        }
+
         animation_index = data["SpriteCurrentTexIndex"].asInt();
 
         // Deserializing imgui-related properties

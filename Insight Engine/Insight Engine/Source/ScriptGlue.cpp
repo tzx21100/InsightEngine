@@ -15,11 +15,13 @@ consent of DigiPen Institute of Technology is prohibited.
 *____________________________________________________________________________*/
 /* End Header ****************************************************************/
 
-#pragma once
-
 /* includes */
 #include "Pch.h"
+#include "ScriptGlue.h"
+#include "Body.h"
+#include "Collider.h"
 #include "GameGui.h"
+
 #include <mono/metadata/object.h>
 
 namespace IS {
@@ -81,12 +83,9 @@ namespace IS {
         return input->IsMouseButtonReleased(mousebutton);
     }
 
-    static Entity GetCurrentEntity(MonoString* name) {
-        auto& engine = InsightEngine::Instance();
-        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
-        std::string str(c_str); // Convert char* to C++ string
-        mono_free(c_str); // Free the allocated char*
-        return engine.GetEntityByName(str);
+    static SimpleVector2D GetMousePosition() {
+        auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return SimpleVector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
     }
 
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
@@ -101,6 +100,19 @@ namespace IS {
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
         Vector2D vec(x, y);
         body_component.AddVelocity(vec);
+    }    
+    
+    static void RigidBodySetForce(float x, float y) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        Vector2D vec(x, y);
+        body_component.mVelocity=vec;
+    }
+
+    static SimpleVector2D RigidBodyGetVelocity() {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return SimpleVector2D(body_component.mVelocity.x,body_component.mVelocity.y);
     }
 
     static void TransformSetPosition(float x, float y) {
@@ -110,9 +122,24 @@ namespace IS {
         trans_component.world_position.y = y;
     }
 
+    static void TransformSetPositionEntity(float x, float y, int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        trans_component.world_position.x = x;
+        trans_component.world_position.y = y;
+    }
+
+
     static void TransformSetScale(float x, float y) {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        trans_component.scaling.x = x;
+        trans_component.scaling.y = y;
+    }
+
+    static void TransformSetScaleEntity(float x, float y,int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
         trans_component.scaling.x = x;
         trans_component.scaling.y = y;
     }
@@ -122,6 +149,14 @@ namespace IS {
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
         trans_component.setRotation(angle,angle_speed);
     }
+
+    static void TransformSetRotationEntity(float angle, float angle_speed, int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        trans_component.setRotation(angle, angle_speed);
+    }
+
+
 
     static SimpleVector2D GetTransformPosition() {
         auto& engine = InsightEngine::Instance();
@@ -144,6 +179,32 @@ namespace IS {
     static float GetTransformRotation() {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(engine.GetScriptCaller());
+        float vec;
+        vec = trans_component.getRotation();
+        return vec;
+    }
+
+    static SimpleVector2D GetTransformPositionEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        SimpleVector2D vec;
+        vec.x = trans_component.getWorldPosition().x;
+        vec.y = trans_component.getWorldPosition().y;
+        return vec;
+    }
+
+    static SimpleVector2D GetTransformScalingEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
+        SimpleVector2D vec;
+        vec.x = trans_component.getScaling().x;
+        vec.y = trans_component.getScaling().y;
+        return vec;
+    }
+
+    static float GetTransformRotationEntity(int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& trans_component = engine.GetComponent<Transform>(entity);
         float vec;
         vec = trans_component.getRotation();
         return vec;
@@ -225,7 +286,6 @@ namespace IS {
         auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         camera.SetPosition(transform_component.world_position.x, transform_component.world_position.y);
-        camera.SetZoomLevel(1.2f);
     }
 
     static void AudioPlaySound(MonoString* name) {
@@ -249,6 +309,82 @@ namespace IS {
         return button.mButtonState;
     }
 
+    static int CreateEntity(MonoString* name) {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity=InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        return static_cast<int>(entity);
+    }
+
+    static void DestroyEntity(int entity) {
+        static_cast<Entity>(entity);
+        InsightEngine::Instance().DeleteEntity(entity);
+    }
+
+    static bool EntityCheckCollide(int entity) {
+        //auto system = InsightEngine::Instance().GetSystem<CollisionSystem>("CollisionSystem");
+        //return system->CheckColliding(static_cast<Entity>(entity));
+        auto const& component=InsightEngine::Instance().GetComponent<Collider>(entity);
+        return component.mIsColliding;
+    }
+
+    //static void AddComponent(MonoString *name) {
+    //    char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+    //    std::string str(c_str);
+    //    mono_free(c_str);
+    //
+    //}
+
+    static void AddCollider(int entity) {
+        if (!InsightEngine::Instance().HasComponent<Collider>(entity))
+        InsightEngine::Instance().AddComponentAndUpdateSignature<RigidBody>(entity, RigidBody());
+        auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        //auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+        body.mBodyType = BodyType::Ghost;
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Collider>(entity, Collider());
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        collider.mResponseEnable = false;
+    }
+
+    static void ColliderNone(int entity) {
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        collider.mResponseEnable = false;
+        collider.mResponseEnable = false;
+    }
+
+    static void CameraSetZoom(float value) {
+        ISGraphics::cameras3D[Camera3D::mActiveCamera].SetZoomLevel(value);
+    }
+
+    static int GetCurrentEntityID() {
+        return InsightEngine::Instance().GetScriptCaller();
+    }
+
+    static float GetCollidedObjectAngle(int entity) {
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+        return collider.mCollidedObjectAngle;
+    }
+
+    static void DrawLineBetweenPoints(float x1, float y1, float x2, float y2) {
+        Vector2D point1 = Vector2D(x1, y1);
+        Vector2D point2 = Vector2D(x2, y2);
+        Vector2D dist = point1 - point2;
+        Sprite::drawDebugLine(point1, point1+dist, {1.f, 0.f, 0.f});
+    }
+
+    static void DrawCircle(float x1, float y1, float x2, float y2) {
+        Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
+    }
+
+
+    //static void CallIS_Trace(MonoString* string) {
+    //
+    //
+    //}
+
 
 
     /**
@@ -266,22 +402,28 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
-
-        // Get the entity by name
-        IS_ADD_INTERNAL_CALL(GetCurrentEntity);
+        IS_ADD_INTERNAL_CALL(GetMousePosition);
 
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
+        IS_ADD_INTERNAL_CALL(RigidBodySetForce);
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);
+        IS_ADD_INTERNAL_CALL(TransformSetPositionEntity);
         IS_ADD_INTERNAL_CALL(TransformSetRotation);
+        IS_ADD_INTERNAL_CALL(TransformSetRotationEntity);
         IS_ADD_INTERNAL_CALL(TransformSetScale);
+        IS_ADD_INTERNAL_CALL(TransformSetScaleEntity);
         IS_ADD_INTERNAL_CALL(GetTransformPosition);
+        IS_ADD_INTERNAL_CALL(GetTransformPositionEntity);
         IS_ADD_INTERNAL_CALL(GetTransformScaling);
+        IS_ADD_INTERNAL_CALL(GetTransformScalingEntity);
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
+        IS_ADD_INTERNAL_CALL(GetTransformRotationEntity);
         IS_ADD_INTERNAL_CALL(GetDeltaTime);
 
         // Images and Sprite
@@ -295,6 +437,7 @@ namespace IS {
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
+        IS_ADD_INTERNAL_CALL(CameraSetZoom);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
@@ -302,6 +445,25 @@ namespace IS {
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);
+
+        //Entity Manipulations
+        IS_ADD_INTERNAL_CALL(CreateEntity);
+        IS_ADD_INTERNAL_CALL(DestroyEntity);
+        IS_ADD_INTERNAL_CALL(AddCollider);
+
+        // Entity Collisions
+        IS_ADD_INTERNAL_CALL(EntityCheckCollide);
+        IS_ADD_INTERNAL_CALL(ColliderNone);
+        IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
+        IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
+
+        //Debug
+        IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
+        IS_ADD_INTERNAL_CALL(DrawCircle);
+
+        // IStrace
+       // IS_ADD_INTERNAL_CALL(CallIS_Trace);
+
 
     }
 }

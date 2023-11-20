@@ -45,34 +45,12 @@ namespace IS {
          */
         HierarchyPanel(EditorLayer& editor_layer) : Panel("Hierarchy", editor_layer) {}
 
-        void UpdatePanel() override {}
+        void UpdatePanel() override;
 
         /*!
          * \brief Renders the panel for the scene hierarchy.
          */
         void RenderPanel() override;
-
-        /*!
-         * \brief Renders configuration for entities.
-         * 
-         * Configurations include rename, save/load prefab,
-         * add component, clone/delete entity.
-         */
-        void RenderEntityConfig(Entity entity);
-
-        /*!
-         * \brief Renders gui to add component to an entity.
-         *
-         * \param entity The Entity to add components to.
-         */
-        static void RenderAddComponent(Entity entity);
-
-        /*!
-         * \brief Gets the size of the scene hierarchy panel.
-         * 
-         * \return Size of the scene hierarchy panel.
-         */
-        Vec2 GetPanelSize() const;
 
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
@@ -108,28 +86,6 @@ namespace IS {
          * \param entity The Entity to be rendered.
          */
         void ProcessSelectedEntityShortcuts();
-
-        ///*!
-        // * \brief Renders configuration for the specified Entity.
-        // 
-        // * \param entity The Entity to be deleted.
-        // * \param show Boolean flag to determine where to show window.
-        // */
-        //void RenderConfirmDelete(Entity entity, bool& show);
-
-        /*!
-         * \brief Clone an existing entity.
-         * 
-         * \param entity The Entity to be cloned.
-         */
-        void CloneEntity(Entity entity);
-
-        /*!
-         * \brief Delete an existing entity.
-         * 
-         * \param entity The Entity to be deleted.
-         */
-        void DeleteEntity(Entity entity);
 
         friend class EditorLayer; ///< Grant EditorLayer access to private data members.
     };

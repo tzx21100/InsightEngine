@@ -14,15 +14,19 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
- /*                                                                   guard
- ----------------------------------------------------------------------------- */
+/*                                                                   guard
+----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 
- /*                                                                   includes
-  ----------------------------------------------------------------------------- */
-#include "Pch.h"
+#include "Body.h"
+#include "Collider.h"
+#include "ISMath.h"
 
+/*                                                                   includes
+----------------------------------------------------------------------------- */
+
+#define MAX_COLLIDING_CASE 5 // 4 cases
 namespace IS 
 {
      /*!
@@ -36,6 +40,8 @@ namespace IS
 	public:
         RigidBody* mBodyA;     //!< Pointer to the first rigid body involved in the collision.
         RigidBody* mBodyB;     //!< Pointer to the second rigid body involved in the collision.
+        Collider* mColliderA;
+        Collider* mColliderB;
         Vector2D mNormal;      //!< Normal vector of the contact.
         float mDepth;          //!< Penetration depth of the collision.
         Vector2D mContact1;    //!< First contact point in world space.
@@ -59,6 +65,7 @@ namespace IS
          * \param contactCount The number of contact points.
          */
         Manifold(RigidBody* bodyA, RigidBody* bodyB,
+            Collider* colliderA, Collider* colliderB,
             Vector2D const& normal, float const& depth,
             Vector2D const& contact1, Vector2D const& contact2, int const& contactCount);
 
@@ -71,7 +78,7 @@ namespace IS
          * \param bodyA The first rigid body involved in the collision.
          * \param bodyB The second rigid body involved in the collision.
          */
-        void FindContactPoints(RigidBody & bodyA, RigidBody & bodyB);
+        void FindContactPoints(Collider & colliderA, Collider& colliderB, std::bitset<MAX_COLLIDING_CASE> colliding_collection);
 
         /*!
          * \brief Calculates contact points for a collision between two polygons.
@@ -86,6 +93,8 @@ namespace IS
          * \param contactCount Output parameter to store the number of contact points.
          */
         void FindPolygonsContactPoints(std::vector<Vector2D> const& verticesA, std::vector<Vector2D> const& verticesB, Vector2D & contact1, Vector2D & contact2, int & contactCount);
+        void FindCirclePolygonContactPoints(Vector2D const& circle_center, float const& circle_radius, Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point);
+        void FindCirlcesContactPoints(Vector2D const& center_a, float const& radius_a, Vector2D const& center_b, Vector2D & contact_point);
 
         /*!
          * \brief Compares two floating-point values for near equality.

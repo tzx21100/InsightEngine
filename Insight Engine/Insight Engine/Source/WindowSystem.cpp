@@ -125,6 +125,9 @@ namespace IS {
             Message quit = Message(MessageType::Quit);
             BROADCAST_MESSAGE(quit);
         }
+
+        // Disable window resize during runtime
+        glfwSetWindowAttrib(mWindow, GLFW_RESIZABLE, InsightEngine::Instance().mRuntime ? GLFW_FALSE : GLFW_TRUE);
     }
 
     void WindowSystem::HandleMessage(const Message&) {}

@@ -15,8 +15,11 @@
  *____________________________________________________________________________*/
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
+
 #include "CoreEngine.h"
 #include "GameGui.h"
+#include "Body.h"
+#include "Collider.h"
 
 namespace IS {
     class GameLoop :public ParentSystem {
@@ -53,6 +56,8 @@ namespace IS {
         
         virtual void Initialize() override {
             
+            
+
             //create a image
             //backgroundTest = asset->GetImage("Assets/placeholder_background.png");
             //backgroundTest->texture_index = 0; // hard code first :)
@@ -169,7 +174,7 @@ namespace IS {
             //body_ai.mRestitution = 0.1f;
 
             auto& scene_manager = SceneManager::Instance();
-            scene_manager.LoadScene("Assets\\Scenes\\basicLevel.insight");
+            scene_manager.LoadScene("Assets\\Scenes\\GameLevel.insight");
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
@@ -181,10 +186,25 @@ namespace IS {
             // transform camera
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
-            Entity player = engine.GetEntityByName("Player");
-            auto& body_player = engine.GetComponent<RigidBody>(player);
+           // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
+            //Sprite::draw_instanced_3D_quads();
+           
+            //auto system = engine.GetSystem<ParticleSystem>("Particle");
+            //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
+            //    color_red, 0.8f, 0.1f, 45.0f, 90.0f,
+            //    pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            //system->SpawnParticles(A);
+
+
+
+            //Entity player = engine.GetEntityByName("Player");
+            //auto& body_player = engine.GetComponent<RigidBody>(player);
+            //auto& collider_player = engine.GetComponent<Collider>(player);
             //auto& trans_player = engine.GetComponent<Transform>(player);
-            body_player.mMass = 5.f;
+            //body_player.mMass = 20.f;
+            //collider_player.mSelectedCollider.reset();
+            //collider_player.mSelectedCollider.set(ColliderShape::BOX);
+            //body_player.mInertia = 2.f;
 
             // limit angle of the player
             //float angle = trans_player.getRotation();
@@ -211,9 +231,11 @@ namespace IS {
                 }
 
                 // Offset mouse position
-                if (!engine.mRenderGUI) {                   
-                    input->setCenterPos(width / 2.f, height / 2.f);
-                    input->setRatio(static_cast<float>(width), static_cast<float>(height));
+                if (!engine.mRenderGUI) {
+                    auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
+                    auto [width2, height2] = window_sys->GetWindowSize();
+                    input->setCenterPos(width2 / 2.f, height2 / 2.f);
+                    input->setRatio(static_cast<float>(width2), static_cast<float>(height2));
                 }
 
                 //this controls the freeze frame
@@ -233,13 +255,13 @@ namespace IS {
                 }
 
                 // for jumping
-                if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
-                    //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
-                    if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
-                        body_player.AddVelocity(Vector2D(0.f, 800.f));
-                        body_player.mState = BodyState::JUMP;
-                    }
-                }
+                //if (input->IsKeyPressed(GLFW_KEY_SPACE)) {
+                //    //IS_CORE_INFO("{}", static_cast<short>(BodyState::GROUNDED));
+                //    if (body_player.mState == BodyState::GROUNDED && body_player.mVelocity.y <= 10.f) {
+                //        body_player.AddVelocity(Vector2D(0.f, 800.f));
+                //        body_player.mState = BodyState::JUMP;
+                //    }
+                //}
 
                 //if (engine.HasComponent<Transform>(entity_player)) {
                 //    auto& trans_player = engine.GetComponent<Transform>(entity_player);
@@ -348,7 +370,7 @@ namespace IS {
 
                 if (input->IsKeyPressed(GLFW_KEY_9)) {
                     for (int i = 0; i < 1; i++) {
-                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody,ScriptComponent>("Ice Cream Truck");
+                        Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Collider,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.05f, height * 0.094222222f);
                         transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
@@ -368,26 +390,28 @@ namespace IS {
 
                 }
 
-                if (input->IsKeyPressed(GLFW_KEY_P)) {
-                    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Pathing Ice Cream Truck");
-                    auto& transl = engine.GetComponent<Transform>(a);
-                    transl.setScaling(width * 0.05f, height * 0.094222222f);
-                    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
-                    auto& spr = engine.GetComponent<Sprite>(a);
-                    spr.name = "ice_cream_truck";
-                    spr.img = *truck_anim_image;
-                    //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
-                    spr.anims.emplace_back(ice_cream_truck_ani);
-                    spr.animation_index = 0;
-                    IS_CORE_DEBUG("PATH FINDING TRUCK SPAWNED");
-                    Waypoint target;
-                    auto& pathcomponent = engine.GetComponent<Pathfinder>(a);
-                    auto& transcomp = engine.GetComponent<Transform>(a);
-                    pathcomponent.mInitPos = Vector2D(transcomp.world_position);
-                    auto sys = engine.GetSystem<Pathfinding>("Pathfinding");
+                //if (input->IsKeyPressed(GLFW_KEY_P)) {
+                //    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Pathing Ice Cream Truck");
+                //    auto& transl = engine.GetComponent<Transform>(a);
+                //    transl.setScaling(width * 0.05f, height * 0.094222222f);
+                //    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                //    auto& spr = engine.GetComponent<Sprite>(a);
+                //    spr.name = "ice_cream_truck";
+                //    spr.img = *truck_anim_image;
+                //    //spr.anim_vect.emplace_back(ISGraphics::ice_cream_truck_ani);
+                //    spr.anims.emplace_back(ice_cream_truck_ani);
+                //    spr.animation_index = 0;
+                //    IS_CORE_DEBUG("PATH FINDING TRUCK SPAWNED");
+                //    Waypoint target;
+                //    auto& pathcomponent = engine.GetComponent<Pathfinder>(a);
+                //    auto& transcomp = engine.GetComponent<Transform>(a);
+                //    pathcomponent.mInitPos = Vector2D(transcomp.world_position);
+                //    auto sys = engine.GetSystem<Pathfinding>("Pathfinding");
 
-                    pathcomponent.mEndPos = Vector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
-                }
+                //    pathcomponent.mEndPos = Vector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+                //}
+
+
 
             }
 

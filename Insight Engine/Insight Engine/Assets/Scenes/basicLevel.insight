@@ -7,11 +7,11 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Environment weird tree.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 2,
@@ -35,9 +35,49 @@
 			}
 		},
 		{
-			"Name" : ""
-		},
-		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 1000.0,
+						"Y" : -80.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Slope",
 			"RigidBody" : 
 			{
@@ -52,62 +92,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 573.62237548828125,
-						"y" : -53.502975463867188
-					},
-					{
-						"x" : 1338.6661376953125,
-						"y" : 180.3944091796875
-					},
-					{
-						"x" : 1426.377685546875,
-						"y" : -106.49702453613281
-					},
-					{
-						"x" : 661.3338623046875,
-						"y" : -340.3944091796875
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -131,74 +129,51 @@
 			}
 		},
 		{
-			"AudioEmitter" : 
+			"AudioListener" : 
 			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : true,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "Footsteps-Grass-Far-Small_1.wav",
-				"AudioVolumeLevel" : 1.0
+				"AudioHearingRange" : 1000.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
+			},
+			"Collider" : 
+			{
+				"BoxColliderEnabled" : false,
+				"CircleCollider" : 
+				{
+					"CircleColliderCenter" : 
+					{
+						"X" : 163.98799133300781,
+						"Y" : -49.999977111816406
+					},
+					"CircleColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"CircleColliderRadius" : 160.00001525878906,
+					"CircleColliderRadiusScale" : 0.40000000596046448
+				},
+				"CircleColliderEnabled" : true,
+				"ResponseEnabled" : true
 			},
 			"Name" : "Player",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
 				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : -2.2747553884983063e-06,
+				"RigidBodyAngularVelocity" : 0.0,
 				"RigidBodyArea" : 144000.015625,
 				"RigidBodyBodyType" : 1,
-				"RigidBodyDensity" : 720000.0625,
+				"RigidBodyDensity" : 2880000.25,
 				"RigidBodyForceX" : 0.0,
 				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.20000000298023224,
-				"RigidBodyMass" : 5.0,
+				"RigidBodyInvMass" : 0.05000000074505806,
+				"RigidBodyMass" : 20.0,
 				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -200.20004272460938,
-						"y" : 179.7774658203125
-					},
-					{
-						"x" : 199.79974365234375,
-						"y" : 180.22232055664062
-					},
-					{
-						"x" : 200.20010375976562,
-						"y" : -179.7774658203125
-					},
-					{
-						"x" : -199.7996826171875,
-						"y" : -180.22232055664062
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -200.00001525878906,
-						"y" : 180.0
-					},
-					{
-						"x" : 200.00001525878906,
-						"y" : 180.0
-					},
-					{
-						"x" : 200.00001525878906,
-						"y" : -180.0
-					},
-					{
-						"x" : -200.00001525878906,
-						"y" : -180.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 120666.6875,
-				"mInvInertia" : 8.2872911661979742e-06,
-				"mStaticFriction" : 1.2000000476837158
+				"RigidBodyVelocityX" : 0.33485323190689087,
+				"RigidBodyVelocityY" : 0.33997154235839844,
+				"mDynamicFriction" : 0.56000000238418579,
+				"mStaticFriction" : 0.93300002813339233
 			},
 			"Script" : 
 			{
@@ -207,10 +182,10 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 1,
-				"Layer" : 2,
-				"SpriteColorX" : 0.85964435338973999,
-				"SpriteColorY" : 0.86737102270126343,
-				"SpriteColorZ" : 0.80789142847061157,
+				"Layer" : 1,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 1,
 				"SpriteFilename" : "Player idle 1R12C.png",
 				"SpriteName" : "ice_cream_truck",
@@ -219,11 +194,11 @@
 				"SpriteTextureHeight" : 800,
 				"SpriteTextureIndex" : 7,
 				"SpriteTextureWidth" : 15684,
-				"SpriteTransformRotation" : 0.063720703125,
-				"SpriteTransformScalingX" : 400.00003051757812,
+				"SpriteTransformRotation" : 0.060622669756412506,
+				"SpriteTransformScalingX" : -400.00003051757812,
 				"SpriteTransformScalingY" : 360.0,
-				"SpriteTransformWorldPositionX" : 2.6226043701171875e-05,
-				"SpriteTransformWorldPositionY" : 0.0,
+				"SpriteTransformWorldPositionX" : 163.98799133300781,
+				"SpriteTransformWorldPositionY" : -49.999977111816406,
 				"animations" : 
 				[
 					{
@@ -231,9 +206,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.13596269488334656,
+						"frame_timer" : 0.20000000298023224,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -243,9 +218,9 @@
 						"animation_duration" : 3.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.12917044758796692,
+						"frame_timer" : 0.033333335071802139,
 						"time_per_frame" : 0.25,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -254,19 +229,64 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 0.063720703125,
-				"TransformScalingX" : 400.00003051757812,
+				"TransformRotation" : 0.060622669756412506,
+				"TransformScalingX" : -400.00003051757812,
 				"TransformScalingY" : 360.0,
-				"TransformWorldPositionX" : 2.6226043701171875e-05,
-				"TransformWorldPositionY" : 0.0
+				"TransformWorldPositionX" : 163.98799133300781,
+				"TransformWorldPositionY" : -49.999977111816406
 			}
 		},
 		{
-			"AudioListener" : 
+			"AudioEmitter" : 
 			{
-				"AudioHearingRange" : 0.0,
-				"AudioPitchCorrectness" : 0.0,
-				"AudioVolume" : 1.0
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 0.0,
+						"Y" : -400.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -450.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 450.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 450.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -450.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
 			},
 			"Name" : "Floor",
 			"RigidBody" : 
@@ -282,62 +302,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -500.0,
-						"y" : -250.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -250.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -550.0
-					},
-					{
-						"x" : -500.0,
-						"y" : -550.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 500.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -500.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -361,6 +339,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 1504.210205078125,
+						"Y" : -380.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform1",
 			"RigidBody" : 
 			{
@@ -375,62 +396,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 1104.210205078125,
-						"y" : -230.0
-					},
-					{
-						"x" : 1904.210205078125,
-						"y" : -230.0
-					},
-					{
-						"x" : 1904.210205078125,
-						"y" : -530.0
-					},
-					{
-						"x" : 1104.210205078125,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -454,6 +433,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 3555.262939453125,
+						"Y" : -105.97080993652344
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform2",
 			"RigidBody" : 
 			{
@@ -468,62 +490,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 3155.262939453125,
-						"y" : 44.029190063476562
-					},
-					{
-						"x" : 3955.262939453125,
-						"y" : 44.029190063476562
-					},
-					{
-						"x" : 3955.262939453125,
-						"y" : -255.97080993652344
-					},
-					{
-						"x" : 3155.262939453125,
-						"y" : -255.97080993652344
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -547,6 +527,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 4500.0,
+						"Y" : -600.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform3",
 			"RigidBody" : 
 			{
@@ -561,62 +584,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 4100.0,
-						"y" : -450.0
-					},
-					{
-						"x" : 4900.0,
-						"y" : -450.0
-					},
-					{
-						"x" : 4900.0,
-						"y" : -750.0
-					},
-					{
-						"x" : 4100.0,
-						"y" : -750.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -640,6 +621,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 5234.052734375,
+						"Y" : -145.63212585449219
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.95999997854232788
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -135.0,
+							"y" : 384.0
+						},
+						{
+							"x" : 135.0,
+							"y" : 384.0
+						},
+						{
+							"x" : 135.0,
+							"y" : -384.0
+						},
+						{
+							"x" : -135.0,
+							"y" : -384.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform4",
 			"RigidBody" : 
 			{
@@ -654,62 +678,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 5200.11865234375,
-						"y" : 280.2181396484375
-					},
-					{
-						"x" : 5488.4970703125,
-						"y" : 197.52687072753906
-					},
-					{
-						"x" : 5267.98681640625,
-						"y" : -571.482421875
-					},
-					{
-						"x" : 4979.6083984375,
-						"y" : -488.7911376953125
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : 400.0
-					},
-					{
-						"x" : 150.0,
-						"y" : -400.0
-					},
-					{
-						"x" : -150.0,
-						"y" : -400.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform03.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 7,
@@ -733,6 +715,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : -1421.052734375,
+						"Y" : 60.248115539550781
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -225.0,
+							"y" : 90.0
+						},
+						{
+							"x" : 225.0,
+							"y" : 90.0
+						},
+						{
+							"x" : 225.0,
+							"y" : -90.0
+						},
+						{
+							"x" : -225.0,
+							"y" : -90.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Floor",
 			"RigidBody" : 
 			{
@@ -747,155 +772,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -1092.10546875,
-						"y" : -50.080337524414062
-					},
-					{
-						"x" : -592.10540771484375,
-						"y" : -50.080337524414062
-					},
-					{
-						"x" : -592.10540771484375,
-						"y" : -250.08033752441406
-					},
-					{
-						"x" : -1092.10546875,
-						"y" : -250.08033752441406
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -100.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -100.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 6,
-				"SpriteTextureHeight" : 565,
-				"SpriteTextureIndex" : 5,
-				"SpriteTextureWidth" : 1481,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 500.0,
-				"SpriteTransformScalingY" : 200.0,
-				"SpriteTransformWorldPositionX" : -842.10540771484375,
-				"SpriteTransformWorldPositionY" : -150.08033752441406,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 500.0,
-				"TransformScalingY" : 200.0,
-				"TransformWorldPositionX" : -842.10540771484375,
-				"TransformWorldPositionY" : -150.08033752441406
-			}
-		},
-		{
-			"Name" : "Floor",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 100000.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -1671.052734375,
-						"y" : 160.24810791015625
-					},
-					{
-						"x" : -1171.052734375,
-						"y" : 160.24810791015625
-					},
-					{
-						"x" : -1171.052734375,
-						"y" : -39.751884460449219
-					},
-					{
-						"x" : -1671.052734375,
-						"y" : -39.751884460449219
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : 100.0
-					},
-					{
-						"x" : 250.0,
-						"y" : -100.0
-					},
-					{
-						"x" : -250.0,
-						"y" : -100.0
-					}
-				],
-				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 0.0
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -919,6 +809,57 @@
 			}
 		},
 		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_Winston-Theme_Loop_81bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 2083.1572265625,
+						"Y" : -380.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform1",
 			"RigidBody" : 
 			{
@@ -933,62 +874,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 1683.1572265625,
-						"y" : -230.0
-					},
-					{
-						"x" : 2483.1572265625,
-						"y" : -230.0
-					},
-					{
-						"x" : 2483.1572265625,
-						"y" : -530.0
-					},
-					{
-						"x" : 1683.1572265625,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -1012,6 +911,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 2756.841552734375,
+						"Y" : -380.0
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : 135.0
+						},
+						{
+							"x" : 360.0,
+							"y" : -135.0
+						},
+						{
+							"x" : -360.0,
+							"y" : -135.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Platform1",
 			"RigidBody" : 
 			{
@@ -1026,62 +968,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 2356.841552734375,
-						"y" : -230.0
-					},
-					{
-						"x" : 3156.841552734375,
-						"y" : -230.0
-					},
-					{
-						"x" : 3156.841552734375,
-						"y" : -530.0
-					},
-					{
-						"x" : 2356.841552734375,
-						"y" : -530.0
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : 150.0
-					},
-					{
-						"x" : 400.0,
-						"y" : -150.0
-					},
-					{
-						"x" : -400.0,
-						"y" : -150.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -1105,6 +1005,49 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : -2715.788818359375,
+						"Y" : 438.83929443359375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -900.0,
+							"y" : 270.0
+						},
+						{
+							"x" : 900.0,
+							"y" : 270.0
+						},
+						{
+							"x" : 900.0,
+							"y" : -270.0
+						},
+						{
+							"x" : -900.0,
+							"y" : -270.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
 			"Name" : "Floor",
 			"RigidBody" : 
 			{
@@ -1119,62 +1062,20 @@
 				"RigidBodyInvMass" : 0.0,
 				"RigidBodyMass" : 0.0,
 				"RigidBodyRestitution" : 0.80000001192092896,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : -3715.788818359375,
-						"y" : 738.83929443359375
-					},
-					{
-						"x" : -1715.788818359375,
-						"y" : 738.83929443359375
-					},
-					{
-						"x" : -1715.788818359375,
-						"y" : 138.83929443359375
-					},
-					{
-						"x" : -3715.788818359375,
-						"y" : 138.83929443359375
-					}
-				],
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -1000.0,
-						"y" : 300.0
-					},
-					{
-						"x" : 1000.0,
-						"y" : 300.0
-					},
-					{
-						"x" : 1000.0,
-						"y" : -300.0
-					},
-					{
-						"x" : -1000.0,
-						"y" : -300.0
-					}
-				],
 				"mDynamicFriction" : 0.0,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
 				"mStaticFriction" : 0.0
 			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.54492461681365967,
-				"SpriteColorY" : 0.27639034390449524,
-				"SpriteColorZ" : 0.28316143155097961,
+				"Layer" : 2,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "",
+				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 6,
@@ -1198,5 +1099,5 @@
 			}
 		}
 	],
-	"EntityAmount" : 14
+	"EntityAmount" : 12
 }

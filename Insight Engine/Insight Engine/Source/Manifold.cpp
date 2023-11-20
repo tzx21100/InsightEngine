@@ -17,7 +17,9 @@
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
-#include "CoreEngine.h"
+#include "Manifold.h"
+#include "CollisionSystem.h"
+#include "Collision.h"
 
 namespace IS 
 {
@@ -25,6 +27,8 @@ namespace IS
 	Manifold::Manifold() {
 		mBodyA = nullptr;
 		mBodyB = nullptr;
+		mColliderA = nullptr;
+		mColliderB = nullptr;
 		mNormal = Vector2D();
 		mDepth = 0.f;
 		mContact1 = Vector2D();
@@ -34,10 +38,13 @@ namespace IS
 
 	// Constructor for the Manifold class that initializes its members.
 	Manifold::Manifold(RigidBody* bodyA, RigidBody* bodyB,
+		Collider* colliderA, Collider* colliderB,
 		Vector2D const& normal, float const& depth,
 		Vector2D const& contact1, Vector2D const& contact2, int const& contact_count) {
 		mBodyA = bodyA;
 		mBodyB = bodyB;
+		mColliderA = colliderA;
+		mColliderB = colliderB;
 		mNormal = normal;
 		mDepth = depth;
 		mContact1 = contact1;
@@ -45,45 +52,62 @@ namespace IS
 		mContactCount = contact_count;
 	}
 
+
 	// Calculates the contact points for the collision between two rigid bodies.
-	void Manifold::FindContactPoints(RigidBody & bodyA, RigidBody & bodyB) {
+	void Manifold::FindContactPoints(Collider& colliderA, Collider& colliderB, std::bitset<MAX_COLLIDING_CASE> colliding_collection) {
 		mContact1 = Vector2D();
 		mContact2 = Vector2D();
 		mContactCount = 0;
 
-		BodyShape shapeA = bodyA.mBodyShape;
-		BodyShape shapeB = bodyB.mBodyShape;
+		/*Collider colliderA = colliderA;
+		Collider colliderB = colliderB;*/
 
-		switch (shapeA)
-		{
-		case BodyShape::Box:
-			switch (shapeB)
-			{
-			case BodyShape::Box: // box vs box
-				FindPolygonsContactPoints(bodyA.GetTransformedVertices(), bodyB.GetTransformedVertices(), mContact1, mContact2, mContactCount);
-				break;
-			case BodyShape::Circle: // box vs circle
-				break;
-			default:
-				break;
-			}
-			break;
-		case BodyShape::Circle:
-			switch (shapeB)
-			{
-			case BodyShape::Box: // circle vs box
-				break;
-			case BodyShape::Circle: // circle vs circle
-				break;
-			default:
-				break;
-			}
-			break;
-		case BodyShape::Line:
-			break;
-		default:
-			break;
+		if (colliding_collection.test(CollidingStatus::BOX_A_BOX_B)) { // box vs box
+			FindPolygonsContactPoints(colliderA.mBoxCollider.transformedVertices, colliderB.mBoxCollider.transformedVertices, mContact1, mContact2, mContactCount);
 		}
+		if (colliding_collection.test(CollidingStatus::BOX_A_CIRCLE_B)) { // box vs circle
+			FindCirclePolygonContactPoints(colliderB.mCircleCollider.center, colliderB.mCircleCollider.radius, colliderA.mBoxCollider.center, colliderA.mBoxCollider.transformedVertices, mContact1);
+			mContactCount = 1;
+		}
+		if (colliding_collection.test(CollidingStatus::CIRCLE_A_BOX_B)) { // circle vs box
+			FindCirclePolygonContactPoints(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mBoxCollider.center, colliderB.mBoxCollider.transformedVertices, mContact1);
+			mContactCount = 1;
+		}
+		if (colliding_collection.test(CollidingStatus::CIRCLE_A_CIRCLE_B)) { // circle vs circle
+			FindCirlcesContactPoints(colliderA.mCircleCollider.center, colliderA.mCircleCollider.radius, colliderB.mCircleCollider.center, mContact1);
+			mContactCount = 1;
+		}
+
+		//switch (shapeA)
+		//{
+		//case BodyShape::Box:
+		//	switch (shapeB)
+		//	{
+		//	case BodyShape::Box: // box vs box
+		//		FindPolygonsContactPoints(bodyA.GetTransformedVertices(), bodyB.GetTransformedVertices(), mContact1, mContact2, mContactCount);
+		//		break;
+		//	case BodyShape::Circle: // box vs circle
+		//		break;
+		//	default:
+		//		break;
+		//	}
+		//	break;
+		//case BodyShape::Circle:
+		//	switch (shapeB)
+		//	{
+		//	case BodyShape::Box: // circle vs box
+		//		break;
+		//	case BodyShape::Circle: // circle vs circle
+		//		break;
+		//	default:
+		//		break;
+		//	}
+		//	break;
+		//case BodyShape::Line:
+		//	break;
+		//default:
+		//	break;
+		//}
 	}
 
 	// Calculates contact points for a collision between two polygons.
@@ -152,14 +176,43 @@ namespace IS
 		}
 	}
 
+	void Manifold::FindCirclePolygonContactPoints(Vector2D const& circle_center, [[maybe_unused]] float const& circle_radius, [[maybe_unused]] Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point) {
+		Vector2D closest_point = Vector2D();
+		float dis_sq = 0.f;
+		float minDistSq = std::numeric_limits<float>::max();
+
+		for (int i = 0; i < polygon_vertices.size(); i++)
+		{
+			Vector2D va = polygon_vertices[i];
+			Vector2D vb = polygon_vertices[(i + 1) % polygon_vertices.size()]; // avoid out of range
+
+			PointSegmentDistance(circle_center, va, vb, dis_sq, closest_point);
+
+			if (dis_sq < minDistSq)
+			{
+				minDistSq = dis_sq;
+				contact_point = closest_point;
+			}
+		}
+	}
+
+
+	void Manifold::FindCirlcesContactPoints(Vector2D const& center_a, float const& radius_a, Vector2D const& center_b, Vector2D& contact_point) {
+		Vector2D ab = center_b - center_a;
+		ISVector2DNormalize(ab, ab);
+		contact_point = center_a + ab * radius_a;
+	}
+
 	// Compares two floating - point values for near equality.
 	bool Manifold::NearlyEqual(float const& a, float const& b) {
-		return std::abs(a - b) < 0.005f; // less than half cm
+		//return std::abs(a - b) < 0.005f; // less than half cm
+		return std::abs(a - b) < 1.f;
 	}
 
 	// Compares two 2D vectors for near equality.
 	bool Manifold::NearlyEqual(Vector2D const& a, Vector2D const& b) {
-		return ISVector2DSquareDistance(a, b) < 0.005f * 0.005f ; // less than half cm square
+		//return ISVector2DSquareDistance(a, b) < 0.005f * 0.005f ; // less than half cm square
+		return ISVector2DSquareDistance(a, b) < 1.f * 1.f ;
 	}
 
 }

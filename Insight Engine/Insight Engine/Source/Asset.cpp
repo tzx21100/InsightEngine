@@ -100,6 +100,13 @@ namespace IS {
                 //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
                 LoadAudio(filepath);
             }
+            else {
+                IS_CORE_CRITICAL("Audio file mus be only .mp3 or .wav");
+            
+            }
+
+
+
         }
     }
 
@@ -168,6 +175,7 @@ namespace IS {
         ImageLoad(filepath);
         Image* img = GetImage(std::filesystem::path(filepath).filename().string());
         img->texture_index = mCurrentTexId;
+        img->mFileName = std::filesystem::path(filepath).filename().string();
         mCurrentTexId++;
         ISGraphics::textures.emplace_back(*img);
     }
@@ -198,7 +206,7 @@ namespace IS {
         if (iter != mImageList.end()) {
             return &(iter->second);
         }
-        throw std::runtime_error("Image not found.");
+        return nullptr;
     }
 
     Image* AssetManager::GetIcon(const std::string& file_name) {

@@ -18,6 +18,10 @@
  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Graphics.h"
+#include "Body.h"
+#include "Collider.h"
+#include "Physics.h"
+
 #include <stb_image.h>
 
 namespace IS {
@@ -35,6 +39,7 @@ namespace IS {
     Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
+    Shader ISGraphics::light_shader_pgm;
 
     // Texture vector
     std::vector<Image> ISGraphics::textures;
@@ -49,6 +54,7 @@ namespace IS {
     std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> ISGraphics::layered3DQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
+    std::vector<Sprite::instanceData3D> ISGraphics::lightInstances;
 
     // Editor and entity camera
     Camera ISGraphics::cameras[2];
@@ -61,6 +67,8 @@ namespace IS {
     // Text animation boolean
     bool ISGraphics::mShowTextAnimation = true;
 
+    Light testLight, testLight2, testLight3, testLight4;
+
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
 
@@ -71,16 +79,8 @@ namespace IS {
         Mesh::initMeshes(meshes); // init 3 meshes
         
         // init quad shader
-        inst_quad_shader_pgm.setupInstSpriteShaders();
-        inst_3d_quad_shader_pgm.setup3DInstSpriteShaders();
-        quad_border_shader_pgm.setupPickedQuadShaders();
 
-        // init debugging lines and circles shaders
-        inst_non_quad_shader_pgm.setupInstLineShaders();
-
-        // init font shaders
-        Times_New_Roman_font.shader.setupTextShaders();
-        Brush_Script_font.shader.setupTextShaders();
+        Shader::compileAllShaders();
 
         // init text object
         Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
@@ -113,6 +113,11 @@ namespace IS {
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
+
+        //testLight.init({ 0.f, 0.f }, { 1.f, 1.f, 1.f }, 0.8f, 1000.f);
+        //testLight2.init({ -100.f, 100.f }, { 1.f, 0.f, 0.f }, 1.0f, 300.f);
+        //testLight3.init({ 0.f, 100.f }, { 0.f, 1.f, 0.f }, 1.0f, 300.f);
+        //testLight4.init({ 100.f, 100.f }, { 0.f, 0.f, 1.f }, 1.0f, 300.f);
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -212,13 +217,16 @@ namespace IS {
             */
 
             // empty quad instance data
-            layered3DQuadInstances.clear();
+            //layered3DQuadInstances.clear();
 
             // for each entity
             for (auto& entity : mEntities) {
                 // get sprite and transform components
                 auto& sprite = engine.GetComponent<Sprite>(entity);
                 auto& trans = engine.GetComponent<Transform>(entity);
+
+                // to remove, just testing
+                if (engine.GetEntityName(entity) == "Player") testLight.position = { trans.getWorldPosition().x, trans.getWorldPosition().y }; 
 
                 // update sprite's transform [will be changed]
                 sprite.followTransform(trans);
@@ -281,7 +289,10 @@ namespace IS {
         InsightEngine& engine = InsightEngine::Instance();
 
         // bind fb
-        if (engine.mRenderGUI) mFramebuffer->Bind();
+        if (engine.mRenderGUI)
+        {
+            mFramebuffer->Bind();
+        }
 
         // set clear color
         glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -296,8 +307,14 @@ namespace IS {
         }
 
         // can enable to test drawing of debug line / circles
-        //Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, 0.f, { 1.0f, 0.0f, 0.0f });
-        //Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+        // Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
+        // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+        // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
+
+        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        //Image* img = system->GetImage("icecream_truck_frame.png");
+        //Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 4);
+
 
         // quads will be drawn first
         // Sprite::draw_instanced_quads();
@@ -307,23 +324,36 @@ namespace IS {
         Sprite::draw_picked_entity_border();
     #endif // USING_IMGUI
         setLineWidth(2.f);
+
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
         Sprite::draw_instanced_lines();
+        testLight.draw();
+        testLight2.draw();
+        testLight3.draw();
+        testLight4.draw();
+        Sprite::draw_lights();
 
         // for each entity
         for (auto& entity : mEntities) {
-            // if they have a rigidbody component
+            // if they have a collider component
+            if (engine.HasComponent<Collider>(entity)) {
+                auto& collider = engine.GetComponent<Collider>(entity);
+                // draw their outline if activated
+                Physics::DrawOutLine(collider);
+            }
+            // if they have a collider component
             if (engine.HasComponent<RigidBody>(entity)) {
                 auto& body = engine.GetComponent<RigidBody>(entity);
-
                 // draw their outline if activated
-                Physics::DrawOutLine(body);
+                if (Physics::mShowVelocity) Sprite::drawDebugLine(body.mPosition, body.mPosition + body.mVelocity, { 1.f, 0.f, 0.f });
             }
         }
 
         // Render text when GUI is disabled
-        if (!engine.mRenderGUI) {
+    #ifdef USING_IMGUI
+        if (!engine.mRenderGUI)
+        {
             // Shared Attributes
             const float scale = 20.f;
             const float x_padding = scale;
@@ -344,13 +374,20 @@ namespace IS {
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
+    #endif // !USING_IMGUI
 
         // Double font animation
-        if (mShowTextAnimation)
+
+        if (engine.mRenderGUI && mShowTextAnimation)
+        {
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
+        }
 
         // if using ImGui, unbind fb at the end of draw
-        if (engine.mRenderGUI) mFramebuffer->Unbind();
+        if (engine.mRenderGUI)
+        {
+            mFramebuffer->Unbind();
+        }
     }
 
     void ISGraphics::cleanup() {

@@ -22,6 +22,7 @@
 				"SpriteColorY" : 0.53704303503036499,
 				"SpriteColorZ" : 0.39801314473152161,
 				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 0,
@@ -43,106 +44,7 @@
 				"TransformWorldPositionX" : -34.482810974121094,
 				"TransformWorldPositionY" : 29.233091354370117
 			}
-		},
-		{
-			"Name" : "Entity"
-		},
-		{
-			"Name" : "Player",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 1,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.20000000298023224,
-				"RigidBodyMass" : 5.0,
-				"RigidBodyRestitution" : 0.10000000149011612,
-				"RigidBodyShapeType" : 0,
-				"RigidBodyTransformUpdateRequired" : false,
-				"RigidBodyTransformedVertices" : 
-				[
-					{
-						"x" : 0.0,
-						"y" : 0.0
-					},
-					{
-						"x" : 0.0,
-						"y" : 0.0
-					},
-					{
-						"x" : 0.0,
-						"y" : 0.0
-					},
-					{
-						"x" : 0.0,
-						"y" : 0.0
-					}
-				],
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidBodyVertices" : 
-				[
-					{
-						"x" : -0.0,
-						"y" : 0.0
-					},
-					{
-						"x" : 0.0,
-						"y" : 0.0
-					},
-					{
-						"x" : 0.0,
-						"y" : -0.0
-					},
-					{
-						"x" : -0.0,
-						"y" : -0.0
-					}
-				],
-				"mDynamicFriction" : 1.1000000238418579,
-				"mInertia" : 0.0,
-				"mInvInertia" : 0.0,
-				"mStaticFriction" : 1.2000000476837158
-			},
-			"Script" : 
-			{
-				"ScriptName" : ""
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorX" : 0.054465334862470627,
-				"SpriteColorY" : 0.80928856134414673,
-				"SpriteColorZ" : 0.47665062546730042,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 0,
-				"SpriteTextureHeight" : 0,
-				"SpriteTextureIndex" : 0,
-				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 0.0,
-				"SpriteTransformScalingY" : 0.0,
-				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : 0.0,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 0.0,
-				"TransformScalingY" : 0.0,
-				"TransformWorldPositionX" : 0.0,
-				"TransformWorldPositionY" : 0.0
-			}
 		}
 	],
-	"EntityAmount" : 3
+	"EntityAmount" : 1
 }
