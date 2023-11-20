@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 namespace IS
 {
-    class ButtonScript
+    class StartButtonScript
     {
         
         static public void Init(){

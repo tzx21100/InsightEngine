@@ -992,25 +992,25 @@
 					},
 					"BoxColliderSizeScale" : 
 					{
-						"X" : 0.40000000596046448,
+						"X" : 0.37999999523162842,
 						"Y" : 0.40000000596046448
 					},
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -40.0,
+							"x" : -38.0,
 							"y" : 36.0
 						},
 						{
-							"x" : 40.0,
+							"x" : 38.0,
 							"y" : 36.0
 						},
 						{
-							"x" : 40.0,
+							"x" : 38.0,
 							"y" : -36.0
 						},
 						{
-							"x" : -40.0,
+							"x" : -38.0,
 							"y" : -36.0
 						}
 					]
@@ -1048,7 +1048,7 @@
 				"RigidBodyForceY" : 0.0,
 				"RigidBodyInvMass" : 0.20000000298023224,
 				"RigidBodyMass" : 5.0,
-				"RigidBodyRestitution" : 0.5,
+				"RigidBodyRestitution" : 0.0,
 				"RigidBodyVelocityX" : 0.0,
 				"RigidBodyVelocityY" : 89.925010681152344,
 				"RigidbodyGravityScale" : 1.0,
@@ -1098,7 +1098,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.033333335071802139,
 						"time_per_frame" : 0.083333335816860199,

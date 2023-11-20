@@ -7,24 +7,61 @@
 	},
 	"Collider" : 
 	{
-		"BoxColliderEnabled" : false,
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 0.0,
+				"Y" : -20.879684448242188
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.37999999523162842,
+				"Y" : 0.40000000596046448
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -38.0,
+					"y" : 36.0
+				},
+				{
+					"x" : 38.0,
+					"y" : 36.0
+				},
+				{
+					"x" : 38.0,
+					"y" : -36.0
+				},
+				{
+					"x" : -38.0,
+					"y" : -36.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
 		"CircleCollider" : 
 		{
 			"CircleColliderCenter" : 
 			{
 				"X" : 0.0,
-				"Y" : -69.160934448242188
+				"Y" : -59.179683685302734
 			},
 			"CircleColliderOffset" : 
 			{
 				"X" : 0.0,
-				"Y" : -20.0
+				"Y" : -38.299999237060547
 			},
-			"CircleColliderRadius" : 60.000003814697266,
-			"CircleColliderRadiusScale" : 0.30000001192092896
+			"CircleColliderRadius" : 38.0,
+			"CircleColliderRadiusScale" : 0.18999999761581421
 		},
 		"CircleColliderEnabled" : true,
-		"CollidingEntity" : 9,
+		"CollidingEntity" : 8,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Player",
@@ -40,7 +77,7 @@
 		"RigidBodyForceY" : 0.0,
 		"RigidBodyInvMass" : 0.20000000298023224,
 		"RigidBodyMass" : 5.0,
-		"RigidBodyRestitution" : 0.5,
+		"RigidBodyRestitution" : 0.0,
 		"RigidBodyVelocityX" : 0.0,
 		"RigidBodyVelocityY" : 89.925010681152344,
 		"RigidbodyGravityScale" : 1.0,
@@ -65,13 +102,13 @@
 		"SpritePrimitiveType" : 5,
 		"SpriteTexture" : 5,
 		"SpriteTextureHeight" : 3652,
-		"SpriteTextureIndex" : 4,
+		"SpriteTextureIndex" : 6,
 		"SpriteTextureWidth" : 3927,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 200.0,
 		"SpriteTransformScalingY" : 180.0,
 		"SpriteTransformWorldPositionX" : 0.0,
-		"SpriteTransformWorldPositionY" : -49.160934448242188,
+		"SpriteTransformWorldPositionY" : -20.879684448242188,
 		"animations" : 
 		[
 			{
@@ -91,9 +128,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 1.0,
+				"frame_index_x" : 0.0,
 				"frame_index_y" : 1.0,
-				"frame_timer" : 0.033333335071802139,
+				"frame_timer" : 0.01666666753590107,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -106,6 +143,6 @@
 		"TransformScalingX" : 200.0,
 		"TransformScalingY" : 180.0,
 		"TransformWorldPositionX" : 0.0,
-		"TransformWorldPositionY" : -49.160934448242188
+		"TransformWorldPositionY" : -20.879684448242188
 	}
 }
