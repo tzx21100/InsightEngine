@@ -400,7 +400,7 @@ namespace IS {
 
     static void SwitchScene(int scene_id)
     {
-        SceneManager::Instance().SwitchScene(scene_id);
+        SceneManager::Instance().SwitchScene(static_cast<SceneID>(scene_id));
     }
 
     static void Exit()
