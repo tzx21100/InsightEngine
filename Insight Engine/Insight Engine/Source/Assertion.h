@@ -85,4 +85,8 @@
 
 #endif // IS_ENABLE_ASSERTS
 
+#define GL_CALL(x) ClearOpenGLError(); \
+        x;                             \
+        IS_CORE_ASSERT(!GotError());   \
+
 #endif // !GAME200_INSIGHT_ENGINE_DEBUG_ASSERTION_H

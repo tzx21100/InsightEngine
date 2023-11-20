@@ -47,9 +47,9 @@ namespace IS {
 
     void Sprite::draw_instanced_quads() {
         // Bind the instance VBO
-        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[0].instance_vbo_ID);
+        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[0].instance_vbo_ID));
         // Upload the quadInstances data to the GPU
-        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
         std::vector<Sprite::instanceData> tempData;
 
         if (buffer) {
@@ -64,40 +64,47 @@ namespace IS {
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
                 // Handle the case where unmap was not successful
-                std::cerr << "Failed to unmap the buffer." << std::endl;
+                IS_CORE_ERROR("Failed to unmap the buffer.");
             }
         }
         else {
             // Handle the case where mapping the buffer was not successful
-            std::cerr << "Failed to map the buffer for writing." << std::endl;
+            IS_CORE_ERROR("Failed to map the buffer for writing.");
         }
         
         // bind shader
-        glUseProgram(ISGraphics::inst_quad_shader_pgm.getHandle());
-        glBindVertexArray(ISGraphics::meshes[0].vao_ID); // will change to enums
+        GL_CALL(glUseProgram(ISGraphics::inst_quad_shader_pgm.getHandle()));
+        GL_CALL(glBindVertexArray(ISGraphics::meshes[0].vao_ID)); // will change to enums
 
         // store texture array indices
         std::vector<int> tex_array_index_vect;
         for (auto const& texture : ISGraphics::textures) {
-            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            GL_CALL(glBindTextureUnit(texture.texture_index, texture.texture_id));
             tex_array_index_vect.emplace_back(texture.texture_index);
         }
 
         // upload to uniform variable
-        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_quad_shader_pgm.getHandle(), "uTex2d");
-        if (tex_arr_uniform >= 0) 
-            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
-        else std::cout << "uTex2d Uniform not found" << std::endl;
+        GL_CALL(auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_quad_shader_pgm.getHandle(), "uTex2d"));
+        if (tex_arr_uniform >= 0)
+        {
+            GL_CALL(glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]));
+        }
+        else
+        {
+            IS_CORE_ERROR("uTex2d Uniform not found");
+        }
 
         // draw instanced quads
-        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[0].draw_count, static_cast<GLsizei>(tempData.size()));
+        GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[0].draw_count, static_cast<GLsizei>(tempData.size())));
     }
 
     void Sprite::draw_instanced_3D_quads() {
         // Bind the instance VBO
-        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
+        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
+
+        glUnmapBuffer(GL_ARRAY_BUFFER);
         // Upload the quadInstances data to the GPU
-        Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        GL_CALL(Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
 
         // Copy the instance data from the multiset to the vector
@@ -122,8 +129,8 @@ namespace IS {
         }
 
         // bind shader
-        glUseProgram(ISGraphics::inst_3d_quad_shader_pgm.getHandle());
-        glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
+        GL_CALL(glUseProgram(ISGraphics::inst_3d_quad_shader_pgm.getHandle()));
+        GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
         // store texture array indices
         std::vector<int> tex_array_index_vect;

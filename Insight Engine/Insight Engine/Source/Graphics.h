@@ -34,6 +34,10 @@
 #include "Camera3D.h"
 
 namespace IS {
+
+	void ClearOpenGLError();
+	bool GotError();
+
 	/*!
 	 * \brief The ISGraphics class encapsulates the functionalities of a Graphics Engine.
 	 *

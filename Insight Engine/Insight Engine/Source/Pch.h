@@ -54,4 +54,5 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include "SceneManager.h"
 #include "Particle.h"
 #include "Light.h"
+
 #endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_

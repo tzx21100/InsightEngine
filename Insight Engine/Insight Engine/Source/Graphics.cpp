@@ -26,6 +26,9 @@
 
 namespace IS {
 
+    void ClearOpenGLError() { while (glGetError() != GL_NO_ERROR); }
+    bool GotError() { return glGetError() != GL_NO_ERROR; }
+
     /// Static objects ///
 
     // Frame Buffer
