@@ -77,8 +77,8 @@ namespace IS
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
-            player_walk = InternalCalls.GetSpriteImage("running_anim 3C4R.png");
-            player_idle = InternalCalls.GetSpriteImage("idle_anim 3C4R.png");
+            player_walk = InternalCalls.GetSpriteImage("running_anim 4R3C.png");
+            player_idle = InternalCalls.GetSpriteImage("idle_anim 4R3C.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
 
