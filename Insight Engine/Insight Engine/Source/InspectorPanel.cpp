@@ -516,6 +516,18 @@ namespace IS {
                 ImGui::TableNextColumn();
                 EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
 
+                if (rigidbody.mBodyType == BodyType::Dynamic)
+                {
+                    ImGui::TableNextColumn();
+                    ImGui::PushFont(FONT_BOLD);
+                    ImGui::TextUnformatted("Gravity Scale");
+                    ImGui::PopFont();
+                    ImGui::TableNextColumn();
+                    ImGui::PushItemWidth(80.f);
+                    ImGui::DragFloat("##Gravity Scale", &rigidbody.mGravityScale);
+                    ImGui::PopItemWidth();
+                }
+
                 // Mass
                 ImGui::TableNextColumn();
                 ImGui::PushFont(FONT_BOLD);

@@ -250,6 +250,9 @@ namespace IS
             prefab["RigidBodyRestitution"] = mRestitution;
             prefab["RigidBodyArea"] = mArea;
 
+            // Serializing gravity scale
+            prefab["RigidbodyGravityScale"] = mGravityScale;
+
             // Serializing bodyShape (casted to int)
             //prefab["RigidBodyShapeType"] = static_cast<int>(mBodyShape);
 
@@ -313,6 +316,9 @@ namespace IS
             mInvMass = data["RigidBodyInvMass"].asFloat();
             mRestitution = data["RigidBodyRestitution"].asFloat();
             mArea = data["RigidBodyArea"].asFloat();
+
+            // Deserializing gravity scale
+            mGravityScale = data["RigidbodyGravityScale"].asFloat();
 
             // Deserializing bodyShape (assuming it's an enum or similar that can be cast from int)
             //mBodyShape = static_cast<BodyShape>(data["RigidBodyShapeType"].asInt());
