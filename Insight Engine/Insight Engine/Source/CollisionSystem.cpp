@@ -62,6 +62,41 @@ namespace IS
 				continue;
 			}
 
+			//
+			BodyType typeA = BodyType::Static;
+			BodyType typeB = BodyType::Static;
+			RigidBody* contact_bodyA = nullptr;
+			RigidBody* contact_bodyB = nullptr;
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA))
+			{
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				typeA = bodyA.mBodyType;
+				contact_bodyA = &bodyA;
+			}
+
+			if (InsightEngine::Instance().HasComponent<RigidBody>(entityB))
+			{
+				auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+				typeB = bodyB.mBodyType;
+				contact_bodyB = &bodyB;
+			}
+
+			if (contact_bodyA == nullptr && contact_bodyB == nullptr)
+			{
+				continue; // skip if both entity have no body componet, default both static
+			}
+
+			if (contact_bodyA != nullptr && contact_bodyB != nullptr)
+			{
+				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+				auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+				if (bodyA.mBodyType == BodyType::Static && bodyB.mBodyType == BodyType::Static)
+				{
+					continue; // skip if collision happens between two non dynamic entities
+				}
+			}
+
+			//
 			auto& transA = InsightEngine::Instance().GetComponent<Transform>(entityA);
 			auto& transB = InsightEngine::Instance().GetComponent<Transform>(entityB);
 			auto& colliderA = InsightEngine::Instance().GetComponent<Collider>(entityA);
@@ -69,6 +104,7 @@ namespace IS
 			colliderA.UpdateCollider(transA);
 			colliderB.UpdateCollider(transB);
 
+			//
 			mColliding = false;
 
 			// collection of all possible collision happens between two colliders
@@ -82,40 +118,12 @@ namespace IS
 				colliderA.mCollidingEntity = entityB;
 				colliderB.mIsColliding = true;
 				colliderB.mCollidingEntity = entityA;
-				BodyType typeA = BodyType::Static;
-				BodyType typeB = BodyType::Static;
-				RigidBody* contact_bodyA = nullptr;
-
-				RigidBody* contact_bodyB = nullptr;
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entityA)) {
-					auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-					typeA = bodyA.mBodyType;
-					contact_bodyA = &bodyA;
-				}
-
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entityB)) {
-					auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-					typeB = bodyB.mBodyType;
-					contact_bodyB = &bodyB;
-				}
-
+				
 				//for non-response enabled to check for angles of the collided object
 				if (!colliderA.mResponseEnable) {
 					colliderA.mCollidedObjectAngle = transB.getRotation();
 				}
 
-
-				if (contact_bodyA == nullptr && contact_bodyB == nullptr) {
-					continue; // skip if both entity have no body componet, default both static
-				}
-
-				if (contact_bodyA != nullptr && contact_bodyB != nullptr) {
-					auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-					auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-					if (bodyA.mBodyType != BodyType::Dynamic && bodyB.mBodyType != BodyType::Dynamic) {
-						continue; // skip if collision happens between two non dynamic entities
-					}
-				}
 				/*if (InsightEngine::Instance().GetEntityName(entityA) == "FeetCollider") {
 					colliderA.mResponseEnable = false;
 				}
@@ -656,11 +664,6 @@ namespace IS
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 				collider.UpdateCollider(trans);
-				/*if (InsightEngine::Instance().HasComponent<Sprite>(entity))
-				{
-					InsightEngine::Instance().GetComponent<Sprite>(entity).drawDebugCircle(trans.world_position,
-						{ collider.mCircleCollider.radius, collider.mCircleCollider.radius }, { 1.f, 0.f, 0.f });
-				}*/
 			}
 		}
 	}

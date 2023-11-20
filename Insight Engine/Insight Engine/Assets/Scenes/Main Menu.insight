@@ -1,0 +1,170 @@
+{
+	"Entities" : 
+	[
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Floor",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "main_menu_bg.jpeg",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 9,
+				"SpriteTextureHeight" : 720,
+				"SpriteTextureIndex" : 8,
+				"SpriteTextureWidth" : 1280,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 4480.0,
+				"SpriteTransformScalingY" : 2520.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 4480.0,
+				"TransformScalingY" : 2520.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Start Button",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "start_button.png",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 20,
+				"SpriteTextureHeight" : 345,
+				"SpriteTextureIndex" : 19,
+				"SpriteTextureWidth" : 1048,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1048.0,
+				"SpriteTransformScalingY" : 345.0,
+				"SpriteTransformWorldPositionX" : -846.69000244140625,
+				"SpriteTransformWorldPositionY" : -69.403228759765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1048.0,
+				"TransformScalingY" : 345.0,
+				"TransformWorldPositionX" : -846.69000244140625,
+				"TransformWorldPositionY" : -69.403228759765625
+			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Exit Button",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "exit_button.png",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 2,
+				"SpriteTextureHeight" : 211,
+				"SpriteTextureIndex" : 1,
+				"SpriteTextureWidth" : 444,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 444.0,
+				"SpriteTransformScalingY" : 211.0,
+				"SpriteTransformWorldPositionX" : -846.68731689453125,
+				"SpriteTransformWorldPositionY" : -485.8056640625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 444.0,
+				"TransformScalingY" : 211.0,
+				"TransformWorldPositionX" : -846.68731689453125,
+				"TransformWorldPositionY" : -485.8056640625
+			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Game Logo",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "fragments_game_logo.png",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 3,
+				"SpriteTextureHeight" : 321,
+				"SpriteTextureIndex" : 2,
+				"SpriteTextureWidth" : 2744,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1700.0,
+				"SpriteTransformScalingY" : 321.0,
+				"SpriteTransformWorldPositionX" : -846.68731689453125,
+				"SpriteTransformWorldPositionY" : 412.92950439453125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1700.0,
+				"TransformScalingY" : 321.0,
+				"TransformWorldPositionX" : -846.68731689453125,
+				"TransformWorldPositionY" : 412.92950439453125
+			}
+		}
+	],
+	"EntityAmount" : 4
+}

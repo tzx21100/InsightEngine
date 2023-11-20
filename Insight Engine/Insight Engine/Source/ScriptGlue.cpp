@@ -391,6 +391,22 @@ namespace IS {
     
     }
 
+    static void LoadScene(MonoString* file_name)
+    {
+        char* c_str = mono_string_to_utf8(file_name); // Convert Mono string to char*
+        SceneManager::Instance().LoadScene(c_str);
+        mono_free(c_str);
+    }
+
+    static void SwitchScene(int scene_id)
+    {
+        SceneManager::Instance().SwitchScene(static_cast<SceneID>(scene_id));
+    }
+
+    static void Exit()
+    {
+        InsightEngine::Instance().Exit();
+    }
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -467,6 +483,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
+
+        //Scene Manager
+        IS_ADD_INTERNAL_CALL(LoadScene);
+        IS_ADD_INTERNAL_CALL(SwitchScene);
+        IS_ADD_INTERNAL_CALL(Exit);
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);

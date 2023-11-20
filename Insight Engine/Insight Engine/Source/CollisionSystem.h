@@ -66,6 +66,8 @@ namespace IS
 
 		void SavingCollidingData(short colliding_status,Vector2D const& normal, float depth);
 
+
+
 		void Step();
 
 	private:
