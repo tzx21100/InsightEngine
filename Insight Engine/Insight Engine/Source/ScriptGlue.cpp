@@ -106,7 +106,8 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
         Vector2D vec(x, y);
-        body_component.mVelocity=vec;
+        //body_component.mVelocity=vec;
+        body_component.SetVelocity(vec);
     }
 
     static SimpleVector2D RigidBodyGetVelocity() {

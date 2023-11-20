@@ -181,12 +181,14 @@ namespace IS
          * \param val The force vector to add.
          */
         void AddForce(Vector2D const& val);
+        void SetForce(Vector2D const& val);
 
         /*!
          * \brief Add a velocity to the rigid body.
          * \param val The velocity vector to add.
          */
         void AddVelocity(Vector2D const& val);
+        void SetVelocity(Vector2D const& val);
 
         /*!
         * \brief Create a box-shaped rigid body with specified parameters.

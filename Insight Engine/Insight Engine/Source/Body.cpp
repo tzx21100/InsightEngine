@@ -243,12 +243,22 @@ namespace IS
 
     // Add a force to the rigid body
     void RigidBody::AddForce(Vector2D const& val) {
+        mForce += val;
+    }
+    
+    // Set a force to the rigid body
+    void RigidBody::SetForce(Vector2D const& val) {
         mForce = val;
     }
 
     // Add a velocity to the rigid body
     void RigidBody::AddVelocity(Vector2D const& val) {
         mVelocity += val;
+    }
+    
+    // Add a velocity to the rigid body
+    void RigidBody::SetVelocity(Vector2D const& val) {
+        mVelocity = val;
     }
 
     // Create a box-shaped rigid body with specified parameters

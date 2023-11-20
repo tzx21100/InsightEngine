@@ -376,14 +376,14 @@ namespace IS
 		Vector2D contact1 = contact.mContact1;
 		Vector2D contact2 = contact.mContact2;
 		int contactCount = contact.mContactCount;
-		Vector2D test = { 100.f, 100.f };
+		/*Vector2D test = { 100.f, 100.f };
 		if (contactCount == 1) {
-//			Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
+			Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
 		}
 		if (contactCount == 2) {
-			//Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
-			//Sprite::drawDebugLine(contact2, contact2 + test, { 1.f, 0.f, 0.f });
-		}
+			Sprite::drawDebugLine(contact1, contact1 + test, { 1.f, 0.f, 0.f });
+			Sprite::drawDebugLine(contact2, contact2 + test, { 1.f, 0.f, 0.f });
+		}*/
 
 		if (contact.mBodyA) { // if entity A got rigidbody component
 			bodyA = contact.mBodyA;
