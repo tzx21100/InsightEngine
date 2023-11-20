@@ -29,6 +29,9 @@ namespace IS
         //double jump and above
         static private int jump_amount;
         static private int jump_amount_set = 1;
+        static private float jump_timer = 0.2f;
+        static private float jump_timer_set = 0.2f;
+        static private bool isJumping = false;
 
         //dashing 
         static private float bullet_time_timer = 1f;
@@ -155,27 +158,27 @@ namespace IS
 
 
 
-            InternalCalls.RigidBodyAddForce(hori_movement * move_speed  *InternalCalls.GetDeltaTime(), 0f);
+            
 
             WallCheckerUpdate();
             //wall checking
-            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID())
+            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)))
             {
-                isClimbing = true;
+                if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); }
+                isClimbing = true;   
             }
             else { isClimbing = false; }
 
             if(isClimbing) {
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
-                InternalCalls.RigidBodyAddForce(0, climbSpeed * InternalCalls.GetDeltaTime());
                 
                 float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall) - (90 * hori_movement);
 
                 InternalCalls.TransformSetRotation(collided_angle, 0);
-                Vector2D force_from_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(collided_angle));
+                Vector2D force_from_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(collided_angle*-hori_movement));
 
-                InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x  *force_from_angle.x *-1, InternalCalls.RigidBodyGetVelocity().y  *force_from_angle.y *-1);
+                InternalCalls.RigidBodySetForce(climbSpeed  *force_from_angle.x * hori_movement, climbSpeed *force_from_angle.y );
 
 
                 float x_offset = 28 * hori_movement;
@@ -190,7 +193,8 @@ namespace IS
                 InternalCalls.TransformSetScale(1f,1f);
             }
 
-
+            //jumping bool
+            if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
                 //if is grounded
             if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != InternalCalls.GetCurrentEntityID())
             {
@@ -206,33 +210,38 @@ namespace IS
 
             if (isGrounded)
             {
-                float aangle = InternalCalls.GetTransformRotation();
-/*                if (hori_movement != 0) {aangle+=180f; }*/
-                Vector2D f_angle=Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians( aangle));
-                //set move speed when grounded
-                
-                InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed)), InternalCalls.RigidBodyGetVelocity().y);
-
-                // Set the rotation to be the same as the detected one
-                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
-                if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
+                if (!isJumping)
                 {
-                    InternalCalls.TransformSetRotation(collided_angle, 0);
-                }
-                else {
-                    InternalCalls.TransformSetRotation(0, 0);
-                }
+                    float aangle = InternalCalls.GetTransformRotation();
+                    /*                if (hori_movement != 0) {aangle+=180f; }*/
+                    Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
+                    //set move speed when grounded
 
-                jump_amount = jump_amount_set;
-                canDash = true;
+                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) *f_angle.x*-1f), f_angle.y  * move_speed *hori_movement);
 
-                if (InternalCalls.KeyPressed((int)KeyCodes.Space))
-                {
-                    Jump();
+                    // Set the rotation to be the same as the detected one
+                    float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
+                    if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
+                    {
+                        InternalCalls.TransformSetRotation(collided_angle, 0);
+                    }
+                    else
+                    {
+                        InternalCalls.TransformSetRotation(0, 0);
+                    }
+
+                    jump_amount = jump_amount_set;
+                    canDash = true;
+
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    {
+                        Jump();
+                        isJumping = true;
+                    }
                 }
             }
             else if(!isClimbing){ //while in the air
-
+                InternalCalls.RigidBodyAddForce(hori_movement * move_speed * InternalCalls.GetDeltaTime(), 0f);
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
@@ -274,7 +283,7 @@ namespace IS
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x,trans_scaling.y);
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x* (bullet_time_timer/bullet_time_set),trans_scaling.y* (bullet_time_timer / bullet_time_set));
 
                 }
                 else

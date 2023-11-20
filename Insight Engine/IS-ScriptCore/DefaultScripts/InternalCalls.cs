@@ -167,6 +167,9 @@ namespace IS
         internal extern static void SwitchScene(int scene_id);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void Exit();
+        internal extern static void Exit();        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CollidingObjectIsStatic(int entity);
     }
 }

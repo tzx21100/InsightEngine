@@ -385,6 +385,11 @@ namespace IS {
         return collider_component.mCollidingEntity;
     }
 
+    static bool CollidingObjectIsStatic(int entity) {
+        auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return body_component.mBodyType == BodyType::Static ? 1 : 0;
+    }
+
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image , int layer=1) {
         
         Sprite::draw_textured_quad(Vector2D(pos.x,pos.y), rotation, Vector2D(scale.x,scale.y), ConvertToImage(image), layer);
@@ -478,6 +483,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
         IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
         IS_ADD_INTERNAL_CALL(GetCollidingEntity);
+        IS_ADD_INTERNAL_CALL(CollidingObjectIsStatic);
 
         //Debug
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
