@@ -46,6 +46,24 @@ namespace IS {
 		}
 
 		/*!
+		 * \brief != operator overload.
+		 * \return Boolean flag indicating the outcome.
+		 */
+		bool operator!=(Transform const& other)
+		{
+			return !(world_position == other.world_position && rotation == other.rotation && angle_speed && other.angle_speed && scaling == other.scaling);
+		}
+
+		/*!
+		 * \brief == operator overload.
+		 * \return Boolean flag indicating the outcome.
+		 */
+		bool operator==(Transform const& other)
+		{
+			return (world_position == other.world_position && rotation == other.rotation && angle_speed && other.angle_speed && scaling == other.scaling);
+		}
+
+		/*!
 		 * \brief Default constructor for the Transform class.
 		 */
 		Transform();

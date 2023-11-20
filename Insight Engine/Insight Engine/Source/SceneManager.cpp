@@ -20,6 +20,7 @@
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "SceneManager.h"
+#include "CommandHistory.h"
 
 namespace IS {
 	
@@ -136,7 +137,10 @@ namespace IS {
 	{
 		if (mSceneCount == 0)
 			return std::nullopt;
-		return InsightEngine::Instance().CreateEntity(name); 
+
+		std::shared_ptr<CreateEntityCommand> command = std::make_shared<CreateEntityCommand>(name);
+		CommandHistory::AddCommand(command);
+		return command->mEntity;
 	}
 
 	std::optional<Entity> SceneManager::AddRandomEntity()
@@ -157,7 +161,9 @@ namespace IS {
 	{
 		if (mSceneCount == 0)
 			return;
-		InsightEngine::Instance().DeleteEntity(entity);
+
+		std::shared_ptr<DestroyEntityCommand> command = std::make_shared<DestroyEntityCommand>(entity);
+		CommandHistory::AddCommand(command);
 	}
 
 	void SceneManager::CreateScene(std::string const& scene_filename)

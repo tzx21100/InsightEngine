@@ -68,7 +68,7 @@ namespace IS {
 
             if (DELETE_PRESSED && mEditorLayer.IsAnyEntitySelected())
             {
-                engine.DeleteEntity(mEditorLayer.GetSelectedEntity());
+                mEditorLayer.DeleteEntity(mEditorLayer.GetSelectedEntity());
                 mEditorLayer.ResetEntitySelection();
             }
 
@@ -485,63 +485,35 @@ namespace IS {
         }
         float snap_values[3] = { snap_value, snap_value, snap_value };
 
-        bool manipulated = ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
-                                                static_cast<ImGuizmo::OPERATION>(mGizmoType),
-                                                ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
-                                                nullptr, mSnap ? snap_values : nullptr);
+       ImGuizmo::Manipulate(glm::value_ptr(view), glm::value_ptr(projection),
+                            static_cast<ImGuizmo::OPERATION>(mGizmoType),
+                            ImGuizmo::LOCAL, glm::value_ptr(transform_matrix),
+                            nullptr, mSnap ? snap_values : nullptr);
 
-        glm::vec3 translation3D, rotation3D, scale3D;
-        ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation3D), glm::value_ptr(rotation3D), glm::value_ptr(scale3D));
+        if (ImGuizmo::IsUsing() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
+        {
+            Vector3D translation3D, rotation3D, scale3D;
+            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), &translation3D.x, &rotation3D.x, &scale3D.x);
 
-        static Transform old_transform = transform;
-        static Entity old_entity = selected_entity;
-        if (old_entity != selected_entity)
-        {
-            old_entity = selected_entity;
-            old_transform = transform;
-        }
-
-        ImGuiIO& io = ImGui::GetIO();
-        if (ImGuizmo::IsUsing() && io.MouseClicked[ImGuiMouseButton_Left])
-        {
-            old_transform = transform;
-            IS_CORE_DEBUG("CLICKED");
-        }
-        else if (!ImGuizmo::IsUsing() && io.MouseReleased[ImGuiMouseButton_Left])
-        {
-            if (old_transform.world_position != transform.world_position)
-            {
-                Vec2 new_position = transform.world_position;
-                transform.world_position = old_transform.world_position;
-                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, new_position));
-            }
-            if (old_transform.rotation != transform.rotation)
-            {
-                float new_rotation = transform.rotation;
-                transform.rotation = old_transform.rotation;
-                CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, new_rotation));
-            }
-            if (old_transform.scaling != transform.scaling)
-            {
-                Vec2 new_scaling = transform.scaling;
-                transform.scaling = old_transform.scaling;
-                CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, new_scaling));
-            }
-            IS_CORE_DEBUG("RELEASED");
-        }
-
-        using namespace EditorUtils;
-        if (manipulated)
-        {
             float delta_rot = rotation3D.z - transform.rotation;
-            Vec2 translation{ translation3D.x, translation3D.y }, scale{ std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
-            float rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
-            transform.world_position = translation;
-            transform.rotation = rotation;
-            transform.scaling = scale;
-        }
 
-        mGizmoInUse = io.MouseDown[ImGuiMouseButton_Left] ? true : false;
+            Transform new_transform;
+            new_transform.world_position = { translation3D.x, translation3D.y };
+            new_transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
+            new_transform.scaling = { std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
+
+            CommandHistory::AddCommand(std::make_shared<ChangeCommand<Transform>>(transform, new_transform));
+
+            mGizmoInUse = true;
+        }
+        else
+        {
+            if (mGizmoInUse)
+            {
+                CommandHistory::SetNoMergeMostRecent(true);
+            }
+            mGizmoInUse = false;
+        }
 
     } // end RenderGizmo()
 

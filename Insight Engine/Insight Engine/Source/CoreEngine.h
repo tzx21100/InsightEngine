@@ -674,7 +674,6 @@ namespace IS {
          */
         std::unordered_set<Entity> mEntitiesToDelete;
 
-
         /**
          * \brief Function To Deserialize All components
          */

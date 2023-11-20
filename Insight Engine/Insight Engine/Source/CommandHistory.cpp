@@ -8,16 +8,41 @@ namespace IS {
 
     void CommandHistory::AddCommand(CommandType command)
     {
+        // Execute the command
         command->Execute();
+
+        // Limit stack size
         LimitStackSize(mUndoStack, MAX_COMMANDS);
+
+        // Clear the redo stack
         mRedoStack.clear();
+
+        // Add to the undo stack
         mUndoStack.push_back(command);
+
+        // Check if more there is enough commands to merge
+        if (mUndoStack.size() > 1)
+        {
+            // Check if the last and second last command can be merged
+            if (CommandType second_last_command = *(std::prev(mUndoStack.end(), 2));
+                mUndoStack.back()->CanMerge() && second_last_command->CanMerge())
+            {
+                // Merge the last and second last command
+                if (mUndoStack.back()->Merge(second_last_command))
+                {
+                    // Remove the last command
+                    mUndoStack.pop_back();
+                }
+            }
+        }
     }
 
     void CommandHistory::Undo()
     {
+        // Check if undo stack is not empty
         if (mUndoStack.size())
         {
+            // Undo the last command
             CommandType command = mUndoStack.back();
             mUndoStack.pop_back();
             command->Undo();
@@ -28,8 +53,10 @@ namespace IS {
 
     void CommandHistory::Redo()
     {
+        // Check if redo stack is not empty
         if (mRedoStack.size())
         {
+            // Redo the last command
             CommandType command = mRedoStack.back();
             mRedoStack.pop_back();
             command->Execute();
@@ -39,12 +66,15 @@ namespace IS {
         }
     }
 
-    void CommandHistory::SetNotExplicitBack(bool changed)
+    void CommandHistory::SetNoMergeMostRecent(bool changed)
     {
         if (!changed)
             return;
 
-
+        if (mUndoStack.size() - 1 >= 0)
+        {
+            mUndoStack.back()->SetNoMerge();
+        }
     }
 
     void CommandHistory::LimitStackSize(StackType& stack, size_t max_size)

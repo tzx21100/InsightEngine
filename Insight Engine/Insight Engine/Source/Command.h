@@ -14,39 +14,37 @@ namespace IS {
         virtual ~ICommand() = default;
         virtual void Execute() = 0;
         virtual void Undo() = 0;
-        virtual bool Merge(ICommand*) = 0;
+        virtual bool Merge(std::shared_ptr<ICommand>) { return false; }
 
-        void SetMerge() { mCanMerge = false; }
+        void SetNoMerge() { mCanMerge = false; }
         bool CanMerge() const { return mCanMerge; }
 
     protected:
         bool mCanMerge = true;
     };
 
-    class Vec2Command final : public ICommand
+    template <typename T>
+    class ChangeCommand final : public ICommand
     {
     public:
-        Vec2Command(Vec2& value, Vec2 new_value)
-            : mValue(value), mNewValue(new_value), mOldValue(value) {}
+        ChangeCommand(T& value, T new_value) : mValue(value), mNewValue(new_value), mOldValue(value) {}
 
         void Execute() override
         {
             mValue = mNewValue;
-            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mOldValue.x, mOldValue.y, mValue.x, mValue.y);
         }
 
-        void Undo() override 
+        void Undo() override
         {
             mValue = mOldValue;
-            IS_CORE_DEBUG("Change from ({:.2f}, {:.2f}) to ({:.2f}, {:.2f})", mNewValue.x, mNewValue.y, mValue.x, mValue.y);
         }
 
-        bool Merge(ICommand* other) override
+        bool Merge(std::shared_ptr<ICommand> other) override
         {
-            Vec2Command* command = dynamic_cast<Vec2Command*>(other);
+            std::shared_ptr<ChangeCommand<T>> command = std::dynamic_pointer_cast<ChangeCommand<T>>(other);
             if (command)
             {
-                if (&command->mValue == &mValue)
+                if (command->mValue != mValue)
                 {
                     command->mNewValue = mNewValue;
                     return true;
@@ -57,76 +55,39 @@ namespace IS {
         }
 
     private:
-        Vec2& mValue;
-        Vec2 mNewValue;
-        Vec2 mOldValue;
-    };
-
-    class FloatCommand final : public ICommand
-    {
-    public:
-        FloatCommand(float& value, float new_value)
-            : mValue(value), mNewValue(new_value), mOldValue(value) {}
-
-        void Execute() override
-        {
-            mValue = mNewValue;
-            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mOldValue, mValue);
-        }
-
-        void Undo() override 
-        {
-            mValue = mOldValue;
-            IS_CORE_DEBUG("Change from {:.2f} to {:.2f}", mNewValue, mValue);
-        }
-
-        bool Merge(ICommand* other) override
-        {
-            FloatCommand* command = dynamic_cast<FloatCommand*>(other);
-            if (command)
-            {
-                if (&command->mValue == &mValue)
-                {
-                    command->mNewValue = mNewValue;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-    private:
-        float& mValue;
-        float mOldValue;
-        float mNewValue;
+        T& mValue;
+        T mNewValue;
+        T mOldValue;
     };
 
     class CreateEntityCommand final : public ICommand
     {
     public:
-        CreateEntityCommand(Entity entity);
+        CreateEntityCommand(std::string const& entity_name);
 
-        void Execute() override {}
-        void Undo() override {}
-        bool Merge(ICommand*) override {}
+        void Execute() override;
+        void Undo() override;
+        Entity mEntity;
 
     private:
-        Entity mEntity;
-        std::string mFileName;
+        std::string mEntityName;
     };
 
-    class DestroyEntityComannd final : public ICommand
+    class DestroyEntityCommand final : public ICommand
     {
     public:
-        DestroyEntityComannd(Entity entity);
+        DestroyEntityCommand(Entity entity);
 
-        void Execute() override {}
-        void Undo() override {}
-        bool Merge(ICommand*) override {}
+        void Execute() override;
+        void Undo() override;
+
+        static void ClearTempDirectory();
 
     private:
         Entity mEntity;
         std::string mFileName;
+        static const std::string mTempDirectory;
+        static int mDestroyedCount;
     };
 
 } // end namespace IS
