@@ -82,6 +82,7 @@ namespace IS
 		//LineCollider mLineCollider;
 		std::bitset<MAX_COLLIDER> mSelectedCollider;
 		bool mIsColliding;
+		Entity mCollidingEntity;
 		bool mResponseEnable;
 		float mCollidedObjectAngle;
 

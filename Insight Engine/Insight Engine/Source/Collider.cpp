@@ -168,6 +168,7 @@ namespace IS
 
 		//save response
 		data["ResponseEnabled"] = mResponseEnable;
+		data["CollidingEntity"] = mCollidingEntity;
 
 
 		// Save Box Collider
@@ -242,6 +243,7 @@ namespace IS
 
 		// Load response
 		mResponseEnable = data["ResponseEnabled"].asBool();
+		mCollidingEntity = data["CollidingEntity"].asUInt();
 
 		// Load Box Collider
 		if (box_enabled)

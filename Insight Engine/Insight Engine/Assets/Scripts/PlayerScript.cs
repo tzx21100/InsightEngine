@@ -15,6 +15,7 @@ namespace IS
         static SimpleImage player_walk;
         static SimpleImage player_idle;
         static SimpleImage player_climb;
+        static SimpleImage player_transparent;
 
 
 
@@ -75,7 +76,9 @@ namespace IS
 
             player_walk = InternalCalls.GetSpriteImage("Player run 1R12C.png");
             player_idle = InternalCalls.GetSpriteImage("Player idle 1R12C.png");
-            player_climb = InternalCalls.GetSpriteImage("Player Climb.png");
+            player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
+            player_transparent = InternalCalls.GetSpriteImage("transparent.png");
+
             // Initialization code
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -156,14 +159,14 @@ namespace IS
 
 
             //wall checking
-            if (InternalCalls.EntityCheckCollide(entityWall) && CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x) <100 && hori_movement!=0)
+            if (InternalCalls.EntityCheckCollide(entityWall) && CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x) <100 && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID())
             {
                 isClimbing = true;
             }
             else { isClimbing = false; }
 
             if(isClimbing) {
-                InternalCalls.SetSpriteImage(player_climb);
+                InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
                 InternalCalls.RigidBodyAddForce(0, climbSpeed * InternalCalls.GetDeltaTime());
                 InternalCalls.RigidBodySetForce(CustomMath.min(99,CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x))*hori_movement, InternalCalls.RigidBodyGetVelocity().y);
@@ -172,10 +175,14 @@ namespace IS
                 {
                     InternalCalls.TransformSetRotation(collided_angle, 0);
                 }
-                else
-                {
-                    InternalCalls.TransformSetRotation(0, 0);
-                }
+
+
+                float x_offset = 28 * hori_movement;
+                SimpleVector2D pos = InternalCalls.GetTransformPosition();
+                pos.x += x_offset;
+                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x* 1.2f, InternalCalls.GetTransformScaling().y * 1.2f);
+                InternalCalls.DrawImageAt(pos, 0f, scale, player_climb, 1);
+
             }
             else
             {
@@ -184,7 +191,7 @@ namespace IS
 
 
                 //if is grounded
-            if (InternalCalls.EntityCheckCollide(entityA) && InternalCalls.RigidBodyGetVelocity().y > -100 && isClimbing==false)
+            if (InternalCalls.EntityCheckCollide(entityA) && InternalCalls.RigidBodyGetVelocity().y > -100 && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != InternalCalls.GetCurrentEntityID())
             {
 
                 isGrounded = true;
@@ -289,8 +296,10 @@ namespace IS
             InternalCalls.FreeSpriteImage(player_climb);
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
+            InternalCalls.FreeSpriteImage(player_transparent);
             InternalCalls.DestroyEntity(entityA);
             InternalCalls.DestroyEntity(entityWall);
+            
         }
 
 
