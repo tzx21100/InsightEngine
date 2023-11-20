@@ -179,8 +179,7 @@ namespace IS {
             Vec2 position = transform.world_position;
             if (EditorUtils::RenderControlVec2("Translation", position))
             {
-                if (position != transform.world_position)
-                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.world_position, position));
+                CommandHistory::AddCommand(std::make_shared<ChangeCommand<Vector2D>>(transform.world_position, position));
             }
 
             // Render Rotation
@@ -199,10 +198,7 @@ namespace IS {
                 float rotation = transform.rotation;
                 if (ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
                 {
-                    if (rotation != transform.rotation)
-                    {
-                        CommandHistory::AddCommand(std::make_shared<FloatCommand>(transform.rotation, rotation));
-                    }
+                    CommandHistory::AddCommand(std::make_shared<ChangeCommand<float>>(transform.rotation, rotation));
                 }
 
                 ImGui::EndTable(); // end table TransformRotation
@@ -212,10 +208,7 @@ namespace IS {
             Vec2 scaling = transform.scaling;
             if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
             {
-                if (scaling != transform.scaling)
-                {
-                    CommandHistory::AddCommand(std::make_shared<Vec2Command>(transform.scaling, scaling));
-                }                    
+                CommandHistory::AddCommand(std::make_shared<ChangeCommand<Vector2D>>(transform.scaling, scaling));
             }
 
         }); // end render Transform Component

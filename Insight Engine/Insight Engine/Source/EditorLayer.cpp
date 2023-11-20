@@ -70,6 +70,7 @@ namespace IS {
     {
         mPanels.Clear();
         mIcons.clear();
+        DestroyEntityCommand::ClearTempDirectory();
         IS_CORE_DEBUG("{} detached.", mDebugName);
 
     } // end OnDetach()
@@ -163,6 +164,11 @@ namespace IS {
             for (auto& panel : mPanels)
             {
                 panel->RenderPanel();
+            }
+
+            if (mShowDelete)
+            {
+                RenderConfirmDelete(mEntityToDelete);
             }
 
             //auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
@@ -557,25 +563,20 @@ namespace IS {
         ImGui::SetNextWindowPos({ width / 2.f, height / 2.f });
         if (ImGui::BeginPopupModal("Confirm Delete?", &mShowDelete, window_flags))
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.8f, .1f, .15f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.9f, .2f, .2f, 1.f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(.8f, .1f, .15f, 1.f));
-
             ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
             ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
             ImGui::TableNextColumn();
-            if (ImGui::Button("CONFIRM"))
+            if (ImGui::Button("Confirm"))
             {
-                engine.DeleteEntity(entity);
+                SceneManager::Instance().DeleteEntity(entity);
                 if (IsAnyEntitySelected() && GetSelectedEntity() == entity)
                 {
                     ResetEntitySelection();
                 }
                 mShowDelete = false;
             }
-            ImGui::PopStyleColor(3);
             ImGui::TableNextColumn();
-            if (ImGui::Button("CANCEL")) { mShowDelete = false; }
+            if (ImGui::Button("Cancel")) { mShowDelete = false; }
             ImGui::EndTable();
             ImGui::EndPopup();
         }
