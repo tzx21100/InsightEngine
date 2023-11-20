@@ -15,7 +15,7 @@
 namespace IS
 {
 	// enum for saving all the possible colliding situations/cases
-	enum CollidingStatus {
+	enum CollidingStatus : short{
 		BOX_A_BOX_B = 1,
 		BOX_A_CIRCLE_B,
 		CIRCLE_A_BOX_B,
@@ -63,6 +63,8 @@ namespace IS
 		static bool CheckCollide(Entity& entity);
 
 		static bool CheckColliding(Entity entity);
+
+		void SavingCollidingData(short colliding_status,Vector2D const& normal, float depth);
 
 		void Step();
 

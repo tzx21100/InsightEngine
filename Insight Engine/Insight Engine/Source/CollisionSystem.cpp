@@ -46,7 +46,7 @@ namespace IS
 
 		for (int i = 0; i < mContactPair.size(); i++)
 		{
-			if (i == 0) {
+			if (i == 0) { // reset all the colliders
 				for (auto entity: mEntities) {
 					auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 					collider.mIsColliding = false;
@@ -562,30 +562,35 @@ namespace IS
 	}
 
 	void CollisionSystem::Colliding(Collider& collider_a, Collider& collider_b) {
+		bool box_box_colliding, box_circle_colliding, circle_box_colliding, circle_circle_colliding;
+		box_box_colliding = box_circle_colliding = circle_box_colliding = circle_circle_colliding = false;
+		Vector2D normal = Vector2D();
+		float depth = 0.f;
 		// box collider check
 		if (collider_a.IsBoxColliderEnable()) {
 			if (collider_b.IsBoxColliderEnable()) { // box vs box
-				mColliding = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-				mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
+				box_box_colliding = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
+				if (box_box_colliding) { SavingCollidingData(CollidingStatus::BOX_A_BOX_B, normal, depth); }
 			}
 			if (collider_b.IsCircleColliderEnable()) { // box vs circle
-				mColliding = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
+				box_circle_colliding = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
 				mManifoldInfo.mNormal *= -1; // to be fixed
-				mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
+				if (box_circle_colliding) { SavingCollidingData(CollidingStatus::BOX_A_CIRCLE_B, normal, depth); }
 			}
 		}
 
 		// circle collider check
 		if (collider_a.IsCircleColliderEnable()) {
 			if (collider_b.IsBoxColliderEnable()) { // circle vs box
-				mColliding = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-				mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
+				circle_box_colliding = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
+				if (circle_box_colliding) { SavingCollidingData(CollidingStatus::CIRCLE_A_BOX_B, normal, depth); }
 			}
 			if (collider_b.IsCircleColliderEnable()) { // circle vs circle
-				mColliding = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, mManifoldInfo.mNormal, mManifoldInfo.mDepth);
-				mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
+				circle_circle_colliding = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
+				if (circle_circle_colliding) { SavingCollidingData(CollidingStatus::CIRCLE_A_CIRCLE_B, normal, depth); }
 			}
 		}
+		mColliding = (box_box_colliding || box_circle_colliding || circle_box_colliding || circle_circle_colliding);
 	}
 #if 0
 	bool CollisionSystem::CheckCollide(Entity& entity) {
@@ -626,7 +631,7 @@ namespace IS
 	}
 #endif
 
-	bool CheckColliding(Entity entity) {
+	bool CollisionSystem::CheckColliding(Entity entity) {
 		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 			auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 			return collider.mIsColliding;
@@ -634,6 +639,13 @@ namespace IS
 		else {
 			return false;
 		}
+	}
+
+	void CollisionSystem::SavingCollidingData(short colliding_status, Vector2D const& normal, float depth)
+	{
+		mCollidingCollection.set(colliding_status);
+		mManifoldInfo.mNormal = normal;
+		mManifoldInfo.mDepth = depth;
 	}
 
 	void CollisionSystem::Step() {
