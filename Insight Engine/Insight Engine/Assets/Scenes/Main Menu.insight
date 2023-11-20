@@ -164,10 +164,7 @@
 				"TransformWorldPositionX" : -846.68731689453125,
 				"TransformWorldPositionY" : 412.92950439453125
 			}
-		},
-		{
-			"Name" : "Camera"
 		}
 	],
-	"EntityAmount" : 5
+	"EntityAmount" : 4
 }

@@ -159,5 +159,14 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, int layer = 1);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void LoadScene(string file_name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SwitchScene(int scene_id);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void Exit();
     }
 }
