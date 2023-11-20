@@ -565,7 +565,7 @@ namespace IS {
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::Text("%.2f", rigidbody.mRestitution);
+                ImGui::SliderFloat("##Restitution", &rigidbody.mRestitution, 0.f, 1.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Density

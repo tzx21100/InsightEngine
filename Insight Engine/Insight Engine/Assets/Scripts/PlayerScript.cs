@@ -74,8 +74,8 @@ namespace IS
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
-            player_walk = InternalCalls.GetSpriteImage("Player run 1R12C.png");
-            player_idle = InternalCalls.GetSpriteImage("Player idle 1R12C.png");
+            player_walk = InternalCalls.GetSpriteImage("running_anim 3C4R.png");
+            player_idle = InternalCalls.GetSpriteImage("idle_anim 3C4R.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
 
@@ -83,8 +83,8 @@ namespace IS
             Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1,12,1f);
-            InternalCalls.CreateAnimationFromSprite(1,12,1f);
+            InternalCalls.CreateAnimationFromSprite(4,3,1f);
+            InternalCalls.CreateAnimationFromSprite(4,3,1f);
 
             entityA = InternalCalls.CreateEntity("FeetCollider");
             entityWall = InternalCalls.CreateEntity("WallCollider");
@@ -170,13 +170,13 @@ namespace IS
                 InternalCalls.SetSpriteAnimationIndex(0);
                 InternalCalls.RigidBodyAddForce(0, climbSpeed * InternalCalls.GetDeltaTime());
                 InternalCalls.RigidBodySetForce(CustomMath.min(99,CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x))*hori_movement, InternalCalls.RigidBodyGetVelocity().y);
-                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall);
+/*                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall);
                 if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                 {
                     InternalCalls.TransformSetRotation(collided_angle, 0);
                 }
 
-
+*/
                 float x_offset = 28 * hori_movement;
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 pos.x += x_offset;
