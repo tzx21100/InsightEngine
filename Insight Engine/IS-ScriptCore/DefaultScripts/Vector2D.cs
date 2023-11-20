@@ -8,6 +8,12 @@ public struct SimpleVector2D
 {
     public float x;
     public float y;
+
+    public SimpleVector2D(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 

@@ -380,12 +380,16 @@ namespace IS {
         Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
     }
 
+    static int GetCollidingEntity(int entity) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        return collider_component.mCollidingEntity;
+    }
 
-    //static void CallIS_Trace(MonoString* string) {
-    //
-    //
-    //}
-
+    static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image , int layer=1) {
+        
+        Sprite::draw_textured_quad(Vector2D(pos.x,pos.y), rotation, Vector2D(scale.x,scale.y), ConvertToImage(image), layer);
+    
+    }
 
 
     /**
@@ -457,10 +461,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ColliderNone);
         IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
         IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
+        IS_ADD_INTERNAL_CALL(GetCollidingEntity);
 
         //Debug
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
+        IS_ADD_INTERNAL_CALL(DrawImageAt);
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);

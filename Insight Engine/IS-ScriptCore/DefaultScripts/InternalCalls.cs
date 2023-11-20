@@ -134,7 +134,10 @@ namespace IS
         internal extern static void ColliderNone(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int GetCurrentEntityID();
+        internal extern static int GetCurrentEntityID();        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetCollidingEntity(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetCollidedObjectAngle(int entity);
@@ -153,5 +156,8 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawCircle(float x1, float y1 ,float scale1, float scale2);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, int layer = 1);
     }
 }

@@ -79,7 +79,9 @@ namespace IS
 			// if collider A and collider B colliding
 			if (mColliding) {
 				colliderA.mIsColliding = true;
+				colliderA.mCollidingEntity = entityB;
 				colliderB.mIsColliding = true;
+				colliderB.mCollidingEntity = entityA;
 				BodyType typeA = BodyType::Static;
 				BodyType typeB = BodyType::Static;
 				RigidBody* contact_bodyA = nullptr;
