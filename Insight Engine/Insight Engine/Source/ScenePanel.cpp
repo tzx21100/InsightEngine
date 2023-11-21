@@ -173,6 +173,7 @@ namespace IS {
             // Accept asset browser payload
             mEditorLayer.AcceptAssetBrowserPayload();
 
+            // Drag drop imported texture
             if (ImGui::BeginDragDropTarget())
             {
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
@@ -190,6 +191,26 @@ namespace IS {
                     transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
                     transform.world_position = { static_cast<float>(input->GetMousePosition().first),
                     static_cast<float>(input->GetMousePosition().second) };
+                }
+
+                ImGui::EndDragDropTarget();
+            }
+
+            // Drag drop prefab
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_PREFAB"))
+                {
+                    std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                    auto const asset = engine.GetSystem<AssetManager>("Asset");
+                    Entity temp = engine.CreateEntity("Imported Prefab");
+                    temp = engine.LoadFromPrefab(asset->GetPrefab(path.filename().string()), temp);
+                    if (engine.HasComponent<Transform>(temp))
+                    {
+                        Transform& transform = engine.GetComponent<Transform>(temp);
+                        transform.world_position = { static_cast<float>(input->GetMousePosition().first),
+                        static_cast<float>(input->GetMousePosition().second) };
+                    }
                 }
 
                 ImGui::EndDragDropTarget();

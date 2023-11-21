@@ -34,6 +34,9 @@ namespace IS {
 	// Enumeration for camera type
 	enum aCameraType { CAMERA_TYPE_GAME = 0, CAMERA_TYPE_EDITOR };
 
+	// Enumeration for camera projection
+	enum aCameraProjection { ProjectionType_Othographic = 0, ProjectionType_Perspective };
+
 	class Camera3D {
 	public:
 		void Init(int width, int height, float fov);
@@ -68,7 +71,7 @@ namespace IS {
 
 		static float mZoomSpeed; ///< rate of zoom
 		static float mMoveSpeed; ///< rate of camera pan
-		static bool isOrtho;
+		static aCameraProjection mProjectionType; ///< Type of camera projection
 
 		glm::vec3 mPosition{};
 

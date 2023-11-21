@@ -98,19 +98,6 @@ namespace IS {
 
             ImGui::SameLine();
 
-            // Save Prefab
-            if (ImGui::Button(ICON_LC_FOLDER_UP))
-                engine.SaveAsPrefab(entity, name);
-            ImGui::SetItemTooltip("Save as Prefab");
-
-            // Load Prefab
-            ImGui::SameLine();
-            if (ImGui::Button(ICON_LC_FOLDER_DOWN))
-                mShowPrefabs = true;
-            ImGui::SetItemTooltip("Load Prefab");
-
-            ImGui::SameLine();
-
             if (ImGui::Button(ICON_LC_MORE_VERTICAL))
                 ImGui::OpenPopup("Entity Options");
 
@@ -122,34 +109,39 @@ namespace IS {
             }
 
             // Prefab combo
-            if (mShowPrefabs)
+            ImGui::TableNextColumn();
+            ImGui::PushFont(FONT_BOLD);
+            ImGui::TextUnformatted("Prefabs");
+            ImGui::PopFont();
+            ImGui::SetItemTooltip("Pre-fabricated Game Objects.\n(i.e., Player, Platform, Background, etc.)");
+            ImGui::TableNextColumn();
+            ImGui::SetNextItemWidth(100.f);
+            auto const asset = engine.GetSystem<AssetManager>("Asset");
+            auto const& prefab_list = asset->mPrefabList;
+            bool is_prefab = prefab_list.find(name) != prefab_list.end();
+            bool begin_combo = ImGui::BeginCombo("##Prefabs", is_prefab ? name.c_str() : "None");
+            if (begin_combo)
             {
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Prefabs");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::SetNextItemWidth(100.f);
-                bool begin_combo = ImGui::BeginCombo("##Prefabs", nullptr, ImGuiComboFlags_NoPreview);
-                if (begin_combo)
+                for (auto const& [prefab_name, prefab] : prefab_list)
                 {
-                    auto asset = engine.GetSystem<AssetManager>("Asset");
-                    for (auto const& [prefab_name, prefab] : asset->mPrefabList)
+                    const bool is_selected = (name == prefab_name);
+                    if (ImGui::Selectable(prefab_name.c_str(), is_selected))
                     {
-                        const bool is_selected = (name == prefab_name);
-                        if (ImGui::Selectable(prefab_name.c_str(), is_selected))
-                        {
-                            engine.LoadFromPrefab(prefab, entity);
-                            mShowPrefabs = false;
-                        }
-                        if (is_selected)
-                            ImGui::SetItemDefaultFocus();
+                        engine.LoadFromPrefab(prefab, entity);
                     }
-                    ImGui::EndCombo(); // end combo Prefabs
+                    if (is_selected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
                 }
+                ImGui::EndCombo(); // end combo Prefabs
+            }
 
-                if (ImGui::IsAnyMouseDown() && !ImGui::IsItemHovered() && !begin_combo)
-                    mShowPrefabs = false;
+            // Save Prefab
+            ImGui::SameLine();
+            if (ImGui::Button("Save as prefab"))
+            {
+                engine.SaveAsPrefab(entity, name);
             }
 
             ImGui::EndTable();
@@ -990,7 +982,7 @@ namespace IS {
             ImGui::TextUnformatted("Projection");
             ImGui::PopFont();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Perspective");
+            EditorUtils::RenderComboBoxEnum<aCameraProjection>("##Projection", Camera3D::mProjectionType, { "Orthographic", "Perspective" });
 
             ImGui::EndTable(); // end camera type table
         }
