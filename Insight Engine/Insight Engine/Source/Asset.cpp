@@ -84,8 +84,12 @@ namespace IS {
         
         path = PARTICLE_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().filename().string();
-            LoadParticle(file_path);
+            std::string file_path = entry.path().string();
+            std::string extension = entry.path().extension().string();
+            if (extension == ".txt") {
+                LoadParticle(file_path);
+            }
+            
             IS_CORE_INFO("Loaded Particle: {} ", file_path);
         }
 

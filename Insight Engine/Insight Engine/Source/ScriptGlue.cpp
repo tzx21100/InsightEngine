@@ -424,6 +424,24 @@ namespace IS {
         system->SpawnParticles(particle);
     }
 
+    static void GameSpawnParticleExtra(float x, float y, float direction, float size, float size_scale,float alpha, float alpha_growth, float lifespan, float speed, MonoString* particle_name) {
+        auto assey_sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto system = InsightEngine::Instance().GetSystem<ParticleSystem>("Particle");
+        char* c_str = mono_string_to_utf8(particle_name); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        Particle particle = assey_sys->GetParticle(part_name);
+        particle.mParticlePos = Vector2D(x, y);
+        particle.mDirection = direction;
+        particle.mScale = Vector2D(size, size);
+        particle.mSizeGrowth = size_scale;
+        particle.mAlpha = alpha;
+        particle.mAlphaGrowth = alpha_growth;
+        particle.mLifespan = lifespan;
+        particle.mVelocity = Vector2D(speed,speed);
+        system->SpawnParticles(particle);
+    }
+
 
 
     /**
@@ -499,6 +517,26 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CollidingObjectIsStatic);
 
         //Debug
+        //Debug
+        //Debug
+        //Debug
+        //Debug
+        //Debug
+        //Debu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
@@ -510,6 +548,7 @@ namespace IS {
 
         // Particle
         IS_ADD_INTERNAL_CALL(GameSpawnParticle);
+        IS_ADD_INTERNAL_CALL(GameSpawnParticleExtra);
 
 
 

@@ -173,6 +173,9 @@ namespace IS
         internal extern static bool CollidingObjectIsStatic(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void GameSpawnParticle(float x, float y, string particle_name);
+        internal extern static void GameSpawnParticle(float x, float y, string particle_name);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GameSpawnParticleExtra(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name);
     }
 }

@@ -18,16 +18,18 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 
-        for (int id = 0; id < mParticleAmount;id++) {
+        for (int id = 0; id < mParticleAmount-1;id++) {
 
             //particles death
 
             if (mParticleList[id].mLifespan <= 0) {
                 DeleteParticle(id);
+                continue;
             }
 
             if (mParticleList[id].mAlpha <= 0) {
                 DeleteParticle(id);
+                continue;
             }
                 
                 

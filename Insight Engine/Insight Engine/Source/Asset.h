@@ -329,10 +329,15 @@ namespace IS {
         //saving and loading particles
 
         void SaveParticleToFile(const Particle& particle, const std::string& filename) {
-            std::ofstream file(filename);
+            std::ofstream file(filename, std::ios::out | std::ios::trunc); // Open file in write mode, truncating existing content
+
             if (file.is_open()) {
                 file << particle.Serialize();
                 file.close();
+            }
+            else {
+                // Handle the error, e.g., by throwing an exception or logging an error message
+                std::cerr << "Error: Unable to open file for writing." << std::endl;
             }
         }
 
@@ -352,11 +357,14 @@ namespace IS {
         
         }
         void LoadParticle(std::string filename) {
+           
+            IS_CORE_DEBUG("{}", filename);
             mParticleList[filename]=LoadParticleFromFile(filename);
 
         }
 
         Particle GetParticle(std::string filename) {
+            filename = PARTICLE_DIRECTORY + filename;
             return mParticleList[filename];
         }
 

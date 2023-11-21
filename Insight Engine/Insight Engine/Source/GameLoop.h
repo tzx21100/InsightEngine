@@ -57,10 +57,10 @@ namespace IS {
         
         virtual void Initialize() override {
             
-            Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
-                color_red, 0.8f, 0.1f, 45.0f, 90.0f,
-                pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
-            asset->SaveParticle(A, "Particle Test.txt");
+            //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
+            //    color_red, 0.8f, 0.1f, 45.0f, 90.0f,
+            //    pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            //asset->SaveParticle(A, "Particle Test.txt");
 
 
             //create a image
@@ -196,10 +196,12 @@ namespace IS {
            // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
             //Sprite::draw_instanced_3D_quads();
            
-            //auto system = engine.GetSystem<ParticleSystem>("Particle");
+           // auto system = engine.GetSystem<ParticleSystem>("Particle");
             //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
             //    color_red, 0.8f, 0.1f, 45.0f, 90.0f,
             //    pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            //Particle A = asset->GetParticle("Particle Test.txt");
+            //A.mParticlePos = Vector2D({ (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
             //system->SpawnParticles(A);
 
 

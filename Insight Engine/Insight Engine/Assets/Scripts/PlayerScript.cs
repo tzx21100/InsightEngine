@@ -186,11 +186,11 @@ namespace IS
             }
 
 
+           
 
 
-            
 
-            
+
             //wall checking
             if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)))
             {
@@ -364,9 +364,18 @@ namespace IS
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x* (bullet_time_timer/bullet_time_set),trans_scaling.y* (bullet_time_timer / bullet_time_set));
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / bullet_time_set));
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/2f/bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 2f / bullet_time_set));
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/ 3f / bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 3f / bullet_time_set));
+                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/ 4f / bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 4f / bullet_time_set));
 
-                    InternalCalls.GameSpawnParticle(player_pos.x, player_pos.y, "A.txt");
+
+                    for (int i = 0; i < 36; i++) {
+
+                        InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y,-1^i*10, 20 * (bullet_time_timer / bullet_time_set), 2, 1, -0.005f, bullet_time_set, 1000, "Particle Test.txt");
+                    
+                    }
+
                 }
                 else
                 {
