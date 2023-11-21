@@ -33,8 +33,6 @@ namespace IS {
 
     void BrowserPanel::RenderPanel()
     {
-        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
-
         // Render asset browser window
         ImGui::Begin((ICON_LC_FOLDER_SEARCH_2 "  " + mName).c_str());
         
@@ -50,9 +48,10 @@ namespace IS {
                     {
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-                        ImGui::PushFont(FONT_BOLD);
-                        if (ImGui::Button((ICON_LC_IMPORT "  " + IMPORTED).c_str())) { SwitchImportedAsset(IMPORTED); }
-                        ImGui::PopFont();
+                        if (ImGui::Button((ICON_LC_IMPORT "  " + IMPORTED).c_str()))
+                        {
+                            SwitchImportedAsset(IMPORTED);
+                        }
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();
@@ -62,9 +61,10 @@ namespace IS {
 
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-                        ImGui::PushFont(FONT_BOLD);
-                        if (ImGui::Button(ICON_LC_FOLDERS "  All Assets")) { SwitchCurrentDirectory(ASSETS_PATH); }
-                        ImGui::PopFont();
+                        if (ImGui::Button(ICON_LC_FOLDERS "  All Assets")) 
+                        {
+                            SwitchCurrentDirectory(ASSETS_PATH);
+                        }
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();

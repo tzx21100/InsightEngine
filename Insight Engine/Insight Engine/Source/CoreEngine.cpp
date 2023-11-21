@@ -135,7 +135,7 @@ namespace IS {
     #endif // USING_IMGUI
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
-        mDeltaTime = LimitFPS(frameStart) - frameStart;
+        mDeltaTime = LimitFPS(frameStart)-frameStart;
 
         ++mFrameCount;
     }

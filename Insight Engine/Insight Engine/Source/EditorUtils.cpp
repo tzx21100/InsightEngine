@@ -78,9 +78,6 @@ namespace IS::EditorUtils {
     {
         bool adjusted = false;
 
-        ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-
         ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
         ImGui::PushID(label.c_str());
@@ -90,9 +87,7 @@ namespace IS::EditorUtils {
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
             ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted(label.c_str());
-            ImGui::PopFont();
             ImGui::TableNextColumn();
 
             // Set the width for both columns
@@ -107,13 +102,11 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(196, 41, 10, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(214, 79, 64, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(196, 41, 10, 255));
-            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("X", button_size))
             {
                 values.x = x_reset;
                 adjusted = true;
             }
-            ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
@@ -128,13 +121,11 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(112, 170, 2, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(140, 189, 53, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(112, 170, 2, 255));
-            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Y", button_size))
             {
                 values.y = y_reset;
                 adjusted = true;
             }
-            ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
@@ -156,9 +147,6 @@ namespace IS::EditorUtils {
     {
         bool adjusted = false;
 
-        ImGuiIO& io = ImGui::GetIO();
-        ImFont* const& FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-
         ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
 
         ImGui::PushID(label.c_str());
@@ -168,9 +156,7 @@ namespace IS::EditorUtils {
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
             ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted(label.c_str());
-            ImGui::PopFont();
             ImGui::TableNextColumn();
 
             // Set the width for both columns
@@ -184,7 +170,6 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(196, 41, 10, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(214, 79, 64, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(196, 41, 10, 255));
-            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("X", button_size))
             {
                 values.x = x_reset;
@@ -205,7 +190,6 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(112, 170, 2, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(140, 189, 53, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(112, 170, 2, 255));
-            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Y", button_size))
             {
                 values.y = y_reset;
@@ -226,7 +210,6 @@ namespace IS::EditorUtils {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(59, 119, 214, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(78, 145, 223, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(59, 119, 214, 255));
-            ImGui::PushFont(FONT_BOLD);
             if (ImGui::Button("Z", button_size))
             {
                 values.z = z_reset;
@@ -248,6 +231,29 @@ namespace IS::EditorUtils {
 
         ImGui::PopID();
         return adjusted;
+    }
+
+    void RenderTableLabel(std::string const& label, std::string const& tooltip)
+    {
+        ImGui::TableNextColumn();
+        ImGui::TextUnformatted(label.c_str());
+        if (!tooltip.empty())
+        {
+            ImGui::SetItemTooltip(tooltip.c_str());
+        }
+    }
+
+    void RenderTableBoldLabel(std::string const& label, std::string const& tooltip)
+    {
+        ImFont* const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
+        ImGui::TableNextColumn();
+        ImGui::PushFont(FONT_BOLD);
+        ImGui::TextUnformatted(label.c_str());
+        ImGui::PopFont();
+        if (!tooltip.empty())
+        {
+            ImGui::SetItemTooltip(tooltip.c_str());
+        }
     }
 
 } // end namespace IS::EditorUtils

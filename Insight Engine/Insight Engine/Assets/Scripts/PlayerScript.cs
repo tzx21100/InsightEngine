@@ -48,6 +48,7 @@ namespace IS
         static private float jump_timer = 0.2f;
         static private float jump_timer_set = 0.2f;
         static private bool isJumping = false;
+        static private float jumpHeight = 1000f;
 
         //dashing 
         static private float bullet_time_timer = 1f;
@@ -81,6 +82,10 @@ namespace IS
         static private int entityWall;
         static int climbdir;
 
+
+        //force calculations
+        static private float Xforce=0f;
+        static private float Yforce=0f;
 
 
 
@@ -213,7 +218,8 @@ namespace IS
                 InternalCalls.RigidBodySetForce(climbSpeed  *force_from_angle.x * hori_movement, climbSpeed *force_from_angle.y );
 
                 if (hori_movement != climbdir) {
-                    InternalCalls.RigidBodyAddForce(hori_movement * 2000f, 0f);
+                    isClimbing = false;
+                    Xforce += hori_movement * 2000f;
                 }
 
 
@@ -336,7 +342,7 @@ namespace IS
                     }
                 }
             }
-            InternalCalls.RigidBodyAddForce(hori_movement * move_speed , 0f);
+            Xforce += hori_movement * move_speed;
             //check for ground
 
 
@@ -386,7 +392,8 @@ namespace IS
             FloorCheckerUpdate();
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
-            
+            InternalCalls.RigidBodyAddForce(Xforce *InternalCalls.GetDeltaTime(), Yforce * InternalCalls.GetDeltaTime());
+            Xforce = 0f;Yforce = 0f;
 
 
 
@@ -436,7 +443,7 @@ namespace IS
 
         static private void Jump()
         {
-            InternalCalls.RigidBodyAddForce(0f, 1000f);
+            InternalCalls.RigidBodyAddForce(0, jumpHeight);
         }
 
         static private void FloorCheckerUpdate()
