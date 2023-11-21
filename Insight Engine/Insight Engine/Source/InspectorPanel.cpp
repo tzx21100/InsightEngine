@@ -74,18 +74,12 @@ namespace IS {
     void InspectorPanel::RenderEntityConfig(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
-        ImGuiIO& io = ImGui::GetIO();
-        auto const FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-
         if (ImGui::BeginTable("Details", 2))
         {
             ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
             ImGui::TableSetupColumn("Label", column_flags, 50.f);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Name");
-            ImGui::PopFont();
+            EditorUtils::RenderTableLabel("Name");
             ImGui::TableNextColumn();
 
             // Edit Entity Name
@@ -110,11 +104,7 @@ namespace IS {
             }
 
             // Prefab combo
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Prefabs");
-            ImGui::PopFont();
-            ImGui::SetItemTooltip("Pre-fabricated Game Objects.\n(i.e., Player, Platform, Background, etc.)");
+            EditorUtils::RenderTableLabel("Prefabs", "Pre-fabricated Game Objects.\n(i.e., Player, Platform, Background, etc.)");
             ImGui::TableNextColumn();
             ImGui::SetNextItemWidth(100.f);
             auto const asset = engine.GetSystem<AssetManager>("Asset");
@@ -181,10 +171,7 @@ namespace IS {
             {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("TransformRotation", column_flags, 100.f);
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Rotation");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Rotation");
                 ImGui::TableNextColumn();
 
                 // Apply modification
@@ -222,37 +209,25 @@ namespace IS {
             {
                 ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Rendering");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Rendering");
 
                 ImGui::TableNextColumn();
                 ImGui::Checkbox("##Rendering", &sprite.toRender);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Layer");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Layer");
                 
                 ImGui::TableNextColumn();
                 Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(sprite.layer);
                 EditorUtils::RenderComboBoxEnum<Sprite::DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
                 sprite.layer = layer;
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Color");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Color");
 
                 ImGui::TableNextColumn();
                 ImGui::ColorEdit4("##Color", &sprite.color[0]);
                 ImGui::Spacing();
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Texture");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Texture");
 
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
@@ -358,17 +333,13 @@ namespace IS {
             if (ImGui::BeginTable("Texture", 2, table_flags))
             {
                 ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Width");
-                ImGui::PopFont();
+
+                EditorUtils::RenderTableLabel("Width");
 
                 ImGui::TableNextColumn();
                 ImGui::Text("%d px", sprite.img.width);
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Height");
-                ImGui::PopFont();
+
+                EditorUtils::RenderTableLabel("Height");
 
                 ImGui::TableNextColumn();
                 ImGui::Text("%d px", sprite.img.height);
@@ -415,10 +386,7 @@ namespace IS {
                                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                                 ImGui::TableSetupColumn("Labels", column_flags, 100.f);
 
-                                ImGui::TableNextColumn();
-                                ImGui::PushFont(FONT_BOLD);
-                                ImGui::TextUnformatted("Name");
-                                ImGui::PopFont();
+                                EditorUtils::RenderTableLabel("Name");
 
                                 ImGui::TableNextColumn();
                                 char buffer[256]{};
@@ -429,24 +397,15 @@ namespace IS {
                                 if (ImGui::InputText("##AnimationName", buffer, sizeof(buffer), input_text_flags))
                                     animation.name = buffer;
 
-                                ImGui::TableNextColumn();
-                                ImGui::PushFont(FONT_BOLD);
-                                ImGui::TextUnformatted("Duration");
-                                ImGui::PopFont();
+                                EditorUtils::RenderTableLabel("Duration");
                                 ImGui::TableNextColumn();
                                 ImGui::SliderFloat("##Duration", &animation.animation_duration, 1.f, 10.f, "%.2f sec");
 
-                                ImGui::TableNextColumn();
-                                ImGui::PushFont(FONT_BOLD);
-                                ImGui::TextUnformatted("Columns");
-                                ImGui::PopFont();
+                                EditorUtils::RenderTableLabel("Columns");
                                 ImGui::TableNextColumn();
                                 ImGui::SliderInt("##Columns", &animation.x_frames, 1, 20);
 
-                                ImGui::TableNextColumn();
-                                ImGui::PushFont(FONT_BOLD);
-                                ImGui::TextUnformatted("Rows");
-                                ImGui::PopFont();
+                                EditorUtils::RenderTableLabel("Rows");
                                 ImGui::TableNextColumn();
                                 ImGui::SliderInt("##Rows", &animation.y_frames, 1, 20);
 
@@ -485,29 +444,20 @@ namespace IS {
                 ImGui::TableSetupColumn("RigidbodyTable", column_flags, 100.f);
 
                 // Angular Velocity
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Angular Velocity");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Angular Velocity");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat("##AngularVelocity", &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Body Type
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Body Type");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Body Type");
                 ImGui::TableNextColumn();
                 EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic" });
 
                 if (rigidbody.mBodyType == BodyType::Dynamic)
                 {
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Gravity Scale");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Gravity Scale");
                     ImGui::TableNextColumn();
                     ImGui::PushItemWidth(80.f);
                     ImGui::DragFloat("##Gravity Scale", &rigidbody.mGravityScale);
@@ -515,70 +465,47 @@ namespace IS {
                 }
 
                 // Mass
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Mass");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Mass");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat("##Mass", &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Inverse Mass
+                EditorUtils::RenderTableLabel("Inverse Mass");
                 ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Inverse Mass");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat("##InvMass", &rigidbody.mInvMass, 1.f, 0.f, 0.f, "%.2f");
-                ImGui::PopItemWidth();
+                ImGui::Text("%.2f", &rigidbody.mInvMass);
 
                 // Inertia
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Inertia");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Inertia");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::DragFloat("##Inertia", &rigidbody.mInertia, 1.f, 0.f, 0.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Restitution
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Restitution");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Restitution");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::SliderFloat("##Restitution", &rigidbody.mRestitution, 0.f, 1.f, "%.2f");
                 ImGui::PopItemWidth();
 
                 // Density
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Density");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Density");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::Text("%.2f", rigidbody.mDensity);
                 ImGui::PopItemWidth();
 
                 // Static Friction
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Static Friction");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Static Friction");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::InputFloat("##Static Friction", &rigidbody.mStaticFriction);
                 ImGui::PopItemWidth();
 
                 // Dynamic Friction
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Dynamic Friction");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Dynamic Friction");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
                 ImGui::InputFloat("##Dynamic Friction", &rigidbody.mDynamicFriction);
@@ -654,10 +581,7 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("ScriptTable", column_flags, 100.f);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Script Name:");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Script Name:");
                 ImGui::TableNextColumn();
                 if (ImGui::BeginCombo("##Scripts", script.mScriptName.c_str()))
                 {
@@ -722,10 +646,7 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("ListenerLabel", column_flags, 100.f);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Volume");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Volume");
                 ImGui::TableNextColumn();
                 int volume = static_cast<int>(listener.volume * 100);
                 if (ImGui::SliderInt("##Volume", &volume, 0, 100, "%d%%"))
@@ -733,17 +654,11 @@ namespace IS {
                     listener.volume = static_cast<float>(volume) / 100.f;
                 }
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Pitch Correctness");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Pitch Correctness");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Pitch Correctness", &listener.pitch_correctness);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Hearing Range");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Hearing Range");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Hearing Range", &listener.hearing_range);
 
@@ -760,10 +675,7 @@ namespace IS {
                 ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
                 ImGui::TableSetupColumn("EmitterLabel", column_flags, 100.f);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Sound");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Sound");
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
                 if (ImGui::BeginCombo("##SoundName", emitter.soundName.c_str()))
@@ -792,32 +704,24 @@ namespace IS {
                     }
                     ImGui::EndDragDropTarget();
                 }
-                
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Looped");
-                ImGui::PopFont();
+
+                EditorUtils::RenderTableLabel("Looped");
                 ImGui::TableNextColumn();
                 ImGui::Checkbox("##Looped", &emitter.isLoop);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Falloff Factor");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Falloff Factor");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Falloff Factor", &emitter.falloff_factor);
 
+                EditorUtils::RenderTableLabel("Volume Level");
                 ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Volume Level");
-                ImGui::PopFont();
-                ImGui::TableNextColumn();
-                ImGui::InputFloat("##Volume Level", &emitter.volumeLevel);
+                int volume_level = static_cast<int>(emitter.volumeLevel * 100);
+                if (ImGui::SliderInt("##VolumeLevel", &volume_level, 0, 100, "%d%%"))
+                {
+                    emitter.volumeLevel = static_cast<float>(volume_level) / 100.f;
+                }
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Pitch");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Pitch");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Pitch", &emitter.pitch);
 
@@ -830,10 +734,7 @@ namespace IS {
         {
             if (ImGui::BeginTable("Button Table", 2))
             {
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Text");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Text");
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
 
@@ -911,7 +812,6 @@ namespace IS {
 
     void InspectorPanel::AddAnimation(Sprite& sprite)
     {
-        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         ImGui::OpenPopup("Add Animation");
 
         if (ImGui::BeginPopupModal("Add Animation", &mShowAddAnimation, ImGuiWindowFlags_AlwaysAutoResize))
@@ -923,26 +823,17 @@ namespace IS {
 
             if (ImGui::BeginTable("Add Animation Table", 2))
             {
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Name");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Name");
 
                 ImGui::TableNextColumn();
                 ImGui::InputText("##Animation Name", name, sizeof(name));
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Columns/Rows");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Columns/Rows");
 
                 ImGui::TableNextColumn();
                 ImGui::InputInt2("##Animation Grid", grid);
 
-                ImGui::TableNextColumn();
-                ImGui::PushFont(FONT_BOLD);
-                ImGui::TextUnformatted("Time");
-                ImGui::PopFont();
+                EditorUtils::RenderTableLabel("Time");
 
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Animation Time", &time);
@@ -992,7 +883,6 @@ namespace IS {
     {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         const float SIZE = 16.f;
-        auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
         auto& style = ImGui::GetStyle();
         float zoom_level = camera.GetZoomLevel();
 
@@ -1001,17 +891,11 @@ namespace IS {
         {
             ImGui::TableSetupColumn("CameraTypeLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Type");
-            ImGui::PopFont();
+            EditorUtils::RenderTableLabel("Type");
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(Camera3D::mActiveCamera == CAMERA_TYPE_EDITOR ? "Editor Camera" : "In-game Camera");
 
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Projection");
-            ImGui::PopFont();
+            EditorUtils::RenderTableLabel("Projection");
             ImGui::TableNextColumn();
             EditorUtils::RenderComboBoxEnum<aCameraProjection>("##Projection", Camera3D::mProjectionType, { "Orthographic", "Perspective" });
 
@@ -1031,23 +915,18 @@ namespace IS {
             ImGui::TableSetupColumn("CameraLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
 
             // Camera Clipping Planes
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Clipping Planes");
-            ImGui::PopFont();
+            EditorUtils::RenderTableLabel("Clipping Planes");
 
             ImGui::TableNextColumn();
             if (ImGui::BeginTable("Clipping Planes", 2))
             {
                 ImGui::TableSetupColumn("PlaneLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Near").x);
 
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Near");
+                EditorUtils::RenderTableLabel("Near");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Near", &camera.mNear);
 
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Far");
+                EditorUtils::RenderTableLabel("Far");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Far", &camera.mFar);
 
@@ -1055,11 +934,7 @@ namespace IS {
             }
 
             // Camera Zoom
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Zoom");
-            ImGui::PopFont();
-            ImGui::SetItemTooltip("Adjust the zoom level of the camera");
+            EditorUtils::RenderTableLabel("Zoom", "Adjust the zoom level of the camera");
 
             // Zoom out with - button
             ImGui::TableNextColumn();
@@ -1090,23 +965,17 @@ namespace IS {
             ImGui::SetItemTooltip("Zooms in camera");
 
             // Speed
-            ImGui::TableNextColumn();
-            ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Speed");
-            ImGui::PopFont();
-            ImGui::SetItemTooltip("Adjust speed of camera");
+            EditorUtils::RenderTableLabel("Speed", "Adjust speed of camera");
             ImGui::TableNextColumn();
             if (ImGui::BeginTable("CameraSpeedTable", 2))
             {
                 ImGui::TableSetupColumn("SpeedLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Zoom").x);
 
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Zoom");
+                EditorUtils::RenderTableLabel("Zoom");
                 ImGui::TableNextColumn();
                 ImGui::SliderFloat("##CameraZoomSpeed", &Camera3D::mZoomSpeed, Camera3D::CAMERA_ZOOM_SPEED_MIN, Camera3D::CAMERA_ZOOM_SPEED_MAX, "%.2f");
 
-                ImGui::TableNextColumn();
-                ImGui::TextUnformatted("Pan");
+                EditorUtils::RenderTableLabel("Pan");
                 ImGui::TableNextColumn();
                 ImGui::SliderFloat("##CameraPanSpeed", &Camera3D::mMoveSpeed, Camera3D::CAMERA_MOVE_SPEED_MIN, Camera3D::CAMERA_MOVE_SPEED_MAX, "%.2f");
 

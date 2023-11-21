@@ -73,7 +73,6 @@ namespace IS {
     void ProfilerPanel::RenderPanel()
     {
         ImGuiIO& io = ImGui::GetIO();
-        auto const FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Text Colors
         const ImU32 GREEN_COLOR = IM_COL32(45, 201, 55, 255);
@@ -90,9 +89,7 @@ namespace IS {
 
             ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
 
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("V-Sync");
-            ImGui::PopFont();
             ImGui::SameLine();
             static bool vsync_enabled = engine.IsVSync();
             if (ImGui::Checkbox("##V-Sync", &vsync_enabled))
@@ -103,9 +100,7 @@ namespace IS {
             ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 
             ImGui::SameLine();
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Target FPS:");
-            ImGui::PopFont();
 
             ImGui::SameLine();
             static int selected_fps_index = -1;
@@ -135,9 +130,7 @@ namespace IS {
             ImGui::SameLine();
             ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
             ImGui::SameLine();
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Delta Time: ");
-            ImGui::PopFont();
             ImGui::SameLine();
             ImU32 text_color = io.Framerate < 15.f ? RED_COLOR : io.Framerate < 30.f ? YELLOW_COLOR : IM_COL32_WHITE;
             ImGui::TextColored(ImColor(text_color), "%.3lf ms", io.DeltaTime * 1000.0);
@@ -145,9 +138,7 @@ namespace IS {
             ImGui::SameLine();
             ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
             ImGui::SameLine();
-            ImGui::PushFont(FONT_BOLD);
             ImGui::TextUnformatted("Current FPS: ");
-            ImGui::PopFont();
             ImGui::SameLine();
             ImGui::TextColored(ImColor(text_color), "%.3f", io.Framerate);
 
@@ -231,9 +222,6 @@ namespace IS {
     // Physics Control Panel
     void SettingsPanel::RenderPanel()
     {
-        ImGuiIO& io = ImGui::GetIO();
-        ImFont* FONT_BOLD = io.Fonts->Fonts[FONT_TYPE_BOLD];
-
         ImGui::Begin((ICON_LC_SETTINGS "  " + mName).c_str());
         
         // Window contents
@@ -251,17 +239,11 @@ namespace IS {
                 {
                     ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Exert Gravity");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Exert Gravity");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
 
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Show Velocity");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Show Velocity");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
 
@@ -277,17 +259,11 @@ namespace IS {
                 {
                     ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Show Colliders");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Show Colliders");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
 
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Implicit Grid");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Implicit Grid");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ImplicitGrid", &Physics::mEnableImplicitGrid);
 
@@ -302,25 +278,18 @@ namespace IS {
                     {
                         ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
-                        ImGui::TableNextColumn();
-                        ImGui::PushFont(FONT_BOLD);
-                        ImGui::TextUnformatted("Show Grid");
-                        ImGui::PopFont();
+                        EditorUtils::RenderTableLabel("Show Grid");
                         ImGui::TableNextColumn();
                         ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
 
-                        ImGui::TableNextColumn();
-                        ImGui::PushFont(FONT_BOLD);
-                        ImGui::TextUnformatted("Columns");
-                        ImGui::PopFont();
+                        EditorUtils::RenderTableLabel("Columns");
                         ImGui::TableNextColumn();
                         if (ImGui::InputInt("##GridColumns", &ImplicitGrid::mCols))
+                        {
                             ImplicitGrid::mCols = std::clamp(ImplicitGrid::mCols, ImplicitGrid::MIN_GRID_COLS, ImplicitGrid::MAX_GRID_COLS);
+                        }
 
-                        ImGui::TableNextColumn();
-                        ImGui::PushFont(FONT_BOLD);
-                        ImGui::TextUnformatted("Rows");
-                        ImGui::PopFont();
+                        EditorUtils::RenderTableLabel("Rows");
                         ImGui::TableNextColumn();
                         if (ImGui::InputInt("##GridRows", &ImplicitGrid::mRows))
                             ImplicitGrid::mRows = std::clamp(ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
@@ -338,10 +307,7 @@ namespace IS {
                 {
                     ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
 
-                    ImGui::TableNextColumn();
-                    ImGui::PushFont(FONT_BOLD);
-                    ImGui::TextUnformatted("Text Animation");
-                    ImGui::PopFont();
+                    EditorUtils::RenderTableLabel("Text Animation");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##TextAnimation", &ISGraphics::mShowTextAnimation);
 
