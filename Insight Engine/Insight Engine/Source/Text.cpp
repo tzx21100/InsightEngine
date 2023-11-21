@@ -44,8 +44,8 @@ namespace IS {
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
 
         // draw either text strings
-        if (drawFirst) font1.renderText(str1, -100.f, 500.f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
-        else font2.renderText(str2, -100.f, 500.f, 24.f, glm::vec3(0.255f, 0.412f, 0.882f));
+        if (drawFirst) font1.renderText(str1, 0.39f, 0.89f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
+        else font2.renderText(str2, 0.36f, 0.87f, 24.f, glm::vec3(0.255f, 0.412f, 0.882f));
     }
 
     void Text::initText(std::string const& filepath) {
@@ -155,12 +155,19 @@ namespace IS {
     }
 
     // render line of text
-    void Text::renderText(std::string text, float x, float y, float scale, glm::vec3 color) {
+    void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
         // Scale the text to the correct size.
         scale = scale * 48.f / (base_size * 16);
 
+        InsightEngine& engine = InsightEngine::Instance();
+        auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+
         // Store the initial X position.
-        float copyX = x;
+        float x = widthScalar * 1920; // world width
+        float y = heightScalar * 1080; // world height
+
+        const float copyX = x;
+        //const float copyY = y;
 
         // Activate the specified shader and set the text color.
         shader.use();
@@ -188,9 +195,9 @@ namespace IS {
             }
             else {
                 // Calculate the position and transformation for the character
-                auto [width, height] = InsightEngine::Instance().GetWindowSize();
-                float xpos = x + ch.Bearing.x * scale + (width / 2.f);
-                float ypos = y - (base_size - ch.Bearing.y) * scale + (height / 2.f);
+                float xpos = x + ch.Bearing.x * scale;
+                float ypos = y - (base_size - ch.Bearing.y) * scale;
+                // IS_CORE_ERROR("text pos: {}, {}", xpos, ypos);
 
                 // Store the transformation matrix and character texture ID
                 transforms[char_index] = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0)) * glm::scale(glm::mat4(1.0f), glm::vec3(base_size * scale, base_size * scale, 0));

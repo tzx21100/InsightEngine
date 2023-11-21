@@ -63,12 +63,12 @@ namespace IS {
          *
          * \param shader The shader to use for rendering.
          * \param text The text to render.
-         * \param x The X-coordinate of the text's position.
-         * \param y The Y-coordinate of the text's position.
+         * \param widthScalar * width for text's position. // 0 to 0.99~ [at 1 the first char will be placed to the right, outside of VP]
+         * \param heightScalar * height for text's position. // 0 to 0.99~
          * \param scale The scale of the text.
          * \param color The color of the text.
          */
-        void renderText(std::string text, float x, float y, float scale, glm::vec3 color);
+        void renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
 
         /*!
          * \brief Renders text using instanced rendering.

@@ -149,7 +149,7 @@ namespace IS {
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
 		worldPos /= worldPos.w;
 
-		IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, -worldPos.y);
+		//IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, -worldPos.y);
 		return { worldPos.x, -worldPos.y };
 	}
 
