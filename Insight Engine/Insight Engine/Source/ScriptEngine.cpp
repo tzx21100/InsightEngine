@@ -120,19 +120,19 @@ namespace IS {
         ScriptGlue::RegisterFunctions(); //register cpp func
 
         //get and init class
-        s_data->mEntityClass = ScriptClass("IS", "Entity");
-        MonoObject* instance = s_data->mEntityClass.Instantiate();
+        //s_data->mEntityClass = ScriptClass("IS", "Entity");
+        //MonoObject* instance = s_data->mEntityClass.Instantiate();
 
         //EXAMPLES
         //call func
-        MonoMethod* print_message_func = s_data->mEntityClass.GetMethod("PrintMessage", 0);
-        s_data->mEntityClass.InvokeMethod(instance, print_message_func, nullptr);
+        //MonoMethod* print_message_func = s_data->mEntityClass.GetMethod("PrintMessage", 0);
+        //s_data->mEntityClass.InvokeMethod(instance, print_message_func, nullptr);
 
-        //call func w str param
-        MonoString* mono_str = mono_string_new(s_data->mAppDomain, "Hello World from C++!");
-        MonoMethod* print_custom_message_func = s_data->mEntityClass.GetMethod("PrintCustomMessage", 1);
-        void* str_param = mono_str;
-        s_data->mEntityClass.InvokeMethod(instance, print_custom_message_func, &str_param);
+        ////call func w str param
+        //MonoString* mono_str = mono_string_new(s_data->mAppDomain, "Hello World from C++!");
+        //MonoMethod* print_custom_message_func = s_data->mEntityClass.GetMethod("PrintCustomMessage", 1);
+        //void* str_param = mono_str;
+        //s_data->mEntityClass.InvokeMethod(instance, print_custom_message_func, &str_param);
 
         
     }

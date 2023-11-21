@@ -4,7 +4,7 @@
 		"Fullscreen" : false,
 		"Height" : 1137,
 		"Maximized" : true,
-		"TargetFPS" : 60,
+		"TargetFPS" : 120,
 		"Title" : "Insight Engine",
 		"Vsync" : false,
 		"Width" : 1920,

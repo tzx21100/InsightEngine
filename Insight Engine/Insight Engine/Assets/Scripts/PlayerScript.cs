@@ -366,6 +366,7 @@ namespace IS
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
                     InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x* (bullet_time_timer/bullet_time_set),trans_scaling.y* (bullet_time_timer / bullet_time_set));
 
+                    InternalCalls.GameSpawnParticle(player_pos.x, player_pos.y, "A.txt");
                 }
                 else
                 {

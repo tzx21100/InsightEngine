@@ -80,6 +80,13 @@ namespace IS {
             std::string file_path = entry.path().filename().string();
             mSceneList.emplace_back(file_path);
             IS_CORE_INFO("Loaded Scene: {} ", file_path);
+        }        
+        
+        path = PARTICLE_DIRECTORY;
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string file_path = entry.path().filename().string();
+            LoadParticle(file_path);
+            IS_CORE_INFO("Loaded Particle: {} ", file_path);
         }
 
         path = SCRIPT_DIRECTORY;

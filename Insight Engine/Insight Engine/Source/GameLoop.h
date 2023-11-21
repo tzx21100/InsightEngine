@@ -56,7 +56,11 @@ namespace IS {
         
         virtual void Initialize() override {
             
-            
+            Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
+                color_red, 0.8f, 0.1f, 45.0f, 90.0f,
+                pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            asset->SaveParticle(A, "Particle Test.txt");
+
 
             //create a image
             //backgroundTest = asset->GetImage("Assets/placeholder_background.png");

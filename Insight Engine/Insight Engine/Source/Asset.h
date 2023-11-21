@@ -27,6 +27,7 @@
 #include <stdbool.h>
 #include <filesystem>
 #include <glad/glad.h>
+#include "Particle.h"
 
 //#define ON_ERROR(condition, msg) \
 //do { \
@@ -324,6 +325,43 @@ namespace IS {
             }
         }
 
+
+        //saving and loading particles
+
+        void SaveParticleToFile(const Particle& particle, const std::string& filename) {
+            std::ofstream file(filename);
+            if (file.is_open()) {
+                file << particle.Serialize();
+                file.close();
+            }
+        }
+
+        Particle LoadParticleFromFile(const std::string& filename) {
+            std::ifstream file(filename);
+            std::stringstream data;
+            if (file.is_open()) {
+                data << file.rdbuf();
+                file.close();
+            }
+            return Particle::Deserialize(data.str());
+        }
+
+        void SaveParticle(Particle part, std::string filename) {
+            filename = PARTICLE_DIRECTORY + filename;
+            SaveParticleToFile(part, filename);
+        
+        }
+        void LoadParticle(std::string filename) {
+            mParticleList[filename]=LoadParticleFromFile(filename);
+
+        }
+
+        Particle GetParticle(std::string filename) {
+            return mParticleList[filename];
+        }
+
+
+
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
@@ -335,11 +373,16 @@ namespace IS {
         std::vector<std::string>mSceneList;
         std::vector<std::string>mScriptList;
 
+        
+        std::unordered_map<std::string,Particle>mParticleList;
+
+
         static constexpr const char* TEXTURE_DIRECTORY  = "Assets/Textures/";
         static constexpr const char* ICON_DIRECTORY     = "Assets/Icons/";
         static constexpr const char* PREFAB_DIRECTORY   = "Assets/Prefabs/";
         static constexpr const char* SCENE_DIRECTORY    = "Assets/Scenes/";
         static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
+        static constexpr const char* PARTICLE_DIRECTORY = "Assets/Particles/";
         static constexpr const char* SCRIPT_DIRECTORY    = "Assets/Scripts/";
 
     private:

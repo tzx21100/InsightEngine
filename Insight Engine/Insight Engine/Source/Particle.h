@@ -7,6 +7,8 @@
 ----------------------------------------------------------------------------- */
 #include "System.h"
 #include <array>
+#include <fstream>
+#include <sstream>
 #define MAX_PARTICLES 10000
 
 
@@ -70,7 +72,28 @@ namespace IS {
 		float R{ 1.f }, G{ 1.f }, B{ 1.f }, A{ 1.f };
 
 
+		// Serialize Color object to string
+		std::string Serialize() const {
+			std::ostringstream out;
+			out << R << "," << G << "," << B << "," << A;
+			return out.str();
+		}
+
+		// Static method to deserialize a string to a Color object
+		static Color Deserialize(const std::string& data) {
+			std::istringstream in(data);
+			float r, g, b, a;
+			char delimiter;
+
+			in >> r >> delimiter >> g >> delimiter >> b >> delimiter >> a;
+			return Color(r, g, b, a);
+		}
+
+
+
 	};
+
+
 
 
 	struct Particle {
@@ -112,7 +135,62 @@ namespace IS {
 			return newParticle;
 		}
 
+		// Serialize Particle object to a string with labels
+		std::string Serialize() const {
+			std::ostringstream out;
+			out << "Velocity: " << mVelocity.x << ", " << mVelocity.y << "\n"
+				<< "Size Growth: " << mSizeGrowth << "\n"
+				<< "Scale: " << mScale.x << ", " << mScale.y << "\n"
+				<< "Lifespan: " << mLifespan << "\n"
+				<< "Color:\n" << mColor.Serialize()
+				<< "Alpha: " << mAlpha << "\n"
+				<< "Alpha Growth: " << mAlphaGrowth << "\n"
+				<< "Rotation: " << mRotation << "\n"
+				<< "Direction: " << mDirection << "\n"
+				<< "Particle Type: " << mParticleType << "\n"
+				<< "Image Name: " << mImageName << "\n"
+				<< "Particle Position: " << mParticlePos.x << ", " << mParticlePos.y << "\n";
+			return out.str();
+		}
+
+		// Deserialize a string to a Particle object
+		static Particle Deserialize(const std::string& data) {
+			std::istringstream in(data);
+			std::string label;
+			Particle particle;
+
+			in >> label >> particle.mVelocity.x >> label >> particle.mVelocity.y
+				>> label >> particle.mSizeGrowth
+				>> label >> particle.mScale.x >> label >> particle.mScale.y
+				>> label >> particle.mLifespan;
+
+			in.ignore(); // Skip to the next line for Color
+			std::string color;
+			in >> color;
+			particle.mColor = Color::Deserialize(color);
+
+			int particle_type;
+
+			in >> label >> particle.mAlpha
+				>> label >> particle.mAlphaGrowth
+				>> label >> particle.mRotation		
+				>> label >> particle.mDirection
+				>> label >> particle_type
+				>> label;
+			std::getline(in, particle.mImageName)
+				>> label >> particle.mParticlePos.x >> label >> particle.mParticlePos.y;
+
+			particle.mParticleType = static_cast<Particle_Type>(particle_type);
+
+			return particle;
+		}
+
+
+
 	};
+
+
+
 
 
     class ParticleSystem : public ParentSystem {

@@ -413,6 +413,19 @@ namespace IS {
         InsightEngine::Instance().Exit();
     }
 
+    static void GameSpawnParticle(float x, float y, MonoString* particle_name) {
+        auto assey_sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto system= InsightEngine::Instance().GetSystem<ParticleSystem>("Particle");
+        char* c_str = mono_string_to_utf8(particle_name); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        Particle particle = assey_sys->GetParticle(part_name);
+        particle.mParticlePos = Vector2D(x, y);
+        system->SpawnParticles(particle);
+    }
+
+
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -494,6 +507,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(LoadScene);
         IS_ADD_INTERNAL_CALL(SwitchScene);
         IS_ADD_INTERNAL_CALL(Exit);
+
+        // Particle
+        IS_ADD_INTERNAL_CALL(GameSpawnParticle);
+
+
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);

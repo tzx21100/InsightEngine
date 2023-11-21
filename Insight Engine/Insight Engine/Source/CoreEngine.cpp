@@ -109,11 +109,12 @@ namespace IS {
             // Update all systems
             for (const auto& system : mSystemList)
             {
+
                 Timer timer(system->GetName() + " System", false);
                 system->Update(1.f / 60.f);
                 timer.Stop();
 
-                if (to_update) {
+                if (to_update && currentNumberOfSteps==1) {
                     mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                     mSystemDeltas["Engine"] += timer.GetDeltaTime();
                 }
