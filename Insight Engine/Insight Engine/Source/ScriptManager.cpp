@@ -112,9 +112,10 @@ namespace IS
     void ScriptManager::OpenClassFile(std::string const& class_name) {
         std::string filepath = class_name;
         std::string directory = "..\\Insight Engine\\Assets\\Scripts";
-
+    #ifdef USING_IMGUI
         // Open .cs file in default program
         FileUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
+    #endif // USING_IMGUI
         IS_CORE_DEBUG("Script File: {}", filepath);
     }
 

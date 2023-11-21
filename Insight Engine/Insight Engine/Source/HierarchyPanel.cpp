@@ -19,6 +19,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "HierarchyPanel.h"
 #include "EditorUtils.h"
 #include "CoreEngine.h"
@@ -321,3 +322,6 @@ namespace IS {
     }
 
 } // end namespace IS
+
+
+#endif // USING_IMGUI

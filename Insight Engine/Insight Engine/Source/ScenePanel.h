@@ -13,7 +13,7 @@
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
-
+#ifdef USING_IMGUI
 /*                                                                      guard
 ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_EDITOR_PANELS_SCENE_PANEL_H
@@ -126,3 +126,6 @@ namespace IS {
 } // end namespace IS
 
 #endif // !GAM200_INSIGHT_ENGINE_EDITOR_PANELS_SCENE_PANEL_H
+
+#endif // USING_IMGUI
+

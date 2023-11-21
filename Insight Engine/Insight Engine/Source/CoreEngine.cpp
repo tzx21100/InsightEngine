@@ -93,16 +93,16 @@ namespace IS {
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
 
-        currentNumberOfSteps = 0;
+        
 
         accumulatedTime += mDeltaTime; //adding actual game loop time
 
-        while (accumulatedTime >= mFixedDeltaTime.count()) {
-            accumulatedTime -= mFixedDeltaTime.count(); //this will store the
+        while (accumulatedTime >= 1.f/60.f) {
+            accumulatedTime -= 1.f / 60.f; //this will store the
             //exact accumulated time differences, among all game loops
             currentNumberOfSteps++;
         }
-
+        currentNumberOfSteps = 1;
         if (currentNumberOfSteps > 0) {
 
             // Update all systems
@@ -110,7 +110,7 @@ namespace IS {
             {
 
                 Timer timer(system->GetName() + " System", false);
-                system->Update(1.f / 60.f);
+                system->Update((float)mDeltaTime);
                 timer.Stop();
 
                 if (to_update && currentNumberOfSteps==1) {
@@ -118,9 +118,12 @@ namespace IS {
                     mSystemDeltas["Engine"] += timer.GetDeltaTime();
                 }
             }
+
+            currentNumberOfSteps = 0;
         }
 
 
+    #ifdef USING_IMGUI
         // Update and render GUI
         if (mRenderGUI)
         {
@@ -129,6 +132,7 @@ namespace IS {
             mLayers.Render();
             mImGuiLayer->End();
         }
+    #endif // USING_IMGUI
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         mDeltaTime = LimitFPS(frameStart) - frameStart;
@@ -551,12 +555,16 @@ namespace IS {
 
     void InsightEngine::PushImGuiLayers()
     {
+    #ifdef USING_IMGUI
         mImGuiLayer = std::make_shared<ImGuiLayer>();
         mEditorLayer = std::make_shared<EditorLayer>();
         PushOverlay(mImGuiLayer);
         PushLayer(mEditorLayer);
         mUsingGUI = true;
         mRenderGUI = true;
+
+    #endif // USING_IMGUI
+
     }
 
 

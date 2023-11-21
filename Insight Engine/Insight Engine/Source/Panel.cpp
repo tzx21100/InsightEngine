@@ -17,6 +17,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "Panel.h"
 #include "EditorUtils.h"
 #include "EditorLayer.h"
@@ -222,7 +223,7 @@ namespace IS {
     // Log Console Panel
     void ConsolePanel::RenderPanel()
     {
-        auto& logger_gui = Logger::LoggerGUI::Instance();
+        auto& logger_gui = LoggerGUI::Instance();
         logger_gui.Draw((ICON_LC_TERMINAL_SQUARE "  " + mName).c_str());
         mSize = logger_gui.mPanelSize;
     }
@@ -360,3 +361,6 @@ namespace IS {
     }
 
 } // end namespace IS
+
+#endif // USING_IMGUI
+

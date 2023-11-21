@@ -215,6 +215,8 @@ namespace IS {
     }
 
     void Sprite::draw_picked_entity_border() {
+    #ifdef USING_IMGUI
+
         InsightEngine& engine = InsightEngine::Instance();
 
         // No entity selected, do nothing
@@ -233,6 +235,8 @@ namespace IS {
 
         shader.setUniform("model_to_ndc_xform", sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
         glDrawArrays(GL_LINE_LOOP, 0, ISGraphics::meshes[4].draw_count);
+
+    #endif // USING_IMGUI
     }
 
     void Sprite::drawDebugLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float lineLength, float angleInDegrees) {

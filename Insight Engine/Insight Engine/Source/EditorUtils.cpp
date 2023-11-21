@@ -17,6 +17,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "EditorUtils.h"
 
 // Dependencies
@@ -250,3 +251,6 @@ namespace IS::EditorUtils {
     }
 
 } // end namespace IS::EditorUtils
+
+
+#endif // USING_IMGUI

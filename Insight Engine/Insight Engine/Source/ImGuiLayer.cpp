@@ -18,6 +18,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "ImGuiLayer.h"
 
 // Dependencies
@@ -196,3 +197,4 @@ namespace IS {
     }
 
 } // end namespace IS
+#endif

@@ -183,6 +183,8 @@ namespace IS {
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
+        #ifdef USING_IMGUI
+
             //if (InsightEngine::Instance().mRuntime == false) { return; }
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetImGuiLayer();
@@ -442,7 +444,7 @@ namespace IS {
             //    else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
             //}
 
-
+        #endif // USING_IMGUI
         }
 
         virtual void Draw([[maybe_unused]] float delta) override {

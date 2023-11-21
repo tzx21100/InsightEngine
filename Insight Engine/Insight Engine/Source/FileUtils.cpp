@@ -17,6 +17,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
+
 #include "FileUtils.h"
 
 #include <filesystem>
@@ -108,3 +110,5 @@ namespace IS::FileUtils {
     }
 
 } // end namespcae IS
+
+#endif // USING_IMGUI

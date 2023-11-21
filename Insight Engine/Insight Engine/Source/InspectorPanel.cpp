@@ -19,6 +19,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "InspectorPanel.h"
 
 #include "Body.h"
@@ -1120,3 +1121,6 @@ namespace IS {
     } // end RenderCameraControls()
 
 } // end namespace IS
+
+#endif // USING_IMGUI
+

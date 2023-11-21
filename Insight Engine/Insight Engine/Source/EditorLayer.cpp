@@ -13,10 +13,10 @@
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
-
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
 #include "EditorLayer.h"
 #include "EditorUtils.h"
 #include "Graphics.h"
@@ -669,3 +669,4 @@ namespace IS {
     }
 
 } // end namespace IS
+#endif
