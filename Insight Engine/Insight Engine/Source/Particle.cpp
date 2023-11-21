@@ -18,7 +18,7 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 
-        for (int id = 0; id < mParticleAmount-1;id++) {
+        for (int id = 0; id < mParticleAmount;id++) {
 
             //particles death
 

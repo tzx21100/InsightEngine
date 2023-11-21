@@ -87,7 +87,9 @@ namespace IS
         static private float Xforce=0f;
         static private float Yforce=0f;
 
-
+        // player pos
+        static private Vector2D player_pos =new Vector2D(0,0);
+        static private Vector2D trans_scaling = new Vector2D(0,0);
 
 
         public static int BoolToInt(bool boolValue)
@@ -147,11 +149,11 @@ namespace IS
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
-           
+            player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             // scaling transform with movement
             Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
-            Vector2D trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
+            trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
@@ -363,10 +365,10 @@ namespace IS
 
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
-                    Vector2D player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+                    
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
 
-                    if (angle > -CustomMath.PI / 4 && angle < CustomMath.PI / 4) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                    if (angle >= -CustomMath.PI / 4 && angle <= CustomMath.PI / 4) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
@@ -376,11 +378,7 @@ namespace IS
                     InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/ 4f / bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 4f / bullet_time_set));
 
 
-                    for (int i = 0; i < 36; i++) {
 
-                        InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y,-1^i*10, 20 * (bullet_time_timer / bullet_time_set), 2, 1, -0.005f, bullet_time_set, 1000, "Particle Test.txt");
-                    
-                    }
 
                 }
                 else
@@ -424,6 +422,17 @@ namespace IS
 
 
         static private void Dashing() {
+            for (int i = 0; i < 36; i++)
+            {
+
+                InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 10, 20 * (bullet_time_timer / bullet_time_set), 2, 1, -0.005f, bullet_time_set, 1000, "Particle Test.txt");
+                
+
+            }
+
+            InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
+                                                        0.0f, trans_scaling.x*2, trans_scaling.y*2, 1, 0.8f, -0.1f, 1,
+                                                        0, "Particle Empty.txt", "Dash AfterImage.png");
             canDash = false;
             isDashing = true;
             dash_timer -= InternalCalls.GetDeltaTime();
@@ -486,7 +495,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * hori_movement;
+            float distanceLeft = width * -hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft  , 0);
 

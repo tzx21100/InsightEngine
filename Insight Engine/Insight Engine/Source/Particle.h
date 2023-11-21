@@ -9,7 +9,7 @@
 #include <array>
 #include <fstream>
 #include <sstream>
-#define MAX_PARTICLES 10000
+#define MAX_PARTICLES 20000
 
 
 namespace IS {
@@ -260,8 +260,9 @@ namespace IS {
 			if (mParticleAmount >= MAX_PARTICLES) {
 				return;
 			}
-			mParticleAmount++;
+			
 			mParticleList[mParticleAmount] = part;
+			mParticleAmount++;
 		}
 
 
@@ -292,7 +293,7 @@ namespace IS {
 
 
     private:
-		int mParticleAmount;
+		int mParticleAmount=0;
 		std::array<Particle,MAX_PARTICLES> mParticleList; //fixed array of particles
     };
 }

@@ -440,6 +440,29 @@ namespace IS {
         system->SpawnParticles(particle);
     }
 
+    static void GameSpawnParticleExtraImage(float x, float y, float direction, float sizex,float sizey, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, MonoString* particle_name, MonoString* image_name) {
+        auto assey_sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto system = InsightEngine::Instance().GetSystem<ParticleSystem>("Particle");
+        char* c_str = mono_string_to_utf8(particle_name); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        c_str = mono_string_to_utf8(image_name); // Convert Mono string to char*
+        std::string part_image_name(c_str);
+        mono_free(c_str);
+        Particle particle = assey_sys->GetParticle(part_name);
+        particle.mParticlePos = Vector2D(x, y);
+        particle.mDirection = direction;
+        particle.mScale = Vector2D(sizex, sizey);
+        particle.mSizeGrowth = size_scale;
+        particle.mAlpha = alpha;
+        particle.mAlphaGrowth = alpha_growth;
+        particle.mLifespan = lifespan;
+        particle.mVelocity = Vector2D(speed, speed);
+        particle.mParticleType = pt_texture;
+        particle.mImageName = part_image_name;
+        system->SpawnParticles(particle);
+    }
+
 
 
     /**
@@ -547,6 +570,7 @@ namespace IS {
         // Particle
         IS_ADD_INTERNAL_CALL(GameSpawnParticle);
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtra);
+        IS_ADD_INTERNAL_CALL(GameSpawnParticleExtraImage);
 
 
 
