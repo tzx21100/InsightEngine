@@ -143,7 +143,9 @@ namespace IS {
         }
     }
 
-    void Logger::LoggerGUI::AddLog(aLogLevel level, const char* message)
+#ifdef USING_IMGUI
+
+    void LoggerGUI::AddLog(aLogLevel level, const char* message)
     {
         // Store log messages with their log levels
         mLogEntries.emplace_back(level, message);
@@ -153,7 +155,7 @@ namespace IS {
             mLogEntries.pop_front();
     }
 
-    void Logger::LoggerGUI::Draw(const char* title)
+    void LoggerGUI::Draw(const char* title)
     {
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
         ImGui::Begin(title, nullptr, window_flags);
@@ -234,11 +236,11 @@ namespace IS {
         ImGui::End(); // end main window
     }
 
-    void Logger::LoggerGUI::Clear() { mLogEntries.clear(); }
+    void LoggerGUI::Clear() { mLogEntries.clear(); }
 
-    Logger::LoggerGUI& Logger::LoggerGUI::Instance() { static LoggerGUI gui; return gui; }
+    LoggerGUI& LoggerGUI::Instance() { static LoggerGUI gui; return gui; }
 
-    ImVec4 Logger::LoggerGUI::GetLogLevelColor(aLogLevel level) {
+    ImVec4 LoggerGUI::GetLogLevelColor(aLogLevel level) {
         ImU32 color = IM_COL32_WHITE;
 
         switch (level)
@@ -256,5 +258,8 @@ namespace IS {
                       ((color >> IM_COL32_B_SHIFT) & 0xFF) / 255.f,
                       ((color >> IM_COL32_A_SHIFT) & 0xFF) / 255.f);
     }
+
+
+#endif // USING_IMGUI
 
 } // end namespace IS

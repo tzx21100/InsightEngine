@@ -17,6 +17,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
+
 #include "ScenePanel.h"
 #include "EditorUtils.h"
 #include "CommandHistory.h"
@@ -594,3 +596,6 @@ namespace IS {
     }
 
 } // end namespace IS
+
+
+#endif // USING_IMGUI

@@ -14,7 +14,7 @@
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
-
+#ifdef USING_IMGUI
 /*                                                                      guard
 ----------------------------------------------------------------------------- */
 #ifndef GAM200_INSIGHT_ENGINE_IMGUI_LAYER_EDITOR_H
@@ -85,3 +85,6 @@ namespace IS {
 } // end namespace IS
 
 #endif // !GAM200_INSIGHT_ENGINE_EDITOR_SYSTEM_EDITOR_H
+
+
+#endif // USING_IMGUI

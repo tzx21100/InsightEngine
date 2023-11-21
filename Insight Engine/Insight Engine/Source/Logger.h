@@ -33,7 +33,11 @@
 #include <format>
 #include <deque>
 
+#ifdef USING_IMGUI
+
 #include <imgui.h>
+
+#endif // USING_IMGUI
 
 namespace IS {
 
@@ -89,6 +93,80 @@ namespace IS {
      * \return The log level.
      */
     aLogLevel StringToLogLevel(std::string const& level);
+#ifdef USING_IMGUI
+    /*!
+     * \class LoggerGUI
+     * \brief GUI interface for real-time log viewing.
+     *
+     * The `LoggerGUI` class provides an ImGui-based GUI for viewing and managing log messages in real-time.
+     */
+    class LoggerGUI
+    {
+    public:
+
+        /*!
+         * \brief Structure to encapsulate a log entry.
+         */
+        struct LogEntry
+        {
+            aLogLevel mLogLevel;
+            std::string mLogMessage;
+        };
+
+        /*!
+         * \brief Add a log message to the GUI.
+         *
+         * \param level The severity of the log message.
+         * \param message The contents of the log message.
+         */
+        void AddLog(aLogLevel severity, const char* message);
+
+        /*!
+         * \brief Draw the GUI window for log viewing.
+         *
+         * \param title The title of the log window.
+         */
+        void Draw(const char* title);
+
+        /*!
+         * \brief Clear the log entries.
+         */
+        void Clear();
+
+        /*!
+         * \brief Gets the color corresponding to the log level.
+         *
+         * \param level The log severity level.
+         * \return The color of corresponding to the log level.
+         */
+        static ImVec4 GetLogLevelColor(aLogLevel level);
+
+        /*!
+         * \brief Gets the instance of LoggerGUI.
+         *
+         * \return The instance of LoggerGUI.
+         */
+        static LoggerGUI& Instance();
+
+    private:
+        ImGuiTextFilter mFilter; ///< Text filter
+        aLogLevel mSelectedFilter = aLogLevel::LOGLEVEL_ALL; ///< Selected filter
+        std::deque<LogEntry> mLogEntries; ///< The log entries displayed
+        bool mAutoScroll = true; ///< Boolean flag indicating auto scroll
+        Vec2 mPanelSize; ///< Size of the panel.
+
+        static const int MAX_LOG_LINES = 1000; // Limit the number of log lines to prevent excessive memory usage
+
+        /*!
+         * \brief Constructor for the LoggerGUI class.
+         */
+        LoggerGUI() = default;
+
+        friend class ConsolePanel;
+    };
+
+#endif // USING_IMGUI
+
 
     /*!
      * \class Logger
@@ -99,75 +177,6 @@ namespace IS {
      */
     class Logger {
     public:
-
-        /*!
-         * \class LoggerGUI
-         * \brief GUI interface for real-time log viewing.
-         *
-         * The `LoggerGUI` class provides an ImGui-based GUI for viewing and managing log messages in real-time.
-         */
-        class LoggerGUI {
-        public:
-
-            /*!
-             * \brief Structure to encapsulate a log entry.
-             */
-            struct LogEntry {
-                aLogLevel mLogLevel;
-                std::string mLogMessage;
-            };
-
-            /*!
-             * \brief Add a log message to the GUI.
-             *
-             * \param level The severity of the log message.
-             * \param message The contents of the log message.
-             */
-            void AddLog(aLogLevel severity, const char* message);
-
-            /*!
-             * \brief Draw the GUI window for log viewing.
-             *
-             * \param title The title of the log window.
-             */
-            void Draw(const char* title);
-
-            /*!
-             * \brief Clear the log entries.
-             */
-            void Clear();
-
-            /*!
-             * \brief Gets the color corresponding to the log level.
-             *
-             * \param level The log severity level.
-             * \return The color of corresponding to the log level.
-             */
-            static ImVec4 GetLogLevelColor(aLogLevel level);
-
-            /*!
-             * \brief Gets the instance of LoggerGUI.
-             *
-             * \return The instance of LoggerGUI.
-             */
-            static LoggerGUI& Instance();
-
-        private:
-            ImGuiTextFilter mFilter; ///< Text filter
-            aLogLevel mSelectedFilter = aLogLevel::LOGLEVEL_ALL; ///< Selected filter
-            std::deque<LogEntry> mLogEntries; ///< The log entries displayed
-            bool mAutoScroll = true; ///< Boolean flag indicating auto scroll
-            Vec2 mPanelSize; ///< Size of the panel.
-
-            static const int MAX_LOG_LINES = 1000; // Limit the number of log lines to prevent excessive memory usage
-
-            /*!
-             * \brief Constructor for the LoggerGUI class.
-             */
-            LoggerGUI() = default;
-
-            friend class ConsolePanel;
-        };
 
         /*!
          * \brief Constructor for the Logger class.
@@ -381,7 +390,9 @@ namespace IS {
             std::clog << log.str() << RESET;
         #endif
 
-        LoggerGUI::Instance().AddLog(level, log.str().c_str());
+    #ifdef USING_IMGUI
+            LoggerGUI::Instance().AddLog(level, log.str().c_str());
+    #endif // USING_IMGUI
 
         // Write to file
         if (!mLogFile.is_open())

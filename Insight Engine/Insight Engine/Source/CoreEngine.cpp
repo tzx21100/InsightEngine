@@ -121,6 +121,7 @@ namespace IS {
         }
 
 
+    #ifdef USING_IMGUI
         // Update and render GUI
         if (mRenderGUI)
         {
@@ -129,6 +130,7 @@ namespace IS {
             mLayers.Render();
             mImGuiLayer->End();
         }
+    #endif // USING_IMGUI
 
         //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
         mDeltaTime = LimitFPS(frameStart) - frameStart;
@@ -551,12 +553,16 @@ namespace IS {
 
     void InsightEngine::PushImGuiLayers()
     {
+    #ifdef USING_IMGUI
         mImGuiLayer = std::make_shared<ImGuiLayer>();
         mEditorLayer = std::make_shared<EditorLayer>();
         PushOverlay(mImGuiLayer);
         PushLayer(mEditorLayer);
         mUsingGUI = true;
         mRenderGUI = true;
+
+    #endif // USING_IMGUI
+
     }
 
 

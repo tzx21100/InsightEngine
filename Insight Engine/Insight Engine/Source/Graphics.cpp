@@ -142,6 +142,8 @@ namespace IS {
 
         InsightEngine& engine = InsightEngine::Instance(); // get engine instance
 
+    #ifdef USING_IMGUI
+
         if (engine.mRenderGUI)
         {
             if (auto const& [fb_width, fb_height] = mFramebuffer->GetSize();
@@ -162,6 +164,7 @@ namespace IS {
                 glClear(GL_COLOR_BUFFER_BIT);
             }
         }
+    #endif // USING_IMGUI
 
         for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
             /*

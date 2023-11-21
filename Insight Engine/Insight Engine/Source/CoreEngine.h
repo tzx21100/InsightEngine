@@ -595,9 +595,10 @@ namespace IS {
 
         //! Unique pointer to the System Manager.
         std::unique_ptr<SystemManager> mSystemManager;
-
+    #ifdef USING_IMGUI
         std::shared_ptr<ImGuiLayer> GetImGuiLayer() { return mImGuiLayer; }
         std::shared_ptr<EditorLayer> GetEditorLayer() { return mEditorLayer; }
+    #endif // USING_IMGUI
 
         static int currentNumberOfSteps;
         double LimitFPS(double frame_start);
@@ -624,9 +625,12 @@ namespace IS {
 
         //! Fixed delta time between frames
         std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
-
+    #ifdef USING_IMGUI
         std::shared_ptr<ImGuiLayer> mImGuiLayer;
         std::shared_ptr<EditorLayer> mEditorLayer;
+
+    #endif // USING_IMGUI
+
 
         LayerStack mLayers;
 

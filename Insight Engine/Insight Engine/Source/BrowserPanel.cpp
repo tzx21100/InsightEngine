@@ -17,6 +17,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
+
 #include "BrowserPanel.h"
 #include "EditorUtils.h"
 #include "FileUtils.h"
@@ -562,3 +564,6 @@ namespace IS {
     }
 
 } // end namespace IS
+
+
+#endif // USING_IMGUI
