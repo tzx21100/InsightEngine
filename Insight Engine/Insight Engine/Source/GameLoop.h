@@ -21,6 +21,7 @@
 #include "Body.h"
 #include "Collider.h"
 
+
 namespace IS {
     class GameLoop :public ParentSystem {
 
@@ -189,6 +190,8 @@ namespace IS {
 
             // transform camera
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
+
+
 
            // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
             //Sprite::draw_instanced_3D_quads();

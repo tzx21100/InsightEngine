@@ -50,6 +50,11 @@ namespace IS {
         ISGraphics::Brush_Script_font.shader.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Text.frag");
         ISGraphics::Brush_Script_font.shader.link();
         ISGraphics::Brush_Script_font.shader.validate();
+
+        ISGraphics::fb_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "fb.vert");
+        ISGraphics::fb_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "fb.frag");
+        ISGraphics::fb_shader_pgm.link();
+        ISGraphics::fb_shader_pgm.validate();
     }
 
     GLboolean Shader::compileShaderString(GLenum shader_type, std::string const& shader_src) {

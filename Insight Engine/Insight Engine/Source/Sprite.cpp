@@ -519,7 +519,7 @@ namespace IS {
         }
 
     }
-    
+
 
     /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
     void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {

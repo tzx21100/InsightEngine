@@ -127,6 +127,8 @@ namespace IS {
 		static std::vector<Mesh> meshes;
 
 		// Shaders
+		static Shader fb_shader_pgm;
+
 		static Shader inst_quad_shader_pgm;
 		static Shader inst_3d_quad_shader_pgm;
 		static Shader inst_non_quad_shader_pgm;

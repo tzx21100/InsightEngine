@@ -129,36 +129,6 @@ namespace IS {
 		return ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform() * world_to_cam_xform;
 	}
 
-	glm::mat4 Transform::FUCKYK() {
-		// convert angle to radians
-		float angle_rad = glm::radians(rotation);
-
-		// to scale to world coordinates
-		//auto [width, height] = InsightEngine::Instance().GetWindowSize();
-
-		// math variables used often
-		float sin_angle = sinf(angle_rad);
-		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x;
-		float model_scale_y = scaling.y;
-		float tx = world_position.x;
-		float ty = world_position.y;
-
-		// dont calculate camera xform every frame
-		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-
-		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,  // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,  // column 2
-										 0.f,                          0.f,                         1.f, 0.f,
-										 tx,					       ty,						    1.f, 1.f }; // column 3
-
-
-		// save matrix
-		return world_to_cam_xform;
-	}
-
 	// not in use
 	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
 		std::vector<Vector2D> vertices;

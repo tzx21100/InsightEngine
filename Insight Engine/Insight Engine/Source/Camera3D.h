@@ -27,7 +27,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include "Input.h"
+
 
 namespace IS {
 
@@ -65,6 +67,8 @@ namespace IS {
 		glm::mat4 getCameraToNDCXform() { return mProjection * mView; }
 		
 		float GetAspectRatio() { return mAspectRatio; }
+
+		static Vector2D mouseToWorld(Vector2D const& screenMousePos);
 
 		/// Static members
 		static aCameraType mActiveCamera;

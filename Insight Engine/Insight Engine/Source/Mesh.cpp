@@ -305,10 +305,10 @@ namespace IS {
 	void Mesh::setupQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 0.5f)},
-            Vertex{glm::vec2(0.5f, -0.5f), glm::vec2(0.5f, 0.5f)},
+            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
+            Vertex{glm::vec2(0.5f, -0.5f), glm::vec2(1.f, 1.f)},
             Vertex{glm::vec2(-0.5f, 0.5f), glm::vec2(0.0f, 0.0f)},
-            Vertex{glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.0f)}
+            Vertex{glm::vec2(0.5f, 0.5f), glm::vec2(1.f, 0.0f)}
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -344,49 +344,37 @@ namespace IS {
 	}
 
     void Mesh::setupFBVAO() {
-        // Define the vertices of the quad as a triangle strip
-        std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
-            Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
-            Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) },
-            Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) }
+        float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
+            // positions   // texCoords
+            -1.0f,  1.0f,  0.0f, 1.0f,
+            -1.0f, -1.0f,  0.0f, 0.0f,
+             1.0f, -1.0f,  1.0f, 0.0f,
+
+            -1.0f,  1.0f,  0.0f, 1.0f,
+             1.0f, -1.0f,  1.0f, 0.0f,
+             1.0f,  1.0f,  1.0f, 1.0f
         };
 
-        // Generate a VAO handle to encapsulate the VBO
-        GLuint vao_hdl;
-        glCreateVertexArrays(1, &vao_hdl);
-        glBindVertexArray(vao_hdl);
+        // screen quad VAO
+        unsigned int quadVAO, quadVBO;
+        glGenVertexArrays(1, &quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glBindVertexArray(quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
-        // Create and bind a VBO to store the vertex data
-        GLuint vbo_hdl;
-        glCreateBuffers(1, &vbo_hdl);
-        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
-
-        // Bind the VBO to the VAO
-        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
-
-        // Enable the position attribute
-        glEnableVertexArrayAttrib(vao_hdl, 0);
-        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
-        glVertexArrayAttribBinding(vao_hdl, 0, 0);
-
-        // Enable the texture coordinate attribute
-        glEnableVertexArrayAttrib(vao_hdl, 2);
-        glVertexArrayAttribFormat(vao_hdl, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord));
-        glVertexArrayAttribBinding(vao_hdl, 2, 0);
-
-        // Unbind the VAO (not necessary to unbind buffers individually)
-        glBindVertexArray(0);
-
-        // save VAO, VBO and draw count
-        vao_ID = vao_hdl;
-        vbo_ID = vbo_hdl;
-        draw_count = static_cast<GLuint>(vertices.size());
+        vao_ID = quadVAO;
+        vbo_ID = quadVBO;
+        draw_count = 6;
     }
 
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // 4 meshes for 4 different models
-        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh;
+        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh, fb_mesh;
         /// non instanced meshes
         // quad_mesh.setupQuadVAO();
         // quad_mesh.setupQuadVAO();
@@ -399,6 +387,7 @@ namespace IS {
         inst_circle_mesh.setupInstancedCircleVAO();
         inst_3d_quad_mesh.setupInstanced3DQuadVAO();
         outline_mesh.setupOutlineVAO();
+        fb_mesh.setupFBVAO();
 
         // meshes.emplace_back(quad_mesh);
         // meshes.emplace_back(point_mesh);
@@ -409,6 +398,7 @@ namespace IS {
         meshes.emplace_back(inst_circle_mesh);
         meshes.emplace_back(inst_3d_quad_mesh);
         meshes.emplace_back(outline_mesh);
+        meshes.emplace_back(fb_mesh);
     }
 
     void Mesh::cleanupMeshes(std::vector<Mesh>& meshes) {

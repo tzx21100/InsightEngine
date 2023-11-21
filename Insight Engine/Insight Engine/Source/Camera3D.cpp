@@ -129,4 +129,28 @@ namespace IS {
 		mFront = glm::normalize(mFront);
 	}
 
+	Vector2D Camera3D::mouseToWorld(Vector2D const& screenMousePos){
+		InsightEngine& engine = InsightEngine::Instance();
+		auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+
+		float ndcX = ((screenMousePos.x * 2.f / static_cast<float>(width)) - 1.f);
+		float ndcY = ((screenMousePos.y * 2.f / static_cast<float>(height)) - 1.f);
+
+		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
+
+		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+		glm::mat4 ndcToCam = glm::inverse(cameraInUse.GetViewMatrix()) * glm::inverse(cameraInUse.GetProjectionMatrix());
+
+		float fWidth = static_cast<float>(width) / cameraInUse.GetZoomLevel();
+		float fHeight = fWidth / cameraInUse.GetAspectRatio();
+		Transform camXform({ cameraInUse.mPosition.x, cameraInUse.mPosition.y }, 0.f, { fWidth, fHeight });
+		glm::mat4 camXformMat = camXform.Return3DXformMatrix();
+
+		glm::vec4 worldPos = ndcToCam * ndcCoords;
+		worldPos /= worldPos.w;
+
+		IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, -worldPos.y);
+		return { worldPos.x, -worldPos.y };
+	}
+
 } // end namespace IS

@@ -169,7 +169,6 @@ namespace IS {
 
 		// not in use
 		std::vector<Vector2D> GetSquareTransformVertices();
-		glm::mat4 FUCKYK();
 	};
 
 	/**

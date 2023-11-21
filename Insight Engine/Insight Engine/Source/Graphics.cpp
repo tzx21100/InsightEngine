@@ -38,6 +38,8 @@ namespace IS {
     std::vector<Mesh> ISGraphics::meshes;
 
     // Shaders
+    Shader ISGraphics::fb_shader_pgm;
+
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
@@ -290,12 +292,13 @@ namespace IS {
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
         // get engine instance
         InsightEngine& engine = InsightEngine::Instance();
+        mFramebuffer->Bind();
 
         // bind fb
-        if (engine.mRenderGUI)
-        {
-            mFramebuffer->Bind();
-        }
+        //if (engine.mRenderGUI)
+        //{
+        //    mFramebuffer->Bind();
+        //}
 
         // set clear color
         glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -308,34 +311,6 @@ namespace IS {
             auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
             glViewport(0, 0, width, height);
         }
-
-        // can enable to test drawing of debug line / circles
-        // Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
-        // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
-        // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
-
-        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        //Image* img = system->GetImage("icecream_truck_frame.png");
-        //Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 4);
-
-
-        // quads will be drawn first
-        // Sprite::draw_instanced_quads();
-        Sprite::draw_instanced_3D_quads();
-        setLineWidth(3.f);
-    #ifdef USING_IMGUI
-        Sprite::draw_picked_entity_border();
-    #endif // USING_IMGUI
-        setLineWidth(2.f);
-
-        // followed by debugging circles and lines
-        Sprite::draw_instanced_circles();
-        Sprite::draw_instanced_lines();
-        testLight.draw();
-        testLight2.draw();
-        testLight3.draw();
-        testLight4.draw();
-        Sprite::draw_lights();
 
         // for each entity
         for (auto& entity : mEntities) {
@@ -354,7 +329,7 @@ namespace IS {
         }
 
         // Render text when GUI is disabled
-    #ifdef USING_IMGUI
+#ifdef USING_IMGUI
         if (!engine.mRenderGUI)
         {
             // Shared Attributes
@@ -377,7 +352,7 @@ namespace IS {
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
-    #endif // !USING_IMGUI
+#endif // !USING_IMGUI
 
         // Double font animation
 
@@ -386,11 +361,56 @@ namespace IS {
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
         }
 
-        // if using ImGui, unbind fb at the end of draw
-        if (engine.mRenderGUI)
+
+        // can enable to test drawing of debug line / circles
+        // Sprite::drawDebugLine({ 0.f, 0.f }, { 200.f, 0.f }, { 1.0f, 0.0f, 0.0f });
+        // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
+        // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
+
+        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        //Image* img = system->GetImage("icecream_truck_frame.png");
+        //Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 4);
+
+
+        // quads will be drawn first
+        // Sprite::draw_instanced_quads();
+        Sprite::draw_instanced_3D_quads();
+        setLineWidth(3.f);
+    #ifdef USING_IMGUI
+        Sprite::draw_picked_entity_border();
+    #endif // USING_IMGUI
+        setLineWidth(2.f);
+
+
+
+        // followed by debugging circles and lines
+        Sprite::draw_instanced_circles();
+        Sprite::draw_instanced_lines();
+        testLight.draw();
+        testLight2.draw();
+        testLight3.draw();
+        testLight4.draw();
+        Sprite::draw_lights();
+
+        mFramebuffer->Unbind();
+
+        if (!engine.mRenderGUI)
         {
-            mFramebuffer->Unbind();
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
+            glClear(GL_COLOR_BUFFER_BIT);
+            fb_shader_pgm.use();
+            glBindVertexArray(meshes[5].vao_ID);
+            glBindTexture(GL_TEXTURE_2D, mFramebuffer->GetColorAttachment());	// use the color attachment texture as the texture of the quad plane
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            fb_shader_pgm.unUse();
         }
+
+       
+        // if using ImGui, unbind fb at the end of draw
+        //if (engine.mRenderGUI)
+        //{
+        //    mFramebuffer->Unbind();
+        //}
     }
 
     void ISGraphics::cleanup() {
