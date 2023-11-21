@@ -290,14 +290,6 @@
 			}
 		},
 		{
-			"AudioEmitter" : 
-			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : false,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "VO-MadCoder-001.wav",
-				"AudioVolumeLevel" : 0.5
-			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1061,9 +1053,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.066666670143604279,
+						"frame_timer" : 0.033333335071802139,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
