@@ -236,6 +236,9 @@ namespace IS {
                     auto [width2, height2] = window_sys->GetWindowSize();
                     input->setCenterPos(width2 / 2.f, height2 / 2.f);
                     input->setRatio(static_cast<float>(width2), static_cast<float>(height2));
+                    
+                    auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+                    camera.SetAspectRatio(static_cast<float>(width2)/ static_cast<float>(height2));
                 }
 
                 //this controls the freeze frame
