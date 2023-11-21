@@ -15,8 +15,24 @@ namespace IS
         static SimpleImage player_walk;
         static SimpleImage player_idle;
         static SimpleImage player_climb;
+        static SimpleImage player_climb1;
+        static SimpleImage player_climb2;
+        static SimpleImage player_climb3;
+        static SimpleImage player_climb4;
+        static SimpleImage player_climb5;
+        static SimpleImage player_climb6;
+        static SimpleImage player_climb7;
+        static SimpleImage player_climb8;
+        static SimpleImage player_climb9;
+        static SimpleImage player_climb10;
+        static SimpleImage player_climb11;
         static SimpleImage player_transparent;
 
+
+        //psuedo animations for images
+        static float animation_speed = 0.07f;
+        static float animation_speed_set = 0.07f;
+        static int animation_current_frame = 0;
 
 
         //private variables for entity
@@ -41,7 +57,7 @@ namespace IS
         static private bool canDash = false;
         static private bool isDashing;
         static private float dashAngle;
-        static private float dashSpeed = 3000f;
+        static private float dashSpeed = 5000f;
 
         static private bool isGrounded;
         static private Vector2D apply_force= new Vector2D(0,0);//dash dir
@@ -63,6 +79,9 @@ namespace IS
         static private bool isClimbing = false;
         static private float climbSpeed = 1500f;
         static private int entityWall;
+        static int climbdir;
+
+
 
 
 
@@ -80,6 +99,17 @@ namespace IS
             player_walk = InternalCalls.GetSpriteImage("running_anim 4R3C.png");
             player_idle = InternalCalls.GetSpriteImage("idle_anim 4R3C.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
+            player_climb1 = InternalCalls.GetSpriteImage("WallClimb_0001.png");
+            player_climb2 = InternalCalls.GetSpriteImage("WallClimb_0002.png");
+            player_climb3 = InternalCalls.GetSpriteImage("WallClimb_0003.png");
+            player_climb4 = InternalCalls.GetSpriteImage("WallClimb_0004.png");
+            player_climb5 = InternalCalls.GetSpriteImage("WallClimb_0005.png");
+            player_climb6 = InternalCalls.GetSpriteImage("WallClimb_0006.png");
+            player_climb7 = InternalCalls.GetSpriteImage("WallClimb_0007.png");
+            player_climb8 = InternalCalls.GetSpriteImage("WallClimb_0008.png");
+            player_climb9 = InternalCalls.GetSpriteImage("WallClimb_0009.png");
+            player_climb10 = InternalCalls.GetSpriteImage("WallClimb_0010.png");
+            player_climb11 = InternalCalls.GetSpriteImage("WallClimb_0011.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
 
             // Initialization code
@@ -160,16 +190,18 @@ namespace IS
 
             
 
-            WallCheckerUpdate();
+            
             //wall checking
             if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)))
             {
-                if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); }
+                if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
                 isClimbing = true;   
             }
-            else { isClimbing = false; }
+            else { isClimbing = false; animation_current_frame = 0; animation_speed = animation_speed_set; }
 
             if(isClimbing) {
+
+
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
                 
@@ -180,12 +212,61 @@ namespace IS
 
                 InternalCalls.RigidBodySetForce(climbSpeed  *force_from_angle.x * hori_movement, climbSpeed *force_from_angle.y );
 
+                if (hori_movement != climbdir) {
+                    InternalCalls.RigidBodyAddForce(hori_movement * 2000f, 0f);
+                }
+
 
                 float x_offset = 28 * hori_movement;
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 pos.x += x_offset;
-                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x* 1.2f, InternalCalls.GetTransformScaling().y * 1.2f);
-                InternalCalls.DrawImageAt(pos, 0f, scale, player_climb, 1);
+                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x* 1.1f, InternalCalls.GetTransformScaling().y * 1.1f);
+
+                SimpleImage curr_image = player_climb;
+
+                switch (animation_current_frame) {
+                    case 0:
+                        curr_image = player_climb;
+                        break;                    case 1:
+                        curr_image = player_climb1;
+                        break;                    case 2:
+                        curr_image = player_climb2;
+                        break;                    case 3:
+                        curr_image = player_climb3;
+                        break;                    case 4:
+                        curr_image = player_climb4;
+                        break;                    case 5:
+                        curr_image = player_climb5;
+                        break;                    case 6:
+                        curr_image = player_climb6;
+                        break;                    case 7:
+                        curr_image = player_climb7;
+                        break;                    case 8:
+                        curr_image = player_climb8;
+                        break;                    case 9:
+                        curr_image = player_climb9;
+                        break;                    case 10:
+                        curr_image = player_climb10;
+                        break;                    case 11:
+                        curr_image = player_climb11;
+                        break;
+                
+                }
+
+                animation_speed -= InternalCalls.GetDeltaTime();
+
+                if (animation_speed <= 0) {
+
+                    animation_speed = animation_speed_set;
+                    animation_current_frame++;
+                    if (animation_current_frame >= 10) {
+                        animation_current_frame = 0;
+                    }
+                
+                }
+
+
+                InternalCalls.DrawImageAt(pos, 0f, scale, curr_image, 1);
 
             }
             else
@@ -241,7 +322,7 @@ namespace IS
                 }
             }
             else if(!isClimbing){ //while in the air
-                InternalCalls.RigidBodyAddForce(hori_movement * move_speed * InternalCalls.GetDeltaTime(), 0f);
+                
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
@@ -255,7 +336,7 @@ namespace IS
                     }
                 }
             }
-
+            InternalCalls.RigidBodyAddForce(hori_movement * move_speed * InternalCalls.GetDeltaTime(), 0f);
             //check for ground
 
 
@@ -292,10 +373,10 @@ namespace IS
                 }
             }
 
-
-            InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
             FloorCheckerUpdate();
-
+            WallCheckerUpdate();
+            InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
+            
 
 
 
@@ -304,6 +385,17 @@ namespace IS
         static public void CleanUp()
         {
             InternalCalls.FreeSpriteImage(player_climb);
+            InternalCalls.FreeSpriteImage(player_climb1);
+            InternalCalls.FreeSpriteImage(player_climb2);
+            InternalCalls.FreeSpriteImage(player_climb3);
+            InternalCalls.FreeSpriteImage(player_climb4);
+            InternalCalls.FreeSpriteImage(player_climb5);
+            InternalCalls.FreeSpriteImage(player_climb6);
+            InternalCalls.FreeSpriteImage(player_climb7);
+            InternalCalls.FreeSpriteImage(player_climb8);
+            InternalCalls.FreeSpriteImage(player_climb9);
+            InternalCalls.FreeSpriteImage(player_climb10);
+            InternalCalls.FreeSpriteImage(player_climb11);
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
             InternalCalls.FreeSpriteImage(player_transparent);
@@ -377,14 +469,14 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width ;
+            float distanceLeft = width * hori_movement;
 
-            Vector2D relativePosition = new Vector2D(distanceLeft *hori_movement , 0);
+            Vector2D relativePosition = new Vector2D(distanceLeft  , 0);
 
             // Apply rotation to the relative position
             Vector2D rotatedRelativePosition = new Vector2D(
-                (float)(relativePosition.x * CustomMath.Cos(angleRadians) - relativePosition.y * CustomMath.Sin(angleRadians)),
-                (float)(relativePosition.x * CustomMath.Sin(angleRadians) + relativePosition.y * CustomMath.Cos(angleRadians))
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) - relativePosition.y * CustomMath.Cos(angleRadians))
             );
 
             // Calculate the absolute position for the wall checker
@@ -395,7 +487,7 @@ namespace IS
 
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
-            InternalCalls.TransformSetScaleEntity(2f, height/2f, entityWall);
+            InternalCalls.TransformSetScaleEntity(2f, height/1.7f, entityWall);
             
         }
 
