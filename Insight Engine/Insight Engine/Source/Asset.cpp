@@ -82,6 +82,15 @@ namespace IS {
             IS_CORE_INFO("Loaded Scene: {} ", file_path);
         }
 
+        path = SCRIPT_DIRECTORY;
+        for (const auto& entry : fs::directory_iterator(path))
+        {
+            std::string file_path = entry.path().filename().string();
+            mScriptList.emplace_back(file_path);
+            IS_CORE_INFO("Loaded Script: {} ", file_path);
+        }
+
+
         // loads all audio and store it
         path = SOUND_DIRECTORY;
         auto audio = engine.GetSystem<ISAudio>("Audio");

@@ -658,7 +658,37 @@ namespace IS {
                 ImGui::TextUnformatted("Script Name:");
                 ImGui::PopFont();
                 ImGui::TableNextColumn();
-                ImGui::Text("%s", script.mScriptName.c_str());
+                if (ImGui::BeginCombo("##Scripts", script.mScriptName.c_str()))
+                {
+                    auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                    for (std::string const& name : asset->mScriptList)
+                    {
+                        std::filesystem::path path(name);
+                        std::string stem = path.stem().string();
+                        bool selected = script.mScriptName == stem;
+                        if (ImGui::Selectable(stem.c_str(), selected))
+                        {
+                            script.mScriptName = stem;
+                        }
+                        if (selected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+
+                    ImGui::EndCombo();
+                }
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        script.mScriptName = path.stem().string();
+                    }
+                    ImGui::EndDragDropTarget();
+                }
 
                 ImGui::SameLine();
 

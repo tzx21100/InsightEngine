@@ -216,10 +216,12 @@ namespace IS {
         const std::string textures = "Textures";
         const std::string sounds = "Sounds";
         const std::string prefabs = "Prefabs";
+        const std::string scripts = "Scripts";
 
         ImGuiTreeNodeFlags textures_tree_flags = (textures == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
         ImGuiTreeNodeFlags sounds_tree_flags = (sounds == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
         ImGuiTreeNodeFlags prefabs_tree_flags = (prefabs == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags scripts_tree_flags = (scripts == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
 
         if (ImGui::TreeNodeEx((ICON_LC_IMAGE "  " + textures).c_str(), textures_tree_flags))
         {
@@ -239,6 +241,13 @@ namespace IS {
         {
             if (ImGui::IsItemClicked())
                 SwitchImportedAsset(prefabs);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNodeEx((ICON_LC_CODE "  " + scripts).c_str(), scripts_tree_flags))
+        {
+            if (ImGui::IsItemClicked())
+                SwitchImportedAsset(scripts);
             ImGui::TreePop();
         }
     }
@@ -464,6 +473,33 @@ namespace IS {
                         {
                             const wchar_t* item_path = path.c_str();
                             ImGui::SetDragDropPayload("IMPORTED_PREFAB", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+
+                            // Tooltip
+                            const ImVec2 image_size = { 48.f , 48.f };
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
+
+                            ImGui::EndDragDropSource();
+                        }
+
+                        ImGui::TextWrapped(path.filename().string().c_str());
+                    }
+                }
+
+                // Show all imported scripts
+                else if (mSelectedImportedAsset == "Scripts")
+                {
+                    for (auto const& name : asset->mScriptList)
+                    {
+                        std::filesystem::path path(name);
+                        ImTextureID icon = mEditorLayer.GetIcon("Json");
+                        ImGui::TableNextColumn();
+                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Start file drag
+                        if (ImGui::BeginDragDropSource())
+                        {
+                            const wchar_t* item_path = path.c_str();
+                            ImGui::SetDragDropPayload("IMPORTED_SCRIPT", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
                             // Tooltip
                             const ImVec2 image_size = { 48.f , 48.f };
