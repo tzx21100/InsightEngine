@@ -93,16 +93,16 @@ namespace IS {
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
 
-        currentNumberOfSteps = 0;
+        
 
         accumulatedTime += mDeltaTime; //adding actual game loop time
 
-        while (accumulatedTime >= mFixedDeltaTime.count()) {
-            accumulatedTime -= mFixedDeltaTime.count(); //this will store the
+        while (accumulatedTime >= 1.f/60.f) {
+            accumulatedTime -= 1.f / 60.f; //this will store the
             //exact accumulated time differences, among all game loops
             currentNumberOfSteps++;
         }
-
+        currentNumberOfSteps = 1;
         if (currentNumberOfSteps > 0) {
 
             // Update all systems
@@ -110,7 +110,7 @@ namespace IS {
             {
 
                 Timer timer(system->GetName() + " System", false);
-                system->Update(1.f / 60.f);
+                system->Update((float)mDeltaTime);
                 timer.Stop();
 
                 if (to_update && currentNumberOfSteps==1) {
@@ -118,6 +118,8 @@ namespace IS {
                     mSystemDeltas["Engine"] += timer.GetDeltaTime();
                 }
             }
+
+            currentNumberOfSteps = 0;
         }
 
 

@@ -166,7 +166,7 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
-        for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step) { // fixed dt
+        
             /*
             // empty quad instance data
             layeredQuadInstances.clear();
@@ -287,9 +287,11 @@ namespace IS {
             //cameras3D[1].update_camera_zoom(cameras[1].GetZoomLevel());
             // cameras3D[1].camera_keyboard_callback(1500.f * delta_time); // follows keyboard's input to change pos, must comment line 263 coz it overrides
             cameras3D[Camera3D::mActiveCamera].Update();
+
+            
             // Graphics system's draw
             Draw(delta_time);
-        }
+        
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {

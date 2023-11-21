@@ -336,7 +336,7 @@ namespace IS
                     }
                 }
             }
-            InternalCalls.RigidBodyAddForce(hori_movement * move_speed * InternalCalls.GetDeltaTime(), 0f);
+            InternalCalls.RigidBodyAddForce(hori_movement * move_speed , 0f);
             //check for ground
 
 

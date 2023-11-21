@@ -218,11 +218,9 @@ namespace IS {
         vec = trans_component.mAngularVelocity;
         return vec;
     }
-
+            
     static float GetDeltaTime() {
-        auto system = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
-        //fast way to get delta with steps.
-        return InsightEngine::Instance().currentNumberOfSteps / 60.f;/*system->mScriptDeltaTime*/
+        return (float)InsightEngine::Instance().mDeltaTime;
     }
 
     static void SetSpriteImage(SimpleImage image) {
