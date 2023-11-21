@@ -158,6 +158,41 @@ namespace IS
 		return mSelectedCollider.test(ColliderShape::CIRCLE);
 	}
 
+	// Get the axis-aligned bounding box (AABB) of the rigid body.
+	Box Collider::GetAABB()
+	{
+		float minX = std::numeric_limits<float>::max();
+		float minY = std::numeric_limits<float>::max();
+		float maxX = -std::numeric_limits<float>::max();
+		float maxY = -std::numeric_limits<float>::max();
+
+		if (IsBoxColliderEnable())
+		{
+			// loop through the vertices to get a bigger(if necessary) box for grid cell calculation
+			for (int i = 0; i < mBoxCollider.transformedVertices.size(); i++)
+			{
+				Vector2D v = mBoxCollider.transformedVertices[i];
+
+				if (v.x < minX) { minX = v.x; }
+				if (v.x > maxX) { maxX = v.x; }
+				if (v.y < minY) { minY = v.y; }
+				if (v.y > maxY) { maxY = v.y; }
+			}
+		}
+		else if (IsCircleColliderEnable())
+		{
+			float radius = mCircleCollider.radius;
+
+			minX = mCircleCollider.center.x - radius;
+			minY = mCircleCollider.center.y - radius;
+			maxX = mCircleCollider.center.x + radius;
+			maxY = mCircleCollider.center.y + radius;
+		}
+
+		Box aabb = Box(minX, minY, maxX, maxY);
+
+		return aabb;
+	}
 
 	
 	Json::Value Collider::Serialize()

@@ -6,7 +6,8 @@
 #include "Body.h"
 #include "Collider.h"
 #include "Manifold.h"
-
+#include "Physics.h"
+#include "Collision.h"
 #include <vector>
 
 /*                                                                   includes
@@ -43,10 +44,12 @@ namespace IS
 		// Resloves collisions among all the entities
 		void NarrowPhase();
 
-		void CollisionDetect(std::vector<Entity> const& entities);
+		void ImplicitGridCollisionDetect();
 
 		// Detects collisions among a set of entities, running different collision detect function form collision.h based on the body shape (box, circle or line).
 		void CollisionDetect(std::set<Entity> const& entities);
+
+		void CollisionDetect(std::vector<Entity> const& entities);
 
 		// separate two bodies if they colliding and penetrating
 		void SeparateColliders(BodyType typeA, BodyType typeB, Transform& transA, Transform& transB, Vector2D const& vec);
@@ -72,9 +75,10 @@ namespace IS
 
 	private:
 		std::vector<std::pair<Entity, Entity>> mContactPair;	// vector list of each two contact entities
-		Manifold mManifoldInfo;
+		Manifold mManifoldInfo;									// instance of Manifold
 		bool mColliding;										// boolean status between two colliders in one collide
 		std::bitset<MAX_COLLIDING_CASE> mCollidingCollection;	// collection of all possible collision happens between two colliders in one collide
+		ImplicitGrid mImplicitGrid;								// instance of ImplicitGrid
 	};
 }
 #endif

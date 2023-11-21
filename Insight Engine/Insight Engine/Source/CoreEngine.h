@@ -208,6 +208,8 @@ namespace IS {
          */
         void EnableVSync(bool enabled = true);
 
+        bool IsMinimized();
+
 
         //abstracted function to make game script
         void CreateGameScript(const std::string& ScriptName);

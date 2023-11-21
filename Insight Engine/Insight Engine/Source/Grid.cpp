@@ -59,14 +59,23 @@ namespace IS
 	// Get the cell corresponding to a given position in the grid.
 	Cell ImplicitGrid::GetCell(Vector2D const& position) {
 
-		// Set cell size based on current window size
-		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
-		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
+		//// Set cell size based on current window size
+		//glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		//glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
 
+		//// set the grid's width and height as 2 times bigger than camera's width and height
+		//float width = camera_dimension.x * 2;
+		//float height = camera_dimension.y * 2;
+
+		auto& engine = InsightEngine::Instance();
+		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
+		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = camera_dimension.x * 2;
-		float height = camera_dimension.y * 2;
-
+		float width = (static_cast<float>(x) * camera.GetZoomLevel()) * 1.f;
+		float height = (static_cast<float>(y) * camera.GetZoomLevel()) * 1.f;
+		//IS_CORE_DEBUG("Width : {:.2f}", width);
+		//IS_CORE_DEBUG("Height : {:.2f}", height);
 		/*float width = 12000.f;
 		float height = 5000.f;*/
 
@@ -178,6 +187,55 @@ namespace IS
 		}
 	}
 #endif
+
+	// Add entities into the appropriate cell of the grid.
+	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities)
+	{
+		InsightEngine& engine = InsightEngine::Instance();
+		if (engine.IsMinimized())
+			return;
+		// loop through all the entities
+		for (auto const& entity : Entities)
+		{
+			if (engine.HasComponent<Collider>(entity))
+			{ // if entity has rigidbody component
+				auto& collider = engine.GetComponent<Collider>(entity);
+
+				/*auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
+				body.BodyFollowTransform(trans);*/
+				// getting the min & max for checking which cell contain the entity
+				Box box = collider.GetAABB();
+				Cell min_cell = GetCell(box.min);
+				Cell max_cell = GetCell(box.max);
+				//Cell center = GetCell(body.mBodyTransform.world_position);
+
+				if (GridContains(min_cell) && GridContains(max_cell))
+				{
+					// fully in grid
+					AddToBitArray(min_cell, max_cell, entity);
+				}
+				else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
+					(!GridContains(min_cell) && GridContains(max_cell)))
+				{
+					// body box overlap on the grid edge, half inside half outside
+					AddToBitArray(min_cell, max_cell, entity);
+					mOutsideGridList.emplace_back(entity);
+				}
+				else if (CheckOverlap(min_cell, max_cell))
+				{
+					// the obj is too big, min and max both outside of the grid but a 
+					// small part of the obj is inside the grid
+					AddToBitArray(min_cell, max_cell, entity);
+					mOutsideGridList.emplace_back(entity);
+				}
+				else
+				{ // body box fully outside of the grid
+					mOutsideGridList.emplace_back(entity);
+				}
+			}
+		}
+	}
+
 	// Add entities into the bit arrays representing grid cells.
 	void ImplicitGrid::AddToBitArray(Cell const& min, Cell const& max, Entity const& entity) {
 
@@ -261,15 +319,15 @@ namespace IS
 #endif
 	// Check if there is an overlap at the edge of the grid.
 	bool ImplicitGrid::CheckOverlap([[maybe_unused]] Cell const& min, [[maybe_unused]] Cell const& max) {
-		bool check = false;
-		//for (int row = min.row; row >= max.row; row--) {
-		//	for (int col = min.col; col <= max.col; col++) {
-		//		if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
-		//			check = true;
-		//		}
-		//	}
-		//}
-		return check;
+		//bool check = false;
+		for (int row = min.row; row >= max.row; row--) {
+			for (int col = min.col; col <= max.col; col++) {
+				if (row >= 0 && row < mRows && col >= 0 && col < mCols) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 #if 0
@@ -409,16 +467,20 @@ namespace IS
 
 	// Draw the grid for visualization purposes.
 	void ImplicitGrid::DrawGrid() {
-		glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		//glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
+		// getting the width and height of the camera
+		auto& engine = InsightEngine::Instance();
+		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = camera_dimension.x * 2;
-		float height = camera_dimension.y * 2;
+		float width = (static_cast<float>(x) * camera.GetZoomLevel()) * 1.f;
+		float height = (static_cast<float>(y) * camera.GetZoomLevel()) * 1.f;
 
 		/*float width = 12000.f;
 		float height = 5000.f;*/
 		ImplicitGrid::mCellSize = { static_cast<float>(width) / ImplicitGrid::mCols, static_cast<float>(height) / ImplicitGrid::mRows };
 
-		glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
+		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
 		// start from top left
 		float start_x = camera_center.x - width / 2.f;
 		float start_y = camera_center.y + height / 2.f;

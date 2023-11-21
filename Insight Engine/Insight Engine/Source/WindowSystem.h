@@ -227,6 +227,16 @@ namespace IS {
          */
         void SetFullScreen(bool fullscreen = true);
 
+        bool IsMinimized() const { return mIsMinimized; }
+        void SetMinimized(bool focus) { mIsMinimized = focus; }
+
+    private:
+        GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
+        WindowProperties mProps; ///< The properties of the window.
+        int mMonitorWidth; ///< The width of the monitor.
+        int mMonitorHeight; ///< The height of the monitor.
+        bool mIsMinimized = false; ///< Boolean flag indicating if window is in focus.
+
         /*!
          * \brief Loads window properties.
          */
@@ -236,12 +246,6 @@ namespace IS {
          * \brief Saves window properties.
          */
         void SaveProperties();
-
-    private:
-        GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
-        WindowProperties mProps; ///< The properties of the window.
-        int mMonitorWidth; ///< The width of the monitor.
-        int mMonitorHeight; ///< The height of the monitor.
     };
 
 } // end namespace IS

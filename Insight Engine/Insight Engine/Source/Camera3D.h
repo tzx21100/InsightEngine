@@ -49,6 +49,9 @@ namespace IS {
 		void SetPosition(float x, float y) { mPosition.x = x; mPosition.y = y; }
 		void SetPosition(float x, float y, float z) { mPosition = { x, y, z }; }
 
+		glm::vec2 GetPosition2D() const { return { mPosition.x, mPosition.y }; }
+		glm::vec3 GetPosition3D() const { return mPosition; }
+
 		void SetZoomLevel(float zoom_level) { mZoomLevel = std::clamp(zoom_level, CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX); }
 		float GetZoomLevel() const { return mZoomLevel; }
 

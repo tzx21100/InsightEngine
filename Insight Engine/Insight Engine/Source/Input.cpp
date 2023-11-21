@@ -78,6 +78,13 @@ namespace IS {
                 input.mWindow->SetMinimized();
             }
         });
+
+        // Minimize window callback
+        glfwSetWindowIconifyCallback(native_window, [](GLFWwindow* window, int iconified)
+        {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            input.mWindow->SetMinimized(iconified ? true : false);
+        });
     }
 
     void InputManager::Update([[maybe_unused]] float deltaTime) {

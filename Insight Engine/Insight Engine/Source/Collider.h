@@ -7,6 +7,7 @@
 #include "Vector2D.h"
 #include <vector>
 #include <bitset>
+#include "Collision.h"
 
 #define MAX_COLLIDER 4 // 3 colliders
 
@@ -130,6 +131,8 @@ namespace IS
 
 		// check if circle collider is enable or not
 		bool IsCircleColliderEnable();
+
+		Box GetAABB();
 
 	};
 

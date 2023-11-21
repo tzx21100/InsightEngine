@@ -80,7 +80,6 @@ namespace IS {
 
     //This is the update portion of the game
     void InsightEngine::Update() {
-
         //i get the start time 
         //auto frameStart = std::chrono::high_resolution_clock::now();
         auto frameStart = glfwGetTime();
@@ -511,6 +510,7 @@ namespace IS {
     std::pair<int, int> InsightEngine::GetWindowSize()  { return GetSystem<WindowSystem>("Window")->GetWindowSize(); }
     bool InsightEngine::IsVSync()                       { return GetSystem<WindowSystem>("Window")->IsVSync(); }
     bool InsightEngine::IsFullScreen()                  { return GetSystem<WindowSystem>("Window")->IsFullScreen(); }
+    bool InsightEngine::IsMinimized()                     { return GetSystem<WindowSystem>("Window")->IsMinimized(); }
     // Setters
     void InsightEngine::EnableVSync(bool enabled)       { GetSystem<WindowSystem>("Window")->EnableVsync(enabled); }
 

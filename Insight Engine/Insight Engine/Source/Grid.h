@@ -22,7 +22,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Entities.h"
-
+#include "Body.h"
+#include "Collider.h"
 #include <vector>
 
 namespace IS

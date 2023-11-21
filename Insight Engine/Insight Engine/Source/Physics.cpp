@@ -45,9 +45,6 @@ namespace IS {
 	// Initializes the physics system
 	void Physics::Initialize()
 	{
-		// Initialization logic here
-		Subscribe(MessageType::Collide);
-
 		mImplicitGrid.ClearGrid();
 	}
 
