@@ -14,6 +14,8 @@ namespace IS
         static public bool Reward_Dash = false;
         static public bool Reward_WallClimb = true;
 
+        //public player variables
+
 
         //private entity
 

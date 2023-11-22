@@ -176,7 +176,10 @@ namespace IS
         internal extern static void Exit();        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static bool CollidingObjectIsStatic(int entity);
+        internal extern static bool CollidingObjectIsStatic(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CollidingObjectIsSpikes(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GameSpawnParticle(float x, float y, string particle_name);

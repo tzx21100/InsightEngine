@@ -18,6 +18,7 @@
  // Include the precompiled header at the top of every cpp file
 #include "Pch.h"
 #include "Audio.h"
+#include "ISMath.h"
 
 namespace IS {
 
@@ -89,7 +90,7 @@ namespace IS {
                                                     emitting_transform.world_position.x,
                                                     emitting_transform.world_position.y
                                                     );
-
+                distance = Max(distance, 100.f);
 
                 if (distance > listener.hearing_range) {
                     assetsys->GetChannel(emitter.soundName)->stop();

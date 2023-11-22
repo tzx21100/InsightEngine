@@ -414,6 +414,11 @@ namespace IS {
     static bool CollidingObjectIsStatic(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
         return body_component.mBodyType == BodyType::WallClimb ? 1 : 0;
+    }    
+    
+    static bool CollidingObjectTypeIsSpikes(int entity) {
+        auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return body_component.mBodyType == BodyType::Spikes ? 1 : 0;
     }
 
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image , int layer=1) {
@@ -583,6 +588,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
         IS_ADD_INTERNAL_CALL(GetCollidingEntity);
         IS_ADD_INTERNAL_CALL(CollidingObjectIsStatic);
+        IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsSpikes);
 
         //Debug
         //Debug

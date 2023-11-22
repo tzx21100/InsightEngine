@@ -453,7 +453,7 @@ namespace IS {
                 // Body Type
                 EditorUtils::RenderTableLabel("Body Type");
                 ImGui::TableNextColumn();
-                EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic","Ghost" , "WallClimb"});
+                EditorUtils::RenderComboBoxEnum<BodyType>("##Body Type", rigidbody.mBodyType, { "Static", "Dynamic", "Kinematic","Ghost" , "WallClimb", "Spikes"});
 
                 if (rigidbody.mBodyType == BodyType::Dynamic)
                 {

@@ -100,10 +100,10 @@ namespace IS {
 		 * \param entity The ID of the entity to be destroyed.
 		 */
 		void DestroyEntity(Entity entity) {
-			if (mSignatures.find(entity) == mSignatures.end()) {
-				IS_CORE_WARN("Entity {} not found!", entity);
-				return;
-			}
+			//if (mSignatures.find(entity) == mSignatures.end()) {
+			//	IS_CORE_WARN("Entity {} not found!", entity);
+			//	return;
+			//}
 
 			// Remove the entity's signature
 			mSignatures.erase(entity);
@@ -123,7 +123,7 @@ namespace IS {
 			mAvailableEntityIDs.push_back(entity);
 
 			// Decrement the count of living entities
-			--mEntitiesAlive;
+			//--mEntitiesAlive;
 
 			IS_CORE_WARN("Entity {} destroyed!", entity);
 		}
@@ -247,7 +247,7 @@ namespace IS {
 		 *
 		 * \return The number of alive entities.
 		 */
-		uint32_t EntitiesAlive() { return mEntitiesAlive; };
+		uint32_t EntitiesAlive() { return static_cast<uint32_t>(mEntityIds.size()); };
 
 		/**
 		 * \brief Retrieves a map of all alive entities and their names.
