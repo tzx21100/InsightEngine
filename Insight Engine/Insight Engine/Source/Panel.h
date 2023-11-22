@@ -25,6 +25,7 @@
 #include "Entities.h"
 
 #include <string>
+#include <functional>
 #include <IconsLucide.h> // for icon fonts
 #include <ImGuizmo.h>
 

@@ -109,6 +109,9 @@ namespace IS {
 
         void RenderTableLabel(std::string const& label, std::string const& tooltip = std::string());
         void RenderTableBoldLabel(std::string const& label, std::string const& tooltip = std::string());
+        void RenderTableFixedWidth(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0, float label_width = 100.f);
+        void RenderTable(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0);
+        void RenderTableInputText(std::string& text);
 
         /*!
          * \brief Renders a combo box for an enumeration type using ImGui.

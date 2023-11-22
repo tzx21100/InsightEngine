@@ -239,7 +239,9 @@ namespace IS {
     // Process the entity deletion from queue
     void InsightEngine::ProcessEntityDeletion() {
         for (Entity entity : mEntitiesToDelete)
+        {
             DestroyEntity(entity);
+        }
         mEntitiesToDelete.clear();
     }
 

@@ -78,14 +78,10 @@ namespace IS::EditorUtils {
     {
         bool adjusted = false;
 
-        ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
-
         ImGui::PushID(label.c_str());
 
-        if (ImGui::BeginTable(label.c_str(), 2, table_flags))
+        EditorUtils::RenderTableFixedWidth(label, 2, [&]()
         {
-            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-            ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(label.c_str());
             ImGui::TableNextColumn();
@@ -98,7 +94,7 @@ namespace IS::EditorUtils {
             ImVec2 button_size = { line_height + 3.f, line_height };
 
             // Render the X component with red color
-            
+
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(196, 41, 10, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(214, 79, 64, 255));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(196, 41, 10, 255));
@@ -136,8 +132,7 @@ namespace IS::EditorUtils {
             ImGui::PopItemWidth();
 
             ImGui::PopStyleVar();
-            ImGui::EndTable();
-        }
+        }, 0, column_width);
 
         ImGui::PopID();
         return adjusted;
@@ -147,14 +142,10 @@ namespace IS::EditorUtils {
     {
         bool adjusted = false;
 
-        ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
-
         ImGui::PushID(label.c_str());
 
-        if (ImGui::BeginTable(label.c_str(), 2, table_flags))
+        EditorUtils::RenderTableFixedWidth(label, 2, [&]()
         {
-            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-            ImGui::TableSetupColumn(label.c_str(), column_flags, column_width);
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(label.c_str());
             ImGui::TableNextColumn();
@@ -223,8 +214,8 @@ namespace IS::EditorUtils {
             ImGui::PopItemWidth();
 
             ImGui::PopStyleVar();
-            ImGui::EndTable();
-        }
+
+        }, 0, column_width);
 
         ImGui::PopID();
         return adjusted;
@@ -251,6 +242,41 @@ namespace IS::EditorUtils {
         {
             ImGui::SetItemTooltip(tooltip.c_str());
         }
+    }
+
+    void RenderTableFixedWidth(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags, float label_width)
+    {
+        if (ImGui::BeginTable(label.c_str(), columns, flags))
+        {
+            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
+            ImGui::TableSetupColumn("Label", column_flags, label_width);
+            contents();
+            ImGui::EndTable();
+        }
+    }
+
+    void RenderTable(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags)
+    {
+        if (ImGui::BeginTable(label.c_str(), columns, flags))
+        {
+            contents();
+            ImGui::EndTable();
+        }
+    }
+
+    void RenderTableInputText(std::string& text)
+    {
+        ImGui::TableNextColumn();
+
+        ImGui::PushID(text.c_str());
+        char buffer[256]{};
+        std::memcpy(buffer, text.c_str(), text.size());
+        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+        if (ImGui::InputText("##Text", buffer, sizeof(buffer), input_text_flags))
+        {
+            text = buffer;
+        }
+        ImGui::PopID();
     }
 
 } // end namespace IS::EditorUtils

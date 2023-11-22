@@ -159,7 +159,7 @@ namespace IS {
         max_entity_count << std::fixed << MAX_ENTITIES;
 
         // Display details about active scene
-        if (ImGui::BeginTable("ActiveScene", 2))
+        EditorUtils::RenderTableFixedWidth("ActiveScene", 2, [&]()
         {
             // Display active scene
             ImGui::TableNextColumn();
@@ -178,9 +178,7 @@ namespace IS {
             ImGui::TextUnformatted(entity_count.str().c_str());
             ImGui::SameLine();
             ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(Max: %s)", max_entity_count.str().c_str());
-
-            ImGui::EndTable(); // end table ActiveScene
-        }
+        });
 
     } // end RenderSceneDetails()
 
@@ -193,7 +191,7 @@ namespace IS {
         
         if (layers_opened)
         {
-            if (ImGui::BeginTable("LayersTable", 2, ImGuiTableFlags_BordersH))
+            EditorUtils::RenderTable("LayersTable", 2, [&]()
             {
                 ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
                 for (int i{}; i < Sprite::INVALID_LAYER; ++i)
@@ -212,8 +210,8 @@ namespace IS {
                     ImGui::TableNextColumn();
                     ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
                 }
-                ImGui::EndTable(); // end table LayersTable
-            }
+            }, ImGuiTableFlags_BordersH);
+
             ImGui::TreePop(); // pop tree Layers
         }
     } // end RenderLayers()

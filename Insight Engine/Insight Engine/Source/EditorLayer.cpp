@@ -568,20 +568,23 @@ namespace IS {
         if (ImGui::BeginPopupModal("Confirm Delete?", &mShowDelete, window_flags))
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_NoBordersInBody;
-            ImGui::BeginTable("Confirm actions", 2, table_flags, ImVec2(0, 0), 10.f);
-            ImGui::TableNextColumn();
-            if (ImGui::Button("Confirm"))
+
+            EditorUtils::RenderTable("Confirm actions", 2, [&]()
             {
-                SceneManager::Instance().DeleteEntity(entity);
-                if (IsAnyEntitySelected() && GetSelectedEntity() == entity)
+                ImGui::TableNextColumn();
+                if (ImGui::Button("Confirm"))
                 {
-                    ResetEntitySelection();
+                    SceneManager::Instance().DeleteEntity(entity);
+                    if (IsAnyEntitySelected() && GetSelectedEntity() == entity)
+                    {
+                        ResetEntitySelection();
+                    }
+                    mShowDelete = false;
                 }
-                mShowDelete = false;
-            }
-            ImGui::TableNextColumn();
-            if (ImGui::Button("Cancel")) { mShowDelete = false; }
-            ImGui::EndTable();
+                ImGui::TableNextColumn();
+                if (ImGui::Button("Cancel")) { mShowDelete = false; }
+            }, table_flags);
+
             ImGui::EndPopup();
         }
     }
