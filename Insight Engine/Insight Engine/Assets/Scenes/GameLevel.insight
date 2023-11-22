@@ -24,7 +24,7 @@
 					"CircleColliderCenter" : 
 					{
 						"X" : -868.116455078125,
-						"Y" : -137.51846313476563
+						"Y" : -137.51846313476562
 					},
 					"CircleColliderOffset" : 
 					{
@@ -66,9 +66,9 @@
 			{
 				"AnimationIndex" : 1,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 1,
 				"SpriteFilename" : "idle_anim 4R3C.png",
 				"SpriteName" : "Quad",
@@ -101,9 +101,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.02058405801653862,
+						"frame_timer" : 0.010634683072566986,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -430,19 +430,19 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -219.63504028320313,
+							"x" : -219.63504028320312,
 							"y" : 131.16598510742188
 						},
 						{
-							"x" : 219.63504028320313,
+							"x" : 219.63504028320312,
 							"y" : 131.16598510742188
 						},
 						{
-							"x" : 219.63504028320313,
+							"x" : 219.63504028320312,
 							"y" : -131.16598510742188
 						},
 						{
-							"x" : -219.63504028320313,
+							"x" : -219.63504028320312,
 							"y" : -131.16598510742188
 						}
 					]
@@ -476,9 +476,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -526,19 +526,19 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -48.079666137695313,
+							"x" : -48.079666137695312,
 							"y" : 342.04061889648438
 						},
 						{
-							"x" : 48.079666137695313,
+							"x" : 48.079666137695312,
 							"y" : 342.04061889648438
 						},
 						{
-							"x" : 48.079666137695313,
+							"x" : 48.079666137695312,
 							"y" : -342.04061889648438
 						},
 						{
-							"x" : -48.079666137695313,
+							"x" : -48.079666137695312,
 							"y" : -342.04061889648438
 						}
 					]
@@ -572,9 +572,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -764,9 +764,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -860,9 +860,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Quad",
@@ -956,9 +956,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Quad",
@@ -993,9 +993,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 0,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
@@ -1008,7 +1008,7 @@
 				"SpriteTransformScalingX" : 50.0,
 				"SpriteTransformScalingY" : 50.0,
 				"SpriteTransformWorldPositionX" : -868.116455078125,
-				"SpriteTransformWorldPositionY" : -117.51846313476563,
+				"SpriteTransformWorldPositionY" : -117.51846313476562,
 				"animations" : []
 			},
 			"Transform" : 
@@ -1017,7 +1017,7 @@
 				"TransformScalingX" : 50.0,
 				"TransformScalingY" : 50.0,
 				"TransformWorldPositionX" : -868.116455078125,
-				"TransformWorldPositionY" : -117.51846313476563
+				"TransformWorldPositionY" : -117.51846313476562
 			}
 		},
 		{
@@ -1028,7 +1028,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : 1505.23583984375,
-						"Y" : -138.46121215820313
+						"Y" : -138.46121215820312
 					},
 					"BoxColliderOffset" : 
 					{
@@ -1089,9 +1089,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1104,7 +1104,7 @@
 				"SpriteTransformScalingX" : 704.74945068359375,
 				"SpriteTransformScalingY" : 691.6009521484375,
 				"SpriteTransformWorldPositionX" : 1505.23583984375,
-				"SpriteTransformWorldPositionY" : -138.46121215820313,
+				"SpriteTransformWorldPositionY" : -138.46121215820312,
 				"animations" : []
 			},
 			"Transform" : 
@@ -1113,7 +1113,7 @@
 				"TransformScalingX" : 704.74945068359375,
 				"TransformScalingY" : 691.6009521484375,
 				"TransformWorldPositionX" : 1505.23583984375,
-				"TransformWorldPositionY" : -138.46121215820313
+				"TransformWorldPositionY" : -138.46121215820312
 			}
 		},
 		{
@@ -1185,9 +1185,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1198,7 +1198,7 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2601.75830078125,
-				"SpriteTransformScalingY" : 271.61904907226563,
+				"SpriteTransformScalingY" : 271.61904907226562,
 				"SpriteTransformWorldPositionX" : 4071.24951171875,
 				"SpriteTransformWorldPositionY" : -185.66122436523438,
 				"animations" : []
@@ -1207,7 +1207,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 2601.75830078125,
-				"TransformScalingY" : 271.61904907226563,
+				"TransformScalingY" : 271.61904907226562,
 				"TransformWorldPositionX" : 4071.24951171875,
 				"TransformWorldPositionY" : -185.66122436523438
 			}
@@ -1281,9 +1281,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1294,7 +1294,7 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 330.08139038085938,
 				"SpriteTransformScalingX" : 930.41644287109375,
-				"SpriteTransformScalingY" : 284.13919067382813,
+				"SpriteTransformScalingY" : 284.13919067382812,
 				"SpriteTransformWorldPositionX" : 656.868896484375,
 				"SpriteTransformWorldPositionY" : 2268.999267578125,
 				"animations" : []
@@ -1303,7 +1303,7 @@
 			{
 				"TransformRotation" : 330.08139038085938,
 				"TransformScalingX" : 930.41644287109375,
-				"TransformScalingY" : 284.13919067382813,
+				"TransformScalingY" : 284.13919067382812,
 				"TransformWorldPositionX" : 656.868896484375,
 				"TransformWorldPositionY" : 2268.999267578125
 			}
@@ -1377,9 +1377,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1428,19 +1428,19 @@
 					[
 						{
 							"x" : -73.391822814941406,
-							"y" : 421.14248657226563
+							"y" : 421.14248657226562
 						},
 						{
 							"x" : 73.391822814941406,
-							"y" : 421.14248657226563
+							"y" : 421.14248657226562
 						},
 						{
 							"x" : 73.391822814941406,
-							"y" : -421.14248657226563
+							"y" : -421.14248657226562
 						},
 						{
 							"x" : -73.391822814941406,
-							"y" : -421.14248657226563
+							"y" : -421.14248657226562
 						}
 					]
 				},
@@ -1473,9 +1473,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1569,9 +1569,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1665,9 +1665,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1761,9 +1761,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1857,9 +1857,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1953,9 +1953,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -1966,7 +1966,7 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1949.8629150390625,
-				"SpriteTransformScalingY" : 283.84780883789063,
+				"SpriteTransformScalingY" : 283.84780883789062,
 				"SpriteTransformWorldPositionX" : -601.7515869140625,
 				"SpriteTransformWorldPositionY" : -339.44235229492188,
 				"animations" : []
@@ -1975,7 +1975,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 1949.8629150390625,
-				"TransformScalingY" : 283.84780883789063,
+				"TransformScalingY" : 283.84780883789062,
 				"TransformWorldPositionX" : -601.7515869140625,
 				"TransformWorldPositionY" : -339.44235229492188
 			}
@@ -2049,9 +2049,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "glitched_platform_vfx 2R6C.png",
 				"SpriteName" : "Quad",
@@ -2060,7 +2060,7 @@
 				"SpriteTextureHeight" : 594,
 				"SpriteTextureIndex" : 10,
 				"SpriteTextureWidth" : 4092,
-				"SpriteTransformRotation" : 358.97549438476563,
+				"SpriteTransformRotation" : 358.97549438476562,
 				"SpriteTransformScalingX" : 740.5006103515625,
 				"SpriteTransformScalingY" : 282.5,
 				"SpriteTransformWorldPositionX" : 1105.8714599609375,
@@ -2073,8 +2073,8 @@
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038954786956310272,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.11233547329902649,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2083,7 +2083,7 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 358.97549438476563,
+				"TransformRotation" : 358.97549438476562,
 				"TransformScalingX" : 740.5006103515625,
 				"TransformScalingY" : 282.5,
 				"TransformWorldPositionX" : 1105.8714599609375,
@@ -2159,9 +2159,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "glitched_platform_vfx 2R6C.png",
 				"SpriteName" : "Quad",
@@ -2183,8 +2183,8 @@
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038954786956310272,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.11233547329902649,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2223,19 +2223,19 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -348.03518676757813,
+							"x" : -348.03518676757812,
 							"y" : 120.06243896484375
 						},
 						{
-							"x" : 348.03518676757813,
+							"x" : 348.03518676757812,
 							"y" : 120.06243896484375
 						},
 						{
-							"x" : 348.03518676757813,
+							"x" : 348.03518676757812,
 							"y" : -120.06243896484375
 						},
 						{
-							"x" : -348.03518676757813,
+							"x" : -348.03518676757812,
 							"y" : -120.06243896484375
 						}
 					]
@@ -2269,9 +2269,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "Platform01_Tileable.png",
 				"SpriteName" : "Quad",
@@ -2280,7 +2280,7 @@
 				"SpriteTextureHeight" : 565,
 				"SpriteTextureIndex" : 21,
 				"SpriteTextureWidth" : 1481,
-				"SpriteTransformRotation" : 318.06106567382813,
+				"SpriteTransformRotation" : 318.06106567382812,
 				"SpriteTransformScalingX" : 740.50042724609375,
 				"SpriteTransformScalingY" : 282.49984741210938,
 				"SpriteTransformWorldPositionX" : -2909.45703125,
@@ -2289,7 +2289,7 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 318.06106567382813,
+				"TransformRotation" : 318.06106567382812,
 				"TransformScalingX" : 740.50042724609375,
 				"TransformScalingY" : 282.49984741210938,
 				"TransformWorldPositionX" : -2909.45703125,
@@ -2304,7 +2304,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : -3921.15234375,
-						"Y" : 309.11331176757813
+						"Y" : 309.11331176757812
 					},
 					"BoxColliderOffset" : 
 					{
@@ -2319,19 +2319,19 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -465.20816040039063,
+							"x" : -465.20816040039062,
 							"y" : 800.36077880859375
 						},
 						{
-							"x" : 465.20816040039063,
+							"x" : 465.20816040039062,
 							"y" : 800.36077880859375
 						},
 						{
-							"x" : 465.20816040039063,
+							"x" : 465.20816040039062,
 							"y" : -800.36077880859375
 						},
 						{
-							"x" : -465.20816040039063,
+							"x" : -465.20816040039062,
 							"y" : -800.36077880859375
 						}
 					]
@@ -2365,9 +2365,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -2380,7 +2380,7 @@
 				"SpriteTransformScalingX" : 930.41632080078125,
 				"SpriteTransformScalingY" : 1600.7215576171875,
 				"SpriteTransformWorldPositionX" : -3921.15234375,
-				"SpriteTransformWorldPositionY" : 309.11331176757813,
+				"SpriteTransformWorldPositionY" : 309.11331176757812,
 				"animations" : []
 			},
 			"Transform" : 
@@ -2389,7 +2389,7 @@
 				"TransformScalingX" : 930.41632080078125,
 				"TransformScalingY" : 1600.7215576171875,
 				"TransformWorldPositionX" : -3921.15234375,
-				"TransformWorldPositionY" : 309.11331176757813
+				"TransformWorldPositionY" : 309.11331176757812
 			}
 		},
 		{
@@ -2461,9 +2461,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -2474,7 +2474,7 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1726.9110107421875,
-				"SpriteTransformScalingY" : 271.61904907226563,
+				"SpriteTransformScalingY" : 271.61904907226562,
 				"SpriteTransformWorldPositionX" : 4225.40380859375,
 				"SpriteTransformWorldPositionY" : 2045.576171875,
 				"animations" : []
@@ -2483,7 +2483,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 1726.9110107421875,
-				"TransformScalingY" : 271.61904907226563,
+				"TransformScalingY" : 271.61904907226562,
 				"TransformWorldPositionX" : 4225.40380859375,
 				"TransformWorldPositionY" : 2045.576171875
 			}
@@ -2496,7 +2496,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : -711.67193603515625,
-						"Y" : -207.51846313476563
+						"Y" : -207.51846313476562
 					},
 					"BoxColliderOffset" : 
 					{
@@ -2559,7 +2559,7 @@
 				"TransformScalingX" : 33.333332061767578,
 				"TransformScalingY" : 2.0,
 				"TransformWorldPositionX" : -711.67193603515625,
-				"TransformWorldPositionY" : -207.51846313476563
+				"TransformWorldPositionY" : -207.51846313476562
 			}
 		},
 		{
@@ -2642,9 +2642,9 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.60000002384185791,
-				"SpriteColorY" : 0.60000002384185791,
-				"SpriteColorZ" : 0.60000002384185791,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "land_vfx 2R7C.png",
 				"SpriteName" : "Quad",
@@ -2665,9 +2665,9 @@
 						"animation_duration" : 0.30000001192092896,
 						"frame_dimension_x" : 0.1428571492433548,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.013477055355906487,
+						"frame_index_x" : 6.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.0082902275025844574,
 						"time_per_frame" : 0.02142857201397419,
 						"x_frames" : 7,
 						"y_frames" : 2

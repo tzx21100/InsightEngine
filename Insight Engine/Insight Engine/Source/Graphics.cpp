@@ -267,7 +267,7 @@ namespace IS {
                         // quad has a texture (animation too)
                         else {
                             // copy texture index
-                            instData.color.a = 1.f; // opaque
+                            instData.color = sprite.color;
                             instData.tex_index = static_cast<float>(sprite.img.texture_index);
                         }
 

@@ -75,7 +75,7 @@ namespace IS {
         int layer{ DrawLayer::DEFAULT_LAYER };                    // Layer value (lower is further back)
         // ImGui properties
         std::string name;               // The name of the sprite.
-        glm::vec4 color{};              // The color of the sprite.
+        glm::vec4 color{ 1.f, 1.f, 1.f, 1.f };              // The color of the sprite.
 
         // For layering //
         enum DrawLayer : int
