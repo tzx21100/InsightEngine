@@ -175,7 +175,6 @@ namespace IS::EditorUtils {
                 values.x = x_reset;
                 adjusted = true;
             }
-            ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
@@ -195,7 +194,6 @@ namespace IS::EditorUtils {
                 values.y = y_reset;
                 adjusted = true;
             }
-            ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
@@ -215,7 +213,6 @@ namespace IS::EditorUtils {
                 values.z = z_reset;
                 adjusted = true;
             }
-            ImGui::PopFont();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();

@@ -903,12 +903,12 @@ namespace IS {
         }
 
         // Camera Position
-        //Vector2D position = { camera.mPosition.x, camera.mPosition.y };
-        //EditorUtils::RenderControlVec2("Position", position);
         Vector3D position = { camera.mPosition.x, camera.mPosition.y, camera.mPosition.z };
-        EditorUtils::RenderControlVec3("Position", position);
+        if (EditorUtils::RenderControlVec3("Position", position))
+        {
+            camera.SetPosition(position.x, position.y, position.z);
+        }
         ImGui::SetItemTooltip("Adjust the position of the camera in world space");
-        camera.SetPosition(position.x, position.y, position.z);
 
         if (ImGui::BeginTable("CameraTable", 2))
         {

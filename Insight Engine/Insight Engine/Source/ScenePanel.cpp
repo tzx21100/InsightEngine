@@ -496,7 +496,7 @@ namespace IS {
         const glm::mat4 view = camera.GetViewMatrix();
         const glm::mat4 projection = camera.GetProjectionMatrix();
         auto& transform = engine.GetComponent<Transform>(selected_entity);
-        glm::mat4 transform_matrix = transform.Return3DXformMatrix();
+        glm::mat4 transform_matrix = transform.GetCamerarToWorldTransform();
 
         float snap_value{};
         switch (mGizmoType)

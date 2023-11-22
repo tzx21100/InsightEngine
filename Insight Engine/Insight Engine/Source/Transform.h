@@ -148,6 +148,7 @@ namespace IS {
 		Mtx33 ReturnXformMatrix();
 
 		glm::mat4 Return3DXformMatrix();
+		glm::mat4 GetCamerarToWorldTransform();
 
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.
