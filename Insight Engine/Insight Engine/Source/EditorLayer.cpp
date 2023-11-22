@@ -591,7 +591,8 @@ namespace IS {
 
     void EditorLayer::CloneEntity(Entity entity) 
     {
-        SceneManager::Instance().CloneEntity(entity);
+        Entity clone = SceneManager::Instance().CloneEntity(entity).value();
+        SetSelectedEntity(std::make_shared<Entity>(clone));
     }
 
     void EditorLayer::DeleteEntity(Entity entity)

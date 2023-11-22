@@ -76,7 +76,7 @@ namespace IS {
 
             if (CTRL_HELD && D_PRESSED && mEditorLayer.IsAnyEntitySelected())
             {
-                engine.CopyEntity(mEditorLayer.GetSelectedEntity());
+                mEditorLayer.CloneEntity(mEditorLayer.GetSelectedEntity());
             }
         }
 

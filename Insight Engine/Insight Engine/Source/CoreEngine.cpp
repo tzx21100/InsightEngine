@@ -334,9 +334,15 @@ namespace IS {
 
     // Dynamic entity copying, this will copy all components and their specific component array.
     Entity InsightEngine::CopyEntity(Entity old_entity) {
-        Entity newEntity = CreateEntity(mEntityManager->FindNames(old_entity));
-        CopyComponents(newEntity, old_entity);
-        return newEntity;
+        Entity new_entity = CreateEntity(mEntityManager->FindNames(old_entity));
+        CopyComponents(new_entity, old_entity);
+        if (HasComponent<Transform>(new_entity))
+        {
+            Transform& transform = GetComponent<Transform>(new_entity);
+            transform.world_position += Vector2D(20.f, -20.f);
+        }
+
+        return new_entity;
     }
 
     void InsightEngine::DeserializeAllComponents(Entity entity, Json::Value &loaded) {
