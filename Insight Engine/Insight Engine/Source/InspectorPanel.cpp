@@ -74,22 +74,14 @@ namespace IS {
     void InspectorPanel::RenderEntityConfig(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
-        if (ImGui::BeginTable("Details", 2))
-        {
-            ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-            ImGui::TableSetupColumn("Label", column_flags, 50.f);
 
+        EditorUtils::RenderTableFixedWidth("Details", 2, [&]()
+        {
             EditorUtils::RenderTableLabel("Name");
-            ImGui::TableNextColumn();
 
             // Edit Entity Name
             std::string& name = engine.GetEntityName(entity);
-            char buffer[256]{};
-            auto source = name | std::ranges::views::take(name.size());
-            std::ranges::copy(source, std::begin(buffer));
-            ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText("##Name", buffer, sizeof(buffer), input_text_flags))
-                name = std::string(buffer);
+            EditorUtils::RenderTableInputText(name);
 
             ImGui::SameLine();
 
@@ -134,9 +126,7 @@ namespace IS {
             {
                 engine.SaveAsPrefab(entity, name);
             }
-
-            ImGui::EndTable();
-        }
+        });
 
         ImGui::Spacing();
 
@@ -166,11 +156,8 @@ namespace IS {
             }
 
             // Render Rotation
-            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
-            if (ImGui::BeginTable("TransformRotation", 2, table_flags))
+            EditorUtils::RenderTableFixedWidth("TransformRotation", 2, [&]()
             {
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                ImGui::TableSetupColumn("TransformRotation", column_flags, 100.f);
                 EditorUtils::RenderTableLabel("Rotation");
                 ImGui::TableNextColumn();
 
@@ -180,9 +167,7 @@ namespace IS {
                 {
                     CommandHistory::AddCommand(std::make_shared<ChangeCommand<float>>(transform.rotation, rotation));
                 }
-
-                ImGui::EndTable(); // end table TransformRotation
-            }
+            });
 
             // Render Scale
             Vec2 scaling = transform.scaling;
@@ -205,17 +190,15 @@ namespace IS {
             bool no_dimensions = sprite.img.width == 0 || sprite.img.height == 0;
             bool has_animation = !sprite.anims.empty();
 
-            if (ImGui::BeginTable("Sprite Table", 2))
+            EditorUtils::RenderTableFixedWidth("Sprite Table", 2, [&]()
             {
-                ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
-
                 EditorUtils::RenderTableLabel("Rendering");
 
                 ImGui::TableNextColumn();
                 ImGui::Checkbox("##Rendering", &sprite.toRender);
 
                 EditorUtils::RenderTableLabel("Layer");
-                
+
                 ImGui::TableNextColumn();
                 Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(sprite.layer);
                 EditorUtils::RenderComboBoxEnum<Sprite::DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
@@ -261,9 +244,7 @@ namespace IS {
                     }
                     ImGui::EndDragDropTarget();
                 }
-
-                ImGui::EndTable(); // end table Sprite Table
-            }
+            });
 
             // Use placeholder if width or height of texture
             if (no_dimensions)
@@ -329,11 +310,8 @@ namespace IS {
             ImGui::EndChild(); // end child window Texture Preview
 
             // Texture Dimensions
-            ImGuiTableFlags table_flags = 0;
-            if (ImGui::BeginTable("Texture", 2, table_flags))
+            EditorUtils::RenderTableFixedWidth("Texture", 2, [&]()
             {
-                ImGui::TableSetupColumn("Labels", ImGuiTableColumnFlags_WidthFixed, 100.f);
-
                 EditorUtils::RenderTableLabel("Width");
 
                 ImGui::TableNextColumn();
@@ -343,9 +321,7 @@ namespace IS {
 
                 ImGui::TableNextColumn();
                 ImGui::Text("%d px", sprite.img.height);
-
-                ImGui::EndTable(); // end table Texture
-            }
+            });
 
             if (has_texture)
             {
@@ -372,20 +348,17 @@ namespace IS {
                     std::string const& active_animation = sprite.anims[sprite.animation_index].name;
                     ImGui::TextUnformatted(active_animation.c_str());
 
-                    if (ImGui::BeginTable("Animations Table", 1))
+                    EditorUtils::RenderTable("Animations Table", 1, [&]()
                     {
-                        int i{};
-                        for (Animation& animation : sprite.anims)
+                        for (int i{}; i < static_cast<int>(sprite.anims.size()); ++i)
                         {
+                            Animation& animation = sprite.anims[i];
                             ImGui::TableNextColumn();
                             ImGui::PushID(i);
 
                             ImGui::Separator();
-                            if (ImGui::BeginTable("Animation Data", 2))
+                            EditorUtils::RenderTableFixedWidth("Animation Data", 2, [&]()
                             {
-                                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                                ImGui::TableSetupColumn("Labels", column_flags, 100.f);
-
                                 EditorUtils::RenderTableLabel("Name");
 
                                 ImGui::TableNextColumn();
@@ -408,14 +381,10 @@ namespace IS {
                                 EditorUtils::RenderTableLabel("Rows");
                                 ImGui::TableNextColumn();
                                 ImGui::SliderInt("##Rows", &animation.y_frames, 1, 20);
-
-                                ImGui::EndTable(); // end table Animation Data
-                            }
+                            });
                             ImGui::PopID();
-                            ++i;
                         }
-                        ImGui::EndTable(); // end table Animations
-                    }
+                    });
 
                     ImGui::TreePop(); // end tree Animation
                 }
@@ -431,18 +400,12 @@ namespace IS {
         // Rigidbody Component
         RenderComponent<RigidBody>(ICON_LC_PERSON_STANDING "  Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
         {
-            ImGuiTableFlags table_flags = ImGuiTableFlags_PreciseWidths;
-
             EditorUtils::RenderControlVec2("Velocity", rigidbody.mVelocity);
             EditorUtils::RenderControlVec2("Force", rigidbody.mForce);
 
             // Render Other Component Attributes
-            if (ImGui::BeginTable(("RigidbodyTable" + std::to_string(entity)).c_str(), 2, table_flags))
+            EditorUtils::RenderTableFixedWidth("Rigidbody Table", 2, [&]()
             {
-                // Set Table and its flags
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                ImGui::TableSetupColumn("RigidbodyTable", column_flags, 100.f);
-
                 // Angular Velocity
                 EditorUtils::RenderTableLabel("Angular Velocity");
                 ImGui::TableNextColumn();
@@ -510,9 +473,8 @@ namespace IS {
                 ImGui::PushItemWidth(80.f);
                 ImGui::InputFloat("##Dynamic Friction", &rigidbody.mDynamicFriction);
                 ImGui::PopItemWidth();
+            });
 
-                ImGui::EndTable(); // end table RigidbodyTable
-            }
         }); // end render Rigidbody Component
 
         // Collider Component
@@ -555,18 +517,15 @@ namespace IS {
                 ImGui::SeparatorText(ICON_LC_CIRCLE_DASHED "  Circle Collider");
                 EditorUtils::RenderControlVec2("Offset", collider.mCircleCollider.offset);
 
-                if (ImGui::BeginTable("Circle Radius Scale Table", 2))
+                EditorUtils::RenderTableFixedWidth("Circle Radius Scale Table", 2, [&]()
                 {
-                    ImGui::TableSetupColumn("Collider Table Column", ImGuiTableColumnFlags_WidthFixed, 100.f);
                     EditorUtils::AddTableBoldLabel("Radius Scale");
 
                     ImGui::TableNextColumn();
                     ImGui::PushItemWidth(80.f);
                     ImGui::InputFloat("##Radius Scale", &collider.mCircleCollider.radiusScale);
                     ImGui::PopItemWidth();
-
-                    ImGui::EndTable(); // end table Circle Radius Scale Table
-                }
+                });
             }
 
         }); // end render Collider Component
@@ -574,13 +533,8 @@ namespace IS {
         // Script Component
         RenderComponent<ScriptComponent>(ICON_LC_BRACES "  Script", entity, [FONT_BOLD](ScriptComponent& script)
         {
-            // Display Sprite Name
-            if (ImGui::BeginTable("ScriptTable", 2))
+            EditorUtils::RenderTableFixedWidth("ScriptTable", 2, [&]()
             {
-                // Set Table and its flags
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                ImGui::TableSetupColumn("ScriptTable", column_flags, 100.f);
-
                 EditorUtils::RenderTableLabel("Script Name:");
                 ImGui::TableNextColumn();
                 if (ImGui::BeginCombo("##Scripts", script.mScriptName.c_str()))
@@ -621,7 +575,9 @@ namespace IS {
                 if (ImGui::Button(ICON_LC_FILE_SEARCH))
                 {
                     if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    {
                         script.mScriptName = filepath.stem().string();
+                    }
                 }
                 ImGui::SetItemTooltip("Browse and replace the existing script");
 
@@ -631,21 +587,15 @@ namespace IS {
                 if (ImGui::Button(ICON_LC_FILE_EDIT))
                     InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
                 ImGui::SetItemTooltip("Open and edit script in default application");
-
-                ImGui::EndTable();
-            }
+            });
 
         }); // end render Script Component
 
         // Audio Listener Component
         RenderComponent<AudioListener>(ICON_LC_EAR "  Audio Listener", entity, [entity, FONT_BOLD](AudioListener& listener)
         {
-            if (ImGui::BeginTable("Audio Listener Table", 2))
+            EditorUtils::RenderTableFixedWidth("Audio Listener Table", 2, [&]()
             {
-                // Set Table and its flags
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                ImGui::TableSetupColumn("ListenerLabel", column_flags, 100.f);
-
                 EditorUtils::RenderTableLabel("Volume");
                 ImGui::TableNextColumn();
                 int volume = static_cast<int>(listener.volume * 100);
@@ -661,20 +611,15 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Hearing Range");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Hearing Range", &listener.hearing_range);
+            });
 
-                ImGui::EndTable(); // end table Audio Listener Table
-            }
         }); // end render Audio Listener Component
 
         // Aduio Emitter Component
         RenderComponent<AudioEmitter>(ICON_LC_SPEAKER "  Audio Emitter", entity, [entity, FONT_BOLD](AudioEmitter& emitter)
         {
-            if (ImGui::BeginTable("Audio Emitter Table", 2))
+            EditorUtils::RenderTableFixedWidth("Audio Emitter Table", 2, [&]()
             {
-                // Set Table and its flags
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-                ImGui::TableSetupColumn("EmitterLabel", column_flags, 100.f);
-
                 EditorUtils::RenderTableLabel("Sound");
                 ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
@@ -724,15 +669,14 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Pitch");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Pitch", &emitter.pitch);
+            });
 
-                ImGui::EndTable(); // end table Audio Emitter Table
-            }
         }); // end render Audio Emitter component
 
         // Button Component
         RenderComponent<ButtonComponent>(ICON_LC_SQUARE "  Button", entity, [entity, FONT_BOLD](ButtonComponent& button)
         {
-            if (ImGui::BeginTable("Button Table", 2))
+            EditorUtils::RenderTableFixedWidth("Button Table", 2, [&]()
             {
                 EditorUtils::RenderTableLabel("Text");
                 ImGui::TableNextColumn();
@@ -747,10 +691,9 @@ namespace IS {
                 if (ImGui::InputText("##ButtonText", buffer, sizeof(buffer), input_text_flags))
                 {
                     text = std::string(buffer);
-                }                    
+                }
+            });
 
-                ImGui::EndTable(); // end table Button Table
-            }
         }); // end render Button Component
 
         ImGui::PopStyleVar(); // end style rounding
@@ -821,7 +764,7 @@ namespace IS {
             static float time{};
             static bool show_warning = false;
 
-            if (ImGui::BeginTable("Add Animation Table", 2))
+            EditorUtils::RenderTableFixedWidth("Add Animation Table", 2, [&]()
             {
                 EditorUtils::RenderTableLabel("Name");
 
@@ -843,8 +786,7 @@ namespace IS {
                     if (strcmp(name, "") == 0 || grid[0] == 0 || grid[1] == 0 || time == 0.f)
                     {
                         show_warning = true;
-                    }
-                    else
+                    } else
                     {
                         sprite.AddAnimation(name, grid[0], grid[1], time);
                         mShowAddAnimation = false;
@@ -871,10 +813,7 @@ namespace IS {
                 {
                     ImGui::TextColored({ 1.f, 0.f, 0.f, 1.f }, "One or more fields are invalid");
                 }
-
-
-                ImGui::EndTable();
-            }
+            });
             ImGui::EndPopup();
         }
     } // end AddAnimation()
@@ -887,10 +826,8 @@ namespace IS {
         float zoom_level = camera.GetZoomLevel();
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
-        if (ImGui::BeginTable("CameraType", 2))
+        EditorUtils::RenderTableFixedWidth("CameraType", 2, [&]()
         {
-            ImGui::TableSetupColumn("CameraTypeLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
-
             EditorUtils::RenderTableLabel("Type");
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(Camera3D::mActiveCamera == CAMERA_TYPE_EDITOR ? "Editor Camera" : "In-game Camera");
@@ -898,9 +835,7 @@ namespace IS {
             EditorUtils::RenderTableLabel("Projection");
             ImGui::TableNextColumn();
             EditorUtils::RenderComboBoxEnum<aCameraProjection>("##Projection", Camera3D::mProjectionType, { "Orthographic", "Perspective" });
-
-            ImGui::EndTable(); // end camera type table
-        }
+        });
 
         // Camera Position
         Vector3D position = { camera.mPosition.x, camera.mPosition.y, camera.mPosition.z };
@@ -910,18 +845,15 @@ namespace IS {
         }
         ImGui::SetItemTooltip("Adjust the position of the camera in world space");
 
-        if (ImGui::BeginTable("CameraTable", 2))
+        EditorUtils::RenderTableFixedWidth("CameraTable", 2, [&]()
         {
-            ImGui::TableSetupColumn("CameraLabels", ImGuiTableColumnFlags_WidthFixed, 100.f);
 
             // Camera Clipping Planes
             EditorUtils::RenderTableLabel("Clipping Planes");
 
             ImGui::TableNextColumn();
-            if (ImGui::BeginTable("Clipping Planes", 2))
+            EditorUtils::RenderTableFixedWidth("Clipping Planes", 2, [&]()
             {
-                ImGui::TableSetupColumn("PlaneLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Near").x);
-
                 EditorUtils::RenderTableLabel("Near");
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Near", &camera.mNear);
@@ -930,8 +862,7 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::InputFloat("##Far", &camera.mFar);
 
-                ImGui::EndTable(); // end table Clipping Planes
-            }
+            }, 0, ImGui::CalcTextSize("Near").x);
 
             // Camera Zoom
             EditorUtils::RenderTableLabel("Zoom", "Adjust the zoom level of the camera");
@@ -967,10 +898,8 @@ namespace IS {
             // Speed
             EditorUtils::RenderTableLabel("Speed", "Adjust speed of camera");
             ImGui::TableNextColumn();
-            if (ImGui::BeginTable("CameraSpeedTable", 2))
+            EditorUtils::RenderTableFixedWidth("CameraSpeedTable", 2, [&]()
             {
-                ImGui::TableSetupColumn("SpeedLabel", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize("Zoom").x);
-
                 EditorUtils::RenderTableLabel("Zoom");
                 ImGui::TableNextColumn();
                 ImGui::SliderFloat("##CameraZoomSpeed", &Camera3D::mZoomSpeed, Camera3D::CAMERA_ZOOM_SPEED_MIN, Camera3D::CAMERA_ZOOM_SPEED_MAX, "%.2f");
@@ -979,11 +908,8 @@ namespace IS {
                 ImGui::TableNextColumn();
                 ImGui::SliderFloat("##CameraPanSpeed", &Camera3D::mMoveSpeed, Camera3D::CAMERA_MOVE_SPEED_MIN, Camera3D::CAMERA_MOVE_SPEED_MAX, "%.2f");
 
-                ImGui::EndTable(); // end table CameraSpeedTable
-            }
-
-            ImGui::EndTable(); // end table CameraTable
-        }
+            }, 0, ImGui::CalcTextSize("Zoom").x);
+        });
 
         ImGui::PopStyleVar(); // end style rounding
 

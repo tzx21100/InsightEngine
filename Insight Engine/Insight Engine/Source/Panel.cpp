@@ -170,7 +170,7 @@ namespace IS {
 
             // Create a table for system usage
             ImGuiTableFlags flags = ImGuiTableFlags_PadOuterX | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
-            if (ImGui::BeginTable("System Usage", 3, flags))
+            EditorUtils::RenderTableFixedWidth("System Usage", 3, [&]()
             {
                 // Table values
                 for (auto const& [system, dt] : engine.GetSystemDeltas())
@@ -197,9 +197,7 @@ namespace IS {
                     ImGui::ProgressBar(percent);
                     ImGui::PopStyleColor();
                 }
-
-                ImGui::EndTable(); // end table System Usage
-            }
+            }, flags);
 
             ImGui::PopStyleVar();
         }
@@ -230,15 +228,11 @@ namespace IS {
 
             ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen;
 
-            const float COLUMN_WIDTH = 100.f;
-
             if (ImGui::TreeNodeEx(ICON_LC_PERSON_STANDING "  Physics", tree_flags))
             {
                 EditorUtils::RenderControlVec2("Gravity", Physics::mGravity);
-                if (ImGui::BeginTable("PhysicsTable", 2))
+                EditorUtils::RenderTableFixedWidth("PhysicsTable", 2, [&]()
                 {
-                    ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
-
                     EditorUtils::RenderTableLabel("Exert Gravity");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
@@ -246,19 +240,15 @@ namespace IS {
                     EditorUtils::RenderTableLabel("Show Velocity");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
-
-                    ImGui::EndTable(); // end table PhysicsTable
-                }
+                });
 
                 ImGui::TreePop(); // end tree Table
             }
 
             if (ImGui::TreeNodeEx(ICON_LC_FLIP_HORIZONTAL_2 "  Collision", tree_flags))
             {
-                if (ImGui::BeginTable("CollisionTable", 2))
+                EditorUtils::RenderTableFixedWidth("CollisionTable", 2, [&]()
                 {
-                    ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
-
                     EditorUtils::RenderTableLabel("Show Colliders");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
@@ -266,18 +256,14 @@ namespace IS {
                     EditorUtils::RenderTableLabel("Implicit Grid");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##ImplicitGrid", &Physics::mEnableImplicitGrid);
-
-                    ImGui::EndTable(); // end table CollisionTable
-                }
+                });
 
                 if (Physics::mEnableImplicitGrid)
                 {
                     ImGui::SeparatorText(ICON_LC_GRID_2X2 "  Implicit Grid");
 
-                    if (ImGui::BeginTable("Implicit Grid Table", 2))
+                    EditorUtils::RenderTableFixedWidth("Implicit Grid Table", 2, [&]()
                     {
-                        ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
-
                         EditorUtils::RenderTableLabel("Show Grid");
                         ImGui::TableNextColumn();
                         ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
@@ -293,9 +279,7 @@ namespace IS {
                         ImGui::TableNextColumn();
                         if (ImGui::InputInt("##GridRows", &ImplicitGrid::mRows))
                             ImplicitGrid::mRows = std::clamp(ImplicitGrid::mRows, ImplicitGrid::MIN_GRID_ROWS, ImplicitGrid::MAX_GRID_ROWS);
-
-                        ImGui::EndTable(); // end table Implicit Grid Table
-                    }
+                    });
                 }
 
                 ImGui::TreePop(); // end tree Collision
@@ -303,16 +287,13 @@ namespace IS {
 
             if (ImGui::TreeNodeEx(ICON_LC_IMAGE "  Graphics", tree_flags))
             {
-                if (ImGui::BeginTable("GraphicsTable", 2))
+                EditorUtils::RenderTableFixedWidth("CollisionTable", 2, [&]()
                 {
-                    ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, COLUMN_WIDTH);
-
                     EditorUtils::RenderTableLabel("Text Animation");
                     ImGui::TableNextColumn();
                     ImGui::Checkbox("##TextAnimation", &ISGraphics::mShowTextAnimation);
+                });
 
-                    ImGui::EndTable(); // end table Other Options
-                }
                 ImGui::TreePop(); // end tree Graphics
             }
 

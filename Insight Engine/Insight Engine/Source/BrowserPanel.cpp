@@ -39,12 +39,12 @@ namespace IS {
         // Window Contents
         {
             ImGuiTableFlags table_flags = ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_Resizable;
-            if (ImGui::BeginTable("Assets Browser Table", 2, table_flags))
+            EditorUtils::RenderTableFixedWidth("Assets Browser Table", 2, [&]()
             {
                 ImGui::TableNextColumn();
                 if (ImGui::BeginChild("Tree Browser", { 0, 0 }, false, ImGuiWindowFlags_HorizontalScrollbar))
                 {
-                    if (ImGui::BeginTable("Tree Browser Table", 1, ImGuiTableFlags_BordersInnerH))
+                    EditorUtils::RenderTable("Tree Browser Table", 1, [&]()
                     {
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -61,7 +61,7 @@ namespace IS {
 
                         ImGui::TableNextColumn();
                         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-                        if (ImGui::Button(ICON_LC_FOLDERS "  All Assets")) 
+                        if (ImGui::Button(ICON_LC_FOLDERS "  All Assets"))
                         {
                             SwitchCurrentDirectory(ASSETS_PATH);
                         }
@@ -70,16 +70,13 @@ namespace IS {
                         ImGui::TableNextColumn();
                         RenderDirectoryContents(ASSETS_PATH);
 
-                        ImGui::EndTable(); // end table Tree Browser Table
-                    }
+                    }, ImGuiTableFlags_BordersInnerH);
                 }
                 ImGui::EndChild(); // end child window Tree Browser
 
                 ImGui::TableNextColumn();
                 mShowImportedAssets ? RenderImportedAssets() : RenderAllAssetsBrowser();
-
-                ImGui::EndTable(); // end table Assets Browser Table
-            }
+            }, table_flags);
         }
 
         // Save window states
@@ -142,8 +139,7 @@ namespace IS {
 
         if (ImGui::BeginChild("Assets", { 0, 0 }, false, child_window_flags))
         {
-            ImGuiTableFlags table_flags = ImGuiTableFlags_None;
-            if (ImGui::BeginTable("Assets Layout", column_count, table_flags))
+            EditorUtils::RenderTable("Assets Layout", column_count, [&]()
             {
                 for (auto const& entry : std::filesystem::directory_iterator(mCurrentDirectory))
                 {
@@ -159,12 +155,12 @@ namespace IS {
                         ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
                     }
                     std::string icon_name = is_directory ? "Folder" :
-                                extension == ".insight" ? "Insight" :
-                                extension == ".json" ? "Json" :
-                                extension == ".mp3" || extension == ".MP3" ? "MP3" :
-                                extension == ".wav" || extension == ".WAV" ? "WAV" :
-                                extension == ".png" ? "PNG" :
-                                extension == ".jpeg" ? "JPEG" : "File";
+                        extension == ".insight" ? "Insight" :
+                        extension == ".json" ? "Json" :
+                        extension == ".mp3" || extension == ".MP3" ? "MP3" :
+                        extension == ".wav" || extension == ".WAV" ? "WAV" :
+                        extension == ".png" ? "PNG" :
+                        extension == ".jpeg" ? "JPEG" : "File";
 
                     ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
                     bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
@@ -194,8 +190,7 @@ namespace IS {
                     // Clicking Item
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
-                        if (is_directory) { mCurrentDirectory /= path.filename(); }
-                        else
+                        if (is_directory) { mCurrentDirectory /= path.filename(); } else
                         {
                             std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
                             path.extension() == ".insight" ? SceneManager::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
@@ -205,9 +200,7 @@ namespace IS {
                     // Render label
                     ImGui::TextWrapped(filename_string.c_str());
                 }
-
-                ImGui::EndTable(); // end table Assets Layout
-            }
+            });
         }
 
         ImGui::EndChild(); // end child window Assets
@@ -366,8 +359,7 @@ namespace IS {
         ImGui::SetNextWindowBgAlpha(.3f);
         if (ImGui::BeginChild("Imported Assets Browser", { 0.f, 0.f }, false, child_window_flags))
         {
-            ImGuiTableFlags table_flags = ImGuiTableFlags_None;
-            if (ImGui::BeginTable("Imported Assets Layout", column_count, table_flags))
+            EditorUtils::RenderTable("Imported Assets Layout", column_count, [&]()
             {
                 ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
                 if (mSelectedImportedAsset == IMPORTED)
@@ -425,7 +417,7 @@ namespace IS {
 
                             // Tooltip
                             const ImVec2 image_size = { 48.f * aspect_ratio, 48.f };
-                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f});
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
 
                             ImGui::EndDragDropSource();
                         }
@@ -515,9 +507,7 @@ namespace IS {
                 }
 
                 ImGui::PopStyleColor();
-
-                ImGui::EndTable(); // end table Imported Assets Layout
-            }
+            });
         }
 
         ImGui::EndChild(); // end child window Imported Assets Browser
@@ -537,13 +527,9 @@ namespace IS {
         {
             // Browser Controls
             float label_width = ImGui::CalcTextSize("Thumbnail Size").x + 2 * ImGui::GetStyle().FramePadding.x;
-            if (ImGui::BeginTable("Browser Control", 2, 0, {}, label_width))
+            EditorUtils::RenderTableFixedWidth("Browser Control", 2, [&]()
             {
                 float panel_width = ImGui::GetContentRegionAvail().x;
-                ImGuiTableColumnFlags column_flags = ImGuiTableColumnFlags_WidthFixed;
-
-                ImGui::TableSetupColumn("Browser Control", column_flags, label_width);
-
                 ImGui::TableNextColumn();
                 ImGui::TextUnformatted("Thumbnail Size");
                 ImGui::TableNextColumn();
@@ -556,8 +542,7 @@ namespace IS {
                 ImGui::SetNextItemWidth(100.f);
                 ImGui::SliderFloat("##padding", &mControls.mPadding, MIN_PADDING, MAX_PADDING, "%.2f", ImGuiSliderFlags_NoInput);
 
-                ImGui::EndTable(); // end table Browser Control
-            }
+            }, 0, label_width);
 
             ImGui::EndPopup(); // end popup BrowserSettings
         }
