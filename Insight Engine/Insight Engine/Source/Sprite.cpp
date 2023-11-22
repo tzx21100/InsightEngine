@@ -168,13 +168,14 @@ namespace IS {
         }
     }
 
-    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer) {
+    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
         if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
             Sprite::instanceData3D instData;
+            instData.color = { 0.f, 0.f, 0.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;

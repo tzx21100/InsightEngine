@@ -318,7 +318,7 @@ namespace IS
                 }
 
                 
-                InternalCalls.DrawImageAt(pos, 0f, scale, curr_image, 1);
+                InternalCalls.DrawImageAt(pos, 0f, scale, curr_image, 1f, 1);
 
             }
             else

@@ -62,7 +62,7 @@ namespace IS
                 Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x+initialPos.x - layerOffsetX, PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
 
                 // Draw the layer at its new position
-                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 0);
+                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
             }
 
             // Update the camera position

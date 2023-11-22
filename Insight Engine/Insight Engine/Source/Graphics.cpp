@@ -267,6 +267,7 @@ namespace IS {
                         // quad has a texture (animation too)
                         else {
                             // copy texture index
+                            instData.color.a = 1.f; // opaque
                             instData.tex_index = static_cast<float>(sprite.img.texture_index);
                         }
 
@@ -345,9 +346,9 @@ namespace IS {
         // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
         // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
 
-        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        //Image* img = system->GetImage("icecream_truck_frame.png");
-        //Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 4);
+        // auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        // Image* img = system->GetImage("icecream_truck_frame.png");
+        // Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
 
 
         // quads will be drawn first
@@ -467,11 +468,13 @@ namespace IS {
             IS_CORE_DEBUG("OpenGL error: {}", err);
         }
 
+        // Set texture wrapping parameters to GL_CLAMP_TO_EDGE
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
         // Use stbi_image_free instead of delete[]
         stbi_image_free(data);  
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 

@@ -23,6 +23,7 @@ void main()
     {
         int texIdx = int(vTexID);
         fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
+        fFragColor.a *= vColor.a;
     }
     int id = int(vEntityID);
     fEntityID = id + 1;
