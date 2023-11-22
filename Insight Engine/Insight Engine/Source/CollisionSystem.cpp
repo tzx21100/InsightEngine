@@ -72,13 +72,13 @@ namespace IS
 
 		for (int i = 0; i < mContactPair.size(); i++)
 		{
-			if (i == 0) { // reset all the colliders
-				for (auto entity: mEntities) {
-					auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
-					collider.mIsColliding = false;
-					collider.mCollidedObjectAngle = 0.f;
-				}
-			}
+			//if (i == 0) { // reset all the colliders
+			//	for (auto entity: mEntities) {
+			//		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+			//		collider.mIsColliding = false;
+			//		collider.mCollidedObjectAngle = 0.f;
+			//	}
+			//}
 
 			std::pair<Entity, Entity> pair = mContactPair[i];
 			Entity entityA = pair.first;
@@ -804,6 +804,10 @@ namespace IS
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 				collider.UpdateCollider(trans);
+				// reset some attributes
+				collider.mIsColliding = false;
+				collider.mCollidedObjectAngle = 0.f;
+				collider.mCollidingEntity = MAX_ENTITIES + 1; // no colliding entity
 			}
 		}
 	}
