@@ -154,6 +154,8 @@ namespace IS
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
 
 
+            InternalCalls.TransformSetScale(200f, 180f);
+
         }
 
         static public void Update()
@@ -544,7 +546,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * -hori_movement;
+            float distanceLeft = width * hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft  , 0);
 
