@@ -91,11 +91,11 @@ namespace IS {
 
             ImGui::TextUnformatted("V-Sync");
             ImGui::SameLine();
+
             static bool vsync_enabled = engine.IsVSync();
-            if (ImGui::Checkbox("##V-Sync", &vsync_enabled))
-            {
-                engine.EnableVSync(vsync_enabled);
-            }
+            EditorUtils::RenderToggleButton("V-Sync", vsync_enabled);
+            engine.EnableVSync(vsync_enabled);
+
             ImGui::SameLine();
             ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 
@@ -235,11 +235,11 @@ namespace IS {
                 {
                     EditorUtils::RenderTableLabel("Exert Gravity");
                     ImGui::TableNextColumn();
-                    ImGui::Checkbox("##ExertGravity", &Physics::mExertingGravity);
+                    EditorUtils::RenderToggleButton("ExertGravity", Physics::mExertingGravity);
 
                     EditorUtils::RenderTableLabel("Show Velocity");
                     ImGui::TableNextColumn();
-                    ImGui::Checkbox("##ShowVelocity", &Physics::mShowVelocity);
+                    EditorUtils::RenderToggleButton("ShowVelocity", Physics::mShowVelocity);
                 });
 
                 ImGui::TreePop(); // end tree Table
@@ -251,11 +251,11 @@ namespace IS {
                 {
                     EditorUtils::RenderTableLabel("Show Colliders");
                     ImGui::TableNextColumn();
-                    ImGui::Checkbox("##ShowColliders", &Physics::mShowColliders);
+                    EditorUtils::RenderToggleButton("ShowColliders", Physics::mShowColliders);
 
                     EditorUtils::RenderTableLabel("Implicit Grid");
                     ImGui::TableNextColumn();
-                    ImGui::Checkbox("##ImplicitGrid", &Physics::mEnableImplicitGrid);
+                    EditorUtils::RenderToggleButton("ImplicitGrid", Physics::mEnableImplicitGrid);
                 });
 
                 if (Physics::mEnableImplicitGrid)
@@ -266,7 +266,7 @@ namespace IS {
                     {
                         EditorUtils::RenderTableLabel("Show Grid");
                         ImGui::TableNextColumn();
-                        ImGui::Checkbox("##ShowGrid", &Physics::mShowGrid);
+                        EditorUtils::RenderToggleButton("ShowGrid", Physics::mShowGrid);
 
                         EditorUtils::RenderTableLabel("Columns");
                         ImGui::TableNextColumn();
@@ -291,7 +291,7 @@ namespace IS {
                 {
                     EditorUtils::RenderTableLabel("Text Animation");
                     ImGui::TableNextColumn();
-                    ImGui::Checkbox("##TextAnimation", &ISGraphics::mShowTextAnimation);
+                    EditorUtils::RenderToggleButton("TextAnimation", ISGraphics::mShowTextAnimation);
                 });
 
                 ImGui::TreePop(); // end tree Graphics

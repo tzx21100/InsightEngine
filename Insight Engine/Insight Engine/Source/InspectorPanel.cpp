@@ -196,7 +196,7 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Rendering");
 
                 ImGui::TableNextColumn();
-                ImGui::Checkbox("##Rendering", &sprite.toRender);
+                EditorUtils::RenderToggleButton("Rendering", sprite.toRender);
 
                 EditorUtils::RenderTableLabel("Layer");
 
@@ -653,7 +653,7 @@ namespace IS {
 
                 EditorUtils::RenderTableLabel("Looped");
                 ImGui::TableNextColumn();
-                ImGui::Checkbox("##Looped", &emitter.isLoop);
+                EditorUtils::RenderToggleButton("Looped", emitter.isLoop);
 
                 EditorUtils::RenderTableLabel("Falloff Factor");
                 ImGui::TableNextColumn();

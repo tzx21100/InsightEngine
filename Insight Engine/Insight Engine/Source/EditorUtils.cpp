@@ -279,6 +279,35 @@ namespace IS::EditorUtils {
         ImGui::PopID();
     }
 
+    void RenderToggleButton(std::string const& str_id, bool& value)
+    {
+        ImVec2 p = ImGui::GetCursorScreenPos();
+        ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+        float height = ImGui::GetFrameHeight();
+        float width = height * 1.55f;
+        float radius = height * 0.50f;
+
+        if (ImGui::InvisibleButton(str_id.c_str(), ImVec2(width, height)))
+        {
+            value = !value;
+        }
+        ImU32 color_background;
+        ImVec4 color_active = ImGui::GetStyleColorVec4(ImGuiCol_CheckMark);
+        ImVec4 color_active_hovered = { color_active.x * 1.05f, color_active.y, color_active.z * 1.05f, color_active.w };
+        if (ImGui::IsItemHovered())
+        {
+            color_background = value ? ImGui::GetColorU32(color_active_hovered) : ImGui::GetColorU32(ImGui::GetStyleColorVec4(ImGuiCol_FrameBgHovered));
+        }
+        else
+        {
+            color_background = value ? ImGui::GetColorU32(color_active) : ImGui::GetColorU32(ImGui::GetStyleColorVec4(ImGuiCol_FrameBg));
+        }
+
+        draw_list->AddRectFilled(p, ImVec2(p.x + width, p.y + height), color_background, height * 0.5f);
+        draw_list->AddCircleFilled(ImVec2(value ? (p.x + width - radius) : (p.x + radius), p.y + radius), radius - 1.5f, IM_COL32(255, 255, 255, 255));
+    }
+
 } // end namespace IS::EditorUtils
 
 
