@@ -22,8 +22,12 @@ namespace IS
 
 	void CollisionSystem::Update([[maybe_unused]] float dt)
 	{
-		//if (!InsightEngine::Instance().mRuntime)
-		//	return;
+		if (!InsightEngine::Instance().mRuntime)
+		{
+			// when the game is not running, update collider transform only
+			Step();
+			return;
+		}
 
 		for (int i = 0; i < 1; i++) {
 			// empty contact pair before going into collision step

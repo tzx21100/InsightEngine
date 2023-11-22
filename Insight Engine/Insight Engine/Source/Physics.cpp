@@ -53,17 +53,6 @@ namespace IS {
 	{
 		if (InsightEngine::Instance().mRuntime == false)
 		{
-
-			// body collider always follow the sprite trans (FOR DEMO FIRST)
-			for (auto const& entity : mEntities)
-			{
-				if (InsightEngine::Instance().HasComponent<RigidBody>(entity))
-				{
-					auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					body.BodyFollowTransform(trans);
-				}
-			}
 			return;
 		}
 
@@ -642,7 +631,7 @@ namespace IS {
 		// draw colliders in green
 		if (mShowColliders)
 		{
-			if (collider.IsBoxColliderEnable()) {
+			if (collider.IsBoxColliderEnable()) { // if box collider is enable, draw it out
 				for (size_t i = 0; i < collider.mBoxCollider.transformedVertices.size(); i++)
 				{
 					Vector2D va = collider.mBoxCollider.transformedVertices[i];
@@ -651,9 +640,10 @@ namespace IS {
 					Sprite::drawDebugLine(va, vb, color);
 				}
 			}
-			if (collider.IsCircleColliderEnable()) {
+			if (collider.IsCircleColliderEnable()) { // if circle collider is enable, draw it out
 				Sprite::drawDebugCircle(collider.mCircleCollider.center, { collider.mCircleCollider.radius * 2.f, collider.mCircleCollider.radius * 2.f }, color);
 			}
+			// to be done
 
 		}
 
@@ -675,7 +665,7 @@ namespace IS {
 
 			if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
-				collider.UpdateBoxCollider(trans);
+				collider.UpdateCollider(trans);
 			}
 
 			// check if having rigidbody component
