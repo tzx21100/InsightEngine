@@ -36,5 +36,11 @@
     {
         // Divide by 2^32 to get a floating point number in the range [0, 1)
         return (double)Next() / (1L << 32);
+    }    
+    
+    public float NextFloat()
+    {
+        // Divide by 2^32 to get a floating point number in the range [0, 1)
+        return (float)Next() / (1L << 32);
     }
 }

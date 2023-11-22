@@ -120,7 +120,7 @@ namespace IS {
         setLineWidth(2.f);
 
         //testLight.init({ 0.f, 0.f }, { 1.f, 1.f, 1.f }, 0.8f, 1000.f);
-        //testLight2.init({ -100.f, 100.f }, { 1.f, 0.f, 0.f }, 1.0f, 300.f);
+        //testLight2.init({ -600.f, 0.f }, { 1.f, 0.5f, 0.4f }, 0.8f, 300.f);
         //testLight3.init({ 0.f, 100.f }, { 0.f, 1.f, 0.f }, 1.0f, 300.f);
         //testLight4.init({ 100.f, 100.f }, { 0.f, 0.f, 1.f }, 1.0f, 300.f);
     }

@@ -295,6 +295,7 @@ namespace IS {
     private:
 		int mParticleAmount=0;
 		std::array<Particle,MAX_PARTICLES> mParticleList; //fixed array of particles
+
     };
 }
 

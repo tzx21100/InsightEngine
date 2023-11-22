@@ -23,7 +23,7 @@ namespace IS
         static private Vector2D bg3_pos=new Vector2D(0,0);
         static private Vector2D bg4_pos=new Vector2D(0,0);
         static private Vector2D bg5_pos=new Vector2D(0,0);
-        static private Vector2D bg_scale=new Vector2D(4096*2,756*2);
+        static private Vector2D bg_scale=new Vector2D(4096*3,756*3);
 
         static private float player_offset = 10f;
 
@@ -103,11 +103,7 @@ namespace IS
 
 
         static public void CleanUp(){
-            InternalCalls.FreeSpriteImage(bg_image1);
-            InternalCalls.FreeSpriteImage(bg_image2);
-            InternalCalls.FreeSpriteImage(bg_image3);
-            InternalCalls.FreeSpriteImage(bg_image4);
-            InternalCalls.FreeSpriteImage(bg_image5);
+
         }
 
     }

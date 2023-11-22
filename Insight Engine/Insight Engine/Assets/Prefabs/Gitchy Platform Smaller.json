@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 1105.8714599609375,
-				"Y" : 1419.75439453125
+				"X" : -254.59609985351562,
+				"Y" : 1164.704833984375
 			},
 			"BoxColliderOffset" : 
 			{
@@ -21,20 +21,20 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -222.15019226074219,
-					"y" : 70.625
+					"x" : -111.07500457763672,
+					"y" : 35.3125
 				},
 				{
-					"x" : 222.15019226074219,
-					"y" : 70.625
+					"x" : 111.07500457763672,
+					"y" : 35.3125
 				},
 				{
-					"x" : 222.15019226074219,
-					"y" : -70.625
+					"x" : 111.07500457763672,
+					"y" : -35.3125
 				},
 				{
-					"x" : -222.15019226074219,
-					"y" : -70.625
+					"x" : -111.07500457763672,
+					"y" : -35.3125
 				}
 			]
 		},
@@ -42,7 +42,7 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "Gitchy Platform",
+	"Name" : "Gitchy Platform Smaller",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
@@ -82,11 +82,11 @@
 		"SpriteTextureHeight" : 594,
 		"SpriteTextureIndex" : 10,
 		"SpriteTextureWidth" : 4092,
-		"SpriteTransformRotation" : 358.97549438476562,
-		"SpriteTransformScalingX" : 740.5006103515625,
-		"SpriteTransformScalingY" : 282.5,
-		"SpriteTransformWorldPositionX" : 1105.8714599609375,
-		"SpriteTransformWorldPositionY" : 1419.75439453125,
+		"SpriteTransformRotation" : 7.39129638671875,
+		"SpriteTransformScalingX" : 370.25,
+		"SpriteTransformScalingY" : 141.25,
+		"SpriteTransformWorldPositionX" : -254.59609985351562,
+		"SpriteTransformWorldPositionY" : 1164.704833984375,
 		"animations" : 
 		[
 			{
@@ -94,9 +94,9 @@
 				"animation_duration" : 2.0,
 				"frame_dimension_x" : 0.1666666716337204,
 				"frame_dimension_y" : 0.5,
-				"frame_index_x" : 2.0,
+				"frame_index_x" : 4.0,
 				"frame_index_y" : 1.0,
-				"frame_timer" : 0.14773893356323242,
+				"frame_timer" : 0.12683109939098358,
 				"time_per_frame" : 0.1666666716337204,
 				"x_frames" : 6,
 				"y_frames" : 2
@@ -105,10 +105,10 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 358.97549438476562,
-		"TransformScalingX" : 740.5006103515625,
-		"TransformScalingY" : 282.5,
-		"TransformWorldPositionX" : 1105.8714599609375,
-		"TransformWorldPositionY" : 1419.75439453125
+		"TransformRotation" : 7.39129638671875,
+		"TransformScalingX" : 370.25,
+		"TransformScalingY" : 141.25,
+		"TransformWorldPositionX" : -254.59609985351562,
+		"TransformWorldPositionY" : 1164.704833984375
 	}
 }

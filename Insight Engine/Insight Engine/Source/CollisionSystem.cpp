@@ -140,9 +140,9 @@ namespace IS
 			// if collider A and collider B colliding
 			if (mColliding) {
 				colliderA.mIsColliding = true;
-				colliderA.mCollidingEntity = entityB;
+				colliderA.mCollidingEntity.emplace_back(entityB);
 				colliderB.mIsColliding = true;
-				colliderB.mCollidingEntity = entityA;
+				colliderB.mCollidingEntity.emplace_back(entityA);
 				
 				//for non-response enabled to check for angles of the collided object
 				if (!colliderA.mResponseEnable) {
@@ -818,7 +818,7 @@ namespace IS
 				// reset some attributes
 				collider.mIsColliding = false;
 				collider.mCollidedObjectAngle = 0.f;
-				collider.mCollidingEntity = MAX_ENTITIES + 1; // no colliding entity
+				collider.mCollidingEntity.clear();
 			}
 		}
 	}

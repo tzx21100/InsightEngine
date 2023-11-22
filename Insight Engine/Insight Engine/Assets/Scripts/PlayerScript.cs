@@ -14,6 +14,14 @@ namespace IS
         static public bool Reward_Dash = true;
         static public bool Reward_WallClimb = true;
 
+        static public int Health = 3;
+        static public int Max_Health = 3;
+
+        static public float respawn_x = 0f;
+        static public float respawn_y = 0f;
+
+        static public int SAVE_POINT_ID = 0;
+
         //public player variables
 
 
@@ -36,6 +44,7 @@ namespace IS
         static SimpleImage player_transparent;
         static SimpleImage player_land;
         static SimpleImage player_jump;
+        static SimpleImage player_jump_vfx;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -43,9 +52,10 @@ namespace IS
         static private int animation_current_frame = 0;
 
         static private int land_entity;
+        static private int jump_entity;
         static private bool land_exists;
 
-        static private int PLAYER_ID;
+        static public int PLAYER_ID;
 
         //private variables for entity
 
@@ -73,7 +83,7 @@ namespace IS
         static private float dashAngle;
         static private float dashSpeed = 5000f;
 
-        static private bool isGrounded;
+        static public bool isGrounded;
         static private Vector2D apply_force= new Vector2D(0,0);//dash dir
 
 
@@ -136,9 +146,9 @@ namespace IS
             player_climb11 = InternalCalls.GetSpriteImage("WallClimb_0011.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
             player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
+            player_jump_vfx = InternalCalls.GetSpriteImage("woosh_vfx 3R4C.png");
 
             // Initialization code
-            Console.WriteLine("ctor!");
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(4,3,1f);
@@ -153,11 +163,13 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1f);
+            InternalCalls.CameraSetZoom(1.5f);
 
-            land_entity = InternalCalls.CreateEntityVFX("jump", player_land);
+            land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
-
+            
+            jump_entity = InternalCalls.CreateEntityVFX("jump", player_jump_vfx);
+            InternalCalls.CreateAnimationFromSpriteEntity(3, 4, 0.3f, jump_entity);
 
             InternalCalls.TransformSetScale(200f, 180f);
 
@@ -169,20 +181,26 @@ namespace IS
                 return;
             }
 
+            if (Health <= 0)
+            {
+                InternalCalls.TransformSetPosition(respawn_x, respawn_y);
+                Health = Max_Health;
+            }
+
             //Attach Camera
             
 
-           target_pos.x = player_pos.x + InternalCalls.RigidBodyGetVelocity().x/10f ;
-           target_pos.y= player_pos.y  +InternalCalls.RigidBodyGetVelocity().y/10f;
+           target_pos.x = player_pos.x + hori_movement* CustomMath.min(100f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
+           target_pos.y= player_pos.y  + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y/20f);
 
-            float interpolate_speed = 15f;
+            float interpolate_speed = 4f;
 
 /*            if (InternalCalls.RigidBodyGetVelocity().y < -1500)
             {
                 interpolate_speed = 25f;
             }*/
 
-            camera_pos =Vector2D.LerpGameCam(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
+            camera_pos =Vector2D.Lerp(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
 
 
 
@@ -243,7 +261,7 @@ namespace IS
 
 
             //wall checking
-            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement != 0 && InternalCalls.GetCollidingEntity(entityWall) != InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)) && Reward_WallClimb)
+            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement != 0 && InternalCalls.GetCollidingEntity(entityWall) != InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectTypeIsWall(InternalCalls.GetCollidingEntity(entityWall)) && Reward_WallClimb)
             {
                 if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
                 isClimbing = true;
@@ -326,27 +344,24 @@ namespace IS
                 InternalCalls.TransformSetScale(1f, 1f);
             }
 
-            if (InternalCalls.RigidBodyGetVelocity().y < -1600f)
+/*            if (InternalCalls.RigidBodyGetVelocity().y < -1600f)
             {
                 initial_land = false;
-            }
+            }*/
 
             //jumping bool
             if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
                 //if is grounded
-            if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != InternalCalls.GetCurrentEntityID())
+            if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != PLAYER_ID && !InternalCalls.CollidingObjectTypeIsIgnore(entityA)
+                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
             {
 
-                if (initial_land == false)
-                {
-                    initial_land = true;
-                    InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                    InternalCalls.TransformSetScaleEntity(200, 200, land_entity);
-                    InternalCalls.TransformSetPositionEntity(player_pos.x,player_pos.y,land_entity);
-                }
+
 
                 isGrounded = true;
 
+                
+                
 
             }
             else
@@ -357,6 +372,11 @@ namespace IS
             if (InternalCalls.GetCurrentAnimationEntity(land_entity) >= 13) {
                 InternalCalls.TransformSetScaleEntity(0,0,land_entity);
                 InternalCalls.TransformSetPositionEntity(-999,-9999,land_entity);
+            }            
+            
+            if (InternalCalls.GetCurrentAnimationEntity(jump_entity) >= 11) {
+                InternalCalls.TransformSetScaleEntity(0,0,jump_entity);
+                InternalCalls.TransformSetPositionEntity(-999,-9999,jump_entity);
             }
 
             if (isGrounded)
@@ -381,6 +401,18 @@ namespace IS
                         InternalCalls.TransformSetRotation(0, 0);
                     }
 
+                    //landing
+                    if (initial_land == false)
+                    {
+                        initial_land = true;
+                        InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
+                        InternalCalls.TransformSetScaleEntity(CustomMath.max(200 * -InternalCalls.RigidBodyGetVelocity().y / 400, 200f), CustomMath.max(200 * -InternalCalls.RigidBodyGetVelocity().y / 800, 200f), land_entity);
+                        InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y + (InternalCalls.GetTransformScalingEntity(land_entity).y - 200f) / 2f, land_entity);
+                        InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, land_entity);
+                    }
+
+
+
                     jump_amount = jump_amount_set;
                     canDash = true;
 
@@ -403,16 +435,21 @@ namespace IS
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
-                        InternalCalls.RigidBodySetForce(hori_movement*move_speed, 0f);
+                        InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f) ;
                         Jump();
                         jump_amount--;
                     }
                 }
 
-
-                
+                Xforce += hori_movement * move_speed;
+                InternalCalls.RigidBodyAddForce(Xforce * InternalCalls.GetDeltaTime(), Yforce * InternalCalls.GetDeltaTime());
+                if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > 700)
+                {
+                    InternalCalls.RigidBodySetForce(700 * hori_movement, InternalCalls.RigidBodyGetVelocity().y);
+                }
+                initial_land = false;
             }
-            Xforce += hori_movement * move_speed;
+            
             //check for ground
 
 
@@ -461,7 +498,7 @@ namespace IS
             FloorCheckerUpdate();
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
-            InternalCalls.RigidBodyAddForce(Xforce *InternalCalls.GetDeltaTime(), Yforce * InternalCalls.GetDeltaTime());
+            
             Xforce = 0f;Yforce = 0f;
 
 
@@ -470,26 +507,11 @@ namespace IS
 
         static public void CleanUp()
         {
-            InternalCalls.FreeSpriteImage(player_climb);
-            InternalCalls.FreeSpriteImage(player_climb1);
-            InternalCalls.FreeSpriteImage(player_climb2);
-            InternalCalls.FreeSpriteImage(player_climb3);
-            InternalCalls.FreeSpriteImage(player_climb4);
-            InternalCalls.FreeSpriteImage(player_climb5);
-            InternalCalls.FreeSpriteImage(player_climb6);
-            InternalCalls.FreeSpriteImage(player_climb7);
-            InternalCalls.FreeSpriteImage(player_climb8);
-            InternalCalls.FreeSpriteImage(player_climb9);
-            InternalCalls.FreeSpriteImage(player_climb10);
-            InternalCalls.FreeSpriteImage(player_climb11);
-            InternalCalls.FreeSpriteImage(player_idle);
-            InternalCalls.FreeSpriteImage(player_walk);
-            InternalCalls.FreeSpriteImage(player_transparent);
-            InternalCalls.FreeSpriteImage(player_land);
-            InternalCalls.FreeSpriteImage(player_jump);
+
             InternalCalls.DestroyEntity(entityA);
             InternalCalls.DestroyEntity(entityWall);
             InternalCalls.DestroyEntity(land_entity);
+            InternalCalls.DestroyEntity(jump_entity);
             
             
         }
@@ -536,6 +558,9 @@ namespace IS
 
         static private void Jump()
         {
+            InternalCalls.ResetSpriteAnimationFrameEntity(jump_entity);
+            InternalCalls.TransformSetScaleEntity(100*-hori_movement, 100, jump_entity);
+            InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
         }
 

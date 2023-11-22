@@ -175,7 +175,7 @@ namespace IS {
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
             Sprite::instanceData3D instData;
-            instData.color = { 0.f, 0.f, 0.f, alpha };
+            instData.color = { 1.f, 1.f, 1.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;

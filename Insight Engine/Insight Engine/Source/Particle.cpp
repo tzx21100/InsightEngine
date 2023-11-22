@@ -14,7 +14,6 @@ namespace IS {
 
     void ParticleSystem::Update(float deltaTime) {
 
-
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 

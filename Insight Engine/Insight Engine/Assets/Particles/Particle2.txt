@@ -1,0 +1,16 @@
+Velocity: 0, 0
+Size Growth: 0.5
+Scale: 15.2, 15.2
+Lifespan: 3
+Color:
+Red: 1
+Green: 0.5
+Blue: 0
+Alpha: 1
+Alpha: 0.8
+Alpha Growth: 0.1
+Rotation: 45
+Direction: 90
+Particle Type: 0
+Image Name: 
+Particle Position: 1588, -1022

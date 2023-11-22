@@ -83,7 +83,10 @@ namespace IS
         internal extern static float GetDeltaTime();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetSpriteImage(SimpleImage image);
+        internal extern static void SetSpriteImage(SimpleImage image);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetSpriteImageEntity(SimpleImage image,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static SimpleImage GetSpriteImage(string filename);
@@ -137,14 +140,23 @@ namespace IS
         internal extern static void CameraSetZoom(float value);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void ColliderNone(int entity);
+        internal extern static void ColliderNone(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ColliderComponentAdd(int entity,float scaleX,float scaleY);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ColliderComponentRemove(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetCurrentEntityID();        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetCollidingEntity(int entity);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool GetCollidingEntityCheck(int entity, int entityToCheckAgainst);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetCollidedObjectAngle(int entity);
 
@@ -179,7 +191,16 @@ namespace IS
         internal extern static bool CollidingObjectIsStatic(int entity);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static bool CollidingObjectIsSpikes(int entity);
+        internal extern static bool CollidingObjectIsSpikes(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CollidingObjectTypeIsGhost(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CollidingObjectTypeIsIgnore(int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]        
+        internal extern static bool CollidingObjectTypeIsWall(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GameSpawnParticle(float x, float y, string particle_name);

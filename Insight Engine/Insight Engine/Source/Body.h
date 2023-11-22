@@ -43,7 +43,8 @@ namespace IS
         Kinematic,
         Ghost,
         WallClimb,
-        Spikes
+        Spikes,
+        Ignore
     };
 
     /**

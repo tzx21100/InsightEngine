@@ -98,7 +98,7 @@ namespace IS {
 
     //converstion to C#
     struct SimpleImage {
-        char* mFileName; // pointer to null-terminated string
+        const char* mFileName; // pointer to null-terminated string
         int width;
         int height;
         int channels;
@@ -109,11 +109,9 @@ namespace IS {
     };
 
     // Convert Image to SimpleImage
-    inline SimpleImage ConvertToSimpleImage(const Image* image) {
+    inline SimpleImage ConvertToSimpleImage(Image* image) {
         SimpleImage simg;
-        simg.mFileName = new char[image->mFileName.length() + 1];
-        strcpy(simg.mFileName, image->mFileName.c_str());
-        
+        simg.mFileName = image->mFileName.c_str();
         simg.width = image->width;
         simg.height = image->height;
         simg.channels = image->channels;

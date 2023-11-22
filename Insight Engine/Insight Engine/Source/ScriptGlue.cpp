@@ -21,6 +21,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Body.h"
 #include "Collider.h"
 #include "GameGui.h"
+#include <algorithm>
 
 #include <mono/metadata/object.h>
 
@@ -227,6 +228,12 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         Image a = ConvertToImage(image);
         sprite_component.img = a;
+    }    
+    
+    static void SetSpriteImageEntity(SimpleImage image,int entity) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        Image a = ConvertToImage(image);
+        sprite_component.img = a;
     }
 
     static void ResetSpriteAnimationFrameEntity(int entity) {
@@ -263,9 +270,9 @@ namespace IS {
     static void FreeSpriteImage(SimpleImage* simg)
     {
         auto script_sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
-        if (simg && simg->texture_index >= 0 && simg->texture_index < 32) {
-            script_sys->availableIndices.push(simg->texture_index);
-        }
+        //if (simg && simg->texture_index >= 0 && simg->texture_index < 32) {
+        //    script_sys->availableIndices.push(simg->texture_index);
+        //}
 
         if (simg && simg->mFileName) {
             delete[] simg->mFileName;
@@ -340,6 +347,7 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
         InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         auto& sprite_component=InsightEngine::Instance().GetComponent<Sprite>(entity);
+        sprite_component.layer = 1;
         sprite_component.img = ConvertToImage(image);
 
         return static_cast<int>(entity);
@@ -379,6 +387,19 @@ namespace IS {
         auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
         collider.mResponseEnable = false;
         collider.mResponseEnable = false;
+    }    
+    
+    static void ColliderComponentAdd(int entity , float scaleX,float scaleY) {
+        if (!InsightEngine::Instance().HasComponent<Collider>(entity)) {
+            InsightEngine::Instance().AddComponent<Collider>(entity, Collider());
+            auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+            collider.mBoxCollider.sizeScale.x = scaleX;
+            collider.mBoxCollider.sizeScale.y = scaleY;
+        }
+    }    
+    
+    static void ColliderComponentRemove(int entity) {
+        InsightEngine::Instance().RemoveComponent<Collider>(entity);
     }
 
     static void CameraSetZoom(float value) {
@@ -405,19 +426,41 @@ namespace IS {
         Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
     }
 
+    static bool GetCollidingEntityCheck(int entity ,int entityToCheckAgainst) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        auto it = std::find(collider_component.mCollidingEntity.begin(), collider_component.mCollidingEntity.end(), static_cast<Entity>(entityToCheckAgainst));
+        if (it != collider_component.mCollidingEntity.end()) { return true; }
+        return false;
+    }       
+    
     static int GetCollidingEntity(int entity) {
         auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
-        return collider_component.mCollidingEntity;
+        return collider_component.mCollidingEntity.back();
     }
 
     static bool CollidingObjectIsStatic(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        return body_component.mBodyType == BodyType::WallClimb ? 1 : 0;
+        return body_component.mBodyType == BodyType::Static ? 1 : 0;
     }    
     
     static bool CollidingObjectTypeIsSpikes(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
         return body_component.mBodyType == BodyType::Spikes ? 1 : 0;
+    }        
+    
+    static bool CollidingObjectTypeIsWall(int entity) {
+        auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return body_component.mBodyType == BodyType::WallClimb ? 1 : 0;
+    }    
+    
+    static bool CollidingObjectTypeIsGhost(int entity) {
+        auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return body_component.mBodyType == BodyType::Ghost ? 1 : 0;
+    }    
+    
+    static bool CollidingObjectTypeIsIgnore(int entity) {
+        auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return (body_component.mBodyType == BodyType::Ignore) ? true : false;
     }
 
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer=1) {
@@ -553,6 +596,7 @@ namespace IS {
 
         // Images and Sprite
         IS_ADD_INTERNAL_CALL(SetSpriteImage);
+        IS_ADD_INTERNAL_CALL(SetSpriteImageEntity);
         IS_ADD_INTERNAL_CALL(GetSpriteImage);
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
@@ -583,11 +627,17 @@ namespace IS {
         // Entity Collisions
         IS_ADD_INTERNAL_CALL(EntityCheckCollide);
         IS_ADD_INTERNAL_CALL(ColliderNone);
+        IS_ADD_INTERNAL_CALL(ColliderComponentAdd);
+        IS_ADD_INTERNAL_CALL(ColliderComponentRemove);
         IS_ADD_INTERNAL_CALL(GetCurrentEntityID);
         IS_ADD_INTERNAL_CALL(GetCollidedObjectAngle);
         IS_ADD_INTERNAL_CALL(GetCollidingEntity);
+        IS_ADD_INTERNAL_CALL(GetCollidingEntityCheck);
         IS_ADD_INTERNAL_CALL(CollidingObjectIsStatic);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsSpikes);
+        IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsWall);
+        IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
+        IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);
 
         //Debug
         //Debug

@@ -136,6 +136,8 @@ namespace IS {
 
     private:
         Entity mEntityScriptCaller{};
+        float mTargetTime = 1.f / 60.f;
+        float mAddedTime = 0.f;
 
 
     };
