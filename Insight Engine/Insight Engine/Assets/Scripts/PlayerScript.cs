@@ -153,7 +153,7 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1.5f);
+            InternalCalls.CameraSetZoom(1f);
 
             land_entity = InternalCalls.CreateEntityVFX("jump", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
