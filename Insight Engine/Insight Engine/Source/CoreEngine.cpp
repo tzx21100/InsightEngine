@@ -348,6 +348,17 @@ namespace IS {
         DeserializeComponent<Collider>(entity, loaded, "Collider");
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
+    }    
+    
+    void InsightEngine::DeserializeAllComponentsPrefab(Entity entity, Json::Value &loaded) {
+        DeserializeComponent<RigidBody>(entity, loaded, "RigidBody");
+        DeserializeComponent<Sprite>(entity, loaded, "Sprite");
+        DeserializeComponent<Transform>(entity, loaded, "Transform");
+        DeserializeComponent<ScriptComponent>(entity, loaded, "Script");
+        DeserializeComponent<ButtonComponent>(entity, loaded, "ButtonComponent");
+        DeserializeComponent<Collider>(entity, loaded, "Collider");
+        DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
+        DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
     }
 
     void InsightEngine::SerializeAllComponents(Entity entity, Json::Value &saved_entity) {
@@ -392,6 +403,35 @@ namespace IS {
         DeserializeAllComponents(entity, loaded);
         return entity;
 
+    }    
+    
+    Entity InsightEngine::LoadEntityFromJsonPrefab(std::string name, Entity entity) {
+        std::string filename = name;
+        Json::Value loaded;
+        LoadJsonFromFile(loaded, filename);
+        std::string str_sig = loaded["Signature"].asString();
+        std::string entity_name = loaded["Name"].asString();
+        if (HasComponent<Transform>(entity)) {
+            Transform save = GetComponent<Transform>(entity);
+            mComponentManager->EntityDestroyed(entity);
+            mSystemManager->EntityDestroyed(entity);
+            mEntityManager->SetName(entity, entity_name);
+            DeserializeAllComponentsPrefab(entity, loaded);
+            auto &a = GetComponent<Transform>(entity);
+            a = save;
+
+        }
+        else {
+            mComponentManager->EntityDestroyed(entity);
+            mSystemManager->EntityDestroyed(entity);
+            mEntityManager->SetName(entity, entity_name);
+            //add in future components: the DeserializeComponent is defined in the .h as a hel  er function to make calling easier
+            DeserializeAllComponents(entity, loaded);
+
+        }
+
+        return entity;
+
     }
 
 
@@ -406,7 +446,7 @@ namespace IS {
 
     //creating an entity from prefab
     Entity InsightEngine::LoadFromPrefab(Prefab prefab ,Entity entity) {
-        LoadEntityFromJson("Assets/Prefabs/"+prefab.mName + ".json",entity);
+        LoadEntityFromJsonPrefab("Assets/Prefabs/"+prefab.mName + ".json",entity);
         return entity;
 
     }

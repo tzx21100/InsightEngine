@@ -11,7 +11,7 @@ namespace IS
     {
         //Powerup triggers
         static public bool Reward_DoubleJump = false;
-        static public bool Reward_Dash = false;
+        static public bool Reward_Dash = true;
         static public bool Reward_WallClimb = true;
 
         //public player variables

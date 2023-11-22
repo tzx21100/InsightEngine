@@ -1,10 +1,22 @@
 {
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+		"AudioVolumeLevel" : 0.43000000715255737
+	},
 	"Name" : "BG Entity",
-	"Signature" : "00000000000000000000000000000011",
+	"Script" : 
+	{
+		"ScriptName" : "BackGroundFollowPlayer"
+	},
+	"Signature" : "00000000000000000000000100100011",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
-		"Layer" : 1,
+		"Layer" : 0,
 		"SpriteColorX" : 0.60000002384185791,
 		"SpriteColorY" : 0.60000002384185791,
 		"SpriteColorZ" : 0.60000002384185791,

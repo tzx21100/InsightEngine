@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 338.45071411132813,
-				"Y" : 307.49282836914063
+				"X" : 1485.1748046875,
+				"Y" : 1657.039794921875
 			},
 			"BoxColliderOffset" : 
 			{
@@ -40,7 +40,7 @@
 		},
 		"BoxColliderEnabled" : true,
 		"CircleColliderEnabled" : false,
-		"CollidingEntity" : 14,
+		"CollidingEntity" : 8,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Right Collider",
@@ -82,8 +82,8 @@
 		"SpriteTransformRotation" : 87.582275390625,
 		"SpriteTransformScalingX" : 1138.9959716796875,
 		"SpriteTransformScalingY" : 283.84765625,
-		"SpriteTransformWorldPositionX" : 338.45071411132813,
-		"SpriteTransformWorldPositionY" : 307.49282836914063,
+		"SpriteTransformWorldPositionX" : 1485.1748046875,
+		"SpriteTransformWorldPositionY" : 1657.039794921875,
 		"animations" : []
 	},
 	"Transform" : 
@@ -91,7 +91,7 @@
 		"TransformRotation" : 87.582275390625,
 		"TransformScalingX" : 1138.9959716796875,
 		"TransformScalingY" : 283.84765625,
-		"TransformWorldPositionX" : 338.45071411132813,
-		"TransformWorldPositionY" : 307.49282836914063
+		"TransformWorldPositionX" : 1485.1748046875,
+		"TransformWorldPositionY" : 1657.039794921875
 	}
 }

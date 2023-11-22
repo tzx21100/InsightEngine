@@ -277,6 +277,7 @@ namespace IS {
          * \return The loaded entity.
          */
         Entity LoadEntityFromJson(std::string filename, Entity entity);
+        Entity LoadEntityFromJsonPrefab(std::string filename, Entity entity);
 
         /**
          * \brief Loads an entity from a prefab.
@@ -684,6 +685,7 @@ namespace IS {
          * \brief Function To Deserialize All components
          */
         void DeserializeAllComponents(Entity entity, Json::Value& loaded);
+        void DeserializeAllComponentsPrefab(Entity entity, Json::Value& loaded);
 
         /**
          * \brief Function for serializing all components.

@@ -12,8 +12,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : 247.02983093261719,
-				"Y" : 201.34053039550781
+				"X" : 132.06991577148438,
+				"Y" : 206.19441223144531
 			},
 			"CircleColliderOffset" : 
 			{
@@ -68,10 +68,10 @@
 		"SpriteTextureIndex" : 8,
 		"SpriteTextureWidth" : 3921,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : -200.0,
+		"SpriteTransformScalingX" : 200.0,
 		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : 247.02983093261719,
-		"SpriteTransformWorldPositionY" : 221.34053039550781,
+		"SpriteTransformWorldPositionX" : 132.06991577148438,
+		"SpriteTransformWorldPositionY" : 226.19441223144531,
 		"animations" : 
 		[
 			{
@@ -91,9 +91,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 1.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.066046163439750671,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.061807412654161453,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -103,9 +103,9 @@
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : -200.0,
+		"TransformScalingX" : 200.0,
 		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : 247.02983093261719,
-		"TransformWorldPositionY" : 221.34053039550781
+		"TransformWorldPositionX" : 132.06991577148438,
+		"TransformWorldPositionY" : 226.19441223144531
 	}
 }
