@@ -413,12 +413,13 @@ namespace IS {
         std::string entity_name = loaded["Name"].asString();
         if (HasComponent<Transform>(entity)) {
             Transform save = GetComponent<Transform>(entity);
+            Vector2D save_pos=save.getWorldPosition();
             mComponentManager->EntityDestroyed(entity);
             mSystemManager->EntityDestroyed(entity);
             mEntityManager->SetName(entity, entity_name);
             DeserializeAllComponentsPrefab(entity, loaded);
             auto &a = GetComponent<Transform>(entity);
-            a = save;
+            a.setWorldPosition(save_pos.x, save_pos.y);
 
         }
         else {
