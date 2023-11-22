@@ -46,9 +46,9 @@ namespace IS {
          * Initializes a new instance of the \c BrowserPanel class.
          */
         BrowserPanel(EditorLayer& editor_layer)
-            : Panel("Browser", editor_layer), mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false) {}
+            : Panel("Browser", editor_layer), mCurrentDirectory(ASSETS_PATH), mSelectedImportedAsset(IMPORTED), mShowImportedAssets(false), mChildWindowHovered(false) {}
 
-        void UpdatePanel() override {}
+        void UpdatePanel() override;
 
         /*! \brief Renders the asset browser panel.
          *
@@ -86,6 +86,7 @@ namespace IS {
         std::filesystem::path mCurrentDirectory; ///< The currently selected directory.
         std::string mSelectedImportedAsset; ///< The type of selected asset.
         bool mShowImportedAssets; ///< Boolean flags indicating to show imported assets.
+        bool mChildWindowHovered;
         Controls mControls; ///< Configuration controls for the asset browser.
 
         /*!

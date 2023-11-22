@@ -31,6 +31,19 @@ namespace IS {
 
     const std::string BrowserPanel::IMPORTED = "Imported";
 
+    void BrowserPanel::UpdatePanel()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const input = engine.GetSystem<InputManager>("Input");
+        const bool CTRL_HELD = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        ImGuiIO& io = ImGui::GetIO();
+
+        if (CTRL_HELD && mChildWindowHovered)
+        {
+            mControls.mThumbnailSize = std::max(mControls.mThumbnailSize + io.MouseWheel, MIN_THUMBNAIL_SIZE);
+        }
+    }
+
     void BrowserPanel::RenderPanel()
     {
         // Render asset browser window
@@ -82,7 +95,7 @@ namespace IS {
         // Save window states
         mFocused    = ImGui::IsWindowFocused();
         mAppearing  = ImGui::IsWindowAppearing();
-        mHovered    = ImGui::IsItemHovered();
+        mHovered    = ImGui::IsWindowHovered();
         ImGui::End(); // end window Asset Browser
     }
 
@@ -201,6 +214,7 @@ namespace IS {
                     ImGui::TextWrapped(filename_string.c_str());
                 }
             });
+            mChildWindowHovered = ImGui::IsWindowHovered();
         }
 
         ImGui::EndChild(); // end child window Assets
@@ -432,7 +446,9 @@ namespace IS {
                     for (auto const& [name, sound] : asset->mSoundList)
                     {
                         std::filesystem::path path(name);
-                        ImTextureID icon = mEditorLayer.GetIcon("File");
+                        std::string extension = path.extension().string();
+                        bool is_mp3 = extension == "MP3" || extension == "mp3";
+                        ImTextureID icon = mEditorLayer.GetIcon(is_mp3 ? "MP3" : "WAV");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
                         // Start file drag
@@ -458,7 +474,7 @@ namespace IS {
                     for (auto const& [name, prefab] : asset->mPrefabList)
                     {
                         std::filesystem::path path(name);
-                        ImTextureID icon = mEditorLayer.GetIcon("File");
+                        ImTextureID icon = mEditorLayer.GetIcon("Json");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
 
@@ -485,7 +501,7 @@ namespace IS {
                     for (auto const& name : asset->mScriptList)
                     {
                         std::filesystem::path path(name);
-                        ImTextureID icon = mEditorLayer.GetIcon("Json");
+                        ImTextureID icon = mEditorLayer.GetIcon("C#");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
 
@@ -508,6 +524,7 @@ namespace IS {
 
                 ImGui::PopStyleColor();
             });
+            mChildWindowHovered = ImGui::IsWindowHovered();
         }
 
         ImGui::EndChild(); // end child window Imported Assets Browser

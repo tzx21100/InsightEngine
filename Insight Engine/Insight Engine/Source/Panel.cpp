@@ -303,7 +303,7 @@ namespace IS {
         // Save window states
         mFocused    = ImGui::IsWindowFocused();
         mAppearing  = ImGui::IsWindowAppearing();
-        mHovered    = ImGui::IsItemHovered();
+        mHovered    = ImGui::IsWindowHovered();
         ImGui::End(); // end window Settings
     }
 

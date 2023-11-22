@@ -1,13 +1,12 @@
 /*!
- * \file HierarchyPanel.cpp
+ * \file InspectorPanel.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
  * \par Course: CSD2401
  * \date 23-09-2023
  * \brief
- * This source file defines the implementation for class HierarchyPanel,
- * which encapsulates the functionalities of a scene hierarchy panel
- * akin to other game engines (i.e., Unity/Unreal Engine, etc.), which
- * manages the entities in a scene.
+ * This source file defines the implementation for class InspectorPanel,
+ * which encapsulates the functionalities of an inspector panel which
+ * manages an entity and its components
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.

@@ -61,6 +61,7 @@ namespace IS {
         mIcons["WAV"]                = EditorUtils::ConvertTextureID(asset->GetIcon("wav_file_icon.png")->texture_id);
         mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon("png_file_icon.png")->texture_id);
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon("jpeg_file_icon.png")->texture_id);
+        mIcons["C#"]                 = EditorUtils::ConvertTextureID(asset->GetIcon("c#_file_icon.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached.", mDebugName);
 
