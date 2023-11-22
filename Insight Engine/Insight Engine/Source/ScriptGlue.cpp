@@ -296,10 +296,9 @@ namespace IS {
         sprite_component.anims.clear();
     }
     
-    static void AttachCamera() {
-        auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
+    static void AttachCamera(float xoffset, float yoffset) {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-        camera.SetPosition(transform_component.world_position.x, transform_component.world_position.y);
+        camera.SetPosition(xoffset, yoffset);
     }
 
     static void AudioPlaySound(MonoString* name) {
@@ -329,7 +328,7 @@ namespace IS {
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
     }    
     

@@ -1,18 +1,10 @@
 {
-	"AudioEmitter" : 
-	{
-		"AudioFalloffFactor" : 1.0,
-		"AudioIsLoop" : false,
-		"AudioPitch" : 1.0,
-		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-		"AudioVolumeLevel" : 0.43000000715255737
-	},
 	"Name" : "BG Entity",
 	"Script" : 
 	{
 		"ScriptName" : "BackGroundFollowPlayer"
 	},
-	"Signature" : "00000000000000000000000100100011",
+	"Signature" : "00000000000000000000000000100011",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -21,13 +13,13 @@
 		"SpriteColorY" : 0.60000002384185791,
 		"SpriteColorZ" : 0.60000002384185791,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "placeholder_background.png",
+		"SpriteFilename" : "transparent.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 16,
-		"SpriteTextureHeight" : 2160,
-		"SpriteTextureIndex" : 15,
-		"SpriteTextureWidth" : 3840,
+		"SpriteTexture" : 26,
+		"SpriteTextureHeight" : 32,
+		"SpriteTextureIndex" : 25,
+		"SpriteTextureWidth" : 32,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 3840.0,
 		"SpriteTransformScalingY" : 2160.0,

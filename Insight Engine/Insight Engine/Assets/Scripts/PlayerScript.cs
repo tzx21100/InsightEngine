@@ -10,7 +10,7 @@ namespace IS
     public class PlayerScript
     {
         //Powerup triggers
-        static public bool Reward_DoubleJump = false;
+        static public bool Reward_DoubleJump = true;
         static public bool Reward_Dash = true;
         static public bool Reward_WallClimb = true;
 
@@ -35,6 +35,7 @@ namespace IS
         static SimpleImage player_climb11;
         static SimpleImage player_transparent;
         static SimpleImage player_land;
+        static SimpleImage player_jump;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -103,6 +104,9 @@ namespace IS
         static public Vector2D player_pos =new Vector2D(0,0);
         static private Vector2D trans_scaling = new Vector2D(0,0);
 
+        //camera pos
+        static public Vector2D camera_pos =new Vector2D(0,0);  
+        static private Vector2D target_pos =new Vector2D(0,0);  
 
         public static int BoolToInt(bool boolValue)
         {
@@ -117,6 +121,7 @@ namespace IS
 
             player_walk = InternalCalls.GetSpriteImage("running_anim 4R3C.png");
             player_idle = InternalCalls.GetSpriteImage("idle_anim 4R3C.png");
+            player_jump = InternalCalls.GetSpriteImage("jump_anim 4R3C.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
             player_climb1 = InternalCalls.GetSpriteImage("WallClimb_0001.png");
             player_climb2 = InternalCalls.GetSpriteImage("WallClimb_0002.png");
@@ -165,7 +170,23 @@ namespace IS
             }
 
             //Attach Camera
-            InternalCalls.AttachCamera();
+            
+
+           target_pos.x = player_pos.x + InternalCalls.RigidBodyGetVelocity().x/10f ;
+           target_pos.y= player_pos.y  +InternalCalls.RigidBodyGetVelocity().y/10f;
+
+            float interpolate_speed = 15f;
+
+/*            if (InternalCalls.RigidBodyGetVelocity().y < -1500)
+            {
+                interpolate_speed = 25f;
+            }*/
+
+            camera_pos =Vector2D.LerpGameCam(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
+
+
+
+            InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
 
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
@@ -191,33 +212,33 @@ namespace IS
 
             //SPRITE
 
-            if (hori_movement != 0)
+            if (!isDashing && !isClimbing && !isJumping)
             {
-                acceleration += acceleration_increment;
-                if (acceleration > max_acceleration) { acceleration = max_acceleration; }
-                move_speed += acceleration;
-                if (move_speed > max_speed) { move_speed = max_speed; }
 
-                InternalCalls.SetSpriteAnimationIndex(0);
-                InternalCalls.SetSpriteImage(player_walk);
+                if (hori_movement != 0)
+                {
+                    acceleration += acceleration_increment;
+                    if (acceleration > max_acceleration) { acceleration = max_acceleration; }
+                    move_speed += acceleration;
+                    if (move_speed > max_speed) { move_speed = max_speed; }
 
+                    InternalCalls.SetSpriteAnimationIndex(0);
+                    InternalCalls.SetSpriteImage(player_walk);
+
+                }
+                else
+                {
+                    move_speed -= acceleration;
+                    acceleration -= acceleration_increment;
+                    if (acceleration < acceleration_base) { acceleration = acceleration_base; }
+                    if (move_speed < 0) { move_speed = 0; }
+
+
+                    InternalCalls.SetSpriteAnimationIndex(1);
+                    InternalCalls.SetSpriteImage(player_idle);
+
+                }
             }
-            else
-            {
-                move_speed -= acceleration;
-                acceleration -= acceleration_increment;
-                if (acceleration < acceleration_base) { acceleration = acceleration_base; }
-                if (move_speed < 0) { move_speed = 0; }
-
-
-                InternalCalls.SetSpriteAnimationIndex(1);
-                InternalCalls.SetSpriteImage(player_idle);
-
-            }
-
-
-
-
 
 
 
@@ -296,7 +317,7 @@ namespace IS
 
                 }
 
-
+                
                 InternalCalls.DrawImageAt(pos, 0f, scale, curr_image, 1);
 
             }
@@ -366,6 +387,7 @@ namespace IS
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
                         Jump();
+                        InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
                 }
@@ -375,7 +397,7 @@ namespace IS
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
-                
+                InternalCalls.SetSpriteImage(player_jump);
 
                 if (jump_amount > 0 && Reward_DoubleJump)
                 {
@@ -464,9 +486,11 @@ namespace IS
             InternalCalls.FreeSpriteImage(player_walk);
             InternalCalls.FreeSpriteImage(player_transparent);
             InternalCalls.FreeSpriteImage(player_land);
+            InternalCalls.FreeSpriteImage(player_jump);
             InternalCalls.DestroyEntity(entityA);
             InternalCalls.DestroyEntity(entityWall);
             InternalCalls.DestroyEntity(land_entity);
+            
             
         }
 
@@ -482,7 +506,7 @@ namespace IS
             }
 
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
-                                                        0.0f, trans_scaling.x*2, trans_scaling.y*2, 1, 0.8f, -0.1f, 1,
+                                                        0.0f, trans_scaling.x*1.5f, trans_scaling.y*1.5f, 1, 0.5f, -0.1f, 0.2f,
                                                         0, "Particle Empty.txt", "Dash AfterImage.png");
             canDash = false;
             isDashing = true;
@@ -490,10 +514,19 @@ namespace IS
 
             if (dash_timer<=0)
             {
+
+                for (int i = 0; i < 72; i++)
+                {
+
+                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "Particle Test.txt");
+
+
+                }
+
                 isDashing = false;
                 dash_timer = dash_set;
                 bullet_time_timer = bullet_time_set;
-                InternalCalls.RigidBodySetForce(0f, 0f);
+                InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x/3f, InternalCalls.RigidBodyGetVelocity().y/3f);
                 return;
             }
 

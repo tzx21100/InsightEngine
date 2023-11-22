@@ -12,33 +12,102 @@ namespace IS
     class BackGroundFollowPlayer
     {
 
-        static SimpleImage bg_image;
+        static SimpleImage bg_image1;
+        static SimpleImage bg_image2;
+        static SimpleImage bg_image3;
+        static SimpleImage bg_image4;
+        static SimpleImage bg_image5;
+
+        static private Vector2D bg1_pos=new Vector2D(0,0);
+        static private Vector2D bg2_pos=new Vector2D(0,0);
+        static private Vector2D bg3_pos=new Vector2D(0,0);
+        static private Vector2D bg4_pos=new Vector2D(0,0);
+        static private Vector2D bg5_pos=new Vector2D(0,0);
+        static private Vector2D bg_scale=new Vector2D(4096*2,756*2);
+
+        static private float player_offset = 10f;
+
 
         static public void Init(){
-            bg_image = InternalCalls.GetSpriteImage("placeholder_background.png");
+            bg_image1 = InternalCalls.GetSpriteImage("1st.png");
+            bg_image2 = InternalCalls.GetSpriteImage("2nd.png");
+            bg_image3 = InternalCalls.GetSpriteImage("3rd.png");
+            bg_image4 = InternalCalls.GetSpriteImage("4th.png");
+            bg_image5 = InternalCalls.GetSpriteImage("5th.png");
 
 
         }
 
-        static public void Update(){
-            // Target position (Player's position)
-            Vector2D targetPos = PlayerScript.player_pos;
+        static public void Update()
+        {
+            //InternalCalls.DrawImageAt(PlayerScript.camera_pos.ToSimpleVector2D() ,0, bg_scale.ToSimpleVector2D(), bg_image5, 0);
+            // Calculate the player's offset
+            float playerOffsetX = PlayerScript.player_pos.x;
+            float playerOffsetY = PlayerScript.player_pos.y;
 
-            // Current position of the object
-            Vector2D currentPos = new Vector2D(InternalCalls.GetTransformPosition().x,InternalCalls.GetTransformPosition().y);
+            // Set offset ratios for each layer (farther layers have smaller ratios)
+            float[] offsetRatios = new float[] { 0.01f, 0.02f, 0.03f, 0.04f, 0.2f };
 
-            // Interpolation speed (adjust as needed)
-            float speed = 25f; // Units per second
+            // Adjust the position of each background layer based on the player's offset
+            for (int i = 0; i < offsetRatios.Length; i++)
+            {
+                // Calculate the offset for this layer
+                float layerOffsetX = playerOffsetX * offsetRatios[i];
+                float layerOffsetY = playerOffsetY * offsetRatios[i];
 
-            // Calculate the interpolated position
-            Vector2D interpolatedPos = Vector2D.Lerp(currentPos, targetPos, speed * InternalCalls.GetDeltaTime());
+                // Get the initial position of this layer
+                Vector2D initialPos = GetCurrentPositionForLayer(i);
 
-            // Set the new position
-            InternalCalls.TransformSetPosition(interpolatedPos.x, interpolatedPos.y);
+                // Update the position
+                Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x+initialPos.x - layerOffsetX, PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
+
+                // Draw the layer at its new position
+                //InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 0);
+            }
+
+            // Update the camera position
+            InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
+
+            
         }
-        
+
+
+
+        static SimpleImage GetBackgroundImage(int index)
+        {
+            switch (index)
+            {
+                case 0: return bg_image5;
+                case 1: return bg_image4;
+                case 2: return bg_image3;
+                case 3: return bg_image2;
+                case 4: return bg_image1;
+                default: return bg_image5;
+            }
+        }
+
+        static Vector2D GetCurrentPositionForLayer(int index)
+        {
+            switch (index)
+            {
+                case 0: return bg1_pos;
+                case 1: return bg2_pos;
+                case 2: return bg3_pos;
+                case 3: return bg4_pos;
+                case 4: return bg5_pos;
+                default: return bg1_pos;
+            }
+
+        }
+
+
+
         static public void CleanUp(){
-            InternalCalls.FreeSpriteImage(bg_image);
+            InternalCalls.FreeSpriteImage(bg_image1);
+            InternalCalls.FreeSpriteImage(bg_image2);
+            InternalCalls.FreeSpriteImage(bg_image3);
+            InternalCalls.FreeSpriteImage(bg_image4);
+            InternalCalls.FreeSpriteImage(bg_image5);
         }
 
     }

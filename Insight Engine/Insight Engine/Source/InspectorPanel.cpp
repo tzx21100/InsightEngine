@@ -163,7 +163,7 @@ namespace IS {
 
                 // Apply modification
                 float rotation = transform.rotation;
-                if (ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
+                if (ImGui::DragFloat("##Rotation", &rotation, 1.f, 0.f, 360.f, "%.f degree"))
                 {
                     CommandHistory::AddCommand(std::make_shared<ChangeCommand<float>>(transform.rotation, rotation));
                 }

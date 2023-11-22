@@ -104,7 +104,7 @@ namespace IS
         internal extern static void CreateAnimationFromSpriteEntity(int row, int columns, float animation_time,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AttachCamera();
+        internal extern static void AttachCamera(float x_offset,float y_offset);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name);
