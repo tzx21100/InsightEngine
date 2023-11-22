@@ -173,6 +173,7 @@ namespace IS {
             Vec2 scaling = transform.scaling;
             if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
             {
+                scaling = { abs(scaling.x), abs(scaling.y) };
                 CommandHistory::AddCommand(std::make_shared<ChangeCommand<Vector2D>>(transform.scaling, scaling));
             }
 

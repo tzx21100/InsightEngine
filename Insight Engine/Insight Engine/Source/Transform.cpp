@@ -129,7 +129,7 @@ namespace IS {
 		return ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform() * world_to_cam_xform;
 	}
 
-	glm::mat4 Transform::GetCamerarToWorldTransform()
+	glm::mat4 Transform::GetCameraToWorldTransform()
 	{
 		// convert angle to radians
 		float angle_rad = glm::radians(rotation);

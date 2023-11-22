@@ -25,6 +25,7 @@
 #include <glm/glm.hpp>
 
 namespace IS {
+
 	class Transform : public IComponent {
 	public:
 		// Member variables
@@ -148,7 +149,7 @@ namespace IS {
 		Mtx33 ReturnXformMatrix();
 
 		glm::mat4 Return3DXformMatrix();
-		glm::mat4 GetCamerarToWorldTransform();
+		glm::mat4 GetCameraToWorldTransform();
 
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.

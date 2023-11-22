@@ -485,18 +485,17 @@ namespace IS {
 
         auto& engine = InsightEngine::Instance();
         Entity selected_entity = mEditorLayer.GetSelectedEntity();
-
-        ImGuizmo::SetOrthographic(true);
+        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        
+        ImGuizmo::SetOrthographic(camera.mProjectionType == ProjectionType_Othographic ? true : false);
         ImGuizmo::SetDrawlist();
         ImGuizmo::SetRect(mViewportBounds[0].x, mViewportBounds[0].y,
                           mViewportBounds[1].x - mViewportBounds[0].x,
                           mViewportBounds[1].y - mViewportBounds[0].y);
-
-        auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         const glm::mat4 view = camera.GetViewMatrix();
         const glm::mat4 projection = camera.GetProjectionMatrix();
         auto& transform = engine.GetComponent<Transform>(selected_entity);
-        glm::mat4 transform_matrix = transform.GetCamerarToWorldTransform();
+        glm::mat4 transform_matrix = transform.GetCameraToWorldTransform();
 
         float snap_value{};
         switch (mGizmoType)
@@ -515,8 +514,8 @@ namespace IS {
 
         if (ImGuizmo::IsUsing() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
         {
-            Vector3D translation3D, rotation3D, scale3D;
-            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), &translation3D.x, &rotation3D.x, &scale3D.x);
+            glm::vec3 translation3D, rotation3D, scale3D;
+            ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform_matrix), glm::value_ptr(translation3D), glm::value_ptr(rotation3D), glm::value_ptr(scale3D));
 
             float delta_rot = rotation3D.z - transform.rotation;
 
