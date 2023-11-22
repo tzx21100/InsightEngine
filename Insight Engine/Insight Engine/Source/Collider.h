@@ -94,11 +94,7 @@ namespace IS
 
 		Collider();
 
-		void CreateCollider();
-
 		void UpdateCollider(Transform const& trans);
-
-		void CreateBoxCollider();
 
 		void CreateBoxVertices(float width, float height);
 

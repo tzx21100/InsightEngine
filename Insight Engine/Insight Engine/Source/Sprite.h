@@ -66,16 +66,16 @@ namespace IS {
         };
 
         // Member variables
-        GLenum primitive_type{};        // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
-        Transform model_TRS{};          // Transformation values for the sprite.
-        int animation_index{};          // The current texture index for switching animations (0 is the default texture).
-        Image img{};                    // Texture Object
-        std::vector<Animation> anims{}; // Vector of animations attached to this sprite
-        bool toRender{ true };          // Flag to control rendering
-        int layer{ DrawLayer::DEFAULT_LAYER };                    // Layer value (lower is further back)
+        GLenum primitive_type{};                // The rendering primitive type for the sprite (e.g., GL_TRIANGLE_STRIP).
+        Transform model_TRS{};                  // Transformation values for the sprite.
+        int animation_index{};                  // The current texture index for switching animations (0 is the default texture).
+        Image img{};                            // Texture Object
+        std::vector<Animation> anims{};         // Vector of animations attached to this sprite
+        bool toRender{ true };                  // Flag to control rendering
+        int layer{ DrawLayer::DEFAULT_LAYER };  // Layer value (lower is further back)
         // ImGui properties
-        std::string name;               // The name of the sprite.
-        glm::vec4 color{};              // The color of the sprite.
+        std::string name;                       // The name of the sprite.
+        glm::vec4 color{ 1.f, 1.f, 1.f, 1.f };  // The color of the sprite. If textured, will be the tint.
 
         // For layering //
         enum DrawLayer : int
@@ -191,7 +191,7 @@ namespace IS {
         static void draw_instanced_3D_quads();
 
         static void draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer = DrawLayer::DEFAULT_LAYER);
-        static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer = DrawLayer::DEFAULT_LAYER);
+        static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer = DrawLayer::DEFAULT_LAYER);
 
         static void draw_lights();
 

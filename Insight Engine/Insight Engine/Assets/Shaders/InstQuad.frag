@@ -9,7 +9,7 @@ layout(location = 5) in flat float vEntityID;
 layout(location = 0) out vec4 fFragColor;
 layout(location = 1) out int fEntityID;
 
-uniform sampler2D uTex2d[32];
+uniform sampler2D uTex2d[128];
   
 void main()
 {
@@ -23,6 +23,7 @@ void main()
     {
         int texIdx = int(vTexID);
         fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
+        fFragColor *= vColor;
     }
     int id = int(vEntityID);
     fEntityID = id + 1;

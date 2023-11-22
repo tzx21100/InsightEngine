@@ -45,20 +45,6 @@ namespace IS
 		mResponseEnable =  true;
 	}
 
-	void Collider::CreateCollider() {
-		if (IsBoxColliderEnable()) {
-			CreateBoxCollider();
-		}
-
-		if (IsCircleColliderEnable()) {
-			//CreateCircleCollider();
-		}
-
-		//if (mSelectedCollider.test(ColliderShape::LINE)) {
-		//	//CreateLineCollider();
-		//}
-	}
-
 	void Collider::UpdateCollider(Transform const& trans) {
 		if (IsBoxColliderEnable()) {
 			UpdateBoxCollider(trans);
@@ -71,18 +57,6 @@ namespace IS
 		//if (mSelectedCollider.test(ColliderShape::LINE)) {
 		//	//UpdateLineCollider();
 		//}
-	}
-
-	void Collider::CreateBoxCollider() {
-
-		//mBoxCollider->center = Vector2D();
-		//mBoxCollider->min = Vector2D();
-		//mBoxCollider->max = Vector2D();
-		//mBoxCollider->offset = Vector2D();
-		//mBoxCollider->sizeScale = Vector2D(1.f, 1.f);
-		//mBoxCollider->vertices.reserve(4);
-		//mBoxCollider->transformedVertices.reserve(4);
-
 	}
 
 	void Collider::CreateBoxVertices(float width, float height) {

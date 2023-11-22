@@ -20,13 +20,13 @@ namespace IS {
     // set of layers to NOT render
     std::unordered_set<int> Sprite::layersToIgnore{};
 
-    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP), color(.6f, .6f, .6f, 1.f) {
+    Sprite::Sprite() : name("Quad"), primitive_type(GL_TRIANGLE_STRIP) {
         // Give it a default size of 1 by 1
         setSpriteSize(1, 1);
         setWorldPos(0, 0);
     }
 
-    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive), color(.6f, .6f, .6f, 1.f) {}
+    Sprite::Sprite(std::string const& model_name, GLenum primitive) : name(model_name), primitive_type(primitive) {}
 
     Sprite::Sprite(const Sprite& other)
         : primitive_type(other.primitive_type),
@@ -168,13 +168,14 @@ namespace IS {
         }
     }
 
-    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, int layer) {
+    void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
         if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
             Sprite::instanceData3D instData;
+            instData.color = { 0.f, 0.f, 0.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;

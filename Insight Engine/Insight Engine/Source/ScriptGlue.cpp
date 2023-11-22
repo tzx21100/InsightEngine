@@ -296,10 +296,9 @@ namespace IS {
         sprite_component.anims.clear();
     }
     
-    static void AttachCamera() {
-        auto& transform_component = InsightEngine::Instance().GetComponent<Transform>(InsightEngine::Instance().GetScriptCaller());
+    static void AttachCamera(float xoffset, float yoffset) {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-        camera.SetPosition(transform_component.world_position.x, transform_component.world_position.y);
+        camera.SetPosition(xoffset, yoffset);
     }
 
     static void AudioPlaySound(MonoString* name) {
@@ -329,7 +328,7 @@ namespace IS {
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
     }    
     
@@ -421,9 +420,9 @@ namespace IS {
         return body_component.mBodyType == BodyType::Spikes ? 1 : 0;
     }
 
-    static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image , int layer=1) {
+    static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer=1) {
         
-        Sprite::draw_textured_quad(Vector2D(pos.x,pos.y), rotation, Vector2D(scale.x,scale.y), ConvertToImage(image), layer);
+        Sprite::draw_textured_quad(Vector2D(pos.x,pos.y), rotation, Vector2D(scale.x,scale.y), ConvertToImage(image), alpha, layer);
     
     }
 

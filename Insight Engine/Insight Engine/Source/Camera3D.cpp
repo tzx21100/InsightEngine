@@ -52,6 +52,7 @@ namespace IS {
 
 	void Camera3D::Update()
 	{
+
 		float adjusted_fov = std::clamp(mFOV / mZoomLevel, CAMERA_FOV_MIN, CAMERA_FOV_MAX);
 		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
 

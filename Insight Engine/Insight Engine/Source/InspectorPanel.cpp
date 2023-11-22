@@ -155,10 +155,11 @@ namespace IS {
                 ImGui::TableNextColumn();
 
                 // Apply modification
-                if (float rotation = transform.rotation; ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
+                if (float rotation = transform.rotation; ImGui::DragFloat("##Rotation", &rotation, 1.f, 0.f, 360.f, "%.f deg"))
                 {
                     CommandHistory::AddCommand<ChangeCommand<float>>(transform.rotation, rotation);
                 }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
             });
 
             // Render Scale

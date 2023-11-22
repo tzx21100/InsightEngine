@@ -602,9 +602,9 @@ namespace IS
 
 			float contact_velocity_mag = ISVector2DDotProduct(relative_velocity, normal);
 
-			if (contact_velocity_mag > 0.f || std::abs(contact_velocity_mag) < 1.f) // moving away
+			if (contact_velocity_mag > 0.f || mManifoldInfo.NearlyEqual(contact_velocity_mag, 0.f)) // moving away
 			{
-				continue; // continue if moving away or value nearly 0 (1 or 5)
+				continue; // continue if moving away or value nearly 0
 			}
 
 			float ra_perp_dotN = ISVector2DDotProduct(ra_perp, normal);
@@ -713,6 +713,13 @@ namespace IS
 			transA.angle_speed = bodyA->mAngularVelocity;
 			transB.angle_speed = bodyB->mAngularVelocity;
 		}
+
+		// clamp if angular velocity nearly equal to 0
+		bodyA->mVelocity = (mManifoldInfo.NearlyEqual(bodyA->mVelocity, Vector2D())) ? Vector2D() : bodyA->mVelocity;
+		bodyB->mVelocity = (mManifoldInfo.NearlyEqual(bodyB->mVelocity, Vector2D())) ? Vector2D() : bodyB->mVelocity;
+		bodyA->mAngularVelocity = (mManifoldInfo.NearlyEqual(bodyA->mAngularVelocity, 0.f)) ? 0.f : bodyA->mAngularVelocity;
+		bodyB->mAngularVelocity = (mManifoldInfo.NearlyEqual(bodyB->mAngularVelocity, 0.f)) ? 0.f : bodyB->mAngularVelocity;
+
 	}
 
 	void CollisionSystem::Colliding(Collider& collider_a, Collider& collider_b) {

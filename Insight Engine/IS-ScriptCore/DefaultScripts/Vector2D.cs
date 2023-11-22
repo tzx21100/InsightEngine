@@ -30,16 +30,31 @@ public class Vector2D
     }
 
     // Lerp
-    public static float Lerp(float start, float end, float t)
+    public static float lerp(float start, float end, float t)
     {
+        return (1 - t) * start + t * end;
+    }
+
+    public static float smoothLerp(float start, float end, float t)
+    {
+        // Using a smooth step function for smoother interpolation on Y axis.
+        t = t * t * (3f - 2f * t);
         return (1 - t) * start + t * end;
     }
 
     public static Vector2D Lerp(Vector2D start, Vector2D end, float t)
     {
         return new Vector2D(
-            Lerp(start.x, end.x, t),
-            Lerp(start.y, end.y, t)
+            lerp(start.x, end.x, t),
+            lerp(start.y, end.y, t)
+        );
+    }
+
+    public static Vector2D LerpGameCam(Vector2D start, Vector2D end, float t)
+    {
+        return new Vector2D(
+            lerp(start.x, end.x, t),  // Linear interpolation for X axis.
+            smoothLerp(start.y, end.y, t)  // Smoother interpolation for Y axis.
         );
     }
 

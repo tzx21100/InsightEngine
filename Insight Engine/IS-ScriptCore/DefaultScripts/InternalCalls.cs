@@ -104,7 +104,7 @@ namespace IS
         internal extern static void CreateAnimationFromSpriteEntity(int row, int columns, float animation_time,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AttachCamera();
+        internal extern static void AttachCamera(float x_offset,float y_offset);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name);
@@ -164,7 +164,7 @@ namespace IS
         internal extern static void DrawCircle(float x1, float y1 ,float scale1, float scale2);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, int layer = 1);
+        internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer = 1);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void LoadScene(string file_name);
