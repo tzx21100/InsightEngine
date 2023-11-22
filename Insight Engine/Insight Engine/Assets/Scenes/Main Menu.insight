@@ -51,7 +51,18 @@
 				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
 				"AudioVolumeLevel" : 1.0
 			},
+			"ButtonComponent" : 
+			{
+				"ButtonImageName" : "",
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonType" : 0
+			},
 			"Name" : "Start Button",
+			"Script" : 
+			{
+				"ScriptName" : "StartButtonScript"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -65,7 +76,7 @@
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 20,
 				"SpriteTextureHeight" : 345,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 19,
 				"SpriteTextureWidth" : 1048,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1048.0,
