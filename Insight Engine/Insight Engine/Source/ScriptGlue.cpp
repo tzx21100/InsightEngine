@@ -229,6 +229,12 @@ namespace IS {
         sprite_component.img = a;
     }
 
+    static void ResetSpriteAnimationFrameEntity(int entity) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        sprite_component.anims[sprite_component.animation_index].resetAnimation();
+    }
+
+
 
     static SimpleImage GetSpriteImage(MonoString* name) {
         auto script_sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
@@ -274,6 +280,15 @@ namespace IS {
         sprite_component.anims.emplace_back(animation);
         IS_CORE_DEBUG("Animsize: {}",sprite_component.anims.size());
 
+    }    
+    
+    static void CreateAnimationFromSpriteEntity(int row, int columns, float animation_time,int entity) {
+        Animation animation;
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        animation.initAnimation(row, columns, animation_time);
+        sprite_component.anims.emplace_back(animation);
+        IS_CORE_DEBUG("Animsize: {}",sprite_component.anims.size());
+
     }
 
     static void ResetAnimations() {
@@ -315,6 +330,19 @@ namespace IS {
         Entity entity=InsightEngine::Instance().CreateEntity(str);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
         InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        return static_cast<int>(entity);
+    }    
+    
+    static int CreateEntityVFX(MonoString* name, SimpleImage image) {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity=InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        auto& sprite_component=InsightEngine::Instance().GetComponent<Sprite>(entity);
+        sprite_component.img = ConvertToImage(image);
+
         return static_cast<int>(entity);
     }
 
@@ -385,7 +413,7 @@ namespace IS {
 
     static bool CollidingObjectIsStatic(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        return body_component.mBodyType == BodyType::Static ? 1 : 0;
+        return body_component.mBodyType == BodyType::WallClimb ? 1 : 0;
     }
 
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image , int layer=1) {
@@ -464,6 +492,21 @@ namespace IS {
     }
 
 
+    static int GetCurrentAnimationEntity(int entity) {
+        if (InsightEngine::Instance().HasComponent<Sprite>(entity)) {
+            auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+            
+            int frame_indexX = (int)sprite_component.anims[sprite_component.animation_index].frame_index.x;
+            int frame_indexY = (int)sprite_component.anims[sprite_component.animation_index].frame_index.y;
+            int x_frames = sprite_component.anims[sprite_component.animation_index].x_frames;
+
+            return frame_indexY * x_frames + frame_indexX;
+        }
+        
+        return 0;
+    }
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -511,7 +554,10 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
+        IS_ADD_INTERNAL_CALL(CreateAnimationFromSpriteEntity);
         IS_ADD_INTERNAL_CALL(ResetAnimations);
+        IS_ADD_INTERNAL_CALL(ResetSpriteAnimationFrameEntity);
+        IS_ADD_INTERNAL_CALL(GetCurrentAnimationEntity);
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
@@ -526,6 +572,7 @@ namespace IS {
 
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);
+        IS_ADD_INTERNAL_CALL(CreateEntityVFX);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
         IS_ADD_INTERNAL_CALL(AddCollider);
 

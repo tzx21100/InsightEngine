@@ -9,7 +9,12 @@ namespace IS
 {
     public class PlayerScript
     {
-        
+        //Powerup triggers
+        static public bool Reward_DoubleJump = false;
+        static public bool Reward_Dash = false;
+        static public bool Reward_WallClimb = true;
+
+
         //private entity
 
         static SimpleImage player_walk;
@@ -27,13 +32,17 @@ namespace IS
         static SimpleImage player_climb10;
         static SimpleImage player_climb11;
         static SimpleImage player_transparent;
-
+        static SimpleImage player_land;
 
         //psuedo animations for images
-        static float animation_speed = 0.07f;
-        static float animation_speed_set = 0.07f;
-        static int animation_current_frame = 0;
+        static private float animation_speed = 0.07f;
+        static private float animation_speed_set = 0.07f;
+        static private int animation_current_frame = 0;
 
+        static private int land_entity;
+        static private bool land_exists;
+
+        static private int PLAYER_ID;
 
         //private variables for entity
 
@@ -48,6 +57,7 @@ namespace IS
         static private float jump_timer = 0.2f;
         static private float jump_timer_set = 0.2f;
         static private bool isJumping = false;
+        static private bool initial_land = false;
         static private float jumpHeight = 1000f;
 
         //dashing 
@@ -88,7 +98,7 @@ namespace IS
         static private float Yforce=0f;
 
         // player pos
-        static private Vector2D player_pos =new Vector2D(0,0);
+        static public Vector2D player_pos =new Vector2D(0,0);
         static private Vector2D trans_scaling = new Vector2D(0,0);
 
 
@@ -118,6 +128,7 @@ namespace IS
             player_climb10 = InternalCalls.GetSpriteImage("WallClimb_0010.png");
             player_climb11 = InternalCalls.GetSpriteImage("WallClimb_0011.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
+            player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
 
             // Initialization code
             Console.WriteLine("ctor!");
@@ -125,6 +136,7 @@ namespace IS
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(4,3,1f);
             InternalCalls.CreateAnimationFromSprite(4,3,1f);
+            
 
             entityA = InternalCalls.CreateEntity("FeetCollider");
             entityWall = InternalCalls.CreateEntity("WallCollider");
@@ -136,6 +148,10 @@ namespace IS
 
             InternalCalls.CameraSetZoom(1.5f);
 
+            land_entity = InternalCalls.CreateEntityVFX("jump", player_land);
+            InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
+
+
         }
 
         static public void Update()
@@ -143,9 +159,12 @@ namespace IS
             if (GameManager.isGamePaused == true) {
                 return;
             }
-            
+
             //Attach Camera
             InternalCalls.AttachCamera();
+
+            PLAYER_ID = InternalCalls.GetCurrentEntityID();
+
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -165,7 +184,7 @@ namespace IS
                         if (trans_rotate < -45) { trans_rotate = -45; }*/
 
 
-                
+
             //SPRITE
 
             if (hori_movement != 0)
@@ -193,31 +212,31 @@ namespace IS
             }
 
 
-           
+
 
 
 
 
             //wall checking
-            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement!=0 && InternalCalls.GetCollidingEntity(entityWall)!= InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)))
+            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement != 0 && InternalCalls.GetCollidingEntity(entityWall) != InternalCalls.GetCurrentEntityID() && InternalCalls.CollidingObjectIsStatic(InternalCalls.GetCollidingEntity(entityWall)) && Reward_WallClimb)
             {
                 if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
-                isClimbing = true;   
+                isClimbing = true;
             }
             else { isClimbing = false; animation_current_frame = 0; animation_speed = animation_speed_set; }
 
-            if(isClimbing) {
+            if (isClimbing) {
 
 
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
-                
+
                 float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall) - (90 * hori_movement);
 
                 InternalCalls.TransformSetRotation(collided_angle, 0);
-                Vector2D force_from_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(collided_angle*-hori_movement));
+                Vector2D force_from_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(collided_angle * -hori_movement));
 
-                InternalCalls.RigidBodySetForce(climbSpeed  *force_from_angle.x * hori_movement, climbSpeed *force_from_angle.y );
+                InternalCalls.RigidBodySetForce(climbSpeed * force_from_angle.x * hori_movement, climbSpeed * force_from_angle.y);
 
                 if (hori_movement != climbdir) {
                     isClimbing = false;
@@ -228,37 +247,37 @@ namespace IS
                 float x_offset = 28 * hori_movement;
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 pos.x += x_offset;
-                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x* 1.1f, InternalCalls.GetTransformScaling().y * 1.1f);
+                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x * 1.1f, InternalCalls.GetTransformScaling().y * 1.1f);
 
                 SimpleImage curr_image = player_climb;
 
                 switch (animation_current_frame) {
                     case 0:
                         curr_image = player_climb;
-                        break;                    case 1:
+                        break; case 1:
                         curr_image = player_climb1;
-                        break;                    case 2:
+                        break; case 2:
                         curr_image = player_climb2;
-                        break;                    case 3:
+                        break; case 3:
                         curr_image = player_climb3;
-                        break;                    case 4:
+                        break; case 4:
                         curr_image = player_climb4;
-                        break;                    case 5:
+                        break; case 5:
                         curr_image = player_climb5;
-                        break;                    case 6:
+                        break; case 6:
                         curr_image = player_climb6;
-                        break;                    case 7:
+                        break; case 7:
                         curr_image = player_climb7;
-                        break;                    case 8:
+                        break; case 8:
                         curr_image = player_climb8;
-                        break;                    case 9:
+                        break; case 9:
                         curr_image = player_climb9;
-                        break;                    case 10:
+                        break; case 10:
                         curr_image = player_climb10;
-                        break;                    case 11:
+                        break; case 11:
                         curr_image = player_climb11;
                         break;
-                
+
                 }
 
                 animation_speed -= InternalCalls.GetDeltaTime();
@@ -270,7 +289,7 @@ namespace IS
                     if (animation_current_frame >= 10) {
                         animation_current_frame = 0;
                     }
-                
+
                 }
 
 
@@ -279,7 +298,12 @@ namespace IS
             }
             else
             {
-                InternalCalls.TransformSetScale(1f,1f);
+                InternalCalls.TransformSetScale(1f, 1f);
+            }
+
+            if (InternalCalls.RigidBodyGetVelocity().y < -1600f)
+            {
+                initial_land = false;
             }
 
             //jumping bool
@@ -288,14 +312,27 @@ namespace IS
             if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != InternalCalls.GetCurrentEntityID())
             {
 
+                if (initial_land == false)
+                {
+                    initial_land = true;
+                    InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
+                    InternalCalls.TransformSetScaleEntity(200, 200, land_entity);
+                    InternalCalls.TransformSetPositionEntity(player_pos.x,player_pos.y,land_entity);
+                }
+
                 isGrounded = true;
+
+
             }
             else
             {
                 isGrounded = false;
             }
 
-
+            if (InternalCalls.GetCurrentAnimationEntity(land_entity) >= 13) {
+                InternalCalls.TransformSetScaleEntity(0,0,land_entity);
+                InternalCalls.TransformSetPositionEntity(-999,-9999,land_entity);
+            }
 
             if (isGrounded)
             {
@@ -334,7 +371,9 @@ namespace IS
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
-                if (jump_amount > 0)
+                
+
+                if (jump_amount > 0 && Reward_DoubleJump)
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
@@ -343,13 +382,16 @@ namespace IS
                         jump_amount--;
                     }
                 }
+
+
+                
             }
             Xforce += hori_movement * move_speed;
             //check for ground
 
 
 
-            if (canDash && isDashing==false)
+            if (canDash && isDashing==false && Reward_Dash)
             {
                 if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift)) {
                    isDashing = true;
@@ -368,7 +410,10 @@ namespace IS
                     
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
 
-                    if (angle >= -CustomMath.PI / 4 && angle <= CustomMath.PI / 4) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                    hori_movement = 0;
+                    InternalCalls.SetSpriteImage(player_idle);
+
+                    if (mouse_pos.x>player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
@@ -414,8 +459,10 @@ namespace IS
             InternalCalls.FreeSpriteImage(player_idle);
             InternalCalls.FreeSpriteImage(player_walk);
             InternalCalls.FreeSpriteImage(player_transparent);
+            InternalCalls.FreeSpriteImage(player_land);
             InternalCalls.DestroyEntity(entityA);
             InternalCalls.DestroyEntity(entityWall);
+            InternalCalls.DestroyEntity(land_entity);
             
         }
 
@@ -463,7 +510,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 1.8f;
+            float distanceBelow = height / 2f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
@@ -513,7 +560,7 @@ namespace IS
 
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
-            InternalCalls.TransformSetScaleEntity(2f, height/1.7f, entityWall);
+            InternalCalls.TransformSetScaleEntity(2f, height/2f, entityWall);
             
         }
 

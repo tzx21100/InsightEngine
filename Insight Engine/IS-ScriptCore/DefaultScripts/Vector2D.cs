@@ -29,6 +29,22 @@ public class Vector2D
         this.y = y;
     }
 
+    // Lerp
+    public static float Lerp(float start, float end, float t)
+    {
+        return (1 - t) * start + t * end;
+    }
+
+    public static Vector2D Lerp(Vector2D start, Vector2D end, float t)
+    {
+        return new Vector2D(
+            Lerp(start.x, end.x, t),
+            Lerp(start.y, end.y, t)
+        );
+    }
+
+
+
     // Addition of two vectors
     public Vector2D Add(Vector2D other)
     {

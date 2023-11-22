@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -1332.6192626953125,
-				"Y" : 945.4527587890625
+				"X" : 664.5465087890625,
+				"Y" : 347.47695922851563
 			},
 			"BoxColliderOffset" : 
 			{
@@ -40,7 +40,7 @@
 		},
 		"BoxColliderEnabled" : true,
 		"CircleColliderEnabled" : false,
-		"CollidingEntity" : 11,
+		"CollidingEntity" : 13,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Left Collider",
@@ -50,7 +50,7 @@
 		"RigidBodyAccelerationY" : -981.0,
 		"RigidBodyAngularVelocity" : 0.0,
 		"RigidBodyArea" : 323300.46875,
-		"RigidBodyBodyType" : 0,
+		"RigidBodyBodyType" : 4,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
@@ -82,8 +82,8 @@
 		"SpriteTransformRotation" : 272.0,
 		"SpriteTransformScalingX" : 1138.9951171875,
 		"SpriteTransformScalingY" : 283.84710693359375,
-		"SpriteTransformWorldPositionX" : -1332.6192626953125,
-		"SpriteTransformWorldPositionY" : 945.4527587890625,
+		"SpriteTransformWorldPositionX" : 664.5465087890625,
+		"SpriteTransformWorldPositionY" : 347.47695922851563,
 		"animations" : []
 	},
 	"Transform" : 
@@ -91,7 +91,7 @@
 		"TransformRotation" : 272.0,
 		"TransformScalingX" : 1138.9951171875,
 		"TransformScalingY" : 283.84710693359375,
-		"TransformWorldPositionX" : -1332.6192626953125,
-		"TransformWorldPositionY" : 945.4527587890625
+		"TransformWorldPositionX" : 664.5465087890625,
+		"TransformWorldPositionY" : 347.47695922851563
 	}
 }

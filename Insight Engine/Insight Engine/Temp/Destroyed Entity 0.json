@@ -13,7 +13,7 @@
 			"CircleColliderCenter" : 
 			{
 				"X" : 247.02983093261719,
-				"Y" : 201.34053039550781
+				"Y" : 1598.38623046875
 			},
 			"CircleColliderOffset" : 
 			{
@@ -24,7 +24,7 @@
 			"CircleColliderRadiusScale" : 0.30000001192092896
 		},
 		"CircleColliderEnabled" : true,
-		"CollidingEntity" : 13,
+		"CollidingEntity" : 11,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Player",
@@ -41,8 +41,8 @@
 		"RigidBodyInvMass" : 0.20000000298023224,
 		"RigidBodyMass" : 5.0,
 		"RigidBodyRestitution" : 0.0,
-		"RigidBodyVelocityX" : -31.442283630371094,
-		"RigidBodyVelocityY" : -746.84747314453125,
+		"RigidBodyVelocityX" : -0.22543525695800781,
+		"RigidBodyVelocityY" : 0.0,
 		"RigidbodyGravityScale" : 2.0,
 		"mDynamicFriction" : 0.80000001192092896,
 		"mStaticFriction" : 0.60000002384185791
@@ -71,7 +71,7 @@
 		"SpriteTransformScalingX" : -200.0,
 		"SpriteTransformScalingY" : 180.0,
 		"SpriteTransformWorldPositionX" : 247.02983093261719,
-		"SpriteTransformWorldPositionY" : 221.34053039550781,
+		"SpriteTransformWorldPositionY" : 1618.38623046875,
 		"animations" : 
 		[
 			{
@@ -92,8 +92,8 @@
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
 				"frame_index_x" : 1.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.066046163439750671,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.044835552573204041,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -106,6 +106,6 @@
 		"TransformScalingX" : -200.0,
 		"TransformScalingY" : 180.0,
 		"TransformWorldPositionX" : 247.02983093261719,
-		"TransformWorldPositionY" : 221.34053039550781
+		"TransformWorldPositionY" : 1618.38623046875
 	}
 }

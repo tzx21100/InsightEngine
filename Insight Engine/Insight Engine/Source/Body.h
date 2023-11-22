@@ -41,7 +41,8 @@ namespace IS
         Static,
         Dynamic,
         Kinematic,
-        Ghost
+        Ghost,
+        WallClimb
     };
 
     /**

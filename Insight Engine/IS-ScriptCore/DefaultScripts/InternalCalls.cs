@@ -98,7 +98,10 @@ namespace IS
         internal extern static void FreeSpriteImage(SimpleImage image);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void CreateAnimationFromSprite(int row, int columns, float animation_time);
+        internal extern static void CreateAnimationFromSprite(int row, int columns, float animation_time);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void CreateAnimationFromSpriteEntity(int row, int columns, float animation_time,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AttachCamera();
@@ -116,7 +119,10 @@ namespace IS
         internal extern static int GetButtonState();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int CreateEntity(string str);
+        internal extern static int CreateEntity(string str);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityVFX(string name, SimpleImage image);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DestroyEntity(int entity);
@@ -173,7 +179,13 @@ namespace IS
         internal extern static bool CollidingObjectIsStatic(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void GameSpawnParticle(float x, float y, string particle_name);        
+        internal extern static void GameSpawnParticle(float x, float y, string particle_name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ResetSpriteAnimationFrameEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetCurrentAnimationEntity(int entity);//returns the index
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GameSpawnParticleExtra(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name);        
