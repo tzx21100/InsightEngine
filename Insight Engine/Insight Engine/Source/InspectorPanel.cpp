@@ -200,7 +200,11 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Color");
 
                 ImGui::TableNextColumn();
-                ImGui::ColorEdit4("##Color", &sprite.color[0]);
+                if (glm::vec4 color = sprite.color; ImGui::ColorEdit4("##Color", &color[0]))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<glm::vec4>>(sprite.color, color);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::Spacing();
 
                 EditorUtils::RenderTableLabel("Texture");
