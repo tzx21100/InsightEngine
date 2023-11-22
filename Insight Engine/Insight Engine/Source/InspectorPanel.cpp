@@ -102,19 +102,13 @@ namespace IS {
             auto const asset = engine.GetSystem<AssetManager>("Asset");
             auto const& prefab_list = asset->mPrefabList;
             bool is_prefab = prefab_list.find(name) != prefab_list.end();
-            bool begin_combo = ImGui::BeginCombo("##Prefabs", is_prefab ? name.c_str() : "None");
-            if (begin_combo)
+            if (ImGui::BeginCombo("##Prefabs", is_prefab ? name.c_str() : "None"))
             {
                 for (auto const& [prefab_name, prefab] : prefab_list)
                 {
-                    const bool is_selected = (name == prefab_name);
-                    if (ImGui::Selectable(prefab_name.c_str(), is_selected))
+                    if (ImGui::Selectable(prefab_name.c_str(), name == prefab_name))
                     {
                         engine.LoadFromPrefab(prefab, entity);
-                    }
-                    if (is_selected)
-                    {
-                        ImGui::SetItemDefaultFocus();
                     }
                 }
                 ImGui::EndCombo(); // end combo Prefabs
@@ -148,11 +142,10 @@ namespace IS {
         // Transform Component
         RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
-            // Render Translation
-            Vec2 position = transform.world_position;
-            if (EditorUtils::RenderControlVec2("Translation", position))
+            // Render Translation            
+            if (Vector2D position = transform.world_position; EditorUtils::RenderControlVec2("Translation", position))
             {
-                CommandHistory::AddCommand(std::make_shared<ChangeCommand<Vector2D>>(transform.world_position, position));
+                CommandHistory::AddCommand<ChangeCommand<Vector2D>>(transform.world_position, position);
             }
 
             // Render Rotation
@@ -162,19 +155,17 @@ namespace IS {
                 ImGui::TableNextColumn();
 
                 // Apply modification
-                float rotation = transform.rotation;
-                if (ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
+                if (float rotation = transform.rotation; ImGui::SliderFloat("##Rotation", &rotation, 0.f, 360.f, "%.f deg"))
                 {
-                    CommandHistory::AddCommand(std::make_shared<ChangeCommand<float>>(transform.rotation, rotation));
+                    CommandHistory::AddCommand<ChangeCommand<float>>(transform.rotation, rotation);
                 }
             });
 
             // Render Scale
-            Vec2 scaling = transform.scaling;
-            if (EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
+            if (Vector2D scaling = transform.scaling; EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
             {
                 scaling = { abs(scaling.x), abs(scaling.y) };
-                CommandHistory::AddCommand(std::make_shared<ChangeCommand<Vector2D>>(transform.scaling, scaling));
+                CommandHistory::AddCommand<ChangeCommand<Vector2D>>(transform.scaling, scaling);
             }
 
         }); // end render Transform Component
@@ -223,10 +214,9 @@ namespace IS {
                         std::filesystem::path path(name);
                         std::string filename = path.filename().string();
 
-                        if (ImGui::Selectable(filename.c_str(), filename == name))
+                        if (ImGui::Selectable(filename.c_str(), filename == sprite.img.mFileName))
                         {
-                            sprite.img = img;
-                            ImGui::SetItemDefaultFocus();
+                            CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
                         }
                     }
 
@@ -240,8 +230,8 @@ namespace IS {
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         auto asset = engine.GetSystem<AssetManager>("Asset");
-                        IS_CORE_DEBUG("Image : {} ", path.string());
-                        sprite.img = *asset->GetImage(path.string());
+                        Image const& img = *asset->GetImage(path.string());
+                        CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -282,8 +272,8 @@ namespace IS {
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         auto asset = engine.GetSystem<AssetManager>("Asset");
-                        IS_CORE_DEBUG("Image : {} ", path.string());
-                        sprite.img = *asset->GetImage(path.string());
+                        Image const& img = *asset->GetImage(path.string());
+                        CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -362,26 +352,32 @@ namespace IS {
                             {
                                 EditorUtils::RenderTableLabel("Name");
 
-                                ImGui::TableNextColumn();
-                                char buffer[256]{};
-                                std::memcpy(buffer, animation.name.c_str(), animation.name.length());
-
-                                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-                                ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
-                                if (ImGui::InputText("##AnimationName", buffer, sizeof(buffer), input_text_flags))
-                                    animation.name = buffer;
+                                EditorUtils::RenderTableInputText(animation.name);
 
                                 EditorUtils::RenderTableLabel("Duration");
                                 ImGui::TableNextColumn();
-                                ImGui::SliderFloat("##Duration", &animation.animation_duration, 1.f, 10.f, "%.2f sec");
+
+                                if (float animation_duration = animation.animation_duration; ImGui::DragFloat("##Duration", &animation_duration, 0.1f, 1.f, 10.f, "%.2f sec"))
+                                {
+                                    CommandHistory::AddCommand<ChangeCommand<float>>(animation.animation_duration, animation_duration);
+                                }
+                                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                                 EditorUtils::RenderTableLabel("Columns");
                                 ImGui::TableNextColumn();
-                                ImGui::SliderInt("##Columns", &animation.x_frames, 1, 20);
+                                if (int x_frames = animation.x_frames; ImGui::InputInt("##Columns", &x_frames))
+                                {
+                                    x_frames = std::max(x_frames, 1);
+                                    CommandHistory::AddCommand<ChangeCommand<int>>(animation.x_frames, x_frames);
+                                }
 
                                 EditorUtils::RenderTableLabel("Rows");
-                                ImGui::TableNextColumn();
-                                ImGui::SliderInt("##Rows", &animation.y_frames, 1, 20);
+                                ImGui::TableNextColumn();                                
+                                if (int y_frames = animation.y_frames; ImGui::InputInt("##Rows", &y_frames))
+                                {
+                                    y_frames = std::max(y_frames, 1);
+                                    CommandHistory::AddCommand<ChangeCommand<int>>(animation.y_frames, y_frames);
+                                }
                             });
                             ImGui::PopID();
                         }
@@ -401,8 +397,15 @@ namespace IS {
         // Rigidbody Component
         RenderComponent<RigidBody>(ICON_LC_PERSON_STANDING "  Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
         {
-            EditorUtils::RenderControlVec2("Velocity", rigidbody.mVelocity);
-            EditorUtils::RenderControlVec2("Force", rigidbody.mForce);
+            if (Vector2D velocity = rigidbody.mVelocity; EditorUtils::RenderControlVec2("Velocity", rigidbody.mVelocity))
+            {
+                CommandHistory::AddCommand<ChangeCommand<Vector2D>>(rigidbody.mVelocity, velocity);
+            }
+            
+            if (Vector2D force = rigidbody.mForce; EditorUtils::RenderControlVec2("Force", rigidbody.mForce))
+            {
+                CommandHistory::AddCommand<ChangeCommand<Vector2D>>(rigidbody.mForce, force);
+            }
 
             // Render Other Component Attributes
             EditorUtils::RenderTableFixedWidth("Rigidbody Table", 2, [&]()
@@ -411,7 +414,12 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Angular Velocity");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat("##AngularVelocity", &rigidbody.mAngularVelocity, 1.f, 0.f, 0.f, "%.2f");
+                                
+                if (float angular_velocity = rigidbody.mAngularVelocity; ImGui::DragFloat("##AngularVelocity", &angular_velocity, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mAngularVelocity, angular_velocity);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
 
                 // Body Type
@@ -424,7 +432,11 @@ namespace IS {
                     EditorUtils::RenderTableLabel("Gravity Scale");
                     ImGui::TableNextColumn();
                     ImGui::PushItemWidth(80.f);
-                    ImGui::DragFloat("##Gravity Scale", &rigidbody.mGravityScale);
+                    if (float gravity_scale = rigidbody.mGravityScale; ImGui::DragFloat("##Gravity Scale", &gravity_scale, 1.f, 0.f, 0.f, "%.2f"))
+                    {
+                        CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mGravityScale, gravity_scale);
+                    }
+                    CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                     ImGui::PopItemWidth();
                 }
 
@@ -432,7 +444,11 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Mass");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat("##Mass", &rigidbody.mMass, 1.f, 0.f, 0.f, "%.2f");
+                if (float mass = rigidbody.mMass; ImGui::DragFloat("##Mass", &mass, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mMass, mass);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
 
                 // Inverse Mass
@@ -444,14 +460,22 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Inertia");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::DragFloat("##Inertia", &rigidbody.mInertia, 1.f, 0.f, 0.f, "%.2f");
+                if (float inertia = rigidbody.mInertia; ImGui::DragFloat("##Inertia", &inertia, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mInertia, inertia);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
 
                 // Restitution
                 EditorUtils::RenderTableLabel("Restitution");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::SliderFloat("##Restitution", &rigidbody.mRestitution, 0.f, 1.f, "%.2f");
+                if (float restitution = rigidbody.mRestitution; ImGui::DragFloat("##Restitution", &restitution, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mRestitution, restitution);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
 
                 // Density
@@ -465,14 +489,22 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Static Friction");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::InputFloat("##Static Friction", &rigidbody.mStaticFriction);
+                if (float static_friction = rigidbody.mStaticFriction; ImGui::DragFloat("##Static Friction", &static_friction, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mStaticFriction, static_friction);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
 
                 // Dynamic Friction
                 EditorUtils::RenderTableLabel("Dynamic Friction");
                 ImGui::TableNextColumn();
                 ImGui::PushItemWidth(80.f);
-                ImGui::InputFloat("##Dynamic Friction", &rigidbody.mDynamicFriction);
+                if (float dynamic_friction = rigidbody.mDynamicFriction; ImGui::DragFloat("##Dynamic Friction", &dynamic_friction, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(rigidbody.mDynamicFriction, dynamic_friction);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                 ImGui::PopItemWidth();
             });
 
@@ -509,22 +541,36 @@ namespace IS {
             if (box_enabled)
             {
                 ImGui::SeparatorText(ICON_LC_BOX_SELECT "  Box Collider");
-                EditorUtils::RenderControlVec2("Offset", collider.mBoxCollider.offset);
-                EditorUtils::RenderControlVec2("Scale", collider.mBoxCollider.sizeScale);
+                if (Vector2D offset = collider.mBoxCollider.offset; EditorUtils::RenderControlVec2("Offset", offset))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mBoxCollider.offset, offset);
+                }
+
+                if (Vector2D scale = collider.mBoxCollider.sizeScale; EditorUtils::RenderControlVec2("Scale", scale))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mBoxCollider.sizeScale, scale);
+                }
             }
             
             if (circle_enabled)
             {
                 ImGui::SeparatorText(ICON_LC_CIRCLE_DASHED "  Circle Collider");
-                EditorUtils::RenderControlVec2("Offset", collider.mCircleCollider.offset);
+                if (Vector2D offset = collider.mCircleCollider.offset; EditorUtils::RenderControlVec2("Offset", offset))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mCircleCollider.offset, offset);
+                }
 
                 EditorUtils::RenderTableFixedWidth("Circle Radius Scale Table", 2, [&]()
                 {
-                    EditorUtils::AddTableBoldLabel("Radius Scale");
+                    EditorUtils::RenderTableLabel("Radius Scale");
 
                     ImGui::TableNextColumn();
                     ImGui::PushItemWidth(80.f);
-                    ImGui::InputFloat("##Radius Scale", &collider.mCircleCollider.radiusScale);
+                    if (float scale = collider.mCircleCollider.radiusScale; ImGui::DragFloat("##Radius Scale", &scale))
+                    {
+                        CommandHistory::AddCommand<ChangeCommand<float>>(collider.mCircleCollider.radiusScale, scale);
+                    }
+                    CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
                     ImGui::PopItemWidth();
                 });
             }
@@ -545,14 +591,9 @@ namespace IS {
                     {
                         std::filesystem::path path(name);
                         std::string stem = path.stem().string();
-                        bool selected = script.mScriptName == stem;
-                        if (ImGui::Selectable(stem.c_str(), selected))
+                        if (ImGui::Selectable(stem.c_str(), script.mScriptName == stem))
                         {
-                            script.mScriptName = stem;
-                        }
-                        if (selected)
-                        {
-                            ImGui::SetItemDefaultFocus();
+                            CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, stem);
                         }
                     }
 
@@ -565,7 +606,7 @@ namespace IS {
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                        script.mScriptName = path.stem().string();
+                        CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, path.stem().string());
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -577,7 +618,7 @@ namespace IS {
                 {
                     if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                     {
-                        script.mScriptName = filepath.stem().string();
+                        CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, filepath.stem().string());
                     }
                 }
                 ImGui::SetItemTooltip("Browse and replace the existing script");
@@ -586,7 +627,9 @@ namespace IS {
 
                 // Edit Script
                 if (ImGui::Button(ICON_LC_FILE_EDIT))
+                {
                     InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
+                }
                 ImGui::SetItemTooltip("Open and edit script in default application");
             });
 
@@ -599,19 +642,30 @@ namespace IS {
             {
                 EditorUtils::RenderTableLabel("Volume");
                 ImGui::TableNextColumn();
-                int volume = static_cast<int>(listener.volume * 100);
-                if (ImGui::SliderInt("##Volume", &volume, 0, 100, "%d%%"))
+
+                if (int volume = static_cast<int>(listener.volume * 100); ImGui::SliderInt("##Volume", &volume, 0, 100, "%d%%"))
                 {
-                    listener.volume = static_cast<float>(volume) / 100.f;
+                    float percent = static_cast<float>(volume) / 100.f;
+                    CommandHistory::AddCommand<ChangeCommand<float>>(listener.volume, percent);
                 }
 
                 EditorUtils::RenderTableLabel("Pitch Correctness");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Pitch Correctness", &listener.pitch_correctness);
+
+                if (float correctness = listener.pitch_correctness; ImGui::DragFloat("##Pitch Correctness", &correctness, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(listener.pitch_correctness, correctness);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                 EditorUtils::RenderTableLabel("Hearing Range");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Hearing Range", &listener.hearing_range);
+
+                if (float range = listener.hearing_range; ImGui::DragFloat("##Hearing Range", &range, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(listener.hearing_range, range);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
             });
 
         }); // end render Audio Listener Component
@@ -633,8 +687,7 @@ namespace IS {
                     {
                         if (ImGui::Selectable(sound_name.c_str(), emitter.soundName == sound_name))
                         {
-                            emitter.soundName = sound_name;
-                            ImGui::SetItemDefaultFocus();
+                            CommandHistory::AddCommand<ChangeCommand<std::string>>(emitter.soundName, sound_name);
                         }
                     }
 
@@ -646,7 +699,7 @@ namespace IS {
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SOUND"))
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                        emitter.soundName = path.string();
+                        CommandHistory::AddCommand<ChangeCommand<std::string>>(emitter.soundName, path.string());
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -657,19 +710,31 @@ namespace IS {
 
                 EditorUtils::RenderTableLabel("Falloff Factor");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Falloff Factor", &emitter.falloff_factor);
+
+                if (float factor = emitter.falloff_factor; ImGui::DragFloat("##Falloff Factor", &factor, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(emitter.falloff_factor, factor);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                 EditorUtils::RenderTableLabel("Volume Level");
                 ImGui::TableNextColumn();
-                int volume_level = static_cast<int>(emitter.volumeLevel * 100);
-                if (ImGui::SliderInt("##VolumeLevel", &volume_level, 0, 100, "%d%%"))
-                {
-                    emitter.volumeLevel = static_cast<float>(volume_level) / 100.f;
+
+                if (int volume_level = static_cast<int>(emitter.volumeLevel * 100); ImGui::SliderInt("##VolumeLevel", &volume_level, 0, 100, "%d%%"))
+                {                    
+                    float volume = static_cast<float>(volume_level) / 100.f;
+                    CommandHistory::AddCommand<ChangeCommand<float>>(emitter.volumeLevel, volume);
                 }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                 EditorUtils::RenderTableLabel("Pitch");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Pitch", &emitter.pitch);
+
+                if (float pitch = emitter.pitch; ImGui::DragFloat("##Pitch", &pitch, 1.f, 0.f, 0.f, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(emitter.pitch, pitch);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
             });
 
         }); // end render Audio Emitter component
@@ -680,19 +745,10 @@ namespace IS {
             EditorUtils::RenderTableFixedWidth("Button Table", 2, [&]()
             {
                 EditorUtils::RenderTableLabel("Text");
-                ImGui::TableNextColumn();
                 ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
 
                 // Edit button text
-                std::string& text = button.mButtonText;
-                char buffer[256]{};
-                auto source = text | std::ranges::views::take(text.size());
-                std::ranges::copy(source, std::begin(buffer));
-                ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-                if (ImGui::InputText("##ButtonText", buffer, sizeof(buffer), input_text_flags))
-                {
-                    text = std::string(buffer);
-                }
+                EditorUtils::RenderTableInputText(button.mButtonText);
             });
 
         }); // end render Button Component
@@ -848,7 +904,6 @@ namespace IS {
 
         EditorUtils::RenderTableFixedWidth("CameraTable", 2, [&]()
         {
-
             // Camera Clipping Planes
             EditorUtils::RenderTableLabel("Clipping Planes");
 
@@ -857,11 +912,19 @@ namespace IS {
             {
                 EditorUtils::RenderTableLabel("Near");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Near", &camera.mNear);
+                if (float near = camera.mNear; ImGui::DragFloat("##Near", &near))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(camera.mNear, near);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                 EditorUtils::RenderTableLabel("Far");
                 ImGui::TableNextColumn();
-                ImGui::InputFloat("##Far", &camera.mFar);
+                if (float far = camera.mFar; ImGui::DragFloat("##Far", &far))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(camera.mFar, far);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
             }, 0, ImGui::CalcTextSize("Near").x);
 
@@ -903,11 +966,20 @@ namespace IS {
             {
                 EditorUtils::RenderTableLabel("Zoom");
                 ImGui::TableNextColumn();
-                ImGui::SliderFloat("##CameraZoomSpeed", &Camera3D::mZoomSpeed, Camera3D::CAMERA_ZOOM_SPEED_MIN, Camera3D::CAMERA_ZOOM_SPEED_MAX, "%.2f");
+                if (float zoom = Camera3D::mZoomSpeed; ImGui::DragFloat("##CameraZoomSpeed", &zoom, 0.01f, Camera3D::CAMERA_ZOOM_SPEED_MIN, Camera3D::CAMERA_ZOOM_SPEED_MAX, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(Camera3D::mZoomSpeed, zoom);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
                 EditorUtils::RenderTableLabel("Pan");
                 ImGui::TableNextColumn();
-                ImGui::SliderFloat("##CameraPanSpeed", &Camera3D::mMoveSpeed, Camera3D::CAMERA_MOVE_SPEED_MIN, Camera3D::CAMERA_MOVE_SPEED_MAX, "%.2f");
+                if (float pan = Camera3D::mMoveSpeed; ImGui::DragFloat("##CameraPanSpeed", &pan, 1.f, Camera3D::CAMERA_MOVE_SPEED_MIN, Camera3D::CAMERA_MOVE_SPEED_MAX, "%.2f"))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(Camera3D::mMoveSpeed, pan);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
 
             }, 0, ImGui::CalcTextSize("Zoom").x);
         });
@@ -919,4 +991,3 @@ namespace IS {
 } // end namespace IS
 
 #endif // USING_IMGUI
-

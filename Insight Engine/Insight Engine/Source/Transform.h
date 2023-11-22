@@ -48,6 +48,7 @@ namespace IS {
 
 		/*!
 		 * \brief != operator overload.
+		 * \param other The transform to compare with.
 		 * \return Boolean flag indicating the outcome.
 		 */
 		bool operator!=(Transform const& other)
@@ -57,6 +58,7 @@ namespace IS {
 
 		/*!
 		 * \brief == operator overload.
+		 * \param other The transform to compare with.
 		 * \return Boolean flag indicating the outcome.
 		 */
 		bool operator==(Transform const& other)

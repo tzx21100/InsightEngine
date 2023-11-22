@@ -19,6 +19,7 @@
 #include "Pch.h"
 #ifdef USING_IMGUI
 #include "EditorUtils.h"
+#include "CommandHistory.h"
 
 // Dependencies
 #include <imgui.h>
@@ -65,15 +66,6 @@ namespace IS::EditorUtils {
         }
     }
 
-    void AddTableBoldLabel(const char* label)
-    {
-        ImFont* FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
-        ImGui::TableNextColumn();
-        ImGui::PushFont(FONT_BOLD);
-        ImGui::TextUnformatted(label);
-        ImGui::PopFont();
-    }
-
     bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
         bool adjusted = false;
@@ -106,6 +98,7 @@ namespace IS::EditorUtils {
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
+
             if (ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f"))
             {
                 adjusted = true;
@@ -274,7 +267,7 @@ namespace IS::EditorUtils {
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
         if (ImGui::InputText("##Text", buffer, sizeof(buffer), input_text_flags))
         {
-            text = buffer;
+            CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
         }
         ImGui::PopID();
     }

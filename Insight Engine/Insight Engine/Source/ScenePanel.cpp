@@ -524,7 +524,7 @@ namespace IS {
             new_transform.rotation = fmod((transform.rotation + delta_rot + 360.0f), 360.0f);
             new_transform.scaling = { std::max(scale3D.x, 1.f), std::max(scale3D.y, 1.f) };
 
-            CommandHistory::AddCommand(std::make_shared<ChangeCommand<Transform>>(transform, new_transform));
+            CommandHistory::AddCommand<ChangeCommand<Transform>>(transform, new_transform);
 
             mGizmoInUse = true;
         }
@@ -595,6 +595,5 @@ namespace IS {
     }
 
 } // end namespace IS
-
 
 #endif // USING_IMGUI

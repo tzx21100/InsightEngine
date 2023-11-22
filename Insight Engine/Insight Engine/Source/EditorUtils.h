@@ -88,8 +88,6 @@ namespace IS {
          */
         void RenderFilterWithHint(ImGuiTextFilter& filter, const char* hint);
 
-        void AddTableBoldLabel(const char* label);
-
         /*!
          * \brief Renders a control for a 2D vector using ImGui.
          *

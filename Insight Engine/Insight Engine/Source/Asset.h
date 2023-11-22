@@ -74,6 +74,26 @@ namespace IS {
         unsigned long mTextureData{};
         int texture_index{}; // Sequential, first texture IN USE has index 0, second has 1 ...
         //AllocationType mAllocationType{};
+
+        /*!
+         * \brief == operator overload.
+         * \param other The image to compare with.
+         * \return Boolean flag indicating the outcome.
+         */
+        bool operator==(Image const& other)
+        {
+            return other.mFileName == mFileName;
+        }
+
+        /*!
+         * \brief != operator overload.
+         * \param other The image to compare with.
+         * \return Boolean flag indicating the outcome.
+         */
+        bool operator!=(Image const& other)
+        {
+            return other.mFileName != mFileName;
+        }
     };
 
     //converstion to C#
