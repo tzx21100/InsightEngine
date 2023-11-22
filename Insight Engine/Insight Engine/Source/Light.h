@@ -6,8 +6,12 @@
 #include <glm/glm.hpp>
 
 namespace IS {
-	class Light {
+	class Light : public IComponent {
 	public:
+		static std::string GetType() {
+			return "Light";
+		}
+		
 		Light() = default;
 		Light(glm::vec2 pos, glm::vec3 clr, float inten, float sz) : position{ pos }, color { clr }, intensity{ inten }, size{ sz } {};
 
