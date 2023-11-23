@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 namespace IS
 {
-    class StartButtonScript
+    class ExitButtonScript
     {
         
         static public void Init(){
@@ -16,8 +16,9 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) {
                 
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
-                InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
+                //InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
+                //InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
+                InternalCalls.Exit();
 
             }
         }
