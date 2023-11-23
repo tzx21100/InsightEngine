@@ -58,11 +58,6 @@ namespace IS
 
             if(save_point)
             {
-                if (Vector2D.Distance(my_position, PlayerScript.player_pos) > 500f)
-                {
-                    return;
-                }
-
                 InternalCalls.SetSpriteImage(lantern_on);
                 float direction=rand.NextFloat() *360;
                 float ran=rand.NextFloat();
