@@ -64,6 +64,10 @@ namespace IS {
         int mButtonType{};
         int mButtonState{};
         std::string ImageName;
+        float mIdleAlpha;
+        float mHoverAlpha;
+        float mClickAlpha;
+        float mSizeScale;
 
         Json::Value Serialize() {
            Json::Value button_data;
@@ -71,6 +75,10 @@ namespace IS {
            button_data["ButtonType"] = mButtonType;
            button_data["ButtonState"] = mButtonState;
            button_data["ButtonImageName"] = ImageName;
+           button_data["ButtonIdleAlpha"] = mIdleAlpha;
+           button_data["ButtonHoverAlpha"] = mHoverAlpha;
+           button_data["ButtonClickAlpha"] = mClickAlpha;
+           button_data["ButtonSizeScale"] = mSizeScale;
            return button_data;
         }
 
@@ -80,6 +88,10 @@ namespace IS {
             mButtonType = data["ButtonType"].asInt();
             mButtonState = data["ButtonState"].asInt();
             ImageName = data["ButtonImageName"].asString();
+            mIdleAlpha = data["ButtonIdleAlpha"].asFloat();
+            mHoverAlpha = data["ButtonHoverAlpha"].asFloat();
+            mClickAlpha = data["ButtonClickAlpha"].asFloat();
+            mSizeScale = data["ButtonSizeScale"].asFloat();
         }
     };
 
@@ -145,16 +157,24 @@ namespace IS {
                     engine.AddComponent<Sprite>(entity, Sprite());
                 }
                 auto& button_component = engine.GetComponent<ButtonComponent>(entity);
+                auto& sprite_component = engine.GetComponent<Sprite>(entity);
+                auto& trans_component = engine.GetComponent<Transform>(entity);
+                Vector2D button_size = trans_component.getScaling(); // Idle button size
                 // mouse is hovered over button
                 if (GameButtonContainsMouse(mouse_x, mouse_y, entity)) {
                     button_component.mButtonState = ButtonStates::Hovered;
+                    sprite_component.color.a = button_component.mHoverAlpha;
+                    trans_component.setScaling(button_size * button_component.mSizeScale);
                     //if clicks
                     if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                         button_component.mButtonState = ButtonStates::Pressed;
+                        sprite_component.color.a = button_component.mClickAlpha;
                     }
                 }
                 else {
                     button_component.mButtonState = ButtonStates::Idle;
+                    sprite_component.color.a = button_component.mIdleAlpha;
+                    trans_component.setScaling(button_size);
                 }
 
 

@@ -136,6 +136,13 @@ namespace IS {
 		void setScaling(float width, float height);
 
 		/*!
+		 * \brief Set the scaling factors.
+		 *
+		 * \param vec the new Vector for scaling factor.
+		 */
+		void setScaling(Vector2D vec);
+
+		/*!
 		 * \brief force change/update/move the transform position by specific value (for collision response)
 		 *
 		 * \param value adding with type Vector2D

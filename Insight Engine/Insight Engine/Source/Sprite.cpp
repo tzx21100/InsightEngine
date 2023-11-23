@@ -514,6 +514,7 @@ namespace IS {
         if (image != nullptr) {
             img.texture_index = system->GetImage(img.mFileName)->texture_index;
         }
+        img.texture_id = system->GetImage(img.mFileName)->texture_id;
 
         animation_index = data["SpriteCurrentTexIndex"].asInt();
 

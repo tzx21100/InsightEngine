@@ -65,6 +65,11 @@ namespace IS {
 		scaling.y = height;
 	}
 
+	void Transform::setScaling(Vector2D vec)
+	{
+		scaling = vec;
+	}
+
 	void Transform::Move(Vector2D const& val) {
 		world_position.x += val.x;
 		world_position.y += val.y;
