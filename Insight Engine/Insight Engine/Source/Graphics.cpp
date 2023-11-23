@@ -347,7 +347,7 @@ namespace IS {
         // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
 
         auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        Image* img = system->GetImage("running_anim 4R3C.png");
+        //Image* img = system->GetImage("running_anim 4R3C.png");
         // Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
         // Sprite::drawSpritesheetFrame(0, 2, 4, 3, { -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
 

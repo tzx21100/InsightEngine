@@ -21,7 +21,7 @@ namespace IS
 
 
         static public void CleanUp(){
-
+            InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
         }
 
     }
