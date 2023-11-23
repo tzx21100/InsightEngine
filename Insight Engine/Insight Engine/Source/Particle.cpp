@@ -3,6 +3,8 @@
 #include "ParticleEmitter.h"
 
 namespace IS {
+    Animation run_anim;
+
     std::string ParticleSystem::GetName() {
         return "Particle";
     }
@@ -10,6 +12,9 @@ namespace IS {
     void ParticleSystem::Initialize() {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
+
+
+        run_anim.initAnimation(4, 3, 2.f);
     }
 
     void ParticleSystem::Update(float deltaTime) {
@@ -51,8 +56,11 @@ namespace IS {
 
             case pt_texture:
 
-                Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                Image* img = system->GetImage("running_anim 4R3C.png");
 
+                Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
                 break;
                 
             }
