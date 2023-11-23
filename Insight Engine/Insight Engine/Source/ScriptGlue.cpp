@@ -22,6 +22,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Collider.h"
 #include "GameGui.h"
 #include <algorithm>
+#include "Physics.h"
 
 #include <mono/metadata/object.h>
 
@@ -342,6 +343,12 @@ namespace IS {
         return button.mButtonState;
     }
 
+    static int GetEntityButtonState(int entity)
+    {
+        auto& button = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        return button.mButtonState;
+    }
+
     static int CreateEntity(MonoString* name) {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
@@ -372,6 +379,49 @@ namespace IS {
         auto& sprite_component=InsightEngine::Instance().GetComponent<Sprite>(entity);
         sprite_component.layer = 1;
         sprite_component.img = ConvertToImage(image);
+
+        return static_cast<int>(entity);
+    }
+
+    static int CreateEntityUI(MonoString* name, SimpleImage image)
+    {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        sprite_component.layer = 4;
+        sprite_component.img = ConvertToImage(image);
+
+        return static_cast<int>(entity);
+    }
+
+    static int CreateEntityButton(MonoString* name, SimpleImage image , MonoString * filename)
+    {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        InsightEngine::Instance().AddComponent<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
+        char* c_str2 = mono_string_to_utf8(filename);
+        std::string str2(c_str2);
+        mono_free(c_str2);
+        script_component.mScriptName = str2;
+        sprite_component.layer = 4;
+        sprite_component.img = ConvertToImage(image);
+        //button_component.followTransform();
+        button_component.mIdleAlpha = 0.8f;
+        button_component.mClickAlpha = 0.9f;
+        button_component.mHoverScale = 1.2f;
+        
 
         return static_cast<int>(entity);
     }
@@ -608,6 +658,19 @@ namespace IS {
         return 0;
     }
 
+    static void GamePause(bool pause)
+    {
+        //auto physics = InsightEngine::Instance().GetSystem<Physics>("Physics");
+        if (pause)
+        {
+            Physics::mGravity = Vector2D(0.f, 0.f);
+        }
+        else
+        {
+            Physics::mGravity = Vector2D(0.f, -981.f);
+        }
+    }
+
 
 
     /**
@@ -734,6 +797,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GameSpawnParticle);
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtra);
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtraImage);
+
+
+        IS_ADD_INTERNAL_CALL(GamePause);
+        IS_ADD_INTERNAL_CALL(CreateEntityButton);
+        IS_ADD_INTERNAL_CALL(CreateEntityUI);
+        IS_ADD_INTERNAL_CALL(GetEntityButtonState);
 
 
 

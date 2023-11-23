@@ -177,7 +177,8 @@ namespace IS
 
         static public void Update()
         {
-            if (GameManager.isGamePaused == true) {
+            if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true) {
+                InternalCalls.RigidBodySetForce(0,0);
                 return;
             }
 

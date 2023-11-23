@@ -233,6 +233,18 @@ namespace IS
         internal extern static void GameSpawnParticleExtra(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name);        
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void GameSpawnParticleExtraImage(float x, float y, float direction, float sizeX, float sizeY, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, string image_name);
+        internal extern static void GameSpawnParticleExtraImage(float x, float y, float direction, float sizeX, float sizeY, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, string image_name); 
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityButton(string name, SimpleImage image, string filename);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityUI(string name, SimpleImage image);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetEntityButtonState(int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GamePause(bool pause);
     }
 }
