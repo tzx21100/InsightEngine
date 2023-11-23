@@ -1,0 +1,58 @@
+{
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+		"AudioVolumeLevel" : 1.0
+	},
+	"ButtonComponent" : 
+	{
+		"ButtonClickAlpha" : 0.80000001192092896,
+		"ButtonHoverAlpha" : 1.0,
+		"ButtonHoverScale" : 1.2000000476837158,
+		"ButtonIdleAlpha" : 0.60000002384185791,
+		"ButtonIdleScale" : 1.0,
+		"ButtonImageName" : "",
+		"ButtonState" : 0,
+		"ButtonText" : "",
+		"ButtonType" : 0
+	},
+	"Name" : "Start Button",
+	"Script" : 
+	{
+		"ScriptName" : "StartButtonScript"
+	},
+	"Signature" : "00000000000000000000000101100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "start_button.png",
+		"SpriteName" : "Box",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 27,
+		"SpriteTextureHeight" : 345,
+		"SpriteTextureIndex" : 26,
+		"SpriteTextureWidth" : 1048,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1048.0,
+		"SpriteTransformScalingY" : 345.0,
+		"SpriteTransformWorldPositionX" : -846.69000244140625,
+		"SpriteTransformWorldPositionY" : -69.403228759765625,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1048.0,
+		"TransformScalingY" : 345.0,
+		"TransformWorldPositionX" : -846.69000244140625,
+		"TransformWorldPositionY" : -69.403228759765625
+	}
+}
