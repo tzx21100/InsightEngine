@@ -7,8 +7,8 @@
 				"AudioFalloffFactor" : 1.0,
 				"AudioIsLoop" : false,
 				"AudioPitch" : 1.0,
-				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-				"AudioVolumeLevel" : 1.0
+				"AudioSoundName" : "JOHN_Mindy-Theme2_Consequence-Finale_Loop_80bpm.wav",
+				"AudioVolumeLevel" : 0.68000000715255737
 			},
 			"AudioListener" : 
 			{
@@ -101,8 +101,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.055579952895641327,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.047973692417144775,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -1972,9 +1972,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.077282458543777466,
+						"frame_timer" : 0.069706171751022339,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2085,9 +2085,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.095501318573951721,
+						"frame_timer" : 0.08792509138584137,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -3057,9 +3057,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.065772131085395813,
+						"frame_timer" : 0.058195903897285461,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -3265,9 +3265,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.012853510677814484,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.0052774101495742798,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
