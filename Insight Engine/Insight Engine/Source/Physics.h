@@ -169,7 +169,7 @@ namespace IS {
          * \param entities The set of entities to consider in the physics step.
          */
         void Step(float time, std::set<Entity> const& entities);
-        
+
 	private:
         float mMaxVelocity;                                 // Maximum velocity for game bodies
         float mMinVelocity;                                 // Minimum velocity for game bodies

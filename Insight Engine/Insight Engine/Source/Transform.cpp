@@ -231,10 +231,15 @@ namespace IS {
 		float ndcX = static_cast<float>(xPos) / width * 2.f - 1.0f;
 		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height * 2.f - 1.0f);
 
-		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
+		// Assuming you're working with a right-handed perspective projection
+		glm::vec4 ndcCoords{ ndcX, ndcY, 0.f, 1.f };
 
 		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
+
+		if (Camera3D::mProjectionType == ProjectionType_Perspective) {
+			ndcCoords.z = (2.0f * cameraInUse.GetNear() * cameraInUse.GetFar()) / (cameraInUse.GetFar() - cameraInUse.GetNear()) / (1.0f - ndcCoords.z) - cameraInUse.GetNear();
+		}
 
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
 
