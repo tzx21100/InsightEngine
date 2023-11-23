@@ -82,14 +82,47 @@ namespace IS {
             glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray);
             glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R8, base_size, base_size, 128, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
 
-            // load first 128 characters of ASCII set
-            for (unsigned char c = 0; c < 128; c++)
-            {
-                // Load character glyph 
-                if (FT_Load_Char(face, c, FT_LOAD_RENDER))
-                {
+            // Calculate the maximum glyph size
+            unsigned int maxGlyphWidth = 0;
+            unsigned int maxGlyphHeight = 0;
+
+            for (unsigned char c = 0; c < 128; ++c) {
+                if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
                     std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character " << static_cast<int>(c) << std::endl;
                     continue;
+                }
+
+                maxGlyphWidth = std::max(maxGlyphWidth, face->glyph->bitmap.width);
+                maxGlyphHeight = std::max(maxGlyphHeight, face->glyph->bitmap.rows);
+            }
+
+            // Dynamic texture size based on the maximum glyph size
+            unsigned int textureWidth = maxGlyphWidth;
+            unsigned int textureHeight = maxGlyphHeight;
+            int numLayers = 128;
+
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+            glGenTextures(1, &textureArray);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray);
+            glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R8, textureWidth, textureHeight, numLayers, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
+
+            // ... (remaining code remains the same)
+
+            for (unsigned char c = 0; c < 128; ++c) {
+                // Load character glyph
+                if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character " << static_cast<int>(c) << std::endl;
+                    continue;
+                }
+
+                // Resize texture array if the glyph is larger
+                if (face->glyph->bitmap.width > textureWidth || face->glyph->bitmap.rows > textureHeight) {
+                    textureWidth = std::max(face->glyph->bitmap.width, textureWidth);
+                    textureHeight = std::max(face->glyph->bitmap.rows, textureHeight);
+
+                    glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R8, textureWidth, textureHeight, numLayers, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
                 }
 
                 glTexSubImage3D(
