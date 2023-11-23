@@ -1,0 +1,34 @@
+{
+	"Name" : "Imported Entity",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Environment without grass01.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 10,
+		"SpriteTextureHeight" : 1152,
+		"SpriteTextureIndex" : 9,
+		"SpriteTextureWidth" : 476,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 86.953399658203125,
+		"SpriteTransformScalingY" : 207.22877502441406,
+		"SpriteTransformWorldPositionX" : -4354.794921875,
+		"SpriteTransformWorldPositionY" : 1930.0341796875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 86.953399658203125,
+		"TransformScalingY" : 207.22877502441406,
+		"TransformWorldPositionX" : -4354.794921875,
+		"TransformWorldPositionY" : 1930.0341796875
+	}
+}
