@@ -1,0 +1,48 @@
+{
+	"Name" : "land",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "land_vfx 2R7C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 16,
+		"SpriteTextureHeight" : 538,
+		"SpriteTextureIndex" : 15,
+		"SpriteTextureWidth" : 3801,
+		"SpriteTransformRotation" : 19.994171142578125,
+		"SpriteTransformScalingX" : 0.0,
+		"SpriteTransformScalingY" : 0.0,
+		"SpriteTransformWorldPositionX" : -999.0,
+		"SpriteTransformWorldPositionY" : -9999.0,
+		"animations" : 
+		[
+			{
+				"Name" : "",
+				"animation_duration" : 0.30000001192092896,
+				"frame_dimension_x" : 0.1428571492433548,
+				"frame_dimension_y" : 0.5,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.0015274453908205032,
+				"time_per_frame" : 0.02142857201397419,
+				"x_frames" : 7,
+				"y_frames" : 2
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 19.994171142578125,
+		"TransformScalingX" : 0.0,
+		"TransformScalingY" : 0.0,
+		"TransformWorldPositionX" : -999.0,
+		"TransformWorldPositionY" : -9999.0
+	}
+}
