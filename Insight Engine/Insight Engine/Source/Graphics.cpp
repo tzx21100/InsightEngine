@@ -68,6 +68,7 @@ namespace IS {
     // Text Objects
     Text ISGraphics::Times_New_Roman_font;
     Text ISGraphics::Brush_Script_font;
+    Text ISGraphics::North_Forest_font;
 
     // Text animation boolean
     bool ISGraphics::mShowTextAnimation = true;
@@ -90,6 +91,7 @@ namespace IS {
         // init text object
         Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
         Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
+        North_Forest_font.initText("Assets/Fonts/NORTH FOREST.ttf");
         
         // init 3 animations
         walking_ani.initAnimation(1, 4, 1.f); 

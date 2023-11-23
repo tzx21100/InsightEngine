@@ -33,7 +33,7 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) 
             {
-                InternalCalls.AudioPlaySound("StartClick.wav");
+                //InternalCalls.AudioPlaySound("StartClick.wav");
                 start_button_click = true;
             }
 

@@ -157,6 +157,7 @@ namespace IS {
 		// Text Objects
 		static Text Times_New_Roman_font;
 		static Text Brush_Script_font;
+		static Text North_Forest_font;
 
 		// Text animation boolean
 		static bool mShowTextAnimation;

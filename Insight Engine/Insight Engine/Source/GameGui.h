@@ -203,7 +203,7 @@ namespace IS {
                 }
                 trans_component.setScaling(button_component.mSize * button_size_scale);
 
-
+                ISGraphics::North_Forest_font.renderText(button_component.mButtonText, 0.5f, 0.5f, 24, { 1.f, 1.f, 1.f });
             }
 
         }
