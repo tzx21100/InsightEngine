@@ -41,15 +41,10 @@ namespace IS {
         ISGraphics::light_shader_pgm.link();
         ISGraphics::light_shader_pgm.validate();
 
-        ISGraphics::Times_New_Roman_font.shader.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Text.vert");
-        ISGraphics::Times_New_Roman_font.shader.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Text.frag");
-        ISGraphics::Times_New_Roman_font.shader.link();
-        ISGraphics::Times_New_Roman_font.shader.validate();
-
-        ISGraphics::Brush_Script_font.shader.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Text.vert");
-        ISGraphics::Brush_Script_font.shader.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Text.frag");
-        ISGraphics::Brush_Script_font.shader.link();
-        ISGraphics::Brush_Script_font.shader.validate();
+        Text::textShader.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Text.vert");
+        Text::textShader.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Text.frag");
+        Text::textShader.link();
+        Text::textShader.validate();
 
         ISGraphics::fb_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "fb.vert");
         ISGraphics::fb_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "fb.frag");

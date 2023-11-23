@@ -402,6 +402,8 @@ namespace IS {
             Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
         }
 
+        North_Forest_font.renderAllText();
+
         //mFramebuffer->Unbind();
         //if (!engine.mRenderGUI)
         //{

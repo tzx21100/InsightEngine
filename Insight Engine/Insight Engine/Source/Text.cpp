@@ -30,6 +30,9 @@ namespace IS {
     std::vector<glm::mat4> Text::transforms;
     std::vector<int> Text::letterMap;*/
 
+    Shader Text::textShader;
+    std::vector<Text::TextRenderCall> Text::renderCalls;
+
     void Text::drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Text& font1, Text& font2) {
         // set static timer and condition
         static float text_timer = 0.f;
@@ -53,8 +56,8 @@ namespace IS {
         // compile and setup the shader
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
-        shader.use();
-        glUniformMatrix4fv(glGetUniformLocation(shader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        textShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
         // FreeType
         FT_Library ft;
@@ -108,8 +111,6 @@ namespace IS {
             glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray);
             glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R8, textureWidth, textureHeight, numLayers, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
 
-            // ... (remaining code remains the same)
-
             for (unsigned char c = 0; c < 128; ++c) {
                 // Load character glyph
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
@@ -145,6 +146,7 @@ namespace IS {
 
                 GLenum error = glGetError();
                 if (error != GL_NO_ERROR) {
+                    std::cout << "wrong char: " << (int)c << std::endl;
                     IS_CORE_ERROR("Error loading font character '{}' from {}", static_cast<char>(c), filepath);
                 }
 
@@ -161,7 +163,7 @@ namespace IS {
         // destroy FreeType once we're finished
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
-        shader.unUse();
+        textShader.unUse();
 
         for (int i = 0; i < ARRAY_LIMIT; i++) {
             letterMap.push_back(0);
@@ -203,8 +205,8 @@ namespace IS {
         //const float copyY = y;
 
         // Activate the specified shader and set the text color.
-        shader.use();
-        glUniform3f(glGetUniformLocation(shader.getHandle(), "textColor"), color.x, color.y, color.z);
+        textShader.use();
+        glUniform3f(glGetUniformLocation(textShader.getHandle(), "textColor"), color.x, color.y, color.z);
 
         // Bind textures and buffers.
         glActiveTexture(GL_TEXTURE0);
@@ -251,7 +253,7 @@ namespace IS {
         textRenderCall(char_index);
 
         // Unbind buffers and textures
-        shader.unUse();
+        textShader.unUse();
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
@@ -260,8 +262,8 @@ namespace IS {
     void Text::textRenderCall(int length) {
         if (length != 0) {
             // Set the transformation matrices and character texture IDs
-            glUniformMatrix4fv(glGetUniformLocation(shader.getHandle(), "transforms"), length, GL_FALSE, &transforms[0][0][0]);
-            glUniform1iv(glGetUniformLocation(shader.getHandle(), "letterMap"), length, &letterMap[0]);
+            glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "transforms"), length, GL_FALSE, &transforms[0][0][0]);
+            glUniform1iv(glGetUniformLocation(textShader.getHandle(), "letterMap"), length, &letterMap[0]);
 
             // Render the characters using instanced rendering
             glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, length);
