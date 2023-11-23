@@ -345,6 +345,16 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
         //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
+    }        
+    
+    static int CreateEntitySprite(MonoString* name) {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity=InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        return static_cast<int>(entity);
     }    
     
     static int CreateEntityVFX(MonoString* name, SimpleImage image) {
@@ -408,6 +418,28 @@ namespace IS {
     
     static void ColliderComponentRemove(int entity) {
         InsightEngine::Instance().RemoveComponent<Collider>(entity);
+    }    
+    
+    static void RigidBodySetBodyTypeEntity(short body_type, int entity) {
+        if (!InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+            InsightEngine::Instance().AddComponent<RigidBody>(entity, RigidBody());
+        }
+
+        auto& component=InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        component.mBodyType = static_cast<BodyType>(body_type);
+        if (body_type == 1) {
+            InsightEngine::Instance().RemoveComponent<RigidBody>(entity);
+            InsightEngine::Instance().AddComponent<RigidBody>(entity,RigidBody());
+        }
+    }
+
+    static short RigidBodyGetBodyTypeEntity(int entity) {
+    if (!InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+        InsightEngine::Instance().AddComponent<RigidBody>(entity, RigidBody());
+    }
+
+    auto& component=InsightEngine::Instance().GetComponent<RigidBody>(entity);
+    return static_cast<short>(component.mBodyType);
     }
 
     static void CameraSetZoom(float value) {
@@ -590,6 +622,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetBodyTypeEntity);
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);
@@ -632,6 +666,7 @@ namespace IS {
 
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);
+        IS_ADD_INTERNAL_CALL(CreateEntitySprite);
         IS_ADD_INTERNAL_CALL(CreateEntityVFX);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
         IS_ADD_INTERNAL_CALL(AddCollider);

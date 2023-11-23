@@ -122,7 +122,10 @@ namespace IS
         internal extern static int GetButtonState();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int CreateEntity(string str);        
+        internal extern static int CreateEntity(string str);         
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntitySprite(string str);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityVFX(string name, SimpleImage image);
@@ -167,7 +170,13 @@ namespace IS
         internal extern static SimpleVector2D RigidBodyGetVelocity();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodySetForce(float x, float y);        
+        internal extern static void RigidBodySetForce(float x, float y);                
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodySetBodyTypeEntity(short body_type, int entity);    
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static short RigidBodyGetBodyTypeEntity(int entity);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodySetVelocityEntity(float x, float y,int entity);
