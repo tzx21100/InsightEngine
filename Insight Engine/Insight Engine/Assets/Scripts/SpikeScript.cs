@@ -15,6 +15,7 @@ namespace IS
                 {
                     PlayerScript.Health -= 1;
                     InternalCalls.TransformSetPositionEntity(PlayerScript.respawn_x, PlayerScript.respawn_y, PlayerScript.PLAYER_ID);
+                    InternalCalls.RigidBodySetVelocityEntity(0,0,PlayerScript.PLAYER_ID);
                 }
             }
         }

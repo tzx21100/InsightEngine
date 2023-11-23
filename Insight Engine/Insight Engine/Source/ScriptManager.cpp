@@ -66,6 +66,11 @@ namespace IS {
                     scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
 
                 }
+                if (mLoadScene) {
+                    mLoadScene = false;
+                    break;
+                }
+
             }
 
     }

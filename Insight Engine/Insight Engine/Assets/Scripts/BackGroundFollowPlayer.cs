@@ -23,7 +23,7 @@ namespace IS
         static private Vector2D bg3_pos=new Vector2D(0,0);
         static private Vector2D bg4_pos=new Vector2D(0,0);
         static private Vector2D bg5_pos=new Vector2D(0,0);
-        static private Vector2D bg_scale=new Vector2D(4096*3,756*3);
+        static private Vector2D bg_scale=new Vector2D(4096*2.2f,756*2.2f);
 
         static private float player_offset = 10f;
 

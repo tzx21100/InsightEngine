@@ -109,6 +109,14 @@ namespace IS {
         Vector2D vec(x, y);
         //body_component.mVelocity=vec;
         body_component.SetVelocity(vec);
+    }    
+    
+    static void RigidBodySetVelocityEntity(float x, float y ,int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(entity);
+        Vector2D vec(x, y);
+        //body_component.mVelocity=vec;
+        body_component.SetVelocity(vec);
     }
 
     static SimpleVector2D RigidBodyGetVelocity() {
@@ -475,6 +483,8 @@ namespace IS {
         std::string str(c_str);
         SceneManager::Instance().LoadScene(str);
         mono_free(c_str);
+        auto system = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+        system->mLoadScene = true;
     }
 
     static void SwitchScene(int scene_id)
@@ -576,6 +586,7 @@ namespace IS {
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
         IS_ADD_INTERNAL_CALL(RigidBodySetForce);
+        IS_ADD_INTERNAL_CALL(RigidBodySetVelocityEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);

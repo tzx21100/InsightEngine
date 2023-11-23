@@ -71,6 +71,8 @@ namespace IS {
     class ScriptManager :public ParentSystem {
     public:
 
+        bool mLoadScene;
+
         // for sprites 
         std::array<int, 32> mTextureIndexList;
         std::stack<int> availableIndices;
