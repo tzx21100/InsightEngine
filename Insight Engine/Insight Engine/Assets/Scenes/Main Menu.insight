@@ -22,7 +22,7 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 17,
+				"SpriteTexture" : 9,
 				"SpriteTextureHeight" : 720,
 				"SpriteTextureIndex" : 16,
 				"SpriteTextureWidth" : 1280,
@@ -53,11 +53,7 @@
 			},
 			"ButtonComponent" : 
 			{
-				"ButtonClickAlpha" : 0.0,
-				"ButtonHoverAlpha" : 0.0,
-				"ButtonIdleAlpha" : 0.0,
 				"ButtonImageName" : "",
-				"ButtonSizeScale" : 0.0,
 				"ButtonState" : 0,
 				"ButtonText" : "",
 				"ButtonType" : 0
@@ -78,13 +74,13 @@
 				"SpriteFilename" : "start_button.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 27,
+				"SpriteTexture" : 20,
 				"SpriteTextureHeight" : 345,
 				"SpriteTextureIndex" : 26,
 				"SpriteTextureWidth" : 1048,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 0.0,
-				"SpriteTransformScalingY" : 0.0,
+				"SpriteTransformScalingX" : 1048.0,
+				"SpriteTransformScalingY" : 345.0,
 				"SpriteTransformWorldPositionX" : -846.69000244140625,
 				"SpriteTransformWorldPositionY" : -69.403228759765625,
 				"animations" : []
@@ -92,8 +88,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 0.0,
-				"TransformScalingY" : 0.0,
+				"TransformScalingX" : 1048.0,
+				"TransformScalingY" : 345.0,
 				"TransformWorldPositionX" : -846.69000244140625,
 				"TransformWorldPositionY" : -69.403228759765625
 			}
@@ -119,7 +115,7 @@
 				"SpriteFilename" : "exit_button.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 9,
+				"SpriteTexture" : 2,
 				"SpriteTextureHeight" : 211,
 				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 444,
@@ -160,7 +156,7 @@
 				"SpriteFilename" : "fragments_game_logo.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 10,
+				"SpriteTexture" : 3,
 				"SpriteTextureHeight" : 321,
 				"SpriteTextureIndex" : 9,
 				"SpriteTextureWidth" : 2744,
