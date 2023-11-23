@@ -162,7 +162,7 @@ namespace IS {
             });
 
             // Render Scale
-            if (Vector2D scaling = transform.scaling; EditorUtils::RenderControlVec2("Scale", scaling, 95.f, 120.f))
+            if (Vector2D scaling = transform.scaling; EditorUtils::RenderControlVec2("Scale", scaling, 128.f, 128.f))
             {
                 scaling = { abs(scaling.x), abs(scaling.y) };
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(transform.scaling, scaling);

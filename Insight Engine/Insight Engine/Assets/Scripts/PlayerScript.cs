@@ -528,7 +528,7 @@ namespace IS
             }
 
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
-                                                        0.0f, trans_scaling.x*1.5f, trans_scaling.y*1.5f, 1, 0.5f, -0.1f, 0.2f,
+                                                        0.0f, trans_scaling.x, trans_scaling.y, 1, 0.5f, -0.1f, 0.2f,
                                                         0, "Particle Empty.txt", "Dash AfterImage.png");
             canDash = false;
             isDashing = true;
