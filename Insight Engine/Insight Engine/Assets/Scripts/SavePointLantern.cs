@@ -31,7 +31,7 @@ namespace IS
             my_position.y = InternalCalls.GetTransformPosition().y;
             if (InternalCalls.EntityCheckCollide(my_ID)) {
 
-                if (InternalCalls.KeyPressed((int)KeyCodes.E) && InternalCalls.GetCollidingEntityCheck(my_ID, PlayerScript.PLAYER_ID))
+                if (InternalCalls.GetCollidingEntityCheck(my_ID, PlayerScript.PLAYER_ID))
                 {
                     save_point = true;
                     PlayerScript.Health = PlayerScript.Max_Health;

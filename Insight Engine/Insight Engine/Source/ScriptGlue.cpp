@@ -472,7 +472,8 @@ namespace IS {
     static void LoadScene(MonoString* file_name)
     {
         char* c_str = mono_string_to_utf8(file_name); // Convert Mono string to char*
-        SceneManager::Instance().LoadScene(c_str);
+        std::string str(c_str);
+        SceneManager::Instance().LoadScene(str);
         mono_free(c_str);
     }
 

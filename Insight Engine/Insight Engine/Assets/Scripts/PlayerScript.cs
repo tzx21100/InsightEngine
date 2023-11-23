@@ -604,7 +604,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * hori_movement;
+            float distanceLeft = width * -hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft  , 0);
 
