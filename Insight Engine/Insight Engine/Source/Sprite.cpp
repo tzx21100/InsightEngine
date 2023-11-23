@@ -184,6 +184,29 @@ namespace IS {
         }
     }
 
+    void Sprite::drawSpritesheetFrame(int rowIndex, int columnIndex, int totalRows, int totalCols, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
+        if (rowIndex < 0 || rowIndex >= totalRows || columnIndex < 0 || columnIndex >= totalCols) {
+            IS_CORE_WARN("Index out of range for drawSpritesheetFrame function");
+            return;
+        }
+        
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData3D instData;
+            instData.color = { 1.f, 1.f, 1.f, alpha };
+            instData.tex_index = static_cast<float>(texture.texture_index);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+            instData.anim_frame_index = { columnIndex, rowIndex };
+            instData.anim_frame_dimension = { 1.f / totalCols, 1.f / totalRows };
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
     void Sprite::draw_lights() {
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
