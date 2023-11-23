@@ -166,8 +166,8 @@ namespace IS {
             auto& engine = InsightEngine::Instance();
             //get the input system
             std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-            float mouse_x = (float)input->GetMousePosition().first;
-            float mouse_y = (float)input->GetMousePosition().second;
+            float mouse_x = (float)Transform::GetMousePosition().first;
+            float mouse_y = (float)Transform::GetMousePosition().second;
             for (auto& entity : mEntities) {
                 //add the needed components if they do not have
                 if (!engine.HasComponent<Transform>(entity)) {

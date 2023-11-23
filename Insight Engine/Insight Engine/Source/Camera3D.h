@@ -71,7 +71,7 @@ namespace IS {
 		
 		float GetAspectRatio() { return mAspectRatio; }
 
-		static Vector2D mouseToWorld(Vector2D const& screenMousePos);
+		// static Vector2D mouseToWorld();
 
 		/// Static members
 		static aCameraType mActiveCamera;

@@ -109,20 +109,6 @@ namespace IS {
         bool IsMouseButtonHeld(int button) const;
 
         /**
-         * \brief Gets the current mouse position in world coordinates.
-         *
-         * \return A pair representing the x and y coordinates of the mouse cursor.
-         */
-        std::pair<double, double> GetMousePosition();
-
-        /**
-         * \brief Gets the current mouse position in world coordinates.
-         *
-         * \return A pair representing the previous x and y coordinates of the mouse cursor.
-         */
-        std::pair<double, double> GetPreviousMousePosition() const;
-
-        /**
          * \brief Sets the center world position for the mouse relative to the GLFW window
          */
         void setCenterPos(float posx, float posy) {
@@ -143,7 +129,7 @@ namespace IS {
 
             ratio_width = widthR / static_cast<float>(width);
             if (engine.IsFullScreen()) ratio_height = heightR / (static_cast<float>(height));
-            else ratio_height = heightR / (static_cast<float>(height) + 30.f); // 30.f for the white title bar
+            else ratio_height = heightR / (static_cast<float>(height) + 32.f); // 32.f for the white title bar
         }
         void PrintMouseWorldPos();
         void mouse_pick_entity();

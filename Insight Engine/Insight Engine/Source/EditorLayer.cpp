@@ -107,9 +107,6 @@ namespace IS {
         if (CTRL_HELD && Y_PRESSED) { CommandHistory::Redo(); }      // Ctrl + Y
 
 
-        auto hi = Camera3D::mouseToWorld({ ImGui::GetMousePos().x, ImGui::GetMousePos().y });
-        hi = hi;
-
         // Update panels
         for (auto& panel : mPanels)
         {

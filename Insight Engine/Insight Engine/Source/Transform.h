@@ -160,6 +160,13 @@ namespace IS {
 		glm::mat4 Return3DXformMatrix();
 		glm::mat4 GetCameraToWorldTransform();
 
+		/**
+		 * \brief Gets the current mouse position in world coordinates.
+		 *
+		 * \return A pair representing the x and y coordinates of the mouse cursor.
+		 */
+		static std::pair<double, double> GetMousePosition();
+
 		/*!
 		 * \brief Serialize the Transform object to a JSON representation.
 		 *

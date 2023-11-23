@@ -157,6 +157,8 @@ namespace IS {
          */
         inline Vec2 GetViewportSize() { return mPanels.Get<ScenePanel>("Scene")->GetSize(); }
 
+        inline std::pair<int, int> GetMousePos() { return mPanels.Get<ScenePanel>("Scene")->GetMousePos(); }
+
         /*!
          * \brief Checks if any entity is currently selected.
          *

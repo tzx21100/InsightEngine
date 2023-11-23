@@ -79,7 +79,7 @@ namespace IS
         static private float dash_timer =0.2f;
         static private float dash_set = 0.2f;
         static private bool canDash = false;
-        static private bool isDashing;
+        static public bool isDashing;
         static private float dashAngle;
         static private float dashSpeed = 5000f;
 
@@ -604,7 +604,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * -hori_movement;
+            float distanceLeft = width * hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft  , 0);
 

@@ -75,6 +75,8 @@ namespace IS {
          */
         bool MouseWithinViewport() const;
 
+        std::pair<int, int> GetMousePos() const;
+
     private:
         std::shared_ptr<Entity> mHoveredEntity; ///< Entity hovered.
         aGizmoType mGizmoType; ///< Type gizmo used.

@@ -86,7 +86,7 @@ namespace IS {
 
     static SimpleVector2D GetMousePosition() {
         auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-        return SimpleVector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+        return SimpleVector2D((float)Transform::GetMousePosition().first, (float)Transform::GetMousePosition().second);
     }
 
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
@@ -345,6 +345,16 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
         //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
+    }        
+    
+    static int CreateEntitySprite(MonoString* name) {
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity=InsightEngine::Instance().CreateEntity(str);
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        return static_cast<int>(entity);
     }    
     
     static int CreateEntityVFX(MonoString* name, SimpleImage image) {
@@ -408,6 +418,28 @@ namespace IS {
     
     static void ColliderComponentRemove(int entity) {
         InsightEngine::Instance().RemoveComponent<Collider>(entity);
+    }    
+    
+    static void RigidBodySetBodyTypeEntity(short body_type, int entity) {
+        if (!InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+            InsightEngine::Instance().AddComponent<RigidBody>(entity, RigidBody());
+        }
+
+        auto& component=InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        component.mBodyType = static_cast<BodyType>(body_type);
+        if (body_type == 1) {
+            InsightEngine::Instance().RemoveComponent<RigidBody>(entity);
+            InsightEngine::Instance().AddComponent<RigidBody>(entity,RigidBody());
+        }
+    }
+
+    static short RigidBodyGetBodyTypeEntity(int entity) {
+    if (!InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
+        InsightEngine::Instance().AddComponent<RigidBody>(entity, RigidBody());
+    }
+
+    auto& component=InsightEngine::Instance().GetComponent<RigidBody>(entity);
+    return static_cast<short>(component.mBodyType);
     }
 
     static void CameraSetZoom(float value) {
@@ -430,8 +462,15 @@ namespace IS {
         Sprite::drawDebugLine(point1, point1+dist, {1.f, 0.f, 0.f});
     }
 
-    static void DrawCircle(float x1, float y1, float x2, float y2) {
-        Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
+    static void DrawCircle(float pos_x, float pos_y, float scale_x, float scale_y) {
+        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), { 1.f,0.f,0.f });
+    }
+
+    static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y)
+    {
+        glLineWidth(200.f);
+        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), { 0.f,0.f,0.f });
+        glLineWidth(2.f);
     }
 
     static bool GetCollidingEntityCheck(int entity ,int entityToCheckAgainst) {
@@ -590,6 +629,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetBodyTypeEntity);
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);
@@ -632,6 +673,7 @@ namespace IS {
 
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);
+        IS_ADD_INTERNAL_CALL(CreateEntitySprite);
         IS_ADD_INTERNAL_CALL(CreateEntityVFX);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
         IS_ADD_INTERNAL_CALL(AddCollider);
@@ -674,6 +716,7 @@ namespace IS {
 
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
+        IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
 
         //Scene Manager

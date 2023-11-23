@@ -20,6 +20,11 @@
 #include "Pch.h"
 #include "Camera3D.h"
 
+#ifdef USING_IMGUI
+#include <imgui.h>
+#endif // USING_IMGUI
+
+
 namespace IS {
 
 	aCameraType Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
@@ -60,7 +65,8 @@ namespace IS {
 		{
 		case ProjectionType_Othographic:
 		{
-			auto [width, height] = InsightEngine::Instance().GetWindowSize();
+			InsightEngine& engine = InsightEngine::Instance();
+			auto [width, height] = engine.GetWindowSize();
 			float fWidth = static_cast<float>(width) / GetZoomLevel();
 			float fHeight = fWidth / GetAspectRatio();
 			mProjection = glm::ortho(-fWidth, fWidth, -fHeight, fHeight, mNear, mFar);
@@ -130,28 +136,30 @@ namespace IS {
 		mFront = glm::normalize(mFront);
 	}
 
-	Vector2D Camera3D::mouseToWorld(Vector2D const& screenMousePos){
-		InsightEngine& engine = InsightEngine::Instance();
-		auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+	//Vector2D Camera3D::mouseToWorld(){
+	//	InsightEngine& engine = InsightEngine::Instance();
+	//	double xPos, yPos;
+	//	auto mWindow = engine.GetSystem<WindowSystem>("Window");
+	//	glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
 
-		float ndcX = ((screenMousePos.x * 2.f / static_cast<float>(width)) - 1.f);
-		float ndcY = ((screenMousePos.y * 2.f / static_cast<float>(height)) - 1.f);
+	//	auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+	//		
+	//	// Get normalized device coordinates
+	//	float ndcX = static_cast<float>(xPos) / static_cast<float>(width) * 2.f - 1.0f;
+	//	float ndcY = -(static_cast<float>(yPos) / static_cast<float>(height) * 2.f - 1.0f);
+	//	// float ndcY = 1.0f - static_cast<float>(yPos) / static_cast<float>(height) * 2.f;
 
-		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
+	//	glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
 
-		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-		glm::mat4 ndcToCam = glm::inverse(cameraInUse.GetViewMatrix()) * glm::inverse(cameraInUse.GetProjectionMatrix());
+	//	auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+	//	glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
 
-		float fWidth = static_cast<float>(width) / cameraInUse.GetZoomLevel();
-		float fHeight = fWidth / cameraInUse.GetAspectRatio();
-		Transform camXform({ cameraInUse.mPosition.x, cameraInUse.mPosition.y }, 0.f, { fWidth, fHeight });
-		glm::mat4 camXformMat = camXform.Return3DXformMatrix();
+	//	glm::vec4 worldPos = ndcToCam * ndcCoords;
+	//	// worldPos.x -= cameraInUse.mPosition.x;
+	//	// worldPos.y -= cameraInUse.mPosition.y;
 
-		glm::vec4 worldPos = ndcToCam * ndcCoords;
-		worldPos /= worldPos.w;
-
-		//IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, -worldPos.y);
-		return { worldPos.x, -worldPos.y };
-	}
+	//	IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, worldPos.y);
+	//	return { worldPos.x, worldPos.y };
+	//}
 
 } // end namespace IS
