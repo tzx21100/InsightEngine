@@ -462,8 +462,15 @@ namespace IS {
         Sprite::drawDebugLine(point1, point1+dist, {1.f, 0.f, 0.f});
     }
 
-    static void DrawCircle(float x1, float y1, float x2, float y2) {
-        Sprite::drawDebugCircle(Vector2D(x1, y1), Vector2D(x2, y2), { 1.f,0.f,0.f });
+    static void DrawCircle(float pos_x, float pos_y, float scale_x, float scale_y) {
+        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), { 1.f,0.f,0.f });
+    }
+
+    static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y)
+    {
+        glLineWidth(200.f);
+        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), { 0.f,0.f,0.f });
+        glLineWidth(2.f);
     }
 
     static bool GetCollidingEntityCheck(int entity ,int entityToCheckAgainst) {
@@ -709,6 +716,7 @@ namespace IS {
 
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
+        IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
 
         //Scene Manager
