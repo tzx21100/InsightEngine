@@ -111,8 +111,6 @@ namespace IS {
             glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray);
             glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R8, textureWidth, textureHeight, numLayers, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
 
-            // ... (remaining code remains the same)
-
             for (unsigned char c = 0; c < 128; ++c) {
                 // Load character glyph
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
