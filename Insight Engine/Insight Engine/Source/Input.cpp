@@ -21,6 +21,7 @@
 #include "Pch.h"
 #include "Input.h"
 
+
 namespace IS {
 
     std::string InputManager::GetName() { return "Input"; }
@@ -150,95 +151,6 @@ namespace IS {
         return held_mouse_buttons.count(button) > 0;
     }
 
-    std::pair<double, double> InputManager::GetMousePosition() {
-        previousWorldMousePos = currentWorldMousePos;
-        
-        double xPos, yPos;
-        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-        
-        double newX = (((xPos - center_x) * ratio_width * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
-        double newY = (((center_y - yPos) * ratio_height * 2.f) / ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel()) + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
-
-        // WORKS WITH 1X CAMERA ZOOM, SO SHOULD BE SCALED BY RATIO / 2???
-        // double newX = 2.f * (xPos - center_x) * ratio_width  + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
-        // double newY = 2.f * (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
-        
-        //newY = -(newX * ISGraphics::cameras3D[Camera3D::mActiveCamera].GetAspectRatio());
-        // IS_CORE_DEBUG("{}, {}", newX, newY);
-
-        currentWorldMousePos = { static_cast<float>(newX), static_cast<float>(newY) };
-        //current_mouse_x = newX;
-        //current_mouse_y = newY;
-
-       /* if (currentWorldMousePos.x != previousWorldMousePos.x) {
-            std::cout << "change!" << std::endl;
-        }*/
-
-        return { newX, newY };
-    }
-
-    std::pair<double, double> InputManager::GetPreviousMousePosition() const {
-        return { previous_mouse_x, previous_mouse_y };
-    }
-
-    void InputManager::PrintMouseWorldPos() {
-       // auto& engine = InsightEngine::Instance();
-       // auto const window = engine.GetSystem<WindowSystem>("Window");
-
-       // auto const editor = engine.GetSystem<ImGuiLayer>("Editor");
-       // auto const editor_layer = editor->GetEditorLayer();
-       // auto const& viewport_size = editor_layer->GetViewportSize();
-
-       // Camera& cameraInUse = ISGraphics::cameras[Camera::mActiveCamera];
-       // double SHw = editor_layer->GetHierarchyPanel().x; // change to scene hierarchy panel width
-       // double LCh = editor_layer->GetConsolePanelSize().y; // change to log console height
-
-       // // step 1: get screen coords
-       // //double mouseX{}, mouseY{};
-       // //glfwGetCursorPos(window->GetNativeWindow(), &mouseX, &mouseY);
-       // //IS_CORE_DEBUG("screen mouse pos: {}, {}", mouseX, mouseY);
-       // //IS_CORE_DEBUG("screen mouse pos: {:.2f}, {:.2f}", current_mouse_x, current_mouse_y);
-
-       // // step 2: translate to cartesian
-       // double cartesianMouseX{ current_mouse_x - (engine.GetWindowWidth() / 2) }, cartesianMouseY{ current_mouse_y + ((engine.GetWindowHeight()) / 2) }; // 40 is the height of window title
-       // //IS_CORE_DEBUG("cartesian screen mouse pos: {:.2f}, {:.2f}", cartesianMouseX, cartesianMouseY);
-
-       // // step 3: normalize to VP coords
-       // double VPMouseX{ cartesianMouseX - SHw }, VPMouseY{ cartesianMouseY - LCh };
-       // //IS_CORE_DEBUG("VP mouse pos: {:.2f}, {:.2f}", VPMouseX, VPMouseY);
-
-       // // step 4: scale to cam dim
-       // double WorldMouseX{ VPMouseX / viewport_size.x * cameraInUse.GetCamDim().x }, WorldMouseY{ VPMouseY / viewport_size.y * cameraInUse.GetCamDim().y };
-       // 
-       // // step 5: translate to camera pos
-       // WorldMouseX += cameraInUse.GetCamPos().x;
-       // WorldMouseY += cameraInUse.GetCamPos().y;
-       // //IS_CORE_DEBUG("World mouse pos: {:.2f}, {:.2f}", WorldMouseX, WorldMouseY);
-
-       // world_mouse_x = WorldMouseX;
-       // world_mouse_y = WorldMouseY;
-
-       // //IS_CORE_DEBUG("Current mouse pos: {}, {}", current_mouse_x, current_mouse_y); //0 ,0 to 1919, 1016
-       // //double newX = (current_mouse_x - center_x) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().x;
-       // //double newY = (center_y - current_mouse_y) * ratio_width + ISGraphics::cameras[Camera::mActiveCamera].GetCamPos().y;  // Negate to make y-axis point upwards
-
-       // //InsightEngine& engine = InsightEngine::Instance();
-       // //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-       // //auto [width, height] = window_sys->GetWindowSize();
-
-       // //newX += width / 2.f;
-       // //newY -= height / 2.f;
-
-       //
-
-       ///* int winW, winH;
-       // glfwGetFramebufferSize(window, &winW, &winH);*/
-
-       // //WindowSystem::GetWidth();
-
-       // //IS_CORE_DEBUG("world mouse pos: {}, {}", engine.GetWindowWidth(), engine.GetWindowHeight());
-    }
-
     void InputManager::ProcessPayloads()
     {
         for (auto const& payload : payloads)
@@ -324,38 +236,6 @@ namespace IS {
             std::filesystem::path path = std::filesystem::relative(paths[i]);
             input->payloads.emplace(path);
         }
-    }
-
-    void InputManager::mouse_pick_entity() {
-       /* double xPos, yPos;
-        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-        std::cout << "xPos: " << xPos << "yPos: " << yPos << std::endl;*/
-
-        double xPos, yPos;
-        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-
-
-        double newX = (xPos - center_x) * ratio_width + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x;
-        double newY = (center_y - yPos) * ratio_height + ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y;  // Negate to make y-axis point upwards
-
-        InsightEngine& engine = InsightEngine::Instance();
-        auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-        auto [width, height] = window_sys->GetWindowSize();
-
-        newX += width / 2.f;
-        newY += height / 2.f;
-
-        if (engine.mRenderGUI) ISGraphics::mFramebuffer->Bind(); // bind fb
-
-        int entityID{};
-        // Read the entityID value at the specified pixel coordinates
-        glReadBuffer(GL_COLOR_ATTACHMENT1);
-        glReadPixels(static_cast<GLint>(xPos), static_cast<GLint>(yPos), 1, 1, GL_RED_INTEGER, GL_INT, &entityID);
-        //GLuint entityIDR = entityID.x;
-        //std::cout << entityID << std::endl;
-        //IS_CORE_DEBUG("Entity ID Picked: {}", entityID);
-
-        if (engine.mRenderGUI) ISGraphics::mFramebuffer->Unbind();
     }
 
 } // end namespace IS

@@ -109,20 +109,6 @@ namespace IS {
         bool IsMouseButtonHeld(int button) const;
 
         /**
-         * \brief Gets the current mouse position in world coordinates.
-         *
-         * \return A pair representing the x and y coordinates of the mouse cursor.
-         */
-        std::pair<double, double> GetMousePosition();
-
-        /**
-         * \brief Gets the current mouse position in world coordinates.
-         *
-         * \return A pair representing the previous x and y coordinates of the mouse cursor.
-         */
-        std::pair<double, double> GetPreviousMousePosition() const;
-
-        /**
          * \brief Sets the center world position for the mouse relative to the GLFW window
          */
         void setCenterPos(float posx, float posy) {

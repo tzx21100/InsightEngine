@@ -94,13 +94,6 @@ namespace IS {
 
         if (!mEditorLayer.IsGamePanelFocused())
         {
-            auto [mx, my] = ImGui::GetMousePos();
-            mx -= mViewportBounds[0].x;
-            my -= mViewportBounds[0].y;
-            my = mSize.y - my;
-            int mouse_x = static_cast<int>(mx);
-            int mouse_y = static_cast<int>(my);
-
             // Check if mouse is within bounds of the scene panel
             if (mHovered && !mToolbarInUse)
             {
@@ -112,7 +105,7 @@ namespace IS {
                 // Mouse picking - set hovered entity as the selected entity
                 if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGuizmo::IsOver())
                 {
-                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(mouse_x, mouse_y);
+                    int pixel_data = ISGraphics::mFramebuffer->ReadPixel(GetMousePos().first, GetMousePos().second);
                     mHoveredEntity = (pixel_data < 0 || pixel_data > MAX_ENTITIES) ? nullptr : std::make_shared<Entity>(pixel_data);
                     mEditorLayer.SetSelectedEntity(mHoveredEntity);
 
@@ -146,6 +139,11 @@ namespace IS {
         
         // Window contents
         {
+            if (mFocused)
+            {
+                ImGuiIO& io = ImGui::GetIO();
+                io.WantCaptureMouse = io.WantCaptureKeyboard = false;
+            }
             auto viewport_lower_bound = ImGui::GetWindowContentRegionMin();
             auto viewport_upper_bound = ImGui::GetWindowContentRegionMax();
             auto viewport_offset = ImGui::GetWindowPos();
@@ -191,8 +189,8 @@ namespace IS {
                     sprite.img = *asset->GetImage(path.string());
 
                     transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
-                    transform.world_position = { static_cast<float>(input->GetMousePosition().first),
-                    static_cast<float>(input->GetMousePosition().second) };
+                    transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
+                    static_cast<float>(Transform::GetMousePosition().second) };
                 }
 
                 ImGui::EndDragDropTarget();
@@ -210,8 +208,8 @@ namespace IS {
                     if (engine.HasComponent<Transform>(temp))
                     {
                         Transform& transform = engine.GetComponent<Transform>(temp);
-                        transform.world_position = { static_cast<float>(input->GetMousePosition().first),
-                        static_cast<float>(input->GetMousePosition().second) };
+                        transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
+                        static_cast<float>(Transform::GetMousePosition().second) };
                     }
                 }
 
@@ -249,6 +247,17 @@ namespace IS {
 
         return (0 <= mouse_x && mouse_x < static_cast<int>(mSize.x) &&
                 0 <= mouse_y && mouse_y < static_cast<int>(mSize.y));
+    }
+
+    std::pair<int, int> ScenePanel::GetMousePos() const
+    {
+        auto [mx, my] = ImGui::GetMousePos();
+        mx -= mViewportBounds[0].x;
+        my -= mViewportBounds[0].y;
+        my = mSize.y - my;
+        int mouse_x = static_cast<int>(mx);
+        int mouse_y = static_cast<int>(my);
+        return std::make_pair(mouse_x, mouse_y);
     }
 
     void ScenePanel::RenderHelp()

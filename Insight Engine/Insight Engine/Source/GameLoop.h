@@ -59,7 +59,7 @@ namespace IS {
             
             //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 5.2f, 5.2f }, 3.0f,
             //    color_red, 0.8f, 0.1f, 45.0f, 90.0f,
-            //    pt_square, "", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            //    pt_square, "", { (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
             //asset->SaveParticle(A, "Particle Test.txt");
 
 
@@ -201,8 +201,8 @@ namespace IS {
             //auto system = engine.GetSystem<ParticleSystem>("Particle");
             //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 200, 200.f }, 3.0f,
             //    color_red, 0.8f, 0.1f, 0.0f, 0.0f,
-            //    pt_texture, "Dash AfterImage.png", { (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
-            //A.mParticlePos = Vector2D({ (float)input->GetMousePosition().first,(float)input->GetMousePosition().second });
+            //    pt_texture, "Dash AfterImage.png", { (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
+            //A.mParticlePos = Vector2D({ (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
             //system->SpawnParticles(A);
 
   /*          Sprite::draw_textured_quad({ 0,0 }, 0, { 1000,1000 }, *asset->GetImage("Dash AfterImage.png"));*/
@@ -358,12 +358,12 @@ namespace IS {
 
                 if (input->IsMouseButtonHeld(GLFW_MOUSE_BUTTON_1)) {
                     //std::vector<Entity> test;
-                    //test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
+                    //test = Physics::GetSelectedEntities({ static_cast<float>(Transform::GetMousePosition().first), static_cast<float>(Transform::GetMousePosition().second) }, mEntities);
                     //for (auto const& ent : test) {
                     //    //IS_CORE_INFO("entity selected: {}", ent);
                     //}
                     /*std::vector<Entity> test;
-                    test = Physics::GetSelectedEntities({ static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second) }, mEntities);
+                    test = Physics::GetSelectedEntities({ static_cast<float>(Transform::GetMousePosition().first), static_cast<float>(Transform::GetMousePosition().second) }, mEntities);
                     for (auto const& ent : test) {
                         IS_CORE_INFO("(Zekai's algo) entity selected: {}", ent);
                     }*/
@@ -375,7 +375,7 @@ namespace IS {
                 //        Entity a = engine.CreateEntityWithComponents<Sprite, Transform>("Small Box");
                 //        auto& transl = engine.GetComponent<Transform>(a);
                 //        transl.setScaling(width * 0.01875f, height * 0.042222222f);
-                //        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                //        transl.setWorldPosition(static_cast<float>(Transform::GetMousePosition().first), static_cast<float>(Transform::GetMousePosition().second));
                 //        //add the image in
                 //        //spr.texture = backgroundTest.texture_id;
                 //    }
@@ -387,7 +387,7 @@ namespace IS {
                         Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, Collider,ScriptComponent>("Ice Cream Truck");
                         auto& transl = engine.GetComponent<Transform>(a);
                         transl.setScaling(width * 0.05f, height * 0.094222222f);
-                        transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                        transl.setWorldPosition(static_cast<float>(Transform::GetMousePosition().first), static_cast<float>(Transform::GetMousePosition().second));
                         auto& spr = engine.GetComponent<Sprite>(a);
                         spr.name = "ice_cream_truck";
                         spr.img = *truck_anim_image;
@@ -408,7 +408,7 @@ namespace IS {
                 //    Entity a = engine.CreateEntityWithComponents<Sprite, Transform, RigidBody, ScriptComponent, Pathfinder>("Pathing Ice Cream Truck");
                 //    auto& transl = engine.GetComponent<Transform>(a);
                 //    transl.setScaling(width * 0.05f, height * 0.094222222f);
-                //    transl.setWorldPosition(static_cast<float>(input->GetMousePosition().first), static_cast<float>(input->GetMousePosition().second));
+                //    transl.setWorldPosition(static_cast<float>(Transform::GetMousePosition().first), static_cast<float>(Transform::GetMousePosition().second));
                 //    auto& spr = engine.GetComponent<Sprite>(a);
                 //    spr.name = "ice_cream_truck";
                 //    spr.img = *truck_anim_image;
@@ -422,7 +422,7 @@ namespace IS {
                 //    pathcomponent.mInitPos = Vector2D(transcomp.world_position);
                 //    auto sys = engine.GetSystem<Pathfinding>("Pathfinding");
 
-                //    pathcomponent.mEndPos = Vector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+                //    pathcomponent.mEndPos = Vector2D((float)Transform::GetMousePosition().first, (float)Transform::GetMousePosition().second);
                 //}
 
 

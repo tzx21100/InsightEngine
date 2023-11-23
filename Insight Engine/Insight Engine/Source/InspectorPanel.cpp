@@ -753,6 +753,46 @@ namespace IS {
 
                 // Edit button text
                 EditorUtils::RenderTableInputText(button.mButtonText);
+
+                EditorUtils::RenderTableLabel("Idle Alpha");
+                ImGui::TableNextColumn();
+                if (float idle_alpha = button.mIdleAlpha; ImGui::DragFloat("##IdleAlpha", &idle_alpha))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(button.mIdleAlpha, idle_alpha);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Hover Alpha");
+                ImGui::TableNextColumn();
+                if (float hover_alpha = button.mHoverAlpha; ImGui::DragFloat("##HoverAlpha", &hover_alpha))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(button.mHoverAlpha, hover_alpha);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Click Alpha");
+                ImGui::TableNextColumn();
+                if (float click_alpha = button.mClickAlpha; ImGui::DragFloat("##ClickAlpha", &click_alpha))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(button.mClickAlpha, click_alpha);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Idle Scale");
+                ImGui::TableNextColumn();
+                if (float idle_scale = button.mIdleScale; ImGui::DragFloat("##IdleScale", &idle_scale))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(button.mIdleScale, idle_scale);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Hovered Scale");
+                ImGui::TableNextColumn();
+                if (float hover_scale = button.mHoverScale; ImGui::DragFloat("##HoverScale", &hover_scale))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(button.mHoverScale, hover_scale);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
             });
 
         }); // end render Button Component

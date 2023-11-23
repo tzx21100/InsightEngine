@@ -86,7 +86,7 @@ namespace IS {
 
     static SimpleVector2D GetMousePosition() {
         auto input = InsightEngine::Instance().GetSystem<InputManager>("Input");
-        return SimpleVector2D((float)input->GetMousePosition().first, (float)input->GetMousePosition().second);
+        return SimpleVector2D((float)Transform::GetMousePosition().first, (float)Transform::GetMousePosition().second);
     }
 
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {

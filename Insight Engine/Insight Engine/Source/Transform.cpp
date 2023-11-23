@@ -16,6 +16,10 @@
 
 #include "Pch.h"
 
+#ifdef USING_IMGUI
+#include <imgui.h>
+#endif // USING_IMGUI
+
 namespace IS {
 	Transform::Transform() { // default constructor
 		this->world_position = Vec2D();
@@ -178,6 +182,63 @@ namespace IS {
 		}
 		
 		return vertices;
+	}
+
+	std::pair<double, double> Transform::GetMousePosition() {
+		InsightEngine& engine = InsightEngine::Instance();
+		double xPos, yPos;
+		auto window = engine.GetSystem<WindowSystem>("Window");
+		float width, height;
+
+#if defined(USING_IMGUI)
+		auto const& editor_layer = engine.GetEditorLayer();
+		if (engine.mRenderGUI)
+		{
+			xPos = static_cast<double>(editor_layer->GetMousePos().first);
+			yPos = static_cast<double>(editor_layer->GetMousePos().second);
+			width = editor_layer->GetViewportSize().x;
+			height = editor_layer->GetViewportSize().y;
+		}
+		else
+		{
+			glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
+			if (engine.IsFullScreen())
+			{
+				width = static_cast<float>(engine.GetMonitorWidth());
+				height = static_cast<float>(engine.GetMonitorHeight());
+			}
+			else
+			{
+				width = static_cast<float>(engine.GetWindowWidth());
+				height = static_cast<float>(engine.GetWindowHeight());
+			}
+		}
+#else
+		glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
+		if (engine.IsFullScreen())
+		{
+			width = static_cast<float>(engine.GetMonitorWidth());
+			height = static_cast<float>(engine.GetMonitorHeight());
+		}
+		else
+		{
+			width = static_cast<float>(engine.GetWindowWidth());
+			height = static_cast<float>(engine.GetWindowHeight());
+		}
+#endif // USING_IMGUI
+
+		// Get normalized device coordinates
+		float ndcX = static_cast<float>(xPos) / width * 2.f - 1.0f;
+		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height * 2.f - 1.0f);
+
+		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
+
+		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+		glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
+
+		glm::vec4 worldPos = ndcToCam * ndcCoords;
+
+		return { worldPos.x, worldPos.y };
 	}
 
 	Json::Value Transform::Serialize() {
