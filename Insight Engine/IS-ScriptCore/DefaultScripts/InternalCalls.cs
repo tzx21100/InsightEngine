@@ -83,8 +83,11 @@ namespace IS
         internal extern static float GetDeltaTime();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetSpriteImage(SimpleImage image);        
-        
+        internal extern static void SetSpriteImage(SimpleImage image);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetSpriteAlphaEntity(float alpha, int entity);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetSpriteImageEntity(SimpleImage image,int entity);
 
@@ -185,7 +188,10 @@ namespace IS
         internal extern static void DrawLineBetweenPoints(float x1, float y1 ,float x2, float y2);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DrawCircle(float x1, float y1 ,float scale1, float scale2);
+        internal extern static void DrawCircle(float pos_x, float pos_y ,float scale_x, float scale_y);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer = 1);

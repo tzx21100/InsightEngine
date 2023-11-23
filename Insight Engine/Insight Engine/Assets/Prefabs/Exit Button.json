@@ -24,10 +24,10 @@
 		"ButtonText" : "",
 		"ButtonType" : 0
 	},
-	"Name" : "Start Button",
+	"Name" : "Exit Button",
 	"Script" : 
 	{
-		"ScriptName" : "StartButtonScript"
+		"ScriptName" : "ExitButtonScript"
 	},
 	"Signature" : "00000000000000000000000101100011",
 	"Sprite" : 
@@ -38,26 +38,26 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "start_button.png",
+		"SpriteFilename" : "exit_button.png",
 		"SpriteName" : "Box",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 28,
-		"SpriteTextureHeight" : 345,
-		"SpriteTextureIndex" : 27,
-		"SpriteTextureWidth" : 1048,
+		"SpriteTexture" : 10,
+		"SpriteTextureHeight" : 211,
+		"SpriteTextureIndex" : 9,
+		"SpriteTextureWidth" : 444,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1048.0,
-		"SpriteTransformScalingY" : 345.0,
-		"SpriteTransformWorldPositionX" : -846.69000244140625,
-		"SpriteTransformWorldPositionY" : -69.403228759765625,
+		"SpriteTransformScalingX" : 444.0,
+		"SpriteTransformScalingY" : 211.0,
+		"SpriteTransformWorldPositionX" : -846.68731689453125,
+		"SpriteTransformWorldPositionY" : -485.8056640625,
 		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1048.0,
-		"TransformScalingY" : 345.0,
-		"TransformWorldPositionX" : -846.69000244140625,
-		"TransformWorldPositionY" : -69.403228759765625
+		"TransformScalingX" : 444.0,
+		"TransformScalingY" : 211.0,
+		"TransformWorldPositionX" : -846.68731689453125,
+		"TransformWorldPositionY" : -485.8056640625
 	}
 }

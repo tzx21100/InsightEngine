@@ -4,8 +4,8 @@ Scale: 15.2, 15.2
 Lifespan: 3
 Color:
 Red: 1
-Green: 0
-Blue: 0
+Green: 1
+Blue: 1
 Alpha: 1
 Alpha: 0.8
 Alpha Growth: 0.1

@@ -33,23 +33,46 @@ namespace IS
         private float TimeOutTimerSet = 4f;
         private float RespawnTimerSet = 2f;
         private float RespawnTimer = 2f;
+        private float shakeTimer = 0.2f;
+        private float shakeTimerSet = 0.2f;
+        private int shake_dir = 1;
+
         public void update()
         {
-            SimpleImage tra = InternalCalls.GetSpriteImage("transparent.png");
-            SimpleImage tra2 = InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png");
+            
             int entity_id = InternalCalls.GetCurrentEntityID();
             TimeOutTimer -= InternalCalls.GetDeltaTime();
-            if (TimeOutTimer < 0)
+
+            if (TimeOutTimer <= 0)
             {
+                InternalCalls.SetSpriteAlphaEntity(0.1f, entity_id);
                 InternalCalls.ColliderComponentRemove(entity_id);
-                InternalCalls.SetSpriteImageEntity(tra,entity_id);
                 RespawnTimer -= InternalCalls.GetDeltaTime();
             }
+            else {
+
+                InternalCalls.SetSpriteAlphaEntity((TimeOutTimer / TimeOutTimerSet), entity_id);
+
+                if (shakeTimer > 0)
+                {
+                    shakeTimer -= InternalCalls.GetDeltaTime();
+                }
+                else
+                {
+                    InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotationEntity(entity_id) + 10f * shake_dir, 0, entity_id);
+                    shakeTimer = shakeTimerSet;
+                    shake_dir *= -1;
+                }
+
+            }
+
+
+
 
             if (RespawnTimer < 0)
             {
                 InternalCalls.ColliderComponentAdd(entity_id, 0.6f, 0.5f);
-                InternalCalls.SetSpriteImageEntity(tra2,entity_id);
+                InternalCalls.SetSpriteAlphaEntity(1, entity_id); 
                 TimeOutTimer = TimeOutTimerSet;
                 RespawnTimer = RespawnTimerSet;
             }
