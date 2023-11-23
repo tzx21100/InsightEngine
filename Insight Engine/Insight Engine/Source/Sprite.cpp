@@ -143,7 +143,7 @@ namespace IS {
         auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_3d_quad_shader_pgm.getHandle(), "uTex2d");
         if (tex_arr_uniform >= 0)
             glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
-        else std::cout << "uTex2d Uniform not found" << std::endl;
+        else IS_CORE_ERROR({ "uTex2d Uniform not found, shader compilation failed?" });
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));

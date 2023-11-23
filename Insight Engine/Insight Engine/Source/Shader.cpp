@@ -165,6 +165,7 @@ namespace IS {
                 glGetProgramInfoLog(pgm_hdl, log_len, &written_log_len, log_vect.data());
 
                 log = "Failed to link shader program\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
+                IS_CORE_ERROR({}, log);
             }
             return GL_FALSE;
         }
@@ -204,6 +205,7 @@ namespace IS {
                 glGetProgramInfoLog(pgm_hdl, log_len, &written_log_len, log_vect.data());
 
                 log = "Failed to validate shader program for current OpenGL context\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
+                IS_CORE_ERROR({}, log);
             }
             return GL_FALSE;
         }
