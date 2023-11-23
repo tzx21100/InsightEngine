@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 0.0,
-				"Y" : 0.0
+				"X" : 3925.2294921875,
+				"Y" : 1831.9464111328125
 			},
 			"BoxColliderOffset" : 
 			{
@@ -21,57 +21,26 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -400.0,
+					"y" : 150.0
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 400.0,
+					"y" : 150.0
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 400.0,
+					"y" : -150.0
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -400.0,
+					"y" : -150.0
 				}
 			]
 		},
 		"BoxColliderEnabled" : true,
-		"CircleColliderEnabled" : false
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : false
 	},
 	"Name" : "Platform1",
 	"RigidBody" : 
@@ -89,6 +58,7 @@
 		"RigidBodyRestitution" : 0.80000001192092896,
 		"RigidBodyVelocityX" : 0.0,
 		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 0.0,
 		"mDynamicFriction" : 0.0,
 		"mStaticFriction" : 0.0
 	},
@@ -97,22 +67,22 @@
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 0,
-		"SpriteColorX" : 0.54492461681365967,
-		"SpriteColorY" : 0.27639034390449524,
-		"SpriteColorZ" : 0.28316143155097961,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
 		"SpriteFilename" : "Platform01_Tileable.png",
 		"SpriteName" : "Box",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 6,
+		"SpriteTexture" : 27,
 		"SpriteTextureHeight" : 565,
-		"SpriteTextureIndex" : 5,
+		"SpriteTextureIndex" : 26,
 		"SpriteTextureWidth" : 1481,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 800.0,
 		"SpriteTransformScalingY" : 300.0,
-		"SpriteTransformWorldPositionX" : 1504.210205078125,
-		"SpriteTransformWorldPositionY" : -380.0,
+		"SpriteTransformWorldPositionX" : 3925.2294921875,
+		"SpriteTransformWorldPositionY" : 1831.9464111328125,
 		"animations" : []
 	},
 	"Transform" : 
@@ -120,7 +90,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 800.0,
 		"TransformScalingY" : 300.0,
-		"TransformWorldPositionX" : 1504.210205078125,
-		"TransformWorldPositionY" : -380.0
+		"TransformWorldPositionX" : 3925.2294921875,
+		"TransformWorldPositionY" : 1831.9464111328125
 	}
 }

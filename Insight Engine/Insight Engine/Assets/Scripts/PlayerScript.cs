@@ -507,11 +507,6 @@ namespace IS
 
         static public void CleanUp()
         {
-
-            InternalCalls.DestroyEntity(entityA);
-            InternalCalls.DestroyEntity(entityWall);
-            InternalCalls.DestroyEntity(land_entity);
-            InternalCalls.DestroyEntity(jump_entity);
             
             
         }

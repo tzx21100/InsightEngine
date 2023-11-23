@@ -463,6 +463,7 @@ namespace IS {
         spriteData["SpriteColorX"] = color.x;
         spriteData["SpriteColorY"] = color.y;
         spriteData["SpriteColorZ"] = color.z;
+        spriteData["SpriteColorA"] = color.a;
 
         spriteData["AnimationIndex"] = animation_index;
         spriteData["Layer"] = layer;
@@ -524,6 +525,7 @@ namespace IS {
         color.x = data["SpriteColorX"].asFloat();
         color.y = data["SpriteColorY"].asFloat();
         color.z = data["SpriteColorZ"].asFloat();
+        color.a = data["SpriteColorA"].asFloat();
 
         animation_index = data["AnimationIndex"].asInt();
         layer = data["Layer"].asInt();
