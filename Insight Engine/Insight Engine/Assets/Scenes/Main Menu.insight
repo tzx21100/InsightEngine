@@ -15,6 +15,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -77,6 +78,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -139,6 +141,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -180,6 +183,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
