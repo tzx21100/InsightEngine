@@ -54,6 +54,8 @@ namespace IS {
          */
         void updateAnimation(float deltaTime);
 
+        void drawNonEntityAnimation(float deltaTime, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer);
+
         /*!
          * \brief Gets the width of a single frame.
          *

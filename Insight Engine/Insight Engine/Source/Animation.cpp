@@ -47,6 +47,26 @@ namespace IS {
         }
     }
 
+    void Animation::drawNonEntityAnimation(float deltaTime, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
+        this->updateAnimation(deltaTime);
+
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+
+            Transform quadTRS(pos, rotation, scale);
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+
+            Sprite::instanceData3D instData;
+            instData.color = { 1.f, 1.f, 1.f, alpha };
+            instData.tex_index = static_cast<float>(texture.texture_index);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+            instData.anim_frame_dimension = this->frame_dimension;
+            instData.anim_frame_index = this->frame_index;
+
+            ISGraphics::layered3DQuadInstances.insert(instData);
+        }
+    }
+
     float Animation::getFrameWidth() const {
         // returns width of each frame
         return 1.f / x_frames; 
