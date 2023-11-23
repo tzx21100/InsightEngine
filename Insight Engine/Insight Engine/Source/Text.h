@@ -89,7 +89,7 @@ namespace IS {
         };
 
         // Member variables
-        Shader shader;
+        static Shader textShader;
         std::map<GLchar, Text::Character> Characters; // A map of character information loaded from FreeType.
         unsigned int text_vao{};                        // VAO for text rendering.
         unsigned int text_vbo{};                        // VBO for text rendering.
@@ -98,6 +98,29 @@ namespace IS {
         std::vector<int> letterMap;                   // Letter map for text rendering.
         const int ARRAY_LIMIT = 100;         // The maximum limit for text rendering.
         const int base_size = 256;                    // The base size for text rendering.
+
+    private:
+        struct TextRenderCall {
+            std::string text;
+            float widthScalar;
+            float heightScalar;
+            float scale;
+            glm::vec3 color;
+        };
+
+    public:
+        static std::vector<TextRenderCall> renderCalls;
+
+        static void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
+            renderCalls.push_back({ text, widthScalar, heightScalar, scale, color });
+        }
+
+        void renderAllText() {
+            for (const auto& renderCall : renderCalls) {
+                renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
+            }
+            renderCalls.clear(); // Clear the render calls after rendering
+        }
     };
 }
 

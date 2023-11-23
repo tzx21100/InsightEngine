@@ -193,7 +193,7 @@ namespace IS {
             // transform camera
             ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
-
+            // Text::addTextRenderCall("ZAMEN!", 0.5f, 0.5f, 48.f, glm::vec3(1.f, 1.f, 1.f));
 
            // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
             //Sprite::draw_instanced_3D_quads();
