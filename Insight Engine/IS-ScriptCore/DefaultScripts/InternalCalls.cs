@@ -14,6 +14,9 @@ namespace IS
         internal extern static void NativeLog(string name, int param);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void NativeLog(string name, float param);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void NativeLogVector(ref Vector3 param);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -185,10 +188,10 @@ namespace IS
         internal extern static void RigidBodySetVelocityEntity(float x, float y,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DrawLineBetweenPoints(float x1, float y1 ,float x2, float y2);        
+        internal extern static void DrawLineBetweenPoints(float x1, float y1 ,float x2, float y2, (float, float, float) color);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DrawCircle(float pos_x, float pos_y ,float scale_x, float scale_y);
+        internal extern static void DrawCircle(float pos_x, float pos_y ,float scale_x, float scale_y, (float, float, float) color);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y);

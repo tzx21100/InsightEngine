@@ -460,15 +460,16 @@ namespace IS {
         return collider.mCollidedObjectAngle;
     }
 
-    static void DrawLineBetweenPoints(float x1, float y1, float x2, float y2) {
+    static void DrawLineBetweenPoints(float x1, float y1, float x2, float y2, std::tuple<float, float, float> color) {
         Vector2D point1 = Vector2D(x1, y1);
         Vector2D point2 = Vector2D(x2, y2);
         Vector2D dist = point1 - point2;
-        Sprite::drawDebugLine(point1, point1+dist, {1.f, 0.f, 0.f});
+        Sprite::drawDebugLine(point1, point1+dist, color);
     }
 
-    static void DrawCircle(float pos_x, float pos_y, float scale_x, float scale_y) {
-        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), { 1.f,0.f,0.f });
+    static void DrawCircle(float pos_x, float pos_y, float scale_x, float scale_y, std::tuple<float, float, float> color)
+    {
+        Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), color);
     }
 
     static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y)

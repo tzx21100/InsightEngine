@@ -230,6 +230,8 @@ namespace IS {
         bool IsMinimized() const { return mIsMinimized; }
         void SetMinimized(bool focus) { mIsMinimized = focus; }
 
+        void ShowMessageBox(std::string const& message);
+
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.

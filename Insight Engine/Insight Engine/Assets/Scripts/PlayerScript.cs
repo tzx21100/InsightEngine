@@ -476,18 +476,23 @@ namespace IS
                     hori_movement = 0;
                     InternalCalls.SetSpriteImage(player_idle);
 
-                    if (mouse_pos.x>player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                    if (mouse_pos.x > player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
-                    InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y);
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / bullet_time_set));
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/2f/bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 2f / bullet_time_set));
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/ 3f / bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 3f / bullet_time_set));
-                    InternalCalls.DrawCircle(player_pos.x,player_pos.y,trans_scaling.x*50* (bullet_time_timer/ 4f / bullet_time_set),trans_scaling.y* 50 * (bullet_time_timer / 4f / bullet_time_set));
+                    var color = (1f, 1f, 1f);
+                    InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y, color);
 
-
-
-
+                    // Render Circles
+                    for (int i = 1; i <= 5; i++)
+                    {
+                        float scale_multiplier = (i / (float)bullet_time_set);
+                        InternalCalls.DrawCircle(
+                            player_pos.x, player_pos.y,
+                            trans_scaling.x * 50f * (bullet_time_timer / scale_multiplier),
+                            trans_scaling.y * 50f * (bullet_time_timer / scale_multiplier),
+                            color
+                        );
+                    }
                 }
                 else
                 {
@@ -507,7 +512,11 @@ namespace IS
 
         static public void CleanUp()
         {
-            
+
+            InternalCalls.DestroyEntity(entityA);
+            InternalCalls.DestroyEntity(entityWall);
+            InternalCalls.DestroyEntity(land_entity);
+            InternalCalls.DestroyEntity(jump_entity);           
             
         }
 
@@ -516,13 +525,19 @@ namespace IS
         static private void Dashing() {
             for (int i = 0; i < 36; i++)
             {
+                float direction = -1 ^ i * 10;
+                float size = 20f * (bullet_time_timer / bullet_time_set);
+                float scale = 2f;
+                float dash_particle_alpha = 1f;
+                float growth = -0.05f;
+                float speed = 10000f;
 
-                InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 10, 20 * (bullet_time_timer / bullet_time_set), 2, 1, -0.005f, bullet_time_set, 1000, "Particle Test.txt");
-                
-
+                InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y,
+                    direction, size, scale, dash_particle_alpha,
+                    growth, bullet_time_set, speed, "Particle Test.txt");
             }
 
-            float alpha = 0.5f * (dash_timer / dash_set);
+            float alpha =  1f - (dash_timer / dash_set);
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
                                                         0.0f, trans_scaling.x, trans_scaling.y, 1, alpha, 0.0f, 0.2f,
                                                         0, "Particle Empty.txt", "Dash AfterImage.png");
@@ -536,7 +551,7 @@ namespace IS
                 for (int i = 0; i < 72; i++)
                 {
 
-                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "Particle Test.txt");
+                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "Particle Player.txt");
 
 
                 }

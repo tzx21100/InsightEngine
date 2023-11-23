@@ -285,18 +285,6 @@ namespace IS {
                 ImGui::TreePop(); // end tree Collision
             }
 
-            if (ImGui::TreeNodeEx(ICON_LC_IMAGE "  Graphics", tree_flags))
-            {
-                EditorUtils::RenderTableFixedWidth("CollisionTable", 2, [&]()
-                {
-                    EditorUtils::RenderTableLabel("Text Animation");
-                    ImGui::TableNextColumn();
-                    EditorUtils::RenderToggleButton("TextAnimation", ISGraphics::mShowTextAnimation);
-                });
-
-                ImGui::TreePop(); // end tree Graphics
-            }
-
             ImGui::PopStyleVar();
         }
         

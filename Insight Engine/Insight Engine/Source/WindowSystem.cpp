@@ -21,6 +21,15 @@
 #include "WindowSystem.h"
 #include "JsonSaveLoad.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4005) // redefine APIENTRY and IS_ERROR macros
+#include <Windows.h>
+#pragma warning(pop)
+#include <commdlg.h>
+#include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+
 namespace IS {
 
     // In case "WindowProperties.json" is not found, window will use default properties
@@ -209,6 +218,12 @@ namespace IS {
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(mWindow, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
         IS_CORE_DEBUG("pos : ({}, {})", mProps.mXpos, mProps.mYpos);
+    }
+
+    void WindowSystem::ShowMessageBox(std::string const& message)
+    {
+        HWND hwnd = glfwGetWin32Window(mWindow);
+        MessageBox(hwnd, message.c_str(), "Message Box", MB_OK | MB_ICONINFORMATION);
     }
 
     void WindowSystem::SetMaximized(bool maximized)

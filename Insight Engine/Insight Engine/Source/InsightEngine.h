@@ -30,6 +30,7 @@
 #include "ParticleEmitter.h"
 #include "Physics.h"
 #include "CollisionSystem.h"
+#include "Light.h"
 
 using namespace IS;
 
@@ -51,6 +52,7 @@ void RegisterComponents() {
     engine.RegisterComponent<AudioListener>();
     engine.RegisterComponent<Collider>();
     engine.RegisterComponent<ParticleEmitter>();
+    engine.RegisterComponent<Light>();
 
 }
 

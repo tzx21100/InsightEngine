@@ -1,3 +1,4 @@
+
 /*!
  * \file Graphics.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
@@ -69,11 +70,6 @@ namespace IS {
     Text ISGraphics::Times_New_Roman_font;
     Text ISGraphics::Brush_Script_font;
     Text ISGraphics::North_Forest_font;
-
-    // Text animation boolean
-    bool ISGraphics::mShowTextAnimation = true;
-
-    Light testLight, testLight2, testLight3, testLight4;
 
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
@@ -235,9 +231,6 @@ namespace IS {
                 auto& sprite = engine.GetComponent<Sprite>(entity);
                 auto& trans = engine.GetComponent<Transform>(entity);
 
-                // to remove, just testing
-                if (engine.GetEntityName(entity) == "Player") testLight.position = { trans.getWorldPosition().x, trans.getWorldPosition().y }; 
-
                 // update sprite's transform [will be changed]
                 sprite.followTransform(trans);
                 sprite.transform();
@@ -283,28 +276,29 @@ namespace IS {
                         layered3DQuadInstances.insert(instData);
                     }
                 }
-            }
 
-            // for each entity
-            for (auto& entity : mEntities) {
+                // Debug draw
                 // if they have a collider component
-                if (engine.HasComponent<Collider>(entity)) {
+                if (engine.HasComponent<Collider>(entity))
+                {
                     auto& collider = engine.GetComponent<Collider>(entity);
                     // draw their outline if activated
                     Physics::DrawOutLine(collider);
                 }
                 // if they have a collider component
-                if (engine.HasComponent<RigidBody>(entity)) {
+                if (engine.HasComponent<RigidBody>(entity))
+                {
                     auto& body = engine.GetComponent<RigidBody>(entity);
                     // draw their outline if activated
                     if (Physics::mShowVelocity) Sprite::drawDebugLine(body.mPosition, body.mPosition + body.mVelocity, { 1.f, 0.f, 0.f });
                 }
+                if (engine.HasComponent<Light>(entity))
+                {
+                    auto& light = engine.GetComponent<Light>(entity);
+                    light.FollowTransform(trans.world_position);
+                    light.draw();
+                }
             }
-
-            testLight.draw();
-            testLight2.draw();
-            testLight3.draw();
-            testLight4.draw();
 
             // @YIMING TO CHANGE ACCORDINGLY
             //cameras3D[1].update_camera_pos(cameras[1].GetCamPos().x, cameras[1].GetCamPos().y); // follows 2d camera's position for now
@@ -338,8 +332,8 @@ namespace IS {
         glClear(GL_COLOR_BUFFER_BIT);
 
         /// get width and height, set viewport size
-        if (auto const& window = engine.GetSystem<WindowSystem>("Window"); !engine.mRenderGUI) {
-            auto const& [width, height] = window->IsFullScreen() ? window->GetMonitorSize() : window->GetWindowSize();
+        if (!engine.mRenderGUI) {
+            auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
             glViewport(0, 0, width, height);
         }
        
@@ -361,9 +355,12 @@ namespace IS {
         Sprite::draw_lights();
 
     #ifdef USING_IMGUI
-        setLineWidth(3.f);
-        Sprite::draw_picked_entity_border();
-        setLineWidth(2.f);
+        if (engine.mRenderGUI)
+        {
+            setLineWidth(3.f);
+            Sprite::draw_picked_entity_border();
+            setLineWidth(2.f);
+        }
     #endif // USING_IMGUI
 
         // followed by debugging circles and lines
@@ -395,12 +392,6 @@ namespace IS {
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
 #endif // !USING_IMGUI
-
-        // Double font animation
-        if (engine.mRenderGUI && mShowTextAnimation)
-        {
-            Text::drawTextAnimation("  Welcome To \n Insight Engine,", "Enjoy your stay!", delta_time, Times_New_Roman_font, Brush_Script_font);
-        }
 
         North_Forest_font.renderAllText();
 
