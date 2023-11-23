@@ -4,7 +4,7 @@ namespace IS
     class StartButtonScript
     {
         
-        static public void Init(){
+        static public void Init() {
 
         }
 

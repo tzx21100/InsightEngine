@@ -22,7 +22,7 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 9,
+				"SpriteTexture" : 17,
 				"SpriteTextureHeight" : 720,
 				"SpriteTextureIndex" : 16,
 				"SpriteTextureWidth" : 1280,
@@ -53,7 +53,17 @@
 			},
 			"ButtonComponent" : 
 			{
+				"ButtonClickAlpha" : 0.80000001192092896,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.2000000476837158,
+				"ButtonIdleAlpha" : 0.60000002384185791,
+				"ButtonIdleScale" : 1.0,
 				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 1257.60009765625,
+					"Y" : 414.00003051757812
+				},
 				"ButtonState" : 0,
 				"ButtonText" : "",
 				"ButtonType" : 0
@@ -74,13 +84,13 @@
 				"SpriteFilename" : "start_button.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 20,
+				"SpriteTexture" : 27,
 				"SpriteTextureHeight" : 345,
 				"SpriteTextureIndex" : 26,
 				"SpriteTextureWidth" : 1048,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 1048.0,
-				"SpriteTransformScalingY" : 345.0,
+				"SpriteTransformScalingX" : 1257.60009765625,
+				"SpriteTransformScalingY" : 414.00003051757812,
 				"SpriteTransformWorldPositionX" : -846.69000244140625,
 				"SpriteTransformWorldPositionY" : -69.403228759765625,
 				"animations" : []
@@ -88,8 +98,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 1048.0,
-				"TransformScalingY" : 345.0,
+				"TransformScalingX" : 1257.60009765625,
+				"TransformScalingY" : 414.00003051757812,
 				"TransformWorldPositionX" : -846.69000244140625,
 				"TransformWorldPositionY" : -69.403228759765625
 			}
@@ -103,7 +113,28 @@
 				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
 				"AudioVolumeLevel" : 1.0
 			},
+			"ButtonComponent" : 
+			{
+				"ButtonClickAlpha" : 0.80000001192092896,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.2000000476837158,
+				"ButtonIdleAlpha" : 0.60000002384185791,
+				"ButtonIdleScale" : 1.0,
+				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 444.0,
+					"Y" : 211.0
+				},
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonType" : 0
+			},
 			"Name" : "Exit Button",
+			"Script" : 
+			{
+				"ScriptName" : "ExitButtonScript"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -115,7 +146,7 @@
 				"SpriteFilename" : "exit_button.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 2,
+				"SpriteTexture" : 9,
 				"SpriteTextureHeight" : 211,
 				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 444,
@@ -156,7 +187,7 @@
 				"SpriteFilename" : "fragments_game_logo.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 3,
+				"SpriteTexture" : 10,
 				"SpriteTextureHeight" : 321,
 				"SpriteTextureIndex" : 9,
 				"SpriteTextureWidth" : 2744,

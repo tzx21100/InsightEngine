@@ -64,10 +64,15 @@ namespace IS {
         int mButtonType{};
         int mButtonState{};
         std::string ImageName;
-        float mIdleAlpha;
-        float mHoverAlpha;
-        float mClickAlpha;
-        float mSizeScale;
+        Vector2D mSize;
+        float mIdleAlpha{ 1.f };
+        float mHoverAlpha{ 1.f };
+        float mClickAlpha{ 1.f };
+        float mIdleScale{ 1.f };
+        float mHoverScale{ 1.f };
+        bool mTransformUpdate = false;
+
+        void followTransform(Transform const& trans) { mSize = trans.scaling; }
 
         Json::Value Serialize() {
            Json::Value button_data;
@@ -75,10 +80,15 @@ namespace IS {
            button_data["ButtonType"] = mButtonType;
            button_data["ButtonState"] = mButtonState;
            button_data["ButtonImageName"] = ImageName;
+           Json::Value button_size;
+           button_size["X"] = mSize.x;
+           button_size["Y"] = mSize.y;
+           button_data["ButtonSize"] = button_size;
            button_data["ButtonIdleAlpha"] = mIdleAlpha;
            button_data["ButtonHoverAlpha"] = mHoverAlpha;
            button_data["ButtonClickAlpha"] = mClickAlpha;
-           button_data["ButtonSizeScale"] = mSizeScale;
+           button_data["ButtonIdleScale"] = mIdleScale;
+           button_data["ButtonHoverScale"] = mHoverScale;
            return button_data;
         }
 
@@ -88,10 +98,12 @@ namespace IS {
             mButtonType = data["ButtonType"].asInt();
             mButtonState = data["ButtonState"].asInt();
             ImageName = data["ButtonImageName"].asString();
+            mSize = { data["ButtonSize"]["X"].asFloat(), data["ButtonSize"]["Y"].asFloat() };
             mIdleAlpha = data["ButtonIdleAlpha"].asFloat();
             mHoverAlpha = data["ButtonHoverAlpha"].asFloat();
             mClickAlpha = data["ButtonClickAlpha"].asFloat();
-            mSizeScale = data["ButtonSizeScale"].asFloat();
+            mIdleScale = data["ButtonIdleScale"].asFloat();
+            mHoverScale = data["ButtonHoverScale"].asFloat();
         }
     };
 
@@ -136,13 +148,21 @@ namespace IS {
             return true;
         }
 
-        void Initialize() {}
+        void Initialize() {
+
+        }
 
         /*!
          * \brief Updates the GUI system.
          * \param delta_time The time elapsed since the last frame.
          */
         void Update([[maybe_unused]] float delta_time) {
+
+            if (InsightEngine::Instance().mRuntime == false)
+            {
+                return;
+            }
+
             auto& engine = InsightEngine::Instance();
             //get the input system
             std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
@@ -159,12 +179,17 @@ namespace IS {
                 auto& button_component = engine.GetComponent<ButtonComponent>(entity);
                 auto& sprite_component = engine.GetComponent<Sprite>(entity);
                 auto& trans_component = engine.GetComponent<Transform>(entity);
-                Vector2D button_size = trans_component.getScaling(); // Idle button size
+                if (!button_component.mTransformUpdate)
+                {
+                    button_component.followTransform(trans_component);
+                    button_component.mTransformUpdate = true;
+                }
+                float button_size_scale = button_component.mIdleScale; // Idle button size
                 // mouse is hovered over button
                 if (GameButtonContainsMouse(mouse_x, mouse_y, entity)) {
                     button_component.mButtonState = ButtonStates::Hovered;
                     sprite_component.color.a = button_component.mHoverAlpha;
-                    trans_component.setScaling(button_size * button_component.mSizeScale);
+                    button_size_scale = button_component.mHoverScale;
                     //if clicks
                     if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                         button_component.mButtonState = ButtonStates::Pressed;
@@ -174,9 +199,9 @@ namespace IS {
                 else {
                     button_component.mButtonState = ButtonStates::Idle;
                     sprite_component.color.a = button_component.mIdleAlpha;
-                    trans_component.setScaling(button_size);
+                    button_size_scale = button_component.mIdleScale;
                 }
-
+                trans_component.setScaling(button_component.mSize * button_size_scale);
 
 
             }
