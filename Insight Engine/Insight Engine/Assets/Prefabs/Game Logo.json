@@ -7,7 +7,7 @@
 		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
 		"AudioVolumeLevel" : 1.0
 	},
-	"Name" : "Background",
+	"Name" : "Game Logo",
 	"Signature" : "00000000000000000000000100000011",
 	"Sprite" : 
 	{
@@ -17,26 +17,26 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "main_menu_bg.jpeg",
+		"SpriteFilename" : "fragments_game_logo.png",
 		"SpriteName" : "Box",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 18,
-		"SpriteTextureHeight" : 720,
-		"SpriteTextureIndex" : 17,
-		"SpriteTextureWidth" : 1280,
+		"SpriteTexture" : 11,
+		"SpriteTextureHeight" : 321,
+		"SpriteTextureIndex" : 10,
+		"SpriteTextureWidth" : 2744,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 4480.0,
-		"SpriteTransformScalingY" : 2520.0,
-		"SpriteTransformWorldPositionX" : 0.0,
-		"SpriteTransformWorldPositionY" : 0.0,
+		"SpriteTransformScalingX" : 1700.0,
+		"SpriteTransformScalingY" : 321.0,
+		"SpriteTransformWorldPositionX" : -846.68731689453125,
+		"SpriteTransformWorldPositionY" : 412.92950439453125,
 		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 4480.0,
-		"TransformScalingY" : 2520.0,
-		"TransformWorldPositionX" : 0.0,
-		"TransformWorldPositionY" : 0.0
+		"TransformScalingX" : 1700.0,
+		"TransformScalingY" : 321.0,
+		"TransformWorldPositionX" : -846.68731689453125,
+		"TransformWorldPositionY" : 412.92950439453125
 	}
 }
