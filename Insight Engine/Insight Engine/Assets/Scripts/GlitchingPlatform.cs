@@ -14,7 +14,7 @@ namespace IS
         static public void Update(){
             int entity_id = InternalCalls.GetCurrentEntityID();
             platforms[entity_id].update(); // Call Update on each GlitchingPlatform instance
-            
+           
 
         }
 
