@@ -65,6 +65,7 @@
 			{
 				"AnimationIndex" : 1,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -100,9 +101,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017171591520309448,
+						"frame_timer" : 0.007463403046131134,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -190,6 +191,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -289,6 +291,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -323,8 +326,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 3246.98876953125,
-						"Y" : 1907.9930419921875
+						"X" : 3257.67138671875,
+						"Y" : 1903.66259765625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -339,20 +342,20 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -703.735107421875,
-							"y" : 45.375450134277344
+							"x" : -703.73492431640625,
+							"y" : 45.375434875488281
 						},
 						{
-							"x" : 703.735107421875,
-							"y" : 45.375450134277344
+							"x" : 703.73492431640625,
+							"y" : 45.375434875488281
 						},
 						{
-							"x" : 703.735107421875,
-							"y" : -45.375450134277344
+							"x" : 703.73492431640625,
+							"y" : -45.375434875488281
 						},
 						{
-							"x" : -703.735107421875,
-							"y" : -45.375450134277344
+							"x" : -703.73492431640625,
+							"y" : -45.375434875488281
 						}
 					]
 				},
@@ -384,9 +387,10 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.87763714790344238,
-				"SpriteColorY" : 0.59249764680862427,
-				"SpriteColorZ" : 0.59249764680862427,
+				"SpriteColorA" : 0.0,
+				"SpriteColorX" : 0.87843137979507446,
+				"SpriteColorY" : 0.59215688705444336,
+				"SpriteColorZ" : 0.59215688705444336,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -395,20 +399,20 @@
 				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : 70.7977294921875,
-				"SpriteTransformScalingX" : 1407.47021484375,
-				"SpriteTransformScalingY" : 90.750900268554688,
-				"SpriteTransformWorldPositionX" : 3246.98876953125,
-				"SpriteTransformWorldPositionY" : 1907.9930419921875,
+				"SpriteTransformRotation" : 67.933349609375,
+				"SpriteTransformScalingX" : 1407.4698486328125,
+				"SpriteTransformScalingY" : 90.750869750976562,
+				"SpriteTransformWorldPositionX" : 3257.67138671875,
+				"SpriteTransformWorldPositionY" : 1903.66259765625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 70.7977294921875,
-				"TransformScalingX" : 1407.47021484375,
-				"TransformScalingY" : 90.750900268554688,
-				"TransformWorldPositionX" : 3246.98876953125,
-				"TransformWorldPositionY" : 1907.9930419921875
+				"TransformRotation" : 67.933349609375,
+				"TransformScalingX" : 1407.4698486328125,
+				"TransformScalingY" : 90.750869750976562,
+				"TransformWorldPositionX" : 3257.67138671875,
+				"TransformWorldPositionY" : 1903.66259765625
 			}
 		},
 		{
@@ -479,6 +483,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -516,6 +521,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 0,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -611,6 +617,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -706,6 +713,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -801,6 +809,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -896,6 +905,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -991,6 +1001,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1086,6 +1097,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1181,6 +1193,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1276,6 +1289,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1375,6 +1389,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1398,9 +1413,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.039870508015155792,
+						"frame_timer" : 0.030244007706642151,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1488,6 +1503,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1511,9 +1527,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.058088824152946472,
+						"frame_index_x" : 5.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.048462212085723877,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1597,6 +1613,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1692,6 +1709,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1726,8 +1744,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 3633.48388671875,
-						"Y" : 1840.281982421875
+						"X" : 3693.28662109375,
+						"Y" : 1829.2073974609375
 					},
 					"BoxColliderOffset" : 
 					{
@@ -1787,6 +1805,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 0,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1801,8 +1820,8 @@
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 788.40277099609375,
 				"SpriteTransformScalingY" : 300.0,
-				"SpriteTransformWorldPositionX" : 3633.48388671875,
-				"SpriteTransformWorldPositionY" : 1840.281982421875,
+				"SpriteTransformWorldPositionX" : 3693.28662109375,
+				"SpriteTransformWorldPositionY" : 1829.2073974609375,
 				"animations" : []
 			},
 			"Transform" : 
@@ -1810,8 +1829,8 @@
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 788.40277099609375,
 				"TransformScalingY" : 300.0,
-				"TransformWorldPositionX" : 3633.48388671875,
-				"TransformWorldPositionY" : 1840.281982421875
+				"TransformWorldPositionX" : 3693.28662109375,
+				"TransformWorldPositionY" : 1829.2073974609375
 			}
 		},
 		{
@@ -1886,6 +1905,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -1981,6 +2001,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2076,6 +2097,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2171,6 +2193,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2266,6 +2289,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2361,6 +2385,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2460,6 +2485,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2483,9 +2509,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 3.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.028359994292259216,
+						"frame_index_x" : 4.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.018733441829681396,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2569,6 +2595,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2668,6 +2695,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2691,9 +2719,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.14210781455039978,
+						"frame_timer" : 0.13248136639595032,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2781,6 +2809,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -2880,6 +2909,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -2979,6 +3009,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -3074,6 +3105,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -3169,9 +3201,10 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorX" : 0.46659186482429504,
-				"SpriteColorY" : 0.49781054258346558,
-				"SpriteColorZ" : 0.87763714790344238,
+				"SpriteColorA" : 0.0,
+				"SpriteColorX" : 0.46666666865348816,
+				"SpriteColorY" : 0.49803921580314636,
+				"SpriteColorZ" : 0.87843137979507446,
 				"SpriteCurrentTexIndex" : 0,
 				"SpriteFilename" : "",
 				"SpriteName" : "Quad",
@@ -3264,6 +3297,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -3363,6 +3397,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -3458,6 +3493,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -3557,6 +3593,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.13924050331115723,
 				"SpriteColorZ" : 0.81477320194244385,
@@ -3656,6 +3693,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.88607597351074219,
@@ -3751,6 +3789,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -3846,6 +3885,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -3941,6 +3981,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4036,6 +4077,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4069,6 +4111,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 2,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4164,6 +4207,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4259,6 +4303,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4354,6 +4399,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4449,6 +4495,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4544,6 +4591,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4639,6 +4687,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4738,6 +4787,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
 				"SpriteColorZ" : 0.0,
@@ -4771,6 +4821,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4804,6 +4855,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4837,6 +4889,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4870,6 +4923,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4903,6 +4957,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4936,6 +4991,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -4969,6 +5025,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5002,6 +5059,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5035,6 +5093,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5068,6 +5127,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5101,6 +5161,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5134,6 +5195,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5167,6 +5229,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5200,6 +5263,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 2,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5233,6 +5297,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5266,6 +5331,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5299,6 +5365,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5332,6 +5399,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5365,6 +5433,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5398,6 +5467,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5431,6 +5501,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5464,6 +5535,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5497,6 +5569,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5530,6 +5603,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5563,6 +5637,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5596,6 +5671,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5629,6 +5705,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5662,6 +5739,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5757,6 +5835,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5790,6 +5869,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5823,6 +5903,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5856,6 +5937,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5890,8 +5972,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 3535.874755859375,
-						"Y" : 2145.9375
+						"X" : 3567.568359375,
+						"Y" : 2120.134765625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -5906,20 +5988,20 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -195.49090576171875,
-							"y" : 384.60256958007812
+							"x" : -151.42881774902344,
+							"y" : 384.60250854492188
 						},
 						{
-							"x" : 195.49090576171875,
-							"y" : 384.60256958007812
+							"x" : 151.42881774902344,
+							"y" : 384.60250854492188
 						},
 						{
-							"x" : 195.49090576171875,
-							"y" : -384.60256958007812
+							"x" : 151.42881774902344,
+							"y" : -384.60250854492188
 						},
 						{
-							"x" : -195.49090576171875,
-							"y" : -384.60256958007812
+							"x" : -151.42881774902344,
+							"y" : -384.60250854492188
 						}
 					]
 				},
@@ -5951,6 +6033,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
+				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -5962,20 +6045,20 @@
 				"SpriteTextureHeight" : 0,
 				"SpriteTextureIndex" : 0,
 				"SpriteTextureWidth" : 0,
-				"SpriteTransformRotation" : 340.59420776367188,
-				"SpriteTransformScalingX" : 390.9818115234375,
-				"SpriteTransformScalingY" : 769.20513916015625,
-				"SpriteTransformWorldPositionX" : 3535.874755859375,
-				"SpriteTransformWorldPositionY" : 2145.9375,
+				"SpriteTransformRotation" : 337.58734130859375,
+				"SpriteTransformScalingX" : 302.85763549804688,
+				"SpriteTransformScalingY" : 769.20501708984375,
+				"SpriteTransformWorldPositionX" : 3567.568359375,
+				"SpriteTransformWorldPositionY" : 2120.134765625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 340.59420776367188,
-				"TransformScalingX" : 390.9818115234375,
-				"TransformScalingY" : 769.20513916015625,
-				"TransformWorldPositionX" : 3535.874755859375,
-				"TransformWorldPositionY" : 2145.9375
+				"TransformRotation" : 337.58734130859375,
+				"TransformScalingX" : 302.85763549804688,
+				"TransformScalingY" : 769.20501708984375,
+				"TransformWorldPositionX" : 3567.568359375,
+				"TransformWorldPositionY" : 2120.134765625
 			}
 		}
 	],
