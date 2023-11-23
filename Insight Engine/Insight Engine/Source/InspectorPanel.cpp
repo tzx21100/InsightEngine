@@ -294,7 +294,7 @@ namespace IS {
                 if (!no_dimensions && ImGui::BeginItemTooltip())
                 {
                     float region_size = draw_size;
-                    float zoom = 2.f;
+                    float zoom = 5.f;
                     float zoomed_in_height = region_size * zoom;
                     float zoomed_in_width = zoomed_in_height * texture_aspect_ratio;
                     ImGui::Image(texture_id, ImVec2(zoomed_in_width, zoomed_in_height)); // still WIP
