@@ -346,8 +346,8 @@ namespace IS {
         // Sprite::drawDebugCircle({ 0.f, 0.f }, { 500.f, 500.f }, { 0.0f, 1.0f, 0.0f });
         // Sprite::draw_colored_quad({ 200.f, 200.f }, 20.f, { 500.f, 500.f }, { 1.f, 1.f, 0.5f, 0.5f }, 4);
 
-        auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        Image* img = system->GetImage("running_anim 4R3C.png");
+        // auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        // Image* img = system->GetImage("running_anim 4R3C.png");
         // Sprite::draw_textured_quad({ -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
         // Sprite::drawSpritesheetFrame(0, 2, 4, 3, { -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
 
@@ -393,6 +393,16 @@ namespace IS {
 #endif // !USING_IMGUI
 
         // Double font animation
+
+        double xPos, yPos;
+        auto mWindow = engine.GetSystem<WindowSystem>("Window");
+        glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
+        // auto hi = Camera3D::mouseToWorld({ ImGui::GetMousePos().x, ImGui::GetMousePos().y });
+        auto hi = Camera3D::mouseToWorld({ (float)xPos, (float)yPos });
+
+        std::string text = "World Mouse X: " + std::to_string(hi.x) + " Y: " + std::to_string(hi.y);
+        Times_New_Roman_font.renderText(text, 0.5f, 0.5f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
+
 
         if (engine.mRenderGUI && mShowTextAnimation)
         {
