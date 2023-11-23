@@ -519,13 +519,7 @@ namespace IS
 
 
         static private void Dashing() {
-            for (int i = 0; i < 36; i++)
-            {
 
-                InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 10, 20 * (bullet_time_timer / bullet_time_set), 2, 1, -0.005f, bullet_time_set, 1000, "Particle Test.txt");
-                
-
-            }
 
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
                                                         0.0f, trans_scaling.x*1.5f, trans_scaling.y*1.5f, 1, 0.5f, -0.1f, 0.2f,
@@ -540,8 +534,8 @@ namespace IS
                 for (int i = 0; i < 72; i++)
                 {
 
-                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "Particle Test.txt");
-
+                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y,  i *5f , 10, -1, 1, -0.025f, 2f, 700, "Particle Test.txt");
+                    
 
                 }
 

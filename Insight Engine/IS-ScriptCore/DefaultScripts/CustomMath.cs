@@ -147,5 +147,29 @@ namespace IS
             return radians * 180.0f / PI;
         }
 
+        public static double Power(double baseValue, int exponent)
+        {
+            double result = 1;
+            for (int i = 0; i < exponent; i++)
+            {
+                result *= baseValue;
+            }
+            return result;
+        }
+
+        public static double Sqrt(double number)
+        {
+            double tolerance = 1e-1; // Precision of the result
+            double guess = number / 2; // Initial guess
+
+            while (CustomMath.Abs((float)(number - guess * guess)) > tolerance)
+            {
+                guess = (guess + number / guess) / 2;
+            }
+
+            return guess;
+        }
+
+
     }
 }

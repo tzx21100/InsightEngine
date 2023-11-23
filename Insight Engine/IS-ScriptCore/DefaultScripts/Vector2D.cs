@@ -161,5 +161,9 @@ public class Vector2D
         return forceDirection.Multiply(forceMagnitude); // Scale the direction by the force magnitude
     }
 
+    public static float Distance(Vector2D a, Vector2D b) {
+        return (float)CustomMath.Sqrt(CustomMath.Abs((a.x - b.x ) * (a.x-b.x) +(a.y-b.y)*(a.y-b.y)));
+    }
+
 
 }
