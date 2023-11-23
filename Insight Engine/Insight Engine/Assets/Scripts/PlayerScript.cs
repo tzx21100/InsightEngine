@@ -53,7 +53,7 @@ namespace IS
 
         static private int land_entity;
         static private int jump_entity;
-        static private bool land_exists;
+
 
         static public int PLAYER_ID;
 
@@ -80,7 +80,6 @@ namespace IS
         static private float dash_set = 0.2f;
         static private bool canDash = false;
         static private bool isDashing;
-        static private float dashAngle;
         static private float dashSpeed = 5000f;
 
         static public bool isGrounded;
