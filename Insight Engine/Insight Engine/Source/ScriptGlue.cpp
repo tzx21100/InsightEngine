@@ -510,6 +510,11 @@ namespace IS {
         ISGraphics::cameras3D[Camera3D::mActiveCamera].SetZoomLevel(value);
     }
 
+    static float CameraGetZoom()
+    {
+       return ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel();
+    }
+
     static int GetCurrentEntityID() {
         return InsightEngine::Instance().GetScriptCaller();
     }
@@ -853,6 +858,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AttachCamera);
         IS_ADD_INTERNAL_CALL(CameraSetZoom);
         IS_ADD_INTERNAL_CALL(GetCameraPos);
+        IS_ADD_INTERNAL_CALL(CameraGetZoom);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
