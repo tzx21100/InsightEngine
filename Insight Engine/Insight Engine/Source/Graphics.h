@@ -132,7 +132,10 @@ namespace IS {
 		static Shader main_quad_shader;
 
 		static Shader inst_quad_shader_pgm;
+
 		static Shader inst_3d_quad_shader_pgm;
+		static Shader glitched_shader_pgm;
+
 		static Shader inst_non_quad_shader_pgm;
 		static Shader quad_border_shader_pgm;
 		static Shader light_shader_pgm;
@@ -160,6 +163,8 @@ namespace IS {
 		static Text Times_New_Roman_font;
 		static Text Brush_Script_font;
 		static Text North_Forest_font;
+
+		static bool mGlitched;
 	};
 
 } // end namespace IS

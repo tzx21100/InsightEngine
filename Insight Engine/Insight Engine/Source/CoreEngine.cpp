@@ -97,6 +97,7 @@ namespace IS {
         
 
         accumulatedTime += mDeltaTime; //adding actual game loop time
+        mElapsedTime += mDeltaTime;
 
         while (accumulatedTime >= 1.f/60.f) {
             accumulatedTime -= 1.f / 60.f; //this will store the

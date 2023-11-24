@@ -605,10 +605,14 @@ namespace IS {
         double LimitFPS(double frame_start);
 
         //! Duration of the delta time between frames.
-        double mDeltaTime{ 0.f };
+        double mDeltaTime{ 0.0 };
+
+        //! Counter for elapsed time since start of Engine.
+        double mElapsedTime{ 0.0 };
     private:
         //! Counter for the number of frames.
         unsigned mFrameCount = 0;
+
 
         //! Limits the frames per second. Can potentially be exposed to public if needed.
         std::chrono::high_resolution_clock::time_point LimitFPS(const std::chrono::high_resolution_clock::time_point& frameStart);

@@ -26,6 +26,11 @@ namespace IS {
         ISGraphics::inst_3d_quad_shader_pgm.link();
         ISGraphics::inst_3d_quad_shader_pgm.validate();
 
+        ISGraphics::glitched_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstQuad.vert");
+        ISGraphics::glitched_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "GlitchEffect.frag");
+        ISGraphics::glitched_shader_pgm.link();
+        ISGraphics::glitched_shader_pgm.validate();
+
         ISGraphics::inst_non_quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstNonQuad.vert");
         ISGraphics::inst_non_quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "InstNonQuad.frag");
         ISGraphics::inst_non_quad_shader_pgm.link();
@@ -102,6 +107,7 @@ namespace IS {
 
                 log = "Vertex shader compilation failed\n" + std::string(log_vect.begin(), log_vect.begin() + written_log_len);
                 IS_CORE_ERROR("Shader compilation failed!");
+                IS_CORE_ERROR("{}", log);
             }
             // Clean up the shader object and return GL_FALSE
             glDeleteShader(shader_hdl);

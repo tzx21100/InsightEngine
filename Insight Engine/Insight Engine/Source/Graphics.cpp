@@ -45,6 +45,7 @@ namespace IS {
 
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_3d_quad_shader_pgm;
+    Shader ISGraphics::glitched_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
     Shader ISGraphics::light_shader_pgm;
@@ -72,6 +73,8 @@ namespace IS {
     Text ISGraphics::Times_New_Roman_font;
     Text ISGraphics::Brush_Script_font;
     Text ISGraphics::North_Forest_font;
+
+    bool ISGraphics::mGlitched = false;
 
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
@@ -357,7 +360,11 @@ namespace IS {
         //walking_ani.drawNonEntityAnimation(delta_time, { 0.f, 0.f }, 30.f, { 200.f, 200.f }, *img, 1.f, 4);
 
         // quads will be drawn first
-        Sprite::draw_instanced_3D_quads();
+        if (mGlitched)
+            Sprite::draw_instanced_glitched_quads();
+        else
+            Sprite::draw_instanced_3D_quads();
+
         Sprite::draw_lights();
 
     #ifdef USING_IMGUI
