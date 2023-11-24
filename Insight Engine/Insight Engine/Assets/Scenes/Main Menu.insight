@@ -74,18 +74,18 @@
 				"SpriteTextureIndex" : 17,
 				"SpriteTextureWidth" : 2744,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 2744.0,
-				"SpriteTransformScalingY" : 321.0,
-				"SpriteTransformWorldPositionX" : -334.9599609375,
+				"SpriteTransformScalingX" : 2022.328125,
+				"SpriteTransformScalingY" : 236.57699584960938,
+				"SpriteTransformWorldPositionX" : -813.34832763671875,
 				"SpriteTransformWorldPositionY" : 586.30078125,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 2744.0,
-				"TransformScalingY" : 321.0,
-				"TransformWorldPositionX" : -334.9599609375,
+				"TransformScalingX" : 2022.328125,
+				"TransformScalingY" : 236.57699584960938,
+				"TransformWorldPositionX" : -813.34832763671875,
 				"TransformWorldPositionY" : 586.30078125
 			}
 		},
