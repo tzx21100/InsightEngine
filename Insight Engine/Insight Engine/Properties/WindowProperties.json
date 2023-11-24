@@ -2,12 +2,12 @@
 	"WindowProperties" : 
 	{
 		"Fullscreen" : false,
-		"Height" : 1137,
+		"Height" : 1494,
 		"Maximized" : true,
 		"TargetFPS" : 144,
 		"Title" : "Insight Engine",
 		"Vsync" : false,
-		"Width" : 1920,
+		"Width" : 2560,
 		"Xpos" : 0,
 		"Ypos" : 34
 	}

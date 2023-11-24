@@ -705,6 +705,36 @@ namespace IS {
         return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
     }
 
+    static void AttachLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Light>(entity, Light());
+        auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+        component.mHue = {HueX,HueY,HueZ};
+        component.mIntensity = Intensity;
+        component.mSize = size;
+    }    
+    
+    static void SetLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mHue = { HueX,HueY,HueZ };
+            component.mIntensity = Intensity;
+            component.mSize = size;
+        }
+    }    
+    
+    static void SetLightIntensityEntity(int entity, float Intensity){
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mIntensity = Intensity;
+        }
+    }    
+    static void SetLightToggleEntity(int entity, bool toggle){
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mRender = toggle;
+        }
+    }
+
 
 
     /**
@@ -810,7 +840,11 @@ namespace IS {
 
 
 
-
+        //LIght
+        IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
+        IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
+        IS_ADD_INTERNAL_CALL(SetLightIntensityEntity);
+        IS_ADD_INTERNAL_CALL(SetLightToggleEntity);
 
 
 
