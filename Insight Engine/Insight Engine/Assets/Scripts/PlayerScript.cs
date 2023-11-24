@@ -157,9 +157,9 @@ namespace IS
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
-            player_walk = InternalCalls.GetSpriteImage("running_anim 3R4C.png");
-            player_idle = InternalCalls.GetSpriteImage("idle_anim 3R4C.png");
-            player_jump = InternalCalls.GetSpriteImage("jump_anim 4R3C.png");
+            player_walk = InternalCalls.GetSpriteImage("run_strip.png");
+            player_idle = InternalCalls.GetSpriteImage("idle_strip.png");
+            player_jump = InternalCalls.GetSpriteImage("jump_strip.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
             player_climb1 = InternalCalls.GetSpriteImage("WallClimb_0001.png");
             player_climb2 = InternalCalls.GetSpriteImage("WallClimb_0002.png");
@@ -180,9 +180,9 @@ namespace IS
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(3,4,1f);
-            InternalCalls.CreateAnimationFromSprite(3,4,1f);
-            InternalCalls.CreateAnimationFromSprite(4,3,1f);
+            InternalCalls.CreateAnimationFromSprite(1,12,1f);
+            InternalCalls.CreateAnimationFromSprite(1,12,1f);
+            InternalCalls.CreateAnimationFromSprite(1,12,1f);
             
 
             entity_feet = InternalCalls.CreateEntity("FeetCollider");

@@ -27,10 +27,10 @@ namespace IS
                 }
 
 
-
+                InternalCalls.GlitchEnable(false);
 
                 InternalCalls.DestroyEntity(entity);
-                InternalCalls.GlitchEnable(false);
+                
             }
 
 

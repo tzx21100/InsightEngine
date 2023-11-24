@@ -1,7 +1,7 @@
 {
 	"WindowProperties" : 
 	{
-		"Fullscreen" : false,
+		"Fullscreen" : true,
 		"Height" : 1137,
 		"Maximized" : false,
 		"TargetFPS" : 9999,
