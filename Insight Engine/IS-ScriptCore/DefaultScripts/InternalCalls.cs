@@ -195,7 +195,11 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawCircle(float pos_x, float pos_y ,float scale_x, float scale_y, (float, float, float) color);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawSquare(float pos_x, float pos_y, float scale_x, float scale_y, float colx, float coly, float colz, float cola, int layer);
+
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y);
 

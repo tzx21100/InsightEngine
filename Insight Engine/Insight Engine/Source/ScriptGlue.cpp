@@ -529,6 +529,11 @@ namespace IS {
     static void DrawCircle(float pos_x, float pos_y, float scale_x, float scale_y, std::tuple<float, float, float> color)
     {
         Sprite::drawDebugCircle(Vector2D(pos_x, pos_y), Vector2D(scale_x, scale_y), color);
+    }    
+    
+    static void DrawSquare(float pos_x, float pos_y, float scale_x, float scale_y, float colx,float coly, float colz, float cola,int layer)
+    {
+        Sprite::draw_colored_quad(Vector2D(pos_x, pos_y), 0, Vector2D(scale_x, scale_y), { colx,coly,colz,cola }, layer);
     }
 
     static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y)
@@ -885,6 +890,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
+        IS_ADD_INTERNAL_CALL(DrawSquare);
 
         //Scene Manager
         IS_ADD_INTERNAL_CALL(LoadScene);
