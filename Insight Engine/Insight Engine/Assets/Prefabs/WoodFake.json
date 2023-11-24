@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -189.49162292480469,
-				"Y" : 1896.9124755859375
+				"X" : -3924.830078125,
+				"Y" : 3516.838623046875
 			},
 			"BoxColliderOffset" : 
 			{
@@ -21,20 +21,20 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -465.2081298828125,
-					"y" : 50.716796875
+					"x" : -234.82852172851562,
+					"y" : 50.716716766357422
 				},
 				{
-					"x" : 465.2081298828125,
-					"y" : 50.716796875
+					"x" : 234.82852172851562,
+					"y" : 50.716716766357422
 				},
 				{
-					"x" : 465.2081298828125,
-					"y" : -50.716796875
+					"x" : 234.82852172851562,
+					"y" : -50.716716766357422
 				},
 				{
-					"x" : -465.2081298828125,
-					"y" : -50.716796875
+					"x" : -234.82852172851562,
+					"y" : -50.716716766357422
 				}
 			]
 		},
@@ -62,7 +62,11 @@
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Signature" : "00000000000000000000010000000111",
+	"Script" : 
+	{
+		"ScriptName" : "BreakableWalls"
+	},
+	"Signature" : "00000000000000000000010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -79,19 +83,19 @@
 		"SpriteTextureHeight" : 1152,
 		"SpriteTextureIndex" : 11,
 		"SpriteTextureWidth" : 476,
-		"SpriteTransformRotation" : 323.95272827148438,
-		"SpriteTransformScalingX" : 930.416259765625,
-		"SpriteTransformScalingY" : 101.43359375,
-		"SpriteTransformWorldPositionX" : -189.49162292480469,
-		"SpriteTransformWorldPositionY" : 1896.9124755859375,
+		"SpriteTransformRotation" : 0.020965576171875,
+		"SpriteTransformScalingX" : 469.65704345703125,
+		"SpriteTransformScalingY" : 101.43343353271484,
+		"SpriteTransformWorldPositionX" : -3924.830078125,
+		"SpriteTransformWorldPositionY" : 3516.838623046875,
 		"animations" : []
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 323.95272827148438,
-		"TransformScalingX" : 930.416259765625,
-		"TransformScalingY" : 101.43359375,
-		"TransformWorldPositionX" : -189.49162292480469,
-		"TransformWorldPositionY" : 1896.9124755859375
+		"TransformRotation" : 0.020965576171875,
+		"TransformScalingX" : 469.65704345703125,
+		"TransformScalingY" : 101.43343353271484,
+		"TransformWorldPositionX" : -3924.830078125,
+		"TransformWorldPositionY" : 3516.838623046875
 	}
 }

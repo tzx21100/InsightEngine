@@ -15,7 +15,7 @@ namespace IS
         static public void Update(){
             if (InternalCalls.GetCollidingEntityCheck(InternalCalls.GetCurrentEntityID(), PlayerScript.PLAYER_ID) && InternalCalls.RigidBodyGetBodyTypeEntity(InternalCalls.GetCurrentEntityID())==0)
             {
-                if (PlayerScript.isDashing) {
+                if (PlayerScript.isDashing && PlayerScript.bullet_time_timer<=0) {
 
 
                     InternalCalls.RigidBodySetBodyTypeEntity(1, InternalCalls.GetCurrentEntityID());

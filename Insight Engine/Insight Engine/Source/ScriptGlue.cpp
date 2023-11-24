@@ -102,7 +102,8 @@ namespace IS {
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
         Vector2D vec(x, y);
         body_component.AddVelocity(vec);
-    }    
+    }        
+    
     
     static void RigidBodySetForce(float x, float y) {
         auto& engine = InsightEngine::Instance();

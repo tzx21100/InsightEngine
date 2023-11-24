@@ -99,7 +99,7 @@ namespace IS
         static private float jumpHeight = 1000f;
 
         //dashing 
-        static private float bullet_time_timer = 1f;
+        static public float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
         static private float dash_timer =0.2f;
         static private float dash_set = 0.2f;
@@ -217,6 +217,11 @@ namespace IS
                 return;
             }
 
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) {
+                InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
+            }
+
+
             //animation sets
             LightUpdate();
 
@@ -314,7 +319,7 @@ namespace IS
             //Attach Camera
             
 
-           target_pos.x = player_pos.x + hori_movement* CustomMath.min(100f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
+           target_pos.x = player_pos.x + hori_movement* CustomMath.min(350f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
            target_pos.y= player_pos.y  + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y/20f);
 
             float interpolate_speed = 4f;
