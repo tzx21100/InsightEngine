@@ -165,6 +165,7 @@ namespace IS {
 		static Text North_Forest_font;
 
 		static bool mGlitched;
+		static bool mLightsOn;
 	};
 
 } // end namespace IS

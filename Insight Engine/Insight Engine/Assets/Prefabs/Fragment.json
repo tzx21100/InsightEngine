@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 287.72479248046875,
-				"Y" : 2515.828125
+				"X" : -3924.83349609375,
+				"Y" : 1275.5263671875
 			},
 			"BoxColliderOffset" : 
 			{
@@ -47,8 +47,8 @@
 		"LightHue" : 
 		{
 			"B" : 1.0,
-			"G" : 1.0,
-			"R" : 1.0
+			"G" : 0.32414698600769043,
+			"R" : 0.06329113245010376
 		},
 		"LightIntensity" : 1.0,
 		"LightOffset" : 
@@ -57,14 +57,33 @@
 			"Y" : 0.0
 		},
 		"LightRender" : true,
-		"LightSize" : 864.0
+		"LightSize" : 1345.0
 	},
 	"Name" : "Fragment",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
 	"Script" : 
 	{
 		"ScriptName" : "FragmentScript"
 	},
-	"Signature" : "00000000000000000001010000100011",
+	"Signature" : "00000000000000000001010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -84,8 +103,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 281.83999633789062,
 		"SpriteTransformScalingY" : 241.79998779296875,
-		"SpriteTransformWorldPositionX" : 287.72479248046875,
-		"SpriteTransformWorldPositionY" : 2515.828125,
+		"SpriteTransformWorldPositionX" : -3924.83349609375,
+		"SpriteTransformWorldPositionY" : 1275.5263671875,
 		"animations" : 
 		[
 			{
@@ -93,9 +112,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 2.0,
-				"frame_index_y" : 3.0,
-				"frame_timer" : 0.070899240672588348,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.033851303160190582,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -107,7 +126,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 281.83999633789062,
 		"TransformScalingY" : 241.79998779296875,
-		"TransformWorldPositionX" : 287.72479248046875,
-		"TransformWorldPositionY" : 2515.828125
+		"TransformWorldPositionX" : -3924.83349609375,
+		"TransformWorldPositionY" : 1275.5263671875
 	}
 }

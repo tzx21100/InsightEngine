@@ -117,6 +117,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static SimpleVector2D GetCameraPos();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float CameraGetZoom();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name);
@@ -318,7 +321,13 @@ namespace IS
         internal extern static float MathAtan2(float x,float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static float MathSqrt(float val);
+        internal extern static float MathSqrt(float val);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GlitchEnable(bool set);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetLightsToggle(bool toogle);
 
 
     }

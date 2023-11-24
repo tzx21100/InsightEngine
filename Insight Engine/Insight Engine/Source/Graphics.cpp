@@ -75,6 +75,7 @@ namespace IS {
     Text ISGraphics::North_Forest_font;
 
     bool ISGraphics::mGlitched = false;
+    bool ISGraphics::mLightsOn = true;
 
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
@@ -365,6 +366,9 @@ namespace IS {
         else
             Sprite::draw_instanced_3D_quads();
 
+        if (mLightsOn)
+            Sprite::draw_lights();
+
     #ifdef USING_IMGUI
         if (!engine.mRuntime)
         {
@@ -405,8 +409,6 @@ namespace IS {
 #endif // !USING_IMGUI
 
         North_Forest_font.renderAllText();
-
-        Sprite::draw_lights();
 
         //mFramebuffer->Unbind();
         //if (!engine.mRenderGUI)

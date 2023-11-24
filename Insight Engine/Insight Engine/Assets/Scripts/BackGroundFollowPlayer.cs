@@ -70,7 +70,7 @@ namespace IS
             // Update the camera position
             InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
 
-            InternalCalls.DrawSquare(PlayerScript.player_pos.x, PlayerScript.player_pos.y, 4000, 4000, 0, 0, 0, 0.2f, 4);
+            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 4000, 4000, 0, 0, 0, 0.2f, 4);
 
             
         }

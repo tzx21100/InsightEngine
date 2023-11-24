@@ -510,6 +510,11 @@ namespace IS {
         ISGraphics::cameras3D[Camera3D::mActiveCamera].SetZoomLevel(value);
     }
 
+    static float CameraGetZoom()
+    {
+       return ISGraphics::cameras3D[Camera3D::mActiveCamera].GetZoomLevel();
+    }
+
     static int GetCurrentEntityID() {
         return InsightEngine::Instance().GetScriptCaller();
     }
@@ -827,8 +832,15 @@ namespace IS {
         return sqrt(val);
     }
 
+    static void GlitchEnable(bool set) {
 
+        ISGraphics::mGlitched = set;
+    }
 
+    static void SetLightsToggle(bool toggle)
+    {
+        ISGraphics::mLightsOn = toggle;
+    }
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -890,6 +902,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AttachCamera);
         IS_ADD_INTERNAL_CALL(CameraSetZoom);
         IS_ADD_INTERNAL_CALL(GetCameraPos);
+        IS_ADD_INTERNAL_CALL(CameraGetZoom);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
@@ -954,6 +967,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
         IS_ADD_INTERNAL_CALL(DrawSquare);
+        IS_ADD_INTERNAL_CALL(GlitchEnable);
 
         //Scene Manager
         IS_ADD_INTERNAL_CALL(LoadScene);
@@ -979,6 +993,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(SetLightsToggle);
 
         // Yiming
         IS_ADD_INTERNAL_CALL(CreateEntityPrefab);

@@ -20,8 +20,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -945.45196533203125,
-				"Y" : -224.36405944824219
+				"X" : -840.0699462890625,
+				"Y" : -223.51600646972656
 			},
 			"CircleColliderOffset" : 
 			{
@@ -48,7 +48,7 @@
 			"X" : -58.700000762939453,
 			"Y" : 0.0
 		},
-		"LightRender" : true,
+		"LightRender" : false,
 		"LightSize" : 404.0
 	},
 	"Name" : "Player",
@@ -78,50 +78,38 @@
 	"Signature" : "00000000000000000001011100100111",
 	"Sprite" : 
 	{
-		"AnimationIndex" : 1,
+		"AnimationIndex" : 0,
 		"Layer" : 1,
 		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
-		"SpriteCurrentTexIndex" : 1,
-		"SpriteFilename" : "idle_anim 4R3C.png",
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "idle_anim 3R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 22,
-		"SpriteTextureHeight" : 3200,
-		"SpriteTextureIndex" : 21,
-		"SpriteTextureWidth" : 3443,
+		"SpriteTexture" : 24,
+		"SpriteTextureHeight" : 2139,
+		"SpriteTextureIndex" : 23,
+		"SpriteTextureWidth" : 3628,
 		"SpriteTransformRotation" : 0.4610595703125,
 		"SpriteTransformScalingX" : 200.0,
 		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : -945.45196533203125,
-		"SpriteTransformWorldPositionY" : -204.36405944824219,
+		"SpriteTransformWorldPositionX" : -840.0699462890625,
+		"SpriteTransformWorldPositionY" : -203.51600646972656,
 		"animations" : 
 		[
 			{
-				"Name" : "",
+				"Name" : "aa",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.3333333432674408,
-				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 0.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.0,
-				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 3,
-				"y_frames" : 4
-			},
-			{
-				"Name" : "",
-				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.3333333432674408,
-				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 0.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.3333333432674408,
+				"frame_index_x" : 1.0,
 				"frame_index_y" : 2.0,
-				"frame_timer" : 0.025985665619373322,
+				"frame_timer" : 0.055539380759000778,
 				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 3,
-				"y_frames" : 4
+				"x_frames" : 4,
+				"y_frames" : 3
 			}
 		]
 	},
@@ -130,7 +118,7 @@
 		"TransformRotation" : 0.4610595703125,
 		"TransformScalingX" : 200.0,
 		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : -945.45196533203125,
-		"TransformWorldPositionY" : -204.36405944824219
+		"TransformWorldPositionX" : -840.0699462890625,
+		"TransformWorldPositionY" : -203.51600646972656
 	}
 }
