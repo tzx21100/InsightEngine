@@ -1,0 +1,97 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -189.49162292480469,
+				"Y" : 1896.9124755859375
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -465.2081298828125,
+					"y" : 50.716796875
+				},
+				{
+					"x" : 465.2081298828125,
+					"y" : 50.716796875
+				},
+				{
+					"x" : 465.2081298828125,
+					"y" : -50.716796875
+				},
+				{
+					"x" : -465.2081298828125,
+					"y" : -50.716796875
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "WoodFake",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 94375.46875,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 0.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Signature" : "00000000000000000000010000000111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 0.96768677234649658,
+		"SpriteColorZ" : 0.48945146799087524,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Environment without grass01.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 12,
+		"SpriteTextureHeight" : 1152,
+		"SpriteTextureIndex" : 11,
+		"SpriteTextureWidth" : 476,
+		"SpriteTransformRotation" : 323.95272827148438,
+		"SpriteTransformScalingX" : 930.416259765625,
+		"SpriteTransformScalingY" : 101.43359375,
+		"SpriteTransformWorldPositionX" : -189.49162292480469,
+		"SpriteTransformWorldPositionY" : 1896.9124755859375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 323.95272827148438,
+		"TransformScalingX" : 930.416259765625,
+		"TransformScalingY" : 101.43359375,
+		"TransformWorldPositionX" : -189.49162292480469,
+		"TransformWorldPositionY" : 1896.9124755859375
+	}
+}
