@@ -15,10 +15,10 @@ namespace IS {
 		}
 		
 		Light() = default;
-		Light(Vector2D offset, Vector3D const& hue, float intensity, float size)
-			: mOffset{ offset }, mHue { hue }, mIntensity{ intensity }, mSize{ size } {};
+		Light(Vector2D offset, Vector3D const& hue, float intensity, float size, bool render)
+			: mOffset{ offset }, mHue{ hue }, mIntensity{ intensity }, mSize{ size }, mRender{ render } {};
 
-		void draw();
+		void draw(float attachedEntID);
 		void FollowTransform(Vector2D position);
 
 		Json::Value Serialize() override;
@@ -29,6 +29,7 @@ namespace IS {
 		Vector3D mHue{ 1.f, 1.f, 1.f };
 		float mIntensity{ .5f }; // 0 - 1.f
 		float mSize{ 200.f };
+		bool mRender{ true };
 	};
 
 }// end namespace IS

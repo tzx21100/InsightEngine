@@ -5,16 +5,19 @@
 namespace IS {
 
 
-	void Light::draw()
+	void Light::draw(float attachedEntID)
 	{
-		Sprite::instanceData3D lightData;
+		if (mRender) {
+			Sprite::instanceData3D lightData;
 
-		lightData.color = { mHue.x, mHue.y, mHue.z, mIntensity };
+			lightData.color = { mHue.x, mHue.y, mHue.z, mIntensity };
 
-		Transform lightXform(mPosition, 0.f, { mSize, mSize });
-		lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
+			Transform lightXform(mPosition, 0.f, { mSize, mSize });
+			lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
+			lightData.entID = attachedEntID;
 
-		ISGraphics::lightInstances.emplace_back(lightData);
+			ISGraphics::lightInstances.emplace_back(lightData);
+		}
 	}
 
 	//Vector2D mOffset{};
@@ -42,6 +45,7 @@ namespace IS {
 		data["LightHue"] = color;
 		data["LightIntensity"] = mIntensity;
 		data["LightSize"] = mSize;
+		data["LightRender"] = mRender;
 		return data;
 	}
 
@@ -51,5 +55,6 @@ namespace IS {
 		mHue = { data["LightHue"]["R"].asFloat(), data["LightHue"]["G"].asFloat(), data["LightHue"]["B"].asFloat() };
 		mIntensity = data["LightIntensity"].asFloat();
 		mSize = data["LightSize"].asFloat();
+		mRender = data["LightRender"].asBool();
 	}
 }

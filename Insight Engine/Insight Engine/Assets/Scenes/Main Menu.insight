@@ -23,9 +23,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 22,
+				"SpriteTexture" : 23,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 21,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 4480.0,
@@ -62,8 +62,8 @@
 				"ButtonImageName" : "",
 				"ButtonSize" : 
 				{
-					"X" : 0.0,
-					"Y" : 0.0
+					"X" : 1048.0,
+					"Y" : 345.0
 				},
 				"ButtonState" : 0,
 				"ButtonText" : "",
@@ -78,7 +78,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorA" : 1.0,
+				"SpriteColorA" : 0.60000002384185791,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
@@ -86,9 +86,9 @@
 				"SpriteFilename" : "start_button.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 33,
+				"SpriteTexture" : 37,
 				"SpriteTextureHeight" : 345,
-				"SpriteTextureIndex" : 32,
+				"SpriteTextureIndex" : 36,
 				"SpriteTextureWidth" : 1048,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1048.0,
@@ -125,8 +125,8 @@
 				"ButtonImageName" : "",
 				"ButtonSize" : 
 				{
-					"X" : 0.0,
-					"Y" : 0.0
+					"X" : 444.0,
+					"Y" : 211.0
 				},
 				"ButtonState" : 0,
 				"ButtonText" : "",
@@ -141,7 +141,7 @@
 			{
 				"AnimationIndex" : 0,
 				"Layer" : 1,
-				"SpriteColorA" : 1.0,
+				"SpriteColorA" : 0.60000002384185791,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,

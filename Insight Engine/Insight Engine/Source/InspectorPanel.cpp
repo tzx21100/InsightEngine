@@ -643,6 +643,13 @@ namespace IS {
         // Light Component
         RenderComponent<Light>(ICON_LC_SUN "  Light", entity, [](Light& light)
         {
+            EditorUtils::RenderTableFixedWidth("Light Render Table", 2, [&]()
+            {
+                EditorUtils::RenderTableLabel("Rendering");
+                ImGui::TableNextColumn();
+                EditorUtils::RenderToggleButton("Render Light", light.mRender);
+            });
+
             if (Vector2D offset = light.mOffset; EditorUtils::RenderControlVec2("Offset", offset))
             {
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(light.mOffset, offset);
