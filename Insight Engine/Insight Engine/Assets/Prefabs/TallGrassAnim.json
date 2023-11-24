@@ -1,0 +1,49 @@
+{
+	"Name" : "TallGrassAnim",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "big_grass_anim 6R2C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 6,
+		"SpriteTextureHeight" : 3858,
+		"SpriteTextureIndex" : 5,
+		"SpriteTextureWidth" : 2762,
+		"SpriteTransformRotation" : 356.26040649414062,
+		"SpriteTransformScalingX" : 562.984375,
+		"SpriteTransformScalingY" : 262.12814331054688,
+		"SpriteTransformWorldPositionX" : 297.48089599609375,
+		"SpriteTransformWorldPositionY" : 2448.01171875,
+		"animations" : 
+		[
+			{
+				"Name" : "bigGrass",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.5,
+				"frame_dimension_y" : 0.1666666716337204,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 4.0,
+				"frame_timer" : 0.0094405859708786011,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 2,
+				"y_frames" : 6
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 356.26040649414062,
+		"TransformScalingX" : 562.984375,
+		"TransformScalingY" : 262.12814331054688,
+		"TransformWorldPositionX" : 297.48089599609375,
+		"TransformWorldPositionY" : 2448.01171875
+	}
+}

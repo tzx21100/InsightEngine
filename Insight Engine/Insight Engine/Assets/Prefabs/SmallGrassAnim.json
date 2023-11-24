@@ -1,0 +1,49 @@
+{
+	"Name" : "SmallGrassAnim",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "small_grass_anim 4R3C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 40,
+		"SpriteTextureHeight" : 1420,
+		"SpriteTextureIndex" : 39,
+		"SpriteTextureWidth" : 3081,
+		"SpriteTransformRotation" : 348.36074829101562,
+		"SpriteTransformScalingX" : 534.65625,
+		"SpriteTransformScalingY" : 184.81295776367188,
+		"SpriteTransformWorldPositionX" : -1345.3348388671875,
+		"SpriteTransformWorldPositionY" : -253.59635925292969,
+		"animations" : 
+		[
+			{
+				"Name" : "smallGrass",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.3333333432674408,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 1.0967254638671875e-05,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 3,
+				"y_frames" : 4
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 348.36074829101562,
+		"TransformScalingX" : 534.65625,
+		"TransformScalingY" : 184.81295776367188,
+		"TransformWorldPositionX" : -1345.3348388671875,
+		"TransformWorldPositionY" : -253.59635925292969
+	}
+}
