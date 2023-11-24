@@ -77,6 +77,9 @@ namespace IS {
 		if (scene_id == mActiveSceneID)
 			return;
 
+		// Clear command history
+		CommandHistory::Clear();
+
 		std::string old_scene = mSceneNames[mActiveSceneID];
 		// Instance of game engine
 		auto& engine = InsightEngine::Instance();
@@ -133,14 +136,14 @@ namespace IS {
 	SceneID SceneManager::GetSceneCount() const { return mSceneCount; }
 
 	// Entity management
-	std::optional<Entity> SceneManager::AddEntity(const char* name) 
+	std::optional<Entity> SceneManager::AddEntity(std::string const& name) 
 	{
 		if (mSceneCount == 0)
 			return std::nullopt;
 
 		std::shared_ptr<CreateEntityCommand> command = std::make_shared<CreateEntityCommand>(name);
 		CommandHistory::AddCommand(command);
-		return command->mEntity;
+		return command->GetEntity();
 	}
 
 	std::optional<Entity> SceneManager::AddRandomEntity()
@@ -154,7 +157,10 @@ namespace IS {
 	{
 		if (mSceneCount == 0)
 			return std::nullopt;
-		return InsightEngine::Instance().CopyEntity(entity);
+
+		std::shared_ptr<DuplicateCommand> command = std::make_shared<DuplicateCommand>(entity);
+		CommandHistory::AddCommand(command);
+		return command->GetDupe();
 	}
 
 	void SceneManager::DeleteEntity(Entity entity) 
@@ -169,6 +175,10 @@ namespace IS {
 	void SceneManager::CreateScene(std::string const& scene_filename)
 	{
 		IS_PROFILE_FUNCTION();
+
+		// Clear command history
+		CommandHistory::Clear();
+
 		// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();

@@ -131,8 +131,16 @@ namespace IS {
             if (engine.IsFullScreen()) ratio_height = heightR / (static_cast<float>(height));
             else ratio_height = heightR / (static_cast<float>(height) + 32.f); // 32.f for the white title bar
         }
-        void PrintMouseWorldPos();
-        void mouse_pick_entity();
+
+        double GetHeldDuration(int glfw_keycode) const
+        {
+            if (held_keys.count(glfw_keycode) > 0)
+            {
+                double held_duration = glfwGetTime() - key_pressed_time.at(glfw_keycode);
+                return held_duration;
+            }
+            return 0.0; // Key not currently held
+        }
 
         // for mouse dragging testing
         Vec2D previousWorldMousePos{ 0.0,0.0 };
@@ -150,6 +158,7 @@ namespace IS {
         std::unordered_set<int> pressed_mouse_buttons;
         std::unordered_set<int> released_mouse_buttons;
         std::unordered_set<int> held_mouse_buttons;
+        std::unordered_map<int, double> key_pressed_time; // Map to store the press time of keys
 
         //for file drag/drop from file explorer
         std::unordered_set<std::filesystem::path> payloads;
@@ -159,13 +168,6 @@ namespace IS {
         float center_y = 0.f;
         float ratio_width = 1.f;
         float ratio_height = 1.f;
-
-        double world_mouse_x = 0.0;
-        double world_mouse_y = 0.0;
-        double current_mouse_x = 0.0;
-        double current_mouse_y = 0.0;
-        double previous_mouse_x = 0.0;
-        double previous_mouse_y = 0.0;
 
         /**
          * \brief Process payloads from windows file explorer.
@@ -199,15 +201,6 @@ namespace IS {
         * Updates the state of pressed, held, and released mouse buttons.
         */
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-
-        /**
-         * \brief GLFW callback for mouse position events.
-         * 
-         * \param window Pointer to window context.
-         * \param xpos Mouse x position.
-         * \param ypos Mouse y position.
-         */
-        static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 
         /**
          * \brief GLFW callback for file drop events.

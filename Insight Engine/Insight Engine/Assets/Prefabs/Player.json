@@ -12,19 +12,18 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : 132.06991577148438,
-				"Y" : 206.19441223144531
+				"X" : -12.929377555847168,
+				"Y" : 102.82825469970703
 			},
 			"CircleColliderOffset" : 
 			{
 				"X" : 0.0,
 				"Y" : -20.0
 			},
-			"CircleColliderRadius" : 60.000003814697266,
+			"CircleColliderRadius" : 360.0,
 			"CircleColliderRadiusScale" : 0.30000001192092896
 		},
 		"CircleColliderEnabled" : true,
-		"CollidingEntity" : 13,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Player",
@@ -56,22 +55,23 @@
 	{
 		"AnimationIndex" : 1,
 		"Layer" : 1,
-		"SpriteColorX" : 0.60000002384185791,
-		"SpriteColorY" : 0.60000002384185791,
-		"SpriteColorZ" : 0.60000002384185791,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 1,
 		"SpriteFilename" : "idle_anim 4R3C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 9,
+		"SpriteTexture" : 21,
 		"SpriteTextureHeight" : 3644,
-		"SpriteTextureIndex" : 8,
+		"SpriteTextureIndex" : 20,
 		"SpriteTextureWidth" : 3921,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 200.0,
-		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : 132.06991577148438,
-		"SpriteTransformWorldPositionY" : 226.19441223144531,
+		"SpriteTransformScalingX" : 1200.0,
+		"SpriteTransformScalingY" : 1080.0,
+		"SpriteTransformWorldPositionX" : -12.929377555847168,
+		"SpriteTransformWorldPositionY" : 122.82825469970703,
 		"animations" : 
 		[
 			{
@@ -91,9 +91,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 0.0,
-				"frame_index_y" : 3.0,
-				"frame_timer" : 0.061807412654161453,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.063837744295597076,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -103,9 +103,9 @@
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 200.0,
-		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : 132.06991577148438,
-		"TransformWorldPositionY" : 226.19441223144531
+		"TransformScalingX" : 1200.0,
+		"TransformScalingY" : 1080.0,
+		"TransformWorldPositionX" : -12.929377555847168,
+		"TransformWorldPositionY" : 122.82825469970703
 	}
 }

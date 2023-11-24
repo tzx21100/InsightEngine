@@ -36,6 +36,8 @@ namespace IS {
     class ICommand
     {
     public:
+        static const std::string mTempDirectory; ///< The temporary directory for entity destruction.
+
         /*!
          * \brief Virtual destructor for ICommand.
          */
@@ -68,6 +70,13 @@ namespace IS {
          * \return True if the command can be merged, false otherwise.
          */
         bool CanMerge() const { return mCanMerge; }
+
+        static void ValidateTempDirectory();
+
+        /*!
+         * \brief Clear the temporary directory used for entity destruction.
+         */
+        static void ClearTempDirectory(); ///< Clear the temporary directory used for entity destruction.
 
     protected:
         bool mCanMerge = true; ///< Flag indicating whether the command can be merged.
@@ -148,9 +157,10 @@ namespace IS {
          */
         void Undo() override; ///< Undo the command by destroying the created entity.
 
-        Entity mEntity;         ///< The created entity.
+        Entity GetEntity() const { return mEntity; }
 
     private:
+        Entity mEntity;         ///< The created entity.
         std::string mEntityName; ///< The name of the entity to be created.
     };
 
@@ -177,16 +187,114 @@ namespace IS {
          */
         void Undo() override; ///< Undo the command by recreating the destroyed entity.
 
-        /*!
-         * \brief Clear the temporary directory used for entity destruction.
-         */
-        static void ClearTempDirectory(); ///< Clear the temporary directory used for entity destruction.
-
     private:
         Entity mEntity;               ///< The entity to be destroyed.
         std::string mFileName;        ///< The filename associated with the destroyed entity.
-        static const std::string mTempDirectory; ///< The temporary directory for entity destruction.
         static int mDestroyedCount;    ///< Count of destroyed entities.
+    };
+
+    class PrefabCommand : public ICommand
+    {
+    public:
+        PrefabCommand(std::string const& prefab_name);
+
+        virtual void Execute() override;
+        void Undo() override;
+
+    protected:
+        Entity mEntity;
+        std::string mPrefabName;
+        std::string mFileName;
+        bool mFirstTime;
+        static int mPrefabCount;
+    };
+
+    class TextureCommand final : public PrefabCommand
+    {
+    public:
+        TextureCommand(std::string const& texture_filename);
+
+        void Execute() override;
+    };
+
+    class DuplicateCommand final : public ICommand
+    {
+    public:
+        DuplicateCommand(Entity original);
+
+        void Execute() override;
+
+        void Undo() override;
+
+        Entity GetDupe() const { return mDupe; }
+
+    private:
+        Entity mOriginal;
+        Entity mDupe;
+        std::string mFileName;
+        bool mFirstTime;
+        static int mDupeCount;
+    };
+
+    template <typename Component>
+    class AddComponentCommand final : public ICommand
+    {
+    public:
+        AddComponentCommand(Entity entity) : mEntity(entity)
+        {
+            mCanMerge = false;
+        }
+
+        void Execute() override
+        {
+            auto& engine = InsightEngine::Instance();
+            engine.AddComponent<Component>(mEntity, Component());
+        }
+
+        void Undo() override
+        {
+            auto& engine = InsightEngine::Instance();
+            engine.RemoveComponent<Component>(mEntity);
+        }
+
+    private:
+        Entity mEntity;
+    };
+
+    static int mRemoveCount = 0;
+
+    template <typename Component>
+    class RemoveComponentCommand final : public ICommand
+    {
+    public:
+        RemoveComponentCommand(Entity entity) : mEntity(entity)
+        {
+            mCanMerge = false;
+            mFileName = mTempDirectory + "\\Remove Component " + std::to_string(mRemoveCount) + ".json";
+        }
+
+        void Execute() override
+        {
+            ValidateTempDirectory();
+
+            auto& engine = InsightEngine::Instance();
+            engine.SaveEntityToJson(mEntity, mFileName);
+            IS_CORE_DEBUG("{}", mFileName);
+            engine.RemoveComponent<Component>(mEntity);
+            mRemoveCount++;
+        }
+
+        void Undo() override
+        {
+            auto& engine = InsightEngine::Instance();
+            mEntity = engine.LoadEntityFromJson(mFileName, mEntity);
+            std::filesystem::remove(mFileName);
+            IS_CORE_DEBUG("{}", mFileName);
+            mRemoveCount--;
+        }
+    private:
+        Entity mEntity;
+        std::string mFileName;
     };
 
 } // end namespace IS

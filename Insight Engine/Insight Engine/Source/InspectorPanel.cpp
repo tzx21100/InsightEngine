@@ -362,7 +362,7 @@ namespace IS {
                                 EditorUtils::RenderTableLabel("Duration");
                                 ImGui::TableNextColumn();
 
-                                if (float animation_duration = animation.animation_duration; ImGui::DragFloat("##Duration", &animation_duration, 0.1f, 1.f, 10.f, "%.2f sec"))
+                                if (float animation_duration = animation.animation_duration; ImGui::DragFloat("##Duration", &animation_duration, 0.1f, 0.f, 20.f, "%.2f sec"))
                                 {
                                     CommandHistory::AddCommand<ChangeCommand<float>>(animation.animation_duration, animation_duration);
                                 }
@@ -894,7 +894,7 @@ namespace IS {
             // Remove Component
             if (remove_component)
             {
-                engine.RemoveComponent<Component>(entity);
+                CommandHistory::AddCommand<RemoveComponentCommand<Component>>(entity);
             }
         }
 

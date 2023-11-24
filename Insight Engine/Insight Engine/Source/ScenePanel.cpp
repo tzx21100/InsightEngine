@@ -46,6 +46,13 @@ namespace IS {
         const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
         const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
 
+        const double HELD_THRESHOLD = 0.5;
+        const double INTERVAL       = 0.1;
+        const double D_HELD_DURATION        = input->GetHeldDuration(GLFW_KEY_D);
+        const double DELETE_HELD_DURATION   = input->GetHeldDuration(GLFW_KEY_DELETE);
+        const bool D_HELD      = D_HELD_DURATION >= HELD_THRESHOLD && std::fmod(D_HELD_DURATION, INTERVAL) < 0.01;
+        const bool DELETE_HELD = DELETE_HELD_DURATION >= HELD_THRESHOLD && std::fmod(DELETE_HELD_DURATION, INTERVAL) < 0.01;
+
         mSnap = CTRL_HELD;
 
         // Keyboard inputs
@@ -68,13 +75,13 @@ namespace IS {
                 mGizmoType = aGizmoType::GIZMO_TYPE_SCALE;
             }
 
-            if (DELETE_PRESSED && mEditorLayer.IsAnyEntitySelected())
+            if ((DELETE_PRESSED || DELETE_HELD) && mEditorLayer.IsAnyEntitySelected())
             {
                 mEditorLayer.DeleteEntity(mEditorLayer.GetSelectedEntity());
                 mEditorLayer.ResetEntitySelection();
             }
 
-            if (CTRL_HELD && D_PRESSED && mEditorLayer.IsAnyEntitySelected())
+            if (CTRL_HELD && (D_PRESSED || D_HELD) && mEditorLayer.IsAnyEntitySelected())
             {
                 mEditorLayer.CloneEntity(mEditorLayer.GetSelectedEntity());
             }
@@ -179,18 +186,20 @@ namespace IS {
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_TEXTURE"))
                 {
                     std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                    Entity entity = SceneManager::Instance().AddEntity("Imported Entity").value();
-                    engine.AddComponent<Sprite>(entity, Sprite());
-                    engine.AddComponent<Transform>(entity, Transform());
-                    auto& sprite = engine.GetComponent<Sprite>(entity);
-                    auto& transform = engine.GetComponent<Transform>(entity);
-                    auto const asset = engine.GetSystem<AssetManager>("Asset");
-                    IS_CORE_DEBUG("Image : {} ", path.string());
-                    sprite.img = *asset->GetImage(path.string());
+                    //CommandHistory::AddCommand<TextureCommand>(path.string());
+                    CommandHistory::AddCommand(std::make_shared<TextureCommand>(path.string()));
+                    //Entity entity = SceneManager::Instance().AddEntity("Imported Entity").value();
+                    //engine.AddComponent<Sprite>(entity, Sprite());
+                    //engine.AddComponent<Transform>(entity, Transform());
+                    //auto& sprite = engine.GetComponent<Sprite>(entity);
+                    //auto& transform = engine.GetComponent<Transform>(entity);
+                    //auto const asset = engine.GetSystem<AssetManager>("Asset");
+                    //IS_CORE_DEBUG("Image : {} ", path.string());
+                    //sprite.img = *asset->GetImage(path.string());
 
-                    transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
-                    transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
-                    static_cast<float>(Transform::GetMousePosition().second) };
+                    //transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
+                    //transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
+                    //static_cast<float>(Transform::GetMousePosition().second) };
                 }
 
                 ImGui::EndDragDropTarget();
@@ -202,15 +211,7 @@ namespace IS {
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_PREFAB"))
                 {
                     std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                    auto const asset = engine.GetSystem<AssetManager>("Asset");
-                    Entity temp = engine.CreateEntity("Imported Prefab");
-                    temp = engine.LoadFromPrefab(asset->GetPrefab(path.filename().string()), temp);
-                    if (engine.HasComponent<Transform>(temp))
-                    {
-                        Transform& transform = engine.GetComponent<Transform>(temp);
-                        transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
-                        static_cast<float>(Transform::GetMousePosition().second) };
-                    }
+                    CommandHistory::AddCommand<PrefabCommand>(path.filename().string());
                 }
 
                 ImGui::EndDragDropTarget();

@@ -160,9 +160,9 @@ namespace IS {
         /*!
          * \brief Add entity with given name.
          * 
-         * \param The name of the entity.
+         * \param name The name of the entity.
          */
-        std::optional<Entity> AddEntity(const char* name);
+        std::optional<Entity> AddEntity(std::string const& name);
 
         /*!
          * \brief Add a random entity.
@@ -172,14 +172,14 @@ namespace IS {
         /*!
          * \brief Clone an existing entity.
          * 
-         * \param enttity Entity to be cloned.
+         * \param entity Entity to be cloned.
          */
         std::optional<Entity> CloneEntity(Entity entity);
 
         /*!
          * \brief Delete an existing entity.
          * 
-         * \param enttity Entity to be deleted.
+         * \param entity Entity to be deleted.
          */
         void DeleteEntity(Entity entity);
 

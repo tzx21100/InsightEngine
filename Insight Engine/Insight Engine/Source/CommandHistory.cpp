@@ -94,6 +94,12 @@ namespace IS {
         }
     }
 
+    void CommandHistory::Clear()
+    {
+        mUndoStack.clear();
+        mRedoStack.clear();
+    }
+
     void CommandHistory::LimitStackSize(StackType& stack, size_t max_size)
     {
         while (stack.size() > max_size)

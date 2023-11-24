@@ -1,0 +1,49 @@
+{
+	"Name" : "Running Animation",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "running_anim 4R3C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 36,
+		"SpriteTextureHeight" : 3200,
+		"SpriteTextureIndex" : 35,
+		"SpriteTextureWidth" : 3864,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 3864.0,
+		"SpriteTransformScalingY" : 3200.0,
+		"SpriteTransformWorldPositionX" : -210.10111999511719,
+		"SpriteTransformWorldPositionY" : -345.85858154296875,
+		"animations" : 
+		[
+			{
+				"Name" : "Running",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.3333333432674408,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.067292578518390656,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 3,
+				"y_frames" : 4
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 3864.0,
+		"TransformScalingY" : 3200.0,
+		"TransformWorldPositionX" : -210.10111999511719,
+		"TransformWorldPositionY" : -345.85858154296875
+	}
+}
