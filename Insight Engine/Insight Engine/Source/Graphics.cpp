@@ -413,7 +413,7 @@ namespace IS {
         //    fb_shader_pgm.unUse();
         //}
 
-        North_Forest_font.renderText("FUCK WAN JIN!!!!", 0.5f, 0.5f, 32.f, glm::vec3(0.529f, 0.808f, 0.922f));
+        // North_Forest_font.renderText("TEST!!!!", 0.5f, 0.5f, 32.f, glm::vec3(0.529f, 0.808f, 0.922f));
        
         // if using ImGui, unbind fb at the end of draw
         if (engine.mRenderGUI)
