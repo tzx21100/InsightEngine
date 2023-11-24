@@ -282,5 +282,21 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetLightToggleEntity(int entity, bool toggle);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float MathSin(float val);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float MathCos(float val);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float MathAtan(float val);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float MathAtan2(float x,float y);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float MathSqrt(float val);
+
+
     }
 }

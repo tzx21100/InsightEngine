@@ -23,8 +23,8 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "GameGui.h"
 #include <algorithm>
 #include "Physics.h"
-
 #include <mono/metadata/object.h>
+#include <math.h>
 
 namespace IS {
     // Macro to add internal calls for C# access
@@ -36,7 +36,7 @@ namespace IS {
      * \param name The message to log.
      * \param param The integer parameter to log.
      */
-    static void NativeLog(MonoString* name, int param) {
+    static void NativeLog(MonoString* name, float param) {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
@@ -745,6 +745,24 @@ namespace IS {
         }
     }
 
+    static float MathAtan(float val) {
+        return atan(val);
+    }    
+    static float MathCos(float val) {
+        return cos(val);
+    }    
+    static float MathSin(float val) {
+        return sin(val);
+    }    
+    static float MathAtan2(float x,float y) {
+        return atan2(x,y);
+    }
+
+    static float MathSqrt(float val) {
+        return sqrt(val);
+    }
+
+
 
 
     /**
@@ -892,6 +910,13 @@ namespace IS {
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);
+
+        // Math Function
+        IS_ADD_INTERNAL_CALL(MathAtan);
+        IS_ADD_INTERNAL_CALL(MathAtan2);
+        IS_ADD_INTERNAL_CALL(MathSqrt);
+        IS_ADD_INTERNAL_CALL(MathSin);
+        IS_ADD_INTERNAL_CALL(MathCos);
 
 
     }

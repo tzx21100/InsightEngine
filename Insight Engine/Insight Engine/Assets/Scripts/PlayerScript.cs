@@ -249,6 +249,8 @@ namespace IS
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     InternalCalls.TransformSetScaleEntity(300 , 300, death_entity);
                     isDashing = false;
+                    dash_timer = dash_set;
+                    bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
 
                     for (int i = 0; i < 36; i++) {
@@ -478,10 +480,7 @@ namespace IS
                 && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
             {
 
-
-
                 isGrounded = true;
-
 
             }
             else
@@ -561,9 +560,6 @@ namespace IS
                 }
                 initial_land = false;
             }
-            
-            //check for ground
-
 
 
             if (canDash && isDashing==false && Reward_Dash)
@@ -583,7 +579,7 @@ namespace IS
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                     
-                    float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+                    float angle = CustomMath.AngleBetweenPoints(player_pos,mouse_pos);
 
                     hori_movement = 0;
                     InternalCalls.SetSpriteImage(player_idle);
@@ -591,6 +587,10 @@ namespace IS
                     if (mouse_pos.x>player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
+                    apply_force=apply_force.Normalize();
+                    //InternalCalls.NativeLog("ANGLE IS: ", CustomMath.RadiansToDegrees(angle));
+/*                    InternalCalls.NativeLog("DIR_X IS: ", apply_force.x);
+                    InternalCalls.NativeLog("DIR_Y IS: ", apply_force.y);*/
                     var color = (1f, 1f, 1f);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y, color);
                     // Render Circles

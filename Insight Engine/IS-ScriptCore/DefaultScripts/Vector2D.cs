@@ -103,7 +103,7 @@ public class Vector2D
     // Magnitude (length) of the vector
     public float Magnitude()
     {
-        return (float)Math.Sqrt(this.x * this.x + this.y * this.y);
+        return (float)CustomMath.Sqrt(this.x * this.x + this.y * this.y);
     }
 
     // Normalize the vector
