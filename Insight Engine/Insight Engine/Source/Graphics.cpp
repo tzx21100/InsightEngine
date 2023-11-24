@@ -41,6 +41,8 @@ namespace IS {
     // Shaders
     Shader ISGraphics::fb_shader_pgm;
 
+    Shader ISGraphics::main_quad_shader;
+
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_3d_quad_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
@@ -83,6 +85,7 @@ namespace IS {
         // init quad shader
 
         Shader::compileAllShaders();
+        Shader::setMainShader(inst_3d_quad_shader_pgm);
 
         // init text object
         Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
@@ -348,7 +351,6 @@ namespace IS {
         // Sprite::drawSpritesheetFrame(0, 2, 4, 3, { -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
 
         //std::string text = "World Mouse X: " + std::to_string(hi.x) + " Y: " + std::to_string(hi.y);
-        //Times_New_Roman_font.renderText(text, 0.5f, 0.5f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
         //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         //Image* img = system->GetImage("running_anim 4R3C.png");
@@ -411,6 +413,7 @@ namespace IS {
         //    fb_shader_pgm.unUse();
         //}
 
+        North_Forest_font.renderText("FUCK WAN JIN!!!!", 0.5f, 0.5f, 32.f, glm::vec3(0.529f, 0.808f, 0.922f));
        
         // if using ImGui, unbind fb at the end of draw
         if (engine.mRenderGUI)

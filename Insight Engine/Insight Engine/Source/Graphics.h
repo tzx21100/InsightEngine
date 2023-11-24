@@ -129,6 +129,8 @@ namespace IS {
 		// Shaders
 		static Shader fb_shader_pgm;
 
+		static Shader main_quad_shader;
+
 		static Shader inst_quad_shader_pgm;
 		static Shader inst_3d_quad_shader_pgm;
 		static Shader inst_non_quad_shader_pgm;

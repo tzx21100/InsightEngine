@@ -52,6 +52,10 @@ namespace IS {
         ISGraphics::fb_shader_pgm.validate();
     }
 
+    void Shader::setMainShader(Shader const& shader) {
+        ISGraphics::main_quad_shader = shader;
+    }
+
     GLboolean Shader::compileShaderString(GLenum shader_type, std::string const& shader_src) {
         // Check if the shader program handle is already created; if not, create it
         if (pgm_hdl <= 0) {

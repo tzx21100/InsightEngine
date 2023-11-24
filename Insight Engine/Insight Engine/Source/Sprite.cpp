@@ -129,7 +129,7 @@ namespace IS {
         }
 
         // bind shader
-        GL_CALL(glUseProgram(ISGraphics::inst_3d_quad_shader_pgm.getHandle()));
+        GL_CALL(glUseProgram(ISGraphics::main_quad_shader.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
         // store texture array indices
@@ -140,7 +140,7 @@ namespace IS {
         }
 
         // upload to uniform variable
-        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_3d_quad_shader_pgm.getHandle(), "uTex2d");
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::main_quad_shader.getHandle(), "uTex2d");
         if (tex_arr_uniform >= 0)
             glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
         else IS_CORE_ERROR({ "uTex2d Uniform not found, shader compilation failed?" });

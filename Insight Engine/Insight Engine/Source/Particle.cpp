@@ -56,11 +56,11 @@ namespace IS {
 
             case pt_texture:
 
-                auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-                Image* img = system->GetImage("running_anim 4R3C.png");
+                //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                //Image* img = system->GetImage("running_anim 4R3C.png");
 
                 Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
-                run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
+                //run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
                 break;
                 
             }
