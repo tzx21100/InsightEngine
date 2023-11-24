@@ -28,7 +28,7 @@ namespace IS {
 	bool Physics::mShowGrid = false;
 	bool Physics::mEnableImplicitGrid = false;
 	bool Physics::mExertingGravity = true;				// Flag indicating whether gravity is currently exerted
-	Vector2D Physics::mGravity = Vector2D(0, -981.f);							// Gravity of the world
+	Vector2D Physics::mGravity = Vector2D(0.f, -981.f);							// Gravity of the world
 
 	// Constructs a Physics instance
 	Physics::Physics()

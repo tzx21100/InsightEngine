@@ -39,6 +39,7 @@ namespace IS {
 
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
+        auto const window = engine.GetSystem<WindowSystem>("Window");
         namespace fs = std::filesystem;
         std::string path = TEXTURE_DIRECTORY; // Path to the Assets directory
 
@@ -50,6 +51,10 @@ namespace IS {
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
                 LoadImage(file_path);
             }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Image file must be either \".png\", \".jpg\" or \".jpeg\"!");
+            }
         }
 
         for (const auto& entry : fs::directory_iterator(ICON_DIRECTORY)) {
@@ -58,7 +63,12 @@ namespace IS {
 
             // Check image extensions
             if (extension == ".png") {
-                IconLoad(file_path);                
+                IconLoad(file_path);
+                IS_CORE_INFO("Loaded Icon: {} ", file_path);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Icon file must be \".png\"!");
             }
         }
 
@@ -69,8 +79,14 @@ namespace IS {
             std::string extension = entry.path().extension().string();
 
             // Check for json extensions
-            if (extension == ".json") {
+            if (extension == ".json")
+            {
                 LoadPrefab(file_path);
+                IS_CORE_INFO("Loaded Prefab: {} ", file_path);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Prefab file must be \".json\"!");
             }
         }
 
@@ -78,8 +94,16 @@ namespace IS {
         path = SCENE_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path)) {
             std::string file_path = entry.path().filename().string();
-            mSceneList.emplace_back(file_path);
-            IS_CORE_INFO("Loaded Scene: {} ", file_path);
+            std::string extension = entry.path().extension().string();
+            if (extension == ".insight")
+            {
+                mSceneList.emplace_back(file_path);
+                IS_CORE_INFO("Loaded Scene: {} ", file_path);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Scene file must be \".insight\"!");
+            }
         }        
         
         path = PARTICLE_DIRECTORY;
@@ -88,17 +112,28 @@ namespace IS {
             std::string extension = entry.path().extension().string();
             if (extension == ".txt") {
                 LoadParticle(file_path);
+                IS_CORE_INFO("Loaded Particle: {} ", file_path);
             }
-            
-            IS_CORE_INFO("Loaded Particle: {} ", file_path);
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Script file must be \".cs\"!");
+            }
         }
 
         path = SCRIPT_DIRECTORY;
         for (const auto& entry : fs::directory_iterator(path))
         {
             std::string file_path = entry.path().filename().string();
-            mScriptList.emplace_back(file_path);
-            IS_CORE_INFO("Loaded Script: {} ", file_path);
+            std::string extension = entry.path().extension().string();
+            if (extension == ".cs")
+            {
+                mScriptList.emplace_back(file_path);
+                IS_CORE_INFO("Loaded Script: {} ", file_path);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Script file must be \".cs\"!");
+            }
         }
 
 
@@ -107,26 +142,17 @@ namespace IS {
         auto audio = engine.GetSystem<ISAudio>("Audio");
         for (const auto& entry : fs::directory_iterator(path)) {
             auto const& filepath = entry.path();
-            //std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
 
             // Check audio extensions (assuming mp3 and wav for this example, add more if needed)
-            if (extension == ".MP3" || extension == ".WAV" || extension ==".wav" || extension==".mp3") {
-                //FMOD::Channel* channel = audio->ISAudioLoadSound(file_path.c_str());
-                //FMOD::Sound* sound = audio->ISAudioLoadSoundS(file_path.c_str());
-                //std::string sound_name = entry.path().filename().string();
-                //SaveSound(sound_name, sound);
-                //SaveChannel(sound_name, channel);
-                //IS_CORE_INFO("Loaded Sound: {} ", sound_name);
+            if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3")
+            {
                 LoadAudio(filepath);
             }
-            else {
-                IS_CORE_CRITICAL("Audio file mus be only .mp3 or .wav");
-            
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Audio file must be either \".mp3\" or \".wav\"!");
             }
-
-
-
         }
     }
 

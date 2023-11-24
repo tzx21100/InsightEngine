@@ -183,15 +183,27 @@ namespace IS {
         std::string const& filename = std::filesystem::relative(filepath).string();
         std::filesystem::path const& extension = filepath.extension();
 
-        // Scene file
-        if (extension == ".insight") { scene_manager.LoadScene(filename); }
-        // Texture file
-        else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") { asset->LoadImage(filename); }
-        // Audio file
-        else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") {  asset->LoadAudio(filename);  }
-        // Prefab file
-        else if (extension == ".json") { asset->LoadPrefab(filename); }
-        else { IS_CORE_WARN("File type \"{}\" not supported!", extension.string()); }
+        if (extension == ".insight") // Scene
+        {
+            scene_manager.LoadScene(filename);
+        }
+        else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")  // Texture
+        { 
+            asset->LoadImage(filename);
+        }
+        else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") // Audio
+        { 
+            asset->LoadAudio(filename);
+        }
+        else if (extension == ".json") // Prefab
+        {
+            asset->LoadPrefab(filename);
+        }
+        else // Unsupported file type
+        {
+            std::string message = std::format("File type \"{}\" not supported!", extension.string());
+            mWindow->ShowMessageBox(message);
+        }
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {

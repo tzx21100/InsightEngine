@@ -234,7 +234,9 @@ namespace IS {
 
         // draw instanced quads
 
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size()));
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         ISGraphics::lightInstances.clear();
     }
 

@@ -25,6 +25,7 @@
 #include "EditorLayer.h"
 #include "Body.h"
 #include "Collider.h"
+#include "Light.h"
 
 #include <iostream>
 #include <thread>
@@ -354,6 +355,7 @@ namespace IS {
         DeserializeComponent<Collider>(entity, loaded, "Collider");
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
+        DeserializeComponent<Light>(entity, loaded, "Light");
     }    
     
     void InsightEngine::DeserializeAllComponentsPrefab(Entity entity, Json::Value &loaded) {
@@ -365,6 +367,7 @@ namespace IS {
         DeserializeComponent<Collider>(entity, loaded, "Collider");
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
+        DeserializeComponent<Light>(entity, loaded, "Light");
     }
 
     void InsightEngine::SerializeAllComponents(Entity entity, Json::Value &saved_entity) {
@@ -376,6 +379,7 @@ namespace IS {
         SerializeComponent<Collider>(entity, saved_entity, "Collider");
         SerializeComponent<AudioListener>(entity, saved_entity, "AudioListener");
         SerializeComponent<AudioEmitter>(entity, saved_entity, "AudioEmitter");
+        SerializeComponent<Light>(entity, saved_entity, "Light");
     }
 
     /* This will save the entity to a string file.The string file is not defined with a path so it can save it

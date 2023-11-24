@@ -27,6 +27,7 @@
 #include "CommandHistory.h"
 #include "Body.h"
 #include "Collider.h"
+#include "Light.h"
 
 // Dependencies
 #include <ranges>
@@ -375,7 +376,6 @@ namespace IS {
                     {
                         scene_manager.SaveScene();
                     }
-                    ISGraphics::mShowTextAnimation = false;
                 }
 
                 // Stop
@@ -385,7 +385,6 @@ namespace IS {
                     Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
                     ImGui::SetWindowFocus(ICON_LC_VIEW "  Scene");
                     scene_manager.ReloadActiveScene();
-                    ISGraphics::mShowTextAnimation = true;
                 }
 
                 // Step
@@ -443,7 +442,8 @@ namespace IS {
         if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
             engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
             engine.HasComponent<ScriptComponent>(entity) && engine.HasComponent<AudioListener>(entity) &&
-            engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<ButtonComponent>(entity))
+            engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<Light>(entity) &&
+            engine.HasComponent<ButtonComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
                 ImGui::CloseCurrentPopup();
@@ -524,6 +524,16 @@ namespace IS {
             if (ImGui::MenuItem(ICON_LC_SPEAKER "  Audio Emitter"))
             {
                 engine.AddComponent<AudioEmitter>(entity, AudioEmitter());
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add Light Component
+        if (!engine.HasComponent<Light>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_SUN "  Light"))
+            {
+                engine.AddComponent<Light>(entity, Light());
                 ImGui::CloseCurrentPopup();
             }
         }

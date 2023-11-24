@@ -72,6 +72,11 @@ namespace IS {
         float mHoverScale{ 1.f };
         bool mTransformUpdate = false;
 
+        ButtonComponent()
+        {
+            // empty by design
+        }
+
         void followTransform(Transform const& trans) { mSize = trans.scaling; }
 
         Json::Value Serialize() {

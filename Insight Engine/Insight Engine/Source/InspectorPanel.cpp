@@ -29,6 +29,7 @@
 #include "FileUtils.h"
 #include "GameGui.h"
 #include "Audio.h"
+#include "Light.h"
 #include "CommandHistory.h"
 
 // Dependencies
@@ -638,6 +639,51 @@ namespace IS {
             });
 
         }); // end render Script Component
+
+        // Light Component
+        RenderComponent<Light>(ICON_LC_SUN "  Light", entity, [](Light& light)
+        {
+            EditorUtils::RenderTableFixedWidth("Light Render Table", 2, [&]()
+            {
+                EditorUtils::RenderTableLabel("Rendering");
+                ImGui::TableNextColumn();
+                EditorUtils::RenderToggleButton("Render Light", light.mRender);
+            });
+
+            if (Vector2D offset = light.mOffset; EditorUtils::RenderControlVec2("Offset", offset))
+            {
+                CommandHistory::AddCommand<ChangeCommand<Vector2D>>(light.mOffset, offset);
+            }
+
+            EditorUtils::RenderTableFixedWidth("Light Table", 2, [&]()
+            {
+                EditorUtils::RenderTableLabel("Hue");
+                ImGui::TableNextColumn();
+                if (Vector3D color = light.mHue; ImGui::ColorEdit3("##LightHue", &color.x))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<Vector3D>>(light.mHue, color);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Intensity");
+                ImGui::TableNextColumn();
+                if (int percent = static_cast<int>(light.mIntensity * 100.f); ImGui::SliderInt("##LightIntensity", &percent, 0, 100, "%d%%"))
+                {
+                    float intensity = static_cast<float>(percent) / 100.f;
+                    CommandHistory::AddCommand<ChangeCommand<float>>(light.mIntensity, intensity);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+
+                EditorUtils::RenderTableLabel("Size");
+                ImGui::TableNextColumn();
+                if (float size = light.mSize; ImGui::DragFloat("##LightSize", &size))
+                {
+                    CommandHistory::AddCommand<ChangeCommand<float>>(light.mSize, size);
+                }
+                CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
+            });
+            
+        });
 
         // Audio Listener Component
         RenderComponent<AudioListener>(ICON_LC_EAR "  Audio Listener", entity, [entity, FONT_BOLD](AudioListener& listener)
