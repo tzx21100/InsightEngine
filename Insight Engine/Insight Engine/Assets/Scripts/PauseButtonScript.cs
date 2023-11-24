@@ -97,6 +97,8 @@ namespace IS
             if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
             {
                 pause_enable = !pause_enable;
+                ExitButtonScript.exit_confirmation = false;
+                HowToPlayScript.how_to_play_enable = false;
             }
 
             //mouse
@@ -130,7 +132,7 @@ namespace IS
                     //click
                 }*/
                 InternalCalls.GamePause(true);
-                if (ExitButtonScript.exit_confirmation)
+                if (ExitButtonScript.exit_confirmation || HowToPlayScript.how_to_play_enable)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);
@@ -172,8 +174,8 @@ namespace IS
             InternalCalls.ButtonRenderText(resume_entity, 0.495f, 0.595f, 19f, (1f, 1f, 1f));
             InternalCalls.ButtonRenderText(how_to_play_entity, 0.495f, 0.475f, 14f, (1f, 1f, 1f));
             //InternalCalls.ButtonRenderText(setting_entity, 0.495f, 0.365f, 14f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(home_entity, 0.495f, 0.365f, 14f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(quit_entity, 0.495f, 0.27f, 9f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(home_entity, 0.495f, 0.367f, 14f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(quit_entity, 0.495f, 0.276f, 9f, (1f, 1f, 1f));
         }
 
         static public void MoveAwayPauseMenuPosition()

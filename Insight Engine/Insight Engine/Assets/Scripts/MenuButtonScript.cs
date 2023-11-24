@@ -47,7 +47,7 @@ namespace IS
         static public void Update()
         {
 
-            if (ExitButtonScript.exit_confirmation) // if exit confirmation is active, move away the menu buttons
+            if (ExitButtonScript.exit_confirmation || HowToPlayScript.how_to_play_enable) // if exit confirmation is active, move away the menu buttons
             {
                 MoveAwayMenuButton();
             }
@@ -74,8 +74,8 @@ namespace IS
             // draw buttons
             InternalCalls.ButtonRenderText(start_entity, 0.265f, 0.575f, 23f, (1f, 1f, 1f));
             InternalCalls.ButtonRenderText(setting_entity, 0.265f, 0.458f, 21f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(how_to_play_entity, 0.265f, 0.34f, 16f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(exit_entity, 0.265f, 0.22f, 20f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(how_to_play_entity, 0.266f, 0.34f, 16f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(exit_entity, 0.265f, 0.23f, 20f, (1f, 1f, 1f));
         }
 
         static public void MoveAwayMenuButton()

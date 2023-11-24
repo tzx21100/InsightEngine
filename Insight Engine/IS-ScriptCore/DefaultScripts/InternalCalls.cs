@@ -314,6 +314,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GlitchEnable(bool set);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetLightsToggle(bool toogle);
 
 
     }

@@ -796,7 +796,10 @@ namespace IS {
         ISGraphics::mGlitched = set;
     }
 
-
+    static void SetLightsToggle(bool toggle)
+    {
+        ISGraphics::mLightsOn = toggle;
+    }
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -945,6 +948,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(SetLightsToggle);
 
 
         // IStrace

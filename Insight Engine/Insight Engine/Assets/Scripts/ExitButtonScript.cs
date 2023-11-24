@@ -55,7 +55,7 @@ namespace IS
             //set camera pos
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
-            //camera_pos = camera_pos.Divide(camera_zoom);
+
             confirmation_menu_pos.Set(camera_pos.x + 0f / camera_zoom, camera_pos.y + 10f / camera_zoom);
             no_pos.Set(camera_pos.x + 600f / camera_zoom, camera_pos.y - 500f / camera_zoom);
             yes_pos.Set(camera_pos.x - 600f / camera_zoom, camera_pos.y - 500f / camera_zoom);
@@ -101,9 +101,9 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
 
             // draw text
-            InternalCalls.RenderText("exit?", 0.5f, 0.55f, 23f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(no_entity, 0.658f, 0.27f, 18f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(yes_entity, 0.34f, 0.27f, 18f, (1f, 1f, 1f));
+            InternalCalls.RenderText("exit?", 0.5f, 0.5f, 23f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(no_entity, 0.658f, 0.28f, 18f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(yes_entity, 0.34f, 0.28f, 18f, (1f, 1f, 1f));
 
         }
 
