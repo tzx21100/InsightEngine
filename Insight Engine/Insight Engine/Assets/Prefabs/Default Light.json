@@ -1,0 +1,52 @@
+{
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.020651977509260178,
+			"G" : 0.31176620721817017,
+			"R" : 0.97890293598175049
+		},
+		"LightIntensity" : 0.60000002384185791,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 200.0
+	},
+	"Name" : "Default Light",
+	"Signature" : "00000000000000000001000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureIndex" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1.0,
+		"SpriteTransformScalingY" : 1.0,
+		"SpriteTransformWorldPositionX" : -421.77670288085938,
+		"SpriteTransformWorldPositionY" : -8.6964426040649414,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1.0,
+		"TransformScalingY" : 1.0,
+		"TransformWorldPositionX" : -421.77670288085938,
+		"TransformWorldPositionY" : -8.6964426040649414
+	}
+}

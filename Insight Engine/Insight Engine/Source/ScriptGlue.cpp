@@ -761,12 +761,53 @@ namespace IS {
             auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
             component.mIntensity = Intensity;
         }
-    }    
+    }
+
     static void SetLightToggleEntity(int entity, bool toggle){
         if (InsightEngine::Instance().HasComponent<Light>(entity)) {
             auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
             component.mRender = toggle;
         }
+    }
+
+    static void SetLightSizeEntity(int entity, float size)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            light.mSize = size;
+        }
+    }
+
+    static float GetLightSizeEntity(int entity)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            return light.mSize;
+        }
+        return 0.f;
+    }
+
+    static void FollowMouseCursorEntity(int entity)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Transform>(entity))
+        {
+            auto& transform = engine.GetComponent<Transform>(entity);
+            transform.world_position.x = static_cast<float>(Transform::GetMousePosition().first);
+            transform.world_position.y = static_cast<float>(Transform::GetMousePosition().second);
+        }
+    }
+
+    static int CreateEntityPrefab(MonoString* prefab_name)
+    {
+        char* c_str = mono_string_to_utf8(prefab_name);
+        auto& engine = InsightEngine::Instance();
+        auto const asset = engine.GetSystem<AssetManager>("Asset");
+        Entity entity = engine.CreateEntity("Prefab");
+        entity = engine.LoadFromPrefab(asset->GetPrefab(c_str), entity);
+        mono_free(c_str);
+        return entity;
     }
 
     static float MathAtan(float val) {
@@ -896,7 +937,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightIntensityEntity);
+        IS_ADD_INTERNAL_CALL(SetLightSizeEntity);
         IS_ADD_INTERNAL_CALL(SetLightToggleEntity);
+        IS_ADD_INTERNAL_CALL(GetLightSizeEntity);
+        IS_ADD_INTERNAL_CALL(FollowMouseCursorEntity);
+        
 
 
 
@@ -934,6 +979,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+
+        // Yiming
+        IS_ADD_INTERNAL_CALL(CreateEntityPrefab);
 
 
         // IStrace

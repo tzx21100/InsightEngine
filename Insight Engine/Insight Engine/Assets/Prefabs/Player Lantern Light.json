@@ -1,0 +1,52 @@
+{
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.43137255311012268,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.5,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 200.0
+	},
+	"Name" : "Player Lantern Light",
+	"Signature" : "00000000000000000001000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureIndex" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1.0,
+		"SpriteTransformScalingY" : 1.0,
+		"SpriteTransformWorldPositionX" : 1386.666259765625,
+		"SpriteTransformWorldPositionY" : 307.07098388671875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1.0,
+		"TransformScalingY" : 1.0,
+		"TransformWorldPositionX" : 1386.666259765625,
+		"TransformWorldPositionY" : 307.07098388671875
+	}
+}

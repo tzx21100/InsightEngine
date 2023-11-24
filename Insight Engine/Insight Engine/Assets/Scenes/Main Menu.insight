@@ -130,7 +130,14 @@
 				"TransformWorldPositionX" : 1568.2198486328125,
 				"TransformWorldPositionY" : -884.8599853515625
 			}
+		},
+		{
+			"Name" : "Entity",
+			"Script" : 
+			{
+				"ScriptName" : "MainMenuBackgroundLight"
+			}
 		}
 	],
-	"EntityAmount" : 3
+	"EntityAmount" : 4
 }

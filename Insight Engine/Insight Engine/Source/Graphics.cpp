@@ -365,8 +365,6 @@ namespace IS {
         else
             Sprite::draw_instanced_3D_quads();
 
-        Sprite::draw_lights();
-
     #ifdef USING_IMGUI
         if (!engine.mRuntime)
         {
@@ -407,6 +405,8 @@ namespace IS {
 #endif // !USING_IMGUI
 
         North_Forest_font.renderAllText();
+
+        Sprite::draw_lights();
 
         //mFramebuffer->Unbind();
         //if (!engine.mRenderGUI)
