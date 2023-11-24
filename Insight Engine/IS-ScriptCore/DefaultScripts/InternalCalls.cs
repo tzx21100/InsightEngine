@@ -294,6 +294,9 @@ namespace IS
         internal extern static void SetLightIntensityEntity(int entity, float Intensity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetLightIntensityEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetLightSizeEntity(int entity, float size);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -303,10 +306,22 @@ namespace IS
         internal extern static void SetLightToggleEntity(int entity, bool toggle);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetLightHueEntity(int entity, (float, float, float) hue);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static (float, float, float) GetLightHueEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityPrefab(string prefab_name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void FollowMouseCursorEntity(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetRandomFloat();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool IsLightRenderingEntity(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float MathSin(float val);

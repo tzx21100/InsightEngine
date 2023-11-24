@@ -18,6 +18,8 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Pch.h"
+#ifdef USING_IMGUI
+
 #include "Command.h"
 
 namespace IS {
@@ -213,3 +215,5 @@ namespace IS {
     }
 
 } // end namespace IS
+
+#endif // USING_IMGUI

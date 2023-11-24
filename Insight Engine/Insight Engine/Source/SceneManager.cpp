@@ -141,9 +141,13 @@ namespace IS {
 		if (mSceneCount == 0)
 			return std::nullopt;
 
+	#ifdef USING_IMGUI
 		std::shared_ptr<CreateEntityCommand> command = std::make_shared<CreateEntityCommand>(name);
 		CommandHistory::AddCommand(command);
 		return command->GetEntity();
+	#else
+		return InsightEngine::Instance().CreateEntity(name);
+	#endif // USING_IMGUI
 	}
 
 	std::optional<Entity> SceneManager::AddRandomEntity()
@@ -158,9 +162,13 @@ namespace IS {
 		if (mSceneCount == 0)
 			return std::nullopt;
 
+	#ifdef USING_IMGUI
 		std::shared_ptr<DuplicateCommand> command = std::make_shared<DuplicateCommand>(entity);
 		CommandHistory::AddCommand(command);
 		return command->GetDupe();
+	#else
+		return InsightEngine::Instance().CopyEntity(entity);
+	#endif // USING_IMGUI
 	}
 
 	void SceneManager::DeleteEntity(Entity entity) 
@@ -168,8 +176,12 @@ namespace IS {
 		if (mSceneCount == 0)
 			return;
 
+	#ifdef USING_IMGUI
 		std::shared_ptr<DestroyEntityCommand> command = std::make_shared<DestroyEntityCommand>(entity);
 		CommandHistory::AddCommand(command);
+	#else
+		return InsightEngine::Instance().DeleteEntity(entity);
+	#endif // USING_IMGUI
 	}
 
 	void SceneManager::CreateScene(std::string const& scene_filename)

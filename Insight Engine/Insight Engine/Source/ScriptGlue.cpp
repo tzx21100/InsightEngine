@@ -768,6 +768,16 @@ namespace IS {
         }
     }
 
+    static float GetLightIntensityEntity(int entity)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            return light.mIntensity;
+        }
+        return 0.f;
+    }
+
     static void SetLightToggleEntity(int entity, bool toggle){
         if (InsightEngine::Instance().HasComponent<Light>(entity)) {
             auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
@@ -794,6 +804,35 @@ namespace IS {
         return 0.f;
     }
 
+    static bool IsLightRenderingEntity(int entity)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            return light.mRender;
+        }
+        return false;
+    }
+
+    static void SetLightHueEntity(int entity, Vector3D hue)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            light.mHue = hue;
+        }
+    }
+
+    static Vector3D GetLightHueEntity(int entity)
+    {
+        if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
+        {
+            auto& light = engine.GetComponent<Light>(entity);
+            return light.mHue;
+        }
+        return Vector3D();
+    }
+
     static void FollowMouseCursorEntity(int entity)
     {
         if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Transform>(entity))
@@ -813,6 +852,11 @@ namespace IS {
         entity = engine.LoadFromPrefab(asset->GetPrefab(c_str), entity);
         mono_free(c_str);
         return entity;
+    }
+
+    static float GetRandomFloat()
+    {
+        return PRNG::Instance().generate();
     }
 
     static float MathAtan(float val) {
@@ -950,10 +994,15 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightIntensityEntity);
+        IS_ADD_INTERNAL_CALL(GetLightIntensityEntity);
         IS_ADD_INTERNAL_CALL(SetLightSizeEntity);
         IS_ADD_INTERNAL_CALL(SetLightToggleEntity);
         IS_ADD_INTERNAL_CALL(GetLightSizeEntity);
         IS_ADD_INTERNAL_CALL(FollowMouseCursorEntity);
+        IS_ADD_INTERNAL_CALL(GetRandomFloat);
+        IS_ADD_INTERNAL_CALL(IsLightRenderingEntity);
+        IS_ADD_INTERNAL_CALL(SetLightHueEntity);
+        IS_ADD_INTERNAL_CALL(GetLightHueEntity);
         
 
 
