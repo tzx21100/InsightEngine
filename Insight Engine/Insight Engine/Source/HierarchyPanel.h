@@ -44,7 +44,7 @@ namespace IS {
         /*!
          * \brief Constructs a HierarchyPanel object.
          */
-        HierarchyPanel(EditorLayer& editor_layer) : Panel("Hierarchy", editor_layer) {}
+        HierarchyPanel(EditorLayer& editor_layer) : Panel("Hierarchy", editor_layer), mChildWindowHovered(false) {}
 
         void UpdatePanel() override;
 
@@ -56,6 +56,7 @@ namespace IS {
     private:
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
         Vec2 mPanelSize; ///< The size of the scene hierarchy panel.
+        bool mChildWindowHovered;
 
         /*!
          * \brief Renders details about the active scene.

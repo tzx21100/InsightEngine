@@ -697,6 +697,24 @@ namespace IS {
         Text::addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
     }
 
+    static void SetButtonSizeScale(int entity, float scale)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        button_component.mSizeScale = scale;
+    }
+
+    static float GetButtonHoverScale(int entity)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        return button_component.mHoverScale;
+    }
+
+    static float GetButtonIdleScale(int entity)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        return button_component.mIdleScale;
+    }
+
     static void RenderText(MonoString* text, float x, float y, float size, Vector3D color)
     {
         char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
@@ -911,6 +929,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
         IS_ADD_INTERNAL_CALL(ButtonRenderText);
         IS_ADD_INTERNAL_CALL(RenderText);
+        IS_ADD_INTERNAL_CALL(SetButtonSizeScale);
+        IS_ADD_INTERNAL_CALL(GetButtonHoverScale);
+        IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
 

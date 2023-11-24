@@ -100,7 +100,6 @@ namespace IS {
         }
 
         void Deserialize(Json::Value data) {
-            
             mButtonText = data["ButtonText"].asString();
             mButtonType = data["ButtonType"].asInt();
             mButtonState = data["ButtonState"].asInt();
@@ -212,6 +211,12 @@ namespace IS {
                 trans_component.setScaling(button_component.mSize * button_component.mSizeScale);
 
                 //Text::addTextRenderCall(button_component.mButtonText, 0.5f, 0.5f, 48.f, glm::vec3(0.f, 1.f, 0.f));
+                /*float win_width = static_cast<float>(engine.IsFullScreen() ? engine.GetMonitorWidth() : engine.GetMonitorWidth());
+                float win_height = static_cast<float>(engine.IsFullScreen() ? engine.GetMonitorHeight() : engine.GetMonitorHeight());
+                float x = (trans_component.world_position.x + win_width / 2.f) / win_width;
+                float y = (trans_component.world_position.y + win_height / 2.f) / win_height;
+
+                Text::addTextRenderCall(button_component.mButtonText, x, y, 48.f, glm::vec3(1.f, 1.f, 1.f));*/
             }
 
         }

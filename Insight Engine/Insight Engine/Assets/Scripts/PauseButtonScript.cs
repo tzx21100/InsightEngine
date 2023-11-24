@@ -13,7 +13,6 @@ namespace IS
 
         // Pause Menu
         static private int pause_menu_entity;
-        //static private int paused_text;
         static private int resume_entity;
         static private int how_to_play_entity;
         static private int setting_entity;
@@ -35,7 +34,7 @@ namespace IS
         //static Vector2D home_pos = new Vector2D(0,0);
         static Vector2D quit_pos = new Vector2D(0,0);
 
-        // Windows
+        // Windows not in use
         static int win_width;
         static int win_height;
 
@@ -57,8 +56,6 @@ namespace IS
             quit_image = InternalCalls.GetSpriteImage("exit_button_frame.png");
 
             pause_menu_entity = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
-            //paused_text = InternalCalls.CreateEntity("Paused Text");
-
             resume_entity = InternalCalls.CreateEntityButton("Resume Game", resume_image, "ResumeButtonScript", "resume game");
             how_to_play_entity = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "HowToPlayScript", "how to play");
             setting_entity = InternalCalls.CreateEntityButton("Setting", setting_image, "SettingScript", "settings");
