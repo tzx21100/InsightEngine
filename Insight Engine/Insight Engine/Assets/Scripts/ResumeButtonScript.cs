@@ -9,8 +9,7 @@ namespace IS
 
         static public void Update()
         {
-            if (PauseButtonScript.pause_enable)
-            {
+
                 //hovered
                 if (InternalCalls.GetButtonState() == 1)
                 {
@@ -19,8 +18,9 @@ namespace IS
                 if (InternalCalls.GetButtonState() == 2)
                 {
                     //click
+                    PauseButtonScript.pause_enable = false;
                 }
-            }
+            
         }
 
 

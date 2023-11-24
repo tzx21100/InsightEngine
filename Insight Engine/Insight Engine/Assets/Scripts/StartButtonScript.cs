@@ -6,7 +6,7 @@ namespace IS
 
         static public bool first_hovering = false;
         static public bool start_button_click = false;
-        static public float timer = 2f;
+        static public float timer = 0f;
         static SimpleVector2D dark_circle = new SimpleVector2D(10000f, 10000f);
         static SimpleImage scene_circle;
 

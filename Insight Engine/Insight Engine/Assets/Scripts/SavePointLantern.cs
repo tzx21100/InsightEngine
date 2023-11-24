@@ -51,6 +51,7 @@ namespace IS
             {
                 save_point=false;
                 InternalCalls.SetSpriteImage(lantern_off);
+                InternalCalls.SetLightToggleEntity(my_ID, false);
             }
             else{
                 save_point = true;
@@ -62,7 +63,7 @@ namespace IS
                 {
                     return;
                 }
-
+                InternalCalls.SetLightToggleEntity(my_ID, true);
                 InternalCalls.SetSpriteImage(lantern_on);
                 float direction=rand.NextFloat() *360;
                 float ran=rand.NextFloat();

@@ -226,6 +226,11 @@ namespace IS {
         MessageBox(hwnd, message.c_str(), "Message Box", MB_OK | MB_ICONINFORMATION);
     }
 
+    int WindowSystem::GetTitleBarHeight()
+    {
+        return GetSystemMetrics(SM_CYCAPTION);
+    }
+
     void WindowSystem::SetMaximized(bool maximized)
     { 
         mProps.mMaximized = maximized;

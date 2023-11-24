@@ -40,7 +40,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
-        std::cout << str << "," << param << std::endl;
+        IS_DEBUG("{}, {}", str, param);
     }
 
     /**
@@ -392,35 +392,43 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
         InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        sprite_component.layer = 4;
+        sprite_component.layer = UI_LAYER;
         sprite_component.img = ConvertToImage(image);
 
         return static_cast<int>(entity);
     }
 
-    static int CreateEntityButton(MonoString* name, SimpleImage image , MonoString * filename)
+    static int CreateEntityButton(MonoString* name, SimpleImage image, MonoString* filename, MonoString* text)
     {
+        auto& engine = InsightEngine::Instance();
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        Entity entity = InsightEngine::Instance().CreateEntity(str);
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
-        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
-        InsightEngine::Instance().AddComponent<ScriptComponent>(entity, ScriptComponent());
-        auto& script_component = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
+        Entity entity = engine.CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        engine.AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        engine.AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
+        auto& sprite_component = engine.GetComponent<Sprite>(entity);
+        auto& button_component = engine.GetComponent<ButtonComponent>(entity);
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+
         char* c_str2 = mono_string_to_utf8(filename);
         std::string str2(c_str2);
         mono_free(c_str2);
         script_component.mScriptName = str2;
-        sprite_component.layer = 4;
+        sprite_component.layer = UI_LAYER;
         sprite_component.img = ConvertToImage(image);
         //button_component.followTransform();
         button_component.mIdleAlpha = 0.8f;
         button_component.mClickAlpha = 0.9f;
-        button_component.mHoverScale = 1.2f;
+        button_component.mIdleScale = 0.9f;
+        button_component.mHoverScale = 1.05f;
+
+        char* c_str3 = mono_string_to_utf8(text);
+        std::string str3(c_str3);
+        mono_free(c_str3);
+        button_component.mButtonText = str3;
         
 
         return static_cast<int>(entity);
@@ -672,6 +680,71 @@ namespace IS {
         }
     }
 
+    static int GetTitleBarHeight()
+    {
+        return InsightEngine::Instance().GetTitleBarHeight();
+    }
+
+    static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        Text::addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
+    }
+
+    static void RenderText(MonoString* text, float x, float y, float size, Vector3D color)
+    {
+        char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        Text::addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+    }
+
+    static int GetWindowWidth()
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+        return engine.IsFullScreen() ? engine.GetMonitorWidth() : engine.GetWindowWidth();
+    }
+
+    static int GetWindowHeight()
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+        return engine.IsFullScreen() ? engine.GetMonitorHeight() : engine.GetWindowHeight();
+    }
+
+    static SimpleVector2D GetCameraPos() {
+        return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
+    }
+
+    static void AttachLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Light>(entity, Light());
+        auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+        component.mHue = {HueX,HueY,HueZ};
+        component.mIntensity = Intensity;
+        component.mSize = size;
+    }    
+    
+    static void SetLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mHue = { HueX,HueY,HueZ };
+            component.mIntensity = Intensity;
+            component.mSize = size;
+        }
+    }    
+    
+    static void SetLightIntensityEntity(int entity, float Intensity){
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mIntensity = Intensity;
+        }
+    }    
+    static void SetLightToggleEntity(int entity, bool toggle){
+        if (InsightEngine::Instance().HasComponent<Light>(entity)) {
+            auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+            component.mRender = toggle;
+        }
+    }
+
 
 
     /**
@@ -733,6 +806,7 @@ namespace IS {
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
         IS_ADD_INTERNAL_CALL(CameraSetZoom);
+        IS_ADD_INTERNAL_CALL(GetCameraPos);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
@@ -776,7 +850,11 @@ namespace IS {
 
 
 
-
+        //LIght
+        IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
+        IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
+        IS_ADD_INTERNAL_CALL(SetLightIntensityEntity);
+        IS_ADD_INTERNAL_CALL(SetLightToggleEntity);
 
 
 
@@ -800,11 +878,16 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtraImage);
 
 
+        // zk
         IS_ADD_INTERNAL_CALL(GamePause);
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
-
+        IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
+        IS_ADD_INTERNAL_CALL(ButtonRenderText);
+        IS_ADD_INTERNAL_CALL(RenderText);
+        IS_ADD_INTERNAL_CALL(GetWindowWidth);
+        IS_ADD_INTERNAL_CALL(GetWindowHeight);
 
 
         // IStrace

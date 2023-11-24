@@ -568,7 +568,8 @@ namespace IS {
     std::pair<int, int> InsightEngine::GetWindowSize()  { return GetSystem<WindowSystem>("Window")->GetWindowSize(); }
     bool InsightEngine::IsVSync()                       { return GetSystem<WindowSystem>("Window")->IsVSync(); }
     bool InsightEngine::IsFullScreen()                  { return GetSystem<WindowSystem>("Window")->IsFullScreen(); }
-    bool InsightEngine::IsMinimized()                     { return GetSystem<WindowSystem>("Window")->IsMinimized(); }
+    bool InsightEngine::IsMinimized()                   { return GetSystem<WindowSystem>("Window")->IsMinimized(); }
+    int InsightEngine::GetTitleBarHeight()              { return GetSystem<WindowSystem>("Window")->GetTitleBarHeight(); }
     // Setters
     void InsightEngine::EnableVSync(bool enabled)       { GetSystem<WindowSystem>("Window")->EnableVsync(enabled); }
 

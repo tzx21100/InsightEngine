@@ -14,6 +14,14 @@ namespace IS
         public static float max(float x, float y) { 
             if(x > y) return x; return y;
         }
+
+        public static float clamp(float val,float min, float max) {
+            val = CustomMath.max(val, min);
+            val = CustomMath.min(val, max);
+            return val; 
+            
+        }
+
         // Constants
         public const float PI = 3.14159265358979323846f;
 
@@ -133,6 +141,14 @@ namespace IS
                 return -value;
             else
                 return value;
+        }        
+        
+        public static float Normalize(float value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
         }
 
         public static float AngleBetweenPoints(Vector2D point1, Vector2D point2)
