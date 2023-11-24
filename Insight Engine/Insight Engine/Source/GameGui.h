@@ -208,7 +208,7 @@ namespace IS {
                 }
                 trans_component.setScaling(button_component.mSize * button_size_scale);
 
-                Text::addTextRenderCall(button_component.mButtonText, 0.5f, 0.5f, 48.f, glm::vec3(0.f, 1.f, 0.f));
+                //Text::addTextRenderCall(button_component.mButtonText, 0.5f, 0.5f, 48.f, glm::vec3(0.f, 1.f, 0.f));
             }
 
         }

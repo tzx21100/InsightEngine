@@ -40,7 +40,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
-        std::cout << str << "," << param << std::endl;
+        IS_DEBUG("{}, {}", str, param);
     }
 
     /**
@@ -392,13 +392,13 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
         InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        sprite_component.layer = 4;
+        sprite_component.layer = UI_LAYER;
         sprite_component.img = ConvertToImage(image);
 
         return static_cast<int>(entity);
     }
 
-    static int CreateEntityButton(MonoString* name, SimpleImage image , MonoString * filename)
+    static int CreateEntityButton(MonoString* name, SimpleImage image, MonoString* filename, MonoString* text)
     {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
@@ -415,12 +415,18 @@ namespace IS {
         std::string str2(c_str2);
         mono_free(c_str2);
         script_component.mScriptName = str2;
-        sprite_component.layer = 4;
+        sprite_component.layer = UI_LAYER;
         sprite_component.img = ConvertToImage(image);
         //button_component.followTransform();
         button_component.mIdleAlpha = 0.8f;
         button_component.mClickAlpha = 0.9f;
-        button_component.mHoverScale = 1.2f;
+        button_component.mIdleScale = 0.9f;
+        button_component.mHoverScale = 1.1f;
+
+        char* c_str3 = mono_string_to_utf8(text);
+        std::string str3(c_str3);
+        mono_free(c_str3);
+        button_component.mButtonText = str3;
         
 
         return static_cast<int>(entity);
@@ -672,6 +678,33 @@ namespace IS {
         }
     }
 
+    static int GetTitleBarHeight()
+    {
+        return InsightEngine::Instance().GetTitleBarHeight();
+    }
+
+    static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        Text::addTextRenderCall(button_component.mButtonText, x, y, size, { color.x, color.y, color.z });
+    }
+
+    static int GetWindowWidth()
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+        return engine.IsFullScreen() ? engine.GetMonitorWidth() : engine.GetWindowWidth();
+    }
+
+    static int GetWindowHeight()
+    {
+        InsightEngine& engine = InsightEngine::Instance();
+        return engine.IsFullScreen() ? engine.GetMonitorHeight() : engine.GetWindowHeight();
+    }
+
+    static SimpleVector2D GetCameraPos() {
+        return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
+    }
+
 
 
     /**
@@ -733,6 +766,7 @@ namespace IS {
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
         IS_ADD_INTERNAL_CALL(CameraSetZoom);
+        IS_ADD_INTERNAL_CALL(GetCameraPos);
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
@@ -800,11 +834,15 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtraImage);
 
 
+        // zk
         IS_ADD_INTERNAL_CALL(GamePause);
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
-
+        IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
+        IS_ADD_INTERNAL_CALL(ButtonRenderText);
+        IS_ADD_INTERNAL_CALL(GetWindowWidth);
+        IS_ADD_INTERNAL_CALL(GetWindowHeight);
 
 
         // IStrace

@@ -193,8 +193,8 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Layer");
 
                 ImGui::TableNextColumn();
-                Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(sprite.layer);
-                EditorUtils::RenderComboBoxEnum<Sprite::DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
+                DrawLayer layer = static_cast<DrawLayer>(sprite.layer);
+                EditorUtils::RenderComboBoxEnum<DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
                 sprite.layer = layer;
 
                 EditorUtils::RenderTableLabel("Color");

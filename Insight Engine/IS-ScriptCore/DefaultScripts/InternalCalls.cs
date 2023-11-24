@@ -113,7 +113,10 @@ namespace IS
         internal extern static void CreateAnimationFromSpriteEntity(int row, int columns, float animation_time,int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AttachCamera(float x_offset,float y_offset);
+        internal extern static void AttachCamera(float x_offset,float y_offset);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleVector2D GetCameraPos();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name);
@@ -239,7 +242,7 @@ namespace IS
         internal extern static void GameSpawnParticleExtraImage(float x, float y, float direction, float sizeX, float sizeY, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, string image_name); 
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int CreateEntityButton(string name, SimpleImage image, string filename);
+        internal extern static int CreateEntityButton(string name, SimpleImage image, string filename, string text);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityUI(string name, SimpleImage image);
@@ -249,5 +252,17 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GamePause(bool pause);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetTitleBarHeight();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int ButtonRenderText(int entity, float x, float y, float size, (float, float, float) color);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetWindowWidth();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetWindowHeight();
     }
 }

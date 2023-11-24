@@ -210,6 +210,8 @@ namespace IS {
 
         bool IsMinimized();
 
+        int GetTitleBarHeight();
+
 
         //abstracted function to make game script
         void CreateGameScript(const std::string& ScriptName);

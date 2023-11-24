@@ -232,6 +232,8 @@ namespace IS {
 
         void ShowMessageBox(std::string const& message);
 
+        int GetTitleBarHeight();
+
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.
