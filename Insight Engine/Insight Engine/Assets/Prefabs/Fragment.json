@@ -60,11 +60,30 @@
 		"LightSize" : 1345.0
 	},
 	"Name" : "Fragment",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
 	"Script" : 
 	{
 		"ScriptName" : "FragmentScript"
 	},
-	"Signature" : "00000000000000000001010000100011",
+	"Signature" : "00000000000000000001010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -94,8 +113,8 @@
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
 				"frame_index_x" : 1.0,
-				"frame_index_y" : 2.0,
-				"frame_timer" : 0.074584513902664185,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.033851303160190582,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
