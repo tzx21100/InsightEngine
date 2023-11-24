@@ -83,6 +83,8 @@ namespace IS {
                     }
                 }
             }
+
+            IS_CORE_DEBUG("UNDO STACK: {}", mUndoStack.size());
         }
 
         /*!
@@ -100,6 +102,8 @@ namespace IS {
          * \param changed True if the most recent command should not be mergeable, false otherwise.
          */
         static void SetNoMergeMostRecent(bool changed);
+
+        static void Clear();
 
     private:
         static constexpr size_t MAX_COMMANDS = 50; ///< The maximum number of commands to retain in the history.

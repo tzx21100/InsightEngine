@@ -34,7 +34,6 @@ namespace IS {
         glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(native_window, KeyCallback);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
-        glfwSetCursorPosCallback(native_window, MousePositionCallback);
 
         // Window size callback
         glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
@@ -211,6 +210,7 @@ namespace IS {
         if (action == GLFW_PRESS) {
             inputManager->pressed_keys.insert(key);
             inputManager->released_keys.erase(key);
+            inputManager->key_pressed_time[key] = glfwGetTime();
         }
         if (action == GLFW_RELEASE) {
             inputManager->pressed_keys.erase(key);
@@ -231,13 +231,6 @@ namespace IS {
             inputManager->released_mouse_buttons.insert(button);
             inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
         }
-    }
-
-    void InputManager::MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
-    {
-        InputManager* input = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
-        input->current_mouse_x = xpos;
-        input->current_mouse_y = ypos;
     }
 
     void InputManager::FileDropCallback(GLFWwindow* window, int count, const char** paths)

@@ -17,6 +17,7 @@
 #include "Animation.h"
 
 namespace IS {
+
     void Animation::initAnimation(int rows, int columns, float animation_time) {
         // init animation object with values
         x_frames = columns;
@@ -29,6 +30,11 @@ namespace IS {
     void Animation::updateAnimation(float deltaTime) {
         // Update function to advance the animation
         frame_timer += deltaTime;
+        frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
+        time_per_frame = animation_duration / (x_frames * y_frames);
+
+        if (time_per_frame == 0)
+            return;
 
         while (frame_timer >= time_per_frame) {
             frame_timer -= time_per_frame;
@@ -36,13 +42,13 @@ namespace IS {
             ++frame_index.x; 
 
             // after last column
-            if (frame_index.x == x_frames) { 
+            if (frame_index.x >= x_frames) { 
                 // return to first 
                 frame_index.x = 0; 
                 // go to next row
                 ++frame_index.y; 
                 // after last frame, reset to first
-                if (frame_index.y == y_frames) frame_index.y = 0; 
+                if (frame_index.y >= y_frames) frame_index.y = 0; 
             }
         }
     }

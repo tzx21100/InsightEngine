@@ -458,9 +458,8 @@ namespace IS {
 
     //creating an entity from prefab
     Entity InsightEngine::LoadFromPrefab(Prefab prefab ,Entity entity) {
-        LoadEntityFromJsonPrefab("Assets/Prefabs/"+prefab.mName + ".json",entity);
+        LoadEntityFromJsonPrefab("Assets/Prefabs/"+ prefab.mName + ".json", entity);
         return entity;
-
     }
 
     // Helper function for signature and string this is only to help load prefabs from files.

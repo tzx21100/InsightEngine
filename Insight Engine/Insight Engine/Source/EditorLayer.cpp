@@ -95,8 +95,14 @@ namespace IS {
         const bool F11_PRESSED  = input->IsKeyPressed(GLFW_KEY_F11);
 
         // Edit
-        const bool Z_PRESSED    = input->IsKeyPressed(GLFW_KEY_Z);
-        const bool Y_PRESSED    = input->IsKeyPressed(GLFW_KEY_Y);
+        const double HELD_THRESHOLD     = 0.5;
+        const double INTERVAL           = 0.1;
+        const double Z_HELD_DURATION    = input->GetHeldDuration(GLFW_KEY_Z);
+        const double Y_HELD_DURATION    = input->GetHeldDuration(GLFW_KEY_Y);
+        const bool Z_PRESSED            = input->IsKeyPressed(GLFW_KEY_Z);
+        const bool Y_PRESSED            = input->IsKeyPressed(GLFW_KEY_Y);
+        const bool Z_HELD               = Z_HELD_DURATION >= HELD_THRESHOLD && std::fmod(Z_HELD_DURATION, INTERVAL) < 0.01;
+        const bool Y_HELD               = Y_HELD_DURATION >= HELD_THRESHOLD && std::fmod(Y_HELD_DURATION, INTERVAL) < 0.01;
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
@@ -104,9 +110,12 @@ namespace IS {
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
-        if (CTRL_HELD && Z_PRESSED) { CommandHistory::Undo(); }      // Ctrl + Z
-        if (CTRL_HELD && Y_PRESSED) { CommandHistory::Redo(); }      // Ctrl + Y
 
+        if (CTRL_HELD)
+        {
+            if (Z_HELD || Z_PRESSED) { CommandHistory::Undo(); }     // Ctrl + Z
+            if (Y_HELD || Y_PRESSED) { CommandHistory::Redo(); }     // Ctrl + Y
+        }
 
         // Update panels
         for (auto& panel : mPanels)
@@ -457,7 +466,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_MOVE "  Transform"))
             {
-                engine.AddComponent<Transform>(entity, Transform());
+                CommandHistory::AddCommand<AddComponentCommand<Transform>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -467,7 +476,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_IMAGE "  Sprite"))
             {
-                engine.AddComponent<Sprite>(entity, Sprite());
+                CommandHistory::AddCommand<AddComponentCommand<Sprite>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -477,7 +486,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_PERSON_STANDING "  Rigidbody"))
             {
-                engine.AddComponent<RigidBody>(entity, RigidBody());
+                CommandHistory::AddCommand<AddComponentCommand<RigidBody>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -487,7 +496,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_FLIP_HORIZONTAL_2 "  Collider"))
             {
-                engine.AddComponent<Collider>(entity, Collider());
+                CommandHistory::AddCommand<AddComponentCommand<Collider>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -513,7 +522,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_EAR "  Audio Listener"))
             {
-                engine.AddComponent<AudioListener>(entity, AudioListener());
+                CommandHistory::AddCommand<AddComponentCommand<AudioListener>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -523,7 +532,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_SPEAKER "  Audio Emitter"))
             {
-                engine.AddComponent<AudioEmitter>(entity, AudioEmitter());
+                CommandHistory::AddCommand<AddComponentCommand<AudioEmitter>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -533,7 +542,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_SUN "  Light"))
             {
-                engine.AddComponent<Light>(entity, Light());
+                CommandHistory::AddCommand<AddComponentCommand<Light>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -543,7 +552,7 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_SQUARE "  Button"))
             {
-                engine.AddComponent<ButtonComponent>(entity, ButtonComponent());
+                CommandHistory::AddCommand<AddComponentCommand<ButtonComponent>>(entity);
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -681,4 +690,5 @@ namespace IS {
     }
 
 } // end namespace IS
+
 #endif

@@ -22,8 +22,26 @@
 
 namespace IS {
 
-    const std::string DestroyEntityCommand::mTempDirectory = "Temp";
+    const std::string ICommand::mTempDirectory = "Temp";
     int DestroyEntityCommand::mDestroyedCount = 0;
+    int PrefabCommand::mPrefabCount = 0;
+    int DuplicateCommand::mDupeCount = 0;
+
+    void ICommand::ValidateTempDirectory()
+    {
+        if (!std::filesystem::exists(mTempDirectory))
+        {
+            std::filesystem::create_directory(mTempDirectory);
+        }
+    }
+
+    void ICommand::ClearTempDirectory()
+    {
+        if (std::filesystem::exists(mTempDirectory))
+        {
+            std::filesystem::remove_all(mTempDirectory);
+        }
+    }
 
     CreateEntityCommand::CreateEntityCommand(std::string const& entity_name) : mEntityName(entity_name)
     {
@@ -32,12 +50,18 @@ namespace IS {
 
     void CreateEntityCommand::Execute()
     {
-        mEntity = InsightEngine::Instance().CreateEntity(mEntityName);
+        auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
+        mEntity = engine.CreateEntity(mEntityName);
+        editor_layer->SetSelectedEntity(std::make_shared<Entity>(mEntity));
     }
 
     void CreateEntityCommand::Undo()
-    {        
-        InsightEngine::Instance().DeleteEntity(mEntity);
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->ResetEntitySelection();
+        engine.DeleteEntity(mEntity);
     }
 
     DestroyEntityCommand::DestroyEntityCommand(Entity entity) : mEntity(entity)
@@ -48,15 +72,12 @@ namespace IS {
 
     void DestroyEntityCommand::Execute()
     {
-        if (!std::filesystem::exists(mTempDirectory))
-        {
-            std::filesystem::create_directory(mTempDirectory);
-        }
+        ICommand::ValidateTempDirectory();
 
         auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->ResetEntitySelection();
         engine.SaveEntityToJson(mEntity, mFileName);
-        IS_CORE_DEBUG("Saved {}", mFileName);
-
         engine.DeleteEntity(mEntity);
         mDestroyedCount++;
     }
@@ -64,18 +85,131 @@ namespace IS {
     void DestroyEntityCommand::Undo()
     {
         auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
         Entity entity = engine.CreateEntity("Entity");
-        mEntity = InsightEngine::Instance().LoadEntityFromJson(mFileName, entity);
+        mEntity = engine.LoadEntityFromJson(mFileName, entity);
+        editor_layer->SetSelectedEntity(std::make_shared<Entity>(mEntity));
         std::filesystem::remove(mFileName);
         mDestroyedCount--;
     }
 
-    void DestroyEntityCommand::ClearTempDirectory()
+    PrefabCommand::PrefabCommand(std::string const& prefab_name) : mPrefabName(prefab_name), mFirstTime(true)
     {
-        if (std::filesystem::exists(mTempDirectory))
+        mCanMerge = false;
+        mFileName = mTempDirectory + "\\Prefab Entity " + std::to_string(mPrefabCount) + ".json";
+    }
+
+    void PrefabCommand::Execute()
+    {
+        auto& engine = InsightEngine::Instance();
+
+        // Load from prefab and save to JSON
+        if (mFirstTime)
         {
-            std::filesystem::remove_all(mTempDirectory);
+            auto const asset = engine.GetSystem<AssetManager>("Asset");
+            Entity prefab = engine.CreateEntity("Prefab");
+            mEntity = engine.LoadFromPrefab(asset->GetPrefab(mPrefabName), prefab);
+            if (engine.HasComponent<Transform>(prefab))
+            {
+                Transform& transform = engine.GetComponent<Transform>(prefab);
+                transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
+                                             static_cast<float>(Transform::GetMousePosition().second) };
+            }
+            ValidateTempDirectory();
+            engine.SaveEntityToJson(mEntity, mFileName);
         }
+        // Load from JSON
+        else
+        {
+            Entity json = engine.CreateEntity("JSON");
+            mEntity = engine.LoadEntityFromJson(mFileName, json);
+        }
+
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->SetSelectedEntity(std::make_shared<Entity>(mEntity));
+        mFirstTime = false;
+        mPrefabCount++;
+    }
+
+    void PrefabCommand::Undo()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->ResetEntitySelection();
+        engine.DeleteEntity(mEntity);
+        mPrefabCount--;
+    }
+
+    TextureCommand::TextureCommand(std::string const& filename) : PrefabCommand(filename) {}
+
+    void TextureCommand::Execute()
+    {
+        auto& engine = InsightEngine::Instance();
+        if (std::string stem = std::filesystem::path(mPrefabName).stem().string(); mFirstTime)
+        {                        
+            mEntity = engine.CreateEntity(stem);
+            engine.AddComponent<Sprite>(mEntity, Sprite());
+            engine.AddComponent<Transform>(mEntity, Transform());
+            auto& sprite = engine.GetComponent<Sprite>(mEntity);
+            auto& transform = engine.GetComponent<Transform>(mEntity);
+            auto const asset = engine.GetSystem<AssetManager>("Asset");
+            sprite.img = *asset->GetImage(mPrefabName);
+
+            transform.scaling = { static_cast<float>(sprite.img.width), static_cast<float>(sprite.img.height) };
+            transform.world_position = { static_cast<float>(Transform::GetMousePosition().first),
+                                         static_cast<float>(Transform::GetMousePosition().second) };
+
+            ValidateTempDirectory();
+            engine.SaveEntityToJson(mEntity, mFileName);
+        }
+        else
+        {
+            Entity entity = engine.CreateEntity(stem);
+            mEntity = engine.LoadEntityFromJson(mFileName, entity);
+        }
+
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->SetSelectedEntity(std::make_shared<Entity>(mEntity));
+        mFirstTime = false;
+        mPrefabCount++;
+    }
+
+    DuplicateCommand::DuplicateCommand(Entity original) : mOriginal(original), mFirstTime(true)
+    {
+        mCanMerge = false;
+        mFileName = mTempDirectory + "\\Duplicated Entity " + std::to_string(mDupeCount) + ".json";
+    }
+
+    void DuplicateCommand::Execute()
+    {
+        auto& engine = InsightEngine::Instance();
+
+        if (mFirstTime)
+        {
+            mDupe = engine.CopyEntity(mOriginal);
+
+            ValidateTempDirectory();
+            engine.SaveEntityToJson(mDupe, mFileName);
+        }
+        else
+        {
+            Entity dupe = engine.CreateEntity("Dupe");
+            mDupe = engine.LoadEntityFromJson(mFileName, dupe);
+        }
+
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->SetSelectedEntity(std::make_shared<Entity>(mDupe));
+
+        mFirstTime = false;
+        mDupeCount++;
+    }
+
+    void DuplicateCommand::Undo()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const editor_layer = engine.GetEditorLayer();
+        editor_layer->ResetEntitySelection();
+        engine.DeleteEntity(mDupe);
     }
 
 } // end namespace IS
