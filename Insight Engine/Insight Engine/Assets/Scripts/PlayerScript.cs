@@ -457,7 +457,7 @@ namespace IS
             if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
                 //if is grounded
             if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != PLAYER_ID && !InternalCalls.CollidingObjectTypeIsIgnore(entityA)
-                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID && !InternalCalls.CollidingObjectIsSpikes(entityA))
+                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
             {
 
 
