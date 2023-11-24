@@ -164,9 +164,9 @@ namespace IS
             InternalCalls.RenderText("paused", 0.495f, 0.7f, 30f, (1f, 1f, 1f));
             InternalCalls.ButtonRenderText(resume_entity, 0.495f, 0.595f, 19f, (1f, 1f, 1f));
             InternalCalls.ButtonRenderText(how_to_play_entity, 0.495f, 0.475f, 14f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(setting_entity, 0.495f, 0.37f, 14f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(setting_entity, 0.495f, 0.365f, 14f, (1f, 1f, 1f));
             //InternalCalls.ButtonRenderText(home_entity, 0.49f, 0.4f, 10f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(quit_entity, 0.495f, 0.28f, 9f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(quit_entity, 0.495f, 0.27f, 9f, (1f, 1f, 1f));
         }
 
         static public void MoveAwayPauseMenuPosition()
