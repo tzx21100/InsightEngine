@@ -355,9 +355,9 @@ namespace IS {
         //std::string text = "World Mouse X: " + std::to_string(hi.x) + " Y: " + std::to_string(hi.y);
         //Times_New_Roman_font.renderText(text, 0.5f, 0.5f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
-        auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        Image* img = system->GetImage("running_anim 4R3C.png");
-        walking_ani.drawNonEntityAnimation(delta_time, { 0.f, 0.f }, 30.f, { 200.f, 200.f }, *img, 1.f, 4);
+        //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        //Image* img = system->GetImage("running_anim 4R3C.png");
+        //walking_ani.drawNonEntityAnimation(delta_time, { 0.f, 0.f }, 30.f, { 200.f, 200.f }, *img, 1.f, 4);
 
         // quads will be drawn first
         Sprite::draw_instanced_3D_quads();

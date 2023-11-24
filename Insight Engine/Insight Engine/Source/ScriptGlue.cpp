@@ -495,7 +495,7 @@ namespace IS {
         return body_component.mBodyType == BodyType::Static ? 1 : 0;
     }    
     
-    static bool CollidingObjectTypeIsSpikes(int entity) {
+    static bool CollidingObjectIsSpikes(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
         return body_component.mBodyType == BodyType::Spikes ? 1 : 0;
     }        
@@ -694,7 +694,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetCollidingEntity);
         IS_ADD_INTERNAL_CALL(GetCollidingEntityCheck);
         IS_ADD_INTERNAL_CALL(CollidingObjectIsStatic);
-        IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsSpikes);
+        IS_ADD_INTERNAL_CALL(CollidingObjectIsSpikes);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsWall);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);

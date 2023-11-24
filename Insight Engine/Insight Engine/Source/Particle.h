@@ -27,6 +27,7 @@ namespace IS {
 		pt_square = 0,
 		pt_circle = 1,
 		pt_texture = 2,
+		pt_anim=3
 
 	};
 

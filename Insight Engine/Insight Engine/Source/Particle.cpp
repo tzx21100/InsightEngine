@@ -14,7 +14,7 @@ namespace IS {
         Subscribe(MessageType::DebugInfo);
 
 
-        run_anim.initAnimation(4, 3, 2.f);
+        run_anim.initAnimation(1, 9, 1.f);
     }
 
     void ParticleSystem::Update(float deltaTime) {
@@ -56,10 +56,14 @@ namespace IS {
 
             case pt_texture:
 
-                auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-                Image* img = system->GetImage("running_anim 4R3C.png");
-
                 Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+
+                break;
+
+            case pt_anim:
+
+                auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                Image* img = system->GetImage(mParticleList[id].mImageName);
                 run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
                 break;
                 

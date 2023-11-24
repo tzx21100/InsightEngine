@@ -9,6 +9,19 @@ namespace IS
 {
     public class PlayerScript
     {
+
+        static private float respawn_timer = 0.6f;
+        static private float respawn_timer_set = 0.6f;
+        static public bool isDead = false;
+        static public bool initialDeath = false;
+
+        static private float camera_shake_duration = 0.2f;
+        static private float camera_shake_duration_set = 0.2f;
+        static private float camera_shake_timer = 0.02f;
+        static private float camera_shake_set = 0.02f;
+        static private Vector2D camera_shake_dir = new Vector2D(0,0);
+        static private float camera_shake_angle = 0f;
+
         //Powerup triggers
         static public bool Reward_DoubleJump = true;
         static public bool Reward_Dash = true;
@@ -45,6 +58,7 @@ namespace IS
         static SimpleImage player_land;
         static SimpleImage player_jump;
         static SimpleImage player_jump_vfx;
+        static SimpleImage player_death_vfx;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -54,6 +68,7 @@ namespace IS
         static private int land_entity;
         static private int jump_entity;
         static private bool land_exists;
+        static private int death_entity;
 
         static public int PLAYER_ID;
 
@@ -147,6 +162,7 @@ namespace IS
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
             player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             player_jump_vfx = InternalCalls.GetSpriteImage("woosh_vfx 3R4C.png");
+            player_death_vfx = InternalCalls.GetSpriteImage("Death Vfx R1 C11.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -169,7 +185,10 @@ namespace IS
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
             
             jump_entity = InternalCalls.CreateEntityVFX("jump", player_jump_vfx);
-            InternalCalls.CreateAnimationFromSpriteEntity(3, 4, 0.3f, jump_entity);
+            InternalCalls.CreateAnimationFromSpriteEntity(3, 4, 0.3f, jump_entity);            
+            
+            death_entity = InternalCalls.CreateEntityVFX("Death", player_death_vfx);
+            InternalCalls.CreateAnimationFromSpriteEntity(1, 11, 0.9f, death_entity);
 
             InternalCalls.TransformSetScale(200f, 180f);
 
@@ -177,14 +196,99 @@ namespace IS
 
         static public void Update()
         {
+
+
+
             if (GameManager.isGamePaused == true) {
                 return;
             }
 
+            //animation sets
+            if (InternalCalls.GetCurrentAnimationEntity(land_entity) >= 13)
+            {
+                InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, land_entity);
+            }
+
+            if (InternalCalls.GetCurrentAnimationEntity(jump_entity) >= 11)
+            {
+                InternalCalls.TransformSetScaleEntity(0, 0, jump_entity);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, jump_entity);
+            }
+
+            if (InternalCalls.GetCurrentAnimationEntity(death_entity) >= 10)
+            {
+                InternalCalls.TransformSetScaleEntity(0, 0, death_entity);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, death_entity);
+            }
+
+            if (isDead)
+            {
+
+                if (initialDeath)
+                {
+                    InternalCalls.SetSpriteImage(player_transparent);
+                    InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y,death_entity);
+                    InternalCalls.ResetSpriteAnimationFrameEntity(death_entity);
+                    InternalCalls.TransformSetPosition(respawn_x, respawn_y);
+                    InternalCalls.TransformSetScaleEntity(300 , 300, death_entity);
+
+                    for (int i = 0; i < 36; i++) {
+                        InternalCalls.GameSpawnParticleExtra(
+                            player_pos.x,player_pos.y,i*10,8,-2,0.9f,-0.1f,1f,300f,"Particle Test"
+                         ); 
+                    }
+
+
+                    initialDeath = false;
+                }
+                else {
+
+                    if (camera_shake_duration > 0)
+                    {
+                        camera_shake_duration -= InternalCalls.GetDeltaTime();
+                        
+                        camera_shake_timer -= InternalCalls.GetDeltaTime();
+
+                        if (camera_shake_timer <= 0)
+                        {
+                            camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
+                            camera_shake_timer = camera_shake_set;
+                            camera_shake_angle += CustomMath.PI / 4;
+                        }
+                        InternalCalls.AttachCamera(camera_pos.x + 20 * camera_shake_dir.x, camera_pos.y + 20 * camera_shake_dir.y);
+                    }
+
+                    respawn_timer -= InternalCalls.GetDeltaTime();
+                    if (respawn_timer <= 0)
+                    {
+                        camera_shake_duration = camera_shake_duration_set;
+                        camera_shake_angle = 0;
+                        
+                        respawn_timer = respawn_timer_set;
+                        isDead = false;
+                        InternalCalls.CameraSetZoom(1.5f);
+
+                    }
+
+
+
+                }
+
+
+
+                return;
+
+            }
+
+            initialDeath = true;
+
+
             if (Health <= 0)
             {
-                InternalCalls.TransformSetPosition(respawn_x, respawn_y);
+                
                 Health = Max_Health;
+                isDead = true;
             }
 
             //Attach Camera
@@ -353,7 +457,7 @@ namespace IS
             if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
                 //if is grounded
             if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != PLAYER_ID && !InternalCalls.CollidingObjectTypeIsIgnore(entityA)
-                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
+                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID && !InternalCalls.CollidingObjectIsSpikes(entityA))
             {
 
 
@@ -369,15 +473,7 @@ namespace IS
                 isGrounded = false;
             }
 
-            if (InternalCalls.GetCurrentAnimationEntity(land_entity) >= 13) {
-                InternalCalls.TransformSetScaleEntity(0,0,land_entity);
-                InternalCalls.TransformSetPositionEntity(-999,-9999,land_entity);
-            }            
-            
-            if (InternalCalls.GetCurrentAnimationEntity(jump_entity) >= 11) {
-                InternalCalls.TransformSetScaleEntity(0,0,jump_entity);
-                InternalCalls.TransformSetPositionEntity(-999,-9999,jump_entity);
-            }
+
 
             if (isGrounded)
             {
