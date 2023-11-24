@@ -307,7 +307,10 @@ namespace IS
         internal extern static float MathAtan2(float x,float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static float MathSqrt(float val);
+        internal extern static float MathSqrt(float val);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GlitchEnable(bool set);
 
 
     }

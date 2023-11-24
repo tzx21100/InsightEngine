@@ -786,6 +786,10 @@ namespace IS {
         return sqrt(val);
     }
 
+    static void GlitchEnable(bool set) {
+
+        ISGraphics::mGlitched = set;
+    }
 
 
 
@@ -909,6 +913,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
         IS_ADD_INTERNAL_CALL(DrawSquare);
+        IS_ADD_INTERNAL_CALL(GlitchEnable);
 
         //Scene Manager
         IS_ADD_INTERNAL_CALL(LoadScene);

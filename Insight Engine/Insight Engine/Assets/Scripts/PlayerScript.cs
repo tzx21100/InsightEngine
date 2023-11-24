@@ -112,7 +112,7 @@ namespace IS
         static private Vector2D apply_force= new Vector2D(0,0);//dash dir
 
 
-        static private int entityA;
+        static private int entity_feet;
 
         //movement
         static private float acceleration=0f;
@@ -157,8 +157,8 @@ namespace IS
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
 
-            player_walk = InternalCalls.GetSpriteImage("running_anim 4R3C.png");
-            player_idle = InternalCalls.GetSpriteImage("idle_anim 4R3C.png");
+            player_walk = InternalCalls.GetSpriteImage("running_anim 3R4C.png");
+            player_idle = InternalCalls.GetSpriteImage("idle_anim 3R4C.png");
             player_jump = InternalCalls.GetSpriteImage("jump_anim 4R3C.png");
             player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
             player_climb1 = InternalCalls.GetSpriteImage("WallClimb_0001.png");
@@ -180,15 +180,16 @@ namespace IS
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(4,3,1f);
+            InternalCalls.CreateAnimationFromSprite(3,4,1f);
+            InternalCalls.CreateAnimationFromSprite(3,4,1f);
             InternalCalls.CreateAnimationFromSprite(4,3,1f);
             
 
-            entityA = InternalCalls.CreateEntity("FeetCollider");
+            entity_feet = InternalCalls.CreateEntity("FeetCollider");
             entityWall = InternalCalls.CreateEntity("WallCollider");
             width = InternalCalls.GetTransformScaling().x /3f;
             height = InternalCalls.GetTransformScaling().y;
-            InternalCalls.AddCollider(entityA);
+            InternalCalls.AddCollider(entity_feet);
             InternalCalls.AddCollider(entityWall);
 
 
@@ -322,7 +323,7 @@ namespace IS
             //Attach Camera
             
 
-           target_pos.x = player_pos.x + hori_movement* CustomMath.min(350f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
+           target_pos.x = player_pos.x + hori_movement* CustomMath.min(200f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
            target_pos.y= player_pos.y  + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y/20f);
 
             float interpolate_speed = 4f;
@@ -483,9 +484,11 @@ namespace IS
 
             //jumping bool
             if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
-                //if is grounded
-            if (InternalCalls.EntityCheckCollide(entityA) && isClimbing==false && InternalCalls.GetCollidingEntity(entityA) != PLAYER_ID && !InternalCalls.CollidingObjectTypeIsIgnore(entityA)
-                && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
+            //if is grounded
+            if (InternalCalls.EntityCheckCollide(entity_feet) && isClimbing == false && InternalCalls.GetCollidingEntity(entity_feet) != PLAYER_ID 
+                && !InternalCalls.CollidingObjectTypeIsIgnore(InternalCalls.GetCollidingEntity(entity_feet))
+                && InternalCalls.GetCollidingEntity(entity_feet) != SAVE_POINT_ID && !InternalCalls.CollidingObjectIsSpikes(InternalCalls.GetCollidingEntity(entity_feet))
+                 && !InternalCalls.CollidingObjectTypeIsGhost(InternalCalls.GetCollidingEntity(entity_feet)))
             {
 
                 isGrounded = true;
@@ -510,7 +513,7 @@ namespace IS
                     InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) *f_angle.x*-1f), f_angle.y  * move_speed *hori_movement);
 
                     // Set the rotation to be the same as the detected one
-                    float collided_angle = InternalCalls.GetCollidedObjectAngle(entityA);
+                    float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
                     if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                     {
                         InternalCalls.TransformSetRotation(collided_angle, 0);
@@ -549,6 +552,7 @@ namespace IS
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
                 InternalCalls.SetSpriteImage(player_jump);
+                InternalCalls.SetSpriteAnimationIndex(2);
 
                 if (jump_amount > 0 && Reward_DoubleJump)
                 {
@@ -722,9 +726,9 @@ namespace IS
             );
 
             // Set the floor checker's position
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityA);
-            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityA);
-            InternalCalls.TransformSetScaleEntity(width/2f, 2f, entityA);
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_feet);
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entity_feet);
+            InternalCalls.TransformSetScaleEntity(width/2f, 2f, entity_feet);
 
         }
 
