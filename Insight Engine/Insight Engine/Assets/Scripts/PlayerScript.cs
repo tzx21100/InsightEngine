@@ -23,9 +23,9 @@ namespace IS
         static private float camera_shake_angle = 0f;
 
         //Powerup triggers
-        static public bool Reward_DoubleJump = true;
-        static public bool Reward_Dash = true;
-        static public bool Reward_WallClimb = true;
+        static public bool Reward_DoubleJump = false;
+        static public bool Reward_Dash = false;
+        static public bool Reward_WallClimb = false;
 
         static public int Health = 3;
         static public int Max_Health = 3;
@@ -150,6 +150,9 @@ namespace IS
 
         static public void Init()
         {
+            Reward_DoubleJump = false;
+            Reward_Dash = false;
+            Reward_WallClimb = false;
 
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
