@@ -51,6 +51,8 @@ namespace IS {
 
         static void compileAllShaders();
 
+        static void setMainShader(Shader const& shader);
+
         /*!
          * \brief Compiles a shader from a provided source string.
          *

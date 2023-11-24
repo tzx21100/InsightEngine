@@ -65,6 +65,7 @@ namespace IS {
         int mButtonState{};
         std::string ImageName;
         Vector2D mSize;
+        float mSizeScale;
         float mIdleAlpha{ 1.f };
         float mHoverAlpha{ 1.f };
         float mClickAlpha{ 1.f };
@@ -89,6 +90,7 @@ namespace IS {
            button_size["X"] = mSize.x;
            button_size["Y"] = mSize.y;
            button_data["ButtonSize"] = button_size;
+           button_data["ButtonTextScale"] = mSizeScale;
            button_data["ButtonIdleAlpha"] = mIdleAlpha;
            button_data["ButtonHoverAlpha"] = mHoverAlpha;
            button_data["ButtonClickAlpha"] = mClickAlpha;
@@ -98,12 +100,12 @@ namespace IS {
         }
 
         void Deserialize(Json::Value data) {
-            
             mButtonText = data["ButtonText"].asString();
             mButtonType = data["ButtonType"].asInt();
             mButtonState = data["ButtonState"].asInt();
             ImageName = data["ButtonImageName"].asString();
             mSize = { data["ButtonSize"]["X"].asFloat(), data["ButtonSize"]["Y"].asFloat() };
+            mSizeScale = data["ButtonSizeScale"].asFloat();
             mIdleAlpha = data["ButtonIdleAlpha"].asFloat();
             mHoverAlpha = data["ButtonHoverAlpha"].asFloat();
             mClickAlpha = data["ButtonClickAlpha"].asFloat();
@@ -189,12 +191,12 @@ namespace IS {
                     button_component.followTransform(trans_component);
                     button_component.mTransformUpdate = true;
                 }
-                float button_size_scale = button_component.mIdleScale; // Idle button size
+                button_component.mSizeScale = button_component.mIdleScale; // Idle button size
                 // mouse is hovered over button
                 if (GameButtonContainsMouse(mouse_x, mouse_y, entity)) {
                     button_component.mButtonState = ButtonStates::Hovered;
                     sprite_component.color.a = button_component.mHoverAlpha;
-                    button_size_scale = button_component.mHoverScale;
+                    button_component.mSizeScale = button_component.mHoverScale;
                     //if clicks
                     if (input->IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
                         button_component.mButtonState = ButtonStates::Pressed;
@@ -204,11 +206,17 @@ namespace IS {
                 else {
                     button_component.mButtonState = ButtonStates::Idle;
                     sprite_component.color.a = button_component.mIdleAlpha;
-                    button_size_scale = button_component.mIdleScale;
+                    button_component.mSizeScale = button_component.mIdleScale;
                 }
-                trans_component.setScaling(button_component.mSize * button_size_scale);
+                trans_component.setScaling(button_component.mSize * button_component.mSizeScale);
 
-                Text::addTextRenderCall(button_component.mButtonText, 0.5f, 0.5f, 48.f, glm::vec3(0.f, 1.f, 0.f));
+                //Text::addTextRenderCall(button_component.mButtonText, 0.5f, 0.5f, 48.f, glm::vec3(0.f, 1.f, 0.f));
+                /*float win_width = static_cast<float>(engine.IsFullScreen() ? engine.GetMonitorWidth() : engine.GetMonitorWidth());
+                float win_height = static_cast<float>(engine.IsFullScreen() ? engine.GetMonitorHeight() : engine.GetMonitorHeight());
+                float x = (trans_component.world_position.x + win_width / 2.f) / win_width;
+                float y = (trans_component.world_position.y + win_height / 2.f) / win_height;
+
+                Text::addTextRenderCall(button_component.mButtonText, x, y, 48.f, glm::vec3(1.f, 1.f, 1.f));*/
             }
 
         }

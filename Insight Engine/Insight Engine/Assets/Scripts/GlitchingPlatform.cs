@@ -45,7 +45,7 @@ namespace IS
 
             if (TimeOutTimer <= 0)
             {
-                InternalCalls.SetSpriteAlphaEntity(0.1f, entity_id);
+                InternalCalls.SetSpriteAlphaEntity(0f, entity_id);
                 InternalCalls.ColliderComponentRemove(entity_id);
                 RespawnTimer -= InternalCalls.GetDeltaTime();
             }

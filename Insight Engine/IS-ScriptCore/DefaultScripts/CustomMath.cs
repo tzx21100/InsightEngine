@@ -14,6 +14,14 @@ namespace IS
         public static float max(float x, float y) { 
             if(x > y) return x; return y;
         }
+
+        public static float clamp(float val,float min, float max) {
+            val = CustomMath.max(val, min);
+            val = CustomMath.min(val, max);
+            return val; 
+            
+        }
+
         // Constants
         public const float PI = 3.14159265358979323846f;
 
@@ -31,33 +39,23 @@ namespace IS
 
         public static float Sin(float radians)
         {
-            radians = Mod(radians + PI, 2 * PI) - PI; // Reduce the angle
 
-            // Use a more efficient approximation
-            float sine;
-            if (radians < 0)
-            {
-                sine = 1.27323954f * radians + .405284735f * radians * radians;
-                if (sine < 0)
-                    sine = .225f * (sine * -sine - sine) + sine;
-                else
-                    sine = .225f * (sine * sine - sine) + sine;
-            }
-            else
-            {
-                sine = 1.27323954f * radians - 0.405284735f * radians * radians;
-                if (sine < 0)
-                    sine = .225f * (sine * -sine - sine) + sine;
-                else
-                    sine = .225f * (sine * sine - sine) + sine;
-            }
-            return sine;
+            return InternalCalls.MathSin(radians);
+
+/*            radians = Mod(radians + PI, 2 * PI) - PI; // Normalize the angle
+
+            float result = radians - (radians * radians * radians) / 6f
+                           + (radians * radians * radians * radians * radians) / 120f
+                           - (radians * radians * radians * radians * radians * radians * radians) / 5040f;
+
+            return result;*/
         }
 
         // Improved Cosine function
         public static float Cos(float radians)
         {
-            return Sin(radians + PI / 2);
+            return InternalCalls.MathCos(radians);
+            //return Sin(radians + PI / 2);
         }
 
         // Modulus function that handles negative values correctly
@@ -90,42 +88,71 @@ namespace IS
 
         public static float Atan2(float y, float x)
         {
-            if (x > 0) return Atan(y / x);
-            if (y >= 0 && x < 0) return Atan(y / x) + PI;
-            if (y < 0 && x < 0) return Atan(y / x) - PI;
-            if (y > 0 && x == 0) return PI / 2;
-            if (y < 0 && x == 0) return -PI / 2;
-            return 0; // Undefined, ideally should handle as an error
+
+            return InternalCalls.MathAtan2(y, x);
+/*            if (x > 0)
+            {
+                return Atan(y / x);
+            }
+            else if (x < 0)
+            {
+                if (y >= 0) return Atan(y / x) + PI;
+                else return Atan(y / x) - PI;
+            }
+            else // x == 0
+            {
+                if (y > 0) return PI / 2;
+                if (y < 0) return -PI / 2;
+                return 0; // x and y are 0, angle is undefined
+            }*/
         }
+
 
         // Simple Atan approximation - Can be improved
         private static float Atan(float z)
         {
-            // Coefficients for a polynomial approximation
-            const float a1 = 0.9998660f;
-            const float a2 = -0.3302995f;
-            const float a3 = 0.1801410f;
-            const float a4 = -0.0851330f;
-            const float a5 = 0.0208351f;
+            return InternalCalls.MathAtan(z);
+/*
+            const float n1 = 0.97239411f;
+            const float n2 = -0.19194795f;
+            float result = 0.0f;
 
-            float az = Abs(z);
-            bool large = az > 1.0f;
+            bool signChange = false;
+            bool invert = false;
+            int sp = 0;
 
-            if (large)
-                az = 1.0f / az;
+            if (z < 0.0f)
+            {
+                z = -z;
+                signChange = true;
+            }
 
-            float az2 = az * az;
-            float az3 = az2 * az;
-            float az4 = az3 * az;
-            float az5 = az4 * az;
+            if (z > 1.0f)
+            {
+                z = 1.0f / z;
+                invert = true;
+            }
 
-            float atanApprox = a1 * az - a2 * az2 + a3 * az3 - a4 * az4 + a5 * az5;
+            while (z > 0.28f)
+            {
+                sp++;
+                z = ((z * z) - 1.0f) / (2.0f * z + 1.0f);
+            }
 
-            if (large)
-                atanApprox = PI / 2 - atanApprox;
+            result = z * (n1 + n2 * z * z);
 
-            return z < 0 ? -atanApprox : atanApprox;
+            while (sp > 0)
+            {
+                result += 0.5235987756f; // PI/6
+                sp--;
+            }
+
+            if (invert) result = 1.57079632679f - result; // PI/2 - result
+            if (signChange) result = -result;
+
+            return result;*/
         }
+
 
         public static float Abs(float value)
         {
@@ -133,6 +160,14 @@ namespace IS
                 return -value;
             else
                 return value;
+        }        
+        
+        public static float Normalize(float value)
+        {
+            if (value < 0)
+                return -1;
+            else
+                return 1;
         }
 
         public static float AngleBetweenPoints(Vector2D point1, Vector2D point2)
@@ -158,13 +193,15 @@ namespace IS
         }
         public static double Sqrt(double number)
         {
-            double tolerance = 1e-1; // Precision of the result
+            return InternalCalls.MathSqrt((float)number);
+
+/*            double tolerance = 1e-1; // Precision of the result
             double guess = number / 2; // Initial guess
             while (CustomMath.Abs((float)(number - guess * guess)) > tolerance)
             {
                 guess = (guess + number / guess) / 2;
             }
-            return guess;
+            return guess;*/
         }
 
 

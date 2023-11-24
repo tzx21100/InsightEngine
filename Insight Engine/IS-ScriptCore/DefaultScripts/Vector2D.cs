@@ -29,6 +29,9 @@ public class Vector2D
         this.y = y;
     }
 
+
+
+
     // Lerp
     public static float lerp(float start, float end, float t)
     {
@@ -64,6 +67,12 @@ public class Vector2D
     public Vector2D Add(Vector2D other)
     {
         return new Vector2D(this.x + other.x, this.y + other.y);
+    }    
+    
+    public void Set(float x,float y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
     // Subtraction of two vectors
@@ -94,7 +103,7 @@ public class Vector2D
     // Magnitude (length) of the vector
     public float Magnitude()
     {
-        return (float)Math.Sqrt(this.x * this.x + this.y * this.y);
+        return (float)CustomMath.Sqrt(this.x * this.x + this.y * this.y);
     }
 
     // Normalize the vector

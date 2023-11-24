@@ -36,7 +36,19 @@ namespace IS {
 
     void HierarchyPanel::UpdatePanel()
     {
-        ProcessSelectedEntityShortcuts();
+        if (!(mEditorLayer.IsAnyEntitySelected() && mChildWindowHovered))
+            return;
+
+        Entity entity = mEditorLayer.GetSelectedEntity();
+
+        auto& engine = InsightEngine::Instance();
+        auto input = engine.GetSystem<InputManager>("Input");
+        const bool CTRL_PRESSED = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
+        const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
+
+        if (CTRL_PRESSED && D_PRESSED) { mEditorLayer.CloneEntity(entity); }  // Ctrl+D
+        if (DELETE_PRESSED) { mEditorLayer.DeleteEntity(entity); } // Delete
     }
 
     void HierarchyPanel::RenderPanel()
@@ -122,7 +134,7 @@ namespace IS {
                     ImGui::TreePop(); // end tree Scenes
                 }
             }
-
+            mChildWindowHovered = ImGui::IsWindowHovered();
             ImGui::EndChild(); // end child window Scene Hierarchy Tree
 
             // Deselect entity and reset inpect mode
@@ -187,18 +199,18 @@ namespace IS {
         auto& style = ImGui::GetStyle();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
         bool layers_opened = ImGui::TreeNodeEx(ICON_LC_LAYERS "  Layers", tree_flags);
-        static bool to_render[Sprite::INVALID_LAYER]{ true };
+        static bool to_render[INVALID_LAYER]{ true };
         
         if (layers_opened)
         {
             EditorUtils::RenderTable("LayersTable", 2, [&]()
             {
                 ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
-                for (int i{}; i < Sprite::INVALID_LAYER; ++i)
+                for (int i{}; i < INVALID_LAYER; ++i)
                 {
                     to_render[i] = (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end());
 
-                    Sprite::DrawLayer layer = static_cast<Sprite::DrawLayer>(i);
+                    DrawLayer layer = static_cast<DrawLayer>(i);
                     ImGui::TableNextColumn();
                     const char* icon = to_render[i] ? ICON_LC_EYE : ICON_LC_EYE_OFF;
                     ImGui::PushID(i);

@@ -99,6 +99,9 @@ namespace IS {
     }
 
     void Sprite::draw_instanced_3D_quads() {
+        // set shader
+        Shader::setMainShader(ISGraphics::inst_3d_quad_shader_pgm);
+
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
@@ -129,7 +132,7 @@ namespace IS {
         }
 
         // bind shader
-        GL_CALL(glUseProgram(ISGraphics::inst_3d_quad_shader_pgm.getHandle()));
+        GL_CALL(glUseProgram(ISGraphics::main_quad_shader.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
         // store texture array indices
@@ -140,7 +143,7 @@ namespace IS {
         }
 
         // upload to uniform variable
-        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_3d_quad_shader_pgm.getHandle(), "uTex2d");
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::main_quad_shader.getHandle(), "uTex2d");
         if (tex_arr_uniform >= 0)
             glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
         else IS_CORE_ERROR({ "uTex2d Uniform not found, shader compilation failed?" });
@@ -150,7 +153,67 @@ namespace IS {
         ISGraphics::layered3DQuadInstances.clear();
     }
 
-    // draw light quad here similar to old non-layered instance quad drawing
+    void Sprite::draw_instanced_glitched_quads() {
+        Shader::setMainShader(ISGraphics::glitched_shader_pgm);
+        // Bind the instance VBO
+        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
+
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+        // Upload the quadInstances data to the GPU
+        GL_CALL(Sprite::instanceData3D * buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+
+
+        // Copy the instance data from the multiset to the vector
+        std::vector<Sprite::instanceData3D> tempData(ISGraphics::layered3DQuadInstances.begin(), ISGraphics::layered3DQuadInstances.end());
+
+        if (buffer) {
+
+            // Copy the instance data to the mapped buffer
+            if (!tempData.empty()) {
+                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+
+                // Unmap the buffer
+                if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
+                    // Handle the case where unmap was not successful
+                    std::cerr << "Failed to unmap the buffer." << std::endl;
+                }
+            }
+        }
+        else {
+            // Handle the case where mapping the buffer was not successful
+            std::cerr << "Failed to map the buffer for writing." << std::endl;
+        }
+
+        // bind shader
+        GL_CALL(glUseProgram(ISGraphics::main_quad_shader.getHandle()));
+        GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
+
+        // store texture array indices
+        std::vector<int> tex_array_index_vect;
+        for (auto const& texture : ISGraphics::textures) {
+            glBindTextureUnit(texture.texture_index, texture.texture_id);
+            tex_array_index_vect.emplace_back(texture.texture_index);
+        }
+
+        // upload to uniform variable
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::main_quad_shader.getHandle(), "uTex2d");
+        if (tex_arr_uniform >= 0)
+            glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
+        else IS_CORE_ERROR({ "uTex2d Uniform not found, shader compilation failed?" });
+
+        // upload to uniform variable
+        auto globalTimeUniform = glGetUniformLocation(ISGraphics::main_quad_shader.getHandle(), "uGlobalTime");
+        if (globalTimeUniform >= 0) {
+            glUniform1f(globalTimeUniform, static_cast<float>(InsightEngine::Instance().mElapsedTime));
+        }
+        else {
+            IS_CORE_ERROR("uGlobalTime Uniform not found, shader compilation failed?");
+        }
+
+        // draw instanced quads
+        glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
+        ISGraphics::layered3DQuadInstances.clear();
+    }
     
 
     void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer) {

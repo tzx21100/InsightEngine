@@ -41,8 +41,11 @@ namespace IS {
     // Shaders
     Shader ISGraphics::fb_shader_pgm;
 
+    Shader ISGraphics::main_quad_shader;
+
     Shader ISGraphics::inst_quad_shader_pgm;
     Shader ISGraphics::inst_3d_quad_shader_pgm;
+    Shader ISGraphics::glitched_shader_pgm;
     Shader ISGraphics::inst_non_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
     Shader ISGraphics::light_shader_pgm;
@@ -71,6 +74,8 @@ namespace IS {
     Text ISGraphics::Brush_Script_font;
     Text ISGraphics::North_Forest_font;
 
+    bool ISGraphics::mGlitched = false;
+
     void ISGraphics::Initialize() {
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to white
 
@@ -83,6 +88,7 @@ namespace IS {
         // init quad shader
 
         Shader::compileAllShaders();
+        Shader::setMainShader(inst_3d_quad_shader_pgm);
 
         // init text object
         Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
@@ -348,14 +354,17 @@ namespace IS {
         // Sprite::drawSpritesheetFrame(0, 2, 4, 3, { -200.f, 200.f }, 340.f, { 500.f, 500.f }, *img, 0.5f, 4);
 
         //std::string text = "World Mouse X: " + std::to_string(hi.x) + " Y: " + std::to_string(hi.y);
-        //Times_New_Roman_font.renderText(text, 0.5f, 0.5f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
 
         //auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         //Image* img = system->GetImage("running_anim 4R3C.png");
         //walking_ani.drawNonEntityAnimation(delta_time, { 0.f, 0.f }, 30.f, { 200.f, 200.f }, *img, 1.f, 4);
 
         // quads will be drawn first
-        Sprite::draw_instanced_3D_quads();
+        if (mGlitched)
+            Sprite::draw_instanced_glitched_quads();
+        else
+            Sprite::draw_instanced_3D_quads();
+
         Sprite::draw_lights();
 
     #ifdef USING_IMGUI
@@ -411,6 +420,7 @@ namespace IS {
         //    fb_shader_pgm.unUse();
         //}
 
+        // North_Forest_font.renderText("TEST!!!!", 0.5f, 0.5f, 32.f, glm::vec3(0.529f, 0.808f, 0.922f));
        
         // if using ImGui, unbind fb at the end of draw
         if (engine.mRenderGUI)

@@ -9,7 +9,7 @@ namespace IS
 {
     public class PlayerScript
     {
-
+        //death timers
         static private float respawn_timer = 0.6f;
         static private float respawn_timer_set = 0.6f;
         static public bool isDead = false;
@@ -23,9 +23,9 @@ namespace IS
         static private float camera_shake_angle = 0f;
 
         //Powerup triggers
-        static public bool Reward_DoubleJump = true;
-        static public bool Reward_Dash = true;
-        static public bool Reward_WallClimb = true;
+        static public bool Reward_DoubleJump = false;
+        static public bool Reward_Dash = false;
+        static public bool Reward_WallClimb = false;
 
         static public int Health = 3;
         static public int Max_Health = 3;
@@ -36,6 +36,16 @@ namespace IS
         static public int SAVE_POINT_ID = 0;
 
         //public player variables
+
+
+        //lighting
+
+        static private int light_entity;
+        static private float light_timer = 1f / 8f;
+        static private float light_timer_set = 1/8f;
+        static private float light_intensity;
+        static private int light_changer = 1;
+
 
 
         //private entity
@@ -89,7 +99,7 @@ namespace IS
         static private float jumpHeight = 1000f;
 
         //dashing 
-        static private float bullet_time_timer = 1f;
+        static public float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
         static private float dash_timer =0.2f;
         static private float dash_set = 0.2f;
@@ -140,6 +150,9 @@ namespace IS
 
         static public void Init()
         {
+            Reward_DoubleJump = false;
+            Reward_Dash = false;
+            Reward_WallClimb = false;
 
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
@@ -190,6 +203,9 @@ namespace IS
             death_entity = InternalCalls.CreateEntityVFX("Death", player_death_vfx);
             InternalCalls.CreateAnimationFromSpriteEntity(1, 11, 0.9f, death_entity);
 
+            light_entity = InternalCalls.CreateEntitySprite("Player Lighting");
+            InternalCalls.AttachLightComponentToEntity(light_entity,1,0.43f,0,0.44f,619);
+
             InternalCalls.TransformSetScale(200f, 180f);
 
         }
@@ -199,11 +215,19 @@ namespace IS
 
 
 
-            if (GameManager.isGamePaused == true) {
+            if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true) {
+                InternalCalls.RigidBodySetForce(0f, 0f);
                 return;
             }
 
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) {
+                InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
+            }
+
+
             //animation sets
+            LightUpdate();
+
             if (InternalCalls.GetCurrentAnimationEntity(land_entity) >= 13)
             {
                 InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
@@ -232,6 +256,10 @@ namespace IS
                     InternalCalls.ResetSpriteAnimationFrameEntity(death_entity);
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     InternalCalls.TransformSetScaleEntity(300 , 300, death_entity);
+                    isDashing = false;
+                    dash_timer = dash_set;
+                    bullet_time_timer = bullet_time_set;
+                    InternalCalls.RigidBodySetForce(0, 0);
 
                     for (int i = 0; i < 36; i++) {
                         InternalCalls.GameSpawnParticleExtra(
@@ -294,7 +322,7 @@ namespace IS
             //Attach Camera
             
 
-           target_pos.x = player_pos.x + hori_movement* CustomMath.min(100f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
+           target_pos.x = player_pos.x + hori_movement* CustomMath.min(350f,CustomMath.Abs( InternalCalls.RigidBodyGetVelocity().x)) ;
            target_pos.y= player_pos.y  + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y/20f);
 
             float interpolate_speed = 4f;
@@ -460,12 +488,7 @@ namespace IS
                 && InternalCalls.GetCollidingEntity(entityA) != SAVE_POINT_ID)
             {
 
-
-
                 isGrounded = true;
-
-                
-                
 
             }
             else
@@ -545,9 +568,6 @@ namespace IS
                 }
                 initial_land = false;
             }
-            
-            //check for ground
-
 
 
             if (canDash && isDashing==false && Reward_Dash)
@@ -567,7 +587,7 @@ namespace IS
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                     
-                    float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+                    float angle = CustomMath.AngleBetweenPoints(player_pos,mouse_pos);
 
                     hori_movement = 0;
                     InternalCalls.SetSpriteImage(player_idle);
@@ -575,6 +595,10 @@ namespace IS
                     if (mouse_pos.x>player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
+                    apply_force=apply_force.Normalize();
+                    //InternalCalls.NativeLog("ANGLE IS: ", CustomMath.RadiansToDegrees(angle));
+/*                    InternalCalls.NativeLog("DIR_X IS: ", apply_force.x);
+                    InternalCalls.NativeLog("DIR_Y IS: ", apply_force.y);*/
                     var color = (1f, 1f, 1f);
                     InternalCalls.DrawLineBetweenPoints(player_pos.x,player_pos.y, mouse_pos.x, mouse_pos.y, color);
                     // Render Circles
@@ -730,6 +754,69 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
             InternalCalls.TransformSetScaleEntity(2f, height/2f, entityWall);
+            
+        }
+
+        static float distance_light=width;
+        static MyRandom randomlights=new MyRandom(12314);
+        static private void LightUpdate()
+        {
+            light_timer -= InternalCalls.GetDeltaTime();
+            if (light_timer <= 0)
+            {
+                
+                light_changer *= -1;
+                light_intensity = randomlights.NextFloat()*0.6f;
+                light_timer = light_timer_set;
+
+                light_intensity = CustomMath.min(0.6f, light_intensity);
+                light_intensity = CustomMath.max(0.4f, light_intensity);
+
+            }
+
+
+           
+
+            InternalCalls.SetLightComponentToEntity(light_entity,1, 0.43f, 0, light_intensity, 619);
+
+            xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+
+
+            if (hori_movement != 0)
+            {
+                distance_light = width *hori_movement;
+
+                if (isClimbing)
+                {
+                    distance_light = width * hori_movement*-1;
+                }                
+                if (isDashing)
+                {
+                    distance_light = width *CustomMath.Normalize(trans_scaling.x);
+                }
+
+                
+            }
+            Vector2D relativePosition = new Vector2D(distance_light  , 0);
+
+            // Apply rotation to the relative position
+            Vector2D rotatedRelativePosition = new Vector2D(
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) - relativePosition.y * CustomMath.Cos(angleRadians))
+            );
+
+            // Calculate the absolute position for the wall checker
+            Vector2D checkerPosition = new Vector2D(
+                xCoord + rotatedRelativePosition.x,
+                yCoord + rotatedRelativePosition.y
+            );
+
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, light_entity);
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, light_entity);
+            InternalCalls.TransformSetScaleEntity(1f, 1f, light_entity);
             
         }
 

@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -609.125244140625,
-				"Y" : -34.588882446289063
+				"X" : -617.95538330078125,
+				"Y" : 4634.7314453125
 			},
 			"BoxColliderOffset" : 
 			{
@@ -21,27 +21,43 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -99.402839660644531,
-					"y" : 152.07095336914063
+					"x" : -99.402923583984375,
+					"y" : 152.07073974609375
 				},
 				{
-					"x" : 99.402839660644531,
-					"y" : 152.07095336914063
+					"x" : 99.402923583984375,
+					"y" : 152.07073974609375
 				},
 				{
-					"x" : 99.402839660644531,
-					"y" : -152.07095336914063
+					"x" : 99.402923583984375,
+					"y" : -152.07073974609375
 				},
 				{
-					"x" : -99.402839660644531,
-					"y" : -152.07095336914063
+					"x" : -99.402923583984375,
+					"y" : -152.07073974609375
 				}
 			]
 		},
 		"BoxColliderEnabled" : true,
 		"CircleColliderEnabled" : false,
-		"CollidingEntity" : 20001,
 		"ResponseEnabled" : false
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.55696201324462891,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.80000001192092896,
+		"LightOffset" : 
+		{
+			"X" : -2.2999999523162842,
+			"Y" : 48.5
+		},
+		"LightRender" : false,
+		"LightSize" : 1167.0
 	},
 	"Name" : "SavepointLantern",
 	"RigidBody" : 
@@ -49,7 +65,7 @@
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : -981.0,
 		"RigidBodyAngularVelocity" : 0.0,
-		"RigidBodyArea" : 107973.4609375,
+		"RigidBodyArea" : 107973.328125,
 		"RigidBodyBodyType" : 6,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
@@ -67,11 +83,12 @@
 	{
 		"ScriptName" : "SavePointLantern"
 	},
-	"Signature" : "00000000000000000000010000100111",
+	"Signature" : "00000000000000000001010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
+		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
@@ -79,23 +96,23 @@
 		"SpriteFilename" : "Prop_Lantern_NoLights.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 25,
+		"SpriteTexture" : 35,
 		"SpriteTextureHeight" : 791,
-		"SpriteTextureIndex" : 24,
+		"SpriteTextureIndex" : 34,
 		"SpriteTextureWidth" : 570,
-		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 284.00811767578125,
-		"SpriteTransformScalingY" : 380.1773681640625,
-		"SpriteTransformWorldPositionX" : -609.125244140625,
-		"SpriteTransformWorldPositionY" : -6.2888832092285156,
+		"SpriteTransformRotation" : 331.189697265625,
+		"SpriteTransformScalingX" : 284.00836181640625,
+		"SpriteTransformScalingY" : 380.17684936523438,
+		"SpriteTransformWorldPositionX" : -617.95538330078125,
+		"SpriteTransformWorldPositionY" : 4663.03125,
 		"animations" : []
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.0,
-		"TransformScalingX" : 284.00811767578125,
-		"TransformScalingY" : 380.1773681640625,
-		"TransformWorldPositionX" : -609.125244140625,
-		"TransformWorldPositionY" : -6.2888832092285156
+		"TransformRotation" : 331.189697265625,
+		"TransformScalingX" : 284.00836181640625,
+		"TransformScalingY" : 380.17684936523438,
+		"TransformWorldPositionX" : -617.95538330078125,
+		"TransformWorldPositionY" : 4663.03125
 	}
 }

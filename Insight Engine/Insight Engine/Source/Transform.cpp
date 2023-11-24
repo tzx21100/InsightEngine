@@ -232,16 +232,16 @@ namespace IS {
 		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height * 2.f - 1.0f);
 
 		// Assuming you're working with a right-handed perspective projection
-		glm::vec4 ndcCoords{ ndcX, ndcY, 0.f, 1.f };
+		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
 
 		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
 
-		if (Camera3D::mProjectionType == ProjectionType_Perspective) {
-			ndcCoords.z = (2.0f * cameraInUse.GetNear() * cameraInUse.GetFar()) / (cameraInUse.GetFar() - cameraInUse.GetNear()) / (1.0f - ndcCoords.z) - cameraInUse.GetNear();
-		}
-
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
+
+		// if (Camera3D::mProjectionType == ProjectionType_Perspective) 
+		//std::string temp = "WORLD X: " + std::to_string(worldPos.x) + " , Y: " + std::to_string(worldPos.y) + '\n';
+		//Text::addTextRenderCall(temp, 0.5f, 0.5f, 32.f, { 1.f, 1.f, 1.f });
 
 		return { worldPos.x, worldPos.y };
 	}

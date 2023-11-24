@@ -191,18 +191,50 @@ namespace IS {
 
     // render line of text
     void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
-        // Scale the text to the correct size.
         scale = scale * 48.f / (base_size * 16);
 
-        InsightEngine& engine = InsightEngine::Instance();
+        // Calculate the width and height of the text
+        float textWidth = 0.0f;
+        float textHeight = 0.0f;
+
+        // Iterate through all characters in the text.
+        std::string::const_iterator c;
+        float lineHeight = 0.0f; // Initialize the height for the current line
+        for (c = text.begin(); c != text.end(); c++) {
+            Character ch = Characters[*c];
+
+            if (*c == '\n') { // if new line
+                textHeight += lineHeight; // Increase total height for the current line
+                lineHeight = 0.0f; // Reset height for the next line
+                textWidth = std::max(textWidth, 0.0f); // Reset width for new line
+            }
+            else if (*c == ' ') { // if whitespace
+                textWidth += (ch.Advance >> 6) * scale; // Increase total width for whitespace
+            }
+            else {
+                textWidth += (ch.Advance >> 6) * scale; // Increase total width for character
+                lineHeight = std::max(lineHeight, static_cast<float>(ch.Size.y) * scale); // Update maximum character height for the current line
+            }
+        }
+        textHeight += lineHeight; // Add the height of the last line
+
+        auto& engine = InsightEngine::Instance();
         auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
-        // Store the initial X position.
-        float x = widthScalar * 1920; // world width
-        float y = heightScalar * 1080; // world height
+        if (!engine.IsFullScreen())
+        {
+           height += engine.GetTitleBarHeight();
+        }
 
-        const float copyX = x;
-        //const float copyY = y;
+        // Calculate the adjusted starting position for center alignment
+        float x = widthScalar * width - textWidth / 2.0f;
+        float y = heightScalar * height - textHeight / 2.0f;
+
+       
+
+        // Reset the position for rendering
+        // x = widthScalar * 1920;
+        // y = heightScalar * 1080;
 
         // Activate the specified shader and set the text color.
         textShader.use();
@@ -216,14 +248,13 @@ namespace IS {
 
         int char_index = 0;
 
-        // Iterate through all characters in the text.
-        std::string::const_iterator c;
-        for (c = text.begin(); c != text.end(); c++) { // for each char in string
+        // Iterate through all characters in the text again for rendering.
+        for (c = text.begin(); c != text.end(); c++) {
             Character ch = Characters[*c];
 
             if (*c == '\n') { // if new line
                 y -= static_cast<float>(((ch.Size.y)) * 1.3 * scale); // Indent y and reset X.
-                x = copyX;
+                x = widthScalar * 1920 - textWidth / 2.0f; // Adjust for center alignment
             }
             else if (*c == ' ') { // if whitespace
                 x += (ch.Advance >> 6) * scale; // add empty space in texture
@@ -232,14 +263,13 @@ namespace IS {
                 // Calculate the position and transformation for the character
                 float xpos = x + ch.Bearing.x * scale;
                 float ypos = y - (base_size - ch.Bearing.y) * scale;
-                // IS_CORE_ERROR("text pos: {}, {}", xpos, ypos);
 
                 // Store the transformation matrix and character texture ID
                 transforms[char_index] = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0)) * glm::scale(glm::mat4(1.0f), glm::vec3(base_size * scale, base_size * scale, 0));
                 letterMap[char_index] = ch.TextureID;
-                
+
                 // Render the character as a quad
-                x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+                x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
                 char_index++;
 
                 // Perform a render call if the character limit is reached
@@ -249,6 +279,7 @@ namespace IS {
                 }
             }
         }
+
         // Perform the final render call for any remaining characters
         textRenderCall(char_index);
 
@@ -258,6 +289,7 @@ namespace IS {
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
+
 
     void Text::textRenderCall(int length) {
         if (length != 0) {

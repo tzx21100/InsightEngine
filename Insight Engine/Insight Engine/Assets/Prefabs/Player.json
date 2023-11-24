@@ -1,4 +1,12 @@
 {
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "JOHN_Mindy-Theme2_Consequence-Finale_Loop_80bpm.wav",
+		"AudioVolumeLevel" : 0.68000000715255737
+	},
 	"AudioListener" : 
 	{
 		"AudioHearingRange" : 15000.0,
@@ -12,19 +20,36 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -12.929377555847168,
-				"Y" : 102.82825469970703
+				"X" : -945.45196533203125,
+				"Y" : -224.36405944824219
 			},
 			"CircleColliderOffset" : 
 			{
 				"X" : 0.0,
 				"Y" : -20.0
 			},
-			"CircleColliderRadius" : 360.0,
+			"CircleColliderRadius" : 60.000003814697266,
 			"CircleColliderRadiusScale" : 0.30000001192092896
 		},
 		"CircleColliderEnabled" : true,
 		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.43037974834442139,
+			"R" : 1.0
+		},
+		"LightIntensity" : 1.0,
+		"LightOffset" : 
+		{
+			"X" : -58.700000762939453,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 404.0
 	},
 	"Name" : "Player",
 	"RigidBody" : 
@@ -40,8 +65,8 @@
 		"RigidBodyInvMass" : 0.20000000298023224,
 		"RigidBodyMass" : 5.0,
 		"RigidBodyRestitution" : 0.0,
-		"RigidBodyVelocityX" : -31.442283630371094,
-		"RigidBodyVelocityY" : -746.84747314453125,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
 		"RigidbodyGravityScale" : 2.0,
 		"mDynamicFriction" : 0.80000001192092896,
 		"mStaticFriction" : 0.60000002384185791
@@ -50,7 +75,7 @@
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000000011000100111",
+	"Signature" : "00000000000000000001011100100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 1,
@@ -63,15 +88,15 @@
 		"SpriteFilename" : "idle_anim 4R3C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 21,
-		"SpriteTextureHeight" : 3644,
-		"SpriteTextureIndex" : 20,
-		"SpriteTextureWidth" : 3921,
-		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1200.0,
-		"SpriteTransformScalingY" : 1080.0,
-		"SpriteTransformWorldPositionX" : -12.929377555847168,
-		"SpriteTransformWorldPositionY" : 122.82825469970703,
+		"SpriteTexture" : 22,
+		"SpriteTextureHeight" : 3200,
+		"SpriteTextureIndex" : 21,
+		"SpriteTextureWidth" : 3443,
+		"SpriteTransformRotation" : 0.4610595703125,
+		"SpriteTransformScalingX" : 200.0,
+		"SpriteTransformScalingY" : 180.0,
+		"SpriteTransformWorldPositionX" : -945.45196533203125,
+		"SpriteTransformWorldPositionY" : -204.36405944824219,
 		"animations" : 
 		[
 			{
@@ -79,9 +104,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 1.0,
-				"frame_index_y" : 1.0,
-				"frame_timer" : 0.077889226377010345,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.0,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -91,9 +116,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 2.0,
+				"frame_index_x" : 0.0,
 				"frame_index_y" : 2.0,
-				"frame_timer" : 0.063837744295597076,
+				"frame_timer" : 0.025985665619373322,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -102,10 +127,10 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1200.0,
-		"TransformScalingY" : 1080.0,
-		"TransformWorldPositionX" : -12.929377555847168,
-		"TransformWorldPositionY" : 122.82825469970703
+		"TransformRotation" : 0.4610595703125,
+		"TransformScalingX" : 200.0,
+		"TransformScalingY" : 180.0,
+		"TransformWorldPositionX" : -945.45196533203125,
+		"TransformWorldPositionY" : -204.36405944824219
 	}
 }

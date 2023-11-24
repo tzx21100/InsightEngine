@@ -29,6 +29,17 @@
 #include <vector>
 
 namespace IS {
+
+    // For layering //
+    enum DrawLayer : int
+    {
+        BACKGROUND_LAYER = 0,
+        DEFAULT_LAYER,
+        FOREGROUND_LAYER,
+        UI_LAYER,
+        INVALID_LAYER // always the last
+    };
+
     /*!
      * \brief The Sprite class represents a 2D sprite with transformation and rendering properties.
      *
@@ -76,16 +87,6 @@ namespace IS {
         // ImGui properties
         std::string name;                       // The name of the sprite.
         glm::vec4 color{ 1.f, 1.f, 1.f, 1.f };  // The color of the sprite. If textured, will be the tint.
-
-        // For layering //
-        enum DrawLayer : int
-        {
-            BACKGROUND_LAYER = 0,
-            DEFAULT_LAYER,
-            FOREGROUND_LAYER,
-            UI_LAYER,
-            INVALID_LAYER // always the last
-        };
         // Static data member for layers management
         static std::unordered_set<int> layersToIgnore;
         static void toggleLayer(DrawLayer layer);
@@ -189,6 +190,7 @@ namespace IS {
          */
         static void draw_instanced_quads();
         static void draw_instanced_3D_quads();
+        static void draw_instanced_glitched_quads();
 
         static void draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer = DrawLayer::DEFAULT_LAYER);
         static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer = DrawLayer::DEFAULT_LAYER);
