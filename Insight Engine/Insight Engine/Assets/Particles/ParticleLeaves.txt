@@ -1,0 +1,16 @@
+Velocity: 0, 0
+Size Growth: 0.5
+Scale: 152, 152
+Lifespan: 3
+Color:
+Red: 1
+Green: 1
+Blue: 1
+Alpha: 1
+Alpha: 0.8
+Alpha Growth: 0.1
+Rotation: 45
+Direction: 90
+Particle Type: 3
+Image Name: leaves_spritesheet.png
+Particle Position: 1588, -1022

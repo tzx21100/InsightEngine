@@ -13,9 +13,7 @@ namespace IS
             if (InternalCalls.EntityCheckCollide(entity_id) && !InternalCalls.CollidingObjectIsStatic(entity_id)) {
                 if (InternalCalls.GetCollidingEntityCheck(entity_id, PlayerScript.PLAYER_ID))
                 {
-                    PlayerScript.Health -= 1;
-                    InternalCalls.TransformSetPositionEntity(PlayerScript.respawn_x, PlayerScript.respawn_y, PlayerScript.PLAYER_ID);
-                    InternalCalls.RigidBodySetVelocityEntity(0,0,PlayerScript.PLAYER_ID);
+                    PlayerScript.isDead = true;
                 }
             }
         }

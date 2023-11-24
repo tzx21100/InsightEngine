@@ -198,10 +198,10 @@ namespace IS {
            // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
             //Sprite::draw_instanced_3D_quads();
            
-            //auto system = engine.GetSystem<ParticleSystem>("Particle");
+            //auto system = engine.GetSystem<ParticleSystem>("Particle Leaves");
             //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 200, 200.f }, 3.0f,
             //    color_red, 0.8f, 0.1f, 0.0f, 0.0f,
-            //    pt_texture, "Dash AfterImage.png", { (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
+            //    pt_anim, "Dash AfterImage.png", { (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
             //A.mParticlePos = Vector2D({ (float)Transform::GetMousePosition().first,(float)Transform::GetMousePosition().second });
             //system->SpawnParticles(A);
 

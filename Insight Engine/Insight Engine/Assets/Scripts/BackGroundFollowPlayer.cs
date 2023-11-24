@@ -23,7 +23,7 @@ namespace IS
         static private Vector2D bg3_pos=new Vector2D(0,0);
         static private Vector2D bg4_pos=new Vector2D(0,0);
         static private Vector2D bg5_pos=new Vector2D(0,0);
-        static private Vector2D bg_scale=new Vector2D(4096*2.2f,756*2.2f);
+        static private Vector2D bg_scale=new Vector2D(4096*2.5f,756*2.5f);
 
         static private float player_offset = 10f;
 
@@ -64,6 +64,8 @@ namespace IS
                 // Draw the layer at its new position
                 InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
             }
+
+            //InternalCalls.GameSpawnParticle(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, "ParticleLeaves.txt");
 
             // Update the camera position
             InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
