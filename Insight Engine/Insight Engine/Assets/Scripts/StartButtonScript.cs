@@ -10,12 +10,16 @@ namespace IS
         static SimpleVector2D dark_circle = new SimpleVector2D(10000f, 10000f);
         static SimpleImage scene_circle;
 
+        //static int button_entity;
+
         static public void Init() {
             scene_circle = InternalCalls.GetSpriteImage("dark_circle.png");
+            //button_entity = InternalCalls.GetCurrentEntityID();
         }
 
         static public void Update(){
-
+            // default scale size
+            //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonIdleScale(button_entity));
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
@@ -26,6 +30,7 @@ namespace IS
                     first_hovering = true;
                 }
                 //InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
+                //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonHoverScale(button_entity));
             }
             else
             {
@@ -33,8 +38,9 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) 
             {
-                //InternalCalls.AudioPlaySound("StartClick.wav");
+                InternalCalls.AudioPlaySound("StartClick.wav");
                 start_button_click = true;
+                //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonIdleScale(button_entity));
             }
 
             if (start_button_click)
@@ -48,7 +54,10 @@ namespace IS
                     InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
                 }
             }
-            
+
+            // draw text
+            //InternalCalls.ButtonRenderText(button_entity, 0.4f, 0.54f, 35f, (1f, 1f, 1f));
+
         }
         
         static public void CleanUp(){

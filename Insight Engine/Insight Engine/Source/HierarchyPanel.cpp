@@ -36,7 +36,19 @@ namespace IS {
 
     void HierarchyPanel::UpdatePanel()
     {
-        ProcessSelectedEntityShortcuts();
+        if (!(mEditorLayer.IsAnyEntitySelected() && mChildWindowHovered))
+            return;
+
+        Entity entity = mEditorLayer.GetSelectedEntity();
+
+        auto& engine = InsightEngine::Instance();
+        auto input = engine.GetSystem<InputManager>("Input");
+        const bool CTRL_PRESSED = input->IsKeyHeld(GLFW_KEY_LEFT_CONTROL) || input->IsKeyHeld(GLFW_KEY_RIGHT_CONTROL);
+        const bool D_PRESSED = input->IsKeyPressed(GLFW_KEY_D);
+        const bool DELETE_PRESSED = input->IsKeyPressed(GLFW_KEY_DELETE);
+
+        if (CTRL_PRESSED && D_PRESSED) { mEditorLayer.CloneEntity(entity); }  // Ctrl+D
+        if (DELETE_PRESSED) { mEditorLayer.DeleteEntity(entity); } // Delete
     }
 
     void HierarchyPanel::RenderPanel()
@@ -122,7 +134,7 @@ namespace IS {
                     ImGui::TreePop(); // end tree Scenes
                 }
             }
-
+            mChildWindowHovered = ImGui::IsWindowHovered();
             ImGui::EndChild(); // end child window Scene Hierarchy Tree
 
             // Deselect entity and reset inpect mode

@@ -11,6 +11,10 @@
 				"AudioVolumeLevel" : 1.0
 			},
 			"Name" : "Background",
+			"Script" : 
+			{
+				"ScriptName" : "MenuButtonScript"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -28,7 +32,7 @@
 				"SpriteTextureIndex" : 25,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 4480.0,
+				"SpriteTransformScalingX" : 3968.0,
 				"SpriteTransformScalingY" : 2520.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
@@ -37,138 +41,10 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 4480.0,
+				"TransformScalingX" : 3968.0,
 				"TransformScalingY" : 2520.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
-			}
-		},
-		{
-			"AudioEmitter" : 
-			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : false,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-				"AudioVolumeLevel" : 1.0
-			},
-			"ButtonComponent" : 
-			{
-				"ButtonClickAlpha" : 0.80000001192092896,
-				"ButtonHoverAlpha" : 1.0,
-				"ButtonHoverScale" : 1.2000000476837158,
-				"ButtonIdleAlpha" : 0.60000002384185791,
-				"ButtonIdleScale" : 1.0,
-				"ButtonImageName" : "",
-				"ButtonSize" : 
-				{
-					"X" : 1048.0,
-					"Y" : 345.0
-				},
-				"ButtonState" : 0,
-				"ButtonText" : "",
-				"ButtonTextScale" : 0.0,
-				"ButtonType" : 0
-			},
-			"Name" : "Start Button",
-			"Script" : 
-			{
-				"ScriptName" : "StartButtonScript"
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 0.60000002384185791,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "start_button.png",
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 39,
-				"SpriteTextureHeight" : 345,
-				"SpriteTextureIndex" : 38,
-				"SpriteTextureWidth" : 1048,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 1048.0,
-				"SpriteTransformScalingY" : 345.0,
-				"SpriteTransformWorldPositionX" : -846.69000244140625,
-				"SpriteTransformWorldPositionY" : -69.403228759765625,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 1048.0,
-				"TransformScalingY" : 345.0,
-				"TransformWorldPositionX" : -846.69000244140625,
-				"TransformWorldPositionY" : -69.403228759765625
-			}
-		},
-		{
-			"AudioEmitter" : 
-			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : false,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-				"AudioVolumeLevel" : 1.0
-			},
-			"ButtonComponent" : 
-			{
-				"ButtonClickAlpha" : 0.80000001192092896,
-				"ButtonHoverAlpha" : 1.0,
-				"ButtonHoverScale" : 1.2000000476837158,
-				"ButtonIdleAlpha" : 0.60000002384185791,
-				"ButtonIdleScale" : 1.0,
-				"ButtonImageName" : "",
-				"ButtonSize" : 
-				{
-					"X" : 444.0,
-					"Y" : 211.0
-				},
-				"ButtonState" : 0,
-				"ButtonText" : "",
-				"ButtonTextScale" : 0.0,
-				"ButtonType" : 0
-			},
-			"Name" : "Exit Button",
-			"Script" : 
-			{
-				"ScriptName" : "ExitButtonScript"
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 0.60000002384185791,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "exit_button.png",
-				"SpriteName" : "Box",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 15,
-				"SpriteTextureHeight" : 211,
-				"SpriteTextureIndex" : 14,
-				"SpriteTextureWidth" : 444,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 444.0,
-				"SpriteTransformScalingY" : 211.0,
-				"SpriteTransformWorldPositionX" : -846.68731689453125,
-				"SpriteTransformWorldPositionY" : -485.8056640625,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 444.0,
-				"TransformScalingY" : 211.0,
-				"TransformWorldPositionX" : -846.68731689453125,
-				"TransformWorldPositionY" : -485.8056640625
 			}
 		},
 		{
@@ -199,20 +75,62 @@
 				"SpriteTextureWidth" : 2744,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2744.0,
-				"SpriteTransformScalingY" : 322.39999389648438,
-				"SpriteTransformWorldPositionX" : -678.6348876953125,
-				"SpriteTransformWorldPositionY" : 412.92950439453125,
+				"SpriteTransformScalingY" : 321.0,
+				"SpriteTransformWorldPositionX" : -334.9599609375,
+				"SpriteTransformWorldPositionY" : 586.30078125,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 2744.0,
-				"TransformScalingY" : 322.39999389648438,
-				"TransformWorldPositionX" : -678.6348876953125,
-				"TransformWorldPositionY" : 412.92950439453125
+				"TransformScalingY" : 321.0,
+				"TransformWorldPositionX" : -334.9599609375,
+				"TransformWorldPositionY" : 586.30078125
+			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Team Logo",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "team_logo.png",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 40,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 39,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1152.0,
+				"SpriteTransformScalingY" : 648.0,
+				"SpriteTransformWorldPositionX" : 1568.2198486328125,
+				"SpriteTransformWorldPositionY" : -884.8599853515625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1152.0,
+				"TransformScalingY" : 648.0,
+				"TransformWorldPositionX" : 1568.2198486328125,
+				"TransformWorldPositionY" : -884.8599853515625
 			}
 		}
 	],
-	"EntityAmount" : 4
+	"EntityAmount" : 3
 }
