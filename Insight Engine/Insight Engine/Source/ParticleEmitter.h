@@ -12,7 +12,6 @@
 
 namespace IS {
 
-
 	class ParticleEmitter : public IComponent
 	{
 	public:
