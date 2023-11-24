@@ -159,11 +159,11 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(home_pos.x, home_pos.y, home_entity);
             InternalCalls.TransformSetPositionEntity(quit_pos.x, quit_pos.y, quit_entity);
 
-            InternalCalls.ButtonRenderText(resume_entity, 0.5f, (resume_pos.y + (float)win_height / 2f) / (float)win_height, 48f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(how_to_play_entity, (how_to_play_pos.x + (float)win_width / 2f) / (float)win_width, (how_to_play_pos.y + (float)win_height / 2f) / (float)win_height, 48f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(setting_entity, (setting_pos.x + (float)win_width / 2f) / (float)win_width, (setting_pos.y + (float)win_height / 2f) / (float)win_height, 48f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(home_entity, (home_pos.x + (float)win_width / 2f) / (float)win_width, (home_pos.y + (float)win_height / 2f) / (float)win_height, 48f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(quit_entity, (quit_pos.x + (float)win_width / 2f) / (float)win_width, (quit_pos.y + (float)win_height / 2f) / (float)win_height, 28f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(resume_entity, 0.5f, 0.7F, 30f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(how_to_play_entity, 0.5f, 0.6f, 30f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(setting_entity, 0.5f, 0.4f, 30f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(home_entity, 0.5f, 0.3f, 30f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(quit_entity, 0.5f, 0.2f, 20f, (1f, 1f, 1f));
         }
 
         static public void MoveAwayPauseMenuPosition()

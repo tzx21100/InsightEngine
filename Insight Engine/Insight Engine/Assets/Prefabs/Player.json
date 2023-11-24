@@ -20,8 +20,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -945.3497314453125,
-				"Y" : 214.8548583984375
+				"X" : -945.45196533203125,
+				"Y" : -224.36405944824219
 			},
 			"CircleColliderOffset" : 
 			{
@@ -33,6 +33,23 @@
 		},
 		"CircleColliderEnabled" : true,
 		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.43037974834442139,
+			"R" : 1.0
+		},
+		"LightIntensity" : 1.0,
+		"LightOffset" : 
+		{
+			"X" : -58.700000762939453,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 404.0
 	},
 	"Name" : "Player",
 	"RigidBody" : 
@@ -49,7 +66,7 @@
 		"RigidBodyMass" : 5.0,
 		"RigidBodyRestitution" : 0.0,
 		"RigidBodyVelocityX" : 0.0,
-		"RigidBodyVelocityY" : -0.0,
+		"RigidBodyVelocityY" : 0.0,
 		"RigidbodyGravityScale" : 2.0,
 		"mDynamicFriction" : 0.80000001192092896,
 		"mStaticFriction" : 0.60000002384185791
@@ -58,7 +75,7 @@
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000000011100100111",
+	"Signature" : "00000000000000000001011100100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 1,
@@ -71,15 +88,15 @@
 		"SpriteFilename" : "idle_anim 4R3C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 21,
+		"SpriteTexture" : 22,
 		"SpriteTextureHeight" : 3200,
-		"SpriteTextureIndex" : 20,
+		"SpriteTextureIndex" : 21,
 		"SpriteTextureWidth" : 3443,
-		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformRotation" : 0.4610595703125,
 		"SpriteTransformScalingX" : 200.0,
 		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : -945.3497314453125,
-		"SpriteTransformWorldPositionY" : 234.8548583984375,
+		"SpriteTransformWorldPositionX" : -945.45196533203125,
+		"SpriteTransformWorldPositionY" : -204.36405944824219,
 		"animations" : 
 		[
 			{
@@ -88,8 +105,8 @@
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
 				"frame_index_x" : 0.0,
-				"frame_index_y" : 2.0,
-				"frame_timer" : 0.033632412552833557,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.0,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -100,8 +117,8 @@
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
 				"frame_index_x" : 0.0,
-				"frame_index_y" : 1.0,
-				"frame_timer" : 0.056830283254384995,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.025985665619373322,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -110,10 +127,10 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.0,
+		"TransformRotation" : 0.4610595703125,
 		"TransformScalingX" : 200.0,
 		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : -945.3497314453125,
-		"TransformWorldPositionY" : 234.8548583984375
+		"TransformWorldPositionX" : -945.45196533203125,
+		"TransformWorldPositionY" : -204.36405944824219
 	}
 }
