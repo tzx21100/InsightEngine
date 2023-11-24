@@ -117,6 +117,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static SimpleVector2D GetCameraPos();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float CameraGetZoom();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name);
