@@ -400,17 +400,19 @@ namespace IS {
 
     static int CreateEntityButton(MonoString* name, SimpleImage image, MonoString* filename, MonoString* text)
     {
+        auto& engine = InsightEngine::Instance();
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        Entity entity = InsightEngine::Instance().CreateEntity(str);
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
-        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
-        InsightEngine::Instance().AddComponent<ScriptComponent>(entity, ScriptComponent());
-        auto& script_component = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
+        Entity entity = engine.CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        engine.AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        engine.AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
+        auto& sprite_component = engine.GetComponent<Sprite>(entity);
+        auto& button_component = engine.GetComponent<ButtonComponent>(entity);
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+
         char* c_str2 = mono_string_to_utf8(filename);
         std::string str2(c_str2);
         mono_free(c_str2);
@@ -421,7 +423,7 @@ namespace IS {
         button_component.mIdleAlpha = 0.8f;
         button_component.mClickAlpha = 0.9f;
         button_component.mIdleScale = 0.9f;
-        button_component.mHoverScale = 1.1f;
+        button_component.mHoverScale = 1.05f;
 
         char* c_str3 = mono_string_to_utf8(text);
         std::string str3(c_str3);
@@ -686,7 +688,15 @@ namespace IS {
     static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
-        Text::addTextRenderCall(button_component.mButtonText, x, y, size, { color.x, color.y, color.z });
+        Text::addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
+    }
+
+    static void RenderText(MonoString* text, float x, float y, float size, Vector3D color)
+    {
+        char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        Text::addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
     }
 
     static int GetWindowWidth()
@@ -875,6 +885,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
         IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
         IS_ADD_INTERNAL_CALL(ButtonRenderText);
+        IS_ADD_INTERNAL_CALL(RenderText);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
 

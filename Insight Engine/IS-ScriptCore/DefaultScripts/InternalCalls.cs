@@ -258,7 +258,11 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int ButtonRenderText(int entity, float x, float y, float size, (float, float, float) color);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int RenderText(string text, float x, float y, float size, (float, float, float) color);
+
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetWindowWidth();
         

@@ -67,6 +67,7 @@
 				},
 				"ButtonState" : 0,
 				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
 				"ButtonType" : 0
 			},
 			"Name" : "Start Button",
@@ -130,6 +131,7 @@
 				},
 				"ButtonState" : 0,
 				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
 				"ButtonType" : 0
 			},
 			"Name" : "Exit Button",

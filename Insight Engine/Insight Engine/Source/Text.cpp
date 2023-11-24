@@ -218,9 +218,19 @@ namespace IS {
         }
         textHeight += lineHeight; // Add the height of the last line
 
+        auto& engine = InsightEngine::Instance();
+        auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+
+        if (!engine.IsFullScreen())
+        {
+           height += engine.GetTitleBarHeight();
+        }
+
         // Calculate the adjusted starting position for center alignment
-        float x = widthScalar * 1920 - textWidth / 2.0f;
-        float y = heightScalar * 1080 - textHeight / 2.0f;
+        float x = widthScalar * width - textWidth / 2.0f;
+        float y = heightScalar * height - textHeight / 2.0f;
+
+       
 
         // Reset the position for rendering
         // x = widthScalar * 1920;

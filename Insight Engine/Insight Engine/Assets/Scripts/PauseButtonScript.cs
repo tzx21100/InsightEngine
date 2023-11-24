@@ -13,24 +13,26 @@ namespace IS
 
         // Pause Menu
         static private int pause_menu_entity;
+        //static private int paused_text;
         static private int resume_entity;
         static private int how_to_play_entity;
         static private int setting_entity;
-        static private int home_entity;
+        //static private int home_entity;
         static private int quit_entity;
+        
 
         static SimpleImage pause_menu_image;
         static SimpleImage resume_image;
         static SimpleImage how_to_play_image;
         static SimpleImage setting_image;
-        static SimpleImage home_image;
+        //static SimpleImage home_image;
         static SimpleImage quit_image;
 
         static Vector2D pause_menu_pos = new Vector2D(0, 0);
         static Vector2D resume_pos = new Vector2D(0,0);
         static Vector2D how_to_play_pos = new Vector2D(0,0);
         static Vector2D setting_pos = new Vector2D(0,0);
-        static Vector2D home_pos = new Vector2D(0,0);
+        //static Vector2D home_pos = new Vector2D(0,0);
         static Vector2D quit_pos = new Vector2D(0,0);
 
         // Windows
@@ -42,6 +44,8 @@ namespace IS
 
         static public void Init(){
 
+            pause_enable = false;
+
             title_bar_height = InternalCalls.GetTitleBarHeight();
 
             // Pause Menu
@@ -49,24 +53,25 @@ namespace IS
             resume_image = InternalCalls.GetSpriteImage("button_frame.png");
             how_to_play_image = InternalCalls.GetSpriteImage("button_frame.png");
             setting_image = InternalCalls.GetSpriteImage("button_frame.png");
-            home_image = InternalCalls.GetSpriteImage("button_frame.png");
+            //home_image = InternalCalls.GetSpriteImage("button_frame.png");
             quit_image = InternalCalls.GetSpriteImage("exit_button_frame.png");
 
             pause_menu_entity = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
+            //paused_text = InternalCalls.CreateEntity("Paused Text");
 
-            resume_entity = InternalCalls.CreateEntityButton("Resume Game", resume_image, "Assets/Scripts/ResumeButtonScript.cs", "Resume Game");
-            how_to_play_entity = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "Assets/Scripts/HowToPlayScript.cs", "How To Play");
-            setting_entity = InternalCalls.CreateEntityButton("Setting", setting_image, "Assets/Scripts/SettingScript.cs", "Setting");
-            home_entity = InternalCalls.CreateEntityButton("Home", home_image, "Assets/Scripts/HomeButtonScript.cs", "Home");
-            quit_entity = InternalCalls.CreateEntityButton("Quit Game", quit_image, "Assets/Scripts/ExitButtonScript.cs", "Quit Game");
+            resume_entity = InternalCalls.CreateEntityButton("Resume Game", resume_image, "ResumeButtonScript", "resume game");
+            how_to_play_entity = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "HowToPlayScript", "how to play");
+            setting_entity = InternalCalls.CreateEntityButton("Setting", setting_image, "SettingScript", "settings");
+            //home_entity = InternalCalls.CreateEntityButton("Home", home_image, "HomeButtonScript", "Home");
+            quit_entity = InternalCalls.CreateEntityButton("Quit Game", quit_image, "ExitButtonScript", "quit game");
 
             InternalCalls.TransformSetScale(1000f, 1000f);
-            InternalCalls.TransformSetScaleEntity(2200f, 1300f, pause_menu_entity);
-            InternalCalls.TransformSetScaleEntity(300f, 100f, resume_entity);
-            InternalCalls.TransformSetScaleEntity(300f, 100f, how_to_play_entity);
-            InternalCalls.TransformSetScaleEntity(300f, 100f, setting_entity);
-            InternalCalls.TransformSetScaleEntity(300f, 100f, home_entity);
-            InternalCalls.TransformSetScaleEntity(200f, 70f, quit_entity);
+            InternalCalls.TransformSetScaleEntity(2200f, 1250f, pause_menu_entity);
+            InternalCalls.TransformSetScaleEntity(600f, 200f, resume_entity);
+            InternalCalls.TransformSetScaleEntity(450f, 150f, how_to_play_entity);
+            InternalCalls.TransformSetScaleEntity(450f, 150f, setting_entity);
+            //InternalCalls.TransformSetScaleEntity(300f, 100f, home_entity);
+            InternalCalls.TransformSetScaleEntity(300f, 100f, quit_entity);
 
             // Windows
             win_width = InternalCalls.GetWindowWidth();
@@ -85,12 +90,12 @@ namespace IS
             InternalCalls.TransformSetPosition(pos.x, pos.y - title_bar_height);
             
 
-            pause_menu_pos.Set(camera_pos.x, camera_pos.y + 50f);
-            resume_pos.Set(camera_pos.x - 10f, camera_pos.y + 350f);
-            how_to_play_pos.Set(camera_pos.x - 10f, camera_pos.y + 200f);
-            setting_pos.Set(camera_pos.x - 10f, camera_pos.y + 50f);
-            home_pos.Set(camera_pos.x - 10f, camera_pos.y - 100f);
-            quit_pos.Set(camera_pos.x - 10f, camera_pos.y - 250f);
+            pause_menu_pos.Set(camera_pos.x, camera_pos.y + 10f);
+            resume_pos.Set(camera_pos.x - 10f, camera_pos.y + 170f);
+            how_to_play_pos.Set(camera_pos.x - 10f, camera_pos.y - 20);
+            setting_pos.Set(camera_pos.x - 10f, camera_pos.y - 190f);
+            //home_pos.Set(camera_pos.x - 10f, camera_pos.y - 100f);
+            quit_pos.Set(camera_pos.x - 10f, camera_pos.y - 340f);
 
             if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
             {
@@ -139,12 +144,7 @@ namespace IS
         }
 
         static public void CleanUp(){
-            InternalCalls.DestroyEntity(pause_menu_entity);
-            InternalCalls.DestroyEntity(resume_entity);
-            InternalCalls.DestroyEntity(how_to_play_entity);
-            InternalCalls.DestroyEntity(setting_entity);
-            InternalCalls.DestroyEntity(home_entity);
-            InternalCalls.DestroyEntity(quit_entity);
+
         }
 
         static public void SetPauseMenuPosition()
@@ -156,14 +156,17 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(resume_pos.x, resume_pos.y, resume_entity);
             InternalCalls.TransformSetPositionEntity(how_to_play_pos.x, how_to_play_pos.y, how_to_play_entity);
             InternalCalls.TransformSetPositionEntity(setting_pos.x, setting_pos.y, setting_entity);
-            InternalCalls.TransformSetPositionEntity(home_pos.x, home_pos.y, home_entity);
+            //InternalCalls.TransformSetPositionEntity(home_pos.x, home_pos.y, home_entity);
             InternalCalls.TransformSetPositionEntity(quit_pos.x, quit_pos.y, quit_entity);
 
-            InternalCalls.ButtonRenderText(resume_entity, 0.5f, 0.7F, 30f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(how_to_play_entity, 0.5f, 0.6f, 30f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(setting_entity, 0.5f, 0.4f, 30f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(home_entity, 0.5f, 0.3f, 30f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(quit_entity, 0.5f, 0.2f, 20f, (1f, 1f, 1f));
+            // draw text
+            //InternalCalls.ButtonRenderText(paused_text, 0.49f, 0.72f, 30f, (1f, 1f, 1f));
+            InternalCalls.RenderText("paused", 0.495f, 0.7f, 30f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(resume_entity, 0.495f, 0.595f, 19f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(how_to_play_entity, 0.495f, 0.475f, 14f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(setting_entity, 0.495f, 0.37f, 14f, (1f, 1f, 1f));
+            //InternalCalls.ButtonRenderText(home_entity, 0.49f, 0.4f, 10f, (1f, 1f, 1f));
+            InternalCalls.ButtonRenderText(quit_entity, 0.495f, 0.28f, 9f, (1f, 1f, 1f));
         }
 
         static public void MoveAwayPauseMenuPosition()
@@ -172,7 +175,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, resume_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, how_to_play_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, setting_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, home_entity);
+            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, home_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, quit_entity);
         }
 
