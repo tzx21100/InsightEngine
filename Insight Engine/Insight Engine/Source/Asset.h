@@ -387,6 +387,7 @@ namespace IS {
         }
 
         void RefreshDirectiories() {
+            IS_PROFILE_FUNCTION();
             mSoundList.clear();
             mChannelList.clear();
             mImageList.clear();
