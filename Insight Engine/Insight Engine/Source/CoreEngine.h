@@ -208,10 +208,23 @@ namespace IS {
          */
         void EnableVSync(bool enabled = true);
 
-        bool IsMinimized();
+        /*!
+         * \brief Checks if window is minimized.
+         * \return Boolean flag indicating if window is minimized.
+         */
+        bool IsWindowMinimized();
 
+        /*!
+         * \brief Checks if window is focused.
+         * \return Boolean flag indicating if window is focused.
+         */
+        bool IsWindowFocused();
+
+        /*!
+         * \brief Get the height of the title bar of the window.
+         * \return The height of the title bar of the window.
+         */
         int GetTitleBarHeight();
-
 
         //abstracted function to make game script
         void CreateGameScript(const std::string& ScriptName);

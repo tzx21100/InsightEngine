@@ -770,6 +770,11 @@ namespace IS {
         window->SetFullScreen(toggle);
     }
 
+    static bool IsWindowFocused()
+    {
+        return InsightEngine::Instance().IsWindowFocused();
+    }
+
     static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
@@ -1139,6 +1144,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
         IS_ADD_INTERNAL_CALL(GetMonitorWidth);
         IS_ADD_INTERNAL_CALL(GetMonitorHeight);
+        IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
 
         // Yiming

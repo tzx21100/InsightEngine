@@ -192,7 +192,7 @@ namespace IS
 	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities)
 	{
 		InsightEngine& engine = InsightEngine::Instance();
-		if (engine.IsMinimized()) // from yiming
+		if (engine.IsWindowMinimized()) // from yiming
 			return;
 		// loop through all the entities
 		for (auto const& entity : Entities)

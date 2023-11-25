@@ -71,6 +71,7 @@ namespace IS {
         glfwSetWindowFocusCallback(native_window, [](GLFWwindow* window, int focused)
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            input.mWindow->SetFocused(focused ? true : false);
             if (!focused && InsightEngine::Instance().mRuntime)
             {
                 input.mWindow->SetMinimized();

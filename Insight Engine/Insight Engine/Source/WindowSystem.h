@@ -227,11 +227,39 @@ namespace IS {
          */
         void SetFullScreen(bool fullscreen = true);
 
+        /*!
+         * \brief Checks if window is minimized.
+         * \return Boolean flag indicating if window is minimized.
+         */
         bool IsMinimized() const { return mIsMinimized; }
-        void SetMinimized(bool focus) { mIsMinimized = focus; }
 
+        /*!
+         * \brief Save the window minimized state.
+         * \param focused Save the window minimized state.
+         */
+        void SetMinimized(bool minimized) { mIsMinimized = minimized; }
+
+        /*!
+         * \brief Checks if window is focused.
+         * \return Boolean flag indicating if window is focused.
+         */
+        bool IsFocused() const { return mIsFocused; }
+
+        /*!
+         * \brief Save the window focused state.
+         * \param focused Save the window focused state.
+         */
+        void SetFocused(bool focused) { mIsFocused = focused; }
+
+        /*!
+         * \brief Show a pop-up message box using Win32 API.
+         */
         void ShowMessageBox(std::string const& message);
 
+        /*!
+         * \brief Get the height of the title bar of the window.
+         * \return The height of the title bar of the window.
+         */
         int GetTitleBarHeight();
 
     private:
@@ -239,9 +267,10 @@ namespace IS {
         WindowProperties mProps; ///< The properties of the window.
         int mMonitorWidth; ///< The width of the monitor.
         int mMonitorHeight; ///< The height of the monitor.
-        int mWidthBeforeFullscreen;
-        int mHeightBeforeFullscreen;
-        bool mIsMinimized = false; ///< Boolean flag indicating if window is in focus.
+        int mWidthBeforeFullscreen; ///< The width of the window before entering fullscreen mode.
+        int mHeightBeforeFullscreen; ///< The height of the window before entering fullscreen mode.
+        bool mIsMinimized = false; ///< Boolean flag indicating if window is minimized.
+        bool mIsFocused = true; ///<  Boolean flag indicating if window is focused.
 
         /*!
          * \brief Loads window properties.
