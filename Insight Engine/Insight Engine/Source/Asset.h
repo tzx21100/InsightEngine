@@ -401,7 +401,7 @@ namespace IS {
             mSceneList.clear();
             mScriptList.clear();
             mParticleList.clear();
-            
+            mCurrentTexId = 0;
             Initialize();
         }
 
