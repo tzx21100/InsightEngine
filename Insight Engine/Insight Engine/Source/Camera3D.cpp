@@ -60,6 +60,7 @@ namespace IS {
 		auto& engine = InsightEngine::Instance();
 		auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
+		mProjectionType = ProjectionType_Othographic;
 		mFront = glm::vec3(0.f, 0.f, -1.f);
 		mPitch = 0.f;
 		mYaw = -90.f;
