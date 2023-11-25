@@ -181,8 +181,14 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static SimpleVector2D RigidBodyGetVelocity();
 
+                [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float RigidBodyGetVelocityY();
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodySetForce(float x, float y);                
+        internal extern static void RigidBodySetForce(float x, float y);               
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodySetForceX(float x);                
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodySetBodyTypeEntity(short body_type, int entity);    

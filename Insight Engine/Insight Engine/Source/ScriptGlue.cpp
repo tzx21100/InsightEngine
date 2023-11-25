@@ -36,7 +36,7 @@ namespace IS {
      * \param name The message to log.
      * \param param The integer parameter to log.
      */
-    static void NativeLog(MonoString* name, int param) {
+    static void NativeLog(MonoString* name, float param) {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
@@ -111,6 +111,12 @@ namespace IS {
         Vector2D vec(x, y);
         //body_component.mVelocity=vec;
         body_component.SetVelocity(vec);
+    }     
+    
+    static void RigidBodySetForceX(float x) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        body_component.mVelocity.x = x;
     }    
     
     static void RigidBodySetVelocityEntity(float x, float y ,int entity) {
@@ -125,6 +131,12 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
         return SimpleVector2D(body_component.mVelocity.x,body_component.mVelocity.y);
+    }
+
+    static float RigidBodyGetVelocityY() {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return body_component.mVelocity.y;
     }
 
     static void TransformSetPosition(float x, float y) {
@@ -906,10 +918,12 @@ namespace IS {
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);
         IS_ADD_INTERNAL_CALL(RigidBodySetForce);
+        IS_ADD_INTERNAL_CALL(RigidBodySetForceX);
         IS_ADD_INTERNAL_CALL(RigidBodySetVelocityEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityY);
         IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetBodyTypeEntity);
 

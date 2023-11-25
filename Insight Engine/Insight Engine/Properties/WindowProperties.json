@@ -7,8 +7,8 @@
 		"TargetFPS" : 60,
 		"Title" : "Insight Engine",
 		"Vsync" : true,
-		"Width" : 1920,
-		"Xpos" : 320,
+		"Width" : 1912,
+		"Xpos" : 324,
 		"Ypos" : 35
 	}
 }

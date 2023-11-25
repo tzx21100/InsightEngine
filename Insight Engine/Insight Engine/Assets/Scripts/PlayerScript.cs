@@ -36,8 +36,7 @@ namespace IS
         static public int SAVE_POINT_ID = 0;
 
         //public player variables
-        static private float footstep_timer = 0.12f;
-        static private float footstep_timer_set = 0.12f;
+
         static private int previous_footstep_frame = 0;
         //static private bool play_footstep = false;
 
@@ -513,6 +512,28 @@ namespace IS
             {
                 if (!isJumping)
                 {
+
+                    //landing
+                    if (initial_land == false)
+                    {
+                        float yvel = InternalCalls.RigidBodyGetVelocityY();
+                        InternalCalls.NativeLog("Y VELOCITY: ", yvel);
+                        float vol = -yvel / 3200f;
+                        
+                        if (yvel < -3200f ) { vol= 1f; }
+                        InternalCalls.NativeLog("VOLUME: ", vol);
+                        vol = CustomMath.max(vol, 0.1f);
+                       // InternalCalls.NativeLog("VOLUME AFTER MAX: ", vol);
+                        vol = CustomMath.min(vol, 1f);
+                       // InternalCalls.NativeLog("VOLUME AFTER MIN: ", vol);
+                        PlayRandomFootstep(vol);
+                        initial_land = true;
+                        InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
+                        InternalCalls.TransformSetScaleEntity(CustomMath.max(vol*400, 200f), CustomMath.max(vol * 400, 200f), land_entity);
+                        InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y + (InternalCalls.GetTransformScalingEntity(land_entity).y - 200f) / 2f, land_entity);
+                        InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, land_entity);
+                    }
+
                     float aangle = InternalCalls.GetTransformRotation();
                     /*                if (hori_movement != 0) {aangle+=180f; }*/
                     Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
@@ -531,16 +552,6 @@ namespace IS
                         InternalCalls.TransformSetRotation(0, 0);
                     }
 
-                    //landing
-                    if (initial_land == false)
-                    {
-                        initial_land = true;
-                        InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        InternalCalls.TransformSetScaleEntity(CustomMath.max(200 * -InternalCalls.RigidBodyGetVelocity().y / 400, 200f), CustomMath.max(200 * -InternalCalls.RigidBodyGetVelocity().y / 800, 200f), land_entity);
-                        InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y + (InternalCalls.GetTransformScalingEntity(land_entity).y - 200f) / 2f, land_entity);
-                        InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, land_entity);
-                    }
-
 
 
                     jump_amount = jump_amount_set;
@@ -557,7 +568,7 @@ namespace IS
                     if ((frame==2 || frame == 8) && hori_movement != 0 && frame!=previous_footstep_frame) {
                         //InternalCalls.Anim
                         InternalCalls.NativeLog("Footsteps called at frame: ", frame);
-                        PlayRandomFootstep();
+                        PlayRandomFootstep(0.2f);
                         previous_footstep_frame = frame;
                         
 
@@ -588,7 +599,7 @@ namespace IS
                 InternalCalls.RigidBodyAddForce(Xforce * InternalCalls.GetDeltaTime(), Yforce * InternalCalls.GetDeltaTime());
                 if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > 700)
                 {
-                    InternalCalls.RigidBodySetForce(700 * hori_movement, InternalCalls.RigidBodyGetVelocity().y);
+                    InternalCalls.RigidBodySetForceX(700 * hori_movement);
                 }
                 initial_land = false;
             }
@@ -729,7 +740,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 2f;
+            float distanceBelow = height / 1.8f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
@@ -848,9 +859,9 @@ namespace IS
 
 
         static MyRandom rando_footsteps = new MyRandom(12312415);
-        static private void PlayRandomFootstep()
+        static private void PlayRandomFootstep(float volume)
         {
-            float volume = 0.3f;
+
             float num = rando_footsteps.NextFloat();
             if (num <= 0.1f)
             {
