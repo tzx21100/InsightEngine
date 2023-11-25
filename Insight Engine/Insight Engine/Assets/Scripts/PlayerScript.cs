@@ -80,7 +80,9 @@ namespace IS
 
         static private int land_entity;
         static private int jump_entity;
+#pragma warning disable CS0169 // variable never used
         static private bool land_exists;
+#pragma warning restore CS0169
         static private int death_entity;
 
         static public int PLAYER_ID;
@@ -108,7 +110,10 @@ namespace IS
         static private float dash_set = 0.2f;
         static private bool canDash = false;
         static public bool isDashing;
+#pragma warning disable CS0169 // variable never used
         static private float dashAngle;
+#pragma warning restore CS0169
+
         static private float dashSpeed = 5000f;
 
         static public bool isGrounded;

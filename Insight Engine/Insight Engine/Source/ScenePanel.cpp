@@ -495,6 +495,9 @@ namespace IS {
 
         auto& engine = InsightEngine::Instance();
         Entity selected_entity = mEditorLayer.GetSelectedEntity();
+        if (!engine.HasComponent<Transform>(selected_entity))
+            return;
+
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         
         ImGuizmo::SetOrthographic(camera.mProjectionType == ProjectionType_Othographic ? true : false);
