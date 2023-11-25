@@ -1178,7 +1178,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.01409052312374115,
+						"frame_timer" : 0.055646520107984543,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1249,7 +1249,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.03230704739689827,
+						"frame_timer" : 0.073863029479980469,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2145,7 +2145,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.002579808235168457,
+						"frame_timer" : 0.044135801494121552,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2316,7 +2316,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.11632852256298065,
+						"frame_timer" : 0.15788453817367554,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -5622,9 +5622,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 11.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.058893118053674698,
+						"frame_timer" : 0.017124202102422714,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -6029,7 +6029,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.01409052312374115,
+						"frame_timer" : 0.055646520107984543,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -7708,7 +7708,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0052299275994300842,
+						"frame_timer" : 0.046792864799499512,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7756,7 +7756,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0052299275994300842,
+						"frame_timer" : 0.046792864799499512,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7804,7 +7804,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0052299275994300842,
+						"frame_timer" : 0.046792864799499512,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7852,7 +7852,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0052299275994300842,
+						"frame_timer" : 0.046792864799499512,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7900,7 +7900,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0052299275994300842,
+						"frame_timer" : 0.046792864799499512,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7948,7 +7948,7 @@
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 4.0,
-						"frame_timer" : 0.011741422116756439,
+						"frame_timer" : 0.053305868059396744,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -7996,7 +7996,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.022239904850721359,
+						"frame_timer" : 0.063802808523178101,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8044,7 +8044,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.024751629680395126,
+						"frame_timer" : 0.066314533352851868,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8092,7 +8092,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.010802902281284332,
+						"frame_timer" : 0.052367348223924637,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8138,9 +8138,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.059397447854280472,
+						"frame_timer" : 0.017628531903028488,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8188,7 +8188,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017693769186735153,
+						"frame_timer" : 0.059251908212900162,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8234,9 +8234,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.06176995113492012,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.020001035183668137,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8282,9 +8282,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.048622786998748779,
+						"frame_timer" : 0.0068479552865028381,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8332,7 +8332,7 @@
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 5.0,
-						"frame_timer" : 0.037907719612121582,
+						"frame_timer" : 0.079470649361610413,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8378,9 +8378,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 2.0,
-						"frame_timer" : 0.080996587872505188,
+						"frame_timer" : 0.039227113127708435,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8426,9 +8426,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 2.0,
-						"frame_timer" : 0.059709791094064713,
+						"frame_timer" : 0.017940875142812729,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8476,7 +8476,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.037742495536804199,
+						"frame_timer" : 0.07930542528629303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8522,9 +8522,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.065452501177787781,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.023677688091993332,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8572,7 +8572,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.020275678485631943,
+						"frame_timer" : 0.061839137226343155,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8618,9 +8618,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.074434272944927216,
+						"frame_timer" : 0.032663878053426743,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8668,7 +8668,7 @@
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 5.0,
-						"frame_timer" : 0.016335494816303253,
+						"frame_timer" : 0.057893995195627213,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8716,7 +8716,7 @@
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 4.0,
-						"frame_timer" : 0.0088137760758399963,
+						"frame_timer" : 0.050378222018480301,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8762,9 +8762,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.072358913719654083,
+						"frame_timer" : 0.03058851882815361,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8812,7 +8812,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 2.0,
-						"frame_timer" : 0.01567145437002182,
+						"frame_timer" : 0.057229954749345779,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8860,7 +8860,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034814015030860901,
+						"frame_timer" : 0.076372154057025909,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8908,7 +8908,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.030413787811994553,
+						"frame_timer" : 0.071977607905864716,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8956,7 +8956,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.020275678485631943,
+						"frame_timer" : 0.061839137226343155,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9004,7 +9004,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 3.0,
-						"frame_timer" : 0.020275678485631943,
+						"frame_timer" : 0.061839137226343155,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9141,9 +9141,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.058521408587694168,
+						"frame_timer" : 0.016752492636442184,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9282,7 +9282,7 @@
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038070186972618103,
+						"frame_timer" : 0.079633116722106934,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9597,7 +9597,146 @@
 				"TransformWorldPositionX" : 105.97578430175781,
 				"TransformWorldPositionY" : -148.33781433105469
 			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 0.80000001192092896,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "Near-Fragments_SFX.wav",
+				"AudioVolumeLevel" : 0.38999998569488525
+			},
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : -3891.10498046875,
+						"Y" : 1274.185546875
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -140.91999816894531,
+							"y" : 120.89999389648438
+						},
+						{
+							"x" : 140.91999816894531,
+							"y" : 120.89999389648438
+						},
+						{
+							"x" : 140.91999816894531,
+							"y" : -120.89999389648438
+						},
+						{
+							"x" : -140.91999816894531,
+							"y" : -120.89999389648438
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Light" : 
+			{
+				"LightHue" : 
+				{
+					"B" : 1.0,
+					"G" : 0.52806699275970459,
+					"R" : 0.20675104856491089
+				},
+				"LightIntensity" : 0.77999997138977051,
+				"LightOffset" : 
+				{
+					"X" : 0.0,
+					"Y" : 0.0
+				},
+				"LightRender" : true,
+				"LightSize" : 1345.0
+			},
+			"Name" : "Fragment",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 68148.90625,
+				"RigidBodyBodyType" : 6,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "FragmentScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "fragment_anim 4R3C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 19,
+				"SpriteTextureHeight" : 1860,
+				"SpriteTextureIndex" : 18,
+				"SpriteTextureWidth" : 1626,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 281.83999633789062,
+				"SpriteTransformScalingY" : 241.79998779296875,
+				"SpriteTransformWorldPositionX" : -3891.10498046875,
+				"SpriteTransformWorldPositionY" : 1274.185546875,
+				"animations" : 
+				[
+					{
+						"Name" : "Frag",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.3333333432674408,
+						"frame_dimension_y" : 0.25,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.016752492636442184,
+						"time_per_frame" : 0.083333335816860199,
+						"x_frames" : 3,
+						"y_frames" : 4
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 281.83999633789062,
+				"TransformScalingY" : 241.79998779296875,
+				"TransformWorldPositionX" : -3891.10498046875,
+				"TransformWorldPositionY" : 1274.185546875
+			}
 		}
 	],
-	"EntityAmount" : 146
+	"EntityAmount" : 147
 }
