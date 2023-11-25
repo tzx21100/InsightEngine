@@ -219,7 +219,7 @@ namespace IS {
         textHeight += lineHeight; // Add the height of the last line
 
         auto& engine = InsightEngine::Instance();
-        auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+        auto [width, height] = engine.GetWindowSize();
 
         if (!engine.IsFullScreen())
         {

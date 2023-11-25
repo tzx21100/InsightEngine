@@ -39,6 +39,9 @@ namespace IS {
     {
         LoadProperties();
 
+        mWidthBeforeFullscreen  = mProps.mWidth;
+        mHeightBeforeFullscreen = mProps.mHeight;
+
         // Initialize GLFW library
         bool success = glfwInit();
         if (!success)
@@ -203,14 +206,16 @@ namespace IS {
         {
             if (!mProps.mMaximized)
             {
-                mProps.mXpos = (mMonitorWidth - mProps.mWidth) / 2;
-                mProps.mYpos = (mMonitorHeight - mProps.mHeight) / 2;
+                mProps.mXpos = (mMonitorWidth - mWidthBeforeFullscreen) / 2;
+                mProps.mYpos = (mMonitorHeight - mHeightBeforeFullscreen) / 2;
             }
 
-            glfwSetWindowMonitor(mWindow, nullptr, mProps.mXpos, mProps.mYpos, mProps.mWidth, mProps.mHeight, GLFW_DONT_CARE);
+            glfwSetWindowMonitor(mWindow, nullptr, mProps.mXpos, mProps.mYpos, mWidthBeforeFullscreen, mHeightBeforeFullscreen, GLFW_DONT_CARE);
             return;
         }
 
+        mWidthBeforeFullscreen = mProps.mWidth;
+        mHeightBeforeFullscreen = mProps.mHeight;
         // Borderless fullscreen window mode
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);

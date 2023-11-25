@@ -52,7 +52,7 @@ namespace IS {
             bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
 
             WindowProperties() = default;
-            WindowProperties(std::string const& title, int width, int height, int fps, bool vsync = true, bool maximized = false, bool fullscreen = true)
+            WindowProperties(std::string const& title, int width, int height, int fps, bool vsync = true, bool maximized = false, bool fullscreen = false)
                 : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mTargetFPS(fps), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
         };
 
@@ -239,6 +239,8 @@ namespace IS {
         WindowProperties mProps; ///< The properties of the window.
         int mMonitorWidth; ///< The width of the monitor.
         int mMonitorHeight; ///< The height of the monitor.
+        int mWidthBeforeFullscreen;
+        int mHeightBeforeFullscreen;
         bool mIsMinimized = false; ///< Boolean flag indicating if window is in focus.
 
         /*!
