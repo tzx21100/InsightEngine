@@ -1,0 +1,57 @@
+{
+	"ButtonComponent" : 
+	{
+		"ButtonClickAlpha" : 0.89999997615814209,
+		"ButtonHoverAlpha" : 1.0,
+		"ButtonHoverScale" : 1.0499999523162842,
+		"ButtonIdleAlpha" : 0.80000001192092896,
+		"ButtonIdleScale" : 0.89999997615814209,
+		"ButtonImageName" : "",
+		"ButtonSize" : 
+		{
+			"X" : 300.0,
+			"Y" : 100.0
+		},
+		"ButtonState" : 0,
+		"ButtonText" : "quit game",
+		"ButtonTextScale" : 0.0,
+		"ButtonType" : 0
+	},
+	"Name" : "Quit Game",
+	"Script" : 
+	{
+		"ScriptName" : "ExitButtonScript"
+	},
+	"Signature" : "00000000000000000000000001100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 0.80000001192092896,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "exit_button_frame.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 17,
+		"SpriteTextureHeight" : 221,
+		"SpriteTextureIndex" : 16,
+		"SpriteTextureWidth" : 444,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 270.0,
+		"SpriteTransformScalingY" : 90.0,
+		"SpriteTransformWorldPositionX" : 9999.0,
+		"SpriteTransformWorldPositionY" : 9999.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 270.0,
+		"TransformScalingY" : 90.0,
+		"TransformWorldPositionX" : 9999.0,
+		"TransformWorldPositionY" : 9999.0
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"Name" : "How To Play",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "how_to_play_image.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 22,
+		"SpriteTextureHeight" : 1080,
+		"SpriteTextureIndex" : 21,
+		"SpriteTextureWidth" : 1920,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 2560.0,
+		"SpriteTransformScalingY" : 1440.0,
+		"SpriteTransformWorldPositionX" : 9999.0,
+		"SpriteTransformWorldPositionY" : 9999.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 2560.0,
+		"TransformScalingY" : 1440.0,
+		"TransformWorldPositionX" : 9999.0,
+		"TransformWorldPositionY" : 9999.0
+	}
+}

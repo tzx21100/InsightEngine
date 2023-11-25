@@ -1,0 +1,74 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -1542.53955078125,
+				"Y" : 2829.46337890625
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -16.666667938232422,
+					"y" : 1.0
+				},
+				{
+					"x" : 16.666667938232422,
+					"y" : 1.0
+				},
+				{
+					"x" : 16.666667938232422,
+					"y" : -1.0
+				},
+				{
+					"x" : -16.666667938232422,
+					"y" : -1.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : false
+	},
+	"Name" : "FeetCollider",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 66.666671752929688,
+		"RigidBodyBodyType" : 3,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Signature" : "00000000000000000000010000000110",
+	"Transform" : 
+	{
+		"TransformRotation" : 9.0616455078125,
+		"TransformScalingX" : 33.333335876464844,
+		"TransformScalingY" : 2.0,
+		"TransformWorldPositionX" : -1542.53955078125,
+		"TransformWorldPositionY" : 2829.46337890625
+	}
+}

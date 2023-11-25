@@ -1,0 +1,49 @@
+{
+	"Name" : "jump",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "woosh_vfx 3R4C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 55,
+		"SpriteTextureHeight" : 1458,
+		"SpriteTextureIndex" : 54,
+		"SpriteTextureWidth" : 3364,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 0.0,
+		"SpriteTransformScalingY" : 0.0,
+		"SpriteTransformWorldPositionX" : -999.0,
+		"SpriteTransformWorldPositionY" : -9999.0,
+		"animations" : 
+		[
+			{
+				"Name" : "",
+				"animation_duration" : 0.30000001192092896,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.3333333432674408,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.018304716795682907,
+				"time_per_frame" : 0.02500000037252903,
+				"x_frames" : 4,
+				"y_frames" : 3
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 0.0,
+		"TransformScalingY" : 0.0,
+		"TransformWorldPositionX" : -999.0,
+		"TransformWorldPositionY" : -9999.0
+	}
+}

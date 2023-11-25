@@ -1,0 +1,57 @@
+{
+	"ButtonComponent" : 
+	{
+		"ButtonClickAlpha" : 0.89999997615814209,
+		"ButtonHoverAlpha" : 1.0,
+		"ButtonHoverScale" : 1.0499999523162842,
+		"ButtonIdleAlpha" : 0.80000001192092896,
+		"ButtonIdleScale" : 0.89999997615814209,
+		"ButtonImageName" : "",
+		"ButtonSize" : 
+		{
+			"X" : 600.0,
+			"Y" : 200.0
+		},
+		"ButtonState" : 0,
+		"ButtonText" : "resume game",
+		"ButtonTextScale" : 0.0,
+		"ButtonType" : 0
+	},
+	"Name" : "Resume Game",
+	"Script" : 
+	{
+		"ScriptName" : "ResumeButtonScript"
+	},
+	"Signature" : "00000000000000000000000001100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 0.80000001192092896,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "button_frame.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 7,
+		"SpriteTextureHeight" : 360,
+		"SpriteTextureIndex" : 6,
+		"SpriteTextureWidth" : 1026,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 540.0,
+		"SpriteTransformScalingY" : 180.0,
+		"SpriteTransformWorldPositionX" : 9999.0,
+		"SpriteTransformWorldPositionY" : 9999.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 540.0,
+		"TransformScalingY" : 180.0,
+		"TransformWorldPositionX" : 9999.0,
+		"TransformWorldPositionY" : 9999.0
+	}
+}
