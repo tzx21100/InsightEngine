@@ -44,7 +44,9 @@ namespace IS
         Ghost,
         WallClimb,
         Spikes,
-        Ignore
+        Ignore,
+        Stone,
+        Grass
     };
 
     /**

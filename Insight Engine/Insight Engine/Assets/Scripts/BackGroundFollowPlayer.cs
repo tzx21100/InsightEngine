@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection.Metadata;
+using static System.Formats.Asn1.AsnWriter;
+using System.Drawing;
 
 namespace IS
 {
@@ -14,7 +16,7 @@ namespace IS
 
 
         static float leaves_timer=3f;
-        static int leaves_amount;
+        static int leaves_amount=50;
         static float leaves_timer_set=3f;
 
         static SimpleImage bg_image1;
@@ -44,6 +46,7 @@ namespace IS
 
 
         }
+
 
         static public void Update()
         {
@@ -83,7 +86,21 @@ namespace IS
             leaves_timer -= InternalCalls.GetDeltaTime();
             if(leaves_timer <= 0 )
             {
-                InternalCalls.GameSpawnParticleFrames(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y + 4000f, 1, 0, "ParticleLeaves.txt");
+                for (int i = 0;i<leaves_amount;i++)
+                {
+                    int col= (int)(InternalCalls.GetRandomFloat()*9);
+                    float direction =InternalCalls.GetRandomFloat() * 360;
+                    float size = InternalCalls.GetRandomFloat() * 150;
+                    float speed = InternalCalls.GetRandomFloat() * 800f;
+                    float lifespan = InternalCalls.GetRandomFloat() * 12f;
+                    InternalCalls.GameSpawnParticleExtraFrames(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y+2000f,
+                        direction, size, 0f, 1f,
+                        0f, lifespan, speed, "ParticleLeaves.txt"
+                        ,col,0);
+
+                }
+
+                leaves_timer = leaves_timer_set;
             }
 
 

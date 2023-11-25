@@ -208,8 +208,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 3206.095947265625,
-						"Y" : 1963.3984375
+						"X" : 3210.9599609375,
+						"Y" : 1980.427978515625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -284,8 +284,8 @@
 				"SpriteTransformRotation" : 74.05963134765625,
 				"SpriteTransformScalingX" : 1543.61328125,
 				"SpriteTransformScalingY" : 90.750869750976562,
-				"SpriteTransformWorldPositionX" : 3206.095947265625,
-				"SpriteTransformWorldPositionY" : 1963.3984375,
+				"SpriteTransformWorldPositionX" : 3210.9599609375,
+				"SpriteTransformWorldPositionY" : 1980.427978515625,
 				"animations" : []
 			},
 			"Transform" : 
@@ -293,8 +293,8 @@
 				"TransformRotation" : 74.05963134765625,
 				"TransformScalingX" : 1543.61328125,
 				"TransformScalingY" : 90.750869750976562,
-				"TransformWorldPositionX" : 3206.095947265625,
-				"TransformWorldPositionY" : 1963.3984375
+				"TransformWorldPositionX" : 3210.9599609375,
+				"TransformWorldPositionY" : 1980.427978515625
 			}
 		},
 		{
@@ -498,6 +498,10 @@
 				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -887,6 +891,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -1079,6 +1087,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -1207,9 +1219,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.16579365730285645,
+						"frame_timer" : 0.076069891452789307,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1321,9 +1333,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 3.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017343450337648392,
+						"frame_timer" : 0.094286471605300903,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1402,6 +1414,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -1498,6 +1514,10 @@
 				"RigidbodyGravityScale" : 0.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
 			},
 			"Sprite" : 
 			{
@@ -1712,6 +1732,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -1807,6 +1831,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -1904,6 +1932,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -2000,6 +2032,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -2095,6 +2131,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -2224,9 +2264,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.15428294241428375,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.064559251070022583,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2305,6 +2345,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -2434,9 +2478,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.10136494040489197,
+						"frame_timer" : 0.011641353368759155,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -3421,6 +3465,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -3461,7 +3509,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : -630.010009765625,
-						"Y" : -401.89401245117188
+						"Y" : -401.89398193359375
 					},
 					"BoxColliderOffset" : 
 					{
@@ -3517,6 +3565,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -3537,7 +3589,7 @@
 				"SpriteTransformScalingX" : 740.49993896484375,
 				"SpriteTransformScalingY" : 282.5001220703125,
 				"SpriteTransformWorldPositionX" : -630.010009765625,
-				"SpriteTransformWorldPositionY" : -385.79400634765625,
+				"SpriteTransformWorldPositionY" : -385.79397583007812,
 				"animations" : []
 			},
 			"Transform" : 
@@ -3546,7 +3598,7 @@
 				"TransformScalingX" : 740.49993896484375,
 				"TransformScalingY" : 282.5001220703125,
 				"TransformWorldPositionX" : -630.010009765625,
-				"TransformWorldPositionY" : -385.79400634765625
+				"TransformWorldPositionY" : -385.79397583007812
 			}
 		},
 		{
@@ -3613,6 +3665,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -3647,6 +3703,10 @@
 		},
 		{
 			"Name" : "Imported Entity",
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -4222,6 +4282,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -5371,6 +5435,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -5501,6 +5569,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -5560,7 +5632,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 1,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5694,9 +5766,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 3.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.030328895896673203,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.024057295173406601,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
 						"y_frames" : 3
@@ -6130,9 +6202,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.16579365730285645,
+						"frame_timer" : 0.076069891452789307,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -7199,6 +7271,10 @@
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
 			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -7294,6 +7370,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -7490,6 +7570,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -7789,9 +7873,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073448561131954193,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.067171014845371246,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7837,9 +7921,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073448561131954193,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.067171014845371246,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7885,9 +7969,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073448561131954193,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.067171014845371246,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7933,9 +8017,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073448561131954193,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.067171014845371246,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7981,9 +8065,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073448561131954193,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.067171014845371246,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8029,9 +8113,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.079951837658882141,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.073680661618709564,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8077,9 +8161,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0071266219019889832,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.00085050612688064575,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8125,9 +8209,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0096601322293281555,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.0033674314618110657,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8173,9 +8257,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.079034380614757538,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.07274242490530014,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8221,9 +8305,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.044300466775894165,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.038013681769371033,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8270,8 +8354,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.0025770142674446106,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.079645171761512756,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8317,9 +8401,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.046646460890769958,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 4.0,
+						"frame_timer" : 0.040375888347625732,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8365,9 +8449,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.033485338091850281,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.027229767292737961,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8413,9 +8497,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.022786539047956467,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.016518376767635345,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8461,9 +8545,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.065874338150024414,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.059604812413454056,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8509,9 +8593,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.044613629579544067,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 4.0,
+						"frame_timer" : 0.038322672247886658,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8557,9 +8641,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.022617395967245102,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.016353152692317963,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8605,9 +8689,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.050315830856561661,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.044059529900550842,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8654,8 +8738,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.0051649287343025208,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.082228273153305054,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8701,9 +8785,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.059342164546251297,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.053048837929964066,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8750,8 +8834,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.0011998936533927917,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.078277923166751862,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8797,9 +8881,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.077052496373653412,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.070763669908046722,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8845,9 +8929,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.057243380695581436,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.050969544798135757,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8894,8 +8978,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.00053519755601882935,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.077611781656742096,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8941,9 +9025,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.019691597670316696,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.013431273400783539,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8989,9 +9073,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.015280686318874359,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.0090219452977180481,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9038,8 +9122,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.0051649287343025208,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.082228273153305054,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9086,8 +9170,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.0051649287343025208,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.082228273153305054,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9169,7 +9253,7 @@
 					"X" : 0.0,
 					"Y" : 0.0
 				},
-				"LightRender" : true,
+				"LightRender" : false,
 				"LightSize" : 1345.0
 			},
 			"Name" : "Fragment",
@@ -9224,9 +9308,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.043432414531707764,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.037137970328330994,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9363,9 +9447,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.054780770093202591,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.048511043190956116,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9447,7 +9531,7 @@
 					"X" : 0.0,
 					"Y" : 0.0
 				},
-				"LightRender" : true,
+				"LightRender" : false,
 				"LightSize" : 1345.0
 			},
 			"Name" : "Fragment",
@@ -9502,9 +9586,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.022950809448957443,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.016680832952260971,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9583,6 +9667,10 @@
 				"RigidbodyGravityScale" : 1.0,
 				"mDynamicFriction" : 0.40000000596046448,
 				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GrassCollider"
 			},
 			"Sprite" : 
 			{
@@ -9715,7 +9803,107 @@
 				"TransformWorldPositionX" : 3503.567138671875,
 				"TransformWorldPositionY" : -400.16354370117188
 			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 105.97578430175781,
+						"Y" : -148.33781433105469
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 0.98000001907348633
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -109.93592071533203,
+							"y" : 91.625175476074219
+						},
+						{
+							"x" : 109.93592071533203,
+							"y" : 91.625175476074219
+						},
+						{
+							"x" : 109.93592071533203,
+							"y" : -91.625175476074219
+						},
+						{
+							"x" : -109.93592071533203,
+							"y" : -91.625175476074219
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Platform",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : -981.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 1489337.5,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Environment without grass01.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 13,
+				"SpriteTextureHeight" : 1152,
+				"SpriteTextureIndex" : 12,
+				"SpriteTextureWidth" : 476,
+				"SpriteTransformRotation" : 33.26019287109375,
+				"SpriteTransformScalingX" : 219.87184143066406,
+				"SpriteTransformScalingY" : 186.99015808105469,
+				"SpriteTransformWorldPositionX" : 105.97578430175781,
+				"SpriteTransformWorldPositionY" : -148.33781433105469,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 33.26019287109375,
+				"TransformScalingX" : 219.87184143066406,
+				"TransformScalingY" : 186.99015808105469,
+				"TransformWorldPositionX" : 105.97578430175781,
+				"TransformWorldPositionY" : -148.33781433105469
+			}
 		}
 	],
-	"EntityAmount" : 146
+	"EntityAmount" : 147
 }
