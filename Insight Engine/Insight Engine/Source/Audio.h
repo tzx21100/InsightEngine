@@ -44,6 +44,8 @@ namespace IS {
     class AudioEmitter : public IComponent {
     public:
         bool isLoop;
+        bool isPlaying;
+        FMOD::Channel* Channel;
         float falloff_factor=1;
         float volumeLevel=1;
         float pitch = 1;
@@ -195,11 +197,15 @@ namespace IS {
          * \return A pointer to the FMOD::Channel representing the played sound.
          */
         FMOD::Channel* PlaySound(FMOD::Sound* sound, bool loop, float volume, float pitch);
+        FMOD::Channel* PlaySoundCheck(FMOD::Sound* Ssound, FMOD::Channel* channel, bool loop, float volume, float pitch);
 
     private:
-        FMOD::System* system;
-        FMOD::Sound* sound;
-        FMOD::Channel* channel;
+        FMOD::System* mSystem;
+        FMOD::Sound* mSound;
+        FMOD::Channel* mChannel;
+
+        std::vector<FMOD::Channel*> mChannelList;
+
     };
 
 
@@ -207,10 +213,7 @@ namespace IS {
     class AudioEmitterSystem :public ParentSystem {
     public:
         //override parent sys
-        void Update([[maybe_unused]] float deltaTime) override {
-
-
-        }
+        void Update([[maybe_unused]] float deltaTime) override;
         std::string GetName() override { return "AudioEmitter"; }
         void Initialize() override {}
         void HandleMessage(const Message& message) override {

@@ -508,7 +508,7 @@ namespace IS
                     {
                         float yvel = InternalCalls.RigidBodyGetVelocityY();
                         float vol = -yvel / 3200f;
-                        
+                        InternalCalls.NativeLog("yvel: ", yvel);
                         if (yvel < -3200f ) { vol= 1f; }
                         InternalCalls.NativeLog("VOLUME: ", vol);
                         vol = CustomMath.max(vol, 0.1f);
