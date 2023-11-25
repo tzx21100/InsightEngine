@@ -1,3 +1,21 @@
+/* Start Header **************************************************************/
+/*!
+ * \file Vector4D.cpp
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date 25-11-2023
+ * \brief
+ * Definition of the Vector4D class for representing 4D vectors and
+ * provides various vector operations.
+ *
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ */
+ /* End Header ****************************************************************/
+/*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Vector4D.h"
 
