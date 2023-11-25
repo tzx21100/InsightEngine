@@ -77,6 +77,9 @@ namespace IS {
             glfwTerminate();
         }
 
+        // Set icon
+        AssetManager::LoadWindowIcon(mWindow, "Assets/Icons/Game Logo.png");
+
         // Default setting
         glfwMakeContextCurrent(mWindow);
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
