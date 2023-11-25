@@ -362,4 +362,29 @@ namespace IS {
         return sepia_image;
     }
 
+
+    void AssetManager::RefreshDirectiories() {
+        IS_PROFILE_FUNCTION();
+        std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
+        for (auto& img : mImageList) {
+            graphics->deleteTexture(img.second);
+        }
+
+        mSoundList.clear();
+        mChannelList.clear();
+        mImageList.clear();
+        mImageNames.clear();
+        mIconNames.clear();
+        mPrefabList.clear();
+        mSceneList.clear();
+        mScriptList.clear();
+        mParticleList.clear();
+        mCurrentTexId = 0;
+
+        Initialize();
+        InsightEngine::Instance().mRuntime = false;
+        SceneManager::Instance().ReloadActiveScene();
+
+
+    }
 }

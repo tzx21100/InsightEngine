@@ -115,6 +115,9 @@ namespace IS {
 		static void setLineWidth(float lWidth) { glLineWidth(lWidth); }
 
 		
+		static void deleteTexture(Image& image);
+
+
 		/// Static objects ///
 
 		// Frame Buffer

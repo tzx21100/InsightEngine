@@ -400,4 +400,16 @@ namespace IS {
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }
 
     void ISGraphics::ResizeFramebuffer(GLuint width, GLuint height) { mFramebuffer->Resize(width, height); }
+
+
+    //delete textures
+    void ISGraphics::deleteTexture(Image& image) {
+        if (image.texture_id != 0) {
+            glDeleteTextures(1, &image.texture_id);
+            image.texture_id = 0; // Reset the texture ID to indicate that the texture has been deleted
+        }
+    }
+
+
+
 } // end namespace IS

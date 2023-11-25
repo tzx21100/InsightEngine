@@ -23,6 +23,7 @@
 #include "Audio.h"
 #include "Prefab.h"
 #include "Particle.h"
+#include "SceneManager.h"
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -390,20 +391,7 @@ namespace IS {
             return mParticleList[filename];
         }
 
-        void RefreshDirectiories() {
-            IS_PROFILE_FUNCTION();
-            mSoundList.clear();
-            mChannelList.clear();
-            mImageList.clear();
-            mImageNames.clear();
-            mIconNames.clear();
-            mPrefabList.clear();
-            mSceneList.clear();
-            mScriptList.clear();
-            mParticleList.clear();
-            mCurrentTexId = 0;
-            Initialize();
-        }
+        void RefreshDirectiories();
 
         static void LoadWindowIcon(GLFWwindow* window, const char* filepath);
 
