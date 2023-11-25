@@ -36,13 +36,16 @@ namespace IS {
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
 
         // Window size callback
-        glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
-            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-            
-            // Store non-fullscreen window size (top-left of window)
-            if (!input.mWindow->IsFullScreen())
-                input.mWindow->SetWindowSize(width, height);
-        });
+        //glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
+        //    InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+        //    
+        //    // Store non-fullscreen window size (top-left of window)
+        //    if (!input.mWindow->IsFullScreen())
+        //    {
+        //        input.mWindow->SetWindowSize(width, height);
+        //        IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
+        //    }
+        //});
 
         // Window position callback
         glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos) {
@@ -56,14 +59,7 @@ namespace IS {
         // Window maximize callback
         glfwSetWindowMaximizeCallback(native_window, [](GLFWwindow* window, int maximized) {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-
-            if (maximized) {
-                IS_CORE_DEBUG("Window was maximized.");
-                input.mWindow->SetMaximized();
-            } else {
-                IS_CORE_DEBUG("Window was restored from maximized.");
-                input.mWindow->SetMaximized(false);
-            }
+            input.mWindow->SetMaximized(maximized ? true : false);
         });
 
         // Accept file payload

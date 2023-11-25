@@ -335,7 +335,7 @@ xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>

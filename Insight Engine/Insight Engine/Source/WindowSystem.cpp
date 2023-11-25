@@ -134,7 +134,6 @@ namespace IS {
             Message quit = Message(MessageType::Quit);
             BROADCAST_MESSAGE(quit);
         }
-
         // Disable window resize during runtime
         glfwSetWindowAttrib(mWindow, GLFW_RESIZABLE, InsightEngine::Instance().mRuntime ? GLFW_FALSE : GLFW_TRUE);
     }
@@ -244,7 +243,7 @@ namespace IS {
     ----------------------------------------------------------------------------- */
     void WindowSystem::LoadProperties()
     {
-        std::string filename = "Properties/WindowProperties.json";
+        std::string filename = "WindowProperties.json";
         Json::Value properties;
         
         // Load window properties from JSON file
@@ -279,7 +278,7 @@ namespace IS {
     {
         if (mProps.mWidth == 0 || mProps.mHeight == 0)
             return;
-        std::string filepath = "Properties/WindowProperties.json";
+        std::string filepath = "WindowProperties.json";
         Json::Value properties;
         auto& win_props = properties["WindowProperties"];
         win_props["Title"]      = mProps.mTitle;
