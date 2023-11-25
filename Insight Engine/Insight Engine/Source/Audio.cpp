@@ -224,6 +224,17 @@ namespace IS {
         return new_group;
     }
 
+    void ISAudio::StopAllAudio() {
+        auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        sys->ClearAllSounds();
+        mChannel->stop();
+
+        for (auto& i : mChannelList) {
+            i->stop();
+        }
+    
+    }
+
 #pragma warning(push)
 #pragma warning(disable: 4458)
     FMOD::Channel* ISAudio::ISAudioLoadSound(const char* file_path) {

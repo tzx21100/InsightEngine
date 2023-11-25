@@ -341,6 +341,11 @@ namespace IS {
         std::string str(c_str);
         mono_free(c_str);
         asset->PlaySoundByName(str,loop,volume);
+    }    
+    
+    static void AudioStopAllSounds() {
+        auto audio = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        audio->StopAllAudio();
     }
 
     static void AudioPlayMusic(MonoString* name) {
@@ -1090,6 +1095,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
         IS_ADD_INTERNAL_CALL(AudioPlayMusic);
         IS_ADD_INTERNAL_CALL(AudioEmitterEnableEntity);
+        IS_ADD_INTERNAL_CALL(AudioStopAllSounds);
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);

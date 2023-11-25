@@ -18,6 +18,7 @@ namespace IS
             {
                 //click
                 InternalCalls.LoadScene("Assets/Scenes/Main Menu.insight");
+                InternalCalls.AudioStopAllSounds();
             }
         }
 

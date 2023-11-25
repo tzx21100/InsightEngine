@@ -388,6 +388,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CloneEntity(int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioStopAllSounds();
 
 
     }

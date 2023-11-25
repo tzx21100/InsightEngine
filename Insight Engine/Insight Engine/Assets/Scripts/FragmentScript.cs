@@ -27,6 +27,7 @@ namespace IS
                         {
                             InternalCalls.CameraSetZoom(1f);
                             InternalCalls.AttachCamera(0, 0);
+                            InternalCalls.AudioStopAllSounds();
                             InternalCalls.LoadScene("Assets/Scenes/YouWin.insight");
                         }
                     }
