@@ -71,6 +71,8 @@ namespace IS {
 
         static std::filesystem::path ASSETS_PATH;
 
+        ImGuiTextFilter mFilter;
+
         /*! \struct Controls
          *
          * \brief A structure representing the configuration controls for the asset browser.
