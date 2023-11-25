@@ -203,6 +203,15 @@ namespace IS {
         }
     }
 
+    void AssetManager::LoadWindowIcon(GLFWwindow* window, const char* filepath)
+    {
+        GLFWimage images[1]{};
+        images[0].pixels = stbi_load(filepath, &images[0].width, &images[0].height, 0, 4);
+
+        glfwSetWindowIcon(window, 1, images);
+        stbi_image_free(images[0].pixels);
+    }
+
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame
          
     }    

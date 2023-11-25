@@ -22,12 +22,15 @@
 #include "System.h"
 #include "Audio.h"
 #include "Prefab.h"
+#include "Particle.h"
+
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <filesystem>
+
 #include <glad/glad.h>
-#include "Particle.h"
+#include <GLFW/glfw3.h>
 
 //#define ON_ERROR(condition, msg) \
 //do { \
@@ -56,6 +59,7 @@
 #pragma warning(pop)
 
 namespace IS {
+
     enum class AllocationType {
         NoAllocation,
         SelfAllocated,
@@ -401,7 +405,7 @@ namespace IS {
             Initialize();
         }
 
-
+        static void LoadWindowIcon(GLFWwindow* window, const char* filepath);
 
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
