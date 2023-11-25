@@ -1,3 +1,19 @@
+/*!
+ * \file Matrix4x4.cpp
+ * \author Koh Yan Khang, yankhang.k@digipen.edu
+ * \par Course: CSD2401
+ * \date 25-11-2023
+ * \brief
+ * This source file declares the Matrix4x4 class for representing 4x4 matrices
+ * and provides various matrix operations.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
 #include "Pch.h"
 #include "Matrix4x4.h"
 
