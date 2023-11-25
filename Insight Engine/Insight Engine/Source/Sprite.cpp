@@ -227,10 +227,14 @@ namespace IS {
     }
 
     void Sprite::draw_lights() {
+
         // Bind the instance VBO
-        glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
+        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
+
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+
         // Upload the quadInstances data to the GPU
-        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
         if (buffer) {
             // Copy the instance data to the mapped buffer
@@ -248,8 +252,8 @@ namespace IS {
         }
 
         // bind shader
-        glUseProgram(ISGraphics::light_shader_pgm.getHandle());
-        glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
+        GL_CALL(glUseProgram(ISGraphics::light_shader_pgm.getHandle()));
+        GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
         // draw instanced quads
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
