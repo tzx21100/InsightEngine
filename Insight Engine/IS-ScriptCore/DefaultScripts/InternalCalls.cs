@@ -271,7 +271,10 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityButton(string name, SimpleImage image, string filename, string text);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityButtonNoText(string name, SimpleImage image, string filename);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityUI(string name, SimpleImage image);
         
@@ -298,6 +301,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int SetButtonSizeScale(int entity, float scale);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int SetButtonSize(int entity, SimpleVector2D size);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetButtonHoverScale(int entity);

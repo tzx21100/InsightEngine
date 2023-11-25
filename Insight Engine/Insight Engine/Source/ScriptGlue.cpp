@@ -462,6 +462,37 @@ namespace IS {
         return static_cast<int>(entity);
     }
 
+    static int CreateEntityButtonNoText(MonoString* name, SimpleImage image, MonoString* filename)
+    {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = engine.CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        engine.AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        engine.AddComponentAndUpdateSignature<ButtonComponent>(entity, ButtonComponent());
+        auto& sprite_component = engine.GetComponent<Sprite>(entity);
+        auto& button_component = engine.GetComponent<ButtonComponent>(entity);
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+
+        char* c_str2 = mono_string_to_utf8(filename);
+        std::string str2(c_str2);
+        mono_free(c_str2);
+        script_component.mScriptName = str2;
+        sprite_component.layer = UI_LAYER;
+        sprite_component.img = ConvertToImage(image);
+        //button_component.followTransform();
+        button_component.mIdleAlpha = 0.8f;
+        button_component.mClickAlpha = 0.9f;
+        button_component.mIdleScale = 0.9f;
+        button_component.mHoverScale = 1.05f;
+
+
+        return static_cast<int>(entity);
+    }
+
     static void DestroyEntity(int entity) {
         static_cast<Entity>(entity);
         InsightEngine::Instance().DeleteEntity(entity);
@@ -790,6 +821,12 @@ namespace IS {
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
         button_component.mSizeScale = scale;
+    }
+
+    static void SetButtonSize(int entity, SimpleVector2D size)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        button_component.mSize = { size.x, size.y };
     }
 
     static float GetButtonHoverScale(int entity)
@@ -1138,12 +1175,14 @@ namespace IS {
         // zk
         IS_ADD_INTERNAL_CALL(GamePause);
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
+        IS_ADD_INTERNAL_CALL(CreateEntityButtonNoText);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
         IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
         IS_ADD_INTERNAL_CALL(ButtonRenderText);
         IS_ADD_INTERNAL_CALL(RenderText);
         IS_ADD_INTERNAL_CALL(SetButtonSizeScale);
+        IS_ADD_INTERNAL_CALL(SetButtonSize);
         IS_ADD_INTERNAL_CALL(GetButtonHoverScale);
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);

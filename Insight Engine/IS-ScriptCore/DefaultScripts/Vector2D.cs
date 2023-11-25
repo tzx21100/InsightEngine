@@ -67,8 +67,14 @@ public class Vector2D
     public Vector2D Add(Vector2D other)
     {
         return new Vector2D(this.x + other.x, this.y + other.y);
-    }    
-    
+    }
+
+    // Addition of x and y
+    public Vector2D Add(float x, float y)
+    {
+        return new Vector2D(this.x + x, this.y + y);
+    }
+
     public void Set(float x,float y)
     {
         this.x = x;
@@ -92,6 +98,13 @@ public class Vector2D
     {
         if (scalar == 0) throw new DivideByZeroException("Division by zero is not allowed.");
         return new Vector2D(this.x / scalar, this.y / scalar);
+    }
+
+    // Divide x and y with different value
+    public Vector2D Divide(float x, float y)
+    {
+        if (x == 0 || y == 0) throw new DivideByZeroException("Division by zero is not allowed.");
+        return new Vector2D(this.x / x, this.y / y);
     }
 
     // Dot product
