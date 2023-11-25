@@ -64,6 +64,8 @@ namespace IS {
 		 */
 		void Init(int width, int height, float fov);
 
+		void Reset();
+
 		/*!
 		 * \brief Updates the view and projection matrices of the Camera3D instance.
 		 */
