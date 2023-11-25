@@ -56,6 +56,13 @@ namespace IS {
 		mFar = distance * 2.f; // To cover zooming in and out
 	}
 
+	void Camera3D::Reset() {
+		auto& engine = InsightEngine::Instance();
+		auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+
+		Init(width, height, 60.f);
+	}
+
 	void Camera3D::Update()
 	{
 		// Update the view matrix and projection matrix of the Camera3D instance
