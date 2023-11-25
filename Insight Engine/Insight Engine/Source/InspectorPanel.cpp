@@ -1070,9 +1070,13 @@ namespace IS {
                 }
                 CommandHistory::SetNoMergeMostRecent(ImGui::IsItemDeactivatedAfterEdit());
 
-
             }, 0, ImGui::CalcTextSize("Zoom").x);
         });
+
+        if (ImGui::Button("Reset Camera"))
+        {
+            camera.Reset();
+        }
 
         ImGui::PopStyleVar(); // end style rounding
 
