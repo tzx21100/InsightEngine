@@ -51,7 +51,7 @@ namespace IS
             }
             else {
 
-                InternalCalls.SetSpriteAlphaEntity((TimeOutTimer / TimeOutTimerSet), entity_id);
+                InternalCalls.SetSpriteAlphaEntity((TimeOutTimer*20 / TimeOutTimerSet), entity_id);
 
                 if (shakeTimer > 0)
                 {
