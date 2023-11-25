@@ -196,11 +196,10 @@ namespace IS
 
         static public void ToggleFullscreenMode()
         {
-            InternalCalls.ToggleFullscreen(fullscreen_mode);
-
             if (InternalCalls.KeyPressed((int)KeyCodes.F11))
             {
                 fullscreen_mode = !fullscreen_mode;
+                InternalCalls.ToggleFullscreen(fullscreen_mode);
             }
         }
 

@@ -36,16 +36,16 @@ namespace IS {
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
 
         // Window size callback
-        //glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
-        //    InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-        //    
-        //    // Store non-fullscreen window size (top-left of window)
-        //    if (!input.mWindow->IsFullScreen())
-        //    {
-        //        input.mWindow->SetWindowSize(width, height);
-        //        IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
-        //    }
-        //});
+        glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            
+            // Store non-fullscreen window size (top-left of window)
+            if (!input.mWindow->IsFullScreen())
+            {
+                input.mWindow->SetWindowSize(width, height);
+                IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
+            }
+        });
 
         // Window position callback
         glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos)
