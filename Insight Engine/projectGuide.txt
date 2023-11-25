@@ -1,31 +1,51 @@
-Insight Engine - M2 Project Guide
+===== Milestone 3 - Insight Engine Project Guide =====
 
-Input Keys:
-W, A, S, D 			- player movement
-Left mouse button click 	- pick entity 
-Left mouse button held + drag 	- move entity (must be picked)
-Right click button held + drag 	- pan camera
-R 				- spawn Ice Cream Truck with animation & rigid body
-Tab				- enter fullscreen (game view)
-F11				- enter fullscreen (editor view)
+===== Overview =====
+Project Name: Insight Engine
+Game Name: Fragments
+Version : 3
 
-Shortcuts:
-ALT+F4 	     - exit
-CTRL+N       - new scene
-CTRL+S 	     - save scene
-CTRL+SHIFT+N - save scene as
+======================== Team Members =============================
 
-Tests:
-Mainly explained in M2 rubrics in detail, but will list the scenes and their main purpose
+--- Name ---          --- Role ---	    --- Championing ---
+Guo Yiming	      Programmer	    Debugging Champion
+Koh Yan Khang	      Product Manager       Graphics Champion
+Ng Matthew De En      Programmer	    Mechanics Champion
+Tan Zheng Xun	      Technical Lead        Engine Champion
+Wu Zekai              Programmer	    Physics Champion
+Ee Tze Rong Cheryl    Design Lead	    Design Champion
+Lim Wan Jin	      Art Lead	            Art Champion
 
-1. basicLevel - A mini prototype, with all components fully integrated. User can playtest the level using this scene.
-2. testLayering - Multiple sprites stacked on top of each other to show layering. User can change/toggle the layers to see difference.
-3. testScene - Shows that player script is controlling player. Audio can be played using "Z" and "X" keys as well.
-4. ButtonTest - Showcase an example of in-game GUI. Pressing on the button will make a sound. Hovering over it will output information as well.
+-------------------------------------------------------------------
+ Configurations                                                     
+-------------------------------------------------------------------
+Total Number of Configurations: 3
+Project Configurations: Debug, Release, GameRelease.
 
-How to Exit:
-1. Click on close button on the top right
-2. ALT+F4
-3. File->Exit
+- Debug: Contains editor and unrestricted debug logs. Contains extensive debug information.
+	 Generally runs the slowest. 
 
+- Release: Contains editor and restricted debug logs. 
+	   Contains only necessary debug information(E.g.Asset loading).
+	   Generally runs much faster than Debug.
 
+- GameRelease: No Editor. Only contains the Game.
+
+-------------------------------------------------------------------
+ How To Run
+-------------------------------------------------------------------
+- Simply select the desired configuration and run the engine in your desired mode. 
+The sln file has been configured to build the libraries first before Insight Engine.
+
+-------------------------------------------------------------------
+Projects In Solution
+-------------------------------------------------------------------
+Total Number of Projects: 5
+
+|  GLAD  | ImGui | ImGuizmo | - Compiles as a static library.
+| IS-ScriptCore  |            - Compiles as a dynamic library.
+| Insight Engine |            - References the libraries above,
+                                compiled last as .exe.
+
+Author: Tan Zheng Xun (t.zhengxun@digipen.edu)
+TimeStamp: 4:40 am 26/11/2023 

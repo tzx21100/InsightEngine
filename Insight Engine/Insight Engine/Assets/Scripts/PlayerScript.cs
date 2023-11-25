@@ -111,7 +111,7 @@ namespace IS
         static private Vector2D apply_force = new Vector2D(0, 0);//dash dir
 
 
-        static private int entity_feet;
+        static public int entity_feet;
 
         //movement
         static private float acceleration = 0f;

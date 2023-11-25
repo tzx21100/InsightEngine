@@ -13,6 +13,7 @@
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
     <EnableNETAnalyzers>False</EnableNETAnalyzers>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <OutputType>WinExe</OutputType>
 
   </PropertyGroup>
 
