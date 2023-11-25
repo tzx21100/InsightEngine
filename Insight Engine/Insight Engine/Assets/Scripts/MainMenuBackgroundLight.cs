@@ -111,6 +111,9 @@ namespace IS
 
         static public void Update()
         {
+            // Toggle fullscreen mode
+            PauseButtonScript.ToggleFullscreenMode();
+
             // Update light timer logic
             mBackgroundLanternTimer -= InternalCalls.GetDeltaTime();
             if (mBackgroundLanternTimer <= 0)

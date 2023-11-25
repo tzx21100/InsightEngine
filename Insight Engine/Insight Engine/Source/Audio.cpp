@@ -37,13 +37,13 @@ namespace IS {
          *
          * This function sets up the ISAudio system and should be called before any other ISAudio operations.
          */
-        FMOD_RESULT result = FMOD::System_Create(&system);
+        FMOD_RESULT result = FMOD::System_Create(&mSystem);
         if (result != FMOD_OK) {
             // Handle initialization error
             return;
         }
 
-        result = system->init(128, FMOD_INIT_NORMAL, nullptr);
+        result = mSystem->init(128, FMOD_INIT_NORMAL, nullptr);
         if (result != FMOD_OK) {
             // Handle initialization error
             return;
@@ -70,11 +70,18 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
-
+        mSystem->update();
         if (InsightEngine::Instance().mRuntime == false) {
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
             sys->ClearAllSounds();
-            return; }
+            mChannel->stop();
+
+            for (auto& i : mChannelList) {
+                i->stop();
+            }
+
+            return; 
+        }
 
         auto& engine = InsightEngine::Instance();
         auto assetsys = engine.GetSystem<AssetManager>("Asset");
@@ -83,8 +90,8 @@ namespace IS {
             auto listener = engine.GetComponent<AudioListener>(entity);
             auto current_entity_transform = engine.GetComponent<Transform>(entity);
             for (auto emittingEntities : mEmitterEntities) {
-                auto emitting_transform = engine.GetComponent<Transform>(emittingEntities);
-                auto emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
+                auto& emitting_transform = engine.GetComponent<Transform>(emittingEntities);
+                auto &emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
                 float distance = CalculateDistance(current_entity_transform.world_position.x,
                                                     current_entity_transform.world_position.y,
                                                     emitting_transform.world_position.x,
@@ -93,18 +100,19 @@ namespace IS {
                 distance = Max(distance, 100.f);
 
                 if (distance > listener.hearing_range) {
-                    assetsys->GetChannel(emitter.soundName)->stop();
+                   emitter.Channel->stop();
                     continue;
                 }
                 //If they are close enough
                     
                 float volume = CalculateGain(distance, emitter.falloff_factor);
-                FMOD::Channel* soundChannel = assetsys->GetChannel(emitter.soundName);
-                if (IsSoundPlaying(soundChannel)) {
-                    soundChannel->setVolume(emitter.volumeLevel * listener.volume * volume);
+                
+                if (IsSoundPlaying(emitter.Channel)){
+                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume);
                 }
                 else {
-                    assetsys->PlayMusicByName((emitter.soundName), emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
+                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
+                    mChannelList.emplace_back(emitter.Channel);
                 }
 
             }
@@ -112,7 +120,7 @@ namespace IS {
             
         
         }
-        system->update();
+       
     }
 
     void ISAudio::HandleMessage(const Message& message) {
@@ -135,9 +143,9 @@ namespace IS {
          *
          * Initializes member variables.
          */
-        system = nullptr;
-        sound = nullptr;
-        channel = nullptr;
+        mSystem = nullptr;
+        mSound = nullptr;
+        mChannel = nullptr;
     }
 
     ISAudio::~ISAudio() {
@@ -155,17 +163,17 @@ namespace IS {
          *
          * This function releases all resources associated with the ISAudio system and should be called during cleanup.
          */
-        if (channel) {
-            channel->stop();
+        if (mChannel) {
+            mChannel->stop();
         }
 
-        if (sound) {
-            sound->release();
+        if (mSound) {
+            mSound->release();
         }
 
-        if (system) {
-            system->close();
-            system->release();
+        if (mSystem) {
+            mSystem->close();
+            mSystem->release();
         }
     }
 
@@ -202,7 +210,7 @@ namespace IS {
          * \return A pointer to the created FMOD::ChannelGroup.
          */
         FMOD::ChannelGroup* new_group = nullptr;
-        FMOD_RESULT result = system->createChannelGroup(nullptr, &new_group);
+        FMOD_RESULT result = mSystem->createChannelGroup(nullptr, &new_group);
 
         if (result != FMOD_OK) {
             // Handle group creation error
@@ -225,7 +233,7 @@ namespace IS {
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
-        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &sound);
+        FMOD_RESULT result = mSystem->createSound(file_path, mode, nullptr, &sound);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr; // Return nullptr on error
@@ -251,7 +259,7 @@ namespace IS {
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* sound = nullptr;
 
-        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &sound);
+        FMOD_RESULT result = mSystem->createSound(file_path, mode, nullptr, &sound);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr;
@@ -271,14 +279,14 @@ namespace IS {
         FMOD_MODE mode = FMOD_LOOP_OFF;
         FMOD::Sound* music = nullptr;
 
-        FMOD_RESULT result = system->createSound(file_path, mode, nullptr, &music);
+        FMOD_RESULT result = mSystem->createSound(file_path, mode, nullptr, &music);
         if (result != FMOD_OK) {
             // Handle sound loading error
             return nullptr; // Return nullptr on error
         }
 
         FMOD::Channel* music_channel = nullptr;
-        result = system->playSound(music, nullptr, false, &music_channel);
+        result = mSystem->playSound(music, nullptr, false, &music_channel);
         if (result != FMOD_OK) {
             // Handle sound playing error
             return nullptr; // Return nullptr on error
@@ -376,7 +384,7 @@ namespace IS {
         if (!Ssound) return nullptr;
 
         FMOD::Channel* Cchannel = nullptr;
-        FMOD_RESULT result = system->playSound(Ssound, nullptr, true, &Cchannel);
+        FMOD_RESULT result = mSystem->playSound(Ssound, nullptr, true, &Cchannel);
 
         if (result != FMOD_OK || !Cchannel) {
             // Handle error
@@ -390,6 +398,27 @@ namespace IS {
 
         return Cchannel;
     }
+
+    FMOD::Channel* ISAudio::PlaySoundCheck(FMOD::Sound* Ssound,FMOD::Channel* channel, bool loop, float volume, float pitch) {
+
+        if (!Ssound) return nullptr;
+
+       channel->stop();
+        FMOD_RESULT result = mSystem->playSound(Ssound, nullptr, true, &channel);
+
+        if (result != FMOD_OK || !channel) {
+            // Handle error
+            return nullptr;
+        }
+
+        channel->setVolume(volume);
+        channel->setPitch(pitch);
+        channel->setLoopCount(loop ? -1 : 0); // -1 for infinite loop, 0 for no loop
+        channel->setPaused(false);
+
+        return channel;
+    }
+
 
     bool ISAudio::IsSoundPlaying(FMOD::Channel* Cchannel) {
         /*!
@@ -442,5 +471,25 @@ namespace IS {
         pitch          = data["AudioPitch"].asFloat();
         soundName      = data["AudioSoundName"].asString();
     }
+
+
+    void AudioEmitterSystem::Update([[maybe_unused]] float deltaTime) {
+        if (InsightEngine::Instance().mRuntime == false) {
+            for (auto& emittingEntities : mEntities) {
+                auto& emitter = InsightEngine::Instance().GetComponent<AudioEmitter>(emittingEntities);
+
+                emitter.Channel->stop();
+                
+            }
+            return;
+        }
+
+    }
+
+
+
+
+
+
 
 }

@@ -6,9 +6,8 @@ namespace IS
     {
         // Pause Button
         static public Vector2D pos = new Vector2D(0f, 0f);
-        static public Vector2D pos_offset = new Vector2D(1200f, 710f);
         static public bool pause_enable = false;
-        static public float title_bar_height = 0f;
+        static public bool fullscreen_mode = false;
         //static SimpleImage pause_button_image;
 
         // Pause Menu
@@ -34,33 +33,27 @@ namespace IS
         static Vector2D home_pos = new Vector2D(0,0);
         static Vector2D quit_pos = new Vector2D(0,0);
 
-        // Windows not in use
-        static int win_width;
-        static int win_height;
-
         // Camera Pos
         static Vector2D camera_pos = new Vector2D(0,0);
 
-        static public void Init(){
-
+        static public void Init()
+        {
             pause_enable = false;
 
-            title_bar_height = InternalCalls.GetTitleBarHeight();
-
             // Pause Menu
-            pause_menu_image = InternalCalls.GetSpriteImage("pause_menu.png");
-            resume_image = InternalCalls.GetSpriteImage("button_frame.png");
-            how_to_play_image = InternalCalls.GetSpriteImage("button_frame.png");
-            //setting_image = InternalCalls.GetSpriteImage("button_frame.png");
-            home_image = InternalCalls.GetSpriteImage("button_frame.png");
-            quit_image = InternalCalls.GetSpriteImage("exit_button_frame.png");
+            pause_menu_image    = InternalCalls.GetSpriteImage("pause_menu.png");
+            resume_image        = InternalCalls.GetSpriteImage("button_frame.png");
+            how_to_play_image   = InternalCalls.GetSpriteImage("button_frame.png");
+            //setting_image     = InternalCalls.GetSpriteImage("button_frame.png");
+            home_image          = InternalCalls.GetSpriteImage("button_frame.png");
+            quit_image          = InternalCalls.GetSpriteImage("exit_button_frame.png");
 
-            pause_menu_entity = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
-            resume_entity = InternalCalls.CreateEntityButton("Resume Game", resume_image, "ResumeButtonScript", "resume game");
-            how_to_play_entity = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "HowToPlayScript", "how to play");
-            //setting_entity = InternalCalls.CreateEntityButton("Setting", setting_image, "SettingScript", "settings");
-            home_entity = InternalCalls.CreateEntityButton("Main Menu", home_image, "BackToMenuButtonScript", "main menu");
-            quit_entity = InternalCalls.CreateEntityButton("Quit Game", quit_image, "ExitButtonScript", "quit game");
+            pause_menu_entity   = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
+            resume_entity       = InternalCalls.CreateEntityButton("Resume Game", resume_image, "ResumeButtonScript", "resume game");
+            how_to_play_entity  = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "HowToPlayScript", "how to play");
+            //setting_entity    = InternalCalls.CreateEntityButton("Setting", setting_image, "SettingScript", "settings");
+            home_entity         = InternalCalls.CreateEntityButton("Main Menu", home_image, "BackToMenuButtonScript", "main menu");
+            quit_entity         = InternalCalls.CreateEntityButton("Quit Game", quit_image, "ExitButtonScript", "quit game");
 
             InternalCalls.TransformSetScale(1000f, 1000f);
             InternalCalls.TransformSetScaleEntity(2200f, 1250f, pause_menu_entity);
@@ -69,25 +62,36 @@ namespace IS
             //InternalCalls.TransformSetScaleEntity(450f, 150f, setting_entity);
             InternalCalls.TransformSetScaleEntity(450f, 150f, home_entity);
             InternalCalls.TransformSetScaleEntity(300f, 100f, quit_entity);
-
-            // Windows
-            win_width = InternalCalls.GetWindowWidth();
-            win_height = InternalCalls.GetWindowHeight();
         }
 
+        static public void Update()
+        {
+            ToggleFullscreenMode();
 
+            // Constants
+            const float PADDING = 16f;
 
-        static public void Update(){
+            // Params used for offset computation
+            float camera_zoom   = (float)InternalCalls.CameraGetZoom();
+            float window_width  = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            float window_height = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+            float pause_width   = InternalCalls.GetTransformScaling().x;
+            float pause_height  = InternalCalls.GetTransformScaling().y;
+            bool is_fullscreen  = InternalCalls.IsFullscreen();
 
-            //set camera pos
+            // Compute pause button position offset
+            float offset_xpos   = window_width - pause_width / 2f - PADDING;
+            float offset_ypos   = window_height - pause_height / 2f - PADDING - (is_fullscreen ? InternalCalls.GetTitleBarHeight() + PADDING : 0);
+
+            // Get camera position
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
-            pos = camera_pos.Add(pos_offset);
-            InternalCalls.TransformSetPosition(pos.x, pos.y - title_bar_height);
+            // Offset pause button position
+            InternalCalls.TransformSetPosition(camera_pos.x + offset_xpos, camera_pos.y + offset_ypos);
             
 
-            pause_menu_pos.Set(camera_pos.x, camera_pos.y + 10f);
+            pause_menu_pos.Set(camera_pos.x, camera_pos.y);
             resume_pos.Set(camera_pos.x - 10f, camera_pos.y + 170f);
             how_to_play_pos.Set(camera_pos.x - 10f, camera_pos.y - 20);
             //setting_pos.Set(camera_pos.x - 10f, camera_pos.y - 190f);
@@ -152,8 +156,9 @@ namespace IS
             }
         }
 
-        static public void CleanUp(){
-
+        static public void CleanUp()
+        {
+            // Empty for now
         }
 
         static public void SetPauseMenuPosition()
@@ -186,6 +191,17 @@ namespace IS
             //InternalCalls.TransformSetPositionEntity(9999f, 9999f, setting_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, home_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, quit_entity);
+        }
+
+        static public void ToggleFullscreenMode()
+        {
+            InternalCalls.ToggleFullscreen(fullscreen_mode);
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.F11))
+            {
+                pause_enable = !pause_enable;
+                fullscreen_mode = !fullscreen_mode;
+            }
         }
 
     }

@@ -167,18 +167,7 @@ namespace IS
             player_walk = InternalCalls.GetSpriteImage("run_strip.png");
             player_idle = InternalCalls.GetSpriteImage("idle_strip.png");
             player_jump = InternalCalls.GetSpriteImage("jump_strip.png");
-            player_climb = InternalCalls.GetSpriteImage("WallClimb_0000.png");
-            player_climb1 = InternalCalls.GetSpriteImage("WallClimb_0001.png");
-            player_climb2 = InternalCalls.GetSpriteImage("WallClimb_0002.png");
-            player_climb3 = InternalCalls.GetSpriteImage("WallClimb_0003.png");
-            player_climb4 = InternalCalls.GetSpriteImage("WallClimb_0004.png");
-            player_climb5 = InternalCalls.GetSpriteImage("WallClimb_0005.png");
-            player_climb6 = InternalCalls.GetSpriteImage("WallClimb_0006.png");
-            player_climb7 = InternalCalls.GetSpriteImage("WallClimb_0007.png");
-            player_climb8 = InternalCalls.GetSpriteImage("WallClimb_0008.png");
-            player_climb9 = InternalCalls.GetSpriteImage("WallClimb_0009.png");
-            player_climb10 = InternalCalls.GetSpriteImage("WallClimb_0010.png");
-            player_climb11 = InternalCalls.GetSpriteImage("WallClimb_0011.png");
+            player_climb = InternalCalls.GetSpriteImage("wall_climb_anim 4R3C.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
             player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             player_jump_vfx = InternalCalls.GetSpriteImage("woosh_vfx 3R4C.png");
@@ -228,6 +217,7 @@ namespace IS
 
             if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) {
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
+                Reward_Dash = true; Reward_DoubleJump = true; Reward_WallClimb = true;
             }
 
 
@@ -433,32 +423,32 @@ namespace IS
                 SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x * 1.1f, InternalCalls.GetTransformScaling().y * 1.1f);
 
                 SimpleImage curr_image = player_climb;
-
+                int cur_col = 0; int cur_row = 0;
                 switch (animation_current_frame) {
                     case 0:
-                        curr_image = player_climb;
+                        cur_col = 0; cur_row = 0;
                         break; case 1:
-                        curr_image = player_climb1;
+                        cur_col = 1; cur_row = 0;
                         break; case 2:
-                        curr_image = player_climb2;
+                        cur_col = 2; cur_row = 0;
                         break; case 3:
-                        curr_image = player_climb3;
+                        cur_col = 0; cur_row = 1;
                         break; case 4:
-                        curr_image = player_climb4;
+                        cur_col = 1; cur_row = 1;
                         break; case 5:
-                        curr_image = player_climb5;
+                        cur_col = 2; cur_row = 1;
                         break; case 6:
-                        curr_image = player_climb6;
+                        cur_col = 0; cur_row = 2;
                         break; case 7:
-                        curr_image = player_climb7;
+                        cur_col = 1; cur_row = 2;
                         break; case 8:
-                        curr_image = player_climb8;
+                        cur_col = 2; cur_row = 2;
                         break; case 9:
-                        curr_image = player_climb9;
+                        cur_col = 0; cur_row = 3;
                         break; case 10:
-                        curr_image = player_climb10;
+                        cur_col = 1; cur_row = 3;
                         break; case 11:
-                        curr_image = player_climb11;
+                        cur_col = 2; cur_row = 3;
                         break;
 
                 }
@@ -476,7 +466,7 @@ namespace IS
                 }
 
 
-                InternalCalls.DrawImageAt(pos, 0f, scale, curr_image, 1f, 1);
+                InternalCalls.DrawImageExtraAt(cur_row,cur_col,4,3,pos, 0f, scale, curr_image, 1f, 1);
 
             }
             else
@@ -517,9 +507,8 @@ namespace IS
                     if (initial_land == false)
                     {
                         float yvel = InternalCalls.RigidBodyGetVelocityY();
-                        InternalCalls.NativeLog("Y VELOCITY: ", yvel);
                         float vol = -yvel / 3200f;
-                        
+                        InternalCalls.NativeLog("yvel: ", yvel);
                         if (yvel < -3200f ) { vol= 1f; }
                         InternalCalls.NativeLog("VOLUME: ", vol);
                         vol = CustomMath.max(vol, 0.1f);

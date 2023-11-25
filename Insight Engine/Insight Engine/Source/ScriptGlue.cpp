@@ -40,7 +40,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
-        IS_DEBUG("{}, {}", str, param);
+        IS_DEBUG("{}{}", str, param);
     }
 
     /**
@@ -603,6 +603,14 @@ namespace IS {
     
     }
 
+    static void DrawImageExtraAt(int rowIndex, int columnIndex, int totalRows, int totalCols, SimpleVector2D  pos, float rotation, SimpleVector2D  scale, SimpleImage texture, float alpha, int layer) {
+
+       
+
+        Sprite::drawSpritesheetFrame( rowIndex,  columnIndex,  totalRows,  totalCols, Vector2D(pos.x, pos.y),  rotation, Vector2D(scale.x, scale.y), ConvertToImage(texture),  alpha,  layer);
+
+    }
+
     static void LoadScene(MonoString* file_name)
     {
         char* c_str = mono_string_to_utf8(file_name); // Convert Mono string to char*
@@ -708,6 +716,18 @@ namespace IS {
         return InsightEngine::Instance().GetTitleBarHeight();
     }
 
+    static bool IsFullscreen()
+    {
+        return InsightEngine::Instance().IsFullScreen();
+    }
+
+    static void ToggleFullscreen(bool toggle)
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const window = engine.GetSystem<WindowSystem>("Window");
+        window->SetFullScreen(toggle);
+    }
+
     static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
@@ -754,6 +774,12 @@ namespace IS {
 
     static SimpleVector2D GetCameraPos() {
         return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
+    }
+
+    static float GetCameraAspectRatio()
+    {
+        Camera3D& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
+        return camera.GetAspectRatio();
     }
 
     static void AttachLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
@@ -960,6 +986,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AttachCamera);
         IS_ADD_INTERNAL_CALL(CameraSetZoom);
         IS_ADD_INTERNAL_CALL(GetCameraPos);
+        IS_ADD_INTERNAL_CALL(GetCameraAspectRatio);
         IS_ADD_INTERNAL_CALL(CameraGetZoom);
 
         // Audio
@@ -1029,6 +1056,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
+        IS_ADD_INTERNAL_CALL(DrawImageExtraAt);
         IS_ADD_INTERNAL_CALL(DrawSquare);
         IS_ADD_INTERNAL_CALL(GlitchEnable);
 
@@ -1060,6 +1088,8 @@ namespace IS {
 
         // Yiming
         IS_ADD_INTERNAL_CALL(CreateEntityPrefab);
+        IS_ADD_INTERNAL_CALL(IsFullscreen);
+        IS_ADD_INTERNAL_CALL(ToggleFullscreen);
 
 
         // IStrace
