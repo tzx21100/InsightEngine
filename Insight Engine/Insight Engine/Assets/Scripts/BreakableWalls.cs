@@ -13,6 +13,17 @@ namespace IS
         }
 
         static public void Update(){
+
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            if (InternalCalls.EntityCheckCollide(entity_id))
+            {
+                if (InternalCalls.GetCollidingEntityCheck(entity_id, PlayerScript.PLAYER_ID))
+                {
+                    PlayerScript.isOnGrass = false;
+                }
+            }
+
+
             if (InternalCalls.GetCollidingEntityCheck(InternalCalls.GetCurrentEntityID(), PlayerScript.PLAYER_ID) && InternalCalls.RigidBodyGetBodyTypeEntity(InternalCalls.GetCurrentEntityID())==0)
             {
                 if (PlayerScript.isDashing && PlayerScript.bullet_time_timer<=0) {

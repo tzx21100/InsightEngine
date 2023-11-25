@@ -1,0 +1,101 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -4144.25341796875,
+				"Y" : 2524.2197265625
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -599.64764404296875,
+					"y" : 2776.20166015625
+				},
+				{
+					"x" : 599.64764404296875,
+					"y" : 2776.20166015625
+				},
+				{
+					"x" : 599.64764404296875,
+					"y" : -2776.20166015625
+				},
+				{
+					"x" : -599.64764404296875,
+					"y" : -2776.20166015625
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "StoneCollider",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "StoneCollider"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 0.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 0,
+		"SpriteTextureHeight" : 0,
+		"SpriteTextureIndex" : 0,
+		"SpriteTextureWidth" : 0,
+		"SpriteTransformRotation" : 359.5572509765625,
+		"SpriteTransformScalingX" : 1199.2952880859375,
+		"SpriteTransformScalingY" : 5552.4033203125,
+		"SpriteTransformWorldPositionX" : -4144.25341796875,
+		"SpriteTransformWorldPositionY" : 2524.2197265625,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 359.5572509765625,
+		"TransformScalingX" : 1199.2952880859375,
+		"TransformScalingY" : 5552.4033203125,
+		"TransformWorldPositionX" : -4144.25341796875,
+		"TransformWorldPositionY" : 2524.2197265625
+	}
+}

@@ -38,6 +38,7 @@ namespace IS
         //public player variables
 
         static private int previous_footstep_frame = 0;
+        static public bool isOnGrass = true;
         //static private bool play_footstep = false;
 
         //lighting
@@ -852,66 +853,130 @@ namespace IS
         {
 
             float num = rando_footsteps.NextFloat();
-            if (num <= 0.1f)
+            if (isOnGrass)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav",false,volume);
-                return;
+                if (num <= 0.1f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.2f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.3f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.4f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.5f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_5.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.6f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_6.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.7f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_7.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.8f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_8.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.85f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_9.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.9f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_10.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.95f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_11.wav", false, volume);
+                    return;
+                }
+                if (num <= 1f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_12.wav", false, volume);
+                    return;
+                }
+
+
             }
-            if (num <= 0.2f)
+            else
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav", false, volume);
-                return;
+
+
+                if (num <= 0.1f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.2f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_2.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.3f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_3.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.4f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_4.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.5f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_5.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.6f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_6.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.7f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_7.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.8f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_8.wav", false, volume);
+                    return;
+                }
+                if (num <= 0.9f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_9.wav", false, volume);
+                    return;
+                }
+                if (num <= 1f)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_10.wav", false, volume);
+                    return;
+                }
+
+
             }
-            if (num <= 0.3f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav", false, volume);
-                return;
-            }
-            if (num <= 0.4f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav", false, volume);
-                return;
-            }
-            if (num <= 0.5f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_5.wav", false, volume);
-                return;
-            }
-            if (num <= 0.6f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_6.wav", false, volume);
-                return;
-            }
-            if (num <= 0.7f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_7.wav", false, volume);
-                return;
-            }
-            if (num <= 0.8f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_8.wav", false, volume);
-                return;
-            }
-            if (num <= 0.85f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_9.wav", false, volume);
-                return;
-            }
-            if (num <= 0.9f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_10.wav", false, volume);
-                return;
-            }
-            if (num <= 0.95f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_11.wav", false, volume);
-                return;
-            }
-            if (num <= 1f)
-            {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_12.wav", false, volume);
-                return;
-            }
+            
+           
             return;
         }
 
