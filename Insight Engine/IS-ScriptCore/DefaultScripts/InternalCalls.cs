@@ -213,7 +213,10 @@ namespace IS
         internal extern static void DrawDarkCircle(float pos_x, float pos_y, float scale_x, float scale_y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer = 1);
+        internal extern static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer = 1);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawImageExtraAt(int rowIndex, int columnIndex, int totalRows, int totalCols, SimpleVector2D  pos, float rotation, SimpleVector2D  scale, SimpleImage texture, float alpha, int layer=1);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void LoadScene(string file_name);
