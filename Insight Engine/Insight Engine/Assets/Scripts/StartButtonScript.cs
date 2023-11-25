@@ -38,7 +38,7 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) 
             {
-                InternalCalls.AudioPlaySound("StartClick.wav", false, 0.5f);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 start_button_click = true;
                 //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonIdleScale(button_entity));
             }

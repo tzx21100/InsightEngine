@@ -33,7 +33,8 @@ namespace IS
 
                 }
 
-
+                InternalCalls.AudioPlaySound("StartClick.wav",false,0.15f);
+                PlayerScript.initialPowerUp = true;
                 InternalCalls.GlitchEnable(false);
 
                 InternalCalls.DestroyEntity(entity);
