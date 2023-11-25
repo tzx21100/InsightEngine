@@ -88,12 +88,6 @@ namespace IS
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
-            InternalCalls.NativeLog("Camera PosX: ", camera_pos.x);
-            InternalCalls.NativeLog("Camera PosY: ", camera_pos.y);
-
-            InternalCalls.NativeLog("Window Width: ", window_width);
-            InternalCalls.NativeLog("Window Height: ", window_height);
-
             // Offset pause button position
             InternalCalls.TransformSetPosition(camera_pos.x + offset_xpos, camera_pos.y + offset_ypos);
             
