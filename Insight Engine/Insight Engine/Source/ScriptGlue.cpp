@@ -378,9 +378,14 @@ namespace IS {
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
-        //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
-    }        
+    } 
+
+    static int CloneEntity(int entity) {
+        InsightEngine::Instance().CopyEntity(entity);
+        return static_cast<int>(entity);
+    }
     
     static int CreateEntitySprite(MonoString* name) {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
@@ -1053,6 +1058,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CreateEntityVFX);
         IS_ADD_INTERNAL_CALL(DestroyEntity);
         IS_ADD_INTERNAL_CALL(AddCollider);
+        IS_ADD_INTERNAL_CALL(CloneEntity);
 
         // Entity Collisions
         IS_ADD_INTERNAL_CALL(EntityCheckCollide);

@@ -1,0 +1,40 @@
+{
+	"Entities" : 
+	[
+		{
+			"Name" : "you win",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "you win.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 56,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 55,
+				"SpriteTextureWidth" : 1920,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 2932.655029296875,
+				"SpriteTransformScalingY" : 1649.61865234375,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 2932.655029296875,
+				"TransformScalingY" : 1649.61865234375,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		}
+	],
+	"EntityAmount" : 1
+}

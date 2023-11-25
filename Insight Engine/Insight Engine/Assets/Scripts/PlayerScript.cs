@@ -191,7 +191,7 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1.5f);
+            InternalCalls.CameraSetZoom(1.2f); ;
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -294,7 +294,7 @@ namespace IS
 
                         respawn_timer = respawn_timer_set;
                         isDead = false;
-                        InternalCalls.CameraSetZoom(1.5f);
+                        InternalCalls.CameraSetZoom(1.2f);
 
                     }
 
@@ -740,7 +740,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 1.8f;
+            float distanceBelow = height / 2.1f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
