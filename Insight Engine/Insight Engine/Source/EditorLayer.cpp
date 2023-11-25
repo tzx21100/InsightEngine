@@ -334,11 +334,11 @@ namespace IS {
         const bool scene_loaded = (0 != scene_manager.GetSceneCount());
 
         auto& style = ImGui::GetStyle();
-        const char* play_pause_button = engine.mRuntime ? "PauseButton" : "PlayButton";
-        const char* play_pause_tooltip = engine.mRuntime ? "Pause" : "Play";
+        const std::string play_pause_button = engine.mRuntime ? "PauseButton" : "PlayButton";
+        const std::string play_pause_tooltip = engine.mRuntime ? "Pause" : "Play";
         const int BUTTON_COUNT = 3;
-        const char* buttons[BUTTON_COUNT] = { play_pause_button, "StopButton", "StepButton" };
-        const char* tooltips[BUTTON_COUNT] = { play_pause_tooltip, "Stop", "Step" };
+        const std::string buttons[BUTTON_COUNT] = { play_pause_button, "StopButton", "StepButton" };
+        const std::string tooltips[BUTTON_COUNT] = { play_pause_tooltip, "Stop", "Step" };
         bool button_clicked[BUTTON_COUNT] = {};
         const ImVec2 button_size = { 16.f, 16.f };
         const ImVec4 grey_color = ImVec4(.5f, .5f, .5f, 1.f);
@@ -367,10 +367,10 @@ namespace IS {
                 ImGui::BeginDisabled(i == BUTTON_COUNT - 1 && scene_manager.GetSceneCount() > 0 && Camera3D::mActiveCamera != CAMERA_TYPE_GAME);
 
                 ImGui::PushStyleColor(ImGuiCol_Text, grey_color);
-                button_clicked[i] = ImGui::ImageButton(buttons[i], mIcons[buttons[i]], button_size);
+                button_clicked[i] = ImGui::ImageButton(buttons[i].c_str(), mIcons[buttons[i]], button_size);
                 ImGui::PopStyleColor();
                 ImGui::EndDisabled();
-                ImGui::SetItemTooltip(tooltips[i]);
+                ImGui::SetItemTooltip(tooltips[i].c_str());
             }
 
             if (scene_loaded)
@@ -381,14 +381,14 @@ namespace IS {
                     engine.mRuntime = !engine.mRuntime;
                     Camera3D::mActiveCamera = CAMERA_TYPE_GAME;
                     ImGui::SetWindowFocus(ICON_LC_GAMEPAD_2 "  Game");
-                    if (!strcmp(play_pause_tooltip, "Play"))
+                    if (!engine.mRuntime && play_pause_tooltip == "Play")
                     {
                         scene_manager.SaveScene();
                     }
                 }
 
                 // Stop
-                if (button_clicked[1])
+                else if (button_clicked[1])
                 {
                     engine.mRuntime = false;
                     Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
@@ -415,7 +415,7 @@ namespace IS {
         mPanels.Emplace<HierarchyPanel>     ("Hierarchy",   *this);
         mPanels.Emplace<InspectorPanel>     ("Inspector",   *this);
         mPanels.Emplace<SettingsPanel>      ("Settings",    *this);
-        mPanels.Emplace<ProfilerPanel>   ("Performance", *this);
+        mPanels.Emplace<ProfilerPanel>      ("Performance", *this);
         mPanels.Emplace<ConsolePanel>       ("Console",     *this);
         mPanels.Emplace<BrowserPanel>       ("Browser",     *this);
 
