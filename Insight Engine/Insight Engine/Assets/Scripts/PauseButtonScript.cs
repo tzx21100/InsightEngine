@@ -46,7 +46,7 @@ namespace IS
             pause_enable = false;
 
             // Pause Menu
-            pause_menu_image    = InternalCalls.GetSpriteImage("pause_menu.png");
+            pause_menu_image    = InternalCalls.GetSpriteImage("paused_menu_image.png");
             resume_image        = InternalCalls.GetSpriteImage("resume_game_button.png");
             how_to_play_image   = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
             //setting_image     = InternalCalls.GetSpriteImage("button_frame.png");
@@ -114,13 +114,19 @@ namespace IS
                 HowToPlayScript.how_to_play_enable = false;
             }
 
+            if (!InternalCalls.IsWindowFocused())
+            {
+                pause_enable = true;
+            }
+
             //mouse
             if (InternalCalls.GetButtonState() == 1)
             {
                 //hovering
             }
             if (InternalCalls.GetButtonState() == 2) 
-            {    
+            {
+                InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                 if (!pause_enable)
                 {
                     //InternalCalls.SetGameStatus(false);
@@ -184,7 +190,7 @@ namespace IS
 
             // draw text
             //InternalCalls.ButtonRenderText(paused_text, 0.49f, 0.72f, 30f, (1f, 1f, 1f));
-            InternalCalls.RenderText("paused", 0.5f, 0.69f, 30f, (1f, 1f, 1f));
+            //InternalCalls.RenderText("paused", 0.5f, 0.69f, 30f, (1f, 1f, 1f));
             /*InternalCalls.ButtonRenderText(resume_entity, 0.495f, 0.595f, 19f, (1f, 1f, 1f));
             InternalCalls.ButtonRenderText(how_to_play_entity, 0.495f, 0.475f, 14f, (1f, 1f, 1f));
             //InternalCalls.ButtonRenderText(setting_entity, 0.495f, 0.365f, 14f, (1f, 1f, 1f));

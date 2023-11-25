@@ -37,8 +37,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1.0,
 		"SpriteTransformScalingY" : 1.0,
-		"SpriteTransformWorldPositionX" : 1382.129638671875,
-		"SpriteTransformWorldPositionY" : 317.5970458984375,
+		"SpriteTransformWorldPositionX" : 1357.6329345703125,
+		"SpriteTransformWorldPositionY" : 266.98226928710938,
 		"animations" : []
 	},
 	"Transform" : 
@@ -46,7 +46,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1.0,
 		"TransformScalingY" : 1.0,
-		"TransformWorldPositionX" : 1382.129638671875,
-		"TransformWorldPositionY" : 317.5970458984375
+		"TransformWorldPositionX" : 1357.6329345703125,
+		"TransformWorldPositionY" : 266.98226928710938
 	}
 }
