@@ -78,6 +78,14 @@ namespace IS {
                         {
                             SwitchCurrentDirectory(ASSETS_PATH);
                         }
+                        ImGui::SameLine();
+                        if (ImGui::Button(ICON_LC_ROTATE_CW))
+                        {
+                            auto& engine = InsightEngine::Instance();
+                            auto const asset = engine.GetSystem<AssetManager>("Asset");
+                            asset->RefreshDirectiories();
+                        }
+                        ImGui::SetItemTooltip("Reload Assets");
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();
