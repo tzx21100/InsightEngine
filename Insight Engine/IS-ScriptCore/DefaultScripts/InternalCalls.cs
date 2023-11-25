@@ -301,6 +301,12 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetWindowHeight();    
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetMonitorWidth();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetMonitorHeight();    
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AttachLightComponentToEntity(int entity, float colorX,float colorY,float colorZ, float Intensity, float size);        

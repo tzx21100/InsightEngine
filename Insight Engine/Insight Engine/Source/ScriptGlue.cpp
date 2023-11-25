@@ -762,14 +762,22 @@ namespace IS {
 
     static int GetWindowWidth()
     {
-        InsightEngine& engine = InsightEngine::Instance();
-        return engine.IsFullScreen() ? engine.GetMonitorWidth() : engine.GetWindowWidth();
+        return InsightEngine::Instance().GetWindowWidth();
     }
 
     static int GetWindowHeight()
     {
-        InsightEngine& engine = InsightEngine::Instance();
-        return engine.IsFullScreen() ? engine.GetMonitorHeight() : engine.GetWindowHeight();
+        return InsightEngine::Instance().GetWindowHeight();
+    }
+
+    static int GetMonitorWidth()
+    {
+        return InsightEngine::Instance().GetMonitorWidth();
+    }
+
+    static int GetMonitorHeight()
+    {
+        return InsightEngine::Instance().GetMonitorHeight();
     }
 
     static SimpleVector2D GetCameraPos() {
@@ -1084,6 +1092,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(GetMonitorWidth);
+        IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
 
         // Yiming

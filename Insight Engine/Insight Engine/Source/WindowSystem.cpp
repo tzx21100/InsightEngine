@@ -208,7 +208,6 @@ namespace IS {
             }
 
             glfwSetWindowMonitor(mWindow, nullptr, mProps.mXpos, mProps.mYpos, mProps.mWidth, mProps.mHeight, GLFW_DONT_CARE);
-            IS_CORE_DEBUG("pos : ({}, {})", mProps.mXpos, mProps.mYpos);
             return;
         }
 
@@ -216,7 +215,6 @@ namespace IS {
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwSetWindowMonitor(mWindow, nullptr, 0, 0, mode->width, mode->height, mode->refreshRate);
-        IS_CORE_DEBUG("pos : ({}, {})", mProps.mXpos, mProps.mYpos);
     }
 
     void WindowSystem::ShowMessageBox(std::string const& message)

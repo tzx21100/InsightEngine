@@ -75,17 +75,24 @@ namespace IS
             float camera_zoom   = (float)InternalCalls.CameraGetZoom();
             float window_width  = (float)InternalCalls.GetWindowWidth() / camera_zoom;
             float window_height = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
             float pause_width   = InternalCalls.GetTransformScaling().x;
             float pause_height  = InternalCalls.GetTransformScaling().y;
             bool is_fullscreen  = InternalCalls.IsFullscreen();
 
             // Compute pause button position offset
             float offset_xpos   = window_width - pause_width / 2f - PADDING;
-            float offset_ypos   = window_height - pause_height / 2f - PADDING - (is_fullscreen ? InternalCalls.GetTitleBarHeight() + PADDING : 0);
+            float offset_ypos   = window_height - pause_height / 2f - PADDING;
 
             // Get camera position
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
+
+            InternalCalls.NativeLog("Camera PosX: ", camera_pos.x);
+            InternalCalls.NativeLog("Camera PosY: ", camera_pos.y);
+
+            InternalCalls.NativeLog("Window Width: ", window_width);
+            InternalCalls.NativeLog("Window Height: ", window_height);
 
             // Offset pause button position
             InternalCalls.TransformSetPosition(camera_pos.x + offset_xpos, camera_pos.y + offset_ypos);
@@ -199,7 +206,6 @@ namespace IS
 
             if (InternalCalls.KeyPressed((int)KeyCodes.F11))
             {
-                pause_enable = !pause_enable;
                 fullscreen_mode = !fullscreen_mode;
             }
         }
