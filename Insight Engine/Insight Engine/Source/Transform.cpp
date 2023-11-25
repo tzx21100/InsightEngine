@@ -2,7 +2,7 @@
  * \file Transform.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source file defines the Transform class, which represents transformation properties
  * for game objects in an OpenGL-based application.
@@ -79,41 +79,11 @@ namespace IS {
 		world_position.y += val.y;
 	}
 
-	Mtx33 Transform::ReturnXformMatrix() {
-		// convert angle to radians
-		float angle_rad = glm::radians(rotation);
-
-		// to scale to world coordinates
-		auto [width, height] = InsightEngine::Instance().GetWindowSize();
-
-		// math variables used often
-		float sin_angle = sinf(angle_rad);
-		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x;
-		float model_scale_y = scaling.y;
-		float tx = world_position.x;
-		float ty = world_position.y;
-
-		// dont calculate camera xform every frame
-		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-
-		glm::mat3 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle),  0.f,   // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle),  0.f,   // column 2
-										 tx,                           ty,                           1.f }; // column 3
-
-
-		// save matrix
-		return GlmMat3ToISMtx33(ISGraphics::cameras[Camera::mActiveCamera].xform * world_to_cam_xform);
-	}
-
 	glm::mat4 Transform::Return3DXformMatrix() {
 		// convert angle to radians
 		float angle_rad = glm::radians(rotation);
 
 		// to scale to world coordinates
-		//auto [width, height] = InsightEngine::Instance().GetWindowSize();
 
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
@@ -123,15 +93,10 @@ namespace IS {
 		float tx = world_position.x;
 		float ty = world_position.y;
 
-		// dont calculate camera xform every frame
-		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-
-		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,  // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,  // column 2
-										 0.f,                          0.f,                         1.f, 0.f,   
-										 tx,					       ty,						    1.f, 1.f }; // column 3
+		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,   // column 1
+										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,   // column 2
+										 0.f,                          0.f,                         1.f, 0.f,   // column 3
+										 tx,					       ty,						    1.f, 1.f }; // column 4
 
 
 		// save matrix
@@ -142,8 +107,7 @@ namespace IS {
 	{
 		// convert angle to radians
 		float angle_rad = glm::radians(rotation);
-		// to scale to world coordinates
-		//auto [width, height] = InsightEngine::Instance().GetWindowSize();
+
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
@@ -151,57 +115,44 @@ namespace IS {
 		float model_scale_y = scaling.y;
 		float tx = world_position.x;
 		float ty = world_position.y;
-		// dont calculate camera xform every frame
-		//glm::mat3 world_to_cam_xform = { (a * model_scale_x * cos_angle) + (b * model_scale_x * sin_angle),  (d * model_scale_x * cos_angle) + (e * model_scale_x * sin_angle),  0.f,   // column 1
-		//								 (a * model_scale_y * -sin_angle) + (b * model_scale_y * cos_angle), (d * model_scale_y * -sin_angle) + (e * model_scale_y * cos_angle), 0.f,   // column 2
-		//								 (a * tx + b * ty + c),                                              (d * tx + e * ty + f),                                              1.f }; // column 3
-		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,  // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,  // column 2
-										 0.f,                          0.f,                         1.f, 0.f,
-										 tx,					       ty,						    1.f, 1.f }; // column 3
+		
+		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,   // column 1
+										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,   // column 2
+										 0.f,                          0.f,                         1.f, 0.f,   // column 3
+										 tx,					       ty,						    1.f, 1.f }; // column 4
 		// save matrix
 		return world_to_cam_xform;
 	}
 
-	// not in use
-	std::vector<Vector2D> Transform::GetSquareTransformVertices() {
-		std::vector<Vector2D> vertices;
-		float left = world_position.x - (scaling.x);
-		float right = world_position.x + (scaling.x);
-		float bottom = world_position.y - (scaling.y);
-		float top = world_position.y + (scaling.y);
-
-		vertices.emplace_back(Vector2D(left, top)); // 0 top left
-		vertices.emplace_back(Vector2D(right, top)); // 1 top right
-		vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
-		vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
-
-		for (int i = 0; i < vertices.size(); i++) {
-			vertices[i].x = cosf(rotation) * world_position.x - sinf(rotation) * world_position.y + world_position.x;
-			vertices[i].y = sinf(rotation) * world_position.x + cosf(rotation) * world_position.y + world_position.y;
-		}
-		
-		return vertices;
-	}
-
 	std::pair<double, double> Transform::GetMousePosition() {
+
+		// get engine instance
 		InsightEngine& engine = InsightEngine::Instance();
-		double xPos, yPos;
+
+		double xPos, yPos; // for mouse pos
+		float width, height; // for scaling
+
 		auto window = engine.GetSystem<WindowSystem>("Window");
-		float width, height;
+		
 
 #if defined(USING_IMGUI)
+
 		auto const& editor_layer = engine.GetEditorLayer();
 		if (engine.mRenderGUI)
 		{
+			// Retrieve the mouse position from the editor layer.
 			xPos = static_cast<double>(editor_layer->GetMousePos().first);
 			yPos = static_cast<double>(editor_layer->GetMousePos().second);
+
+			// Use the viewport size from the editor layer
 			width = editor_layer->GetViewportSize().x;
 			height = editor_layer->GetViewportSize().y;
 		}
 		else
 		{
+			// Use GLFW to get the mouse position.
 			glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
+			// Determine the rendering dimensions based on fullscreen or windowed mode.
 			if (engine.IsFullScreen())
 			{
 				width = static_cast<float>(engine.GetMonitorWidth());
@@ -231,17 +182,14 @@ namespace IS {
 		float ndcX = static_cast<float>(xPos) / width * 2.f - 1.0f;
 		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height * 2.f - 1.0f);
 
-		// Assuming you're working with a right-handed perspective projection
 		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
 
+		// Retrieve the active camera and its inverse NDC transformation matrix.
 		auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
 
+		// Transform the ndcCoords to world coordinates using the inverse NDC transformation matrix.
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
-
-		// if (Camera3D::mProjectionType == ProjectionType_Perspective) 
-		//std::string temp = "WORLD X: " + std::to_string(worldPos.x) + " , Y: " + std::to_string(worldPos.y) + '\n';
-		//Text::addTextRenderCall(temp, 0.5f, 0.5f, 32.f, { 1.f, 1.f, 1.f });
 
 		return { worldPos.x, worldPos.y };
 	}
@@ -279,6 +227,27 @@ namespace IS {
 
 		// Note: Not deserializing mdl_to_ndc_xform since matrix deserialization can be complex and depends on specifics
 	}
+
+	// not in use
+	//std::vector<Vector2D> Transform::GetSquareTransformVertices() {
+	//	std::vector<Vector2D> vertices;
+	//	float left = world_position.x - (scaling.x);
+	//	float right = world_position.x + (scaling.x);
+	//	float bottom = world_position.y - (scaling.y);
+	//	float top = world_position.y + (scaling.y);
+
+	//	vertices.emplace_back(Vector2D(left, top)); // 0 top left
+	//	vertices.emplace_back(Vector2D(right, top)); // 1 top right
+	//	vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
+	//	vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
+
+	//	for (int i = 0; i < vertices.size(); i++) {
+	//		vertices[i].x = cosf(rotation) * world_position.x - sinf(rotation) * world_position.y + world_position.x;
+	//		vertices[i].y = sinf(rotation) * world_position.x + cosf(rotation) * world_position.y + world_position.y;
+	//	}
+	//	
+	//	return vertices;
+	//}
 
 	glm::mat3 ISMtx33ToGlmMat3(Matrix3x3 const& mat) {
 		glm::mat3 ret{

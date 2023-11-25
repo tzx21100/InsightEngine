@@ -2,7 +2,7 @@
  * \file Sprite.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This header file defines the Sprite class, which represents a 2D sprite with transformation, rendering properties,
  * and animation capabilities.
@@ -46,21 +46,10 @@ namespace IS {
      * The Sprite class encapsulates a 2D sprite with various properties such as transformation, rendering settings,
      * and animation capabilities. It allows you to create and manage 2D sprites for use in OpenGL applications.
      */
-
     class Sprite : public IComponent {
     public:
         // Instance data of quad entity (static color, textured, animated)
         struct instanceData {
-            glm::vec4 color{};
-            float tex_index{-1.f};
-            glm::mat3 model_to_ndc_xform{};
-            glm::vec2 anim_frame_dimension{ 1.f, 1.f }; // default UV size
-            glm::vec2 anim_frame_index{ 0.f, 0.f };
-            float entID{}; // initialize with invalid entity id
-            int layer{};
-        };
-
-        struct instanceData3D {
             glm::vec4 color{};
             float tex_index{-1};
             glm::mat4 model_to_ndc_xform{};
@@ -84,9 +73,9 @@ namespace IS {
         std::vector<Animation> anims{};         // Vector of animations attached to this sprite
         bool toRender{ true };                  // Flag to control rendering
         int layer{ DrawLayer::DEFAULT_LAYER };  // Layer value (lower is further back)
-        // ImGui properties
         std::string name;                       // The name of the sprite.
         glm::vec4 color{ 1.f, 1.f, 1.f, 1.f };  // The color of the sprite. If textured, will be the tint.
+        
         // Static data member for layers management
         static std::unordered_set<int> layersToIgnore;
         static void toggleLayer(DrawLayer layer);
@@ -106,10 +95,6 @@ namespace IS {
         // Unordered set insert comparator
         struct GfxLayerComparator {
             bool operator()(instanceData const& a, instanceData const& b) const {
-                return a.layer < b.layer;
-            }
-
-            bool operator()(instanceData3D const& a, instanceData3D const& b) const {
                 return a.layer < b.layer;
             }
         };
@@ -179,26 +164,58 @@ namespace IS {
         void setSpriteSize(Transform trans) { model_TRS.scaling = trans.scaling; }
         void setSpriteSize(float width, float height) { model_TRS.scaling = Vec2D(width, height); }
 
-
-        /*!
-         * \brief Renders instances of quads efficiently.
+        /**
+         * @brief Draw instanced quads using the main quad shader.
          *
-         * This static member function binds the instance Vertex Buffer Object (VBO),
-         * uploads the instance data to the GPU, and draws the instances as quads using
-         * the provided shader program and mesh. It's a highly efficient method for rendering
-         * multiple sprites with different transformations in a single draw call.
+         * This function sets the main quad shader, uploads instance data to the GPU, and draws instanced quads.
          */
         static void draw_instanced_quads();
-        static void draw_instanced_3D_quads();
+
+        /**
+         * @brief Draw instanced glitched quads using the glitched quad shader.
+         *
+         * This function sets the glitched quad shader, uploads instance data to the GPU, and draws instanced quads.
+         * It also handles additional shader uniforms such as time.
+         */
         static void draw_instanced_glitched_quads();
 
+        /**
+         * @brief Draw a colored quad at the specified position with rotation, scale, color, and layer.
+         *
+         * This function adds a colored quad to the set of layered quad instances to be drawn later.
+         * The layer determines the rendering order.
+         */
         static void draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer = DrawLayer::DEFAULT_LAYER);
+
+        /**
+         * @brief Draw a textured quad at the specified position with rotation, scale, texture, alpha, and layer.
+         *
+         * This function adds a textured quad to the set of layered quad instances to be drawn later.
+         * The layer determines the rendering order.
+         */
         static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer = DrawLayer::DEFAULT_LAYER);
 
+        /**
+         * @brief Draw a specific frame from a spritesheet at the specified position with rotation, scale, texture, alpha, and layer.
+         *
+         * This function adds a textured quad with a specific frame from a spritesheet to the set of layered quad instances to be drawn later.
+         * The layer determines the rendering order.
+         */
         static void drawSpritesheetFrame(int rowIndex, int columnIndex, int totalRows, int totalCols, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer);
 
+        /**
+         * @brief Draw lights using the light shader.
+         *
+         * This function uploads light instance data to the GPU and draws instanced lights.
+         */
         static void draw_lights();
 
+        /**
+         * @brief Draw a border around the currently picked entity.
+         *
+         * This function, when using ImGui, draws a border around the currently picked entity.
+         * It uses the quad border shader and the entity's transformation matrix.
+         */
         static void draw_picked_entity_border();
 
         /*!
@@ -315,7 +332,7 @@ namespace IS {
          * \param shader The shader to use for rendering.
          * \param texture_id The texture ID to use for rendering.
          */
-        void drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
+        //void drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_id = 0);
 
         /*!
          * \brief Draws a line between two points.
@@ -327,7 +344,17 @@ namespace IS {
          * \param color The color of the line, white by default. TODO: Replace with Vector3D
          * \param thickness The thickness of the line.
          */
-        void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float thickness);
+        //void drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& color, float thickness);
+
+        /*!
+         * \brief Renders instances of quads efficiently.
+         *
+         * This static member function binds the instance Vertex Buffer Object (VBO),
+         * uploads the instance data to the GPU, and draws the instances as quads using
+         * the provided shader program and mesh. It's a highly efficient method for rendering
+         * multiple sprites with different transformations in a single draw call.
+         */
+        //static void draw_instanced_quads();
     };
 }
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SPRITE_H

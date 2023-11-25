@@ -1,3 +1,20 @@
+/*!
+ * \file Vector3D.cpp
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date 25-11-2023
+ * \brief
+ * Definition of the Vector3D class for representing 3D vectors and
+ * provides various vector operations.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+ /*                                                                   includes
+  ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "Vector3D.h"
 
@@ -63,7 +80,6 @@ namespace IS {
     }
 
     // Additional functionalities
-
     void ISVector3DNormalize(Vector3D& pResult, const Vector3D& pVec0) {
         pResult = pVec0;
         float magnitude = sqrt(pVec0.x * pVec0.x + pVec0.y * pVec0.y + pVec0.z * pVec0.z);

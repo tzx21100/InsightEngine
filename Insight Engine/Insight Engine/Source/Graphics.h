@@ -2,7 +2,7 @@
  * \file Graphics.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source file defines the implementation for class ISGraphics which
  * encapsulates the functionalities of a Graphics Engine.
@@ -34,8 +34,15 @@
 #include "Camera3D.h"
 
 namespace IS {
-
+	/*!
+	 * \brief Clears OpenGL errors.
+	 */
 	void ClearOpenGLError();
+
+	/*!
+	 * \brief Checks if any OpenGL errors occurred.
+	 * \return True if there is an error, false otherwise.
+	 */
 	bool GotError();
 
 	/*!
@@ -100,16 +107,6 @@ namespace IS {
 		 */
 		static void ResizeFramebuffer(GLuint width, GLuint height);
 
-		/*!
-		 * \brief Draws the outline around the specified rigid body using the provided sprite based on vertices for polygons.
-		 *
-		 * \param body The rigid body to draw the outline for.
-		 * \param sprite The sprite used for drawing the outline.
-		 * \param color The color of the outline.
-		 * \param thickness The width of the outline.
-		 */
-		static void DrawOutLine(Sprite const& sprite, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
-
 		/**
 		 * Set the line width for OpenGL rendering using glLineWidth.
 		 *
@@ -118,7 +115,7 @@ namespace IS {
 		static void setLineWidth(float lWidth) { glLineWidth(lWidth); }
 
 		
-		/// Static objects /// 
+		/// Static objects ///
 
 		// Frame Buffer
 		static std::shared_ptr<Framebuffer> mFramebuffer;
@@ -128,35 +125,23 @@ namespace IS {
 
 		// Shaders
 		static Shader fb_shader_pgm;
-
 		static Shader main_quad_shader;
-
-		static Shader inst_quad_shader_pgm;
-
-		static Shader inst_3d_quad_shader_pgm;
-		static Shader glitched_shader_pgm;
-
-		static Shader inst_non_quad_shader_pgm;
+		static Shader quad_shader_pgm;
+		static Shader glitched_quad_shader_pgm;
+		static Shader non_quad_shader_pgm;
 		static Shader quad_border_shader_pgm;
 		static Shader light_shader_pgm;
 
 		// Texture vector
 		static std::vector<Image> textures;
 
-		// Animation objects
-		static Animation idle_ani;
-		static Animation walking_ani;
-		static Animation ice_cream_truck_ani;
-
 		// instance data containers
 		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
-		static std::multiset<Sprite::instanceData3D, Sprite::GfxLayerComparator> layered3DQuadInstances;
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
-		static std::vector<Sprite::instanceData3D> lightInstances;
+		static std::vector<Sprite::instanceData> lightInstances;
 
 		// Editor and entity camera
-		static Camera cameras[2]; // 0 @ entity, 1 @ editor [represented by enums in Camera class]
 		static Camera3D cameras3D[2];
 
 		// Text Objects
@@ -164,6 +149,7 @@ namespace IS {
 		static Text Brush_Script_font;
 		static Text North_Forest_font;
 
+		// Flags
 		static bool mGlitched;
 		static bool mLightsOn;
 	};

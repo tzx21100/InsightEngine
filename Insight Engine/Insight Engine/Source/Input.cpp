@@ -48,7 +48,8 @@ namespace IS {
         //});
 
         // Window position callback
-        glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos) {
+        glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos)
+        {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
 
             // Store non-fullscreen window position (top-left of window)
@@ -57,7 +58,8 @@ namespace IS {
         });
 
         // Window maximize callback
-        glfwSetWindowMaximizeCallback(native_window, [](GLFWwindow* window, int maximized) {
+        glfwSetWindowMaximizeCallback(native_window, [](GLFWwindow* window, int maximized)
+        {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             input.mWindow->SetMaximized(maximized ? true : false);
         });

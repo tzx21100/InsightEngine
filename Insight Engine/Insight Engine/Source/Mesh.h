@@ -2,7 +2,7 @@
  * \file Mesh.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This header file defines the Mesh class, which represents OpenGL vertex array objects and buffers for rendering.
  *
@@ -60,12 +60,17 @@ namespace IS {
         };
 
         /*!
-        * \brief Set up an instanced quad mesh.
-        *
-        * This function initializes the vertex and instance data for rendering an instanced quad.
-        */
-        void setupInstancedQuadVAO();
+         * \brief Initializes various types of meshes for rendering.
+         *
+         * Initializes the necessary VAOs, VBOs abd IVBOs for rendering a quad, line, and circle mesh.
+         *
+         * \param meshes A vector of Mesh objects to store the initialized meshes.
+         */
+        static void initMeshes(std::vector<Mesh>& meshes);
 
+        /**
+         * @brief Set up an instanced 3D quad mesh.
+         */
         void setupInstanced3DQuadVAO();
 
         /*!
@@ -75,8 +80,6 @@ namespace IS {
          */
         void setupInstancedLineVAO();
 
-        void setupOutlineVAO();
-
         /*!
         * \brief Set up an instanced circle mesh.
         *
@@ -84,18 +87,17 @@ namespace IS {
         */
         void setupInstancedCircleVAO();
 
+        /**
+         * @brief Set up an outline mesh.
+         */
+        void setupOutlineVAO();
+
+        /**
+         * @brief Set up a frame buffer mesh.
+         */
         void setupFBVAO();
 
-        /*!
-         * \brief Initializes various types of meshes for rendering.
-         *
-         * Initializes the necessary VAOs, VBOs abd IVBOs for rendering a quad, line, and circle mesh.
-         *
-         * \param meshes A vector of Mesh objects to store the initialized meshes.
-         */
-        static void initMeshes(std::vector<Mesh>& meshes);
-
-
+    
         /*!
          * \brief Cleans up the OpenGL resources associated with the initialized meshes.
          *
@@ -106,6 +108,14 @@ namespace IS {
         static void cleanupMeshes(std::vector<Mesh>& meshes);
 
         /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
+
+        /*!
+        * \brief Set up an instanced quad mesh.
+        *
+        * This function initializes the vertex and instance data for rendering an instanced quad.
+        */
+        void setupInstancedQuadVAO();
+
         /*!
          * \brief Sets up a quad mesh with predefined vertices and texture coordinates.
          *

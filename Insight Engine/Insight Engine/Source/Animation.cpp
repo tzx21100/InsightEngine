@@ -2,7 +2,7 @@
  * \file Animation.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source file defines the Animation class, which manages sprite animations.
  *
@@ -61,7 +61,7 @@ namespace IS {
             Transform quadTRS(pos, rotation, scale);
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
 
-            Sprite::instanceData3D instData;
+            Sprite::instanceData instData;
             instData.color = { 1.f, 1.f, 1.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
@@ -69,7 +69,7 @@ namespace IS {
             instData.anim_frame_dimension = this->frame_dimension;
             instData.anim_frame_index = this->frame_index;
 
-            ISGraphics::layered3DQuadInstances.insert(instData);
+            ISGraphics::layeredQuadInstances.insert(instData);
         }
     }
 

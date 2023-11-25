@@ -2,7 +2,7 @@
  * \file Transform.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This header file defines the Transform class, which represents transformation properties
  * for game objects in an OpenGL-based application.
@@ -150,14 +150,23 @@ namespace IS {
 		void Move(Vector2D const& val);
 
 		/**
-		 * Returns a transformation matrix (Mtx33) representing the combined transformation
-		 * of the object's rotation, scaling, and translation in world coordinates, relative to the active camera.
+		 * @brief Returns the 3D transformation matrix for the object.
 		 *
-		 * @return An Mtx33 transformation matrix that represents the object's transformation.
+		 * This function calculates and returns the 3D transformation matrix for the object based on its
+		 * world position, rotation, scaling, and the active 3D camera's transformation to NDC space.
+		 *
+		 * @return The 3D transformation matrix for the object.
 		 */
-		Mtx33 ReturnXformMatrix();
-
 		glm::mat4 Return3DXformMatrix();
+
+		/**
+		 * @brief Gets the transformation matrix from camera space to world space.
+		 *
+		 * This function calculates and returns the transformation matrix from camera space to world space
+		 * based on the object's world position, rotation, and scaling.
+		 *
+		 * @return The transformation matrix from camera space to world space.
+		 */
 		glm::mat4 GetCameraToWorldTransform();
 
 		/**
@@ -186,7 +195,7 @@ namespace IS {
 		void Deserialize(Json::Value data) override;
 
 		// not in use
-		std::vector<Vector2D> GetSquareTransformVertices();
+		// std::vector<Vector2D> GetSquareTransformVertices();
 	};
 
 	/**
@@ -205,7 +214,24 @@ namespace IS {
 	 */
 	Matrix3x3 GlmMat3ToISMtx33(glm::mat3 const& mat);
 
+	/**
+	 * @brief Converts a 4x4 InsightMatrix to a glm::mat4.
+	 *
+	 * This function converts a 4x4 InsightMatrix to a glm::mat4.
+	 *
+	 * @param mat The input 4x4 InsightMatrix.
+	 * @return The resulting glm::mat4.
+	 */
 	glm::mat4 ISMtx44ToGlmMat4(Matrix4x4 const& mat);
+
+	/**
+	 * @brief Converts a glm::mat4 to a 4x4 InsightMatrix.
+	 *
+	 * This function converts a glm::mat4 to a 4x4 InsightMatrix.
+	 *
+	 * @param mat The input glm::mat4.
+	 * @return The resulting 4x4 InsightMatrix.
+	 */
 	Matrix4x4 GlmMat4ToISMtx44(glm::mat4 const& mat);
 }
 

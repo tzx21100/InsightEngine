@@ -2,7 +2,7 @@
  * \file Animation.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This header file defines the Animation class, which manages sprite animations.
  *
@@ -54,6 +54,19 @@ namespace IS {
          */
         void updateAnimation(float deltaTime);
 
+        /*!
+         * \brief Draws non-entity animation.
+         *
+         * Draws the non-entity animation at the specified position, rotation, scale, and alpha with the provided texture.
+         *
+         * \param deltaTime The time difference since the last update.
+         * \param pos The position of the animation.
+         * \param rotation The rotation angle of the animation.
+         * \param scale The scale of the animation.
+         * \param texture The texture used for the animation.
+         * \param alpha The alpha (transparency) value of the animation.
+         * \param layer The layer on which to draw the animation.
+         */
         void drawNonEntityAnimation(float deltaTime, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer);
 
         /*!
