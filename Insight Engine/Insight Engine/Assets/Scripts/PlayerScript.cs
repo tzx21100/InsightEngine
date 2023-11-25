@@ -761,7 +761,7 @@ namespace IS
             // Set the floor checker's position
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_feet);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entity_feet);
-            InternalCalls.TransformSetScaleEntity(width / 2f, 2f, entity_feet);
+            InternalCalls.TransformSetScaleEntity(width / 1.8f, 2f, entity_feet);
 
         }
 
