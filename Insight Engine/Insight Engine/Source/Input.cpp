@@ -40,7 +40,7 @@ namespace IS {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             
             // Store non-fullscreen window size (top-left of window)
-            if (!input.mWindow->IsFullScreen())
+            if (!(input.mWindow->IsFullScreen() || width == 0 || height == 0))
             {
                 input.mWindow->SetWindowSize(width, height);
                 IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
