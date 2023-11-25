@@ -92,6 +92,9 @@ namespace IS {
             for (auto emittingEntities : mEmitterEntities) {
                 auto& emitting_transform = engine.GetComponent<Transform>(emittingEntities);
                 auto &emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
+
+                if (emitter.isPlaying == false) { continue; }
+
                 float distance = CalculateDistance(current_entity_transform.world_position.x,
                                                     current_entity_transform.world_position.y,
                                                     emitting_transform.world_position.x,

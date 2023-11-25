@@ -44,7 +44,7 @@ namespace IS {
     class AudioEmitter : public IComponent {
     public:
         bool isLoop;
-        bool isPlaying;
+        bool isPlaying=true;
         FMOD::Channel* Channel;
         float falloff_factor=1;
         float volumeLevel=1;

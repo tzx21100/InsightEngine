@@ -131,6 +131,9 @@ namespace IS
         internal extern static void AudioPlayMusic(string name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioEmitterEnableEntity(bool enable, int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void ResetAnimations();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

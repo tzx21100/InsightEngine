@@ -49,7 +49,8 @@ namespace IS
 
             if(PlayerScript.SAVE_POINT_ID!=my_ID)
             {
-                save_point=false;
+                InternalCalls.AudioEmitterEnableEntity(false, my_ID);
+                save_point =false;
                 InternalCalls.SetSpriteImage(lantern_off);
                 InternalCalls.SetLightToggleEntity(my_ID, false);
             }
@@ -59,10 +60,12 @@ namespace IS
 
             if(save_point)
             {
+
                 if (Vector2D.Distance(my_position, PlayerScript.player_pos) > 500f)
                 {
                     return;
                 }
+                InternalCalls.AudioEmitterEnableEntity(true, my_ID);
                 InternalCalls.SetLightToggleEntity(my_ID, true);
                 InternalCalls.SetSpriteImage(lantern_on);
                 float direction=rand.NextFloat() *360;

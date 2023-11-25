@@ -109,6 +109,7 @@ namespace IS
         static private float dash_timer = 0.2f;
         static private float dash_set = 0.2f;
         static private bool canDash = false;
+        static private bool initialDash = true;
         static public bool isDashing;
 #pragma warning disable CS0169 // variable never used
         static private float dashAngle;
@@ -257,6 +258,7 @@ namespace IS
                     dash_timer = dash_set;
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
+                    InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
 
                     for (int i = 0; i < 36; i++) {
                         InternalCalls.GameSpawnParticleExtra(
@@ -669,6 +671,13 @@ namespace IS
 
 
         static private void Dashing() {
+
+            if (initialDash == true) {
+                InternalCalls.AudioPlaySound("Sward-Whoosh_3.wav",false,0.3f);
+                initialDash = false;
+            }
+
+
             for (int i = 0; i < 36; i++)
             {
 
@@ -706,6 +715,7 @@ namespace IS
                 isDashing = false;
                 dash_timer = dash_set;
                 bullet_time_timer = bullet_time_set;
+                initialDash = true;
                 InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x / 3f, InternalCalls.RigidBodyGetVelocity().y / 3f);
                 return;
             }

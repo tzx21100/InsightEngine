@@ -351,6 +351,16 @@ namespace IS {
         asset->PlayMusicByName(str);
     }
 
+    static void AudioEmitterEnableEntity(bool enable , int entity) {
+        auto& component = InsightEngine::Instance().GetComponent<AudioEmitter>(entity);
+        if (enable) {
+            component.isPlaying = true;
+        }
+        else {
+            component.isPlaying = false;
+        }
+    }
+
     static int GetButtonState() {
         auto& button=InsightEngine::Instance().GetComponent<ButtonComponent>(InsightEngine::Instance().GetScriptCaller());
         return button.mButtonState;
@@ -1032,6 +1042,7 @@ namespace IS {
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
         IS_ADD_INTERNAL_CALL(AudioPlayMusic);
+        IS_ADD_INTERNAL_CALL(AudioEmitterEnableEntity);
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);

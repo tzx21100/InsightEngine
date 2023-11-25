@@ -3,12 +3,12 @@
 	{
 		"Fullscreen" : false,
 		"Height" : 720,
-		"Maximized" : false,
+		"Maximized" : true,
 		"TargetFPS" : 60,
 		"Title" : "Insight Engine",
 		"Vsync" : false,
 		"Width" : 1280,
-		"Xpos" : 320,
-		"Ypos" : 180
+		"Xpos" : 0,
+		"Ypos" : 23
 	}
 }

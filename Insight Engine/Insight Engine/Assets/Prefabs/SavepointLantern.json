@@ -1,4 +1,12 @@
 {
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "FIREWORKS.wav",
+		"AudioVolumeLevel" : 0.5
+	},
 	"Collider" : 
 	{
 		"BoxCollider" : 
@@ -65,7 +73,7 @@
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : -981.0,
 		"RigidBodyAngularVelocity" : 0.0,
-		"RigidBodyArea" : 107973.328125,
+		"RigidBodyArea" : 107973.40625,
 		"RigidBodyBodyType" : 6,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
@@ -83,7 +91,7 @@
 	{
 		"ScriptName" : "SavePointLantern"
 	},
-	"Signature" : "00000000000000000001010000100111",
+	"Signature" : "00000000000000000001010100100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -96,9 +104,9 @@
 		"SpriteFilename" : "Prop_Lantern_NoLights.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 35,
+		"SpriteTexture" : 41,
 		"SpriteTextureHeight" : 791,
-		"SpriteTextureIndex" : 34,
+		"SpriteTextureIndex" : 40,
 		"SpriteTextureWidth" : 570,
 		"SpriteTransformRotation" : 331.189697265625,
 		"SpriteTransformScalingX" : 284.00836181640625,
