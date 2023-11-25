@@ -78,6 +78,14 @@ namespace IS {
                         {
                             SwitchCurrentDirectory(ASSETS_PATH);
                         }
+                        ImGui::SameLine();
+                        if (ImGui::Button(ICON_LC_ROTATE_CW))
+                        {
+                            auto& engine = InsightEngine::Instance();
+                            auto const asset = engine.GetSystem<AssetManager>("Asset");
+                            asset->RefreshDirectiories();
+                        }
+                        ImGui::SetItemTooltip("Reload Assets");
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();
@@ -88,6 +96,12 @@ namespace IS {
                 ImGui::EndChild(); // end child window Tree Browser
 
                 ImGui::TableNextColumn();
+
+                // Texture filter
+                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.f);
+                EditorUtils::RenderFilterWithHint(mFilter, "Filter Asset...");
+                ImGui::PopStyleVar();
+
                 mShowImportedAssets ? RenderImportedAssets() : RenderAllAssetsBrowser();
             }, table_flags);
         }
@@ -161,6 +175,12 @@ namespace IS {
                     auto const& relative_path = std::filesystem::relative(path, ASSETS_PATH);
                     auto const& extension = path.extension();
                     std::string filename_string = relative_path.filename().string();
+
+                    if (!mFilter.PassFilter(filename_string.c_str()))
+                    {
+                        continue;
+                    }
+
                     const bool is_directory = entry.is_directory();
                     ImGui::TableNextColumn();
                     if (selected_file != filename_string)
@@ -408,6 +428,11 @@ namespace IS {
                 {
                     for (auto const& [name, img] : asset->mImageList)
                     {
+                        if (!mFilter.PassFilter(name.c_str()))
+                        {
+                            continue;
+                        }
+
                         std::filesystem::path path(name);
                         ImTextureID icon = EditorUtils::ConvertTextureID(img.texture_id);
                         float aspect_ratio = static_cast<float>(img.width) / static_cast<float>(img.height);
@@ -445,6 +470,10 @@ namespace IS {
                 {
                     for (auto const& [name, sound] : asset->mSoundList)
                     {
+                        if (!mFilter.PassFilter(name.c_str()))
+                        {
+                            continue;
+                        }
                         std::filesystem::path path(name);
                         std::string extension = path.extension().string();
                         bool is_mp3 = extension == "MP3" || extension == "mp3";
@@ -473,6 +502,11 @@ namespace IS {
                 {
                     for (auto const& [name, prefab] : asset->mPrefabList)
                     {
+                        if (!mFilter.PassFilter(name.c_str()))
+                        {
+                            continue;
+                        }
+
                         std::filesystem::path path(name);
                         ImTextureID icon = mEditorLayer.GetIcon("Json");
                         ImGui::TableNextColumn();
@@ -500,6 +534,11 @@ namespace IS {
                 {
                     for (auto const& name : asset->mScriptList)
                     {
+                        if (!mFilter.PassFilter(name.c_str()))
+                        {
+                            continue;
+                        }
+
                         std::filesystem::path path(name);
                         ImTextureID icon = mEditorLayer.GetIcon("C#");
                         ImGui::TableNextColumn();
