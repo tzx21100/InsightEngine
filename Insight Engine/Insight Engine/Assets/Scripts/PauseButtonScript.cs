@@ -60,16 +60,8 @@ namespace IS
             home_entity         = InternalCalls.CreateEntityButton("Main Menu", home_image, "BackToMenuButtonScript", "");
             quit_entity         = InternalCalls.CreateEntityButton("Quit Game", quit_image, "ExitButtonScript", "");
 
-            InternalCalls.TransformSetScale(1000f, 1000f);
-            InternalCalls.TransformSetScaleEntity(2200f, 1250f, pause_menu_entity);
-            InternalCalls.TransformSetScaleEntity(600f, 200f, resume_entity);
-            InternalCalls.TransformSetScaleEntity(450f, 150f, how_to_play_entity);
-            //InternalCalls.TransformSetScaleEntity(450f, 150f, setting_entity);
-            InternalCalls.TransformSetScaleEntity(450f, 150f, home_entity);
-            InternalCalls.TransformSetScaleEntity(300f, 100f, quit_entity);
-
-            // Camera
-            camera_zoom = InternalCalls.CameraGetZoom();
+            
+            
         }
 
         static public void Update()
@@ -77,35 +69,52 @@ namespace IS
             ToggleFullscreenMode();
 
             // Constants
-            const float PADDING = 16f;
+            //const float PADDING = 32f;
 
-            // Params used for offset computation
-            float camera_zoom   = (float)InternalCalls.CameraGetZoom();
-            float window_width  = (float)InternalCalls.GetWindowWidth() / camera_zoom;
-            float window_height = (float)InternalCalls.GetWindowHeight() / camera_zoom;
-
-            float pause_width   = InternalCalls.GetTransformScaling().x;
-            float pause_height  = InternalCalls.GetTransformScaling().y;
-            bool is_fullscreen  = InternalCalls.IsFullscreen();
-
-            // Compute pause button position offset
-            float offset_xpos   = window_width - pause_width / 2f - PADDING;
-            float offset_ypos   = window_height - pause_height / 2f - PADDING;
+            // Camera
+            camera_zoom = InternalCalls.CameraGetZoom();
 
             // Get camera position
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
+            // Windows
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() * 2f / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() * 2f / camera_zoom;
+
+            orgin.x = camera_pos.x - (win_dimension.x / 2f);
+            orgin.y = camera_pos.y - (win_dimension.y / 2f);
+
+            // Dimensions
+            InternalCalls.TransformSetScale(0.04f * win_dimension.x, 0.07f * win_dimension.y);
+            InternalCalls.TransformSetScaleEntity(0.85f * win_dimension.x, 0.75f * win_dimension.y, pause_menu_entity);
+            InternalCalls.SetButtonSize(resume_entity, new SimpleVector2D(0.21f * win_dimension.x, 0.12f * win_dimension.y));
+            InternalCalls.SetButtonSize(how_to_play_entity, new SimpleVector2D(0.15f * win_dimension.x, 0.09f * win_dimension.y));
+            //InternalCalls.TransformSetScaleEntity(450f, 150f, setting_entity);
+            InternalCalls.SetButtonSize(home_entity, new SimpleVector2D(0.15f * win_dimension.x, 0.09f * win_dimension.y));
+            InternalCalls.SetButtonSize(quit_entity, new SimpleVector2D(0.13f * win_dimension.x, 0.07f * win_dimension.y));
+
+            // Params used for offset computation
+            /*float window_width = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            float window_height = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+            float pause_width = InternalCalls.GetTransformScaling().x;
+            float pause_height = InternalCalls.GetTransformScaling().y;*/
+
+            // Compute pause button position offset
+            float offset_xpos = 0.47f * win_dimension.x;
+            float offset_ypos = 0.45f * win_dimension.y;
+
             // Offset pause button position
             InternalCalls.TransformSetPosition(camera_pos.x + offset_xpos, camera_pos.y + offset_ypos);
             
-
+            // Positions
             pause_menu_pos.Set(camera_pos.x, camera_pos.y);
-            resume_pos.Set(camera_pos.x - 10f, camera_pos.y + 170f);
-            how_to_play_pos.Set(camera_pos.x - 10f, camera_pos.y - 20);
+            resume_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y + 0.1f * win_dimension.y);
+            how_to_play_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y - 0.01f * win_dimension.y);
             //setting_pos.Set(camera_pos.x - 10f, camera_pos.y - 190f);
-            home_pos.Set(camera_pos.x - 10f, camera_pos.y - 190f);
-            quit_pos.Set(camera_pos.x - 10f, camera_pos.y - 340f);
+            home_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y - 0.105f * win_dimension.y);
+            quit_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y - 0.19f * win_dimension.y);
 
             if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
             {
@@ -123,6 +132,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 1)
             {
                 //hovering
+                InternalCalls.TransformSetScale(0.06f * win_dimension.x, 0.1f * win_dimension.y);
             }
             if (InternalCalls.GetButtonState() == 2) 
             {

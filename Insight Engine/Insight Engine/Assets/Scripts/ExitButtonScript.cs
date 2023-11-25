@@ -74,7 +74,7 @@ namespace IS
             InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(yes.x, yes.y));
 
             // Positions
-            confirmation_menu_pos.Set(orgin.x + (0.5f * win_dimension.x), orgin.y + (0.51f * win_dimension.y));
+            confirmation_menu_pos.Set(orgin.x + (0.5f * win_dimension.x), orgin.y + (0.5f * win_dimension.y));
             no_pos.Set(orgin.x + (0.68f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
             yes_pos.Set(orgin.x + (0.32f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
 
