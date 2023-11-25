@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 namespace IS
 {
@@ -22,6 +23,12 @@ namespace IS
                         if (!PlayerScript.Reward_Dash) {
                             PlayerScript.Reward_Dash = true;
                         }
+                        else
+                        {
+                            InternalCalls.CameraSetZoom(1f);
+                            InternalCalls.AttachCamera(0, 0);
+                            InternalCalls.LoadScene("Assets/Scenes/YouWin.insight");
+                        }
                     }
 
                 }
@@ -34,7 +41,10 @@ namespace IS
             }
 
 
-            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 1500f)
+
+
+
+            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 1500f && !PlayerScript.Reward_Dash)
             {
                 glitch_timer = 1f;
             }

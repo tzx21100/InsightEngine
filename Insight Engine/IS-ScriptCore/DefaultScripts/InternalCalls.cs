@@ -378,7 +378,10 @@ namespace IS
         internal extern static void GlitchEnable(bool set);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetLightsToggle(bool toogle);
+        internal extern static void SetLightsToggle(bool toogle);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CloneEntity(int entity);
 
 
     }
