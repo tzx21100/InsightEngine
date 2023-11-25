@@ -2,6 +2,20 @@
 	"Entities" : 
 	[
 		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"AudioListener" : 
+			{
+				"AudioHearingRange" : 250.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 0.40000000596046448
+			},
 			"Name" : "you win",
 			"Sprite" : 
 			{
@@ -15,9 +29,9 @@
 				"SpriteFilename" : "you win.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 56,
+				"SpriteTexture" : 69,
 				"SpriteTextureHeight" : 1080,
-				"SpriteTextureIndex" : 55,
+				"SpriteTextureIndex" : 68,
 				"SpriteTextureWidth" : 1920,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2932.655029296875,

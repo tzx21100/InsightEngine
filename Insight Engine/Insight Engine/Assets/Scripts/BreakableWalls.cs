@@ -31,7 +31,7 @@ namespace IS
 
                     InternalCalls.RigidBodySetBodyTypeEntity(1, InternalCalls.GetCurrentEntityID());
 
-                    
+                    InternalCalls.AudioPlaySound("AXE_GEN-HDF-02675.wav", false, 0.6f);
                     
                     Vector2D trans =  Vector2D.FromSimpleVector2D( InternalCalls.GetTransformScaling());
                     InternalCalls.TransformSetScale(trans.x / 2f, trans.y );

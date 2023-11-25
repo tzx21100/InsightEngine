@@ -13,8 +13,12 @@ namespace IS
         //static int button_entity;
 
         static public void Init() {
+            timer = 0.5f;
             scene_circle = InternalCalls.GetSpriteImage("dark_circle.png");
             //button_entity = InternalCalls.GetCurrentEntityID();
+            start_button_click = false;
+            InternalCalls.AttachCamera(0f, 0f);
+            InternalCalls.CameraSetZoom(1f);
         }
 
         static public void Update(){
@@ -23,24 +27,22 @@ namespace IS
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
-                
                 //hovering
                 if (!first_hovering) {
-                    //InternalCalls.AudioPlaySound("Hover.wav");
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                     first_hovering = true;
                 }
-                //InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
-                //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonHoverScale(button_entity));
             }
             else
             {
                 first_hovering = false;
             }
+
+            // clicking
             if (InternalCalls.GetButtonState() == 2) 
             {
-                InternalCalls.AudioPlaySound("StartClick.wav", false, 0.5f);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 start_button_click = true;
-                //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonIdleScale(button_entity));
             }
 
             if (start_button_click)

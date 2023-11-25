@@ -27,6 +27,8 @@ namespace IS
         static public bool Reward_Dash = false;
         static public bool Reward_WallClimb = false;
 
+        static public bool initialPowerUp = false;
+
         static public int Health = 3;
         static public int Max_Health = 3;
 
@@ -56,22 +58,15 @@ namespace IS
         static SimpleImage player_walk;
         static SimpleImage player_idle;
         static SimpleImage player_climb;
-        static SimpleImage player_climb1;
-        static SimpleImage player_climb2;
-        static SimpleImage player_climb3;
-        static SimpleImage player_climb4;
-        static SimpleImage player_climb5;
-        static SimpleImage player_climb6;
-        static SimpleImage player_climb7;
-        static SimpleImage player_climb8;
-        static SimpleImage player_climb9;
-        static SimpleImage player_climb10;
-        static SimpleImage player_climb11;
         static SimpleImage player_transparent;
         static SimpleImage player_land;
         static SimpleImage player_jump;
         static SimpleImage player_jump_vfx;
         static SimpleImage player_death_vfx;
+        static SimpleImage player_powerup_vfx;
+        static SimpleImage player_reward_dash;
+        static SimpleImage player_reward_doublejump;
+        static SimpleImage player_reward_wallclimb;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -80,10 +75,8 @@ namespace IS
 
         static private int land_entity;
         static private int jump_entity;
-#pragma warning disable CS0169 // variable never used
-        static private bool land_exists;
-#pragma warning restore CS0169
         static private int death_entity;
+        static private int powerup_entity;
 
         static public int PLAYER_ID;
 
@@ -111,9 +104,6 @@ namespace IS
         static private bool canDash = false;
         static private bool initialDash = true;
         static public bool isDashing;
-#pragma warning disable CS0169 // variable never used
-        static private float dashAngle;
-#pragma warning restore CS0169
 
         static private float dashSpeed = 5000f;
 
@@ -152,6 +142,11 @@ namespace IS
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static private Vector2D target_pos = new Vector2D(0, 0);
 
+        //window height
+        static private int WindowHeight = 0;
+        static private int WindowWidth = 0;
+
+
         public static int BoolToInt(bool boolValue)
         {
             return boolValue ? 1 : 0;
@@ -159,6 +154,9 @@ namespace IS
 
         static public void Init()
         {
+            WindowWidth= InternalCalls.GetWindowWidth();
+            WindowHeight = InternalCalls.GetWindowHeight();
+
             Reward_DoubleJump = false;
             Reward_Dash = false;
             Reward_WallClimb = false;
@@ -174,6 +172,11 @@ namespace IS
             player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             player_jump_vfx = InternalCalls.GetSpriteImage("woosh_vfx 3R4C.png");
             player_death_vfx = InternalCalls.GetSpriteImage("Death Vfx R1 C11.png");
+            player_powerup_vfx = InternalCalls.GetSpriteImage("collect_fragment_vfx 2R6C.png");
+
+            player_reward_dash = InternalCalls.GetSpriteImage("Dash UI.png");
+            player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
+            player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -191,7 +194,7 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1.2f); ;
+            InternalCalls.CameraSetZoom(1.2f);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -205,12 +208,57 @@ namespace IS
             light_entity = InternalCalls.CreateEntitySprite("Player Lighting");
             InternalCalls.AttachLightComponentToEntity(light_entity, 1, 0.43f, 0, 0.44f, 619);
 
+            powerup_entity = InternalCalls.CreateEntityVFX("powerup",player_powerup_vfx);
+            InternalCalls.CreateAnimationFromSpriteEntity(2, 6, 0.9f, powerup_entity);
+
             InternalCalls.TransformSetScale(200f, 180f);
 
         }
 
         static public void Update()
         {
+
+            if (initialPowerUp)
+            {
+                InternalCalls.ResetSpriteAnimationFrameEntity(powerup_entity);
+                InternalCalls.TransformSetScaleEntity(trans_scaling.x * 1.5f, trans_scaling.y * 1.5f, powerup_entity);
+                InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, powerup_entity);
+                InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, powerup_entity);
+                initialPowerUp = false;
+            }
+
+            SimpleVector2D scaler = new SimpleVector2D(230.5f, 230.5f);
+            //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
+            if (Reward_Dash)
+            {
+               
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x+scaler.x,camera_pos.y-WindowHeight/2f - scaler.y/2f);
+                InternalCalls.DrawImageAt
+                (
+                    pos,0,scaler,player_reward_dash,1f,4
+                );
+
+            }
+            if(Reward_DoubleJump)
+            {
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x-scaler.x, camera_pos.y - WindowHeight / 2f - scaler.y/2f);
+                InternalCalls.DrawImageAt
+                (
+                    pos, 0, scaler, player_reward_doublejump, 1f,4
+                );
+
+            }
+            if(Reward_WallClimb)
+            {
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2f - scaler.y / 2f);
+                InternalCalls.DrawImageAt
+                (
+                    pos, 0, scaler, player_reward_wallclimb, 1f,4
+                );
+
+            }
+
+
 
             if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true) {
                 InternalCalls.RigidBodySetForce(0f, 0f);
@@ -219,6 +267,10 @@ namespace IS
 
             if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) {
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
+            }
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl))
+            {
                 Reward_Dash = true; Reward_DoubleJump = true; Reward_WallClimb = true;
             }
 
@@ -243,6 +295,19 @@ namespace IS
                 InternalCalls.TransformSetScaleEntity(0, 0, death_entity);
                 InternalCalls.TransformSetPositionEntity(-999, -9999, death_entity);
             }
+
+            if (InternalCalls.GetCurrentAnimationEntity(powerup_entity) >= 11)
+            {
+                InternalCalls.TransformSetScaleEntity(0, 0, powerup_entity);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, powerup_entity);
+            }
+            else {
+                InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, powerup_entity);
+            }
+
+
+            // end of animation updates
+
 
             if (isDead)
             {

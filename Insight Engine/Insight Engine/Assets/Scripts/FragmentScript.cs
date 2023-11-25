@@ -27,13 +27,15 @@ namespace IS
                         {
                             InternalCalls.CameraSetZoom(1f);
                             InternalCalls.AttachCamera(0, 0);
+                            InternalCalls.AudioStopAllSounds();
                             InternalCalls.LoadScene("Assets/Scenes/YouWin.insight");
                         }
                     }
 
                 }
 
-
+                InternalCalls.AudioPlaySound("StartClick.wav",false,0.15f);
+                PlayerScript.initialPowerUp = true;
                 InternalCalls.GlitchEnable(false);
 
                 InternalCalls.DestroyEntity(entity);

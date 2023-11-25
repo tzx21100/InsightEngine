@@ -199,6 +199,8 @@ namespace IS {
         FMOD::Channel* PlaySound(FMOD::Sound* sound, bool loop, float volume, float pitch);
         FMOD::Channel* PlaySoundCheck(FMOD::Sound* Ssound, FMOD::Channel* channel, bool loop, float volume, float pitch);
 
+        void StopAllAudio();
+
     private:
         FMOD::System* mSystem;
         FMOD::Sound* mSound;
