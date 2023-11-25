@@ -64,6 +64,11 @@ namespace IS {
 
             case pt_texture:
                 Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                break;            
+            
+            case pt_texture_frames:
+                //Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                Sprite::drawSpritesheetFrame(mParticleList[id].mRowIndex, mParticleList[id].mColIndex, mParticleList[id].mTotalRows, mParticleList[id].mTotalCols, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha,1);
                 break;
 
             case pt_anim:

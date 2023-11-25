@@ -508,9 +508,9 @@ namespace IS
                     {
                         float yvel = InternalCalls.RigidBodyGetVelocityY();
                         float vol = -yvel / 3200f;
-                        InternalCalls.NativeLog("yvel: ", yvel);
+                        //InternalCalls.NativeLog("yvel: ", yvel);
                         if (yvel < -3200f ) { vol= 1f; }
-                        InternalCalls.NativeLog("VOLUME: ", vol);
+                       // InternalCalls.NativeLog("VOLUME: ", vol);
                         vol = CustomMath.max(vol, 0.1f);
                        // InternalCalls.NativeLog("VOLUME AFTER MAX: ", vol);
                         vol = CustomMath.min(vol, 1f);
@@ -556,7 +556,7 @@ namespace IS
                     int frame = InternalCalls.GetCurrentAnimationEntity(PLAYER_ID);
                     if ((frame==2 || frame == 8) && hori_movement != 0 && frame!=previous_footstep_frame) {
                         //InternalCalls.Anim
-                        InternalCalls.NativeLog("Footsteps called at frame: ", frame);
+                       // InternalCalls.NativeLog("Footsteps called at frame: ", frame);
                         PlayRandomFootstep(0.2f);
                         previous_footstep_frame = frame;
                         

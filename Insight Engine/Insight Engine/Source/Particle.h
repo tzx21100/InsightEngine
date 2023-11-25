@@ -41,7 +41,8 @@ namespace IS {
 		pt_square = 0,
 		pt_circle = 1,
 		pt_texture = 2,
-		pt_anim=3
+		pt_texture_frames=3,
+		pt_anim=4
 
 	};
 
@@ -131,6 +132,10 @@ namespace IS {
 		float mDirection = 0.f;
 		int mParticleType = pt_square;
 		std::string mImageName = "";
+		int mColIndex = 0;
+		int mRowIndex = 0;
+		int mTotalCols = 0;
+		int mTotalRows = 0;
 
 		Vector2D mParticlePos = { 0.f,0.f };
 
@@ -154,7 +159,9 @@ namespace IS {
 			const Vector2D& scale, float lifespan,
 			const Color& color, float alpha, float alpha_growth,
 			float rotation, float direction, Particle_Type particle_type,
-			const std::string& image_name, const Vector2D& particle_pos) {
+			const std::string& image_name, const Vector2D& particle_pos,
+			int totalcols,int totalrows,
+			int curcol, int currow) {
 			Particle new_particle;
 			new_particle.mVelocity = velocity;
 			new_particle.mSizeGrowth = size_growth;
@@ -168,8 +175,18 @@ namespace IS {
 			new_particle.mParticleType = particle_type;
 			new_particle.mImageName = image_name;
 			new_particle.mParticlePos = particle_pos;
+			new_particle.mTotalCols = totalcols;
+			new_particle.mTotalRows = totalrows;
+			new_particle.mColIndex = curcol;
+			new_particle.mRowIndex = currow;
 
 			return new_particle;
+		}
+
+		static Particle CreateParticleFrames(Particle& part, int col, int row) {
+			part.mColIndex = col;
+			part.mRowIndex = row;
+			return part;
 		}
 
 		// Serialize Particle object to a string with labels
@@ -186,7 +203,9 @@ namespace IS {
 				<< "Direction: " << mDirection << "\n"
 				<< "Particle Type: " << mParticleType << "\n"
 				<< "Image Name: " << mImageName << "\n"
-				<< "Particle Position: " << mParticlePos.x << ", " << mParticlePos.y << "\n";
+				<< "Particle Position: " << mParticlePos.x << ", " << mParticlePos.y << "\n"
+				<< "Total Cols: " << mTotalCols << "\n"
+				<< "Total Rows: " << mTotalRows << "\n";
 			return out.str();
 		}
 
@@ -257,6 +276,11 @@ namespace IS {
 			std::getline(in, label, ':'); in >> particle.mParticlePos.x;
 			in.ignore(2); // Ignore the comma and space
 			in >> particle.mParticlePos.y;
+
+			// Deserialize the rows and cols for animation
+			std::getline(in, label, ':'); in >> particle.mTotalCols;
+			std::getline(in, label);
+			std::getline(in, label, ':'); in >> particle.mTotalRows;
 
 			return particle;
 		}
@@ -335,6 +359,8 @@ namespace IS {
 		std::array<Particle,MAX_PARTICLES> mParticleList; //fixed array of particles
 
     };
+
+
 }
 
 #endif // GAM200_INSIGHT_ENGINE_SOURCE_PARTICLE_H  

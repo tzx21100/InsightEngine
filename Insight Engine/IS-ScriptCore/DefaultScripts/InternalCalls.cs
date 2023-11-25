@@ -249,6 +249,9 @@ namespace IS
         internal extern static void GameSpawnParticle(float x, float y, string particle_name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GameSpawnParticleFrames(float x, float y, int col, int row, string particle_name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void ResetSpriteAnimationFrameEntity(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

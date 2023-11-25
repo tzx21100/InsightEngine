@@ -14,3 +14,5 @@ Direction: 90
 Particle Type: 0
 Image Name: 
 Particle Position: 1588, -1022
+Total Cols: 0
+Total Rows: 0

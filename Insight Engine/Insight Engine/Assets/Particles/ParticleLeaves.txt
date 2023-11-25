@@ -10,7 +10,9 @@ Alpha: 1
 Alpha: 0.8
 Alpha Growth: 0.1
 Rotation: 45
-Direction: 90
+Direction: 270
 Particle Type: 3
 Image Name: leaves_spritesheet.png
 Particle Position: 1588, -1022
+Total Cols: 9
+Total Rows: 1

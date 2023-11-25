@@ -12,6 +12,11 @@ namespace IS
     class BackGroundFollowPlayer
     {
 
+
+        static float leaves_timer=3f;
+        static int leaves_amount;
+        static float leaves_timer_set=3f;
+
         static SimpleImage bg_image1;
         static SimpleImage bg_image2;
         static SimpleImage bg_image3;
@@ -74,7 +79,14 @@ namespace IS
 
             InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 4000, 4000, 0, 0, 0, 0.2f, 4);
 
-            
+
+            leaves_timer -= InternalCalls.GetDeltaTime();
+            if(leaves_timer <= 0 )
+            {
+                InternalCalls.GameSpawnParticleFrames(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y + 4000f, 1, 0, "ParticleLeaves.txt");
+            }
+
+
         }
 
 

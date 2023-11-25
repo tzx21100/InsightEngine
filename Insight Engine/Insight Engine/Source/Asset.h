@@ -386,6 +386,20 @@ namespace IS {
             return mParticleList[filename];
         }
 
+        void RefreshDirectiories() {
+            mSoundList.clear();
+            mChannelList.clear();
+            mImageList.clear();
+            mImageNames.clear();
+            mIconNames.clear();
+            mPrefabList.clear();
+            mSceneList.clear();
+            mScriptList.clear();
+            mParticleList.clear();
+            
+            Initialize();
+        }
+
 
 
         // for save sounds and fonts

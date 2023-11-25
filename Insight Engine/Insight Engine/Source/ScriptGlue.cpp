@@ -683,6 +683,18 @@ namespace IS {
         system->SpawnParticles(particle);
     }
 
+    static void GameSpawnParticleFrames(float x, float y,int col, int row, MonoString* particle_name) {
+        auto assey_sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto system = InsightEngine::Instance().GetSystem<ParticleSystem>("Particle");
+        char* c_str = mono_string_to_utf8(particle_name); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        Particle particle = assey_sys->GetParticle(part_name);
+        particle.mParticlePos = Vector2D(x, y);
+        particle = Particle::CreateParticleFrames(particle,col, row);
+        system->SpawnParticles(particle);
+    }
+
 
     static int GetCurrentAnimationEntity(int entity) {
         if (InsightEngine::Instance().HasComponent<Sprite>(entity)) {
@@ -1067,6 +1079,7 @@ namespace IS {
 
         // Particle
         IS_ADD_INTERNAL_CALL(GameSpawnParticle);
+        IS_ADD_INTERNAL_CALL(GameSpawnParticleFrames);
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtra);
         IS_ADD_INTERNAL_CALL(GameSpawnParticleExtraImage);
 
