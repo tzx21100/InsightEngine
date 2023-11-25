@@ -386,9 +386,9 @@ namespace IS {
         log << timestamp << name << ' ' << all_args << '\n';
 
         // Print to console
-    #ifdef _DEBUG
+    #ifndef _DEBUG
             std::clog << log.str() << RESET;
-        #endif
+    #endif
 
     #ifdef USING_IMGUI
             LoggerGUI::Instance().AddLog(level, log.str().c_str());

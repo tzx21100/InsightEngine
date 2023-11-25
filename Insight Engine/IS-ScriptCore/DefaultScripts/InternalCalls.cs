@@ -120,6 +120,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float CameraGetZoom();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetCameraAspectRatio();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlaySound(string name, bool loop,float volume);
@@ -271,6 +274,12 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetTitleBarHeight();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool IsFullscreen();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ToggleFullscreen(bool toggle);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int ButtonRenderText(int entity, float x, float y, float size, (float, float, float) color);
