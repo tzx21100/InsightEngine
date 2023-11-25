@@ -2,7 +2,7 @@
  * \file Text.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source file defines the Text class, which provides functionality for rendering text in OpenGL.
  *
@@ -300,5 +300,16 @@ namespace IS {
             // Render the characters using instanced rendering
             glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, length);
         }
+    }
+
+    void Text::addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
+        renderCalls.push_back({ text, widthScalar, heightScalar, scale, color });
+    }
+
+    void Text::renderAllText() {
+        for (const auto& renderCall : renderCalls) {
+            renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
+        }
+        renderCalls.clear(); // Clear the render calls after rendering
     }
 }

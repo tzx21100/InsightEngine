@@ -192,12 +192,12 @@ namespace IS {
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
             // transform camera
-            ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
+            // ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 
             // Text::addTextRenderCall("ZAMEN!", 0.5f, 0.5f, 48.f, glm::vec3(1.f, 1.f, 1.f));
 
            // Sprite::draw_colored_quad({ 10,10 }, 0, { 400,400 }, { 1,1,1,1 },4);
-            //Sprite::draw_instanced_3D_quads();
+            //Sprite::draw_instanced_quads();
            
             //auto system = engine.GetSystem<ParticleSystem>("Particle Leaves");
             //Particle A = Particle::CreateParticle({ 0.f, 0.f }, 0.5f, { 200, 200.f }, 3.0f,

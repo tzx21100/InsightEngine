@@ -2,7 +2,7 @@
  * \file Sprite.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source  file defines the Sprite class, which represents a 2D sprite with transformation, rendering properties,
  * and animation capabilities.
@@ -41,83 +41,29 @@ namespace IS {
     }
 
     void Sprite::transform() {
-        model_TRS.mdl_to_ndc_xform = model_TRS.ReturnXformMatrix();
         model_TRS.mdl_to_3dcam_to_ndc_xform = model_TRS.Return3DXformMatrix();
     }
 
     void Sprite::draw_instanced_quads() {
-        // Bind the instance VBO
-        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[0].instance_vbo_ID));
-        // Upload the quadInstances data to the GPU
-        GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
-        std::vector<Sprite::instanceData> tempData;
-
-        if (buffer) {
-            // Copy the instance data from the multiset to the vector
-            for (const auto& data : ISGraphics::layeredQuadInstances) {
-                tempData.push_back(data);
-            }
-
-            // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
-
-            // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
-                // Handle the case where unmap was not successful
-                IS_CORE_ERROR("Failed to unmap the buffer.");
-            }
-        }
-        else {
-            // Handle the case where mapping the buffer was not successful
-            IS_CORE_ERROR("Failed to map the buffer for writing.");
-        }
-        
-        // bind shader
-        GL_CALL(glUseProgram(ISGraphics::inst_quad_shader_pgm.getHandle()));
-        GL_CALL(glBindVertexArray(ISGraphics::meshes[0].vao_ID)); // will change to enums
-
-        // store texture array indices
-        std::vector<int> tex_array_index_vect;
-        for (auto const& texture : ISGraphics::textures) {
-            GL_CALL(glBindTextureUnit(texture.texture_index, texture.texture_id));
-            tex_array_index_vect.emplace_back(texture.texture_index);
-        }
-
-        // upload to uniform variable
-        GL_CALL(auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_quad_shader_pgm.getHandle(), "uTex2d"));
-        if (tex_arr_uniform >= 0)
-        {
-            GL_CALL(glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]));
-        }
-        else
-        {
-            IS_CORE_ERROR("uTex2d Uniform not found");
-        }
-
-        // draw instanced quads
-        GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[0].draw_count, static_cast<GLsizei>(tempData.size())));
-    }
-
-    void Sprite::draw_instanced_3D_quads() {
         // set shader
-        Shader::setMainShader(ISGraphics::inst_3d_quad_shader_pgm);
+        Shader::setMainQuadShader(ISGraphics::quad_shader_pgm);
 
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
         glUnmapBuffer(GL_ARRAY_BUFFER);
         // Upload the quadInstances data to the GPU
-        GL_CALL(Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+        GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
 
         // Copy the instance data from the multiset to the vector
-        std::vector<Sprite::instanceData3D> tempData(ISGraphics::layered3DQuadInstances.begin(), ISGraphics::layered3DQuadInstances.end());
+        std::vector<Sprite::instanceData> tempData(ISGraphics::layeredQuadInstances.begin(), ISGraphics::layeredQuadInstances.end());
 
         if (buffer) {
 
             // Copy the instance data to the mapped buffer
             if (!tempData.empty()) {
-                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
 
                 // Unmap the buffer
                 if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
@@ -150,27 +96,28 @@ namespace IS {
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
-        ISGraphics::layered3DQuadInstances.clear();
+        ISGraphics::layeredQuadInstances.clear();
     }
 
     void Sprite::draw_instanced_glitched_quads() {
-        Shader::setMainShader(ISGraphics::glitched_shader_pgm);
+        // set to glitching effect shader
+        Shader::setMainQuadShader(ISGraphics::glitched_quad_shader_pgm);
+
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
         glUnmapBuffer(GL_ARRAY_BUFFER);
         // Upload the quadInstances data to the GPU
-        GL_CALL(Sprite::instanceData3D * buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
-
+        GL_CALL(Sprite::instanceData * buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
         // Copy the instance data from the multiset to the vector
-        std::vector<Sprite::instanceData3D> tempData(ISGraphics::layered3DQuadInstances.begin(), ISGraphics::layered3DQuadInstances.end());
+        std::vector<Sprite::instanceData> tempData(ISGraphics::layeredQuadInstances.begin(), ISGraphics::layeredQuadInstances.end());
 
         if (buffer) {
 
             // Copy the instance data to the mapped buffer
             if (!tempData.empty()) {
-                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData3D));
+                std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
 
                 // Unmap the buffer
                 if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) { // 
@@ -201,7 +148,7 @@ namespace IS {
             glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]);
         else IS_CORE_ERROR({ "uTex2d Uniform not found, shader compilation failed?" });
 
-        // upload to uniform variable
+        // upload to uniform variable for glitch effect animation
         auto globalTimeUniform = glGetUniformLocation(ISGraphics::main_quad_shader.getHandle(), "uGlobalTime");
         if (globalTimeUniform >= 0) {
             glUniform1f(globalTimeUniform, static_cast<float>(InsightEngine::Instance().mElapsedTime));
@@ -212,61 +159,70 @@ namespace IS {
 
         // draw instanced quads
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(tempData.size()));
-        ISGraphics::layered3DQuadInstances.clear();
+        ISGraphics::layeredQuadInstances.clear();
     }
     
 
     void Sprite::draw_colored_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Vector4D const& color, int layer) {
-        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+        // only render if layer not ignored
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) { 
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
-            Sprite::instanceData3D instData;
+            Sprite::instanceData instData;
             instData.color = glm::vec4(color.x, color.y, color.z, color.w);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;
 
-            ISGraphics::layered3DQuadInstances.insert(instData);
+            // add to multiset to render everything at the end
+            ISGraphics::layeredQuadInstances.insert(instData);
         }
     }
 
     void Sprite::draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
+        // only render if layer not ignored
         if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
-            Sprite::instanceData3D instData;
+            Sprite::instanceData instData;
             instData.color = { 1.f, 1.f, 1.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;
 
-            ISGraphics::layered3DQuadInstances.insert(instData);
+            // add to multiset to render everything at the end
+            ISGraphics::layeredQuadInstances.insert(instData);
         }
     }
 
     void Sprite::drawSpritesheetFrame(int rowIndex, int columnIndex, int totalRows, int totalCols, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
+        // error handling
         if (rowIndex < 0 || rowIndex >= totalRows || columnIndex < 0 || columnIndex >= totalCols) {
             IS_CORE_WARN("Index out of range for drawSpritesheetFrame function");
             return;
         }
-        
+
+        // only render if layer not ignored
         if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
             Transform quadTRS(pos, rotation, scale);
 
             // get line scaling matrix
             glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
-            Sprite::instanceData3D instData;
+            Sprite::instanceData instData;
             instData.color = { 1.f, 1.f, 1.f, alpha };
             instData.tex_index = static_cast<float>(texture.texture_index);
             instData.model_to_ndc_xform = world_to_NDC_xform;
             instData.layer = layer;
+
+            // set spritesheet variables
             instData.anim_frame_index = { columnIndex, rowIndex };
             instData.anim_frame_dimension = { 1.f / totalCols, 1.f / totalRows };
 
-            ISGraphics::layered3DQuadInstances.insert(instData);
+            // add to multiset to render everything at the end
+            ISGraphics::layeredQuadInstances.insert(instData);
         }
     }
 
@@ -274,11 +230,11 @@ namespace IS {
         // Bind the instance VBO
         glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID);
         // Upload the quadInstances data to the GPU
-        Sprite::instanceData3D* buffer = reinterpret_cast<Sprite::instanceData3D*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+        Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 
         if (buffer) {
             // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData3D));
+            std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData));
 
             // Unmap the buffer
             if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
@@ -296,7 +252,6 @@ namespace IS {
         glBindVertexArray(ISGraphics::meshes[3].vao_ID); // will change to enums
 
         // draw instanced quads
-
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size()));
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -305,7 +260,6 @@ namespace IS {
 
     void Sprite::draw_picked_entity_border() {
     #ifdef USING_IMGUI
-
         InsightEngine& engine = InsightEngine::Instance();
 
         // No entity selected, do nothing
@@ -324,7 +278,6 @@ namespace IS {
 
         shader.setUniform("model_to_ndc_xform", sprite.model_TRS.mdl_to_3dcam_to_ndc_xform);
         glDrawArrays(GL_LINE_LOOP, 0, ISGraphics::meshes[4].draw_count);
-
     #endif // USING_IMGUI
     }
 
@@ -376,7 +329,7 @@ namespace IS {
         }
 
         // bind shader
-        glUseProgram(ISGraphics::inst_non_quad_shader_pgm.getHandle());
+        glUseProgram(ISGraphics::non_quad_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[1].vao_ID);
 
         // draw instanced lines
@@ -422,7 +375,7 @@ namespace IS {
         }
 
         // bind shader
-        glUseProgram(ISGraphics::inst_non_quad_shader_pgm.getHandle());
+        glUseProgram(ISGraphics::non_quad_shader_pgm.getHandle());
         glBindVertexArray(ISGraphics::meshes[2].vao_ID);
 
         // draw instanced circles
@@ -619,107 +572,160 @@ namespace IS {
 
 
     /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
-    void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
-        // use sprite shader
-        shader.use();
+    //void Sprite::drawSprite(const Mesh& mesh_used, Shader shader, GLuint texture_ID) {
+    //    // use sprite shader
+    //    shader.use();
 
-        // bind vao
-        glBindVertexArray(mesh_used.vao_ID);
+    //    // bind vao
+    //    glBindVertexArray(mesh_used.vao_ID);
 
-        // set uniforms
-        shader.setUniform("uColor", color);
-        shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
+    //    // set uniforms
+    //    shader.setUniform("uColor", color);
+    //    shader.setUniform("uModel_to_NDC", ISMtx33ToGlmMat3(model_TRS.mdl_to_ndc_xform));
 
-        // Bind the texture to the uniform sampler2D
-        if (glIsTexture(texture_ID)) {
-            GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
-            if (textureUniformLoc != -1) {
-                glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D, texture_ID);
-            }
-            shader.setUniform("uTexture", 1);
-        }
-        else shader.setUniform("uTexture", 0);
+    //    // Bind the texture to the uniform sampler2D
+    //    if (glIsTexture(texture_ID)) {
+    //        GLuint textureUniformLoc = glGetUniformLocation(shader.getHandle(), "uTex2d");
+    //        if (textureUniformLoc != -1) {
+    //            glUniform1i(textureUniformLoc, 0); // Bind to texture unit 0
+    //            glActiveTexture(GL_TEXTURE0);
+    //            glBindTexture(GL_TEXTURE_2D, texture_ID);
+    //        }
+    //        shader.setUniform("uTexture", 1);
+    //    }
+    //    else shader.setUniform("uTexture", 0);
 
-        // set animation uniforms to default value
-        shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
-        shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
+    //    // set animation uniforms to default value
+    //    shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
+    //    shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
 
-        // for each mesh type
-        switch (primitive_type) {
-        case GL_TRIANGLE_STRIP:
-            glDrawArrays(primitive_type, 0, mesh_used.draw_count);
-            break;
-        case GL_POINTS:
-            glPointSize(8.f);
-            glDrawArrays(primitive_type, 0, mesh_used.draw_count);
-            glPointSize(1.f);
-            break;
-        case GL_LINES:
-            //glLineWidth(3.f);
-            //glDrawArrays(primitive_type, 0, mesh_used.draw_count);
-            //glLineWidth(1.f);
-            break;
-        case GL_TRIANGLE_FAN:
-            glDrawArrays(primitive_type, 0, mesh_used.draw_count);
-            break;
-        }
+    //    // for each mesh type
+    //    switch (primitive_type) {
+    //    case GL_TRIANGLE_STRIP:
+    //        glDrawArrays(primitive_type, 0, mesh_used.draw_count);
+    //        break;
+    //    case GL_POINTS:
+    //        glPointSize(8.f);
+    //        glDrawArrays(primitive_type, 0, mesh_used.draw_count);
+    //        glPointSize(1.f);
+    //        break;
+    //    case GL_LINES:
+    //        //glLineWidth(3.f);
+    //        //glDrawArrays(primitive_type, 0, mesh_used.draw_count);
+    //        //glLineWidth(1.f);
+    //        break;
+    //    case GL_TRIANGLE_FAN:
+    //        glDrawArrays(primitive_type, 0, mesh_used.draw_count);
+    //        break;
+    //    }
 
-        // unbind texture and vao
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindVertexArray(0);
-        shader.unUse();
-    }
+    //    // unbind texture and vao
+    //    glBindTexture(GL_TEXTURE_2D, 0);
+    //    glBindVertexArray(0);
+    //    shader.unUse();
+    //}
 
-    void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& clr, float thickness) {
-        // ensure line mesh is initialized
-        if (ISGraphics::meshes.empty()) {
-            std::cerr << "No mesh to draw line!" << std::endl;
-            return;
-        }
-        Mesh mesh_used = ISGraphics::meshes[2];
-        float delta_x = p1.x - p0.x;
-        float delta_y = p1.y - p0.y;
+    //void Sprite::drawLine(Vector2D const& p0, Vector2D const& p1, std::tuple<float, float, float> const& clr, float thickness) {
+    //    // ensure line mesh is initialized
+    //    if (ISGraphics::meshes.empty()) {
+    //        std::cerr << "No mesh to draw line!" << std::endl;
+    //        return;
+    //    }
+    //    Mesh mesh_used = ISGraphics::meshes[2];
+    //    float delta_x = p1.x - p0.x;
+    //    float delta_y = p1.y - p0.y;
 
-        // Translation
-        Vector2D midpoint = (p0 + p1) / 2.f;
+    //    // Translation
+    //    Vector2D midpoint = (p0 + p1) / 2.f;
 
-        // Rotation
-        float angle = atan2f(delta_y, delta_x);
-        angle += PI; // atan returns [-PI, PI]
+    //    // Rotation
+    //    float angle = atan2f(delta_y, delta_x);
+    //    angle += PI; // atan returns [-PI, PI]
 
-        // Scaling
-        float length = ISVector2DDistance(p0, p1);
-        Transform lineTRS(midpoint, glm::degrees(angle), { length, 0.f });
+    //    // Scaling
+    //    float length = ISVector2DDistance(p0, p1);
+    //    Transform lineTRS(midpoint, glm::degrees(angle), { length, 0.f });
 
-        // get line scaling matrix
-        glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
+    //    // get line scaling matrix
+    //    glm::mat3 world_to_NDC_xform = ISMtx33ToGlmMat3(lineTRS.ReturnXformMatrix());
 
-        // render
-        // Shader shader = ISGraphics::mesh_shader_pgm;
-        Shader shader{};
-        shader.use();
+    //    // render
+    //    // Shader shader = ISGraphics::mesh_shader_pgm;
+    //    Shader shader{};
+    //    shader.use();
 
-        // bind line mesh vao
-        glBindVertexArray(mesh_used.vao_ID);
+    //    // bind line mesh vao
+    //    glBindVertexArray(mesh_used.vao_ID);
 
-        // set uniforms
-        auto& [r, g, b] = clr;
-        glm::vec3 uniform_color{ r, g, b };
-        shader.setUniform("uColor", uniform_color);
-        shader.setUniform("uModel_to_NDC", world_to_NDC_xform);
-        shader.setUniform("uTexture", 0);
-        shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
-        shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
+    //    // set uniforms
+    //    auto& [r, g, b] = clr;
+    //    glm::vec3 uniform_color{ r, g, b };
+    //    shader.setUniform("uColor", uniform_color);
+    //    shader.setUniform("uModel_to_NDC", world_to_NDC_xform);
+    //    shader.setUniform("uTexture", 0);
+    //    shader.setUniform("uFrameDim", glm::vec2(1.f, 1.f));
+    //    shader.setUniform("uFrameIndex", glm::vec2(0.f, 0.f));
 
-        // draw line
-        glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
-        glLineWidth(thickness);
+    //    // draw line
+    //    glDrawArrays(GL_LINES, 0, mesh_used.draw_count);
+    //    glLineWidth(thickness);
 
-        // unbind texture and vao
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindVertexArray(0);
-        shader.unUse();
-    }
+    //    // unbind texture and vao
+    //    glBindTexture(GL_TEXTURE_2D, 0);
+    //    glBindVertexArray(0);
+    //    shader.unUse();
+    //}
+
+    //void Sprite::draw_instanced_quads() {
+    //    // Bind the instance VBO
+    //    GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[0].instance_vbo_ID));
+    //    // Upload the quadInstances data to the GPU
+    //    GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+    //    std::vector<Sprite::instanceData> tempData;
+
+    //    if (buffer) {
+    //        // Copy the instance data from the multiset to the vector
+    //        for (const auto& data : ISGraphics::layeredQuadInstances) {
+    //            tempData.push_back(data);
+    //        }
+
+    //        // Copy the instance data to the mapped buffer
+    //        std::memcpy(buffer, tempData.data(), tempData.size() * sizeof(Sprite::instanceData));
+
+    //        // Unmap the buffer
+    //        if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+    //            // Handle the case where unmap was not successful
+    //            IS_CORE_ERROR("Failed to unmap the buffer.");
+    //        }
+    //    }
+    //    else {
+    //        // Handle the case where mapping the buffer was not successful
+    //        IS_CORE_ERROR("Failed to map the buffer for writing.");
+    //    }
+    //    
+    //    // bind shader
+    //    GL_CALL(glUseProgram(ISGraphics::inst_quad_shader_pgm.getHandle()));
+    //    GL_CALL(glBindVertexArray(ISGraphics::meshes[0].vao_ID)); // will change to enums
+
+    //    // store texture array indices
+    //    std::vector<int> tex_array_index_vect;
+    //    for (auto const& texture : ISGraphics::textures) {
+    //        GL_CALL(glBindTextureUnit(texture.texture_index, texture.texture_id));
+    //        tex_array_index_vect.emplace_back(texture.texture_index);
+    //    }
+
+    //    // upload to uniform variable
+    //    GL_CALL(auto tex_arr_uniform = glGetUniformLocation(ISGraphics::inst_quad_shader_pgm.getHandle(), "uTex2d"));
+    //    if (tex_arr_uniform >= 0)
+    //    {
+    //        GL_CALL(glUniform1iv(tex_arr_uniform, static_cast<int>(tex_array_index_vect.size()), &tex_array_index_vect[0]));
+    //    }
+    //    else
+    //    {
+    //        IS_CORE_ERROR("uTex2d Uniform not found");
+    //    }
+
+    //    // draw instanced quads
+    //    GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[0].draw_count, static_cast<GLsizei>(tempData.size())));
+    //}
 }

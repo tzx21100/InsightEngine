@@ -2,7 +2,7 @@
  * \file Camera.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This file defines the Camera class used for managing view and projection in graphics systems.
  *
@@ -26,7 +26,7 @@
 
 
 namespace IS {
-
+	// Static member initialization
 	aCameraType Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
 	const float Camera3D::CAMERA_ZOOM_MIN = .34f;
 	const float Camera3D::CAMERA_ZOOM_MAX = 10.f;
@@ -44,19 +44,21 @@ namespace IS {
 
 	void Camera3D::Init(int width, int height, float fov)
 	{
+		// Initialization of Camera3D instance with specified width, height, and field of view
 		mFOV = fov;
 		mAspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-		// calculate camDist to see the entire game world of 1920 units width
+		// calculate camDist to see the entire game world of width units
 		float distance = ((static_cast<float>(width) / 2.f) / tanf(glm::radians(mFOV) / 2.f));
 
 		mPosition = glm::vec3(0.f, 0.f, distance);
 		mNear = 0.1f;
-		mFar = distance * 2.f; // to cover zooming in and out
+		mFar = distance * 2.f; // To cover zooming in and out
 	}
 
 	void Camera3D::Update()
 	{
+		// Update the view matrix and projection matrix of the Camera3D instance
 		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
 
 		switch (mProjectionType)
@@ -87,6 +89,7 @@ namespace IS {
 
 	void Camera3D::MoveCamera(float move_speed)
 	{
+		// Move the camera based on keyboard input and move speed
 		auto& engine = InsightEngine::Instance();
 		auto input = engine.GetSystem<InputManager>("Input");
 		float camera_speed = move_speed / mZoomLevel;
@@ -113,6 +116,7 @@ namespace IS {
 
 	void Camera3D::Rotate(float xoffset, float yoffset)
 	{
+		// Rotate the camera based on specified x and y offsets
 		const float sensitivity = 0.1f;
 
 		xoffset *= sensitivity;
@@ -134,31 +138,4 @@ namespace IS {
 		// normalize
 		mFront = glm::normalize(mFront);
 	}
-
-	//Vector2D Camera3D::mouseToWorld(){
-	//	InsightEngine& engine = InsightEngine::Instance();
-	//	double xPos, yPos;
-	//	auto mWindow = engine.GetSystem<WindowSystem>("Window");
-	//	glfwGetCursorPos(mWindow->GetNativeWindow(), &xPos, &yPos);
-
-	//	auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
-	//		
-	//	// Get normalized device coordinates
-	//	float ndcX = static_cast<float>(xPos) / static_cast<float>(width) * 2.f - 1.0f;
-	//	float ndcY = -(static_cast<float>(yPos) / static_cast<float>(height) * 2.f - 1.0f);
-	//	// float ndcY = 1.0f - static_cast<float>(yPos) / static_cast<float>(height) * 2.f;
-
-	//	glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
-
-	//	auto cameraInUse = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-	//	glm::mat4 ndcToCam = glm::inverse(cameraInUse.getCameraToNDCXform());
-
-	//	glm::vec4 worldPos = ndcToCam * ndcCoords;
-	//	// worldPos.x -= cameraInUse.mPosition.x;
-	//	// worldPos.y -= cameraInUse.mPosition.y;
-
-	//	IS_CORE_ERROR("mouse to world: {}, {}", worldPos.x, worldPos.y);
-	//	return { worldPos.x, worldPos.y };
-	//}
-
 } // end namespace IS

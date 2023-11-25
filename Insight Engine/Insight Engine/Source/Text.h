@@ -2,7 +2,7 @@
  * \file Text.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This header file defines the Text class, which provides functionality for rendering text in OpenGL.
  *
@@ -80,6 +80,28 @@ namespace IS {
          */
         void textRenderCall(int length);
 
+        /**
+         * @brief Add a text rendering call to the list of render calls.
+         *
+         * This function adds a text rendering call to the list of render calls, specifying the text content,
+         * width and height scaling factors, scale, and color.
+         *
+         * @param text The text content to be rendered.
+         * @param widthScalar The width scaling factor for the text rendering.
+         * @param heightScalar The height scaling factor for the text rendering.
+         * @param scale The overall scale factor for the text rendering.
+         * @param color The color of the rendered text, specified as a glm::vec3 (RGB).
+         */
+        static void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
+        
+        /**
+         * @brief Render all the queued text rendering calls.
+         *
+         * This function iterates through the list of text rendering calls and renders each of them.
+         * After rendering, it clears the list of render calls.
+         */
+        void renderAllText();
+
         /// Holds all state information relevant to a character as loaded using FreeType
         struct Character {
             int TextureID;          // ID handle of the glyph texture
@@ -100,6 +122,12 @@ namespace IS {
         const int base_size = 256;                    // The base size for text rendering.
 
     private:
+        /**
+         * @brief The TextRenderCall struct represents a single rendering call for text.
+         *
+         * The TextRenderCall struct encapsulates information needed for rendering a text string, including the text content,
+         * width and height scaling factors, scale, and color.
+         */
         struct TextRenderCall {
             std::string text;
             float widthScalar;
@@ -109,18 +137,14 @@ namespace IS {
         };
 
     public:
+        /**
+         * @brief Static vector to store text rendering calls.
+         *
+         * The static vector `renderCalls` is used to store instances of TextRenderCall, representing text rendering calls.
+         * It holds information such as text content, scaling factors, scale, and color for each rendering call.
+         * The vector is static to ensure that it is shared among all instances of the Text class.
+         */
         static std::vector<TextRenderCall> renderCalls;
-
-        static void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
-            renderCalls.push_back({ text, widthScalar, heightScalar, scale, color });
-        }
-
-        void renderAllText() {
-            for (const auto& renderCall : renderCalls) {
-                renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
-            }
-            renderCalls.clear(); // Clear the render calls after rendering
-        }
     };
 }
 

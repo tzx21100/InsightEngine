@@ -2,7 +2,7 @@
  * \file Shader.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 25-11-2023
  * \brief
  * This source file defines the Shader class, which encapsulates shader compilation,
  * linking, and usage in OpenGL applications.
@@ -19,22 +19,23 @@
 
 namespace IS {
     void Shader::compileAllShaders() {
-        std::string directory = "Assets/Shaders/";
+        std::string directory = "Assets/Shaders/"; // directory shaders are placed in
 
-        ISGraphics::inst_3d_quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstQuad.vert");
-        ISGraphics::inst_3d_quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "InstQuad.frag");
-        ISGraphics::inst_3d_quad_shader_pgm.link();
-        ISGraphics::inst_3d_quad_shader_pgm.validate();
+        // Initializing all required shaders
+        ISGraphics::quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstQuad.vert");
+        ISGraphics::quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "InstQuad.frag");
+        ISGraphics::quad_shader_pgm.link();
+        ISGraphics::quad_shader_pgm.validate();
 
-        ISGraphics::glitched_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstQuad.vert");
-        ISGraphics::glitched_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "GlitchEffect.frag");
-        ISGraphics::glitched_shader_pgm.link();
-        ISGraphics::glitched_shader_pgm.validate();
+        ISGraphics::glitched_quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstQuad.vert");
+        ISGraphics::glitched_quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "GlitchEffect.frag");
+        ISGraphics::glitched_quad_shader_pgm.link();
+        ISGraphics::glitched_quad_shader_pgm.validate();
 
-        ISGraphics::inst_non_quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstNonQuad.vert");
-        ISGraphics::inst_non_quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "InstNonQuad.frag");
-        ISGraphics::inst_non_quad_shader_pgm.link();
-        ISGraphics::inst_non_quad_shader_pgm.validate();
+        ISGraphics::non_quad_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "InstNonQuad.vert");
+        ISGraphics::non_quad_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "InstNonQuad.frag");
+        ISGraphics::non_quad_shader_pgm.link();
+        ISGraphics::non_quad_shader_pgm.validate();
 
         ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "PickedQuad.vert");
         ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "PickedQuad.frag");
@@ -57,7 +58,7 @@ namespace IS {
         ISGraphics::fb_shader_pgm.validate();
     }
 
-    void Shader::setMainShader(Shader const& shader) {
+    void Shader::setMainQuadShader(Shader const& shader) {
         ISGraphics::main_quad_shader = shader;
     }
 
@@ -124,10 +125,12 @@ namespace IS {
     }
 
     GLboolean Shader::compileShaderFromFile(GLenum shader_type, std::string const& file_name) {
+        // Check if the file exists
         if (GL_FALSE == FileExists(file_name)) {
             IS_CORE_ERROR("Shader File not found.");
             return GL_FALSE;
         }
+        // Check if the program handle is already created; if not, create it
         if (pgm_hdl <= 0) {
             pgm_hdl = glCreateProgram();
             if (0 == pgm_hdl) {
@@ -135,15 +138,18 @@ namespace IS {
                 return GL_FALSE;
             }
         }
-
+        // Open the shader file
         std::ifstream shader_file(file_name, std::ifstream::in);
         if (!shader_file) {
             IS_CORE_ERROR("Error opening file: {}", file_name);
             return GL_FALSE;
         }
+        // Read the shader source code from the file
         std::stringstream buffer;
         buffer << shader_file.rdbuf();
         shader_file.close();
+
+        // Compile the shader using the source code
         return compileShaderString(shader_type, buffer.str());
     }
 
@@ -345,448 +351,4 @@ namespace IS {
         }
         std::cout << "----------------------------------------------------------------------\n";
     }
-
-    /// BELOW FUNCTIONS ARE UNUSED AFTER ADDING INSTANCING ///
-    //void Shader::setupSpriteShaders() {
-    //    // vertex shader
-    //    std::string vtx_shdr = R"(
-    //        #version 450 core
-    //        layout(location = 0) in vec2 aVertexPosition;
-    //        layout(location = 2) in vec2 aTexCoord;
-    //        out vec2 vTexCoord;
-
-    //        uniform mat3 uModel_to_NDC;
-
-    //        void main()
-    //        {
-    //            gl_Position = vec4(vec2(uModel_to_NDC * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-    //            vTexCoord = aTexCoord;
-    //        }
-    //    )";
-
-    //    // fragment shader
-    //    std::string frag_shdr = R"(
-    //        #version 450 core
-
-    //        layout(location = 0) out vec4 fFragColor;
-    //        uniform vec3 uColor;
-    //        uniform sampler2D uTex2d;
-    //        in vec2 vTexCoord; // Input variable for texture coordinates
-    //        uniform int uTexture; // Flag to indicate whether to use texture or color
-
-    //        // animation uniforms - default unless drawing animation
-    //        uniform vec2 uFrameDim = vec2(1.0, 1.0); 
-    //        uniform vec2 uFrameIndex = vec2(0.0, 0.0);
-
-    //        void main()
-    //        {
-    //            if (uTexture == 0)
-    //            {
-    //                fFragColor = vec4(uColor, 1.0); // Use uColor if no texture is bound
-    //            }
-    //            else
-    //            {
-    //                //fFragColor = texture(uTex2d, vTexCoord); // Multiply texture color with uColor
-    //                fFragColor = texture(uTex2d, vec2(vTexCoord.x * uFrameDim.x, vTexCoord.y * uFrameDim.y) + vec2(uFrameDim.x * uFrameIndex.x, uFrameDim.y * uFrameIndex.y)); // Multiply texture color with uColor
-    //            }
-    //        }
-    //    )";
-
-    //    // Compile and link the shaders into a shader program
-    //    compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //    compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //    link();
-    //    validate();
-
-    //    // Check if the shader program compilation and linking was successful
-    //    if (GL_FALSE == isLinked())
-    //    {
-    //        std::cout << "Unable to compile/link/validate shader programs\n";
-    //        std::cout << getLog() << "\n";
-    //        exit(EXIT_FAILURE);
-    //    }
-    //}
-
-
-    //  void Shader::setupInstSpriteShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0)  in vec2  aVertexPosition;
-    //          layout(location = 1)  in vec2  aVertexTexCoord;
-    //          layout(location = 2)  in vec4  aVertexColor;
-    //          layout(location = 3)  in float aTexIndex;
-    //          layout(location = 4)  in vec3  aMtxRow1;
-    //          layout(location = 5)  in vec3  aMtxRow2;
-    //          layout(location = 6)  in vec3  aMtxRow3;
-    //          layout(location = 8)  in vec2  aAnimDim;
-    //          layout(location = 9)  in vec2  aAnimIndex;
-    //          layout(location = 10) in float aEntityID;
-
-    //          layout(location = 0) out vec4  vColor;
-    //          layout(location = 1) out vec2  vTexCoord;
-    //          layout(location = 2) out float vTexID;
-    //          layout(location = 3) out vec2  vAnimDim;
-    //          layout(location = 4) out vec2  vAnimIndex;
-    //          layout(location = 5) out flat float vEntityID;
-
-    //          void main()
-    //          {
-    //              mat3 model_to_NDC_xform = mat3(aMtxRow1, aMtxRow2, aMtxRow3);
-    //              gl_Position = vec4(vec2(model_to_NDC_xform * vec3(aVertexPosition, 1.0)), 0.0, 1.0);
-          //        vColor = aVertexColor;  
-    //              vTexCoord = aVertexTexCoord;
-    //              vTexID = aTexIndex;
-    //              vAnimDim = aAnimDim;
-    //              vAnimIndex = aAnimIndex;
-    //              vEntityID = aEntityID;
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec4  vColor;
-    //          layout(location = 1) in vec2  vTexCoord;
-    //          layout(location = 2) in float vTexID;
-    //          layout(location = 3) in vec2  vAnimDim;
-    //          layout(location = 4) in vec2  vAnimIndex;
-    //          layout(location = 5) in flat float vEntityID;
-
-    //          layout(location = 0) out vec4 fFragColor;
-    //          layout(location = 1) out int fEntityID;
-
-    //          uniform sampler2D uTex2d[32];
-    //
-    //          void main()
-    //          {
-    //              bool textured = false;
-    //              if (vTexID >= 0) textured = true;
-    //              if (!textured)
-    //              {
-    //                  fFragColor = vec4(vColor); // Use vColor if no texture is bound
-    //              }
-    //              else
-    //              {
-    //                  int texIdx = int(vTexID);
-    //                  fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
-    //              }
-    //              int id = int(vEntityID);
-    //              fEntityID = id + 1;
-    //          }
-    //      )";
-
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
-
-    //  void Shader::setup3DInstSpriteShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0)  in vec2  aVertexPosition;
-    //          layout(location = 1)  in vec2  aVertexTexCoord;
-    //          layout(location = 2)  in vec4  aVertexColor;
-    //          layout(location = 3)  in float aTexIndex;
-    //          layout(location = 4)  in vec4  aMtxRow1;
-    //          layout(location = 5)  in vec4  aMtxRow2;
-    //          layout(location = 6)  in vec4  aMtxRow3;
-    //          layout(location = 7)  in vec4  aMtxRow4;
-    //          layout(location = 8)  in vec2  aAnimDim;
-    //          layout(location = 9)  in vec2  aAnimIndex;
-    //          layout(location = 10) in float aEntityID;
-
-    //          layout(location = 0) out vec4  vColor;
-    //          layout(location = 1) out vec2  vTexCoord;
-    //          layout(location = 2) out flat float vTexID;
-    //          layout(location = 3) out vec2  vAnimDim;
-    //          layout(location = 4) out vec2  vAnimIndex;
-    //          layout(location = 5) out flat float vEntityID;
-
-    //          void main()
-    //          {
-    //              mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
-    //              gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
-          //        vColor = aVertexColor;  
-    //              vTexCoord = aVertexTexCoord;
-    //              vTexID = aTexIndex;
-    //              vAnimDim = aAnimDim;
-    //              vAnimIndex = aAnimIndex;
-    //              vEntityID = aEntityID;
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec4  vColor;
-    //          layout(location = 1) in vec2  vTexCoord;
-    //          layout(location = 2) in flat float vTexID;
-    //          layout(location = 3) in vec2  vAnimDim;
-    //          layout(location = 4) in vec2  vAnimIndex;
-    //          layout(location = 5) in flat float vEntityID;
-
-    //          layout(location = 0) out vec4 fFragColor;
-    //          layout(location = 1) out int fEntityID;
-
-    //          uniform sampler2D uTex2d[32];
-    //
-    //          void main()
-    //          {
-    //              bool textured = false;
-    //              if (vTexID >= 0) textured = true;
-    //              if (!textured)
-    //              {
-    //                  fFragColor = vec4(vColor); // Use vColor if no texture is bound
-    //              }
-    //              else
-    //              {
-    //                  int texIdx = int(vTexID);
-    //                  fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
-    //              }
-    //              int id = int(vEntityID);
-    //              fEntityID = id + 1;
-    //          }
-    //      )";
-
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
-
-    //  void Shader::setupPickedQuadShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0)  in vec2  aVertexPosition;
-
-    //          uniform mat4 model_to_ndc_xform;
-
-    //          void main()
-    //          {
-    //              gl_Position = model_to_ndc_xform * vec4(aVertexPosition, 0.0, 1.0);
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) out vec4 fFragColor;
-    //
-    //          void main()
-    //          {
-    //              fFragColor = vec4(1.0, 0.675, 0.11, 1.0);
-    //          }
-    //      )";
-
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
-
-    //  void Shader::setupInstNonQuadShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec2  aVertexPosition;
-    //          layout(location = 2) in vec4  aVertexColor;
-    //          layout(location = 4) in vec4  aMtxRow1;
-    //          layout(location = 5) in vec4  aMtxRow2;
-    //          layout(location = 6) in vec4  aMtxRow3;
-    //          layout(location = 7) in vec4  aMtxRow4;
-
-    //          layout(location = 0) out vec4  vColor;
-
-    //          void main()
-    //          {
-    //              mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
-    //              gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
-          //		vColor = aVertexColor;
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec4 vColor;
-    //          layout(location = 0) out vec4 fFragColor;
-
-    //          void main()
-    //          {
-    //              fFragColor = vec4(vColor);
-    //          }
-    //      )";
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
-
-    //  void Shader::setupLightingShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec2 aVertexPosition;
-    //          layout(location = 1) in vec2 aVertexTexCoord;
-    //          layout(location = 2) in vec4 aVertexColor;
-    //          layout(location = 4) in vec4 aMtxRow1;
-    //          layout(location = 5) in vec4 aMtxRow2;
-    //          layout(location = 6) in vec4 aMtxRow3;
-    //          layout(location = 7) in vec4 aMtxRow4;
-
-    //          layout(location = 0) out vec4 vColor;
-    //          layout(location = 1) out vec2 vTexCoord;
-    //          
-
-    //          void main()
-    //          {
-    //              mat4 model_to_NDC_xform = mat4(aMtxRow1, aMtxRow2, aMtxRow3, aMtxRow4);
-    //              gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
-    //              vTexCoord = aVertexTexCoord;
-          //		vColor = aVertexColor;
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-    //          layout(location = 0) in vec4 vColor;
-    //          layout(location = 1) in vec2 vTexCoord;
-
-    //          layout(location = 0) out vec4 fFragColor;
-
-    //          void main()
-    //          {
-    //              vec2 center = vec2(0.5, 0.5);
-    //              float distance = length(vTexCoord - center);
-
-    //              // Set the radius to be half of the smaller dimension of the quad
-    //              float radius = min(0.5, 0.5 * length(vec2(1.0, 1.0)));
-
-    //              // Use a step function to make the light only render in a circle
-    //              float inCircle = step(distance, radius);
-
-    //              // Apply the original attenuation formula with the step function
-    //              fFragColor = vec4(vColor.rgb, vColor.a * inCircle * (pow(0.01, distance) - 0.01));
-    //          }
-    //      )";
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
-
-    //  void Shader::setupTextShaders() {
-    //      // vertex shader
-    //      std::string vtx_shdr = R"(
-    //          #version 450 core
-    //          layout (location = 0) in vec2 vertex;
-
-    //          out VS_OUT{
-    //              vec2 TexCoords;
-    //              flat int index;
-    //          } vs_out;
-
-    //          uniform mat4 transforms[100]; // 400 chars per render
-    //          uniform mat4 projection;
-
-    //          void main()
-    //          {
-    //              gl_Position = projection * transforms[gl_InstanceID] * vec4(vertex.xy, 0.0, 1.0);
-    //              vs_out.index = gl_InstanceID; // get index to feed to frag shader
-    //              vs_out.TexCoords = vertex.xy;
-    //              vs_out.TexCoords.y = 1.0f-vs_out.TexCoords.y; // flip
-    //          }
-    //      )";
-
-    //      // fragment shader
-    //      std::string frag_shdr = R"(
-    //          #version 450 core
-
-    //          out vec4 color;
-
-    //          in VS_OUT{
-    //              vec2 TexCoords;
-    //              flat int index;
-    //          } fs_in;
-
-    //          uniform sampler2DArray text; // texture array
-    //          uniform int letterMap[400];
-    //          uniform vec3 textColor;
-
-    //          void main()
-    //          {    
-    //              vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, vec3(fs_in.TexCoords.xy,letterMap[fs_in.index])).r);
-    //              color = vec4(textColor, 1.0) * sampled;
-    //          }
-    //      )";
-
-    //      // Compile and link the shaders into a shader program
-    //      compileShaderString(GL_VERTEX_SHADER, vtx_shdr);
-    //      compileShaderString(GL_FRAGMENT_SHADER, frag_shdr);
-    //      link();
-    //      validate();
-
-    //      // Check if the shader program compilation and linking was successful
-    //      if (GL_FALSE == isLinked())
-    //      {
-    //          std::cout << "Unable to compile/link/validate shader programs\n";
-    //          std::cout << getLog() << "\n";
-    //          exit(EXIT_FAILURE);
-    //      }
-    //  }
 }
