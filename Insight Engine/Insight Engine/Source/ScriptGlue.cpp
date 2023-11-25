@@ -378,7 +378,7 @@ namespace IS {
         mono_free(c_str);
         Entity entity=InsightEngine::Instance().CreateEntity(str);
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity,Transform());
-        InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
+        //InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity,Sprite());
         return static_cast<int>(entity);
     } 
 
