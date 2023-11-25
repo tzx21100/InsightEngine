@@ -75,6 +75,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(0.14f * win_dimension.x, 0.08f * win_dimension.y, how_to_play_entity);
             InternalCalls.TransformSetScaleEntity(0.14f * win_dimension.x, 0.08f * win_dimension.y, exit_entity);*/
 
+            // Dimensions
             InternalCalls.SetButtonSize(start_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
             InternalCalls.SetButtonSize(setting_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
             InternalCalls.SetButtonSize(how_to_play_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
@@ -82,6 +83,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
             InternalCalls.TransformSetScaleEntity(0.44f * win_dimension.x, 0.35f * win_dimension.y, team_logo_entity);
 
+            // Positions
             start_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.58f * win_dimension.y));
             setting_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.46f * win_dimension.y));
             how_to_play_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.34f * win_dimension.y));

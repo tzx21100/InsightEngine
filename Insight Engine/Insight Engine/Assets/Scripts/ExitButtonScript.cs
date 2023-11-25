@@ -22,14 +22,18 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
+        // Windows
+        static Vector2D win_dimension = new Vector2D(0, 0);
+        static Vector2D orgin = new Vector2D(0, 0);
+
         static public void Init()
         {
             exit_confirmation = false;
 
             // Confirmation Panel
             confirmation_menu_image = InternalCalls.GetSpriteImage("pause_menu.png");
-            no_image = InternalCalls.GetSpriteImage("button_frame.png");
-            yes_image = InternalCalls.GetSpriteImage("button_frame.png");
+            no_image = InternalCalls.GetSpriteImage("no_button.png");
+            yes_image = InternalCalls.GetSpriteImage("yes_button.png");
 
             confirmation_menu_entity = InternalCalls.CreateEntityUI("Confirmation Menu", confirmation_menu_image);
             no_entity = InternalCalls.CreateEntityButton("No Button", no_image, "NoButtonScript", "no");
@@ -38,16 +42,6 @@ namespace IS
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
-            Vector2D confirmation = new Vector2D(2200f, 1250f);
-            Vector2D no = new Vector2D(600f, 200f);
-            Vector2D yes = new Vector2D(600f, 200f);
-            confirmation = confirmation.Divide(camera_zoom);
-            no = no.Divide(camera_zoom);
-            yes = yes.Divide(camera_zoom);
-
-            InternalCalls.TransformSetScaleEntity(confirmation.x, confirmation.y, confirmation_menu_entity);
-            InternalCalls.TransformSetScaleEntity(no.x, no.y, no_entity);
-            InternalCalls.TransformSetScaleEntity(yes.x, yes.y, yes_entity);
         }
 
         static public void Update(){
@@ -56,9 +50,40 @@ namespace IS
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
-            confirmation_menu_pos.Set(camera_pos.x + 0f / camera_zoom, camera_pos.y + 10f / camera_zoom);
+            // Windows
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() * 2f / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() * 2f / camera_zoom;
+
+            orgin.x = camera_pos.x -(win_dimension.x / 2f);
+            orgin.y = camera_pos.y -(win_dimension.y / 2f);
+
+            // Dimensions
+            /*Vector2D confirmation = new Vector2D(2200f, 1250f);
+            Vector2D no = new Vector2D(600f, 200f);
+            Vector2D yes = new Vector2D(600f, 200f);*/
+            Vector2D confirmation = new Vector2D(0.85f * win_dimension.x, 0.75f * win_dimension.y);
+            Vector2D no = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
+            Vector2D yes = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
+            /*confirmation = confirmation.Divide(camera_zoom);
+            no = no.Divide(camera_zoom);
+            yes = yes.Divide(camera_zoom);*/
+
+            InternalCalls.TransformSetScaleEntity(confirmation.x, confirmation.y, confirmation_menu_entity);
+            InternalCalls.SetButtonSize(no_entity, new SimpleVector2D(no.x, no.y));
+            InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(yes.x, yes.y));
+
+            // Positions
+            confirmation_menu_pos.Set(orgin.x + (0.5f * win_dimension.x), orgin.y + (0.51f * win_dimension.y));
+            no_pos.Set(orgin.x + (0.68f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
+            yes_pos.Set(orgin.x + (0.32f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
+
+            /*confirmation_menu_pos = confirmation_menu_pos.Divide(camera_zoom);
+            no_pos = no_pos.Divide(camera_zoom);
+            yes_pos = yes_pos.Divide(camera_zoom);*/
+
+            /*confirmation_menu_pos.Set(camera_pos.x + 0f / camera_zoom, camera_pos.y + 10f / camera_zoom);
             no_pos.Set(camera_pos.x + 600f / camera_zoom, camera_pos.y - 500f / camera_zoom);
-            yes_pos.Set(camera_pos.x - 600f / camera_zoom, camera_pos.y - 500f / camera_zoom);
+            yes_pos.Set(camera_pos.x - 600f / camera_zoom, camera_pos.y - 500f / camera_zoom);*/
 
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -67,16 +92,6 @@ namespace IS
             }
             if (InternalCalls.GetButtonState() == 2) 
             {
-                //InternalCalls.Exit();
-                /*if (!exit_confirmation)
-                {
-                    //InternalCalls.SetGameStatus(false);
-                    exit_confirmation = true;
-                }
-                else
-                {
-                    pause_enable = false;
-                }*/
                 exit_confirmation = true;
             }
 
@@ -102,8 +117,8 @@ namespace IS
 
             // draw text
             InternalCalls.RenderText("exit?", 0.5f, 0.5f, 23f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(no_entity, 0.658f, 0.28f, 18f, (1f, 1f, 1f));
-            InternalCalls.ButtonRenderText(yes_entity, 0.34f, 0.28f, 18f, (1f, 1f, 1f));
+            //InternalCalls.ButtonRenderText(no_entity, 0.658f, 0.28f, 18f, (1f, 1f, 1f));
+            //InternalCalls.ButtonRenderText(yes_entity, 0.34f, 0.28f, 18f, (1f, 1f, 1f));
 
         }
 

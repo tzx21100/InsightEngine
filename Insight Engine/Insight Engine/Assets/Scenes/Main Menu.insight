@@ -27,9 +27,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 32,
+				"SpriteTexture" : 33,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 31,
+				"SpriteTextureIndex" : 32,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 3968.0,
@@ -46,7 +46,14 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Name" : "Main Menu Light",
+			"Script" : 
+			{
+				"ScriptName" : "MainMenuBackgroundLight"
+			}
 		}
 	],
-	"EntityAmount" : 1
+	"EntityAmount" : 2
 }

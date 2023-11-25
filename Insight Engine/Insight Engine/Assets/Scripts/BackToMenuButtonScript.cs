@@ -17,7 +17,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                //InternalCalls.LoadScene("Assets/Scenes/Main Menu.insight");
+                InternalCalls.LoadScene("Assets/Scenes/Main Menu.insight");
             }
         }
 

@@ -13,8 +13,12 @@ namespace IS
         //static int button_entity;
 
         static public void Init() {
+            timer = 0.5f;
             scene_circle = InternalCalls.GetSpriteImage("dark_circle.png");
             //button_entity = InternalCalls.GetCurrentEntityID();
+            start_button_click = false;
+            InternalCalls.AttachCamera(0f, 0f);
+            InternalCalls.CameraSetZoom(1f);
         }
 
         static public void Update(){
