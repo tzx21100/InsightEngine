@@ -19,22 +19,22 @@ namespace IS
 
                 if (randomNumber < 25)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav", false, 1);
                     return;
                 }
                 if(randomNumber < 50)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav",false,1);
                     return;
                 }
                 if (randomNumber < 75)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav", false, 1);
                     return;
                 }
                 if (randomNumber < 100)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav");
+                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav", false, 1);
                     return;
                 }
 

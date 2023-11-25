@@ -183,6 +183,7 @@ namespace IS {
         }
 
         virtual void Update([[maybe_unused]] float delta) override {
+
         #ifdef USING_IMGUI
 
             //if (InsightEngine::Instance().mRuntime == false) { return; }

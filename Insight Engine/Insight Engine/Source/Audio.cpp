@@ -43,7 +43,7 @@ namespace IS {
             return;
         }
 
-        result = system->init(32, FMOD_INIT_NORMAL, nullptr);
+        result = system->init(128, FMOD_INIT_NORMAL, nullptr);
         if (result != FMOD_OK) {
             // Handle initialization error
             return;

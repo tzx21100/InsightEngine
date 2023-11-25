@@ -36,7 +36,7 @@ namespace IS {
      * \param name The message to log.
      * \param param The integer parameter to log.
      */
-    static void NativeLog(MonoString* name, float param) {
+    static void NativeLog(MonoString* name, int param) {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str); // Convert char* to C++ string
         mono_free(c_str); // Free the allocated char*
@@ -323,12 +323,12 @@ namespace IS {
         camera.SetPosition(xoffset, yoffset);
     }
 
-    static void AudioPlaySound(MonoString* name) {
+    static void AudioPlaySound(MonoString* name,bool loop=0,float volume=1.f) {
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlaySoundByName(str);
+        asset->PlaySoundByName(str,loop,volume);
     }
 
     static void AudioPlayMusic(MonoString* name) {
@@ -582,7 +582,7 @@ namespace IS {
     
     static bool CollidingObjectTypeIsIgnore(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-        return (body_component.mBodyType == BodyType::Ignore) ? true : false;
+        return body_component.mBodyType == BodyType::Ignore ? true : false;
     }
 
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer=1) {

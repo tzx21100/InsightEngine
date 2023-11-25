@@ -122,7 +122,7 @@ namespace IS
         internal extern static float CameraGetZoom();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AudioPlaySound(string name);
+        internal extern static void AudioPlaySound(string name, bool loop,float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlayMusic(string name);

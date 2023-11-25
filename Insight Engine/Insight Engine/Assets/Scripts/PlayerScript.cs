@@ -36,10 +36,10 @@ namespace IS
         static public int SAVE_POINT_ID = 0;
 
         //public player variables
-        static private float footstep_timer = 0.2f;
-        static private float footstep_timer_set = 0.2f;
-
-        static private bool play_footstep = false;
+        static private float footstep_timer = 0.12f;
+        static private float footstep_timer_set = 0.12f;
+        static private int previous_footstep_frame = 0;
+        //static private bool play_footstep = false;
 
         //lighting
 
@@ -221,8 +221,6 @@ namespace IS
 
         static public void Update()
         {
-
-
 
             if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true) {
                 InternalCalls.RigidBodySetForce(0f, 0f);
@@ -555,13 +553,14 @@ namespace IS
                         isJumping = true;
                     }
 
+                    int frame = InternalCalls.GetCurrentAnimationEntity(PLAYER_ID);
+                    if ((frame==2 || frame == 8) && hori_movement != 0 && frame!=previous_footstep_frame) {
+                        //InternalCalls.Anim
+                        InternalCalls.NativeLog("Footsteps called at frame: ", frame);
+                        PlayRandomFootstep();
+                        previous_footstep_frame = frame;
+                        
 
-
-                    if ((InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 2 || InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 8) && hori_movement != 0)
-                    {
-                        if (play_footstep)
-                            PlayRandomFootstep();
-                        play_footstep = false;
                     }
 
 
@@ -597,6 +596,7 @@ namespace IS
 
             if (canDash && isDashing == false && Reward_Dash)
             {
+                InternalCalls.GlitchEnable(false);
                 if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift)) {
                     isDashing = true;
                 }
@@ -648,11 +648,7 @@ namespace IS
                 }
             }
 
-            footstep_timer -= InternalCalls.GetDeltaTime();
-            if (footstep_timer < 0) { 
-            play_footstep = true;
-                footstep_timer = footstep_timer_set;
-            }
+
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -854,34 +850,68 @@ namespace IS
         static MyRandom rando_footsteps = new MyRandom(12312415);
         static private void PlayRandomFootstep()
         {
-            float num = rando_footsteps.Next();
+            float volume = 0.3f;
+            float num = rando_footsteps.NextFloat();
             if (num <= 0.1f)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav");
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav",false,volume);
                 return;
             }
             if (num <= 0.2f)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav");
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav", false, volume);
                 return;
             }
             if (num <= 0.3f)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav");
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav", false, volume);
                 return;
             }
             if (num <= 0.4f)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav");
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav", false, volume);
                 return;
             }
             if (num <= 0.5f)
             {
-                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_5.wav");
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_5.wav", false, volume);
                 return;
             }
-
-            InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_6.wav");
+            if (num <= 0.6f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_6.wav", false, volume);
+                return;
+            }
+            if (num <= 0.7f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_7.wav", false, volume);
+                return;
+            }
+            if (num <= 0.8f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_8.wav", false, volume);
+                return;
+            }
+            if (num <= 0.85f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_9.wav", false, volume);
+                return;
+            }
+            if (num <= 0.9f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_10.wav", false, volume);
+                return;
+            }
+            if (num <= 0.95f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_11.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_12.wav", false, volume);
+                return;
+            }
             return;
         }
 
