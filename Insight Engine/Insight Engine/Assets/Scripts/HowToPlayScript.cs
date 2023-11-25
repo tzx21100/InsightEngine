@@ -54,9 +54,7 @@ namespace IS
 
             // Dimensions
             Vector2D how_to_play = new Vector2D(win_dimension.x, win_dimension.y);
-            Vector2D back = new Vector2D(0.23f * win_dimension.x, 0.13f * win_dimension.y);
-            /*how_to_play = how_to_play.Divide(camera_zoom);
-            back = back.Divide(camera_zoom);*/
+            Vector2D back = new Vector2D(0.23f * win_dimension.x, 0.13f * win_dimension.y);           
 
             InternalCalls.TransformSetScaleEntity(how_to_play.x, how_to_play.y, how_to_play_menu_entity);
             InternalCalls.SetButtonSize(back_entity, new SimpleVector2D(back.x, back.y));

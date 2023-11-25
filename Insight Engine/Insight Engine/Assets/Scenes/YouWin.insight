@@ -17,6 +17,10 @@
 				"AudioVolume" : 0.40000000596046448
 			},
 			"Name" : "you win",
+			"Script" : 
+			{
+				"ScriptName" : "YouWinScript"
+			},
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
@@ -29,9 +33,9 @@
 				"SpriteFilename" : "you win.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 69,
+				"SpriteTexture" : 71,
 				"SpriteTextureHeight" : 1080,
-				"SpriteTextureIndex" : 68,
+				"SpriteTextureIndex" : 70,
 				"SpriteTextureWidth" : 1920,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2932.655029296875,
