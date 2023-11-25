@@ -4,6 +4,7 @@ namespace IS
     class HowToPlayScript
     {
         static public bool how_to_play_enable = false;
+        static public bool first_hovering = false;
 
         // How To Play Panel
         static private int how_to_play_menu_entity;
@@ -71,10 +72,22 @@ namespace IS
             if (InternalCalls.GetButtonState() == 1)
             {
                 //hovering
+                if (!first_hovering)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    first_hovering = true;
+                }
             }
+            else
+            {
+                first_hovering = false;
+            }
+
+            // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 how_to_play_enable = true;
             }
 

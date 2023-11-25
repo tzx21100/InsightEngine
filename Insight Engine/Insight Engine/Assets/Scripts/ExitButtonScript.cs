@@ -4,6 +4,7 @@ namespace IS
     class ExitButtonScript
     {
         static public bool exit_confirmation = false;
+        static public bool first_hovering = false;
 
         // Confirmation Panel
         static private int confirmation_menu_entity;
@@ -31,7 +32,7 @@ namespace IS
             exit_confirmation = false;
 
             // Confirmation Panel
-            confirmation_menu_image = InternalCalls.GetSpriteImage("pause_menu.png");
+            confirmation_menu_image = InternalCalls.GetSpriteImage("exit_menu_image.png");
             no_image = InternalCalls.GetSpriteImage("no_button.png");
             yes_image = InternalCalls.GetSpriteImage("yes_button.png");
 
@@ -88,10 +89,23 @@ namespace IS
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
+
                 //hovering
+                if (!first_hovering)
+                {
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    first_hovering = true;
+                }
             }
+            else
+            {
+                first_hovering = false;
+            }
+
+            // clicking
             if (InternalCalls.GetButtonState() == 2) 
             {
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 exit_confirmation = true;
             }
 
@@ -116,7 +130,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
 
             // draw text
-            InternalCalls.RenderText("exit?", 0.5f, 0.5f, 23f, (1f, 1f, 1f));
+            //InternalCalls.RenderText("exit?", 0.5f, 0.5f, 23f, (1f, 1f, 1f));
             //InternalCalls.ButtonRenderText(no_entity, 0.658f, 0.28f, 18f, (1f, 1f, 1f));
             //InternalCalls.ButtonRenderText(yes_entity, 0.34f, 0.28f, 18f, (1f, 1f, 1f));
 

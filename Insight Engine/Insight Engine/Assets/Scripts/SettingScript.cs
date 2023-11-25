@@ -3,23 +3,35 @@ namespace IS
 {
     class SettingScript
     {
+        static public bool first_hovering = false;
+
         static public void Init()
         {
         }
 
         static public void Update()
         {
-            if (PauseButtonScript.pause_enable)
+            //hovered
+            if (InternalCalls.GetButtonState() == 1)
             {
-                //hovered
-                if (InternalCalls.GetButtonState() == 1)
+
+                //hovering
+                if (!first_hovering)
                 {
-                    //hovering
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    first_hovering = true;
                 }
-                if (InternalCalls.GetButtonState() == 2)
-                {
-                    //click
-                }
+            }
+            else
+            {
+                first_hovering = false;
+            }
+
+
+            if (InternalCalls.GetButtonState() == 2)
+            {
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                //click
             }
         }
 
