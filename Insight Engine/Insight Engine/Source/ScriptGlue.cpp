@@ -603,6 +603,14 @@ namespace IS {
     
     }
 
+    static void DrawImageExtraAt(int rowIndex, int columnIndex, int totalRows, int totalCols, SimpleVector2D  pos, float rotation, SimpleVector2D  scale, SimpleImage texture, float alpha, int layer) {
+
+       
+
+        Sprite::drawSpritesheetFrame( rowIndex,  columnIndex,  totalRows,  totalCols, Vector2D(pos.x, pos.y),  rotation, Vector2D(scale.x, scale.y), ConvertToImage(texture),  alpha,  layer);
+
+    }
+
     static void LoadScene(MonoString* file_name)
     {
         char* c_str = mono_string_to_utf8(file_name); // Convert Mono string to char*
@@ -1048,6 +1056,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);
         IS_ADD_INTERNAL_CALL(DrawImageAt);
+        IS_ADD_INTERNAL_CALL(DrawImageExtraAt);
         IS_ADD_INTERNAL_CALL(DrawSquare);
         IS_ADD_INTERNAL_CALL(GlitchEnable);
 
