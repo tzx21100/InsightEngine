@@ -160,8 +160,8 @@ namespace IS {
         Entity GetEntity() const { return mEntity; }
 
     private:
-        Entity mEntity;         ///< The created entity.
-        std::string mEntityName; ///< The name of the entity to be created.
+        Entity mEntity{};         ///< The created entity.
+        std::string mEntityName{}; ///< The name of the entity to be created.
     };
 
     /*!
