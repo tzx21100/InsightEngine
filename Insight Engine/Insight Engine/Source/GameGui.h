@@ -63,9 +63,9 @@ namespace IS {
         std::string mButtonText;
         int mButtonType{};
         int mButtonState{};
-        std::string ImageName;
-        Vector2D mSize;
-        float mSizeScale;
+        std::string ImageName{};
+        Vector2D mSize{};
+        float mSizeScale=1.f;
         float mIdleAlpha{ 1.f };
         float mHoverAlpha{ 1.f };
         float mClickAlpha{ 1.f };

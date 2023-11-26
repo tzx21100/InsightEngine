@@ -43,13 +43,13 @@ namespace IS {
 
     class AudioEmitter : public IComponent {
     public:
-        bool isLoop;
+        bool isLoop=false;
         bool isPlaying=true;
-        FMOD::Channel* Channel;
+        FMOD::Channel* Channel=nullptr;
         float falloff_factor=1;
         float volumeLevel=1;
         float pitch = 1;
-        std::string soundName;
+        std::string soundName="";
         //we are going to use the formula
         //gain=1/distance+fall-off factor higher the falloff factor faster the sound disappears
 

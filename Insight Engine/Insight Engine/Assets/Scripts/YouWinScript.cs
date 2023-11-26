@@ -6,7 +6,7 @@ namespace IS
         static public bool first_hovering = false;
 
         // Win Menu
-        static private int pause_menu_entity;
+        //static private int pause_menu_entity;
         static private int back_entity;
 
         static SimpleImage back_image;
