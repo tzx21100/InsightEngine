@@ -8,7 +8,7 @@
 ; !!NOTE!!: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click "Tools" | "Create GUID" inside the Visual Studio IDE.)
-AppId={{FAD36143-EAC3-4AFF-967E-F487B8D8D92B}
+AppId={{774151A4-9ADF-42B9-A95D-027288EF9504}
 
 ; Standard app data stuff
 ; !!NOTE!!: Replace all instances of "Fragments" with your game name.

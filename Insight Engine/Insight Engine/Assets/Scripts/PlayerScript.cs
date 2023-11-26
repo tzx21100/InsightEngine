@@ -2,7 +2,7 @@
  * \file PlayerScript.cs
  * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 26-11-2023
  * \brief
  * This source file is meant for the player movement and camera.
  *
