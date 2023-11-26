@@ -1,7 +1,10 @@
 /* Start Header **************************************************************/
 /*!
 \file    ScriptGlue.cpp
-\author  Matthew Ng, matthewdeen.ng@digipen.edu
+\author  Matthew Ng, matthewdeen.ng@digipen.edu (35%)
+         Tan Zheng Xun, t.zhengxun@digipen.edu  (40%)
+         Guo Yiming, yiming.guo@digipen.edu (5%)
+         Wu Zekai, zekai.wu@digipen.edu (20%)
 \par     Course: CSD2401
 \date    2-11-2023
 \brief   This source file defines the implementation of the ScriptGlue class, which
