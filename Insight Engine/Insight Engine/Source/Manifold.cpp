@@ -2,7 +2,7 @@
  * \file Manifold.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 01-11-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains the definitions of the Manifold class, which represents contact information
  * between two objects in a physics simulation.
@@ -82,36 +82,6 @@ namespace IS
 			return; // instantly return once find the contact points
 		}
 
-		//switch (shapeA)
-		//{
-		//case BodyShape::Box:
-		//	switch (shapeB)
-		//	{
-		//	case BodyShape::Box: // box vs box
-		//		FindPolygonsContactPoints(bodyA.GetTransformedVertices(), bodyB.GetTransformedVertices(), mContact1, mContact2, mContactCount);
-		//		break;
-		//	case BodyShape::Circle: // box vs circle
-		//		break;
-		//	default:
-		//		break;
-		//	}
-		//	break;
-		//case BodyShape::Circle:
-		//	switch (shapeB)
-		//	{
-		//	case BodyShape::Box: // circle vs box
-		//		break;
-		//	case BodyShape::Circle: // circle vs circle
-		//		break;
-		//	default:
-		//		break;
-		//	}
-		//	break;
-		//case BodyShape::Line:
-		//	break;
-		//default:
-		//	break;
-		//}
 	}
 
 	// Calculates contact points for a collision between two polygons.
@@ -180,6 +150,7 @@ namespace IS
 		}
 	}
 
+	// Calculates contact points for a collision between circle and polygon.
 	void Manifold::FindCirclePolygonContactPoints(Vector2D const& circle_center, [[maybe_unused]] float const& circle_radius, [[maybe_unused]] Vector2D const& polygon_center, std::vector<Vector2D> const& polygon_vertices, Vector2D& contact_point) {
 		Vector2D closest_point = Vector2D();
 		float dis_sq = 0.f;
@@ -200,7 +171,7 @@ namespace IS
 		}
 	}
 
-
+	// Calculates contact points for a collision between two circles.
 	void Manifold::FindCirlcesContactPoints(Vector2D const& center_a, float const& radius_a, Vector2D const& center_b, Vector2D& contact_point) {
 		Vector2D ab = center_b - center_a;
 		ISVector2DNormalize(ab, ab);

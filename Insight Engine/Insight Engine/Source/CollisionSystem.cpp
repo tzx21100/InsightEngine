@@ -1,4 +1,22 @@
+/*!
+ * \file CollisionSystem.cpp
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-11-2023
+ * \brief
+ * This header file contains CollisionSystem class. This class is responsible for
+ * handling the physics of collisions between entities in a game.
+ * It includes functions for detecting and resolving collisions.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CollisionSystem.h"
 
@@ -68,13 +86,6 @@ namespace IS
 
 		for (int i = 0; i < mContactPair.size(); i++)
 		{
-			//if (i == 0) { // reset all the colliders
-			//	for (auto entity: mEntities) {
-			//		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
-			//		collider.mIsColliding = false;
-			//		collider.mCollidedObjectAngle = 0.f;
-			//	}
-			//}
 
 			std::pair<Entity, Entity> pair = mContactPair[i];
 			Entity entityA = pair.first;
@@ -219,8 +230,6 @@ namespace IS
 						mImplicitGrid.mInGridList.clear();
 					}
 				}
-
-
 			}
 		}
 
@@ -714,6 +723,7 @@ namespace IS
 
 	}
 
+	// used in NarrowPhase()
 	void CollisionSystem::Colliding(Collider& collider_a, Collider& collider_b) {
 		bool box_box_colliding, box_circle_colliding, circle_box_colliding, circle_circle_colliding;
 		box_box_colliding = box_circle_colliding = circle_box_colliding = circle_circle_colliding = false;
@@ -746,6 +756,7 @@ namespace IS
 		mColliding = (box_box_colliding || box_circle_colliding || circle_box_colliding || circle_circle_colliding);
 	}
 
+	// helper function for scripting
 	bool CollisionSystem::CheckColliding(Entity entity) {
 		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 			auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
@@ -756,6 +767,7 @@ namespace IS
 		}
 	}
 
+	// saving colliding data for used in Colliding() and calculate the contact points
 	void CollisionSystem::SavingCollidingData(short colliding_status, Vector2D const& normal, float depth)
 	{
 		mCollidingCollection.set(colliding_status);
@@ -763,13 +775,14 @@ namespace IS
 		mManifoldInfo.mDepth = depth;
 	}
 
+	// update collider with transform
 	void CollisionSystem::Step() {
 		for (auto const& entity : mEntities) {
 			if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 				collider.UpdateCollider(trans);
-				// reset some attributes
+				// reset some attributes, from zx
 				collider.mIsColliding = false;
 				collider.mCollidedObjectAngle = 0.f;
 				collider.mCollidingEntity.clear();

@@ -2,7 +2,7 @@
  * \file Physics.h
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 28-09-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains the Physics class and related functions for real world physics simulation 
  * and collision handling.
@@ -88,7 +88,10 @@ namespace IS {
          */
         static bool mExertingGravity;
 
-        static Vector2D mGravity;                                  // Gravity of the world
+        /*!
+         * \brief Gravity of the world
+         */
+        static Vector2D mGravity;                              
 
         /*!
          * \brief Destructor for the Physics class.
@@ -130,27 +133,6 @@ namespace IS {
         * \param vec vector of penetration depth to move entities apart (normal * penetration depth)
         */
         void SeparateBodies(RigidBody* bodyA, RigidBody* bodyB, Transform* transA, Transform* transB, Vector2D const& vec);
-
-        /*!
-         * \brief Resolves collisions between two rigid bodies by calculating and applying the impulse force to update the velocities of collding entities.
-         *
-         * \param contact The manifold containing collision information.
-         */
-        void ResolveCollision(Manifold & contact);
-
-        /*!
-        * \brief Resolves collisions between two rigid bodies, including rotation effects, by calculating and applying the impulse force to update the velocities and angular velocities of colliding entities.
-        *
-        * \param contact The manifold containing collision information.
-        */
-        void ResolveCollisionWithRotation(Manifold & contact);
-
-        /*!
-         * \brief Resolves collisions between two rigid bodies, including rotation and friction effects, by calculating and applying the impulse force to update the velocities, angular velocities, and angular impulses of colliding entities.
-         *
-         * \param contact The manifold containing collision information.
-         */
-        void ResolveCollisionWithRotationAndFriction(Manifold& contact);
 
         /*!
          * \brief Draws the velocity and an outline around the specified rigid body using the provided sprite based on vertices for polygons.

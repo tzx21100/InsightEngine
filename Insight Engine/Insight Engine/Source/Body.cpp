@@ -29,7 +29,6 @@ namespace IS
         mRotation = 0.f;
         mAngularVelocity = 0.f;
         mVelocity = Vector2D(); // (0,0)
-        //mBodyTransform = Transform(Vector2D(), 0.f, Vector2D());
         mBodyType = BodyType::Dynamic;
         mForce = Vector2D();
         mAcceleration = Vector2D();
@@ -39,31 +38,11 @@ namespace IS
         mRestitution = 0.5f;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        //mBodyShape = BodyShape::Box;
-        //mTransformUpdateRequired = false;
-        //mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
         mGravityScale = 1.f;
-        //CreateBoxBody(0.f, 0.f, mMass, mRestitution);
-        //if (mBodyShape == BodyShape::Box) {
-        //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-        //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
-        //    // making the transform mVertices same size as the mVertices
-        //    mTransformedVertices = mVertices;
-        //}
-        //else if (mBodyShape == BodyShape::Circle) {
-        //    CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
-        //}
-        //else {
-        //    // make sure the vector array is empty
-        //    mVertices.clear();
-        //    mTransformedVertices.clear();
-        //}
-
-        //mTransformUpdateRequired = true;
     }
 
     // Parameterized constructor to initialize rigid body properties.
@@ -72,9 +51,6 @@ namespace IS
         mRotation = 0.f;
         mAngularVelocity = 0.f;
         mVelocity = Vector2D(); // (0,0)
-        //mBodyTransform.world_position = position;
-        //mBodyTransform.rotation = 0.f;
-        //mBodyTransform.scaling = Vector2D(width, height);
         mBodyType = body_type;
         mForce = Vector2D(); // (0,0)
         mAcceleration = Vector2D();
@@ -84,30 +60,11 @@ namespace IS
         mRestitution = restitution;
         mArea = 0.f;
         mState = BodyState::IDLE;
-        //mBodyShape = body_shape;
-        //mTransformUpdateRequired = false;
-        //mGridState = GridState::Uninitialized;
         mInertia = 1.f;
         mInvInertia = 1.f / mInertia;
         mStaticFriction = 0.6f;
         mDynamicFriction = 0.4f;
         mGravityScale = 1.f;
-        //if (mBodyShape == BodyShape::Box) {
-        //    CreateBoxBody(mBodyTransform.scaling.x, mBodyTransform.scaling.y, mMass, mRestitution);
-        //    CreateBoxVertices(mBodyTransform.scaling.x, mBodyTransform.scaling.y); // for vertices
-        //    // making the transform mVertices same size as the mVertices
-        //    mTransformedVertices = mVertices;
-        //}
-        //else if (mBodyShape == BodyShape::Circle) {
-        //    CreateCircleBody(mBodyTransform.scaling.x/2.f, mMass, mRestitution);
-        //}
-        //else {
-        //    // make sure the vector array is empty
-        //    mVertices.clear();
-        //    mTransformedVertices.clear();
-        //}
-
-        //mTransformUpdateRequired = true;
 
 	}
 

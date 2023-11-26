@@ -1,6 +1,3 @@
-
-#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
-#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
 /*!
  * \file Collider.h
  * \author Wu Zekai, zekai.wu@digipen.edu
@@ -18,6 +15,10 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+ /*                                                                   guard
+ ----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
+#define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
 
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
@@ -111,8 +112,15 @@ namespace IS
 
 		static std::string GetType() { return "Collider"; }
 
+		/*!
+		 * \brief Default constructor for Collider.
+		 */
 		Collider();
 
+		/*!
+		 * \brief Updates the Collider based on the Transform.
+		 * \param trans The Transform object to update the Collider with.
+		 */
 		void UpdateCollider(Transform const& trans);
 
 		/*!
@@ -123,35 +131,62 @@ namespace IS
 		 */
 		void CreateBoxVertices(float width, float height);
 
-		// Updated transformed vertices based on the transform center position.
+		/*!
+		 * \brief Updates the box collider's transformed vertices based on the provided Transform.
+		 * \param trans The Transform object that includes position, scale, and rotation data.
+		 */
 		void UpdateBoxCollider(Transform const& trans);
 
+		/*!
+		 * \brief Updates the circle collider based on the provided Transform.
+		 * \param trans The Transform object to update the circle collider with.
+		 */
 		void UpdateCircleCollider(Transform const& trans);
 
-		// set all colliders active
+		/*!
+		 * \brief Activates all collider types (box, circle, etc.) in this Collider object.
+		 */
 		void EnableAllColliders();
 
-		// set all colliders deactive
+		/*!
+		 * \brief Deactivates all collider types in this Collider object.
+		 */
 		void DisableAllColliders();
 
-		// HELPER FUNCTION FOR BOX COLLIDER
-		// set box collider active
+		/*											HELPER FUNCTION FOR BOX COLLIDER
+		----------------------------------------------------------------------------- */
+		/*!
+		 * \brief Activates the box collider component of this Collider object.
+		 */
 		void EnableBoxCollider();
 
-		// set box collider deactive
+		/*!
+		 * \brief Deactivates the box collider component of this Collider object.
+		 */
 		void DisableBoxCollider();
 
-		// check if box collider is enable or not
+		/*!
+		 * \brief Checks if the box collider component is active.
+		 * \return True if the box collider is active, false otherwise.
+		 */
 		bool IsBoxColliderEnable();
 
-		// HELPER FUNCTION FOR CIRCLE COLLIDER
-		// set circle collider active
+		/*											HELPER FUNCTION FOR CIRCLE COLLIDER
+		---------------------------------------------------------------------------- - */
+		/*!
+		 * \brief Activates the circle collider component of this Collider object.
+		 */
 		void EnableCircleCollider();
 
-		// set circle collider deactive
+		/*!
+		 * \brief Deactivates the circle collider component of this Collider object.
+		 */
 		void DisableCircleCollider();
 
-		// check if circle collider is enable or not
+		/*!
+		 * \brief Checks if the circle collider component is active.
+		 * \return True if the circle collider is active, false otherwise.
+		 */
 		bool IsCircleColliderEnable();
 
 		/**
