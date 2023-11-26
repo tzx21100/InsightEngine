@@ -253,8 +253,10 @@ namespace IS {
 
         /*!
          * \brief Show a pop-up message box using Win32 API.
+         * \param message Message to be displayed.
+         * \param title Title of the window.
          */
-        void ShowMessageBox(std::string const& message);
+        void ShowMessageBox(std::string const& message, std::string const& title = "Message Box");
 
         /*!
          * \brief Get the height of the title bar of the window.

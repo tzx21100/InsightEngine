@@ -569,8 +569,8 @@ namespace IS {
         }
 
         // Clone/Delete entity
-        if (ImGui::MenuItem(ICON_LC_COPY "  Clone", "Ctrl+D")) { CloneEntity(entity); }
-        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete", "Del")) { DeleteEntity(entity); }
+        if (ImGui::MenuItem(ICON_LC_COPY "  Duplicate", "Ctrl+D")) { CloneEntity(entity); }
+        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Remove", "Del")) { DeleteEntity(entity); }
     }
 
     void EditorLayer::RenderConfirmDelete(Entity entity)
