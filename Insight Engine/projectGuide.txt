@@ -36,6 +36,8 @@ Project Configurations: Debug, Release, GameRelease.
 -------------------------------------------------------------------
 - Simply select the desired configuration and run the engine in your desired mode. 
 The sln file has been configured to build the libraries first before Insight Engine.
+- When Building in Debug or Release, ensure that the static libraries are built first.
+  You can right click and build the imgui/imguizmo first.
 
 -------------------------------------------------------------------
 Projects In Solution
