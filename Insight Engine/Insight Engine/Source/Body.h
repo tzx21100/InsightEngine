@@ -6,8 +6,7 @@
  * \brief
  * This header file contains the declaration of the `RigidBody` class, which represents
  * the rigid body components for entities in the game engine. It provides functions to
- * create rigid bodies in different shapes (box or circle), update body data based on
- * transformations, and perform physics-related operations.
+ * update body data based on transformations, and perform physics-related operations.
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -136,33 +135,6 @@ namespace IS
         void BodyFollowTransform(Transform const& trans);
 
         /*!
-         * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
-         * \param width The width of the box.
-         * \param height The height of the box.
-         * \return A vector containing the vertices of the box.
-         */
-        void CreateBoxVertices(float width, float height);
-
-        /*!
-         * \brief Calculate all the updated transformed vertices based on the transform center position.
-         * \return A vector containing the transformed vertices of the rigid body.
-         */
-        std::vector<Vector2D> GetTransformedVertices();
-
-        /*!
-         * \brief Updated transformed vertices based on the transform center position.
-         */
-        void UpdateTransformedVertices();
-
-        /*!
-         * \brief Transform a vector using a given transformation matrix.
-         * \param v The vector to transform.
-         * \param transform The transformation matrix.
-         * \return The transformed vector.
-         */
-        Vector2D TransformRigidBody(Vector2D v, Transform transform);
-
-        /*!
          * \brief Update the position, rotation, and force of the rigid body based on real-world gravity.
          * \param dt The time step.
          * \param gravity The gravity vector.
@@ -186,6 +158,7 @@ namespace IS
          * \param val The force vector to add.
          */
         void AddForce(Vector2D const& val);
+
         void SetForce(Vector2D const& val);
 
         /*!
@@ -193,6 +166,7 @@ namespace IS
          * \param val The velocity vector to add.
          */
         void AddVelocity(Vector2D const& val);
+
         void SetVelocity(Vector2D const& val);
 
         /*!
@@ -216,13 +190,7 @@ namespace IS
          * \brief Update the parameters of a box-shaped rigid body based on its current Transform.
          * \param body_transform The Transform of the rigid body.
          */
-        void UpdateBoxBody(Transform const& body_transform);
-
-        /**
-         * \brief Get the axis-aligned bounding box (AABB) of the rigid body.
-         * \return The AABB box of the rigid body.
-         */
-        Box GetAABB();
+        void UpdateBoxBody(Transform const& body_transform); // not in use
 
 
         /*!

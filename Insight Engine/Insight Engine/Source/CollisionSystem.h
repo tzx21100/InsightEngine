@@ -63,8 +63,6 @@ namespace IS
 		void Colliding(Collider& collider_a, Collider& collider_b);
 
 		// helper function to check if the current entity colliding with any other entities
-		static bool CheckCollide(Entity& entity);
-
 		static bool CheckColliding(Entity entity);
 
 		void SavingCollidingData(short colliding_status,Vector2D const& normal, float depth);

@@ -33,7 +33,6 @@ namespace IS
 			// empty contact pair before going into collision step
 			mContactPair.clear();
 
-
 			// add new entity inside grid
 			mImplicitGrid.AddIntoCell(mEntities);
 
@@ -52,8 +51,6 @@ namespace IS
 
 	void CollisionSystem::BroadPhase() 
 	{
-		//CollisionDetect(mEntities);
-
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -62,11 +59,6 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			/*std::vector<Entity> list;
-			for (auto const& entity : mEntities)
-			{
-				list.emplace_back(entity);
-			}*/
 			CollisionDetect(mEntities);
 		}
 	}
@@ -88,7 +80,7 @@ namespace IS
 			Entity entityA = pair.first;
 			Entity entityB = pair.second;
 
-			//
+			// if the entity dont have the rigidbody component, default with static and nullptr
 			BodyType typeA = BodyType::Static;
 			BodyType typeB = BodyType::Static;
 			RigidBody* contact_bodyA = nullptr;
@@ -753,44 +745,6 @@ namespace IS
 		}
 		mColliding = (box_box_colliding || box_circle_colliding || circle_box_colliding || circle_circle_colliding);
 	}
-#if 0
-	bool CollisionSystem::CheckCollide(Entity& entity) {
-		for(){
-			if (InsightEngine::Instance().HasComponent<Collider>(entityA)) {}
-
-			bool result = false;
-
-			Vector2D normal = Vector2D();
-			float depth = 0.f;
-
-			// box collider check
-			if (collider_a.IsBoxColliderEnable()) {
-				if (collider_b.IsBoxColliderEnable()) { // box vs box
-					result = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
-				}
-				if (collider_b.IsCircleColliderEnable()) { // box vs circle
-					result = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
-					//mManifoldInfo.mNormal *= -1; // to be fixed
-					//mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
-				}
-			}
-
-			// circle collider check
-			if (collider_a.IsCircleColliderEnable()) {
-				if (collider_b.IsBoxColliderEnable()) { // circle vs box
-					result = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
-				}
-				if (collider_b.IsCircleColliderEnable()) { // circle vs circle
-					result = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
-				}
-			}
-		}
-		return result;
-	}
-#endif
 
 	bool CollisionSystem::CheckColliding(Entity entity) {
 		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
