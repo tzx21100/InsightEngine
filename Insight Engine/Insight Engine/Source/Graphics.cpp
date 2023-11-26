@@ -264,6 +264,8 @@ namespace IS {
         // render lighting
         if (mLightsOn)
             Sprite::draw_lights();
+        else
+            lightInstances.clear();
 
     #ifdef USING_IMGUI
         if (!engine.mRuntime)
