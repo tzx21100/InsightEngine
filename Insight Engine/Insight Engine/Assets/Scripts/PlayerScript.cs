@@ -1,4 +1,21 @@
-﻿using System.Numerics;
+﻿/*!
+ * \file PlayerScript.cs
+ * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
+ * \par Course: CSD2401
+ * \date 02-11-2023
+ * \brief
+ * This source file defines the simple system for calling all Init,Update and CleanUps
+ * of the Scripts that designers use. It also defines the file that gets created for scripts
+ * and it's format.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
+using System.Numerics;
 using System;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;

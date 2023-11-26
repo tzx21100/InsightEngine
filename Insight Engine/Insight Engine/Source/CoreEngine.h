@@ -226,11 +226,22 @@ namespace IS {
          */
         int GetTitleBarHeight();
 
-        //abstracted function to make game script
+        /*!
+         * \brief Create Game Script in a set format
+         * \return 
+         */
         void CreateGameScript(const std::string& ScriptName);
+
+        /*!
+         * \brief Opens a game script
+         * \return
+         */
         void OpenGameScript(const std::string& ScriptName);
 
-        // abstracted function to get entity calling script
+        /*!
+         * \brief Gets the Caller of the current script in scriptmanager
+        * \return the Entity that is calling the script
+        */
         Entity GetScriptCaller() {
             auto script = GetSystem<ScriptManager>("ScriptManager");
             return script->GetScriptEntity();
@@ -284,6 +295,10 @@ namespace IS {
          */
         bool LoadScene(std::string filename);
 
+
+        /**
+         * \brief Generates a new scene
+         */
         void NewScene();
 
         /**
@@ -711,6 +726,9 @@ namespace IS {
          */
         void SerializeAllComponents(Entity entity, Json::Value& loaded);
 
+        /**
+         * \brief Push Layers to ImGui
+         */
         void PushImGuiLayers();
 
 

@@ -1123,19 +1123,6 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);
 
-        //Debug
-        //Debug
-        //Debug
-        //Debug
-        //Debug
-        //Debug
-        //Debu
-
-
-
-
-
-
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
@@ -1149,13 +1136,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(IsLightRenderingEntity);
         IS_ADD_INTERNAL_CALL(SetLightHueEntity);
         IS_ADD_INTERNAL_CALL(GetLightHueEntity);
-        
 
 
-
-
-
-
+        // Drawing functions
 
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);

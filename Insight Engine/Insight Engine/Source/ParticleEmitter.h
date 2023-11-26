@@ -1,5 +1,16 @@
-/*                                                                   guard
- ----------------------------------------------------------------------------- */
+/*!
+ * \file ParticleEmitter.h
+ * \author  Matthew Ng, matthewdeen.ng@digipen.edu
+ * \par Course: CSD2401
+ * \date  25-11-2023
+ * \brief
+ * This is a simple header that defines the Particle Emitter Component.
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_PARTICLEEMITTER_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_PARTICLEEMITTER_H
 

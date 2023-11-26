@@ -32,10 +32,6 @@ namespace IS
         static private Vector2D bg5_pos=new Vector2D(0,0);
         static private Vector2D bg_scale=new Vector2D(4096*2.5f,756*2.5f);
 
-#pragma warning disable CS0414 // variable assigned but never used
-        static private float player_offset = 10f;
-#pragma warning restore CS0414
-
 
         static public void Init(){
             bg_image1 = InternalCalls.GetSpriteImage("1st.png");
