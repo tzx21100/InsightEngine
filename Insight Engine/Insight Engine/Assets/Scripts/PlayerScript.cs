@@ -4,9 +4,7 @@
  * \par Course: CSD2401
  * \date 02-11-2023
  * \brief
- * This source file defines the simple system for calling all Init,Update and CleanUps
- * of the Scripts that designers use. It also defines the file that gets created for scripts
- * and it's format.
+ * This source file is meant for the player movement and camera.
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
