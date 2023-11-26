@@ -76,7 +76,7 @@ namespace IS {
         /*!
          * \brief Clear the temporary directory used for entity destruction.
          */
-        static void ClearTempDirectory(); ///< Clear the temporary directory used for entity destruction.
+        static void ClearTempDirectory();
 
     protected:
         bool mCanMerge = true; ///< Flag indicating whether the command can be merged.
@@ -113,7 +113,7 @@ namespace IS {
          * \param other A shared pointer to another ICommand object.
          * \return True if the merge is successful, false otherwise.
          */
-        bool Merge(std::shared_ptr<ICommand> other) override ///< Attempt to merge with another ChangeCommand.
+        bool Merge(std::shared_ptr<ICommand> other) override
         {
             std::shared_ptr<ChangeCommand<T>> command = std::dynamic_pointer_cast<ChangeCommand<T>>(other);
             if (command)
@@ -145,17 +145,17 @@ namespace IS {
          * \brief Constructor for CreateEntityCommand.
          * \param entity_name The name of the entity to be created.
          */
-        CreateEntityCommand(std::string const& entity_name); ///< Constructor for CreateEntityCommand.
+        CreateEntityCommand(std::string const& entity_name);
 
         /*!
          * \brief Execute the command by creating the entity.
          */
-        void Execute() override; ///< Execute the command by creating the entity.
+        void Execute() override;
 
         /*!
          * \brief Undo the command by destroying the created entity.
          */
-        void Undo() override; ///< Undo the command by destroying the created entity.
+        void Undo() override;
 
         Entity GetEntity() const { return mEntity; }
 
@@ -175,17 +175,17 @@ namespace IS {
          * \brief Constructor for DestroyEntityCommand.
          * \param entity The entity to be destroyed.
          */
-        DestroyEntityCommand(Entity entity); ///< Constructor for DestroyEntityCommand.
+        DestroyEntityCommand(Entity entity);
 
         /*!
          * \brief Execute the command by destroying the entity.
          */
-        void Execute() override; ///< Execute the command by destroying the entity.
+        void Execute() override;
 
         /*!
          * \brief Undo the command by recreating the destroyed entity.
          */
-        void Undo() override; ///< Undo the command by recreating the destroyed entity.
+        void Undo() override;
 
     private:
         Entity mEntity;               ///< The entity to be destroyed.
@@ -193,57 +193,114 @@ namespace IS {
         static int mDestroyedCount;    ///< Count of destroyed entities.
     };
 
+    /*!
+     * \class PrefabCommand
+     * \brief Represents a command for handling prefabs.
+     */
     class PrefabCommand : public ICommand
     {
     public:
+        /*!
+         * \brief Constructor for PrefabCommand.
+         * \param prefab_name The name of the prefab.
+         */
         PrefabCommand(std::string const& prefab_name);
 
+        /*!
+         * \brief Executes the prefab command.
+         */
         virtual void Execute() override;
+
+        /*!
+         * \brief Undoes the prefab command.
+         */
         void Undo() override;
 
     protected:
-        Entity mEntity;
-        std::string mPrefabName;
-        std::string mFileName;
-        bool mFirstTime;
-        static int mPrefabCount;
+        Entity mEntity;             ///< The entity associated with the prefab.
+        std::string mPrefabName;    ///< The name of the prefab.
+        std::string mFileName;      ///< The file name associated with the prefab.
+        bool mFirstTime;            ///< Flag indicating if it's the first time executing the command.
+        static int mPrefabCount;    ///< Static counter for tracking the number of prefab commands.
     };
 
+    /*!
+     * \class TextureCommand
+     * \brief Represents a command for handling textures, inheriting from PrefabCommand.
+     */
     class TextureCommand final : public PrefabCommand
     {
     public:
+        /*!
+         * \brief Constructor for TextureCommand.
+         * \param texture_filename The filename of the texture.
+         */
         TextureCommand(std::string const& texture_filename);
 
+        /*!
+         * \brief Executes the texture command.
+         */
         void Execute() override;
     };
 
+    /*!
+     * \class DuplicateCommand
+     * \brief Represents a command for duplicating entities.
+     */
     class DuplicateCommand final : public ICommand
     {
     public:
+        /*!
+         * \brief Constructor for DuplicateCommand.
+         * \param original The original entity to duplicate.
+         */
         DuplicateCommand(Entity original);
 
+        /*!
+         * \brief Executes the duplicate command.
+         */
         void Execute() override;
 
+        /*!
+         * \brief Undoes the duplicate command.
+         */
         void Undo() override;
 
+        /*!
+         * \brief Gets the duplicated entity.
+         * \return The duplicated entity.
+         */
         Entity GetDupe() const { return mDupe; }
 
     private:
-        Entity mOriginal;
-        Entity mDupe;
-        std::string mFileName;
-        bool mFirstTime;
-        static int mDupeCount;
+        Entity mOriginal;           ///< The original entity to duplicate.
+        Entity mDupe;               ///< The duplicated entity.
+        std::string mFileName;      ///< The file name associated with the duplication.
+        bool mFirstTime;            ///< Flag indicating if it's the first time executing the command.
+        static int mDupeCount;      ///< Static counter for tracking the number of duplicate commands.
     };
 
+    /*!
+     * \class AddComponentCommand
+     * \brief Represents a command for adding a component to an entity.
+     * \tparam Component The type of component to add.
+     */
     template <typename Component>
     class AddComponentCommand final : public ICommand
     {
     public:
+        /*!
+         * \brief Constructor for AddComponentCommand.
+         * \param entity The entity to which the component will be added.
+         */
         AddComponentCommand(Entity entity) : mEntity(entity)
         {
             mCanMerge = false;
         }
+
+        /*!
+         * \brief Executes the add component command.
+         */
 
         void Execute() override
         {
@@ -251,6 +308,9 @@ namespace IS {
             engine.AddComponent<Component>(mEntity, Component());
         }
 
+        /*!
+         * \brief Undoes the add component command.
+         */
         void Undo() override
         {
             auto& engine = InsightEngine::Instance();
@@ -258,21 +318,33 @@ namespace IS {
         }
 
     private:
-        Entity mEntity;
+        Entity mEntity;             ///< The entity to which the component will be added.
     };
 
-    static int mRemoveCount = 0;
+    static int mRemoveCount = 0; ///< The counter for remove component command.
 
+    /*!
+     * \class RemoveComponentCommand
+     * \brief Represents a command for removing a component from an entity.
+     * \tparam Component The type of component to remove.
+     */
     template <typename Component>
     class RemoveComponentCommand final : public ICommand
     {
     public:
+        /*!
+         * \brief Constructor for RemoveComponentCommand.
+         * \param entity The entity from which the component will be removed.
+         */
         RemoveComponentCommand(Entity entity) : mEntity(entity)
         {
             mCanMerge = false;
             mFileName = mTempDirectory + "\\Remove Component " + std::to_string(mRemoveCount) + ".json";
         }
 
+        /*!
+         * \brief Executes the remove component command.
+         */
         void Execute() override
         {
             ValidateTempDirectory();
@@ -284,6 +356,9 @@ namespace IS {
             mRemoveCount++;
         }
 
+        /*!
+         * \brief Undoes the remove component command.
+         */
         void Undo() override
         {
             auto& engine = InsightEngine::Instance();
@@ -292,9 +367,10 @@ namespace IS {
             IS_CORE_DEBUG("{}", mFileName);
             mRemoveCount--;
         }
+
     private:
-        Entity mEntity;
-        std::string mFileName;
+        Entity mEntity;             ///< The entity from which the component will be removed.
+        std::string mFileName;      ///< The file name associated with the removal.
     };
 
 } // end namespace IS
