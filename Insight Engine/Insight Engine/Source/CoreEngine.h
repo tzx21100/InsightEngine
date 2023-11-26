@@ -711,9 +711,10 @@ namespace IS {
          */
         void SerializeAllComponents(Entity entity, Json::Value& loaded);
 
+        /**
+         * \brief Push all imgui layers.
+         */
         void PushImGuiLayers();
-
-
     };
 
 }
