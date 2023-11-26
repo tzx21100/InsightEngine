@@ -386,7 +386,7 @@ namespace IS {
         log << timestamp << name << ' ' << all_args << '\n';
 
         // Print to console
-    #ifndef _DEBUG
+    #ifdef _DEBUG
             std::clog << log.str() << RESET;
     #endif
 
