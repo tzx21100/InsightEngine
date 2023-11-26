@@ -142,80 +142,6 @@ namespace IS
 
     }
 #if 0
-    // Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape) based on origin (0,0)
-    void RigidBody::CreateBoxVertices(float width, float height) {
-        // the vertices are calculated based on origin (not transform yet)
-        float left = - width / 2.f;
-        float right = left + width;
-        float bottom = - height / 2.f;
-        float top = bottom + height;
-
-        std::vector<Vector2D> box_vertices;
-        box_vertices.emplace_back(Vector2D(left,top)); // 0 top left
-        box_vertices.emplace_back(Vector2D(right, top)); // 1 top right
-        box_vertices.emplace_back(Vector2D(right, bottom)); // 2 bottom right
-        box_vertices.emplace_back(Vector2D(left, bottom)); // 3 bottom left
-
-        mVertices = box_vertices;
-    }
-
-    // Calculate all the updated transformed vertices based on the transform center position
-    std::vector<Vector2D> RigidBody::GetTransformedVertices()
-    {
-        // if true means the game object had move from previous place
-        if (mTransformUpdateRequired)
-        {
-            //BodyTransform transform(this->position, this->rotation);
-            Transform currentTransform = Transform(mBodyTransform.world_position, mBodyTransform.rotation, mBodyTransform.scaling);
-
-            // loop for each vertice
-            for (int i = 0; i < mVertices.size(); i++)
-            {
-                Vector2D v = mVertices[i];
-                // apply transform function to calculate correct mVertices
-                mTransformedVertices[i] = RigidBody::TransformRigidBody(v, currentTransform);
-            }
-        }/*
-        else {
-            this->mTransformedVertices = this->mVertices;
-        }*/
-
-        mTransformUpdateRequired = false;
-        return mTransformedVertices;
-    }
-
-    void RigidBody::UpdateTransformedVertices() {
-        // if true means the game object had move from previous place
-        if (mTransformUpdateRequired)
-        {
-            //BodyTransform transform(this->position, this->rotation);
-            Transform currentTransform = Transform(mBodyTransform.world_position, mBodyTransform.rotation, mBodyTransform.scaling);
-
-            // loop for each vertice
-            for (int i = 0; i < mVertices.size(); i++)
-            {
-                Vector2D v = mVertices[i];
-                // apply transform function to calculate correct mVertices
-                mTransformedVertices[i] = RigidBody::TransformRigidBody(v, currentTransform);
-            }
-        }/*
-        else {
-            this->mTransformedVertices = this->mVertices;
-        }*/
-
-        mTransformUpdateRequired = false;
-    }
-
-    // Transform a vector using a given transformation matrix
-    Vector2D RigidBody::TransformRigidBody(Vector2D v, Transform transform) {
-        Vector2D ret;
-        float angle = glm::radians(transform.rotation);
-        /*if (angle < 0.f) { angle += 360.f; }
-        angle *= (PI / 180.f);*/
-        ret.x = cosf(angle) * v.x - sinf(angle) * v.y + transform.world_position.x;
-        ret.y = sinf(angle) * v.x + cosf(angle) * v.y + transform.world_position.y;
-        return ret;
-    }
 
     // Update the position, rotation, and force of the rigid body based on real-world gravity
     void RigidBody::BodyUpdate(float dt, Vector2D const& gravity) {
@@ -311,41 +237,6 @@ namespace IS
         }
         mTransformUpdateRequired = true;
         UpdateTransformedVertices();
-    }
-
-    // Get the axis-aligned bounding box (AABB) of the rigid body.
-    Box RigidBody::GetAABB() {
-            float minX = std::numeric_limits<float>::max();
-            float minY = std::numeric_limits<float>::max();
-            float maxX = -std::numeric_limits<float>::max();
-            float maxY = -std::numeric_limits<float>::max();
-
-            if (mBodyShape == BodyShape::Box)
-            {
-                // loop through the vertices to get a bigger(if necessary) box for grid cell calculation
-                for (int i = 0; i < mTransformedVertices.size(); i++)
-                {
-                    Vector2D v = mTransformedVertices[i];
-
-                    if (v.x < minX) { minX = v.x; }
-                    if (v.x > maxX) { maxX = v.x; }
-                    if (v.y < minY) { minY = v.y; }
-                    if (v.y > maxY) { maxY = v.y; }
-                }
-            }
-            else if (mBodyShape == BodyShape::Circle)
-            {
-                float radius = mBodyTransform.scaling.x / 2;
-
-                minX = mBodyTransform.world_position.x - radius;
-                minY = mBodyTransform.world_position.y - radius;
-                maxX = mBodyTransform.world_position.x + radius;
-                maxY = mBodyTransform.world_position.y + radius;
-            }
-
-            Box aabb = Box(minX, minY, maxX, maxY);
-
-        return aabb;
     }
 #endif
 }

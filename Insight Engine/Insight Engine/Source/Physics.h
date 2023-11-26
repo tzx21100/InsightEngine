@@ -175,9 +175,6 @@ namespace IS {
         float mMinVelocity;                                 // Minimum velocity for game bodies
         int mTotalIterations;                               // Number of iterations for physics step
         int mCurrentIterations;                             // Number of current iterations for physics step
-        std::vector<std::pair<Entity, Entity>> mContactPair;// vector list of each two contact entities
-        Manifold mManifoldInfo;                             // instance of Manifold
-        ImplicitGrid mImplicitGrid;                         // instance of ImplicitGrid
 	};
 
 }

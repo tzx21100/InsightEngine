@@ -1,6 +1,23 @@
 
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_COLLIDER_H
+/*!
+ * \file Collider.h
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-11-2023
+ * \brief
+ * This header file contains the Collider class and associated structures for 
+ * the Insight Engine's physics system. It includes definitions for BoxCollider, 
+ * CircleCollider, and LineCollider structures, as well as the Collider class.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
+
 
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
@@ -13,16 +30,10 @@
 
 namespace IS
 {
-	//enum ColliderShape
-	//{
-	//	invalid = 0,
-	//	box = 1 << 1,
-	//	circle = 1 << 2,
-	//	line = 1 << 3,
-	//	//sat = 1 << 4,
-	//	//obb = 1 << 5
-	//};
-
+	/*!
+	 * \enum ColliderShape
+	 * \brief Enum for identifying the shape of a collider.
+	 */
 	enum ColliderShape : int
 	{
 		INVALID = 0,
@@ -31,15 +42,17 @@ namespace IS
 		LINE
 	};
 
+	/*!
+	 * \struct BoxCollider
+	 * \brief Structure representing a box collider with center, offset, size scaling, and vertices.
+	 */
 	struct BoxCollider
 	{
-		Vector2D center;
-		//Vector2D min; // Minimum point of the bounding box
-		//Vector2D max; // Maximum point of the bounding box
-		Vector2D offset;
-		Vector2D sizeScale;
-		std::vector<Vector2D> vertices;
-		std::vector<Vector2D> transformedVertices;
+		Vector2D center;								// Center point of the box collider
+		Vector2D offset;								// Offset of the collider from the center
+		Vector2D sizeScale;								// Scale of the collider size
+		std::vector<Vector2D> vertices;					// Vertices of the box
+		std::vector<Vector2D> transformedVertices;		// Transformed vertices after applying transformations
 
 		BoxCollider();
 		BoxCollider(Vector2D const& center_, Vector2D const& offset_, Vector2D const& sizeScale_, std::vector<Vector2D> const& vertices_, std::vector<Vector2D> const& transformedVertices_);
@@ -48,44 +61,50 @@ namespace IS
 	};
 
 	/*!
-	 * \struct Circle
-	 * \brief A structure representing a circle defined by its center and radius.
+	 * \struct CircleCollider
+	 * \brief Structure representing a circle collider.
 	 */
 	struct CircleCollider
 	{
-		Vector2D center; // Center of the circle
-		float    radius; // Radius of the circle
-		Vector2D offset;
-		float radiusScale;
+		Vector2D center;								// Center of the circle
+		float radius;									// Radius of the circle
+		Vector2D offset;								// Offset of the collider from the center
+		float radiusScale;								// Scale of the collider radius
 
 		CircleCollider();
 		CircleCollider(Vector2D const& center_, float const& radius_, Vector2D const& offset_);
 	};
 
 	/*!
-	 * \struct Line
-	 * \brief A structure representing a line segment defined by its start and end points, along with a normal vector.
+	 * \struct LineCollider
+	 * \brief Structure representing a line collider.
 	 */
 	struct LineCollider
 	{
-		Vector2D start; // Starting point of the line segment
-		Vector2D end; // Ending point of the line segment
-		Vector2D normal; // Normal vector of the line segment
-		Vector2D offset;
-		Vector2D sizeScale;
+		Vector2D start;									// Starting point of the line segment
+		Vector2D end;									// Ending point of the line segment
+		Vector2D normal;								// Normal vector of the line segment
+		Vector2D offset;								// Offset of the collider from the start point
+		Vector2D sizeScale;								// Scale of the line segment
 	};
 
+	/*!
+	 * \class Collider
+	 * \brief Class handling colliders in the physics system.
+	 *
+	 * This class is responsible for managing box and circle colliders, including their creation, updating, and enabling/disabling.
+	 */
 	class Collider : public IComponent
 	{
 	public:
-		BoxCollider mBoxCollider;
-		CircleCollider mCircleCollider;
-		//LineCollider mLineCollider;
-		std::bitset<MAX_COLLIDER> mSelectedCollider;
-		bool mIsColliding;
-		std::vector<Entity> mCollidingEntity;
-		bool mResponseEnable;
-		float mCollidedObjectAngle;
+		BoxCollider mBoxCollider;						// Box collider struct
+		CircleCollider mCircleCollider;					// Circle collider struct
+		// line collider to be implemented
+		std::bitset<MAX_COLLIDER> mSelectedCollider;	// Bitset for selected colliders
+		bool mIsColliding;								// Flag indicating if the collider is currently in a collision
+		std::vector<Entity> mCollidingEntity;			// List of entities currently colliding with this collider
+		bool mResponseEnable;							// Flag to enable or disable collision response
+		float mCollidedObjectAngle;						// Angle of the collided object
 
 		Json::Value Serialize() override;
 		void Deserialize(Json::Value data) override;
@@ -96,8 +115,15 @@ namespace IS
 
 		void UpdateCollider(Transform const& trans);
 
+		/*!
+		 * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
+		 * \param width The width of the collider.
+		 * \param height The height of the collider.
+		 * \return A vector containing the vertices of the box collider.
+		 */
 		void CreateBoxVertices(float width, float height);
 
+		// Updated transformed vertices based on the transform center position.
 		void UpdateBoxCollider(Transform const& trans);
 
 		void UpdateCircleCollider(Transform const& trans);
@@ -128,6 +154,10 @@ namespace IS
 		// check if circle collider is enable or not
 		bool IsCircleColliderEnable();
 
+		/**
+		 * \brief Get the axis-aligned bounding box (AABB) of the collider.
+		 * \return The AABB box of the collider.
+		 */
 		Box GetAABB();
 
 	};
