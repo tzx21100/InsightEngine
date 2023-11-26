@@ -1,5 +1,5 @@
 /*!
- * \file Camera3D.h
+ * \file Camera.h // UNUSED
  * \author Koh Yan Khang, yankhang.k@digipen.edu
  * \par Course: CSD2401
  * \date 25-11-2023

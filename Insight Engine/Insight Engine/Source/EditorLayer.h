@@ -225,13 +225,13 @@ namespace IS {
         bool mShowNewScript = false; ///< Flag indicating to show new script.
         bool mShowDelete = false;
 
-        Vec2 mDockspacePosition; ///< Position of the dockspace in the editor.
+        Vec2 mDockspacePosition{}; ///< Position of the dockspace in the editor.
 
-        std::shared_ptr<Entity> mSelectedEntity; ///< Pointer to the selected entity.
-        Entity mEntityToDelete;
+        std::shared_ptr<Entity> mSelectedEntity{}; ///< Pointer to the selected entity.
+        Entity mEntityToDelete{};
 
-        std::unordered_map<std::string, ImTextureID> mIcons; ///< Icons used by the dockspace.
-        OrderedMap<std::string, Panel> mPanels; ///< An ordered map of panels.
+        std::unordered_map<std::string, ImTextureID> mIcons{}; ///< Icons used by the dockspace.
+        OrderedMap<std::string, Panel> mPanels{}; ///< An ordered map of panels.
 
         /*!
          * \brief Render the menu bar.
