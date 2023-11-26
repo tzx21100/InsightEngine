@@ -200,7 +200,8 @@ namespace IS {
         else // Unsupported file type
         {
             std::string message = std::format("File type \"{}\" not supported!", extension.string());
-            mWindow->ShowMessageBox(message);
+            std::string title = "Unsupported File Type";
+            mWindow->ShowMessageBox(message, title);
         }
     }
 

@@ -74,7 +74,7 @@ namespace IS {
             ImGui::Spacing();
 
             // Filter entity hierarchy
-            EditorUtils::RenderFilterWithHint(mFilter, "Filter Entity...");
+            EditorUtils::RenderFilterWithHint(mFilter, "Filter Game Object...");
             ImGui::Spacing();
 
             // Render list of scenes and its entities in child window
@@ -164,11 +164,9 @@ namespace IS {
         auto const FONT_BOLD = ImGui::GetIO().Fonts->Fonts[FONT_TYPE_BOLD];
 
         // Comma separted numbers
-        std::ostringstream entity_count, max_entity_count;
+        std::ostringstream entity_count;
         entity_count.imbue(std::locale(""));
         entity_count << std::fixed << scene_manager.GetActiveEntityCount();
-        max_entity_count.imbue(std::locale(""));
-        max_entity_count << std::fixed << MAX_ENTITIES;
 
         // Display details about active scene
         EditorUtils::RenderTableFixedWidth("ActiveScene", 2, [&]()
@@ -181,15 +179,13 @@ namespace IS {
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(scene_manager.GetActiveSceneName());
 
-            // Entities Alive
+            // Display no. of game objects in active scene
             ImGui::TableNextColumn();
             ImGui::PushFont(FONT_BOLD);
-            ImGui::TextUnformatted("Entities Alive:");
+            ImGui::TextUnformatted("Game Objects:");
             ImGui::PopFont();
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(entity_count.str().c_str());
-            ImGui::SameLine();
-            ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(Max: %s)", max_entity_count.str().c_str());
         });
 
     } // end RenderSceneDetails()
@@ -241,8 +237,8 @@ namespace IS {
         {
             if (ImGui::BeginMenu("Add"))
             {
-                if (ImGui::MenuItem(ICON_LC_BOX "  Entity"))        { scene_manager.AddEntity("Entity"); }
-                if (ImGui::MenuItem(ICON_LC_SHUFFLE "  Random Entity")) { scene_manager.AddRandomEntity(); }
+                if (ImGui::MenuItem(ICON_LC_BOX "  Game Object"))        { scene_manager.AddEntity("Game Object"); }
+                if (ImGui::MenuItem(ICON_LC_SHUFFLE "  Random Game Object")) { scene_manager.AddRandomEntity(); }
 
                 ImGui::EndMenu(); // end menu Add
             }

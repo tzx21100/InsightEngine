@@ -2,7 +2,7 @@
  * \file Collision.h
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 28-09-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains various collision detection and resolution functions for different geometric shapes,
  * including boxes, circles, and lines. These functions are designed to facilitate precise and realistic physics simulations

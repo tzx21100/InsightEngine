@@ -1,4 +1,22 @@
+/*!
+ * \file CollisionSystem.cpp
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2401
+ * \date 26-11-2023
+ * \brief
+ * This header file contains CollisionSystem class. This class is responsible for
+ * handling the physics of collisions between entities in a game.
+ * It includes functions for detecting and resolving collisions.
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 
+ /*                                                                   includes
+ ----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "CollisionSystem.h"
 
@@ -33,7 +51,6 @@ namespace IS
 			// empty contact pair before going into collision step
 			mContactPair.clear();
 
-
 			// add new entity inside grid
 			mImplicitGrid.AddIntoCell(mEntities);
 
@@ -52,8 +69,6 @@ namespace IS
 
 	void CollisionSystem::BroadPhase() 
 	{
-		//CollisionDetect(mEntities);
-
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -62,11 +77,6 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			/*std::vector<Entity> list;
-			for (auto const& entity : mEntities)
-			{
-				list.emplace_back(entity);
-			}*/
 			CollisionDetect(mEntities);
 		}
 	}
@@ -76,19 +86,12 @@ namespace IS
 
 		for (int i = 0; i < mContactPair.size(); i++)
 		{
-			//if (i == 0) { // reset all the colliders
-			//	for (auto entity: mEntities) {
-			//		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
-			//		collider.mIsColliding = false;
-			//		collider.mCollidedObjectAngle = 0.f;
-			//	}
-			//}
 
 			std::pair<Entity, Entity> pair = mContactPair[i];
 			Entity entityA = pair.first;
 			Entity entityB = pair.second;
 
-			//
+			// if the entity dont have the rigidbody component, default with static and nullptr
 			BodyType typeA = BodyType::Static;
 			BodyType typeB = BodyType::Static;
 			RigidBody* contact_bodyA = nullptr;
@@ -227,8 +230,6 @@ namespace IS
 						mImplicitGrid.mInGridList.clear();
 					}
 				}
-
-
 			}
 		}
 
@@ -722,6 +723,7 @@ namespace IS
 
 	}
 
+	// used in NarrowPhase()
 	void CollisionSystem::Colliding(Collider& collider_a, Collider& collider_b) {
 		bool box_box_colliding, box_circle_colliding, circle_box_colliding, circle_circle_colliding;
 		box_box_colliding = box_circle_colliding = circle_box_colliding = circle_circle_colliding = false;
@@ -753,45 +755,8 @@ namespace IS
 		}
 		mColliding = (box_box_colliding || box_circle_colliding || circle_box_colliding || circle_circle_colliding);
 	}
-#if 0
-	bool CollisionSystem::CheckCollide(Entity& entity) {
-		for(){
-			if (InsightEngine::Instance().HasComponent<Collider>(entityA)) {}
 
-			bool result = false;
-
-			Vector2D normal = Vector2D();
-			float depth = 0.f;
-
-			// box collider check
-			if (collider_a.IsBoxColliderEnable()) {
-				if (collider_b.IsBoxColliderEnable()) { // box vs box
-					result = IntersectionPolygons(collider_a.mBoxCollider.transformedVertices, collider_a.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, collider_b.mBoxCollider.center, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::BOX_A_BOX_B);
-				}
-				if (collider_b.IsCircleColliderEnable()) { // box vs circle
-					result = IntersectionCirlcecPolygon(collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, collider_a.mBoxCollider.center, collider_a.mBoxCollider.transformedVertices, normal, depth);
-					//mManifoldInfo.mNormal *= -1; // to be fixed
-					//mCollidingCollection.set(CollidingStatus::BOX_A_CIRCLE_B);
-				}
-			}
-
-			// circle collider check
-			if (collider_a.IsCircleColliderEnable()) {
-				if (collider_b.IsBoxColliderEnable()) { // circle vs box
-					result = IntersectionCirlcecPolygon(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mBoxCollider.center, collider_b.mBoxCollider.transformedVertices, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_BOX_B);
-				}
-				if (collider_b.IsCircleColliderEnable()) { // circle vs circle
-					result = IntersectionCircles(collider_a.mCircleCollider.center, collider_a.mCircleCollider.radius, collider_b.mCircleCollider.center, collider_b.mCircleCollider.radius, normal, depth);
-					//mCollidingCollection.set(CollidingStatus::CIRCLE_A_CIRCLE_B);
-				}
-			}
-		}
-		return result;
-	}
-#endif
-
+	// helper function for scripting
 	bool CollisionSystem::CheckColliding(Entity entity) {
 		if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 			auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
@@ -802,6 +767,7 @@ namespace IS
 		}
 	}
 
+	// saving colliding data for used in Colliding() and calculate the contact points
 	void CollisionSystem::SavingCollidingData(short colliding_status, Vector2D const& normal, float depth)
 	{
 		mCollidingCollection.set(colliding_status);
@@ -809,13 +775,14 @@ namespace IS
 		mManifoldInfo.mDepth = depth;
 	}
 
+	// update collider with transform
 	void CollisionSystem::Step() {
 		for (auto const& entity : mEntities) {
 			if (InsightEngine::Instance().HasComponent<Collider>(entity)) {
 				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
 				auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 				collider.UpdateCollider(trans);
-				// reset some attributes
+				// reset some attributes, from zx
 				collider.mIsColliding = false;
 				collider.mCollidedObjectAngle = 0.f;
 				collider.mCollidingEntity.clear();

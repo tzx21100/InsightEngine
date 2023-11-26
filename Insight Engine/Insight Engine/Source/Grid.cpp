@@ -2,7 +2,7 @@
  * \file Grid.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 02-11-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains the declaration of the `ImplicitGrid` class, which is responsible
  * for managing an implicit grid system used for optimizing spatial partitioning in a game engine.

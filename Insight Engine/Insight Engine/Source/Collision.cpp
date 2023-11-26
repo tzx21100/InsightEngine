@@ -2,7 +2,7 @@
  * \file Collision.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 28-09-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains functions needed for handling collision detection between
  * different shapes like circles, polygons, and axis-aligned bounding boxes (AABB).

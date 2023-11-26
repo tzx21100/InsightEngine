@@ -2,12 +2,11 @@
  * \file Body.h
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 28-09-2023
+ * \date 26-11-2023
  * \brief
  * This header file contains the declaration of the `RigidBody` class, which represents
  * the rigid body components for entities in the game engine. It provides functions to
- * create rigid bodies in different shapes (box or circle), update body data based on
- * transformations, and perform physics-related operations.
+ * update body data based on transformations, and perform physics-related operations.
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -87,11 +86,6 @@ namespace IS
         float mRestitution;                         /**< Restitution coefficient (bounciness 0 to 1). */
         float mArea;                                /**< Area of the rigid body. */
         BodyState mState;                           /**< State of the rigid body. */
-        //BodyShape mBodyShape;                           /**< Shape of the rigid body (Box, Circle, etc.). */
-        //std::vector<Vector2D> mVertices;            /**< Vertices defining the polygon shape (for polygons). */
-        //std::vector<Vector2D> mTransformedVertices; /**< Transformed vertices of the polygon shape. */
-        //bool mTransformUpdateRequired;              /**< Flag to indicate if transformed vertices need to be updated. */
-
         float mInertia;                             /**< Inertia of the body. */
         float mInvInertia;                          /**< Inverse Inertia of the body. */
         float mStaticFriction;                      /**< Static friction of the body. */
@@ -125,6 +119,11 @@ namespace IS
          */
         RigidBody(Vector2D position, BodyType body_type, float mass, float restitution);
 
+        /**
+         * \brief Initializes a static body with a specific position and restitution value.
+         * \param position The initial position of the static body.
+         * \param restitution The restitution coefficient for the static body.
+         */
         void CreateStaticBody(Vector2D const& position, float restitution);
 
         // Member functions for rigid body operations
@@ -134,33 +133,6 @@ namespace IS
          * \param trans The Transform representing the new position and orientation.
          */
         void BodyFollowTransform(Transform const& trans);
-
-        /*!
-         * \brief Calculate all the vertices for a 2D axis-aligned bounding box from origin (Box shape).
-         * \param width The width of the box.
-         * \param height The height of the box.
-         * \return A vector containing the vertices of the box.
-         */
-        void CreateBoxVertices(float width, float height);
-
-        /*!
-         * \brief Calculate all the updated transformed vertices based on the transform center position.
-         * \return A vector containing the transformed vertices of the rigid body.
-         */
-        std::vector<Vector2D> GetTransformedVertices();
-
-        /*!
-         * \brief Updated transformed vertices based on the transform center position.
-         */
-        void UpdateTransformedVertices();
-
-        /*!
-         * \brief Transform a vector using a given transformation matrix.
-         * \param v The vector to transform.
-         * \param transform The transformation matrix.
-         * \return The transformed vector.
-         */
-        Vector2D TransformRigidBody(Vector2D v, Transform transform);
 
         /*!
          * \brief Update the position, rotation, and force of the rigid body based on real-world gravity.
@@ -186,6 +158,11 @@ namespace IS
          * \param val The force vector to add.
          */
         void AddForce(Vector2D const& val);
+
+        /*!
+         * \brief Set the force to the rigid body.
+         * \param val The force vector to add.
+         */
         void SetForce(Vector2D const& val);
 
         /*!
@@ -193,6 +170,11 @@ namespace IS
          * \param val The velocity vector to add.
          */
         void AddVelocity(Vector2D const& val);
+
+        /*!
+         * \brief Set the velocity to the rigid body.
+         * \param val The velocity vector to add.
+         */
         void SetVelocity(Vector2D const& val);
 
         /*!
@@ -216,13 +198,7 @@ namespace IS
          * \brief Update the parameters of a box-shaped rigid body based on its current Transform.
          * \param body_transform The Transform of the rigid body.
          */
-        void UpdateBoxBody(Transform const& body_transform);
-
-        /**
-         * \brief Get the axis-aligned bounding box (AABB) of the rigid body.
-         * \return The AABB box of the rigid body.
-         */
-        Box GetAABB();
+        void UpdateBoxBody(Transform const& body_transform); // not in use
 
 
         /*!
@@ -260,36 +236,11 @@ namespace IS
             // Serializing gravity scale
             prefab["RigidbodyGravityScale"] = mGravityScale;
 
-            // Serializing bodyShape (casted to int)
-            //prefab["RigidBodyShapeType"] = static_cast<int>(mBodyShape);
-
-            //// Serializing vertices and transformedVertices
-            //Json::Value verticesArray(Json::arrayValue);
-            //for (const auto& vertex : mVertices) {
-            //    Json::Value v;
-            //    v["x"] = vertex.x;
-            //    v["y"] = vertex.y;
-            //    verticesArray.append(v);
-            //}
-            //prefab["RigidBodyVertices"] = verticesArray;
-
-            //Json::Value transformedVerticesArray(Json::arrayValue);
-            //for (const auto& vertex : mTransformedVertices) {
-            //    Json::Value v;
-            //    v["x"] = vertex.x;
-            //    v["y"] = vertex.y;
-            //    transformedVerticesArray.append(v);
-            //}
-            //prefab["RigidBodyTransformedVertices"] = transformedVerticesArray;
-
-            ////prefab["RigidBodyCheckTransform"] = mCheckTransform;
             //prefab["mInertia"] = mInertia;
             //prefab["mInvInertia"] = mInvInertia;
             prefab["mStaticFriction"] = mStaticFriction;
             prefab["mDynamicFriction"] = mDynamicFriction;
 
-            //// Serializing transformUpdateRequired
-            //prefab["RigidBodyTransformUpdateRequired"] = mTransformUpdateRequired;
 
             return prefab;
         }
@@ -327,39 +278,12 @@ namespace IS
             // Deserializing gravity scale
             mGravityScale = data["RigidbodyGravityScale"].asFloat();
 
-            // Deserializing bodyShape (assuming it's an enum or similar that can be cast from int)
-            //mBodyShape = static_cast<BodyShape>(data["RigidBodyShapeType"].asInt());
-
-            //// Deserializing vertices and transformedVertices
-            //const Json::Value verticesArray = data["RigidBodyVertices"];
-            //mVertices.clear();
-            //for (const auto& v : verticesArray) {
-            //    Vector2D vertex;
-            //    vertex.x = v["x"].asFloat();
-            //    vertex.y = v["y"].asFloat();
-            //    mVertices.push_back(vertex);
-            //}
-
-            //const Json::Value transformedVerticesArray = data["RigidBodyTransformedVertices"];
-            //mTransformedVertices.clear();
-            //for (const auto& v : transformedVerticesArray) {
-            //    Vector2D vertex;
-            //    vertex.x = v["x"].asFloat();
-            //    vertex.y = v["y"].asFloat();
-            //    mTransformedVertices.push_back(vertex);
-            //}
-
-
-            //mCheckTransform= data["RigidBodyCheckTransform"].asBool();
             mInertia= data["mInertia"].asFloat();
             mInvInertia = data["mInvInertia"].asFloat();
             mStaticFriction = data["mStaticFriction"].asFloat();
             mDynamicFriction = data["mDynamicFriction"].asFloat();
 
-            // Deserializing transformUpdateRequired
-            //mTransformUpdateRequired = data["RigidBodyTransformUpdateRequired"].asBool();
         }
-
 
     };
 
