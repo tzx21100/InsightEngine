@@ -30,8 +30,8 @@ namespace IS {
     class AudioListener : public IComponent {
     public:
         float volume=1;
-        float pitch_correctness;
-        float hearing_range;
+        float pitch_correctness{};
+        float hearing_range{};
 
         static std::string GetType() {
             return "AudioListener";
