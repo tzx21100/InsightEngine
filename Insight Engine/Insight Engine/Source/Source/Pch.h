@@ -4,12 +4,11 @@ But we will use them alot so this helps with compile times.
 We should put things like library headers here.
 Don't put too many files that will make you confuse. Mostly files like STL (strings vectors etc).
 */
-#ifndef GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
-#define GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
-
-//we can switch these to our own STL when we finish them
+#ifndef GAM200_INSIGHT_ENGINE_PCH_H_
+#define GAM200_INSIGHT_ENGINE_PCH_H_
 
 // Standard library
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <cassert>
@@ -17,7 +16,6 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <string>
 #include <algorithm>
 #include <variant>
-#include <cmath>
 #include <limits>
 #include <chrono>
 #include <memory>
@@ -34,10 +32,16 @@ Don't put too many files that will make you confuse. Mostly files like STL (stri
 #include <functional>
 #include <filesystem>
 
+/*
+ * DO NOT INCLUDE FILES HERE FOR YOUR OWN CONVENIENCE!
+ * INCLUDE THE HEADERS YOU NEED IN YOUR SOURCE FILES AND DO NOT RELY ON PCH.H!
+ * THIS IS TO ENSURE THAT YOU KNOW WHAT YOU NEED IN YOUR OWN SOURCE FILES AND NOT RELY ON BLIND LUCK!
+ * THIS IS A FRIENDLY REMINDER, THOSE WHO DO NOT ADHERE TO THE ABOVE INSTRUCTIONS WILL RECEIVE REPERCUSSIONS!
+ */
 // Project files
 #include "Debug/Logging/Log.h"
 #include "Debug/Utils/Assertion.h"
 #include "Debug/Profiling/Timer.h"
 #include "Utils.h"
 
-#endif //GAM200_INSIGHT_ENGINE_SOURCE_PCH_H_
+#endif //!GAM200_INSIGHT_ENGINE_PCH_H_
