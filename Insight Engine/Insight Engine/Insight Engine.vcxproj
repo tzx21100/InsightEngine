@@ -15,143 +15,145 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AIFSM.cpp" />
-    <ClCompile Include="Source\Animation.cpp" />
-    <ClCompile Include="Source\Asset.cpp" />
-    <ClCompile Include="Source\BrowserPanel.cpp" />
-    <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\Body.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\Camera3D.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\Collision.cpp" />
-    <ClCompile Include="Source\CollisionSystem.cpp" />
-    <ClCompile Include="Source\Command.cpp" />
-    <ClCompile Include="Source\CoreEngine.cpp" />
-    <ClCompile Include="Source\CommandHistory.cpp" />
-    <ClCompile Include="Source\EditorLayer.cpp" />
-    <ClCompile Include="Source\EventManager.cpp" />
-    <ClCompile Include="Source\Framebuffer.cpp" />
-    <ClCompile Include="Source\ImGuiLayer.cpp" />
-    <ClCompile Include="Source\Grid.cpp" />
-    <ClCompile Include="Source\InspectorPanel.cpp" />
-    <ClCompile Include="Source\Light.cpp" />
-    <ClCompile Include="Source\Manifold.cpp" />
-    <ClCompile Include="Source\Matrix4x4.cpp" />
-    <ClCompile Include="Source\Mesh.cpp" />
-    <ClCompile Include="Source\Panel.cpp" />
-    <ClCompile Include="Source\Particle.cpp" />
-    <ClCompile Include="Source\Pathfinding.cpp" />
-    <ClCompile Include="Source\HierarchyPanel.cpp" />
-    <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\ScenePanel.cpp" />
-    <ClCompile Include="Source\ScriptEngine.cpp" />
-    <ClCompile Include="Source\JsonSaveLoad.cpp" />
-    <ClCompile Include="Source\ScriptGlue.cpp" />
-    <ClCompile Include="Source\ScriptManager.cpp" />
-    <ClCompile Include="Source\Sprite.cpp" />
-    <ClCompile Include="Source\Text.cpp" />
-    <ClCompile Include="Source\Transform.cpp" />
-    <ClCompile Include="Source\EditorUtils.cpp" />
-    <ClCompile Include="Source\Vector3D.cpp" />
-    <ClCompile Include="Source\Vector4D.cpp" />
-    <ClCompile Include="Source\WindowSystem.cpp" />
-    <ClCompile Include="Source\Graphics.cpp" />
-    <ClCompile Include="Source\Input.cpp" />
-    <ClCompile Include="Source\ISArray.cpp" />
-    <ClCompile Include="Source\ISString.cpp" />
-    <ClCompile Include="Source\ISVector.cpp" />
-    <ClCompile Include="Source\LayerStack.cpp" />
-    <ClCompile Include="Source\Log.cpp" />
-    <ClCompile Include="Source\Logger.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Matrix3x3.cpp" />
-    <ClCompile Include="Source\Pch.cpp">
+    <ClCompile Include="Source\Debug\Logging\Log.cpp" />
+    <ClCompile Include="Source\Debug\Logging\Logger.cpp" />
+    <ClCompile Include="Source\Debug\Profiling\Timer.cpp" />
+    <ClCompile Include="Source\Editor\Commands\Command.cpp" />
+    <ClCompile Include="Source\Editor\Commands\CommandHistory.cpp" />
+    <ClCompile Include="Source\Editor\Layers\EditorLayer.cpp" />
+    <ClCompile Include="Source\Editor\Layers\ImGuiLayer.cpp" />
+    <ClCompile Include="Source\Editor\Layers\LayerStack.cpp" />
+    <ClCompile Include="Source\Editor\Panels\BrowserPanel.cpp" />
+    <ClCompile Include="Source\Editor\Panels\HierarchyPanel.cpp" />
+    <ClCompile Include="Source\Editor\Panels\InspectorPanel.cpp" />
+    <ClCompile Include="Source\Editor\Panels\Panel.cpp" />
+    <ClCompile Include="Source\Editor\Panels\ScenePanel.cpp" />
+    <ClCompile Include="Source\Editor\Utils\EditorUtils.cpp" />
+    <ClCompile Include="Source\Editor\Utils\FileUtils.cpp" />
+    <ClCompile Include="Source\Engine\Core\CoreEngine.cpp" />
+    <ClCompile Include="Source\Engine\JSON\JsonSaveLoad.cpp" />
+    <ClCompile Include="Source\Engine\Messages\EventManager.cpp" />
+    <ClCompile Include="Source\Engine\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="Source\Engine\Scripting\ScriptGlue.cpp" />
+    <ClCompile Include="Source\Engine\Scripting\ScriptManager.cpp" />
+    <ClCompile Include="Source\Engine\Systems\AIFSM\AIFSM.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Asset\Asset.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Audio\Audio.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Button\Button.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Input\Input.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Particle\Particle.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Pathfinding\Pathfinding.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Window\WindowSystem.cpp" />
+    <ClCompile Include="Source\Graphics\Buffers\Framebuffer.cpp" />
+    <ClCompile Include="Source\Graphics\Core\Graphics.cpp" />
+    <ClCompile Include="Source\Graphics\System\Animation.cpp" />
+    <ClCompile Include="Source\Graphics\System\Camera.cpp" />
+    <ClCompile Include="Source\Graphics\System\Camera3D.cpp" />
+    <ClCompile Include="Source\Graphics\System\Light.cpp" />
+    <ClCompile Include="Source\Graphics\System\Mesh.cpp" />
+    <ClCompile Include="Source\Graphics\System\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\System\Sprite.cpp" />
+    <ClCompile Include="Source\Graphics\System\Text.cpp" />
+    <ClCompile Include="Source\Graphics\System\Transform.cpp" />
+    <ClCompile Include="Source\Physics\Collision\Collider.cpp" />
+    <ClCompile Include="Source\Physics\Collision\Collision.cpp" />
+    <ClCompile Include="Source\Physics\Collision\Grid.cpp" />
+    <ClCompile Include="Source\Physics\Collision\Manifold.cpp" />
+    <ClCompile Include="Source\Physics\Dynamics\Body.cpp" />
+    <ClCompile Include="Source\Physics\System\CollisionSystem.cpp" />
+    <ClCompile Include="Source\Physics\System\Physics.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Source\Main.cpp" />
+    <ClCompile Include="Source\Source\Pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='GameRelease|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp" />
-    <ClCompile Include="Source\Shader.cpp" />
-    <ClCompile Include="Source\Timer.cpp" />
-    <ClCompile Include="Source\Vector2D.cpp" />
-    <ClCompile Include="Source\FileUtils.cpp" />
+    <ClCompile Include="Source\Utils\Containers\ISArray.cpp" />
+    <ClCompile Include="Source\Utils\Containers\ISString.cpp" />
+    <ClCompile Include="Source\Utils\Containers\ISVector.cpp" />
+    <ClCompile Include="Source\Utils\Math\Matrix3x3.cpp" />
+    <ClCompile Include="Source\Utils\Math\Matrix4x4.cpp" />
+    <ClCompile Include="Source\Utils\Math\Vector2D.cpp" />
+    <ClCompile Include="Source\Utils\Math\Vector3D.cpp" />
+    <ClCompile Include="Source\Utils\Math\Vector4D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AIFSM.h" />
-    <ClInclude Include="Source\AIState.h" />
-    <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Source\Asset.h" />
-    <ClInclude Include="Source\Audio.h" />
-    <ClInclude Include="Source\Body.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\Camera3D.h" />
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\Collision.h" />
-    <ClInclude Include="Source\CollisionSystem.h" />
-    <ClInclude Include="Source\Command.h" />
-    <ClInclude Include="Source\Component.h" />
-    <ClInclude Include="Source\BrowserPanel.h" />
-    <ClInclude Include="Source\CoreEngine.h" />
-    <ClInclude Include="Source\Assertion.h" />
-    <ClInclude Include="Source\EditorLayer.h" />
-    <ClInclude Include="Source\Entities.h" />
-    <ClInclude Include="Source\EventManager.h" />
-    <ClInclude Include="Source\Framebuffer.h" />
-    <ClInclude Include="Source\GameGui.h" />
-    <ClInclude Include="Source\GameLoop.h" />
-    <ClInclude Include="Source\ImGuiLayer.h" />
-    <ClInclude Include="Source\Grid.h" />
-    <ClInclude Include="Source\InspectorPanel.h" />
-    <ClInclude Include="Source\ISMath.h" />
-    <ClInclude Include="Source\ISContainers.h" />
-    <ClInclude Include="Source\JsonSaveLoad.h" />
-    <ClInclude Include="Source\Light.h" />
-    <ClInclude Include="Source\Manifold.h" />
-    <ClInclude Include="Source\Matrix4x4.h" />
-    <ClInclude Include="Source\MemoryLeakCheck.h" />
-    <ClInclude Include="Source\Mesh.h" />
-    <ClInclude Include="Source\OrderedMap.h" />
-    <ClInclude Include="Source\Panel.h" />
-    <ClInclude Include="Source\Particle.h" />
-    <ClInclude Include="Source\ParticleEmitter.h" />
-    <ClInclude Include="Source\Pathfinder.h" />
-    <ClInclude Include="Source\Pathfinding.h" />
-    <ClInclude Include="Source\Prefab.h" />
-    <ClInclude Include="Source\Random.h" />
-    <ClInclude Include="Source\InsightEngine.h" />
-    <ClInclude Include="Source\HierarchyPanel.h" />
-    <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\ScenePanel.h" />
-    <ClInclude Include="Source\ScriptEngine.h" />
-    <ClInclude Include="Source\ScriptGlue.h" />
-    <ClInclude Include="Source\ScriptManager.h" />
-    <ClInclude Include="Source\Sprite.h" />
-    <ClInclude Include="Source\Text.h" />
-    <ClInclude Include="Source\Transform.h" />
-    <ClInclude Include="Source\EditorUtils.h" />
-    <ClInclude Include="Source\CommandHistory.h" />
-    <ClInclude Include="Source\Vector3D.h" />
-    <ClInclude Include="Source\Vector4D.h" />
-    <ClInclude Include="Source\WindowSystem.h" />
-    <ClInclude Include="Source\Graphics.h" />
-    <ClInclude Include="Source\Input.h" />
-    <ClInclude Include="Source\ISArray.h" />
-    <ClInclude Include="Source\ISString.h" />
-    <ClInclude Include="Source\ISVector.h" />
-    <ClInclude Include="Source\Layer.h" />
-    <ClInclude Include="Source\LayerStack.h" />
-    <ClInclude Include="Source\Log.h" />
-    <ClInclude Include="Source\Logger.h" />
-    <ClInclude Include="Source\Matrix3x3.h" />
-    <ClInclude Include="Source\Message.h" />
-    <ClInclude Include="Source\Pch.h" />
-    <ClInclude Include="Source\Physics.h" />
-    <ClInclude Include="Source\Shader.h" />
-    <ClInclude Include="Source\System.h" />
-    <ClInclude Include="Source\Timer.h" />
-    <ClInclude Include="Source\Vector2D.h" />
-    <ClInclude Include="Source\FileUtils.h" />
+    <ClInclude Include="Source\Debug\Logging\Log.h" />
+    <ClInclude Include="Source\Debug\Logging\Logger.h" />
+    <ClInclude Include="Source\Debug\Profiling\Timer.h" />
+    <ClInclude Include="Source\Debug\Utils\Assertion.h" />
+    <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h" />
+    <ClInclude Include="Source\Editor\Commands\Command.h" />
+    <ClInclude Include="Source\Editor\Commands\CommandHistory.h" />
+    <ClInclude Include="Source\Editor\Layers\EditorLayer.h" />
+    <ClInclude Include="Source\Editor\Layers\ImGuiLayer.h" />
+    <ClInclude Include="Source\Editor\Layers\Layer.h" />
+    <ClInclude Include="Source\Editor\Layers\LayerStack.h" />
+    <ClInclude Include="Source\Editor\Panels\BrowserPanel.h" />
+    <ClInclude Include="Source\Editor\Panels\HierarchyPanel.h" />
+    <ClInclude Include="Source\Editor\Panels\InspectorPanel.h" />
+    <ClInclude Include="Source\Editor\Panels\Panel.h" />
+    <ClInclude Include="Source\Editor\Panels\ScenePanel.h" />
+    <ClInclude Include="Source\Editor\Utils\EditorUtils.h" />
+    <ClInclude Include="Source\Editor\Utils\FileUtils.h" />
+    <ClInclude Include="Source\Engine\Core\CoreEngine.h" />
+    <ClInclude Include="Source\Engine\ECS\Component.h" />
+    <ClInclude Include="Source\Engine\ECS\Entities.h" />
+    <ClInclude Include="Source\Engine\ECS\System.h" />
+    <ClInclude Include="Source\Engine\JSON\JsonSaveLoad.h" />
+    <ClInclude Include="Source\Engine\JSON\Prefab.h" />
+    <ClInclude Include="Source\Engine\Messages\EventManager.h" />
+    <ClInclude Include="Source\Engine\Messages\Message.h" />
+    <ClInclude Include="Source\Engine\Scripting\ScriptEngine.h" />
+    <ClInclude Include="Source\Engine\Scripting\ScriptGlue.h" />
+    <ClInclude Include="Source\Engine\Scripting\ScriptManager.h" />
+    <ClInclude Include="Source\Engine\Systems\AIFSM\AIFSM.h" />
+    <ClInclude Include="Source\Engine\Systems\AIFSM\AIState.h" />
+    <ClInclude Include="Source\Engine\Systems\Asset\Asset.h" />
+    <ClInclude Include="Source\Engine\Systems\Audio\Audio.h" />
+    <ClInclude Include="Source\Engine\Systems\Button\Button.h" />
+    <ClInclude Include="Source\Engine\Systems\Input\Input.h" />
+    <ClInclude Include="Source\Engine\Systems\Particle\Particle.h" />
+    <ClInclude Include="Source\Engine\Systems\Particle\ParticleEmitter.h" />
+    <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinder.h" />
+    <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinding.h" />
+    <ClInclude Include="Source\Engine\Systems\Window\WindowSystem.h" />
+    <ClInclude Include="Source\Graphics\Buffers\Framebuffer.h" />
+    <ClInclude Include="Source\Graphics\Core\Graphics.h" />
+    <ClInclude Include="Source\Graphics\System\Animation.h" />
+    <ClInclude Include="Source\Graphics\System\Camera.h" />
+    <ClInclude Include="Source\Graphics\System\Camera3D.h" />
+    <ClInclude Include="Source\Graphics\System\Light.h" />
+    <ClInclude Include="Source\Graphics\System\Mesh.h" />
+    <ClInclude Include="Source\Graphics\System\Shader.h" />
+    <ClInclude Include="Source\Graphics\System\Sprite.h" />
+    <ClInclude Include="Source\Graphics\System\Text.h" />
+    <ClInclude Include="Source\Graphics\System\Transform.h" />
+    <ClInclude Include="Source\Physics\Collision\Collider.h" />
+    <ClInclude Include="Source\Physics\Collision\Collision.h" />
+    <ClInclude Include="Source\Physics\Collision\Grid.h" />
+    <ClInclude Include="Source\Physics\Collision\Manifold.h" />
+    <ClInclude Include="Source\Physics\Dynamics\Body.h" />
+    <ClInclude Include="Source\Physics\System\CollisionSystem.h" />
+    <ClInclude Include="Source\Physics\System\Physics.h" />
+    <ClInclude Include="Source\Scene\SceneManager.h" />
+    <ClInclude Include="Source\Source\GameLoop.h" />
+    <ClInclude Include="Source\Source\InsightEngine.h" />
+    <ClInclude Include="Source\Source\Pch.h" />
+    <ClInclude Include="Source\Utils\Containers\ISArray.h" />
+    <ClInclude Include="Source\Utils\Containers\ISContainers.h" />
+    <ClInclude Include="Source\Utils\Containers\ISString.h" />
+    <ClInclude Include="Source\Utils\Containers\ISVector.h" />
+    <ClInclude Include="Source\Utils\Containers\OrderedMap.h" />
+    <ClInclude Include="Source\Utils\Math\ISMath.h" />
+    <ClInclude Include="Source\Utils\Math\Matrix3x3.h" />
+    <ClInclude Include="Source\Utils\Math\Matrix4x4.h" />
+    <ClInclude Include="Source\Utils\Math\Random.h" />
+    <ClInclude Include="Source\Utils\Math\Vector2D.h" />
+    <ClInclude Include="Source\Utils\Math\Vector3D.h" />
+    <ClInclude Include="Source\Utils\Math\Vector4D.h" />
+    <ClInclude Include="Source\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GLAD\GLAD.vcxproj">
@@ -205,7 +207,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\imguizmo\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Source;$(ProjectDir)Source\Utils;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\imguizmo\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\imguizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -226,14 +228,14 @@
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\imguizmo\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Source;$(ProjectDir)Source\Utils;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\imgui\include;$(ProjectDir)libraries\imguizmo\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\imgui\lib;$(ProjectDir)libraries\imguizmo\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GameRelease|x64'">
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Source;$(ProjectDir)Source\Utils;$(ProjectDir)libraries\glfw\include;$(ProjectDir)libraries\glm;$(ProjectDir)libraries\glad\include;$(ProjectDir)libraries\fmod\include;$(ProjectDir)libraries\iconfont;$(ProjectDir)libraries\jsoncpp\include;$(ProjectDir)libraries\stb\include;$(ProjectDir)libraries\freetype\include;$(ProjectDir)libraries\mono\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)libraries\glad\lib;$(ProjectDir)libraries\glfw\lib;$(ProjectDir)libraries\fmod\lib;$(ProjectDir)libraries\jsoncpp\lib;$(ProjectDir)libraries\freetype\lib;$(ProjectDir)libraries\mono\lib</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)-$(Platform)\GAMEDIRECTORY\</OutDir>
     <IntDir>$(SolutionDir)\.tmp\$(Configuration)-$(Platform)\</IntDir>

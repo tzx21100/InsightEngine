@@ -1,400 +1,406 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pch.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Vector2D.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Matrix3x3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISArray.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISString.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ISVector.cpp">
-      <Filter>STL</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EventManager.cpp">
-      <Filter>Engine\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CoreEngine.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Log.cpp">
-      <Filter>Debug\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Logger.cpp">
-      <Filter>Debug\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Physics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collision.cpp">
-      <Filter>Physics\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
+    <ClCompile Include="Source\Debug\Profiling\Timer.cpp">
       <Filter>Debug\Profiling</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EditorLayer.cpp">
+    <ClCompile Include="Source\Debug\Logging\Logger.cpp">
+      <Filter>Debug\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Debug\Logging\Log.cpp">
+      <Filter>Debug\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Commands\CommandHistory.cpp">
+      <Filter>Editor\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Commands\Command.cpp">
+      <Filter>Editor\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Layers\LayerStack.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LayerStack.cpp">
+    <ClCompile Include="Source\Editor\Layers\EditorLayer.cpp">
       <Filter>Editor\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framebuffer.cpp">
-      <Filter>Graphics\Buffers</Filter>
+    <ClCompile Include="Source\Editor\Layers\ImGuiLayer.cpp">
+      <Filter>Editor\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Animation.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sprite.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Transform.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Text.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\HierarchyPanel.cpp">
+    <ClCompile Include="Source\Editor\Panels\InspectorPanel.cpp">
       <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScriptEngine.cpp">
-      <Filter>Engine\Scripting</Filter>
+    <ClCompile Include="Source\Editor\Panels\Panel.cpp">
+      <Filter>Editor\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Source\JsonSaveLoad.cpp">
+    <ClCompile Include="Source\Editor\Panels\ScenePanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Panels\BrowserPanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Panels\HierarchyPanel.cpp">
+      <Filter>Editor\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Utils\FileUtils.cpp">
+      <Filter>Editor\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Utils\EditorUtils.cpp">
+      <Filter>Editor\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\CoreEngine.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\JSON\JsonSaveLoad.cpp">
       <Filter>Engine\JSON</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics.cpp">
-      <Filter>Graphics\Core</Filter>
+    <ClCompile Include="Source\Engine\Messages\EventManager.cpp">
+      <Filter>Engine\Messages</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScriptGlue.cpp">
+    <ClCompile Include="Source\Engine\Scripting\ScriptManager.cpp">
       <Filter>Engine\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manifold.cpp">
-      <Filter>Physics\Collision</Filter>
+    <ClCompile Include="Source\Engine\Scripting\ScriptEngine.cpp">
+      <Filter>Engine\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Asset.cpp">
-      <Filter>Engine\Systems\Asset</Filter>
+    <ClCompile Include="Source\Engine\Scripting\ScriptGlue.cpp">
+      <Filter>Engine\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Engine\Systems\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Engine\Systems\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AIFSM.cpp">
+    <ClCompile Include="Source\Engine\Systems\AIFSM\AIFSM.cpp">
       <Filter>Engine\Systems\AIFSM</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Grid.cpp">
-      <Filter>Physics\Dynamics</Filter>
+    <ClCompile Include="Source\Engine\Systems\Asset\Asset.cpp">
+      <Filter>Engine\Systems\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Panel.cpp">
-      <Filter>Editor\Panels</Filter>
+    <ClCompile Include="Source\Engine\Systems\Audio\Audio.cpp">
+      <Filter>Engine\Systems\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScriptManager.cpp">
-      <Filter>Engine\Scripting</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pathfinding.cpp">
-      <Filter>Engine\Systems\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Body.cpp">
-      <Filter>Physics\Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EditorUtils.cpp">
-      <Filter>Editor\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BrowserPanel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\FileUtils.cpp">
-      <Filter>Editor\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WindowSystem.cpp">
-      <Filter>Engine\Systems\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Editor\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\InspectorPanel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
-      <Filter>Physics\Dynamics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CollisionSystem.cpp">
-      <Filter>Physics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera3D.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ImGuiLayer.cpp">
-      <Filter>Editor\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Particle.cpp">
+    <ClCompile Include="Source\Engine\Systems\Particle\Particle.cpp">
       <Filter>Engine\Systems\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Matrix4x4.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Source\Engine\Systems\Pathfinding\Pathfinding.cpp">
+      <Filter>Engine\Systems\Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Vector3D.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Source\Engine\Systems\Window\WindowSystem.cpp">
+      <Filter>Engine\Systems\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CommandHistory.cpp">
-      <Filter>Editor\Commands</Filter>
+    <ClCompile Include="Source\Graphics\Buffers\Framebuffer.cpp">
+      <Filter>Graphics\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
+    <ClCompile Include="Source\Graphics\Core\Graphics.cpp">
+      <Filter>Graphics\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Sprite.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ScenePanel.cpp">
-      <Filter>Editor\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Command.cpp">
-      <Filter>Editor\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Light.cpp">
+    <ClCompile Include="Source\Graphics\System\Text.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Vector4D.cpp">
-      <Filter>Math</Filter>
+    <ClCompile Include="Source\Graphics\System\Transform.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Animation.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Camera.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Camera3D.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Light.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Mesh.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\System\Shader.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\System\Physics.cpp">
+      <Filter>Physics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\System\CollisionSystem.cpp">
+      <Filter>Physics\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Dynamics\Body.cpp">
+      <Filter>Physics\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Collision\Grid.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Collision\Manifold.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Collision\Collider.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics\Collision\Collision.cpp">
+      <Filter>Physics\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Systems\Input\Input.cpp">
+      <Filter>Engine\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Systems\Button\Button.cpp">
+      <Filter>Engine\Systems\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Pch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Containers\ISArray.cpp">
+      <Filter>Utils\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Containers\ISString.cpp">
+      <Filter>Utils\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Containers\ISVector.cpp">
+      <Filter>Utils\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Math\Vector2D.cpp">
+      <Filter>Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Math\Vector3D.cpp">
+      <Filter>Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Math\Vector4D.cpp">
+      <Filter>Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Math\Matrix3x3.cpp">
+      <Filter>Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Math\Matrix4x4.cpp">
+      <Filter>Utils\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Pch.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">
+      <Filter>Debug\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vector2D.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Debug\Utils\Assertion.h">
+      <Filter>Debug\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Matrix3x3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISArray.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISString.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ISVector.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EventManager.h">
-      <Filter>Engine\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Message.h">
-      <Filter>Engine\Messages</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CoreEngine.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Log.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Logger.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\JsonSaveLoad.h">
-      <Filter>Engine\JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entities.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System.h">
-      <Filter>Engine\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Physics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Body.h">
-      <Filter>Physics\Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Collision.h">
-      <Filter>Physics\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
+    <ClInclude Include="Source\Debug\Profiling\Timer.h">
       <Filter>Debug\Profiling</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Assertion.h">
-      <Filter>Debug\Handler</Filter>
+    <ClInclude Include="Source\Debug\Logging\Logger.h">
+      <Filter>Debug\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MemoryLeakCheck.h">
-      <Filter>Debug\Handler</Filter>
+    <ClInclude Include="Source\Debug\Logging\Log.h">
+      <Filter>Debug\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Random.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Editor\Commands\CommandHistory.h">
+      <Filter>Editor\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ISMath.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Editor\Commands\Command.h">
+      <Filter>Editor\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ISContainers.h">
-      <Filter>STL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EditorLayer.h">
+    <ClInclude Include="Source\Editor\Layers\Layer.h">
       <Filter>Editor\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Layer.h">
+    <ClInclude Include="Source\Editor\Layers\LayerStack.h">
       <Filter>Editor\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LayerStack.h">
+    <ClInclude Include="Source\Editor\Layers\EditorLayer.h">
       <Filter>Editor\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameLoop.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\Editor\Layers\ImGuiLayer.h">
+      <Filter>Editor\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framebuffer.h">
-      <Filter>Graphics\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sprite.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Transform.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Text.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\HierarchyPanel.h">
+    <ClInclude Include="Source\Editor\Panels\InspectorPanel.h">
       <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScriptEngine.h">
-      <Filter>Engine\Scripting</Filter>
+    <ClInclude Include="Source\Editor\Panels\Panel.h">
+      <Filter>Editor\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Prefab.h">
+    <ClInclude Include="Source\Editor\Panels\ScenePanel.h">
+      <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Panels\BrowserPanel.h">
+      <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Panels\HierarchyPanel.h">
+      <Filter>Editor\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Utils\FileUtils.h">
+      <Filter>Editor\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Utils\EditorUtils.h">
+      <Filter>Editor\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\CoreEngine.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\ECS\Entities.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\ECS\System.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\ECS\Component.h">
+      <Filter>Engine\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\JSON\JsonSaveLoad.h">
       <Filter>Engine\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Graphics.h">
-      <Filter>Graphics\Core</Filter>
+    <ClInclude Include="Source\Engine\JSON\Prefab.h">
+      <Filter>Engine\JSON</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InsightEngine.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\Engine\Messages\EventManager.h">
+      <Filter>Engine\Messages</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScriptGlue.h">
+    <ClInclude Include="Source\Engine\Messages\Message.h">
+      <Filter>Engine\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Scripting\ScriptGlue.h">
       <Filter>Engine\Scripting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manifold.h">
-      <Filter>Physics\Collision</Filter>
+    <ClInclude Include="Source\Engine\Scripting\ScriptManager.h">
+      <Filter>Engine\Scripting</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Asset.h">
+    <ClInclude Include="Source\Engine\Scripting\ScriptEngine.h">
+      <Filter>Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\AIFSM\AIFSM.h">
+      <Filter>Engine\Systems\AIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\AIFSM\AIState.h">
+      <Filter>Engine\Systems\AIFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\Asset\Asset.h">
       <Filter>Engine\Systems\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Audio.h">
+    <ClInclude Include="Source\Engine\Systems\Audio\Audio.h">
       <Filter>Engine\Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Engine\Systems\Input</Filter>
+    <ClInclude Include="Source\Engine\Systems\Button\Button.h">
+      <Filter>Engine\Systems\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIState.h">
-      <Filter>Engine\Systems\AIFSM</Filter>
+    <ClInclude Include="Source\Engine\Systems\Particle\Particle.h">
+      <Filter>Engine\Systems\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIFSM.h">
-      <Filter>Engine\Systems\AIFSM</Filter>
+    <ClInclude Include="Source\Engine\Systems\Particle\ParticleEmitter.h">
+      <Filter>Engine\Systems\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Grid.h">
-      <Filter>Physics\Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Panel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ScriptManager.h">
-      <Filter>Engine\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameGui.h">
-      <Filter>Engine\Systems\Gui System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pathfinder.h">
+    <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinder.h">
       <Filter>Engine\Systems\Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Pathfinding.h">
+    <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinding.h">
       <Filter>Engine\Systems\Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EditorUtils.h">
-      <Filter>Editor\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BrowserPanel.h">
-      <Filter>Editor\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\FileUtils.h">
-      <Filter>Editor\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowSystem.h">
+    <ClInclude Include="Source\Engine\Systems\Window\WindowSystem.h">
       <Filter>Engine\Systems\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Editor\Scene</Filter>
+    <ClInclude Include="Source\Graphics\Buffers\Framebuffer.h">
+      <Filter>Graphics\Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InspectorPanel.h">
-      <Filter>Editor\Panels</Filter>
+    <ClInclude Include="Source\Graphics\Core\Graphics.h">
+      <Filter>Graphics\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collider.h">
-      <Filter>Physics\Dynamics</Filter>
+    <ClInclude Include="Source\Graphics\System\Shader.h">
+      <Filter>Graphics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionSystem.h">
+    <ClInclude Include="Source\Graphics\System\Sprite.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Text.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Transform.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Animation.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Camera.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Camera3D.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Light.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\Mesh.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics\System\Physics.h">
       <Filter>Physics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ImGuiLayer.h">
-      <Filter>Editor\Layers</Filter>
+    <ClInclude Include="Source\Physics\System\CollisionSystem.h">
+      <Filter>Physics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera3D.h">
-      <Filter>Graphics\System</Filter>
+    <ClInclude Include="Source\Physics\Dynamics\Body.h">
+      <Filter>Physics\Dynamics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Particle.h">
-      <Filter>Engine\Systems\Particle</Filter>
+    <ClInclude Include="Source\Physics\Collision\Grid.h">
+      <Filter>Physics\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ParticleEmitter.h">
-      <Filter>Engine\Systems\Particle</Filter>
+    <ClInclude Include="Source\Physics\Collision\Manifold.h">
+      <Filter>Physics\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Matrix4x4.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Physics\Collision\Collider.h">
+      <Filter>Physics\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vector3D.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Physics\Collision\Collision.h">
+      <Filter>Physics\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CommandHistory.h">
-      <Filter>Editor\Commands</Filter>
+    <ClInclude Include="Source\Engine\Systems\Input\Input.h">
+      <Filter>Engine\Systems\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Graphics\System</Filter>
+    <ClInclude Include="Source\Source\GameLoop.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ScenePanel.h">
-      <Filter>Editor\Panels</Filter>
+    <ClInclude Include="Source\Source\InsightEngine.h">
+      <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\OrderedMap.h">
+    <ClInclude Include="Source\Scene\SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Pch.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Utils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Command.h">
-      <Filter>Editor\Commands</Filter>
+    <ClInclude Include="Source\Utils\Containers\ISArray.h">
+      <Filter>Utils\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Light.h">
-      <Filter>Graphics\System</Filter>
+    <ClInclude Include="Source\Utils\Containers\ISContainers.h">
+      <Filter>Utils\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vector4D.h">
-      <Filter>Math</Filter>
+    <ClInclude Include="Source\Utils\Containers\ISString.h">
+      <Filter>Utils\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Containers\ISVector.h">
+      <Filter>Utils\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Containers\OrderedMap.h">
+      <Filter>Utils\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Vector2D.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Vector3D.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Vector4D.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\ISMath.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Matrix3x3.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Matrix4x4.h">
+      <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Math\Random.h">
+      <Filter>Utils\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -409,12 +415,6 @@
     </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{e4d5b7dc-d972-4b83-9e14-f84afd59316d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="STL">
-      <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{935fc06a-851e-49a7-8e82-ee01254b565b}</UniqueIdentifier>
@@ -442,9 +442,6 @@
     </Filter>
     <Filter Include="Editor">
       <UniqueIdentifier>{74363855-2e0b-4615-9976-43d4236a4a7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Handler">
-      <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\JSON">
       <UniqueIdentifier>{a545d8f8-9e6f-48ce-800a-e4d4322268be}</UniqueIdentifier>
@@ -488,17 +485,11 @@
     <Filter Include="Engine\Systems\AIFSM">
       <UniqueIdentifier>{04098ec3-c3dc-405d-a930-8cc6a93d8694}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Systems\Gui System">
-      <UniqueIdentifier>{7c2b3b4c-19b5-4d80-994a-0269fcb5fddd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Editor\Utils">
       <UniqueIdentifier>{091bd855-80c0-4451-ba80-733ec30c1671}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Systems\Window">
       <UniqueIdentifier>{0952072b-323d-45ee-a5fc-c54facde40af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Editor\Scene">
-      <UniqueIdentifier>{af6e24eb-8858-4a53-9442-61aca5bc19b3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Systems\Particle">
       <UniqueIdentifier>{c56f3f61-4209-4647-b8ee-d504305003b8}</UniqueIdentifier>
@@ -508,6 +499,21 @@
     </Filter>
     <Filter Include="Editor\Commands">
       <UniqueIdentifier>{bd2566b6-d6fe-456e-8e04-4b6b53d5f72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Utils">
+      <UniqueIdentifier>{6cfff4a2-1a2d-4ce1-a9eb-d1bbe29613a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Button">
+      <UniqueIdentifier>{87fd0082-4da4-4b60-83be-b99526f6c395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{fcbf9881-486f-4a5e-8bc1-c60b726d9af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Containers">
+      <UniqueIdentifier>{d5e2e553-7bbd-473f-9e48-331649ecd887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Math">
+      <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
