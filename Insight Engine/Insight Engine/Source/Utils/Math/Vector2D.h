@@ -19,6 +19,8 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR2D_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR2D_H
 
+#include "Engine/Core/Core.h"
+
 namespace IS {
 
 #ifdef _MSC_VER
@@ -26,7 +28,7 @@ namespace IS {
 #endif
 
     // I added a simple vector2d to convert to C#
-    struct SimpleVector2D {
+    struct IS_API SimpleVector2D {
         float x, y;
     };
 
@@ -35,7 +37,7 @@ namespace IS {
         This typedef union represents a mathematical vector in 2D space.
      */
      /**************************************************************************/
-    typedef union Vector2D {
+    typedef union IS_API Vector2D {
         struct {
             float x, y;
         };

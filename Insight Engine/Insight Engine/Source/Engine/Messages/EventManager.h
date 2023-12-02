@@ -20,6 +20,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <vector>
 #include <unordered_map>
 #include "Message.h"
@@ -36,7 +37,7 @@ namespace IS {
      * The EventManager follows the Singleton design pattern, ensuring that there is only one instance of the manager in the system.
      * It provides methods for systems to subscribe to specific message types and for broadcasting messages to all subscribed systems.
      */
-    class EventManager {
+    class IS_API EventManager {
     public:
         /**
          * \brief Returns the singleton instance of the EventManager.

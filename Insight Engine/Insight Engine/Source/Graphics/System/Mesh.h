@@ -16,6 +16,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_MESH_H
 #define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_MESH_H
 
+#include "Engine/Core/Core.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
@@ -27,7 +28,7 @@ namespace IS {
      * for rendering. It provides functions for setting up different types of meshes and initializing and cleaning up
      * meshes for rendering.
      */
-    class Mesh {
+    class IS_API Mesh {
     public:
         /*!
          * \brief Enumeration of attribute locations within the shader program.

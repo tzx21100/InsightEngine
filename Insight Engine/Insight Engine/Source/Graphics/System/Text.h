@@ -20,6 +20,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Shader.h"
 
 #include <ft2build.h>
@@ -35,7 +36,7 @@ namespace IS {
      * The Text class encapsulates methods for rendering text using FreeType and OpenGL. It allows you to
      * display text with various fonts, sizes, and colors in an OpenGL application.
      */
-    class Text {
+    class IS_API Text {
     public:
         /*!
          * \brief Renders an animated text.

@@ -19,6 +19,7 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_ASSET_H
 
 /*includes */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Engine/Systems/Audio/Audio.h"
 #include "Engine/JSON/Prefab.h"
@@ -68,7 +69,7 @@ namespace IS {
     };
 
 
-    struct Image { 
+    struct IS_API Image { 
         //image data should just be in image itself
         std::string mFileName{};
         int width{};
@@ -102,7 +103,7 @@ namespace IS {
     };
 
     //converstion to C#
-    struct SimpleImage {
+    struct IS_API SimpleImage {
         const char* mFileName; // pointer to null-terminated string
         int width;
         int height;
@@ -147,7 +148,7 @@ namespace IS {
      * The AssetManager class provides functions to load, unload, and access various game assets such as textures, models, and audio files.
      * It ensures that assets are efficiently loaded and unloaded as needed.
      */
-    class AssetManager :public ParentSystem {
+    class IS_API AssetManager :public ParentSystem {
     public:
         //override parent
         void Initialize() override;

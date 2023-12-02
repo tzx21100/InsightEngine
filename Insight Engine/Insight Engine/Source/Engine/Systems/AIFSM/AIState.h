@@ -20,12 +20,15 @@ consent of DigiPen Institute of Technology is prohibited.
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "Pch.h"
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Engine/ECS/Component.h"
 
+#include <string>
+#include <unordered_map>
+
 namespace IS {
-	class AIState : public IComponent
+	class IS_API AIState : public IComponent
 	{
 	public:
 		static std::string GetType() {

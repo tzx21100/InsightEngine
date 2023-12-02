@@ -22,6 +22,7 @@
 
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Component.h"
 
 namespace IS
@@ -30,7 +31,7 @@ namespace IS
      * \struct Box
      * \brief A structure representing an axis-aligned bounding box (AABB) defined by its minimum and maximum corners.
      */
-    struct Box
+    struct IS_API Box
     {
         Vector2D min; // Minimum point of the bounding box
         Vector2D max; // Maximum point of the bounding box
@@ -44,7 +45,7 @@ namespace IS
      * \struct Circle
      * \brief A structure representing a circle defined by its center and radius.
      */
-    struct Circle
+    struct IS_API Circle
     {
         Vector2D center; // Center of the circle
         float    radius; // Radius of the circle
@@ -54,7 +55,7 @@ namespace IS
      * \struct Line
      * \brief A structure representing a line segment defined by its start and end points, along with a normal vector.
      */
-    struct Line
+    struct IS_API Line
     {
         Vector2D start; // Starting point of the line segment
         Vector2D end; // Ending point of the line segment

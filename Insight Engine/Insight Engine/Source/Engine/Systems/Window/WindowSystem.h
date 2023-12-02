@@ -22,6 +22,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 
 // Dependencies
@@ -35,7 +36,7 @@ namespace IS {
      *
      * \brief WindowSystem is a subclass of ParentSystem and handles window-related functionality.
      */
-    class WindowSystem : public ParentSystem {
+    class IS_API WindowSystem : public ParentSystem {
     public:
         /*!
          * \brief Structure encapsulating properties of a window.

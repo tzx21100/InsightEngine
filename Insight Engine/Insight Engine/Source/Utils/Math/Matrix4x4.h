@@ -17,6 +17,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MATRIX4X4_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MATRIX4X4_H
 
+#include "Engine/Core/Core.h"
 #include "Vector3D.h"
 
 namespace IS
@@ -29,7 +30,7 @@ namespace IS
      * @union Matrix4x4
      * @brief Represents a 4x4 matrix and provides various matrix operations.
      */
-    typedef union Matrix4x4
+    typedef union IS_API Matrix4x4
     {
         struct
         {

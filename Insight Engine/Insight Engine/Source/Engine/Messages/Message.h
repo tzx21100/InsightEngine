@@ -21,6 +21,8 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_MESSAGE_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_MESSAGE_H_
 
+#include "Engine/Core/Core.h"
+
 namespace IS {
 
     /**
@@ -40,7 +42,7 @@ namespace IS {
      * \class Message
      * \brief Represents a basic message that is used to convey information by systems to the engine.
      */
-    class Message {
+    class IS_API Message {
     public:
         /**
          * \brief Constructor that initializes the message with a specific type.
@@ -76,7 +78,7 @@ namespace IS {
      * \class MessageListener
      * \brief An abstract base class that provides an interface for objects that wish to listen and handle messages.
      */
-    class MessageListener {
+    class IS_API MessageListener {
     public:
         /**
          * \brief A virtual method to handle incoming messages.

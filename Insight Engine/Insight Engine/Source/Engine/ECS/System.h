@@ -22,6 +22,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Entities.h"
 #include "Engine/Messages/Message.h"
 #include "Engine/Messages/EventManager.h"
@@ -43,7 +44,7 @@ namespace IS {
    * This class provides basic methods for handling messages and entities, and should
    * be the parent class for all specialized systems like Graphics.
    */
-    class ParentSystem :public MessageListener {
+    class IS_API ParentSystem :public MessageListener {
     public:
          /**
          * \brief Sends a message to the EventManager to broadcast.

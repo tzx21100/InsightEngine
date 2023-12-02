@@ -16,6 +16,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Engine/ECS/Component.h"
 #include "Particle.h"
@@ -23,7 +24,7 @@
 
 namespace IS {
 
-	class ParticleEmitter : public IComponent
+	class IS_API ParticleEmitter : public IComponent
 	{
 	public:
 		static std::string GetType() {

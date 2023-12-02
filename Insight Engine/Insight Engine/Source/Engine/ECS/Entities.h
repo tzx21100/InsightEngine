@@ -22,6 +22,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <cassert>
 #include <bitset>
 #include <array>
@@ -49,7 +50,7 @@ namespace IS {
 	 * This class provides efficient mechanisms for entity management using a queue
 	 * for available entity IDs and bitset signatures for component tracking.
 	 */
-	class EntityManager {
+	class IS_API EntityManager {
 	public:
 
 		/**

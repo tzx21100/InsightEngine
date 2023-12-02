@@ -23,6 +23,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Engine/ECS/System.h"
 #include "Engine/Systems/Window/WindowSystem.h"
@@ -32,7 +33,7 @@
 
 namespace IS {
 
-    class InputAffector :public IComponent {
+    class IS_API InputAffector :public IComponent {
     public:
         static std::string GetType() {
             return "InputAffector";
@@ -43,7 +44,7 @@ namespace IS {
 
     };
 
-    class InputManager : public ParentSystem{
+    class IS_API InputManager : public ParentSystem{
     public:
         /**
          * \brief Returns the name of the InputManager system.

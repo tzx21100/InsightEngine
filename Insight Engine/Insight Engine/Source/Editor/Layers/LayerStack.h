@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Layer.h"
 #include <vector>
 
@@ -30,7 +31,7 @@ namespace IS {
      * \brief The LayerStack class manages layers and overlays in the application.
      * A layer stack maintains a list of layers and allows for easy addition, removal, and traversal of layers.
      */
-    class LayerStack {
+    class IS_API LayerStack {
     public:
         using container = std::vector<std::shared_ptr<Layer>>; ///< The container type for storing layers.
         using value_type = container::value_type; ///< The type of elements stored in the container.

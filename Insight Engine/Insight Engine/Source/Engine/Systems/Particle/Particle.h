@@ -20,6 +20,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include <array>
 #include <fstream>
@@ -50,7 +51,7 @@ namespace IS {
 	 * \class Color
 	 * \brief Represents a color with red, green, blue, and alpha components.
 	 */
-	class Color {
+	class IS_API Color {
 	public:
 		/*!
 		 * \brief Constructor for Color class with individual color components.
@@ -119,7 +120,7 @@ namespace IS {
 	 * \struct Particle
 	 * \brief Represents a particle with various attributes.
 	 */
-	struct Particle {
+	struct IS_API Particle {
 		// Particle Attributes
 		Vec2D mVelocity = { 0.f,0.f };
 		float mSizeGrowth = 0.f;
@@ -290,7 +291,7 @@ namespace IS {
 	 * \class ParticleSystem
 	 * \brief Manages particle effects and behaviors.
 	 */
-    class ParticleSystem : public ParentSystem {
+    class IS_API ParticleSystem : public ParentSystem {
     public:
         //override parent
         void Initialize() override;

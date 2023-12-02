@@ -22,6 +22,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Physics/Collision/Collider.h"
 #include "Physics/Collision/Manifold.h"
@@ -50,7 +51,7 @@ namespace IS
 	 * It includes methods for both broad and narrow phase collision detection,
 	 * handling collision response, and managing collision data.
 	 */
-	class CollisionSystem : public ParentSystem
+	class IS_API CollisionSystem : public ParentSystem
 	{
 	public:
 		/*!

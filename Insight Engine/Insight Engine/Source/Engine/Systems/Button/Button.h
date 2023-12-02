@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Engine/ECS/Component.h"
 #include "Engine/Systems/Input/Input.h"
@@ -56,7 +57,7 @@ namespace IS {
      * in the GUI system.
      */
     //Components for GUI (to represent an entity as a button)
-    class ButtonComponent : IComponent {
+    class IS_API ButtonComponent : IComponent {
     public:
         static std::string GetType() {
             return "ButtonComponent";
@@ -94,7 +95,7 @@ namespace IS {
      * This system manages the initialization, update, and interaction of GUI components
      * such as buttons.
      */
-    class GuiSystem : public ParentSystem {
+    class IS_API GuiSystem : public ParentSystem {
     public:        
 
         std::string GetName() {

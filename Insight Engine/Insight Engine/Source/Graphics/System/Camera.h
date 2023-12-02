@@ -24,13 +24,14 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Graphics/System/Camera3D.h"
 #include <glm/glm.hpp>
 
 namespace IS {
 
-	class Camera {
+	class IS_API Camera {
 	public:		
 		/**
 		 * Constructor for the Camera class.

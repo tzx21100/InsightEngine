@@ -20,6 +20,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <string>
 #include "Engine/ECS/Entities.h"
 
@@ -33,7 +34,7 @@ namespace IS {
    * This class contains the necessary information to create an entity with set components
    *
    */
-    class Prefab {
+    class IS_API Prefab {
     public:
         /**
          * \brief Constructs the prefab

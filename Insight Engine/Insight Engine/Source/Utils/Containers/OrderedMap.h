@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <memory>
 #include <utility>
 #include <vector>
@@ -38,7 +39,7 @@ namespace IS {
      * \tparam Base The base type from which all derived types are derived.
      */
     template <typename Key, typename Base>
-    class OrderedMap
+    class IS_API OrderedMap
     {
     public:
         using BaseSharedPtr = std::shared_ptr<Base>; ///< Shared pointer type for the base class.

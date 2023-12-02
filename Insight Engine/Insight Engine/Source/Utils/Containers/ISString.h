@@ -1,8 +1,9 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_STL_STRING_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_STL_STRING_H_
+#include "Engine/Core/Core.h"
 
 namespace IS {
-    class IS_String
+    class IS_API IS_String
     {
     public:
         using value_type = char;

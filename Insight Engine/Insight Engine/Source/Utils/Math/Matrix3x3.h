@@ -19,6 +19,7 @@
 
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Vector2D.h"
 
 namespace IS
@@ -28,7 +29,7 @@ namespace IS
 #pragma warning( disable : 4201 )
 #endif
 
-	typedef union Matrix3x3
+	typedef union IS_API Matrix3x3
 	{
 		struct
 		{

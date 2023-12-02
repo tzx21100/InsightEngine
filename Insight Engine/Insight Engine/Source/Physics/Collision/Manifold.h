@@ -19,14 +19,15 @@
 #ifndef GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 #define GAM200_INSIGHT_ENGINE_PHYSICS_SYSTEM_MANIFOLD_H
 
+/*                                                                   includes
+----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Physics/Dynamics/Body.h"
 #include "Collider.h"
 #include "Math/ISMath.h"
 
-/*                                                                   includes
------------------------------------------------------------------------------ */
-
 #define MAX_COLLIDING_CASE 5 // 4 cases
+
 namespace IS 
 {
      /*!
@@ -36,7 +37,7 @@ namespace IS
      * The Manifold class is a mathematical construct used to store contact information between two rigid bodies.
      * It holds data such as the normal vector, penetration depth, and contact points.
      */
-	class Manifold {
+	class IS_API Manifold {
 	public:
         RigidBody* mBodyA;          //!< Pointer to the first rigid body involved in the collision.
         RigidBody* mBodyB;          //!< Pointer to the second rigid body involved in the collision.

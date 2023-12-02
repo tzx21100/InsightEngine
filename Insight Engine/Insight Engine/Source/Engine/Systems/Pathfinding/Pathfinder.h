@@ -20,11 +20,14 @@ consent of DigiPen Institute of Technology is prohibited.
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
-#include "Pch.h"
+#include "Engine/Core/Core.h"
+#include "Utils/Math/ISMath.h"
 #include "Engine/ECS/Component.h"
 
+#include <string>
+
 namespace IS {
-	class Pathfinder : public IComponent
+	class IS_API Pathfinder : public IComponent
 	{
 	public:
 		static std::string GetType() {

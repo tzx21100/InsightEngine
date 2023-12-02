@@ -22,6 +22,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Layer.h"
 #include "LayerStack.h"
@@ -33,7 +34,7 @@ namespace IS {
      *
      * Editor is a subclass of ParentSystem and handles the GUI for the application.
      */
-    class ImGuiLayer : public Layer {
+    class IS_API ImGuiLayer : public Layer {
     public:
 
         /*!

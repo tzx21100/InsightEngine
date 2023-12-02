@@ -20,6 +20,8 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTENGINE_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTENGINE_H
 
+#include "Engine/Core/Core.h"
+
 /* C# Type Forward Declarations */
 extern "C" {
     // Type forward declarations for Mono runtime.
@@ -36,7 +38,7 @@ namespace IS {
      * This class provides functions to initialize and shutdown the Mono runtime,
      * load C# assembly files, and instantiate C# classes for scripting within the engine.
      */
-    class ScriptEngine {
+    class IS_API ScriptEngine {
     public:
         /*!
          * \brief Initializes the ScriptEngine.
@@ -100,7 +102,7 @@ namespace IS {
      * This class allows you to specify a C# class by its namespace and name,
      * instantiate objects of that class, and invoke methods on those objects.
      */
-    class ScriptClass
+    class IS_API ScriptClass
     {
     public:
 

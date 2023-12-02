@@ -21,6 +21,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
@@ -52,7 +53,7 @@ namespace IS {
 	 *
 	 * ISGraphics is a subclass of ParentSystem and handles the rendering of graphics in the application.
 	 */
-	class ISGraphics : public ParentSystem {
+	class IS_API ISGraphics : public ParentSystem {
 	public:
 
 		/*!

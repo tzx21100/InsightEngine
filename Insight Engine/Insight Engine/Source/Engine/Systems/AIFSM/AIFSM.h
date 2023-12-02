@@ -20,6 +20,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "AIState.h"
 
@@ -30,7 +31,7 @@ namespace IS {
      * The AIFSMManager class provides function to add, remove, change and store states.
      * NOTE: Substates are a little buggy, so its wip.
      */
-    class AIFSMManager: public ParentSystem {
+    class IS_API AIFSMManager: public ParentSystem {
     public:
         //override parent
         void Initialize() override;

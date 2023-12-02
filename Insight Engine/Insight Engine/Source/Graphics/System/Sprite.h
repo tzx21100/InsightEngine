@@ -21,6 +21,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Transform.h"
 #include "Shader.h"
 #include "Animation.h"
@@ -48,7 +49,7 @@ namespace IS {
      * The Sprite class encapsulates a 2D sprite with various properties such as transformation, rendering settings,
      * and animation capabilities. It allows you to create and manage 2D sprites for use in OpenGL applications.
      */
-    class Sprite : public IComponent {
+    class IS_API Sprite : public IComponent {
     public:
         // Instance data of quad entity (static color, textured, animated)
         struct instanceData {

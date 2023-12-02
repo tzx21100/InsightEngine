@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 
 namespace IS {
 #ifdef _MSC_VER
@@ -33,7 +34,7 @@ namespace IS {
      * This struct provides functionality for basic vector operations in a 3D space,
      * including arithmetic operations, normalization, dot product, and cross product.
      */
-    struct Vector3D {
+    struct IS_API Vector3D {
         float x, y, z;
 
         // Constructors

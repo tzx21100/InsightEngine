@@ -1,9 +1,10 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_STL_VECTOR_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_STL_VECTOR_H_
+#include "Engine/Core/Core.h"
 
 namespace IS {
     template <typename T>
-    class IS_Vector
+    class IS_API IS_Vector
     {
     public:
         using size_type = size_t;

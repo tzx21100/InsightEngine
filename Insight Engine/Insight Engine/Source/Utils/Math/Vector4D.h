@@ -19,6 +19,8 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR4D_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_MATH_VECTOR4D_H
 
+#include "Engine/Core/Core.h"
+
 namespace IS {
 #ifdef _MSC_VER
 #pragma warning(disable : 4201) // Suppress warning: nonstandard extension used : nameless struct/union
@@ -30,7 +32,7 @@ namespace IS {
      * This struct provides functionality for basic vector operations in a 4D space,
      * including arithmetic operations and normalization.
      */
-    struct Vector4D {
+    struct IS_API Vector4D {
         float x, y, z, w;
 
         // Constructors

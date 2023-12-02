@@ -23,6 +23,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/Core/CoreEngine.h"
 #include <functional>
 
@@ -33,7 +34,7 @@ namespace IS {
     /*!
      * \brief The SceneManager class manages the scenes in the game.
      */
-	class SceneManager
+	class IS_API SceneManager
 	{
 	public:
 		/*!

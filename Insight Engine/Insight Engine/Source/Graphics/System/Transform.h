@@ -21,12 +21,13 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/Core/CoreEngine.h"
 #include <glm/glm.hpp>
 
 namespace IS {
 
-	class Transform : public IComponent {
+	class IS_API Transform : public IComponent {
 	public:
 		// Member variables
 		Vec2D world_position{};	// world coordinates (if world is 1280 pixels, valid world positions: [-640, 640]

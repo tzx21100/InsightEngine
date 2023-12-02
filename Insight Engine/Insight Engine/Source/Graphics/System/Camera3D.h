@@ -24,6 +24,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <glm/glm.hpp>
 
 namespace IS {
@@ -48,7 +49,7 @@ namespace IS {
 	 * It supports zooming and panning operations, and allows access to various camera properties like zoom level
 	 * and camera vectors.
 	 */
-	class Camera3D {
+	class IS_API Camera3D {
 	public:
 		/*!
 		 * \brief Initializes the Camera3D instance with the specified width, height, and field of view.

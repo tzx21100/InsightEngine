@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Physics/Dynamics/Body.h"
 #include "Collider.h"
@@ -52,7 +53,7 @@ namespace IS
 	 * \class ImplicitGrid
 	 * \brief Manages an implicit grid system for optimizing spatial partitioning.
 	 */
-	class ImplicitGrid
+	class IS_API ImplicitGrid
 	{
 	public:
 		/**

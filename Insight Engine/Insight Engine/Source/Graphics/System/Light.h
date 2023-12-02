@@ -21,6 +21,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_LIGHT_H
 #define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_LIGHT_H
 
+#include "Engine/Core/Core.h"
 #include "Transform.h"
 #include <glm/glm.hpp>
 
@@ -34,7 +35,7 @@ namespace IS {
 	 * It includes attributes such as position, color, intensity, size, and rendering status.
 	 * This class inherits from the IComponent interface.
 	 */
-	class Light : public IComponent {
+	class IS_API Light : public IComponent {
 	public:
 		/*!
 		 * \brief Retrieves the type of the Light component.

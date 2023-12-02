@@ -175,6 +175,9 @@
     <ClCompile Include="Source\Utils\Math\Matrix4x4.cpp">
       <Filter>Utils\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Core\Application.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">
@@ -401,6 +404,12 @@
     </ClInclude>
     <ClInclude Include="Source\Utils\Math\Random.h">
       <Filter>Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Core.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Application.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

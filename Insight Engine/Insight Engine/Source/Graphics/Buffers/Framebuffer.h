@@ -22,6 +22,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <glad/glad.h> // for access to OpenGL API
 
 namespace IS {
@@ -29,7 +30,7 @@ namespace IS {
     /*!
      * \brief The Framebuffer class represents an OpenGL framebuffer object.
      */
-    class Framebuffer {
+    class IS_API Framebuffer {
     public:
         struct FramebufferProps {
             GLuint mColorAttachment; /**< Color attachment ID. */

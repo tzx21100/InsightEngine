@@ -18,6 +18,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_ANIMATION_H
 #define GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_ANIMATION_H
 
+#include "Engine/Core/Core.h"
 #include <glad/glad.h>
 #include "Mesh.h"
 #include "Shader.h"
@@ -33,7 +34,7 @@ namespace IS {
      * in a sprite sheet and the animation's duration. It can update the animation based on the elapsed time and provide
      * information about the current frame's dimensions.
      */
-    class Animation {
+    class IS_API Animation {
     public:
         /*!
          * \brief Initializes the animation settings.

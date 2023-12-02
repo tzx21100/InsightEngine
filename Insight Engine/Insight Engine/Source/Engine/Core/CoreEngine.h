@@ -22,6 +22,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Engine/ECS/System.h"
 #include "Engine/JSON/Prefab.h"
@@ -44,7 +45,7 @@ namespace IS {
        * and the main game loop. It follows the Singleton pattern, ensuring only
        * one instance of the engine exists throughout the game's lifecycle.
        */
-    class InsightEngine : public MessageListener {
+    class IS_API InsightEngine : public MessageListener {
     public:
         using layer_type = LayerStack::value_type;
 

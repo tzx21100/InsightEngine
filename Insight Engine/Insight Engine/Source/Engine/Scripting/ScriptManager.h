@@ -21,6 +21,7 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Component.h"
 #include "Engine/ECS/System.h"
 #include "ScriptEngine.h"
@@ -39,7 +40,7 @@ namespace IS {
      * This component holds information related to a script, including the script name,
      * initialization state, and the instance of the script object.
      */
-    class ScriptComponent : IComponent {
+    class IS_API ScriptComponent : IComponent {
     public:
         static std::string GetType() {
             return "ScriptComponent";
@@ -71,7 +72,7 @@ namespace IS {
      * This system manages the initialization, update, and interaction of script components,
      * as well as the creation and management of C# class files.
      */
-    class ScriptManager :public ParentSystem {
+    class IS_API ScriptManager :public ParentSystem {
     public:
 
         bool mLoadScene;

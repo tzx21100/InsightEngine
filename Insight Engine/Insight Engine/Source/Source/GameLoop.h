@@ -16,6 +16,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_GAMELOOP_H_
 
+#include "Engine/Core/Core.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Engine/Systems/Button/Button.h"
 #include "Physics/Dynamics/Body.h"
@@ -23,7 +24,7 @@
 
 
 namespace IS {
-    class GameLoop :public ParentSystem {
+    class IS_API GameLoop :public ParentSystem {
 
         //imagine this is AE engine screen
 

@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Manifold.h"
@@ -30,7 +31,7 @@ namespace IS {
      * \class Physics
      * \brief The Physics class handles physics simulation, collision detection and response for game entities.
      */
-	class Physics : public ParentSystem {
+	class IS_API Physics : public ParentSystem {
 	public:
         /*!
          * \brief Constructs a Physics instance.

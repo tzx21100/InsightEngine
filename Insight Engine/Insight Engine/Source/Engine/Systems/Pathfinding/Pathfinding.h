@@ -20,6 +20,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Pathfinder.h"
 
@@ -30,7 +31,7 @@ namespace IS {
     /*!
      * \brief Waypoint class representing a navigation point in the pathfinding system.
      */
-    class Waypoint {
+    class IS_API Waypoint {
     public:
         /*!
          * \brief Default constructor for Waypoint.
@@ -80,7 +81,7 @@ namespace IS {
     };
 
     // Define a comparator for the priority queue
-    struct CompareCost {
+    struct IS_API CompareCost {
         bool operator()(const std::pair<Waypoint*, double>& a, const std::pair<Waypoint*, double>& b) const {
             return a.second > b.second;
         }
@@ -89,7 +90,7 @@ namespace IS {
     /*!
      * \brief Pathfinding class responsible for managing pathfinding operations.
      */
-    class Pathfinding : public ParentSystem {
+    class IS_API Pathfinding : public ParentSystem {
     public:
         //override parent
         void Initialize() override;

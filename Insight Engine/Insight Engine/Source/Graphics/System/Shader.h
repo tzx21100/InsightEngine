@@ -21,6 +21,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <iostream>
@@ -40,7 +41,7 @@ namespace IS {
      * It allows the compilation and linking of vertex and fragment shaders, setting
      * uniform values, and using shader programs.
      */
-    class Shader {
+    class IS_API Shader {
     public:
         
         /*!

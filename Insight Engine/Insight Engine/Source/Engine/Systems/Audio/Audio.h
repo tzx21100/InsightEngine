@@ -21,13 +21,14 @@
 #define GAM200_INSIGHT_ENGINE_SOURCE_AUDIO_H
 
 /*includes */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/System.h"
 #include "Engine/ECS/Component.h"
 #include <fmod.hpp>
 
 namespace IS {
 
-    class AudioListener : public IComponent {
+    class IS_API AudioListener : public IComponent {
     public:
         float volume=1;
         float pitch_correctness{};
@@ -41,7 +42,7 @@ namespace IS {
         void Deserialize(Json::Value data) override;
     };
 
-    class AudioEmitter : public IComponent {
+    class IS_API AudioEmitter : public IComponent {
     public:
         bool isLoop=false;
         bool isPlaying=true;
@@ -67,7 +68,7 @@ namespace IS {
      *
      * This class provides functions for initializing, playing, and managing audio and sound groups.
      */
-    class ISAudio :public ParentSystem {
+    class IS_API ISAudio :public ParentSystem {
     public:
         //override parent sys
         void Update(float deltaTime) override;
@@ -212,7 +213,7 @@ namespace IS {
 
 
 
-    class AudioEmitterSystem :public ParentSystem {
+    class IS_API AudioEmitterSystem :public ParentSystem {
     public:
         //override parent sys
         void Update([[maybe_unused]] float deltaTime) override;

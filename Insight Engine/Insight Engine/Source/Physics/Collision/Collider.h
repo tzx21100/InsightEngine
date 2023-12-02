@@ -22,6 +22,7 @@
 
 /*                                                                   includes
  ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <vector>
 #include <bitset>
 
@@ -49,7 +50,7 @@ namespace IS
 	 * \struct BoxCollider
 	 * \brief Structure representing a box collider with center, offset, size scaling, and vertices.
 	 */
-	struct BoxCollider
+	struct IS_API BoxCollider
 	{
 		Vector2D center;								// Center point of the box collider
 		Vector2D offset;								// Offset of the collider from the center
@@ -67,7 +68,7 @@ namespace IS
 	 * \struct CircleCollider
 	 * \brief Structure representing a circle collider.
 	 */
-	struct CircleCollider
+	struct IS_API CircleCollider
 	{
 		Vector2D center;								// Center of the circle
 		float radius;									// Radius of the circle
@@ -82,7 +83,7 @@ namespace IS
 	 * \struct LineCollider
 	 * \brief Structure representing a line collider.
 	 */
-	struct LineCollider
+	struct IS_API LineCollider
 	{
 		Vector2D start;									// Starting point of the line segment
 		Vector2D end;									// Ending point of the line segment
@@ -97,7 +98,7 @@ namespace IS
 	 *
 	 * This class is responsible for managing box and circle colliders, including their creation, updating, and enabling/disabling.
 	 */
-	class Collider : public IComponent
+	class IS_API Collider : public IComponent
 	{
 	public:
 		BoxCollider mBoxCollider;						// Box collider struct

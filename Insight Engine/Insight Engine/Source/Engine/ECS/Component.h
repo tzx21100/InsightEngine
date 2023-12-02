@@ -22,9 +22,14 @@
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
-#include "Pch.h"
-#include <json/json.h>
+#include "Engine/Core/Core.h"
+#include "Debug/Profiling/Timer.h"
 #include "Entities.h"
+
+#include <json/json.h>
+#include <memory>
+#include <unordered_map>
+#include <string>
 
 namespace IS {
 
@@ -35,7 +40,7 @@ namespace IS {
 	 * This class provides basic serialization and deserialization methods
 	 * for components, which can be overridden by derived component classes.
 	 */
-	class IComponent {
+	class IS_API IComponent {
 	public:
 		/**
 		 * \brief Serialize the component into a JSON format.
@@ -74,7 +79,7 @@ namespace IS {
 	 * This class provides basic methods for handling entities and their
 	 * associated components in a generic manner.
 	 */
-	class IComponentArray {
+	class IS_API IComponentArray {
 	public:
 		virtual ~IComponentArray() {};
 
@@ -142,7 +147,7 @@ namespace IS {
 	 * \tparam T The type of the component stored in the array.
 	 */
 	template<typename T>
-	class ComponentArray : public IComponentArray {
+	class IS_API ComponentArray : public IComponentArray {
 	public:
 
 		std::shared_ptr<IComponentArray> clone() const override {
@@ -276,7 +281,7 @@ namespace IS {
 	 * This class provides various methods to manage components associated with entities.
 	 * It also maintains maps to associate component types with their respective arrays.
 	 */
-	class ComponentManager
+	class IS_API ComponentManager
 	{
 	public:
 

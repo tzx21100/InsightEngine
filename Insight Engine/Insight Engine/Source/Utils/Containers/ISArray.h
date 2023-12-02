@@ -1,9 +1,10 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_STL_ARRAY_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_STL_ARRAY_H_
+#include "Engine/Core/Core.h"
 
 namespace IS {
     template <typename T, size_t N>
-    class IS_Array
+    class IS_API IS_Array
     {
 
     public:

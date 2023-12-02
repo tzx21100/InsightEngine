@@ -24,6 +24,7 @@
 
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include <string>
 
 namespace IS {
@@ -34,7 +35,7 @@ namespace IS {
      * Layers allow modular functionality to be added to the application in a structured way.
      * Inherit from this class to create a custom layer with specific behavior.
      */
-    class Layer {
+    class IS_API Layer {
     public:
 
         /*!

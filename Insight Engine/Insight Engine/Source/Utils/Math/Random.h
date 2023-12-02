@@ -17,11 +17,12 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_MATH_RANDOM_H
 #define GAM200_INSIGHT_ENGINE_SOURCE_MATH_RANDOM_H
 
+#include "Engine/Core/Core.h"
 #include <random>
 
 namespace IS {
 
-    class PRNG {
+    class IS_API PRNG {
     public:
         static PRNG& Instance() {
             static PRNG prng;

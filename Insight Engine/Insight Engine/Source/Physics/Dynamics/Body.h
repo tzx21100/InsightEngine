@@ -22,6 +22,7 @@
 
  /*                                                                   includes
   ----------------------------------------------------------------------------- */
+#include "Engine/Core/Core.h"
 #include "Engine/ECS/Entities.h"
 #include "Engine/ECS/Component.h"
 #include "Graphics/System/Transform.h"
@@ -64,7 +65,7 @@ namespace IS
      * \class RigidBody
      * \brief Represents a rigid body component for game entities.
      */
-    class RigidBody : public IComponent{
+    class IS_API RigidBody : public IComponent{
     public:
         static std::string GetType() {
             return "RigidBody";
