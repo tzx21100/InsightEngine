@@ -123,9 +123,13 @@ void EngineSetup() {
 // The only function that main should ever call
 void RunInsightEngine() {
     //This is to set the flow of the engine
+    FileWatcher fw;
+    std::string directory_to_watch = "Insight Engine/Assets/Scripts";
+    fw.Start(directory_to_watch,std::chrono::milliseconds(5000)); //we watch for changes every 5000 ms
     EngineSetup();
     InsightEngine::Instance().Run();
     ScriptEngine::Shutdown();
+    fw.Stop();
     IS_CORE_WARN("Insight Engine has terminated!");
 }
 
