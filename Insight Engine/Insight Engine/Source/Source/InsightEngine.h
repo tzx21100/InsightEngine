@@ -32,6 +32,7 @@
 #include "Physics/System/Physics.h"
 #include "Physics/System/CollisionSystem.h"
 #include "Graphics/System/Light.h"
+#include "../Engine/Scripting/Filewatcher.h"
 
 using namespace IS;
 

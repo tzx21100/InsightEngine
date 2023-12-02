@@ -402,6 +402,8 @@
     <ClInclude Include="Source\Utils\Math\Random.h">
       <Filter>Utils\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
+    <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

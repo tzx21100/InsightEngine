@@ -105,6 +105,7 @@
     <ClInclude Include="Source\Engine\JSON\Prefab.h" />
     <ClInclude Include="Source\Engine\Messages\EventManager.h" />
     <ClInclude Include="Source\Engine\Messages\Message.h" />
+    <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />
     <ClInclude Include="Source\Engine\Scripting\ScriptEngine.h" />
     <ClInclude Include="Source\Engine\Scripting\ScriptGlue.h" />
     <ClInclude Include="Source\Engine\Scripting\ScriptManager.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Source\Engine\Systems\Asset\Asset.h" />
     <ClInclude Include="Source\Engine\Systems\Audio\Audio.h" />
     <ClInclude Include="Source\Engine\Systems\Button\Button.h" />
+    <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
     <ClInclude Include="Source\Engine\Systems\Input\Input.h" />
     <ClInclude Include="Source\Engine\Systems\Particle\Particle.h" />
     <ClInclude Include="Source\Engine\Systems\Particle\ParticleEmitter.h" />
