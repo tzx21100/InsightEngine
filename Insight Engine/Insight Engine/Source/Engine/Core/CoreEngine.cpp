@@ -84,6 +84,16 @@ namespace IS {
 
     //This is the update portion of the game
     void InsightEngine::Update() {
+
+        //hotreload
+        if (isHotReloading) {
+            ScriptEngine::HotReload();
+            isHotReloading = false;
+        }
+       
+
+
+
         //i get the start time 
         //auto frameStart = std::chrono::high_resolution_clock::now();
         auto frameStart = glfwGetTime();

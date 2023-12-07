@@ -29,7 +29,7 @@ extern "C" {
 }
 
 namespace IS {
-
+   
     /*!
      * \brief The ScriptEngine class manages interaction with C# scripting.
      *
@@ -87,6 +87,8 @@ namespace IS {
          */
         static MonoObject* InstantiateClass(MonoClass* mono_class);
         static MonoObject* InstantiateClass(const std::string& class_namespace, const std::string& class_name);
+
+        static void HotReload();
 
 
 
@@ -170,6 +172,9 @@ namespace IS {
                 InvokeMethod(mInstance, mUpdateMethod);
             }
         }
+
+
+       
 
 
     };

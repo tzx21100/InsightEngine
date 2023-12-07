@@ -12,6 +12,7 @@
 #include "InsightEngine.h"
 #include "Debug/Utils/MemoryLeakCheck.h"
 
+
 int main() {
     // Enable memory leaks check
     ENABLE_MEMORY_CHECK();

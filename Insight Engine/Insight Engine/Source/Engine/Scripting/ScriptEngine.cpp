@@ -25,6 +25,9 @@
 
 namespace IS {
 
+
+ 
+
     namespace Utils {
         //helps read bytes of assembly
         static  char* ReadBytes(const std::filesystem::path& file_path, uint32_t* out_size)
@@ -121,23 +124,7 @@ namespace IS {
         InitMono();
         LoadAssembly("Resources/Scripts/net6.0/IS-ScriptCore.dll");
         ScriptGlue::RegisterFunctions(); //register cpp func
-
-        //get and init class
-        //s_data->mEntityClass = ScriptClass("IS", "Entity");
-        //MonoObject* instance = s_data->mEntityClass.Instantiate();
-
-        //EXAMPLES
-        //call func
-        //MonoMethod* print_message_func = s_data->mEntityClass.GetMethod("PrintMessage", 0);
-        //s_data->mEntityClass.InvokeMethod(instance, print_message_func, nullptr);
-
-        ////call func w str param
-        //MonoString* mono_str = mono_string_new(s_data->mAppDomain, "Hello World from C++!");
-        //MonoMethod* print_custom_message_func = s_data->mEntityClass.GetMethod("PrintCustomMessage", 1);
-        //void* str_param = mono_str;
-        //s_data->mEntityClass.InvokeMethod(instance, print_custom_message_func, &str_param);
-
-        
+      
     }
 
     void ScriptEngine::Shutdown()
@@ -224,4 +211,55 @@ namespace IS {
         return mono_runtime_invoke(method, instance, params, nullptr);
 
     }
+
+
+
+
+    //recompile assemblies
+    void RecompileAssembly(const std::vector<std::string>& sourcePaths, const std::string& outputPath) {
+        std::ostringstream commandStream;
+        commandStream << "csc -out:" << outputPath;
+
+        for (const auto& path : sourcePaths) {
+            commandStream << " " << path;
+        }
+
+        std::string command = commandStream.str();
+        system(command.c_str());
+    }
+
+
+    static std::atomic<bool> isHotReloading = false;
+    void ScriptEngine::HotReload()
+    {
+       
+        IS_CORE_DEBUG("HOT RELOADED");
+        std::cout << "HOT RELOADED";
+
+        // Unload the current app domain    
+        if (s_data->mAppDomain)
+        {
+            mono_domain_unload(s_data->mAppDomain);
+            s_data->mAppDomain = nullptr;
+        }
+
+        // Recompile the script/assembly
+        std::vector<std::string> files = { "../IS-ScriptCore/DefaultScripts/*", "Assets/Scripts/*" };
+        RecompileAssembly(files, "Resources/Scripts/net6.0/IS-ScriptCore.dll");
+
+
+
+        // Create a new app domain
+        s_data->mAppDomain = mono_domain_create_appdomain((char*)"ISScriptRuntime", nullptr);
+        mono_domain_set(s_data->mAppDomain, true);
+
+        // Load the new assembly
+        const std::filesystem::path newAssemblyPath = "Resources/Scripts/net6.0/IS-ScriptCore.dll";
+        s_data->mCoreAssembly = Utils::LoadMonoAssembly(newAssemblyPath);
+        s_data->mCoreAssemblyImage = mono_assembly_get_image(s_data->mCoreAssembly);
+
+    }
+
+
+
 }

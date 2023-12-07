@@ -54,6 +54,7 @@ namespace IS {
 
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
 
+
         if (InsightEngine::Instance().mRuntime == false) { return; }
             mScriptDeltaTime = deltaTime;
             auto& engine = InsightEngine::Instance();

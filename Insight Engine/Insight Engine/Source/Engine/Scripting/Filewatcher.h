@@ -5,8 +5,12 @@
 #include <unordered_map>
 #include <iostream>
 #include <thread>
+#include <cstdlib>
 
 namespace IS {
+
+
+
 
     class FileWatcher {
     public:
@@ -29,7 +33,9 @@ namespace IS {
         // Function to call when a change is detected
         void OnChange(const std::string& path) {
             //hot reload here
+            isHotReloading = true;
             std::cout << "File changed: " << path << std::endl;
+            std::cout << "HotReload changed: " << isHotReloading << std::endl;
         }
 
         // Start monitoring files
