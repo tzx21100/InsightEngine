@@ -36,7 +36,6 @@
 #include <unordered_set>
 
 namespace IS {
-    static bool isHotReloading;
     /*!
        * \brief The central engine class for the game.
        *

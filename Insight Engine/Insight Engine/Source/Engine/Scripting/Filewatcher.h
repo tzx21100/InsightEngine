@@ -6,73 +6,60 @@
 #include <iostream>
 #include <thread>
 #include <cstdlib>
+#include "ScriptEngine.h"
+#include "../Engine/Scripting/Filewatcher.h"
 
 namespace IS {
 
-
-
-
     class FileWatcher {
     public:
-
-        // paths for areas to watch
+        // Paths for areas to watch
         std::unordered_map<std::string, std::filesystem::file_time_type> mPaths;
         bool running_ = true;
-        std::thread watcher_thread_;
-
-        // Check if a file has been created or modified
-        bool FileModified(const std::string& path) {
-            auto current_time = std::filesystem::last_write_time(path);
-            if (mPaths.find(path) == mPaths.end() || mPaths[path] != current_time) {
-                mPaths[path] = current_time;
-                return true;
-            }
-            return false;
-        }
+        bool initial_scan_complete_ = false;  // Flag to track the initial scan
 
         // Function to call when a change is detected
-        void OnChange(const std::string& path) {
-            //hot reload here
-            isHotReloading = true;
-            std::cout << "File changed: " << path << std::endl;
-            std::cout << "HotReload changed: " << isHotReloading << std::endl;
+        void OnChange() {
+            // Hot reload here
+            ScriptEngine::Reload();
         }
 
-        // Start monitoring files
-        void Start(const std::string& directory, std::chrono::duration<int, std::milli> interval) {
-            // Initialize the file list
+        // Start monitoring files (single-threaded)
+        void Start(std::string& directory) {
             for (const auto& file : std::filesystem::directory_iterator(directory)) {
-                if (std::filesystem::is_regular_file(file.path())) {
-                    mPaths[file.path().string()] = std::filesystem::last_write_time(file);
+                if (std::filesystem::is_regular_file(file.path()) && file.path().extension() == ".cs") {
+                    std::string file_path = file.path().string();
+                    // Only record the modification time for files that existed before the scan started
+                    if (!initial_scan_complete_ || mPaths.find(file_path) == mPaths.end()) {
+                        mPaths[file_path] = std::filesystem::last_write_time(file);
+                    }
                 }
             }
 
-            watcher_thread_ = std::thread([this, directory, interval]() {
-                while (running_) {
-                    std::this_thread::sleep_for(interval);
+            initial_scan_complete_ = true;  // Set the flag to indicate the initial scan is complete
 
-                    for (const auto& file : std::filesystem::directory_iterator(directory)) {
-                        if (std::filesystem::is_regular_file(file.path())) {
-                            std::string file_path = file.path().string();
-                            if (FileModified(file_path)) {
-                                OnChange(file_path);
-                            }
+            // Monitor for changes after the initial scan
+            if (running_) {
+                for (const auto& file : std::filesystem::directory_iterator(directory)) {
+                    if (std::filesystem::is_regular_file(file.path()) && file.path().extension() == ".cs") {
+                        std::string file_path = file.path().string();
+                        auto current_time = std::filesystem::last_write_time(file_path);
+                        if (mPaths.find(file_path) != mPaths.end() && mPaths[file_path] != current_time) {
+                            mPaths[file_path] = current_time;
+                            OnChange();
+                            InsightEngine::Instance().mRuntime = false;
+                            auto sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
+                            sys->ReloadAllScriptClasses();
                         }
                     }
                 }
-                });
+            }
         }
 
         void Stop() {
             running_ = false;
-            if (watcher_thread_.joinable()) {
-                watcher_thread_.join();
-            }
         }
     };
-
-
-
-
-
 }
+
+

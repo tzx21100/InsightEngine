@@ -1,4 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace IS
 {
@@ -96,7 +103,7 @@ namespace IS
 
         // Light Entities
         static private int mBackgroundLantern;
-        static private ParticleEmitter? mParticleEmitter; // Nullable reference type
+        static private ParticleEmitter mParticleEmitter; // Nullable reference type
 
         // Parameters
         static private float mBackgroundLanternTimer;

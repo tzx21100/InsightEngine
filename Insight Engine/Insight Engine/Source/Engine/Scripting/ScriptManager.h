@@ -133,6 +133,9 @@ namespace IS {
         float mScriptDeltaTime{};
 
 
+        void ReloadAllScriptClasses();
+
+
         /*!
          * \brief Cleans up the script manager.
          */

@@ -26,7 +26,7 @@ namespace IS {
 
     std::string ScriptManager::GetName() { return "ScriptManager"; }
 
-    bool ScriptManager::InitScript(ScriptComponent &scriptcomponent) {
+    bool ScriptManager::InitScript(ScriptComponent& scriptcomponent) {
         scriptcomponent.scriptClass = ScriptClass("IS", scriptcomponent.mScriptName);
         scriptcomponent.instance = scriptcomponent.scriptClass.Instantiate();
         if (scriptcomponent.instance != nullptr) {
@@ -56,23 +56,26 @@ namespace IS {
 
 
         if (InsightEngine::Instance().mRuntime == false) { return; }
-            mScriptDeltaTime = deltaTime;
-            auto& engine = InsightEngine::Instance();
-            for (auto& entity : mEntities) {
-                mEntityScriptCaller = entity;
-                auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
-                if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
-                if (scriptcomponent.instance != nullptr) {
-                    MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
-                    scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
-
-                }
-                if (mLoadScene) {
-                    mLoadScene = false;
-                    break;
-                }
+        mScriptDeltaTime = deltaTime;
+        auto& engine = InsightEngine::Instance();
+        for (auto& entity : mEntities) {
+            mEntityScriptCaller = entity;
+            auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
+            if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
+            if (scriptcomponent.instance != nullptr) {
+                MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
+                scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
 
             }
+            if (mLoadScene) {
+                mLoadScene = false;
+                break;
+            }
+            if (InsightEngine::Instance().mRuntime == false) {
+                break;
+            }
+
+        }
 
     }
 
@@ -111,7 +114,8 @@ namespace IS
             outFile << classTemplate;
             outFile.close();
             IS_CORE_DEBUG("Script file created sucessfully");
-        } else {
+        }
+        else {
             IS_CORE_DEBUG("Script file failed to be created, unable to open file for writing");
         }
     } //end of create file
@@ -119,10 +123,10 @@ namespace IS
     void ScriptManager::OpenClassFile(std::string const& class_name) {
         std::string filepath = class_name;
         std::string directory = "..\\Insight Engine\\Assets\\Scripts";
-    #ifdef USING_IMGUI
+#ifdef USING_IMGUI
         // Open .cs file in default program
         FileUtils::OpenFileFromDefaultApp(filepath.c_str(), directory.c_str());
-    #endif // USING_IMGUI
+#endif // USING_IMGUI
         IS_CORE_DEBUG("Script File: {}", filepath);
     }
 
@@ -133,9 +137,18 @@ namespace IS
             mEntityScriptCaller = entity;
             MonoMethod* cleanup = scriptcomponent.scriptClass.GetMethod("CleanUp", 0);
             scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, cleanup, nullptr);
-            
+
 
         }
+    }
+
+    void ScriptManager::ReloadAllScriptClasses() {
+        for (auto& entity : mEntities) {
+            auto& scriptcomponent = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
+            scriptcomponent.scriptClass.Unload();
+        }
+
+        InitScripts();
     }
 
 }

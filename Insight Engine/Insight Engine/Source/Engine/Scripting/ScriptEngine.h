@@ -88,9 +88,9 @@ namespace IS {
         static MonoObject* InstantiateClass(MonoClass* mono_class);
         static MonoObject* InstantiateClass(const std::string& class_namespace, const std::string& class_name);
 
-        static void HotReload();
+        static void Compile();
 
-
+        static void Reload();
 
         /* Friend Declaration */
         friend class ScriptClass;
@@ -171,6 +171,10 @@ namespace IS {
             if (mUpdateMethod) {
                 InvokeMethod(mInstance, mUpdateMethod);
             }
+        }
+
+        void Unload() {
+            mMonoClass = nullptr;
         }
 
 

@@ -161,9 +161,6 @@
     <ProjectReference Include="..\GLAD\GLAD.vcxproj">
       <Project>{670025b5-7df5-4c7c-8d9e-22895c1c1fe8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\IS-ScriptCore\IS-ScriptCore.csproj">
-      <Project>{3ffb83a8-18ab-4dbb-89b2-d88bb7a9fa65}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -321,7 +318,7 @@ copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
 xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
-xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='GameRelease|x64'">

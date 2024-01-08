@@ -1,5 +1,0 @@
-<Project>
-    <PropertyGroup>
-        <BaseIntermediateOutputPath>$(SolutionDir)Insight Engine\Resources\Scripts\Intermediates\</BaseIntermediateOutputPath>
-    </PropertyGroup>
-</Project>

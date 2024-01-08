@@ -112,7 +112,6 @@ namespace IS {
         MonoDomain* mAppDomain = nullptr;
         MonoAssembly* mCoreAssembly = nullptr;
         MonoImage* mCoreAssemblyImage = nullptr;
-        ScriptClass mEntityClass;
     };
 
     static ScriptEngineData* s_data;
@@ -122,7 +121,8 @@ namespace IS {
     {
         s_data = new ScriptEngineData();
         InitMono();
-        LoadAssembly("Resources/Scripts/net6.0/IS-ScriptCore.dll");
+        Compile();
+        LoadAssembly("Assets/ScriptDLL/IANHELPMETOGETHOTRELOAD.dll");
         ScriptGlue::RegisterFunctions(); //register cpp func
       
     }
@@ -212,7 +212,18 @@ namespace IS {
 
     }
 
+    //reload hot
+     void IS::ScriptEngine::Reload()
+    {
+        mono_domain_set(mono_get_root_domain(), false);
 
+        mono_domain_unload(s_data->mAppDomain);
+
+        ScriptEngine::Compile();
+
+        LoadAssembly("Assets/ScriptDLL/IANHELPMETOGETHOTRELOAD.dll");
+        ScriptGlue::RegisterFunctions(); //register cpp func
+    }
 
 
     //recompile assemblies
@@ -228,36 +239,37 @@ namespace IS {
         system(command.c_str());
     }
 
-
-    static std::atomic<bool> isHotReloading = false;
-    void ScriptEngine::HotReload()
+    void ScriptEngine::Compile()
     {
-       
-        IS_CORE_DEBUG("HOT RELOADED");
-        std::cout << "HOT RELOADED";
 
-        // Unload the current app domain    
-        if (s_data->mAppDomain)
-        {
-            mono_domain_unload(s_data->mAppDomain);
-            s_data->mAppDomain = nullptr;
+        std::string absolute_path = "";
+        std::string mcs_path = "\"" + absolute_path + "libraries\\mono\\bin\\mcs\"";
+        std::string src_files = absolute_path + "Assets\\Scripts\\*.cs";
+        std::string tgt_dll = absolute_path + "Assets\\ScriptDLL\\IANHELPMETOGETHOTRELOAD.dll";
+
+        // Create a batch script
+        std::ofstream batch_file("compile_script.bat");
+        if (!batch_file.is_open()) {
+            std::cerr << "Failed to create the batch script." << std::endl;
         }
 
-        // Recompile the script/assembly
-        std::vector<std::string> files = { "../IS-ScriptCore/DefaultScripts/*", "Assets/Scripts/*" };
-        RecompileAssembly(files, "Resources/Scripts/net6.0/IS-ScriptCore.dll");
+       // batch_file << "@echo off" << std::endl;
+        batch_file << mcs_path << " /target:library /out:" << tgt_dll << " " << src_files << std::endl;
+        batch_file.close();
 
+        // Execute the batch script
+        std::string cmd = "compile_script.bat";
+        int result = system(cmd.c_str());
 
+        // Clean up the batch script
+        std::remove("compile_script.bat");
 
-        // Create a new app domain
-        s_data->mAppDomain = mono_domain_create_appdomain((char*)"ISScriptRuntime", nullptr);
-        mono_domain_set(s_data->mAppDomain, true);
-
-        // Load the new assembly
-        const std::filesystem::path newAssemblyPath = "Resources/Scripts/net6.0/IS-ScriptCore.dll";
-        s_data->mCoreAssembly = Utils::LoadMonoAssembly(newAssemblyPath);
-        s_data->mCoreAssemblyImage = mono_assembly_get_image(s_data->mCoreAssembly);
-
+        if (result == 0) {
+            std::cout << "Compilation successful." << std::endl;
+        }
+        else {
+            std::cerr << "Compilation failed." << std::endl;
+        }
     }
 
 

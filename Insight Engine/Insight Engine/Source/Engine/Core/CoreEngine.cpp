@@ -29,6 +29,7 @@
 #include "Graphics/Core/Graphics.h"
 #include "Graphics/System/Light.h"
 #include "Graphics/System/Camera3D.h"
+#include "../Engine/Scripting/Filewatcher.h"
 
 #include <iostream>
 #include <thread>
@@ -84,15 +85,6 @@ namespace IS {
 
     //This is the update portion of the game
     void InsightEngine::Update() {
-
-        //hotreload
-        if (isHotReloading) {
-            ScriptEngine::HotReload();
-            isHotReloading = false;
-        }
-       
-
-
 
         //i get the start time 
         //auto frameStart = std::chrono::high_resolution_clock::now();
@@ -157,11 +149,14 @@ namespace IS {
 
     // Moved all the engine stuff under this run function so we can have draw() load() etc. next time with a GSM
     void InsightEngine::Run() {
+        FileWatcher fw;
         IS_PROFILE_FUNCTION();
         Initialize();
         //this is the game loop
         while (mIsRunning) {
             Update();
+            std::string directory_to_watch = "Assets/Scripts";
+            fw.Start(directory_to_watch); //we watch for changes
             auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
             window->SwapBuffers(); // swap buffers after all the rendering
             ProcessEntityDeletion(); // destroy deleted entities
