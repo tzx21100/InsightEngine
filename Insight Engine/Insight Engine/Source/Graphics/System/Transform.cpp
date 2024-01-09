@@ -89,17 +89,31 @@ namespace IS {
 		// to scale to world coordinates
 
 		// math variables used often
-		float sin_angle = sinf(angle_rad);
-		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x;
-		float model_scale_y = scaling.y;
-		float tx = world_position.x;
-		float ty = world_position.y;
+		//float sin_angle = sinf(angle_rad);
+		//float cos_angle = cosf(angle_rad);
+		float model_scale_x = scaling.x * 2.f;
+		float model_scale_y = scaling.y * 2.f;
+		float tx = world_position.x * 2.f;
+		float ty = world_position.y * 2.f;
 
-		glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,   // column 1
-										 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,   // column 2
-										 0.f,                          0.f,                         1.f, 0.f,   // column 3
-										 tx,					       ty,						    1.f, 1.f }; // column 4
+		// Scaling matrix
+		glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(model_scale_x, model_scale_y, 1.0f));
+
+		// Rotation matrix
+		glm::mat4 rotationMatrix = glm::mat4(1.0f);
+		rotationMatrix = glm::rotate(rotationMatrix, angle_rad, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		// Translation matrix
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(tx, ty, 0.0f));
+
+		// Combine the transformations
+		glm::mat4 world_to_cam_xform = translationMatrix * rotationMatrix * scalingMatrix;
+
+
+		//glm::mat4 world_to_cam_xform = { (model_scale_x * cos_angle),  (model_scale_x * sin_angle), 0.f, 0.f,   // column 1
+		//								 (model_scale_y * -sin_angle), (model_scale_y * cos_angle), 0.f, 0.f,   // column 2
+		//								 0.f,                          0.f,                         1.f, 0.f,   // column 3
+		//								 tx,					       ty,						    1.f, 1.f }; // column 4
 
 
 		// save matrix
@@ -182,8 +196,8 @@ namespace IS {
 #endif // USING_IMGUI
 
 		// Get normalized device coordinates
-		float ndcX = static_cast<float>(xPos) / width * 2.f - 1.0f;
-		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height * 2.f - 1.0f);
+		float ndcX = static_cast<float>(xPos) / width - 0.5f;
+		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height - 0.5f);
 
 		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
 
