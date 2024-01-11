@@ -25,16 +25,7 @@ Insight Engine/Insight Engine/libraries/glad/lib/
 Insight Engine/Insight Engine/Resources/
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
+Insight Engine/bin
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
