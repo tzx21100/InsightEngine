@@ -404,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
     <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />
+    <ClInclude Include="MemoryManager.h">
+      <Filter>Engine\Memory Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -516,6 +519,9 @@
     </Filter>
     <Filter Include="Utils\Math">
       <UniqueIdentifier>{6027792b-31b3-474e-89cd-cd1fb8023f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Memory Manager">
+      <UniqueIdentifier>{3957f59f-c3fb-4cd9-9a0c-be89c842d9e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -79,6 +79,7 @@
     <ClCompile Include="Source\Utils\Math\Vector4D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MemoryManager.h" />
     <ClInclude Include="Source\Debug\Logging\Log.h" />
     <ClInclude Include="Source\Debug\Logging\Logger.h" />
     <ClInclude Include="Source\Debug\Profiling\Timer.h" />
