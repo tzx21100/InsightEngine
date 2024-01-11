@@ -32,8 +32,8 @@
 				"SpriteTextureIndex" : 35,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 3968.0,
-				"SpriteTransformScalingY" : 2520.0,
+				"SpriteTransformScalingX" : 1984.0,
+				"SpriteTransformScalingY" : 1260.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : []
@@ -41,8 +41,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 3968.0,
-				"TransformScalingY" : 2520.0,
+				"TransformScalingX" : 1984.0,
+				"TransformScalingY" : 1260.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}

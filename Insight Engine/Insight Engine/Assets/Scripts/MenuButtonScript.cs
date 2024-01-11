@@ -13,6 +13,7 @@
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
+using System;
 using System.Runtime.CompilerServices;
 namespace IS
 {
@@ -77,8 +78,8 @@ namespace IS
         static public void Update()
         {
             // Windows
-            win_dimension.x = (float)InternalCalls.GetWindowWidth() * 2f;
-            win_dimension.y = (float)InternalCalls.GetWindowHeight() * 2f;
+            win_dimension.x = (float)InternalCalls.GetWindowWidth();
+            win_dimension.y = (float)InternalCalls.GetWindowHeight();
 
             orgin.x = -(win_dimension.x / 2f);
             orgin.y = -(win_dimension.y / 2f);
