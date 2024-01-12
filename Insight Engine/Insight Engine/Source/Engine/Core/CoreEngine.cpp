@@ -30,6 +30,7 @@
 #include "Graphics/System/Light.h"
 #include "Graphics/System/Camera3D.h"
 #include "../Engine/Scripting/Filewatcher.h"
+#include "../Systems/Category/Category.h"
 
 #include <iostream>
 #include <thread>
@@ -365,6 +366,7 @@ namespace IS {
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
         DeserializeComponent<Light>(entity, loaded, "Light");
+        DeserializeComponent<Category>(entity, loaded, "Category");
     }    
     
     void InsightEngine::DeserializeAllComponentsPrefab(Entity entity, Json::Value &loaded) {
@@ -377,6 +379,7 @@ namespace IS {
         DeserializeComponent<AudioListener>(entity, loaded, "AudioListener");
         DeserializeComponent<AudioEmitter>(entity, loaded, "AudioEmitter");
         DeserializeComponent<Light>(entity, loaded, "Light");
+        DeserializeComponent<Category>(entity, loaded, "Category");
     }
 
     void InsightEngine::SerializeAllComponents(Entity entity, Json::Value &saved_entity) {
@@ -389,6 +392,7 @@ namespace IS {
         SerializeComponent<AudioListener>(entity, saved_entity, "AudioListener");
         SerializeComponent<AudioEmitter>(entity, saved_entity, "AudioEmitter");
         SerializeComponent<Light>(entity, saved_entity, "Light");
+        SerializeComponent<Category>(entity, saved_entity, "Category");
     }
 
     /* This will save the entity to a string file.The string file is not defined with a path so it can save it

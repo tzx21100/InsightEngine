@@ -115,6 +115,7 @@
     <ClInclude Include="Source\Engine\Systems\Asset\Asset.h" />
     <ClInclude Include="Source\Engine\Systems\Audio\Audio.h" />
     <ClInclude Include="Source\Engine\Systems\Button\Button.h" />
+    <ClInclude Include="Source\Engine\Systems\Category\Category.h" />
     <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
     <ClInclude Include="Source\Engine\Systems\Input\Input.h" />
     <ClInclude Include="Source\Engine\Systems\Particle\Particle.h" />

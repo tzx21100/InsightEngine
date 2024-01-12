@@ -407,6 +407,7 @@
     <ClInclude Include="MemoryManager.h">
       <Filter>Engine\Memory Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\Category\Category.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

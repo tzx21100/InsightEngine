@@ -32,7 +32,7 @@
 #include "Physics/System/Physics.h"
 #include "Physics/System/CollisionSystem.h"
 #include "Graphics/System/Light.h"
-
+#include "../Engine/Systems/Category/Category.h"
 
 using namespace IS;
 
@@ -55,7 +55,7 @@ void RegisterComponents() {
     engine.RegisterComponent<Collider>();
     engine.RegisterComponent<ParticleEmitter>();
     engine.RegisterComponent<Light>();
-
+    engine.RegisterComponent<Category>();
 }
 
 // This is a helper function to register all systems

@@ -28,6 +28,7 @@
 #include "Engine/Systems/Button/Button.h"
 #include "Engine/Systems/Audio/Audio.h"
 #include "Engine/Systems/Asset/Asset.h"
+#include "Engine/Systems/Category/Category.h"
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/CollisionSystem.h"
@@ -77,6 +78,7 @@ namespace IS {
     void InspectorPanel::RenderEntityConfig(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
+        static bool add_new_category = false;
 
         EditorUtils::RenderTableFixedWidth("Details", 2, [&]()
         {
@@ -123,9 +125,44 @@ namespace IS {
             {
                 engine.SaveAsPrefab(entity, name);
             }
+
+            // Category
+            ImGui::TableNextColumn();
+            EditorUtils::RenderTableLabel("Category", "Categorizes Entities.\n(i.e., Player, Platform, Background, etc.)");
+            bool has_category = engine.HasComponent<Category>(entity);
+            std::string entity_category = has_category ? engine.GetComponent<Category>(entity).mCategory : "";
+            if (ImGui::BeginCombo("##Category", has_category ? entity_category.c_str() : "None"))
+            {
+                for (auto const& [categoryname, category] : Category::mCategories)
+                {
+                    if (ImGui::Selectable(categoryname.c_str(), entity_category == category))
+                    {
+                        Category& cat = engine.GetComponent<Category>(entity);
+                        cat.mCategory = category;
+                    }
+                    if (ImGui::Selectable(categoryname.c_str(), entity_category == "Add New Category..."))
+                    {
+                        add_new_category = true;
+                    }
+                }
+                ImGui::EndCombo();
+            }
         });
 
         ImGui::Spacing();
+
+        if (add_new_category)
+        {
+            if (ImGui::BeginPopupModal("Add New Category", &add_new_category))
+            {
+                EditorUtils::RenderTableFixedWidth("Details", 2, [&]()
+                {
+                    EditorUtils::RenderTableLabel("Category", "New Category");
+                    std::string& category = engine.GetComponent<Category>(entity).mCategory;
+                    EditorUtils::RenderTableInputText(category);
+                });
+            }
+        }
 
     } // end RenderEntityConfig()
 
