@@ -93,7 +93,7 @@ namespace IS {
 
 		//// Clone ECS
 		//{
-		//	engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
+			engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
 		//	original_map = engine.mComponentManager->mComponentArrayMap;
 
 		//	for (auto const& [name, components] : original_map)
