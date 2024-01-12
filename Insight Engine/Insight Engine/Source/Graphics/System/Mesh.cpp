@@ -79,7 +79,7 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_ID, x_form_row4_attrib);
         glEnableVertexArrayAttrib(vao_ID, anim_dim_attrib);
         glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
-        glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
+        glEnableVertexArrayAttrib(vao_ID, ent_ID_attrib);
 
         // Specify instance data layout
         glVertexAttribPointer(color_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
@@ -90,7 +90,7 @@ namespace IS {
         glVertexAttribPointer(x_form_row4_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 17));
         glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 21));
         glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 23));
-        glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 25));
+        glVertexAttribPointer(ent_ID_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 25));
 
         // Specify instance data divisor for attribute instancing
         glVertexAttribDivisor(color_attrib, 1);
@@ -101,7 +101,7 @@ namespace IS {
         glVertexAttribDivisor(x_form_row4_attrib, 1);
         glVertexAttribDivisor(anim_dim_attrib, 1);
         glVertexAttribDivisor(anim_index_attrib, 1);
-        glVertexAttribDivisor(ent_ID_attib, 1);
+        glVertexAttribDivisor(ent_ID_attrib, 1);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -334,7 +334,7 @@ namespace IS {
  //       glEnableVertexArrayAttrib(vao_ID, x_form_row3_attrib);
  //       glEnableVertexArrayAttrib(vao_ID, anim_dim_attrib);
  //       glEnableVertexArrayAttrib(vao_ID, anim_index_attrib);
- //       glEnableVertexArrayAttrib(vao_ID, ent_ID_attib);
+ //       glEnableVertexArrayAttrib(vao_ID, ent_ID_attrib);
 
  //       // Specify instance data layout
  //       glVertexAttribPointer(color_attrib, 4, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), 0);
@@ -344,7 +344,7 @@ namespace IS {
  //       glVertexAttribPointer(x_form_row3_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 11));
  //       glVertexAttribPointer(anim_dim_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 14));
  //       glVertexAttribPointer(anim_index_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 16));
- //       glVertexAttribPointer(ent_ID_attib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 18));
+ //       glVertexAttribPointer(ent_ID_attrib, 1, GL_FLOAT, GL_FALSE, sizeof(Sprite::instanceData), reinterpret_cast<GLvoid*>(sizeof(float) * 18));
 
  //       // Specify instance data divisor for attribute instancing
  //       glVertexAttribDivisor(color_attrib, 1);
@@ -354,7 +354,7 @@ namespace IS {
  //       glVertexAttribDivisor(x_form_row3_attrib, 1);
  //       glVertexAttribDivisor(anim_dim_attrib, 1);
  //       glVertexAttribDivisor(anim_index_attrib, 1);
- //       glVertexAttribDivisor(ent_ID_attib, 1);
+ //       glVertexAttribDivisor(ent_ID_attrib, 1);
 
  //       glBindBuffer(GL_ARRAY_BUFFER, 0);
  //       glBindVertexArray(0);
