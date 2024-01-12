@@ -106,6 +106,7 @@
     <ClInclude Include="Source\Engine\ECS\System.h" />
     <ClInclude Include="Source\Engine\JSON\JsonSaveLoad.h" />
     <ClInclude Include="Source\Engine\JSON\Prefab.h" />
+    <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h" />
     <ClInclude Include="Source\Engine\Messages\EventManager.h" />
     <ClInclude Include="Source\Engine\Messages\Message.h" />
     <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />

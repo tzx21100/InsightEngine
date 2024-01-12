@@ -49,11 +49,11 @@ namespace IS {
 		IS_PROFILE_FUNCTION();
 		auto& engine = InsightEngine::Instance();
 
-		// Construct filepath
+		//// Construct filepath
 		std::filesystem::path filepath(scene_filename);
 		std::string const& filename = filepath.stem().string();
 
-		// Checks for if scene has already been loaded
+		//// Checks for if scene has already been loaded
 		{
 			auto found = std::find_if(mSceneNames.begin(), mSceneNames.end(), [filename](std::pair<SceneID, std::string> const& pair)
 			{
@@ -69,46 +69,50 @@ namespace IS {
 
 		if (engine.LoadScene(scene_filename))
 			CreateScene(scene_filename);
+
+		//InsightEngine::Instance().LoadScene(scene_filename);
 	}
 
 	void SceneManager::SwitchScene(SceneID scene_id)
 	{
 		IS_PROFILE_FUNCTION();
-		// Nothing to do if scene already active
+		//// Nothing to do if scene already active
 		if (scene_id == mActiveSceneID)
 			return;
 
-		// Clear command history
+		//// Clear command history
 		CommandHistory::Clear();
 
-		std::string old_scene = mSceneNames[mActiveSceneID];
-		// Instance of game engine
+		//std::string old_scene = mSceneNames[mActiveSceneID];
+		//// Instance of game engine
 		auto& engine = InsightEngine::Instance();
-		ECSMap original_map, cloned_map;
+		//ECSMap original_map, cloned_map;
 
-		// Create a new scene
+		//// Create a new scene
 		engine.NewScene();
 
-		// Clone ECS
-		{
-			engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
-			original_map = engine.mComponentManager->mComponentArrayMap;
+		//// Clone ECS
+		//{
+		//	engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
+		//	original_map = engine.mComponentManager->mComponentArrayMap;
 
-			for (auto const& [name, components] : original_map)
-				cloned_map[name] = components->clone();
+		//	for (auto const& [name, components] : original_map)
+		//		cloned_map[name] = components->clone();
 
-			mSceneComponents[scene_id] = cloned_map;
+		//	mSceneComponents[scene_id] = cloned_map;
 			mActiveSceneID = scene_id;
-		}
+		//}
 
-		// Update engine with scene entities
+		//// Update engine with scene entities
 		OverwriteEngineEntities(scene_id);
 
-		// Update ECS signatures
+		//// Update ECS signatures
 		for (auto const& [entity, signature] : mSceneEntitySignatures[scene_id])
 			engine.mSystemManager->EntitySignatureChanged(entity, signature);
 
-		IS_CORE_DEBUG("Switch from \"{}\" to scene \"{}\"", old_scene, mSceneNames[scene_id]);
+		//IS_CORE_DEBUG("Switch from \"{}\" to scene \"{}\"", old_scene, mSceneNames[scene_id]);
+
+		InsightEngine::Instance().LoadScene(mSceneNames[scene_id]);
 	}
 
 	void SceneManager::ReloadActiveScene()
@@ -236,14 +240,14 @@ namespace IS {
 	{
 		// Instance of game engine
 		auto& engine = InsightEngine::Instance();
-		ECSMap original_map, cloned_map;
+		//ECSMap original_map, cloned_map;
 		mSceneEntities[mActiveSceneID] = engine.EntitiesAlive();
-		original_map = engine.mComponentManager->mComponentArrayMap;
+		//original_map = engine.mComponentManager->mComponentArrayMap;
 
-		for (auto const& [name, components] : original_map)
-			cloned_map[name] = components->clone();
+		//for (auto const& [name, components] : original_map)
+		//	cloned_map[name] = components->clone();
 
-		mSceneComponents[mActiveSceneID] = cloned_map;
+		//mSceneComponents[mActiveSceneID] = cloned_map;
 
 		// Update active scene with engine entities
 		OverwriteSceneEntities();

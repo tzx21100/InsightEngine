@@ -1,40 +1,95 @@
-#include <vector>
+#pragma once
+
+#include <cstddef>
+#include <cstdint>
+#include <cassert>
+#include <algorithm>
 
 
-/* This is a memory manager made specifically with our
-   ECS in mind. We are going to ensure that the components
-   allocated are stored here and freed when added and deleted.
-
-    Also since components are frequently getting added and destroyed,
-    having a memory manager to allocate the memory will be much faster.
-*/
-class ComponentMemoryManager {
-public:
-    // we use 100 as the default size for now
-    ComponentMemoryManager(size_t data_size = 100) {
-        mCapacity = data_size;
-        mSize = 0;
-    }
-
-    ~ComponentMemoryManager() {
-
-    }
-
-    template <typename T>
-    T* AddComponent() {
-        T* component = new T;
-        mAllocatedComponents.push_back(component);
-        return component;
-    }
-    
-    template <typename T>
-    void DeallocateComponent() {
-
-    }
+namespace IS {
 
 
-private:
-    std::vector<void*> mAllocatedComponents;
-    size_t mCapacity;
-    size_t mSize;
-};
+    class ParentAllocator {
+    public:
+        ParentAllocator(size_t size) : memorySize(size), usedMemorySize(0), firstAddress(nullptr) {}
+
+        virtual ~ParentAllocator() {
+            firstAddress = nullptr;
+            usedMemorySize = 0;
+            memorySize = 0;
+        }
+
+        virtual void* Allocate(size_t size) = 0;
+        virtual void Free(void* ptr) = 0;
+
+    protected:
+        size_t memorySize;
+        size_t usedMemorySize;
+        void* firstAddress;
+
+        static size_t CalculatePadding(size_t baseAddress, size_t alignment) {
+            size_t multiplier = (baseAddress / alignment) + 1;
+            size_t alignedAddress = multiplier * alignment;
+            size_t padding = alignedAddress - baseAddress;
+            return padding;
+        }
+    };
+
+
+    class PoolAllocator : public ParentAllocator {
+    public:
+        PoolAllocator(size_t objectSize, size_t numObjects) : ParentAllocator(objectSize* numObjects), objectSize(objectSize) {
+            assert(objectSize >= sizeof(void*)); // Ensure the object size can at least store a pointer
+
+            firstAddress = ::operator new(memorySize);
+            freeList = static_cast<void**>(firstAddress);
+
+            void** current = freeList;
+            for (size_t i = 0; i < numObjects - 1; ++i) {
+                *current = static_cast<void*>(static_cast<char*>(firstAddress) + ((i + 1) * objectSize));
+                current = static_cast<void**>(*current);
+            }
+            *current = nullptr; // End of the list
+        }
+
+        virtual ~PoolAllocator() {
+            ::operator delete(firstAddress);
+            firstAddress = nullptr;
+        }
+
+        void* Allocate(size_t size) override {
+            assert(size == objectSize && "Allocation size must be equal to object size");
+
+            if (freeList == nullptr) {
+                return nullptr; // Pool is full
+            }
+
+            void* p = freeList;
+            freeList = static_cast<void**>(*freeList);
+            usedMemorySize += size;
+            return p;
+        }
+
+        void* Allocate() {
+            if (freeList == nullptr) {
+                return nullptr; // Pool is full
+            }
+
+            void* p = freeList;
+            freeList = static_cast<void**>(*freeList);
+            usedMemorySize += objectSize;
+            return p;
+        }
+
+        void Free(void* ptr) override {
+            *((void**)ptr) = freeList;
+            freeList = static_cast<void**>(ptr);
+            usedMemorySize -= objectSize;
+        }
+
+    private:
+        size_t objectSize;
+        void** freeList;
+    };
+
+}

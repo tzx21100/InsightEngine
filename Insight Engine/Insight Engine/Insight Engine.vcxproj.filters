@@ -415,6 +415,7 @@
     <ClInclude Include="Source\Graphics\System\Shadow.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

@@ -178,8 +178,8 @@ namespace IS {
             //body_ai.mAngularVelocity = 10.f;
             //body_ai.mRestitution = 0.1f;
 
-            auto& scene_manager = SceneManager::Instance();
-            scene_manager.LoadScene("Assets\\Scenes\\Main Menu.insight");
+            //auto& scene_manager = SceneManager::Instance();
+            //scene_manager.LoadScene("Assets\\Scenes\\Main Menu.insight");
         }
 
         virtual void Update([[maybe_unused]] float delta) override {

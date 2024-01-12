@@ -494,7 +494,7 @@ namespace IS {
         if (InsightEngine::Instance().mRuntime == false) {
             for (auto& emittingEntities : mEntities) {
                 auto& emitter = InsightEngine::Instance().GetComponent<AudioEmitter>(emittingEntities);
-
+                if (&emitter == nullptr) { continue; }
                 emitter.Channel->stop();
                 
             }

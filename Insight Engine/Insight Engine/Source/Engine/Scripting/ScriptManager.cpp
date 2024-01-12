@@ -61,6 +61,7 @@ namespace IS {
         for (auto& entity : mEntities) {
             mEntityScriptCaller = entity;
             auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
+            if (&scriptcomponent == nullptr) { continue; }
             if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
             if (scriptcomponent.instance != nullptr) {
                 MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
@@ -133,7 +134,6 @@ namespace IS
     void ScriptManager::CleanUp() {
         for (auto& entity : mEntities) {
             auto& scriptcomponent = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
-            if (scriptcomponent.instance == nullptr) { return; }
             mEntityScriptCaller = entity;
             MonoMethod* cleanup = scriptcomponent.scriptClass.GetMethod("CleanUp", 0);
             scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, cleanup, nullptr);

@@ -431,7 +431,9 @@ namespace IS {
         template<typename T>
         void RemoveComponent(Entity entity)
         {
-            mComponentManager->RemoveComponent<T>(entity);
+            if (InsightEngine::Instance().HasComponent<T>(entity)) {
+                mComponentManager->RemoveComponent<T>(entity);
+            }
 
             auto signature = mEntityManager->GetSignature(entity);
             signature.set(mComponentManager->GetComponentType<T>(), false);
@@ -449,8 +451,16 @@ namespace IS {
         template<typename T>
         T& GetComponent(Entity entity)
         {
-            return mComponentManager->GetComponent<T>(entity);
+            static T defaultComponent=T();
+
+            if (HasComponent<T>(entity)) {
+                return mComponentManager->GetComponent<T>(entity);
+            }
+            else {
+                return defaultComponent;  // Return a reference to the default component
+            }
         }
+
 
         /**
          * \brief Retrieves the type identifier of a specified component.

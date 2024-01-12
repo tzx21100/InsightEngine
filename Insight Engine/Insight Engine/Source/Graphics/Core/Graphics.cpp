@@ -153,6 +153,7 @@ namespace IS {
                 // get sprite and transform components
                 auto& sprite = engine.GetComponent<Sprite>(entity);
                 auto& trans = engine.GetComponent<Transform>(entity);
+                if (&trans == nullptr) { continue; }
 
                 // update sprite's transform [will be changed]
                 sprite.followTransform(trans);

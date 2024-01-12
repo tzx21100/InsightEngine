@@ -25,6 +25,7 @@
 #include "Pch.h"
 #include <json/json.h>
 #include "Entities.h"
+#include "../Memory Manager/MemoryManager.h"
 
 namespace IS {
 
@@ -145,8 +146,32 @@ namespace IS {
 	class ComponentArray : public IComponentArray {
 	public:
 
+		ComponentArray(size_t objectCount) : mPoolAllocator(sizeof(T), objectCount), mSize(0) {}
+
+		ComponentArray() : mPoolAllocator(sizeof(T), 10000), mSize(0) {}
+
 		std::shared_ptr<IComponentArray> clone() const override {
-			return std::make_shared<ComponentArray>(*this);
+			auto clonedArray = std::make_shared<ComponentArray<T>>(/* arguments */);
+
+			for (const auto& pair : mComponentArray) {
+				Entity entity = pair.first;
+				const T* originalComponent = pair.second;
+
+				T* clonedComponent = static_cast<T*>(clonedArray->mPoolAllocator.Allocate());
+				if (!clonedComponent) {
+					continue; // Handle allocation failure
+				}
+
+				new (clonedComponent) T(*originalComponent); // Use copy constructor
+				clonedArray->mComponentArray.insert({ entity, clonedComponent });
+			}
+
+			clonedArray->mSize = this->mSize;
+			return clonedArray;
+		}
+
+		~ComponentArray() {
+			ClearAllEntities();
 		}
 
 		/**
@@ -159,11 +184,17 @@ namespace IS {
 		 * \param component The component data to be inserted.
 		 */
 		void InsertComponentData(Entity entity, T component) {
-			if (mSize >= 20000) { return; }
-			// Put new entry at end and update the maps
-			mComponentArray.insert({ entity,component });
+			T* componentPtr = static_cast<T*>(mPoolAllocator.Allocate());
+			if (!componentPtr) {
+				// Handle allocation failure
+				return;
+			}
+
+			new (componentPtr) T(component); // Construct the component
+			mComponentArray.insert({ entity, componentPtr });
 			mSize++;
 		}
+
 
 		/**
 		 * \brief Removes the component associated with a given entity.
@@ -176,6 +207,9 @@ namespace IS {
 		 */
 		void RemoveComponentData(Entity entity) {
 
+			T* componentPtr = mComponentArray[entity];
+			componentPtr->~T(); // Call the destructor
+			mPoolAllocator.Free(componentPtr);
 			mComponentArray.erase(entity);
 			mSize--;
 		}
@@ -191,7 +225,7 @@ namespace IS {
 		T& GetComponentData(Entity entity) {
 
 			// Return a reference to the entity's component
-			return mComponentArray[entity];
+			return *mComponentArray[entity];
 		}
 
 		/**
@@ -246,8 +280,22 @@ namespace IS {
 		}
 
 		//clear all entities in the component
-		void ClearAllEntities() override {
+		void ClearAllEntities() {
+			// Iterate through all components and properly destruct and deallocate each one
+			for (auto& pair : mComponentArray) {
+				T* component = pair.second;
+
+				// Call the destructor for the component
+				component->~T();
+
+				// Free the memory using the pool allocator
+				mPoolAllocator.Free(component);
+			}
+
+			// Clear the component map
 			mComponentArray.clear();
+
+			// Reset the size to 0 as all components have been cleared
 			mSize = 0;
 		}
 
@@ -259,7 +307,7 @@ namespace IS {
 		 * The array is of generic type T and is set to a specified maximum amount,
 		 * matching the maximum number of entities allowed to exist simultaneously.
 		 */
-		std::unordered_map<Entity, T> mComponentArray{};
+		std::unordered_map<Entity, T*> mComponentArray{};
 
 		/**
 		 * \brief The total size of valid entries in the array.
@@ -267,6 +315,9 @@ namespace IS {
 		 * This size increases or decreases as components are added or removed.
 		 */
 		size_t mSize;
+
+		// stack allocator 
+		PoolAllocator mPoolAllocator;
 	};
 
 	/**
@@ -306,7 +357,7 @@ namespace IS {
 			// Add this component type to the component type map
 			mRegisteredComponentType.insert({ type_name, mNextComponentType });
 			// Create a ComponentArray pointer and add it to the component arrays map
-			mComponentArrayMap.insert({ type_name, std::make_shared<ComponentArray<T>>() });
+			mComponentArrayMap.insert({ type_name, std::make_shared<ComponentArray<T>>(1000) });
 			// Add the componentType to the value
 			mComponentArrayMap[type_name]->SetComponentType(mNextComponentType);
 			// Increment the value so that the next component registered will be different
