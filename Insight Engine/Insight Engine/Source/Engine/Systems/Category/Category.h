@@ -29,12 +29,23 @@ namespace IS
         std::string mCategory;
     };
 
-    class Caregory : public ParentSystem
+    class CategorySystem : public ParentSystem
     {
     public:
-        static std::unordered_map<std::string, std::string> mCategories;
-
+        void Initialize() override;
+        void Update(float delta_time) override;
+        std::string GetName() override
+        {
+            return "CategorySystem";
+        }
+        static std::string GetType()
+        {
+            return "CategorySystem";
+        }
+        std::unordered_set<std::string> mCategories;
     };
+
+    const std::string ADD_NEW_CATEGORY = "Add New Category...";
 
 } // end namespace IS
 

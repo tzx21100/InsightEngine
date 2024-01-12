@@ -127,21 +127,23 @@ namespace IS {
             }
 
             // Category
-            ImGui::TableNextColumn();
             EditorUtils::RenderTableLabel("Category", "Categorizes Entities.\n(i.e., Player, Platform, Background, etc.)");
+            ImGui::TableNextColumn();
             bool has_category = engine.HasComponent<Category>(entity);
             std::string entity_category = has_category ? engine.GetComponent<Category>(entity).mCategory : "";
             if (ImGui::BeginCombo("##Category", has_category ? entity_category.c_str() : "None"))
             {
-                for (auto const& [categoryname, category] : Category::mCategories)
+                auto const& category_system = engine.GetSystem<CategorySystem>("CategorySystem");
+                for (std::string const& category : category_system->mCategories)
                 {
-                    if (ImGui::Selectable(categoryname.c_str(), entity_category == category))
+                    if (ImGui::Selectable(category.c_str(), entity_category == category))
                     {
-                        Category& cat = engine.GetComponent<Category>(entity);
-                        cat.mCategory = category;
-                    }
-                    if (ImGui::Selectable(categoryname.c_str(), entity_category == "Add New Category..."))
-                    {
+                        if (category != ADD_NEW_CATEGORY)
+                        {
+                            Category& cat = engine.GetComponent<Category>(entity);
+                            cat.mCategory = category;
+                            continue;
+                        }
                         add_new_category = true;
                     }
                 }
@@ -153,14 +155,36 @@ namespace IS {
 
         if (add_new_category)
         {
+            ImGui::OpenPopup("Add New Category");
             if (ImGui::BeginPopupModal("Add New Category", &add_new_category))
             {
                 EditorUtils::RenderTableFixedWidth("Details", 2, [&]()
                 {
-                    EditorUtils::RenderTableLabel("Category", "New Category");
+                    if (!engine.HasComponent<Category>(entity))
+                    {
+                        engine.AddComponent<Category>(entity, Category());
+                    }
                     std::string& category = engine.GetComponent<Category>(entity).mCategory;
-                    EditorUtils::RenderTableInputText(category);
+
+                    EditorUtils::RenderTableLabel("New Category");
+                    EditorUtils::RenderTableInputText(category, []()
+                    {
+                        add_new_category = false;
+                    });
+                    ImGui::SetItemTooltip("Press \"Enter\" to add and save category.");
                 });
+                ImGui::EndPopup();
+            }
+        }
+        else
+        {
+            if (engine.HasComponent<Category>(entity))
+            {
+                std::string const& category = engine.GetComponent<Category>(entity).mCategory;
+                if (category.empty())
+                {
+                    engine.RemoveComponent<Category>(entity);
+                }
             }
         }
 

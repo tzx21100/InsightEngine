@@ -175,6 +175,7 @@
     <ClCompile Include="Source\Utils\Math\Matrix4x4.cpp">
       <Filter>Utils\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Systems\Category\Category.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">

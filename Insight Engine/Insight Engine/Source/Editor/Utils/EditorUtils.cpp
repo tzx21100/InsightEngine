@@ -257,7 +257,7 @@ namespace IS::EditorUtils {
         }
     }
 
-    void RenderTableInputText(std::string& text)
+    void RenderTableInputText(std::string& text, std::function<void(void)> action)
     {
         ImGui::TableNextColumn();
 
@@ -267,7 +267,11 @@ namespace IS::EditorUtils {
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
         if (ImGui::InputText("##Text", buffer, sizeof(buffer), input_text_flags))
         {
-            CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
+            if (strlen(buffer) > 0)
+            {
+                CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
+                action();
+            }
         }
         ImGui::PopID();
     }

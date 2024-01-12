@@ -40,6 +40,7 @@
     <ClCompile Include="Source\Engine\Systems\Asset\Asset.cpp" />
     <ClCompile Include="Source\Engine\Systems\Audio\Audio.cpp" />
     <ClCompile Include="Source\Engine\Systems\Button\Button.cpp" />
+    <ClCompile Include="Source\Engine\Systems\Category\Category.cpp" />
     <ClCompile Include="Source\Engine\Systems\Input\Input.cpp" />
     <ClCompile Include="Source\Engine\Systems\Particle\Particle.cpp" />
     <ClCompile Include="Source\Engine\Systems\Pathfinding\Pathfinding.cpp" />

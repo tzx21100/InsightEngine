@@ -76,6 +76,7 @@ void RegisterSystems() {
     Signature sign_collision = engine.GenerateSignature<Transform, Collider>();
 
     Signature sign_particle = engine.GenerateSignature<ParticleEmitter>();
+    Signature sign_category = engine.GenerateSignature<Category>();
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -91,6 +92,7 @@ void RegisterSystems() {
     auto insight_pathfinding = std::make_shared<Pathfinding>();
     auto insight_collision = std::make_shared<CollisionSystem>();
     auto insight_particle = std::make_shared <ParticleSystem> ();
+    auto insight_category = std::make_shared<CategorySystem>();
 
 
     engine.AddSystem(insight_window, sign_default);
@@ -105,6 +107,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_guisystem, sign_gui);
     engine.AddSystem(insight_pathfinding, sign_pathfinding);
     engine.AddSystem(insight_particle, sign_particle);
+    engine.AddSystem(insight_category, sign_category);
     engine.AddSystem(insight_scriptmanager, sign_script);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
