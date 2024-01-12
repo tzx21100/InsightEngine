@@ -356,7 +356,7 @@ copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelpe
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
 xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
-xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y
+
 
 </Command>
     </PostBuildEvent>
