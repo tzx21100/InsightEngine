@@ -175,6 +175,7 @@
     <ClCompile Include="Source\Utils\Math\Matrix4x4.cpp">
       <Filter>Utils\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Systems\Category\Category.cpp" />
     <ClCompile Include="Source\Graphics\System\Shadow.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
@@ -410,6 +411,7 @@
     <ClInclude Include="MemoryManager.h">
       <Filter>Engine\Memory Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\Category\Category.h" />
     <ClInclude Include="Source\Graphics\System\Shadow.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
