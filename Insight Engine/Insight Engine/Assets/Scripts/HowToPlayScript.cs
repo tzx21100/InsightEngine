@@ -60,8 +60,8 @@ namespace IS
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
             // Windows
-            win_dimension.x = (float)InternalCalls.GetWindowWidth() * 2f / camera_zoom;
-            win_dimension.y = (float)InternalCalls.GetWindowHeight() * 2f / camera_zoom;
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
 
             orgin.x = camera_pos.x - (win_dimension.x / 2f);
             orgin.y = camera_pos.y - (win_dimension.y / 2f);

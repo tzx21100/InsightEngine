@@ -7,9 +7,6 @@
 
     Also since components are frequently getting added and destroyed,
     having a memory manager to allocate the memory will be much faster.
-
-    TLDR since we have upwards of thousands of objects per scene this performance
-    difference can be felt.
 */
 class ComponentMemoryManager {
 public:
