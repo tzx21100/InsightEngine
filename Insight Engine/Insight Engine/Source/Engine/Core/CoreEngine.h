@@ -451,14 +451,7 @@ namespace IS {
         template<typename T>
         T& GetComponent(Entity entity)
         {
-            static T defaultComponent=T();
-
-            if (HasComponent<T>(entity)) {
-                return mComponentManager->GetComponent<T>(entity);
-            }
-            else {
-                return defaultComponent;  // Return a reference to the default component
-            }
+              return mComponentManager->GetComponent<T>(entity);
         }
 
 

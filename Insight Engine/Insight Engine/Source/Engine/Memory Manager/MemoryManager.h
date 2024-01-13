@@ -82,10 +82,22 @@ namespace IS {
         }
 
         void Free(void* ptr) override {
-            *((void**)ptr) = freeList;
-            freeList = static_cast<void**>(ptr);
-            usedMemorySize -= objectSize;
+            // Check if ptr is within the range of memory managed by the allocator
+            char* start = static_cast<char*>(firstAddress);
+            char* end = start + memorySize;
+            char* checkPtr = static_cast<char*>(ptr);
+
+            if (checkPtr >= start && checkPtr < end) {
+                // Proceed with freeing the memory
+                *((void**)ptr) = freeList;
+                freeList = static_cast<void**>(ptr);
+                usedMemorySize -= objectSize;
+            }
+            else {
+                return;
+            }
         }
+
 
     private:
         size_t objectSize;

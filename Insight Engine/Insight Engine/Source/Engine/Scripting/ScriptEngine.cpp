@@ -203,8 +203,19 @@ namespace IS {
 
     MonoMethod* ScriptClass::GetMethod(const std::string& name, int parameterCount)
     {
-        return mono_class_get_method_from_name(mMonoClass, name.c_str(), parameterCount);
+        MonoMethod* method = mono_class_get_method_from_name(mMonoClass, name.c_str(), parameterCount);
+
+        if (!method) {
+            // Log a warning or handle the error as needed
+            std::cerr << "Warning: Method '" << name << "' with " << parameterCount << " parameters not found in the class." << std::endl;
+            // Optionally, handle the situation further, e.g., throw an exception or return a default method.
+
+            return nullptr; // Return nullptr to indicate that the method was not found
+        }
+
+        return method;
     }
+
 
     MonoObject* ScriptClass::InvokeMethod(MonoObject* instance, MonoMethod* method, void** params)
     {

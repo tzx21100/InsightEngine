@@ -223,10 +223,16 @@ namespace IS {
 		* \return A reference to the component.
 		*/
 		T& GetComponentData(Entity entity) {
-
-			// Return a reference to the entity's component
-			return *mComponentArray[entity];
+			static T defaultComponent = T();
+			if (mComponentArray.find(entity) != mComponentArray.end()) {
+				return *(mComponentArray[entity]);
+			}
+			else {
+				// Log a warning or error here
+				return defaultComponent;
+			}
 		}
+
 
 		/**
 		* \brief Removes the component associated with a destroyed entity.

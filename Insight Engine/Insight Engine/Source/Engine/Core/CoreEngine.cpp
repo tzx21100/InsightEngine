@@ -163,8 +163,6 @@ namespace IS {
             ProcessEntityDeletion(); // destroy deleted entities
             SceneManager::Instance().UpdateActiveScene(); // update active scene
         }
-        auto script = GetSystem<ScriptManager>("ScriptManager");
-        script->CleanUp();
         DestroyAllSystems();
         mLayers.ClearStack();
     }
@@ -561,7 +559,7 @@ namespace IS {
 
     void InsightEngine::NewScene() {
         auto scriptsystem = GetSystem<ScriptManager>("ScriptManager");
-        scriptsystem->CleanUp();
+        //scriptsystem->CleanUp();
         // Destroy all existing entities
         mComponentManager->ClearEntities();
         mSystemManager->ClearEntities();

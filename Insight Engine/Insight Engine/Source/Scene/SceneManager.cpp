@@ -93,7 +93,7 @@ namespace IS {
 
 		//// Clone ECS
 		//{
-			engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
+			//engine.mComponentManager->mComponentArrayMap = mSceneComponents[scene_id];
 		//	original_map = engine.mComponentManager->mComponentArrayMap;
 
 		//	for (auto const& [name, components] : original_map)
@@ -112,7 +112,9 @@ namespace IS {
 
 		//IS_CORE_DEBUG("Switch from \"{}\" to scene \"{}\"", old_scene, mSceneNames[scene_id]);
 
-		InsightEngine::Instance().LoadScene(mSceneNames[scene_id]);
+		InsightEngine::Instance().LoadScene(AssetManager::SCENE_DIRECTORY+ mSceneNames[scene_id] + ".insight");
+
+
 	}
 
 	void SceneManager::ReloadActiveScene()
