@@ -408,14 +408,13 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
     <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />
-    <ClInclude Include="MemoryManager.h">
-      <Filter>Engine\Memory Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Systems\Category\Category.h" />
     <ClInclude Include="Source\Graphics\System\Shadow.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h" />
+    <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h">
+      <Filter>Engine\Memory Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
