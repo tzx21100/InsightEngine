@@ -72,13 +72,10 @@ namespace IS {
 
         void* Allocate() {
             if (freeList == nullptr) {
-                return nullptr; // Pool is full
+                ExpandPool();
             }
 
-            void* p = freeList;
-            freeList = static_cast<void**>(*freeList);
-            usedMemorySize += objectSize;
-            return p;
+            return InternalAllocate();
         }
 
         void Free(void* ptr) override {
@@ -102,6 +99,29 @@ namespace IS {
     private:
         size_t objectSize;
         void** freeList;
+        std::vector<void*> blocks; // Stores all the memory blocks
+
+        void ExpandPool() {
+            void* newBlock = ::operator new(memorySize);
+            blocks.push_back(newBlock); // Keep track of the new block
+
+            freeList = static_cast<void**>(newBlock);
+
+            // Initialize the free list for the new block
+            void** current = freeList;
+            for (size_t i = 0; i < (memorySize / objectSize) - 1; ++i) {
+                *current = static_cast<void*>(static_cast<char*>(newBlock) + ((i + 1) * objectSize));
+                current = static_cast<void**>(*current);
+            }
+            *current = nullptr; // End of the list
+        }
+
+        void* InternalAllocate() {
+            void* p = freeList;
+            freeList = static_cast<void**>(*freeList);
+            usedMemorySize += objectSize;
+            return p;
+        }
     };
 
 }
