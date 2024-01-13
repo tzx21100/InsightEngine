@@ -53,6 +53,11 @@ namespace IS {
         //we are going to use the formula
         //gain=1/distance+fall-off factor higher the falloff factor faster the sound disappears
 
+
+        ~AudioEmitter() {
+            Channel->stop();
+        }
+
         static std::string GetType() {
             return "AudioEmitter";
         }
@@ -223,7 +228,6 @@ namespace IS {
                 IS_CORE_INFO("Handling Debug");
             }
         }
-
         std::set<Entity> GetEntities() { return mEntities; }
     };
 
