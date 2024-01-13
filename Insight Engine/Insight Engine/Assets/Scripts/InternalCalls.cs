@@ -391,6 +391,15 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioStopAllSounds();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CompareCategory(string str);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool OnCollisionEnter();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool SetGravityScale(float scale);
 
 
     }

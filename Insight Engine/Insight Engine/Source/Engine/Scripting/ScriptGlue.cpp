@@ -33,6 +33,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include <mono/metadata/object.h>
 #include <algorithm>
 #include <math.h>
+#include <Engine/Systems/Category/Category.h>
 
 namespace IS {
     // Macro to add internal calls for C# access
@@ -187,8 +188,6 @@ namespace IS {
         auto& trans_component = engine.GetComponent<Transform>(entity);
         trans_component.setRotation(angle, angle_speed);
     }
-
-
 
     static SimpleVector2D GetTransformPosition() {
         auto& engine = InsightEngine::Instance();
@@ -1034,6 +1033,33 @@ namespace IS {
         ISGraphics::mLightsOn = toggle;
     }
 
+    static bool CompareCategory(MonoString* string) {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(string); // Convert Mono string to char*
+        std::string tag(c_str);
+        mono_free(c_str);
+        auto& collider = engine.GetComponent<Collider>(engine.GetScriptCaller());
+        for (Entity entity : collider.mCollidingEntity) {
+            auto& category = engine.GetComponent<Category>(entity);
+            if (category.mCategory == tag) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static bool OnCollisionEnter() {
+        auto& engine = InsightEngine::Instance();
+        auto& collider = engine.GetComponent<Collider>(engine.GetScriptCaller());
+        return collider.mIsColliding;
+    }
+
+    static void SetGravityScale(float scale) {
+        auto& engine = InsightEngine::Instance();
+        auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        body.mGravityScale = scale;
+    }
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -1188,6 +1214,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
+
+
+        IS_ADD_INTERNAL_CALL(CompareCategory);
+        IS_ADD_INTERNAL_CALL(OnCollisionEnter);
+        IS_ADD_INTERNAL_CALL(SetGravityScale);
+
 
         // Yiming
         IS_ADD_INTERNAL_CALL(CreateEntityPrefab);
