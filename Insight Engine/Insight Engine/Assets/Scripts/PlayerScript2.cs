@@ -192,7 +192,7 @@ namespace IS
             {
                // if (isGrounded || DoubleJumpEnable)
                 {
-                    InternalCalls.RigidBodySetForce(0f, 0f); //reset the vel otherwise double jump will be higher
+                    InternalCalls.RigidBodySetForce(player_vel.x, 0f); //reset the vel otherwise double jump will be higher
                     InternalCalls.RigidBodyAddForce(0f, jump_height);
                     isGrounded = false;
                     jumps_left -= 1;
