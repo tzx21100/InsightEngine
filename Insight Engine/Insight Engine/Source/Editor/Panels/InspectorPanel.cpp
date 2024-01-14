@@ -140,6 +140,10 @@ namespace IS {
                     {
                         if (category != CategorySystem::ADD_NEW_CATEGORY)
                         {
+                            if (!engine.HasComponent<Category>(entity))
+                            {
+                                engine.AddComponent<Category>(entity, Category());
+                            }
                             Category& cat = engine.GetComponent<Category>(entity);
                             cat.mCategory = category;
                             continue;
