@@ -399,7 +399,10 @@ namespace IS
         internal extern static bool OnCollisionEnter();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static bool SetGravityScale(float scale);
+        internal extern static float GetGravityScale();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetGravityScale(float scale);
 
 
     }

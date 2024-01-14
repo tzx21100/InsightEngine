@@ -1054,6 +1054,12 @@ namespace IS {
         return collider.mIsColliding;
     }
 
+    static float GetGravityScale() {
+        auto& engine = InsightEngine::Instance();
+        auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return body.mGravityScale;
+    }
+
     static void SetGravityScale(float scale) {
         auto& engine = InsightEngine::Instance();
         auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
@@ -1218,6 +1224,7 @@ namespace IS {
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
         IS_ADD_INTERNAL_CALL(OnCollisionEnter);
+        IS_ADD_INTERNAL_CALL(GetGravityScale);
         IS_ADD_INTERNAL_CALL(SetGravityScale);
 
 

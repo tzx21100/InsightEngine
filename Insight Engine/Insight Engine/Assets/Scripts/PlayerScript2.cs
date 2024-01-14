@@ -50,7 +50,7 @@ namespace IS
 
         static public int player_id;
 
-        static public bool isGrounded;
+        static public bool isGrounded = false;
 
         //double jump and above
         static private int jump_amount;
@@ -60,6 +60,7 @@ namespace IS
         static private bool isJumping = false;
         static private bool initial_land = false;
         static private float jump_height = 1000f;
+        static private float fall_multiplier = 2f;
 
         //movement
         static private float acceleration = 0f;
@@ -70,6 +71,7 @@ namespace IS
         static private float move_speed = 0f;
 
         static private int move_input;
+        static private float gravity_scale;
 
         // player pos and dimension
         static public Vector2D player_pos = new Vector2D(0, 0);
@@ -113,18 +115,23 @@ namespace IS
                 InternalCalls.TransformSetPositionEntity(-999, -9999, jump_entity);
             }
 
+            //isGrounded = false;
+
+            gravity_scale = InternalCalls.GetGravityScale();
+
             // camera
             InternalCalls.CameraSetZoom(1f);
         }
 
         static public void Update()
         {
+            InternalCalls.TransformSetRotation(0f,0f);
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
             else if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
-            else { InternalCalls.RigidBodySetForceX(player_vel.x/1.1f); }
+            else { InternalCalls.RigidBodySetForceX(player_vel.x/1.2f); } // let player slide for abit
             move_input = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
             
             if (move_input != 0)
@@ -146,7 +153,7 @@ namespace IS
                 InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y);
             }
             CollisionEnterCheck();
-            if (isGrounded)
+            if (isGrounded) // if player on the ground
             {
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                 {
@@ -159,6 +166,7 @@ namespace IS
                     isGrounded = false;
                     
                 }
+                //InternalCalls.SetGravityScale(gravity_scale * 0f);
             }
 
             // when jumping in the air
@@ -166,14 +174,15 @@ namespace IS
             {
                 InternalCalls.SetSpriteAnimationIndex(2);
                 InternalCalls.SetSpriteImage(player_jump);
-                if (player_vel.y < 100f)
+                InternalCalls.SetGravityScale(gravity_scale);
+                if (player_vel.y < 10f)
                 {
                     
-                    InternalCalls.SetGravityScale(3f);
+                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier);
                 }
-                else
+                else if(player_vel.y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
                 {
-                    InternalCalls.SetGravityScale(2f);
+                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f);
                 }
             }
             
