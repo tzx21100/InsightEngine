@@ -278,7 +278,7 @@ namespace IS {
 		 */
 		ComponentType SignatureMatch(Signature signature, Entity entity) {
 			if (signature.test(this->GetComponentType())) {
-				T component{};
+				T component=T();
 				InsertComponentData(entity, component);
 				return this->GetComponentType();
 			}

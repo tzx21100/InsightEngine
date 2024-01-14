@@ -1,7 +1,17 @@
+
+
+
+
 #pragma once
 #include "../../ECS/System.h"
 #include <functional>
 #include "../../ECS/Component.h"
+
+/*                                                                   guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_ECS_FSM_H_
+#define GAM200_INSIGHT_ENGINE_ECS_FSM_H_
+
 
 namespace IS {
 	/*
@@ -13,6 +23,8 @@ namespace IS {
 		std::function<void()> Enter;
 		std::function<void()> Update;
 		std::function<void()> Exit;
+
+		SimpleState():Enter(),Update(),Exit() {};
 
 		SimpleState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit)
 			: Enter(enter), Update(update), Exit(exit) {}
@@ -40,7 +52,7 @@ namespace IS {
 	/*c
 		Checks for state conditions
 	*/
-	class StateManager : ParentSystem {
+	class StateManager : public ParentSystem {
 	public:
 		/**
 		 * \brief Returns the name of the InputManager system.
@@ -75,18 +87,20 @@ namespace IS {
 
 	};
 
-	class StateComponent : IComponent {
+	class StateComponent : public IComponent {
 	public:
+
+		static std::string GetType() { return "StateComponent"; }
 		//each entity should hold their own list of change state
 		std::vector<ChangeState> mEntityConditions;
+		SimpleState mCurrentState;
 
 	};
-
-	// The following are helper functions to create States
-
-	SimpleState CreateNewState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit) {
-		return SimpleState(enter, update, exit);
-	}
-
+	
+	// helper functions
+	SimpleState CreateNewState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit);
 
 }
+
+
+#endif GAM200_INSIGHT_ENGINE_ECS_COMPONENT_H_

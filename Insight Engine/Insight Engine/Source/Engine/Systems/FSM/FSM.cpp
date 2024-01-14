@@ -1,6 +1,7 @@
 #pragma once
 #include "Pch.h"
 #include "FSM.h"
+#include "../../Core/CoreEngine.h"
 
 namespace IS {
 
@@ -32,8 +33,33 @@ namespace IS {
 		mCurrentState = state;
 	}
 
+	std::string StateManager::GetName()  {
+		return "StateManager";
+	}
 
+	void StateManager::Initialize() {
+		for (auto& entity : mEntities) {
+			auto& state_component=InsightEngine::Instance().GetComponent<StateComponent>(entity);
+			state_component.mCurrentState.Enter();
+		}
+	}
 
+	void StateManager::Update(float) {
+		for (auto& entity : mEntities) {
+			auto& state_component = InsightEngine::Instance().GetComponent<StateComponent>(entity);
+			state_component.mCurrentState.Update();
+		}
+	}
 
+	void StateManager::HandleMessage(const Message& message) {
+		if (message.GetType() == MessageType::DebugInfo) {
+			IS_CORE_DEBUG("State Manager Running");
+		}
+	}
 
+	// The following are helper functions to create States
+
+	SimpleState CreateNewState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit) {
+		return SimpleState(enter, update, exit);
+	}
 }

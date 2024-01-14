@@ -33,6 +33,7 @@
 #include "Physics/System/CollisionSystem.h"
 #include "Graphics/System/Light.h"
 #include "../Engine/Systems/Category/Category.h"
+#include "../Engine/Systems/FSM/FSM.h"
 
 using namespace IS;
 
@@ -56,6 +57,7 @@ void RegisterComponents() {
     engine.RegisterComponent<ParticleEmitter>();
     engine.RegisterComponent<Light>();
     engine.RegisterComponent<Category>();
+    engine.RegisterComponent<StateComponent>();
 }
 
 // This is a helper function to register all systems
@@ -77,6 +79,7 @@ void RegisterSystems() {
 
     Signature sign_particle = engine.GenerateSignature<ParticleEmitter>();
     Signature sign_category = engine.GenerateSignature<Category>();
+    Signature sign_state = engine.GenerateSignature<StateComponent>();
 
     // Register each system to Insight Engine
     auto insight_window = std::make_shared<WindowSystem>();
@@ -93,6 +96,7 @@ void RegisterSystems() {
     auto insight_collision = std::make_shared<CollisionSystem>();
     auto insight_particle = std::make_shared <ParticleSystem> ();
     auto insight_category = std::make_shared<CategorySystem>();
+    auto insight_statemanager = std::make_shared<StateManager>();
 
 
     engine.AddSystem(insight_window, sign_default);
@@ -109,6 +113,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_particle, sign_particle);
     engine.AddSystem(insight_category, sign_category);
     engine.AddSystem(insight_scriptmanager, sign_script);
+    engine.AddSystem(insight_statemanager, sign_state);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
 
