@@ -61,6 +61,9 @@ namespace IS
         static private bool initial_land = false;
         static private float jump_height = 1000f;
         static private float fall_multiplier = 2f;
+        static private bool DoubleJumpEnable = false;
+        static private int max_jumps = 2;
+        static private int jumps_left;
 
         //movement
         static private float acceleration = 0f;
@@ -153,20 +156,34 @@ namespace IS
                 InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y);
             }
             CollisionEnterCheck();
-            if (isGrounded) // if player on the ground
+            if (isGrounded && !(InternalCalls.KeyHeld((int)KeyCodes.Space))) // if player on the ground
             {
-                if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                jumps_left = max_jumps;
+                //DoubleJumpEnable = false;
+                /*if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                 {
                     //Jump();
-                    /*InternalCalls.ResetSpriteAnimationFrameEntity(jump_entity);
+                    *//*InternalCalls.ResetSpriteAnimationFrameEntity(jump_entity);
                     InternalCalls.TransformSetScaleEntity(100 * -move_input, 100, jump_entity);
                     InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
-                    InternalCalls.SetSpriteImage(player_jump);*/
+                    InternalCalls.SetSpriteImage(player_jump);*//*
                     InternalCalls.RigidBodyAddForce(0f, jump_height);
                     isGrounded = false;
-                    
-                }
+                    DoubleJumpEnable = true;
+                }*/
                 //InternalCalls.SetGravityScale(gravity_scale * 0f);
+            }
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.Space) && jumps_left > 0)
+            {
+               // if (isGrounded || DoubleJumpEnable)
+                {
+                    InternalCalls.RigidBodySetForce(0f, 0f); //reset the vel otherwise double jump will be higher
+                    InternalCalls.RigidBodyAddForce(0f, jump_height);
+                    isGrounded = false;
+                    jumps_left -= 1;
+                    //DoubleJumpEnable = !DoubleJumpEnable; // it change from false to true during first jumping, true to false during second jumping
+                }
             }
 
             // when jumping in the air
@@ -177,12 +194,12 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale);
                 if (player_vel.y < 10f)
                 {
-                    
-                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier);
+                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier); // higher jump
                 }
-                else if(player_vel.y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
+                else if(jumps_left != 1 /*not apply to first jump only*/ || 
+                    player_vel.y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
                 {
-                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f);
+                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
                 }
             }
             
