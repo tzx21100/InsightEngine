@@ -598,6 +598,8 @@ namespace IS {
         Vector2D point1 = Vector2D(x1, y1);
         Vector2D point2 = Vector2D(x2, y2);
         Vector2D dist = point1 - point2;
+        ISVector2DNormalize(dist, dist);
+        dist *= 500.f;
         Sprite::drawDebugLine(point1, point1+dist, color);
     }
 
@@ -1054,6 +1056,12 @@ namespace IS {
         return collider.mIsColliding;
     }
 
+    static float GetGravityScale() {
+        auto& engine = InsightEngine::Instance();
+        auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return body.mGravityScale;
+    }
+
     static void SetGravityScale(float scale) {
         auto& engine = InsightEngine::Instance();
         auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
@@ -1218,6 +1226,7 @@ namespace IS {
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
         IS_ADD_INTERNAL_CALL(OnCollisionEnter);
+        IS_ADD_INTERNAL_CALL(GetGravityScale);
         IS_ADD_INTERNAL_CALL(SetGravityScale);
 
 
