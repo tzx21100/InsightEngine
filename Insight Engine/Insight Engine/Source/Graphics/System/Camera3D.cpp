@@ -75,7 +75,7 @@ namespace IS {
 	void Camera3D::Update()
 	{
 		// Update the view matrix and projection matrix of the Camera3D instance
-		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
+		mView = glm::lookAt(mPosition * 2.f, (mPosition * 2.f) + mFront, mUp);
 
 		switch (mProjectionType)
 		{
