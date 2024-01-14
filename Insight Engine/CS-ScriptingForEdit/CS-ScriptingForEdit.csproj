@@ -22,7 +22,7 @@
 
 	<ItemGroup>
 		<!-- Add links to the external script files -->
-		<Compile Include="..\Insight Engine\Assets\Scripts\*.cs" LinkBase="ExternalScripts" />
+		<Compile Include="..\Insight Engine\Assets\Scripts\*" LinkBase="ExternalScripts" />
 	</ItemGroup>
 
 	<ItemGroup>
