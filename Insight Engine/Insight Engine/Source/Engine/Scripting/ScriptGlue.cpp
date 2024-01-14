@@ -598,6 +598,8 @@ namespace IS {
         Vector2D point1 = Vector2D(x1, y1);
         Vector2D point2 = Vector2D(x2, y2);
         Vector2D dist = point1 - point2;
+        ISVector2DNormalize(dist, dist);
+        dist *= 500.f;
         Sprite::drawDebugLine(point1, point1+dist, color);
     }
 
