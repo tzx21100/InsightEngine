@@ -39,6 +39,7 @@ namespace IS {
 		void AddCondition(std::function<bool()>);
 		void SetTargetState(SimpleState state);
 		void SetCurrentState(SimpleState state);
+		SimpleState GetTargetState();
 		bool CheckConditionsFufilled();
 
 	private:

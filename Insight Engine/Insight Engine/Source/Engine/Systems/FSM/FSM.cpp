@@ -33,6 +33,10 @@ namespace IS {
 		mCurrentState = state;
 	}
 
+	SimpleState ChangeState::GetTargetState() {
+		return mTargetState;
+	}
+
 	std::string StateManager::GetName()  {
 		return "StateManager";
 	}
@@ -48,6 +52,9 @@ namespace IS {
 		for (auto& entity : mEntities) {
 			auto& state_component = InsightEngine::Instance().GetComponent<StateComponent>(entity);
 			state_component.mCurrentState.Update();
+			for (auto& statchange : state_component.mEntityConditions) {
+				if (statchange.CheckConditionsFufilled()) { state_component.mCurrentState = statchange.GetTargetState(); }
+			}
 		}
 	}
 
