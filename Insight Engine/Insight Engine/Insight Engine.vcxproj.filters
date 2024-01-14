@@ -179,6 +179,9 @@
     <ClCompile Include="Source\Graphics\System\Shadow.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Systems\FSM\FSM.cpp">
+      <Filter>Engine\Systems\FSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">
@@ -415,6 +418,9 @@
     <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h">
       <Filter>Engine\Memory Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\FSM\FSM.h">
+      <Filter>Engine\Systems\FSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -530,6 +536,9 @@
     </Filter>
     <Filter Include="Engine\Memory Manager">
       <UniqueIdentifier>{3957f59f-c3fb-4cd9-9a0c-be89c842d9e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\FSM">
+      <UniqueIdentifier>{518ea196-49f2-459c-84c4-d1487221cc32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
