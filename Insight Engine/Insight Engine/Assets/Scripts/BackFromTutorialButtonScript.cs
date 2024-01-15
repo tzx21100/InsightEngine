@@ -46,7 +46,7 @@ namespace IS
             {
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
-               // HowToPlayScript.how_to_play_enable = false;
+                HowToPlayScript.how_to_play_enable = false;
             }
         }
 
