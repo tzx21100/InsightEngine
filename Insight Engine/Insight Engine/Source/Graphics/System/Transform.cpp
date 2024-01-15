@@ -128,8 +128,8 @@ namespace IS {
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x / 2.f;
-		float model_scale_y = scaling.y / 2.f;
+		float model_scale_x = scaling.x;
+		float model_scale_y = scaling.y;
 		float tx = world_position.x;
 		float ty = world_position.y;
 		
