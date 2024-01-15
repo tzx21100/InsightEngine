@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 762.49127197265625,
-				"Y" : -434.69052124023438
+				"X" : 2117.92236328125,
+				"Y" : -430.82217407226562
 			},
 			"BoxColliderOffset" : 
 			{
@@ -21,26 +21,25 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -387.40130615234375,
+					"x" : -311.0616455078125,
 					"y" : 50.496086120605469
 				},
 				{
-					"x" : 387.40130615234375,
+					"x" : 311.0616455078125,
 					"y" : 50.496086120605469
 				},
 				{
-					"x" : 387.40130615234375,
+					"x" : 311.0616455078125,
 					"y" : -50.496086120605469
 				},
 				{
-					"x" : -387.40130615234375,
+					"x" : -311.0616455078125,
 					"y" : -50.496086120605469
 				}
 			]
 		},
 		"BoxColliderEnabled" : true,
 		"CircleColliderEnabled" : false,
-		"CollidingEntity" : 20001,
 		"ResponseEnabled" : true
 	},
 	"Name" : "Spikes",
@@ -49,7 +48,7 @@
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : 0.0,
 		"RigidBodyAngularVelocity" : 0.0,
-		"RigidBodyArea" : 78249.0,
+		"RigidBodyArea" : 62829.58203125,
 		"RigidBodyBodyType" : 5,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
@@ -72,6 +71,7 @@
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
+		"SpriteColorA" : 0.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 0.0,
 		"SpriteColorZ" : 0.0,
@@ -84,18 +84,18 @@
 		"SpriteTextureIndex" : 0,
 		"SpriteTextureWidth" : 0,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 774.8026123046875,
+		"SpriteTransformScalingX" : 622.123291015625,
 		"SpriteTransformScalingY" : 100.99217224121094,
-		"SpriteTransformWorldPositionX" : 762.49127197265625,
-		"SpriteTransformWorldPositionY" : -434.69052124023438,
+		"SpriteTransformWorldPositionX" : 2117.92236328125,
+		"SpriteTransformWorldPositionY" : -430.82217407226562,
 		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 774.8026123046875,
+		"TransformScalingX" : 622.123291015625,
 		"TransformScalingY" : 100.99217224121094,
-		"TransformWorldPositionX" : 762.49127197265625,
-		"TransformWorldPositionY" : -434.69052124023438
+		"TransformWorldPositionX" : 2117.92236328125,
+		"TransformWorldPositionY" : -430.82217407226562
 	}
 }
