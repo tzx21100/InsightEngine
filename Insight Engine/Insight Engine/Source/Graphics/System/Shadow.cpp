@@ -9,10 +9,10 @@ namespace IS {
     void Shadow::setupShadowQuadMesh() {
         // Define the vertices of the quad as a triangle strip
         std::array<Mesh::Vertex, 4> vertices {
-            Mesh::Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
-            Mesh::Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
-            Mesh::Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) },
-            Mesh::Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) }
+            Mesh::Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+            Mesh::Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
+            Mesh::Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
+            Mesh::Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO

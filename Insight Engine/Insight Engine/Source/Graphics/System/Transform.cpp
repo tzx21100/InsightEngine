@@ -91,10 +91,10 @@ namespace IS {
 		// math variables used often
 		//float sin_angle = sinf(angle_rad);
 		//float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x * 2.f;
-		float model_scale_y = scaling.y * 2.f;
-		float tx = world_position.x * 2.f;
-		float ty = world_position.y * 2.f;
+		float model_scale_x = scaling.x / 2.f;
+		float model_scale_y = scaling.y / 2.f;
+		float tx = world_position.x;
+		float ty = world_position.y;
 
 		// Scaling matrix
 		glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(model_scale_x, model_scale_y, 1.0f));
@@ -128,8 +128,8 @@ namespace IS {
 		// math variables used often
 		float sin_angle = sinf(angle_rad);
 		float cos_angle = cosf(angle_rad);
-		float model_scale_x = scaling.x;
-		float model_scale_y = scaling.y;
+		float model_scale_x = scaling.x / 2.f;
+		float model_scale_y = scaling.y / 2.f;
 		float tx = world_position.x;
 		float ty = world_position.y;
 		
@@ -196,8 +196,8 @@ namespace IS {
 #endif // USING_IMGUI
 
 		// Get normalized device coordinates
-		float ndcX = static_cast<float>(xPos) / width - 0.5f;
-		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(yPos) / height - 0.5f);
+		float ndcX = static_cast<float>(2 * xPos) / width - 1.f;
+		float ndcY = (engine.mRenderGUI ? 1 : -1) * (static_cast<float>(2 * yPos) / height - 1.f);
 
 		glm::vec4 ndcCoords{ ndcX, ndcY, 1.f, 1.f };
 
@@ -208,6 +208,7 @@ namespace IS {
 		// Transform the ndcCoords to world coordinates using the inverse NDC transformation matrix.
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
 
+		IS_CORE_WARN("World mouse X: {}, Y: {}", worldPos.x, worldPos.y);
 		return { worldPos.x, worldPos.y };
 	}
 

@@ -75,7 +75,7 @@ namespace IS {
 	void Camera3D::Update()
 	{
 		// Update the view matrix and projection matrix of the Camera3D instance
-		mView = glm::lookAt(mPosition * 2.f, (mPosition * 2.f) + mFront, mUp);
+		mView = glm::lookAt(mPosition, mPosition + mFront, mUp);
 
 		switch (mProjectionType)
 		{
@@ -83,7 +83,7 @@ namespace IS {
 		{
 			InsightEngine& engine = InsightEngine::Instance();
 			auto [width, height] = engine.GetWindowSize();
-			float fWidth = static_cast<float>(width) / GetZoomLevel();
+			float fWidth = static_cast<float>(width) / GetZoomLevel() / 2.f;
 			float fHeight = fWidth / GetAspectRatio();
 			mProjection = glm::ortho(-fWidth, fWidth, -fHeight, fHeight, mNear, mFar);
 			break;

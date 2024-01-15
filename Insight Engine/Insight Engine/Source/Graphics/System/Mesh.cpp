@@ -42,10 +42,10 @@ namespace IS {
     void Mesh::setupInstanced3DQuadVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
-            Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
-            Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) },
-            Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) }
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
+            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
+            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -224,10 +224,10 @@ namespace IS {
     void Mesh::setupOutlineVAO() {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
-            Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
-            Vertex{ glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f) },
-            Vertex{ glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f) },
-            Vertex{ glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f) }
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
+            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) },
+            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -298,10 +298,10 @@ namespace IS {
  //   void Mesh::setupInstancedQuadVAO() {
  //       // Define the vertices of the quad as a triangle strip
  //       std::array<Vertex, 4> vertices{
- //           Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
- //           Vertex{glm::vec2(0.5f, -0.5f),  glm::vec2(1.f, 1.f)},
- //           Vertex{glm::vec2(-0.5f, 0.5f),  glm::vec2(0.0f, 0.0f)},
- //           Vertex{glm::vec2(0.5f, 0.5f),   glm::vec2(1.f, 0.0f)}
+ //           Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+ //           Vertex{glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f)},
+ //           Vertex{glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f)},
+ //           Vertex{glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f)}
  //       };
 
  //       // Generate a VAO handle to encapsulate the VBO
@@ -364,10 +364,10 @@ namespace IS {
 	//void Mesh::setupQuadVAO() {
  //       // Define the vertices of the quad as a triangle strip
  //       std::array<Vertex, 4> vertices{
- //           Vertex{glm::vec2(-0.5f, -0.5f), glm::vec2(0.0f, 1.f)},
- //           Vertex{glm::vec2(0.5f, -0.5f), glm::vec2(1.f, 1.f)},
- //           Vertex{glm::vec2(-0.5f, 0.5f), glm::vec2(0.0f, 0.0f)},
- //           Vertex{glm::vec2(0.5f, 0.5f), glm::vec2(1.f, 0.0f)}
+ //           Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+ //           Vertex{glm::vec2(1.0f, -1.0f), glm::vec2(1.f, 1.f)},
+ //           Vertex{glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+ //           Vertex{glm::vec2(1.0f, 1.0f), glm::vec2(1.f, 0.0f)}
  //       };
 
  //       // Generate a VAO handle to encapsulate the VBO
