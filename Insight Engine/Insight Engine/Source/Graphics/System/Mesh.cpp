@@ -111,8 +111,8 @@ namespace IS {
     void Mesh::setupInstancedLineVAO() {
         // Define the vertices of the quad as a triangle strip
         std::vector<glm::vec2> vertices = { // start horizontal
-            glm::vec2(-0.5f, 0.f),
-            glm::vec2(0.5f, 0.f)
+            glm::vec2(-1.f, 0.f),
+            glm::vec2(1.f, 0.f)
         };
 
         // Generate a VAO handle to encapsulate the VBO
