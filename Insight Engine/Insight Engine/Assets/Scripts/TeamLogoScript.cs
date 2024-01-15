@@ -11,24 +11,26 @@ namespace IS
         {
             entity_id = InternalCalls.GetCurrentEntityID();
             InternalCalls.SetLightToggleEntity(entity_id, is_lighted);
+            InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
         }
 
         static public void Update()
         {
-            /*//hovered
-            if (InternalCalls.GetButtonState() == 1)
-            {
-                //hovering
-                if (!first_hover)
-                {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
-                    first_hover = true;
-                }
+            if (ExitButtonScript.exit_confirmation) {
+                InternalCalls.ButtonComponentRemove(entity_id);
             }
             else
             {
-                first_hover = false;
-            }*/
+                if (!InternalCalls.ButtonComponentExists(entity_id))
+                {
+                    InternalCalls.ButtonComponentAdd(entity_id, 0.8f, 1.0f, 0.9f, 1.0f, 1.150f);
+                    InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
+                }
+            }
+
+            if (!InternalCalls.ButtonComponentExists(entity_id)) {
+                InternalCalls.TransformSetScale(684.29f, 286.05f);
+            }
 
             //click
             if (InternalCalls.GetButtonState() == 2)

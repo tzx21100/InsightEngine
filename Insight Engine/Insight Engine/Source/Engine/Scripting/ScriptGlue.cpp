@@ -855,6 +855,27 @@ namespace IS {
         return button_component.mIdleScale;
     }
 
+    static void ButtonComponentAdd(int entity,float idle_alpha, float hover_alpha, float click_alpha, float idle_scale, float hover_scale) {
+        if (!InsightEngine::Instance().HasComponent<ButtonComponent>(entity)) {
+            InsightEngine::Instance().AddComponent<ButtonComponent>(entity, ButtonComponent());
+            auto& button = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+            button.mSizeScale = 1.f;
+            button.mIdleAlpha = idle_alpha;
+            button.mHoverAlpha = hover_alpha;
+            button.mClickAlpha = click_alpha;
+            button.mIdleScale = idle_scale;
+            button.mHoverScale = hover_scale;
+        }
+    }
+
+    static bool ButtonComponentExists(int entity) {
+        return InsightEngine::Instance().HasComponent<ButtonComponent>(entity);
+    }
+    
+    static void ButtonComponentRemove(int entity) {
+        InsightEngine::Instance().RemoveComponent<ButtonComponent>(entity);
+    }
+
     static void RenderText(MonoString* text, float x, float y, float size, Vector3D color)
     {
         char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
@@ -1141,6 +1162,9 @@ namespace IS {
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);
+        IS_ADD_INTERNAL_CALL(ButtonComponentAdd);
+        IS_ADD_INTERNAL_CALL(ButtonComponentRemove);
+        IS_ADD_INTERNAL_CALL(ButtonComponentExists);
 
         //Entity Manipulations
         IS_ADD_INTERNAL_CALL(CreateEntity);

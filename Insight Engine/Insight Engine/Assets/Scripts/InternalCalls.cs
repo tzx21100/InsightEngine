@@ -140,6 +140,15 @@ namespace IS
         internal extern static int GetButtonState();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ButtonComponentAdd(int entity, float idle_alpha, float hover_alpha, float click_alpha, float idle_scale, float hover_scale);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ButtonComponentRemove(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool ButtonComponentExists(int entity);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntity(string str);         
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
