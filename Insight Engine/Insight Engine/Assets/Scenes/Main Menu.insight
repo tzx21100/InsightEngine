@@ -13,7 +13,7 @@
 			"Name" : "Background",
 			"Script" : 
 			{
-				"ScriptName" : "MenuButtonScript"
+				"ScriptName" : "MainMenuScript"
 			},
 			"Sprite" : 
 			{
@@ -53,7 +53,98 @@
 			{
 				"ScriptName" : "MainMenuBackgroundLight"
 			}
+		},
+		{
+			"ButtonComponent" : 
+			{
+				"ButtonClickAlpha" : 1.0,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.0,
+				"ButtonIdleAlpha" : 1.0,
+				"ButtonIdleScale" : 1.0,
+				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 0.0,
+					"Y" : 0.0
+				},
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
+				"ButtonType" : 0
+			},
+			"Light" : 
+			{
+				"LightHue" : 
+				{
+					"B" : 0.0,
+					"G" : 0.5058823823928833,
+					"R" : 1.0
+				},
+				"LightIntensity" : 1.0,
+				"LightOffset" : 
+				{
+					"X" : 5.0,
+					"Y" : 60.0
+				},
+				"LightRender" : true,
+				"LightSize" : 400.0
+			},
+			"Name" : "Team Logo",
+			"Script" : 
+			{
+				"ScriptName" : "TeamLogoScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 3,
+				"SpriteColorA" : 0.80000001192092896,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "team_logo.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 61,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 60,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 760.32000732421875,
+				"SpriteTransformScalingY" : 317.82998657226562,
+				"SpriteTransformWorldPositionX" : 768.32000732421875,
+				"SpriteTransformWorldPositionY" : -373.32998657226562,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 760.32000732421875,
+				"TransformScalingY" : 317.82998657226562,
+				"TransformWorldPositionX" : 768.32000732421875,
+				"TransformWorldPositionY" : -373.32998657226562
+			},
+			"ButtonComponent" : 
+			{
+				"ButtonClickAlpha" : 0.9,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.050,
+				"ButtonIdleAlpha" : 0.8,
+				"ButtonIdleScale" : 0.9,
+				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 0.0,
+					"Y" : 0.0
+				},
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
+				"ButtonType" : 0
+			}
 		}
 	],
-	"EntityAmount" : 2
+	"EntityAmount" : 3
 }
