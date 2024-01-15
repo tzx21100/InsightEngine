@@ -13,7 +13,7 @@
 			"Name" : "Background",
 			"Script" : 
 			{
-				"ScriptName" : "MenuButtonScript"
+				"ScriptName" : "MainMenuScript"
 			},
 			"Sprite" : 
 			{
@@ -32,8 +32,8 @@
 				"SpriteTextureIndex" : 35,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 1984.0,
-				"SpriteTransformScalingY" : 1260.0,
+				"SpriteTransformScalingX" : 1902.0,
+				"SpriteTransformScalingY" : 991.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : []
@@ -41,8 +41,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 1984.0,
-				"TransformScalingY" : 1260.0,
+				"TransformScalingX" : 1902.0,
+				"TransformScalingY" : 991.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
@@ -53,7 +53,80 @@
 			{
 				"ScriptName" : "MainMenuBackgroundLight"
 			}
+		},
+		{
+			"ButtonComponent" : 
+			{
+				"ButtonClickAlpha" : 0.89999997615814209,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.1499999761581421,
+				"ButtonIdleAlpha" : 0.80000001192092896,
+				"ButtonIdleScale" : 1.0,
+				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 684.28997802734375,
+					"Y" : 286.04998779296875
+				},
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
+				"ButtonType" : 0
+			},
+			"Light" : 
+			{
+				"LightHue" : 
+				{
+					"B" : 0.0,
+					"G" : 0.5058823823928833,
+					"R" : 1.0
+				},
+				"LightIntensity" : 1.0,
+				"LightOffset" : 
+				{
+					"X" : 5.0,
+					"Y" : 60.0
+				},
+				"LightRender" : false,
+				"LightSize" : 400.0
+			},
+			"Name" : "Team Logo",
+			"Script" : 
+			{
+				"ScriptName" : "TeamLogoScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 3,
+				"SpriteColorA" : 0.80000001192092896,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "team_logo.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 61,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 60,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 684.28997802734375,
+				"SpriteTransformScalingY" : 286.04998779296875,
+				"SpriteTransformWorldPositionX" : 768.32000732421875,
+				"SpriteTransformWorldPositionY" : -373.32998657226562,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 684.28997802734375,
+				"TransformScalingY" : 286.04998779296875,
+				"TransformWorldPositionX" : 768.32000732421875,
+				"TransformWorldPositionY" : -373.32998657226562
+			}
 		}
 	],
-	"EntityAmount" : 2
+	"EntityAmount" : 3
 }

@@ -74,9 +74,19 @@ namespace IS {
         float mHoverScale{ 1.f };
         bool mTransformUpdate = false;
 
-        ButtonComponent()
+        //ButtonComponent()
+        //{
+        //    // empty by design
+        //}
+
+        ButtonComponent() 
         {
-            // empty by design
+            mSizeScale = 1.f;
+            mIdleAlpha = 1.f;
+            mHoverAlpha = 1.f;
+            mClickAlpha = 1.f;
+            mIdleScale = 1.f;
+            mHoverScale = 1.f;
         }
 
         void followTransform(Transform const& trans) { mSize = trans.scaling; }
