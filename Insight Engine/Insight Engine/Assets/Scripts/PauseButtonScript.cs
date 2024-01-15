@@ -135,7 +135,7 @@ namespace IS
             {
                 pause_enable = !pause_enable;
                 ExitButtonScript.exit_confirmation = false;
-                HowToPlayScript.how_to_play_enable = false;
+                //HowToPlayScript.how_to_play_enable = false;
             }
 
             if (!InternalCalls.IsWindowFocused())
@@ -176,7 +176,7 @@ namespace IS
                     //click
                 }*/
                 InternalCalls.GamePause(true);
-                if (ExitButtonScript.exit_confirmation || HowToPlayScript.how_to_play_enable)
+                if (ExitButtonScript.exit_confirmation)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);

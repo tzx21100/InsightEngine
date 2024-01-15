@@ -109,7 +109,7 @@ namespace IS
 
             //InternalCalls.NativeLog("win_x: ", win_dimension.x);
             //InternalCalls.NativeLog("win_y: ", win_dimension.y);
-            if (ExitButtonScript.exit_confirmation || HowToPlayScript.how_to_play_enable) // if exit confirmation is active, move away the menu buttons
+            if (ExitButtonScript.exit_confirmation) // if exit confirmation is active, move away the menu buttons
             {
                 MoveAwayMenuButton();
             }
