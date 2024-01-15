@@ -13,7 +13,7 @@
 			"Name" : "Background",
 			"Script" : 
 			{
-				"ScriptName" : "MainMenuScript"
+				"ScriptName" : "HowToPlayScript"
 			},
 			"Sprite" : 
 			{
@@ -24,7 +24,7 @@
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "main_menu_bg.jpeg",
+				"SpriteFilename" : "how_to_play_bg.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
 				"SpriteTexture" : 36,
@@ -46,14 +46,7 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
-		},
-		{
-			"Name" : "Main Menu Light",
-			"Script" : 
-			{
-				"ScriptName" : "MainMenuBackgroundLight"
-			}
 		}
 	],
-	"EntityAmount" : 2
+	"EntityAmount" : 1
 }
