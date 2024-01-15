@@ -101,6 +101,8 @@ namespace IS
 
         static private Vector2D dash_dir = new Vector2D(0, 0);//dash dir
 
+        static public int entity_feet_raycast;
+
         //movement
         static private float acceleration = 0f;
         static private float acceleration_base = 50f;
@@ -187,13 +189,13 @@ namespace IS
             }
             initialDeath = true;
 
-            InternalCalls.TransformSetRotation(0f,0f);
+            InternalCalls.TransformSetRotation(0f,0f); // for now only
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
             else if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
-            if(isGrounded && !InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D)) { InternalCalls.RigidBodySetForceX(player_vel.x/1.2f); } // let player slide for abit
+            if(isGrounded && !InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D)) { InternalCalls.RigidBodySetForceX(player_vel.x/1.5f); } // let player slide for abit
             move_input = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
             
             if (move_input != 0)
