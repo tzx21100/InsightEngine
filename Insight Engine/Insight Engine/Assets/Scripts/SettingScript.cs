@@ -16,7 +16,6 @@
 using System.Runtime.CompilerServices;
 namespace IS
 {
-    //NOT USED
     class SettingScript
     {
         static public bool first_hovering = false;
