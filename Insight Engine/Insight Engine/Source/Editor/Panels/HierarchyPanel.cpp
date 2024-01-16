@@ -216,7 +216,9 @@ namespace IS {
                     ImGui::PopStyleColor();
                     ImGui::PopID();
                     ImGui::TableNextColumn();
+                    ImGui::BeginDisabled(!to_render[i]);
                     ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
+                    ImGui::EndDisabled();
                 }
             }, ImGuiTableFlags_BordersH);
 
