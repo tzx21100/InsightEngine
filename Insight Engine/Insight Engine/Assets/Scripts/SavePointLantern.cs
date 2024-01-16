@@ -27,7 +27,7 @@ namespace IS
         static private Vector2D my_position= new Vector2D(0,0);
 
         static public void Init(){
-            PlayerScript2.SAVE_POINT_ID = -1;
+            PlayerScript.SAVE_POINT_ID = -1;
             save_point = false;
             my_ID=InternalCalls.GetCurrentEntityID();
             lantern_off = InternalCalls.GetSpriteImage("Prop_Lantern_NoLights.png");
@@ -46,14 +46,14 @@ namespace IS
             my_position.y = InternalCalls.GetTransformPosition().y;
             if (InternalCalls.EntityCheckCollide(my_ID)) {
 
-                if (InternalCalls.GetCollidingEntityCheck(my_ID, PlayerScript2.player_id))
+                if (InternalCalls.GetCollidingEntityCheck(my_ID, PlayerScript.PLAYER_ID))
                 {
                     save_point = true;
-                    PlayerScript2.health = PlayerScript2.max_health;
-                    PlayerScript2.respawn_x = my_position.x;
-                    PlayerScript2.respawn_y = my_position.y;
+                    PlayerScript.Health = PlayerScript.Max_Health;
+                    PlayerScript.respawn_x = my_position.x;
+                    PlayerScript.respawn_y = my_position.y;
                     InternalCalls.SetSpriteImage(lantern_on);
-                    PlayerScript2.SAVE_POINT_ID = my_ID;
+                    PlayerScript.SAVE_POINT_ID = my_ID;
                 }
 
                 
@@ -62,7 +62,7 @@ namespace IS
             
             }
 
-            if(PlayerScript2.SAVE_POINT_ID!=my_ID)
+            if(PlayerScript.SAVE_POINT_ID!=my_ID)
             {
                 InternalCalls.AudioEmitterEnableEntity(false, my_ID);
                 save_point =false;
@@ -76,7 +76,7 @@ namespace IS
             if(save_point)
             {
 
-                if (Vector2D.Distance(my_position, PlayerScript2.player_pos) > 500f)
+                if (Vector2D.Distance(my_position, PlayerScript.player_pos) > 500f)
                 {
                     return;
                 }

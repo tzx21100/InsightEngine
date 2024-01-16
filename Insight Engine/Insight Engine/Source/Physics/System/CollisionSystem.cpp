@@ -47,9 +47,9 @@ namespace IS
 			return;
 		}
 
-		////Loop using Fixed DT
-		//for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
-		//{
+		//Loop using Fixed DT
+		for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+		{
 			for (int i = 0; i < 1; i++) {
 				// empty contact pair before going into collision step
 				mContactPair.clear();
@@ -68,7 +68,7 @@ namespace IS
 
 				mImplicitGrid.ClearGrid();
 			}
-		//}
+		}
 	}
 
 	void CollisionSystem::BroadPhase() 

@@ -54,31 +54,28 @@ namespace IS {
 
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
 
-        //Loop using Fixed DT
-        /*for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
-        {*/
-            if (InsightEngine::Instance().mRuntime == false) { return; }
-            mScriptDeltaTime = deltaTime;
-            auto& engine = InsightEngine::Instance();
-            for (auto& entity : mEntities) {
-                mEntityScriptCaller = entity;
-                auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
-                if (&scriptcomponent == nullptr) { continue; }
-                if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
-                if (scriptcomponent.instance != nullptr) {
-                    MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
-                    scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
 
-                }
-                if (mLoadScene) {
-                    mLoadScene = false;
-                    break;
-                }
-                if (InsightEngine::Instance().mRuntime == false) {
-                    break;
-                }
+        if (InsightEngine::Instance().mRuntime == false) { return; }
+        mScriptDeltaTime = deltaTime;
+        auto& engine = InsightEngine::Instance();
+        for (auto& entity : mEntities) {
+            mEntityScriptCaller = entity;
+            auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
+            if (&scriptcomponent == nullptr) { continue; }
+            if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
+            if (scriptcomponent.instance != nullptr) {
+                MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
+                scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
 
-            //}
+            }
+            if (mLoadScene) {
+                mLoadScene = false;
+                break;
+            }
+            if (InsightEngine::Instance().mRuntime == false) {
+                break;
+            }
+
         }
 
     }

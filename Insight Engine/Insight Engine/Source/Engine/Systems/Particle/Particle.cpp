@@ -39,64 +39,67 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
 
-        for (int id = 0; id < mParticleAmount;id++) {
-            //particles death
-            if (mParticleList[id].mLifespan <= 0) {
-                DeleteParticle(id);
-                continue;
-            }
 
-            if (mParticleList[id].mAlpha <= 0) {
-                DeleteParticle(id);
-                continue;
-            }
-                
-                
-            // particle types
-            switch (mParticleList[id].mParticleType) 
-            {
-            case pt_square:
-                Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
-                break;
-
-            case pt_circle:
-                for (int i = 0; i < 8; i++) {
-                    Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation +(i*45), mParticleList[id].mScale, {mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A});
+            for (int id = 0; id < mParticleAmount; id++) {
+                //particles death
+                if (mParticleList[id].mLifespan <= 0) {
+                    DeleteParticle(id);
+                    continue;
                 }
 
-                break;
+                if (mParticleList[id].mAlpha <= 0) {
+                    DeleteParticle(id);
+                    continue;
+                }
 
-            case pt_texture:
-                Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
-                break;            
-            
-            case pt_texture_frames:
-                //Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
-                Sprite::drawSpritesheetFrame(mParticleList[id].mRowIndex, mParticleList[id].mColIndex, mParticleList[id].mTotalRows, mParticleList[id].mTotalCols, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha,1);
-                break;
 
-            case pt_anim:
-                auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-                Image* img = system->GetImage(mParticleList[id].mImageName);
-                run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
-                break;
+                // particle types
+                switch (mParticleList[id].mParticleType)
+                {
+                case pt_square:
+                    Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
+                    break;
+
+                case pt_circle:
+                    for (int i = 0; i < 8; i++) {
+                        Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation + (i * 45), mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
+                    }
+
+                    break;
+
+                case pt_texture:
+                    Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                    break;
+
+                case pt_texture_frames:
+                    //Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                    Sprite::drawSpritesheetFrame(mParticleList[id].mRowIndex, mParticleList[id].mColIndex, mParticleList[id].mTotalRows, mParticleList[id].mTotalCols, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, 1);
+                    break;
+
+                case pt_anim:
+                    auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                    Image* img = system->GetImage(mParticleList[id].mImageName);
+                    run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
+                    break;
+                }
+                for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+                {
+                    //affectors
+                    mParticleList[id].mLifespan -= deltaTime;
+                    mParticleList[id].mParticlePos += mParticleList[id].mVelocity * deltaTime * DirectionToVector2D(mParticleList[id].mDirection);
+                    mParticleList[id].mScale.x += mParticleList[id].mSizeGrowth * deltaTime;
+                    mParticleList[id].mScale.y += mParticleList[id].mSizeGrowth * deltaTime;
+                    mParticleList[id].mAlpha += mParticleList[id].mAlphaGrowth * deltaTime;
+                }
             }
 
-            //affectors
-            mParticleList[id].mLifespan -= deltaTime;
-            mParticleList[id].mParticlePos += mParticleList[id].mVelocity * deltaTime * DirectionToVector2D(mParticleList[id].mDirection);
-            mParticleList[id].mScale.x += mParticleList[id].mSizeGrowth * deltaTime;
-            mParticleList[id].mScale.y += mParticleList[id].mSizeGrowth * deltaTime;
-            mParticleList[id].mAlpha += mParticleList[id].mAlphaGrowth * deltaTime;
+            for (auto const& emitters : mEntities) {
+                auto& emitter = engine.GetComponent<ParticleEmitter>(emitters);
+                for (int i = 0; i < emitter.mParticlesAmount; i++) {
+                    SpawnParticles(emitter.mParticle);
+                }
+            }
         }
-
-        for (auto const& emitters : mEntities) {
-            auto emitter= engine.GetComponent<ParticleEmitter>(emitters);
-            for (int i = 0; i < emitter.mParticlesAmount; i++) {
-                SpawnParticles(emitter.mParticle);
-            }
-        }   
-    }
 
     void ParticleSystem::HandleMessage(const Message& message) {
         if (message.GetType() == MessageType::DebugInfo) {

@@ -250,7 +250,7 @@ namespace IS {
     }
             
     static float GetDeltaTime() {
-        return static_cast<float>(InsightEngine::Instance().mDeltaTime);
+        return static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
     }
 
     static float GetFixedDeltaTime() {

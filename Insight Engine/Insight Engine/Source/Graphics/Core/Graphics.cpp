@@ -132,6 +132,7 @@ namespace IS {
                 engine.GetEditorLayer()->GetViewportSize().x > 0.f && engine.GetEditorLayer()->GetViewportSize().y > 0.f &&
                 (fb_width != engine.GetEditorLayer()->GetViewportSize().x || fb_height != engine.GetEditorLayer()->GetViewportSize().y))
             {
+                // yk mum gay
                 // resize framebuffer based on panel size
                 ResizeFramebuffer(static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().x),
                                   static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
