@@ -84,6 +84,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetDeltaTime();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetFixedDeltaTime();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetSpriteImage(SimpleImage image);

@@ -30,29 +30,34 @@ namespace IS {
     }
 
     void Animation::updateAnimation(float deltaTime) {
-        // Update function to advance the animation
-        frame_timer += deltaTime;
-        frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
-        time_per_frame = animation_duration / (x_frames * y_frames);
+        //Loop using Fixed DT
+        //deltaTime = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
+        /*for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+        {*/
+            // Update function to advance the animation
+            frame_timer += deltaTime;
+            frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
+            time_per_frame = animation_duration / (x_frames * y_frames);
 
-        if (time_per_frame == 0)
-            return;
+            if (time_per_frame == 0)
+                return;
 
-        while (frame_timer >= time_per_frame) {
-            frame_timer -= time_per_frame;
-            // go to next column
-            ++frame_index.x; 
+            while (frame_timer >= time_per_frame) {
+                frame_timer -= time_per_frame;
+                // go to next column
+                ++frame_index.x;
 
-            // after last column
-            if (frame_index.x >= x_frames) { 
-                // return to first 
-                frame_index.x = 0; 
-                // go to next row
-                ++frame_index.y; 
-                // after last frame, reset to first
-                if (frame_index.y >= y_frames) frame_index.y = 0; 
+                // after last column
+                if (frame_index.x >= x_frames) {
+                    // return to first 
+                    frame_index.x = 0;
+                    // go to next row
+                    ++frame_index.y;
+                    // after last frame, reset to first
+                    if (frame_index.y >= y_frames) frame_index.y = 0;
+                }
             }
-        }
+        //}
     }
 
     void Animation::drawNonEntityAnimation(float deltaTime, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {

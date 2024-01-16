@@ -621,6 +621,7 @@ namespace IS {
          */
         void PopOverlay(layer_type overlay);
 
+        int GetCurrentNumberOfSteps() { return currentNumberOfSteps; };
         //! Unique pointer to the Component Manager.
         std::unique_ptr<ComponentManager> mComponentManager;
 
@@ -634,7 +635,7 @@ namespace IS {
         std::shared_ptr<EditorLayer> GetEditorLayer() { return mEditorLayer; }
     #endif // USING_IMGUI
 
-        static int currentNumberOfSteps;
+        int currentNumberOfSteps = 0;
         double LimitFPS(double frame_start);
 
         //! Duration of the delta time between frames.
@@ -642,6 +643,10 @@ namespace IS {
 
         //! Counter for elapsed time since start of Engine.
         double mElapsedTime{ 0.0 };
+
+        //! Fixed delta time between frames
+        //std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
+        double mFixedDeltaTime{ 1.0 / 60.0 };
     private:
         //! Counter for the number of frames.
         unsigned mFrameCount = 0;
@@ -661,8 +666,6 @@ namespace IS {
         //! Pointer to the target frames per second for the game.
         int* mTargetFPS = nullptr;
 
-        //! Fixed delta time between frames
-        std::chrono::duration<float> mFixedDeltaTime{ 1.f / 60.f };
     #ifdef USING_IMGUI
         std::shared_ptr<ImGuiLayer> mImGuiLayer;
         std::shared_ptr<EditorLayer> mEditorLayer;

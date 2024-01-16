@@ -77,10 +77,10 @@ namespace IS {
 		else {
 			mTotalIterations = 10;
 		}*/
-
 		//Loop using Fixed DT
-		for (int step = 0; step < InsightEngine::currentNumberOfSteps; ++step)
-		{
+		//dt = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
+		/*for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+		{*/
 
 			// physics update iteration
 			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++)
@@ -91,7 +91,7 @@ namespace IS {
 
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
-		}
+		//}
 	}
 #if 0
 

@@ -47,24 +47,28 @@ namespace IS
 			return;
 		}
 
-		for (int i = 0; i < 1; i++) {
-			// empty contact pair before going into collision step
-			mContactPair.clear();
+		////Loop using Fixed DT
+		//for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+		//{
+			for (int i = 0; i < 1; i++) {
+				// empty contact pair before going into collision step
+				mContactPair.clear();
 
-			// add new entity inside grid
-			mImplicitGrid.AddIntoCell(mEntities);
+				// add new entity inside grid
+				mImplicitGrid.AddIntoCell(mEntities);
 
-			// Step update, collider update transform
-			Step();
+				// Step update, collider update transform
+				Step();
 
-			// Collision Detection
-			BroadPhase();
+				// Collision Detection
+				BroadPhase();
 
-			// Collision Resolution
-			NarrowPhase();
+				// Collision Resolution
+				NarrowPhase();
 
-			mImplicitGrid.ClearGrid();
-		}
+				mImplicitGrid.ClearGrid();
+			}
+		//}
 	}
 
 	void CollisionSystem::BroadPhase() 

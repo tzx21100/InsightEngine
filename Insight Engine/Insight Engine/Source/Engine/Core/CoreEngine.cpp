@@ -39,7 +39,7 @@ namespace IS {
 
     constexpr int DEFAULT_FPS(60);
 
-    int InsightEngine::currentNumberOfSteps = 0;
+    //int InsightEngine::currentNumberOfSteps = 0;
 
     //Basic constructor and setting base FPS to 60 if its not set by LimitFPS
     InsightEngine::InsightEngine() : mIsRunning(false), mLastRuntime(0) {
@@ -100,35 +100,42 @@ namespace IS {
         if (to_update)
             mSystemDeltas["Engine"] = elapsed_time = 0.f;
 
-        
-
+        //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
+        mDeltaTime = LimitFPS(frameStart) - frameStart;
+        currentNumberOfSteps = 0;
         accumulatedTime += mDeltaTime; //adding actual game loop time
-        mElapsedTime += mDeltaTime;
+        //mElapsedTime += mDeltaTime;
 
-        while (accumulatedTime >= 1.f/60.f) {
-            accumulatedTime -= 1.f / 60.f; //this will store the
+        while (accumulatedTime >= mFixedDeltaTime) {
+            accumulatedTime -= mFixedDeltaTime; //this will store the
             //exact accumulated time differences, among all game loops
             currentNumberOfSteps++;
+            if (currentNumberOfSteps > 3) { currentNumberOfSteps = 3; }
         }
-        currentNumberOfSteps = 1;
-        if (currentNumberOfSteps > 0) {
+        /*if (currentNumberOfSteps > 0) {
+            std::cout << "Number of steps: " << currentNumberOfSteps << std::endl;
+        }*/
+        //currentNumberOfSteps = 1;
+        //if (currentNumberOfSteps > 0) {
 
             // Update all systems
+        for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step){
             for (const auto& system : mSystemList)
             {
 
                 Timer timer(system->GetName() + " System", false);
-                system->Update((float)mDeltaTime);
+                system->Update(static_cast<float>(mFixedDeltaTime));
                 timer.Stop();
 
-                if (to_update && currentNumberOfSteps==1) {
+                if (to_update && currentNumberOfSteps == 1) {
                     mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
                     mSystemDeltas["Engine"] += timer.GetDeltaTime();
                 }
             }
-
-            currentNumberOfSteps = 0;
-        }
+    }
+    
+            //currentNumberOfSteps = 0;
+        //}
 
 
     #ifdef USING_IMGUI
@@ -142,8 +149,7 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
-        //by passing in the start time, we can limit the fps here by sleeping until the next loop and get the time after the loop
-        mDeltaTime = LimitFPS(frameStart)-frameStart;
+        
 
         ++mFrameCount;
     }
@@ -268,6 +274,7 @@ namespace IS {
 
     double InsightEngine::LimitFPS(double frame_start)
     {
+
         while (true)
         {
             double now = glfwGetTime();

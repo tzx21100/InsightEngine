@@ -250,7 +250,11 @@ namespace IS {
     }
             
     static float GetDeltaTime() {
-        return (float)InsightEngine::Instance().mDeltaTime;
+        return static_cast<float>(InsightEngine::Instance().mDeltaTime);
+    }
+
+    static float GetFixedDeltaTime() {
+        return static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
     }
 
     static void SetSpriteImage(SimpleImage image) {
@@ -1132,6 +1136,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetTransformRotation);
         IS_ADD_INTERNAL_CALL(GetTransformRotationEntity);
         IS_ADD_INTERNAL_CALL(GetDeltaTime);
+        IS_ADD_INTERNAL_CALL(GetFixedDeltaTime);
 
         // Images and Sprite
         IS_ADD_INTERNAL_CALL(SetSpriteImage);
