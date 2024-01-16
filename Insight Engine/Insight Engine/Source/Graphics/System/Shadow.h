@@ -10,16 +10,11 @@ namespace IS {
     public:
         enum shadowAttribs {
             pos_attrib,
-            tex_coord_attrib,
             color_attrib,
-            tex_index_attrib,
             x_form_row1_attrib, // shader only able to take in max 4 values at a time
             x_form_row2_attrib, // so we will have to break a 3x3 matrix into 3 vec3
             x_form_row3_attrib,
             x_form_row4_attrib,
-            anim_dim_attrib,
-            anim_index_attrib,
-            ent_ID_attrib,
             TL_coord_attrib,
             TR_coord_attrib,
             BR_coord_attrib,

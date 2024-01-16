@@ -9,10 +9,10 @@ namespace IS {
     void Shadow::setupShadowQuadMesh() {
         // Define the vertices of the quad as a triangle strip
         std::array<Mesh::Vertex, 4> vertices {
-            Mesh::Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
-            Mesh::Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
-            Mesh::Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
-            Mesh::Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) }
+            Mesh::Vertex{glm::vec2(-1.0f, -1.0f)},
+            Mesh::Vertex{ glm::vec2(1.0f, -1.0f)},
+            Mesh::Vertex{ glm::vec2(-1.0f, 1.0f),},
+            Mesh::Vertex{ glm::vec2(1.0f, 1.0f)}
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -26,11 +26,9 @@ namespace IS {
 
         // Enable attributes
         glEnableVertexArrayAttrib(shadowMesh.vao_ID, Mesh::pos_attrib);
-        glEnableVertexArrayAttrib(shadowMesh.vao_ID, Mesh::tex_coord_attrib);
 
         // Bind attributes
         glVertexAttribPointer(Mesh::pos_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Mesh::Vertex), 0);
-        glVertexAttribPointer(Mesh::tex_coord_attrib, 2, GL_FLOAT, GL_FALSE, sizeof(Mesh::Vertex), reinterpret_cast<GLvoid*>(offsetof(Mesh::Vertex, texCoord)));
 
         // Create Instance Buffer Object
         glCreateBuffers(1, &shadowMesh.instance_vbo_ID);
