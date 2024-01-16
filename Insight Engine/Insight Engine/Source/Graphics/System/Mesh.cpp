@@ -167,7 +167,7 @@ namespace IS {
 
         // Generate circle vertices using GL_LINE_LOOP
         const int segments = 50;
-        const float radius = 0.5f;
+        const float radius = 1.f;
         for (int i = 0; i < segments; i++) {
             float theta = static_cast<float>(i) / static_cast<float>(segments) * 2.0f * PI;
             float x = radius * std::cos(theta);
