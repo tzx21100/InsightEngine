@@ -352,7 +352,7 @@ namespace IS
             InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
             FloorCheckerUpdate();
-            Console.WriteLine(isGrounded);
+            //Console.WriteLine(isGrounded);
         }
 
         static public void CleanUp()
