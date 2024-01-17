@@ -260,12 +260,14 @@ namespace IS {
     static void SetSpriteImage(SimpleImage image) {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         Image a = ConvertToImage(image);
+        if (a.mFileName == sprite_component.img.mFileName) { return; }
         sprite_component.img = a;
     }    
     
     static void SetSpriteImageEntity(SimpleImage image,int entity) {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
         Image a = ConvertToImage(image);
+        if (a.mFileName == sprite_component.img.mFileName) { return; }
         sprite_component.img = a;
     }
 

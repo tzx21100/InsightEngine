@@ -88,7 +88,6 @@ void RegisterSystems() {
     auto insight_audio_emitter = std::make_shared<AudioEmitterSystem>();
     auto insight_asset = std::make_shared<AssetManager>();
     auto insight_physics = std::make_shared<Physics>();
-    auto insight_graphics = std::make_shared<ISGraphics>();
     auto insight_fsm = std::make_shared<AIFSMManager>();
     auto insight_scriptmanager = std::make_shared<ScriptManager>();
     auto insight_guisystem = std::make_shared<GuiSystem>();
@@ -97,7 +96,7 @@ void RegisterSystems() {
     auto insight_particle = std::make_shared <ParticleSystem> ();
     auto insight_category = std::make_shared<CategorySystem>();
     auto insight_statemanager = std::make_shared<StateManager>();
-
+    auto insight_graphics = std::make_shared<ISGraphics>();
 
     engine.AddSystem(insight_window, sign_default);
     engine.AddSystem(insight_input, sign_input);
@@ -106,7 +105,6 @@ void RegisterSystems() {
     engine.AddSystem(insight_asset, sign_default);
     engine.AddSystem(insight_physics, sign_physics);
     engine.AddSystem(insight_collision, sign_collision);
-    engine.AddSystem(insight_graphics, sign_graphics);
     engine.AddSystem(insight_fsm, sign_fsm);
     engine.AddSystem(insight_guisystem, sign_gui);
     engine.AddSystem(insight_pathfinding, sign_pathfinding);
@@ -116,6 +114,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_statemanager, sign_state);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
+    engine.AddSystem(insight_graphics, sign_graphics);
 
 }
 

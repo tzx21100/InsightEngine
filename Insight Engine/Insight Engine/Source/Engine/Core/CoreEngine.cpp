@@ -112,17 +112,22 @@ namespace IS {
 		for (const auto& system : mSystemList)
 		{
 			Timer timer(system->GetName() + " System", false);
-			system->Update(static_cast<float>(mFixedDeltaTime));
+			for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+			{
+				system->Update(static_cast<float>(mFixedDeltaTime));
+				system->Draw(static_cast<float>(mFixedDeltaTime));
+			}
 			timer.Stop();
 			mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
 			mSystemDeltas["Engine"] += timer.GetDeltaTime();
+			
 			//if (to_update && currentNumberOfSteps == 1) {
 
 			//}
 		}
 
 		//for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
-		//{
+					//{
 
 		//}
 
@@ -155,6 +160,9 @@ namespace IS {
 		}
 
 		++mFrameCount;
+
+		
+
 	}
 
 	// Moved all the engine stuff under this run function so we can have draw() load() etc. next time with a GSM
@@ -171,6 +179,7 @@ namespace IS {
 			window->SwapBuffers(); // swap buffers after all the rendering
 			ProcessEntityDeletion(); // destroy deleted entities
 			SceneManager::Instance().UpdateActiveScene(); // update active scene
+			
 		}
 		DestroyAllSystems();
 		mLayers.ClearStack();

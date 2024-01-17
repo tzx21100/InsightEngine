@@ -150,6 +150,7 @@ namespace IS {
     #endif // USING_IMGUI
 
             // for each entity
+
             for (auto& entity : mEntities) {
                 // get sprite and transform components
                 auto& sprite = engine.GetComponent<Sprite>(entity);
@@ -230,7 +231,9 @@ namespace IS {
             cameras3D[Camera3D::mActiveCamera].Update();
 
             // Graphics system's draw
-            Draw(delta_time);
+
+            //Draw(delta_time);
+            
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
