@@ -24,6 +24,7 @@
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 
+
 #include <stb_image.h>
 
 namespace IS {
@@ -53,7 +54,7 @@ namespace IS {
     std::vector<Image> ISGraphics::textures;
 
     // instance data containers
-    std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> ISGraphics::layeredQuadInstances;
+    std::multiset<Sprite::instanceData, Layering::GfxLayerComparator> ISGraphics::layeredQuadInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
     std::vector<Sprite::instanceData> ISGraphics::lightInstances;

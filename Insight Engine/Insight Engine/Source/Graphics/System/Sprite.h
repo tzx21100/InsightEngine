@@ -94,13 +94,6 @@ namespace IS {
             return "Invalid";
         }
 
-        // Unordered set insert comparator
-        struct GfxLayerComparator {
-            bool operator()(instanceData const& a, instanceData const& b) const {
-                return a.layer < b.layer;
-            }
-        };
-
         /*!
          * \brief Default constructor for the Sprite class.
          *

@@ -32,6 +32,7 @@
 #include "Graphics/System/Animation.h"
 #include "Graphics/System/Camera.h"
 #include "Graphics/System/Camera3D.h"
+#include "Graphics/System/Layering.h"
 
 #include "Graphics/Buffers/Framebuffer.h"
 
@@ -141,7 +142,7 @@ namespace IS {
 		static std::vector<Image> textures;
 
 		// instance data containers
-		static std::multiset<Sprite::instanceData, Sprite::GfxLayerComparator> layeredQuadInstances;
+		static std::multiset<Sprite::instanceData, Layering::GfxLayerComparator> layeredQuadInstances;
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 		static std::vector<Sprite::instanceData> lightInstances;

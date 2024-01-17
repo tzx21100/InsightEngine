@@ -51,6 +51,7 @@
     <ClCompile Include="Source\Graphics\System\Animation.cpp" />
     <ClCompile Include="Source\Graphics\System\Camera.cpp" />
     <ClCompile Include="Source\Graphics\System\Camera3D.cpp" />
+    <ClCompile Include="Source\Graphics\System\Layering.cpp" />
     <ClCompile Include="Source\Graphics\System\Light.cpp" />
     <ClCompile Include="Source\Graphics\System\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\System\Shader.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Source\Graphics\System\Animation.h" />
     <ClInclude Include="Source\Graphics\System\Camera.h" />
     <ClInclude Include="Source\Graphics\System\Camera3D.h" />
+    <ClInclude Include="Source\Graphics\System\Layering.h" />
     <ClInclude Include="Source\Graphics\System\Light.h" />
     <ClInclude Include="Source\Graphics\System\Mesh.h" />
     <ClInclude Include="Source\Graphics\System\Shader.h" />
