@@ -369,3 +369,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Insight Engine/Insight Engine/Assets/Scripts/PlayerScript2.cs

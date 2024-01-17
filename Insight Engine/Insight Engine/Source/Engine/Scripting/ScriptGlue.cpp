@@ -1077,9 +1077,30 @@ namespace IS {
         return false;
     }
 
+    static bool CompareEntityCategory(int entity_id, MonoString* string) {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(string); // Convert Mono string to char*
+        std::string tag(c_str);
+        mono_free(c_str);
+        auto& collider = engine.GetComponent<Collider>(entity_id);
+        for (Entity entity : collider.mCollidingEntity) {
+            auto& category = engine.GetComponent<Category>(entity);
+            if (category.mCategory == tag) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     static bool OnCollisionEnter() {
         auto& engine = InsightEngine::Instance();
         auto& collider = engine.GetComponent<Collider>(engine.GetScriptCaller());
+        return collider.mIsColliding;
+    }
+
+    static bool OnEntityCollisionEnter(int entity_id) {
+        auto& engine = InsightEngine::Instance();
+        auto& collider = engine.GetComponent<Collider>(entity_id);
         return collider.mIsColliding;
     }
 
@@ -1256,7 +1277,9 @@ namespace IS {
 
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
+        IS_ADD_INTERNAL_CALL(CompareEntityCategory);
         IS_ADD_INTERNAL_CALL(OnCollisionEnter);
+        IS_ADD_INTERNAL_CALL(OnEntityCollisionEnter);
         IS_ADD_INTERNAL_CALL(GetGravityScale);
         IS_ADD_INTERNAL_CALL(SetGravityScale);
 

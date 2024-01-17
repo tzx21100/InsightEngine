@@ -72,6 +72,8 @@ namespace IS
         static private int powerup_entity;
 
         static public int player_id;
+        static private float player_width;
+        static private float player_height;
 
         static public bool isGrounded = false;
 
@@ -101,15 +103,15 @@ namespace IS
 
         static private Vector2D dash_dir = new Vector2D(0, 0);//dash dir
 
-        static public int entity_feet_raycast;
+        static public int entity_feet;
 
         //movement
         static private float acceleration = 0f;
         static private float acceleration_base = 50f;
         static private float acceleration_increment = 10f;
         static private float max_acceleration = 100;
-        static private float max_speed = 900f;
-        static private float move_speed = 0f;
+        static private float max_speed = 800f;
+        static private float move_speed = 100f;
 
         static private int move_input;
         static private float gravity_scale;
@@ -160,6 +162,13 @@ namespace IS
 
             gravity_scale = InternalCalls.GetGravityScale();
 
+            // helper entity
+            entity_feet = InternalCalls.CreateEntity("FeetCollider");
+            InternalCalls.AddCollider(entity_feet);
+
+            player_width = InternalCalls.GetTransformScaling().x / 3f;
+            player_height = InternalCalls.GetTransformScaling().y;
+
             // camera
             InternalCalls.CameraSetZoom(1f);
 
@@ -189,7 +198,7 @@ namespace IS
             }
             initialDeath = true;
 
-            InternalCalls.TransformSetRotation(0f,0f); // for now only
+            //InternalCalls.TransformSetRotation(0f,0f); // for now only
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
@@ -211,9 +220,10 @@ namespace IS
 
             player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
             //transform.Translate(movement * 5 * Time.deltaTime);
-            InternalCalls.RigidBodyAddForce(move_input * 30, 0);
+            // moving left or right when A/D being pressed
+            InternalCalls.RigidBodyAddForce(move_input * move_speed, 0);
             if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y);}
-            if (MathF.Abs(player_vel.y) > max_speed) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * max_speed);}
+            if (MathF.Abs(player_vel.y) > jump_height) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jump_height);}
 
             CollisionEnterCheck();
 
@@ -241,7 +251,10 @@ namespace IS
                 {
                     InternalCalls.RigidBodySetForce(player_vel.x, 0f); //reset the vel otherwise double jump will be higher
                     InternalCalls.RigidBodyAddForce(0f, jump_height);
+                    // move the feet collider away otherwise it will check with the ground again when jumping
+                    InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, entity_feet);
                     isGrounded = false;
+                    //isJumping = true;
                     jumps_left -= 1;
                     //DoubleJumpEnable = !DoubleJumpEnable; // it change from false to true during first jumping, true to false during second jumping
                 }
@@ -255,7 +268,7 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale);
                 if (player_vel.y < 10f)
                 {
-                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier); // higher jump
+                    InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
                 }
                 else if(jumps_left != 1 /*not apply to first jump only*/ || 
                     player_vel.y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
@@ -316,7 +329,17 @@ namespace IS
                 isGrounded = false; // must have otherwise will stuck in the floor
                 
             }
-            
+
+            // Set the rotation to be the same as the detected one
+            float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
+            if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
+            {
+                InternalCalls.TransformSetRotation(collided_angle, 0);
+            }
+            else
+            {
+                InternalCalls.TransformSetRotation(0, 0);
+            }
 
             // camera
             target_pos.x = player_pos.x + move_input * CustomMath.min(200f, CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x));
@@ -327,8 +350,9 @@ namespace IS
 
             camera_pos = player_pos;
             InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
-
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
+            FloorCheckerUpdate();
+            Console.WriteLine(isGrounded);
         }
 
         static public void CleanUp()
@@ -343,12 +367,30 @@ namespace IS
 
         public static void CollisionEnterCheck()
         {
+            // when feet collider colliding
+            /*if (InternalCalls.OnEntityCollisionEnter(entity_feet))
+            {
+                // check with ground
+                if (InternalCalls.CompareEntityCategory(entity_feet, "Ground"))
+                {
+                    isGrounded = true;
+                    canDash = true;
+                    //isJumping = false;
+                }
+                else
+                {
+                    isGrounded = false;
+                }
+            }*/
+
+            // when player itself colliding
             if (InternalCalls.OnCollisionEnter())
             {
                 if (InternalCalls.CompareCategory("Ground"))
                 {
                     isGrounded = true;
                     canDash = true;
+                    //isJumping = false;
                 }
                 else
                 {
@@ -460,6 +502,41 @@ namespace IS
                 }
 
             }
+        }
+
+        static public void FloorCheckerUpdate()
+        {
+            //Player x y coord
+            /*xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;*/
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            float distanceBelow = player_height / 2.1f;
+
+            Vector2D relativePosition = new Vector2D(0, distanceBelow);
+
+            // Apply rotation to the relative position
+            // Rotation matrix in 2D: [cos(theta), -sin(theta); sin(theta), cos(theta)]
+            Vector2D rotatedRelativePosition = new Vector2D(
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) - relativePosition.y * CustomMath.Cos(angleRadians))
+                );
+
+
+            // Calculate the absolute position for the floor checker
+            Vector2D checkerPosition = new Vector2D(
+                player_pos.x + rotatedRelativePosition.x,
+                player_pos.y + rotatedRelativePosition.y
+            );
+
+            // Set the floor checker's position
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_feet);
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entity_feet);
+            InternalCalls.TransformSetScaleEntity(player_width / 1.8f, 2f, entity_feet);
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), 0, new SimpleVector2D(player_width / 1.8f, 2f), player_reward_dash, 1f, 4
+                );
         }
 
     } //player script
