@@ -79,15 +79,14 @@ namespace IS {
 		}*/
 		//Loop using Fixed DT
 		//dt = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
-
-
+		for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+		{
 			// physics update iteration
-			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++)
-			{
+
 				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 				Step(dt, mEntities);
-			}
-
+			
+		}
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
 		

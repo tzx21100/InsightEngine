@@ -307,7 +307,7 @@ namespace IS {
             std::ostringstream render_text;
             render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << '\n';
             render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
-
+                
             // Render Text
             Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
