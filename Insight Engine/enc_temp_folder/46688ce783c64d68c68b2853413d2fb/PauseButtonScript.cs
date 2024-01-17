@@ -61,7 +61,7 @@ namespace IS
             pause_enable = false;
 
             // Pause Menu
-            pause_menu_image    = InternalCalls.GetSpriteImage("pause_menu_image.png");
+            pause_menu_image    = InternalCalls.GetSpriteImage("paused_menu_image.png");
             resume_image        = InternalCalls.GetSpriteImage("resume_game_button.png");
             how_to_play_image   = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
             //setting_image     = InternalCalls.GetSpriteImage("button_frame.png");
