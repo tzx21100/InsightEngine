@@ -102,7 +102,7 @@ namespace IS
 
             // Dimensions
             InternalCalls.TransformSetScale(0.04f * win_dimension.x, 0.07f * win_dimension.y);
-            InternalCalls.TransformSetScaleEntity(0.85f * win_dimension.x, 0.75f * win_dimension.y, pause_menu_entity);
+            InternalCalls.TransformSetScaleEntity(1.15f * win_dimension.x, 1.05f * win_dimension.y, pause_menu_entity);
             InternalCalls.SetButtonSize(resume_entity, new SimpleVector2D(0.21f * win_dimension.x, 0.12f * win_dimension.y));
             InternalCalls.SetButtonSize(how_to_play_entity, new SimpleVector2D(0.15f * win_dimension.x, 0.09f * win_dimension.y));
             //InternalCalls.TransformSetScaleEntity(450f, 150f, setting_entity);
@@ -135,7 +135,7 @@ namespace IS
             {
                 pause_enable = !pause_enable;
                 ExitButtonScript.exit_confirmation = false;
-                HowToPlayScript.how_to_play_enable = false;
+                HowToPlayScript.show_how_to_play = false;
             }
 
             if (!InternalCalls.IsWindowFocused())
@@ -176,7 +176,7 @@ namespace IS
                     //click
                 }*/
                 InternalCalls.GamePause(true);
-                if (ExitButtonScript.exit_confirmation || HowToPlayScript.how_to_play_enable)
+                if (ExitButtonScript.exit_confirmation || HowToPlayScript.show_how_to_play)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);
