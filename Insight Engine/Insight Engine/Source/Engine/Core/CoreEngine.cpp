@@ -141,7 +141,7 @@ namespace IS {
 		}
 #endif // USING_IMGUI
 
-		mDeltaTime = glfwGetTime() - frameStart;
+		mDeltaTime = LimitFPS(frameStart) - frameStart;
 
 		currentNumberOfSteps = 0;
 		accumulatedTime += mDeltaTime; //adding actual game loop time
