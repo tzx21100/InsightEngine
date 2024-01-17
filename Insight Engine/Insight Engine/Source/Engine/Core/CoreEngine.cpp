@@ -150,7 +150,7 @@ namespace IS {
 		mDeltaTime = LimitFPS(frameStart) - frameStart;
 
 		currentNumberOfSteps = 0;
-		double min_delta = 1.0 / 240.0;
+		double min_delta = 1.0 / 800.0;
 		accumulatedTime += std::max(mDeltaTime,min_delta); //adding actual game loop time
 		//mElapsedTime += mDeltaTime;
 
