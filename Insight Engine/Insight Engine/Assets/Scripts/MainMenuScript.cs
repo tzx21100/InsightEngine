@@ -1,3 +1,16 @@
+/*!
+ * \file MainMenuScript.cs
+ * \author Wu Zekai, zekai.wu@digipen.edu (60%), Matthew Ng, matthewdeen.ng@digipen.edu (40%)
+ * \par Course: CSD2451
+ * \brief
+ * This c# file contains the MainMenuScript class, used for main menu of the game
+ *
+ * \copyright
+ * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 using System;
 using System.Runtime.CompilerServices;
 namespace IS
@@ -37,9 +50,9 @@ namespace IS
 
             game_title_entity = InternalCalls.CreateEntityUI("Game Title", game_title_image);
             start_button_entity = InternalCalls.CreateEntityButtonNoText("Start Button", start_button_image, "StartButtonScript"); //look thru
-            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Settings Button", settings_button_image, "SettingsButtonScript"); //done for now
-            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How To Play Button", how_to_play_button_image, "HowToPlayButtonScript");
-            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", exit_button_image, "ExitButtonScript"); //ok for now
+            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Settings Button", settings_button_image, "SettingsScript"); //done for now
+            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How To Play Button", how_to_play_button_image, "HowToPlayScript"); //done
+            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", exit_button_image, "ExitButtonScript"); //done
         }
 
         static public void Update()
@@ -67,7 +80,7 @@ namespace IS
             how_to_play_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.34f * win_dimension.y));
             exit_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
 
-            if (ExitButtonScript.exit_confirmation)
+            if (SettingsScript.show_settings || HowToPlayScript.show_how_to_play || ExitButtonScript.exit_confirmation)
             {
                 HideMenuButtons();
             }
