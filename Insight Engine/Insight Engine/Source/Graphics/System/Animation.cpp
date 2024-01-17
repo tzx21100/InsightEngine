@@ -30,51 +30,59 @@ namespace IS {
     }
 
     void Animation::updateAnimation(float deltaTime) {
-        //Loop using Fixed DT
-        //deltaTime = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
-        // Update function to advance the animation
-        frame_timer += deltaTime;
-        frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
-        time_per_frame = animation_duration / (x_frames * y_frames);
+        for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+        {
+            //Loop using Fixed DT
+            //deltaTime = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
+            // Update function to advance the animation
+            frame_timer += deltaTime;
+            frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
+            time_per_frame = animation_duration / (x_frames * y_frames);
 
-        if (time_per_frame == 0)
-            return;
+            if (time_per_frame == 0)
+                return;
 
-        while (frame_timer >= time_per_frame) {
-            frame_timer -= time_per_frame;
-            // go to next column
-            ++frame_index.x;
+            while (frame_timer >= time_per_frame) {
+                frame_timer -= time_per_frame;
+                // go to next column
+                ++frame_index.x;
 
-            // after last column
-            if (frame_index.x >= x_frames) {
-                // return to first 
-                frame_index.x = 0;
-                // go to next row
-                ++frame_index.y;
-                // after last frame, reset to first
-                if (frame_index.y >= y_frames) frame_index.y = 0;
+                // after last column
+                if (frame_index.x >= x_frames) {
+                    // return to first 
+                    frame_index.x = 0;
+                    // go to next row
+                    ++frame_index.y;
+                    // after last frame, reset to first
+                    if (frame_index.y >= y_frames) frame_index.y = 0;
+                }
             }
         }
+        
     }
 
     void Animation::drawNonEntityAnimation(float deltaTime, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
-        this->updateAnimation(deltaTime);
+        for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+        {
+            this->updateAnimation(deltaTime);
 
-        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
 
-            Transform quadTRS(pos, rotation, scale);
-            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+                Transform quadTRS(pos, rotation, scale);
+                glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
 
-            Sprite::instanceData instData;
-            instData.color = { 1.f, 1.f, 1.f, alpha };
-            instData.tex_index = static_cast<float>(texture.texture_index);
-            instData.model_to_ndc_xform = world_to_NDC_xform;
-            instData.layer = layer;
-            instData.anim_frame_dimension = this->frame_dimension;
-            instData.anim_frame_index = this->frame_index;
+                Sprite::instanceData instData;
+                instData.color = { 1.f, 1.f, 1.f, alpha };
+                instData.tex_index = static_cast<float>(texture.texture_index);
+                instData.model_to_ndc_xform = world_to_NDC_xform;
+                instData.layer = layer;
+                instData.anim_frame_dimension = this->frame_dimension;
+                instData.anim_frame_index = this->frame_index;
 
-            ISGraphics::layeredQuadInstances.insert(instData);
-        }
+                ISGraphics::layeredQuadInstances.insert(instData);
+
+            }
+        }   
     }
 
     float Animation::getFrameWidth() const {

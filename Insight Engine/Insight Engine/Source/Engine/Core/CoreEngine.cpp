@@ -34,6 +34,7 @@
 
 #include <iostream>
 #include <thread>
+#include <algorithm>
 
 namespace IS {
 
@@ -89,7 +90,7 @@ namespace IS {
 
 		//i get the start time 
 		//auto frameStart = std::chrono::high_resolution_clock::now();
-		auto frameStart = glfwGetTime();
+		double frameStart = glfwGetTime();
 
 		// Update System deltas every 1s
 		static const float UPDATE_FREQUENCY = 1.f;
@@ -106,24 +107,24 @@ namespace IS {
 			std::cout << "Number of steps: " << currentNumberOfSteps << std::endl;
 		}*/
 		//currentNumberOfSteps = 1;
-		//if (currentNumberOfSteps > 0) {
-		
-		// Update all systems
-		for (const auto& system : mSystemList)
-		{
-			Timer timer(system->GetName() + " System", false);
-			for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
+		if (currentNumberOfSteps > 0) {
+
+			// Update all systems
+			for (const auto& system : mSystemList)
 			{
+				Timer timer(system->GetName() + " System", false);
+
 				system->Update(static_cast<float>(mFixedDeltaTime));
 				system->Draw(static_cast<float>(mFixedDeltaTime));
-			}
-			timer.Stop();
-			mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
-			mSystemDeltas["Engine"] += timer.GetDeltaTime();
-			
-			//if (to_update && currentNumberOfSteps == 1) {
 
-			//}
+				timer.Stop();
+				mSystemDeltas[system->GetName()] = timer.GetDeltaTime();
+				mSystemDeltas["Engine"] += timer.GetDeltaTime();
+
+				//if (to_update && currentNumberOfSteps == 1) {
+
+				//}
+			}
 		}
 
 		//for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
@@ -149,14 +150,15 @@ namespace IS {
 		mDeltaTime = LimitFPS(frameStart) - frameStart;
 
 		currentNumberOfSteps = 0;
-		accumulatedTime += mDeltaTime; //adding actual game loop time
+
+		accumulatedTime += mDeltaTime;
 		//mElapsedTime += mDeltaTime;
 
 		while (accumulatedTime >= mFixedDeltaTime) {
 			accumulatedTime -= mFixedDeltaTime; //this will store the
 			//exact accumulated time differences, among all game loops
 			currentNumberOfSteps++;
-			//if (currentNumberOfSteps > 3) { currentNumberOfSteps = 3; }
+
 		}
 
 		++mFrameCount;

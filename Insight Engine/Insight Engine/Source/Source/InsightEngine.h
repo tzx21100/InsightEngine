@@ -110,8 +110,8 @@ void RegisterSystems() {
     engine.AddSystem(insight_pathfinding, sign_pathfinding);
     engine.AddSystem(insight_particle, sign_particle);
     engine.AddSystem(insight_category, sign_category);
-    engine.AddSystem(insight_scriptmanager, sign_script);
     engine.AddSystem(insight_statemanager, sign_state);
+    engine.AddSystem(insight_scriptmanager, sign_script);
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
     engine.AddSystem(insight_graphics, sign_graphics);
