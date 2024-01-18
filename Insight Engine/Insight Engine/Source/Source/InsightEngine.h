@@ -93,7 +93,7 @@ void RegisterSystems() {
     auto insight_guisystem = std::make_shared<GuiSystem>();
     auto insight_pathfinding = std::make_shared<Pathfinding>();
     auto insight_collision = std::make_shared<CollisionSystem>();
-    auto insight_particle = std::make_shared <ParticleSystem> ();
+    auto insight_particle = std::make_shared <ParticleSystem>();
     auto insight_category = std::make_shared<CategorySystem>();
     auto insight_statemanager = std::make_shared<StateManager>();
     auto insight_graphics = std::make_shared<ISGraphics>();
@@ -112,7 +112,7 @@ void RegisterSystems() {
     engine.AddSystem(insight_particle, sign_particle);
     engine.AddSystem(insight_category, sign_category);
     engine.AddSystem(insight_statemanager, sign_state);
-    
+
     auto insight_gameloop = std::make_shared<GameLoop>(); // Always added last
     engine.AddSystem(insight_gameloop, sign_default);
     engine.AddSystem(insight_graphics, sign_graphics);
