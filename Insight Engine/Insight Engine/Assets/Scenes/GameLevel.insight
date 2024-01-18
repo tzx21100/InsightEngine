@@ -1184,15 +1184,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-<<<<<<< Updated upstream
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.026399778202176094,
-=======
-						"frame_index_x" : 5.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.076399780809879303,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1261,15 +1255,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.044616196304559708,
-=======
-						"frame_index_x" : 4.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.094616197049617767,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2163,15 +2151,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.014852449297904968,
-=======
-						"frame_index_x" : 3.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.064844712615013123,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2340,15 +2322,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-<<<<<<< Updated upstream
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.12863641977310181,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.01196974515914917,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -5694,33 +5670,6 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-<<<<<<< Updated upstream
-=======
-						"frame_index_x" : 9.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.050188589841127396,
-						"time_per_frame" : 0.083333335816860199,
-						"x_frames" : 12,
-						"y_frames" : 1
-					},
-					{
-						"Name" : "",
-						"animation_duration" : 1.0,
-						"frame_dimension_x" : 0.083333335816860199,
-						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038083914667367935,
-						"time_per_frame" : 0.083333335816860199,
-						"x_frames" : 12,
-						"y_frames" : 1
-					},
-					{
-						"Name" : "",
-						"animation_duration" : 1.0,
-						"frame_dimension_x" : 0.083333335816860199,
-						"frame_dimension_y" : 1.0,
->>>>>>> Stashed changes
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.0,
@@ -6138,15 +6087,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-<<<<<<< Updated upstream
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.026399778202176094,
-=======
-						"frame_index_x" : 5.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.076399780809879303,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -7824,13 +7767,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.017749110236763954,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.067749112844467163,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7877,13 +7815,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.017749110236763954,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.067749112844467163,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7930,13 +7863,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.017749110236763954,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.067749112844467163,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7983,13 +7911,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.017749110236763954,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.067749112844467163,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8036,13 +7959,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.017749110236763954,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.067749112844467163,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8089,13 +8007,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 4.0,
 						"frame_timer" : 0.024263488128781319,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.074263490736484528,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8141,15 +8054,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.034758683294057846,
-=======
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0014253482222557068,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8195,15 +8102,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.037270274013280869,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0039369389414787292,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8250,13 +8151,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.02332502044737339,
-=======
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.073325023055076599,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8302,15 +8198,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.071920678019523621,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.038587342947721481,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8357,13 +8247,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 2.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 2.0,
 						"frame_timer" : 0.030209409072995186,
-=======
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.080209411680698395,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8409,15 +8294,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.074293680489063263,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.040960345417261124,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8463,15 +8342,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.061140462756156921,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.027807125821709633,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8517,15 +8390,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 5.0,
 						"frame_timer" : 0.050426214933395386,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.017092877998948097,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8572,13 +8439,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 2.0,
 						"frame_timer" : 0.010184489190578461,
-=======
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.060184493660926819,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8624,15 +8486,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 2.0,
 						"frame_timer" : 0.072233393788337708,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.038900058716535568,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8678,15 +8534,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.050261378288269043,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.016928041353821754,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8732,15 +8582,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 5.0,
 						"frame_timer" : 0.077969916164875031,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.044636581093072891,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8787,13 +8631,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.032761514186859131,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.082753777503967285,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8840,13 +8679,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.0036201700568199158,
-=======
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.053620174527168274,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8893,13 +8727,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 5.0,
 						"frame_timer" : 0.02885119803249836,
-=======
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.078851200640201569,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8946,13 +8775,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 4.0,
 						"frame_timer" : 0.021335581317543983,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.071335583925247192,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8999,13 +8823,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.0015451759099960327,
-=======
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.051545180380344391,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -9052,13 +8871,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 0.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 2.0,
 						"frame_timer" : 0.028186598792672157,
-=======
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.078186601400375366,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9104,15 +8918,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.047329526394605637,
-=======
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.013996191322803497,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9158,15 +8966,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.042935002595186234,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.0096016675233840942,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9213,13 +9015,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.032761514186859131,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.082753777503967285,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9266,13 +9063,8 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-<<<<<<< Updated upstream
 						"frame_index_y" : 3.0,
 						"frame_timer" : 0.032761514186859131,
-=======
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.082753777503967285,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9409,15 +9201,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.071045361459255219,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.037712026387453079,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9554,15 +9340,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.050589278340339661,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017255941405892372,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -10003,15 +9783,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-<<<<<<< Updated upstream
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.071045361459255219,
-=======
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.037712026387453079,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -10148,15 +9922,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-<<<<<<< Updated upstream
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
 						"frame_timer" : 0.036843042820692062,
-=======
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0035097077488899231,
->>>>>>> Stashed changes
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
 						"y_frames" : 3
