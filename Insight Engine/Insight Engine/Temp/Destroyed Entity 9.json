@@ -1,0 +1,57 @@
+{
+	"ButtonComponent" : 
+	{
+		"ButtonClickAlpha" : 0.89999997615814209,
+		"ButtonHoverAlpha" : 1.0,
+		"ButtonHoverScale" : 1.0499999523162842,
+		"ButtonIdleAlpha" : 0.80000001192092896,
+		"ButtonIdleScale" : 0.89999997615814209,
+		"ButtonImageName" : "",
+		"ButtonSize" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"ButtonState" : 0,
+		"ButtonText" : "yes",
+		"ButtonTextScale" : 0.89999997615814209,
+		"ButtonType" : 0
+	},
+	"Name" : "Yes Button",
+	"Script" : 
+	{
+		"ScriptName" : "YesButtonScript"
+	},
+	"Signature" : "00000000000000000000000001100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 0.80000001192092896,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "yes_button.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 72,
+		"SpriteTextureHeight" : 442,
+		"SpriteTextureIndex" : 71,
+		"SpriteTextureWidth" : 1256,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 0.0,
+		"SpriteTransformScalingY" : 0.0,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 0.0,
+		"TransformScalingY" : 0.0,
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 0.0
+	}
+}
