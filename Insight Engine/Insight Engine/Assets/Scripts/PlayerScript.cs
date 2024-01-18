@@ -123,6 +123,8 @@ namespace IS
         static private float dashSpeed = 5000f;
 
         static public bool isGrounded;
+        static public bool isFirstGrounded = false;
+        static public Vector2D player_ground_pos = new Vector2D(0, 0);
         static private Vector2D apply_force = new Vector2D(0, 0);//dash dir
 
 
@@ -137,6 +139,8 @@ namespace IS
         static private float move_speed = 0f;
 
         static private int hori_movement;
+        static private float gravity_scale;
+        static private float fall_multiplier = 2f;
 
         // climbing
         static private bool isClimbing = false;
@@ -227,6 +231,9 @@ namespace IS
             InternalCalls.CreateAnimationFromSpriteEntity(2, 6, 0.9f, powerup_entity);
 
             InternalCalls.TransformSetScale(200f, 180f);
+
+            // init gravity scale
+            gravity_scale = InternalCalls.GetGravityScale();
 
         }
 
@@ -428,8 +435,8 @@ namespace IS
             Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
-            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
-            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
+            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
 
 
             /*            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
@@ -570,13 +577,20 @@ namespace IS
                 && InternalCalls.GetCollidingEntity(entity_feet) != SAVE_POINT_ID && !InternalCalls.CollidingObjectIsSpikes(InternalCalls.GetCollidingEntity(entity_feet))
                  && !InternalCalls.CollidingObjectTypeIsGhost(InternalCalls.GetCollidingEntity(entity_feet)))
             {
-
                 isGrounded = true;
-
+                // make player not slide when on slope
+                if (!isFirstGrounded)
+                {
+                    isFirstGrounded = true;
+                    player_ground_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+                }
+                // let player rest and stop sliding when grounding
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping) { InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y); }
             }
             else
             {
                 isGrounded = false;
+                isFirstGrounded = false;
             }
 
 
@@ -611,7 +625,7 @@ namespace IS
                     Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
                     //set move speed when grounded
 
-                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
+                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
 
                     // Set the rotation to be the same as the detected one
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
@@ -635,6 +649,7 @@ namespace IS
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
+                    ApplyGravityChange();
 
                     int frame = InternalCalls.GetCurrentAnimationEntity(PLAYER_ID);
                     if ((frame==2 || frame == 8) && hori_movement != 0 && frame!=previous_footstep_frame) {
@@ -666,9 +681,10 @@ namespace IS
                         jump_amount--;
                     }
                 }
+                ApplyGravityChange();
 
                 Xforce += hori_movement * move_speed;
-                InternalCalls.RigidBodyAddForce(Xforce * InternalCalls.GetDeltaTime(), Yforce * InternalCalls.GetDeltaTime());
+                InternalCalls.RigidBodyAddForce(Xforce, Yforce);
                 if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > 700)
                 {
                     InternalCalls.RigidBodySetForceX(700 * hori_movement);
@@ -687,6 +703,7 @@ namespace IS
             }
             if (isDashing) {
                 isGrounded = false;
+                isFirstGrounded = false;
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer -= InternalCalls.GetDeltaTime();
@@ -810,6 +827,23 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(100 * -hori_movement, 100, jump_entity);
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
+
+            
+        }
+
+        static private void ApplyGravityChange()
+        {
+            // update the player's gravity scale to make them fall faster
+            InternalCalls.SetGravityScale(gravity_scale);
+            if (InternalCalls.RigidBodyGetVelocity().y < 10f)
+            {
+                InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
+            }
+            else if (jump_amount != 1 /*not apply to first jump only*/ ||
+                InternalCalls.RigidBodyGetVelocity().y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
+            {
+                InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
+            }
         }
 
         static private void FloorCheckerUpdate()
