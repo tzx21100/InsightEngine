@@ -109,7 +109,7 @@ namespace IS
         static private float jump_timer_set = 0.2f;
         static private bool isJumping = false;
         static private bool initial_land = false;
-        static private float jumpHeight = 1000f;
+        static private float jumpHeight = 1200f;
 
         //dashing 
         static public float bullet_time_timer = 1f;
@@ -135,8 +135,8 @@ namespace IS
         static private float acceleration_base = 50f;
         static private float acceleration_increment = 10f;
         static private float max_acceleration = 100;
-        static private float max_speed = 700f;
-        static private float move_speed = 0f;
+        static private float max_speed = 950f;
+        static private float move_speed = 950f;
 
         static private int hori_movement;
         static private float gravity_scale;
@@ -156,6 +156,7 @@ namespace IS
         // player pos
         static public Vector2D player_pos = new Vector2D(0, 0);
         static private Vector2D trans_scaling = new Vector2D(0, 0);
+        static public Vector2D player_vel = new Vector2D(0, 0);
 
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
@@ -213,7 +214,7 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1.2f);
+            InternalCalls.CameraSetZoom(1.1f);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -455,8 +456,8 @@ namespace IS
                 {
                     acceleration += acceleration_increment;
                     if (acceleration > max_acceleration) { acceleration = max_acceleration; }
-                    move_speed += acceleration;
-                    if (move_speed > max_speed) { move_speed = max_speed; }
+                    /*move_speed += acceleration;
+                    if (move_speed > max_speed) { move_speed = max_speed; }*/
 
                     InternalCalls.SetSpriteAnimationIndex(0);
                     InternalCalls.SetSpriteImage(player_walk);
@@ -464,10 +465,10 @@ namespace IS
                 }
                 else
                 {
-                    move_speed -= acceleration;
+                    //move_speed -= acceleration;
                     acceleration -= acceleration_increment;
                     if (acceleration < acceleration_base) { acceleration = acceleration_base; }
-                    if (move_speed < 0) { move_speed = 0; }
+                    //if (move_speed < 0) { move_speed = 0; }
 
 
                     InternalCalls.SetSpriteAnimationIndex(1);
@@ -585,7 +586,10 @@ namespace IS
                     player_ground_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
                 }
                 // let player rest and stop sliding when grounding
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping) { InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y); }
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping) { 
+                    InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y); 
+                    InternalCalls.RigidBodySetForce(0f, 0f); 
+                }
             }
             else
             {
@@ -624,8 +628,10 @@ namespace IS
                     /*                if (hori_movement != 0) {aangle+=180f; }*/
                     Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
                     //set move speed when grounded
-
-                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
+                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
+                    
+                    //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
+                    
 
                     // Set the rotation to be the same as the detected one
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
@@ -645,6 +651,7 @@ namespace IS
 
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
+                        InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
@@ -683,14 +690,27 @@ namespace IS
                 }
                 ApplyGravityChange();
 
+                // no key input in the air
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D))
+                {
+                    InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                }
+
                 Xforce += hori_movement * move_speed;
-                InternalCalls.RigidBodyAddForce(Xforce, Yforce);
-                if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > 700)
+                InternalCalls.RigidBodyAddForce(hori_movement * move_speed/10, 0f);
+                player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
+                if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
+                if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
+
+                /*if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > max_speed)
                 {
                     InternalCalls.RigidBodySetForceX(700 * hori_movement);
-                }
+                }*/
                 initial_land = false;
             }
+            player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
+            if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
+            if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
 
 
             if (canDash && isDashing == false && Reward_Dash)
