@@ -1,8 +1,7 @@
 /*!
  * \file StartButtonScript.cs
- * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
- * \date 26-11-2023
+ * \author Wu Zekai, zekai.wu@digipen.edu (90%), Matthew Ng, matthewdeen.ng@digipen.edu (10%)
+ * \par Course: CSD2451
  * \brief
  * This header file contains the StartButtonScript class, used for the start button 
  * in the main menu
@@ -19,61 +18,47 @@ namespace IS
     class StartButtonScript
     {
 
-        static public bool first_hovering = false;
-        static public bool start_button_click = false;
+        static public bool first_hover = false;
+        static public bool click = false;
         static public float timer = 0f;
-        static SimpleVector2D dark_circle = new SimpleVector2D(10000f, 10000f);
-        static SimpleImage scene_circle;
-
-        //static int button_entity;
 
         static public void Init() {
             timer = 0.5f;
-            scene_circle = InternalCalls.GetSpriteImage("dark_circle.png");
-            //button_entity = InternalCalls.GetCurrentEntityID();
-            start_button_click = false;
+            click = false;
             InternalCalls.AttachCamera(0f, 0f);
             InternalCalls.CameraSetZoom(1f);
         }
 
         static public void Update(){
-            // default scale size
-            //InternalCalls.SetButtonSizeScale(button_entity, InternalCalls.GetButtonIdleScale(button_entity));
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
                 //hovering
-                if (!first_hovering) {
+                if (!first_hover) {
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
-                    first_hovering = true;
+                    first_hover = true;
                 }
             }
             else
             {
-                first_hovering = false;
+                first_hover = false;
             }
 
             // clicking
             if (InternalCalls.GetButtonState() == 2) 
             {
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
-                start_button_click = true;
+                click = true;
             }
 
-            if (start_button_click)
+            if (click)
             {
-                //SimpleImage cirlce = scene_circle;
-                SimpleVector2D circle_scale = new SimpleVector2D(dark_circle.x * timer, dark_circle.y * timer);
-                //InternalCalls.DrawImageAt(new SimpleVector2D(0,0), 0f, circle_scale, scene_circle, 1f, 4);
                 timer -= InternalCalls.GetDeltaTime();
                 if (timer <= 0f)
                 {
                     InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
                 }
             }
-
-            // draw text
-            //InternalCalls.ButtonRenderText(button_entity, 0.4f, 0.54f, 35f, (1f, 1f, 1f));
 
         }
         
