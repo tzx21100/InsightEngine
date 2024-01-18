@@ -26,9 +26,9 @@ namespace IS
 
             int entity_id = InternalCalls.GetCurrentEntityID();
             if (InternalCalls.EntityCheckCollide(entity_id) && !InternalCalls.CollidingObjectIsStatic(entity_id)) {
-                if (InternalCalls.GetCollidingEntityCheck(entity_id, PlayerScript.PLAYER_ID))
+                if (InternalCalls.GetCollidingEntityCheck(entity_id, PlayerScript2.player_id))
                 {
-                    PlayerScript.isDead = true;
+                    PlayerScript2.isDead = true;
                 }
             }
         }
