@@ -158,6 +158,7 @@ namespace IS {
 			accumulatedTime -= mFixedDeltaTime; //this will store the
 			//exact accumulated time differences, among all game loops
 			currentNumberOfSteps++;
+			if (currentNumberOfSteps > 3) { currentNumberOfSteps = 3; }
 		}
 
 		++mFrameCount;
