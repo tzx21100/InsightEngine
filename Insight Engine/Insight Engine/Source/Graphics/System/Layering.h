@@ -15,7 +15,20 @@ namespace IS {
             }
         };
 
-        //std::vector
+        void AddEntity(Entity entity) {
+            mLayerEntities.emplace_back(entity);
+        }
+
+        void RemoveEntity(Entity entity) {
+            auto val = std::find(mLayerEntities.begin(), mLayerEntities.end(), entity);
+            if (val == mLayerEntities.end()) {
+                return;
+            }
+            mLayerEntities.erase(val);
+        }
+
+        bool mLayerActive=true;
+        std::vector<Entity> mLayerEntities;
     };
 }// end namespace IS
 
