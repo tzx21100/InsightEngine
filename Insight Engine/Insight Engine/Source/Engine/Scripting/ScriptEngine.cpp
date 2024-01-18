@@ -26,8 +26,6 @@
 namespace IS {
 
 
- 
-
     namespace Utils {
         //helps read bytes of assembly
         static  char* ReadBytes(const std::filesystem::path& file_path, uint32_t* out_size)

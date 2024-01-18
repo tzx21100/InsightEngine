@@ -11,6 +11,7 @@
 
 namespace IS {
 
+    int WATCH_STUFF = 0;
     class FileWatcher {
     public:
         // Paths for areas to watch
@@ -26,12 +27,15 @@ namespace IS {
 
         // Start monitoring files (single-threaded)
         void Start(std::string& directory) {
-            for (const auto& file : std::filesystem::directory_iterator(directory)) {
-                if (std::filesystem::is_regular_file(file.path()) && file.path().extension() == ".cs") {
-                    std::string file_path = file.path().string();
-                    // Only record the modification time for files that existed before the scan started
-                    if (!initial_scan_complete_ || mPaths.find(file_path) == mPaths.end()) {
-                        mPaths[file_path] = std::filesystem::last_write_time(file);
+
+            if (!initial_scan_complete_) {
+                for (const auto& file : std::filesystem::directory_iterator(directory)) {
+                    if (std::filesystem::is_regular_file(file.path()) && file.path().extension() == ".cs") {
+                        std::string file_path = file.path().string();
+                        // Only record the modification time for files that existed before the scan started
+                        if (!initial_scan_complete_ || mPaths.find(file_path) == mPaths.end()) {
+                            mPaths[file_path] = std::filesystem::last_write_time(file);
+                        }
                     }
                 }
             }
@@ -40,6 +44,15 @@ namespace IS {
 
             // Monitor for changes after the initial scan
             if (running_) {
+
+                WATCH_STUFF++;
+                if (WATCH_STUFF < 10) {
+                    return;
+                }
+                else {
+                    WATCH_STUFF = 0;
+                }
+
                 for (const auto& file : std::filesystem::directory_iterator(directory)) {
                     if (std::filesystem::is_regular_file(file.path()) && file.path().extension() == ".cs") {
                         std::string file_path = file.path().string();
@@ -50,6 +63,8 @@ namespace IS {
                             InsightEngine::Instance().mRuntime = false;
                             auto sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
                             sys->ReloadAllScriptClasses();
+                            
+
                         }
                     }
                 }

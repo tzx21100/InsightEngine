@@ -224,6 +224,7 @@ namespace IS {
 		*/
 		T& GetComponentData(Entity entity) {
 			static T defaultComponent = T();
+			defaultComponent = T();
 			if (mComponentArray.find(entity) != mComponentArray.end()) {
 				return *(mComponentArray[entity]);
 			}
