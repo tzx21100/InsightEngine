@@ -1,0 +1,35 @@
+{
+	"Name" : "Confirmation Menu",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "exit_menu_image.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 21,
+		"SpriteTextureHeight" : 1080,
+		"SpriteTextureIndex" : 20,
+		"SpriteTextureWidth" : 1920,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1359.9998779296875,
+		"SpriteTransformScalingY" : 660.625,
+		"SpriteTransformWorldPositionX" : 9999.0,
+		"SpriteTransformWorldPositionY" : 9999.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1359.9998779296875,
+		"TransformScalingY" : 660.625,
+		"TransformWorldPositionX" : 9999.0,
+		"TransformWorldPositionY" : 9999.0
+	}
+}
