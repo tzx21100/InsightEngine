@@ -206,6 +206,12 @@ namespace IS {
 			AddEntityToLayer(new_layer, entity);
 		}
 
+		static void ClearLayers() {
+			for (auto& layer : mLayers) {
+				layer.mLayerEntities.clear();
+			}
+		}
+
 
 	};
 
