@@ -76,6 +76,10 @@ namespace IS {
 
 
     void ISGraphics::Initialize() {
+        EventManager::Instance().Subscribe(MessageType::SpriteAdded, this);;
+        EventManager::Instance().Subscribe(MessageType::SpriteRemoved,this);
+        for (int i = 0; i < 4; i++) { AddLayer(); }
+
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
@@ -117,6 +121,14 @@ namespace IS {
     void ISGraphics::HandleMessage(const Message& msg) {
         if (msg.GetType() == MessageType::DebugInfo) {
             IS_CORE_INFO("Handling Graphics");
+        }
+        if (msg.GetType() == MessageType::SpriteAdded) {
+          auto& spr=InsightEngine::Instance().GetComponent<Sprite>(msg.GetInt());
+            AddEntityToLayer(spr.layer, msg.GetInt());
+           
+        }
+        if (msg.GetType() == MessageType::SpriteRemoved) {
+            RemoveEntityFromLayer(msg.int_value);
         }
     }
 

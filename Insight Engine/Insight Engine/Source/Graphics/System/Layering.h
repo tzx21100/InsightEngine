@@ -16,7 +16,7 @@ namespace IS {
         };
 
         void AddEntity(Entity entity) {
-            mLayerEntities.emplace_back(entity);
+            mLayerEntities.insert(entity);
         }
 
         void RemoveEntity(Entity entity) {
@@ -28,7 +28,7 @@ namespace IS {
         }
 
         bool mLayerActive=true;
-        std::vector<Entity> mLayerEntities;
+        std::set<Entity> mLayerEntities;
     };
 }// end namespace IS
 

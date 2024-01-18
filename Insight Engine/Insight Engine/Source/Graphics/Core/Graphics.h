@@ -195,6 +195,12 @@ namespace IS {
 			mLayers[layer].RemoveEntity(entity);
 		}
 
+		static void RemoveEntityFromLayer(Entity entity) {
+			for (auto& layer : mLayers) {
+				layer.RemoveEntity(entity);
+			}
+		}
+
 		static void ChangeEntityLayer(int layer, int new_layer, Entity entity) {
 			RemoveEntityFromLayer(layer, entity);
 			AddEntityToLayer(new_layer, entity);
