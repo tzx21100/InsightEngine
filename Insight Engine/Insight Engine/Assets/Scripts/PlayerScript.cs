@@ -147,6 +147,12 @@ namespace IS
         static int climbdir;
 
         // combat system
+        static private int combo_step = 0;
+        static public float attack_interval = 0.5f;
+        static public float combo_interval = 1f;
+        static private float attack_timer = 0f;
+        static private bool isAttack = false;
+        //static private string attack_type;
 
         //force calculations
         static private float Xforce = 0f;
@@ -794,7 +800,7 @@ namespace IS
                 }
             }
 
-
+            Attack();
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -974,8 +980,6 @@ namespace IS
             }
 
 
-
-
             InternalCalls.SetLightComponentToEntity(light_entity, 1, 0.43f, 0, light_intensity, 619);
 
             xCoord = InternalCalls.GetTransformPosition().x;
@@ -1150,6 +1154,50 @@ namespace IS
 
 
             return;
+        }
+
+        static private void Attack()
+        {
+            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack || (isAttack && attack_timer < attack_interval)))
+            {
+                isAttack = true;
+                //attack_type = "Light";
+                combo_step++;
+                if (combo_step > 3)
+                {
+                    attack_timer = combo_interval;
+                }
+                attack_timer = attack_interval;
+                
+            }
+            if (isAttack)
+            {
+                if (attack_timer > 0f)
+                {
+                    attack_timer -= InternalCalls.GetDeltaTime();
+                    // attacking combo animation 123
+                    switch (combo_step)
+                    {
+                        case 1:
+                            InternalCalls.SetSpriteImage(player_jump);
+                            break;
+                        case 2:
+                            InternalCalls.SetSpriteImage(player_idle);
+                            break;
+                        case 3:
+                            InternalCalls.SetSpriteImage(player_walk);
+                            break;
+                    }
+
+                    if (attack_timer <= 0f)
+                    {
+                        attack_timer = 0f;
+                        combo_step = 0;
+                        isAttack = false;
+                    }
+                }
+            }
+            //Console.WriteLine(combo_step);
         }
 
     } //player script
