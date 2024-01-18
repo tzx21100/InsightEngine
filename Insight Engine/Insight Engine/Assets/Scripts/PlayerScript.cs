@@ -66,8 +66,6 @@ namespace IS
         static private float light_intensity;
         static private int light_changer = 1;
 
-
-
         //private entity
 
         static SimpleImage player_walk;
@@ -148,6 +146,7 @@ namespace IS
         static private int entityWall;
         static int climbdir;
 
+        // combat system
 
         //force calculations
         static private float Xforce = 0f;
