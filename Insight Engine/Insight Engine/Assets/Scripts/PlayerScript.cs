@@ -66,8 +66,6 @@ namespace IS
         static private float light_intensity;
         static private int light_changer = 1;
 
-
-
         //private entity
 
         static SimpleImage player_walk;
@@ -148,6 +146,7 @@ namespace IS
         static private int entityWall;
         static int climbdir;
 
+        // combat system
 
         //force calculations
         static private float Xforce = 0f;
@@ -250,12 +249,12 @@ namespace IS
                 initialPowerUp = false;
             }
 
-            SimpleVector2D scaler = new SimpleVector2D(230.5f, 230.5f);
+            SimpleVector2D scaler = new SimpleVector2D(150f, 150f);
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
             {
 
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x + scaler.x, camera_pos.y - WindowHeight / 2f - scaler.y / 2f);
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x + scaler.x * 2f, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_dash, 1f, 4
@@ -264,7 +263,7 @@ namespace IS
             }
             if (Reward_DoubleJump)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x - scaler.x, camera_pos.y - WindowHeight / 2f - scaler.y / 2f);
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x - scaler.x * 2f, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_doublejump, 1f, 4
@@ -273,7 +272,7 @@ namespace IS
             }
             if (Reward_WallClimb)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2f - scaler.y / 2f);
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_wallclimb, 1f, 4
@@ -289,12 +288,13 @@ namespace IS
                 return;
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt))
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) // cheat code
             {
+                player_ground_pos = new Vector2D(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl))
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl)) // cheat code
             {
                 Reward_Dash = true; Reward_DoubleJump = true; Reward_WallClimb = true;
             }
@@ -715,13 +715,14 @@ namespace IS
                 ApplyGravityChange();
 
                 // no key input in the air
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D))
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isDashing)
                 {
                     InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
                 }
 
                 Xforce += hori_movement * move_speed;
                 InternalCalls.RigidBodyAddForce(hori_movement * move_speed / 10, 0f);
+                // limit the vel
                 player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
                 if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
                 if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
@@ -732,6 +733,7 @@ namespace IS
                 }*/
                 initial_land = false;
             }
+            // limit the vel
             player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
             if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
             if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
@@ -753,6 +755,7 @@ namespace IS
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer -= InternalCalls.GetDeltaTime();
+                    InternalCalls.SetGravityScale(gravity_scale * 0f);
                     InternalCalls.RigidBodySetForce(0, 0);
 
                     //Get mouse
@@ -783,9 +786,6 @@ namespace IS
                             color
                         );
                     }
-
-
-
 
                 }
                 else
