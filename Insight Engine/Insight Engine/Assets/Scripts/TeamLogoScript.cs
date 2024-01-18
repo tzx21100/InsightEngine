@@ -1,17 +1,3 @@
-/*!
- * \file TeamLogoScript.cs
- * \author Matthew Ng, matthewdeen.ng@digipen.edu 
- * \par Course: CSD2451
- * \brief
- * This header file contains the TeamLogoScript class, used for the logo gimick 
- * in the main menu
- *
- * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
- * All rights reserved.
- * Reproduction or disclosure of this file or its contents without the prior written
- * consent of DigiPen Institute of Technology is prohibited.
- *____________________________________________________________________________*/
 using System;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;

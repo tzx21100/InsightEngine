@@ -70,7 +70,7 @@ namespace IS
 
             pause_menu_entity   = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
             resume_entity       = InternalCalls.CreateEntityButton("Resume Game", resume_image, "ResumeButtonScript", "");
-            how_to_play_entity  = InternalCalls.CreateEntityButtonNoText("How to Play", how_to_play_image, "HowToPlayScript");
+            how_to_play_entity  = InternalCalls.CreateEntityButton("How to Play", how_to_play_image, "HowToPlayScript", "");
             //setting_entity    = InternalCalls.CreateEntityButton("Setting", setting_image, "SettingScript", "settings");
             home_entity         = InternalCalls.CreateEntityButton("Main Menu", home_image, "BackToMenuButtonScript", "");
             quit_entity         = InternalCalls.CreateEntityButton("Quit Game", quit_image, "ExitButtonScript", "");
