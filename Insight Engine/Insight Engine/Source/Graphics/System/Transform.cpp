@@ -208,7 +208,6 @@ namespace IS {
 		// Transform the ndcCoords to world coordinates using the inverse NDC transformation matrix.
 		glm::vec4 worldPos = ndcToCam * ndcCoords;
 
-		IS_CORE_WARN("World mouse X: {}, Y: {}", worldPos.x, worldPos.y);
 		return { worldPos.x, worldPos.y };
 	}
 
