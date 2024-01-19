@@ -52,7 +52,7 @@ namespace IS
                 scaling.x *= -1; // flip the enemy over
             }
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
-            Console.WriteLine(direction);
+            //Console.WriteLine(direction);
         }
 
 
