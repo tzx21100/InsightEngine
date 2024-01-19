@@ -18,7 +18,7 @@ namespace IS
 {
     class BackFromScript
     {
-        static public bool first_hovering = false;
+        static public bool first_hover = false;
 
         static public void Init()
         {
@@ -31,15 +31,15 @@ namespace IS
             {
 
                 //hovering
-                if (!first_hovering)
+                if (!first_hover)
                 {
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
-                    first_hovering = true;
+                    first_hover = true;
                 }
             }
             else
             {
-                first_hovering = false;
+                first_hover = false;
             }
 
 

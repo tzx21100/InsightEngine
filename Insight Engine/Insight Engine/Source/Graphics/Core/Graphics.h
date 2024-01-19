@@ -163,7 +163,6 @@ namespace IS {
 
 		// Layers
 		static std::vector<Layering>mLayers;
-		static std::unordered_map<std::string, Layering> mLayerNames;
 		
 		static void EnableLayer(Layering layer) {
 			layer.mLayerActive = true;
@@ -181,7 +180,7 @@ namespace IS {
 		static void AddLayer() {
 			Layering new_layer;
 			new_layer.mLayerActive = true;
-			mLayers.emplace_back(new_layer); 
+			mLayers.emplace_back(new_layer);
 			mLayers.back().mName = "Layer " + std::to_string(mLayers.size());
 		}
 
@@ -225,6 +224,12 @@ namespace IS {
 				layer.mLayerEntities.clear();
 			}
 		}
+
+		// Get Layers Serialize
+		static int GetLayerAmount() {
+			return static_cast<int>(mLayers.size());
+		}
+
 	};
 
 } // end namespace IS

@@ -30,6 +30,19 @@ namespace IS {
         bool mLayerActive=true;
         std::string mName = "";
         std::set<Entity> mLayerEntities;
+
+        Json::Value Serialize() {
+            Json::Value data;
+            data["Active"] = mLayerActive;
+            data["Name"] = mName;
+            return data;
+        }
+
+        void Deserialize(Json::Value data) {
+            mLayerActive = data["Active"].asBool();
+            mName = data["Name"].asString();
+        }
+
     };
 }// end namespace IS
 

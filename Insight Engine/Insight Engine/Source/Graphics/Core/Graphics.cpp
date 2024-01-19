@@ -73,7 +73,6 @@ namespace IS {
 
     // Layering
     std::vector<Layering> ISGraphics::mLayers;
-    std::unordered_map<std::string, Layering> ISGraphics::mLayerNames;
 
 
     void ISGraphics::Initialize() {

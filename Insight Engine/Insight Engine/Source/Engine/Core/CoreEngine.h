@@ -32,12 +32,15 @@
 #include "Math/Vector2D.h"
 #include "../Messages/Message.h"
 
+
 #include <unordered_map>
 #include <chrono>
 #include <unordered_set>
 #include <iostream>
 
 namespace IS {
+    class Sprite;
+
     /*!
        * \brief The central engine class for the game.
        *

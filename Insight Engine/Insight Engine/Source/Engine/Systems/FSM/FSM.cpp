@@ -64,9 +64,4 @@ namespace IS {
 		}
 	}
 
-	// The following are helper functions to create States
-
-	SimpleState CreateNewState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit) {
-		return SimpleState(enter, update, exit);
-	}
 }

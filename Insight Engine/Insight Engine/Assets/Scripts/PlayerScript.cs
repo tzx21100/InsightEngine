@@ -80,6 +80,7 @@ namespace IS
         static SimpleImage player_reward_dash;
         static SimpleImage player_reward_doublejump;
         static SimpleImage player_reward_wallclimb;
+        static SimpleImage player_attack;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -147,7 +148,9 @@ namespace IS
         static int climbdir;
 
         // combat system
+        static public int entity_attack;
         static private int combo_step = 0;
+        static private int total_attack_in_one_combo = 3;
         static public float attack_interval = 0.5f;
         static public float combo_interval = 1f;
         static private float attack_timer = 0f;
@@ -202,6 +205,7 @@ namespace IS
             player_reward_dash = InternalCalls.GetSpriteImage("Dash UI.png");
             player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
+            player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -213,10 +217,12 @@ namespace IS
 
             entity_feet = InternalCalls.CreateEntity("FeetCollider");
             entityWall = InternalCalls.CreateEntity("WallCollider");
+            entity_attack = InternalCalls.CreateEntity("AttackCollider");
             width = InternalCalls.GetTransformScaling().x / 3f;
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entity_feet);
             InternalCalls.AddCollider(entityWall);
+            InternalCalls.AddCollider(entity_attack);
 
 
             InternalCalls.CameraSetZoom(1.1f);
@@ -291,6 +297,7 @@ namespace IS
             if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
+                InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 return;
             }
 
@@ -655,9 +662,18 @@ namespace IS
                     float aangle = InternalCalls.GetTransformRotation();
                     /*                if (hori_movement != 0) {aangle+=180f; }*/
                     Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
-                    //set move speed when grounded
-                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
 
+                    //set move speed when grounded
+                    if (!isAttack)
+                    {   // normal movement
+                        InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
+                    }
+                    else
+                    {
+                        // moving due to attack
+                        //InternalCalls.RigidBodySetVelocityEntity();
+                    }
+                    
                     //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
 
 
@@ -801,6 +817,8 @@ namespace IS
             }
 
             Attack();
+            AttackAreaUpdate();
+            HitEnemy();
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -1158,24 +1176,29 @@ namespace IS
 
         static private void Attack()
         {
-            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack || (isAttack && attack_timer < attack_interval)))
+            if (InternalCalls.MousePressed(0) && (!isAttack ))
             {
                 isAttack = true;
                 //attack_type = "Light";
                 combo_step++;
-                if (combo_step > 3)
+                if (combo_step > total_attack_in_one_combo)
                 {
-                    attack_timer = combo_interval;
+                    //attack_timer = combo_interval;
+                    combo_step = 0; // reset attack step 
                 }
-                attack_timer = attack_interval;
-                
-            }
-            if (isAttack)
-            {
-                if (attack_timer > 0f)
+                else
                 {
-                    attack_timer -= InternalCalls.GetDeltaTime();
-                    // attacking combo animation 123
+                    //attack_timer = attack_interval;
+                }
+                attack_timer = 0f; // reset timer
+            }
+            if (attack_timer < combo_interval)
+            {
+                attack_timer += InternalCalls.GetDeltaTime();
+                
+                if (attack_timer < attack_interval) // play attack animation
+                {
+                    // render attacking combo animation 123
                     switch (combo_step)
                     {
                         case 1:
@@ -1188,16 +1211,74 @@ namespace IS
                             InternalCalls.SetSpriteImage(player_walk);
                             break;
                     }
+                }
 
-                    if (attack_timer <= 0f)
-                    {
-                        attack_timer = 0f;
-                        combo_step = 0;
-                        isAttack = false;
-                    }
+                if (attack_timer >= attack_interval && combo_step != 0) // enable combo
+                {
+                    //attack_timer = 0f;
+                    //combo_step = 0;
+                    isAttack = false;
+                }
+                if (attack_timer >= combo_interval) // reset sth when a combo ends
+                {
+                    combo_step = 0;
+                    isAttack = false;
                 }
             }
+            /*if (isAttack)
+            {*/
+
+            //}
             //Console.WriteLine(combo_step);
+        }
+
+        static private void AttackAreaUpdate()
+        {
+            if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
+            xCoord = InternalCalls.GetTransformPosition().x;
+            yCoord = InternalCalls.GetTransformPosition().y;
+            float rotationAngle = InternalCalls.GetTransformRotation();
+            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            //float distanceLeft = width * hori_movement;
+            float distanceLeft = width * 0;
+
+            Vector2D relativePosition = new Vector2D(distanceLeft, 0);
+
+            // Apply rotation to the relative position
+            Vector2D rotatedRelativePosition = new Vector2D(
+                (float)(relativePosition.x * CustomMath.Cos(angleRadians) + relativePosition.y * CustomMath.Sin(angleRadians)),
+                (float)(relativePosition.x * CustomMath.Sin(angleRadians) - relativePosition.y * CustomMath.Cos(angleRadians))
+            );
+
+            // Calculate the absolute position for the wall checker
+            Vector2D checkerPosition = new Vector2D(
+                xCoord + rotatedRelativePosition.x - MathF.Sign(trans_scaling.x) * 100f,
+                yCoord + rotatedRelativePosition.y
+            );
+
+            Vector2D attack_area_pos = new Vector2D(200f, height / 2f);
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
+            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entity_attack);
+            InternalCalls.TransformSetScaleEntity(attack_area_pos.x, attack_area_pos.y, entity_attack);
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), 0, new SimpleVector2D(attack_area_pos.x, attack_area_pos.y), player_attack, 1f, 4
+                );
+        }
+
+        static private void HitEnemy()
+        {
+            // check attack collider when colliding
+            if (InternalCalls.OnEntityCollisionEnter(entity_attack))
+            {
+                // when colliding with enemy
+                if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
+                {
+                    // enemy get hit
+                    Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                    Console.WriteLine("hitting enemy");
+                }
+            }
         }
 
     } //player script
