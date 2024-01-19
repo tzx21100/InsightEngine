@@ -121,7 +121,15 @@
 		{
 			"Active" : true,
 			"Name" : "Layer 2"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 3"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 4"
 		}
 	],
-	"LayersAmount" : 2
+	"LayersAmount" : 4
 }
