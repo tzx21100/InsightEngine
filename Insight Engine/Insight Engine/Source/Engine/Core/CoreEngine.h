@@ -30,10 +30,12 @@
 #include "Editor/Layers/ImGuiLayer.h"
 #include "Editor/Layers/EditorLayer.h"
 #include "Math/Vector2D.h"
+#include "../Messages/Message.h"
 
 #include <unordered_map>
 #include <chrono>
 #include <unordered_set>
+#include <iostream>
 
 namespace IS {
     /*!
@@ -144,7 +146,7 @@ namespace IS {
          * \brief Sends a message to the event manager.
          * \param message Pointer to the message to be broadcasted.
          */
-        void SendMessage(Message* message) { EventManager::Instance().Broadcast(*message); };
+        void SendMessage(Message message) { EventManager::Instance().Broadcast(message); };
 
         /*!
          * \brief Subscribes to a specific type of message.
@@ -405,6 +407,12 @@ namespace IS {
             mComponentManager->RegisterComponent<T>();
         }
 
+
+        // Messages
+        Message mSpriteAdded = Message(MessageType::SpriteAdded);
+        Message mSpriteRemoved = Message(MessageType::SpriteRemoved);
+
+
         /**
          * \brief Adds a specified component to a given entity.
          * \tparam T The type of component to add.
@@ -414,6 +422,11 @@ namespace IS {
         template<typename T>
         void AddComponent(Entity entity, T component)
         {
+            if (GetComponentType<T>() == GetComponentType<Sprite>()) {
+                mSpriteAdded.int_value = entity;
+                SendMessage(mSpriteAdded);
+            }
+
             mComponentManager->AddComponent<T>(entity, component);
 
             auto signature = mEntityManager->GetSignature(entity);
@@ -431,6 +444,14 @@ namespace IS {
         template<typename T>
         void RemoveComponent(Entity entity)
         {
+
+            if (GetComponentType<T>() == GetComponentType<Sprite>()) {
+                mSpriteRemoved.int_value = entity;
+                SendMessage(mSpriteRemoved);
+            }
+
+            if (GetComponentType<T>() == GetComponentType<Sprite>()) {}
+
             if (InsightEngine::Instance().HasComponent<T>(entity)) {
                 mComponentManager->RemoveComponent<T>(entity);
             }
@@ -736,6 +757,9 @@ namespace IS {
          * \brief Push all imgui layers.
          */
         void PushImGuiLayers();
+
+
+
     };
 
 }

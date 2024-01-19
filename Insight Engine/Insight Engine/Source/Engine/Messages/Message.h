@@ -33,7 +33,9 @@ namespace IS {
         Collide,    ///< Represents a collision-related message.
         DebugInfo,  ///< Represents a debug information message.
         RunScene,   ///< Represents the scene running.
-        StopScene   ///< Represent that the scene isn't running.
+        StopScene,  ///< Represent that the scene isn't running.
+        SpriteAdded,
+        SpriteRemoved
     };
 
     /**
@@ -66,10 +68,10 @@ namespace IS {
          */
         int GetInt() const { return int_value; }
 
-    private:
         MessageType type;  ///< Holds the type of the message.
         float float_value; ///< A float value that the message might carry.
         int int_value;     ///< An integer value that the message might carry.
+        int int_value2;
     };
 
     /**

@@ -62,6 +62,7 @@ void RegisterComponents() {
 
 // This is a helper function to register all systems
 void RegisterSystems() {
+
     InsightEngine& engine = InsightEngine::Instance();
 
     // Signature (components registered for each system)
@@ -121,6 +122,7 @@ void RegisterSystems() {
 
 //This is a function to setup the engine correctly
 void EngineSetup() {
+    ISGraphics graphics;//ensure graphics get created first
     // Initialize log
     ScriptEngine::Init();
     Log::Init(true);
@@ -130,6 +132,7 @@ void EngineSetup() {
 
 // The only function that main should ever call
 void RunInsightEngine() {
+
     //This is to set the flow of the engine
     EngineSetup();
     InsightEngine::Instance().Run();
