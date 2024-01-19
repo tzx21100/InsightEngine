@@ -17,6 +17,7 @@
 #include "Pch.h"
 #include "Sprite.h"
 #include "Graphics/Core/Graphics.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace IS {
     // set of layers to NOT render
@@ -229,6 +230,7 @@ namespace IS {
     }
 
     void Sprite::draw_lights() {
+        std::vector<glm::vec4> line = { glm::vec4(-100.f, 30.f, 100.f, 50.f) };
 
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
@@ -247,6 +249,18 @@ namespace IS {
                 // Handle the case where unmap was not successful
                 std::cerr << "Failed to unmap the buffer." << std::endl;
             }
+
+            // upload to uniform variable
+            auto tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
+            if (tex_arr_uniform >= 0)
+                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), glm::value_ptr(line[0]));
+            else IS_CORE_ERROR({ "uLineSegments Uniform not found, shader compilation failed?" });
+
+            //auto tex_arr_uniform2 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
+            //if (tex_arr_uniform2 >= 0)
+            //    glUniform1i(tex_arr_uniform2, static_cast<int>(line.size()));
+            //else IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+
         }
         else {
             // Handle the case where mapping the buffer was not successful
