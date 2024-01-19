@@ -92,6 +92,10 @@ namespace IS {
          */
         void ProcessSelectedEntityShortcuts();
 
+        bool IsSelectedLayer(int layer_index) const;
+        void MakeSelectedLayer(int layer_index);
+        void ResetSelectedLayer();
+
         friend class EditorLayer; ///< Grant EditorLayer access to private data members.
     };
 

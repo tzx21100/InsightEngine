@@ -173,6 +173,16 @@ namespace IS {
 		}
 
 		static void ChangeLayerPosition(int layer, int layer2){
+			for (auto& entity : mLayers[layer].mLayerEntities)
+			{
+				auto& spr = InsightEngine::Instance().GetComponent<Sprite>(entity);
+				spr.layer = layer2;
+			}
+			for (auto& entity : mLayers[layer2].mLayerEntities)
+			{
+				auto& spr = InsightEngine::Instance().GetComponent<Sprite>(entity);
+				spr.layer = layer;
+			}
 			//swap positions in the vector
 			std::swap(mLayers[layer], mLayers[layer2]);
 		}
@@ -185,20 +195,22 @@ namespace IS {
 		}
 
 		static void RemoveLayer(int layerID) {
-			mLayers.erase(mLayers.begin()+layerID);
+			
 			ISGraphics::Instance().GraphicsRemoveLayer(layerID);
+			mLayers.erase(mLayers.begin() + layerID);
 			
 		}
 
 		void GraphicsRemoveLayer(int layer){
-			for (auto& entities : mEntities) {
-				if (InsightEngine::Instance().GetComponent<Sprite>(entities).layer == layer) {
-					InsightEngine::Instance().DeleteEntity(entities);
-				}
+			for (auto& entities : mLayers[layer].mLayerEntities) {
+
+				InsightEngine::Instance().DeleteEntity(entities);
+				
 			}
 		}
 
 		static void AddEntityToLayer(int layer,Entity entity) {
+			while (mLayers.size() <= layer) { AddLayer(); }
 			mLayers[layer].AddEntity(entity);
 			auto& spr = InsightEngine::Instance().GetComponent<Sprite>(entity);
 			spr.layer = layer;
@@ -217,12 +229,25 @@ namespace IS {
 		static void ChangeEntityLayer(int layer, int new_layer, Entity entity) {
 			RemoveEntityFromLayer(layer, entity);
 			AddEntityToLayer(new_layer, entity);
+			auto& engine = InsightEngine::Instance();
+			auto& sprite = engine.GetComponent<Sprite>(entity);
+			sprite.layer = new_layer;
 		}
 
 		static void ClearLayers() {
 			for (auto& layer : mLayers) {
 				layer.mLayerEntities.clear();
 			}
+			mLayers.clear();
+		}
+
+		static void DestroyAllLayers()
+		{
+			for (int i = 0; i < static_cast<int>(mLayers.size());)
+			{
+				RemoveLayer(i);
+			}
+			
 		}
 
 		// Get Layers Serialize

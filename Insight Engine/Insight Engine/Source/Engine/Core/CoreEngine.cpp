@@ -590,7 +590,10 @@ namespace IS {
 		const Json::Value layers = sceneRoot["Layers"];
 		for (int i = 0; i < layer_count; i++) {
 			Json::Value layer_data = layers[i];
-			ISGraphics::AddLayer();
+			if (ISGraphics::GetLayerAmount() < layer_count)
+			{
+				ISGraphics::AddLayer();
+			}
 			ISGraphics::mLayers[i].Deserialize(layer_data);
 		}
 

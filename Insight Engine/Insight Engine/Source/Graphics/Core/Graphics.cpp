@@ -76,12 +76,9 @@ namespace IS {
 
 
     void ISGraphics::Initialize() {
-        EventManager::Instance().Subscribe(MessageType::SpriteAdded, this);;
-        EventManager::Instance().Subscribe(MessageType::SpriteRemoved,this);
-        for (int i = 0; i < 4; i++)
-        { 
-            AddLayer();
-        }
+        ISGraphics::Instance().Subscribe(MessageType::SpriteAdded);
+        ISGraphics::Instance().Subscribe(MessageType::SpriteRemoved);
+        ISGraphics::ClearLayers();
 
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 
@@ -169,7 +166,9 @@ namespace IS {
     #endif // USING_IMGUI
 
             // for each entity
-        for (auto& layers : mLayers) {
+        for (int i = 0; i < static_cast<int>(mLayers.size()); i++)
+        {
+            Layering& layers = mLayers[i];
             if (layers.mLayerActive == false) { 
                 continue; 
             }

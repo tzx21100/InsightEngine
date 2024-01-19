@@ -13,13 +13,14 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
     class Enemy
     {
 
-        static public float speed = 10f;
-        static private Vector2D direction = new Vector2D(1f, 0f);
+        static public float speed = 200f;
+        static private Vector2D direction = new Vector2D(0f, 0f);
         static private bool isHit;
         static private float being_hit_timer = 0f;
         static private Vector2D scaling = new Vector2D(257f, 183f);
@@ -28,6 +29,7 @@ namespace IS
         {
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
+            direction.x = 1f; // init
         }
 
         static public void Update()
@@ -36,6 +38,7 @@ namespace IS
             {
                 float vel_x = direction.x * speed;
                 //float vel_y = direction.y * speed;
+                // moving backwards abit
                 InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
                 being_hit_timer += InternalCalls.GetDeltaTime();
                 if (being_hit_timer > 0.5f)
@@ -44,7 +47,12 @@ namespace IS
                     being_hit_timer = 0f;
                 }
             }
-            InternalCalls.TransformSetScaleEntity(InternalCalls.GetTransformScalingEntity(ENEMY_ID).x * direction.x, InternalCalls.GetTransformScalingEntity(ENEMY_ID).y, ENEMY_ID);
+            if(MathF.Sign(scaling.x) != MathF.Sign(direction.x))
+            {
+                scaling.x *= -1; // flip the enemy over
+            }
+            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
+            //Console.WriteLine(direction);
         }
 
 
