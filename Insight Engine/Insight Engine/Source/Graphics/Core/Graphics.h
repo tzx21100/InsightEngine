@@ -163,7 +163,6 @@ namespace IS {
 
 		// Layers
 		static std::vector<Layering>mLayers;
-		static OrderedMap<std::string, Layering> mLayerNames;
 		
 		static void EnableLayer(Layering layer) {
 			layer.mLayerActive = true;
