@@ -18,7 +18,7 @@ namespace IS
     class YouWinScript
     {
         static public bool first_hover = false;
-;
+
         static private int back_button_entity;
 
         static SimpleImage back_button_image;
