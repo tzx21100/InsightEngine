@@ -168,7 +168,9 @@ namespace IS {
 
             // for each entity
         for (auto& layers : mLayers) {
-            if (layers.mLayerActive == false) { continue; }
+            if (layers.mLayerActive == false) { 
+                continue; 
+            }
             for (auto& entity : layers.mLayerEntities) {
                 // get sprite and transform components
                 auto& sprite = engine.GetComponent<Sprite>(entity);

@@ -56,6 +56,8 @@ namespace IS {
 	class ISGraphics : public ParentSystem {
 	public:
 
+		static ISGraphics& Instance() { static ISGraphics instance; return instance; }
+
 		/*!
 		 * \brief Initializes the ISGraphics system.
 		 */
@@ -161,7 +163,8 @@ namespace IS {
 
 		// Layers
 		static std::vector<Layering>mLayers;
-
+		static std::unordered_map<std::string, Layering> mLayerNames;
+		
 		static void EnableLayer(Layering layer) {
 			layer.mLayerActive = true;
 		}
@@ -183,6 +186,16 @@ namespace IS {
 
 		static void RemoveLayer(int layerID) {
 			mLayers.erase(mLayers.begin()+layerID);
+			ISGraphics::Instance().GraphicsRemoveLayer(layerID);
+			
+		}
+
+		void GraphicsRemoveLayer(int layer){
+			for (auto& entities : mEntities) {
+				if (InsightEngine::Instance().GetComponent<Sprite>(entities).layer == layer) {
+					InsightEngine::Instance().DeleteEntity(entities);
+				}
+			}
 		}
 
 		static void AddEntityToLayer(int layer,Entity entity) {

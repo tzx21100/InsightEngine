@@ -28,6 +28,7 @@ namespace IS {
         }
 
         bool mLayerActive=true;
+        std::string mName = "";
         std::set<Entity> mLayerEntities;
     };
 }// end namespace IS
