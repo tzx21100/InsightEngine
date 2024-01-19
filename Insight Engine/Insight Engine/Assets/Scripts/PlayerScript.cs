@@ -1236,10 +1236,26 @@ namespace IS
         static private void AttackAreaUpdate()
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
+
+            //Get mouse
+            Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+
+            float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+            //InternalCalls.SetSpriteImage(player_idle);
+
+            //if (mouse_pos.x > player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+
+            //apply_force = Vector2D.DirectionFromAngle(angle);
+            //apply_force = apply_force.Normalize();
+
+            //var color = (1f, 1f, 1f);
+            //InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+
+
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
-            float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
+            float angleRadians = angle * (CustomMath.PI / 180.0f);
             //float distanceLeft = width * hori_movement;
             float distanceLeft = width * 0;
 
@@ -1259,7 +1275,7 @@ namespace IS
 
             Vector2D attack_area_pos = new Vector2D(200f, height / 2f);
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
-            InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entity_attack);
+            InternalCalls.TransformSetRotationEntity(angle, 0, entity_attack);
             InternalCalls.TransformSetScaleEntity(attack_area_pos.x, attack_area_pos.y, entity_attack);
             InternalCalls.DrawImageAt
                 (
@@ -1277,7 +1293,7 @@ namespace IS
                 {
                     // enemy get hit
                     Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
-                    Console.WriteLine("hitting enemy");
+                    //Console.WriteLine("hitting enemy");
                 }
             }
         }
