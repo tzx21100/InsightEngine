@@ -20,14 +20,11 @@ namespace IS {
 	class SimpleState {
 
 	public:
-		std::function<void()> Enter;
-		std::function<void()> Update;
-		std::function<void()> Exit;
+		void Enter() {};
+		void Update() {};
+		void Exit() {};
 
-		SimpleState():Enter(),Update(),Exit() {};
 
-		SimpleState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit)
-			: Enter(enter), Update(update), Exit(exit) {}
 
 	};
 	/*
@@ -98,8 +95,6 @@ namespace IS {
 
 	};
 	
-	// helper functions
-	SimpleState CreateNewState(std::function<void()> enter, std::function<void()> update, std::function<void()> exit);
 
 }
 
