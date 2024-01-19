@@ -21,7 +21,7 @@ namespace IS
 
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
-        static Vector2D orgin = new Vector2D(0, 0);
+        static Vector2D origin = new Vector2D(0, 0);
 
         // Camera
         static Vector2D camera_pos = new Vector2D(0, 0);
@@ -54,12 +54,12 @@ namespace IS
             win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
             win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
 
-            orgin.x = camera_pos.x - (win_dimension.x / 2f);
-            orgin.y = camera_pos.y - (win_dimension.y / 2f);
+            origin.x = camera_pos.x - (win_dimension.x / 2f);
+            origin.y = camera_pos.y - (win_dimension.y / 2f);
 
             Vector2D not_available = new Vector2D(0.85f * win_dimension.x, 0.75f * win_dimension.y);
             InternalCalls.TransformSetScaleEntity(not_available.x, not_available.y, not_available_entity);
-            not_available_pos.Set(orgin.x + (0.5f * win_dimension.x), orgin.y + (0.5f * win_dimension.y));
+            not_available_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
 
 
             //hovered

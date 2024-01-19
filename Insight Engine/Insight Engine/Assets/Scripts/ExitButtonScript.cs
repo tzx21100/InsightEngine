@@ -40,7 +40,7 @@ namespace IS
 
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
-        static Vector2D orgin = new Vector2D(0, 0);
+        static Vector2D origin = new Vector2D(0, 0);
 
         static public void Init()
         {
@@ -70,8 +70,8 @@ namespace IS
             win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
             win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
 
-            orgin.x = camera_pos.x -(win_dimension.x / 2f);
-            orgin.y = camera_pos.y -(win_dimension.y / 2f);
+            origin.x = camera_pos.x -(win_dimension.x / 2f);
+            origin.y = camera_pos.y -(win_dimension.y / 2f);
 
             // Dimensions
             /*Vector2D confirmation = new Vector2D(2200f, 1250f);
@@ -89,9 +89,9 @@ namespace IS
             InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(yes.x, yes.y));
 
             // Positions
-            confirmation_menu_pos.Set(orgin.x + (0.5f * win_dimension.x), orgin.y + (0.5f * win_dimension.y));
-            no_pos.Set(orgin.x + (0.68f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
-            yes_pos.Set(orgin.x + (0.32f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
+            confirmation_menu_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
+            no_pos.Set(origin.x + (0.68f * win_dimension.x), origin.y + (0.22f * win_dimension.y));
+            yes_pos.Set(origin.x + (0.32f * win_dimension.x), origin.y + (0.22f * win_dimension.y));
 
             /*confirmation_menu_pos = confirmation_menu_pos.Divide(camera_zoom);
             no_pos = no_pos.Divide(camera_zoom);
