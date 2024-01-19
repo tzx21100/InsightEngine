@@ -52,8 +52,8 @@ namespace IS
             yes_image = InternalCalls.GetSpriteImage("yes_button.png");
 
             confirmation_menu_entity = InternalCalls.CreateEntityUI("Confirmation Menu", confirmation_menu_image);
-            no_entity = InternalCalls.CreateEntityButton("No Button", no_image, "NoButtonScript", "no");
-            yes_entity = InternalCalls.CreateEntityButton("Yes Button", yes_image, "YesButtonScript", "yes");
+            no_entity = InternalCalls.CreateEntityButtonNoText("No Button", no_image, "NoButtonScript");
+            yes_entity = InternalCalls.CreateEntityButtonNoText("Yes Button", yes_image, "YesButtonScript");
 
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
@@ -73,16 +73,9 @@ namespace IS
             origin.x = camera_pos.x -(win_dimension.x / 2f);
             origin.y = camera_pos.y -(win_dimension.y / 2f);
 
-            // Dimensions
-            /*Vector2D confirmation = new Vector2D(2200f, 1250f);
-            Vector2D no = new Vector2D(600f, 200f);
-            Vector2D yes = new Vector2D(600f, 200f);*/
             Vector2D confirmation = new Vector2D(0.85f * win_dimension.x, 0.75f * win_dimension.y);
             Vector2D no = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
             Vector2D yes = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
-            /*confirmation = confirmation.Divide(camera_zoom);
-            no = no.Divide(camera_zoom);
-            yes = yes.Divide(camera_zoom);*/
 
             InternalCalls.TransformSetScaleEntity(confirmation.x, confirmation.y, confirmation_menu_entity);
             InternalCalls.SetButtonSize(no_entity, new SimpleVector2D(no.x, no.y));

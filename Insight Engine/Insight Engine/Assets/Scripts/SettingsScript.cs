@@ -27,7 +27,6 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
-        static private float timer = 5.0f;
         static private int not_available_entity;
         static SimpleImage not_available_image;
         static Vector2D not_available_pos = new Vector2D(0, 0);

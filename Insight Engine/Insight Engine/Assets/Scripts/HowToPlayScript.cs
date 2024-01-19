@@ -76,10 +76,9 @@ namespace IS
             how_to_play_pos.Set(camera_pos.x, camera_pos.y);
             back_button_pos.Set(origin.x + (0.16f * win_dimension.x), origin.y + (0.8f * win_dimension.y));
 
-            //hovered
+            //hover
             if (InternalCalls.GetButtonState() == 1)
             {
-                //hovering
                 if (!first_hover)
                 {
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
