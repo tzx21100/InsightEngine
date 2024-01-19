@@ -525,7 +525,6 @@ namespace IS {
         }
         spriteData["animations"] = animationsJson;
 
-
         return spriteData;
     }
 

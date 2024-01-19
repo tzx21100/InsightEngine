@@ -76,8 +76,8 @@ namespace IS {
 
 
     void ISGraphics::Initialize() {
-        EventManager::Instance().Subscribe(MessageType::SpriteAdded, this);;
-        EventManager::Instance().Subscribe(MessageType::SpriteRemoved,this);
+        ISGraphics::Instance().Subscribe(MessageType::SpriteAdded);
+        ISGraphics::Instance().Subscribe(MessageType::SpriteRemoved);
         for (int i = 0; i < 4; i++)
         { 
             AddLayer();

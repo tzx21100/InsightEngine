@@ -199,6 +199,7 @@ namespace IS {
 		}
 
 		static void AddEntityToLayer(int layer,Entity entity) {
+			while (mLayers.size() <= layer) { AddLayer(); }
 			mLayers[layer].AddEntity(entity);
 			auto& spr = InsightEngine::Instance().GetComponent<Sprite>(entity);
 			spr.layer = layer;
@@ -223,6 +224,7 @@ namespace IS {
 			for (auto& layer : mLayers) {
 				layer.mLayerEntities.clear();
 			}
+			mLayers.clear();
 		}
 
 		// Get Layers Serialize

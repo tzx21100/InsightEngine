@@ -27,9 +27,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 36,
+				"SpriteTexture" : 37,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 35,
+				"SpriteTextureIndex" : 36,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -90,9 +90,9 @@
 				"SpriteFilename" : "team_logo.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 61,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 60,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 684.28997802734375,
@@ -111,5 +111,17 @@
 			}
 		}
 	],
-	"EntityAmount" : 3
+	"EntityAmount" : 3,
+	"Layers" : 
+	[
+		{
+			"Active" : true,
+			"Name" : "Layer 1"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
+		}
+	],
+	"LayersAmount" : 2
 }

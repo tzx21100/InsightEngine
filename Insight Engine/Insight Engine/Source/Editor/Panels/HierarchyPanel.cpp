@@ -197,6 +197,7 @@ namespace IS {
         auto& style = ImGui::GetStyle();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
         bool layers_opened = ImGui::TreeNodeEx(ICON_LC_LAYERS "  Layers", tree_flags);
+        ImGui::SetItemTooltip("Order: Furthest layer (bottom), closest layer (top).\ne.g.,\n  UI\n  Foreground\n  Background");
 
         bool vertical_scroll_visible = ImGui::GetScrollMaxY() != 0;
         float x_offset = ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x;
@@ -207,13 +208,61 @@ namespace IS {
         {
             ImGui::OpenPopup("AddLayer");
         }
+        if (mSelectedLayer)
+        {
+            float down_position = x_offset - ImGui::CalcTextSize(ICON_LC_CHEVRON_DOWN).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x;
+            int new_layer_index{};
+
+            ImGui::SameLine(down_position);
+            if (ImGui::Button(ICON_LC_CHEVRON_DOWN))
+            {
+                new_layer_index = *mSelectedLayer == 0 ? static_cast<int>(ISGraphics::mLayers.size() - 1) : *mSelectedLayer - 1;
+                ISGraphics::ChangeLayerPosition(*mSelectedLayer, new_layer_index);
+                MakeSelectedLayer(new_layer_index);
+            }
+
+            ImGui::SameLine(down_position - ImGui::CalcTextSize(ICON_LC_CHEVRON_UP).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x);
+            if (ImGui::Button(ICON_LC_CHEVRON_UP))
+            {
+                new_layer_index = *mSelectedLayer == static_cast<int>(ISGraphics::mLayers.size() - 1) ? 0 : *mSelectedLayer + 1;
+                ISGraphics::ChangeLayerPosition(*mSelectedLayer, new_layer_index);
+                MakeSelectedLayer(new_layer_index);
+            }
+        }
 
         if (ImGui::BeginPopup("AddLayer"))
         {
-            if (ImGui::MenuItem("Add New Layer"))
+            if (ImGui::MenuItem(ICON_LC_PLUS_SQUARE "  Add New Layer"))
             {
                 ISGraphics::AddLayer();
             }
+
+            ImGui::Separator();
+
+            if (ImGui::MenuItem(ICON_LC_EYE "  Hide All Layers"))
+            {
+                for (auto& layer : ISGraphics::mLayers)
+                {
+                    layer.mLayerActive = false;
+                }
+            }
+
+            if (ImGui::MenuItem(ICON_LC_EYE_OFF "  Unhide All Layers"))
+            {
+                for (auto& layer : ISGraphics::mLayers)
+                {
+                    layer.mLayerActive = true;
+                }
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Remove All Layers"))
+            {
+                ISGraphics::ClearLayers();
+                ISGraphics::mLayers.clear();
+            }
+
             ImGui::EndPopup();
         }
 
@@ -223,59 +272,130 @@ namespace IS {
             {
                 ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
                 static bool already_selected = false;
+
+                const ImVec4 COLOR_CLEAR = ImVec4(0.f, 0.f, 0.f, 0.f);
+                const ImVec4 COLOR_BLACK_BG = ImVec4(0.f, 0.f, 0.f, 1.f);
+                const ImVec4 COLOR_GREY = ImVec4(.8f, .8f, .8f, .8f);
+                const ImVec4 COLOR_WHITE = ImVec4(1.f, 1.f, 1.f, 1.f);
+
+                ImVec4 original_button_color = style.Colors[ImGuiCol_ButtonHovered];
                 for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
                 {
                     Layering& layer = ISGraphics::mLayers[i];
                     ImGui::TableNextColumn();
                     const char* icon = layer.mLayerActive ? ICON_LC_EYE : ICON_LC_EYE_OFF;
+                    const char* tooltip = (layer.mLayerActive ? "Hide Layer" : "Unhide Layer");
                     ImGui::PushID(i);
-                    ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
+                    ImGui::PushStyleColor(ImGuiCol_Button, COLOR_CLEAR);
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, COLOR_CLEAR);
+                    ImGui::PushStyleColor(ImGuiCol_ButtonActive, COLOR_CLEAR);
+                    ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? COLOR_WHITE : COLOR_GREY);
                     if (ImGui::Button(icon))
                     {
                         layer.mLayerActive = !layer.mLayerActive;
                     }
-                    ImGui::PopStyleColor();
+                    ImGui::PopStyleColor(4);
                     ImGui::PopID();
+                    ImGui::SetItemTooltip(tooltip);
                     ImGui::TableNextColumn();
                     //ImGui::BeginDisabled(!layer.mLayerActive);
-                    ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? ImVec4(1.f, 1.f, 1.f, 1.f) : ImVec4(0.8f, 0.8f, 0.8f, .8f));
-                    if (already_selected && mSelectedLayer && *mSelectedLayer == i)
+                    ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? COLOR_WHITE : COLOR_GREY);
+                    //if (already_selected && IsSelectedLayer(i))
+                    //{
+                    //    EditorUtils::RenderInputText(layer.mName, [&]()
+                    //    {
+                    //        already_selected = false;
+                    //        ResetSelectedLayer();
+                    //    });
+                    //}
+                    //else
                     {
-                        EditorUtils::RenderInputText(layer.mName, [&]()
+                        int push_count{};
+                        ImGuiTreeNodeFlags layer_tree_flags = 0;
+                        if (!IsSelectedLayer(i))
                         {
-                            already_selected = false;
-                            mSelectedLayer.reset();
-                        });
-                    }
-                    else
-                    {
-                        ImGui::PushStyleColor(ImGuiCol_Button, (mSelectedLayer && *mSelectedLayer == i) ? style.Colors[ImGuiCol_ButtonActive] : ImVec4(0, 0, 0, 0));
-
-                        if (ImGui::Button(layer.mName.c_str()))
-                        {
-                            already_selected = (mSelectedLayer && *mSelectedLayer == i);
-                            mSelectedLayer = std::make_shared<int>(i);
+                            ImGui::PushStyleColor(ImGuiCol_Button, COLOR_CLEAR);
+                            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, COLOR_CLEAR);
+                            push_count = 2;
                         }
-                        ImGui::PopStyleColor();
+                        else
+                        {
+                            layer_tree_flags = ImGuiTreeNodeFlags_Selected;
+                            ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
+                            push_count = 1;
+                        }
+
+                        layer_tree_flags |= ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
+                        bool layer_opened = ImGui::TreeNodeEx(layer.mName.c_str(), layer_tree_flags);
+
+                        if (ImGui::IsItemClicked())
+                        {
+                            already_selected = IsSelectedLayer(i);
+                            MakeSelectedLayer(i);
+                        }
+
+                        //if (ImGui::Button(layer.mName.c_str()))
+                        //{
+                        //    already_selected = IsSelectedLayer(i);
+                        //    MakeSelectedLayer(i);
+                        //}
+                        ImGui::PopStyleColor(push_count);
+
                         if (ImGui::BeginPopupContextItem())
                         {
-                            if (ImGui::MenuItem("Remove Layer"))
+                            if (ImGui::MenuItem(ICON_LC_ARROW_UP "  Move Up"))
+                            {
+                                ISGraphics::ChangeLayerPosition(i, i == static_cast<int>(ISGraphics::mLayers.size() - 1) ? 0 : i + 1);
+                            }
+                            ImGui::SetItemTooltip("Bring Forward");
+
+                            if (ImGui::MenuItem(ICON_LC_ARROW_DOWN "  Move Down"))
+                            {
+                                ISGraphics::ChangeLayerPosition(i, i == 0 ? static_cast<int>(ISGraphics::mLayers.size() - 1) : i - 1);
+                            }
+                            ImGui::SetItemTooltip("Send Backward");
+
+                            ImGui::Separator();
+
+                            if (ImGui::MenuItem(ICON_LC_X "  Remove Layer"))
                             {
                                 ISGraphics::RemoveLayer(i);
                             }
 
                             ImGui::EndPopup();
                         }
+
+                        ImGui::SameLine(ImGui::CalcTextSize(layer.mName.c_str()).x + style.ItemSpacing.x);
+                        if (already_selected && IsSelectedLayer(i))
+                        {
+                            ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_BLACK_BG);
+                            EditorUtils::RenderInputText(layer.mName, [&]()
+                            {
+                                already_selected = false;
+                                ResetSelectedLayer();
+                            });
+                            ImGui::PopStyleColor();
+                        }
+
+                        if (layer_opened)
+                        {
+                            for (Entity entity : layer.mLayerEntities)
+                            {
+                                RenderEntityNode(entity);
+                            }
+
+                            ImGui::TreePop();
+                        }
                     }
 
                     //ImGui::EndDisabled();
                     ImGui::PopStyleColor();
                 }
-            }, ImGuiTableFlags_BordersH);
+            }, ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersInnerV);
 
             if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsAnyItemHovered())
             {
-                mSelectedLayer.reset();
+                ResetSelectedLayer();
             }
 
             ImGui::TreePop(); // pop tree Layers
@@ -284,7 +404,7 @@ namespace IS {
 
     void HierarchyPanel::RenderSceneNode(SceneID scene)
     {
-        auto& scene_manager = SceneManager::Instance();        
+        auto& scene_manager = SceneManager::Instance();
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
         bool opened = ImGui::TreeNodeEx((ICON_LC_BOXES "  " + std::string(scene_manager.GetSceneName(scene))).c_str(), tree_flags);
         if (ImGui::IsItemClicked())
@@ -383,6 +503,21 @@ namespace IS {
 
         if (CTRL_PRESSED && D_PRESSED) { mEditorLayer.CloneEntity(entity); }  // Ctrl+D
         if (DELETE_PRESSED) { mEditorLayer.DeleteEntity(entity); } // Delete
+    }
+
+    bool HierarchyPanel::IsSelectedLayer(int layer_index) const
+    {
+        return (mSelectedLayer && *mSelectedLayer == layer_index);
+    }
+
+    void HierarchyPanel::MakeSelectedLayer(int layer_index)
+    {
+        mSelectedLayer = std::make_shared<int>(layer_index);
+    }
+
+    void HierarchyPanel::ResetSelectedLayer()
+    {
+        mSelectedLayer.reset();
     }
 
 } // end namespace IS
