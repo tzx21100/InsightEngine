@@ -1176,7 +1176,8 @@ namespace IS
 
         static private void Attack()
         {
-            if (InternalCalls.MousePressed(0) && (!isAttack ))
+            //if (InternalCalls.MousePressed(0) && (!isAttack ))
+            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack ))
             {
                 isAttack = true;
                 //attack_type = "Light";
