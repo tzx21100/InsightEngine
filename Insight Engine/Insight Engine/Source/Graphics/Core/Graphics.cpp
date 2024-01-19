@@ -78,10 +78,7 @@ namespace IS {
     void ISGraphics::Initialize() {
         ISGraphics::Instance().Subscribe(MessageType::SpriteAdded);
         ISGraphics::Instance().Subscribe(MessageType::SpriteRemoved);
-        for (int i = 0; i < 4; i++)
-        { 
-            AddLayer();
-        }
+        ISGraphics::ClearLayers();
 
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 
