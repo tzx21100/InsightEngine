@@ -73,12 +73,16 @@ namespace IS {
 
     // Layering
     std::vector<Layering> ISGraphics::mLayers;
+    std::unordered_map<std::string, Layering> ISGraphics::mLayerNames;
 
 
     void ISGraphics::Initialize() {
         EventManager::Instance().Subscribe(MessageType::SpriteAdded, this);;
         EventManager::Instance().Subscribe(MessageType::SpriteRemoved,this);
-        for (int i = 0; i < 4; i++) { AddLayer(); }
+        for (int i = 0; i < 4; i++)
+        { 
+            AddLayer();
+        }
 
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 

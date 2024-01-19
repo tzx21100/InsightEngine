@@ -28,6 +28,8 @@
 #include "Engine/Systems/Button/Button.h"
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Collider.h"
+#include "Graphics/Core/Graphics.h"
+#include "Graphics/System/Layering.h"
 
 // Dependencies
 #include <imgui.h>
@@ -193,34 +195,88 @@ namespace IS {
     void HierarchyPanel::RenderLayerControls()
     {
         auto& style = ImGui::GetStyle();
-        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed;
+        ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
         bool layers_opened = ImGui::TreeNodeEx(ICON_LC_LAYERS "  Layers", tree_flags);
-        static bool to_render[INVALID_LAYER]{ true };
-        
+
+        bool vertical_scroll_visible = ImGui::GetScrollMaxY() != 0;
+        float x_offset = ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x;
+
+        ImGui::SameLine(x_offset);
+
+        if (ImGui::Button(ICON_LC_MORE_VERTICAL))
+        {
+            ImGui::OpenPopup("AddLayer");
+        }
+
+        if (ImGui::BeginPopup("AddLayer"))
+        {
+            if (ImGui::MenuItem("Add New Layer"))
+            {
+                ISGraphics::AddLayer();
+            }
+            ImGui::EndPopup();
+        }
+
         if (layers_opened)
         {
             EditorUtils::RenderTable("LayersTable", 2, [&]()
             {
                 ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
-                for (int i{}; i < INVALID_LAYER; ++i)
+                static bool already_selected = false;
+                for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
                 {
-                    to_render[i] = (Sprite::layersToIgnore.find(i) == Sprite::layersToIgnore.end());
-
-                    DrawLayer layer = static_cast<DrawLayer>(i);
+                    Layering& layer = ISGraphics::mLayers[i];
                     ImGui::TableNextColumn();
-                    const char* icon = to_render[i] ? ICON_LC_EYE : ICON_LC_EYE_OFF;
+                    const char* icon = layer.mLayerActive ? ICON_LC_EYE : ICON_LC_EYE_OFF;
                     ImGui::PushID(i);
                     ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
                     if (ImGui::Button(icon))
-                        Sprite::toggleLayer(layer);
+                    {
+                        layer.mLayerActive = !layer.mLayerActive;
+                    }
                     ImGui::PopStyleColor();
                     ImGui::PopID();
                     ImGui::TableNextColumn();
-                    ImGui::BeginDisabled(!to_render[i]);
-                    ImGui::TextUnformatted(Sprite::LayerToString(layer).c_str());
-                    ImGui::EndDisabled();
+                    //ImGui::BeginDisabled(!layer.mLayerActive);
+                    ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? ImVec4(1.f, 1.f, 1.f, 1.f) : ImVec4(0.8f, 0.8f, 0.8f, .8f));
+                    if (already_selected && mSelectedLayer && *mSelectedLayer == i)
+                    {
+                        EditorUtils::RenderInputText(layer.mName, [&]()
+                        {
+                            already_selected = false;
+                            mSelectedLayer.reset();
+                        });
+                    }
+                    else
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_Button, (mSelectedLayer && *mSelectedLayer == i) ? style.Colors[ImGuiCol_ButtonActive] : ImVec4(0, 0, 0, 0));
+
+                        if (ImGui::Button(layer.mName.c_str()))
+                        {
+                            already_selected = (mSelectedLayer && *mSelectedLayer == i);
+                            mSelectedLayer = std::make_shared<int>(i);
+                        }
+                        ImGui::PopStyleColor();
+                        if (ImGui::BeginPopupContextItem())
+                        {
+                            if (ImGui::MenuItem("Remove Layer"))
+                            {
+                                ISGraphics::RemoveLayer(i);
+                            }
+
+                            ImGui::EndPopup();
+                        }
+                    }
+
+                    //ImGui::EndDisabled();
+                    ImGui::PopStyleColor();
                 }
             }, ImGuiTableFlags_BordersH);
+
+            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsAnyItemHovered())
+            {
+                mSelectedLayer.reset();
+            }
 
             ImGui::TreePop(); // pop tree Layers
         }

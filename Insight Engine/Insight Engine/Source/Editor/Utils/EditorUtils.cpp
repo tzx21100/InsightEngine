@@ -276,6 +276,23 @@ namespace IS::EditorUtils {
         ImGui::PopID();
     }
 
+    void RenderInputText(std::string& text, std::function<void(void)> action)
+    {
+        ImGui::PushID(text.c_str());
+        char buffer[256]{};
+        std::memcpy(buffer, text.c_str(), text.size());
+        ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+        if (ImGui::InputText("##Text", buffer, sizeof(buffer), input_text_flags))
+        {
+            if (strlen(buffer) > 0)
+            {
+                CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
+                action();
+            }
+        }
+        ImGui::PopID();
+    }
+
     void RenderToggleButton(std::string const& str_id, bool& value)
     {
         ImVec2 p = ImGui::GetCursorScreenPos();

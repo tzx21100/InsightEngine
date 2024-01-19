@@ -59,6 +59,7 @@ namespace IS {
         ImGuiTextFilter mFilter; ///< Filter for scene hierarchy.
         Vec2 mPanelSize; ///< The size of the scene hierarchy panel.
         bool mChildWindowHovered;
+        std::shared_ptr<int> mSelectedLayer;
 
         /*!
          * \brief Renders details about the active scene.

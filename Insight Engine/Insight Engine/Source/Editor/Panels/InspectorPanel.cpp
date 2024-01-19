@@ -261,9 +261,17 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Layer");
 
                 ImGui::TableNextColumn();
-                DrawLayer layer = static_cast<DrawLayer>(sprite.layer);
-                EditorUtils::RenderComboBoxEnum<DrawLayer>("##Layer", layer, { "Background", "Default", "Foreground", "UI" });
-                sprite.layer = layer;
+                if (ImGui::BeginCombo("##Layer", ISGraphics::mLayers[sprite.layer].mName.c_str()))
+                {
+                    for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
+                    {
+                        if (ImGui::Selectable(ISGraphics::mLayers[i].mName.c_str(), sprite.layer == i))
+                        {
+                            sprite.layer = i;
+                        }
+                    }
+                    ImGui::EndCombo();
+                }
 
                 EditorUtils::RenderTableLabel("Color");
 

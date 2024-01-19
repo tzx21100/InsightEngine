@@ -113,6 +113,7 @@ namespace IS {
         void RenderTableFixedWidth(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0, float label_width = 100.f);
         void RenderTable(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0);
         void RenderTableInputText(std::string& text, std::function<void(void)> action = nullptr);
+        void RenderInputText(std::string& text, std::function<void(void)> action = nullptr);
         void RenderToggleButton(std::string const& str_id, bool& value);
 
         /*!

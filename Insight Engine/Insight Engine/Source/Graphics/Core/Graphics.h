@@ -182,6 +182,7 @@ namespace IS {
 			Layering new_layer;
 			new_layer.mLayerActive = true;
 			mLayers.emplace_back(new_layer); 
+			mLayers.back().mName = "Layer " + std::to_string(mLayers.size());
 		}
 
 		static void RemoveLayer(int layerID) {
@@ -224,8 +225,6 @@ namespace IS {
 				layer.mLayerEntities.clear();
 			}
 		}
-
-
 	};
 
 } // end namespace IS
