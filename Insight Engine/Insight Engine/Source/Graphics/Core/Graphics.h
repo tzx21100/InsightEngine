@@ -163,7 +163,7 @@ namespace IS {
 
 		// Layers
 		static std::vector<Layering>mLayers;
-		static std::unordered_map<std::string, Layering> mLayerNames;
+		static OrderedMap<std::string, Layering> mLayerNames;
 		
 		static void EnableLayer(Layering layer) {
 			layer.mLayerActive = true;
@@ -225,6 +225,10 @@ namespace IS {
 			}
 		}
 
+		// Get Layers Serialize
+		static int GetLayerAmount() {
+			return static_cast<int>(mLayers.size());
+		}
 
 	};
 
