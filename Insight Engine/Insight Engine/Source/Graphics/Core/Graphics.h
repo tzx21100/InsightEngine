@@ -56,6 +56,8 @@ namespace IS {
 	class ISGraphics : public ParentSystem {
 	public:
 
+		static ISGraphics& Instance() { static ISGraphics instance; return instance; }
+
 		/*!
 		 * \brief Initializes the ISGraphics system.
 		 */
@@ -158,6 +160,72 @@ namespace IS {
 		// Flags
 		static bool mGlitched;
 		static bool mLightsOn;
+
+		// Layers
+		static std::vector<Layering>mLayers;
+		static std::unordered_map<std::string, Layering> mLayerNames;
+		
+		static void EnableLayer(Layering layer) {
+			layer.mLayerActive = true;
+		}
+
+		static void DisableLayer(Layering layer) {
+			layer.mLayerActive = false;
+		}
+
+		static void ChangeLayerPosition(int layer, int layer2){
+			//swap positions in the vector
+			std::swap(mLayers[layer], mLayers[layer2]);
+		}
+
+		static void AddLayer() {
+			Layering new_layer;
+			new_layer.mLayerActive = true;
+			mLayers.emplace_back(new_layer); 
+		}
+
+		static void RemoveLayer(int layerID) {
+			mLayers.erase(mLayers.begin()+layerID);
+			ISGraphics::Instance().GraphicsRemoveLayer(layerID);
+			
+		}
+
+		void GraphicsRemoveLayer(int layer){
+			for (auto& entities : mEntities) {
+				if (InsightEngine::Instance().GetComponent<Sprite>(entities).layer == layer) {
+					InsightEngine::Instance().DeleteEntity(entities);
+				}
+			}
+		}
+
+		static void AddEntityToLayer(int layer,Entity entity) {
+			mLayers[layer].AddEntity(entity);
+			auto& spr = InsightEngine::Instance().GetComponent<Sprite>(entity);
+			spr.layer = layer;
+		}
+
+		static void RemoveEntityFromLayer(int layer, Entity entity) {
+			mLayers[layer].RemoveEntity(entity);
+		}
+
+		static void RemoveEntityFromLayer(Entity entity) {
+			for (auto& layer : mLayers) {
+				layer.RemoveEntity(entity);
+			}
+		}
+
+		static void ChangeEntityLayer(int layer, int new_layer, Entity entity) {
+			RemoveEntityFromLayer(layer, entity);
+			AddEntityToLayer(new_layer, entity);
+		}
+
+		static void ClearLayers() {
+			for (auto& layer : mLayers) {
+				layer.mLayerEntities.clear();
+			}
+		}
+
+
 	};
 
 } // end namespace IS

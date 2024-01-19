@@ -71,7 +71,15 @@ namespace IS {
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
 
+    // Layering
+    std::vector<Layering> ISGraphics::mLayers;
+
+
     void ISGraphics::Initialize() {
+        EventManager::Instance().Subscribe(MessageType::SpriteAdded, this);;
+        EventManager::Instance().Subscribe(MessageType::SpriteRemoved,this);
+        for (int i = 0; i < 4; i++) { AddLayer(); }
+
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
@@ -114,6 +122,14 @@ namespace IS {
         if (msg.GetType() == MessageType::DebugInfo) {
             IS_CORE_INFO("Handling Graphics");
         }
+        if (msg.GetType() == MessageType::SpriteAdded) {
+          auto& spr=InsightEngine::Instance().GetComponent<Sprite>(msg.GetInt());
+            AddEntityToLayer(spr.layer, msg.GetInt());
+           
+        }
+        if (msg.GetType() == MessageType::SpriteRemoved) {
+            RemoveEntityFromLayer(msg.int_value);
+        }
     }
 
     void ISGraphics::Update(float delta_time) {
@@ -151,8 +167,11 @@ namespace IS {
     #endif // USING_IMGUI
 
             // for each entity
-
-            for (auto& entity : mEntities) {
+        for (auto& layers : mLayers) {
+            if (layers.mLayerActive == false) { 
+                continue; 
+            }
+            for (auto& entity : layers.mLayerEntities) {
                 // get sprite and transform components
                 auto& sprite = engine.GetComponent<Sprite>(entity);
                 auto& trans = engine.GetComponent<Transform>(entity);
@@ -170,7 +189,7 @@ namespace IS {
                 // quad entities
                 if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                     // if sprite and it's layer is to be rendered
-                    if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
+                    //if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
                         // empty instance data
                         Sprite::instanceData instData;
 
@@ -208,7 +227,7 @@ namespace IS {
                             light.FollowTransform(trans.world_position);
                             light.draw(static_cast<float>(entity));
                         }
-                    }
+                    //}
                 }
 
                 // Debug draw
@@ -227,6 +246,7 @@ namespace IS {
                     if (Physics::mShowVelocity) Sprite::drawDebugLine(body.mPosition, body.mPosition + body.mVelocity, { 1.f, 0.f, 0.f });
                 }
             }
+        }
 
             // update active camera
             cameras3D[Camera3D::mActiveCamera].Update();
@@ -234,7 +254,7 @@ namespace IS {
             // Graphics system's draw
 
             //Draw(delta_time);
-            
+        
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
