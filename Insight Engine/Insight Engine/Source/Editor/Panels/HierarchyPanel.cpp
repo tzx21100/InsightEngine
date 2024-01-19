@@ -198,6 +198,8 @@ namespace IS {
         ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
         bool layers_opened = ImGui::TreeNodeEx(ICON_LC_LAYERS "  Layers", tree_flags);
         ImGui::SetItemTooltip("Order: Furthest layer (bottom), closest layer (top).\ne.g.,\n  UI\n  Foreground\n  Background");
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%zu)", ISGraphics::mLayers.size());
 
         bool vertical_scroll_visible = ImGui::GetScrollMaxY() != 0;
         float x_offset = ImGui::GetWindowWidth() - ImGui::CalcTextSize(ICON_LC_MORE_VERTICAL).x - (vertical_scroll_visible ? 3.f : 1.f) * style.ItemSpacing.x;
@@ -259,8 +261,7 @@ namespace IS {
 
             if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Remove All Layers"))
             {
-                ISGraphics::ClearLayers();
-                ISGraphics::mLayers.clear();
+                ISGraphics::DestroyAllLayers();
             }
 
             ImGui::EndPopup();
@@ -298,10 +299,11 @@ namespace IS {
                     ImGui::PopID();
                     ImGui::SetItemTooltip(tooltip);
                     ImGui::TableNextColumn();
-                    //ImGui::BeginDisabled(!layer.mLayerActive);
+
                     ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? COLOR_WHITE : COLOR_GREY);
                     int push_count{};
-                    ImGuiTreeNodeFlags layer_tree_flags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
+                    ImGuiTreeNodeFlags layer_tree_flags = IsSelectedLayer(i) ? ImGuiTreeNodeFlags_Selected : 0;
+                    layer_tree_flags |= ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
                     bool layer_opened = ImGui::TreeNodeEx(("##" + layer.mName).c_str(), layer_tree_flags);
 
                     if (ImGui::BeginPopupContextItem())
@@ -340,7 +342,7 @@ namespace IS {
                         ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
                         push_count = 1;
                     }
-                    ImGui::SameLine(6 * style.ItemSpacing.x);
+                    ImGui::SameLine(7 * style.ItemSpacing.x);
                     if (already_selected && IsSelectedLayer(i))
                     {
                         ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_BLACK_BG);
@@ -372,7 +374,6 @@ namespace IS {
                         ImGui::TreePop();
                     }
 
-                    //ImGui::EndDisabled();
                     ImGui::PopStyleColor();
                 }
             }, ImGuiTableFlags_BordersH | ImGuiTableFlags_BordersInnerV);

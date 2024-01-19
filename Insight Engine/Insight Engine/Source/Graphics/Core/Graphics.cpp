@@ -167,7 +167,9 @@ namespace IS {
     #endif // USING_IMGUI
 
             // for each entity
-        for (auto& layers : mLayers) {
+        for (int i = 0; i < static_cast<int>(mLayers.size()); i++)
+        {
+            Layering& layers = mLayers[i];
             if (layers.mLayerActive == false) { 
                 continue; 
             }
