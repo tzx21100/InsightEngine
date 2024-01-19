@@ -222,6 +222,7 @@ namespace IS
             height = InternalCalls.GetTransformScaling().y;
             InternalCalls.AddCollider(entity_feet);
             InternalCalls.AddCollider(entityWall);
+            InternalCalls.AddCollider(entity_attack);
 
 
             InternalCalls.CameraSetZoom(1.1f);
@@ -296,6 +297,7 @@ namespace IS
             if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
+                InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 return;
             }
 
@@ -816,6 +818,8 @@ namespace IS
 
             Attack();
             AttackAreaUpdate();
+            HitEnemy();
+
             FloorCheckerUpdate();
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
@@ -1172,7 +1176,7 @@ namespace IS
 
         static private void Attack()
         {
-            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack ))
+            if (InternalCalls.MousePressed(0) && (!isAttack ))
             {
                 isAttack = true;
                 //attack_type = "Light";
@@ -1225,7 +1229,7 @@ namespace IS
             {*/
 
             //}
-            Console.WriteLine(combo_step);
+            //Console.WriteLine(combo_step);
         }
 
         static private void AttackAreaUpdate()
@@ -1235,7 +1239,8 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * hori_movement;
+            //float distanceLeft = width * hori_movement;
+            float distanceLeft = width * 0;
 
             Vector2D relativePosition = new Vector2D(distanceLeft, 0);
 
@@ -1270,7 +1275,8 @@ namespace IS
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
                 {
                     // enemy get hit
-
+                    Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                    Console.WriteLine("hitting enemy");
                 }
             }
         }
