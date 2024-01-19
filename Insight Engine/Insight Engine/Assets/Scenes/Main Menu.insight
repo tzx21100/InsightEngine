@@ -73,23 +73,6 @@
 				"ButtonTextScale" : 0.0,
 				"ButtonType" : 0
 			},
-			"Light" : 
-			{
-				"LightHue" : 
-				{
-					"B" : 0.0,
-					"G" : 0.5058823823928833,
-					"R" : 1.0
-				},
-				"LightIntensity" : 1.0,
-				"LightOffset" : 
-				{
-					"X" : 5.0,
-					"Y" : 60.0
-				},
-				"LightRender" : false,
-				"LightSize" : 400.0
-			},
 			"Name" : "Team Logo",
 			"Script" : 
 			{

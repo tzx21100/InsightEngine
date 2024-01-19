@@ -1,10 +1,15 @@
 {
+	"Category" : 
+	{
+		"Category" : "Spikes"
+	},
 	"Name" : "SpikeImage",
-	"Signature" : "00000000000000000000000000000011",
+	"Signature" : "00000000000000000010000000000011",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
+		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
@@ -12,9 +17,9 @@
 		"SpriteFilename" : "Spikes.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 32,
+		"SpriteTexture" : 61,
 		"SpriteTextureHeight" : 888,
-		"SpriteTextureIndex" : 31,
+		"SpriteTextureIndex" : 60,
 		"SpriteTextureWidth" : 1548,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 388.02044677734375,

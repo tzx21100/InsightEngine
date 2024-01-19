@@ -337,10 +337,13 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool IsWindowFocused();
-        
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AttachLightComponentToEntity(int entity, float colorX,float colorY,float colorZ, float Intensity, float size);        
-        
+        internal extern static void AttachLightComponentToEntity(int entity, float colorX, float colorY, float colorZ, float Intensity, float size);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AttachLightComponentToEntityWithOffset(int entity, float colorX, float colorY, float colorZ, float Intensity, float size, SimpleVector2D offset);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetLightComponentToEntity(int entity, float colorX,float colorY,float colorZ, float Intensity, float size);
 
@@ -360,7 +363,7 @@ namespace IS
         internal extern static void SetLightToggleEntity(int entity, bool toggle);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetLightHueEntity(int entity, (float, float, float) hue);
+        internal extern static void SetLightHueEntity(int entity, float r, float g, float b);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static (float, float, float) GetLightHueEntity(int entity);

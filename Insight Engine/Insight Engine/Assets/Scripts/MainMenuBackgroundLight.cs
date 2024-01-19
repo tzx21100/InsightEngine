@@ -98,8 +98,8 @@ namespace IS
         const float LIGHT_TIMER_INIT = 2f;
         const float MIN_LIGHT_INTENSITY = 0.5f;
         const float MAX_LIGHT_INTENSITY = 1f;
-        static float MIN_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.05f;
-        static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 2.5f;
+        static float MIN_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.025f;
+        static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 1.5f;
 
         // Light Entities
         static private int mBackgroundLantern;

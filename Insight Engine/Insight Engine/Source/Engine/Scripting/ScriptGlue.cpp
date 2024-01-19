@@ -928,6 +928,16 @@ namespace IS {
         component.mSize = size;
     }    
     
+    static void AttachLightComponentToEntityWithOffset(int entity, float HueX, float HueY, float HueZ, float Intensity, float size, SimpleVector2D offset) {
+        InsightEngine::Instance().AddComponentAndUpdateSignature<Light>(entity, Light());
+        auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
+        component.mHue = { HueX,HueY,HueZ };
+        component.mIntensity = Intensity;
+        component.mSize = size;
+        component.mOffset.x = offset.x;
+        component.mOffset.y = offset.y;
+    }
+
     static void SetLightComponentToEntity(int entity,float HueX,float HueY,float HueZ, float Intensity, float size) {
         if (InsightEngine::Instance().HasComponent<Light>(entity)) {
             auto& component = InsightEngine::Instance().GetComponent<Light>(entity);
@@ -990,12 +1000,14 @@ namespace IS {
         return false;
     }
 
-    static void SetLightHueEntity(int entity, Vector3D hue)
+    static void SetLightHueEntity(int entity, float r, float g, float b)
     {
         if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Light>(entity))
         {
             auto& light = engine.GetComponent<Light>(entity);
-            light.mHue = hue;
+            light.mHue.x = r;
+            light.mHue.y = g;
+            light.mHue.z = b;
         }
     }
 
@@ -1219,6 +1231,7 @@ namespace IS {
 
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
+        IS_ADD_INTERNAL_CALL(AttachLightComponentToEntityWithOffset);
         IS_ADD_INTERNAL_CALL(SetLightComponentToEntity);
         IS_ADD_INTERNAL_CALL(SetLightIntensityEntity);
         IS_ADD_INTERNAL_CALL(GetLightIntensityEntity);

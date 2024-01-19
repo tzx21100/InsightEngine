@@ -66,8 +66,6 @@ namespace IS
         static private float light_intensity;
         static private int light_changer = 1;
 
-
-
         //private entity
 
         static SimpleImage player_walk;
@@ -109,7 +107,7 @@ namespace IS
         static private float jump_timer_set = 0.2f;
         static private bool isJumping = false;
         static private bool initial_land = false;
-        static private float jumpHeight = 1000f;
+        static private float jumpHeight = 1200f;
 
         //dashing 
         static public float bullet_time_timer = 1f;
@@ -135,8 +133,8 @@ namespace IS
         static private float acceleration_base = 50f;
         static private float acceleration_increment = 10f;
         static private float max_acceleration = 100;
-        static private float max_speed = 700f;
-        static private float move_speed = 0f;
+        static private float max_speed = 950f;
+        static private float move_speed = 950f;
 
         static private int hori_movement;
         static private float gravity_scale;
@@ -148,6 +146,13 @@ namespace IS
         static private int entityWall;
         static int climbdir;
 
+        // combat system
+        static private int combo_step = 0;
+        static public float attack_interval = 0.5f;
+        static public float combo_interval = 1f;
+        static private float attack_timer = 0f;
+        static private bool isAttack = false;
+        //static private string attack_type;
 
         //force calculations
         static private float Xforce = 0f;
@@ -156,6 +161,7 @@ namespace IS
         // player pos
         static public Vector2D player_pos = new Vector2D(0, 0);
         static private Vector2D trans_scaling = new Vector2D(0, 0);
+        static public Vector2D player_vel = new Vector2D(0, 0);
 
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
@@ -173,7 +179,7 @@ namespace IS
 
         static public void Init()
         {
-            WindowWidth= InternalCalls.GetWindowWidth();
+            WindowWidth = InternalCalls.GetWindowWidth();
             WindowHeight = InternalCalls.GetWindowHeight();
 
             Reward_DoubleJump = false;
@@ -213,7 +219,7 @@ namespace IS
             InternalCalls.AddCollider(entityWall);
 
 
-            InternalCalls.CameraSetZoom(1.2f);
+            InternalCalls.CameraSetZoom(1.1f);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -227,7 +233,7 @@ namespace IS
             light_entity = InternalCalls.CreateEntitySprite("Player Lighting");
             InternalCalls.AttachLightComponentToEntity(light_entity, 1, 0.43f, 0, 0.44f, 619);
 
-            powerup_entity = InternalCalls.CreateEntityVFX("powerup",player_powerup_vfx);
+            powerup_entity = InternalCalls.CreateEntityVFX("powerup", player_powerup_vfx);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 6, 0.9f, powerup_entity);
 
             InternalCalls.TransformSetScale(200f, 180f);
@@ -249,49 +255,52 @@ namespace IS
                 initialPowerUp = false;
             }
 
-            SimpleVector2D scaler = new SimpleVector2D(230.5f, 230.5f);
+            SimpleVector2D scaler = new SimpleVector2D(150f, 150f);
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
             {
-               
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x+scaler.x,camera_pos.y-WindowHeight/2f - scaler.y/2f);
+
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x + scaler.x * 2f, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
-                    pos,0,scaler,player_reward_dash,1f,4
+                    pos, 0, scaler, player_reward_dash, 1f, 4
                 );
 
             }
-            if(Reward_DoubleJump)
+            if (Reward_DoubleJump)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x-scaler.x, camera_pos.y - WindowHeight / 2f - scaler.y/2f);
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x - scaler.x * 2f, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
-                    pos, 0, scaler, player_reward_doublejump, 1f,4
+                    pos, 0, scaler, player_reward_doublejump, 1f, 4
                 );
 
             }
-            if(Reward_WallClimb)
+            if (Reward_WallClimb)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2f - scaler.y / 2f);
+                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
-                    pos, 0, scaler, player_reward_wallclimb, 1f,4
+                    pos, 0, scaler, player_reward_wallclimb, 1f, 4
                 );
 
             }
 
 
 
-            if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true) {
+            if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true)
+            {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 return;
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) {
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) // cheat code
+            {
+                player_ground_pos = new Vector2D(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl))
+            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl)) // cheat code
             {
                 Reward_Dash = true; Reward_DoubleJump = true; Reward_WallClimb = true;
             }
@@ -323,7 +332,8 @@ namespace IS
                 InternalCalls.TransformSetScaleEntity(0, 0, powerup_entity);
                 InternalCalls.TransformSetPositionEntity(-999, -9999, powerup_entity);
             }
-            else {
+            else
+            {
                 InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, powerup_entity);
             }
 
@@ -347,7 +357,8 @@ namespace IS
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
 
-                    for (int i = 0; i < 36; i++) {
+                    for (int i = 0; i < 36; i++)
+                    {
                         InternalCalls.GameSpawnParticleExtra(
                             player_pos.x, player_pos.y, i * 10, 8, -2, 0.9f, -0.1f, 1f, 300f, "Particle Test"
                          );
@@ -356,7 +367,8 @@ namespace IS
 
                     initialDeath = false;
                 }
-                else {
+                else
+                {
 
                     if (camera_shake_duration > 0)
                     {
@@ -455,8 +467,8 @@ namespace IS
                 {
                     acceleration += acceleration_increment;
                     if (acceleration > max_acceleration) { acceleration = max_acceleration; }
-                    move_speed += acceleration;
-                    if (move_speed > max_speed) { move_speed = max_speed; }
+                    /*move_speed += acceleration;
+                    if (move_speed > max_speed) { move_speed = max_speed; }*/
 
                     InternalCalls.SetSpriteAnimationIndex(0);
                     InternalCalls.SetSpriteImage(player_walk);
@@ -464,10 +476,10 @@ namespace IS
                 }
                 else
                 {
-                    move_speed -= acceleration;
+                    //move_speed -= acceleration;
                     acceleration -= acceleration_increment;
                     if (acceleration < acceleration_base) { acceleration = acceleration_base; }
-                    if (move_speed < 0) { move_speed = 0; }
+                    //if (move_speed < 0) { move_speed = 0; }
 
 
                     InternalCalls.SetSpriteAnimationIndex(1);
@@ -488,7 +500,8 @@ namespace IS
             }
             else { isClimbing = false; animation_current_frame = 0; animation_speed = animation_speed_set; }
 
-            if (isClimbing) {
+            if (isClimbing)
+            {
 
 
                 InternalCalls.SetSpriteImage(player_transparent);
@@ -501,7 +514,8 @@ namespace IS
 
                 InternalCalls.RigidBodySetForce(climbSpeed * force_from_angle.x * hori_movement, climbSpeed * force_from_angle.y);
 
-                if (hori_movement != climbdir) {
+                if (hori_movement != climbdir)
+                {
                     isClimbing = false;
                     Xforce += hori_movement * 2000f;
                 }
@@ -514,30 +528,42 @@ namespace IS
 
                 SimpleImage curr_image = player_climb;
                 int cur_col = 0; int cur_row = 0;
-                switch (animation_current_frame) {
+                switch (animation_current_frame)
+                {
                     case 0:
                         cur_col = 0; cur_row = 0;
-                        break; case 1:
+                        break;
+                    case 1:
                         cur_col = 1; cur_row = 0;
-                        break; case 2:
+                        break;
+                    case 2:
                         cur_col = 2; cur_row = 0;
-                        break; case 3:
+                        break;
+                    case 3:
                         cur_col = 0; cur_row = 1;
-                        break; case 4:
+                        break;
+                    case 4:
                         cur_col = 1; cur_row = 1;
-                        break; case 5:
+                        break;
+                    case 5:
                         cur_col = 2; cur_row = 1;
-                        break; case 6:
+                        break;
+                    case 6:
                         cur_col = 0; cur_row = 2;
-                        break; case 7:
+                        break;
+                    case 7:
                         cur_col = 1; cur_row = 2;
-                        break; case 8:
+                        break;
+                    case 8:
                         cur_col = 2; cur_row = 2;
-                        break; case 9:
+                        break;
+                    case 9:
                         cur_col = 0; cur_row = 3;
-                        break; case 10:
+                        break;
+                    case 10:
                         cur_col = 1; cur_row = 3;
-                        break; case 11:
+                        break;
+                    case 11:
                         cur_col = 2; cur_row = 3;
                         break;
 
@@ -545,18 +571,20 @@ namespace IS
 
                 animation_speed -= InternalCalls.GetDeltaTime();
 
-                if (animation_speed <= 0) {
+                if (animation_speed <= 0)
+                {
 
                     animation_speed = animation_speed_set;
                     animation_current_frame++;
-                    if (animation_current_frame >= 10) {
+                    if (animation_current_frame >= 10)
+                    {
                         animation_current_frame = 0;
                     }
 
                 }
 
 
-                InternalCalls.DrawImageExtraAt(cur_row,cur_col,4,3,pos, 0f, scale, curr_image, 1f, 1);
+                InternalCalls.DrawImageExtraAt(cur_row, cur_col, 4, 3, pos, 0f, scale, curr_image, 1f, 1);
 
             }
             else
@@ -585,7 +613,11 @@ namespace IS
                     player_ground_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
                 }
                 // let player rest and stop sliding when grounding
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping) { InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y); }
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping)
+                {
+                    InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y);
+                    InternalCalls.RigidBodySetForce(0f, 0f);
+                }
             }
             else
             {
@@ -606,16 +638,16 @@ namespace IS
                         float yvel = InternalCalls.RigidBodyGetVelocityY();
                         float vol = -yvel / 3200f;
                         //InternalCalls.NativeLog("yvel: ", yvel);
-                        if (yvel < -3200f ) { vol= 1f; }
-                       // InternalCalls.NativeLog("VOLUME: ", vol);
+                        if (yvel < -3200f) { vol = 1f; }
+                        // InternalCalls.NativeLog("VOLUME: ", vol);
                         vol = CustomMath.max(vol, 0.1f);
-                       // InternalCalls.NativeLog("VOLUME AFTER MAX: ", vol);
+                        // InternalCalls.NativeLog("VOLUME AFTER MAX: ", vol);
                         vol = CustomMath.min(vol, 1f);
-                       // InternalCalls.NativeLog("VOLUME AFTER MIN: ", vol);
+                        // InternalCalls.NativeLog("VOLUME AFTER MIN: ", vol);
                         PlayRandomFootstep(vol);
                         initial_land = true;
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        InternalCalls.TransformSetScaleEntity(CustomMath.max(vol*400, 200f), CustomMath.max(vol * 400, 200f), land_entity);
+                        InternalCalls.TransformSetScaleEntity(CustomMath.max(vol * 400, 200f), CustomMath.max(vol * 400, 200f), land_entity);
                         InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y + (InternalCalls.GetTransformScalingEntity(land_entity).y - 200f) / 2f, land_entity);
                         InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, land_entity);
                     }
@@ -624,8 +656,10 @@ namespace IS
                     /*                if (hori_movement != 0) {aangle+=180f; }*/
                     Vector2D f_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(aangle));
                     //set move speed when grounded
+                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
 
-                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
+                    //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
+
 
                     // Set the rotation to be the same as the detected one
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
@@ -645,6 +679,7 @@ namespace IS
 
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
+                        InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
@@ -652,19 +687,21 @@ namespace IS
                     ApplyGravityChange();
 
                     int frame = InternalCalls.GetCurrentAnimationEntity(PLAYER_ID);
-                    if ((frame==2 || frame == 8) && hori_movement != 0 && frame!=previous_footstep_frame) {
+                    if ((frame == 2 || frame == 8) && hori_movement != 0 && frame != previous_footstep_frame)
+                    {
                         //InternalCalls.Anim
-                       // InternalCalls.NativeLog("Footsteps called at frame: ", frame);
+                        // InternalCalls.NativeLog("Footsteps called at frame: ", frame);
                         PlayRandomFootstep(0.2f);
                         previous_footstep_frame = frame;
-                        
+
 
                     }
 
 
                 }
             }
-            else if (!isClimbing) { //while in the air
+            else if (!isClimbing)
+            { //while in the air
 
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
@@ -683,30 +720,48 @@ namespace IS
                 }
                 ApplyGravityChange();
 
+                // no key input in the air
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isDashing)
+                {
+                    InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                }
+
                 Xforce += hori_movement * move_speed;
-                InternalCalls.RigidBodyAddForce(Xforce, Yforce);
-                if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > 700)
+                InternalCalls.RigidBodyAddForce(hori_movement * move_speed / 10, 0f);
+                // limit the vel
+                player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
+                if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
+                if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
+
+                /*if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > max_speed)
                 {
                     InternalCalls.RigidBodySetForceX(700 * hori_movement);
-                }
+                }*/
                 initial_land = false;
             }
+            // limit the vel
+            player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
+            if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
+            if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
 
 
             if (canDash && isDashing == false && Reward_Dash)
             {
                 InternalCalls.GlitchEnable(false);
-                if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift)) {
+                if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift))
+                {
                     isDashing = true;
                 }
 
             }
-            if (isDashing) {
+            if (isDashing)
+            {
                 isGrounded = false;
                 isFirstGrounded = false;
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer -= InternalCalls.GetDeltaTime();
+                    InternalCalls.SetGravityScale(gravity_scale * 0f);
                     InternalCalls.RigidBodySetForce(0, 0);
 
                     //Get mouse
@@ -738,9 +793,6 @@ namespace IS
                         );
                     }
 
-
-
-
                 }
                 else
                 {
@@ -748,7 +800,7 @@ namespace IS
                 }
             }
 
-
+            Attack();
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -767,10 +819,12 @@ namespace IS
         }
 
 
-        static private void Dashing() {
+        static private void Dashing()
+        {
 
-            if (initialDash == true) {
-                InternalCalls.AudioPlaySound("Sward-Whoosh_3.wav",false,0.3f);
+            if (initialDash == true)
+            {
+                InternalCalls.AudioPlaySound("Sward-Whoosh_3.wav", false, 0.3f);
                 initialDash = false;
             }
 
@@ -828,7 +882,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
 
-            
+
         }
 
         static private void ApplyGravityChange()
@@ -924,8 +978,6 @@ namespace IS
                 light_intensity = CustomMath.max(0.4f, light_intensity);
 
             }
-
-
 
 
             InternalCalls.SetLightComponentToEntity(light_entity, 1, 0.43f, 0, light_intensity, 619);
@@ -1099,9 +1151,53 @@ namespace IS
 
 
             }
-            
-           
+
+
             return;
+        }
+
+        static private void Attack()
+        {
+            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack || (isAttack && attack_timer < attack_interval)))
+            {
+                isAttack = true;
+                //attack_type = "Light";
+                combo_step++;
+                if (combo_step > 3)
+                {
+                    attack_timer = combo_interval;
+                }
+                attack_timer = attack_interval;
+                
+            }
+            if (isAttack)
+            {
+                if (attack_timer > 0f)
+                {
+                    attack_timer -= InternalCalls.GetDeltaTime();
+                    // attacking combo animation 123
+                    switch (combo_step)
+                    {
+                        case 1:
+                            InternalCalls.SetSpriteImage(player_jump);
+                            break;
+                        case 2:
+                            InternalCalls.SetSpriteImage(player_idle);
+                            break;
+                        case 3:
+                            InternalCalls.SetSpriteImage(player_walk);
+                            break;
+                    }
+
+                    if (attack_timer <= 0f)
+                    {
+                        attack_timer = 0f;
+                        combo_step = 0;
+                        isAttack = false;
+                    }
+                }
+            }
+            //Console.WriteLine(combo_step);
         }
 
     } //player script
