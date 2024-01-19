@@ -19,7 +19,7 @@ namespace IS
     {
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
-        static Vector2D orgin = new Vector2D(0, 0);
+        static Vector2D origin = new Vector2D(0, 0);
 
         static private int game_title_entity;
         static private int start_button_entity;
@@ -63,8 +63,8 @@ namespace IS
             InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
 
             // set origin
-            orgin.x = -(win_dimension.x / 2f);
-            orgin.y = -(win_dimension.y / 2f);
+            origin.x = -(win_dimension.x / 2f);
+            origin.y = -(win_dimension.y / 2f);
 
             // set sizes
             InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
@@ -74,11 +74,11 @@ namespace IS
             InternalCalls.SetButtonSize(exit_button_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
 
             // set pos
-            game_title_pos.Set(orgin.x + (0.33f * win_dimension.x), orgin.y + (0.76f * win_dimension.y));
-            start_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.58f * win_dimension.y));
-            settings_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.46f * win_dimension.y));
-            how_to_play_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.34f * win_dimension.y));
-            exit_button_pos.Set(orgin.x + (0.31f * win_dimension.x), orgin.y + (0.22f * win_dimension.y));
+            game_title_pos.Set(origin.x + (0.33f * win_dimension.x), origin.y + (0.76f * win_dimension.y));
+            start_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.58f * win_dimension.y));
+            settings_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
+            how_to_play_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.34f * win_dimension.y));
+            exit_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.22f * win_dimension.y));
 
             if (SettingsScript.show_settings || HowToPlayScript.show_how_to_play || ExitButtonScript.exit_confirmation)
             {
