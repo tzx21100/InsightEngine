@@ -300,92 +300,78 @@ namespace IS {
                     ImGui::TableNextColumn();
                     //ImGui::BeginDisabled(!layer.mLayerActive);
                     ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? COLOR_WHITE : COLOR_GREY);
-                    //if (already_selected && IsSelectedLayer(i))
-                    //{
-                    //    EditorUtils::RenderInputText(layer.mName, [&]()
-                    //    {
-                    //        already_selected = false;
-                    //        ResetSelectedLayer();
-                    //    });
-                    //}
-                    //else
+                    int push_count{};
+                    ImGuiTreeNodeFlags layer_tree_flags = 0;
+
+                    layer_tree_flags |= ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
+                    bool layer_opened = ImGui::TreeNodeEx(("##" + layer.mName).c_str(), layer_tree_flags);
+
+                    if (ImGui::BeginPopupContextItem())
                     {
-                        int push_count{};
-                        ImGuiTreeNodeFlags layer_tree_flags = 0;
-                        if (!IsSelectedLayer(i))
+                        if (ImGui::MenuItem(ICON_LC_ARROW_UP "  Move Up"))
                         {
-                            ImGui::PushStyleColor(ImGuiCol_Button, COLOR_CLEAR);
-                            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, COLOR_CLEAR);
-                            push_count = 2;
+                            ISGraphics::ChangeLayerPosition(i, i == static_cast<int>(ISGraphics::mLayers.size() - 1) ? 0 : i + 1);
                         }
-                        else
+                        ImGui::SetItemTooltip("Bring Forward");
+
+                        if (ImGui::MenuItem(ICON_LC_ARROW_DOWN "  Move Down"))
                         {
-                            layer_tree_flags = ImGuiTreeNodeFlags_Selected;
-                            ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
-                            push_count = 1;
+                            ISGraphics::ChangeLayerPosition(i, i == 0 ? static_cast<int>(ISGraphics::mLayers.size() - 1) : i - 1);
                         }
+                        ImGui::SetItemTooltip("Send Backward");
 
-                        layer_tree_flags |= ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
-                        bool layer_opened = ImGui::TreeNodeEx(layer.mName.c_str(), layer_tree_flags);
+                        ImGui::Separator();
 
-                        if (ImGui::IsItemClicked())
+                        if (ImGui::MenuItem(ICON_LC_X "  Remove Layer"))
                         {
-                            already_selected = IsSelectedLayer(i);
-                            MakeSelectedLayer(i);
+                            ISGraphics::RemoveLayer(i);
                         }
 
-                        //if (ImGui::Button(layer.mName.c_str()))
-                        //{
-                        //    already_selected = IsSelectedLayer(i);
-                        //    MakeSelectedLayer(i);
-                        //}
-                        ImGui::PopStyleColor(push_count);
+                        ImGui::EndPopup();
+                    }
 
-                        if (ImGui::BeginPopupContextItem())
-                        {
-                            if (ImGui::MenuItem(ICON_LC_ARROW_UP "  Move Up"))
-                            {
-                                ISGraphics::ChangeLayerPosition(i, i == static_cast<int>(ISGraphics::mLayers.size() - 1) ? 0 : i + 1);
-                            }
-                            ImGui::SetItemTooltip("Bring Forward");
-
-                            if (ImGui::MenuItem(ICON_LC_ARROW_DOWN "  Move Down"))
-                            {
-                                ISGraphics::ChangeLayerPosition(i, i == 0 ? static_cast<int>(ISGraphics::mLayers.size() - 1) : i - 1);
-                            }
-                            ImGui::SetItemTooltip("Send Backward");
-
-                            ImGui::Separator();
-
-                            if (ImGui::MenuItem(ICON_LC_X "  Remove Layer"))
-                            {
-                                ISGraphics::RemoveLayer(i);
-                            }
-
-                            ImGui::EndPopup();
-                        }
-
-                        ImGui::SameLine(ImGui::CalcTextSize(layer.mName.c_str()).x + style.ItemSpacing.x);
-                        if (already_selected && IsSelectedLayer(i))
-                        {
-                            ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_BLACK_BG);
-                            EditorUtils::RenderInputText(layer.mName, [&]()
+                    if (!IsSelectedLayer(i))
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_Button, COLOR_CLEAR);
+                        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, COLOR_CLEAR);
+                        push_count = 2;
+                    }
+                    else
+                    {
+                        layer_tree_flags = ImGuiTreeNodeFlags_Selected;
+                        ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
+                        push_count = 1;
+                    }
+                    ImGui::SameLine(ImGui::CalcTextSize(layer.mName.c_str()).x + style.ItemSpacing.x);
+                    if (already_selected && IsSelectedLayer(i))
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_BLACK_BG);
+                        EditorUtils::RenderInputText(layer.mName, [&]()
                             {
                                 already_selected = false;
                                 ResetSelectedLayer();
                             });
-                            ImGui::PopStyleColor();
-                        }
-
-                        if (layer_opened)
+                        ImGui::PopStyleColor();
+                    }
+                    else
+                    {
+                        if (ImGui::Button(layer.mName.c_str()))
                         {
-                            for (Entity entity : layer.mLayerEntities)
-                            {
-                                RenderEntityNode(entity);
-                            }
-
-                            ImGui::TreePop();
+                            already_selected = IsSelectedLayer(i);
+                            MakeSelectedLayer(i);
                         }
+                    }
+
+                    ImGui::PopStyleColor(push_count);
+
+                    if (layer_opened)
+                    {
+                        for (Entity entity : layer.mLayerEntities)
+                        {
+                            RenderEntityNode(entity);
+                        }
+
+                        ImGui::TreePop();
                     }
 
                     //ImGui::EndDisabled();
