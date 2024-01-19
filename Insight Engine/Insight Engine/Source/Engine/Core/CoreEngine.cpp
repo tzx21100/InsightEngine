@@ -158,6 +158,7 @@ namespace IS {
 			accumulatedTime -= mFixedDeltaTime; //this will store the
 			//exact accumulated time differences, among all game loops
 			currentNumberOfSteps++;
+			if (currentNumberOfSteps > 3) { currentNumberOfSteps = 3; }
 		}
 
 		++mFrameCount;
@@ -587,6 +588,9 @@ namespace IS {
 		mSystemManager->ClearEntities();
 		//reset the entity ID to start from 0
 		mEntityManager->ResetEntityID();
+
+		//Clear layers
+		ISGraphics::ClearLayers();
 	}
 
 	// Abstracted functions for window getters/setters
