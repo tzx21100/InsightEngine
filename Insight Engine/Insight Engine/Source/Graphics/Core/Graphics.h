@@ -218,6 +218,9 @@ namespace IS {
 		static void ChangeEntityLayer(int layer, int new_layer, Entity entity) {
 			RemoveEntityFromLayer(layer, entity);
 			AddEntityToLayer(new_layer, entity);
+			auto& engine = InsightEngine::Instance();
+			auto& sprite = engine.GetComponent<Sprite>(entity);
+			sprite.layer = new_layer;
 		}
 
 		static void ClearLayers() {

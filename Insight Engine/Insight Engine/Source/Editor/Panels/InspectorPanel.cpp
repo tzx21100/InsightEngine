@@ -267,7 +267,8 @@ namespace IS {
                     {
                         if (ImGui::Selectable(ISGraphics::mLayers[i].mName.c_str(), sprite.layer == i))
                         {
-                            sprite.layer = i;
+                            //sprite.layer = i;
+                            ISGraphics::ChangeEntityLayer(sprite.layer, i, entity);
                         }
                     }
                     ImGui::EndCombo();

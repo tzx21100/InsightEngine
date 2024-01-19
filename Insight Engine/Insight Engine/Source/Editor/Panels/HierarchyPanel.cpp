@@ -301,9 +301,7 @@ namespace IS {
                     //ImGui::BeginDisabled(!layer.mLayerActive);
                     ImGui::PushStyleColor(ImGuiCol_Text, layer.mLayerActive ? COLOR_WHITE : COLOR_GREY);
                     int push_count{};
-                    ImGuiTreeNodeFlags layer_tree_flags = 0;
-
-                    layer_tree_flags |= ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
+                    ImGuiTreeNodeFlags layer_tree_flags = ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap;
                     bool layer_opened = ImGui::TreeNodeEx(("##" + layer.mName).c_str(), layer_tree_flags);
 
                     if (ImGui::BeginPopupContextItem())
@@ -342,7 +340,7 @@ namespace IS {
                         ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonHovered]);
                         push_count = 1;
                     }
-                    ImGui::SameLine(ImGui::CalcTextSize(layer.mName.c_str()).x + style.ItemSpacing.x);
+                    ImGui::SameLine(6 * style.ItemSpacing.x);
                     if (already_selected && IsSelectedLayer(i))
                     {
                         ImGui::PushStyleColor(ImGuiCol_FrameBg, COLOR_BLACK_BG);

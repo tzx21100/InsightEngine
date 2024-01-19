@@ -18,7 +18,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 1,
+				"Layer" : 0,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -81,7 +81,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 3,
+				"Layer" : 1,
 				"SpriteColorA" : 0.80000001192092896,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -116,11 +116,11 @@
 	[
 		{
 			"Active" : true,
-			"Name" : "Layer 1"
+			"Name" : "Background"
 		},
 		{
 			"Active" : true,
-			"Name" : "Layer 2"
+			"Name" : "Foreground"
 		}
 	],
 	"LayersAmount" : 2

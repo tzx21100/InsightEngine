@@ -39,7 +39,10 @@
 #include <iostream>
 
 namespace IS {
+
+    // forward delcarations
     class Sprite;
+    class ISGraphics;
 
     /*!
        * \brief The central engine class for the game.
@@ -593,6 +596,10 @@ namespace IS {
                 AddComponent<T>(entity, T());
                 auto& component = GetComponent<T>(entity);
                 component.Deserialize(prefab[componentName]);
+                mSpriteRemoved.int_value = entity;
+                SendMessage(mSpriteRemoved);
+                mSpriteAdded.int_value = entity;
+                SendMessage(mSpriteAdded);
             }
         }
 
