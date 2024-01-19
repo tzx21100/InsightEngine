@@ -230,7 +230,19 @@ namespace IS {
     }
 
     void Sprite::draw_lights() {
-        std::vector<glm::vec4> line = { glm::vec4(-100.f, 30.f, 100.f, 50.f) };
+        std::vector<glm::vec4> line = {
+            glm::vec4(0.15f, 0.1f, 0.5f, 0.1f)
+        };
+
+        glm::mat4 camXform = ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform();
+
+        //for (auto& lineSeg : line) {
+        //    glm::vec2 p0 = glm::vec4(lineSeg.x, lineSeg.y, 0.f, 1.f) * camXform;
+        //    glm::vec2 p1 = glm::vec4(lineSeg.z, lineSeg.w, 0.f, 1.f) * camXform;
+        //    lineSeg.x = p0.x, lineSeg.y = p0.y, lineSeg.z = p1.x, lineSeg.w = p1.y;
+        //}
+
+        
 
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
@@ -250,17 +262,6 @@ namespace IS {
                 std::cerr << "Failed to unmap the buffer." << std::endl;
             }
 
-            // upload to uniform variable
-            auto tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
-            if (tex_arr_uniform >= 0)
-                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), glm::value_ptr(line[0]));
-            else IS_CORE_ERROR({ "uLineSegments Uniform not found, shader compilation failed?" });
-
-            //auto tex_arr_uniform2 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
-            //if (tex_arr_uniform2 >= 0)
-            //    glUniform1i(tex_arr_uniform2, static_cast<int>(line.size()));
-            //else IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
-
         }
         else {
             // Handle the case where mapping the buffer was not successful
@@ -270,6 +271,31 @@ namespace IS {
         // bind shader
         GL_CALL(glUseProgram(ISGraphics::light_shader_pgm.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
+
+        // upload to uniform variable
+        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
+        if (tex_arr_uniform >= 0)
+            glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), &line[0].x);
+        else
+            IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
+
+        auto tex_arr_uniform2 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
+        if (tex_arr_uniform2 >= 0)
+            glUniform1i(tex_arr_uniform2, static_cast<int>(line.size()));
+        else 
+            IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+
+        InsightEngine& engine = InsightEngine::Instance();
+        auto const& [width, height] = engine.GetWindowSize();
+        glm::vec2 resolution = { width, height };
+
+        // upload to uniform variable
+        auto tex_arr_uniform3 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
+        if (tex_arr_uniform3 >= 0)
+            glUniform2fv(tex_arr_uniform3, 1, &resolution.x);
+        else
+            IS_CORE_ERROR("uResolution Uniform not found, shader compilation failed?");
+
 
         // draw instanced quads
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);

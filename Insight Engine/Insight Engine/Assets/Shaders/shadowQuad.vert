@@ -23,6 +23,6 @@ void main()
 	vColor = aVertexColor;
     vEntityID = aEntityID;
 
-    lightWidth = model_to_NDC_xform[0][0] * 2.0;
+    lightWidth = 1345.f;
     worldLightPos = vec2(model_to_NDC_xform[3]);
 }
