@@ -50,7 +50,7 @@ namespace IS
 
         static public void Update()
         {
-            if (ExitButtonScript.exit_confirmation) {
+            if ( SettingsScript.show_settings || ExitButtonScript.exit_confirmation) {
                 InternalCalls.ButtonComponentRemove(entity_id);
             }
             else

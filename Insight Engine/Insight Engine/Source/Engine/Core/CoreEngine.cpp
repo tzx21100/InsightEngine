@@ -158,6 +158,7 @@ namespace IS {
 			accumulatedTime -= mFixedDeltaTime; //this will store the
 			//exact accumulated time differences, among all game loops
 			currentNumberOfSteps++;
+			if (currentNumberOfSteps > 3) { currentNumberOfSteps = 3; }
 		}
 
 		++mFrameCount;
@@ -535,6 +536,17 @@ namespace IS {
 			SaveEntityToJson(id.first, entity_names);*/
 		}
 		scene["Entities"] = entities;
+		scene["LayersAmount"] = ISGraphics::GetLayerAmount();
+		Json::Value layers(Json::arrayValue);
+		for (auto& layer : ISGraphics::mLayers) {
+			Json::Value layer_;
+			layer_ = layer.Serialize();
+			layers.append(layer_);
+
+		}
+		scene["Layers"] = layers;
+
+
 		if (SaveJsonToFile(scene, file_path))
 		{
 			IS_CORE_INFO("Saving scene {} successful!", file_path);
@@ -574,6 +586,14 @@ namespace IS {
 			DeserializeAllComponents(entity, entityData);
 		}
 
+		int layer_count = sceneRoot["LayersAmount"].asInt();
+		const Json::Value layers = sceneRoot["Layers"];
+		for (int i = 0; i < layer_count; i++) {
+			Json::Value layer_data = layers[i];
+			ISGraphics::AddLayer();
+			ISGraphics::mLayers[i].Deserialize(layer_data);
+		}
+
 		IS_CORE_INFO("Loading scene {} successful!", filepath.string());
 		IS_CORE_INFO("{} entities loaded", EntitiesAlive);
 		return true;
@@ -587,6 +607,9 @@ namespace IS {
 		mSystemManager->ClearEntities();
 		//reset the entity ID to start from 0
 		mEntityManager->ResetEntityID();
+
+		//Clear layers
+		ISGraphics::ClearLayers();
 	}
 
 	// Abstracted functions for window getters/setters
