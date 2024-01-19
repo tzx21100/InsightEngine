@@ -142,6 +142,12 @@ namespace IS {
         return SimpleVector2D(body_component.mVelocity.x,body_component.mVelocity.y);
     }
 
+    static float RigidBodyGetVelocityX() {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        return body_component.mVelocity.x;
+    }
+
     static float RigidBodyGetVelocityY() {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
@@ -603,7 +609,7 @@ namespace IS {
     static void DrawLineBetweenPoints(float x1, float y1, float x2, float y2, std::tuple<float, float, float> color) {
         Vector2D point1 = Vector2D(x1, y1);
         Vector2D point2 = Vector2D(x2, y2);
-        Vector2D dist = point1 - point2;
+        Vector2D dist = point2 - point1;
         ISVector2DNormalize(dist, dist);
         dist *= 500.f;
         Sprite::drawDebugLine(point1, point1+dist, color);
@@ -1153,6 +1159,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityX);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityY);
         IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetBodyTypeEntity);

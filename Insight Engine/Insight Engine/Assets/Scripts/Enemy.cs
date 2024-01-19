@@ -19,7 +19,7 @@ namespace IS
     class Enemy
     {
 
-        static public float speed = 200f;
+        static public float speed = 100f;
         static private Vector2D direction = new Vector2D(0f, 0f);
         static private bool isHit;
         static private float being_hit_timer = 0f;
