@@ -18,40 +18,76 @@ namespace IS
 {
     class Enemy
     {
-
+        // common
         static public float speed = 100f;
         static private Vector2D direction = new Vector2D(0f, 0f);
-        static private bool isHit;
-        static private float being_hit_timer = 0f;
+        static public Vector2D enemy_pos = new Vector2D(0f, 0f);
         static private Vector2D scaling = new Vector2D(257f, 183f);
+
+        // get hit
+        static private bool isHit;
+        static private bool initialHit = false;
+        static private float being_hit_timer = 0f;
         static public int ENEMY_ID;
+
+        // image and vfx
+        static SimpleImage enemy_get_hit_vfx;
+
+        static private int get_hit_vfx_entity;
         static public void Init()
         {
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
             direction.x = 1f; // init
+            //InternalCalls.ColliderNone(ENEMY_ID);
+
+            // image and vfx
+            enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
+
+            get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
+            InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
         }
 
         static public void Update()
         {
+            InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
+            enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
+
+            if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
+            {
+                scaling.x *= -1; // flip the enemy over
+            }
+            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
+
             if (isHit)
             {
+                //Console.WriteLine("getting enemy");
                 float vel_x = direction.x * speed;
                 //float vel_y = direction.y * speed;
-                // moving backwards abit
+                // first hit
+                if (!initialHit)
+                {
+                    // draw vfx animation once get hit
+                    InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
+                    
+                    initialHit = true;
+                }
+                DrawGetHitVFX(); // update vfx 
+                // enemy moving backwards abit
                 InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
                 being_hit_timer += InternalCalls.GetDeltaTime();
                 if (being_hit_timer > 0.5f)
                 {
                     isHit = false;
+                    initialHit = false;
                     being_hit_timer = 0f;
                 }
             }
-            if(MathF.Sign(scaling.x) != MathF.Sign(direction.x))
+            else
             {
-                scaling.x *= -1; // flip the enemy over
+                RemoveGetHitVFX();
             }
-            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
+            EnemyCollidingPlayer();
             //Console.WriteLine(direction);
         }
 
@@ -66,6 +102,39 @@ namespace IS
             //InternalCalls.TransformSetScaleEntity(InternalCalls.GetTransformScalingEntity(ENEMY_ID).x * dir.x, InternalCalls.GetTransformScalingEntity(ENEMY_ID).y, ENEMY_ID);
             isHit = true;
             direction = dir;
+        }
+
+        static private void DrawGetHitVFX()
+        {
+            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
+            InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * 150f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
+            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 90f, 0, get_hit_vfx_entity);
+        }
+
+        static private void RemoveGetHitVFX()
+        {
+            InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
+            InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
+        }
+
+        static public void EnemyCollidingPlayer()
+        {
+            // check enemy colliding with enemy
+            if (InternalCalls.OnCollisionEnter())
+            {
+                if (InternalCalls.CompareCategory("Player"))
+                {
+                    //Console.WriteLine("enemy"); 
+                    PlayerScript.is_colliding_enemy = true;
+                    PlayerScript.colliding_enemy_id = ENEMY_ID;
+                }
+                else
+                {
+                    PlayerScript.is_colliding_enemy = false;
+                    PlayerScript.colliding_enemy_id = -1;
+                }
+            }
+            
         }
     }
 }

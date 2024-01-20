@@ -108,7 +108,7 @@ namespace IS
         static private float jump_timer_set = 0.2f;
         static private bool isJumping = false;
         static private bool initial_land = false;
-        static private float jumpHeight = 1200f;
+        static private float jumpHeight = 1100f;
 
         //dashing 
         static public float bullet_time_timer = 1f;
@@ -149,13 +149,19 @@ namespace IS
 
         // combat system
         static public int entity_attack;
+
         static private int combo_step = 0;
         static private int total_attack_in_one_combo = 3;
-        static public float attack_interval = 0.5f;
-        static public float combo_interval = 1f;
+        static private float attack_interval = 0.5f;
+        static private float combo_interval = 1f;
         static private float attack_timer = 1f;
         static private bool isAttack = false;
         static private float attack_angle = 0f;
+        static private bool initial_attack = false;
+
+        static public bool is_colliding_enemy;
+        static public int colliding_enemy_id;
+        static public Vector2D enemy_impulse = new Vector2D(3000f, 1000f);
         //static private string attack_type;
 
         //force calculations
@@ -248,6 +254,8 @@ namespace IS
             // init gravity scale
             gravity_scale = InternalCalls.GetGravityScale();
 
+            // init enemy info
+            is_colliding_enemy = false;
         }
 
         static public void Update()
@@ -821,6 +829,7 @@ namespace IS
             Attack();
             AttackAreaUpdate();
             HitEnemy();
+            EnemyAttack();
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -1227,11 +1236,13 @@ namespace IS
                     //attack_timer = 0f;
                     //combo_step = 0;
                     isAttack = false;
+                    initial_attack = false;
                 }
                 if (attack_timer >= combo_interval) // reset sth when a combo ends
                 {
                     combo_step = 0;
                     isAttack = false;
+                    initial_attack = false;
                 }
             }
             /*if (isAttack)
@@ -1247,7 +1258,7 @@ namespace IS
 
             // calibrate the fangle to make attack area not towards to floor (when isGrounded)
             if (isGrounded) {
-                if (-2.36f < attack_angle && attack_angle < -0.78)
+                if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
                 {
                     if (attack_angle <= -1.57f) // calibrate to left
                     {
@@ -1265,7 +1276,7 @@ namespace IS
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
 
-            float distanceLeft = 100f;
+            float distanceLeft = 200f;
 
             Vector2D checkerPosition = new Vector2D(
                 xCoord + f_angle.x * distanceLeft,
@@ -1275,7 +1286,7 @@ namespace IS
             // flip player if neccessary
             if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
 
-            Vector2D attack_area_pos = new Vector2D(100f, height / 2f);
+            Vector2D attack_area_pos = new Vector2D(250f, height / 2f);
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
             InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
             InternalCalls.TransformSetScaleEntity(attack_area_pos.x, attack_area_pos.y, entity_attack);
@@ -1294,9 +1305,25 @@ namespace IS
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
                 {
                     // enemy get hit
-                    Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
-                    //Console.WriteLine("hitting enemy");
+                    if (isAttack && !initial_attack)
+                    {
+                        Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                        //Console.WriteLine("hitting enemy");
+                        initial_attack = true;
+                    }
+                    
                 }
+            }
+        }
+
+        static public void EnemyAttack()
+        {
+            if (is_colliding_enemy)
+            {
+                // player get hit back
+                Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
+                float dir = player_pos.x - enemy_pos.x;
+                InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
             }
         }
 

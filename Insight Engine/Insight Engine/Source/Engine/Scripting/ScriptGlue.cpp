@@ -550,7 +550,6 @@ namespace IS {
     static void ColliderNone(int entity) {
         auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
         collider.mResponseEnable = false;
-        collider.mResponseEnable = false;
     }    
     
     static void ColliderComponentAdd(int entity , float scaleX,float scaleY) {
