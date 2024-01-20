@@ -1,6 +1,6 @@
 /*!
  * \file YouWinScript.cs
- * \author Wu Zekai, zekai.wu@digipen.edu
+ * \author Wu Zekai, zekai.wu@digipen.edu (90%), Matthew Ng, matthewdeen.ng@digipen.edu (10%)
  * \par Course: CSD2401
  * \date 26-11-2023
  * \brief
