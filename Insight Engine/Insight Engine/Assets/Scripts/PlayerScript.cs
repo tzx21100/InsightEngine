@@ -303,7 +303,7 @@ namespace IS
 
 
 
-            if (GameManager.isGamePaused == true || PauseButtonScript.pause_enable == true)
+            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);

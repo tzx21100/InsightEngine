@@ -23,7 +23,7 @@ namespace IS
 
         static public void Update()
         {
-            if (PauseButtonScript.pause_enable)
+            if (PauseButtonScript.paused)
             {
                 //hovered
                 if (InternalCalls.GetButtonState() == 1)
