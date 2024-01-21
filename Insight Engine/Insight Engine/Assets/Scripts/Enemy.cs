@@ -50,6 +50,13 @@ namespace IS
 
         static public void Update()
         {
+            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true)
+            {
+                InternalCalls.RigidBodySetForce(0f, 0f);
+                InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
+                return;
+            }
+
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
 
@@ -69,7 +76,7 @@ namespace IS
                 {
                     // draw vfx animation once get hit
                     InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
-                    
+                    EnemyGetHit();
                     initialHit = true;
                 }
                 DrawGetHitVFX(); // update vfx 
@@ -135,6 +142,27 @@ namespace IS
                 }
             }
             
+        }
+
+        static private void EnemyGetHit()
+        {
+            InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+
+            // load bleeding particles
+            Random rnd = new Random();
+            MyRandom my_rand = new MyRandom(129248189);
+            for (int i = 0; i < 30; i++)
+            {
+                float rand = (float)rnd.NextDouble();
+                float dir_rand = my_rand.NextFloat();
+                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
+                float size = 10f * rand;
+                float size_scale = 10 * rand;
+                float alpha = 0.8f * rand;
+                InternalCalls.GameSpawnParticleExtra(
+                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f), dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Enemy Bleeding"
+                 );
+            }
         }
     }
 }

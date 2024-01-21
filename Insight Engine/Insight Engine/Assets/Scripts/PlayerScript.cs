@@ -159,9 +159,11 @@ namespace IS
         static private float attack_angle = 0f;
         static private bool initial_attack = false;
 
+        // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
-        static public Vector2D enemy_impulse = new Vector2D(3000f, 1000f);
+        static public Vector2D enemy_impulse = new Vector2D(3000f, 800f);
+        static private bool initial_get_hit = false;
         //static private string attack_type;
 
         //force calculations
@@ -409,22 +411,16 @@ namespace IS
 
                         respawn_timer = respawn_timer_set;
                         isDead = false;
-                        InternalCalls.CameraSetZoom(1.2f);
-
+                        InternalCalls.CameraSetZoom(1.1f);
                     }
 
-
-
                 }
-
-
 
                 return;
 
             }
 
             initialDeath = true;
-
 
             if (Health <= 0)
             {
@@ -434,7 +430,6 @@ namespace IS
             }
 
             //Attach Camera
-
 
             target_pos.x = player_pos.x + hori_movement * CustomMath.min(200f, CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x));
             target_pos.y = player_pos.y + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y / 20f);
@@ -447,8 +442,6 @@ namespace IS
                         }*/
 
             camera_pos = Vector2D.Lerp(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
-
-
 
             InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
 
@@ -747,9 +740,18 @@ namespace IS
                 ApplyGravityChange();
 
                 // no key input in the air
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isDashing)
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !InternalCalls.KeyHeld((int)KeyCodes.Space) &&!isDashing )
                 {
-                    InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                    if (InternalCalls.RigidBodyGetVelocityY() > 10f) // if still going up, set vel y to 0 to make it falls
+                    {
+                        //InternalCalls.RigidBodySetForce(0f, 0f);
+                        // do nothing to get rid of the weird bugs
+                    }
+                    else
+                    {
+                        InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                    }
+                    
                 }
 
                 Xforce += hori_movement * move_speed;
@@ -828,6 +830,7 @@ namespace IS
 
             Attack();
             AttackAreaUpdate();
+            AttackCameraShake(); // camera shake
             HitEnemy();
             EnemyAttack();
 
@@ -923,7 +926,7 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
             }
             else if (jump_amount != 1 /*not apply to first jump only*/ ||
-                InternalCalls.RigidBodyGetVelocity().y > 10f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
+                InternalCalls.RigidBodyGetVelocity().y > 0f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
             {
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
             }
@@ -1206,6 +1209,7 @@ namespace IS
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+                
             }
             if (attack_timer < combo_interval)
             {
@@ -1323,7 +1327,52 @@ namespace IS
                 // player get hit back
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;
-                InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                InternalCalls.RigidBodyAddForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                PlayerGetHit();
+
+            }
+            else
+            {
+                initial_get_hit = false;
+            }
+        }
+
+        static private void PlayerGetHit()
+        {
+            if (!initial_get_hit)
+            {
+                InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+                initial_get_hit = true;
+            }
+        }
+
+        static private void AttackCameraShake()
+        {
+            if (isAttack && initial_attack) {
+                if (camera_shake_duration > 0)
+                {
+                    camera_shake_duration -= InternalCalls.GetDeltaTime();
+
+                    camera_shake_timer -= InternalCalls.GetDeltaTime();
+
+                    if (camera_shake_timer <= 0)
+                    {
+                        //camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
+                        //camera_shake_angle += CustomMath.PI / 4;
+                        Random rnd = new Random();
+                        camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
+                        camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
+                        camera_shake_timer = camera_shake_set;
+                    }
+                    InternalCalls.AttachCamera(camera_pos.x + 40f * camera_shake_dir.x, camera_pos.y + 40f * camera_shake_dir.y);
+                }
+            }
+            else
+            {
+                camera_shake_duration = camera_shake_duration_set;
+                camera_shake_dir = new Vector2D(0, 0);
+                //camera_shake_angle = 0;
+                InternalCalls.CameraSetZoom(1.1f);
             }
         }
 
