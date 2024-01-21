@@ -10,11 +10,6 @@
   </PropertyGroup>
 
 
-	<ItemGroup>
-		<Compile Remove="Source\**" />
-		<EmbeddedResource Remove="Source\**" />
-		<None Remove="Source\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<AvailableItemName Include="LinkedFiles" />

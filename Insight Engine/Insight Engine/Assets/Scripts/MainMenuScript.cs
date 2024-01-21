@@ -34,7 +34,6 @@ namespace IS
         static SimpleImage exit_button_image;
 
         static Vector2D game_title_pos = new Vector2D(0, 0);
-        static Vector2D team_logo_pos = new Vector2D(0, 0);
         static Vector2D start_button_pos = new Vector2D(0, 0);
         static Vector2D settings_button_pos = new Vector2D(0, 0);
         static Vector2D how_to_play_button_pos = new Vector2D(0, 0);
