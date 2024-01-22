@@ -4,15 +4,15 @@ layout(location = 0) in vec4 vColor;
 layout(location = 1) in vec2 vTexCoord;
 layout(location = 5) in flat float vEntityID;
 
-layout(location = 6) in flat float lightWidth;
-layout(location = 7) in flat vec2 worldLightPos;
-
 layout(location = 0) out vec4 fFragColor;
 layout(location = 1) out int fEntityID;
 
 uniform vec4 uLineSegments[128];
 uniform int uNoOfLineSegments;
 uniform vec2 uResolution;
+uniform mat4 uInverseVP; // Inverse of View-Projection Matrix
+uniform vec2 uWorldLights[128];
+uniform int uNoOfWorldLights;
 
 // Function to check if two line segments intersect
 bool doLineSegmentsIntersect(vec2 p0, vec2 p1, vec2 q0, vec2 q1) {
@@ -32,13 +32,15 @@ void main()
 {
     vec2 center = vec2(0.5, 0.5);
 
-    vec2 current_pixel = gl_FragCoord.xy / uResolution;
 
     float dist = length(vTexCoord - center); // distance(u_light, current_pixel); // ndc
-    float dist2 = distance(worldLightPos, current_pixel);
-
 
     float attenuation;
+
+    vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Convert pixel position to NDC
+    vec4 worldPos = uInverseVP * ndcPos; // Transform to world coordinates
+    vec2 current_pixel = worldPos.xy;
+
     bool intersectionFound = false;
 
     // Set the radius to be half of the smaller dimension of the quad
@@ -47,28 +49,22 @@ void main()
     // Use a step function to make the light only render in a circle
     float inCircle = step(dist, radius);
 
-    for (int i = 0; i < uNoOfLineSegments; ++i) {
-        vec2 p0 = vec2(uLineSegments[i].x, uLineSegments[i].y);
-        vec2 p1 = vec2(uLineSegments[i].z, uLineSegments[i].w);
+    for (int i = 0; i < uNoOfWorldLights; ++i) {
+        vec2 worldLightPos = uWorldLights[i];
+        for (int j = 0; j < uNoOfLineSegments; ++j) {
+            vec2 p0 = vec2(uLineSegments[j].x, uLineSegments[j].y);
+            vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
 
-        // p0 = (p0 / 2.0) + 0.5; // convert points from world pos to UV pos (to calculate against texCoords in UV)
-        // p1 = (p1 / 2.0) + 0.5;
-
-        //p0 = ((p0 - worldLightPos) / lightWidth) + 0.5; // convert points from world pos to UV pos (to calculate against texCoords in UV)
-        //p1 = ((p1 - worldLightPos) / lightWidth) + 0.5;
-
-        // invert y axis
-        // p0.y = 1.0 - p0.y;
-        // p1.y = 1.0 - p1.y;
-
-        // Check if the current pixel's line segment intersects with the light line segment
-        // center->u_light, vTexCoord ->current_pixel
-
-        if (doLineSegmentsIntersect(worldLightPos, current_pixel, p0, p1)) {
-            // If there's an intersection, set the flag and continue checking other line segments
-            intersectionFound = true;
+            if (doLineSegmentsIntersect(worldLightPos, current_pixel, p0, p1)) {
+                // If there's an intersection, set the flag and continue checking other line segments
+                intersectionFound = true;
+                break;
+            }
         }
     }
+
+
+    
 
     // Update attenuation based on whether any intersection was found
     if (intersectionFound) {

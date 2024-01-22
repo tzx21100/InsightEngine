@@ -12,8 +12,6 @@ layout(location = 0) out vec4 vColor;
 layout(location = 1) out vec2 vTexCoord;
 layout(location = 5) out flat float vEntityID;
 
-layout(location = 6) out flat float lightWidth;
-layout(location = 7) out flat vec2 worldLightPos;
 
 void main()
 {
@@ -22,7 +20,4 @@ void main()
     vTexCoord = aVertexTexCoord;
 	vColor = aVertexColor;
     vEntityID = aEntityID;
-
-    lightWidth = 1345.f;
-    worldLightPos = vec2(model_to_NDC_xform[3]);
 }

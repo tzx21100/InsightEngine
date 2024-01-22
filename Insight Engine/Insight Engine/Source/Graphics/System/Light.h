@@ -90,6 +90,8 @@ namespace IS {
 		float mIntensity{ .5f }; // 0 - 1.f
 		float mSize{ 200.f };
 		bool mRender{ true };
+
+		static std::vector<glm::vec2> lightPos;
 	};
 
 }// end namespace IS

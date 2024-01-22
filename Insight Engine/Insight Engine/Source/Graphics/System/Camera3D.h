@@ -155,6 +155,8 @@ namespace IS {
 		 * \return The camera-to-NDC transformation matrix.
 		 */
 		glm::mat4 getCameraToNDCXform() { return mProjection * mView; }
+
+		glm::mat4 getInverseCameraToNDCXform() { return glm::inverse(getCameraToNDCXform()); }
 		
 		/*!
 		 * \brief Gets the aspect ratio of the Camera3D instance.

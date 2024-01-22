@@ -24,6 +24,8 @@
 #include "Graphics/Core/Graphics.h"
 
 namespace IS {
+	std::vector<glm::vec2> Light::lightPos;
+
 	void Light::draw(float attachedEntID)
 	{
 		if (mRender) { // if draw light flag is true
@@ -34,6 +36,8 @@ namespace IS {
 			Transform lightXform(mPosition, 0.f, { mSize, mSize });
 			lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
 			lightData.entID = attachedEntID; // to allow mousepicking past light
+
+			lightPos.emplace_back(mPosition.x, mPosition.y);
 
 			ISGraphics::lightInstances.emplace_back(lightData);
 		}

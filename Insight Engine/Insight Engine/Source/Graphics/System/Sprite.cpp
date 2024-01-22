@@ -16,6 +16,7 @@
 
 #include "Pch.h"
 #include "Sprite.h"
+#include "Light.h"
 #include "Graphics/Core/Graphics.h"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -231,10 +232,12 @@ namespace IS {
 
     void Sprite::draw_lights() {
         std::vector<glm::vec4> line = {
-            glm::vec4(0.15f, 0.1f, 0.5f, 0.1f)
+            glm::vec4(-100.f, 100.f, 100.f, 100.f)
         };
 
-        glm::mat4 camXform = ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform();
+        std::vector<glm::vec2> lightPos;
+
+        //glm::mat4 camXform = ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform();
 
         //for (auto& lineSeg : line) {
         //    glm::vec2 p0 = glm::vec4(lineSeg.x, lineSeg.y, 0.f, 1.f) * camXform;
@@ -275,26 +278,43 @@ namespace IS {
         // upload to uniform variable
         auto tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
         if (tex_arr_uniform >= 0)
-            glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), &line[0].x);
-        else
-            IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
+            glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), reinterpret_cast<const GLfloat*>(line.data()));
+        //else
+        //    IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
 
-        auto tex_arr_uniform2 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
-        if (tex_arr_uniform2 >= 0)
-            glUniform1i(tex_arr_uniform2, static_cast<int>(line.size()));
-        else 
-            IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
+        if (tex_arr_uniform >= 0)
+            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
+        //else 
+        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
 
         InsightEngine& engine = InsightEngine::Instance();
         auto const& [width, height] = engine.GetWindowSize();
         glm::vec2 resolution = { width, height };
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
+        if (tex_arr_uniform >= 0)
+            glUniform2fv(tex_arr_uniform, 1, &resolution.x);
+        //else
+        //    IS_CORE_ERROR("uResolution Uniform not found, shader compilation failed?");
 
-        // upload to uniform variable
-        auto tex_arr_uniform3 = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
-        if (tex_arr_uniform3 >= 0)
-            glUniform2fv(tex_arr_uniform3, 1, &resolution.x);
-        else
-            IS_CORE_ERROR("uResolution Uniform not found, shader compilation failed?");
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uInverseVP");
+        if (tex_arr_uniform >= 0)
+            glUniformMatrix4fv(tex_arr_uniform, 1, GL_FALSE, glm::value_ptr(ISGraphics::cameras3D[Camera3D::mActiveCamera].getInverseCameraToNDCXform()));
+        //else
+        //    IS_CORE_ERROR({ "uInverseVP Uniform not found, shader compilation failed?" });
+        
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uWorldLights");
+        if (tex_arr_uniform >= 0)
+            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(Light::lightPos.size()), reinterpret_cast<const GLfloat*>(Light::lightPos.data()));
+        //else
+        //    IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfWorldLights");
+        if (tex_arr_uniform >= 0)
+            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
+        //else 
+        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+
 
 
         // draw instanced quads
@@ -302,6 +322,7 @@ namespace IS {
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size()));
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         ISGraphics::lightInstances.clear();
+        Light::lightPos.clear();
     }
 
     void Sprite::draw_picked_entity_border() {
