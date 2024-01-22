@@ -160,7 +160,7 @@ namespace IS
                 float size_scale = 10 * rand;
                 float alpha = 0.8f * rand;
                 InternalCalls.GameSpawnParticleExtra(
-                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f), dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Enemy Bleeding"
+                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f), dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
                  );
             }
         }
