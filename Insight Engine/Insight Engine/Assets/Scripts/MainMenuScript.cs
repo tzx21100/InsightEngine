@@ -85,16 +85,21 @@ namespace IS
             }
             else //draw 
             {
-                InternalCalls.TransformSetPositionEntity(game_title_pos.x, game_title_pos.y, game_title_entity);
-                InternalCalls.TransformSetPositionEntity(start_button_pos.x, start_button_pos.y, start_button_entity);
-                InternalCalls.TransformSetPositionEntity(settings_button_pos.x, settings_button_pos.y, settings_button_entity);
-                InternalCalls.TransformSetPositionEntity(how_to_play_button_pos.x, how_to_play_button_pos.y, how_to_play_button_entity);
-                InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
+                DrawMenuButtons();
             }
         }
 
         static public void CleanUp()
         {
+        }
+
+        static public void DrawMenuButtons()
+        {
+            InternalCalls.TransformSetPositionEntity(game_title_pos.x, game_title_pos.y, game_title_entity);
+            InternalCalls.TransformSetPositionEntity(start_button_pos.x, start_button_pos.y, start_button_entity);
+            InternalCalls.TransformSetPositionEntity(settings_button_pos.x, settings_button_pos.y, settings_button_entity);
+            InternalCalls.TransformSetPositionEntity(how_to_play_button_pos.x, how_to_play_button_pos.y, how_to_play_button_entity);
+            InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
         }
 
         static public void HideMenuButtons()

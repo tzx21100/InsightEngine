@@ -282,6 +282,11 @@ namespace IS {
         sprite_component.color.a = alpha;
     }
 
+    static float GetSpriteAlphaEntity(int entity) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        return sprite_component.color.a;
+    }
+
     static void ResetSpriteAnimationFrameEntity(int entity) {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
         sprite_component.anims[sprite_component.animation_index].resetAnimation();
@@ -1186,6 +1191,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(SetSpriteAlphaEntity);
+        IS_ADD_INTERNAL_CALL(GetSpriteAlphaEntity);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSpriteEntity);

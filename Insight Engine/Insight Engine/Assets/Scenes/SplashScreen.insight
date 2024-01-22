@@ -10,7 +10,7 @@
 				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
 				"AudioVolumeLevel" : 1.0
 			},
-			"Name" : "Splash Screen",
+			"Name" : "Splash Screen Background",
 			"Script" : 
 			{
 				"ScriptName" : "SplashScreenScript"
@@ -24,16 +24,16 @@
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "main_menu_bg.jpeg",
+				"SpriteFilename" : "black_bg.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
-				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 36,
-				"SpriteTextureWidth" : 1280,
+				"SpriteTexture" : 8,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 7,
+				"SpriteTextureWidth" : 1920,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 1902.0,
-				"SpriteTransformScalingY" : 991.0,
+				"SpriteTransformScalingX" : 1920.0,
+				"SpriteTransformScalingY" : 1009.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : []
@@ -41,8 +41,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 1902.0,
-				"TransformScalingY" : 991.0,
+				"TransformScalingX" : 1920.0,
+				"TransformScalingY" : 1009.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
