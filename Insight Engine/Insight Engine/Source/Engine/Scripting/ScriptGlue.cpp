@@ -552,6 +552,26 @@ namespace IS {
         collider.mResponseEnable = false;
     }
 
+    static void UpdateCategory(int entity, MonoString* category) {
+        if (!InsightEngine::Instance().HasComponent<Category>(entity))
+            InsightEngine::Instance().AddComponentAndUpdateSignature<Category>(entity, Category());
+        auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
+        char* c_str = mono_string_to_utf8(category); // Convert Mono string to char*
+        std::string cate_name(c_str);
+        mono_free(c_str);
+        cate.mCategory = cate_name;
+    }
+
+    //static MonoString* GetCategory(int entity) {
+    //    auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
+    //    //return cate.mCategory;
+    //    MonoString* str 
+    //    //char* c_str = mono_string_to_utf8(category); // Convert Mono string to char*
+    //    //std::string cate_name(c_str);
+    //    //mono_free(c_str);
+    //    //cate.mCategory = cate_name;
+    //}
+
     static void ColliderNone(int entity) {
         auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
         collider.mResponseEnable = false;
@@ -1299,6 +1319,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
+        IS_ADD_INTERNAL_CALL(UpdateCategory);
 
 
         IS_ADD_INTERNAL_CALL(CompareCategory);

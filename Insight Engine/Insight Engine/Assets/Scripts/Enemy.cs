@@ -140,6 +140,15 @@ namespace IS
                     PlayerScript.is_colliding_enemy = false;
                     PlayerScript.colliding_enemy_id = -1;
                 }
+
+                if (InternalCalls.CompareCategory("Weapon"))
+                {
+                    PlayerScript.hitting_enemy_id = ENEMY_ID;
+                }
+                else
+                {
+                    PlayerScript.hitting_enemy_id = -1;
+                }
             }
             
         }

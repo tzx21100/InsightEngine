@@ -158,6 +158,7 @@ namespace IS
         static private bool isAttack = false;
         static private float attack_angle = 0f;
         static private bool initial_attack = false;
+        static public int hitting_enemy_id;
 
         // enemy info
         static public bool is_colliding_enemy;
@@ -232,6 +233,7 @@ namespace IS
             InternalCalls.AddCollider(entity_feet);
             InternalCalls.AddCollider(entityWall);
             InternalCalls.AddCollider(entity_attack);
+            InternalCalls.UpdateCategory(entity_attack, "Weapon");
 
 
             InternalCalls.CameraSetZoom(1.1f);
@@ -255,6 +257,9 @@ namespace IS
 
             // init gravity scale
             gravity_scale = InternalCalls.GetGravityScale();
+
+            // hitting enemy info
+            hitting_enemy_id = -1;
 
             // init enemy info
             is_colliding_enemy = false;
@@ -1260,8 +1265,35 @@ namespace IS
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
 
+            CalibrateAttackAngle();
+            Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
+            f_angle = f_angle.Normalize();
+
+            float distanceLeft = 150f;
+
+            Vector2D checkerPosition = new Vector2D(
+                player_pos.x + f_angle.x * distanceLeft,
+                player_pos.y + f_angle.y * distanceLeft
+            );
+            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+            // flip player if neccessary
+            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+
+            Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
+            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
+            InternalCalls.TransformSetScaleEntity(attack_area_scaling.x, attack_area_scaling.y, entity_attack);
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_scaling.x, attack_area_scaling.y), player_attack, 1f, 4
+                );
+        }
+
+        static private void CalibrateAttackAngle()
+        {
             // calibrate the fangle to make attack area not towards to floor (when isGrounded)
-            if (isGrounded) {
+            if (isGrounded)
+            {
                 if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
                 {
                     if (attack_angle <= -1.57f) // calibrate to left
@@ -1274,30 +1306,6 @@ namespace IS
                     }
                 }
             }
-            Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
-            f_angle = f_angle.Normalize();
-
-            xCoord = InternalCalls.GetTransformPosition().x;
-            yCoord = InternalCalls.GetTransformPosition().y;
-
-            float distanceLeft = 180f;
-
-            Vector2D checkerPosition = new Vector2D(
-                xCoord + f_angle.x * distanceLeft,
-                yCoord + f_angle.y * distanceLeft
-            );
-            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
-            // flip player if neccessary
-            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
-
-            Vector2D attack_area_pos = new Vector2D(250f, height / 2f);
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
-            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
-            InternalCalls.TransformSetScaleEntity(attack_area_pos.x, attack_area_pos.y, entity_attack);
-            InternalCalls.DrawImageAt
-                (
-                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_pos.x, attack_area_pos.y), player_attack, 1f, 4
-                );
         }
 
         static private void HitEnemy()
@@ -1319,33 +1327,16 @@ namespace IS
                     }
                     else if (isAttack)
                     {
-                        // calibrate the fangle to make attack area not towards to floor (when isGrounded)
-                        if (isGrounded)
-                        {
-                            if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
-                            {
-                                if (attack_angle <= -1.57f) // calibrate to left
-                                {
-                                    attack_angle = -2.36f;
-                                }
-                                else if (attack_angle > -1.57f) // lean to right
-                                {
-                                    attack_angle = -0.78f;
-                                }
-                            }
-                        }
+                        CalibrateAttackAngle();
                         //float _angle = attack_angle + MathF.Sign(trans_scaling.x) * MathF.PI / 4;
                         Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
                         f_angle = f_angle.Normalize();
 
-                        xCoord = InternalCalls.GetTransformPosition().x;
-                        yCoord = InternalCalls.GetTransformPosition().y;
-
-                        float distanceLeft = 400f;
+                        float distanceLeft = 300f;
 
                         Vector2D checkerPosition = new Vector2D(
-                            xCoord + f_angle.x * distanceLeft,
-                            yCoord + f_angle.y * distanceLeft
+                            player_pos.x + f_angle.x * distanceLeft,
+                            player_pos.y + f_angle.y * distanceLeft
                         );
                         float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
@@ -1396,25 +1387,28 @@ namespace IS
                     camera_shake_duration -= InternalCalls.GetDeltaTime();
 
                     camera_shake_timer -= InternalCalls.GetDeltaTime();
-
+                    Random rnd = new Random();
                     if (camera_shake_timer <= 0)
                     {
                         //camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
                         //camera_shake_angle += CustomMath.PI / 4;
-                        Random rnd = new Random();
+                      
                         camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                         camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
-                        
-                        
+                       
+
                         camera_shake_timer = camera_shake_set;
                     }
                     Vector2D attack_dir = new Vector2D(0f, 0f);
-                    attack_dir.x = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).x - player_pos.x;
-                    attack_dir.y = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).y - player_pos.y;
-                    attack_dir.x /= attack_dir.x;
-                    attack_dir.y /= attack_dir.y;
-
-                    InternalCalls.AttachCamera(camera_pos.x + 30f * camera_shake_dir.x * attack_dir.x, camera_pos.y + 30f * camera_shake_dir.y * attack_dir.y);
+                    attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
+                    attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
+                    /*attack_dir.x /= attack_dir.x;
+                    attack_dir.y /= attack_dir.y;*/
+                    float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
+                    //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
+                    if (hitting_enemy_id != -1)
+                        Console.WriteLine(attack_dir);
+                        InternalCalls.AttachCamera(camera_pos.x + 0.1f * rand * attack_dir.x, camera_pos.y + 0.1f * rand * attack_dir.y);
                 }
             }
             else
