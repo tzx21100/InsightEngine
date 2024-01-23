@@ -1327,8 +1327,8 @@ namespace IS
                     }
                     else if (isAttack)
                     {
+                        // drawing hitting enemy vfx
                         CalibrateAttackAngle();
-                        //float _angle = attack_angle + MathF.Sign(trans_scaling.x) * MathF.PI / 4;
                         Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
                         f_angle = f_angle.Normalize();
 
@@ -1346,6 +1346,7 @@ namespace IS
                     }
                     else
                     {
+                        // not drawing hitting enemy vfx
                         InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
                         InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
                     }
@@ -1395,7 +1396,6 @@ namespace IS
                       
                         camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                         camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
-                       
 
                         camera_shake_timer = camera_shake_set;
                     }
@@ -1407,7 +1407,6 @@ namespace IS
                     float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                     //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
                     if (hitting_enemy_id != -1)
-                        Console.WriteLine(attack_dir);
                         InternalCalls.AttachCamera(camera_pos.x + 0.1f * rand * attack_dir.x, camera_pos.y + 0.1f * rand * attack_dir.y);
                 }
             }
