@@ -1184,9 +1184,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.043066445738077164,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.076399780809879303,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -1255,9 +1255,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.061282865703105927,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.094616197049617767,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2151,9 +2151,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.031476423144340515,
+						"frame_timer" : 0.064804002642631531,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -2322,9 +2322,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.14530308544635773,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.01196974515914917,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -5686,9 +5686,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0047505795955657959,
+						"frame_timer" : 0.038083914667367935,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -6091,9 +6091,9 @@
 						"animation_duration" : 2.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.043066445738077164,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.076399780809879303,
 						"time_per_frame" : 0.1666666716337204,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -7770,9 +7770,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034415777772665024,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.067749112844467163,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7818,9 +7818,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034415777772665024,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.067749112844467163,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7866,9 +7866,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034415777772665024,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.067749112844467163,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7914,9 +7914,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034415777772665024,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.067749112844467163,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -7962,9 +7962,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.034415777772665024,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.067749112844467163,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8011,8 +8011,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.040930155664682388,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.074263490736484528,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8058,9 +8058,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.051425352692604065,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.0014253482222557068,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8106,9 +8106,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.053936943411827087,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.0039369389414787292,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8154,9 +8154,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.03999168798327446,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.073325023055076599,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8202,9 +8202,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.005254007875919342,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.038587342947721481,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8250,9 +8250,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.046876076608896255,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.080209411680698395,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8299,8 +8299,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.0076270103454589844,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.040960345417261124,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8346,9 +8346,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.077807128429412842,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.027807125821709633,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8394,9 +8394,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.067092880606651306,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 5.0,
+						"frame_timer" : 0.017092877998948097,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8442,9 +8442,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.02685115672647953,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.060184493660926819,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8491,8 +8491,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 5.0,
-						"frame_timer" : 0.005566723644733429,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.038900058716535568,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8538,9 +8538,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.066928043961524963,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.016928041353821754,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8587,8 +8587,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.011303246021270752,
+						"frame_index_y" : 5.0,
+						"frame_timer" : 0.044636581093072891,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8634,9 +8634,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.049385488033294678,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.082713067531585693,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8682,9 +8682,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.020286837592720985,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.053620174527168274,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8731,8 +8731,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.045517865568399429,
+						"frame_index_y" : 4.0,
+						"frame_timer" : 0.078851200640201569,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8779,8 +8779,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.038002248853445053,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.071335583925247192,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8827,8 +8827,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.018211843445897102,
+						"frame_index_y" : 5.0,
+						"frame_timer" : 0.051545180380344391,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -8874,9 +8874,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.044853266328573227,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.078186601400375366,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8922,9 +8922,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.063996195793151855,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.013996191322803497,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8970,9 +8970,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.059601671993732452,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.0096016675233840942,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9018,9 +9018,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.049385488033294678,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.082713067531585693,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9066,9 +9066,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.049385488033294678,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.082713067531585693,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9205,9 +9205,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0043786913156509399,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.037712026387453079,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9344,9 +9344,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.067255944013595581,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.017255941405892372,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9787,9 +9787,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 3.0,
-						"frame_timer" : 0.0043786913156509399,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.037712026387453079,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9926,9 +9926,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 3.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.053509712219238281,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.0035097077488899231,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
 						"y_frames" : 3
@@ -10285,23 +10285,45 @@
 			},
 			"Collider" : 
 			{
-				"BoxColliderEnabled" : false,
-				"CircleCollider" : 
+				"BoxCollider" : 
 				{
-					"CircleColliderCenter" : 
+					"BoxColliderCenter" : 
 					{
 						"X" : -906.42474365234375,
 						"Y" : 15.928329467773438
 					},
-					"CircleColliderOffset" : 
+					"BoxColliderOffset" : 
 					{
 						"X" : 0.0,
 						"Y" : 0.0
 					},
-					"CircleColliderRadius" : 102.80000305175781,
-					"CircleColliderRadiusScale" : 0.40000000596046448
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.55000001192092896,
+						"Y" : 0.69999998807907104
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -70.675003051757812,
+							"y" : 64.049995422363281
+						},
+						{
+							"x" : 70.675003051757812,
+							"y" : 64.049995422363281
+						},
+						{
+							"x" : 70.675003051757812,
+							"y" : -64.049995422363281
+						},
+						{
+							"x" : -70.675003051757812,
+							"y" : -64.049995422363281
+						}
+					]
 				},
-				"CircleColliderEnabled" : true,
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
 				"ResponseEnabled" : true
 			},
 			"Name" : "enemy",
@@ -10356,9 +10378,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 11.0,
+						"frame_index_x" : 3.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0021645203232765198,
+						"frame_timer" : 0.035497855395078659,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1

@@ -805,7 +805,7 @@ namespace IS
                     hori_movement = 0;
                     InternalCalls.SetSpriteImage(player_idle);
 
-                    if (mouse_pos.x > player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                    if (mouse_pos.x < player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     apply_force = apply_force.Normalize();

@@ -23,6 +23,7 @@ namespace IS
         static private Vector2D direction = new Vector2D(0f, 0f);
         static public Vector2D enemy_pos = new Vector2D(0f, 0f);
         static private Vector2D scaling = new Vector2D(257f, 183f);
+        static private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
         static private bool isHit;
@@ -33,9 +34,20 @@ namespace IS
         // image and vfx
         static SimpleImage enemy_get_hit_vfx;
 
+        // enemy patrol
+        static public Vector2D enemy_left_point = new Vector2D(0f, 0f);
+        static public Vector2D enemy_right_point = new Vector2D(0f, 0f);
+        static public Vector2D target_point = new Vector2D(0f, 0f);
+        static public float enemy_patrol_distance = 500f;
+        static public float enemy_rest_timer = 0f;
+        static public bool going_left;
+        static public bool isPatrolling;
+        static public bool isAttacking;
+
         static private int get_hit_vfx_entity;
         static public void Init()
         {
+            enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
             direction.x = 1f; // init
@@ -46,6 +58,13 @@ namespace IS
 
             get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
+
+            // enemy patrol
+            enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
+            enemy_right_point = new Vector2D(enemy_pos.x + enemy_patrol_distance / 2f, enemy_pos.y);
+            target_point = enemy_left_point;
+            going_left = true;
+            isPatrolling = true;
         }
 
         static public void Update()
@@ -56,10 +75,10 @@ namespace IS
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 return;
             }
-
+            //InternalCalls.RigidBodyAddForce(0f, -9.8f);
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
-
+            enemy_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
             if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
             {
                 scaling.x *= -1; // flip the enemy over
@@ -94,8 +113,8 @@ namespace IS
             {
                 //RemoveGetHitVFX();
             }
+            EnemyPatrolling();
             EnemyCollidingPlayer();
-            //Console.WriteLine(direction);
         }
 
 
@@ -173,5 +192,38 @@ namespace IS
                  );
             }
         }
+
+        static private void EnemyPatrolling()
+        {
+            if (isPatrolling)
+            {
+                float dist = target_point.x - enemy_pos.x;
+
+                if (dist < 10f) // rest then turn around
+                {
+                    if (going_left)
+                    {
+                        target_point = enemy_right_point;
+                    }
+                    else
+                    {
+                        target_point = enemy_left_point;
+                    }
+                    going_left = !going_left;
+                }
+                else // walking
+                {
+                    Vector2D dir = new Vector2D(0f, 0f);
+                    dir.x = target_point.x - enemy_pos.x;
+                    //enemy[i].position.x += enemy[i].speed * dt * (enemy[i].waypoints[enemy[i].currentWaypoint].x - enemy[i].position.x) / distToNextPoint;
+                    //enemy_pos.x += 100f * speed * dir.x * MathF.Sign(scaling.x) / dist;
+                    enemy_vel.x = speed * dir.x * MathF.Sign(scaling.x) / dist;
+                    InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
+                    //Console.WriteLine(dist);
+                }
+            }
+        }
+
+
     }
 }
