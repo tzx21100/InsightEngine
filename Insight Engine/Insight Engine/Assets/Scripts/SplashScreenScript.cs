@@ -176,7 +176,8 @@ namespace IS
 
             if (timer >= 5)
             {
-                InternalCalls.LoadScene("Assets/Scenes/Main Menu.insight");
+                //add transition effect
+                InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
             }
         }
 
@@ -186,7 +187,7 @@ namespace IS
 
         }
 
-        static private void DrawJigsawPieces()
+        static private void DrawJigsawPieces() //ltr change to glass shattering effect
         {
             InternalCalls.TransformSetPositionEntity(top_left_splash_pos.x, top_left_splash_pos.y, top_left_splash_entity);
             InternalCalls.TransformSetPositionEntity(top_right_splash_pos.x, top_right_splash_pos.y, top_right_splash_entity);
