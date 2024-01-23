@@ -75,11 +75,11 @@ namespace IS
                 if (!initialHit)
                 {
                     // draw vfx animation once get hit
-                    InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
+                    //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
                     EnemyGetHit();
                     initialHit = true;
                 }
-                DrawGetHitVFX(); // update vfx 
+                //DrawGetHitVFX(); // update vfx 
                 // enemy moving backwards abit
                 InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
                 being_hit_timer += InternalCalls.GetDeltaTime();
@@ -92,7 +92,7 @@ namespace IS
             }
             else
             {
-                RemoveGetHitVFX();
+                //RemoveGetHitVFX();
             }
             EnemyCollidingPlayer();
             //Console.WriteLine(direction);
@@ -114,8 +114,8 @@ namespace IS
         static private void DrawGetHitVFX()
         {
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
-            InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * 150f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
-            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 90f, 0, get_hit_vfx_entity);
+            InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * -100f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
+            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 270f, 0, get_hit_vfx_entity);
         }
 
         static private void RemoveGetHitVFX()

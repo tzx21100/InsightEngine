@@ -5,7 +5,7 @@ Lifespan: 3
 Color:
 Red: 1
 Green: 0.25
-Blue: 0.4
+Blue: 0.25
 Alpha: 1
 Alpha: 1
 Alpha Growth: 0.1
@@ -16,3 +16,5 @@ Image Name:
 Particle Position: 1588, -1022
 Total Cols: 0
 Total Rows: 0
+Layer: 2
+Gravity: 1

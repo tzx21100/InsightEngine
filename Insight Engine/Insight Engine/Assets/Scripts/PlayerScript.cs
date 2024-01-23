@@ -1280,7 +1280,7 @@ namespace IS
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
 
-            float distanceLeft = 200f;
+            float distanceLeft = 180f;
 
             Vector2D checkerPosition = new Vector2D(
                 xCoord + f_angle.x * distanceLeft,
@@ -1311,11 +1311,53 @@ namespace IS
                     // enemy get hit
                     if (isAttack && !initial_attack)
                     {
+
+                        InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
                         //Console.WriteLine("hitting enemy");
                         initial_attack = true;
                     }
-                    
+                    else if (isAttack)
+                    {
+                        // calibrate the fangle to make attack area not towards to floor (when isGrounded)
+                        if (isGrounded)
+                        {
+                            if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
+                            {
+                                if (attack_angle <= -1.57f) // calibrate to left
+                                {
+                                    attack_angle = -2.36f;
+                                }
+                                else if (attack_angle > -1.57f) // lean to right
+                                {
+                                    attack_angle = -0.78f;
+                                }
+                            }
+                        }
+                        //float _angle = attack_angle + MathF.Sign(trans_scaling.x) * MathF.PI / 4;
+                        Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
+                        f_angle = f_angle.Normalize();
+
+                        xCoord = InternalCalls.GetTransformPosition().x;
+                        yCoord = InternalCalls.GetTransformPosition().y;
+
+                        float distanceLeft = 400f;
+
+                        Vector2D checkerPosition = new Vector2D(
+                            xCoord + f_angle.x * distanceLeft,
+                            yCoord + f_angle.y * distanceLeft
+                        );
+                        float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+
+                        InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
+                        InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
+                        InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
+                    }
+                    else
+                    {
+                        InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
+                        InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
+                    }
                 }
             }
         }
@@ -1362,9 +1404,17 @@ namespace IS
                         Random rnd = new Random();
                         camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                         camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
+                        
+                        
                         camera_shake_timer = camera_shake_set;
                     }
-                    InternalCalls.AttachCamera(camera_pos.x + 40f * camera_shake_dir.x, camera_pos.y + 40f * camera_shake_dir.y);
+                    Vector2D attack_dir = new Vector2D(0f, 0f);
+                    attack_dir.x = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).x - player_pos.x;
+                    attack_dir.y = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).y - player_pos.y;
+                    attack_dir.x /= attack_dir.x;
+                    attack_dir.y /= attack_dir.y;
+
+                    InternalCalls.AttachCamera(camera_pos.x + 30f * camera_shake_dir.x * attack_dir.x, camera_pos.y + 30f * camera_shake_dir.y * attack_dir.y);
                 }
             }
             else

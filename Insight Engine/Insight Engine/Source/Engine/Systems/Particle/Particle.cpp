@@ -57,29 +57,29 @@ namespace IS {
                 switch (mParticleList[id].mParticleType)
                 {
                 case pt_square:
-                    Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
+                    Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A },mParticleList[id].mLayer);
                     break;
 
                 case pt_circle:
                     for (int i = 0; i < 8; i++) {
-                        Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation + (i * 45), mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A });
+                        Sprite::draw_colored_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation + (i * 45), mParticleList[id].mScale, { mParticleList[id].mColor.R, mParticleList[id].mColor.G ,mParticleList[id].mColor.B ,mParticleList[id].mColor.A }, mParticleList[id].mLayer);
                     }
 
                     break;
 
                 case pt_texture:
-                    Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
+                    Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, mParticleList[id].mLayer);
                     break;
 
                 case pt_texture_frames:
                     //Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale,*asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha);
-                    Sprite::drawSpritesheetFrame(mParticleList[id].mRowIndex, mParticleList[id].mColIndex, mParticleList[id].mTotalRows, mParticleList[id].mTotalCols, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, 1);
+                    Sprite::drawSpritesheetFrame(mParticleList[id].mRowIndex, mParticleList[id].mColIndex, mParticleList[id].mTotalRows, mParticleList[id].mTotalCols, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, mParticleList[id].mLayer);
                     break;
 
                 case pt_anim:
                     auto system = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
                     Image* img = system->GetImage(mParticleList[id].mImageName);
-                    run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, 4);
+                    run_anim.drawNonEntityAnimation(deltaTime, mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *img, 1.f, mParticleList[id].mLayer);
                     break;
                 }
                 for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
@@ -90,6 +90,7 @@ namespace IS {
                     mParticleList[id].mScale.x += mParticleList[id].mSizeGrowth * deltaTime;
                     mParticleList[id].mScale.y += mParticleList[id].mSizeGrowth * deltaTime;
                     mParticleList[id].mAlpha += mParticleList[id].mAlphaGrowth * deltaTime;
+                    mParticleList[id].mParticlePos.y -= 98.f * deltaTime * static_cast<int>(mParticleList[id].mGravity);
                 }
             }
 

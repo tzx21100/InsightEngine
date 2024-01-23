@@ -132,6 +132,8 @@ namespace IS {
 		float mDirection = 0.f;
 		int mParticleType = pt_square;
 		std::string mImageName = "";
+		int mLayer = 1;
+		bool mGravity=false;
 		int mColIndex = 0;
 		int mRowIndex = 0;
 		int mTotalCols = 0;
@@ -205,8 +207,10 @@ namespace IS {
 				<< "Image Name: " << mImageName << "\n"
 				<< "Particle Position: " << mParticlePos.x << ", " << mParticlePos.y << "\n"
 				<< "Total Cols: " << mTotalCols << "\n"
-				<< "Total Rows: " << mTotalRows << "\n";
-			return out.str();
+				<< "Total Rows: " << mTotalRows << "\n"
+				<< "Layer: " << mLayer << "\n"
+				<< "Gravity: " << mLayer << "\n";
+				return out.str();
 		}
 
 
@@ -280,7 +284,11 @@ namespace IS {
 			// Deserialize the rows and cols for animation
 			std::getline(in, label, ':'); in >> particle.mTotalCols;
 			std::getline(in, label);
-			std::getline(in, label, ':'); in >> particle.mTotalRows;
+			std::getline(in, label, ':'); in >> particle.mTotalRows;			
+			std::getline(in, label);
+			std::getline(in, label, ':'); in >> particle.mLayer;			
+			std::getline(in, label);
+			std::getline(in, label, ':'); in >> particle.mGravity;
 
 			return particle;
 		}
