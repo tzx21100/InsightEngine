@@ -40,6 +40,7 @@ namespace IS {
 			lightPos.emplace_back(mPosition.x, mPosition.y);
 
 			ISGraphics::lightInstances.emplace_back(lightData);
+			ISGraphics::lightRadius.emplace_back(mSize);
 		}
 	}
 

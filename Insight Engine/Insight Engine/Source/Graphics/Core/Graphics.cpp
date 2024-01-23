@@ -36,6 +36,8 @@ namespace IS {
     // Frame Buffer
     std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
 
+    Framebuffer ISGraphics::mShaderFrameBuffer;
+
     // Meshes vector
     std::vector<Mesh> ISGraphics::meshes;
 
@@ -58,6 +60,7 @@ namespace IS {
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
     std::vector<Sprite::instanceData> ISGraphics::lightInstances;
+    std::vector<float> ISGraphics::lightRadius;
 
     // Editor and entity camera
     // Camera ISGraphics::cameras[2];
@@ -70,6 +73,8 @@ namespace IS {
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
+
+
 
     // Layering
     std::vector<Layering> ISGraphics::mLayers;
@@ -100,6 +105,8 @@ namespace IS {
         // create framebuffer
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
         mFramebuffer = std::make_shared<Framebuffer>(props);
+
+        mShaderFrameBuffer.Create();
 
         // initialize cameras
         for (int i{}; i < 2; ++i) {
@@ -265,35 +272,66 @@ namespace IS {
         // loading fb texture onto quad
         //mFramebuffer->Bind();
 
+        if (mLightsOn)
+        {
+            mShaderFrameBuffer.Bind();
+            // set clear color
+            glClearColor(0.f, 0.f, 0.f, 0.f);
+
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
+
+            // quads will be drawn first
+            if (mGlitched) // glitch effect
+                Sprite::draw_instanced_glitched_quads();
+            else
+                Sprite::draw_instanced_quads();
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+
         // bind fb
         if (engine.mRenderGUI)
         {
             mFramebuffer->Bind();
         }
 
-        // set clear color
-        glClearColor(0.f, 0.f, 0.f, 0.f);
+        if (!mLightsOn)
+        {
+            // set clear color
+            glClearColor(0.f, 0.f, 0.f, 0.f);
 
-        // clear color buffer
-        glClear(GL_COLOR_BUFFER_BIT);
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        /// get width and height, set viewport size
-        if (!engine.mRenderGUI) {
-            auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
-            glViewport(0, 0, width, height);
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
+
+            // quads will be drawn first
+            if (mGlitched) // glitch effect
+                Sprite::draw_instanced_glitched_quads();
+            else
+                Sprite::draw_instanced_quads();
         }
-    
-        // quads will be drawn first
-        if (mGlitched) // glitch effect
-            Sprite::draw_instanced_glitched_quads();
         else
-            Sprite::draw_instanced_quads();
+        {
+            // render lighting
+            if (mLightsOn)
+                Sprite::draw_lights();
+            else
+                lightInstances.clear();
+        }
 
-        // render lighting
-        if (mLightsOn)
-            Sprite::draw_lights();
-        else
-            lightInstances.clear();
 
     #ifdef USING_IMGUI
         if (!engine.mRuntime)

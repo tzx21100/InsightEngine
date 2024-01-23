@@ -131,6 +131,7 @@ namespace IS {
     }
 
     GLuint Framebuffer::GetColorAttachment() const { return mProps.mColorAttachment; }
+    GLuint Framebuffer::GetEntityIDAttachment() const { return mProps.mColorAttachment; }
 
     void Framebuffer::SetColorAttachment(GLuint color_attachment) { mProps.mColorAttachment = color_attachment; }
 

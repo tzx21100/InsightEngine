@@ -95,6 +95,7 @@ namespace IS {
          * \return The color attachment ID.
          */
         GLuint GetColorAttachment() const;
+        GLuint GetEntityIDAttachment() const;
 
         /*!
          * \brief Sets the color attachment ID.

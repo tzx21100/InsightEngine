@@ -231,6 +231,8 @@ namespace IS {
     }
 
     void Sprite::draw_lights() {
+        GLuint clr_attach_id = ISGraphics::mShaderFrameBuffer.GetColorAttachment(); // texture ID
+        GLuint entt_attach_id = ISGraphics::mShaderFrameBuffer.GetEntityIDAttachment();
         std::vector<glm::vec4> line = {
             glm::vec4(-100.f, 100.f, 100.f, 100.f)
         };
@@ -245,32 +247,29 @@ namespace IS {
         //    lineSeg.x = p0.x, lineSeg.y = p0.y, lineSeg.z = p1.x, lineSeg.w = p1.y;
         //}
 
-        
-
         // Bind the instance VBO
-        GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
+        //GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
-        glUnmapBuffer(GL_ARRAY_BUFFER);
+        //glUnmapBuffer(GL_ARRAY_BUFFER);
 
-        // Upload the quadInstances data to the GPU
-        GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+        //// Upload the quadInstances data to the GPU
+        //GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
-        if (buffer) {
-            // Copy the instance data to the mapped buffer
-            std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData));
+        //if (buffer) {
+        //    // Copy the instance data to the mapped buffer
+        //    std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData));
 
-            // Unmap the buffer
-            if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
-                // Handle the case where unmap was not successful
-                std::cerr << "Failed to unmap the buffer." << std::endl;
-            }
+        //    // Unmap the buffer
+        //    if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
+        //        // Handle the case where unmap was not successful
+        //        std::cerr << "Failed to unmap the buffer." << std::endl;
+        //    }
 
-        }
-        else {
-            // Handle the case where mapping the buffer was not successful
-            std::cerr << "Failed to map the buffer for writing." << std::endl;
-        }
-
+        //}
+        //else {
+        //    // Handle the case where mapping the buffer was not successful
+        //    std::cerr << "Failed to map the buffer for writing." << std::endl;
+        //}
         // bind shader
         GL_CALL(glUseProgram(ISGraphics::light_shader_pgm.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
@@ -315,7 +314,30 @@ namespace IS {
         //else 
         //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
 
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightRadius");
+        if (tex_arr_uniform >= 0)
+            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(ISGraphics::lightRadius.size()), ISGraphics::lightRadius.data());
 
+        std::vector<glm::vec4> light_clrs{};
+        for (auto& inst : ISGraphics::lightInstances)
+            light_clrs.emplace_back(inst->color);
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightColors");
+        if (tex_arr_uniform >= 0)
+            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(light_clrs.size()), glm::value_ptr(light_clrs[0]));
+        //else 
+        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+        
+        glBindTextureUnit(0, clr_attach_id);
+        glBindTextureUnit(1, entt_attach_id);
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "bg_tex");
+        if (tex_arr_uniform >= 0)
+            glUniform1i(tex_arr_uniform, 0);
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "id_tex");
+        if (tex_arr_uniform >= 0)
+            glUniform1i(tex_arr_uniform, 1);
 
         // draw instanced quads
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);

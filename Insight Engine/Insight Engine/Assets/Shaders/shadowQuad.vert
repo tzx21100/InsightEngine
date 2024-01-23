@@ -6,11 +6,9 @@ layout(location = 4) in vec4 aMtxRow1;
 layout(location = 5) in vec4 aMtxRow2;
 layout(location = 6) in vec4 aMtxRow3;
 layout(location = 7) in vec4 aMtxRow4;
-layout(location = 10) in float aEntityID;
 
 layout(location = 0) out vec4 vColor;
 layout(location = 1) out vec2 vTexCoord;
-layout(location = 5) out flat float vEntityID;
 
 
 void main()
