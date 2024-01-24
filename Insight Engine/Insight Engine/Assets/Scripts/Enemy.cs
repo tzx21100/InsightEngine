@@ -33,12 +33,14 @@ namespace IS
 
         // image and vfx
         static SimpleImage enemy_get_hit_vfx;
+        static SimpleImage check_point;
 
         // enemy patrol
         static public Vector2D enemy_left_point = new Vector2D(0f, 0f);
         static public Vector2D enemy_right_point = new Vector2D(0f, 0f);
         static public Vector2D target_point = new Vector2D(0f, 0f);
         static public float enemy_patrol_distance = 500f;
+        static public float enemy_rest_timer_duration = 2f;
         static public float enemy_rest_timer = 0f;
         static public bool going_left;
         static public bool isPatrolling;
@@ -47,14 +49,15 @@ namespace IS
         static private int get_hit_vfx_entity;
         static public void Init()
         {
-            enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
+            enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
             direction.x = 1f; // init
             //InternalCalls.ColliderNone(ENEMY_ID);
 
             // image and vfx
             enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
+            check_point = InternalCalls.GetSpriteImage("enemy.png");
 
             get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
@@ -63,6 +66,7 @@ namespace IS
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
             enemy_right_point = new Vector2D(enemy_pos.x + enemy_patrol_distance / 2f, enemy_pos.y);
             target_point = enemy_left_point;
+            enemy_rest_timer = enemy_rest_timer_duration;
             going_left = true;
             isPatrolling = true;
         }
@@ -79,10 +83,7 @@ namespace IS
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             enemy_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
-            if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
-            {
-                scaling.x *= -1; // flip the enemy over
-            }
+            
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
             if (isHit)
@@ -108,12 +109,18 @@ namespace IS
                     initialHit = false;
                     being_hit_timer = 0f;
                 }
+                else
+                {
+                    // being hit animation
+                }
             }
             else
             {
                 //RemoveGetHitVFX();
             }
-            EnemyPatrolling();
+            UpdateEnemyDirection();
+            DrawPatrolPoint();
+            //EnemyPatrolling();
             EnemyCollidingPlayer();
         }
 
@@ -141,6 +148,29 @@ namespace IS
         {
             InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
             InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
+        }
+
+        static private void DrawPatrolPoint()
+        {
+            /*InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
+            InternalCalls.TransformSetPositionEntity(enemy_left_point.x, enemy_left_point.y, get_hit_vfx_entity);
+            InternalCalls.TransformSetRotationEntity(0f, 0f, get_hit_vfx_entity);*/
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(enemy_left_point.x, enemy_left_point.y), 0, new SimpleVector2D(200f, 200f), check_point, 1f, 4
+                );
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(enemy_right_point.x, enemy_right_point.y), 0, new SimpleVector2D(200f, 200f), check_point, 1f, 4
+                );
+        }
+
+        static private void UpdateEnemyDirection()
+        {
+            if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
+            {
+                scaling.x *= -1; // flip the enemy over
+            }
         }
 
         static public void EnemyCollidingPlayer()
@@ -198,32 +228,47 @@ namespace IS
             if (isPatrolling)
             {
                 float dist = target_point.x - enemy_pos.x;
-
-                if (dist < 10f) // rest then turn around
+                //Vector2D dir = new Vector2D(0f, 0f);
+                
+                if (MathF.Abs(dist) < 10f) // rest then turn around
                 {
-                    if (going_left)
+                    if (enemy_rest_timer > 0f) // enemy in resting
                     {
-                        target_point = enemy_right_point;
+                        enemy_rest_timer -= InternalCalls.GetDeltaTime();
+                        InternalCalls.RigidBodySetVelocityEntity(0f, enemy_vel.y, ENEMY_ID);
+                        if (enemy_rest_timer <= 0f)
+                        {
+                            if (going_left)
+                            {
+                                target_point = enemy_right_point;
+                            }
+                            else
+                            {
+                                target_point = enemy_left_point;
+                            }
+                            going_left = !going_left; // change direction
+                            enemy_rest_timer = enemy_rest_timer_duration; // rest timer
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
-                    else
-                    {
-                        target_point = enemy_left_point;
-                    }
-                    going_left = !going_left;
+                    
                 }
-                else // walking
-                {
-                    Vector2D dir = new Vector2D(0f, 0f);
-                    dir.x = target_point.x - enemy_pos.x;
-                    //enemy[i].position.x += enemy[i].speed * dt * (enemy[i].waypoints[enemy[i].currentWaypoint].x - enemy[i].position.x) / distToNextPoint;
-                    //enemy_pos.x += 100f * speed * dir.x * MathF.Sign(scaling.x) / dist;
-                    enemy_vel.x = speed * dir.x * MathF.Sign(scaling.x) / dist;
-                    InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
-                    //Console.WriteLine(dist);
-                }
+                direction.x = target_point.x - enemy_pos.x;
+                // set enemy vel
+                enemy_vel.x = speed * MathF.Sign(direction.x);
+                InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
             }
         }
 
+        static private void EnemyAttacking()
+        {
+            if (isAttacking)
+            {
 
+            }
+        }
     }
 }

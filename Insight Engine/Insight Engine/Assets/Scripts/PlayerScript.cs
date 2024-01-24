@@ -919,7 +919,6 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
 
-
         }
 
         static private void ApplyGravityChange()
