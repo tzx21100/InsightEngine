@@ -270,7 +270,10 @@ namespace IS::EditorUtils {
             if (strlen(buffer) > 0)
             {
                 CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
-                action();
+                if (action != nullptr)
+                {
+                    action();
+                }
             }
         }
         ImGui::PopID();
@@ -287,7 +290,10 @@ namespace IS::EditorUtils {
             if (strlen(buffer) > 0)
             {
                 CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
-                action();
+                if (action != nullptr)
+                {
+                    action();
+                }
             }
         }
         ImGui::PopID();

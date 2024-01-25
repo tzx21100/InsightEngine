@@ -371,7 +371,12 @@ namespace IS {
 		if (HasComponent<Transform>(new_entity))
 		{
 			Transform& transform = GetComponent<Transform>(new_entity);
-			transform.world_position += Vector2D(20.f, -20.f);
+			transform.world_position += Vector2D(20.f, 0.f);
+		}
+		if (HasComponent<Sprite>(new_entity)) 
+		{
+			auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(new_entity);
+			ISGraphics::AddEntityToLayer(sprite_component.layer, new_entity);
 		}
 
 		return new_entity;

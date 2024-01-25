@@ -149,7 +149,7 @@ namespace IS
             scriptcomponent.scriptClass.Unload();
         }
 
-        InitScripts();
+        //InitScripts();
     }
 
 }

@@ -236,7 +236,7 @@ namespace IS
             InternalCalls.UpdateCategory(entity_attack, "Weapon");
 
 
-            InternalCalls.CameraSetZoom(1.1f);
+            InternalCalls.CameraSetZoom(0.8f);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -416,7 +416,7 @@ namespace IS
 
                         respawn_timer = respawn_timer_set;
                         isDead = false;
-                        InternalCalls.CameraSetZoom(1.1f);
+                        InternalCalls.CameraSetZoom(0.8f);
                     }
 
                 }
@@ -1414,7 +1414,7 @@ namespace IS
                 camera_shake_duration = camera_shake_duration_set;
                 camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
-                InternalCalls.CameraSetZoom(1.1f);
+                InternalCalls.CameraSetZoom(0.8f);
             }
         }
 
