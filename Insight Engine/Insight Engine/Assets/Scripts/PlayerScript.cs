@@ -179,11 +179,19 @@ namespace IS
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static private Vector2D target_pos = new Vector2D(0, 0);
+        static public float camera_zoom = 0.8f;
 
         //window height
         static private int WindowHeight = 0;
         static private int WindowWidth = 0;
 
+
+        // stablize player
+        static private float prev_x = 0f;
+
+        // Collectible
+
+        static public int collection_count = 0;
 
         public static int BoolToInt(bool boolValue)
         {
@@ -194,10 +202,6 @@ namespace IS
         {
             WindowWidth = InternalCalls.GetWindowWidth();
             WindowHeight = InternalCalls.GetWindowHeight();
-
-            Reward_DoubleJump = false;
-            Reward_Dash = false;
-            Reward_WallClimb = false;
 
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
@@ -236,7 +240,7 @@ namespace IS
             InternalCalls.UpdateCategory(entity_attack, "Weapon");
 
 
-            InternalCalls.CameraSetZoom(0.8f);
+            InternalCalls.CameraSetZoom(camera_zoom);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -371,6 +375,7 @@ namespace IS
                 {
                     InternalCalls.SetSpriteImage(player_transparent);
                     InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, death_entity);
+                    InternalCalls.AttachCamera(player_pos.x, player_pos.y);
                     InternalCalls.ResetSpriteAnimationFrameEntity(death_entity);
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     InternalCalls.TransformSetScaleEntity(300, 300, death_entity);
@@ -379,7 +384,8 @@ namespace IS
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
-
+                    InternalCalls.CameraSetZoom(1f);
+                    
                     for (int i = 0; i < 36; i++)
                     {
                         InternalCalls.GameSpawnParticleExtra(
@@ -392,7 +398,7 @@ namespace IS
                 }
                 else
                 {
-
+                    InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     if (camera_shake_duration > 0)
                     {
                         camera_shake_duration -= InternalCalls.GetDeltaTime();
@@ -413,10 +419,11 @@ namespace IS
                     {
                         camera_shake_duration = camera_shake_duration_set;
                         camera_shake_angle = 0;
-
+                        InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                         respawn_timer = respawn_timer_set;
                         isDead = false;
-                        InternalCalls.CameraSetZoom(0.8f);
+                        isJumping = true;
+                        InternalCalls.CameraSetZoom(camera_zoom);
                     }
 
                 }
@@ -689,7 +696,12 @@ namespace IS
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
                     if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                     {
-                        InternalCalls.TransformSetRotation(collided_angle, 0);
+                        if(InternalCalls.GetTransformPosition().x!=prev_x)
+                        {
+                            InternalCalls.TransformSetRotation(collided_angle, 0);
+                            prev_x = InternalCalls.GetTransformPosition().x;
+                        }
+                        
                     }
                     else
                     {
@@ -852,6 +864,9 @@ namespace IS
         static public void CleanUp()
         {
 
+            Reward_DoubleJump = false;
+            Reward_Dash = false;
+            Reward_WallClimb = false;
 
         }
 
@@ -1406,7 +1421,7 @@ namespace IS
                     float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                     //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
                     if (hitting_enemy_id != -1)
-                        InternalCalls.AttachCamera(camera_pos.x + 0.1f * rand * attack_dir.x, camera_pos.y + 0.1f * rand * attack_dir.y);
+                        InternalCalls.AttachCamera(camera_pos.x + 0.01f * attack_dir.x, camera_pos.y + 0.01f * attack_dir.y);
                 }
             }
             else
@@ -1414,7 +1429,7 @@ namespace IS
                 camera_shake_duration = camera_shake_duration_set;
                 camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
-                InternalCalls.CameraSetZoom(0.8f);
+                InternalCalls.CameraSetZoom(camera_zoom);
             }
         }
 

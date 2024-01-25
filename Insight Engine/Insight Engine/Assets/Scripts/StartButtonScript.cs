@@ -56,7 +56,7 @@ namespace IS
                 timer -= InternalCalls.GetDeltaTime();
                 if (timer <= 0f)
                 {
-                    InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
+                    InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
                 }
             }
 

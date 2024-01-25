@@ -10,10 +10,6 @@ namespace IS
     {
 
 
-        static float leaves_timer=3f;
-        static int leaves_amount=50;
-        static float leaves_timer_set=3f;
-
         static SimpleImage bg_image1;
         static SimpleImage bg_image2;
         static SimpleImage bg_image3;
@@ -71,28 +67,20 @@ namespace IS
             // Update the camera position
             InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
 
-            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.4f, 4);
-
-
-            leaves_timer -= InternalCalls.GetDeltaTime();
-            if(leaves_timer <= 0 )
+            
+            if (PlayerScript.camera_pos.y > 3500)
             {
-                for (int i = 0;i<leaves_amount;i++)
+                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0,1+( (PlayerScript.camera_pos.y-4500) /1000), 4);
+                if (PlayerScript.player_pos.y > 4600)
                 {
-                    int col= (int)(InternalCalls.GetRandomFloat()*9);
-                    float direction =InternalCalls.GetRandomFloat() * 360;
-                    float size = InternalCalls.GetRandomFloat() * 150;
-                    float speed = InternalCalls.GetRandomFloat() * 800f;
-                    float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFrames(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y+2000f,
-                        direction, size, 0f, 1f,
-                        0f, lifespan, speed, "ParticleLeaves.txt"
-                        ,col,0);
-
+                    InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
                 }
-
-                leaves_timer = leaves_timer_set;
             }
+            else
+            {
+                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.4f, 4);
+            }
+
 
 
         }

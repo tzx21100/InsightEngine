@@ -119,7 +119,7 @@ namespace IS
                 //RemoveGetHitVFX();
             }
             UpdateEnemyDirection();
-            DrawPatrolPoint();
+            //DrawPatrolPoint();
             //EnemyPatrolling();
             EnemyCollidingPlayer();
         }

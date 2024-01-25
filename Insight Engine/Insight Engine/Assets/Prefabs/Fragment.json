@@ -1,12 +1,20 @@
 {
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "Near-Fragments_SFX.wav",
+		"AudioVolumeLevel" : 0.54000002145767212
+	},
 	"Collider" : 
 	{
 		"BoxCollider" : 
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -3924.83349609375,
-				"Y" : 1275.5263671875
+				"X" : 2924.90283203125,
+				"Y" : 1445.0643310546875
 			},
 			"BoxColliderOffset" : 
 			{
@@ -83,7 +91,7 @@
 	{
 		"ScriptName" : "FragmentScript"
 	},
-	"Signature" : "00000000000000000001010000100111",
+	"Signature" : "00000000000000000001010100100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -96,15 +104,15 @@
 		"SpriteFilename" : "fragment_anim 4R3C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 19,
+		"SpriteTexture" : 35,
 		"SpriteTextureHeight" : 1860,
-		"SpriteTextureIndex" : 18,
+		"SpriteTextureIndex" : 34,
 		"SpriteTextureWidth" : 1626,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 281.83999633789062,
 		"SpriteTransformScalingY" : 241.79998779296875,
-		"SpriteTransformWorldPositionX" : -3924.83349609375,
-		"SpriteTransformWorldPositionY" : 1275.5263671875,
+		"SpriteTransformWorldPositionX" : 2924.90283203125,
+		"SpriteTransformWorldPositionY" : 1445.0643310546875,
 		"animations" : 
 		[
 			{
@@ -112,9 +120,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.3333333432674408,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 1.0,
-				"frame_index_y" : 1.0,
-				"frame_timer" : 0.033851303160190582,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.050517968833446503,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 3,
 				"y_frames" : 4
@@ -126,7 +134,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 281.83999633789062,
 		"TransformScalingY" : 241.79998779296875,
-		"TransformWorldPositionX" : -3924.83349609375,
-		"TransformWorldPositionY" : 1275.5263671875
+		"TransformWorldPositionX" : 2924.90283203125,
+		"TransformWorldPositionY" : 1445.0643310546875
 	}
 }

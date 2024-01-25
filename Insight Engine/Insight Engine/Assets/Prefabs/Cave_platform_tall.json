@@ -1,0 +1,101 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 3517.84228515625,
+				"Y" : 60.137039184570312
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.20000000298023224,
+				"Y" : 0.55000001192092896
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -208.0,
+					"y" : 572.0
+				},
+				{
+					"x" : 208.0,
+					"y" : 572.0
+				},
+				{
+					"x" : 208.0,
+					"y" : -572.0
+				},
+				{
+					"x" : -208.0,
+					"y" : -572.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "Cave_platform_tall",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "StoneCollider"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_platform_tall.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 11,
+		"SpriteTextureHeight" : 2080,
+		"SpriteTextureIndex" : 10,
+		"SpriteTextureWidth" : 2080,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 2080.0,
+		"SpriteTransformScalingY" : 2080.0,
+		"SpriteTransformWorldPositionX" : 3517.84228515625,
+		"SpriteTransformWorldPositionY" : 60.137039184570312,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 2080.0,
+		"TransformScalingY" : 2080.0,
+		"TransformWorldPositionX" : 3517.84228515625,
+		"TransformWorldPositionY" : 60.137039184570312
+	}
+}

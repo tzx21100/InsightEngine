@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 14.479983329772949,
-				"Y" : -403.48748779296875
+				"X" : 721.6934814453125,
+				"Y" : -404.28366088867188
 			},
 			"BoxColliderOffset" : 
 			{
@@ -62,7 +62,11 @@
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Signature" : "00000000000000000000010000000111",
+	"Script" : 
+	{
+		"ScriptName" : "StoneCollider"
+	},
+	"Signature" : "00000000000000000000010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -82,8 +86,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1144.0,
 		"SpriteTransformScalingY" : 1144.0,
-		"SpriteTransformWorldPositionX" : 2.7799835205078125,
-		"SpriteTransformWorldPositionY" : -356.6875,
+		"SpriteTransformWorldPositionX" : 709.99346923828125,
+		"SpriteTransformWorldPositionY" : -357.48367309570312,
 		"animations" : []
 	},
 	"Transform" : 
@@ -91,7 +95,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1144.0,
 		"TransformScalingY" : 1144.0,
-		"TransformWorldPositionX" : 2.7799835205078125,
-		"TransformWorldPositionY" : -356.6875
+		"TransformWorldPositionX" : 709.99346923828125,
+		"TransformWorldPositionY" : -357.48367309570312
 	}
 }

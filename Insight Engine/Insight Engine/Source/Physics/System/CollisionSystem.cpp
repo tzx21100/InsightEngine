@@ -153,7 +153,7 @@ namespace IS
 				
 				//for non-response enabled to check for angles of the collided object
 				if (!colliderA.mResponseEnable) {
-					colliderA.mCollidedObjectAngle = transB.getRotation();
+					colliderA.mCollidedObjectAngle += transB.getRotation();
 				}
 
 				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {

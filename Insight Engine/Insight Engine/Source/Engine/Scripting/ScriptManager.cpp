@@ -73,6 +73,7 @@ namespace IS {
                     break;
                 }
                 if (InsightEngine::Instance().mRuntime == false) {
+                    CleanUp();
                     break;
                 }
 
