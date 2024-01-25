@@ -432,7 +432,10 @@ namespace IS
         internal extern static void SetGravityScale(float scale);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void UpdateCategory(int entity, string category);
+        internal extern static void UpdateCategory(int entity, string category);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SendCondition(bool condition_return_bool);
 
 
     }

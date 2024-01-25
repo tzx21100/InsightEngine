@@ -3,26 +3,25 @@
 #include "FSM.h"
 #include "../../Core/CoreEngine.h"
 
+
 namespace IS {
 
-	void ChangeState::AddCondition(std::function<bool()> func) {
+	SimpleState CreateSimpleState(std::string script_name) {
+		SimpleState new_state;
+		new_state.SetSimpleState(script_name);
+		return new_state;
+	}
 
-		mConditionList.emplace_back(func);
-		mConditionSize++;
 
+	void ChangeState::AddCondition(std::string script_name) {
+		mConditionScript = CreateSimpleState(script_name);
 	}
 
 	bool ChangeState::CheckConditionsFufilled() {
-		int size=0;
-		for (int i = 0; i < mConditionSize; i++) {
-			if (mConditionList[i]() == true) {
-				size++;
-			}
-		}
-		if (size == mConditionSize) {
-			return true;
-		}
-		return false;
+		mConditionScript.Update();
+		bool state = RecievedScriptCondition;
+		RecievedScriptCondition = false;
+		return state;
 	}
 
 	void ChangeState::SetTargetState(SimpleState state) {
@@ -52,9 +51,11 @@ namespace IS {
 		for (auto& entity : mEntities) {
 			auto& state_component = InsightEngine::Instance().GetComponent<StateComponent>(entity);
 			state_component.mCurrentState.Update();
-			for (auto& statchange : state_component.mEntityConditions) {
-				if (statchange.CheckConditionsFufilled()) { state_component.mCurrentState = statchange.GetTargetState(); }
+
+			if (state_component.mEntityConditions.CheckConditionsFufilled()) { 
+				state_component.mCurrentState = state_component.mEntityConditions.GetTargetState(); 
 			}
+			
 		}
 	}
 
@@ -62,6 +63,10 @@ namespace IS {
 		if (message.GetType() == MessageType::DebugInfo) {
 			IS_CORE_DEBUG("State Manager Running");
 		}
+	}
+
+	void StateManager::ActivateScripts() {
+		
 	}
 
 }

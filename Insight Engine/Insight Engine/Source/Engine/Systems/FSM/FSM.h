@@ -1,11 +1,9 @@
-
-
-
-
 #pragma once
 #include "../../ECS/System.h"
-#include <functional>
 #include "../../ECS/Component.h"
+#include <functional>
+#include "../../Scripting/ScriptGlue.h"
+#include "../../Scripting/ScriptEngine.h"
 
 /*                                                                   guard
 ----------------------------------------------------------------------------- */
@@ -20,30 +18,64 @@ namespace IS {
 	class SimpleState {
 
 	public:
-		void Enter() {};
-		void Update() {};
-		void Exit() {};
+
+		//Adding script to simple state
+		void SetSimpleState(std::string script_name) {
+			mScriptName = script_name;
+			mScriptClass = ScriptClass("IS",mScriptName);
+			mMonoObject = mScriptClass.Instantiate();
+			if (mMonoObject != nullptr) {
+				mScriptClass.LoadMethods();
+				MonoMethod* init_method =mScriptClass.GetMethod("Init", 0);
+				mScriptClass.InvokeMethod(mMonoObject, init_method, nullptr);
+				mHasScript = true;
+			}
+		}
 
 
+		void Enter() 
+		{
+			MonoMethod* update_method = mScriptClass.GetMethod("Init", 0);
+			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
+		};
+		void Update() 
+		{
+			MonoMethod* update_method = mScriptClass.GetMethod("Update", 0);
+			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
+		};
+		void Exit() 
+		{
+			MonoMethod* update_method = mScriptClass.GetMethod("CleanUp", 0);
+			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
+		};
+
+		std::string mScriptName;
+		ScriptClass mScriptClass;
+		MonoObject* mMonoObject = nullptr;
+		bool mHasScript =false;
+		bool mConditionRecieved = false;
 
 	};
+
+	// functions to create SimpleState
+	SimpleState CreateSimpleState(std::string script_name);
+
 	/*
 	This is a class to mark conditions in which a state should change 
 	*/
 	class ChangeState {
 
 	public:
-		void AddCondition(std::function<bool()>);
+		void AddCondition(std::string script_name);
 		void SetTargetState(SimpleState state);
 		void SetCurrentState(SimpleState state);
 		SimpleState GetTargetState();
 		bool CheckConditionsFufilled();
 
 	private:
-		std::vector<std::function<bool()>> mConditionList;
+		SimpleState mConditionScript;
 		SimpleState mTargetState;
 		SimpleState mCurrentState;
-		int mConditionSize;
 
 	};
 
@@ -81,7 +113,7 @@ namespace IS {
 		void HandleMessage(const Message& message) override;
 		
 
-
+		void ActivateScripts();
 
 	};
 
@@ -90,11 +122,13 @@ namespace IS {
 
 		static std::string GetType() { return "StateComponent"; }
 		//each entity should hold their own list of change state
-		std::vector<ChangeState> mEntityConditions;
+		ChangeState mEntityConditions;
 		SimpleState mCurrentState;
 
 	};
 	
+
+
 
 }
 

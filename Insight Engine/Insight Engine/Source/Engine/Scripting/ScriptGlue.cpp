@@ -1158,6 +1158,11 @@ namespace IS {
         body.mGravityScale = scale;
     }
 
+    static void SendCondition(bool bo) {
+        RecievedScriptCondition = bo;
+    }
+
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -1335,6 +1340,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(IsFullscreen);
         IS_ADD_INTERNAL_CALL(ToggleFullscreen);
 
+
+
+
+        //FSM Condition
+        IS_ADD_INTERNAL_CALL(SendCondition);
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);
