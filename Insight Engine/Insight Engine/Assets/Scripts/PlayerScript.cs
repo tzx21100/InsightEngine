@@ -267,6 +267,9 @@ namespace IS
 
             // init enemy info
             is_colliding_enemy = false;
+            InternalCalls.AttachCamera(player_pos.x, player_pos.y);
+
+
         }
 
         static public void Update()
@@ -863,6 +866,7 @@ namespace IS
 
         static public void CleanUp()
         {
+
 
             Reward_DoubleJump = false;
             Reward_Dash = false;

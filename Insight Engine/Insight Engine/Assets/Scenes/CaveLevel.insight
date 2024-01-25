@@ -2879,8 +2879,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
@@ -3293,8 +3293,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
@@ -3707,8 +3707,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
@@ -4450,8 +4450,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
@@ -5168,7 +5168,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
@@ -5601,8 +5601,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
@@ -5725,7 +5725,7 @@
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
 						"frame_index_x" : 3.0,
-						"frame_index_y" : 2.0,
+						"frame_index_y" : 0.0,
 						"frame_timer" : 0.0055393800139427185,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
@@ -5838,8 +5838,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
@@ -5956,7 +5956,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
@@ -6074,7 +6074,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
@@ -6192,7 +6192,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 10.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
@@ -6423,8 +6423,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
@@ -6554,8 +6554,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
@@ -6693,8 +6693,8 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
@@ -6732,8 +6732,8 @@
 				"SpriteTransformRotation" : 356.3365478515625,
 				"SpriteTransformScalingX" : 398.43026733398438,
 				"SpriteTransformScalingY" : 3135.010986328125,
-				"SpriteTransformWorldPositionX" : 3498.01513671875,
-				"SpriteTransformWorldPositionY" : 3758.704345703125,
+				"SpriteTransformWorldPositionX" : 3476.5986328125,
+				"SpriteTransformWorldPositionY" : 3760.0751953125,
 				"animations" : []
 			},
 			"Transform" : 
@@ -6741,8 +6741,8 @@
 				"TransformRotation" : 356.3365478515625,
 				"TransformScalingX" : 398.43026733398438,
 				"TransformScalingY" : 3135.010986328125,
-				"TransformWorldPositionX" : 3498.01513671875,
-				"TransformWorldPositionY" : 3758.704345703125
+				"TransformWorldPositionX" : 3476.5986328125,
+				"TransformWorldPositionY" : 3760.0751953125
 			}
 		},
 		{
@@ -6840,9 +6840,65 @@
 				"TransformWorldPositionX" : 3504.464599609375,
 				"TransformWorldPositionY" : 3838.02587890625
 			}
+		},
+		{
+			"ButtonComponent" : 
+			{
+				"ButtonClickAlpha" : 1.0,
+				"ButtonHoverAlpha" : 1.0,
+				"ButtonHoverScale" : 1.0,
+				"ButtonIdleAlpha" : 1.0,
+				"ButtonIdleScale" : 1.0,
+				"ButtonImageName" : "",
+				"ButtonSize" : 
+				{
+					"X" : 117.0,
+					"Y" : 129.0
+				},
+				"ButtonState" : 0,
+				"ButtonText" : "",
+				"ButtonTextScale" : 0.0,
+				"ButtonType" : 0
+			},
+			"Name" : "Pause Button",
+			"Script" : 
+			{
+				"ScriptName" : "PauseButtonScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "pause_button.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 59,
+				"SpriteTextureHeight" : 258,
+				"SpriteTextureIndex" : 58,
+				"SpriteTextureWidth" : 234,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 117.0,
+				"SpriteTransformScalingY" : 129.0,
+				"SpriteTransformWorldPositionX" : -778.10076904296875,
+				"SpriteTransformWorldPositionY" : 3327.9140625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 117.0,
+				"TransformScalingY" : 129.0,
+				"TransformWorldPositionX" : -778.10076904296875,
+				"TransformWorldPositionY" : 3327.9140625
+			}
 		}
 	],
-	"EntityAmount" : 82,
+	"EntityAmount" : 83,
 	"Layers" : 
 	[
 		{

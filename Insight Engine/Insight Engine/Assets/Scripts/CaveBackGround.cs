@@ -21,7 +21,7 @@ namespace IS
         static private Vector2D bg3_pos=new Vector2D(0,0);
         static private Vector2D bg4_pos=new Vector2D(0,0);
         static private Vector2D bg5_pos=new Vector2D(0,0);
-        static private Vector2D bg_scale=new Vector2D(4096*1.5f,756*2.5f);
+        static private Vector2D bg_scale=new Vector2D(5850*1.2f,1080*1.2f);
 
 
         static public void Init(){
@@ -37,26 +37,26 @@ namespace IS
 
         static public void Update()
         {
-            //InternalCalls.DrawImageAt(PlayerScript.camera_pos.ToSimpleVector2D() ,0, bg_scale.ToSimpleVector2D(), bg_image5, 0);
-            // Calculate the player's offset
             float playerOffsetX = PlayerScript.player_pos.x;
             float playerOffsetY = PlayerScript.player_pos.y;
 
             // Set offset ratios for each layer (farther layers have smaller ratios)
-            float[] offsetRatios = new float[] { 0.01f, 0.02f, 0.03f, 0.04f, 0.2f };
+            // Adjust the ratios to control the movement sensitivity of each layer
+            float[] horizontalOffsetRatios = new float[] { 0.2f, 0.15f, 0.1f, 0.05f, 0.02f };
+            float[] verticalOffsetRatios = new float[] { 0.05f, 0.04f, 0.03f, 0.02f, 0.01f };
 
-            // Adjust the position of each background layer based on the player's offset
-            for (int i = 1; i < offsetRatios.Length; i++)
+            for (int i = 0; i < horizontalOffsetRatios.Length; i++)
             {
                 // Calculate the offset for this layer
-                float layerOffsetX = playerOffsetX * offsetRatios[i];
-                float layerOffsetY = playerOffsetY * offsetRatios[i];
+                float layerOffsetX = playerOffsetX * horizontalOffsetRatios[i];
+                float layerOffsetY = playerOffsetY * verticalOffsetRatios[i];
 
                 // Get the initial position of this layer
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
 
                 // Update the position
-                Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x+initialPos.x - layerOffsetX, PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
+                Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x + initialPos.x - layerOffsetX,
+                                               PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
 
                 // Draw the layer at its new position
                 InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);

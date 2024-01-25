@@ -1,0 +1,57 @@
+{
+	"ButtonComponent" : 
+	{
+		"ButtonClickAlpha" : 1.0,
+		"ButtonHoverAlpha" : 1.0,
+		"ButtonHoverScale" : 1.0,
+		"ButtonIdleAlpha" : 1.0,
+		"ButtonIdleScale" : 1.0,
+		"ButtonImageName" : "",
+		"ButtonSize" : 
+		{
+			"X" : 117.0,
+			"Y" : 129.0
+		},
+		"ButtonState" : 0,
+		"ButtonText" : "",
+		"ButtonTextScale" : 0.0,
+		"ButtonType" : 0
+	},
+	"Name" : "Pause Button",
+	"Script" : 
+	{
+		"ScriptName" : "PauseButtonScript"
+	},
+	"Signature" : "00000000000000000000000001100011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "pause_button.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 59,
+		"SpriteTextureHeight" : 258,
+		"SpriteTextureIndex" : 58,
+		"SpriteTextureWidth" : 234,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 117.0,
+		"SpriteTransformScalingY" : 129.0,
+		"SpriteTransformWorldPositionX" : -778.10076904296875,
+		"SpriteTransformWorldPositionY" : 3327.9140625,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 117.0,
+		"TransformScalingY" : 129.0,
+		"TransformWorldPositionX" : -778.10076904296875,
+		"TransformWorldPositionY" : 3327.9140625
+	}
+}
