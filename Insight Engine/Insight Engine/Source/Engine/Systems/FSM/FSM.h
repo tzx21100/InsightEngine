@@ -40,8 +40,14 @@ namespace IS {
 		};
 		void Update() 
 		{
-			MonoMethod* update_method = mScriptClass.GetMethod("Update", 0);
-			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
+			if (!mHasScript && mScriptName != "") {
+				SetSimpleState(mScriptName);
+			}
+
+			if (mHasScript) {
+				MonoMethod* update_method = mScriptClass.GetMethod("Update", 0);
+				mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
+			}
 		};
 		void Exit() 
 		{
@@ -49,7 +55,7 @@ namespace IS {
 			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
 		};
 
-		std::string mScriptName;
+		std::string mScriptName = "";
 		ScriptClass mScriptClass;
 		MonoObject* mMonoObject = nullptr;
 		bool mHasScript =false;

@@ -750,6 +750,7 @@ namespace IS {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         std::string stem = path.stem().string();
                         state.mCurrentState.mScriptName = stem;
+                        state.mCurrentState.SetSimpleState(stem);
                         state.mEntityConditions.AddCondition(stem);
                     }
                     ImGui::EndDragDropTarget();
