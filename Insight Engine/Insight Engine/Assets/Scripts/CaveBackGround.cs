@@ -25,7 +25,7 @@ namespace IS
 
 
         static public void Init(){
-            bg_image1 = InternalCalls.GetSpriteImage("Env_cave_foreground.png");
+            bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image2 = InternalCalls.GetSpriteImage("Env_cave_foreground.png");
             bg_image3 = InternalCalls.GetSpriteImage("Env_cave_midground.png");
             bg_image4 = InternalCalls.GetSpriteImage("Env_cave_2ndbackground.png");
@@ -42,7 +42,7 @@ namespace IS
 
             // Set offset ratios for each layer (farther layers have smaller ratios)
             // Adjust the ratios to control the movement sensitivity of each layer
-            float[] horizontalOffsetRatios = new float[] { 0.2f, 0.15f, 0.1f, 0.05f, 0.02f };
+            float[] horizontalOffsetRatios = new float[] { 0.2f, 0.05f, 0.1f, 0.05f, 0.02f };
             float[] verticalOffsetRatios = new float[] { 0.05f, 0.04f, 0.03f, 0.02f, 0.01f };
 
             for (int i = 0; i < horizontalOffsetRatios.Length; i++)

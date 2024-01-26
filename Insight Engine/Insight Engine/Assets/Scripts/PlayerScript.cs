@@ -179,7 +179,7 @@ namespace IS
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static private Vector2D target_pos = new Vector2D(0, 0);
-        static public float camera_zoom = 0.8f;
+        static public float camera_zoom = 1f;
 
         //window height
         static private int WindowHeight = 0;
