@@ -2,9 +2,9 @@
  * \file YouWinScript.cs
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
- * \date 26-11-2023
+ * \date 26-01-2024
  * \brief
- * This header file contains the YouWinScript class, used for the win scene
+ * This header file contains
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -14,40 +14,66 @@
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
 using System;
+using System.Collections.Generic;
 namespace IS
 {
     class Enemy
     {
+        static Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
+
+        static public void Init()
+        {
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            enemies[entity_id] = new EachEnemy();
+            enemies[entity_id].Init();
+        }
+
+        static public void Update()
+        {
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            enemies[entity_id].update(); // Call Update on each GlitchingPlatform instance
+
+        }
+
+
+
+        /*static public void CleanUp()
+        {
+            InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
+        }*/
+    }
+    class EachEnemy
+    {
         // common
-        static public float speed = 100f;
+        public float speed = 100f;
         static private Vector2D direction = new Vector2D(0f, 0f);
-        static public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        static private Vector2D scaling = new Vector2D(257f, 183f);
-        static private Vector2D enemy_vel = new Vector2D(0f, 0f);
+        public Vector2D enemy_pos = new Vector2D(0f, 0f);
+        private Vector2D scaling = new Vector2D(257f, 183f);
+        private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
         static private bool isHit;
-        static private bool initialHit = false;
-        static private float being_hit_timer = 0f;
+        private bool initialHit = false;
+        private float being_hit_timer = 0f;
         static public int ENEMY_ID;
 
         // image and vfx
-        static SimpleImage enemy_get_hit_vfx;
-        static SimpleImage check_point;
+        SimpleImage enemy_get_hit_vfx;
+        SimpleImage check_point;
 
         // enemy patrol
-        static public Vector2D enemy_left_point = new Vector2D(0f, 0f);
-        static public Vector2D enemy_right_point = new Vector2D(0f, 0f);
-        static public Vector2D target_point = new Vector2D(0f, 0f);
-        static public float enemy_patrol_distance = 500f;
-        static public float enemy_rest_timer_duration = 2f;
-        static public float enemy_rest_timer = 0f;
-        static public bool going_left;
-        static public bool isPatrolling;
-        static public bool isAttacking;
+        public Vector2D enemy_left_point = new Vector2D(0f, 0f);
+        public Vector2D enemy_right_point = new Vector2D(0f, 0f);
+        public Vector2D target_point = new Vector2D(0f, 0f);
+        public float enemy_patrol_distance = 500f;
+        public float enemy_rest_timer_duration = 2f;
+        public float enemy_rest_timer = 0f;
+        public bool going_left;
+        public bool isPatrolling;
+        public bool isAttacking;
 
         static private int get_hit_vfx_entity;
-        static public void Init()
+        public void Init()
         {
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
@@ -71,7 +97,7 @@ namespace IS
             isPatrolling = true;
         }
 
-        static public void Update()
+        public void update()
         {
             if (GameManager.isGamePaused == true || PauseButtonScript.paused == true)
             {
@@ -121,36 +147,39 @@ namespace IS
             UpdateEnemyDirection();
             //DrawPatrolPoint();
             //EnemyPatrolling();
+            DrawHealthBar();
             EnemyCollidingPlayer();
         }
 
 
-        static public void CleanUp()
+        public void CleanUp()
         {
 
         }
 
-        static public void GetHit(Vector2D dir)
+        static public void GetHit(Vector2D dir, int id)
         {
             //InternalCalls.TransformSetScaleEntity(InternalCalls.GetTransformScalingEntity(ENEMY_ID).x * dir.x, InternalCalls.GetTransformScalingEntity(ENEMY_ID).y, ENEMY_ID);
-            isHit = true;
-            direction = dir;
+            if (ENEMY_ID == id) {
+                isHit = true;
+                direction = dir;
+            }
         }
 
-        static private void DrawGetHitVFX()
+        private void DrawGetHitVFX()
         {
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
             InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * -100f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
             InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 270f, 0, get_hit_vfx_entity);
         }
 
-        static private void RemoveGetHitVFX()
+        private void RemoveGetHitVFX()
         {
             InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
             InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
         }
 
-        static private void DrawPatrolPoint()
+        private void DrawPatrolPoint()
         {
             /*InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
             InternalCalls.TransformSetPositionEntity(enemy_left_point.x, enemy_left_point.y, get_hit_vfx_entity);
@@ -165,7 +194,7 @@ namespace IS
                 );
         }
 
-        static private void UpdateEnemyDirection()
+        private void UpdateEnemyDirection()
         {
             if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
             {
@@ -173,7 +202,7 @@ namespace IS
             }
         }
 
-        static public void EnemyCollidingPlayer()
+        public void EnemyCollidingPlayer()
         {
             // check enemy colliding with enemy
             if (InternalCalls.OnCollisionEnter())
@@ -202,7 +231,7 @@ namespace IS
             
         }
 
-        static private void EnemyGetHit()
+        private void EnemyGetHit()
         {
             InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
 
@@ -223,7 +252,7 @@ namespace IS
             }
         }
 
-        static private void EnemyPatrolling()
+        private void EnemyPatrolling()
         {
             if (isPatrolling)
             {
@@ -263,12 +292,17 @@ namespace IS
             }
         }
 
-        static private void EnemyAttacking()
+        private void EnemyAttacking()
         {
             if (isAttacking)
             {
 
             }
+        }
+
+        private void DrawHealthBar()
+        {
+            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, 200f, 100f, 0f, 1f, 0f, 0.5f, 2);
         }
     }
 }

@@ -30,6 +30,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 
+#include <vector>
 #include <mono/metadata/object.h>
 #include <algorithm>
 #include <math.h>
@@ -666,6 +667,15 @@ namespace IS {
     static int GetCollidingEntity(int entity) {
         auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
         return collider_component.mCollidingEntity.back();
+    }
+
+    static std::vector<int> GetCollidingEntityList(int entity) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        std::vector<int> ret;
+        for (int i = 0; i < collider_component.mCollidingEntity.size(); i++) {
+            ret.push_back(collider_component.mCollidingEntity[i]);
+        }
+        return ret;
     }
 
     static bool CollidingObjectIsStatic(int entity) {
@@ -1325,6 +1335,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);
+        IS_ADD_INTERNAL_CALL(GetCollidingEntityList);
 
 
         IS_ADD_INTERNAL_CALL(CompareCategory);

@@ -190,6 +190,9 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetCollidingEntity(int entity);
 
+        /*[MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Array GetCollidingEntityList(int entity);*/
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool GetCollidingEntityCheck(int entity, int entityToCheckAgainst);
 

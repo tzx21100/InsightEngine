@@ -1337,7 +1337,8 @@ namespace IS
                     {
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                        //int id = InternalCalls.GetCollidingEntity();
+                        //Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
                         //Console.WriteLine("hitting enemy");
                         initial_attack = true;
                     }
