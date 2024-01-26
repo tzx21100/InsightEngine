@@ -38,13 +38,13 @@ namespace IS {
         ISGraphics::non_quad_shader_pgm.link();
         ISGraphics::non_quad_shader_pgm.validate();
 
-        ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Lighting.vert");
-        ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Lighting.frag");
+        ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "PickedQuad.vert");
+        ISGraphics::quad_border_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "PickedQuad.frag");
         ISGraphics::quad_border_shader_pgm.link();
         ISGraphics::quad_border_shader_pgm.validate();
 
-        ISGraphics::light_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "shadowQuad.vert");
-        ISGraphics::light_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "shadowQuad.frag");
+        ISGraphics::light_shader_pgm.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Lighting.vert");
+        ISGraphics::light_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Lighting.frag");
         ISGraphics::light_shader_pgm.link();
         ISGraphics::light_shader_pgm.validate();
 
