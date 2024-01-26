@@ -179,7 +179,7 @@ namespace IS
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static private Vector2D target_pos = new Vector2D(0, 0);
-        static public float camera_zoom = 1f;
+        static public float camera_zoom = 0.7f;
 
         //window height
         static private int WindowHeight = 0;
@@ -378,7 +378,6 @@ namespace IS
                 {
                     InternalCalls.SetSpriteImage(player_transparent);
                     InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, death_entity);
-                    InternalCalls.AttachCamera(player_pos.x, player_pos.y);
                     InternalCalls.ResetSpriteAnimationFrameEntity(death_entity);
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     InternalCalls.TransformSetScaleEntity(300, 300, death_entity);
@@ -387,7 +386,6 @@ namespace IS
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
-                    InternalCalls.CameraSetZoom(1f);
                     
                     for (int i = 0; i < 36; i++)
                     {

@@ -21,7 +21,7 @@ namespace IS
         static private Vector2D bg3_pos=new Vector2D(0,0);
         static private Vector2D bg4_pos=new Vector2D(0,0);
         static private Vector2D bg5_pos=new Vector2D(0,0);
-        static private Vector2D bg_scale=new Vector2D(5850*1.2f,1080*1.2f);
+        static private Vector2D bg_scale=new Vector2D(5850*0.8f,1080*1.5f);
 
 
         static public void Init(){
@@ -42,8 +42,8 @@ namespace IS
 
             // Set offset ratios for each layer (farther layers have smaller ratios)
             // Adjust the ratios to control the movement sensitivity of each layer
-            float[] horizontalOffsetRatios = new float[] { 0.2f, 0.05f, 0.1f, 0.05f, 0.02f };
-            float[] verticalOffsetRatios = new float[] { 0.05f, 0.04f, 0.03f, 0.02f, 0.01f };
+            float[] horizontalOffsetRatios = new float[] { 0.02f, 0.05f, 0.1f, 0.01f, 0.0f };
+            float[] verticalOffsetRatios = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 
             for (int i = 0; i < horizontalOffsetRatios.Length; i++)
             {
@@ -59,7 +59,8 @@ namespace IS
                                                PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
 
                 // Draw the layer at its new position
-                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
+                int layer = 0;
+                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, layer);
             }
 
             //InternalCalls.GameSpawnParticle(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, "ParticleLeaves.txt");
@@ -78,7 +79,7 @@ namespace IS
             }
             else
             {
-                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.4f, 4);
+                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.8f, 0);
             }
 
 
