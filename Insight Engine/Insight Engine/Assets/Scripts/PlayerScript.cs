@@ -173,7 +173,7 @@ namespace IS
 
         // player pos
         static public Vector2D player_pos = new Vector2D(0, 0);
-        static private Vector2D trans_scaling = new Vector2D(0, 0);
+        static public Vector2D trans_scaling = new Vector2D(0, 0);
         static public Vector2D player_vel = new Vector2D(0, 0);
 
         //camera pos
@@ -1337,9 +1337,13 @@ namespace IS
                     {
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        //int id = InternalCalls.GetCollidingEntity();
-                        //Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
-                        //Console.WriteLine("hitting enemy");
+                        // // get the id for enemy being attack (one only)
+                        int attacking_enemy_id = InternalCalls.GetCollidingEntity(entity_attack);
+                        
+                        //Console.WriteLine(attacking_enemy_id);
+                        //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
+                        //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
+                        Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
                         initial_attack = true;
                     }
                     else if (isAttack)
@@ -1375,6 +1379,7 @@ namespace IS
         {
             if (is_colliding_enemy)
             {
+                //Console.WriteLine(colliding_enemy_id);
                 // player get hit back
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;

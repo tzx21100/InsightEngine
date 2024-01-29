@@ -19,7 +19,7 @@ namespace IS
 {
     class Enemy
     {
-        static Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
+        static public Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
 
         static public void Init()
         {
@@ -46,16 +46,17 @@ namespace IS
     {
         // common
         public float speed = 100f;
-        static private Vector2D direction = new Vector2D(0f, 0f);
+        private Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(257f, 183f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
-        static private bool isHit;
+        public bool isHit;
         private bool initialHit = false;
         private float being_hit_timer = 0f;
         static public int ENEMY_ID;
+        static public int BEING_ATTACK_ENEMY_ID;
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
@@ -72,10 +73,11 @@ namespace IS
         public bool isPatrolling;
         public bool isAttacking;
 
-        static private int get_hit_vfx_entity;
+        //static private int get_hit_vfx_entity;
         public void Init()
         {
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
+            BEING_ATTACK_ENEMY_ID = -1;
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
             direction.x = 1f; // init
@@ -85,8 +87,8 @@ namespace IS
             enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             check_point = InternalCalls.GetSpriteImage("enemy.png");
 
-            get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
-            InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
+            //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
+            //InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
 
             // enemy patrol
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -105,6 +107,7 @@ namespace IS
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 return;
             }
+            ENEMY_ID = InternalCalls.GetCurrentEntityID();
             //InternalCalls.RigidBodyAddForce(0f, -9.8f);
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
@@ -148,6 +151,7 @@ namespace IS
             //DrawPatrolPoint();
             //EnemyPatrolling();
             DrawHealthBar();
+            //GetHitByPlayerCheck();
             EnemyCollidingPlayer();
         }
 
@@ -157,26 +161,36 @@ namespace IS
 
         }
 
-        static public void GetHit(Vector2D dir, int id)
+        public void GetHitByPlayer(Vector2D vec)
         {
+            isHit = true;
+            direction = vec;
+        }
+
+        static public void GetHitByPlayerCheck()
+        {
+            //Console.WriteLine(ENEMY_ID);
             //InternalCalls.TransformSetScaleEntity(InternalCalls.GetTransformScalingEntity(ENEMY_ID).x * dir.x, InternalCalls.GetTransformScalingEntity(ENEMY_ID).y, ENEMY_ID);
-            if (ENEMY_ID == id) {
-                isHit = true;
-                direction = dir;
+            if (ENEMY_ID == BEING_ATTACK_ENEMY_ID) {
+                /*isHit = true;
+                direction.x = -MathF.Sign(PlayerScript.trans_scaling.x);
+                direction.y = 0f;*/
             }
+            //Console.WriteLine(ENEMY_ID);
+            //Console.WriteLine(id);
         }
 
         private void DrawGetHitVFX()
         {
-            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
-            InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * -100f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
-            InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 270f, 0, get_hit_vfx_entity);
+            //InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
+            //InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * -100f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
+            //InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 270f, 0, get_hit_vfx_entity);
         }
 
         private void RemoveGetHitVFX()
         {
-            InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
-            InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
+            //InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
+            //InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
         }
 
         private void DrawPatrolPoint()
@@ -202,14 +216,14 @@ namespace IS
             }
         }
 
-        public void EnemyCollidingPlayer()
+        static public void EnemyCollidingPlayer()
         {
             // check enemy colliding with enemy
             if (InternalCalls.OnCollisionEnter())
             {
                 if (InternalCalls.CompareCategory("Player"))
                 {
-                    //Console.WriteLine("enemy"); 
+                    //Console.WriteLine(PlayerScript.colliding_enemy_id); 
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
                 }
@@ -222,11 +236,14 @@ namespace IS
                 if (InternalCalls.CompareCategory("Weapon"))
                 {
                     PlayerScript.hitting_enemy_id = ENEMY_ID;
+                    BEING_ATTACK_ENEMY_ID = ENEMY_ID;
                 }
                 else
                 {
                     PlayerScript.hitting_enemy_id = -1;
+                    BEING_ATTACK_ENEMY_ID = -1;
                 }
+                //Console.WriteLine(PlayerScript.colliding_enemy_id);
             }
             
         }

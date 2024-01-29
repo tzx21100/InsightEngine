@@ -669,6 +669,7 @@ namespace IS {
         return collider_component.mCollidingEntity.back();
     }
 
+    // not in use
     static std::vector<int> GetCollidingEntityList(int entity) {
         auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
         std::vector<int> ret;
