@@ -532,8 +532,7 @@ namespace IS {
                     std::string stem = filepath.stem().string();
                     engine.AddComponent<StateComponent>(entity, StateComponent());
                     auto& state = engine.GetComponent<StateComponent>(entity);
-                    state.mCurrentState.mScriptName = stem;
-                    state.mEntityConditions.AddCondition(stem);
+                    state.mCurrentState.SetSimpleState(stem);
                 }
                 ImGui::CloseCurrentPopup();
             }
