@@ -64,9 +64,10 @@ namespace IS {
     Camera3D ISGraphics::cameras3D[2];
     
     // Text Objects
-    Text ISGraphics::Times_New_Roman_font;
-    Text ISGraphics::Brush_Script_font;
-    Text ISGraphics::North_Forest_font;
+    //Text ISGraphics::Times_New_Roman_font;
+    //Text ISGraphics::Brush_Script_font;
+    //Text ISGraphics::North_Forest_font;
+    std::unordered_map<std::string, Text> ISGraphics::mTexts;
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
@@ -91,11 +92,9 @@ namespace IS {
         // init quad shader
         Shader::compileAllShaders();
         Shader::setMainQuadShader(quad_shader_pgm);
-
-        // init text objects
-        Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
-        Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
-        North_Forest_font.initText("Assets/Fonts/NORTH FOREST.ttf");
+        
+        // init all fonts
+        InitFonts();
 
         // create framebuffer
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
@@ -312,30 +311,35 @@ namespace IS {
 #ifdef USING_IMGUI
         if (!engine.mRenderGUI)
         {
-            // Shared Attributes
-            const float scale = 20.f;
-            const float x_padding = scale;
-            const float y_padding = (scale * 3.f);
-            auto [width, height] = InsightEngine::Instance().GetWindowSize();
-            const float pos_x = -(width / 2.f) + x_padding;
-            const float pos_y = (height / 2.f) - y_padding;
-            const glm::vec3 islamic_green = { 0.f, .56f, .066f };
-            const glm::vec3 malachite = { 0.f, 1.f, .25f };
-            static glm::vec3 color = islamic_green;
-            color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
-
-            // Text Attribute
-            std::ostringstream render_text;
-            render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << '\n';
-            render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
-                
-            // Render Text
-            Times_New_Roman_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         }
 #endif // !USING_IMGUI
+            // Shared Attributes
+        const float scale = 20.f;
+        //const float x_padding = scale;
+        //const float y_padding = (scale * 3.f);
+        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+        const float pos_x = .5f;
+        const float pos_y = .5f;
+        const glm::vec3 islamic_green = { 0.f, .56f, .066f };
+        const glm::vec3 malachite = { 0.f, 1.f, .25f };
+        static glm::vec3 color = islamic_green;
+        color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
+
+        // Text Attribute
+        std::ostringstream render_text;
+        render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << "\nFuck";
+        //render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
+
+        // Render Text
+        mTexts["Poiret_One_Regular"].renderText(render_text.str(), pos_x, pos_y, scale, color);
+        //North_Forest_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         
         // render all text
-        North_Forest_font.renderAllText();
+        //North_Forest_font.renderAllText();
+        for (auto& [font, text] : mTexts)
+        {
+            text.renderAllText();
+        }
 
         //mFramebuffer->Unbind();
         //if (!engine.mRenderGUI)
@@ -356,11 +360,13 @@ namespace IS {
         }
     }
 
-    void ISGraphics::cleanup() {
+    void ISGraphics::cleanup()
+    {
         Mesh::cleanupMeshes(meshes); // delete array and buffers
     }
 
-    void ISGraphics::initTextures(const std::string& filepath, Image& image) {
+    void ISGraphics::initTextures(const std::string& filepath, Image& image)
+    {
         // get asset manager
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -425,6 +431,24 @@ namespace IS {
         image.channels = channels;
         image.mFileName = std::filesystem::path(filepath).filename().string();
         image.texture_id = textureID;
+    }
+
+    void ISGraphics::InitFonts()
+    {
+        Text temp;
+        mTexts.insert({ "Times_New_Roman", temp });
+        mTexts.insert({ "BRUSHSCI", temp });
+        mTexts.insert({ "Poiret_One_Regular", temp });
+
+        mTexts["Times_New_Roman"].initText("Assets/Fonts/Times-New-Roman.ttf");
+        mTexts["BRUSHSCI"].initText("Assets/Fonts/BRUSHSCI.ttf");
+        mTexts["Poiret_One_Regular"].initText("Assets/Fonts/PoiretOne-Regular.ttf");
+
+        // init text objects
+        //Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
+        //Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
+        ////North_Forest_font.initText("Assets/Fonts/NORTH FOREST.ttf");
+        //Poreit_One_Regular_font.initText("Assets/Fonts/PoiretOne-Regular.ttf");
     }
 
     GLuint ISGraphics::GetScreenTexture() { return mFramebuffer->GetColorAttachment(); }

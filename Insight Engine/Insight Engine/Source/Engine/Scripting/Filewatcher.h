@@ -26,7 +26,7 @@ namespace IS {
         }
 
         // Start monitoring files (single-threaded)
-        void Start(std::string& directory) {
+        void Start(std::string& directory , std::string &directory2) {
 
             if (!initial_scan_complete_) {
                 for (const auto& file : std::filesystem::directory_iterator(directory)) {
@@ -38,6 +38,18 @@ namespace IS {
                         }
                     }
                 }
+
+                //directory 2
+                for (const auto& file : std::filesystem::directory_iterator(directory2)) {
+
+                    std::string file_path = file.path().string();
+                    // Only record the modification time for files that existed before the scan started
+                    if (!initial_scan_complete_ || mPaths.find(file_path) == mPaths.end()) {
+                        mPaths[file_path] = std::filesystem::last_write_time(file);
+                    }
+                    
+                }
+
             }
 
             initial_scan_complete_ = true;  // Set the flag to indicate the initial scan is complete
@@ -68,6 +80,19 @@ namespace IS {
                         }
                     }
                 }
+
+                for (const auto& file : std::filesystem::directory_iterator(directory2)) {
+                    std::string file_path = file.path().string();
+                    auto current_time = std::filesystem::last_write_time(file_path);
+                    if (mPaths.find(file_path) != mPaths.end() && mPaths[file_path] != current_time) {
+                        mPaths[file_path] = current_time;
+                        Shader::deleteAllShaders();
+                        Shader::compileAllShaders();
+                        std::cout << "SHADER COMPILED" << std::endl;
+                    }
+                    
+                }
+
             }
         }
 

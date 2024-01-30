@@ -198,6 +198,8 @@ namespace IS {
         float textWidth = 0.0f;
         float textHeight = 0.0f;
 
+        const float yPadding = 50; // for newline
+
         // Iterate through all characters in the text.
         std::string::const_iterator c;
         float lineHeight = 0.0f; // Initialize the height for the current line
@@ -254,8 +256,9 @@ namespace IS {
             Character ch = Characters[*c];
 
             if (*c == '\n') { // if new line
-                y -= static_cast<float>(((ch.Size.y)) * 1.3 * scale); // Indent y and reset X.
-                x = widthScalar * 1920 - textWidth / 2.0f; // Adjust for center alignment
+                y -= lineHeight + (yPadding * scale); // Move to the next line by subtracting the line height
+                // textWidth = 0.0f; // Reset the width for the new line
+                x = widthScalar * width - textWidth / 2.0f; // Adjust for center alignment
             }
             else if (*c == ' ') { // if whitespace
                 x += (ch.Advance >> 6) * scale; // add empty space in texture
