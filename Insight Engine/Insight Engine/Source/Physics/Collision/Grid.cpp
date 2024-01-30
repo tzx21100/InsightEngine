@@ -74,8 +74,8 @@ namespace IS
 		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
 		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = (static_cast<float>(x) * camera.GetZoomLevel()) * 1.f;
-		float height = (static_cast<float>(y) * camera.GetZoomLevel()) * 1.f;
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.f;
 		//IS_CORE_DEBUG("Width : {:.2f}", width);
 		//IS_CORE_DEBUG("Height : {:.2f}", height);
 		/*float width = 12000.f;
@@ -475,8 +475,8 @@ namespace IS
 		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = (static_cast<float>(x) * camera.GetZoomLevel()) * 1.f;
-		float height = (static_cast<float>(y) * camera.GetZoomLevel()) * 1.f;
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.f;
 
 		/*float width = 12000.f;
 		float height = 5000.f;*/
