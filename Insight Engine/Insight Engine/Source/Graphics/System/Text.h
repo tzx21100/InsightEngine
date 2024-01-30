@@ -37,6 +37,7 @@ namespace IS {
      */
     class Text {
     public:
+
         /*!
          * \brief Renders an animated text.
          *
