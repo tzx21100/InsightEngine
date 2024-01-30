@@ -176,7 +176,8 @@ namespace IS {
 		while (mIsRunning) {
 			Update();
 			std::string directory_to_watch = "Assets/Scripts";
-			fw.Start(directory_to_watch); //we watch for changes
+			std::string shader_to_watch = "Assets/Shaders";
+			fw.Start(directory_to_watch,shader_to_watch); //we watch for changes
 			auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
 			window->SwapBuffers(); // swap buffers after all the rendering
 			ProcessEntityDeletion(); // destroy deleted entities
