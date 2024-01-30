@@ -108,6 +108,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetSpriteAnimationIndex(int num);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetAnimationAlpha(float val);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void FreeSpriteImage(SimpleImage image);

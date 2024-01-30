@@ -227,11 +227,11 @@ namespace IS
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
                 }
-                else
+                /*else
                 {
                     PlayerScript.is_colliding_enemy = false;
                     PlayerScript.colliding_enemy_id = -1;
-                }
+                }*/
 
                 if (InternalCalls.CompareCategory("Weapon"))
                 {
@@ -319,7 +319,7 @@ namespace IS
 
         private void DrawHealthBar()
         {
-            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, 200f, 100f, 0f, 1f, 0f, 0.5f, 2);
+            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, 200f, 50f, 0f, 1f, 0f, 0.6f, 6);
         }
     }
 }

@@ -355,6 +355,11 @@ namespace IS {
         sprite_component.anims.clear();
     }
     
+    static void SetAnimationAlpha(float val) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        sprite_component.color = { 1.f, 1.f, 1.f, val };
+    }
+    
     static void AttachCamera(float xoffset, float yoffset) {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         camera.SetPosition(xoffset, yoffset);
@@ -1234,6 +1239,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ResetAnimations);
         IS_ADD_INTERNAL_CALL(ResetSpriteAnimationFrameEntity);
         IS_ADD_INTERNAL_CALL(GetCurrentAnimationEntity);
+        IS_ADD_INTERNAL_CALL(SetAnimationAlpha);
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);

@@ -81,6 +81,7 @@ namespace IS
         static SimpleImage player_reward_doublejump;
         static SimpleImage player_reward_wallclimb;
         static SimpleImage player_attack;
+        static SimpleImage player_being_hit;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -160,10 +161,16 @@ namespace IS
         static private bool initial_attack = false;
         static public int hitting_enemy_id;
 
+        // player getting hit
+        static public float player_get_hit_timer_duration = 0.65f;
+        static public float player_get_hit_timer = 0.65f;
+        static public float being_hit_flicker_timer_duration = 0.2f;
+        static public float being_hit_flicker_timer = 0.2f;
+
         // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
-        static public Vector2D enemy_impulse = new Vector2D(3000f, 800f);
+        static public Vector2D enemy_impulse = new Vector2D(3000f, 2000f);
         static private bool initial_get_hit = false;
         //static private string attack_type;
 
@@ -220,6 +227,7 @@ namespace IS
             player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
             player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
+            player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -460,6 +468,7 @@ namespace IS
 
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
+            
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -845,6 +854,9 @@ namespace IS
                     Dashing();
                 }
             }
+
+            // check player being hit
+            CheckPlayerGetHitAndFreeze();
 
             Attack();
             AttackAreaUpdate();
@@ -1377,19 +1389,64 @@ namespace IS
 
         static public void EnemyAttack()
         {
+            /*if (InternalCalls.CompareCategory("Enemy"))
+            {
+                is_colliding_enemy = true;
+                // GetCollidingEntity func not accurate
+                //colliding_enemy_id = InternalCalls.GetCollidingEntity(PLAYER_ID);
+                //Console.WriteLine(colliding_enemy_id);
+            }
+            else
+            {
+                *//*is_colliding_enemy = false;
+                colliding_enemy_id = -1;*//*
+            }*/
+
             if (is_colliding_enemy)
             {
-                //Console.WriteLine(colliding_enemy_id);
                 // player get hit back
-                Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
-                float dir = player_pos.x - enemy_pos.x;
-                InternalCalls.RigidBodyAddForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
                 PlayerGetHit();
-
             }
             else
             {
                 initial_get_hit = false;
+            }
+        }
+
+        static public void CheckPlayerGetHitAndFreeze()
+        {
+            if (is_colliding_enemy)
+            {
+                //Console.WriteLine(player_get_hit_timer);
+                player_get_hit_timer -= InternalCalls.GetDeltaTime();
+                if (player_get_hit_timer > 0f)
+                {
+                    // render get hit animation
+                    /*InternalCalls.DrawImageAt
+                    (
+                        InternalCalls.GetTransformPosition(), 0, new SimpleVector2D(trans_scaling.x, trans_scaling.y), player_being_hit, 1f, 4
+                    );*/
+                    /*float alpha = 1f - (player_get_hit_timer / player_get_hit_timer_duration);
+                    if (player_get_hit_timer > 0.1f)
+                        InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
+                                                                0.0f, trans_scaling.x, trans_scaling.y, 1, alpha, 0.0f, 0.2f,
+                                                                0, "Particle Empty.txt", "Dash AfterImage.png");
+                    */
+
+                    //InternalCalls.SetAnimationAlpha(0.5f);
+                    Render_Being_Hit_Flicker();
+
+                    //return; // player cannot do anything
+                }
+                else
+                {
+                    InternalCalls.SetAnimationAlpha(1f); // reset
+                    player_get_hit_timer = player_get_hit_timer_duration;
+
+                    is_colliding_enemy = false;
+                    colliding_enemy_id = -1;
+
+                }
             }
         }
 
@@ -1399,6 +1456,32 @@ namespace IS
             {
                 InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
                 initial_get_hit = true;
+
+                // player get hit back
+                Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
+                float dir = player_pos.x - enemy_pos.x;
+                InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                Console.WriteLine(dir);
+                //reset
+                hori_movement = 0;
+                InternalCalls.SetSpriteImage(player_idle);
+            }
+        }
+
+        static private void Render_Being_Hit_Flicker()
+        {
+            being_hit_flicker_timer -= InternalCalls.GetDeltaTime();
+            if (being_hit_flicker_timer > 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(0.5f);
+            }
+            else if (being_hit_flicker_timer > 0f && being_hit_flicker_timer < 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(1f);
+            }
+            else
+            {
+                being_hit_flicker_timer = being_hit_flicker_timer_duration;
             }
         }
 
