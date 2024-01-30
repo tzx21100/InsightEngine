@@ -73,6 +73,7 @@ namespace IS
 
 	void CollisionSystem::BroadPhase() 
 	{
+		Physics::PhysicsEnableList.clear(); // clear the list
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -81,7 +82,8 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			CollisionDetect(mEntities);
+			Physics::PhysicsEnableList = mEntities; // update to list
+			CollisionDetect(Physics::PhysicsEnableList);
 		}
 	}
 
@@ -203,6 +205,14 @@ namespace IS
 					}
 				}
 
+				// for use in physics update
+				if (totalEntities > 0) {
+					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
+						if (test_cell.test(e))
+							Physics::PhysicsEnableList.emplace(e);
+					}
+				}
+
 				// at least more than 1 entity to avoid self checking
 				// in case one entity overlaps on the grid check collide with one in grid entity
 				if (totalEntities > 1)
@@ -240,7 +250,8 @@ namespace IS
 		// for collision outside or overlap of the grid
 		if (mImplicitGrid.mOutsideGridList.size() > 1)
 		{
-			CollisionDetect(mImplicitGrid.mOutsideGridList);
+			// do nothing, save alot of the checks
+			//CollisionDetect(mImplicitGrid.mOutsideGridList);
 		}
 
 	}
