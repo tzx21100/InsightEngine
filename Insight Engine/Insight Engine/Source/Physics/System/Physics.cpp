@@ -24,13 +24,13 @@
 
 namespace IS {
 		
-	bool Physics::mShowColliders = false;						// Flag indicating whether the collider will be drawn
-	bool Physics::mShowVelocity = false;						// Flag indicating whether the velocity will be drawn
-	bool Physics::mShowGrid = false;							// Flag indicating whether the grid will be drawn
-	bool Physics::mEnableImplicitGrid = false;					// Flag indicating whether implicit grid is enable
-	bool Physics::mExertingGravity = true;						// Flag indicating whether gravity is currently exerted
-	Vector2D Physics::mGravity = Vector2D(0.f, -981.f);			// Gravity of the world
-
+	bool Physics::mShowColliders = false;								// Flag indicating whether the collider will be drawn
+	bool Physics::mShowVelocity = false;								// Flag indicating whether the velocity will be drawn
+	bool Physics::mShowGrid = false;									// Flag indicating whether the grid will be drawn
+	bool Physics::mEnableImplicitGrid = false;							// Flag indicating whether implicit grid is enable
+	bool Physics::mExertingGravity = true;								// Flag indicating whether gravity is currently exerted
+	Vector2D Physics::mGravity = Vector2D(0.f, -981.f);					// Gravity of the world
+	std::set<Entity> Physics::PhysicsEnableList = std::set<Entity>();	// Enable entities list for physics
 	// Constructs a Physics instance
 	Physics::Physics()
 	{
@@ -84,7 +84,7 @@ namespace IS {
 			// physics update iteration
 
 				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
-				Step(dt, mEntities);
+				Step(dt, PhysicsEnableList);
 			
 		}
 			// set it back to 0 for next iteration loop

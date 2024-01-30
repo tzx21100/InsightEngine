@@ -91,7 +91,12 @@ namespace IS {
         /*!
          * \brief Gravity of the world
          */
-        static Vector2D mGravity;                              
+        static Vector2D mGravity;  
+
+        /*!
+         * \brief physics enable list to update in each frame
+         */
+        static std::set<Entity> PhysicsEnableList;
 
         /*!
          * \brief Destructor for the Physics class.
