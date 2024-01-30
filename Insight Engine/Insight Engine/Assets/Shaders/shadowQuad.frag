@@ -1,6 +1,6 @@
 #version 450 core
 
-// layout(location = 0) in vec4 vColor; 
+layout(location = 0) in vec4 vColor; 
 
 
 
@@ -54,7 +54,7 @@ void main()
 
     for (int i = 0; i < uNoOfWorldLights; ++i) {
         vec2 worldLightPos = uWorldLights[i];
-        float dist = length(current - worldLightPos);
+        float dist = length(current_pixel - worldLightPos);
         // Set the radius to be half of the smaller dimension of the quad
         float radius = uLightRadius[i] * 0.5; // which is in world pos
         float inCircle = step(dist, radius);
@@ -85,6 +85,7 @@ void main()
     // Apply the attenuation with the step function
     //fFragColor = vec4(0.0, 0.0, 1.0, 1.0);
 
-    int id = int(vEntityID);
-    fEntityID = texelFetch();
+    // int id = int(vEntityID);
+    int id = texelFetch(id_tex, vTexCoord, 0).r;
+    fEntityID = id;
 }

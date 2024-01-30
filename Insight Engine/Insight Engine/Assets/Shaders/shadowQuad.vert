@@ -17,5 +17,4 @@ void main()
     gl_Position = model_to_NDC_xform * vec4(aVertexPosition, 1.0, 1.0);
     vTexCoord = aVertexTexCoord;
 	vColor = aVertexColor;
-    vEntityID = aEntityID;
 }

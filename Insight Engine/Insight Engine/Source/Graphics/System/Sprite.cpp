@@ -320,7 +320,7 @@ namespace IS {
 
         std::vector<glm::vec4> light_clrs{};
         for (auto& inst : ISGraphics::lightInstances)
-            light_clrs.emplace_back(inst->color);
+            light_clrs.emplace_back(inst.color);
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightColors");
         if (tex_arr_uniform >= 0)

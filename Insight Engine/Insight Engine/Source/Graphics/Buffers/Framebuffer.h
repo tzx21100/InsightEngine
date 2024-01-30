@@ -32,12 +32,14 @@ namespace IS {
     class Framebuffer {
     public:
         struct FramebufferProps {
-            GLuint mColorAttachment; /**< Color attachment ID. */
-            GLuint mEntIDAttachment;
+            GLuint mColorAttachment{}; /**< Color attachment ID. */
+            GLuint mEntIDAttachment{};
             //GLuint mDepthAttachment; /**< Depth attachment ID. */
-            GLuint mWidth; /**< Width of the framebuffer. */
-            GLuint mHeight; /**< Height of the framebuffer. */
+            GLuint mWidth{}; /**< Width of the framebuffer. */
+            GLuint mHeight{}; /**< Height of the framebuffer. */
         };
+
+        Framebuffer() = default;
 
         /*!
          * \brief Constructs a Framebuffer object with the specified properties.
