@@ -123,7 +123,7 @@ namespace IS {
 
 		
 		static void deleteTexture(Image& image);
-
+		static void Shutdown();
 
 		/// Static objects ///
 

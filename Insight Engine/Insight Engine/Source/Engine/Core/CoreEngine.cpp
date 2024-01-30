@@ -184,6 +184,7 @@ namespace IS {
 			SceneManager::Instance().UpdateActiveScene(); // update active scene
 			
 		}
+		ISGraphics::Shutdown();
 		DestroyAllSystems();
 		mLayers.ClearStack();
 	}

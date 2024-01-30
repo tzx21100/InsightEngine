@@ -53,6 +53,8 @@ namespace IS {
          */
         ~Framebuffer();
 
+        void Destroy();
+
         /*!
          * \brief Creates the framebuffer object.
          */

@@ -83,9 +83,9 @@ void main()
     //    // Harder falloff with a squared attenuation term
     //    attenuation = pow(1.0 - dist / radius, 2.0);
     //}
-    fFragColor = final_frag_clr; //vec4(vColor.rgb, vColor.a * inCircle * attenuation);
+    // fFragColor = final_frag_clr; //vec4(vColor.rgb, vColor.a * inCircle * attenuation);
     // Apply the attenuation with the step function
-    //fFragColor = vec4(0.0, 0.0, 1.0, 1.0);
+    fFragColor = vec4(0.0, 0.0, 1.0, 1.0);
 
     // int id = int(vEntityID);
     float id = texelFetch(id_tex, ivec2(vTexCoord * textureSize(id_tex, 0)), 0).r;

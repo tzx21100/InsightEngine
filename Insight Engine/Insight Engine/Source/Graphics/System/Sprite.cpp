@@ -111,7 +111,6 @@ namespace IS {
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
-        GL_CALL(glUnmapBuffer(GL_ARRAY_BUFFER));
         // Upload the quadInstances data to the GPU
         GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 

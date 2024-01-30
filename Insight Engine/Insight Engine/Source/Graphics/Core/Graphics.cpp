@@ -160,13 +160,15 @@ namespace IS {
                                   static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
 
                 // bind framebuffer after resize
-                // mFramebuffer->Bind();
+                 mFramebuffer->Bind();
 
-                //// set clear color
-                //glClearColor(0.f, 0.f, 0.f, 0.f);
+                // set clear color
+                glClearColor(0.f, 0.f, 0.f, 0.f);
 
-                //// clear color buffer
-                //glClear(GL_COLOR_BUFFER_BIT);
+                // clear color buffer
+                glClear(GL_COLOR_BUFFER_BIT);
+
+                mFramebuffer->Unbind();
             }
         }
     #endif // USING_IMGUI
@@ -328,7 +330,11 @@ namespace IS {
 
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
-
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
             // render lighting
             if (mLightsOn)
                 Sprite::draw_lights();
@@ -504,6 +510,10 @@ namespace IS {
         }
     }
 
-
+    void ISGraphics::Shutdown()
+    {
+        mFramebuffer->Destroy();
+        mShaderFrameBuffer.Destroy();
+    }
 
 } // end namespace IS
