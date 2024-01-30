@@ -213,6 +213,8 @@ namespace IS {
          */
         static void draw_picked_entity_border();
 
+        static void draw_some_thing(std::vector<int> tex_vec);
+
         /*!
          * \brief "Draws" a debug line between two specified points.
          *

@@ -106,7 +106,7 @@ namespace IS {
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
         mFramebuffer = std::make_shared<Framebuffer>(props);
 
-        mShaderFrameBuffer.Create();
+        mShaderFrameBuffer = Framebuffer(props);
 
         // initialize cameras
         for (int i{}; i < 2; ++i) {
@@ -161,13 +161,13 @@ namespace IS {
                                   static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
 
                 // bind framebuffer after resize
-                mFramebuffer->Bind();
+                // mFramebuffer->Bind();
 
-                // set clear color
-                glClearColor(0.f, 0.f, 0.f, 0.f);
+                //// set clear color
+                //glClearColor(0.f, 0.f, 0.f, 0.f);
 
-                // clear color buffer
-                glClear(GL_COLOR_BUFFER_BIT);
+                //// clear color buffer
+                //glClear(GL_COLOR_BUFFER_BIT);
             }
         }
     #endif // USING_IMGUI
@@ -276,7 +276,7 @@ namespace IS {
         {
             mShaderFrameBuffer.Bind();
             // set clear color
-            glClearColor(0.f, 0.f, 0.f, 0.f);
+            GL_CALL(glClearColor(0.f, 0.f, 0.f, 0.f));
 
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
@@ -292,11 +292,10 @@ namespace IS {
                 Sprite::draw_instanced_glitched_quads();
             else
                 Sprite::draw_instanced_quads();
-
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            mShaderFrameBuffer.Unbind();
         }
 
-
+        
         // bind fb
         if (engine.mRenderGUI)
         {
@@ -325,13 +324,16 @@ namespace IS {
         }
         else
         {
+            // set clear color
+            glClearColor(0.f, 0.f, 0.f, 0.f);
+
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
+
             // render lighting
             if (mLightsOn)
                 Sprite::draw_lights();
-            else
-                lightInstances.clear();
         }
-
 
     #ifdef USING_IMGUI
         if (!engine.mRuntime)

@@ -21,6 +21,7 @@
 #include "Framebuffer.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Engine/Systems/Window/WindowSystem.h"
+#include "Debug/Utils/Assertion.h"
 
 namespace IS {
 
