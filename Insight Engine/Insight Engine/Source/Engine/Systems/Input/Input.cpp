@@ -22,6 +22,7 @@
 #include "Input.h"
 
 #include "Engine/Systems/Asset/Asset.h"
+#include "Graphics/Core/Graphics.h"
 #include "Scene/SceneManager.h"
 
 
@@ -46,6 +47,7 @@ namespace IS {
             if (!(input.mWindow->IsFullScreen() || width == 0 || height == 0))
             {
                 input.mWindow->SetWindowSize(width, height);
+                ISGraphics::InitFonts();
                 IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
             }
         });

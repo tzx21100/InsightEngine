@@ -73,6 +73,7 @@ namespace IS {
                     break;
                 }
                 if (InsightEngine::Instance().mRuntime == false) {
+                    CleanUp();
                     break;
                 }
 
@@ -149,7 +150,7 @@ namespace IS
             scriptcomponent.scriptClass.Unload();
         }
 
-        InitScripts();
+        //InitScripts();
     }
 
 }

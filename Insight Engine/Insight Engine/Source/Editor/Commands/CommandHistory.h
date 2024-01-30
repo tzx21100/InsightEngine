@@ -83,8 +83,6 @@ namespace IS {
                     }
                 }
             }
-
-            IS_CORE_DEBUG("UNDO STACK: {}", mUndoStack.size());
         }
 
         /*!

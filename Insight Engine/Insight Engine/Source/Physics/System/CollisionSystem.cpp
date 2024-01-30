@@ -73,6 +73,7 @@ namespace IS
 
 	void CollisionSystem::BroadPhase() 
 	{
+		Physics::PhysicsEnableList.clear(); // clear the list
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -81,7 +82,8 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			CollisionDetect(mEntities);
+			Physics::PhysicsEnableList = mEntities; // update to list
+			CollisionDetect(Physics::PhysicsEnableList);
 		}
 	}
 
@@ -203,6 +205,14 @@ namespace IS
 					}
 				}
 
+				// for use in physics update
+				if (totalEntities > 0) {
+					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
+						if (test_cell.test(e))
+							Physics::PhysicsEnableList.emplace(e);
+					}
+				}
+
 				// at least more than 1 entity to avoid self checking
 				// in case one entity overlaps on the grid check collide with one in grid entity
 				if (totalEntities > 1)
@@ -240,7 +250,8 @@ namespace IS
 		// for collision outside or overlap of the grid
 		if (mImplicitGrid.mOutsideGridList.size() > 1)
 		{
-			CollisionDetect(mImplicitGrid.mOutsideGridList);
+			// do nothing, save alot of the checks
+			//CollisionDetect(mImplicitGrid.mOutsideGridList);
 		}
 
 	}
@@ -252,46 +263,34 @@ namespace IS
 		for (size_t i = 0; i < entities_set.size(); ++i)
 		{
 			const Entity& entity_a = entities_set[i];
-			if (InsightEngine::Instance().HasComponent<Collider>(entity_a))
+			for (size_t j = 0; j < entities_set.size(); ++j)
 			{
+				const Entity& entity_b = entities_set[j];
 
-				for (size_t j = 0; j < entities_set.size(); ++j)
-				{
-					const Entity& entity_b = entities_set[j];
-					if (entity_a == entity_b)
-					{ // if self checking, continue
-						continue;
-					}
-
-					if (InsightEngine::Instance().HasComponent<Collider>(entity_b))
-					{
-
-						if (!InsightEngine::Instance().HasComponent<RigidBody>(entity_a) && !InsightEngine::Instance().HasComponent<RigidBody>(entity_b))
-						{
-							continue; // continue if both entities have no rigidbody
-						}
-
-						if (InsightEngine::Instance().HasComponent<RigidBody>(entity_a) && InsightEngine::Instance().HasComponent<RigidBody>(entity_b))
-						{
-							auto& collider_a = InsightEngine::Instance().GetComponent<Collider>(entity_a);
-							auto& collider_b = InsightEngine::Instance().GetComponent<Collider>(entity_b);
-							auto& body_a = InsightEngine::Instance().GetComponent<RigidBody>(entity_a);
-							auto& body_b = InsightEngine::Instance().GetComponent<RigidBody>(entity_b);
-							if (body_a.mBodyType == BodyType::Static && body_b.mBodyType == BodyType::Static)
-							{
-								continue; // skip if collision happens between two static entities
-							}
-
-							if (!StaticIntersectAABB(collider_a.GetAABB(), collider_b.GetAABB()))
-							{
-								continue; // static AABB collision check, continue if not colliding
-							}
-						}
-						// save into contact pair to solve the possible contacts
-						mContactPair.emplace_back(std::make_pair(entity_a, entity_b));
-					}
+				if (entity_a == entity_b)
+				{ // if self checking, continue
+					continue;
 				}
+
+				auto& body_a = InsightEngine::Instance().GetComponent<RigidBody>(entity_a);
+				auto& body_b = InsightEngine::Instance().GetComponent<RigidBody>(entity_b);
+				if (body_a.mBodyType == BodyType::Static && body_b.mBodyType == BodyType::Static)
+				{
+					continue; // skip if collision happens between two static entities
+				}
+
+				auto& collider_a = InsightEngine::Instance().GetComponent<Collider>(entity_a);
+				auto& collider_b = InsightEngine::Instance().GetComponent<Collider>(entity_b);
+				if (!StaticIntersectAABB(collider_a.GetAABB(), collider_b.GetAABB()))
+				{
+					continue; // static AABB collision check, continue if not colliding
+				}
+				
+				// save into contact pair to solve the possible contacts
+				mContactPair.emplace_back(std::make_pair(entity_a, entity_b));
+				
 			}
+			
 		}
 	}
 
@@ -300,45 +299,30 @@ namespace IS
 		for (size_t i = 0; i < entities.size(); ++i)
 		{
 			const Entity& entity_a = entities[i];
-			if (InsightEngine::Instance().HasComponent<Collider>(entity_a))
+			for (size_t j = 0; j < entities.size(); ++j)
 			{
-
-				for (size_t j = 0; j < entities.size(); ++j)
-				{
-					const Entity& entity_b = entities[j];
-					if (entity_a == entity_b)
-					{ // if self checking, continue
-						continue;
-					}
-
-					if (InsightEngine::Instance().HasComponent<Collider>(entity_b))
-					{
-
-						if (!InsightEngine::Instance().HasComponent<RigidBody>(entity_a) && !InsightEngine::Instance().HasComponent<RigidBody>(entity_b))
-						{
-							continue; // continue if both entities have no rigidbody
-						}
-
-						if (InsightEngine::Instance().HasComponent<RigidBody>(entity_a) && InsightEngine::Instance().HasComponent<RigidBody>(entity_b))
-						{
-							auto& collider_a = InsightEngine::Instance().GetComponent<Collider>(entity_a);
-							auto& collider_b = InsightEngine::Instance().GetComponent<Collider>(entity_b);
-							auto& body_a = InsightEngine::Instance().GetComponent<RigidBody>(entity_a);
-							auto& body_b = InsightEngine::Instance().GetComponent<RigidBody>(entity_b);
-							if (body_a.mBodyType == BodyType::Static && body_b.mBodyType == BodyType::Static)
-							{
-								continue; // skip if collision happens between two static entities
-							}
-
-							if (!StaticIntersectAABB(collider_a.GetAABB(), collider_b.GetAABB()))
-							{
-								continue; // static AABB collision check, continue if not colliding
-							}
-						}
-						// save into contact pair to solve the possible contacts
-						mContactPair.emplace_back(std::make_pair(entity_a, entity_b));
-					}
+				const Entity& entity_b = entities[j];
+				if (entity_a == entity_b)
+				{ // if self checking, continue
+					continue;
 				}
+
+				auto& body_a = InsightEngine::Instance().GetComponent<RigidBody>(entity_a);
+				auto& body_b = InsightEngine::Instance().GetComponent<RigidBody>(entity_b);
+				if (body_a.mBodyType == BodyType::Static && body_b.mBodyType == BodyType::Static)
+				{
+					continue; // skip if collision happens between two static entities
+				}
+
+				auto& collider_a = InsightEngine::Instance().GetComponent<Collider>(entity_a);
+				auto& collider_b = InsightEngine::Instance().GetComponent<Collider>(entity_b);
+				if (!StaticIntersectAABB(collider_a.GetAABB(), collider_b.GetAABB()))
+				{
+					continue; // static AABB collision check, continue if not colliding
+				}
+				// save into contact pair to solve the possible contacts
+				mContactPair.emplace_back(std::make_pair(entity_a, entity_b));
+
 			}
 		}
 	}

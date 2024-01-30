@@ -52,6 +52,8 @@ namespace IS {
          * @brief Compile all shaders used in the application.
          */
         static void compileAllShaders();
+        
+        static void deleteAllShaders();
 
         /**
          * @brief Set the main quad shader used in the application.
@@ -116,6 +118,7 @@ namespace IS {
          * \return GL_TRUE if the program is linked, GL_FALSE otherwise.
          */
         GLboolean isLinked() const;
+        void Unlink();
 
         /*!
          * \brief Retrieves the log information from shader compilation and linking.

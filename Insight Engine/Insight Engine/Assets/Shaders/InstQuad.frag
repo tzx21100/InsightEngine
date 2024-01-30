@@ -25,6 +25,7 @@ void main()
         fFragColor = texture(uTex2d[texIdx], vec2(vTexCoord.x * vAnimDim.x, vTexCoord.y * vAnimDim.y) + vec2(vAnimDim.x * vAnimIndex.x, vAnimDim.y * vAnimIndex.y));
         fFragColor *= vColor;
     }
+
     int id = int(vEntityID);
     fEntityID = id + 1;
 }

@@ -31,7 +31,7 @@
 namespace IS {
 	// Static member initialization
 	aCameraType Camera3D::mActiveCamera = CAMERA_TYPE_EDITOR;
-	const float Camera3D::CAMERA_ZOOM_MIN = .34f;
+	const float Camera3D::CAMERA_ZOOM_MIN = 0.01f;
 	const float Camera3D::CAMERA_ZOOM_MAX = 10.f;
 	const float Camera3D::CAMERA_ZOOM_SPEED_MIN = 0.01f;
 	const float Camera3D::CAMERA_ZOOM_SPEED_MAX = 0.2f;

@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 1105.8714599609375,
-				"Y" : 1419.75439453125
+				"X" : -314.05419921875,
+				"Y" : 724.47418212890625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -71,6 +71,7 @@
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
+		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
@@ -78,26 +79,26 @@
 		"SpriteFilename" : "glitched_platform_vfx 2R6C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 6,
+		"SpriteTexture" : 36,
 		"SpriteTextureHeight" : 594,
-		"SpriteTextureIndex" : 10,
+		"SpriteTextureIndex" : 35,
 		"SpriteTextureWidth" : 4092,
 		"SpriteTransformRotation" : 358.97549438476562,
 		"SpriteTransformScalingX" : 740.5006103515625,
 		"SpriteTransformScalingY" : 282.5,
-		"SpriteTransformWorldPositionX" : 1105.8714599609375,
-		"SpriteTransformWorldPositionY" : 1419.75439453125,
+		"SpriteTransformWorldPositionX" : -314.05419921875,
+		"SpriteTransformWorldPositionY" : 724.47418212890625,
 		"animations" : 
 		[
 			{
-				"Name" : "Glitch",
-				"animation_duration" : 2.0,
+				"Name" : "gl",
+				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.1666666716337204,
 				"frame_dimension_y" : 0.5,
-				"frame_index_x" : 2.0,
-				"frame_index_y" : 1.0,
-				"frame_timer" : 0.14773893356323242,
-				"time_per_frame" : 0.1666666716337204,
+				"frame_index_x" : 4.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.075000479817390442,
+				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 6,
 				"y_frames" : 2
 			}
@@ -108,7 +109,7 @@
 		"TransformRotation" : 358.97549438476562,
 		"TransformScalingX" : 740.5006103515625,
 		"TransformScalingY" : 282.5,
-		"TransformWorldPositionX" : 1105.8714599609375,
-		"TransformWorldPositionY" : 1419.75439453125
+		"TransformWorldPositionX" : -314.05419921875,
+		"TransformWorldPositionY" : 724.47418212890625
 	}
 }

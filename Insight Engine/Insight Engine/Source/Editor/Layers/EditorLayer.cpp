@@ -21,6 +21,7 @@
 #include "Engine/Core/CoreEngine.h"
 #include "Engine/Systems/Asset/Asset.h"
 #include "Engine/Systems/Button/Button.h"
+#include "../../Engine/Systems/FSM/FSM.h"
 
 #include "Editor/Panels/BrowserPanel.h"
 #include "Editor/Utils/EditorUtils.h"
@@ -455,7 +456,7 @@ namespace IS {
             engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
             engine.HasComponent<ScriptComponent>(entity) && engine.HasComponent<AudioListener>(entity) &&
             engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<Light>(entity) &&
-            engine.HasComponent<ButtonComponent>(entity))
+            engine.HasComponent<ButtonComponent>(entity) && engine.HasComponent<StateComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
                 ImGui::CloseCurrentPopup();
@@ -515,6 +516,23 @@ namespace IS {
                     engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
                     auto& script = engine.GetComponent<ScriptComponent>(entity);
                     script.mScriptName = filepath.stem().string();
+                }
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        // Add State Component
+        if (!engine.HasComponent<StateComponent>(entity))
+        {
+            if (ImGui::MenuItem(ICON_LC_FLAG "  State"))
+            {
+                // Browse for script to add
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                {
+                    std::string stem = filepath.stem().string();
+                    engine.AddComponent<StateComponent>(entity, StateComponent());
+                    auto& state = engine.GetComponent<StateComponent>(entity);
+                    state.mCurrentState.SetSimpleState(stem);
                 }
                 ImGui::CloseCurrentPopup();
             }

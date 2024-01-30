@@ -81,6 +81,7 @@ namespace IS
         static SimpleImage player_reward_doublejump;
         static SimpleImage player_reward_wallclimb;
         static SimpleImage player_attack;
+        static SimpleImage player_being_hit;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -158,11 +159,18 @@ namespace IS
         static private bool isAttack = false;
         static private float attack_angle = 0f;
         static private bool initial_attack = false;
+        static public int hitting_enemy_id;
+
+        // player getting hit
+        static public float player_get_hit_timer_duration = 0.65f;
+        static public float player_get_hit_timer = 0.65f;
+        static public float being_hit_flicker_timer_duration = 0.2f;
+        static public float being_hit_flicker_timer = 0.2f;
 
         // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
-        static public Vector2D enemy_impulse = new Vector2D(3000f, 800f);
+        static public Vector2D enemy_impulse = new Vector2D(3000f, 2000f);
         static private bool initial_get_hit = false;
         //static private string attack_type;
 
@@ -172,17 +180,25 @@ namespace IS
 
         // player pos
         static public Vector2D player_pos = new Vector2D(0, 0);
-        static private Vector2D trans_scaling = new Vector2D(0, 0);
+        static public Vector2D trans_scaling = new Vector2D(0, 0);
         static public Vector2D player_vel = new Vector2D(0, 0);
 
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static private Vector2D target_pos = new Vector2D(0, 0);
+        static public float camera_zoom = 0.7f;
 
         //window height
         static private int WindowHeight = 0;
         static private int WindowWidth = 0;
 
+
+        // stablize player
+        static private float prev_x = 0f;
+
+        // Collectible
+
+        static public int collection_count = 0;
 
         public static int BoolToInt(bool boolValue)
         {
@@ -193,10 +209,6 @@ namespace IS
         {
             WindowWidth = InternalCalls.GetWindowWidth();
             WindowHeight = InternalCalls.GetWindowHeight();
-
-            Reward_DoubleJump = false;
-            Reward_Dash = false;
-            Reward_WallClimb = false;
 
             //player_walk = InternalCalls.GetSpriteImage("Assets/Textures/player_walking.png");
             //player_idle = InternalCalls.GetSpriteImage("Assets/Textures/player_idle.png");
@@ -215,6 +227,7 @@ namespace IS
             player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
             player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
+            player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -232,9 +245,10 @@ namespace IS
             InternalCalls.AddCollider(entity_feet);
             InternalCalls.AddCollider(entityWall);
             InternalCalls.AddCollider(entity_attack);
+            InternalCalls.UpdateCategory(entity_attack, "Weapon");
 
 
-            InternalCalls.CameraSetZoom(1.1f);
+            InternalCalls.CameraSetZoom(camera_zoom);
 
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
@@ -256,8 +270,14 @@ namespace IS
             // init gravity scale
             gravity_scale = InternalCalls.GetGravityScale();
 
+            // hitting enemy info
+            hitting_enemy_id = -1;
+
             // init enemy info
             is_colliding_enemy = false;
+            InternalCalls.AttachCamera(player_pos.x, player_pos.y);
+
+
         }
 
         static public void Update()
@@ -374,7 +394,7 @@ namespace IS
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
-
+                    
                     for (int i = 0; i < 36; i++)
                     {
                         InternalCalls.GameSpawnParticleExtra(
@@ -387,7 +407,7 @@ namespace IS
                 }
                 else
                 {
-
+                    InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     if (camera_shake_duration > 0)
                     {
                         camera_shake_duration -= InternalCalls.GetDeltaTime();
@@ -408,10 +428,11 @@ namespace IS
                     {
                         camera_shake_duration = camera_shake_duration_set;
                         camera_shake_angle = 0;
-
+                        InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                         respawn_timer = respawn_timer_set;
                         isDead = false;
-                        InternalCalls.CameraSetZoom(1.1f);
+                        isJumping = true;
+                        InternalCalls.CameraSetZoom(camera_zoom);
                     }
 
                 }
@@ -447,6 +468,7 @@ namespace IS
 
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
+            
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -684,7 +706,12 @@ namespace IS
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
                     if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                     {
-                        InternalCalls.TransformSetRotation(collided_angle, 0);
+                        if(InternalCalls.GetTransformPosition().x!=prev_x)
+                        {
+                            InternalCalls.TransformSetRotation(collided_angle, 0);
+                            prev_x = InternalCalls.GetTransformPosition().x;
+                        }
+                        
                     }
                     else
                     {
@@ -800,7 +827,7 @@ namespace IS
                     hori_movement = 0;
                     InternalCalls.SetSpriteImage(player_idle);
 
-                    if (mouse_pos.x > player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                    if (mouse_pos.x < player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
 
                     apply_force = Vector2D.DirectionFromAngle(angle);
                     apply_force = apply_force.Normalize();
@@ -828,6 +855,9 @@ namespace IS
                 }
             }
 
+            // check player being hit
+            CheckPlayerGetHitAndFreeze();
+
             Attack();
             AttackAreaUpdate();
             AttackCameraShake(); // camera shake
@@ -847,6 +877,10 @@ namespace IS
         static public void CleanUp()
         {
 
+
+            Reward_DoubleJump = false;
+            Reward_Dash = false;
+            Reward_WallClimb = false;
 
         }
 
@@ -913,7 +947,6 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(100 * -hori_movement, 100, jump_entity);
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
-
 
         }
 
@@ -1260,8 +1293,35 @@ namespace IS
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
 
+            CalibrateAttackAngle();
+            Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
+            f_angle = f_angle.Normalize();
+
+            float distanceLeft = 150f;
+
+            Vector2D checkerPosition = new Vector2D(
+                player_pos.x + f_angle.x * distanceLeft,
+                player_pos.y + f_angle.y * distanceLeft
+            );
+            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+            // flip player if neccessary
+            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+
+            Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
+            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
+            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
+            InternalCalls.TransformSetScaleEntity(attack_area_scaling.x, attack_area_scaling.y, entity_attack);
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_scaling.x, attack_area_scaling.y), player_attack, 1f, 4
+                );
+        }
+
+        static private void CalibrateAttackAngle()
+        {
             // calibrate the fangle to make attack area not towards to floor (when isGrounded)
-            if (isGrounded) {
+            if (isGrounded)
+            {
                 if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
                 {
                     if (attack_angle <= -1.57f) // calibrate to left
@@ -1274,30 +1334,6 @@ namespace IS
                     }
                 }
             }
-            Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
-            f_angle = f_angle.Normalize();
-
-            xCoord = InternalCalls.GetTransformPosition().x;
-            yCoord = InternalCalls.GetTransformPosition().y;
-
-            float distanceLeft = 180f;
-
-            Vector2D checkerPosition = new Vector2D(
-                xCoord + f_angle.x * distanceLeft,
-                yCoord + f_angle.y * distanceLeft
-            );
-            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
-            // flip player if neccessary
-            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
-
-            Vector2D attack_area_pos = new Vector2D(250f, height / 2f);
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
-            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
-            InternalCalls.TransformSetScaleEntity(attack_area_pos.x, attack_area_pos.y, entity_attack);
-            InternalCalls.DrawImageAt
-                (
-                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_pos.x, attack_area_pos.y), player_attack, 1f, 4
-                );
         }
 
         static private void HitEnemy()
@@ -1313,39 +1349,27 @@ namespace IS
                     {
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        Enemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
-                        //Console.WriteLine("hitting enemy");
+                        // // get the id for enemy being attack (one only)
+                        int attacking_enemy_id = InternalCalls.GetCollidingEntity(entity_attack);
+                        
+                        //Console.WriteLine(attacking_enemy_id);
+                        //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
+                        //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
+                        Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
                         initial_attack = true;
                     }
                     else if (isAttack)
                     {
-                        // calibrate the fangle to make attack area not towards to floor (when isGrounded)
-                        if (isGrounded)
-                        {
-                            if (-2.36f < attack_angle && attack_angle < -0.78) // between 3/4 PI and 1/4 PI
-                            {
-                                if (attack_angle <= -1.57f) // calibrate to left
-                                {
-                                    attack_angle = -2.36f;
-                                }
-                                else if (attack_angle > -1.57f) // lean to right
-                                {
-                                    attack_angle = -0.78f;
-                                }
-                            }
-                        }
-                        //float _angle = attack_angle + MathF.Sign(trans_scaling.x) * MathF.PI / 4;
+                        // drawing hitting enemy vfx
+                        CalibrateAttackAngle();
                         Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
                         f_angle = f_angle.Normalize();
 
-                        xCoord = InternalCalls.GetTransformPosition().x;
-                        yCoord = InternalCalls.GetTransformPosition().y;
-
-                        float distanceLeft = 400f;
+                        float distanceLeft = 300f;
 
                         Vector2D checkerPosition = new Vector2D(
-                            xCoord + f_angle.x * distanceLeft,
-                            yCoord + f_angle.y * distanceLeft
+                            player_pos.x + f_angle.x * distanceLeft,
+                            player_pos.y + f_angle.y * distanceLeft
                         );
                         float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
@@ -1355,6 +1379,7 @@ namespace IS
                     }
                     else
                     {
+                        // not drawing hitting enemy vfx
                         InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
                         InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
                     }
@@ -1364,18 +1389,64 @@ namespace IS
 
         static public void EnemyAttack()
         {
+            /*if (InternalCalls.CompareCategory("Enemy"))
+            {
+                is_colliding_enemy = true;
+                // GetCollidingEntity func not accurate
+                //colliding_enemy_id = InternalCalls.GetCollidingEntity(PLAYER_ID);
+                //Console.WriteLine(colliding_enemy_id);
+            }
+            else
+            {
+                *//*is_colliding_enemy = false;
+                colliding_enemy_id = -1;*//*
+            }*/
+
             if (is_colliding_enemy)
             {
                 // player get hit back
-                Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
-                float dir = player_pos.x - enemy_pos.x;
-                InternalCalls.RigidBodyAddForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
                 PlayerGetHit();
-
             }
             else
             {
                 initial_get_hit = false;
+            }
+        }
+
+        static public void CheckPlayerGetHitAndFreeze()
+        {
+            if (is_colliding_enemy)
+            {
+                //Console.WriteLine(player_get_hit_timer);
+                player_get_hit_timer -= InternalCalls.GetDeltaTime();
+                if (player_get_hit_timer > 0f)
+                {
+                    // render get hit animation
+                    /*InternalCalls.DrawImageAt
+                    (
+                        InternalCalls.GetTransformPosition(), 0, new SimpleVector2D(trans_scaling.x, trans_scaling.y), player_being_hit, 1f, 4
+                    );*/
+                    /*float alpha = 1f - (player_get_hit_timer / player_get_hit_timer_duration);
+                    if (player_get_hit_timer > 0.1f)
+                        InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
+                                                                0.0f, trans_scaling.x, trans_scaling.y, 1, alpha, 0.0f, 0.2f,
+                                                                0, "Particle Empty.txt", "Dash AfterImage.png");
+                    */
+
+                    //InternalCalls.SetAnimationAlpha(0.5f);
+                    Render_Being_Hit_Flicker();
+
+                    //return; // player cannot do anything
+                }
+                else
+                {
+                    InternalCalls.SetAnimationAlpha(1f); // reset
+                    player_get_hit_timer = player_get_hit_timer_duration;
+
+                    is_colliding_enemy = false;
+                    colliding_enemy_id = -1;
+
+                }
             }
         }
 
@@ -1385,6 +1456,32 @@ namespace IS
             {
                 InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
                 initial_get_hit = true;
+
+                // player get hit back
+                Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
+                float dir = player_pos.x - enemy_pos.x;
+                InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                Console.WriteLine(dir);
+                //reset
+                hori_movement = 0;
+                InternalCalls.SetSpriteImage(player_idle);
+            }
+        }
+
+        static private void Render_Being_Hit_Flicker()
+        {
+            being_hit_flicker_timer -= InternalCalls.GetDeltaTime();
+            if (being_hit_flicker_timer > 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(0.5f);
+            }
+            else if (being_hit_flicker_timer > 0f && being_hit_flicker_timer < 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(1f);
+            }
+            else
+            {
+                being_hit_flicker_timer = being_hit_flicker_timer_duration;
             }
         }
 
@@ -1396,25 +1493,26 @@ namespace IS
                     camera_shake_duration -= InternalCalls.GetDeltaTime();
 
                     camera_shake_timer -= InternalCalls.GetDeltaTime();
-
+                    Random rnd = new Random();
                     if (camera_shake_timer <= 0)
                     {
                         //camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
                         //camera_shake_angle += CustomMath.PI / 4;
-                        Random rnd = new Random();
+                      
                         camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                         camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
-                        
-                        
+
                         camera_shake_timer = camera_shake_set;
                     }
                     Vector2D attack_dir = new Vector2D(0f, 0f);
-                    attack_dir.x = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).x - player_pos.x;
-                    attack_dir.y = InternalCalls.GetTransformPositionEntity(colliding_enemy_id).y - player_pos.y;
-                    attack_dir.x /= attack_dir.x;
-                    attack_dir.y /= attack_dir.y;
-
-                    InternalCalls.AttachCamera(camera_pos.x + 30f * camera_shake_dir.x * attack_dir.x, camera_pos.y + 30f * camera_shake_dir.y * attack_dir.y);
+                    attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
+                    attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
+                    /*attack_dir.x /= attack_dir.x;
+                    attack_dir.y /= attack_dir.y;*/
+                    float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
+                    //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
+                    if (hitting_enemy_id != -1)
+                        InternalCalls.AttachCamera(camera_pos.x + 0.01f * attack_dir.x, camera_pos.y + 0.01f * attack_dir.y);
                 }
             }
             else
@@ -1422,7 +1520,7 @@ namespace IS
                 camera_shake_duration = camera_shake_duration_set;
                 camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
-                InternalCalls.CameraSetZoom(1.1f);
+                InternalCalls.CameraSetZoom(camera_zoom);
             }
         }
 

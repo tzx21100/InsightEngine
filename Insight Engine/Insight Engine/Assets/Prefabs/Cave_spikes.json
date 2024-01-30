@@ -1,0 +1,35 @@
+{
+	"Name" : "Cave_spikes",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_spikes.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 13,
+		"SpriteTextureHeight" : 2080,
+		"SpriteTextureIndex" : 12,
+		"SpriteTextureWidth" : 2080,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 576.83819580078125,
+		"SpriteTransformScalingY" : 576.83819580078125,
+		"SpriteTransformWorldPositionX" : 11.306976318359375,
+		"SpriteTransformWorldPositionY" : -424.114013671875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 576.83819580078125,
+		"TransformScalingY" : 576.83819580078125,
+		"TransformWorldPositionX" : 11.306976318359375,
+		"TransformWorldPositionY" : -424.114013671875
+	}
+}

@@ -176,7 +176,8 @@ namespace IS {
 		while (mIsRunning) {
 			Update();
 			std::string directory_to_watch = "Assets/Scripts";
-			fw.Start(directory_to_watch); //we watch for changes
+			std::string shader_to_watch = "Assets/Shaders";
+			fw.Start(directory_to_watch,shader_to_watch); //we watch for changes
 			auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
 			window->SwapBuffers(); // swap buffers after all the rendering
 			ProcessEntityDeletion(); // destroy deleted entities
@@ -371,7 +372,12 @@ namespace IS {
 		if (HasComponent<Transform>(new_entity))
 		{
 			Transform& transform = GetComponent<Transform>(new_entity);
-			transform.world_position += Vector2D(20.f, -20.f);
+			transform.world_position += Vector2D(20.f, 0.f);
+		}
+		if (HasComponent<Sprite>(new_entity)) 
+		{
+			auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(new_entity);
+			ISGraphics::AddEntityToLayer(sprite_component.layer, new_entity);
 		}
 
 		return new_entity;

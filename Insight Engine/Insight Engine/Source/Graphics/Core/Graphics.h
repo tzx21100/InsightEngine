@@ -99,6 +99,8 @@ namespace IS {
 		*/
 		static void initTextures(const std::string& filepath, Image& image);
 
+		static void InitFonts();
+
 		/*!
 		 * \brief Gets the screen texture ID.
 		 * \return The texture ID of the screen.
@@ -155,9 +157,11 @@ namespace IS {
 		static Camera3D cameras3D[2];
 
 		// Text Objects
-		static Text Times_New_Roman_font;
-		static Text Brush_Script_font;
-		static Text North_Forest_font;
+		//static Text Times_New_Roman_font;
+		//static Text Brush_Script_font;
+		//static Text North_Forest_font;
+		//static Text Poreit_One_Regular_font;
+		static std::unordered_map<std::string, Text> mTexts;
 
 		// Flags
 		static bool mGlitched;

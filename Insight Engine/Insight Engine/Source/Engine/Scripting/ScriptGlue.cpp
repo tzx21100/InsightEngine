@@ -30,6 +30,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 
+#include <vector>
 #include <mono/metadata/object.h>
 #include <algorithm>
 #include <math.h>
@@ -354,6 +355,11 @@ namespace IS {
         sprite_component.anims.clear();
     }
     
+    static void SetAnimationAlpha(float val) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        sprite_component.color = { 1.f, 1.f, 1.f, val };
+    }
+    
     static void AttachCamera(float xoffset, float yoffset) {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
         camera.SetPosition(xoffset, yoffset);
@@ -552,6 +558,26 @@ namespace IS {
         collider.mResponseEnable = false;
     }
 
+    static void UpdateCategory(int entity, MonoString* category) {
+        if (!InsightEngine::Instance().HasComponent<Category>(entity))
+            InsightEngine::Instance().AddComponentAndUpdateSignature<Category>(entity, Category());
+        auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
+        char* c_str = mono_string_to_utf8(category); // Convert Mono string to char*
+        std::string cate_name(c_str);
+        mono_free(c_str);
+        cate.mCategory = cate_name;
+    }
+
+    //static MonoString* GetCategory(int entity) {
+    //    auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
+    //    //return cate.mCategory;
+    //    MonoString* str 
+    //    //char* c_str = mono_string_to_utf8(category); // Convert Mono string to char*
+    //    //std::string cate_name(c_str);
+    //    //mono_free(c_str);
+    //    //cate.mCategory = cate_name;
+    //}
+
     static void ColliderNone(int entity) {
         auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
         collider.mResponseEnable = false;
@@ -646,6 +672,16 @@ namespace IS {
     static int GetCollidingEntity(int entity) {
         auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
         return collider_component.mCollidingEntity.back();
+    }
+
+    // not in use
+    static std::vector<int> GetCollidingEntityList(int entity) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        std::vector<int> ret;
+        for (int i = 0; i < collider_component.mCollidingEntity.size(); i++) {
+            ret.push_back(collider_component.mCollidingEntity[i]);
+        }
+        return ret;
     }
 
     static bool CollidingObjectIsStatic(int entity) {
@@ -1138,6 +1174,11 @@ namespace IS {
         body.mGravityScale = scale;
     }
 
+    static void SendCondition(bool bo) {
+        RecievedScriptCondition = bo;
+    }
+
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
@@ -1198,6 +1239,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ResetAnimations);
         IS_ADD_INTERNAL_CALL(ResetSpriteAnimationFrameEntity);
         IS_ADD_INTERNAL_CALL(GetCurrentAnimationEntity);
+        IS_ADD_INTERNAL_CALL(SetAnimationAlpha);
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);
@@ -1299,6 +1341,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
+        IS_ADD_INTERNAL_CALL(UpdateCategory);
+        IS_ADD_INTERNAL_CALL(GetCollidingEntityList);
 
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
@@ -1314,6 +1358,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(IsFullscreen);
         IS_ADD_INTERNAL_CALL(ToggleFullscreen);
 
+
+
+
+        //FSM Condition
+        IS_ADD_INTERNAL_CALL(SendCondition);
 
         // IStrace
        // IS_ADD_INTERNAL_CALL(CallIS_Trace);

@@ -29,6 +29,7 @@
 #include "Engine/Systems/Audio/Audio.h"
 #include "Engine/Systems/Asset/Asset.h"
 #include "Engine/Systems/Category/Category.h"
+#include "Engine/Systems/FSM/FSM.h"
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/CollisionSystem.h"
@@ -713,6 +714,120 @@ namespace IS {
                     InsightEngine::Instance().OpenGameScript(script.mScriptName + ".cs");
                 }
                 ImGui::SetItemTooltip("Open and edit script in default application");
+            });
+
+        }); // end render Script Component
+
+        // State Component
+        RenderComponent<StateComponent>(ICON_LC_FLAG "  State", entity, [](StateComponent& state)
+        {
+            EditorUtils::RenderTableFixedWidth("State Table", 2, [&]()
+            {
+                // Current State
+                EditorUtils::RenderTableLabel("Current State:");
+                ImGui::TableNextColumn();
+                if (ImGui::BeginCombo("##CurrentStates", state.mCurrentState.mScriptName.c_str()))
+                {
+                    auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                    for (std::string const& name : asset->mScriptList)
+                    {
+                        std::filesystem::path path(name);
+                        std::string stem = path.stem().string();
+                        if (ImGui::Selectable(stem.c_str(), state.mCurrentState.mScriptName == stem))
+                        {
+                            state.mCurrentState.SetSimpleState(stem);
+                        }
+                    }
+
+                    ImGui::EndCombo();
+                }
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        std::string stem = path.stem().string();
+                        state.mCurrentState.SetSimpleState(stem);
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::SameLine();
+
+                // Modify State Script
+                if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                {
+                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    {
+                        std::string stem = filepath.stem().string();
+                        state.mCurrentState.SetSimpleState(stem);
+                    }
+                }
+                ImGui::SetItemTooltip("Browse and replace the current state.");
+
+                ImGui::SameLine();
+
+                // Edit State Script
+                if (ImGui::Button(ICON_LC_FILE_EDIT))
+                {
+                    InsightEngine::Instance().OpenGameScript(state.mCurrentState.mScriptName + ".cs");
+                }
+                ImGui::SetItemTooltip("Open and edit the current state in default application");
+
+                // Add Condition
+                EditorUtils::RenderTableLabel("State Condition:");
+                ImGui::TableNextColumn();
+                if (ImGui::BeginCombo("##StateCondition", state.mCurrentState.mScriptName.c_str()))
+                {
+                    auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                    for (std::string const& name : asset->mScriptList)
+                    {
+                        std::filesystem::path path(name);
+                        std::string stem = path.stem().string();
+                        if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetTargetState().mScriptName == stem))
+                        {
+                            state.mEntityConditions.AddCondition(stem);
+                        }
+                    }
+
+                    ImGui::EndCombo();
+                }
+
+                // Accept file drop
+                if (ImGui::BeginDragDropTarget())
+                {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                    {
+                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                        std::string stem = path.stem().string();
+                        state.mEntityConditions.AddCondition(stem);
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+
+                ImGui::SameLine();
+
+                // Modify State Condition
+                if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                {
+                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    {
+                        std::string stem = filepath.stem().string();
+                        state.mEntityConditions.AddCondition(stem);
+                    }
+                }
+                ImGui::SetItemTooltip("Browse and replace the state condition.");
+
+                ImGui::SameLine();
+
+                // Edit State Script
+                if (ImGui::Button(ICON_LC_FILE_EDIT))
+                {
+                    InsightEngine::Instance().OpenGameScript(state.mEntityConditions.GetTargetState().mScriptName + ".cs");
+                }
+                ImGui::SetItemTooltip("Open and edit the state condition in default application");
             });
 
         }); // end render Script Component

@@ -20,6 +20,10 @@ consent of DigiPen Institute of Technology is prohibited.
 #define GAM200_INSIGHT_ENGINE_SOURCE_SCRIPTGLUE_H
 
 namespace IS {
+
+    // Global static variables for sharing
+    static bool RecievedScriptCondition = false;
+
     // This class is solely to register C++ functions so that C# knows of their existence, for now.
     class ScriptGlue {
     public:

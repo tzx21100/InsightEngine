@@ -108,6 +108,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetSpriteAnimationIndex(int num);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetAnimationAlpha(float val);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void FreeSpriteImage(SimpleImage image);
@@ -189,6 +192,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetCollidingEntity(int entity);
+
+        /*[MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static Array GetCollidingEntityList(int entity);*/
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool GetCollidingEntityCheck(int entity, int entityToCheckAgainst);
@@ -430,6 +436,12 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetGravityScale(float scale);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void UpdateCategory(int entity, string category);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SendCondition(bool condition_return_bool);
 
 
     }

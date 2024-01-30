@@ -1,0 +1,132 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 2117.189208984375,
+				"Y" : -178.19387817382812
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.40000000596046448,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -56.368000030517578,
+					"y" : 120.89999389648438
+				},
+				{
+					"x" : 56.368000030517578,
+					"y" : 120.89999389648438
+				},
+				{
+					"x" : 56.368000030517578,
+					"y" : -120.89999389648438
+				},
+				{
+					"x" : -56.368000030517578,
+					"y" : -120.89999389648438
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.06329113245010376,
+			"G" : 0.06329113245010376,
+			"R" : 1.0
+		},
+		"LightIntensity" : 1.0,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 1345.0
+	},
+	"Name" : "Collectable",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 68148.90625,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "CollectableScript"
+	},
+	"Signature" : "00000000000000000001010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "fragment_anim 4R3C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 35,
+		"SpriteTextureHeight" : 1860,
+		"SpriteTextureIndex" : 34,
+		"SpriteTextureWidth" : 1626,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 281.83999633789062,
+		"SpriteTransformScalingY" : 241.79998779296875,
+		"SpriteTransformWorldPositionX" : 2117.189208984375,
+		"SpriteTransformWorldPositionY" : -178.19387817382812,
+		"animations" : 
+		[
+			{
+				"Name" : "Frag",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.3333333432674408,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.017184631898999214,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 3,
+				"y_frames" : 4
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 281.83999633789062,
+		"TransformScalingY" : 241.79998779296875,
+		"TransformWorldPositionX" : 2117.189208984375,
+		"TransformWorldPositionY" : -178.19387817382812
+	}
+}

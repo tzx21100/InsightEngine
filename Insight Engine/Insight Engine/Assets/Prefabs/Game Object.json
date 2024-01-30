@@ -1,0 +1,35 @@
+{
+	"Name" : "Game Object",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "transparent.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 81,
+		"SpriteTextureHeight" : 32,
+		"SpriteTextureIndex" : 80,
+		"SpriteTextureWidth" : 32,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 12.300000190734863,
+		"SpriteTransformScalingY" : 58.5,
+		"SpriteTransformWorldPositionX" : 1225.7491455078125,
+		"SpriteTransformWorldPositionY" : 68.812454223632812,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 12.300000190734863,
+		"TransformScalingY" : 58.5,
+		"TransformWorldPositionX" : 1225.7491455078125,
+		"TransformWorldPositionY" : 68.812454223632812
+	}
+}
