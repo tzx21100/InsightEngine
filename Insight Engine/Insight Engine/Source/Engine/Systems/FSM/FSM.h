@@ -75,7 +75,9 @@ namespace IS {
 		void AddCondition(std::string script_name);
 		void SetTargetState(SimpleState state);
 		void SetCurrentState(SimpleState state);
+		SimpleState GetCondition();
 		SimpleState GetTargetState();
+		SimpleState GetCurrentState();
 		bool CheckConditionsFufilled();
 
 	private:

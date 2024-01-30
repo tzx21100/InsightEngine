@@ -155,10 +155,6 @@ namespace IS {
 		static Camera3D cameras3D[2];
 
 		// Text Objects
-		//static Text Times_New_Roman_font;
-		//static Text Brush_Script_font;
-		//static Text North_Forest_font;
-		//static Text Poreit_One_Regular_font;
 		static std::unordered_map<std::string, Text> mTexts;
 
 		// Flags

@@ -775,60 +775,191 @@ namespace IS {
                     InsightEngine::Instance().OpenGameScript(state.mCurrentState.mScriptName + ".cs");
                 }
                 ImGui::SetItemTooltip("Open and edit the current state in default application");
+            });
 
-                // Add Condition
-                EditorUtils::RenderTableLabel("State Condition:");
-                ImGui::TableNextColumn();
-                if (ImGui::BeginCombo("##StateCondition", state.mCurrentState.mScriptName.c_str()))
+            //--------------------------------------------------------------------------------
+            // Add Condition
+            //--------------------------------------------------------------------------------
+            ImGuiTreeNodeFlags condition_tree_flags = ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
+            bool condition_opened = ImGui::TreeNodeEx(ICON_LC_CHECK_CIRCLE  "  Condition", condition_tree_flags);
+            if (condition_opened)
+            {
+                EditorUtils::RenderTableFixedWidth("ConditionTable", 2, [&]()
                 {
-                    auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-                    for (std::string const& name : asset->mScriptList)
+                    //--------------------------------------------------------------------------------
+                    // Condition
+                    //--------------------------------------------------------------------------------
+                    EditorUtils::RenderTableLabel("State Condition:");
+                    ImGui::TableNextColumn();
+                    if (ImGui::BeginCombo("##StateCondition", state.mEntityConditions.GetCondition().mScriptName.c_str()))
                     {
-                        std::filesystem::path path(name);
-                        std::string stem = path.stem().string();
-                        if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetTargetState().mScriptName == stem))
+                        auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                        for (std::string const& name : asset->mScriptList)
                         {
+                            std::filesystem::path path(name);
+                            std::string stem = path.stem().string();
+                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCondition().mScriptName == stem))
+                            {
+                                state.mEntityConditions.AddCondition(stem);
+                            }
+                        }
+
+                        ImGui::EndCombo();
+                    }
+
+                    // Accept file drop
+                    if (ImGui::BeginDragDropTarget())
+                    {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                        {
+                            std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                            std::string stem = path.stem().string();
+                            state.mEntityConditions.AddCondition(stem);
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
+                    ImGui::SameLine();
+
+                    // Modify State Condition
+                    if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                    {
+                        if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                        {
+                            std::string stem = filepath.stem().string();
                             state.mEntityConditions.AddCondition(stem);
                         }
                     }
+                    ImGui::SetItemTooltip("Browse and replace the state condition.");
 
-                    ImGui::EndCombo();
-                }
+                    ImGui::SameLine();
 
-                // Accept file drop
-                if (ImGui::BeginDragDropTarget())
-                {
-                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                    // Edit State Script
+                    if (ImGui::Button(ICON_LC_FILE_EDIT))
                     {
-                        std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
-                        std::string stem = path.stem().string();
-                        state.mEntityConditions.AddCondition(stem);
+                        InsightEngine::Instance().OpenGameScript(state.mEntityConditions.GetCondition().mScriptName + ".cs");
                     }
-                    ImGui::EndDragDropTarget();
-                }
+                    ImGui::SetItemTooltip("Open and edit the state condition in default application");
 
-                ImGui::SameLine();
-
-                // Modify State Condition
-                if (ImGui::Button(ICON_LC_FILE_SEARCH))
-                {
-                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    //--------------------------------------------------------------------------------
+                    // Current State
+                    //--------------------------------------------------------------------------------
+                    EditorUtils::RenderTableLabel("Current State:");
+                    ImGui::TableNextColumn();
+                    if (ImGui::BeginCombo("##CurrentState", state.mCurrentState.mScriptName.c_str()))
                     {
-                        std::string stem = filepath.stem().string();
-                        state.mEntityConditions.AddCondition(stem);
+                        auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                        for (std::string const& name : asset->mScriptList)
+                        {
+                            std::filesystem::path path(name);
+                            std::string stem = path.stem().string();
+                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCurrentState().mScriptName == stem))
+                            {
+                                SimpleState temp = CreateSimpleState(stem);
+                                state.mEntityConditions.SetCurrentState(temp);
+                            }
+                        }
+
+                        ImGui::EndCombo();
                     }
-                }
-                ImGui::SetItemTooltip("Browse and replace the state condition.");
 
-                ImGui::SameLine();
+                    // Accept file drop
+                    if (ImGui::BeginDragDropTarget())
+                    {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                        {
+                            std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                            std::string stem = path.stem().string();
+                            SimpleState temp = CreateSimpleState(stem);
+                            state.mEntityConditions.SetCurrentState(temp);
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
 
-                // Edit State Script
-                if (ImGui::Button(ICON_LC_FILE_EDIT))
-                {
-                    InsightEngine::Instance().OpenGameScript(state.mEntityConditions.GetTargetState().mScriptName + ".cs");
-                }
-                ImGui::SetItemTooltip("Open and edit the state condition in default application");
-            });
+                    ImGui::SameLine();
+
+                    // Modify State Condition
+                    if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                    {
+                        if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                        {
+                            std::string stem = filepath.stem().string();
+                            SimpleState temp = CreateSimpleState(stem);
+                            state.mEntityConditions.SetCurrentState(temp);
+                        }
+                    }
+                    ImGui::SetItemTooltip("Browse and replace the state condition current state.");
+
+                    ImGui::SameLine();
+
+                    // Edit State Script
+                    if (ImGui::Button(ICON_LC_FILE_EDIT))
+                    {
+                        InsightEngine::Instance().OpenGameScript(state.mEntityConditions.GetCurrentState().mScriptName + ".cs");
+                    }
+                    ImGui::SetItemTooltip("Open and edit the state condition current state in default application");
+
+                    //--------------------------------------------------------------------------------
+                    // Target State
+                    //--------------------------------------------------------------------------------
+                    EditorUtils::RenderTableLabel("Target State:");
+                    ImGui::TableNextColumn();
+                    if (ImGui::BeginCombo("##TargetState", state.mEntityConditions.GetTargetState().mScriptName.c_str()))
+                    {
+                        auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+                        for (std::string const& name : asset->mScriptList)
+                        {
+                            std::filesystem::path path(name);
+                            std::string stem = path.stem().string();
+                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCondition().mScriptName == stem))
+                            {
+                                SimpleState temp = CreateSimpleState(stem);
+                                state.mEntityConditions.SetTargetState(temp);
+                            }
+                        }
+
+                        ImGui::EndCombo();
+                    }
+
+                    // Accept file drop
+                    if (ImGui::BeginDragDropTarget())
+                    {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("IMPORTED_SCRIPT"))
+                        {
+                            std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
+                            std::string stem = path.stem().string();
+                            SimpleState temp = CreateSimpleState(stem);
+                            state.mEntityConditions.SetTargetState(temp);
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
+                    ImGui::SameLine();
+
+                    // Modify State Condition
+                    if (ImGui::Button(ICON_LC_FILE_SEARCH))
+                    {
+                        if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                        {
+                            std::string stem = filepath.stem().string();
+                            SimpleState temp = CreateSimpleState(stem);
+                            state.mEntityConditions.SetTargetState(temp);
+                        }
+                    }
+                    ImGui::SetItemTooltip("Browse and replace the state condition target state.");
+
+                    ImGui::SameLine();
+
+                    // Edit State Script
+                    if (ImGui::Button(ICON_LC_FILE_EDIT))
+                    {
+                        InsightEngine::Instance().OpenGameScript(state.mEntityConditions.GetTargetState().mScriptName + ".cs");
+                    }
+                    ImGui::SetItemTooltip("Open and edit the state condition target state in default application");
+                });
+
+                ImGui::TreePop();
+            }
 
         }); // end render Script Component
 

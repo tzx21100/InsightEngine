@@ -32,11 +32,23 @@ namespace IS {
 		mCurrentState = state;
 	}
 
-	SimpleState ChangeState::GetTargetState() {
+	SimpleState ChangeState::GetCondition()
+	{
+		return mConditionScript;
+	}
+
+	SimpleState ChangeState::GetTargetState()
+	{
 		return mTargetState;
 	}
 
-	std::string StateManager::GetName()  {
+	SimpleState ChangeState::GetCurrentState()
+	{
+		return mCurrentState;
+	}
+
+	std::string StateManager::GetName()
+	{
 		return "StateManager";
 	}
 

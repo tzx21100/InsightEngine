@@ -64,9 +64,6 @@ namespace IS {
     Camera3D ISGraphics::cameras3D[2];
     
     // Text Objects
-    //Text ISGraphics::Times_New_Roman_font;
-    //Text ISGraphics::Brush_Script_font;
-    //Text ISGraphics::North_Forest_font;
     std::unordered_map<std::string, Text> ISGraphics::mTexts;
 
     bool ISGraphics::mGlitched = false;

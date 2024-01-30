@@ -534,6 +534,32 @@ namespace IS {
                     auto& state = engine.GetComponent<StateComponent>(entity);
                     state.mCurrentState.SetSimpleState(stem);
                 }
+                // Browse for condition to add
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                {
+                    std::string stem = filepath.stem().string();
+                    engine.AddComponent<StateComponent>(entity, StateComponent());
+                    auto& state = engine.GetComponent<StateComponent>(entity);
+                    state.mEntityConditions.AddCondition(stem);
+                }
+                // Browse for current state to add
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                {
+                    std::string stem = filepath.stem().string();
+                    engine.AddComponent<StateComponent>(entity, StateComponent());
+                    auto& state = engine.GetComponent<StateComponent>(entity);
+                    SimpleState temp = CreateSimpleState(stem);
+                    state.mEntityConditions.SetCurrentState(temp);
+                }
+                // Browse for target state to add
+                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                {
+                    std::string stem = filepath.stem().string();
+                    engine.AddComponent<StateComponent>(entity, StateComponent());
+                    auto& state = engine.GetComponent<StateComponent>(entity);
+                    SimpleState temp = CreateSimpleState(stem);
+                    state.mEntityConditions.SetTargetState(temp);
+                }
                 ImGui::CloseCurrentPopup();
             }
         }
