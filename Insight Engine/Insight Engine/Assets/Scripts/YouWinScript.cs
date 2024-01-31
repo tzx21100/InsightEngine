@@ -37,7 +37,7 @@ namespace IS
         {
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
-            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromScript");
+            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromWinScript");
 
         }
 

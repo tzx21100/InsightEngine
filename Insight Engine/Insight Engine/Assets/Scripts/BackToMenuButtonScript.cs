@@ -45,6 +45,7 @@ namespace IS
             {
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                PlayerScript.CleanUp();
                 InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
                 InternalCalls.AudioStopAllSounds();
             }
