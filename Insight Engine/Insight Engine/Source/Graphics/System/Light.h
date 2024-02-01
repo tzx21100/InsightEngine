@@ -92,6 +92,7 @@ namespace IS {
 		bool mRender{ true };
 
 		static std::vector<glm::vec2> lightPos;
+		static std::vector<glm::vec4> lightClr;
 	};
 
 }// end namespace IS

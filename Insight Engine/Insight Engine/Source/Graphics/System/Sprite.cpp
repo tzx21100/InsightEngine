@@ -292,7 +292,7 @@ namespace IS {
             glm::vec4(-100.f, 100.f, 100.f, 100.f)
         };
 
-        std::vector<glm::vec2> lightPos;
+        //std::vector<glm::vec2> lightPos;
 
         //glm::mat4 camXform = ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform();
 
@@ -329,18 +329,50 @@ namespace IS {
         GL_CALL(glUseProgram(ISGraphics::light_shader_pgm.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
-        // upload to uniform variable
-        auto tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
+        GLint tex_arr_uniform{};
+        if (!Light::lightClr.empty()) {
+            tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightColors");
+            if (tex_arr_uniform >= 0)
+                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(Light::lightClr.size()), reinterpret_cast<const GLfloat*>(Light::lightClr.data()));
+            else
+                IS_CORE_ERROR("uLightColors Uniform not found, shader compilation failed?");
+        }
+
+        if (!ISGraphics::lightRadius.empty()) {
+            tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightRadius");
+            if (tex_arr_uniform >= 0)
+                glUniform1fv(tex_arr_uniform, static_cast<GLsizei>(ISGraphics::lightRadius.size()), ISGraphics::lightRadius.data());
+            else
+                IS_CORE_ERROR({ "uLightRadius Uniform not found, shader compilation failed" });
+        }
+
+        if (!Light::lightPos.empty()) {
+            tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightWorldPos");
+            if (tex_arr_uniform >= 0)
+                glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(Light::lightPos.size()), reinterpret_cast<const GLfloat*>(Light::lightPos.data()));
+            else
+                IS_CORE_ERROR("uLightWorldPos Uniform not found, shader compilation failed?");
+        }
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfWorldLights");
         if (tex_arr_uniform >= 0)
-            glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), reinterpret_cast<const GLfloat*>(line.data()));
-        //else
-        //    IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
+            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
+        else 
+            IS_CORE_ERROR({ "uNoOfWorldLights Uniform not found, shader compilation failed?" });
+
+        if (!line.empty()) {
+            tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
+            if (tex_arr_uniform >= 0)
+                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), reinterpret_cast<const GLfloat*>(line.data()));
+            else
+                IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");
+        }
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
         if (tex_arr_uniform >= 0)
             glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
-        //else 
-        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+        else 
+            IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
 
         InsightEngine& engine = InsightEngine::Instance();
         auto const& [width, height] = engine.GetWindowSize();
@@ -348,40 +380,14 @@ namespace IS {
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
         if (tex_arr_uniform >= 0)
             glUniform2fv(tex_arr_uniform, 1, &resolution.x);
-        //else
-        //    IS_CORE_ERROR("uResolution Uniform not found, shader compilation failed?");
+        else
+            IS_CORE_ERROR("uResolution Uniform not found, shader compilation failed?");
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uInverseVP");
         if (tex_arr_uniform >= 0)
             glUniformMatrix4fv(tex_arr_uniform, 1, GL_FALSE, glm::value_ptr(ISGraphics::cameras3D[Camera3D::mActiveCamera].getInverseCameraToNDCXform()));
-        //else
-        //    IS_CORE_ERROR({ "uInverseVP Uniform not found, shader compilation failed?" });
-        
-        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightWorldPos");
-        if (tex_arr_uniform >= 0)
-            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(Light::lightPos.size()), reinterpret_cast<const GLfloat*>(Light::lightPos.data()));
-        //else
-        //    IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");   
-
-        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfWorldLights");
-        if (tex_arr_uniform >= 0)
-            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
-        //else 
-        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
-
-        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightRadius");
-        if (tex_arr_uniform >= 0)
-            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(ISGraphics::lightRadius.size()), ISGraphics::lightRadius.data());
-
-        std::vector<glm::vec4> light_clrs{};
-        for (auto& inst : ISGraphics::lightInstances)
-            light_clrs.emplace_back(inst.color);
-
-        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLightColors");
-        if (tex_arr_uniform >= 0)
-            glUniform2fv(tex_arr_uniform, static_cast<GLsizei>(light_clrs.size()), glm::value_ptr(light_clrs[0]));
-        //else 
-        //    IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
+        else
+            IS_CORE_ERROR({ "uInverseVP Uniform not found, shader compilation failed?" });
         
         GL_CALL(glBindTextureUnit(0, clr_attach_id));
         GL_CALL(glBindTextureUnit(1, entt_attach_id));
@@ -389,17 +395,24 @@ namespace IS {
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "bg_tex");
         if (tex_arr_uniform >= 0)
             glUniform1i(tex_arr_uniform, 0);
+        else
+            IS_CORE_ERROR({ "bg_tex Uniform not found, shader compilation failed?" });
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "id_tex");
         if (tex_arr_uniform >= 0)
             glUniform1i(tex_arr_uniform, 1);
+        else
+            IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
 
         // draw instanced quads
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
         GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, static_cast<GLsizei>(ISGraphics::lightInstances.size())));
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+        ISGraphics::lightRadius.clear();
         ISGraphics::lightInstances.clear();
         Light::lightPos.clear();
+        Light::lightClr.clear();
     }
 
     void Sprite::draw_picked_entity_border() {
