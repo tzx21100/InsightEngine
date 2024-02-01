@@ -1462,7 +1462,7 @@ namespace IS
                 float dir = player_pos.x - enemy_pos.x;
                 InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 20f);
                 InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
-                Console.WriteLine(dir);
+                //Console.WriteLine(dir);
                 //reset
                 hori_movement = 0;
                 InternalCalls.SetSpriteImage(player_idle);
