@@ -1,7 +1,6 @@
 #version 450 core
 
-layout(location = 0) in vec4 vColor;
-layout(location = 1) in vec2 vTexCoord;
+layout(location = 0) in vec2 vTexCoord;
 
 layout(location = 0) out vec4 fFragColor;
 layout(location = 1) out int fEntityID;
@@ -35,13 +34,7 @@ bool doLineSegmentsIntersect(vec2 p0, vec2 p1, vec2 q0, vec2 q1) {
 
 void main()
 {
-    vec2 texY = vTexCoord;
-    texY.y = 1.0 - texY.y;
-    vec4 final_frag_clr = texture(bg_tex, texY);
-
-
-    fFragColor = final_frag_clr;
-    return;
+    vec4 final_frag_clr = texture(bg_tex, vTexCoord);
     float attenuation = 1.0;
 
     vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Convert pixel position to NDC
@@ -68,7 +61,7 @@ void main()
             }
         }
 
-        final_frag_clr.rgb += vColor.rgb * attenuationColor * inCircle;
+        final_frag_clr.rgb += uLightColors[i].rgb * attenuationColor * inCircle;
     }
 
     fFragColor = final_frag_clr;
