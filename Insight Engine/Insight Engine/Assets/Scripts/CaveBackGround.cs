@@ -72,7 +72,7 @@ namespace IS
             if (PlayerScript.camera_pos.y > 3500)
             {
                 InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0,1+( (PlayerScript.camera_pos.y-4500) /1000), 4);
-                if (PlayerScript.player_pos.y > 4600)
+                if (PlayerScript.player_pos.y > 4600 && PlayerScript.isGrounded==true)
                 {
                     InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
                 }

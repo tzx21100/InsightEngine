@@ -148,7 +148,7 @@ namespace IS
 
         // climbing
         static private bool isClimbing = false;
-        static private float climbSpeed = 1500f;
+        static private float climbSpeed = 2500f;
         static private int entityWall;
         static int climbdir;
 
@@ -252,8 +252,6 @@ namespace IS
             InternalCalls.UpdateCategory(entity_attack, "Weapon");
 
 
-            InternalCalls.CameraSetZoom(camera_zoom);
-
             land_entity = InternalCalls.CreateEntityVFX("land", player_land);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.3f, land_entity);
 
@@ -279,7 +277,6 @@ namespace IS
 
             // init enemy info
             is_colliding_enemy = false;
-            InternalCalls.AttachCamera(player_pos.x, player_pos.y);
 
 
         }
@@ -301,7 +298,7 @@ namespace IS
             if (Reward_Dash)
             {
 
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x + scaler.x * 2f, camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x + scaler.x * 2f, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_dash, 1f, 4
@@ -310,7 +307,7 @@ namespace IS
             }
             if (Reward_DoubleJump)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x - scaler.x * 2f, camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - scaler.x * 2f, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_doublejump, 1f, 4
@@ -319,7 +316,7 @@ namespace IS
             }
             if (Reward_WallClimb)
             {
-                SimpleVector2D pos = new SimpleVector2D(camera_pos.x, camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_wallclimb, 1f, 4
@@ -412,31 +409,17 @@ namespace IS
                 else
                 {
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
-                    if (camera_shake_duration > 0)
-                    {
-                        camera_shake_duration -= InternalCalls.GetDeltaTime();
-
-                        camera_shake_timer -= InternalCalls.GetDeltaTime();
-
-                        if (camera_shake_timer <= 0)
-                        {
-                            camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
-                            camera_shake_timer = camera_shake_set;
-                            camera_shake_angle += CustomMath.PI / 4;
-                        }
-                        InternalCalls.AttachCamera(camera_pos.x + 20 * camera_shake_dir.x, camera_pos.y + 20 * camera_shake_dir.y);
-                    }
+                    CameraScript.camera_shake_duration = 0.1f;
 
                     respawn_timer -= InternalCalls.GetDeltaTime();
                     if (respawn_timer <= 0)
                     {
-                        camera_shake_duration = camera_shake_duration_set;
-                        camera_shake_angle = 0;
+                        CameraScript.camera_shake_duration = camera_shake_duration;
                         InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                         respawn_timer = respawn_timer_set;
                         isDead = false;
                         isJumping = true;
-                        InternalCalls.CameraSetZoom(camera_zoom);
+
                     }
 
                 }
@@ -468,7 +451,7 @@ namespace IS
 
             camera_pos = Vector2D.Lerp(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
 
-            InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
+            CameraScript.camera_pos = camera_pos;
 
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
@@ -531,13 +514,15 @@ namespace IS
                 && !InternalCalls.CollidingObjectTypeIsIgnore(InternalCalls.GetCollidingEntity(entityWall)))
             {
                 if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
-                isClimbing = true;
+                isClimbing = true; 
             }
             else { isClimbing = false; animation_current_frame = 0; animation_speed = animation_speed_set; }
 
             if (isClimbing)
             {
-
+                //allow dashing when climbing
+                canDash = true;
+                isGrounded = true;
 
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
@@ -996,7 +981,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 2.1f;
+            float distanceBelow = height / 1.8f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
@@ -1477,6 +1462,7 @@ namespace IS
         {
             if (!initial_get_hit)
             {
+                CameraScript.camera_shake_duration = 0.2f;
                 InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
                 initial_get_hit = true;
 
@@ -1523,20 +1509,27 @@ namespace IS
                         //camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
                         //camera_shake_angle += CustomMath.PI / 4;
                       
-                        camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
-                        camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
+                        CameraScript.camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
+                        CameraScript.camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
 
-                        camera_shake_timer = camera_shake_set;
+                        CameraScript.camera_shake_timer = camera_shake_set;
+                        CameraScript.camera_shake_duration = 0.1f;
+                        Vector2D attack_dir = new Vector2D(0f, 0f);
+                        attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
+                        attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
+                      //  if (hitting_enemy_id != -1)
+/*                            CameraScript.camera_pos.x = CameraScript.camera_pos.x + 0.01f * attack_dir.x;
+                        CameraScript.camera_pos.y = CameraScript.camera_pos.y + 0.01f * attack_dir.y;*/
                     }
-                    Vector2D attack_dir = new Vector2D(0f, 0f);
-                    attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
-                    attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
+
                     /*attack_dir.x /= attack_dir.x;
                     attack_dir.y /= attack_dir.y;*/
                     float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                     //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
-                    if (hitting_enemy_id != -1)
-                        InternalCalls.AttachCamera(camera_pos.x + 0.01f * attack_dir.x, camera_pos.y + 0.01f * attack_dir.y);
+                    if (hitting_enemy_id != -1) { }
+/*                    CameraScript.camera_shake_duration = 4f;
+                    CameraScript.camera_pos.x=camera_pos.x + 0.01f * attack_dir.x;
+                    CameraScript.camera_pos.y = camera_pos.y + 0.01f * attack_dir.y;*/
                 }
             }
             else
@@ -1544,7 +1537,6 @@ namespace IS
                 camera_shake_duration = camera_shake_duration_set;
                 camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
-                InternalCalls.CameraSetZoom(camera_zoom);
             }
         }
 

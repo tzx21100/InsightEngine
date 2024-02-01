@@ -934,7 +934,9 @@ namespace IS {
         std::string part_name(c_str);
         mono_free(c_str);
         Text::addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+        ISGraphics::mTexts["Poiret_One_Regular"].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }
+
 
     static int GetWindowWidth()
     {

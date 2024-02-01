@@ -102,19 +102,17 @@ namespace IS
 			BodyType typeB = BodyType::Static;
 			RigidBody* contact_bodyA = nullptr;
 			RigidBody* contact_bodyB = nullptr;
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entityA))
-			{
-				auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
-				typeA = bodyA.mBodyType;
-				contact_bodyA = &bodyA;
-			}
 
-			if (InsightEngine::Instance().HasComponent<RigidBody>(entityB))
-			{
-				auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
-				typeB = bodyB.mBodyType;
-				contact_bodyB = &bodyB;
-			}
+			auto& bodyA = InsightEngine::Instance().GetComponent<RigidBody>(entityA);
+			typeA = bodyA.mBodyType;
+			contact_bodyA = &bodyA;
+			
+
+	
+			auto& bodyB = InsightEngine::Instance().GetComponent<RigidBody>(entityB);
+			typeB = bodyB.mBodyType;
+			contact_bodyB = &bodyB;
+			
 
 			//if (contact_bodyA == nullptr && contact_bodyB == nullptr)
 			//{
@@ -159,6 +157,7 @@ namespace IS
 				}
 
 				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {
+					if (typeA != BodyType::Ignore && typeB != BodyType::Ignore) { // i WANT TO IGNORE THE RESPONSE
 					// vector of penetration depth to move entities apart
 					SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 
@@ -167,7 +166,9 @@ namespace IS
 					Manifold contact = Manifold(contact_bodyA, contact_bodyB, &colliderA, &colliderB, mManifoldInfo.mNormal, mManifoldInfo.mDepth, mManifoldInfo.mContact1, mManifoldInfo.mContact2, mManifoldInfo.mContactCount);
 					//ResolveCollision(contact);
 					//ResolveCollisionWithRotation(contact, transA, transB);
-					ResolveCollisionWithRotationAndFriction(contact, transA, transB);
+					
+						ResolveCollisionWithRotationAndFriction(contact, transA, transB);
+					}
 				}
 			}
 		}

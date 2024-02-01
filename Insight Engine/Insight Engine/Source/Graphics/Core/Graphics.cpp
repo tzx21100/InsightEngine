@@ -311,24 +311,24 @@ namespace IS {
         }
 #endif // !USING_IMGUI
             // Shared Attributes
-        const float scale = 20.f;
+       // const float scale = 20.f;
         //const float x_padding = scale;
         //const float y_padding = (scale * 3.f);
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
-        const float pos_x = .5f;
-        const float pos_y = .5f;
+       // const float pos_x = .5f;
+        //const float pos_y = .5f;
         const glm::vec3 islamic_green = { 0.f, .56f, .066f };
         const glm::vec3 malachite = { 0.f, 1.f, .25f };
         static glm::vec3 color = islamic_green;
         color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
 
         // Text Attribute
-        std::ostringstream render_text;
-        render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << "\nFuck";
+        //std::ostringstream render_text;
+        //render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << "\nFuck";
         //render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
 
         // Render Text
-        mTexts["Poiret_One_Regular"].renderText(render_text.str(), pos_x, pos_y, scale, color);
+        //mTexts["Poiret_One_Regular"].renderText(render_text.str(), pos_x, pos_y, scale, color);
         //North_Forest_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         
         // render all text
