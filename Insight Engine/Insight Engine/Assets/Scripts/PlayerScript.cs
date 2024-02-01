@@ -111,6 +111,10 @@ namespace IS
         static private bool initial_land = false;
         static private float jumpHeight = 1100f;
 
+        //coyote time
+        static private float coyote_timer_duration = 0.2f;
+        static private float coyote_timer;
+
         //dashing 
         static public float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
@@ -656,7 +660,14 @@ namespace IS
                 isFirstGrounded = false;
             }
 
-
+            if (isGrounded) // check and update for coyote time
+            {
+                coyote_timer = coyote_timer_duration;
+            }
+            else
+            {
+                coyote_timer -= InternalCalls.GetDeltaTime();
+            }
 
             if (isGrounded)
             {
@@ -755,7 +766,18 @@ namespace IS
                 InternalCalls.SetSpriteImage(player_jump);
                 InternalCalls.SetSpriteAnimationIndex(2);
 
-                if (jump_amount > 0 && Reward_DoubleJump)
+                if (coyote_timer > 0f) // coyote time for the first time 
+                {
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    {
+                        InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
+                        Jump();
+                        InternalCalls.SetSpriteImage(player_jump);
+                        isJumping = true;
+                    }
+                }
+                
+                else if (jump_amount > 0 && Reward_DoubleJump) // double jump
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
@@ -794,6 +816,7 @@ namespace IS
                 }*/
                 initial_land = false;
             }
+
             // limit the vel
             player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
             if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
@@ -947,7 +970,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(100 * -hori_movement, 100, jump_entity);
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
             InternalCalls.RigidBodyAddForce(0, jumpHeight);
-
+            coyote_timer = 0f;
         }
 
         static private void ApplyGravityChange()
