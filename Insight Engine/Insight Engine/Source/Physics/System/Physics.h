@@ -149,6 +149,8 @@ namespace IS {
          */
         static void DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
+        void AddLineSegementsForLights(Entity const& entity);
+
         /*!
          * \brief Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities.
          *
@@ -156,6 +158,7 @@ namespace IS {
          * \param entities The set of entities to consider in the physics step.
          */
         void Step(float time, std::set<Entity> const& entities);
+
 
 	private:
         float mMaxVelocity;                                 // Maximum velocity for game bodies

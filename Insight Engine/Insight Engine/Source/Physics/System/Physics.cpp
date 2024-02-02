@@ -21,6 +21,7 @@
 #include "Pch.h"
 #include "Physics.h"
 #include "Graphics/System/Sprite.h"
+#include "Graphics/System/Light.h"
 
 namespace IS {
 		
@@ -353,12 +354,37 @@ namespace IS {
 		// draw the velocity line in blue
 		//if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
+
+
+	void Physics::AddLineSegementsForLights(Entity const& entity)
+	{
+		//for (auto const& entity: Physics::PhysicsEnableList) {
+			
+		//}
+
+		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
+		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+		if (collider.IsBoxColliderEnable()
+			&& collider.mResponseEnable
+			&& body.mBodyType == BodyType::Static) {
+			std::vector<Vector2D> vertices = collider.mBoxCollider.transformedVertices;
+			for (int i = 0; i < vertices.size(); i++) {
+				glm::vec4 vec = { vertices[i].x,
+									vertices[i].y,
+									vertices[(i + 1) % vertices.size()].x,
+									vertices[(i + 1) % vertices.size()].y };
+				Light::shadowLineSegments.emplace_back(vec);
+			}
+		}
+	}
+
+
 	// Performs a physics step for the specified time and set of entities, updates velocities and positions for game entities
 	void Physics::Step(float time, std::set<Entity> const& entities)
 	{
 		// divide by iterations to increase precision
 		time /= static_cast<float>(mTotalIterations);
-
+		
 		for (auto const& entity : entities)
 		{
 			auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
@@ -374,7 +400,7 @@ namespace IS {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 
 				body.BodyFollowTransform(trans);
-
+				AddLineSegementsForLights(entity); // render lights
 				if (body.mBodyType == BodyType::Static) {
 					continue; // skip the update for static entity
 				}
