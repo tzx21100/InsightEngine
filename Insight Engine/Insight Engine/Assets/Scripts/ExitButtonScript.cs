@@ -23,16 +23,16 @@ namespace IS
 
         // Confirmation Panel
         static private int exit_overlay_entity;
-        //static private int no_entity;
-        //static private int yes_entity;
+        static private int no_entity;
+        static private int yes_entity;
 
         static SimpleImage exit_overlay_image;
-        //static SimpleImage no_image;
-        //static SimpleImage yes_image;
+        static SimpleImage no_image;
+        static SimpleImage yes_image;
 
         static Vector2D exit_overlay_pos = new Vector2D(0, 0);
-        //static Vector2D no_pos = new Vector2D(0, 0);
-        //static Vector2D yes_pos = new Vector2D(0, 0);
+        static Vector2D no_pos = new Vector2D(0, 0);
+        static Vector2D yes_pos = new Vector2D(0, 0);
 
         // Camera Pos
         static Vector2D camera_pos = new Vector2D(0, 0);
@@ -47,13 +47,14 @@ namespace IS
             exit_confirmation = false;
 
             // Confirmation Panel
-            exit_overlay_image = InternalCalls.GetSpriteImage("exit_overlay.png");
-            //no_image = InternalCalls.GetSpriteImage("no_button.png");
-            //yes_image = InternalCalls.GetSpriteImage("yes_button.png");
+            //exit_overlay_image = InternalCalls.GetSpriteImage("exit_overlay.png");
+            exit_overlay_image = InternalCalls.GetSpriteImage("temp_exit_overlay.png");
+            no_image = InternalCalls.GetSpriteImage("no_button.png");
+            yes_image = InternalCalls.GetSpriteImage("yes_button.png");
 
             exit_overlay_entity = InternalCalls.CreateEntityUI("Confirmation Menu", exit_overlay_image);
-            //no_entity = InternalCalls.CreateEntityButtonNoText("No Button", no_image, "NoButtonScript");
-            //yes_entity = InternalCalls.CreateEntityButtonNoText("Yes Button", yes_image, "YesButtonScript");
+            no_entity = InternalCalls.CreateEntityButtonNoText("No Button", no_image, "NoButtonScript");
+            yes_entity = InternalCalls.CreateEntityButtonNoText("Yes Button", yes_image, "YesButtonScript");
 
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
@@ -74,17 +75,17 @@ namespace IS
             origin.y = camera_pos.y -(win_dimension.y / 2f);
 
             Vector2D overlay = new Vector2D(win_dimension.x, win_dimension.y);
-            //Vector2D no = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
-            //Vector2D yes = new Vector2D(0.18f * win_dimension.x, 0.1f * win_dimension.y);
+            Vector2D no = new Vector2D(0.2f * win_dimension.x, 0.2f * win_dimension.y);
+            Vector2D yes = new Vector2D(0.2f * win_dimension.x, 0.2f * win_dimension.y);
 
             InternalCalls.TransformSetScaleEntity(overlay.x, overlay.y, exit_overlay_entity);
-            //InternalCalls.SetButtonSize(no_entity, new SimpleVector2D(no.x, no.y));
-            //InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(yes.x, yes.y));
+            InternalCalls.SetButtonSize(no_entity, new SimpleVector2D(no.x, no.y));
+            InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(yes.x, yes.y));
 
             // Positions
             exit_overlay_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
-            //no_pos.Set(origin.x + (0.68f * win_dimension.x), origin.y + (0.22f * win_dimension.y));
-            //yes_pos.Set(origin.x + (0.32f * win_dimension.x), origin.y + (0.22f * win_dimension.y));
+            no_pos.Set(origin.x + (0.6f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
+            yes_pos.Set(origin.x + (0.4f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
 
 
             //hovered
@@ -126,16 +127,16 @@ namespace IS
         static public void DrawConfirmationMenu()
         {
             InternalCalls.TransformSetPositionEntity(exit_overlay_pos.x, exit_overlay_pos.y, exit_overlay_entity);
-            //InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
-            //InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
+            InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
+            InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
 
         }
 
         static public void HideConfirmationMenu()
         {
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, exit_overlay_entity);
-            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, no_entity);
-            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, yes_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, no_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, yes_entity);
         }
 
     }

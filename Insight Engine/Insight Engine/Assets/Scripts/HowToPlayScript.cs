@@ -45,7 +45,8 @@ namespace IS
             show_how_to_play = false;
 
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
-            how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
+            //how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
+            how_to_play_overlay_image = InternalCalls.GetSpriteImage("temp_how_to_play_overlay.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
