@@ -20,6 +20,7 @@
 #include "Engine/Systems/Button/Button.h"
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Collider.h"
+#include "../Graphics/Core/Graphics.h"
 
 
 namespace IS {
@@ -193,6 +194,9 @@ namespace IS {
             auto const& gui = engine.GetImGuiLayer();
             auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
 
+            if (input->IsKeyPressed(GLFW_KEY_L)) {
+                ISGraphics::mLightsOn=!ISGraphics::mLightsOn;
+            }
             // transform camera
             // ISGraphics::cameras[Camera::mActiveCamera].UpdateCamXform();
 

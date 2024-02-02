@@ -14,7 +14,6 @@ uniform int uNoOfLineSegments; // line segment count
 uniform vec2 uResolution; // resolution of game
 uniform mat4 uInverseVP; // Inverse of View-Projection Matrix
 uniform int type_of_light;
-uniform float ilovetime;
 
 uniform sampler2D bg_tex; // background framebuffer texture
 uniform sampler2D id_tex; // ID framebuffer texture
@@ -39,16 +38,6 @@ vec3 blendLight(vec3 base, vec3 added) {
     return min(base + added, vec3(1.0));
 }
 
-float generate_rand(vec2 uv)
-{
-    return fract(sin(ilovetime));
-}
-
-float real_random_thing(vec2 some_parameter)
-{
-    return fract(sin(dot(some_parameter, vec2(12.9898, 78.233))) * 43758.5453) * ilovetime;
-}
-
 void main() {
     vec4 final_frag_clr = texture(bg_tex, vTexCoord); // Base color from background texture
     vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Pixel position to NDC
@@ -56,37 +45,24 @@ void main() {
     vec2 current_pixel = worldPos.xy / worldPos.w; // Correct by perspective division
     int render = 0;
     float dist = 1.0;
-
+    
     for (int i = 0; i < uNoOfWorldLights; ++i) 
     {
         vec2 lightDirection = uLightWorldPos[i] - current_pixel;
         float distance = length(lightDirection);
         float radius = uLightRadius[i];
 
-        // change to sepia
-        if (type_of_light == 1){
-            radius = radius * 8.0;
-        }
-        //end of change to sepia 
-
-        if (distance < radius) {
+        if (distance < radius*32) {
             float attenuation = pow(1.0 - (distance / radius), 2.0); // Squared falloff attenuation
             float intensity = uLightColors[i].a; // Intensity from alpha
             vec3 lightContribution = uLightColors[i].rgb * attenuation * intensity; // Apply attenuation and intensity
 
             bool inShadow = false;
-            for (int j = 0; j < uNoOfLineSegments && !inShadow; ++j) 
-            {
+            for (int j = 0; j < uNoOfLineSegments && !inShadow; ++j) {
                 vec2 p0 = vec2(uLineSegments[j].x, uLineSegments[j].y);
                 vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
                 if (doLineSegmentsIntersect(uLightWorldPos[i], current_pixel, p0, p1)) {
-
-                    if (type_of_light==0){
                     lightContribution *= 0.0; // Shadow attenuation
-                    }
-                    else{
-                        lightContribution*=0.8;
-                    }
                     inShadow = true;
                 }
             }
@@ -99,39 +75,16 @@ void main() {
                 dist = distance / radius;
         }
     }
-
-    if (type_of_light == 0)
+    
+    if (render == 0)
     {
-         fFragColor = final_frag_clr;    
-
+        fFragColor = fFragColor;
     }
-    if (type_of_light == 1)
+    else
     {
-        if (render == 0)
-        {
-            fFragColor = fFragColor;
-        }
-        else
-        {
-            fFragColor = final_frag_clr * (1.0 - dist);
-        }
+        fFragColor = final_frag_clr * (1.0 - dist);
+    }
         
-    }
-    if (type_of_light==2)
-    {
-        // type of light is normal
-        float avr = (final_frag_clr.x + final_frag_clr.y + final_frag_clr.z) / 3.0;
-        avr *= 3.0;
-        fFragColor = vec4(vec3(avr), final_frag_clr.a);
-
-        if (mod(gl_FragCoord.x, real_random_thing(vTexCoord) * 10.0) < 8 || mod(gl_FragCoord.y, real_random_thing(vTexCoord) * 10.0) < 2)
-            fFragColor = vec4(real_random_thing(vTexCoord));
-    }
-    if (type_of_light==3)
-    {
-        fFragColor = final_frag_clr;    
-    }
-
     float id = texelFetch(id_tex, ivec2(gl_FragCoord.xy), 0).r;
     fEntityID = int(id); // Entity ID from ID texture
 }

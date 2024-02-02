@@ -163,6 +163,16 @@ namespace IS {
 		static bool mGlitched;
 		static bool mLightsOn;
 
+		enum LiGhT_tYPE
+		{   
+			NORMAL,
+			FADE,
+			SEPIA,
+			CANCER,
+			GLITCHED
+		};
+		static int mLightType;
+
 		// Layers
 		static std::vector<Layering>mLayers;
 		

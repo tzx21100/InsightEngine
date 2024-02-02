@@ -238,10 +238,10 @@ namespace IS {
     void Sprite::draw_lights() {
         GLuint clr_attach_id = ISGraphics::mShaderFrameBuffer.GetColorAttachment(); // texture ID
         GLuint entt_attach_id = ISGraphics::mShaderFrameBuffer.GetEntityIDAttachment();
-        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, 100.f, 100.f, 100.f));
+       /* Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, 100.f, 100.f, 100.f));
         Light::shadowLineSegments.emplace_back(glm::vec4(100.f, 100.f, 100.f, -100.f));
         Light::shadowLineSegments.emplace_back(glm::vec4(100.f, -100.f, -100.f, -100.f));
-        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, -100.f, -100.f, 100.f));
+        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, -100.f, -100.f, 100.f));*/
 
 
         //std::vector<glm::vec2> lightPos;
@@ -368,6 +368,17 @@ namespace IS {
         else
             IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
 
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "type_of_light");
+        if (tex_arr_uniform >= 0)
+            glUniform1i(tex_arr_uniform, ISGraphics::mLightType);
+        else
+            IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
+
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "ilovetime");
+        if (tex_arr_uniform >= 0)
+            glUniform1f(tex_arr_uniform, static_cast<float>(glfwGetTime()));
+        else
+            IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
         //glm::mat3 transform
         //{
         //    1.f, 0.f, 0.f,

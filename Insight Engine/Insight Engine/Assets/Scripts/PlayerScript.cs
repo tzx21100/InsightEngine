@@ -1360,12 +1360,15 @@ namespace IS
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         // // get the id for enemy being attack (one only)
                         int attacking_enemy_id = InternalCalls.GetCollidingEntity(entity_attack);
-                        
-                        //Console.WriteLine(attacking_enemy_id);
-                        //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
-                        //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                        Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
-                        initial_attack = true;
+
+                        if (InternalCalls.CheckEntityCategory(attacking_enemy_id, "Enemy"))
+                        {
+                            //Console.WriteLine(attacking_enemy_id);
+                            //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
+                            //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
+                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                            initial_attack = true;
+                        }
                     }
                     else if (isAttack)
                     {

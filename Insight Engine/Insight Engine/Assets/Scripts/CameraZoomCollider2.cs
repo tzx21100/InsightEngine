@@ -15,6 +15,7 @@ namespace IS
             if (InternalCalls.EntityCheckCollide(entity) && InternalCalls.GetCollidingEntityCheck(entity, PlayerScript.PLAYER_ID))
             {
                 CameraScript.CameraTargetZoom(0.7f, 0.3f);
+                InternalCalls.ChangeLightType(0);
             }
         }
 

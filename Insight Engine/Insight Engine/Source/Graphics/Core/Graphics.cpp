@@ -71,7 +71,7 @@ namespace IS {
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
-
+    int  ISGraphics::mLightType = ISGraphics::NORMAL;
 
 
     // Layering

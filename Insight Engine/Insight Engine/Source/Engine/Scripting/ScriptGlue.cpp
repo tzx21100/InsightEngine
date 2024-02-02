@@ -1164,6 +1164,18 @@ namespace IS {
         return false;
     }
 
+    static bool CheckEntityCategory(int entity_id, MonoString* category_to_check) {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(category_to_check); // Convert Mono string to char*
+        std::string tag(c_str);
+        mono_free(c_str);
+        auto& category = engine.GetComponent<Category>(entity_id);
+        if(category.mCategory==tag){
+            return true;
+        }
+        return false;
+    }
+
     static bool OnCollisionEnter() {
         auto& engine = InsightEngine::Instance();
         auto& collider = engine.GetComponent<Collider>(engine.GetScriptCaller());
@@ -1192,12 +1204,20 @@ namespace IS {
         RecievedScriptCondition = bo;
     }
 
+    static void ChangeLightType(int lighttype) {
+        ISGraphics::mLightType = lighttype;
+
+    }
+
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
     void ScriptGlue::RegisterFunctions()
     {
+        IS_ADD_INTERNAL_CALL(ChangeLightType);
+
         IS_ADD_INTERNAL_CALL(NativeLog);
         IS_ADD_INTERNAL_CALL(NativeLogVector);
 
@@ -1362,6 +1382,7 @@ namespace IS {
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
         IS_ADD_INTERNAL_CALL(CompareEntityCategory);
+        IS_ADD_INTERNAL_CALL(CheckEntityCategory);
         IS_ADD_INTERNAL_CALL(OnCollisionEnter);
         IS_ADD_INTERNAL_CALL(OnEntityCollisionEnter);
         IS_ADD_INTERNAL_CALL(GetGravityScale);

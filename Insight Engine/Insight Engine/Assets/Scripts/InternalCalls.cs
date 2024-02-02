@@ -426,7 +426,10 @@ namespace IS
         internal extern static bool CompareCategory(string str);
             
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static bool CompareEntityCategory(int entity_id, string str);
+        internal extern static bool CompareEntityCategory(int entity_id, string str);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CheckEntityCategory(int entity_id, string category_to_check_its_in);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool OnCollisionEnter();
@@ -444,7 +447,10 @@ namespace IS
         internal extern static void UpdateCategory(int entity, string category);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SendCondition(bool condition_return_bool);
+        internal extern static void SendCondition(bool condition_return_bool);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ChangeLightType(int light_type );
 
 
     }

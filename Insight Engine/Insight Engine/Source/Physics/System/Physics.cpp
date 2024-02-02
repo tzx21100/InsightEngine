@@ -377,6 +377,7 @@ namespace IS {
 									vertices[(i + 1) % vertices.size()].y };
 				// emplace into the vector list
 				Light::shadowLineSegments.emplace_back(vec);
+
 			}
 		}
 	}

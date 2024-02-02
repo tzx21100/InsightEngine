@@ -71,12 +71,14 @@ namespace IS
             // Update the camera position
             InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
 
-            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.2f, 4);
+            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.2f, 0);
 
 
             leaves_timer -= InternalCalls.GetDeltaTime();
             if(leaves_timer <= 0 )
             {
+
+
                 for (int i = 0;i<leaves_amount;i++)
                 {
                     int col= (int)(InternalCalls.GetRandomFloat()*9);
