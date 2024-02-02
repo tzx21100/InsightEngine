@@ -239,7 +239,10 @@ namespace IS {
         GLuint clr_attach_id = ISGraphics::mShaderFrameBuffer.GetColorAttachment(); // texture ID
         GLuint entt_attach_id = ISGraphics::mShaderFrameBuffer.GetEntityIDAttachment();
         std::vector<glm::vec4> line = {
-            glm::vec4(-100.f, 100.f, 100.f, 100.f)
+            glm::vec4(-100.f, 100.f, 100.f, 100.f),
+            glm::vec4(100.f, 100.f, 100.f, -100.f),
+            glm::vec4(100.f, -100.f, -100.f, -100.f),
+            glm::vec4(-100.f, -100.f, -100.f, 100.f)
         };
 
         //std::vector<glm::vec2> lightPos;

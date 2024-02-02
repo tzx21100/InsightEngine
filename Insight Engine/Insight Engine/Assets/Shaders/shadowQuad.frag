@@ -32,10 +32,15 @@ bool doLineSegmentsIntersect(vec2 p0, vec2 p1, vec2 q0, vec2 q1) {
     return (crossProduct != 0.0) && (t >= 0.0) && (t <= 1.0) && (u >= 0.0) && (u <= 1.0);
 }
 
+vec3 blendLight(vec3 base, vec3 added) {
+    // Simple additive blend mode with a safeguard against overexposure
+    return min(base + added, vec3(1.0));
+}
+
 void main() {
-    vec4 final_frag_clr = texture(bg_tex, vTexCoord); // Start with base color from background texture
-    vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Convert pixel position to NDC
-    vec4 worldPos = uInverseVP * ndcPos; // Transform to world coordinates
+    vec4 final_frag_clr = texture(bg_tex, vTexCoord); // Base color from background texture
+    vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Pixel position to NDC
+    vec4 worldPos = uInverseVP * ndcPos; // NDC to world coordinates
     vec2 current_pixel = worldPos.xy / worldPos.w; // Correct by perspective division
 
     for (int i = 0; i < uNoOfWorldLights; ++i) {
@@ -45,23 +50,25 @@ void main() {
 
         if (distance < radius) {
             float attenuation = pow(1.0 - (distance / radius), 2.0); // Squared falloff attenuation
-            vec4 lightColor = uLightColors[i] * attenuation; // Apply attenuation to light color
+            float intensity = uLightColors[i].a; // Intensity from alpha
+            vec3 lightContribution = uLightColors[i].rgb * attenuation * intensity; // Apply attenuation and intensity
 
             bool inShadow = false;
             for (int j = 0; j < uNoOfLineSegments && !inShadow; ++j) {
                 vec2 p0 = vec2(uLineSegments[j].x, uLineSegments[j].y);
                 vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
                 if (doLineSegmentsIntersect(uLightWorldPos[i], current_pixel, p0, p1)) {
+                    lightContribution *= 0.0; // Shadow attenuation
                     inShadow = true;
-                    lightColor *= 0.5; // Reduce intensity by half if in shadow
                 }
             }
 
-            final_frag_clr.rgb += lightColor.rgb; // Add light color to final fragment color
+            // Blend light contribution using custom blend function
+            final_frag_clr.rgb = blendLight(final_frag_clr.rgb, lightContribution);
         }
     }
 
     fFragColor = final_frag_clr;
     float id = texelFetch(id_tex, ivec2(gl_FragCoord.xy), 0).r;
-    fEntityID = int(id); // Set entity ID from ID texture
+    fEntityID = int(id); // Entity ID from ID texture
 }

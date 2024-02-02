@@ -1,0 +1,35 @@
+{
+	"Name" : "dark_circle",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "dark_circle.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 16,
+		"SpriteTextureHeight" : 225,
+		"SpriteTextureIndex" : 15,
+		"SpriteTextureWidth" : 225,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1.0,
+		"SpriteTransformScalingY" : 1.0,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 225.0,
+		"TransformScalingY" : 225.0,
+		"TransformWorldPositionX" : 301.84219360351562,
+		"TransformWorldPositionY" : 131.61331176757812
+	}
+}
