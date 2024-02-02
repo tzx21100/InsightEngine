@@ -149,6 +149,7 @@ namespace IS {
          */
         static void DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
+        // for shadow lights
         void AddLineSegementsForLights(Entity const& entity);
 
         /*!

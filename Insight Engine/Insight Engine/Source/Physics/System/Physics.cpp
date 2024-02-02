@@ -366,13 +366,16 @@ namespace IS {
 		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 		if (collider.IsBoxColliderEnable()
 			&& collider.mResponseEnable
-			&& body.mBodyType == BodyType::Static) {
+			&& body.mBodyType == BodyType::Static) { // if check
+
 			std::vector<Vector2D> vertices = collider.mBoxCollider.transformedVertices;
 			for (int i = 0; i < vertices.size(); i++) {
-				glm::vec4 vec = { vertices[i].x,
+
+				glm::vec4 vec = {	vertices[i].x,
 									vertices[i].y,
 									vertices[(i + 1) % vertices.size()].x,
 									vertices[(i + 1) % vertices.size()].y };
+				// emplace into the vector list
 				Light::shadowLineSegments.emplace_back(vec);
 			}
 		}
@@ -400,7 +403,9 @@ namespace IS {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 
 				body.BodyFollowTransform(trans);
-				AddLineSegementsForLights(entity); // render lights
+
+				AddLineSegementsForLights(entity); // render shadow lights
+
 				if (body.mBodyType == BodyType::Static) {
 					continue; // skip the update for static entity
 				}
