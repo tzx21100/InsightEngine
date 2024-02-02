@@ -323,8 +323,8 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int RenderText(string text, float x, float y, float size, (float, float, float) color);        
         
-        //[MethodImplAttribute(MethodImplOptions.InternalCall)]
-        //internal extern static int RenderTextFont(string text, string font, float x, float y, float size, (float, float, float) color);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int RenderTextFont(string text, string font, float x, float y, float size, (float, float, float) color);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int SetButtonSizeScale(int entity, float scale);

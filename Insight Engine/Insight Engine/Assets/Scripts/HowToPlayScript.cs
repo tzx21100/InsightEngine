@@ -83,6 +83,7 @@ namespace IS
             background_pos.Set(camera_pos.x, camera_pos.y);
             how_to_play_overlay_pos.Set(camera_pos.x, camera_pos.y);
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "Poiret_One_Regular",0.3f, 0.5f, 20f, (1f, 1f, 1f));
 
             //hover
             if (InternalCalls.GetButtonState() == 1)
