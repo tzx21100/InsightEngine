@@ -199,44 +199,43 @@ namespace IS {
                 if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                     // if sprite and it's layer is to be rendered
                     //if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
-                        // empty instance data
-                        Sprite::instanceData instData;
+                    // empty instance data
+                    Sprite::instanceData instData;
 
-                        // all quads will have xform, entityID, layer
-                        instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_3dcam_to_ndc_xform;
-                        instData.entID = static_cast<float>(entity);
-                        instData.layer = sprite.layer;
+                    // all quads will have xform, entityID, layer
+                    instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_3dcam_to_ndc_xform;
+                    instData.entID = static_cast<float>(entity);
+                    instData.layer = sprite.layer;
 
-                        // quads with no texture
-                        if (sprite.img.texture_id == 0) {
-                            // copy sprite's color to instance data
-                            instData.color = sprite.color;
-                            // set to -1 to represent no texture
-                            instData.tex_index = -1.f;
-                        }
-                        // quad has a texture (animation too)
-                        else {
-                            // copy texture index
-                            instData.color = sprite.color;
-                            instData.tex_index = static_cast<float>(sprite.img.texture_index);
-                        }
+                    // quads with no texture
+                    if (sprite.img.texture_id == 0) {
+                        // copy sprite's color to instance data
+                        instData.color = sprite.color;
+                        // set to -1 to represent no texture
+                        instData.tex_index = -1.f;
+                    }
+                    // quad has a texture (animation too)
+                    else {
+                        // copy texture index
+                        instData.color = sprite.color;
+                        instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                    }
 
-                        // if sprite is an animation
-                        if (!sprite.anims.empty()) {
-                            // copy animation data
-                            instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
-                            instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
-                        }
-                        // insert to multiset with comparator function
-                        layeredQuadInstances.insert(instData);
+                    // if sprite is an animation
+                    if (!sprite.anims.empty()) {
+                        // copy animation data
+                        instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                        instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                    }
+                    // insert to multiset with comparator function
+                    layeredQuadInstances.insert(instData);
 
-                        if (engine.HasComponent<Light>(entity))
-                        {
-                            auto& light = engine.GetComponent<Light>(entity);
-                            light.FollowTransform(trans.world_position);
-                            light.draw(static_cast<float>(entity));
-                        }
-                    //}
+                    if (engine.HasComponent<Light>(entity))
+                    {
+                        auto& light = engine.GetComponent<Light>(entity);
+                        light.FollowTransform(trans.world_position);
+                        light.draw(static_cast<float>(entity));
+                    }
                 }
 
                 // Debug draw
@@ -272,6 +271,8 @@ namespace IS {
         
         // loading fb texture onto quad
         //mFramebuffer->Bind();
+
+        //mLightsOn = false; //// TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 
         if (mLightsOn)
         {
@@ -373,7 +374,6 @@ namespace IS {
 
         // Text Attribute
         std::ostringstream render_text;
-        render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << "\nFuck";
         //render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
 
         // Render Text

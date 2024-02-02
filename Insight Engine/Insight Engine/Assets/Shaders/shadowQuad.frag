@@ -32,40 +32,36 @@ bool doLineSegmentsIntersect(vec2 p0, vec2 p1, vec2 q0, vec2 q1) {
     return (crossProduct != 0.0) && (t >= 0.0) && (t <= 1.0) && (u >= 0.0) && (u <= 1.0);
 }
 
-void main()
-{
+void main() {
     vec4 final_frag_clr = texture(bg_tex, vTexCoord);
-    float attenuation = 1.0;
-
     vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Convert pixel position to NDC
     vec4 worldPos = uInverseVP * ndcPos; // Transform to world coordinates
     vec2 current_pixel = worldPos.xy;
 
-    bool intersectionFound = false;
-
     for (int i = 0; i < uNoOfWorldLights; ++i) {
-        vec2 worldLightPos = uLightWorldPos[i];
-        float dist = length(current_pixel - worldLightPos);
-        float radius = uLightRadius[i] * 0.5; // which is in world pos
-        float inCircle = step(dist, radius);
+        vec2 lightScreenPos = (uLightWorldPos[i] - current_pixel) / uResolution; // Calculate light's screen position relative to current_pixel
+        float distance = length(lightScreenPos);
+        float radius = uLightRadius[i] / min(uResolution.x, uResolution.y); // Adjust radius based on screen resolution
+        float inCircle = step(distance, radius);
 
-        vec4 lightColor = uLightColors[i]; // Get the light color and intensity
-        vec3 attenuationColor = lightColor.rgb * lightColor.a; // Calculate the attenuation color
+        // Harder falloff with a squared attenuation term
+        float attenuation = pow(1.0 - min(distance / radius, 1.0), 2.0) * inCircle;
 
-        for (int j = 0; j < uNoOfLineSegments; ++j) {
+        bool inShadow = false;
+        for (int j = 0; j < uNoOfLineSegments && !inShadow; ++j) {
             vec2 p0 = vec2(uLineSegments[j].x, uLineSegments[j].y);
             vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
-
-            if (doLineSegmentsIntersect(worldLightPos, current_pixel, p0, p1)) {
-                attenuationColor *= 0.5; // Apply attenuation for shadows
+            if (doLineSegmentsIntersect(uLightWorldPos[i], current_pixel, p0, p1)) {
+                inShadow = true; // Fragment is in shadow
             }
         }
 
-        final_frag_clr.rgb += uLightColors[i].rgb * attenuationColor * inCircle;
+        if (!inShadow) {
+            final_frag_clr.rgb += uLightColors[i].rgb * attenuation; // Apply light if not in shadow
+        }
     }
 
     fFragColor = final_frag_clr;
-    // fFragColor = vec4(1.0,0,0,1.0);
     float id = texelFetch(id_tex, ivec2(vTexCoord * textureSize(id_tex, 0)), 0).r;
-    fEntityID = int(id);
+    fEntityID = int(id) + 1; // Increment ID by 1 as per original shader logic
 }
