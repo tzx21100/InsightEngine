@@ -32,12 +32,14 @@ namespace IS {
     class Framebuffer {
     public:
         struct FramebufferProps {
-            GLuint mColorAttachment; /**< Color attachment ID. */
-            GLuint mEntIDAttachment;
+            GLuint mColorAttachment{}; /**< Color attachment ID. */
+            GLuint mEntIDAttachment{};
             //GLuint mDepthAttachment; /**< Depth attachment ID. */
-            GLuint mWidth; /**< Width of the framebuffer. */
-            GLuint mHeight; /**< Height of the framebuffer. */
+            GLuint mWidth{}; /**< Width of the framebuffer. */
+            GLuint mHeight{}; /**< Height of the framebuffer. */
         };
+
+        Framebuffer() = default;
 
         /*!
          * \brief Constructs a Framebuffer object with the specified properties.
@@ -50,6 +52,8 @@ namespace IS {
          * \brief Destructor for cleaning up the framebuffer resources.
          */
         ~Framebuffer();
+
+        void Destroy();
 
         /*!
          * \brief Creates the framebuffer object.
@@ -95,6 +99,7 @@ namespace IS {
          * \return The color attachment ID.
          */
         GLuint GetColorAttachment() const;
+        GLuint GetEntityIDAttachment() const;
 
         /*!
          * \brief Sets the color attachment ID.

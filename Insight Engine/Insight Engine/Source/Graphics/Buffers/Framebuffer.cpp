@@ -21,6 +21,8 @@
 #include "Framebuffer.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Engine/Systems/Window/WindowSystem.h"
+#include "Debug/Utils/Assertion.h"
+#include "Graphics/Core/Graphics.h"
 
 namespace IS {
 
@@ -39,35 +41,42 @@ namespace IS {
 
     Framebuffer::Framebuffer(FramebufferProps const& properties) : mFramebufferID(0), mProps(properties) { Create(); }
 
+
+
     Framebuffer::~Framebuffer()
+    {
+
+        //glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
+    }
+
+    void Framebuffer::Destroy()
     {
         glDeleteFramebuffers(1, &mFramebufferID);
         glDeleteTextures(1, &mProps.mColorAttachment);
         glDeleteTextures(1, &mProps.mEntIDAttachment);
-        //glDeleteRenderbuffers(1, &mProps.mDepthAttachment);
     }
 
     void Framebuffer::Create()
     {
         // Create framebuffer object
-        glCreateFramebuffers(1, &mFramebufferID);
-        glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
+        GL_CALL(glCreateFramebuffers(1, &mFramebufferID));
+        GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID));
 
         // Create texture object color attachment
-        glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mColorAttachment);
-        glBindTexture(GL_TEXTURE_2D, mProps.mColorAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mProps.mWidth, mProps.mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mProps.mColorAttachment, 0);
+        GL_CALL(glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mColorAttachment));
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, mProps.mColorAttachment));
+        GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mProps.mWidth, mProps.mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+        GL_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mProps.mColorAttachment, 0));
 
-        glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mEntIDAttachment);
-        glBindTexture(GL_TEXTURE_2D, mProps.mEntIDAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, mProps.mWidth, mProps.mHeight, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mProps.mEntIDAttachment, 0);
+        GL_CALL(glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mEntIDAttachment));
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, mProps.mEntIDAttachment));
+        GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, mProps.mWidth, mProps.mHeight, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr));
+        GL_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mProps.mEntIDAttachment, 0));
 
         /*glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mDepthAttachment);
         glBindTexture(GL_TEXTURE_2D, mProps.mDepthAttachment);
@@ -93,8 +102,12 @@ namespace IS {
 
     void Framebuffer::Bind()
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID);
-
+        if (glIsFramebuffer(mFramebufferID))
+        {
+            GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, mFramebufferID));
+        }
+        else
+            std::cout << "urmumgay" << std::endl;
         // Set viewport to size of framebuffer
         glViewport(0, 0, mProps.mWidth, mProps.mHeight);
     }
@@ -131,6 +144,7 @@ namespace IS {
     }
 
     GLuint Framebuffer::GetColorAttachment() const { return mProps.mColorAttachment; }
+    GLuint Framebuffer::GetEntityIDAttachment() const { return mProps.mColorAttachment; }
 
     void Framebuffer::SetColorAttachment(GLuint color_attachment) { mProps.mColorAttachment = color_attachment; }
 

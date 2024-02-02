@@ -123,12 +123,13 @@ namespace IS {
 
 		
 		static void deleteTexture(Image& image);
-
+		static void Shutdown();
 
 		/// Static objects ///
 
 		// Frame Buffer
 		static std::shared_ptr<Framebuffer> mFramebuffer;
+		static Framebuffer mShaderFrameBuffer;
 
 		// Meshes vector
 		static std::vector<Mesh> meshes;
@@ -150,6 +151,7 @@ namespace IS {
 		static std::vector<Sprite::nonQuadInstanceData> lineInstances;
 		static std::vector<Sprite::nonQuadInstanceData> circleInstances;
 		static std::vector<Sprite::instanceData> lightInstances;
+		static std::vector<float> lightRadius;
 
 		// Editor and entity camera
 		static Camera3D cameras3D[2];

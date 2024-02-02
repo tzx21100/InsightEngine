@@ -36,6 +36,8 @@ namespace IS {
     // Frame Buffer
     std::shared_ptr<Framebuffer> ISGraphics::mFramebuffer;
 
+    Framebuffer ISGraphics::mShaderFrameBuffer;
+
     // Meshes vector
     std::vector<Mesh> ISGraphics::meshes;
 
@@ -58,6 +60,7 @@ namespace IS {
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::lineInstances;
     std::vector<Sprite::nonQuadInstanceData> ISGraphics::circleInstances;
     std::vector<Sprite::instanceData> ISGraphics::lightInstances;
+    std::vector<float> ISGraphics::lightRadius;
 
     // Editor and entity camera
     // Camera ISGraphics::cameras[2];
@@ -68,6 +71,8 @@ namespace IS {
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
+
+
 
     // Layering
     std::vector<Layering> ISGraphics::mLayers;
@@ -96,6 +101,8 @@ namespace IS {
         // create framebuffer
         Framebuffer::FramebufferProps props{ 0, 0, static_cast<GLuint>(width), static_cast<GLuint>(height) }; 
         mFramebuffer = std::make_shared<Framebuffer>(props);
+
+        mShaderFrameBuffer = Framebuffer(props);
 
         // initialize cameras
         for (int i{}; i < 2; ++i) {
@@ -150,13 +157,15 @@ namespace IS {
                                   static_cast<GLuint>(engine.GetEditorLayer()->GetViewportSize().y));
 
                 // bind framebuffer after resize
-                mFramebuffer->Bind();
+                 mFramebuffer->Bind();
 
                 // set clear color
                 glClearColor(0.f, 0.f, 0.f, 0.f);
 
                 // clear color buffer
                 glClear(GL_COLOR_BUFFER_BIT);
+
+                mFramebuffer->Unbind();
             }
         }
     #endif // USING_IMGUI
@@ -187,44 +196,43 @@ namespace IS {
                 if (sprite.primitive_type == GL_TRIANGLE_STRIP) {
                     // if sprite and it's layer is to be rendered
                     //if (Sprite::layersToIgnore.find(sprite.layer) == Sprite::layersToIgnore.end() && sprite.toRender) {
-                        // empty instance data
-                        Sprite::instanceData instData;
+                    // empty instance data
+                    Sprite::instanceData instData;
 
-                        // all quads will have xform, entityID, layer
-                        instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_3dcam_to_ndc_xform;
-                        instData.entID = static_cast<float>(entity);
-                        instData.layer = sprite.layer;
+                    // all quads will have xform, entityID, layer
+                    instData.model_to_ndc_xform = sprite.model_TRS.mdl_to_3dcam_to_ndc_xform;
+                    instData.entID = static_cast<float>(entity);
+                    instData.layer = sprite.layer;
 
-                        // quads with no texture
-                        if (sprite.img.texture_id == 0) {
-                            // copy sprite's color to instance data
-                            instData.color = sprite.color;
-                            // set to -1 to represent no texture
-                            instData.tex_index = -1.f;
-                        }
-                        // quad has a texture (animation too)
-                        else {
-                            // copy texture index
-                            instData.color = sprite.color;
-                            instData.tex_index = static_cast<float>(sprite.img.texture_index);
-                        }
+                    // quads with no texture
+                    if (sprite.img.texture_id == 0) {
+                        // copy sprite's color to instance data
+                        instData.color = sprite.color;
+                        // set to -1 to represent no texture
+                        instData.tex_index = -1.f;
+                    }
+                    // quad has a texture (animation too)
+                    else {
+                        // copy texture index
+                        instData.color = sprite.color;
+                        instData.tex_index = static_cast<float>(sprite.img.texture_index);
+                    }
 
-                        // if sprite is an animation
-                        if (!sprite.anims.empty()) {
-                            // copy animation data
-                            instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
-                            instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
-                        }
-                        // insert to multiset with comparator function
-                        layeredQuadInstances.insert(instData);
+                    // if sprite is an animation
+                    if (!sprite.anims.empty()) {
+                        // copy animation data
+                        instData.anim_frame_dimension = sprite.anims[sprite.animation_index].frame_dimension;
+                        instData.anim_frame_index = sprite.anims[sprite.animation_index].frame_index;
+                    }
+                    // insert to multiset with comparator function
+                    layeredQuadInstances.insert(instData);
 
-                        if (engine.HasComponent<Light>(entity))
-                        {
-                            auto& light = engine.GetComponent<Light>(entity);
-                            light.FollowTransform(trans.world_position);
-                            light.draw(static_cast<float>(entity));
-                        }
-                    //}
+                    if (engine.HasComponent<Light>(entity))
+                    {
+                        auto& light = engine.GetComponent<Light>(entity);
+                        light.FollowTransform(trans.world_position);
+                        light.draw(static_cast<float>(entity));
+                    }
                 }
 
                 // Debug draw
@@ -261,35 +269,74 @@ namespace IS {
         // loading fb texture onto quad
         //mFramebuffer->Bind();
 
+        //mLightsOn = false; //// TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+
+        if (mLightsOn)
+        {
+            mShaderFrameBuffer.Bind();
+            // set clear color
+            GL_CALL(glClearColor(0.f, 0.f, 0.f, 1.f));
+
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
+
+            // quads will be drawn first
+            if (mGlitched) // glitch effect
+                Sprite::draw_instanced_glitched_quads();
+            else
+                Sprite::draw_instanced_quads();
+            mShaderFrameBuffer.Unbind();
+        }
+
+        
         // bind fb
         if (engine.mRenderGUI)
         {
             mFramebuffer->Bind();
         }
 
-        // set clear color
-        glClearColor(0.f, 0.f, 0.f, 0.f);
+        if (!mLightsOn)
+        {
+            // set clear color
+            glClearColor(0.f, 0.f, 0.f, 0.f);
 
-        // clear color buffer
-        glClear(GL_COLOR_BUFFER_BIT);
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        /// get width and height, set viewport size
-        if (!engine.mRenderGUI) {
-            auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
-            glViewport(0, 0, width, height);
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
+
+            // quads will be drawn first
+            if (mGlitched) // glitch effect
+                Sprite::draw_instanced_glitched_quads();
+            else
+                Sprite::draw_instanced_quads();
         }
-    
-        // quads will be drawn first
-        if (mGlitched) // glitch effect
-            Sprite::draw_instanced_glitched_quads();
         else
-            Sprite::draw_instanced_quads();
+        {
+            // set clear color
+            glClearColor(0.f, 0.f, 0.f, 0.f);
 
-        // render lighting
-        if (mLightsOn)
-            Sprite::draw_lights();
-        else
-            lightInstances.clear();
+            // clear color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
+            /// get width and height, set viewport size
+            if (!engine.mRenderGUI) {
+                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                glViewport(0, 0, width, height);
+            }
+            // render lighting
+            if (mLightsOn)
+                Sprite::draw_lights();
+        }
 
     #ifdef USING_IMGUI
         if (!engine.mRuntime)
@@ -465,6 +512,10 @@ namespace IS {
         }
     }
 
-
+    void ISGraphics::Shutdown()
+    {
+        mFramebuffer->Destroy();
+        mShaderFrameBuffer.Destroy();
+    }
 
 } // end namespace IS

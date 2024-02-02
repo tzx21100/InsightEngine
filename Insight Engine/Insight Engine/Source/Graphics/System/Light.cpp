@@ -24,7 +24,9 @@
 #include "Graphics/Core/Graphics.h"
 
 namespace IS {
-	std::vector<glm::vec2> Light::lightPos;
+	std::vector<glm::vec2> Light::lightPos{};
+	std::vector<glm::vec4> Light::lightClr{};
+	std::vector<glm::vec4> Light::shadowLineSegments{};
 
 	void Light::draw(float attachedEntID)
 	{
@@ -38,8 +40,9 @@ namespace IS {
 			lightData.entID = attachedEntID; // to allow mousepicking past light
 
 			lightPos.emplace_back(mPosition.x, mPosition.y);
-
+			lightClr.emplace_back(lightData.color);
 			ISGraphics::lightInstances.emplace_back(lightData);
+			ISGraphics::lightRadius.emplace_back(mSize);
 		}
 	}
 

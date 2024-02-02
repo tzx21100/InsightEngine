@@ -258,7 +258,7 @@ namespace IS {
     }
 
     void Mesh::setupFBVAO() {
-        float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
+        std::vector<float> quadVertices = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
             // positions   // texCoords
             -1.0f,  1.0f,  0.0f, 1.0f,
             -1.0f, -1.0f,  0.0f, 0.0f,
@@ -269,20 +269,31 @@ namespace IS {
              1.0f,  1.0f,  1.0f, 1.0f
         };
 
-        // screen quad VAO
-        unsigned int quadVAO, quadVBO;
-        glGenVertexArrays(1, &quadVAO);
-        glGenBuffers(1, &quadVBO);
-        glBindVertexArray(quadVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+        // Generate a VAO handle to encapsulate the VBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
 
-        vao_ID = quadVAO;
-        vbo_ID = quadVBO;
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * quadVertices.size(), quadVertices.data(), 0);
+
+        // Bind the VBO to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Enable the position attribute
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Enable the texture coordinate attribute
+        glEnableVertexArrayAttrib(vao_hdl, 1);
+        glVertexArrayAttribFormat(vao_hdl, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord));
+        glVertexArrayAttribBinding(vao_hdl, 1, 0);
+
+        vao_ID = vao_hdl;
+        vbo_ID = vbo_hdl;
         draw_count = 6;
     }
 
