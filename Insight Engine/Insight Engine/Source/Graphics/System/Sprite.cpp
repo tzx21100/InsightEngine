@@ -306,7 +306,7 @@ namespace IS {
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfWorldLights");
         if (tex_arr_uniform >= 0)
-            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
+            glUniform1i(tex_arr_uniform, static_cast<int>(Light::lightPos.size()));
         else 
             IS_CORE_ERROR({ "uNoOfWorldLights Uniform not found, shader compilation failed?" });
 
