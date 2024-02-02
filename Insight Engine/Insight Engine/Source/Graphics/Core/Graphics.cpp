@@ -436,10 +436,14 @@ namespace IS {
         mTexts.insert({ "Times_New_Roman", temp });
         mTexts.insert({ "BRUSHSCI", temp });
         mTexts.insert({ "Poiret_One_Regular", temp });
+        mTexts.insert({ "MedusaGothic-D", temp });
+        mTexts.insert({ "Semplicita-Light", temp });
 
         mTexts["Times_New_Roman"].initText("Assets/Fonts/Times-New-Roman.ttf");
         mTexts["BRUSHSCI"].initText("Assets/Fonts/BRUSHSCI.ttf");
         mTexts["Poiret_One_Regular"].initText("Assets/Fonts/PoiretOne-Regular.ttf");
+        mTexts["Poiret_One_Regular"].initText("Assets/Fonts/MedusaGothic-D.otf");
+        mTexts["Poiret_One_Regular"].initText("Assets/Fonts/Semplicita-Light.otf");
 
         // init text objects
         //Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");

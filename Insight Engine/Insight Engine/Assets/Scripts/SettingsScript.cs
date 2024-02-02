@@ -27,16 +27,30 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
-        static private int not_available_entity;
-        static SimpleImage not_available_image;
-        static Vector2D not_available_pos = new Vector2D(0, 0);
+        static private int background_entity;
+        static private int settings_overlay_entity;
+        static private int back_button_entity;
+
+        static SimpleImage background_image;
+        static SimpleImage settings_overlay_image;
+        static SimpleImage back_button_image;
+
+        static Vector2D background_pos = new Vector2D(0, 0);
+        static Vector2D settings_overlay_pos = new Vector2D(0, 0);
+        static Vector2D back_button_pos = new Vector2D(0, 0);
 
 
         static public void Init()
         {
             show_settings = false;
-            not_available_image = InternalCalls.GetSpriteImage("not_available.png");
-            not_available_entity = InternalCalls.CreateEntityUI("Not Available", not_available_image);
+
+            background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
+            settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
+            back_button_image = InternalCalls.GetSpriteImage("back_button.png");
+
+            background_entity = InternalCalls.CreateEntityUI("Background", background_image);
+            settings_overlay_entity = InternalCalls.CreateEntityUI("Settings Overlay", settings_overlay_image);
+            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
         }
 
         static public void Update()
@@ -56,10 +70,19 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            Vector2D not_available = new Vector2D(0.85f * win_dimension.x, 0.75f * win_dimension.y);
-            InternalCalls.TransformSetScaleEntity(not_available.x, not_available.y, not_available_entity);
-            not_available_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
+            // Dimensions
+            Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D settings_overlay = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D back = new Vector2D(0.35f * win_dimension.x, 0.35f * win_dimension.y);
 
+            InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
+            InternalCalls.TransformSetScaleEntity(settings_overlay.x, settings_overlay.y, settings_overlay_entity);
+            InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
+
+            // Positions    
+            background_pos.Set(camera_pos.x, camera_pos.y);
+            settings_overlay_pos.Set(camera_pos.x, camera_pos.y);
+            back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -84,18 +107,15 @@ namespace IS
                   
             }
 
-            if(InternalCalls.KeyPressed(32)) //press space to get rid of popup 
-            {
-                show_settings = false;
-            }
-
             if (show_settings)
             {
-                DrawNotAvailable(); //temp
+                InternalCalls.SetLightsToggle(false);
+                DrawSettings(); 
             }
             else
             {
-                HideNotAvailable(); //temp
+                InternalCalls.SetLightsToggle(true);
+                HideSettings(); 
             }
         }
 
@@ -103,14 +123,18 @@ namespace IS
         {
 
         }
-        static private void DrawNotAvailable()
+        static private void DrawSettings()
         {
-            InternalCalls.TransformSetPositionEntity(not_available_pos.x, not_available_pos.y, not_available_entity);
+            InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
+            InternalCalls.TransformSetPositionEntity(settings_overlay_pos.x, settings_overlay_pos.y, settings_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity); 
         }
 
-        static private void HideNotAvailable()
+        static private void HideSettings()
         {
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, not_available_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, background_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 
         }
 
 

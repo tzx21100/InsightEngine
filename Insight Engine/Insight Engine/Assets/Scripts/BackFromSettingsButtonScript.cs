@@ -1,11 +1,11 @@
 /*!
- * \file BackFromTutorialButtonScript.cs
+ * \file BackFromSettingsButtonScript.cs
  * \author Wu Zekai, zekai.wu@digipen.edu
  * \par Course: CSD2401
  * \date 26-11-2023
  * \brief
- * This header file contains the BackFromTutorialButtonScript class, used for the back 
- * button in how to play scene
+ * This header file contains the BackFromSettingsButtonScript class, used for the back 
+ * button in settings
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -16,19 +16,26 @@
 using System.Runtime.CompilerServices;
 namespace IS
 {
-    class BackFromTutorialButtonScript
+    class BackFromSettingsButtonScript
     {
         static public bool first_hover = false;
+        static SimpleImage back_button_image;
+        static SimpleImage back_button_hovered_image;
 
         static public void Init()
         {
+            back_button_image = InternalCalls.GetSpriteImage("back_button.png");
+            back_button_hovered_image = InternalCalls.GetSpriteImage("back_button_hovered.png");
+
         }
 
         static public void Update()
         {
+            InternalCalls.SetSpriteImage(back_button_image);
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
+                InternalCalls.SetSpriteImage(back_button_hovered_image);
                 //hovering
                 if (!first_hover)
                 {
@@ -46,7 +53,7 @@ namespace IS
             {
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
-                HowToPlayScript.show_how_to_play = false;
+                SettingsScript.show_settings = false;
             }
         }
 

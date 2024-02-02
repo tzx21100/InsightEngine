@@ -28,24 +28,29 @@ namespace IS
         static float camera_zoom = 0f;
 
         // How To Play Panel
-        static private int how_to_play_entity;
+        static private int background_entity;
+        static private int how_to_play_overlay_entity;
         static private int back_button_entity;
 
-        static SimpleImage how_to_play_image;
+        static SimpleImage background_image;
+        static SimpleImage how_to_play_overlay_image;
         static SimpleImage back_button_image;
 
-        static Vector2D how_to_play_pos = new Vector2D(0, 0);
+        static Vector2D background_pos = new Vector2D(0, 0);
+        static Vector2D how_to_play_overlay_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
         static public void Init()
         {
             show_how_to_play = false;
 
-            how_to_play_image = InternalCalls.GetSpriteImage("how_to_play_image.png");
+            background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
+            how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
-            how_to_play_entity = InternalCalls.CreateEntityUI("How To Play", how_to_play_image);
-            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromTutorialButtonScript"); //see script
+            background_entity = InternalCalls.CreateEntityUI("Background", background_image);
+            how_to_play_overlay_entity = InternalCalls.CreateEntityUI("How To Play Overlay", how_to_play_overlay_image);
+            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromHowToPlayButtonScript");
             
         }
 
@@ -66,15 +71,18 @@ namespace IS
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
             // Dimensions
-            Vector2D how_to_play = new Vector2D(win_dimension.x, win_dimension.y);
-            Vector2D back = new Vector2D(0.23f * win_dimension.x, 0.13f * win_dimension.y);           
+            Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D how_to_play_overlay = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D back = new Vector2D(0.35f * win_dimension.x, 0.35f * win_dimension.y);     
 
-            InternalCalls.TransformSetScaleEntity(how_to_play.x, how_to_play.y, how_to_play_entity);
+            InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
+            InternalCalls.TransformSetScaleEntity(how_to_play_overlay.x, how_to_play_overlay.y, how_to_play_overlay_entity);
             InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
 
             // Positions    
-            how_to_play_pos.Set(camera_pos.x, camera_pos.y);
-            back_button_pos.Set(origin.x + (0.16f * win_dimension.x), origin.y + (0.8f * win_dimension.y));
+            background_pos.Set(camera_pos.x, camera_pos.y);
+            how_to_play_overlay_pos.Set(camera_pos.x, camera_pos.y);
+            back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
             //hover
             if (InternalCalls.GetButtonState() == 1)
@@ -116,14 +124,16 @@ namespace IS
 
         static public void DrawHowToPlay()
         {
-            InternalCalls.TransformSetPositionEntity(how_to_play_pos.x, how_to_play_pos.y, how_to_play_entity);
+            InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
+            InternalCalls.TransformSetPositionEntity(how_to_play_overlay_pos.x, how_to_play_overlay_pos.y, how_to_play_overlay_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
         }
 
         static public void HideHowToPlay()
         {
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, how_to_play_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, background_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, how_to_play_overlay_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity);
         }
     }
