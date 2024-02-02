@@ -17,7 +17,7 @@ uniform int type_of_light;
 uniform float ilovetime;
 
 uniform sampler2D bg_tex; // background framebuffer texture
-uniform sampler2D id_tex; // ID framebuffer texture
+uniform isampler2D id_tex; // ID framebuffer texture
 uniform sampler2D shadowMap; // Shadow map texture
 
 // Function to check if two line segments intersect
@@ -132,6 +132,6 @@ void main() {
         fFragColor = final_frag_clr;    
     }
 
-    float id = texelFetch(id_tex, ivec2(gl_FragCoord.xy), 0).r;
+    int id = texture(id_tex, vTexCoord).x;
     fEntityID = int(id); // Entity ID from ID texture
 }

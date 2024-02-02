@@ -76,6 +76,9 @@ namespace IS {
         GL_CALL(glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mEntIDAttachment));
         GL_CALL(glBindTexture(GL_TEXTURE_2D, mProps.mEntIDAttachment));
         GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, mProps.mWidth, mProps.mHeight, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+        GL_CALL(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
         GL_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, mProps.mEntIDAttachment, 0));
 
         /*glCreateTextures(GL_TEXTURE_2D, 1, &mProps.mDepthAttachment);
