@@ -326,9 +326,21 @@ namespace IS {
         else 
             IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
 
+        
+        glm::vec2 resolution{};
         InsightEngine& engine = InsightEngine::Instance();
-        auto const& [width, height] = engine.GetWindowSize();
-        glm::vec2 resolution = { width, height };
+        auto const& editor_layer = engine.GetEditorLayer();
+        if (engine.mRenderGUI)
+        {
+            // Use the viewport size from the editor layer
+            resolution.x = editor_layer->GetViewportSize().x;
+            resolution.y = editor_layer->GetViewportSize().y;
+        }
+        else {
+            auto const& [width, height] = engine.GetWindowSize();
+            resolution.x = static_cast<float>(width);
+            resolution.y = static_cast<float>(height);
+        }
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
         if (tex_arr_uniform >= 0)
             glUniform2fv(tex_arr_uniform, 1, &resolution.x);
@@ -369,7 +381,7 @@ namespace IS {
         //    IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
 
         // draw instanced quads
-        //GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
+        // GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
         // GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, 1));
         GL_CALL(glDrawArrays(GL_TRIANGLES, 0, ISGraphics::meshes[5].draw_count));
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
