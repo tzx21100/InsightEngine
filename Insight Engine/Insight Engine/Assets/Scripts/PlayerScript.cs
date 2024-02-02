@@ -1469,9 +1469,8 @@ namespace IS
                 // player get hit back
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;
-                InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 20f);
+                InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 50f);
                 InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
-                //Console.WriteLine(dir);
                 //reset
                 hori_movement = 0;
                 InternalCalls.SetSpriteImage(player_idle);
