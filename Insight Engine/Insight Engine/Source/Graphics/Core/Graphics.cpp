@@ -275,7 +275,7 @@ namespace IS {
         {
             mShaderFrameBuffer.Bind();
             // set clear color
-            GL_CALL(glClearColor(0.f, 0.f, 0.f, 1.f));
+            GL_CALL(glClearColor(0.f, 0.f, 0.f, 0.f));
 
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
