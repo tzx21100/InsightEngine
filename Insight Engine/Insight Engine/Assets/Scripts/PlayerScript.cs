@@ -394,7 +394,7 @@ namespace IS
                     dash_timer = dash_set;
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
-                    InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+                    InternalCalls.AudioPlaySound("PlayerDeath.wav", false, 0.2f);
                     
                     for (int i = 0; i < 36; i++)
                     {
@@ -523,6 +523,7 @@ namespace IS
                 //allow dashing when climbing
                 canDash = true;
                 isGrounded = true;
+                jump_amount = jump_amount_set; //allow double dash
 
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);

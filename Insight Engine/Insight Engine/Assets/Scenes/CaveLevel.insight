@@ -2679,7 +2679,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.058333814144134521,
 						"time_per_frame" : 0.083333335816860199,
@@ -3093,7 +3093,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.058333814144134521,
 						"time_per_frame" : 0.083333335816860199,
@@ -3507,7 +3507,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.058333814144134521,
 						"time_per_frame" : 0.083333335816860199,
@@ -4250,7 +4250,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
@@ -4968,7 +4968,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
@@ -5401,7 +5401,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
@@ -5528,7 +5528,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 3.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 2.0,
 						"frame_timer" : 0.022206047549843788,
 						"time_per_frame" : 0.083333335816860199,
@@ -5642,7 +5642,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.058333814144134521,
 						"time_per_frame" : 0.083333335816860199,
@@ -5760,7 +5760,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
@@ -5878,7 +5878,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
@@ -5996,7 +5996,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 6.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
@@ -6227,7 +6227,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
@@ -6358,7 +6358,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
@@ -6497,7 +6497,7 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
 						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
@@ -8367,7 +8367,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : -4805.0185546875,
-						"Y" : 723.254150390625
+						"Y" : 742.8052978515625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -8383,19 +8383,19 @@
 					[
 						{
 							"x" : -397.3216552734375,
-							"y" : 73.528717041015625
+							"y" : 50.439426422119141
 						},
 						{
 							"x" : 397.3216552734375,
-							"y" : 73.528717041015625
+							"y" : 50.439426422119141
 						},
 						{
 							"x" : 397.3216552734375,
-							"y" : -73.528717041015625
+							"y" : -50.439426422119141
 						},
 						{
 							"x" : -397.3216552734375,
-							"y" : -73.528717041015625
+							"y" : -50.439426422119141
 						}
 					]
 				},
@@ -8445,18 +8445,18 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 794.643310546875,
-				"SpriteTransformScalingY" : 147.05743408203125,
+				"SpriteTransformScalingY" : 100.87885284423828,
 				"SpriteTransformWorldPositionX" : -4805.0185546875,
-				"SpriteTransformWorldPositionY" : 723.254150390625,
+				"SpriteTransformWorldPositionY" : 742.8052978515625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 794.643310546875,
-				"TransformScalingY" : 147.05743408203125,
+				"TransformScalingY" : 100.87885284423828,
 				"TransformWorldPositionX" : -4805.0185546875,
-				"TransformWorldPositionY" : 723.254150390625
+				"TransformWorldPositionY" : 742.8052978515625
 			}
 		},
 		{
@@ -9246,19 +9246,19 @@
 					[
 						{
 							"x" : -197.89328002929688,
-							"y" : 73.528717041015625
+							"y" : 57.666500091552734
 						},
 						{
 							"x" : 197.89328002929688,
-							"y" : 73.528717041015625
+							"y" : 57.666500091552734
 						},
 						{
 							"x" : 197.89328002929688,
-							"y" : -73.528717041015625
+							"y" : -57.666500091552734
 						},
 						{
 							"x" : -197.89328002929688,
-							"y" : -73.528717041015625
+							"y" : -57.666500091552734
 						}
 					]
 				},
@@ -9308,7 +9308,7 @@
 				"SpriteTextureWidth" : 0,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 395.78656005859375,
-				"SpriteTransformScalingY" : 147.05743408203125,
+				"SpriteTransformScalingY" : 115.33300018310547,
 				"SpriteTransformWorldPositionX" : -7257.7900390625,
 				"SpriteTransformWorldPositionY" : 766.486083984375,
 				"animations" : []
@@ -9317,7 +9317,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 395.78656005859375,
-				"TransformScalingY" : 147.05743408203125,
+				"TransformScalingY" : 115.33300018310547,
 				"TransformWorldPositionX" : -7257.7900390625,
 				"TransformWorldPositionY" : 766.486083984375
 			}
