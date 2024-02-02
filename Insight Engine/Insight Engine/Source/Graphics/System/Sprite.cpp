@@ -238,12 +238,11 @@ namespace IS {
     void Sprite::draw_lights() {
         GLuint clr_attach_id = ISGraphics::mShaderFrameBuffer.GetColorAttachment(); // texture ID
         GLuint entt_attach_id = ISGraphics::mShaderFrameBuffer.GetEntityIDAttachment();
-        std::vector<glm::vec4> line = {
-            glm::vec4(-100.f, 100.f, 100.f, 100.f),
-            glm::vec4(100.f, 100.f, 100.f, -100.f),
-            glm::vec4(100.f, -100.f, -100.f, -100.f),
-            glm::vec4(-100.f, -100.f, -100.f, 100.f)
-        };
+        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, 100.f, 100.f, 100.f));
+        Light::shadowLineSegments.emplace_back(glm::vec4(100.f, 100.f, 100.f, -100.f));
+        Light::shadowLineSegments.emplace_back(glm::vec4(100.f, -100.f, -100.f, -100.f));
+        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, -100.f, -100.f, 100.f));
+
 
         //std::vector<glm::vec2> lightPos;
 
@@ -313,17 +312,17 @@ namespace IS {
         else 
             IS_CORE_ERROR({ "uNoOfWorldLights Uniform not found, shader compilation failed?" });
 
-        if (!line.empty()) {
+        if (!Light::shadowLineSegments.empty()) {
             tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uLineSegments");
             if (tex_arr_uniform >= 0)
-                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(line.size()), reinterpret_cast<const GLfloat*>(line.data()));
+                glUniform4fv(tex_arr_uniform, static_cast<GLsizei>(Light::shadowLineSegments.size()), reinterpret_cast<const GLfloat*>(Light::shadowLineSegments.data()));
             else
                 IS_CORE_ERROR("uLineSegments Uniform not found, shader compilation failed?");
         }
 
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uNoOfLineSegments");
         if (tex_arr_uniform >= 0)
-            glUniform1i(tex_arr_uniform, static_cast<int>(line.size()));
+            glUniform1i(tex_arr_uniform, static_cast<int>(Light::shadowLineSegments.size()));
         else 
             IS_CORE_ERROR({ "uNoOfLineSegments Uniform not found, shader compilation failed?" });
 
@@ -379,6 +378,7 @@ namespace IS {
         ISGraphics::lightInstances.clear();
         Light::lightPos.clear();
         Light::lightClr.clear();
+        Light::shadowLineSegments.clear();
     }
 
     void Sprite::draw_picked_entity_border() {

@@ -26,6 +26,7 @@
 namespace IS {
 	std::vector<glm::vec2> Light::lightPos{};
 	std::vector<glm::vec4> Light::lightClr{};
+	std::vector<glm::vec4> Light::shadowLineSegments{};
 
 	void Light::draw(float attachedEntID)
 	{
