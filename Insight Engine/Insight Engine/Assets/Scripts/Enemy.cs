@@ -57,7 +57,7 @@ namespace IS
     class EachEnemy
     {
         // common
-        public float speed = 100f;
+        public float speed = 150f;
         private Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(257f, 183f);
@@ -72,28 +72,41 @@ namespace IS
 
         // attack
         SimpleImage enemy_attack1;
-        public Vector2D view_port = new Vector2D(1000f, 500f);
+        SimpleImage enemy_attack2;
+        private int current_attack;
+        public Vector2D view_port_pos = new Vector2D(0f, 0f);
+        public Vector2D view_port_area = new Vector2D(500f, 200f);
+        private float attack_timer_duration = 1f;
+        private float attack_timer = 1f;
+        private float attack_hit_timer = 0.4f;
+        private bool initialAttack = false;
+        public Vector2D attack_pos = new Vector2D(0f, 0f);
+        public Vector2D attack_area = new Vector2D(200f, 200f);
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
         SimpleImage check_point;
 
         // enemy patrol
+        SimpleImage enemy_idle;
         public Vector2D enemy_left_point = new Vector2D(0f, 0f);
         public Vector2D enemy_right_point = new Vector2D(0f, 0f);
         public Vector2D target_point = new Vector2D(0f, 0f);
         public float enemy_patrol_distance = 500f;
-        public float enemy_rest_timer_duration = 2f;
+        public float enemy_rest_timer_duration = 1f;
         public float enemy_rest_timer = 0f;
         public bool going_left;
 
         // states
-        EnemyState previous_state;
+        //EnemyState previous_state;
         EnemyState current_state;
-        public bool isPatrolling;
+        /*public bool isPatrolling;
         public bool isAttacking;
         public bool isFollowingPlayer;
-        public bool isDead;
+        public bool isDead;*/
+
+        // enemy inof
+        public float health = 100f;
 
         //static private int get_hit_vfx_entity;
         public void Init()
@@ -109,9 +122,16 @@ namespace IS
             enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             check_point = InternalCalls.GetSpriteImage("dark_circle.png");
             enemy_attack1 = InternalCalls.GetSpriteImage("enemy_attack1.png");
+            enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
+            enemy_idle = InternalCalls.GetSpriteImage("Enemy_Idle.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             //InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
+
+            // animation 
+            InternalCalls.ResetAnimations();
+            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 22, 1f);
 
             // enemy patrol
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -121,12 +141,13 @@ namespace IS
             going_left = true;
 
             // init states
-            previous_state = (EnemyState)(-1);
+            //previous_state = (EnemyState)(-1);
             current_state = EnemyState.PATROLLING;
-            isPatrolling = true;
+            /*isPatrolling = true;
             isAttacking = false;
             isFollowingPlayer = false;
-            isDead = false;
+            isDead = false;*/
+
         }
 
         public void update()
@@ -142,7 +163,7 @@ namespace IS
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             enemy_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
-            
+
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
             /*if (isHit)
@@ -193,7 +214,7 @@ namespace IS
 
         public void GetHitByPlayer(Vector2D vec)
         {
-            previous_state = current_state;
+            //previous_state = current_state;
             current_state = EnemyState.BEING_HIT;
             direction = vec;
         }
@@ -218,11 +239,20 @@ namespace IS
             InternalCalls.TransformSetRotationEntity(0f, 0f, get_hit_vfx_entity);*/
             InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(enemy_left_point.x, enemy_left_point.y), 0, new SimpleVector2D(200f, 200f), check_point, 1f, 4
+                    new SimpleVector2D(enemy_left_point.x, enemy_left_point.y), 0, new SimpleVector2D(100f, 100f), check_point, 1f, 6
                 );
             InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(enemy_right_point.x, enemy_right_point.y), 0, new SimpleVector2D(200f, 200f), check_point, 1f, 4
+                    new SimpleVector2D(enemy_right_point.x, enemy_right_point.y), 0, new SimpleVector2D(100f, 100f), check_point, 1f, 6
+                );
+
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(view_port_pos.x, view_port_pos.y), 0, new SimpleVector2D(view_port_area.x, view_port_area.y), check_point, 0.2f, 6
+                );
+            InternalCalls.DrawImageAt
+                (
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_area.x, attack_area.y), check_point, 0.3f, 6
                 );
         }
 
@@ -232,6 +262,8 @@ namespace IS
             {
                 scaling.x *= -1; // flip the enemy over
             }
+            view_port_pos = new Vector2D(enemy_pos.x + MathF.Sign(-direction.x) * view_port_area.x / 2, enemy_pos.y);
+            attack_pos = new Vector2D(enemy_pos.x + MathF.Sign(-direction.x) * attack_area.x / 2, enemy_pos.y);
         }
 
         static public void EnemyCollidingPlayer()
@@ -263,7 +295,7 @@ namespace IS
                 }
                 //Console.WriteLine(PlayerScript.colliding_enemy_id);
             }
-            
+
         }
 
         private void EnemyGetHit()
@@ -286,7 +318,8 @@ namespace IS
             if (being_hit_timer > 0.5f)
             {
                 //isHit = false;
-                current_state = previous_state; // back to previous state
+                //current_state = previous_state; // back to previous state
+                current_state = EnemyState.FOLLOWING_PLAYER;
                 initialHit = false;
                 being_hit_timer = 0f;
             }
@@ -356,6 +389,7 @@ namespace IS
             direction.x = target_point.x - enemy_pos.x;
             // set enemy vel
             enemy_vel.x = speed * MathF.Sign(direction.x);
+            direction.x = -direction.x;// going left is positive, right is negative
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
 
@@ -365,34 +399,155 @@ namespace IS
             switch (current_state)
             {
                 case EnemyState.PATROLLING:
+                    Console.WriteLine("patrolling");
                     EnemyPatrolling();
                     break;
                 case EnemyState.FOLLOWING_PLAYER:
+                    Console.WriteLine("following player");
+                    EnemyFollowingPlayer();
                     break;
                 case EnemyState.ATTACKING:
+                    Console.WriteLine("attacking");
                     EnemyAttacking();
                     break;
                 case EnemyState.BEING_HIT:
+                    Console.WriteLine("being hit");
                     EnemyGetHit();
                     break;
                 case EnemyState.DEAD:
+                    Console.WriteLine("dead");
                     break;
             }
         }
 
         private void EnemyChangeState()
         {
+            // if no health bar, then dead
+            if (health <= 0f)
+            {
+                current_state = EnemyState.DEAD;
+                return;
+            }
 
+
+            if (current_state == EnemyState.PATROLLING || current_state == EnemyState.FOLLOWING_PLAYER)
+            {
+                InternalCalls.SetSpriteImage(enemy_idle);
+                InternalCalls.SetSpriteAnimationIndex(0);
+            }
+
+            switch (current_state)
+            {
+                case EnemyState.PATROLLING:
+
+                    if (PlayerInSight())
+                    {
+                        current_state = EnemyState.FOLLOWING_PLAYER;
+                    }
+
+                    break;
+                case EnemyState.FOLLOWING_PLAYER:
+                    break;
+                case EnemyState.ATTACKING:
+                    break;
+                case EnemyState.BEING_HIT:
+                    break;
+                case EnemyState.DEAD:
+                    break;
+            }
         }
 
         private void EnemyFollowingPlayer()
         {
+            float dist = PlayerScript.player_pos.x - enemy_pos.x;
+            //Console.WriteLine(dist);
+            if (MathF.Abs(dist) < 200f) // attack player
+            {
+                Random rnd = new Random();
+                current_attack = rnd.Next(0, 2);
+                current_state = EnemyState.ATTACKING;
+                return;
+            }
 
+            if (enemy_pos.x < enemy_left_point.x || enemy_pos.x > enemy_right_point.x || !PlayerInSight())
+            {
+                current_state = EnemyState.PATROLLING;
+                //return;
+            }
+
+            direction.x = PlayerScript.player_pos.x - enemy_pos.x;
+            // set enemy vel
+            enemy_vel.x = speed * MathF.Sign(direction.x) * 2f;
+            direction.x = -direction.x;// going left is positive, right is negative
+            InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
 
         private void EnemyAttacking()
         {
+            /*Random rnd = new Random();
+            int rand = rnd.Next(0, 2);*/
+            switch (current_attack)
+            {
+                case 0:
+                    InternalCalls.SetSpriteImage(enemy_attack1);
+                    break;
+                case 1:
+                    InternalCalls.SetSpriteImage(enemy_attack2);
+                    break;
+            }
+            InternalCalls.SetSpriteAnimationIndex(1);
+            attack_timer -= InternalCalls.GetDeltaTime();
+            if (attack_timer < attack_hit_timer && attack_timer > 0.2f) // atack timing 0.4s to 0.2s
+            {
+                if (!initialAttack && PlayerInAttackRange())
+                {
+                    // enemy attack sound
+
+                    PlayerScript.is_colliding_enemy = true;
+                    PlayerScript.colliding_enemy_id = ENEMY_ID;
+
+                    initialAttack = true;
+                }
+            }
             
+            if (attack_timer <= 0f)
+            {
+                attack_timer = attack_timer_duration;
+                initialAttack = false;
+                current_state = EnemyState.FOLLOWING_PLAYER;
+            }
+        }
+
+        private bool PlayerInSight()
+        {
+            // check if enemy has see player
+            Vector2D min = new Vector2D(view_port_pos.x - view_port_area.x / 2, view_port_pos.y - view_port_area.y / 2);
+            Vector2D max = new Vector2D(view_port_pos.x + view_port_area.x / 2, view_port_pos.y + view_port_area.y / 2);
+            if (PlayerScript.player_pos.x > min.x && PlayerScript.player_pos.x < max.x &&
+                PlayerScript.player_pos.y > min.y && PlayerScript.player_pos.y < max.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool PlayerInAttackRange()
+        {
+            // check if player in attack range
+            Vector2D min = new Vector2D(attack_pos.x - attack_area.x / 2, attack_pos.y - attack_area.y / 2);
+            Vector2D max = new Vector2D(attack_pos.x + attack_area.x / 2, attack_pos.y + attack_area.y / 2);
+            if (PlayerScript.player_pos.x > min.x && PlayerScript.player_pos.x < max.x &&
+                               PlayerScript.player_pos.y > min.y && PlayerScript.player_pos.y < max.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void DrawHealthBar()
