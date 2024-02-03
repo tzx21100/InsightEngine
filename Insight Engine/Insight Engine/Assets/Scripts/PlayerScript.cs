@@ -82,6 +82,9 @@ namespace IS
         static SimpleImage player_reward_wallclimb;
         static SimpleImage player_attack;
         static SimpleImage player_being_hit;
+        static SimpleImage player_attack1;
+        static SimpleImage player_attack2;
+        static SimpleImage player_attack3;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -232,6 +235,9 @@ namespace IS
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
             player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
             player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
+            player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
+            player_attack2 = InternalCalls.GetSpriteImage("player_attack1.png");
+            player_attack3 = InternalCalls.GetSpriteImage("player_attack1.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -1263,13 +1269,13 @@ namespace IS
                     switch (combo_step)
                     {
                         case 1:
-                            InternalCalls.SetSpriteImage(player_idle);
+                            InternalCalls.SetSpriteImage(player_attack1);
                             break;
                         case 2:
-                            InternalCalls.SetSpriteImage(player_idle);
+                            InternalCalls.SetSpriteImage(player_attack2);
                             break;
                         case 3:
-                            InternalCalls.SetSpriteImage(player_idle);
+                            InternalCalls.SetSpriteImage(player_attack3);
                             break;
                     }
 
