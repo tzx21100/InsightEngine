@@ -8,7 +8,7 @@ in VS_OUT{
 } fs_in;
 
 uniform sampler2DArray text; // texture array
-uniform int letterMap[400];
+uniform int letterMap[128];
 uniform vec3 textColor;
 
 void main()

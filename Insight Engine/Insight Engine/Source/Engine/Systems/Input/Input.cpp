@@ -47,7 +47,7 @@ namespace IS {
             if (!(input.mWindow->IsFullScreen() || width == 0 || height == 0))
             {
                 input.mWindow->SetWindowSize(width, height);
-                ISGraphics::InitFonts();
+                // ISGraphics::InitFonts();
                 IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
             }
         });

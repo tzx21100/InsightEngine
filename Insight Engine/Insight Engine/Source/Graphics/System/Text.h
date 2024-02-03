@@ -96,7 +96,7 @@ namespace IS {
          * @param scale The overall scale factor for the text rendering.
          * @param color The color of the rendered text, specified as a glm::vec3 (RGB).
          */
-        static void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
+        void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
         
         /**
          * @brief Render all the queued text rendering calls.
@@ -104,7 +104,7 @@ namespace IS {
          * This function iterates through the list of text rendering calls and renders each of them.
          * After rendering, it clears the list of render calls.
          */
-        void renderAllText();
+        static void renderAllText(std::unordered_map<std::string, Text>& textMap);
 
         /// Holds all state information relevant to a character as loaded using FreeType
         struct Character {
@@ -120,9 +120,9 @@ namespace IS {
         unsigned int text_vao{};                        // VAO for text rendering.
         unsigned int text_vbo{};                        // VBO for text rendering.
         GLuint textureArray{};                          // Texture array for storing glyph textures.
-        std::vector<glm::mat4> transforms;            // Transforms for text rendering.
-        std::vector<int> letterMap;                   // Letter map for text rendering.
-        const int ARRAY_LIMIT = 100;         // The maximum limit for text rendering.
+        std::vector<glm::mat4> transforms{};            // Transforms for text rendering.
+        std::vector<int> letterMap{};                   // Letter map for text rendering.
+        const int ARRAY_LIMIT = 128;         // The maximum limit for text rendering.
         const int base_size = 256;                    // The base size for text rendering.
 
     private:
@@ -148,7 +148,7 @@ namespace IS {
          * It holds information such as text content, scaling factors, scale, and color for each rendering call.
          * The vector is static to ensure that it is shared among all instances of the Text class.
          */
-        static std::vector<TextRenderCall> renderCalls;
+       std::vector<TextRenderCall> renderCalls;
     };
 }
 

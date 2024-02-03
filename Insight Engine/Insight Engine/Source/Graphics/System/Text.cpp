@@ -32,7 +32,6 @@ namespace IS {
     std::vector<int> Text::letterMap;*/
 
     Shader Text::textShader;
-    std::vector<Text::TextRenderCall> Text::renderCalls;
 
     void Text::drawTextAnimation(std::string const& str1, std::string const& str2, float dt, Text& font1, Text& font2) {
         // set static timer and condition
@@ -275,12 +274,12 @@ namespace IS {
                 // Render the character as a quad
                 x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
                 char_index++;
+            }
 
-                // Perform a render call if the character limit is reached
-                if (char_index == ARRAY_LIMIT - 1) {
-                    textRenderCall(char_index);
-                    char_index = 0;
-                }
+            // Perform a render call if the character limit is reached
+            if (char_index == ARRAY_LIMIT - 1) {
+                textRenderCall(char_index);
+                char_index = 0;
             }
         }
 
@@ -296,7 +295,7 @@ namespace IS {
 
 
     void Text::textRenderCall(int length) {
-        if (length != 0) {
+        if (length != 0 && !transforms.empty() && !letterMap.empty()) {
             // Set the transformation matrices and character texture IDs
             glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "transforms"), length, GL_FALSE, &transforms[0][0][0]);
             glUniform1iv(glGetUniformLocation(textShader.getHandle(), "letterMap"), length, &letterMap[0]);
@@ -310,10 +309,16 @@ namespace IS {
         renderCalls.push_back({ text, widthScalar, heightScalar, scale, color });
     }
 
-    void Text::renderAllText() {
-        for (const auto& renderCall : renderCalls) {
-            renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
+    void Text::renderAllText(std::unordered_map<std::string, Text>& textMap) {
+        for (auto& [font, text] : textMap) {
+            if (text.renderCalls.empty()) continue;
+
+            for (const auto& renderCall : text.renderCalls) {
+                text.renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
+            }
+            text.renderCalls.clear();
         }
-        renderCalls.clear(); // Clear the render calls after rendering
+        
+        // renderCalls.clear(); // Clear the render calls after rendering
     }
 }

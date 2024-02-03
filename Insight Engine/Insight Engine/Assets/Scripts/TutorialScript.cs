@@ -19,7 +19,7 @@ namespace IS
 
             if (tutorial_state == 1)
             {
-                InternalCalls.RenderText("Press A and D to move", 0.5f, 0.3f, 20, (1f, 1f, 1f));
+                //InternalCalls.RenderText("Press A and D to move", 0.5f, 0.3f, 20, (1f, 1f, 1f));
                 if(PlayerScript.player_pos.x > -7600)
                 {
                     tutorial_state++;
@@ -29,7 +29,7 @@ namespace IS
             if (tutorial_state == 2)
             {
 
-                InternalCalls.RenderText("Press Space To Jump", 0.5f, 0.3f, 20, (1f, 1f, 1f));
+                //InternalCalls.RenderText("Press Space To Jump", 0.5f, 0.3f, 20, (1f, 1f, 1f));
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                 {
                     tutorial_state++;
@@ -51,7 +51,7 @@ namespace IS
             if (tutorial_state == 4)
             {
 
-                InternalCalls.RenderText("Hold Space To Jump Further!", 0.5f, 0.3f, 20, (1f, 1f, 1f));
+                //InternalCalls.RenderText("Hold Space To Jump Further!", 0.5f, 0.3f, 20, (1f, 1f, 1f));
                 if (PlayerScript.player_pos.x > -4100)
                 {
                     tutorial_state++;

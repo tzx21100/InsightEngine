@@ -6,7 +6,7 @@ out VS_OUT{
     flat int index;
 } vs_out;
 
-uniform mat4 transforms[100]; // 400 chars per render
+uniform mat4 transforms[128]; // 400 chars per render
 uniform mat4 projection;
 
 void main()
