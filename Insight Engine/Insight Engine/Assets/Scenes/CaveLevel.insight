@@ -219,9 +219,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 460.80001831054688,
@@ -918,9 +918,9 @@
 				"SpriteFilename" : "Prop_Lantern.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 68,
+				"SpriteTexture" : 70,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 67,
+				"SpriteTextureIndex" : 69,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.15606689453125,
 				"SpriteTransformScalingX" : 284.00823974609375,
@@ -1643,9 +1643,9 @@
 				"SpriteFilename" : "Prop_Lantern_NoLights.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 69,
+				"SpriteTexture" : 71,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 68,
+				"SpriteTextureIndex" : 70,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.15606689453125,
 				"SpriteTransformScalingX" : 284.00823974609375,
@@ -1839,9 +1839,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 25.7967529296875,
 				"SpriteTransformScalingX" : 103.78110504150391,
@@ -1935,9 +1935,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 117.56210327148438,
 				"SpriteTransformScalingX" : 50.549175262451172,
@@ -2031,9 +2031,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 352.25579833984375,
 				"SpriteTransformScalingX" : 22.75153923034668,
@@ -2127,9 +2127,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 6.708984375,
 				"SpriteTransformScalingX" : 58.5599365234375,
@@ -3892,9 +3892,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 40,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -3908,9 +3908,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -4610,9 +4610,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 28,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 27,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 257.0,
@@ -4626,9 +4626,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5043,9 +5043,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 40,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -5059,9 +5059,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -5088,9 +5088,9 @@
 			},
 			"AudioListener" : 
 			{
-				"AudioHearingRange" : 15000.0,
+				"AudioHearingRange" : 2708.0,
 				"AudioPitchCorrectness" : 0.0,
-				"AudioVolume" : 1.0
+				"AudioVolume" : 0.56000000238418579
 			},
 			"Category" : 
 			{
@@ -5104,15 +5104,15 @@
 					"CircleColliderCenter" : 
 					{
 						"X" : -8511.4921875,
-						"Y" : 2777.270263671875
+						"Y" : 2788.170166015625
 					},
 					"CircleColliderOffset" : 
 					{
 						"X" : 0.0,
-						"Y" : -20.0
+						"Y" : -9.1000003814697266
 					},
-					"CircleColliderRadius" : 60.000007629394531,
-					"CircleColliderRadiusScale" : 0.30000001192092896
+					"CircleColliderRadius" : 80.0,
+					"CircleColliderRadiusScale" : 0.20000000298023224
 				},
 				"CircleColliderEnabled" : true,
 				"ResponseEnabled" : true
@@ -5160,46 +5160,70 @@
 			},
 			"Sprite" : 
 			{
-				"AnimationIndex" : 0,
+				"AnimationIndex" : 1,
 				"Layer" : 5,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "idle_anim 3R4C.png",
+				"SpriteCurrentTexIndex" : 1,
+				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
-				"SpriteTextureHeight" : 2139,
-				"SpriteTextureIndex" : 43,
-				"SpriteTextureWidth" : 3628,
-				"SpriteTransformRotation" : 0.4610595703125,
-				"SpriteTransformScalingX" : 200.00001525878906,
-				"SpriteTransformScalingY" : 180.0,
+				"SpriteTexture" : 47,
+				"SpriteTextureHeight" : 219,
+				"SpriteTextureIndex" : 46,
+				"SpriteTextureWidth" : 4096,
+				"SpriteTransformRotation" : 358.06292724609375,
+				"SpriteTransformScalingX" : 400.0,
+				"SpriteTransformScalingY" : 360.0,
 				"SpriteTransformWorldPositionX" : -8511.4921875,
 				"SpriteTransformWorldPositionY" : 2797.270263671875,
 				"animations" : 
 				[
 					{
-						"Name" : "aa",
+						"Name" : "",
 						"animation_duration" : 1.0,
-						"frame_dimension_x" : 0.25,
-						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.022206047549843788,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 9.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.050188589841127396,
 						"time_per_frame" : 0.083333335816860199,
-						"x_frames" : 4,
-						"y_frames" : 3
+						"x_frames" : 12,
+						"y_frames" : 1
+					},
+					{
+						"Name" : "",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 4.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.038083914667367935,
+						"time_per_frame" : 0.083333335816860199,
+						"x_frames" : 12,
+						"y_frames" : 1
+					},
+					{
+						"Name" : "",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.083333335816860199,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.01082388311624527,
+						"time_per_frame" : 0.083333335816860199,
+						"x_frames" : 12,
+						"y_frames" : 1
 					}
 				]
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 0.4610595703125,
-				"TransformScalingX" : 200.00001525878906,
-				"TransformScalingY" : 180.0,
+				"TransformRotation" : 358.06292724609375,
+				"TransformScalingX" : 400.0,
+				"TransformScalingY" : 360.0,
 				"TransformWorldPositionX" : -8511.4921875,
 				"TransformWorldPositionY" : 2797.270263671875
 			}
@@ -5288,9 +5312,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 28,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 27,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 257.0,
@@ -5304,9 +5328,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5406,9 +5430,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 28,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 27,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 257.0,
@@ -5422,9 +5446,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5524,9 +5548,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 28,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 27,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 257.0,
@@ -5540,9 +5564,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 8.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.052164524793624878,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5755,9 +5779,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 40,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -5771,9 +5795,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -5886,9 +5910,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 40,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -5902,9 +5926,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -6025,9 +6049,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 37,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 40,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -6041,9 +6065,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00051796436309814453,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -6073,9 +6097,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 86,
+				"SpriteTexture" : 93,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 85,
+				"SpriteTextureIndex" : 92,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 356.3365478515625,
 				"SpriteTransformScalingX" : 398.43026733398438,
@@ -6325,9 +6349,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 103.78110504150391,
@@ -6393,9 +6417,9 @@
 				"SpriteFilename" : "Env_cave_2ndbackground.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 28,
+				"SpriteTexture" : 32,
 				"SpriteTextureHeight" : 1080,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 31,
 				"SpriteTextureWidth" : 5850,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2973.59375,
@@ -7410,8 +7434,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : -8549.9306640625,
-						"Y" : 1443.2042236328125
+						"X" : -8538.857421875,
+						"Y" : 2016.6451416015625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -7427,19 +7451,19 @@
 					[
 						{
 							"x" : -614.8179931640625,
-							"y" : 12.567212104797363
+							"y" : 658.82183837890625
 						},
 						{
 							"x" : 614.8179931640625,
-							"y" : 12.567212104797363
+							"y" : 658.82183837890625
 						},
 						{
 							"x" : 614.8179931640625,
-							"y" : -12.567212104797363
+							"y" : -658.82183837890625
 						},
 						{
 							"x" : -614.8179931640625,
-							"y" : -12.567212104797363
+							"y" : -658.82183837890625
 						}
 					]
 				},
@@ -7483,24 +7507,24 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 358.8924560546875,
 				"SpriteTransformScalingX" : 1229.635986328125,
-				"SpriteTransformScalingY" : 25.134424209594727,
-				"SpriteTransformWorldPositionX" : -8549.9306640625,
-				"SpriteTransformWorldPositionY" : 1443.2042236328125,
+				"SpriteTransformScalingY" : 1317.6436767578125,
+				"SpriteTransformWorldPositionX" : -8538.857421875,
+				"SpriteTransformWorldPositionY" : 2016.6451416015625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 358.8924560546875,
 				"TransformScalingX" : 1229.635986328125,
-				"TransformScalingY" : 25.134424209594727,
-				"TransformWorldPositionX" : -8549.9306640625,
-				"TransformWorldPositionY" : 1443.2042236328125
+				"TransformScalingY" : 1317.6436767578125,
+				"TransformWorldPositionX" : -8538.857421875,
+				"TransformWorldPositionY" : 2016.6451416015625
 			}
 		},
 		{
@@ -7583,9 +7607,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 268.73126220703125,
 				"SpriteTransformScalingX" : 365.55691528320312,
@@ -7683,9 +7707,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 84,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 91.44677734375,
 				"SpriteTransformScalingX" : 355.82778930664062,
@@ -8621,9 +8645,9 @@
 				"SpriteFilename" : "Environment without grass01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 25,
+				"SpriteTexture" : 29,
 				"SpriteTextureHeight" : 1152,
-				"SpriteTextureIndex" : 24,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 476,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 2015.6441650390625,
@@ -8639,131 +8663,6 @@
 				"TransformScalingY" : 5883.36669921875,
 				"TransformWorldPositionX" : -5087.51513671875,
 				"TransformWorldPositionY" : 2287.156494140625
-			}
-		},
-		{
-			"AudioEmitter" : 
-			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : false,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "FIREWORKS.wav",
-				"AudioVolumeLevel" : 0.5
-			},
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : -8585.65234375,
-						"Y" : 1018.7245483398438
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : -28.299999237060547
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.69999998807907104,
-						"Y" : 0.80000001192092896
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -99.402885437011719,
-							"y" : 152.07080078125
-						},
-						{
-							"x" : 99.402885437011719,
-							"y" : 152.07080078125
-						},
-						{
-							"x" : 99.402885437011719,
-							"y" : -152.07080078125
-						},
-						{
-							"x" : -99.402885437011719,
-							"y" : -152.07080078125
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : false
-			},
-			"Light" : 
-			{
-				"LightHue" : 
-				{
-					"B" : 0.0,
-					"G" : 0.55696201324462891,
-					"R" : 1.0
-				},
-				"LightIntensity" : 0.80000001192092896,
-				"LightOffset" : 
-				{
-					"X" : -2.2999999523162842,
-					"Y" : 48.5
-				},
-				"LightRender" : true,
-				"LightSize" : 1167.0
-			},
-			"Name" : "SavepointLantern",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : -981.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 107973.3984375,
-				"RigidBodyBodyType" : 6,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Script" : 
-			{
-				"ScriptName" : "SavePointLantern"
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Prop_Lantern.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 68,
-				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 67,
-				"SpriteTextureWidth" : 570,
-				"SpriteTransformRotation" : 359.15606689453125,
-				"SpriteTransformScalingX" : 284.00823974609375,
-				"SpriteTransformScalingY" : 380.177001953125,
-				"SpriteTransformWorldPositionX" : -8585.65234375,
-				"SpriteTransformWorldPositionY" : 1047.0245361328125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 359.15606689453125,
-				"TransformScalingX" : 284.00823974609375,
-				"TransformScalingY" : 380.177001953125,
-				"TransformWorldPositionX" : -8585.65234375,
-				"TransformWorldPositionY" : 1047.0245361328125
 			}
 		},
 		{
@@ -8976,7 +8875,7 @@
 			}
 		}
 	],
-	"EntityAmount" : 117,
+	"EntityAmount" : 116,
 	"Layers" : 
 	[
 		{

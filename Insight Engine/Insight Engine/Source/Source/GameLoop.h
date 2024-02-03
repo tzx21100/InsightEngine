@@ -213,7 +213,10 @@ namespace IS {
             //system->SpawnParticles(A);
 
   /*          Sprite::draw_textured_quad({ 0,0 }, 0, { 1000,1000 }, *asset->GetImage("Dash AfterImage.png"));*/
-
+        
+            //Animation ai;
+            //ai.initAnimation(1, 6, 1.f);
+            //ai.drawNonEntityAnimation(1/60.f, Vector2D(0, 0), 0, Vector2D(1000, 1000), *(asset->GetImage("player_attack1.png")), 1, 5);
 
             //Entity player = engine.GetEntityByName("Player");
             //auto& body_player = engine.GetComponent<RigidBody>(player);

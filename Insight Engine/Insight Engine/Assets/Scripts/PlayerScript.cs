@@ -291,7 +291,7 @@ namespace IS
             powerup_entity = InternalCalls.CreateEntityVFX("powerup", player_powerup_vfx);
             InternalCalls.CreateAnimationFromSpriteEntity(2, 6, 0.9f, powerup_entity);
 
-            InternalCalls.TransformSetScale(200f, 180f);
+            //InternalCalls.TransformSetScale(200f, 180f);
 
             // init gravity scale
             gravity_scale = InternalCalls.GetGravityScale();
@@ -569,7 +569,7 @@ namespace IS
                 float x_offset = 28 * hori_movement;
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 pos.x += x_offset;
-                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x * 1.1f, InternalCalls.GetTransformScaling().y * 1.1f);
+                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x *0.7f, InternalCalls.GetTransformScaling().y * 0.7f);
 
                 SimpleImage curr_image = player_climb;
                 int cur_col = 0; int cur_row = 0;
@@ -1005,7 +1005,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 1.8f;
+            float distanceBelow = height / 3.2f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
@@ -1294,9 +1294,9 @@ namespace IS
                     switch (combo_step)
                     {
                         case 1:
-                            InternalCalls.SetSpriteImage(player_transparent);
+                            InternalCalls.SetSpriteImage(player_attack1);
                             InternalCalls.SetSpriteAnimationIndex(3);
-                            InternalCalls.DrawImageExtraAt(attack_animation_current_frame,1,1,21, new SimpleVector2D(player_pos.x, player_pos.y), 0,new SimpleVector2D(1,1),player_attack1,2);
+                            //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
                         case 2:
                             InternalCalls.SetSpriteImage(player_attack2);

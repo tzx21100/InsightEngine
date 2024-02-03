@@ -725,7 +725,7 @@ namespace IS {
 
     Animation free_anim;
     static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage  texture, float alpha, int layer=1) {
-
+        free_anim.initAnimation(1, 6, 0.5f);
         free_anim.drawNonEntityAnimation( deltaTime, Vector2D(pos.x,pos.y),  rotation, Vector2D(scale.x,scale.y), ConvertToImage(texture), alpha, layer);
     }
 

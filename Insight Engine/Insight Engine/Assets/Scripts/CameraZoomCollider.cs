@@ -5,7 +5,8 @@ namespace IS
     {
 
         static public void Init(){
-
+            PlayerScript.respawn_x = -8585;
+            PlayerScript.respawn_y = 1047;
         }
 
         static public void Update(){

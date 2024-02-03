@@ -9,9 +9,13 @@
 	},
 	"AudioListener" : 
 	{
-		"AudioHearingRange" : 15000.0,
+		"AudioHearingRange" : 2708.0,
 		"AudioPitchCorrectness" : 0.0,
-		"AudioVolume" : 1.0
+		"AudioVolume" : 0.56000000238418579
+	},
+	"Category" : 
+	{
+		"Category" : "Player"
 	},
 	"Collider" : 
 	{
@@ -20,16 +24,16 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -840.0699462890625,
-				"Y" : -223.51600646972656
+				"X" : -591.01898193359375,
+				"Y" : 67.572349548339844
 			},
 			"CircleColliderOffset" : 
 			{
 				"X" : 0.0,
-				"Y" : -20.0
+				"Y" : -9.1000003814697266
 			},
-			"CircleColliderRadius" : 60.000003814697266,
-			"CircleColliderRadiusScale" : 0.30000001192092896
+			"CircleColliderRadius" : 80.0,
+			"CircleColliderRadiusScale" : 0.20000000298023224
 		},
 		"CircleColliderEnabled" : true,
 		"ResponseEnabled" : true
@@ -75,50 +79,74 @@
 	{
 		"ScriptName" : "PlayerScript"
 	},
-	"Signature" : "00000000000000000001011100100111",
+	"Signature" : "00000000000000000011011100100111",
 	"Sprite" : 
 	{
-		"AnimationIndex" : 0,
+		"AnimationIndex" : 1,
 		"Layer" : 1,
 		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
-		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "idle_anim 3R4C.png",
+		"SpriteCurrentTexIndex" : 1,
+		"SpriteFilename" : "idle_strip.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 24,
-		"SpriteTextureHeight" : 2139,
-		"SpriteTextureIndex" : 23,
-		"SpriteTextureWidth" : 3628,
-		"SpriteTransformRotation" : 0.4610595703125,
-		"SpriteTransformScalingX" : 200.0,
-		"SpriteTransformScalingY" : 180.0,
-		"SpriteTransformWorldPositionX" : -840.0699462890625,
-		"SpriteTransformWorldPositionY" : -203.51600646972656,
+		"SpriteTexture" : 47,
+		"SpriteTextureHeight" : 219,
+		"SpriteTextureIndex" : 46,
+		"SpriteTextureWidth" : 4096,
+		"SpriteTransformRotation" : 358.06292724609375,
+		"SpriteTransformScalingX" : 400.0,
+		"SpriteTransformScalingY" : 360.0,
+		"SpriteTransformWorldPositionX" : -591.01898193359375,
+		"SpriteTransformWorldPositionY" : 76.672348022460938,
 		"animations" : 
 		[
 			{
-				"Name" : "aa",
+				"Name" : "",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.25,
-				"frame_dimension_y" : 0.3333333432674408,
-				"frame_index_x" : 1.0,
-				"frame_index_y" : 2.0,
-				"frame_timer" : 0.055539380759000778,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 9.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.050188589841127396,
 				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 4,
-				"y_frames" : 3
+				"x_frames" : 12,
+				"y_frames" : 1
+			},
+			{
+				"Name" : "",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.054750584065914154,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 12,
+				"y_frames" : 1
+			},
+			{
+				"Name" : "",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.01082388311624527,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 12,
+				"y_frames" : 1
 			}
 		]
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.4610595703125,
-		"TransformScalingX" : 200.0,
-		"TransformScalingY" : 180.0,
-		"TransformWorldPositionX" : -840.0699462890625,
-		"TransformWorldPositionY" : -203.51600646972656
+		"TransformRotation" : 358.06292724609375,
+		"TransformScalingX" : 400.0,
+		"TransformScalingY" : 360.0,
+		"TransformWorldPositionX" : -591.01898193359375,
+		"TransformWorldPositionY" : 76.672348022460938
 	}
 }
