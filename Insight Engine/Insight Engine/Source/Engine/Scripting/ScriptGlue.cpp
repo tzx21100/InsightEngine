@@ -877,10 +877,13 @@ namespace IS {
         return InsightEngine::Instance().IsWindowFocused();
     }
 
-    static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color)
+    static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color, MonoString* font)
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
-        Text::addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
+        char* f_str = mono_string_to_utf8(font);
+        std::string font_name(f_str);
+        mono_free(f_str);
+        ISGraphics::mTexts[font_name].addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
     }
 
     static void SetButtonSizeScale(int entity, float scale)
@@ -933,8 +936,11 @@ namespace IS {
         char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
         std::string part_name(c_str);
         mono_free(c_str);
-        Text::addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
-        ISGraphics::mTexts["Poiret_One_Regular"].renderText(c_str, x, y, size, { color.x,color.y,color.z });
+
+        // Poiret will be default text font
+        ISGraphics::mTexts[""].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+
+        // ISGraphics::mTexts["Poiret_One_Regular"].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }
 
     static void RenderTextFont(MonoString* text, MonoString* font, float x, float y, float size, Vector3D color)
@@ -945,7 +951,7 @@ namespace IS {
         char* f_str = mono_string_to_utf8(font);
         std::string font_name(f_str);
         mono_free(f_str);
-        Text::addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+        ISGraphics::mTexts[font_name].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
 
         //ISGraphics::mTexts[font_name].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }

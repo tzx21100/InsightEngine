@@ -358,12 +358,12 @@ namespace IS {
         }
 #endif // !USING_IMGUI
             // Shared Attributes
-       // const float scale = 20.f;
+        // const float scale = 20.f;
         //const float x_padding = scale;
         //const float y_padding = (scale * 3.f);
         auto [width, height] = InsightEngine::Instance().GetWindowSize();
-       // const float pos_x = .5f;
-        //const float pos_y = .5f;
+        // const float pos_x = .5f;
+        // const float pos_y = .5f;
         const glm::vec3 islamic_green = { 0.f, .56f, .066f };
         const glm::vec3 malachite = { 0.f, 1.f, .25f };
         static glm::vec3 color = islamic_green;
@@ -375,15 +375,18 @@ namespace IS {
         //render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
 
         // Render Text
-        //mTexts["Poiret_One_Regular"].renderText(render_text.str(), pos_x, pos_y, scale, color);
+        //mTexts["MedusaGothic_D"].addTextRenderCall(render_text.str(), pos_x, pos_y, scale, color);
         //North_Forest_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         
         // render all text
-        //North_Forest_font.renderAllText();
-        for (auto& [font, text] : mTexts)
-        {
-            text.renderAllText();
-        }
+        Text::renderAllText(mTexts);
+
+        // first font renders everything and clears. the rest no more
+
+        // for (auto& [font, text] : mTexts)
+        // {
+        //     text.renderAllText();
+        // }
 
         //mFramebuffer->Unbind();
         //if (!engine.mRenderGUI)

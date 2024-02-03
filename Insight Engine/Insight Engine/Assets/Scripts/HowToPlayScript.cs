@@ -84,7 +84,12 @@ namespace IS
             background_pos.Set(camera_pos.x, camera_pos.y);
             how_to_play_overlay_pos.Set(camera_pos.x, camera_pos.y);
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
-            //InternalCalls.RenderTextFont("HOW TO PLAY", "Poiret_One_Regular",0.3f, 0.5f, 20f, (1f, 1f, 1f));
+
+            InternalCalls.RenderTextFont("H", "Times_New_Roman", 0.1f, 0.5f, 20f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("H", "BRUSHSCI", 0.2f, 0.5f, 20f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("H", "Poiret_One_Regular", 0.3f, 0.5f, 20f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("H", "MedusaGothic_D", 0.4f, 0.5f, 20f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("H", "Semplicita_Light", 0.5f, 0.5f, 20f, (1f, 1f, 1f));
 
             //hover
             if (InternalCalls.GetButtonState() == 1)
