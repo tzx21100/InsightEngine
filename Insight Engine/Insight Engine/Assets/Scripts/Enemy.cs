@@ -15,6 +15,8 @@
 using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.ComponentModel;
 namespace IS
 {
     class Enemy
@@ -42,6 +44,16 @@ namespace IS
             InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
         }*/
     }
+
+    public enum EnemyState : short
+    {
+        PATROLLING,
+        FOLLOWING_PLAYER,
+        ATTACKING,
+        BEING_HIT,
+        DEAD
+    }
+
     class EachEnemy
     {
         // common
@@ -52,11 +64,15 @@ namespace IS
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
-        public bool isHit;
+        //public bool isHit;
         private bool initialHit = false;
         private float being_hit_timer = 0f;
         static public int ENEMY_ID;
         static public int BEING_ATTACK_ENEMY_ID;
+
+        // attack
+        SimpleImage enemy_attack1;
+        public Vector2D view_port = new Vector2D(1000f, 500f);
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
@@ -70,8 +86,14 @@ namespace IS
         public float enemy_rest_timer_duration = 2f;
         public float enemy_rest_timer = 0f;
         public bool going_left;
+
+        // states
+        EnemyState previous_state;
+        EnemyState current_state;
         public bool isPatrolling;
         public bool isAttacking;
+        public bool isFollowingPlayer;
+        public bool isDead;
 
         //static private int get_hit_vfx_entity;
         public void Init()
@@ -85,7 +107,8 @@ namespace IS
 
             // image and vfx
             enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
-            check_point = InternalCalls.GetSpriteImage("enemy.png");
+            check_point = InternalCalls.GetSpriteImage("dark_circle.png");
+            enemy_attack1 = InternalCalls.GetSpriteImage("enemy_attack1.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             //InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
@@ -96,7 +119,14 @@ namespace IS
             target_point = enemy_left_point;
             enemy_rest_timer = enemy_rest_timer_duration;
             going_left = true;
+
+            // init states
+            previous_state = (EnemyState)(-1);
+            current_state = EnemyState.PATROLLING;
             isPatrolling = true;
+            isAttacking = false;
+            isFollowingPlayer = false;
+            isDead = false;
         }
 
         public void update()
@@ -115,7 +145,7 @@ namespace IS
             
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
-            if (isHit)
+            /*if (isHit)
             {
                 //Console.WriteLine("getting enemy");
                 float vel_x = direction.x * speed;
@@ -125,7 +155,7 @@ namespace IS
                 {
                     // draw vfx animation once get hit
                     //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
-                    EnemyGetHit();
+                    EnemyInitialGetHit();
                     initialHit = true;
                 }
                 //DrawGetHitVFX(); // update vfx 
@@ -140,18 +170,18 @@ namespace IS
                 }
                 else
                 {
-                    // being hit animation
+                    // being hit animation here
                 }
             }
             else
             {
                 //RemoveGetHitVFX();
-            }
+            }*/
             UpdateEnemyDirection();
             //DrawPatrolPoint();
             //EnemyPatrolling();
+            EnemyStateMechine();
             DrawHealthBar();
-            //GetHitByPlayerCheck();
             EnemyCollidingPlayer();
         }
 
@@ -163,21 +193,9 @@ namespace IS
 
         public void GetHitByPlayer(Vector2D vec)
         {
-            isHit = true;
+            previous_state = current_state;
+            current_state = EnemyState.BEING_HIT;
             direction = vec;
-        }
-
-        static public void GetHitByPlayerCheck()
-        {
-            //Console.WriteLine(ENEMY_ID);
-            //InternalCalls.TransformSetScaleEntity(InternalCalls.GetTransformScalingEntity(ENEMY_ID).x * dir.x, InternalCalls.GetTransformScalingEntity(ENEMY_ID).y, ENEMY_ID);
-            if (ENEMY_ID == BEING_ATTACK_ENEMY_ID) {
-                /*isHit = true;
-                direction.x = -MathF.Sign(PlayerScript.trans_scaling.x);
-                direction.y = 0f;*/
-            }
-            //Console.WriteLine(ENEMY_ID);
-            //Console.WriteLine(id);
         }
 
         private void DrawGetHitVFX()
@@ -250,6 +268,36 @@ namespace IS
 
         private void EnemyGetHit()
         {
+            //Console.WriteLine("getting enemy");
+            float vel_x = direction.x * speed;
+            //float vel_y = direction.y * speed;
+            // first hit
+            if (!initialHit)
+            {
+                // draw vfx animation once get hit
+                //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
+                EnemyInitialGetHit();
+                initialHit = true;
+            }
+            //DrawGetHitVFX(); // update vfx 
+            // enemy moving backwards abit
+            InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
+            being_hit_timer += InternalCalls.GetDeltaTime();
+            if (being_hit_timer > 0.5f)
+            {
+                //isHit = false;
+                current_state = previous_state; // back to previous state
+                initialHit = false;
+                being_hit_timer = 0f;
+            }
+            else
+            {
+                // being hit animation here
+            }
+        }
+
+        private void EnemyInitialGetHit()
+        {
             InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
 
             // load bleeding particles
@@ -271,50 +319,80 @@ namespace IS
 
         private void EnemyPatrolling()
         {
-            if (isPatrolling)
+            /*if (isPatrolling)
+            {*/
+
+            //}
+
+            float dist = target_point.x - enemy_pos.x;
+            //Vector2D dir = new Vector2D(0f, 0f);
+
+            if (MathF.Abs(dist) < 10f) // rest then turn around
             {
-                float dist = target_point.x - enemy_pos.x;
-                //Vector2D dir = new Vector2D(0f, 0f);
-                
-                if (MathF.Abs(dist) < 10f) // rest then turn around
+                if (enemy_rest_timer > 0f) // enemy in resting
                 {
-                    if (enemy_rest_timer > 0f) // enemy in resting
+                    enemy_rest_timer -= InternalCalls.GetDeltaTime();
+                    InternalCalls.RigidBodySetVelocityEntity(0f, enemy_vel.y, ENEMY_ID);
+                    if (enemy_rest_timer <= 0f)
                     {
-                        enemy_rest_timer -= InternalCalls.GetDeltaTime();
-                        InternalCalls.RigidBodySetVelocityEntity(0f, enemy_vel.y, ENEMY_ID);
-                        if (enemy_rest_timer <= 0f)
+                        if (going_left)
                         {
-                            if (going_left)
-                            {
-                                target_point = enemy_right_point;
-                            }
-                            else
-                            {
-                                target_point = enemy_left_point;
-                            }
-                            going_left = !going_left; // change direction
-                            enemy_rest_timer = enemy_rest_timer_duration; // rest timer
+                            target_point = enemy_right_point;
                         }
                         else
                         {
-                            return;
+                            target_point = enemy_left_point;
                         }
+                        going_left = !going_left; // change direction
+                        enemy_rest_timer = enemy_rest_timer_duration; // rest timer
                     }
-                    
+                    else
+                    {
+                        return;
+                    }
                 }
-                direction.x = target_point.x - enemy_pos.x;
-                // set enemy vel
-                enemy_vel.x = speed * MathF.Sign(direction.x);
-                InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
+
             }
+            direction.x = target_point.x - enemy_pos.x;
+            // set enemy vel
+            enemy_vel.x = speed * MathF.Sign(direction.x);
+            InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
+        }
+
+        private void EnemyStateMechine()
+        {
+            EnemyChangeState();
+            switch (current_state)
+            {
+                case EnemyState.PATROLLING:
+                    EnemyPatrolling();
+                    break;
+                case EnemyState.FOLLOWING_PLAYER:
+                    break;
+                case EnemyState.ATTACKING:
+                    EnemyAttacking();
+                    break;
+                case EnemyState.BEING_HIT:
+                    EnemyGetHit();
+                    break;
+                case EnemyState.DEAD:
+                    break;
+            }
+        }
+
+        private void EnemyChangeState()
+        {
+
+        }
+
+        private void EnemyFollowingPlayer()
+        {
+
         }
 
         private void EnemyAttacking()
         {
-            if (isAttacking)
-            {
-
-            }
+            
         }
 
         private void DrawHealthBar()
