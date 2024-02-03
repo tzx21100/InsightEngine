@@ -328,7 +328,10 @@ namespace IS {
 
         
         glm::vec2 resolution{};
+
+#if defined(USING_IMGUI)
         InsightEngine& engine = InsightEngine::Instance();
+
         auto const& editor_layer = engine.GetEditorLayer();
         if (engine.mRenderGUI)
         {
@@ -341,6 +344,8 @@ namespace IS {
             resolution.x = static_cast<float>(width);
             resolution.y = static_cast<float>(height);
         }
+#endif
+
         tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uResolution");
         if (tex_arr_uniform >= 0)
             glUniform2fv(tex_arr_uniform, 1, &resolution.x);

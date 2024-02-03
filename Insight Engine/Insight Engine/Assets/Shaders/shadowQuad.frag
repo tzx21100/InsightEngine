@@ -65,7 +65,7 @@ void main() {
 
         // change to sepia
         if (type_of_light == 1){
-            radius = radius * 8.0;
+            radius = radius * 1.2;
         }
         //end of change to sepia 
 
@@ -121,10 +121,10 @@ void main() {
     {
         // type of light is normal
         float avr = (final_frag_clr.x + final_frag_clr.y + final_frag_clr.z) / 3.0;
-        avr *= 3.0;
+        avr *= 1.0;
         fFragColor = vec4(vec3(avr), final_frag_clr.a);
 
-        if (mod(gl_FragCoord.x, real_random_thing(vTexCoord) * 10.0) < 8 || mod(gl_FragCoord.y, real_random_thing(vTexCoord) * 10.0) < 2)
+        if (mod(gl_FragCoord.x, real_random_thing(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, real_random_thing(vTexCoord) * 10.0) < 0.1)
             fFragColor = vec4(real_random_thing(vTexCoord));
     }
     if (type_of_light==3)
