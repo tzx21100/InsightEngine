@@ -20,8 +20,8 @@ namespace IS
         static public bool first_hover = false;
 
         // Windows
-        static Vector2D win_dimension = new Vector2D(0, 0);
-        static Vector2D origin = new Vector2D(0, 0);
+        static public Vector2D win_dimension = new Vector2D(0, 0);
+        static public Vector2D origin = new Vector2D(0, 0);
 
         // Camera
         static Vector2D camera_pos = new Vector2D(0, 0);
@@ -59,7 +59,7 @@ namespace IS
         static Vector2D vfx_slider_bar_pos = new Vector2D(0, 0);
         static Vector2D master_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
-        static Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
+        static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
 
@@ -169,7 +169,8 @@ namespace IS
             vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.32f * win_dimension.y));
             master_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.543f * win_dimension.y));
             bgm_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
-            vfx_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.323f * win_dimension.y));
+            //Math.Clamp(VFXSliderKnobScript.adjustment, .442f, .558f);
+            vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
 
