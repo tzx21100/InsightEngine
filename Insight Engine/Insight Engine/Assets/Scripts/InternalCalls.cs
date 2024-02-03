@@ -450,7 +450,16 @@ namespace IS
         internal extern static void SendCondition(bool condition_return_bool);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void ChangeLightType(int light_type );
+        internal extern static void ChangeLightType(int light_type );        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetLayerVisible(int layer, bool visible );        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetTopLayer();        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage texture, float alpha, int layer );
 
 
     }

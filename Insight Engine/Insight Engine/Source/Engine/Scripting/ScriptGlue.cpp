@@ -723,6 +723,13 @@ namespace IS {
 
     }
 
+    Animation free_anim;
+    static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage  texture, float alpha, int layer=1) {
+
+        free_anim.drawNonEntityAnimation( deltaTime, Vector2D(pos.x,pos.y),  rotation, Vector2D(scale.x,scale.y), ConvertToImage(texture), alpha, layer);
+    }
+
+
     static void LoadScene(MonoString* file_name)
     {
         char* c_str = mono_string_to_utf8(file_name); // Convert Mono string to char*
@@ -1210,6 +1217,16 @@ namespace IS {
     }
 
 
+    // layers
+
+    static int GetTopLayer() {
+        return static_cast<int>(ISGraphics::mLayers.size());
+    }
+
+    static void SetLayerVisible(int layer, bool boolean) {
+        ISGraphics::mLayers[layer].mLayerActive=boolean;
+    }
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -1395,6 +1412,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ToggleFullscreen);
 
 
+        // Layers
+        IS_ADD_INTERNAL_CALL(GetTopLayer);
+        IS_ADD_INTERNAL_CALL(SetLayerVisible);
 
 
         //FSM Condition
@@ -1410,6 +1430,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MathSin);
         IS_ADD_INTERNAL_CALL(MathCos);
 
+
+        // Animation
+        IS_ADD_INTERNAL_CALL(DrawNonEnityAnimation);
 
     }
 }

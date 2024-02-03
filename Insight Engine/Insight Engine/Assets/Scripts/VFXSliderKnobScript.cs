@@ -5,6 +5,7 @@ namespace IS
     class VFXSliderKnobScript
     {
         static public bool first_hover = false;
+        static public int targetedEntity=InternalCalls.GetCurrentEntityID();
         static private int vfx_slider_knob_entity;
         static public float adjustment;
         static public void Init()
@@ -25,14 +26,11 @@ namespace IS
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                     first_hover = true;
                 }
-                if (InternalCalls.MouseHeld(0))
+                if (InternalCalls.MouseHeld(0)==true)
                 {
                     InternalCalls.TransformSetPosition(Math.Min(111.36f, Math.Max(-111.36f, mouse_pos.x)), InternalCalls.GetTransformPosition().y);
-                }
-                if (InternalCalls.MouseReleased(0)) {
+                    SettingsScript.vfx_slider_knob_pos.x = Math.Min(111.36f, Math.Max(-111.36f, mouse_pos.x));
 
-                    SettingsScript.vfx_slider_knob_pos.x = InternalCalls.GetTransformPosition().x;// SettingsScript.origin.x + (Math.Clamp(adjustment, .442f, .558f) * SettingsScript.win_dimension.x);
-                    //SettingsScript.vfx_slider_knob_pos.x = SettingsScript.origin.x + (Math.Clamp(adjustment, .442f, .558f) * SettingsScript.win_dimension.x);
                 }
 
             }
@@ -47,6 +45,9 @@ namespace IS
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
             }
+
+
+
 
         }
 

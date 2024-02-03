@@ -85,11 +85,16 @@ namespace IS
         static SimpleImage player_attack1;
         static SimpleImage player_attack2;
         static SimpleImage player_attack3;
+       // static SimpleImage player_attack1;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
         static private float animation_speed_set = 0.07f;
         static private int animation_current_frame = 0;
+
+        static private float attack_animation_speed = 0.07f;
+        static private float attack_animation_speed_set = 0.07f;
+        static private int attack_animation_current_frame = 0;
 
         static private int land_entity;
         static private int jump_entity;
@@ -236,8 +241,9 @@ namespace IS
             player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
             player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
             player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
-            player_attack2 = InternalCalls.GetSpriteImage("player_attack1.png");
-            player_attack3 = InternalCalls.GetSpriteImage("player_attack1.png");
+            player_attack2 = InternalCalls.GetSpriteImage("player_attack2.png");
+            player_attack3 = InternalCalls.GetSpriteImage("player_attack3.png");
+            player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -245,6 +251,18 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
             InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
             InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
+
+            // attack 1
+            InternalCalls.CreateAnimationFromSprite(1, 6, 1f);
+
+            // attack 2
+            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+
+            // attack 3
+            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+
+            // attack total
+            InternalCalls.CreateAnimationFromSprite(1,22,3f);
 
 
             entity_feet = InternalCalls.CreateEntity("FeetCollider");
@@ -289,7 +307,7 @@ namespace IS
 
         static public void Update()
         {
-
+            
             if (initialPowerUp)
             {
                 InternalCalls.ResetSpriteAnimationFrameEntity(powerup_entity);
@@ -884,9 +902,6 @@ namespace IS
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
 
             Xforce = 0f; Yforce = 0f;
-
-
-
         }
 
         static public void CleanUp()
@@ -953,6 +968,8 @@ namespace IS
             }
 
             InternalCalls.RigidBodySetForce(apply_force.x * dashSpeed, apply_force.y * dashSpeed);
+
+
 
         }
 
@@ -1101,6 +1118,8 @@ namespace IS
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, light_entity);
             InternalCalls.TransformSetScaleEntity(1f, 1f, light_entity);
 
+
+
         }
 
 
@@ -1241,6 +1260,8 @@ namespace IS
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
             if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack ))
             {
+
+                
                 isAttack = true;
                 //attack_type = "Light";
                 combo_step++;
@@ -1265,17 +1286,25 @@ namespace IS
                 
                 if (attack_timer < attack_interval) // play attack animation
                 {
+                    attack_animation_speed-=InternalCalls.GetDeltaTime();
+                    if (attack_animation_current_frame > 21) { attack_animation_current_frame = 0; }
+                    if (attack_animation_speed < 0) { attack_animation_speed=attack_animation_speed_set; }
+
                     // render attacking combo animation 123
                     switch (combo_step)
                     {
                         case 1:
-                            InternalCalls.SetSpriteImage(player_attack1);
+                            InternalCalls.SetSpriteImage(player_transparent);
+                            InternalCalls.SetSpriteAnimationIndex(3);
+                            InternalCalls.DrawImageExtraAt(attack_animation_current_frame,1,1,21, new SimpleVector2D(player_pos.x, player_pos.y), 0,new SimpleVector2D(1,1),player_attack1,2);
                             break;
                         case 2:
                             InternalCalls.SetSpriteImage(player_attack2);
+                            InternalCalls.SetSpriteAnimationIndex(4);
                             break;
                         case 3:
                             InternalCalls.SetSpriteImage(player_attack3);
+                            InternalCalls.SetSpriteAnimationIndex(5);
                             break;
                     }
 
@@ -1307,6 +1336,7 @@ namespace IS
         static private void AttackAreaUpdate()
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
+            
 
             CalibrateAttackAngle();
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
