@@ -49,6 +49,7 @@ namespace IS
             {
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 click = true;
+                PlayerScript.CleanUp();
             }
 
             if (click)
