@@ -173,63 +173,37 @@ namespace IS
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
 
-            // Initial setting of images based on the toggled state of A (MasterCheckbox)
             if (MasterCheckboxScript.toggled)
             {
-                // When A is on, B & C turn on
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
-                bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
-                vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
+                bgm_checkbox_image = MasterCheckboxScript.toggled_image;
+                vfx_checkbox_image = MasterCheckboxScript.toggled_image;
             }
             else
             {
-                // When A is off, ensure images reflect the non-toggled state
                 master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+                bgm_checkbox_image = MasterCheckboxScript.checkbox_image;
+                vfx_checkbox_image = MasterCheckboxScript.checkbox_image;
             }
-
-            // Adjust logic for when A is off but B or C are toggled
-            if (!MasterCheckboxScript.toggled)
-            {
+            if (!MasterCheckboxScript.toggled) {
                 if (BGMCheckboxScript.toggled)
                 {
-                    // Only B is turned on/off based on its current state
                     bgm_checkbox_image = BGMCheckboxScript.toggled_image;
                 }
                 else
                 {
                     bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
                 }
-
                 if (VFXCheckboxScript.toggled)
                 {
-                    // Only C is turned on/off based on its current state
                     vfx_checkbox_image = VFXCheckboxScript.toggled_image;
                 }
                 else
                 {
                     vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
                 }
-            }   
-
-            // Ensure A is turned on if both B and C are toggled on separately
-            if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
-            {
-                MasterCheckboxScript.toggled = true;
-                master_checkbox_image = MasterCheckboxScript.toggled_image;
             }
             
-            if (BGMCheckboxScript.toggled && !VFXCheckboxScript.toggled)
-            {
-                MasterCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
-            }
-            if (!BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
-            {
-                MasterCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
-            }
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(vfx_checkbox_image, vfx_checkbox_entity);
