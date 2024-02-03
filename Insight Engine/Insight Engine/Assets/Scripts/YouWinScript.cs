@@ -35,7 +35,7 @@ namespace IS
 
         static public void Init()
         {
-            back_button_image = InternalCalls.GetSpriteImage("back_button.png");
+            back_button_image = InternalCalls.GetSpriteImage("win_back_button.png");
 
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromWinScript");
 
