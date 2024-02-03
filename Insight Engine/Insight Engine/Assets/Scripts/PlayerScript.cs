@@ -126,8 +126,8 @@ namespace IS
         //dashing 
         static public float bullet_time_timer = 1f;
         static private float bullet_time_set = 1f;
-        static private float dash_timer = 0.2f;
-        static private float dash_set = 0.2f;
+        static private float dash_timer = 0.1f;
+        static private float dash_set = 0.1f;
         static private bool canDash = false;
         static private bool initialDash = true;
         static public bool isDashing;
@@ -248,9 +248,9 @@ namespace IS
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
+            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
+            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
 
             // attack 1
             InternalCalls.CreateAnimationFromSprite(1, 6, 1f);
@@ -311,7 +311,7 @@ namespace IS
             if (initialPowerUp)
             {
                 InternalCalls.ResetSpriteAnimationFrameEntity(powerup_entity);
-                InternalCalls.TransformSetScaleEntity(trans_scaling.x * 1.5f, trans_scaling.y * 1.5f, powerup_entity);
+                InternalCalls.TransformSetScaleEntity(trans_scaling.x , trans_scaling.y , powerup_entity);
                 InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, powerup_entity);
                 InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, powerup_entity);
                 initialPowerUp = false;
@@ -942,7 +942,7 @@ namespace IS
 
             float alpha = 1f - (dash_timer / dash_set);
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
-                                                        0.0f, trans_scaling.x, trans_scaling.y, 1, alpha, 0.0f, 0.2f,
+                                                        0.0f, trans_scaling.x/2f, trans_scaling.y/2f, 1, alpha, 0.0f, 0.2f,
                                                         0, "Particle Empty.txt", "Dash AfterImage.png");
             canDash = false;
             isDashing = true;
@@ -1037,7 +1037,7 @@ namespace IS
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width * hori_movement;
+            float distanceLeft = width*0.68f * hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft, 0);
 

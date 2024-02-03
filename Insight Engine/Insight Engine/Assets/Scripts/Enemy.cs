@@ -399,23 +399,23 @@ namespace IS
             switch (current_state)
             {
                 case EnemyState.PATROLLING:
-                    Console.WriteLine("patrolling");
+                    //Console.WriteLine("patrolling");
                     EnemyPatrolling();
                     break;
                 case EnemyState.FOLLOWING_PLAYER:
-                    Console.WriteLine("following player");
+                    //Console.WriteLine("following player");
                     EnemyFollowingPlayer();
                     break;
                 case EnemyState.ATTACKING:
-                    Console.WriteLine("attacking");
+                   // Console.WriteLine("attacking");
                     EnemyAttacking();
                     break;
                 case EnemyState.BEING_HIT:
-                    Console.WriteLine("being hit");
+                   // Console.WriteLine("being hit");
                     EnemyGetHit();
                     break;
                 case EnemyState.DEAD:
-                    Console.WriteLine("dead");
+                    //Console.WriteLine("dead");
                     break;
             }
         }
