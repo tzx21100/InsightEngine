@@ -544,6 +544,10 @@ namespace IS {
                         ImTextureID icon = mEditorLayer.GetIcon("C#");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                        {
+                            FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
+                        }
 
                         // Start file drag
                         if (ImGui::BeginDragDropSource())

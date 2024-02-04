@@ -80,6 +80,7 @@ namespace IS {
 
         // Set icon
         AssetManager::LoadWindowIcon(mWindow, "Assets/Icons/Game Logo.png");
+        AssetManager::LoadWindowCursor(mWindow, "Assets/Icons/cursor_default.png");
 
         // Default setting
         glfwMakeContextCurrent(mWindow);

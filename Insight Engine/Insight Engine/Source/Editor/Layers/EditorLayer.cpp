@@ -67,6 +67,7 @@ namespace IS {
         mIcons["PNG"]                = EditorUtils::ConvertTextureID(asset->GetIcon("png_file_icon.png")->texture_id);
         mIcons["JPEG"]               = EditorUtils::ConvertTextureID(asset->GetIcon("jpeg_file_icon.png")->texture_id);
         mIcons["C#"]                 = EditorUtils::ConvertTextureID(asset->GetIcon("c#_file_icon.png")->texture_id);
+        mIcons["Cursor"]             = EditorUtils::ConvertTextureID(asset->GetIcon("cursor_default.png")->texture_id);
 
         IS_CORE_DEBUG("{} attached.", mDebugName);
 
@@ -186,23 +187,6 @@ namespace IS {
             {
                 RenderConfirmDelete(mEntityToDelete);
             }
-
-            //auto& hovered_entity = mPanels.Get<ScenePanel>("Scene")->mHoveredEntity;
-
-            //if (mSelectedEntity && hovered_entity && *mSelectedEntity == *hovered_entity)
-            //{
-            //    if (io.MouseClicked[ImGuiMouseButton_Right])
-            //    {
-            //        ImGui::OpenPopup("Entity F");
-            //    }
-
-            //    if (ImGui::BeginPopup("Entity F"))
-            //    {
-            //        RenderEntityConfig(*hovered_entity);
-
-            //        ImGui::EndPopup();
-            //    }
-            //}
         }
 
         ImGui::End(); // end dockspace

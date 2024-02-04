@@ -207,11 +207,49 @@ namespace IS {
 
     void AssetManager::LoadWindowIcon(GLFWwindow* window, const char* filepath)
     {
-        GLFWimage images[1]{};
-        images[0].pixels = stbi_load(filepath, &images[0].width, &images[0].height, 0, 4);
+        int width, height, channels;
+        unsigned char* pixels = stbi_load(filepath, &width, &height, &channels, 0);
+        if (!pixels)
+        {
+            IS_CORE_ERROR("Failed to load ICON image: {}", filepath);
+            return;
+        }
 
-        glfwSetWindowIcon(window, 1, images);
-        stbi_image_free(images[0].pixels);
+        GLFWimage image;
+        image.width = width;
+        image.height = height;
+        image.pixels = pixels;
+
+        glfwSetWindowIcon(window, 1, &image);
+        stbi_image_free(image.pixels);
+    }
+
+    void AssetManager::LoadWindowCursor(GLFWwindow* window, const char* filepath)
+    {
+        int width, height, channels;
+        unsigned char* pixels = stbi_load(filepath, &width, &height, &channels, 0);
+        if (!pixels)
+        {
+            IS_CORE_ERROR("Failed to load cursor image: {}", filepath);
+            return;
+        }
+
+        GLFWimage image;
+        image.width = width;
+        image.height = height;
+        image.pixels = pixels;
+
+        GLFWcursor* cursor = glfwCreateCursor(&image, 0, 0);
+        if (!cursor)
+        {
+            IS_CORE_ERROR("Failed to create cursor from image: {}", filepath);
+            stbi_image_free(pixels); // Free the image data
+        }
+
+        glfwSetCursor(window, cursor);
+        stbi_image_free(pixels); // Free the image data
+
+        IS_CORE_INFO("Loaded Cursor: {} ", filepath);
     }
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame

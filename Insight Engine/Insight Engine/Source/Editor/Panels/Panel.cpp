@@ -47,6 +47,13 @@ namespace IS {
 
         ImGuiWindowFlags window_flags = 0;
         ImGui::Begin((ICON_LC_GAMEPAD_2 "  " + mName).c_str(), nullptr, window_flags);
+
+        if (mHovered)
+        {
+            ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+            ImVec2 cusor_pos = ImGui::GetMousePos();
+            ImGui::GetForegroundDrawList()->AddImage(mEditorLayer.GetIcon("Cursor"), cusor_pos, ImVec2(cusor_pos.x + 32, cusor_pos.y + 32));
+        }
         
         // Window contents
         {
