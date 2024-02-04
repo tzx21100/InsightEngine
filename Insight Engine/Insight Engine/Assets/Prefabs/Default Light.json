@@ -3,9 +3,9 @@
 	{
 		"LightHue" : 
 		{
-			"B" : 0.020651977509260178,
-			"G" : 0.31176620721817017,
-			"R" : 0.97890293598175049
+			"B" : 0.90113765001296997,
+			"G" : 0.91963517665863037,
+			"R" : 0.96202534437179565
 		},
 		"LightIntensity" : 0.60000002384185791,
 		"LightOffset" : 
@@ -14,7 +14,7 @@
 			"Y" : 0.0
 		},
 		"LightRender" : true,
-		"LightSize" : 200.0
+		"LightSize" : 16.0
 	},
 	"Name" : "Default Light",
 	"Signature" : "00000000000000000001000000000011",
@@ -37,8 +37,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1.0,
 		"SpriteTransformScalingY" : 1.0,
-		"SpriteTransformWorldPositionX" : -421.77670288085938,
-		"SpriteTransformWorldPositionY" : -8.6964426040649414,
+		"SpriteTransformWorldPositionX" : -352.70364379882812,
+		"SpriteTransformWorldPositionY" : -14.396071434020996,
 		"animations" : []
 	},
 	"Transform" : 
@@ -46,7 +46,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1.0,
 		"TransformScalingY" : 1.0,
-		"TransformWorldPositionX" : -421.77670288085938,
-		"TransformWorldPositionY" : -8.6964426040649414
+		"TransformWorldPositionX" : -352.70364379882812,
+		"TransformWorldPositionY" : -14.396071434020996
 	}
 }
