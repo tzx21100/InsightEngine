@@ -1506,9 +1506,13 @@ namespace IS
                 InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
                 initial_get_hit = true;
 
-                // player get hit back
+                // getting enemy position
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;
+                // make enemy facing player
+                Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
+
+                // player get hit back
                 InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 50f);
                 InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
                 //reset

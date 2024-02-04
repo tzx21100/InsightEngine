@@ -58,7 +58,7 @@ namespace IS
     {
         // common
         public float speed = 150f;
-        private Vector2D direction = new Vector2D(0f, 0f);
+        public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(257f, 183f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
@@ -78,7 +78,7 @@ namespace IS
         public Vector2D view_port_area = new Vector2D(500f, 200f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
-        private float attack_hit_timer = 0.4f;
+        private float attack_hit_timer = 0.5f;
         private bool initialAttack = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(200f, 200f);
@@ -461,7 +461,7 @@ namespace IS
         {
             float dist = PlayerScript.player_pos.x - enemy_pos.x;
             //Console.WriteLine(dist);
-            if (MathF.Abs(dist) < 200f) // attack player
+            if (MathF.Abs(dist) <= 200f) // attack player when getting close enough
             {
                 Random rnd = new Random();
                 current_attack = rnd.Next(0, 2);
@@ -477,7 +477,7 @@ namespace IS
 
             direction.x = PlayerScript.player_pos.x - enemy_pos.x;
             // set enemy vel
-            enemy_vel.x = speed * MathF.Sign(direction.x) * 2f;
+            enemy_vel.x = speed * MathF.Sign(direction.x) * 1.8f;
             direction.x = -direction.x;// going left is positive, right is negative
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
@@ -497,7 +497,7 @@ namespace IS
             }
             InternalCalls.SetSpriteAnimationIndex(1);
             attack_timer -= InternalCalls.GetDeltaTime();
-            if (attack_timer < attack_hit_timer && attack_timer > 0.2f) // atack timing 0.4s to 0.2s
+            if (attack_timer < attack_hit_timer && attack_timer > 0.3f) // attack timing 0.5s to 0.3s
             {
                 if (!initialAttack && PlayerInAttackRange())
                 {
