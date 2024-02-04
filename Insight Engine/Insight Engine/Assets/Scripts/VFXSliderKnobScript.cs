@@ -42,6 +42,7 @@ namespace IS
                     {
                         SettingsScript.vfx_multiplier = normalised_adjustment;
                     }*/
+                     
                 }
 
             }

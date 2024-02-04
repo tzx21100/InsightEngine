@@ -74,6 +74,8 @@ namespace IS
             master_multiplier = MasterSliderKnobScript.normalised_adjustment;
             bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
             vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
+            bgm_vol = master_multiplier * bgm_multiplier;
+            vfx_vol = master_multiplier * vfx_multiplier;
             if (MasterCheckboxScript.toggled)
             {
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
@@ -248,7 +250,8 @@ namespace IS
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(vfx_checkbox_image, vfx_checkbox_entity);
-
+            bgm_vol = master_multiplier * bgm_multiplier;
+            vfx_vol = master_multiplier * vfx_multiplier;
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {

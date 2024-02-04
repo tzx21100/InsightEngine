@@ -23,7 +23,7 @@ namespace IS
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.vfx_vol);
                     first_hover = true;
                 }
                 if (InternalCalls.MouseHeld(0) == true)
@@ -32,6 +32,8 @@ namespace IS
                     InternalCalls.TransformSetPosition(adjustment, InternalCalls.GetTransformPosition().y);
                     SettingsScript.bgm_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + 111.36f) / (111.36f + 111.36f);
+
+
 
                 }
 
@@ -50,7 +52,7 @@ namespace IS
                 //Console.WriteLine(MasterCheckboxScript.toggled);
                 //Console.WriteLine(SettingsScript.master_multiplier); 
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.vfx_vol);
             }
             
            
