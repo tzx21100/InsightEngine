@@ -57,15 +57,23 @@ namespace IS
         static Vector2D master_slider_bar_pos = new Vector2D(0, 0);
         static Vector2D bgm_slider_bar_pos = new Vector2D(0, 0);
         static Vector2D vfx_slider_bar_pos = new Vector2D(0, 0);
-        static Vector2D master_slider_knob_pos = new Vector2D(0, 0);
-        static Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
+        static public Vector2D master_slider_knob_pos = new Vector2D(0, 0);
+        static public Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
+        static public float master_multiplier;
+        static public float bgm_multiplier;
+        static public float vfx_multiplier;
 
+        static public float bgm_vol;
+        static public float vfx_vol;
         static public void Init()
         {
             show_settings = false;
+            master_multiplier = MasterSliderKnobScript.normalised_adjustment;
+            bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
+            vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
             if (MasterCheckboxScript.toggled)
             {
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
@@ -167,9 +175,9 @@ namespace IS
             master_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.54f * win_dimension.y));
             bgm_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.43f * win_dimension.y));
             vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.32f * win_dimension.y));
-            master_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.543f * win_dimension.y));
-            bgm_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
-            //Math.Clamp(VFXSliderKnobScript.adjustment, .442f, .558f);
+            master_slider_knob_pos.Set(master_slider_knob_pos.x, origin.y + (0.543f * win_dimension.y));
+            //bgm_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
+            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y));
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
@@ -181,6 +189,7 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
                 bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
                 vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
+                master_multiplier = 0f;
             }
             else
             {
@@ -188,6 +197,7 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.checkbox_image;
                 bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
                 vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+                master_multiplier = MasterSliderKnobScript.normalised_adjustment;
             }
 
             // Adjust logic for when A is off but B or C are toggled

@@ -5,7 +5,6 @@ namespace IS
     {
         static public bool first_hover = false;
         static public bool toggled = false;
-        static public float multiplier;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
 
@@ -16,14 +15,15 @@ namespace IS
 
         static public void Update()
         {
-            if (toggled)
-            { //muted
-                multiplier = 0f;
+            if (!toggled)
+            {
+                SettingsScript.vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
             }
             else
             {
-
+                SettingsScript.vfx_multiplier = 0f;
             }
+
 
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -31,7 +31,7 @@ namespace IS
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * multiplier);
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                     first_hover = true;
                 }
             }
@@ -44,7 +44,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * multiplier);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                 toggled = !toggled;
             }
 

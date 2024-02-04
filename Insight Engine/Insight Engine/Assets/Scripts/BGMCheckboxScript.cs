@@ -15,13 +15,21 @@ namespace IS
 
         static public void Update()
         {
+            if (!toggled)
+            {
+                SettingsScript.bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
+            }
+            else
+            {
+                SettingsScript.bgm_multiplier = 0f;
+            }
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                     first_hover = true;
                 }
             }
@@ -34,7 +42,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                 toggled = !toggled;
             }
         }
