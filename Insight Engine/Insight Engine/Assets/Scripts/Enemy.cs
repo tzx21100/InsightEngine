@@ -78,10 +78,10 @@ namespace IS
         public Vector2D view_port_area = new Vector2D(500f, 200f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
-        private float attack_hit_timer = 0.5f;
+        private float attack_hit_timer = 0.6f;
         private bool initialAttack = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
-        public Vector2D attack_area = new Vector2D(200f, 200f);
+        public Vector2D attack_area = new Vector2D(220f, 200f);
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
@@ -461,7 +461,7 @@ namespace IS
         {
             float dist = PlayerScript.player_pos.x - enemy_pos.x;
             //Console.WriteLine(dist);
-            if (MathF.Abs(dist) <= 200f) // attack player when getting close enough
+            if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
             {
                 Random rnd = new Random();
                 current_attack = rnd.Next(0, 2);
@@ -497,7 +497,7 @@ namespace IS
             }
             InternalCalls.SetSpriteAnimationIndex(1);
             attack_timer -= InternalCalls.GetDeltaTime();
-            if (attack_timer < attack_hit_timer && attack_timer > 0.3f) // attack timing 0.5s to 0.3s
+            if (attack_timer < attack_hit_timer && attack_timer > 0.4f) // attack timing 0.6s to 0.4s
             {
                 if (!initialAttack && PlayerInAttackRange())
                 {
