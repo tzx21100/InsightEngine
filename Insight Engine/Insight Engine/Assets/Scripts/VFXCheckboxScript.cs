@@ -7,6 +7,7 @@ namespace IS
         static public bool toggled = false;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
+        static public bool clicked = false;
 
         static public void Init()
         {
@@ -43,6 +44,7 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
+                clicked = !clicked;
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                 toggled = !toggled;
