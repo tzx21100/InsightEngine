@@ -144,16 +144,16 @@ namespace IS
             // Dimensions
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D settings_overlay = new Vector2D(win_dimension.x, win_dimension.y);
-            Vector2D master_checkbox = new Vector2D(0.08f * win_dimension.x, 0.1f * win_dimension.y);
-            Vector2D bgm_checkbox = new Vector2D(0.08f * win_dimension.x, 0.1f * win_dimension.y);
-            Vector2D vfx_checkbox = new Vector2D(0.08f * win_dimension.x, 0.1f * win_dimension.y);
+            Vector2D master_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
+            Vector2D bgm_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
+            Vector2D vfx_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
             Vector2D master_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
             Vector2D bgm_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
             Vector2D vfx_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
-            Vector2D master_slider_knob = new Vector2D(0.06f * win_dimension.x, 0.075f * win_dimension.y);
-            Vector2D bgm_slider_knob = new Vector2D(0.06f * win_dimension.x, 0.075f * win_dimension.y);
-            Vector2D vfx_slider_knob = new Vector2D(0.06f * win_dimension.x, 0.075f * win_dimension.y);
-            Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.15f * win_dimension.y);
+            Vector2D master_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
+            Vector2D bgm_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
+            Vector2D vfx_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
+            Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.12f * win_dimension.x);
 
             InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
             InternalCalls.TransformSetScaleEntity(settings_overlay.x, settings_overlay.y, settings_overlay_entity);
@@ -191,9 +191,22 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
                 bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
                 vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
-                /*master_multiplier = 0f;
-                bgm_multiplier = 0f;
-                vfx_multiplier = 0f;*/
+
+             /*   if (BGMCheckboxScript.clicked)
+                {
+                    BGMCheckboxScript.toggled = false;
+                    bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
+                }
+                else
+                {
+                    BGMCheckboxScript.toggled=true;
+                    bgm_checkbox_image= BGMCheckboxScript.checkbox_image;
+                }*/
+                /*if (VFXCheckboxScript.clicked)
+                {
+                    VFXCheckboxScript.toggled = false;
+                    vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+                }*/
             }
             else
             {
@@ -201,9 +214,7 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.checkbox_image;
                 bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
                 vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                /*master_multiplier = MasterSliderKnobScript.normalised_adjustment;
-                bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
-                vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;*/
+                
             }
 
             // Adjust logic for when A is off but B or C are toggled
@@ -236,17 +247,52 @@ namespace IS
                 MasterCheckboxScript.toggled = true;
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
             }
-            
-            if (BGMCheckboxScript.toggled && !VFXCheckboxScript.toggled)
+
+            if (BGMCheckboxScript.toggled)
             {
-                MasterCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                if (MasterCheckboxScript.clicked || VFXCheckboxScript.clicked)
+                {
+                    MasterCheckboxScript.toggled = true;
+                    VFXCheckboxScript.toggled = true;
+                    master_checkbox_image = MasterCheckboxScript.toggled_image;
+                    vfx_checkbox_image = VFXCheckboxScript.toggled_image;
+                }
+                else
+                {
+                    MasterCheckboxScript.toggled = false;
+                    VFXCheckboxScript.toggled = false;
+                    master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                    vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+                }
             }
-            if (!BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
+   
+            if (VFXCheckboxScript.toggled)
             {
-                MasterCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                if (MasterCheckboxScript.clicked || BGMCheckboxScript.clicked)
+                {
+                    MasterCheckboxScript.toggled = true;
+                    BGMCheckboxScript.toggled = true;
+                    master_checkbox_image = MasterCheckboxScript.toggled_image;
+                    bgm_checkbox_image = BGMCheckboxScript.toggled_image;
+                }
+                else
+                {
+                    MasterCheckboxScript.toggled = false;
+                    BGMCheckboxScript.toggled = false;
+                    master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                    bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
+                }
             }
+            /*            if (BGMCheckboxScript.toggled && !VFXCheckboxScript.toggled)
+                        {
+                            MasterCheckboxScript.toggled = false;
+                            master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                        }
+                        if (!BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
+                        {
+                            MasterCheckboxScript.toggled = false;
+                            master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                        }*/
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(vfx_checkbox_image, vfx_checkbox_entity);

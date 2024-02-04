@@ -74,7 +74,7 @@ namespace IS
             // Dimensions
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D how_to_play_overlay = new Vector2D(win_dimension.x, win_dimension.y);
-            Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.15f * win_dimension.y);     
+            Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.12f * win_dimension.x);     
 
             InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
             InternalCalls.TransformSetScaleEntity(how_to_play_overlay.x, how_to_play_overlay.y, how_to_play_overlay_entity);

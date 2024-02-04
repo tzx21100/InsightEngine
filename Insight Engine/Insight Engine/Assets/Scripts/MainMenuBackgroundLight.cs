@@ -11,7 +11,7 @@ namespace IS
 {
     class ParticleEmitter
     {
-        const int MAX_PARTICLES = 10;
+        const int MAX_PARTICLES = 15;
         const float PARTICLE_BASE_SPEED = 50f;
         const float PARTICLE_SPEED_VARIATION = 100f;
         const float PARTICLE_LIFE_TIME = 5f;
@@ -99,7 +99,7 @@ namespace IS
         const float MIN_LIGHT_INTENSITY = 0.5f;
         const float MAX_LIGHT_INTENSITY = 1f;
         static float MIN_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.025f;
-        static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 1.5f;
+        static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth();
 
         // Light Entities
         static private int mBackgroundLantern;
