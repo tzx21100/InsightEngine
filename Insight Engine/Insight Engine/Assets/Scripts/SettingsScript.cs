@@ -189,7 +189,9 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.toggled_image;
                 bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
                 vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
-                master_multiplier = 0f;
+                /*master_multiplier = 0f;
+                bgm_multiplier = 0f;
+                vfx_multiplier = 0f;*/
             }
             else
             {
@@ -197,7 +199,9 @@ namespace IS
                 master_checkbox_image = MasterCheckboxScript.checkbox_image;
                 bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
                 vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                master_multiplier = MasterSliderKnobScript.normalised_adjustment;
+                /*master_multiplier = MasterSliderKnobScript.normalised_adjustment;
+                bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
+                vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;*/
             }
 
             // Adjust logic for when A is off but B or C are toggled

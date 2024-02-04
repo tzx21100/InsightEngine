@@ -45,7 +45,7 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                Console.WriteLine(SettingsScript.master_multiplier); //0 when muted
+                //Console.WriteLine(SettingsScript.master_multiplier); //0 when muted
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
             }

@@ -34,6 +34,14 @@ namespace IS
                     SettingsScript.vfx_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + 111.36f) / (111.36f + 111.36f);
 
+                    /*if (MasterCheckboxScript.toggled == true)
+                    {
+                        SettingsScript.vfx_multiplier = 0f;
+                    }
+                    else
+                    {
+                        SettingsScript.vfx_multiplier = normalised_adjustment;
+                    }*/
                 }
 
             }
@@ -46,11 +54,15 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
+                //Console.WriteLine(SettingsScript.master_multiplier);
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
             }
 
+            if (MasterCheckboxScript.toggled)
+            {
+                SettingsScript.master_multiplier = 0f;
+            }
             SettingsScript.vfx_multiplier = normalised_adjustment;
-
 
         }
 

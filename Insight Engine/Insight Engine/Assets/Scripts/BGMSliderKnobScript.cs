@@ -40,15 +40,20 @@ namespace IS
             {
                 first_hover = false;
             }
-
+            if (MasterCheckboxScript.toggled)
+            {
+                SettingsScript.master_multiplier = 0f;
+            }
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                Console.WriteLine(SettingsScript.master_multiplier); //why got value?
+                //Console.WriteLine(MasterCheckboxScript.toggled);
+                //Console.WriteLine(SettingsScript.master_multiplier); 
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
             }
-
+            
+           
             SettingsScript.bgm_multiplier = normalised_adjustment;
         }
 
