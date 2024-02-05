@@ -33,6 +33,7 @@
 #include "Graphics/System/Camera.h"
 #include "Graphics/System/Camera3D.h"
 #include "Graphics/System/Layering.h"
+#include "Graphics/System/ShaderEffects.h"
 
 #include "Graphics/Buffers/Framebuffer.h"
 
@@ -162,16 +163,6 @@ namespace IS {
 		// Flags
 		static bool mGlitched;
 		static bool mLightsOn;
-
-		enum LiGhT_tYPE
-		{   
-			NORMAL,
-			FADE,
-			SEPIA,
-			CANCER,
-			GLITCHED
-		};
-		static int mLightType;
 
 		// Layers
 		static std::vector<Layering>mLayers;

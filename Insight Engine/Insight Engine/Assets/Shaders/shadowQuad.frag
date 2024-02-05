@@ -13,8 +13,9 @@ uniform vec4 uLineSegments[128]; // line segment world positions (x,y) to (z,w)
 uniform int uNoOfLineSegments; // line segment count
 uniform vec2 uResolution; // resolution of game
 uniform mat4 uInverseVP; // Inverse of View-Projection Matrix
-uniform int type_of_light;
-uniform float ilovetime;
+uniform int uShaderEffect;
+uniform float uTimeElapsed;
+uniform float uShaderEffectTimer;
 
 uniform sampler2D bg_tex; // background framebuffer texture
 uniform isampler2D id_tex; // ID framebuffer texture
@@ -41,12 +42,24 @@ vec3 blendLight(vec3 base, vec3 added) {
 
 float generate_rand(vec2 uv)
 {
-    return fract(sin(ilovetime));
+    return fract(sin(uTimeElapsed));
 }
 
 float real_random_thing(vec2 some_parameter)
 {
-    return fract(sin(dot(some_parameter, vec2(12.9898, 78.233))) * 43758.5453) * ilovetime;
+    return fract(sin(dot(some_parameter, vec2(12.9898, 78.233))) * 43758.5453) * uTimeElapsed;
+}
+
+vec2 applyLensDistortion(vec2 uv, float distortionAmount) {
+    vec2 centeredUV = uv - 0.5;
+    float dist = dot(centeredUV, centeredUV);
+    vec2 distortedUV = uv + centeredUV * dist * distortionAmount;
+    return distortedUV;
+}
+
+float filmReelNoise(vec2 uv, float time) {
+    float noise = sin(dot(uv + time, vec2(12.9898, 78.233))) * 43758.5453;
+    return fract(noise);
 }
 
 void main() {
@@ -64,7 +77,7 @@ void main() {
         float radius = uLightRadius[i];
 
         // change to sepia
-        if (type_of_light == 1){
+        if (uShaderEffect == 1){
             radius = radius * 3;
         }
         //end of change to sepia 
@@ -81,7 +94,7 @@ void main() {
                 vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
                 if (doLineSegmentsIntersect(uLightWorldPos[i], current_pixel, p0, p1)) {
 
-                    if (type_of_light==0){
+                    if (uShaderEffect==0){
                     lightContribution *= 0.0; // Shadow attenuation
                     }
                     else{
@@ -100,12 +113,12 @@ void main() {
         }
     }
 
-    if (type_of_light == 0)
+    if (uShaderEffect == 0)
     {
-         fFragColor = final_frag_clr;    
+        fFragColor = final_frag_clr;    
 
     }
-    if (type_of_light == 1)
+    if (uShaderEffect == 1)
     {
         if (render == 0)
         {
@@ -117,7 +130,7 @@ void main() {
         }
         
     }
-    if (type_of_light==2)
+    if (uShaderEffect==2)
     {
         // type of light is normal
         float avr = (final_frag_clr.x + final_frag_clr.y + final_frag_clr.z) / 3.0;
@@ -127,11 +140,79 @@ void main() {
         if (mod(gl_FragCoord.x, real_random_thing(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, real_random_thing(vTexCoord) * 10.0) < 0.1)
             fFragColor = vec4(real_random_thing(vTexCoord));
     }
-    if (type_of_light==3)
-    {
-        fFragColor = final_frag_clr;    
-    }
+    if (uShaderEffect == 3) { // static glitch
+        // Determine glitch activation based on uTimeElapsed
+        float glitchCycle = 3.0; // Glitch every 5 seconds
+        float glitchDuration = 0.2; // Glitch is active for 0.2 seconds
+        float currentTime = mod(uTimeElapsed, glitchCycle);
+        bool isGlitchActive = currentTime < glitchDuration;
 
+        // Apply lens distortion and chromatic aberration
+        vec2 uv = applyLensDistortion(vTexCoord, 0.02);
+        float aberrationOffset = isGlitchActive ? 0.02 : 0.005; // Increase offset if glitch is active
+        vec3 colorR = texture(bg_tex, uv + vec2(aberrationOffset, 0.0)).rgb;
+        vec3 colorG = texture(bg_tex, uv).rgb;
+        vec3 colorB = texture(bg_tex, uv - vec2(aberrationOffset, 0.0)).rgb;
+        vec3 chromaticAberrationColor = vec3(colorR.r, colorG.g, colorB.b);
+
+        // Optionally, apply film reel noise based on glitch activation
+        float noiseIntensity = isGlitchActive ? 0.2 : 0.05; // Increase noise if glitch is active
+        float noise = filmReelNoise(uv, uTimeElapsed) * noiseIntensity;
+        vec3 noiseColor = vec3(noise);
+
+        // Combine chromatic aberration, noise, and final color from lighting calculations
+        vec3 finalColorWithEffects = final_frag_clr.rgb + chromaticAberrationColor + noiseColor;
+
+        // Output the final color, applying the glitch effect conditionally
+        fFragColor = vec4(finalColorWithEffects, final_frag_clr.a);
+    }
+    if (uShaderEffect == 4 && uShaderEffectTimer >= 0.0) {
+        vec3 colorEffect = vec3(0.0);
+        vec2 uv = vTexCoord;
+        vec2 position = (gl_FragCoord.xy / uResolution.xy) * 2.0 - 1.0;
+        position.x *= uResolution.x / uResolution.y; // Aspect correction
+
+        float cycleLength = 6.0; // Total effect duration
+        float convergeDuration = 4.0 * 0.75; // Duration of the convergence phase
+        float fadeOutDuration = 2.0; // Not directly used since fading is tied to the timer
+
+        // Directly use uShaderEffectTimer to determine the phase
+        bool isConverging = uShaderEffectTimer > cycleLength - convergeDuration;
+        
+        float intensity;
+        if (isConverging) {
+            // During convergence, calculate intensity based on the timer, inversely proportional
+            intensity = uShaderEffectTimer / convergeDuration;
+        } else {
+            // After convergence, start fading out based on the remaining timer
+            intensity = uShaderEffectTimer / fadeOutDuration;
+        }
+
+        // Ensure intensity is clamped to [0, 1] to prevent under/overflow
+        intensity = clamp(intensity, 0.0, 1.0);
+
+        for (int i = 0; i < 3; i++) {
+            float z = uShaderEffectTimer * 0.1 + float(i) * 0.07;
+            float l = length(position);
+            vec2 p = position;
+
+            float directionMultiplier = isConverging ? -1.0 : 1.0;
+            float effectStrength = sin(z) + 1.0;
+
+            p += (position / max(l, 0.001)) * directionMultiplier * effectStrength * intensity * abs(sin(l * 9.0 - z * 2.0));
+            colorEffect[i] = 0.01 / length(mod(p, 1.0) - 0.5);
+        }
+
+        // Retrieve the base color from the texture
+        vec4 baseColor = texture(bg_tex, uv);
+
+        // Combine the colorEffect with the base color, modulated by intensity
+        vec4 finalColor = vec4(colorEffect, 1.0) * intensity + baseColor;
+        fFragColor = finalColor;
+    } 
+    
+
+    // Entity ID output remains unchanged
     int id = texture(id_tex, vTexCoord).x;
-    fEntityID = int(id); // Entity ID from ID texture
+    fEntityID = int(id);
 }

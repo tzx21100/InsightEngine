@@ -29,6 +29,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Physics/Dynamics/Body.h"
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
+#include "Graphics/System/ShaderEffects.h"
 
 #include <vector>
 #include <mono/metadata/object.h>
@@ -1246,8 +1247,7 @@ namespace IS {
     }
 
     static void ChangeLightType(int lighttype) {
-        ISGraphics::mLightType = lighttype;
-
+        ShaderEffect::currentShaderEffect = static_cast<ShaderEffect::shaderEffect>(lighttype);
     }
 
 

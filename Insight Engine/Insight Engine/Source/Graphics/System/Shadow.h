@@ -38,6 +38,7 @@ namespace IS {
         static Mesh shadowMesh;
 
         static void setupShadowQuadMesh();
+
     };
 } // end namespace IS
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SHADOW_H
