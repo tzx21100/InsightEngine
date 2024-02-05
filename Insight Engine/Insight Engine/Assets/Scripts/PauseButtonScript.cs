@@ -14,6 +14,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 using System.Collections.Generic;
 namespace IS
 {
@@ -23,7 +24,8 @@ namespace IS
         static public Vector2D pause_button_pos = new Vector2D(0f, 0f);
         static public bool paused = false;
         static public bool fullscreen_mode = false;
-
+        static public SimpleImage paused_button_image = InternalCalls.GetSpriteImage("pause_button.png");
+        static public SimpleImage paused_button_clicked_image = InternalCalls.GetSpriteImage("pause_button_clicked.png");
         // Pause Menu
         static private int pause_menu_entity;
         static private int resume_button_entity;
@@ -82,10 +84,13 @@ namespace IS
         {
             ToggleFullscreenMode();
 
+            //set the image
+            InternalCalls.SetSpriteImage(paused_button_image);
+
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
-            // Get camera position
+            // Get camera position 
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
@@ -97,7 +102,7 @@ namespace IS
             orgin.y = camera_pos.y - (win_dimension.y / 2f);
 
             // Size
-            InternalCalls.TransformSetScale(0.04f * win_dimension.x, 0.07f * win_dimension.y);
+            InternalCalls.TransformSetScale(0.08f * win_dimension.x, 0.08f * win_dimension.x);
             InternalCalls.TransformSetScaleEntity(1.25f * win_dimension.x, 1.15f * win_dimension.y, pause_menu_entity);
             InternalCalls.SetButtonSize(resume_button_entity, new SimpleVector2D(0.21f * win_dimension.x, 0.12f * win_dimension.y));
             InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(0.15f * win_dimension.x, 0.09f * win_dimension.y));
@@ -136,11 +141,14 @@ namespace IS
             if (InternalCalls.GetButtonState() == 1)
             {
                 InternalCalls.TransformSetScale(0.06f * win_dimension.x, 0.1f * win_dimension.y);
+                InternalCalls.SetSpriteImage(paused_button_clicked_image);
             }
             //click
             if (InternalCalls.GetButtonState() == 2) 
             {
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                InternalCalls.SetSpriteImage(paused_button_clicked_image);
+
                 if (!paused)
                 {
                     paused = true;
@@ -173,6 +181,8 @@ namespace IS
                 InternalCalls.GamePause(false);
                 HidePauseMenu();
             }
+            
+
         }
 
         static public void CleanUp()
