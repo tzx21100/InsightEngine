@@ -90,7 +90,7 @@ namespace IS
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
-            // Get camera position
+            // Get camera position 
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
 
@@ -141,14 +141,12 @@ namespace IS
             if (InternalCalls.GetButtonState() == 1)
             {
                 InternalCalls.TransformSetScale(0.06f * win_dimension.x, 0.1f * win_dimension.y);
-                Console.WriteLine("hovered");
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
             }
             //click
             if (InternalCalls.GetButtonState() == 2) 
             {
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
-                Console.WriteLine("click");
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
 
                 if (!paused)
