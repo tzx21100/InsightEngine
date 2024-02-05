@@ -1388,19 +1388,19 @@
 					[
 						{
 							"x" : -630.8009033203125,
-							"y" : 724.188720703125
+							"y" : 1539.375
 						},
 						{
 							"x" : 630.8009033203125,
-							"y" : 724.188720703125
+							"y" : 1539.375
 						},
 						{
 							"x" : 630.8009033203125,
-							"y" : -724.188720703125
+							"y" : -1539.375
 						},
 						{
 							"x" : -630.8009033203125,
-							"y" : -724.188720703125
+							"y" : -1539.375
 						}
 					]
 				},
@@ -1450,7 +1450,7 @@
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1261.601806640625,
-				"SpriteTransformScalingY" : 1448.37744140625,
+				"SpriteTransformScalingY" : 3078.75,
 				"SpriteTransformWorldPositionX" : -808.87493896484375,
 				"SpriteTransformWorldPositionY" : 1810.8369140625,
 				"animations" : []
@@ -1459,7 +1459,7 @@
 			{
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 1261.601806640625,
-				"TransformScalingY" : 1448.37744140625,
+				"TransformScalingY" : 3078.75,
 				"TransformWorldPositionX" : -808.87493896484375,
 				"TransformWorldPositionY" : 1810.8369140625
 			}
@@ -6884,9 +6884,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038083914667367935,
+						"frame_timer" : 0.054750584065914154,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -7340,9 +7340,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0021645203232765198,
+						"frame_timer" : 0.018831187859177589,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -9550,8 +9550,8 @@
 						"animation_duration" : 0.40000000596046448,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -11875,9 +11875,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.052164524793624878,
+						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -11995,7 +11995,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -12616,8 +12616,8 @@
 						"animation_duration" : 0.40000000596046448,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -12747,9 +12747,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.033851299434900284,
+						"frame_timer" : 0.050517968833446503,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -14213,9 +14213,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.052164524793624878,
+						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -14331,9 +14331,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.052164524793624878,
+						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -14449,9 +14449,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 10.0,
+						"frame_index_x" : 9.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.052164524793624878,
+						"frame_timer" : 0.068831190466880798,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1

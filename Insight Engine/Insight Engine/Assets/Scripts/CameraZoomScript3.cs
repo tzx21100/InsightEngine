@@ -29,6 +29,7 @@ namespace IS
                 if (zoom_out_timer < 0)
                 {
                     CameraScript.CameraTargetZoom(0.7f, 0.2f);
+                    PlayerScript.hideHealth = false;
                     InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
                 }
             }

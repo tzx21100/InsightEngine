@@ -209,8 +209,8 @@ namespace IS
         static public float camera_zoom = 0.7f;
 
         //window height
-        static private int WindowHeight = 0;
-        static private int WindowWidth = 0;
+        static private float WindowHeight = 0;
+        static private float WindowWidth = 0;
 
 
         // stablize player
@@ -219,6 +219,10 @@ namespace IS
         // Collectible
 
         static public int collection_count = 0;
+
+        // hide health
+        static public bool hideHealth = false;
+
 
         public static int BoolToInt(bool boolValue)
         {
@@ -1694,8 +1698,9 @@ namespace IS
 
         static private void DrawHealthBar()
         {
+            if(hideHealth==true) return;
             //Console.WriteLine(Health);
-            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - WindowWidth / 1.6f, CameraScript.camera_pos.y + WindowHeight / 1.6f );
+            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x, health_scaling.y);
             float interval = scaling.x / 1.6f;
             // draw health bar
