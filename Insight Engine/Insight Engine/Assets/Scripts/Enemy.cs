@@ -607,10 +607,10 @@ namespace IS
                         }
                         break;
                     case 1: // attack 2
-                        random_attack1_sound = rnd.Next(0, 6);
+                        random_attack2_sound = rnd.Next(0, 6);
                         float volume2 = 0.2f;
 
-                        switch (random_attack1_sound)
+                        switch (random_attack2_sound)
                         {
                             case 0:
                                 InternalCalls.AudioPlaySound("Blobby Attack-Swirl_1.wav", false, volume2);
