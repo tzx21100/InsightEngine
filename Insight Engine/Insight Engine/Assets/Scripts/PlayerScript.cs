@@ -1270,7 +1270,7 @@ namespace IS
         static private void Attack()
         {
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
-            if (InternalCalls.KeyPressed((int)KeyCodes.F) && (!isAttack ))
+            if (InternalCalls.MousePressed(0) && (!isAttack ))
             {
 
                 
