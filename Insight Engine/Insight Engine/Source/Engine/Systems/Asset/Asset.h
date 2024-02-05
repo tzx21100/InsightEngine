@@ -394,7 +394,7 @@ namespace IS {
         void RefreshDirectiories();
 
         static void LoadWindowIcon(GLFWwindow* window, const char* filepath);
-        static void LoadWindowCursor(GLFWwindow* window, const char* filepath);
+        static GLFWcursor* LoadWindowCursor(const char* filepath);
 
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;

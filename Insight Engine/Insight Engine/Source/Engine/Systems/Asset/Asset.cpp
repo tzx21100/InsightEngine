@@ -224,14 +224,14 @@ namespace IS {
         stbi_image_free(image.pixels);
     }
 
-    void AssetManager::LoadWindowCursor(GLFWwindow* window, const char* filepath)
+    GLFWcursor* AssetManager::LoadWindowCursor(const char* filepath)
     {
         int width, height, channels;
         unsigned char* pixels = stbi_load(filepath, &width, &height, &channels, 0);
         if (!pixels)
         {
             IS_CORE_ERROR("Failed to load cursor image: {}", filepath);
-            return;
+            return nullptr;
         }
 
         GLFWimage image;
@@ -246,10 +246,11 @@ namespace IS {
             stbi_image_free(pixels); // Free the image data
         }
 
-        glfwSetCursor(window, cursor);
         stbi_image_free(pixels); // Free the image data
 
         IS_CORE_INFO("Loaded Cursor: {} ", filepath);
+
+        return cursor;
     }
 
     void AssetManager::Update([[maybe_unused]] float deltaTime) {//every frame

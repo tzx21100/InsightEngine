@@ -80,11 +80,12 @@ namespace IS {
 
         // Set icon
         AssetManager::LoadWindowIcon(mWindow, "Assets/Icons/Game Logo.png");
-        AssetManager::LoadWindowCursor(mWindow, "Assets/Icons/cursor_default.png");
+        mCursor = AssetManager::LoadWindowCursor("Assets/Icons/cursor_default.png");
 
         // Default setting
         glfwMakeContextCurrent(mWindow);
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwSetCursor(mWindow, mCursor);
 
         // Center window
         if (!mProps.mFullscreen)
@@ -241,7 +242,7 @@ namespace IS {
     void WindowSystem::LoadCustomCursor()
     {
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        AssetManager::LoadWindowCursor(mWindow, "Assets/Icons/cursor_default.png");
+        glfwSetCursor(mWindow, mCursor);
     }
 
     void WindowSystem::SetMaximized(bool maximized)

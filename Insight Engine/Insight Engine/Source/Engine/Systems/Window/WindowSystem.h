@@ -273,6 +273,7 @@ namespace IS {
 
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
+        GLFWcursor* mCursor = nullptr; ///< Pointer to the GLFW cursor.
         WindowProperties mProps; ///< The properties of the window.
         int mMonitorWidth; ///< The width of the monitor.
         int mMonitorHeight; ///< The height of the monitor.
