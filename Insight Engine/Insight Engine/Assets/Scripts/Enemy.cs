@@ -89,6 +89,13 @@ namespace IS
         private int random_dead_sound;
         private int random_attack1_sound;
         private int random_attack2_sound;
+        private int random_idle_sound;
+
+        // idle
+        private float idle_sound_timer_duration = 3f;
+        private float idle_sound_timer = 3f;
+        private bool initialIdleSound = false;
+        private float idle_sound_radius = 1000f;
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
@@ -373,10 +380,60 @@ namespace IS
 
         private void EnemyPatrolling()
         {
-            /*if (isPatrolling)
-            {*/
+            Random rnd = new Random();
+            if (idle_sound_timer > 0f)
+            {
+                idle_sound_timer -= InternalCalls.GetDeltaTime();
 
-            //}
+                if (idle_sound_timer < 1f)
+                {
+                    initialIdleSound = false; // reset
+                }
+            }
+            else
+            {
+                if (!initialIdleSound && CheckPlayerNearby()) // play the idle sound once only
+                {
+                    random_idle_sound = rnd.Next(0, 10);
+                    float volume = 0.2f;
+                    switch (random_idle_sound)
+                    {
+                        case 0:
+                            InternalCalls.AudioPlaySound("Blobby Idle_1.wav", false, volume);
+                            break;
+                        case 1:
+                            InternalCalls.AudioPlaySound("Blobby Idle_2.wav", false, volume);
+                            break;
+                        case 2:
+                            InternalCalls.AudioPlaySound("Blobby Idle_3.wav", false, volume);
+                            break;
+                        case 3:
+                            InternalCalls.AudioPlaySound("Blobby Idle_4.wav", false, volume);
+                            break;
+                        case 4:
+                            InternalCalls.AudioPlaySound("Blobby Idle_5.wav", false, volume);
+                            break;
+                        case 5:
+                            InternalCalls.AudioPlaySound("Blobby Idle_6.wav", false, volume);
+                            break;
+                        case 6:
+                            InternalCalls.AudioPlaySound("Blobby Idle_7.wav", false, volume);
+                            break;
+                        case 7:
+                            InternalCalls.AudioPlaySound("Blobby Idle_8.wav", false, volume);
+                            break;
+                        case 8:
+                            InternalCalls.AudioPlaySound("Blobby Idle_9.wav", false, volume);
+                            break;
+                        case 9:
+                            InternalCalls.AudioPlaySound("Blobby Idle_10.wav", false, volume);
+                            break;
+                    }
+                    idle_sound_timer = idle_sound_timer_duration + (float)rnd.NextDouble() * 5f; // reset sound timer
+                    initialIdleSound = true;
+                }
+                
+            }
 
             float dist = target_point.x - enemy_pos.x;
             //Vector2D dir = new Vector2D(0f, 0f);
@@ -412,6 +469,20 @@ namespace IS
             enemy_vel.x = speed * MathF.Sign(direction.x);
             direction.x = -direction.x;// going left is positive, right is negative
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
+        }
+
+        private bool CheckPlayerNearby()
+        {
+            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
+            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
+            if (length < idle_sound_radius)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void EnemyStateMechine()
