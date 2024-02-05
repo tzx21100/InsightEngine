@@ -17,7 +17,7 @@ namespace IS {
     void ShaderEffect::shader_effect_update(float dt) {
         shader_effect_timer -= dt;
         if (shader_effect_timer <= 0.f) {
-            currentShaderEffect = shaderEffect::no_effect;
+           // currentShaderEffect = shaderEffect::no_effect;
         }
     }
 }

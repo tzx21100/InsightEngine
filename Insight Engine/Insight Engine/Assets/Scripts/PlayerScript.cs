@@ -1695,7 +1695,7 @@ namespace IS
         static private void DrawHealthBar()
         {
             //Console.WriteLine(Health);
-            SimpleVector2D pos = new SimpleVector2D(camera_pos.x - WindowWidth / 1.6f, camera_pos.y + WindowHeight / 1.6f);
+            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - WindowWidth / 1.6f, CameraScript.camera_pos.y + WindowHeight / 1.6f );
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x, health_scaling.y);
             float interval = scaling.x / 1.6f;
             // draw health bar

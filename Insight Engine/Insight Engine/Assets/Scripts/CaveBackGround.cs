@@ -81,7 +81,10 @@ namespace IS
                 InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0,1+( (PlayerScript.camera_pos.y-4500) /1000), 4);
                 if (PlayerScript.player_pos.y > 4600)
                 {
-                    InternalCalls.ChangeLightType(3);
+                    InternalCalls.ChangeLightType(0);
+                    CameraScript.camera_pos.x = -591;
+                    CameraScript.camera_pos.y = 76;
+                    InternalCalls.AttachCamera(-591, 76);
                     InternalCalls.LoadScene("Assets/Scenes/GameLevel.insight");
                 }
             }

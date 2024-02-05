@@ -28,6 +28,8 @@ namespace IS
         static private Vector2D bg_scale=new Vector2D(4096*2.5f,756*2.5f);
 
 
+        static private float fade_out_timer = 1f;
+
         static public void Init(){
             bg_image1 = InternalCalls.GetSpriteImage("1st.png");
             bg_image2 = InternalCalls.GetSpriteImage("2nd.png");
@@ -41,6 +43,8 @@ namespace IS
 
         static public void Update()
         {
+
+
             //InternalCalls.DrawImageAt(PlayerScript.camera_pos.ToSimpleVector2D() ,0, bg_scale.ToSimpleVector2D(), bg_image5, 0);
             // Calculate the player's offset
             float playerOffsetX = PlayerScript.player_pos.x;
@@ -73,8 +77,9 @@ namespace IS
 
             InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.2f, 0);
 
-
+            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, fade_out_timer, InternalCalls.GetTopLayer());
             leaves_timer -= InternalCalls.GetDeltaTime();
+            fade_out_timer -= InternalCalls.GetDeltaTime()*0.8f;
             if(leaves_timer <= 0 )
             {
 
