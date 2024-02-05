@@ -170,6 +170,7 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
+
             // for each entity
         for (int i = 0; i < static_cast<int>(mLayers.size()); i++)
         {
