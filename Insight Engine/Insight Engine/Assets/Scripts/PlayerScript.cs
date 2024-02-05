@@ -47,7 +47,7 @@ namespace IS
         // health
         static public int Max_Health = 6;
         static public int Health = 6;
-        static public Vector2D health_scaling = new Vector2D(250, 250);
+        static public Vector2D health_scaling = new Vector2D(150, 150);
 
         static public float respawn_x = 0f;
         static public float respawn_y = 0f;
@@ -1701,7 +1701,7 @@ namespace IS
             if(hideHealth==true) return;
             //Console.WriteLine(Health);
             SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
-            SimpleVector2D scaling = new SimpleVector2D(health_scaling.x, health_scaling.y);
+            SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
             float interval = scaling.x / 1.6f;
             // draw health bar
             switch (Health){

@@ -90,6 +90,7 @@ namespace IS {
         if (InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetFocus() == false) {
 
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+            sys->ClearAllSounds();
             //sys->ClearAllSounds();
             mChannel->setPaused(true);
 
