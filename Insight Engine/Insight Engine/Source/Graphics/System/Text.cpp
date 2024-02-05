@@ -63,14 +63,14 @@ namespace IS {
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
         {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+            IS_CORE_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
             return;
         }
 
         // load font as face
         FT_Face face;
         if (FT_New_Face(ft, filepath.c_str(), 0, &face)) {
-            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+            IS_CORE_ERROR("ERROR::FREETYPE: Failed to load font");
             return;
         }
         else {
@@ -91,7 +91,7 @@ namespace IS {
 
             for (unsigned char c = 0; c < 128; ++c) {
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character " << static_cast<int>(c) << std::endl;
+                    IS_CORE_ERROR("ERROR::FREETYTPE: Failed to load Glyph for character {}", static_cast<int>(c));
                     continue;
                 }
 
@@ -114,7 +114,7 @@ namespace IS {
             for (unsigned char c = 0; c < 128; ++c) {
                 // Load character glyph
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character " << static_cast<int>(c) << std::endl;
+                    IS_CORE_ERROR("ERROR::FREETYTPE: Failed to load Glyph for character {}", static_cast<int>(c));
                     continue;
                 }
 
@@ -146,7 +146,6 @@ namespace IS {
 
                 GLenum error = glGetError();
                 if (error != GL_NO_ERROR) {
-                    std::cout << "wrong char: " << (int)c << std::endl;
                     IS_CORE_ERROR("Error loading font character '{}' from {}", static_cast<char>(c), filepath);
                 }
 
@@ -306,7 +305,14 @@ namespace IS {
     }
 
     void Text::addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
-        renderCalls.push_back({ text, widthScalar, heightScalar, scale, color });
+        TextRenderCall renderCall;
+        renderCall.text = text;
+        renderCall.widthScalar = widthScalar;
+        renderCall.heightScalar = heightScalar;
+        renderCall.scale = scale;
+        renderCall.color = color;
+
+        renderCalls.emplace_back(renderCall);
     }
 
     void Text::renderAllText(std::unordered_map<std::string, Text>& textMap) {
