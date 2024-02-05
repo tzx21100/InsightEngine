@@ -12,6 +12,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
     class SettingsScript
@@ -62,6 +63,9 @@ namespace IS
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
+        static public float upper_limit;
+        static public float lower_limit; 
+
         static public float master_multiplier;
         static public float bgm_multiplier;
         static public float vfx_multiplier;
@@ -71,6 +75,13 @@ namespace IS
         static public void Init()
         {
             show_settings = false;
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+            origin.x = camera_pos.x - (win_dimension.x / 2f);
+            origin.y = camera_pos.y - (win_dimension.y / 2f);
+            upper_limit = origin.x + (0.558f * win_dimension.x);
+            lower_limit = origin.x + (0.442f * win_dimension.x);
             master_multiplier = MasterSliderKnobScript.normalised_adjustment;
             bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
             vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
@@ -105,7 +116,7 @@ namespace IS
 
             }
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
-            settings_overlay_image = InternalCalls.GetSpriteImage("temp_settings_overlay.png");
+            settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
             slider_bar_image = InternalCalls.GetSpriteImage("slider_bar.png");
             slider_knob_image = InternalCalls.GetSpriteImage("slider_knob.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
@@ -140,6 +151,9 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
+            upper_limit = origin.x + (0.558f * win_dimension.x);
+            lower_limit = origin.x + (0.442f * win_dimension.x);
+
 
             // Dimensions
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
@@ -183,6 +197,8 @@ namespace IS
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
+          
+      
 
             /*// Initial setting of images based on the toggled state of A (MasterCheckbox)
             if (MasterCheckboxScript.toggled)
@@ -352,7 +368,16 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(master_slider_knob_pos.x, master_slider_knob_pos.y, master_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(bgm_slider_knob_pos.x, bgm_slider_knob_pos.y, bgm_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(vfx_slider_knob_pos.x, vfx_slider_knob_pos.y, vfx_slider_knob_entity);
-            InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity); 
+            InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
+            /*   InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004572271f * win_dimension.y), 10f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", origin.x + (0.5002578125f * win_dimension.x), origin.y + (0.5003539823f * win_dimension.y), 10f, (1f, 1f, 1f));*/
+
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.666f, 12.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.58f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.465f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.36f, 10f, (1f, 1f, 1f));
         }
 
         static private void HideSettings()
