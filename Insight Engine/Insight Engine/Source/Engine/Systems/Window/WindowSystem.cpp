@@ -67,7 +67,7 @@ namespace IS {
         mMonitorHeight = mode->height;
 
         // Validate window size
-        if (mProps.mWidth > mMonitorWidth || mProps.mHeight > mMonitorHeight)
+        if (0 <= mProps.mWidth || mProps.mWidth > mMonitorWidth || 0 <= mProps.mHeight || mProps.mHeight > mMonitorHeight)
         {
             mProps = DEFAULT_PROPERTIES;
 
