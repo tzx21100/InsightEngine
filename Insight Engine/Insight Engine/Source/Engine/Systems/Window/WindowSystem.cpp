@@ -66,6 +66,15 @@ namespace IS {
         mMonitorWidth = mode->width;
         mMonitorHeight = mode->height;
 
+        // Validate window size
+        if (0 <= mProps.mWidth || mProps.mWidth > mMonitorWidth || 0 <= mProps.mHeight || mProps.mHeight > mMonitorHeight)
+        {
+            mProps = DEFAULT_PROPERTIES;
+
+            mWidthBeforeFullscreen = mProps.mWidth;
+            mHeightBeforeFullscreen = mProps.mHeight;
+        }
+
         // Create a window and its OpenGL context
         mWindow = mProps.mFullscreen
             ? glfwCreateWindow(mMonitorWidth, mMonitorHeight, mProps.mTitle.c_str(), monitor, nullptr)
