@@ -11,9 +11,11 @@ namespace IS
 {
     class ParticleEmitter
     {
-        const int MAX_PARTICLES = 20;
-        const float PARTICLE_BASE_SPEED = 50f;
-        const float PARTICLE_SPEED_VARIATION = 100f;
+        const int MAX_PARTICLES = 10;
+        public const float PARTICLE_FAST_SPEED = 150f;
+        public const float PARTICLE_SLOW_SPEED = 10f;
+        static public float particleBaseSpeed = PARTICLE_FAST_SPEED;
+        const float PARTICLE_SPEED_VARIATION = 10f;
         const float PARTICLE_LIFE_TIME = 5f;
 
         private int[] mParticles;
@@ -38,7 +40,21 @@ namespace IS
         {
             // Activate and reposition an existing particle
             InternalCalls.SetLightToggleEntity(mParticles[mCurrentParticleIndex], true);
-            InternalCalls.TransformSetPositionEntity(x, y, mParticles[mCurrentParticleIndex]);
+            // InternalCalls.TransformSetPositionEntity(x, y, mParticles[mCurrentParticleIndex]);
+            // Define the emission area size
+            const int EMISSION_AREA_SIZE = 32;
+
+            // Generate a random offset within the emission area
+            Random random = new Random();
+            int offsetX = random.Next(0, EMISSION_AREA_SIZE);
+            int offsetY = random.Next(0, EMISSION_AREA_SIZE);
+
+            // Add the offset to the x and y coordinates
+            float newX = x + offsetX;
+            float newY = y - offsetY;
+
+            // Set the new position
+            InternalCalls.TransformSetPositionEntity(newX, newY, mParticles[mCurrentParticleIndex]);
             mParticleLifetimes[mCurrentParticleIndex] = 0f;
 
             // Increment the particle index for the next frame
@@ -49,7 +65,7 @@ namespace IS
             {
                 if (InternalCalls.IsLightRenderingEntity(mParticles[i]))
                 {
-                    float particleSpeed = PARTICLE_BASE_SPEED + GetRandomFloat(-PARTICLE_SPEED_VARIATION, PARTICLE_SPEED_VARIATION);
+                    float particleSpeed = particleBaseSpeed + GetRandomFloat(-PARTICLE_SPEED_VARIATION, PARTICLE_SPEED_VARIATION);
 
                     float xPos = InternalCalls.GetTransformPositionEntity(mParticles[i]).x + particleSpeed * InternalCalls.GetDeltaTime();
                     float yPos = InternalCalls.GetTransformPositionEntity(mParticles[i]).y + particleSpeed * InternalCalls.GetDeltaTime();
@@ -63,7 +79,7 @@ namespace IS
                     float intensity = lerpedIntensity * distanceIntensityFactor;
 
                     // Calculate opacity reduction factor
-                    float opacityReductionFactor = GetRandomFloat(0.3f, 0.8f); // Varying opacity for each particle
+                    float opacityReductionFactor = GetRandomFloat(0.1f, 0.8f); // Varying opacity for each particle
 
                     // Reset the particle position and life timer when it goes off-screen
                     if (mParticleLifetimes[i] > PARTICLE_LIFE_TIME)
@@ -100,6 +116,7 @@ namespace IS
         const float MAX_LIGHT_INTENSITY = 1f;
         static float MIN_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.025f;
         static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.75f;
+        const float MOUSE_MOVEMENT_THRESHOLD = 100f;
 
         // Light Entities
         static private int mBackgroundLantern;
@@ -108,16 +125,31 @@ namespace IS
         // Parameters
         static private float mBackgroundLanternTimer;
         static private bool mIncreasing = true;
+        static private float lastMouseX;
+        static private float lastMouseY;
 
         static public void Init()
         {
             mBackgroundLantern = InternalCalls.CreateEntityPrefab("Player Lantern Light");
             mBackgroundLanternTimer = LIGHT_TIMER_INIT;
             mParticleEmitter = new ParticleEmitter();
+            
+            lastMouseX = InternalCalls.GetMousePosition().x;
+            lastMouseY = InternalCalls.GetMousePosition().y;
         }
 
         static public void Update()
         {
+            float mouseX = InternalCalls.GetMousePosition().x;
+            float mouseY = InternalCalls.GetMousePosition().y;
+            float dx = mouseX - lastMouseX;
+            float dy = mouseY - lastMouseY;
+            float mouseMovement = dx * dx + dy * dy;
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            ParticleEmitter.particleBaseSpeed = (mouseMovement < MOUSE_MOVEMENT_THRESHOLD)
+                ? ParticleEmitter.PARTICLE_FAST_SPEED : ParticleEmitter.PARTICLE_SLOW_SPEED;            
+
             // Toggle fullscreen mode
             PauseButtonScript.ToggleFullscreenMode();
 
