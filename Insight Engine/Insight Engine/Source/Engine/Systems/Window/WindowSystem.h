@@ -266,6 +266,8 @@ namespace IS {
 
         void LoadCustomCursor();
 
+        bool GetFocus() { return mIsFocused; }
+
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.
