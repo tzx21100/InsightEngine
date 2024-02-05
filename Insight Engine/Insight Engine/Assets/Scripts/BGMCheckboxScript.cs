@@ -4,7 +4,7 @@ namespace IS
     class BGMCheckboxScript
     {
         static public bool first_hover = false;
-        static public bool toggled = false;
+        static public bool toggled = true;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
@@ -18,11 +18,15 @@ namespace IS
         {
             if (!toggled)
             {
-                SettingsScript.bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
+                SettingsScript.bgm_multiplier = 0f;
+                InternalCalls.SetSpriteImage(checkbox_image);
+
             }
             else
             {
-                SettingsScript.bgm_multiplier = 0f;
+                SettingsScript.bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
+                InternalCalls.SetSpriteImage(toggled_image);
+
             }
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -42,7 +46,7 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                clicked = !clicked;
+                //clicked = !clicked;
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                 toggled = !toggled;

@@ -184,7 +184,7 @@ namespace IS
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
 
-            // Initial setting of images based on the toggled state of A (MasterCheckbox)
+            /*// Initial setting of images based on the toggled state of A (MasterCheckbox)
             if (MasterCheckboxScript.toggled)
             {
                 // When A is on, B & C turn on
@@ -192,7 +192,7 @@ namespace IS
                 bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
                 vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
 
-             /*   if (BGMCheckboxScript.clicked)
+             *//*   if (BGMCheckboxScript.clicked)
                 {
                     BGMCheckboxScript.toggled = false;
                     bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
@@ -202,87 +202,87 @@ namespace IS
                     BGMCheckboxScript.toggled=true;
                     bgm_checkbox_image= BGMCheckboxScript.checkbox_image;
                 }*/
-                /*if (VFXCheckboxScript.clicked)
-                {
-                    VFXCheckboxScript.toggled = false;
-                    vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                }*/
+            /*if (VFXCheckboxScript.clicked)
+            {
+                VFXCheckboxScript.toggled = false;
+                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+            }*//*
+        }
+        else
+        {
+            // When A is off, ensure images reflect the non-toggled state
+            master_checkbox_image = MasterCheckboxScript.checkbox_image;
+            bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
+            vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+
+        }
+
+        // Adjust logic for when A is off but B or C are toggled
+        if (!MasterCheckboxScript.toggled)
+        {
+            if (BGMCheckboxScript.toggled)
+            {
+                // Only B is turned on/off based on its current state
+                bgm_checkbox_image = BGMCheckboxScript.toggled_image;
             }
             else
             {
-                // When A is off, ensure images reflect the non-toggled state
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
                 bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                
             }
 
-            // Adjust logic for when A is off but B or C are toggled
-            if (!MasterCheckboxScript.toggled)
-            {
-                if (BGMCheckboxScript.toggled)
-                {
-                    // Only B is turned on/off based on its current state
-                    bgm_checkbox_image = BGMCheckboxScript.toggled_image;
-                }
-                else
-                {
-                    bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-                }
-
-                if (VFXCheckboxScript.toggled)
-                {
-                    // Only C is turned on/off based on its current state
-                    vfx_checkbox_image = VFXCheckboxScript.toggled_image;
-                }
-                else
-                {
-                    vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                }
-            }   
-
-            // Ensure A is turned on if both B and C are toggled on separately
-            if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
-            {
-                MasterCheckboxScript.toggled = true;
-                master_checkbox_image = MasterCheckboxScript.toggled_image;
-            }
-
-            if (BGMCheckboxScript.toggled)
-            {
-                if (MasterCheckboxScript.clicked || VFXCheckboxScript.clicked)
-                {
-                    MasterCheckboxScript.toggled = true;
-                    VFXCheckboxScript.toggled = true;
-                    master_checkbox_image = MasterCheckboxScript.toggled_image;
-                    vfx_checkbox_image = VFXCheckboxScript.toggled_image;
-                }
-                else
-                {
-                    MasterCheckboxScript.toggled = false;
-                    VFXCheckboxScript.toggled = false;
-                    master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                    vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-                }
-            }
-   
             if (VFXCheckboxScript.toggled)
             {
-                if (MasterCheckboxScript.clicked || BGMCheckboxScript.clicked)
-                {
-                    MasterCheckboxScript.toggled = true;
-                    BGMCheckboxScript.toggled = true;
-                    master_checkbox_image = MasterCheckboxScript.toggled_image;
-                    bgm_checkbox_image = BGMCheckboxScript.toggled_image;
-                }
-                else
-                {
-                    MasterCheckboxScript.toggled = false;
-                    BGMCheckboxScript.toggled = false;
-                    master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                    bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-                }
+                // Only C is turned on/off based on its current state
+                vfx_checkbox_image = VFXCheckboxScript.toggled_image;
             }
+            else
+            {
+                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+            }
+        }   
+
+        // Ensure A is turned on if both B and C are toggled on separately
+        if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
+        {
+            MasterCheckboxScript.toggled = true;
+            master_checkbox_image = MasterCheckboxScript.toggled_image;
+        }
+
+        if (BGMCheckboxScript.toggled)
+        {
+            if (MasterCheckboxScript.clicked || VFXCheckboxScript.clicked)
+            {
+                MasterCheckboxScript.toggled = true;
+                VFXCheckboxScript.toggled = true;
+                master_checkbox_image = MasterCheckboxScript.toggled_image;
+                vfx_checkbox_image = VFXCheckboxScript.toggled_image;
+            }
+            else
+            {
+                MasterCheckboxScript.toggled = false;
+                VFXCheckboxScript.toggled = false;
+                master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
+            }
+        }
+
+        if (VFXCheckboxScript.toggled)
+        {
+            if (MasterCheckboxScript.clicked || BGMCheckboxScript.clicked)
+            {
+                MasterCheckboxScript.toggled = true;
+                BGMCheckboxScript.toggled = true;
+                master_checkbox_image = MasterCheckboxScript.toggled_image;
+                bgm_checkbox_image = BGMCheckboxScript.toggled_image;
+            }
+            else
+            {
+                MasterCheckboxScript.toggled = false;
+                BGMCheckboxScript.toggled = false;
+                master_checkbox_image = MasterCheckboxScript.checkbox_image;
+                bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
+            }
+        }*/
             /*            if (BGMCheckboxScript.toggled && !VFXCheckboxScript.toggled)
                         {
                             MasterCheckboxScript.toggled = false;
@@ -293,6 +293,8 @@ namespace IS
                             MasterCheckboxScript.toggled = false;
                             master_checkbox_image = MasterCheckboxScript.checkbox_image;
                         }*/
+            bgm_vol = master_multiplier * bgm_multiplier;
+            vfx_vol = master_multiplier * vfx_multiplier;
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(vfx_checkbox_image, vfx_checkbox_entity);

@@ -60,7 +60,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(257f, 183f);
+        private Vector2D scaling = new Vector2D(500f, 500f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
@@ -73,23 +73,42 @@ namespace IS
         // attack
         SimpleImage enemy_attack1;
         SimpleImage enemy_attack2;
-        private int current_attack;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
         public Vector2D view_port_area = new Vector2D(500f, 200f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
-        private float attack_hit_timer = 0.6f;
+        private float attack_hit_timer = 0.5f;
         private bool initialAttack = false;
+        private bool initialAttackSound = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(220f, 200f);
+
+        // random stuff
+        private int random_attack;
+        private int random_being_hit_sound;
+        private int random_dead_sound;
+        private int random_attack1_sound;
+        private int random_attack2_sound;
+        private int random_idle_sound;
+
+        // idle
+        private float idle_sound_timer_duration = 3f;
+        private float idle_sound_timer = 3f;
+        private bool initialIdleSound = false;
+        private float idle_sound_radius = 1000f;
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
         SimpleImage check_point;
 
+        // health bar
+        SimpleImage health_bar;
+        private Vector2D health_bar_scaling = new Vector2D(200f, 50f);
+
         // enemy death
         SimpleImage enemy_death;
-        private float death_timer = 2f;
+        private bool initialDeath = false;
+        private float death_timer = 1f;
 
         // enemy patrol
         SimpleImage enemy_idle;
@@ -97,7 +116,7 @@ namespace IS
         public Vector2D enemy_right_point = new Vector2D(0f, 0f);
         public Vector2D target_point = new Vector2D(0f, 0f);
         public float enemy_patrol_distance = 500f;
-        public float enemy_rest_timer_duration = 1f;
+        public float enemy_rest_timer_duration = 0.95f;
         public float enemy_rest_timer = 0f;
         public bool going_left;
 
@@ -130,6 +149,7 @@ namespace IS
             enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
             enemy_death = InternalCalls.GetSpriteImage("enemy_death.png");
             enemy_idle = InternalCalls.GetSpriteImage("Enemy_Idle.png");
+            health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             //InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
@@ -173,38 +193,6 @@ namespace IS
 
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
-            /*if (isHit)
-            {
-                //Console.WriteLine("getting enemy");
-                float vel_x = direction.x * speed;
-                //float vel_y = direction.y * speed;
-                // first hit
-                if (!initialHit)
-                {
-                    // draw vfx animation once get hit
-                    //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
-                    EnemyInitialGetHit();
-                    initialHit = true;
-                }
-                //DrawGetHitVFX(); // update vfx 
-                // enemy moving backwards abit
-                InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
-                being_hit_timer += InternalCalls.GetDeltaTime();
-                if (being_hit_timer > 0.5f)
-                {
-                    isHit = false;
-                    initialHit = false;
-                    being_hit_timer = 0f;
-                }
-                else
-                {
-                    // being hit animation here
-                }
-            }
-            else
-            {
-                //RemoveGetHitVFX();
-            }*/
             UpdateEnemyDirection();
             //DrawPatrolPoint();
             //EnemyPatrolling();
@@ -274,10 +262,10 @@ namespace IS
             attack_pos = new Vector2D(enemy_pos.x + MathF.Sign(-direction.x) * attack_area.x / 2, enemy_pos.y);
         }
 
-        static public void EnemyCollidingPlayer()
+        public void EnemyCollidingPlayer()
         {
             // check enemy colliding with enemy
-            if (InternalCalls.OnCollisionEnter())
+            if (InternalCalls.OnCollisionEnter() && current_state != EnemyState.DEAD)
             {
                 if (InternalCalls.CompareCategory("Player"))
                 {
@@ -316,6 +304,8 @@ namespace IS
             {
                 // draw vfx animation once get hit
                 //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
+                Random rnd = new Random();
+                random_being_hit_sound = rnd.Next(0, 9);
                 EnemyInitialGetHit();
                 initialHit = true;
             }
@@ -339,7 +329,37 @@ namespace IS
 
         private void EnemyInitialGetHit()
         {
-            InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+            float volume = 0.2f;
+            switch (random_being_hit_sound)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_1.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_2.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_3.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_4.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_5.wav", false, volume);
+                    break;
+                case 5:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_6.wav", false, volume);
+                    break;
+                case 6:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_7.wav", false, volume);
+                    break;
+                case 7:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_8.wav", false, volume);
+                    break;
+                case 8:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_9.wav", false, volume);
+                    break;
+            }
 
             // load bleeding particles
             Random rnd = new Random();
@@ -353,17 +373,67 @@ namespace IS
                 float size_scale = 10 * rand;
                 float alpha = 0.8f * rand;
                 InternalCalls.GameSpawnParticleExtra(
-                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f), dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
+                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f) / 6f, dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
                  );
             }
         }
 
         private void EnemyPatrolling()
         {
-            /*if (isPatrolling)
-            {*/
+            Random rnd = new Random();
+            if (idle_sound_timer > 0f)
+            {
+                idle_sound_timer -= InternalCalls.GetDeltaTime();
 
-            //}
+                if (idle_sound_timer < 1f)
+                {
+                    initialIdleSound = false; // reset
+                }
+            }
+            else
+            {
+                if (!initialIdleSound && CheckPlayerNearby()) // play the idle sound once only
+                {
+                    random_idle_sound = rnd.Next(0, 10);
+                    float volume = 0.2f;
+                    switch (random_idle_sound)
+                    {
+                        case 0:
+                            InternalCalls.AudioPlaySound("Blobby Idle_1.wav", false, volume);
+                            break;
+                        case 1:
+                            InternalCalls.AudioPlaySound("Blobby Idle_2.wav", false, volume);
+                            break;
+                        case 2:
+                            InternalCalls.AudioPlaySound("Blobby Idle_3.wav", false, volume);
+                            break;
+                        case 3:
+                            InternalCalls.AudioPlaySound("Blobby Idle_4.wav", false, volume);
+                            break;
+                        case 4:
+                            InternalCalls.AudioPlaySound("Blobby Idle_5.wav", false, volume);
+                            break;
+                        case 5:
+                            InternalCalls.AudioPlaySound("Blobby Idle_6.wav", false, volume);
+                            break;
+                        case 6:
+                            InternalCalls.AudioPlaySound("Blobby Idle_7.wav", false, volume);
+                            break;
+                        case 7:
+                            InternalCalls.AudioPlaySound("Blobby Idle_8.wav", false, volume);
+                            break;
+                        case 8:
+                            InternalCalls.AudioPlaySound("Blobby Idle_9.wav", false, volume);
+                            break;
+                        case 9:
+                            InternalCalls.AudioPlaySound("Blobby Idle_10.wav", false, volume);
+                            break;
+                    }
+                    idle_sound_timer = idle_sound_timer_duration + (float)rnd.NextDouble() * 5f; // reset sound timer
+                    initialIdleSound = true;
+                }
+                
+            }
 
             float dist = target_point.x - enemy_pos.x;
             //Vector2D dir = new Vector2D(0f, 0f);
@@ -401,6 +471,20 @@ namespace IS
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
 
+        private bool CheckPlayerNearby()
+        {
+            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
+            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
+            if (length < idle_sound_radius)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void EnemyStateMechine()
         {
             EnemyChangeState();
@@ -431,11 +515,44 @@ namespace IS
 
         private void EnemyDead()
         {
+            Random rnd = new Random();
+            random_dead_sound = rnd.Next(0, 7);
+            if (!initialDeath)
+            {
+                float volume = 0.2f;
+                switch (random_dead_sound)
+                {
+                    case 0:
+                        InternalCalls.AudioPlaySound("Blobby Death_1.wav", false, volume);
+                        break;
+                    case 1:
+                        InternalCalls.AudioPlaySound("Blobby Death_2.wav", false, volume);
+                        break;
+                    case 2:
+                        InternalCalls.AudioPlaySound("Blobby Death_3.wav", false, volume);
+                        break;
+                    case 3:
+                        InternalCalls.AudioPlaySound("Blobby Death_4.wav", false, volume);
+                        break;
+                    case 4:
+                        InternalCalls.AudioPlaySound("Blobby Death_5.wav", false, volume);
+                        break;
+                    case 5:
+                        InternalCalls.AudioPlaySound("Blobby Death_6.wav", false, volume);
+                        break;
+                    case 6:
+                        InternalCalls.AudioPlaySound("Blobby Death_7.wav", false, volume);
+                        break;
+                }
+                initialDeath = true;
+            }
+            InternalCalls.RemoveColliderComponentEntity(ENEMY_ID);
             InternalCalls.SetSpriteImage(enemy_death);
             InternalCalls.SetSpriteAnimationIndex(2);
             death_timer -= InternalCalls.GetDeltaTime();
             if (death_timer <= 0f)
             {
+                initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);
             }
            
@@ -485,7 +602,7 @@ namespace IS
             if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
             {
                 Random rnd = new Random();
-                current_attack = rnd.Next(0, 2);
+                random_attack = rnd.Next(0, 2);
                 current_state = EnemyState.ATTACKING;
                 return;
             }
@@ -505,25 +622,96 @@ namespace IS
 
         private void EnemyAttacking()
         {
-            /*Random rnd = new Random();
-            int rand = rnd.Next(0, 2);*/
-            switch (current_attack)
+            switch (random_attack)
             {
-                case 0:
+                case 0: // atack 1 animation
                     InternalCalls.SetSpriteImage(enemy_attack1);
+
                     break;
-                case 1:
+                case 1: // attack 2 animation
                     InternalCalls.SetSpriteImage(enemy_attack2);
+
                     break;
             }
             InternalCalls.SetSpriteAnimationIndex(1);
+
+            Random rnd = new Random();
+            // enemy attack sound
+            if (!initialAttackSound)
+            {
+                // enemy attack sound
+                switch (random_attack)
+                {
+                    case 0: // atack 1
+                        random_attack1_sound = rnd.Next(0, 9);
+                        float volume1 = 0.2f;
+
+                        switch (random_attack1_sound)
+                        {
+                            case 0:
+                                InternalCalls.AudioPlaySound("Blobby Attack_1.wav", false, volume1);
+                                break;
+                            case 1:
+                                InternalCalls.AudioPlaySound("Blobby Attack_2.wav", false, volume1);
+                                break;
+                            case 2:
+                                InternalCalls.AudioPlaySound("Blobby Attack_3.wav", false, volume1);
+                                break;
+                            case 3:
+                                InternalCalls.AudioPlaySound("Blobby Attack_4.wav", false, volume1);
+                                break;
+                            case 4:
+                                InternalCalls.AudioPlaySound("Blobby Attack_5.wav", false, volume1);
+                                break;
+                            case 5:
+                                InternalCalls.AudioPlaySound("Blobby Attack_6.wav", false, volume1);
+                                break;
+                            case 6:
+                                InternalCalls.AudioPlaySound("Blobby Attack_7.wav", false, volume1);
+                                break;
+                            case 7:
+                                InternalCalls.AudioPlaySound("Blobby Attack_8.wav", false, volume1);
+                                break;
+                            case 8:
+                                InternalCalls.AudioPlaySound("Blobby Attack_9.wav", false, volume1);
+                                break;
+                        }
+                        break;
+                    case 1: // attack 2
+                        random_attack2_sound = rnd.Next(0, 6);
+                        float volume2 = 0.2f;
+
+                        switch (random_attack2_sound)
+                        {
+                            case 0:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_1.wav", false, volume2);
+                                break;
+                            case 1:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_2.wav", false, volume2);
+                                break;
+                            case 2:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_3.wav", false, volume2);
+                                break;
+                            case 3:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_4.wav", false, volume2);
+                                break;
+                            case 4:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_5.wav", false, volume2);
+                                break;
+                            case 5:
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_6.wav", false, volume2);
+                                break;
+                        }
+                        break;
+                }
+
+                initialAttackSound = true;
+            }
             attack_timer -= InternalCalls.GetDeltaTime();
-            if (attack_timer < attack_hit_timer && attack_timer > 0.4f) // attack timing 0.6s to 0.4s
+            if (attack_timer < attack_hit_timer && attack_timer > 0.3f) // attack timing 0.5s to 0.3s
             {
                 if (!initialAttack && PlayerInAttackRange())
                 {
-                    // enemy attack sound
-
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
 
@@ -535,6 +723,7 @@ namespace IS
             {
                 attack_timer = attack_timer_duration;
                 initialAttack = false;
+                initialAttackSound = false;
                 current_state = EnemyState.FOLLOWING_PLAYER;
             }
         }
@@ -586,9 +775,23 @@ namespace IS
             {
                 color = new Vector3(1f, 0f, 0f);
             }
+            int layer = InternalCalls.GetTopLayer();
+            float health_wdith = (((health > 0) ? health : 0f) / max_health) * 155f; // width lenght of the health bar
+            float health_pos_x = enemy_pos.x - ((max_health - health) / max_health) * 155f / 2f; // render position append of the health bar
+            Vector2D health_bar_length = new Vector2D(health_wdith, 20f);
 
-            Vector2D health_bar_length = new Vector2D(200f * (health / max_health), 20f);
-            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.6f, 6);
+            // draw health bar only when the health is lesser
+            if (health < max_health) {
+                // draw health blood
+                InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 6f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+
+                // draw health bar UI
+                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, enemy_pos.y + scaling.y / 6f);
+                InternalCalls.DrawImageAt
+                    (
+                        pos, 0, new SimpleVector2D(health_bar_scaling.x, health_bar_scaling.y), health_bar, 1f, layer
+                    );
+            }
         }
     }
 }

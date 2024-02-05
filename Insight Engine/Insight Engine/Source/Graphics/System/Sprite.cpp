@@ -329,8 +329,15 @@ namespace IS {
         
         glm::vec2 resolution{};
 
-#if defined(USING_IMGUI)
         InsightEngine& engine = InsightEngine::Instance();
+
+        if (!engine.mRenderGUI) {
+            auto const& [width, height] = engine.GetWindowSize();
+            resolution.x = static_cast<float>(width);
+            resolution.y = static_cast<float>(height);
+        }
+
+#if defined(USING_IMGUI)
 
         auto const& editor_layer = engine.GetEditorLayer();
         if (engine.mRenderGUI)
@@ -338,11 +345,6 @@ namespace IS {
             // Use the viewport size from the editor layer
             resolution.x = editor_layer->GetViewportSize().x;
             resolution.y = editor_layer->GetViewportSize().y;
-        }
-        else {
-            auto const& [width, height] = engine.GetWindowSize();
-            resolution.x = static_cast<float>(width);
-            resolution.y = static_cast<float>(height);
         }
 #endif
 

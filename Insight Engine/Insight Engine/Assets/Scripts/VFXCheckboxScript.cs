@@ -4,7 +4,7 @@ namespace IS
     class VFXCheckboxScript
     {
         static public bool first_hover = false;
-        static public bool toggled = false;
+        static public bool toggled = true;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
@@ -18,11 +18,13 @@ namespace IS
         {
             if (!toggled)
             {
-                SettingsScript.vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
+                InternalCalls.SetSpriteImage(checkbox_image);
+                SettingsScript.vfx_multiplier = 0f;
             }
             else
             {
-                SettingsScript.vfx_multiplier = 0f;
+                InternalCalls.SetSpriteImage(toggled_image);
+                SettingsScript.vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
             }
 
 
@@ -44,7 +46,7 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                clicked = !clicked;
+                //clicked = !clicked;
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                 toggled = !toggled;

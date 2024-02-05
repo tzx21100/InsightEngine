@@ -173,6 +173,7 @@ namespace IS
         static private bool initial_attack = false;
         static public int hitting_enemy_id;
         static public float attack_damage = 10f;
+        static public Vector2D attack_range = new Vector2D(150f, 300f);
 
         // player getting hit
         static public float player_get_hit_timer_duration = 0.65f;
@@ -254,13 +255,13 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
 
             // attack 1
-            InternalCalls.CreateAnimationFromSprite(1, 6, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 6, 0.5f);
 
             // attack 2
-            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
 
             // attack 3
-            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
 
             // attack total
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
@@ -776,8 +777,8 @@ namespace IS
 
                 InternalCalls.SetSpriteImage(player_jump);
                 InternalCalls.SetSpriteAnimationIndex(2);
-
-                if (coyote_timer > 0f) // coyote time for the first time 
+                
+                if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
@@ -1270,12 +1271,14 @@ namespace IS
                 {
                     //attack_timer = combo_interval;
                     combo_step = 0; // reset attack step 
+                    attack_timer = 0.99f; // reset timer
                 }
                 else
                 {
                     //attack_timer = attack_interval;
+                    attack_timer = 0f; // reset timer
                 }
-                attack_timer = 0f; // reset timer
+                
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
@@ -1295,15 +1298,18 @@ namespace IS
                     switch (combo_step)
                     {
                         case 1:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack1);
                             InternalCalls.SetSpriteAnimationIndex(3);
                             //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
                         case 2:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack2);
                             InternalCalls.SetSpriteAnimationIndex(4);
                             break;
                         case 3:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack3);
                             InternalCalls.SetSpriteAnimationIndex(5);
                             break;
@@ -1336,31 +1342,32 @@ namespace IS
 
         static private void AttackAreaUpdate()
         {
-            if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
+            if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
             
 
             CalibrateAttackAngle();
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
 
-            float distanceLeft = 150f;
+            //float distanceLeft = 150f;
 
-            Vector2D checkerPosition = new Vector2D(
-                player_pos.x + f_angle.x * distanceLeft,
-                player_pos.y + f_angle.y * distanceLeft
+            Vector2D attack_pos = new Vector2D(
+                player_pos.x + f_angle.x * attack_range.x,
+                player_pos.y
             );
-            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+            //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
             // flip player if neccessary
-            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
 
-            Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
-            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
-            InternalCalls.TransformSetScaleEntity(attack_area_scaling.x, attack_area_scaling.y, entity_attack);
-            InternalCalls.DrawImageAt
+            //Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
+            InternalCalls.TransformSetPositionEntity(attack_pos.x, attack_pos.y, entity_attack);
+            InternalCalls.TransformSetRotationEntity(0, 0, entity_attack);
+            InternalCalls.TransformSetScaleEntity(attack_range.x, attack_range.y, entity_attack);
+            // draw attack range
+            /*InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_scaling.x, attack_area_scaling.y), player_attack, 1f, 4
-                );
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack, 0.5f, 6
+                );*/
         }
 
         static private void CalibrateAttackAngle()
@@ -1396,7 +1403,7 @@ namespace IS
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         // // get the id for enemy being attack (one only)
-                        int attacking_enemy_id = InternalCalls.GetCollidingEntity(entity_attack);
+                        int attacking_enemy_id = InternalCalls.GetCollidingEnemyEntity(entity_attack);
 
                         if (InternalCalls.CheckEntityCategory(attacking_enemy_id, "Enemy"))
                         {
@@ -1414,17 +1421,19 @@ namespace IS
                         Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
                         f_angle = f_angle.Normalize();
 
-                        float distanceLeft = 300f;
+                        float distanceLeft = 250f;
 
                         Vector2D checkerPosition = new Vector2D(
                             player_pos.x + f_angle.x * distanceLeft,
-                            player_pos.y + f_angle.y * distanceLeft
+                            //player_pos.y + f_angle.y * distanceLeft
+                            player_pos.y
                         );
                         float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
                         InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
                         InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
-                        InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
+                        //InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
+                        InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);
                     }
                     else
                     {

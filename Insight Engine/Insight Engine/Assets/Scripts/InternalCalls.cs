@@ -456,7 +456,13 @@ namespace IS
         internal extern static void SetLayerVisible(int layer, bool visible );        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int GetTopLayer();        
+        internal extern static int GetTopLayer();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetCollidingEnemyEntity(int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RemoveColliderComponentEntity(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage texture, float alpha, int layer );

@@ -19,6 +19,7 @@
 #include "Pch.h"
 #include "Audio.h"
 #include "Engine/Core/CoreEngine.h"
+#include "../Window/WindowSystem.h"
 #include "Engine/Systems/Asset/Asset.h"
 #include "Graphics/Core/Graphics.h"
 #include "Math/ISMath.h"
@@ -85,6 +86,25 @@ namespace IS {
 
             return; 
         }
+
+        if (InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetFocus() == false) {
+
+            auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+            //sys->ClearAllSounds();
+            mChannel->setPaused(true);
+
+            for (auto& i : mChannelList) {
+                i->setPaused(true);
+            }
+
+        }
+        else {
+            mChannel->setPaused(false);
+            for (auto& i : mChannelList) {
+                i->setPaused(false);
+            }
+        }
+
 
         auto& engine = InsightEngine::Instance();
         auto assetsys = engine.GetSystem<AssetManager>("Asset");
