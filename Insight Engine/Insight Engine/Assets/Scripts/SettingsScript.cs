@@ -367,10 +367,15 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(bgm_slider_knob_pos.x, bgm_slider_knob_pos.y, bgm_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(vfx_slider_knob_pos.x, vfx_slider_knob_pos.y, vfx_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
-            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004572271f * win_dimension.y), 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", origin.x + (0.5002578125f * win_dimension.x), origin.y + (0.5003539823f * win_dimension.y), 10f, (1f, 1f, 1f));
+            /*   InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004572271f * win_dimension.y), 10f, (1f, 1f, 1f));
+               InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", origin.x + (0.5002578125f * win_dimension.x), origin.y + (0.5003539823f * win_dimension.y), 10f, (1f, 1f, 1f));*/
+
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.666f, 12.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.58f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.465f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.36f, 10f, (1f, 1f, 1f));
         }
 
         static private void HideSettings()
