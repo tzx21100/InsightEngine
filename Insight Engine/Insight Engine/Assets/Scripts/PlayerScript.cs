@@ -319,12 +319,12 @@ namespace IS
                 initialPowerUp = false;
             }
 
-            SimpleVector2D scaler = new SimpleVector2D(150f, 150f);
+            SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
             {
 
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x + scaler.x * 2f, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x + scaler.x * 1.3f, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_dash, 1f, 4
@@ -333,7 +333,7 @@ namespace IS
             }
             if (Reward_DoubleJump)
             {
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - scaler.x * 2f, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - scaler.x * 1.3f, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_doublejump, 1f, 4
@@ -342,7 +342,7 @@ namespace IS
             }
             if (Reward_WallClimb)
             {
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y - WindowHeight / 2.1f + scaler.y);
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
                 InternalCalls.DrawImageAt
                 (
                     pos, 0, scaler, player_reward_wallclimb, 1f, 4
