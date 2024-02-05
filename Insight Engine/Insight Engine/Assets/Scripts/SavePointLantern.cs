@@ -49,7 +49,7 @@ namespace IS
                 if (InternalCalls.GetCollidingEntityCheck(my_ID, PlayerScript.PLAYER_ID))
                 {
                     save_point = true;
-                    PlayerScript.Health = PlayerScript.Max_Health;
+                    //PlayerScript.Health = PlayerScript.Max_Health; // not allow player to heal at save point
                     PlayerScript.respawn_x = my_position.x;
                     PlayerScript.respawn_y = my_position.y;
                     InternalCalls.SetSpriteImage(lantern_on);
