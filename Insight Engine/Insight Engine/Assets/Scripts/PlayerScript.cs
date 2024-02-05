@@ -173,6 +173,7 @@ namespace IS
         static private bool initial_attack = false;
         static public int hitting_enemy_id;
         static public float attack_damage = 10f;
+        static public Vector2D attack_range = new Vector2D(150f, 300f);
 
         // player getting hit
         static public float player_get_hit_timer_duration = 0.65f;
@@ -1336,31 +1337,32 @@ namespace IS
 
         static private void AttackAreaUpdate()
         {
-            if (!isAttack) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entity_attack); return; }
+            if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
             
 
             CalibrateAttackAngle();
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
 
-            float distanceLeft = 150f;
+            //float distanceLeft = 150f;
 
-            Vector2D checkerPosition = new Vector2D(
-                player_pos.x + f_angle.x * distanceLeft,
-                player_pos.y + f_angle.y * distanceLeft
+            Vector2D attack_pos = new Vector2D(
+                player_pos.x + f_angle.x * attack_range.x,
+                player_pos.y
             );
-            float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+            //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
             // flip player if neccessary
-            if (checkerPosition.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
 
-            Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
-            InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entity_attack);
-            InternalCalls.TransformSetRotationEntity(angleDegree, 0, entity_attack);
-            InternalCalls.TransformSetScaleEntity(attack_area_scaling.x, attack_area_scaling.y, entity_attack);
-            InternalCalls.DrawImageAt
+            //Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
+            InternalCalls.TransformSetPositionEntity(attack_pos.x, attack_pos.y, entity_attack);
+            InternalCalls.TransformSetRotationEntity(0, 0, entity_attack);
+            InternalCalls.TransformSetScaleEntity(attack_range.x, attack_range.y, entity_attack);
+            // draw attack range
+            /*InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(checkerPosition.x, checkerPosition.y), angleDegree, new SimpleVector2D(attack_area_scaling.x, attack_area_scaling.y), player_attack, 1f, 4
-                );
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack, 0.5f, 6
+                );*/
         }
 
         static private void CalibrateAttackAngle()
@@ -1396,7 +1398,7 @@ namespace IS
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         // // get the id for enemy being attack (one only)
-                        int attacking_enemy_id = InternalCalls.GetCollidingEntity(entity_attack);
+                        int attacking_enemy_id = InternalCalls.GetCollidingEnemyEntity(entity_attack);
 
                         if (InternalCalls.CheckEntityCategory(attacking_enemy_id, "Enemy"))
                         {

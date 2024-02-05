@@ -674,6 +674,29 @@ namespace IS {
         return collider_component.mCollidingEntity.back();
     }
 
+    static bool CheckEntityCategoryString(int entity_id, const char* category_to_check) {
+        auto& engine = InsightEngine::Instance();
+        //char* c_str = mono_string_to_utf8(category_to_check); // Convert Mono string to char*
+        //std::string tag(c_str);
+        //mono_free(c_str);
+        auto& category = engine.GetComponent<Category>(entity_id);
+        if (category.mCategory == category_to_check) {
+            return true;
+        }
+        return false;
+    }
+
+    static int GetCollidingEnemyEntity(int entity) {
+        int ret = -1;
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        for (int i = 0; i < collider_component.mCollidingEntity.size(); i++) {
+            if (CheckEntityCategoryString(collider_component.mCollidingEntity[i], "Enemy")) {
+                ret = collider_component.mCollidingEntity[i];
+            }
+        }
+        return ret;
+    }
+
     // not in use
     static std::vector<int> GetCollidingEntityList(int entity) {
         auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
@@ -682,6 +705,10 @@ namespace IS {
             ret.push_back(collider_component.mCollidingEntity[i]);
         }
         return ret;
+    }
+
+    static void RemoveColliderComponentEntity(int entity) {
+        InsightEngine::Instance().RemoveComponent<Collider>(entity);
     }
 
     static bool CollidingObjectIsStatic(int entity) {
@@ -1401,6 +1428,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);
         IS_ADD_INTERNAL_CALL(GetCollidingEntityList);
+        IS_ADD_INTERNAL_CALL(RemoveColliderComponentEntity);
 
 
         IS_ADD_INTERNAL_CALL(CompareCategory);
@@ -1410,6 +1438,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(OnEntityCollisionEnter);
         IS_ADD_INTERNAL_CALL(GetGravityScale);
         IS_ADD_INTERNAL_CALL(SetGravityScale);
+        IS_ADD_INTERNAL_CALL(GetCollidingEnemyEntity);
 
 
         // Yiming

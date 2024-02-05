@@ -89,7 +89,7 @@ namespace IS
 
         // enemy death
         SimpleImage enemy_death;
-        private float death_timer = 2f;
+        private float death_timer = 1f;
 
         // enemy patrol
         SimpleImage enemy_idle;
@@ -97,7 +97,7 @@ namespace IS
         public Vector2D enemy_right_point = new Vector2D(0f, 0f);
         public Vector2D target_point = new Vector2D(0f, 0f);
         public float enemy_patrol_distance = 500f;
-        public float enemy_rest_timer_duration = 1f;
+        public float enemy_rest_timer_duration = 0.95f;
         public float enemy_rest_timer = 0f;
         public bool going_left;
 
@@ -274,10 +274,10 @@ namespace IS
             attack_pos = new Vector2D(enemy_pos.x + MathF.Sign(-direction.x) * attack_area.x / 2, enemy_pos.y);
         }
 
-        static public void EnemyCollidingPlayer()
+        public void EnemyCollidingPlayer()
         {
             // check enemy colliding with enemy
-            if (InternalCalls.OnCollisionEnter())
+            if (InternalCalls.OnCollisionEnter() && current_state != EnemyState.DEAD)
             {
                 if (InternalCalls.CompareCategory("Player"))
                 {
@@ -431,6 +431,7 @@ namespace IS
 
         private void EnemyDead()
         {
+            InternalCalls.RemoveColliderComponentEntity(ENEMY_ID);
             InternalCalls.SetSpriteImage(enemy_death);
             InternalCalls.SetSpriteAnimationIndex(2);
             death_timer -= InternalCalls.GetDeltaTime();
