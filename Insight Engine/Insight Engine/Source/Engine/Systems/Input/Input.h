@@ -45,6 +45,30 @@ namespace IS {
 
     class InputManager : public ParentSystem{
     public:
+
+        /**
+         * \brief Get monitor resolution
+         *
+         * \return A std::pair of the resolution
+         */
+        std::pair<int, int> GetMonitorResolution() {
+            GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+            if (primaryMonitor == nullptr) {
+                // Handle the error, maybe the monitor is not detected or GLFW is not initialized
+            }
+
+            const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+            if (mode == nullptr) {
+                // Handle the error, maybe the video mode is not available
+            }
+
+            int monitorWidth = mode->width;
+            int monitorHeight = mode->height;
+
+            // Now you have the monitor's resolution in monitorWidth and monitorHeight
+            return std::pair<int, int>(monitorWidth, monitorHeight);
+        }
+
         /**
          * \brief Returns the name of the InputManager system.
          *
