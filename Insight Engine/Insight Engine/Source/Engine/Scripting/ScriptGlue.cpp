@@ -34,7 +34,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include <mono/metadata/object.h>
 #include <algorithm>
 #include <math.h>
-#include <Engine/Systems/Category/Category.h>
+#include "Engine/Systems/Category/Category.h"
 
 namespace IS {
     // Macro to add internal calls for C# access
@@ -917,6 +917,7 @@ namespace IS {
         char* f_str = mono_string_to_utf8(font);
         std::string font_name(f_str);
         mono_free(f_str);
+        std::cout << "yeap";
         ISGraphics::mTexts[font_name].addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z });
     }
 
@@ -972,7 +973,7 @@ namespace IS {
         mono_free(c_str);
 
         // Poiret will be default text font
-        ISGraphics::mTexts[""].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+        ISGraphics::mTexts["PoiretOne-Regular"].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
 
         // ISGraphics::mTexts["Poiret_One_Regular"].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }

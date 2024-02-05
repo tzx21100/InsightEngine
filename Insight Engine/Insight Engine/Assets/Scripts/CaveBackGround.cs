@@ -53,7 +53,7 @@ namespace IS
 
                 // Get the initial position of this layer
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
-                bg_scale = new Vector2D((5850 * 0.8f) /CameraScript.camera_zoom, (1080 * 1.5f) / CameraScript.camera_zoom);
+                bg_scale = new Vector2D((5850 * 0.8f) /CameraScript.camera_zoom, (1080 * 1.1f) / CameraScript.camera_zoom);
                 // Update the position
                 Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x + initialPos.x - layerOffsetX,
                                                PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
