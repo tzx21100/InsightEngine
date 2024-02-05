@@ -87,6 +87,10 @@ namespace IS
         SimpleImage enemy_get_hit_vfx;
         SimpleImage check_point;
 
+        // health bar
+        SimpleImage health_bar;
+        private Vector2D health_bar_scaling = new Vector2D(200f, 50f);
+
         // enemy death
         SimpleImage enemy_death;
         private float death_timer = 1f;
@@ -130,6 +134,7 @@ namespace IS
             enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
             enemy_death = InternalCalls.GetSpriteImage("enemy_death.png");
             enemy_idle = InternalCalls.GetSpriteImage("Enemy_Idle.png");
+            health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
             //InternalCalls.CreateAnimationFromSpriteEntity(2, 7, 0.8f, get_hit_vfx_entity);
@@ -587,9 +592,23 @@ namespace IS
             {
                 color = new Vector3(1f, 0f, 0f);
             }
+            int layer = InternalCalls.GetTopLayer();
+            float health_wdith = (((health > 0) ? health : 0f) / max_health) * 155f; // width lenght of the health bar
+            float health_pos_x = enemy_pos.x - ((max_health - health) / max_health) * 155f / 2f; // render position append of the health bar
+            Vector2D health_bar_length = new Vector2D(health_wdith, 20f);
 
-            Vector2D health_bar_length = new Vector2D(200f * (health / max_health), 20f);
-            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.6f, 6);
+            // draw health bar only when the health is lesser
+            if (health < max_health) {
+                // draw health blood
+                InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 2f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+
+                // draw health bar UI
+                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, enemy_pos.y + scaling.y / 2f);
+                InternalCalls.DrawImageAt
+                    (
+                        pos, 0, new SimpleVector2D(health_bar_scaling.x, health_bar_scaling.y), health_bar, 1f, layer
+                    );
+            }
         }
     }
 }

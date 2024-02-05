@@ -255,13 +255,13 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
 
             // attack 1
-            InternalCalls.CreateAnimationFromSprite(1, 6, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 6, 0.5f);
 
             // attack 2
-            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
 
             // attack 3
-            InternalCalls.CreateAnimationFromSprite(1, 8, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
 
             // attack total
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
@@ -1271,12 +1271,14 @@ namespace IS
                 {
                     //attack_timer = combo_interval;
                     combo_step = 0; // reset attack step 
+                    attack_timer = 0.99f; // reset timer
                 }
                 else
                 {
                     //attack_timer = attack_interval;
+                    attack_timer = 0f; // reset timer
                 }
-                attack_timer = 0f; // reset timer
+                
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
@@ -1296,15 +1298,18 @@ namespace IS
                     switch (combo_step)
                     {
                         case 1:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack1);
                             InternalCalls.SetSpriteAnimationIndex(3);
                             //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
                         case 2:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack2);
                             InternalCalls.SetSpriteAnimationIndex(4);
                             break;
                         case 3:
+                            //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack3);
                             InternalCalls.SetSpriteAnimationIndex(5);
                             break;
@@ -1332,7 +1337,7 @@ namespace IS
             {*/
 
             //}
-            //Console.WriteLine(combo_step);
+            Console.WriteLine(combo_step);
         }
 
         static private void AttackAreaUpdate()
