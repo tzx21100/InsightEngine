@@ -87,6 +87,10 @@ namespace IS
         SimpleImage enemy_get_hit_vfx;
         SimpleImage check_point;
 
+        // enemy death
+        SimpleImage enemy_death;
+        private float death_timer = 2f;
+
         // enemy patrol
         SimpleImage enemy_idle;
         public Vector2D enemy_left_point = new Vector2D(0f, 0f);
@@ -106,6 +110,7 @@ namespace IS
         public bool isDead;*/
 
         // enemy inof
+        public float max_health = 100f;
         public float health = 100f;
 
         //static private int get_hit_vfx_entity;
@@ -123,6 +128,7 @@ namespace IS
             check_point = InternalCalls.GetSpriteImage("dark_circle.png");
             enemy_attack1 = InternalCalls.GetSpriteImage("enemy_attack1.png");
             enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
+            enemy_death = InternalCalls.GetSpriteImage("enemy_death.png");
             enemy_idle = InternalCalls.GetSpriteImage("Enemy_Idle.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
@@ -132,6 +138,7 @@ namespace IS
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
             InternalCalls.CreateAnimationFromSprite(1, 22, 1f);
+            InternalCalls.CreateAnimationFromSprite(1, 21, 1f);
 
             // enemy patrol
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -212,11 +219,12 @@ namespace IS
 
         }
 
-        public void GetHitByPlayer(Vector2D vec)
+        public void GetHitByPlayer(Vector2D vec, float damage)
         {
             //previous_state = current_state;
             current_state = EnemyState.BEING_HIT;
             direction = vec;
+            health -= damage;
         }
 
         private void DrawGetHitVFX()
@@ -416,8 +424,21 @@ namespace IS
                     break;
                 case EnemyState.DEAD:
                     //Console.WriteLine("dead");
+                    EnemyDead();
                     break;
             }
+        }
+
+        private void EnemyDead()
+        {
+            InternalCalls.SetSpriteImage(enemy_death);
+            InternalCalls.SetSpriteAnimationIndex(2);
+            death_timer -= InternalCalls.GetDeltaTime();
+            if (death_timer <= 0f)
+            {
+                InternalCalls.DestroyEntity(ENEMY_ID);
+            }
+           
         }
 
         private void EnemyChangeState()
@@ -552,7 +573,22 @@ namespace IS
 
         private void DrawHealthBar()
         {
-            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, 200f, 50f, 0f, 1f, 0f, 0.6f, 6);
+            Vector3 color = new Vector3(0f, 0f, 0f);
+            if (health > 50f)
+            {
+                color = new Vector3(0f, 1f, 0f);
+            }
+            else if (health > 20f)
+            {
+                color = new Vector3(1f, 1f, 0f);
+            }
+            else
+            {
+                color = new Vector3(1f, 0f, 0f);
+            }
+
+            Vector2D health_bar_length = new Vector2D(200f * (health / max_health), 20f);
+            InternalCalls.DrawSquare(enemy_pos.x, enemy_pos.y + scaling.y/2f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.6f, 6);
         }
     }
 }
