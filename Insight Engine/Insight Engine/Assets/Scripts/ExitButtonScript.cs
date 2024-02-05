@@ -47,8 +47,8 @@ namespace IS
             exit_confirmation = false;
 
             // Confirmation Panel
-            //exit_overlay_image = InternalCalls.GetSpriteImage("exit_overlay.png");
-            exit_overlay_image = InternalCalls.GetSpriteImage("temp_exit_overlay.png");
+            exit_overlay_image = InternalCalls.GetSpriteImage("exit_overlay.png");
+            //exit_overlay_image = InternalCalls.GetSpriteImage("temp_exit_overlay.png");
             no_image = InternalCalls.GetSpriteImage("no_button.png");
             yes_image = InternalCalls.GetSpriteImage("yes_button.png");
 
@@ -129,6 +129,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(exit_overlay_pos.x, exit_overlay_pos.y, exit_overlay_entity);
             InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
+            InternalCalls.RenderTextFont("CONFIRM EXIT?", "MedusaGothic_D", 0.5f, 0.525f, 13f, (1f, 1f, 1f));
 
         }
 
