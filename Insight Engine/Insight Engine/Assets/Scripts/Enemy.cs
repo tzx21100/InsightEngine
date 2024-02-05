@@ -92,6 +92,11 @@ namespace IS
         private int random_attack2_sound;
         private int random_idle_sound;
 
+        // sound
+        private float volume = 0.2f;
+        private float max_volume = 0.2f;
+        private float volume_scale = 1f;
+
         // idle
         private float idle_sound_timer_duration = 3f;
         private float idle_sound_timer = 3f;
@@ -195,6 +200,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
             UpdateEnemyDirection();
+            UpdateVolume();
             //DrawPatrolPoint();
             //EnemyPatrolling();
             EnemyStateMechine();
@@ -330,7 +336,6 @@ namespace IS
 
         private void EnemyInitialGetHit()
         {
-            float volume = 0.2f;
             switch (random_being_hit_sound)
             {
                 case 0:
@@ -396,7 +401,6 @@ namespace IS
                 if (!initialIdleSound && CheckPlayerNearby()) // play the idle sound once only
                 {
                     random_idle_sound = rnd.Next(0, 10);
-                    float volume = 0.2f;
                     switch (random_idle_sound)
                     {
                         case 0:
@@ -486,6 +490,21 @@ namespace IS
             }
         }
 
+        private void UpdateVolume()
+        {
+            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
+            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
+            if (length < idle_sound_radius)
+            {
+                volume_scale = (idle_sound_radius - length) / idle_sound_radius;
+            }
+            else
+            {
+                volume_scale = 0f;
+            }
+            volume = max_volume * volume_scale;
+        }
+
         private void EnemyStateMechine()
         {
             EnemyChangeState();
@@ -520,7 +539,6 @@ namespace IS
             random_dead_sound = rnd.Next(0, 7);
             if (!initialDeath)
             {
-                float volume = 0.2f;
                 switch (random_dead_sound)
                 {
                     case 0:
@@ -645,62 +663,59 @@ namespace IS
                 {
                     case 0: // atack 1
                         random_attack1_sound = rnd.Next(0, 9);
-                        float volume1 = 0.2f;
-
                         switch (random_attack1_sound)
                         {
                             case 0:
-                                InternalCalls.AudioPlaySound("Blobby Attack_1.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_1.wav", false, volume);
                                 break;
                             case 1:
-                                InternalCalls.AudioPlaySound("Blobby Attack_2.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_2.wav", false, volume);
                                 break;
                             case 2:
-                                InternalCalls.AudioPlaySound("Blobby Attack_3.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_3.wav", false, volume);
                                 break;
                             case 3:
-                                InternalCalls.AudioPlaySound("Blobby Attack_4.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_4.wav", false, volume);
                                 break;
                             case 4:
-                                InternalCalls.AudioPlaySound("Blobby Attack_5.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_5.wav", false, volume);
                                 break;
                             case 5:
-                                InternalCalls.AudioPlaySound("Blobby Attack_6.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_6.wav", false, volume);
                                 break;
                             case 6:
-                                InternalCalls.AudioPlaySound("Blobby Attack_7.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_7.wav", false, volume);
                                 break;
                             case 7:
-                                InternalCalls.AudioPlaySound("Blobby Attack_8.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_8.wav", false, volume);
                                 break;
                             case 8:
-                                InternalCalls.AudioPlaySound("Blobby Attack_9.wav", false, volume1);
+                                InternalCalls.AudioPlaySound("Blobby Attack_9.wav", false, volume);
                                 break;
                         }
                         break;
                     case 1: // attack 2
                         random_attack2_sound = rnd.Next(0, 6);
-                        float volume2 = 0.2f;
 
                         switch (random_attack2_sound)
                         {
                             case 0:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_1.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_1.wav", false, volume);
                                 break;
                             case 1:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_2.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_2.wav", false, volume);
                                 break;
                             case 2:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_3.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_3.wav", false, volume);
                                 break;
                             case 3:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_4.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_4.wav", false, volume);
                                 break;
                             case 4:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_5.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_5.wav", false, volume);
                                 break;
                             case 5:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_6.wav", false, volume2);
+                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_6.wav", false, volume);
                                 break;
                         }
                         break;

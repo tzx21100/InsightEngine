@@ -179,6 +179,8 @@ namespace IS
         static public float attack_damage = 10f;
         static public Vector2D attack_range = new Vector2D(150f, 300f);
 
+        static int random_attack_sound;
+
         // player getting hit
         static public float player_get_hit_timer_duration = 0.65f;
         static public float player_get_hit_timer = 0.65f;
@@ -1272,11 +1274,25 @@ namespace IS
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
             if (InternalCalls.MousePressed(0) && (!isAttack ))
             {
+                // play attack sound
+                Random rnd = new Random();
+                random_attack_sound = rnd.Next(0, 5);
 
-                
                 isAttack = true;
                 //attack_type = "Light";
                 combo_step++;
+                switch (combo_step)
+                {
+                    case 1:
+                        PlayAttack1Sound();
+                        break;
+                    case 2:
+                        PlayAttack2Sound();
+                        break;
+                    case 3:
+                        PlayAttack3Sound();
+                        break;
+                }
                 if (combo_step > total_attack_in_one_combo)
                 {
                     //attack_timer = combo_interval;
@@ -1348,6 +1364,75 @@ namespace IS
 
             //}
             //Console.WriteLine(combo_step);
+        }
+
+        static private void PlayAttack1Sound()
+        {
+            float volume = 0.2f;
+            switch (random_attack_sound)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_1.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_1.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_1.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_1.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_1.wav", false, volume);
+                    break;
+            }
+        }
+
+        static private void PlayAttack2Sound()
+        {
+            float volume = 0.2f;
+            switch (random_attack_sound)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_2.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_2.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_2.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_2.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_2.wav", false, volume);
+                    break;
+            }
+        }
+
+        static private void PlayAttack3Sound()
+        {
+            float volume = 0.2f;
+            switch (random_attack_sound)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_3.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_3.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_3.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_3.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_3.wav", false, volume);
+                    break;
+            }
         }
 
         static private void AttackAreaUpdate()
