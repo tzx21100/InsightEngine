@@ -34,8 +34,8 @@ namespace IS
         static private float camera_shake_duration_set = 0.2f;
         static private float camera_shake_timer = 0.02f;
         static private float camera_shake_set = 0.02f;
-        static private Vector2D camera_shake_dir = new Vector2D(0, 0);
-        static private float camera_shake_angle = 0f;
+        //static private Vector2D camera_shake_dir = new Vector2D(0, 0);
+        //static private float camera_shake_angle = 0f;
 
         //Powerup triggers
         static public bool Reward_DoubleJump = false;
@@ -196,7 +196,7 @@ namespace IS
 
         //force calculations
         static private float Xforce = 0f;
-        static private float Yforce = 0f;
+        //static private float Yforce = 0f;
 
         // player pos
         static public Vector2D player_pos = new Vector2D(0, 0);
@@ -499,7 +499,7 @@ namespace IS
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             // scaling transform with movement
-            Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+            //Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
@@ -915,7 +915,8 @@ namespace IS
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
 
-            Xforce = 0f; Yforce = 0f;
+            Xforce = 0f; 
+            //Yforce = 0f;
         }
 
         static public void CleanUp()
@@ -1523,7 +1524,7 @@ namespace IS
                             //player_pos.y + f_angle.y * distanceLeft
                             player_pos.y
                         );
-                        float angleDegree = attack_angle * (180.0f / CustomMath.PI);
+                        //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
                         InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
                         InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
@@ -1675,7 +1676,7 @@ namespace IS
 
                     /*attack_dir.x /= attack_dir.x;
                     attack_dir.y /= attack_dir.y;*/
-                    float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
+                    //float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                     //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
                     if (hitting_enemy_id != -1) { }
 /*                    CameraScript.camera_shake_duration = 4f;
@@ -1686,7 +1687,7 @@ namespace IS
             else
             {
                 camera_shake_duration = camera_shake_duration_set;
-                camera_shake_dir = new Vector2D(0, 0);
+                //camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
             }
         }

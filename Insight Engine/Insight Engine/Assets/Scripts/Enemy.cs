@@ -104,7 +104,7 @@ namespace IS
         private float idle_sound_radius = 1000f;
 
         // image and vfx
-        SimpleImage enemy_get_hit_vfx;
+        //SimpleImage enemy_get_hit_vfx;
         SimpleImage check_point;
 
         // health bar
@@ -149,7 +149,7 @@ namespace IS
             //InternalCalls.ColliderNone(ENEMY_ID);
 
             // image and vfx
-            enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
+            //enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
             check_point = InternalCalls.GetSpriteImage("dark_circle.png");
             enemy_attack1 = InternalCalls.GetSpriteImage("enemy_attack1.png");
             enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
