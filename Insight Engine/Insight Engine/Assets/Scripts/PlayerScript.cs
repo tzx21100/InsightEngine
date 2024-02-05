@@ -44,8 +44,10 @@ namespace IS
 
         static public bool initialPowerUp = false;
 
-        static public int Health = 3;
-        static public int Max_Health = 3;
+        // health
+        static public int Max_Health = 6;
+        static public int Health = 6;
+        static public Vector2D health_scaling = new Vector2D(250, 250);
 
         static public float respawn_x = 0f;
         static public float respawn_y = 0f;
@@ -80,12 +82,14 @@ namespace IS
         static SimpleImage player_reward_dash;
         static SimpleImage player_reward_doublejump;
         static SimpleImage player_reward_wallclimb;
-        static SimpleImage player_attack;
-        static SimpleImage player_being_hit;
+        //static SimpleImage player_attack;
+        //static SimpleImage player_being_hit;
         static SimpleImage player_attack1;
         static SimpleImage player_attack2;
         static SimpleImage player_attack3;
-       // static SimpleImage player_attack1;
+        static SimpleImage player_health_empty;
+        static SimpleImage player_health_full;
+        static SimpleImage player_health_half;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -240,12 +244,15 @@ namespace IS
             player_reward_dash = InternalCalls.GetSpriteImage("Dash UI.png");
             player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
-            player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
-            player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
+            //player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
+            //player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
             player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
             player_attack2 = InternalCalls.GetSpriteImage("player_attack2.png");
             player_attack3 = InternalCalls.GetSpriteImage("player_attack3.png");
-            player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
+            player_health_empty = InternalCalls.GetSpriteImage("player_health_empty.png");
+            player_health_full = InternalCalls.GetSpriteImage("player_health_full.png");
+            player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
+            //player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
@@ -349,6 +356,8 @@ namespace IS
                 );
 
             }
+
+            DrawHealthBar();
 
 
 
@@ -898,6 +907,7 @@ namespace IS
             AttackCameraShake(); // camera shake
             HitEnemy();
             EnemyAttack();
+            
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -1522,6 +1532,9 @@ namespace IS
                 // make enemy facing player
                 Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
 
+                // damage the player
+                Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
+
                 // player get hit back
                 InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 50f);
                 InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
@@ -1590,6 +1603,47 @@ namespace IS
                 camera_shake_duration = camera_shake_duration_set;
                 camera_shake_dir = new Vector2D(0, 0);
                 //camera_shake_angle = 0;
+            }
+        }
+
+        static private void DrawHealthBar()
+        {
+            //Console.WriteLine(Health);
+            SimpleVector2D pos = new SimpleVector2D(camera_pos.x - WindowWidth / 1.6f, camera_pos.y + WindowHeight / 1.6f);
+            SimpleVector2D scaling = new SimpleVector2D(health_scaling.x, health_scaling.y);
+            float interval = scaling.x / 1.6f;
+            // draw health bar
+            switch (Health){
+                case 1:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_half, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    break;
+                case 2:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    break;
+                case 3:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_half, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    break;
+                case 4:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_empty, 1f, 6);
+                    break;
+                case 5:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_half, 1f, 6);
+                    break;
+                case 6:
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval * 2f, pos.y), 0, scaling, player_health_full, 1f, 6);
+                    break;
             }
         }
 

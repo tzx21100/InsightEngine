@@ -82,6 +82,7 @@ namespace IS
         private bool initialAttackSound = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(220f, 200f);
+        public int attack_damage = 1;
 
         // random stuff
         private int random_attack;
@@ -370,7 +371,7 @@ namespace IS
                 float dir_rand = my_rand.NextFloat();
                 float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
                 float size = 10f * rand;
-                float size_scale = 10 * rand;
+                float size_scale = 20 * rand;
                 float alpha = 0.8f * rand;
                 InternalCalls.GameSpawnParticleExtra(
                     enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f) / 6f, dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
