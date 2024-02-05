@@ -71,7 +71,6 @@ namespace IS {
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
-    int  ISGraphics::mLightType = ISGraphics::NORMAL;
 
 
     // Layering
@@ -256,6 +255,7 @@ namespace IS {
 
             // update active camera
             cameras3D[Camera3D::mActiveCamera].Update();
+            ShaderEffect::shader_effect_update(delta_time);
 
             // Graphics system's draw
 

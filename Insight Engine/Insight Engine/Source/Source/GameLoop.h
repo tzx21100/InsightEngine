@@ -22,6 +22,7 @@
 #include "Physics/Collision/Collider.h"
 #include "../Graphics/Core/Graphics.h"
 #include "../Physics/System/Physics.h"
+#include "Graphics/System/ShaderEffects.h"
 
 
 namespace IS {
@@ -462,6 +463,9 @@ namespace IS {
             //    else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
             //}
 
+            if (input->IsKeyPressed(GLFW_KEY_X)) {
+                ShaderEffect::play_fragment_light();
+            }
         #endif // USING_IMGUI
         }
 

@@ -26,6 +26,7 @@
 #include "Animation.h"
 #include "Math/Vector2D.h"
 #include "Engine/Systems/Asset/Asset.h"
+#include "Graphics/System/ShaderEffects.h"
 
 #include <glad/glad.h>
 #include <vector>

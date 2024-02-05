@@ -185,6 +185,9 @@
     <ClCompile Include="Source\Graphics\System\Layering.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Graphics\System\ShaderEffects.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">
@@ -425,6 +428,9 @@
       <Filter>Engine\Systems\FSM</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\System\Layering.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\System\ShaderEffects.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
   </ItemGroup>
