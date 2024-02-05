@@ -24,13 +24,20 @@ namespace IS
         static private Vector2D bg_scale=new Vector2D(5850*0.8f,1080*1.5f);
 
 
+
+        static float leaves_timer = 3f;
+        static int leaves_amount = 150;
+        static float leaves_timer_set = 3f;
+
+
         static public void Init(){
             bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image2 = InternalCalls.GetSpriteImage("Env_cave_foreground.png");
             bg_image3 = InternalCalls.GetSpriteImage("Env_cave_midground.png");
             bg_image4 = InternalCalls.GetSpriteImage("Env_cave_2ndbackground.png");
             bg_image5 = InternalCalls.GetSpriteImage("Env_cave_background.png");
-
+            InternalCalls.AudioStopAllSounds();
+            InternalCalls.AudioPlaySound("falling.wav", false, 0.1f);
 
         }
 
@@ -80,9 +87,29 @@ namespace IS
             }
 
                 InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.8f, 0);
-/*                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.3f, 10);*/
-            
+            /*                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.3f, 10);*/
 
+            leaves_timer -= InternalCalls.GetDeltaTime();
+            if (leaves_timer <= 0)
+            {
+
+
+                for (int i = 0; i < leaves_amount; i++)
+                {
+                    int col = (int)(InternalCalls.GetRandomFloat() * 9);
+                    float direction = InternalCalls.GetRandomFloat() * 360;
+                    float size = InternalCalls.GetRandomFloat() * 25;
+                    float speed = InternalCalls.GetRandomFloat() * 800f;
+                    float lifespan = InternalCalls.GetRandomFloat() * 12f;
+                    InternalCalls.GameSpawnParticleExtraFrames((PlayerScript.camera_pos.x-2000) +(2000* InternalCalls.GetRandomFloat()), PlayerScript.camera_pos.y + 2000f,
+                        direction, size, 0f, 1f,
+                        0f, lifespan, speed, "ParticleDust.txt"
+                        , col, 0);
+
+                }
+
+                leaves_timer = leaves_timer_set;
+            }
 
 
         }

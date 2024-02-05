@@ -39,7 +39,7 @@ namespace IS
                 }
 
             }
-            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("JOHN_Company History_Loop_120bpm.wav"); }
+            if (InternalCalls.KeyPressed((int)KeyCodes.X)) { InternalCalls.AudioPlayMusic("JOHN_Company History_Loop_120bpm.wav",0.2f); }
         }
         
         static public void CleanUp(){

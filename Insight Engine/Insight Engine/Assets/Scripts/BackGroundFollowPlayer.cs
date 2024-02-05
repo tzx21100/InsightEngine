@@ -86,7 +86,7 @@ namespace IS
                     float size = InternalCalls.GetRandomFloat() * 150;
                     float speed = InternalCalls.GetRandomFloat() * 800f;
                     float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFrames(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y+2000f,
+                    InternalCalls.GameSpawnParticleExtraFrames((PlayerScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), PlayerScript.camera_pos.y+2000f,
                         direction, size, 0f, 1f,
                         0f, lifespan, speed, "ParticleLeaves.txt"
                         ,col,0);

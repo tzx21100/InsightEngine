@@ -1,0 +1,77 @@
+{
+	"Entities" : 
+	[
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "Fragments_Music_Tension 2.wav",
+				"AudioVolumeLevel" : 0.15999999642372131
+			},
+			"AudioListener" : 
+			{
+				"AudioHearingRange" : 286.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
+			},
+			"Name" : "Game Object",
+			"Script" : 
+			{
+				"ScriptName" : "CutSceneScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "1.jpg",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 1,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 3840.0,
+				"SpriteTransformScalingY" : 2160.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 3840.0,
+				"TransformScalingY" : 2160.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		},
+		{
+			"Name" : "Game Object",
+			"Script" : 
+			{
+				"ScriptName" : "CameraScript"
+			}
+		}
+	],
+	"EntityAmount" : 2,
+	"Layers" : 
+	[
+		{
+			"Active" : true,
+			"Name" : "Layer 1"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
+		}
+	],
+	"LayersAmount" : 2
+}

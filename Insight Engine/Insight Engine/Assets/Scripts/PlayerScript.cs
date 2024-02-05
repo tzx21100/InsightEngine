@@ -128,10 +128,10 @@ namespace IS
         static private float coyote_timer;
 
         //dashing 
-        static public float bullet_time_timer = 1f;
-        static private float bullet_time_set = 1f;
-        static private float dash_timer = 0.1f;
-        static private float dash_set = 0.1f;
+        static public float bullet_time_timer = 0.5f;
+        static private float bullet_time_set = 0.5f;
+        static private float dash_timer = 0.2f;
+        static private float dash_set = 0.2f;
         static private bool canDash = false;
         static private bool initialDash = true;
         static public bool isDashing;
@@ -919,7 +919,7 @@ namespace IS
         static public void CleanUp()
         {
 
-
+            Health = Max_Health;
             Reward_DoubleJump = false;
             Reward_Dash = false;
             Reward_WallClimb = false;

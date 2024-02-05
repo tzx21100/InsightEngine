@@ -378,12 +378,12 @@ namespace IS {
         audio->StopAllAudio();
     }
 
-    static void AudioPlayMusic(MonoString* name) {
+    static void AudioPlayMusic(MonoString* name ,float volume) {
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName(str);
+        asset->PlayMusicByName(str ,1,volume,1);
     }
 
     static void AudioEmitterEnableEntity(bool enable , int entity) {
@@ -394,6 +394,10 @@ namespace IS {
         else {
             component.isPlaying = false;
         }
+    }
+
+    static void AudioSetMaster(float volume) {
+        MasterAudioLevel = volume;
     }
 
     static int GetButtonState() {
@@ -1338,6 +1342,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioPlayMusic);
         IS_ADD_INTERNAL_CALL(AudioEmitterEnableEntity);
         IS_ADD_INTERNAL_CALL(AudioStopAllSounds);
+        IS_ADD_INTERNAL_CALL(AudioSetMaster);
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);
