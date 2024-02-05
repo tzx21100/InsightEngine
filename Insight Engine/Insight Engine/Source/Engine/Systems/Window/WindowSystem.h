@@ -264,6 +264,8 @@ namespace IS {
          */
         int GetTitleBarHeight();
 
+        void LoadCustomCursor();
+
     private:
         GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
         WindowProperties mProps; ///< The properties of the window.

@@ -257,6 +257,7 @@ namespace IS {
                 if (!engine.mRenderGUI) {
                     auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
                     auto [width2, height2] = window_sys->GetWindowSize();
+                    window_sys->LoadCustomCursor();
                     input->setCenterPos(width2 / 2.f, height2 / 2.f);
                     input->setRatio(static_cast<float>(width2), static_cast<float>(height2));
                     

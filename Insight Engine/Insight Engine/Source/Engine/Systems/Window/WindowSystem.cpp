@@ -238,6 +238,12 @@ namespace IS {
         return GetSystemMetrics(SM_CYCAPTION);
     }
 
+    void WindowSystem::LoadCustomCursor()
+    {
+        glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        AssetManager::LoadWindowCursor(mWindow, "Assets/Icons/cursor_default.png");
+    }
+
     void WindowSystem::SetMaximized(bool maximized)
     { 
         mProps.mMaximized = maximized;
