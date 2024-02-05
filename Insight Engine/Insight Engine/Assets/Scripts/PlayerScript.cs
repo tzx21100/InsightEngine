@@ -172,6 +172,7 @@ namespace IS
         static private float attack_angle = 0f;
         static private bool initial_attack = false;
         static public int hitting_enemy_id;
+        static public float attack_damage = 10f;
 
         // player getting hit
         static public float player_get_hit_timer_duration = 0.65f;
@@ -1402,7 +1403,7 @@ namespace IS
                             //Console.WriteLine(attacking_enemy_id);
                             //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
                             //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f));
+                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attack_damage);
                             initial_attack = true;
                         }
                     }
