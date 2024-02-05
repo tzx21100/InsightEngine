@@ -60,7 +60,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(257f, 183f);
+        private Vector2D scaling = new Vector2D(500f, 500f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
@@ -73,12 +73,13 @@ namespace IS
         // attack
         SimpleImage enemy_attack1;
         SimpleImage enemy_attack2;
-        private int current_attack;
+        private int random_attack;
+        private int random_being_hit;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
         public Vector2D view_port_area = new Vector2D(500f, 200f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
-        private float attack_hit_timer = 0.6f;
+        private float attack_hit_timer = 0.5f;
         private bool initialAttack = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(220f, 200f);
@@ -321,6 +322,8 @@ namespace IS
             {
                 // draw vfx animation once get hit
                 //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
+                Random rnd = new Random();
+                random_being_hit = rnd.Next(0, 9);
                 EnemyInitialGetHit();
                 initialHit = true;
             }
@@ -344,7 +347,37 @@ namespace IS
 
         private void EnemyInitialGetHit()
         {
-            InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+            float volume = 0.2f;
+            switch (random_being_hit)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_1.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_2.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_3.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_4.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_5.wav", false, volume);
+                    break;
+                case 5:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_6.wav", false, volume);
+                    break;
+                case 6:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_7.wav", false, volume);
+                    break;
+                case 7:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_8.wav", false, volume);
+                    break;
+                case 8:
+                    InternalCalls.AudioPlaySound("Blobby Hurt_9.wav", false, volume);
+                    break;
+            }
 
             // load bleeding particles
             Random rnd = new Random();
@@ -358,7 +391,7 @@ namespace IS
                 float size_scale = 10 * rand;
                 float alpha = 0.8f * rand;
                 InternalCalls.GameSpawnParticleExtra(
-                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f), dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
+                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f) / 6f, dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
                  );
             }
         }
@@ -491,7 +524,7 @@ namespace IS
             if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
             {
                 Random rnd = new Random();
-                current_attack = rnd.Next(0, 2);
+                random_attack = rnd.Next(0, 2);
                 current_state = EnemyState.ATTACKING;
                 return;
             }
@@ -513,7 +546,7 @@ namespace IS
         {
             /*Random rnd = new Random();
             int rand = rnd.Next(0, 2);*/
-            switch (current_attack)
+            switch (random_attack)
             {
                 case 0:
                     InternalCalls.SetSpriteImage(enemy_attack1);
@@ -524,7 +557,7 @@ namespace IS
             }
             InternalCalls.SetSpriteAnimationIndex(1);
             attack_timer -= InternalCalls.GetDeltaTime();
-            if (attack_timer < attack_hit_timer && attack_timer > 0.4f) // attack timing 0.6s to 0.4s
+            if (attack_timer < attack_hit_timer && attack_timer > 0.3f) // attack timing 0.5s to 0.3s
             {
                 if (!initialAttack && PlayerInAttackRange())
                 {
@@ -600,10 +633,10 @@ namespace IS
             // draw health bar only when the health is lesser
             if (health < max_health) {
                 // draw health blood
-                InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 2f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+                InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 6f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
 
                 // draw health bar UI
-                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, enemy_pos.y + scaling.y / 2f);
+                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, enemy_pos.y + scaling.y / 6f);
                 InternalCalls.DrawImageAt
                     (
                         pos, 0, new SimpleVector2D(health_bar_scaling.x, health_bar_scaling.y), health_bar, 1f, layer

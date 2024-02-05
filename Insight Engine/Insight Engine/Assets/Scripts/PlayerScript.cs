@@ -777,8 +777,8 @@ namespace IS
 
                 InternalCalls.SetSpriteImage(player_jump);
                 InternalCalls.SetSpriteAnimationIndex(2);
-
-                if (coyote_timer > 0f) // coyote time for the first time 
+                
+                if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
                     if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                     {
@@ -1337,7 +1337,7 @@ namespace IS
             {*/
 
             //}
-            Console.WriteLine(combo_step);
+            //Console.WriteLine(combo_step);
         }
 
         static private void AttackAreaUpdate()

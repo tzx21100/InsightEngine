@@ -9,36 +9,36 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -906.42474365234375,
-				"Y" : 15.928329467773438
+				"X" : -1146.8682861328125,
+				"Y" : -178.71485900878906
 			},
 			"BoxColliderOffset" : 
 			{
-				"X" : 0.0,
-				"Y" : 0.0
+				"X" : -9.3999996185302734,
+				"Y" : -52.799999237060547
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 0.55000001192092896,
-				"Y" : 0.69999998807907104
+				"X" : 0.33000001311302185,
+				"Y" : 0.30000001192092896
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -70.675003051757812,
-					"y" : 64.049995422363281
+					"x" : -82.5,
+					"y" : 75.0
 				},
 				{
-					"x" : 70.675003051757812,
-					"y" : 64.049995422363281
+					"x" : 82.5,
+					"y" : 75.0
 				},
 				{
-					"x" : 70.675003051757812,
-					"y" : -64.049995422363281
+					"x" : 82.5,
+					"y" : -75.0
 				},
 				{
-					"x" : -70.675003051757812,
-					"y" : -64.049995422363281
+					"x" : -82.5,
+					"y" : -75.0
 				}
 			]
 		},
@@ -83,15 +83,15 @@
 		"SpriteFilename" : "Enemy_Idle.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 23,
+		"SpriteTexture" : 30,
 		"SpriteTextureHeight" : 627,
-		"SpriteTextureIndex" : 22,
+		"SpriteTextureIndex" : 29,
 		"SpriteTextureWidth" : 8604,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 257.0,
-		"SpriteTransformScalingY" : 183.0,
-		"SpriteTransformWorldPositionX" : -906.42474365234375,
-		"SpriteTransformWorldPositionY" : 15.928329467773438,
+		"SpriteTransformScalingX" : 500.0,
+		"SpriteTransformScalingY" : 500.0,
+		"SpriteTransformWorldPositionX" : -1137.46826171875,
+		"SpriteTransformWorldPositionY" : -125.91485595703125,
 		"animations" : 
 		[
 			{
@@ -99,9 +99,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.083333335816860199,
 				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 3.0,
+				"frame_index_x" : 2.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.018831187859177589,
+				"frame_timer" : 0.068831190466880798,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 12,
 				"y_frames" : 1
@@ -111,9 +111,9 @@
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 257.0,
-		"TransformScalingY" : 183.0,
-		"TransformWorldPositionX" : -906.42474365234375,
-		"TransformWorldPositionY" : 15.928329467773438
+		"TransformScalingX" : 500.0,
+		"TransformScalingY" : 500.0,
+		"TransformWorldPositionX" : -1137.46826171875,
+		"TransformWorldPositionY" : -125.91485595703125
 	}
 }
