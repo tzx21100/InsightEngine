@@ -27,6 +27,9 @@
 
 namespace IS {
 
+
+    static float MasterAudioLevel=1.f;
+
     class AudioListener : public IComponent {
     public:
         float volume=1;

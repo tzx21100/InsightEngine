@@ -25,7 +25,7 @@
 #include "Math/ISMath.h"
 
 namespace IS {
-
+    
     std::string ISAudio::GetName() {
         /*!
          * \brief Gets the name of the ISAudio system.
@@ -134,10 +134,10 @@ namespace IS {
                 float volume = CalculateGain(distance, emitter.falloff_factor);
                 
                 if (IsSoundPlaying(emitter.Channel)){
-                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume);
+                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume *MasterAudioLevel);
                 }
                 else {
-                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume, emitter.pitch);
+                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume * MasterAudioLevel, emitter.pitch);
                     mChannelList.emplace_back(emitter.Channel);
                 }
 
