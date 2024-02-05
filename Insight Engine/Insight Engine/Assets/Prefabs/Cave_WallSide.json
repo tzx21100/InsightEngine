@@ -1,0 +1,97 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -1967.890625,
+				"Y" : 1136.5419921875
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.89999997615814209,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -522.45001220703125,
+					"y" : 1040.0
+				},
+				{
+					"x" : 522.45001220703125,
+					"y" : 1040.0
+				},
+				{
+					"x" : 522.45001220703125,
+					"y" : -1040.0
+				},
+				{
+					"x" : -522.45001220703125,
+					"y" : -1040.0
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "Cave_WallSide",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Signature" : "00000000000000000000010000000111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_WallSide.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 16,
+		"SpriteTextureHeight" : 2080,
+		"SpriteTextureIndex" : 15,
+		"SpriteTextureWidth" : 1161,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1161.0,
+		"SpriteTransformScalingY" : 2080.0,
+		"SpriteTransformWorldPositionX" : -1967.890625,
+		"SpriteTransformWorldPositionY" : 1136.5419921875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1161.0,
+		"TransformScalingY" : 2080.0,
+		"TransformWorldPositionX" : -1967.890625,
+		"TransformWorldPositionY" : 1136.5419921875
+	}
+}

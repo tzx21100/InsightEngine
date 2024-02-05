@@ -65,7 +65,7 @@ void main() {
 
         // change to sepia
         if (type_of_light == 1){
-            radius = radius * 1.2;
+            radius = radius * 3;
         }
         //end of change to sepia 
 

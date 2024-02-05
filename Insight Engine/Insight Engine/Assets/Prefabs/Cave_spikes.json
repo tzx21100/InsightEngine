@@ -13,23 +13,23 @@
 		"SpriteFilename" : "Cave_spikes.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 13,
-		"SpriteTextureHeight" : 2080,
-		"SpriteTextureIndex" : 12,
-		"SpriteTextureWidth" : 2080,
+		"SpriteTexture" : 14,
+		"SpriteTextureHeight" : 857,
+		"SpriteTextureIndex" : 13,
+		"SpriteTextureWidth" : 657,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 576.83819580078125,
-		"SpriteTransformScalingY" : 576.83819580078125,
-		"SpriteTransformWorldPositionX" : 11.306976318359375,
-		"SpriteTransformWorldPositionY" : -424.114013671875,
+		"SpriteTransformScalingX" : 170.81999206542969,
+		"SpriteTransformScalingY" : 222.81999206542969,
+		"SpriteTransformWorldPositionX" : 154.5728759765625,
+		"SpriteTransformWorldPositionY" : 422.28912353515625,
 		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 576.83819580078125,
-		"TransformScalingY" : 576.83819580078125,
-		"TransformWorldPositionX" : 11.306976318359375,
-		"TransformWorldPositionY" : -424.114013671875
+		"TransformScalingX" : 170.81999206542969,
+		"TransformScalingY" : 222.81999206542969,
+		"TransformWorldPositionX" : 154.5728759765625,
+		"TransformWorldPositionY" : 422.28912353515625
 	}
 }

@@ -63,8 +63,8 @@ namespace IS
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
-        static public float upper_limit = origin.x + (0.558f * win_dimension.x);
-        static public float lower_limit = origin.x + (0.442f * win_dimension.x);
+        static public float upper_limit;
+        static public float lower_limit; 
 
         static public float master_multiplier;
         static public float bgm_multiplier;
@@ -80,7 +80,8 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-
+            upper_limit = origin.x + (0.558f * win_dimension.x);
+            lower_limit = origin.x + (0.442f * win_dimension.x);
             master_multiplier = MasterSliderKnobScript.normalised_adjustment;
             bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
             vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
@@ -150,8 +151,9 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
+            upper_limit = origin.x + (0.558f * win_dimension.x);
+            lower_limit = origin.x + (0.442f * win_dimension.x);
 
-            
 
             // Dimensions
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
