@@ -22,7 +22,7 @@
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
-		"SpriteColorA" : 1.0,
+		"SpriteColorA" : 0.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
@@ -37,8 +37,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1.0,
 		"SpriteTransformScalingY" : 1.0,
-		"SpriteTransformWorldPositionX" : -352.70364379882812,
-		"SpriteTransformWorldPositionY" : -14.396071434020996,
+		"SpriteTransformWorldPositionX" : -405.78839111328125,
+		"SpriteTransformWorldPositionY" : 23.396785736083984,
 		"animations" : []
 	},
 	"Transform" : 
@@ -46,7 +46,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1.0,
 		"TransformScalingY" : 1.0,
-		"TransformWorldPositionX" : -352.70364379882812,
-		"TransformWorldPositionY" : -14.396071434020996
+		"TransformWorldPositionX" : -405.78839111328125,
+		"TransformWorldPositionY" : 23.396785736083984
 	}
 }

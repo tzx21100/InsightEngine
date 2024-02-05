@@ -264,6 +264,9 @@ namespace IS {
          */
         int GetTitleBarHeight();
 
+        /*!
+         * \brief Loads a custom cursor for the window.
+         */
         void LoadCustomCursor();
 
     private:
