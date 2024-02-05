@@ -72,7 +72,7 @@ namespace IS
             pause_menu_entity   = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
             resume_button_entity       = InternalCalls.CreateEntityButtonNoText("Resume Game", resume_button_image, "ResumeButtonScript");
             settings_button_entity = InternalCalls.CreateEntityButtonNoText("Setting", settings_button_image, "SettingsScript");
-            how_to_play_button_entity  = InternalCalls.CreateEntityButtonNoText("How to Play", how_to_play_button_image, "HowToPlayScript");
+            how_to_play_button_entity  = InternalCalls.CreateEntityButtonNoText("How to Play Button", how_to_play_button_image, "HowToPlayScript");
             back_to_menu_button_entity = InternalCalls.CreateEntityButtonNoText("Main Menu", back_to_menu_button_image, "BackToMenuButtonScript");
             exit_button_entity = InternalCalls.CreateEntityButtonNoText("Quit Game", exit_button_image, "ExitButtonScript");
 

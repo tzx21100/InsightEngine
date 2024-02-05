@@ -12,6 +12,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
     class HowToPlayScript
@@ -45,8 +46,8 @@ namespace IS
             show_how_to_play = false;
 
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
-            //how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
-            how_to_play_overlay_image = InternalCalls.GetSpriteImage("temp_how_to_play_overlay.png");
+            how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
+            //how_to_play_overlay_image = InternalCalls.GetSpriteImage("temp_how_to_play_overlay.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
@@ -88,8 +89,7 @@ namespace IS
             //InternalCalls.RenderTextFont("H", "Times_New_Roman", 0.1f, 0.5f, 20f, (1f, 1f, 1f));
             //InternalCalls.RenderTextFont("H", "BRUSHSCI", 0.2f, 0.5f, 20f, (1f, 1f, 1f));
             //InternalCalls.RenderTextFont("H", "Poiret_One_Regular", 0.3f, 0.5f, 20f, (1f, 1f, 1f));
-            //InternalCalls.RenderTextFont("H", "MedusaGothic_D", 0.4f, 0.5f, 20f, (1f, 1f, 1f));
-            //InternalCalls.RenderTextFont("Haaaaaeiofuioafea f", "Semplicita_Light", 0.5f, 0.5f, 20f, (1f, 1f, 1f));
+
 
             //hover
             if (InternalCalls.GetButtonState() == 1)
@@ -114,6 +114,7 @@ namespace IS
 
             if (show_how_to_play)
             {
+
                 InternalCalls.SetLightsToggle(false);
                 DrawHowToPlay();
             }
@@ -134,6 +135,13 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
             InternalCalls.TransformSetPositionEntity(how_to_play_overlay_pos.x, how_to_play_overlay_pos.y, how_to_play_overlay_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
+            //Console.WriteLine("hi");
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006489676f * win_dimension.y), 12.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5005309735f * win_dimension.y), 10.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Collect Fragments for movement abilities", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004621436f * win_dimension.y), 10.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.500373648f * win_dimension.y), 10.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5003343166f * win_dimension.y), 10.5f, (1f, 1f, 1f));
 
         }
 
