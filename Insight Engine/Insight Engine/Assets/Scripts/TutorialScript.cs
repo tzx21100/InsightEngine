@@ -19,7 +19,7 @@ namespace IS
 
             if (tutorial_state == 1)
             {
-                InternalCalls.RenderTextFont("Press A and D to move", 0.5f, 0.3f, 20, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Press A and D to move", "PoiretOne-Regular", 0.5f, 0.3f, 20, (1f, 1f, 1f));
                 if(PlayerScript.player_pos.x > -7600)
                 {
                     tutorial_state++;

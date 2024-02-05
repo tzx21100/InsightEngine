@@ -972,7 +972,7 @@ namespace IS {
         mono_free(c_str);
 
         // Poiret will be default text font
-        ISGraphics::mTexts[""].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+        ISGraphics::mTexts["PoiretOne-Regular"].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
 
         // ISGraphics::mTexts["Poiret_One_Regular"].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }
