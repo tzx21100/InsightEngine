@@ -53,7 +53,7 @@ namespace IS
 
                 // Get the initial position of this layer
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
-
+                bg_scale = new Vector2D((5850 * 0.8f) /CameraScript.camera_zoom, (1080 * 1.5f) / CameraScript.camera_zoom);
                 // Update the position
                 Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x + initialPos.x - layerOffsetX,
                                                PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
@@ -66,7 +66,7 @@ namespace IS
             //InternalCalls.GameSpawnParticle(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, "ParticleLeaves.txt");
 
             // Update the camera position
-            InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
+            //InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
 
             
             if (PlayerScript.camera_pos.y > 3500)
