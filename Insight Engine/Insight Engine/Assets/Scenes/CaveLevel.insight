@@ -3908,9 +3908,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -4628,7 +4628,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.035497855395078659,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5059,9 +5059,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -5200,7 +5200,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.054750584065914154,
+						"frame_timer" : 0.021417247131466866,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5330,7 +5330,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.035497855395078659,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5448,7 +5448,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.035497855395078659,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5566,7 +5566,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.035497855395078659,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -5795,9 +5795,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -5926,9 +5926,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -6065,9 +6065,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.017184631898999214,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -8891,7 +8891,7 @@
 			"Name" : "Layer 3"
 		},
 		{
-			"Active" : false,
+			"Active" : true,
 			"Name" : "Layer 4"
 		},
 		{

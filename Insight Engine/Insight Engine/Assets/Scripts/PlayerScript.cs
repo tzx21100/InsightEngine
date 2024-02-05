@@ -1421,17 +1421,19 @@ namespace IS
                         Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
                         f_angle = f_angle.Normalize();
 
-                        float distanceLeft = 300f;
+                        float distanceLeft = 250f;
 
                         Vector2D checkerPosition = new Vector2D(
                             player_pos.x + f_angle.x * distanceLeft,
-                            player_pos.y + f_angle.y * distanceLeft
+                            //player_pos.y + f_angle.y * distanceLeft
+                            player_pos.y
                         );
                         float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
                         InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
                         InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
-                        InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
+                        //InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
+                        InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);
                     }
                     else
                     {

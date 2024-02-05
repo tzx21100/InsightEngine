@@ -73,8 +73,6 @@ namespace IS
         // attack
         SimpleImage enemy_attack1;
         SimpleImage enemy_attack2;
-        private int random_attack;
-        private int random_being_hit;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
         public Vector2D view_port_area = new Vector2D(500f, 200f);
         private float attack_timer_duration = 1f;
@@ -83,6 +81,11 @@ namespace IS
         private bool initialAttack = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(220f, 200f);
+
+        // random stuff
+        private int random_attack_sound;
+        private int random_being_hit_sound;
+        private int random_dead_sound;
 
         // image and vfx
         SimpleImage enemy_get_hit_vfx;
@@ -94,6 +97,7 @@ namespace IS
 
         // enemy death
         SimpleImage enemy_death;
+        private bool initialDeath = false;
         private float death_timer = 1f;
 
         // enemy patrol
@@ -323,7 +327,7 @@ namespace IS
                 // draw vfx animation once get hit
                 //InternalCalls.ResetSpriteAnimationFrameEntity(get_hit_vfx_entity);
                 Random rnd = new Random();
-                random_being_hit = rnd.Next(0, 9);
+                random_being_hit_sound = rnd.Next(0, 9);
                 EnemyInitialGetHit();
                 initialHit = true;
             }
@@ -348,7 +352,7 @@ namespace IS
         private void EnemyInitialGetHit()
         {
             float volume = 0.2f;
-            switch (random_being_hit)
+            switch (random_being_hit_sound)
             {
                 case 0:
                     InternalCalls.AudioPlaySound("Blobby Hurt_1.wav", false, volume);
@@ -469,6 +473,36 @@ namespace IS
 
         private void EnemyDead()
         {
+            Random rnd = new Random();
+            random_dead_sound = rnd.Next(0, 7);
+            if (!initialDeath)
+            {
+                switch (random_dead_sound)
+                {
+                    case 0:
+                        InternalCalls.AudioPlaySound("Blobby Death_1.wav", false, 0.2f);
+                        break;
+                    case 1:
+                        InternalCalls.AudioPlaySound("Blobby Death_2.wav", false, 0.2f);
+                        break;
+                    case 2:
+                        InternalCalls.AudioPlaySound("Blobby Death_3.wav", false, 0.2f);
+                        break;
+                    case 3:
+                        InternalCalls.AudioPlaySound("Blobby Death_4.wav", false, 0.2f);
+                        break;
+                    case 4:
+                        InternalCalls.AudioPlaySound("Blobby Death_5.wav", false, 0.2f);
+                        break;
+                    case 5:
+                        InternalCalls.AudioPlaySound("Blobby Death_6.wav", false, 0.2f);
+                        break;
+                    case 6:
+                        InternalCalls.AudioPlaySound("Blobby Death_7.wav", false, 0.2f);
+                        break;
+                }
+                initialDeath = true;
+            }
             InternalCalls.RemoveColliderComponentEntity(ENEMY_ID);
             InternalCalls.SetSpriteImage(enemy_death);
             InternalCalls.SetSpriteAnimationIndex(2);
@@ -524,7 +558,7 @@ namespace IS
             if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
             {
                 Random rnd = new Random();
-                random_attack = rnd.Next(0, 2);
+                random_attack_sound = rnd.Next(0, 2);
                 current_state = EnemyState.ATTACKING;
                 return;
             }
@@ -546,7 +580,7 @@ namespace IS
         {
             /*Random rnd = new Random();
             int rand = rnd.Next(0, 2);*/
-            switch (random_attack)
+            switch (random_attack_sound)
             {
                 case 0:
                     InternalCalls.SetSpriteImage(enemy_attack1);
