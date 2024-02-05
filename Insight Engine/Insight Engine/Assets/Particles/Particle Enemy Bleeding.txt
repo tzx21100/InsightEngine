@@ -5,8 +5,8 @@ Lifespan: 3
 Color:
 Red: 1
 Green: 0.25
-Blue: 0.25
-Alpha: 1
+Blue: 1
+Alpha: 0.25
 Alpha: 1
 Alpha Growth: 0.1
 Rotation: 0
