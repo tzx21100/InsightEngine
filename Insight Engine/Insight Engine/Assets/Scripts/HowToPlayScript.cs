@@ -89,7 +89,7 @@ namespace IS
             //InternalCalls.RenderTextFont("H", "BRUSHSCI", 0.2f, 0.5f, 20f, (1f, 1f, 1f));
             //InternalCalls.RenderTextFont("H", "Poiret_One_Regular", 0.3f, 0.5f, 20f, (1f, 1f, 1f));
             //InternalCalls.RenderTextFont("H", "MedusaGothic_D", 0.4f, 0.5f, 20f, (1f, 1f, 1f));
-            //InternalCalls.RenderTextFont("H", "Semplicita_Light", 0.5f, 0.5f, 20f, (1f, 1f, 1f));
+            //InternalCalls.RenderTextFont("Haaaaaeiofuioafea f", "Semplicita_Light", 0.5f, 0.5f, 20f, (1f, 1f, 1f));
 
             //hover
             if (InternalCalls.GetButtonState() == 1)

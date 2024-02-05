@@ -985,7 +985,7 @@ namespace IS {
         char* f_str = mono_string_to_utf8(font);
         std::string font_name(f_str);
         mono_free(f_str);
-        ISGraphics::mTexts[font_name].addTextRenderCall(c_str, x, y, size, { color.x, color.y, color.z });
+        ISGraphics::mTexts[font_name].addTextRenderCall(part_name, x, y, size, { color.x, color.y, color.z });
 
         //ISGraphics::mTexts[font_name].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }
