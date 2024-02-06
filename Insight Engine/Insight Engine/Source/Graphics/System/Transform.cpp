@@ -170,16 +170,16 @@ namespace IS {
 			// Use GLFW to get the mouse position.
 			glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
 			// Determine the rendering dimensions based on fullscreen or windowed mode.
-			if (engine.IsFullScreen())
-			{
-				width = static_cast<float>(engine.GetMonitorWidth());
-				height = static_cast<float>(engine.GetMonitorHeight());
-			}
-			else
-			{
-				width = static_cast<float>(engine.GetWindowWidth());
-				height = static_cast<float>(engine.GetWindowHeight());
-			}
+			// if (engine.IsFullScreen())
+			// {
+			width = static_cast<float>(engine.GetWindowWidth());
+			height = static_cast<float>(engine.GetWindowHeight());
+			// }
+			// else
+			// {
+			// 	width = static_cast<float>(engine.GetWindowWidth());
+			// 	height = static_cast<float>(engine.GetWindowHeight());
+			// }
 		}
 #else
 		glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
