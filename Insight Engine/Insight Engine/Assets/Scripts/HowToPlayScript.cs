@@ -46,8 +46,8 @@ namespace IS
             show_how_to_play = false;
 
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
-            //how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
-            how_to_play_overlay_image = InternalCalls.GetSpriteImage("temp_how_to_play_overlay.png");
+            how_to_play_overlay_image = InternalCalls.GetSpriteImage("how_to_play_overlay.png");
+            //how_to_play_overlay_image = InternalCalls.GetSpriteImage("temp_how_to_play_overlay.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
@@ -142,12 +142,13 @@ namespace IS
             InternalCalls.RenderTextFont("Collect Fragments for movement abilities", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004621436f * win_dimension.y), 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.500373648f * win_dimension.y), 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5003343166f * win_dimension.y), 10.5f, (1f, 1f, 1f));*/
-        /*    InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.66f, 12.5f, (1f, 1f, 1f));
+
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.66f, 12.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", 0.5f, 0.54f, 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Collect Fragments for movement abilities", "Semplicita_Light", 0.5f, 0.47f, 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", 0.5f, 0.38f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", 0.5f, 0.34f, 10.5f, (1f, 1f, 1f));*/
+            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", 0.5f, 0.34f, 10.5f, (1f, 1f, 1f));
         }
 
         static public void HideHowToPlay()
