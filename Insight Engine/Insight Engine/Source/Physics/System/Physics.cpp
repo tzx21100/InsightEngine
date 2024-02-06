@@ -21,7 +21,9 @@
 #include "Pch.h"
 #include "Physics.h"
 #include "Graphics/System/Sprite.h"
+#include "Graphics/Core/Graphics.h"
 #include "Graphics/System/Light.h"
+#include "../../Engine//Systems/Category/Category.h"
 
 namespace IS {
 		
@@ -44,6 +46,7 @@ namespace IS {
 	// Initializes the physics system
 	void Physics::Initialize()
 	{
+		Physics::PhysicsEnableList = mEntities;
 	}
 
 	// Updates the physics simulation for the given time step
@@ -364,8 +367,10 @@ namespace IS {
 
 		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+		auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
 		if (collider.IsBoxColliderEnable()
-			&& collider.mResponseEnable
+			//&& collider.mResponseEnable
+			&& (cate.mCategory == "Ground")
 			&& body.mBodyType == BodyType::Static) { // if check
 
 			std::vector<Vector2D> vertices = collider.mBoxCollider.transformedVertices;
@@ -377,6 +382,7 @@ namespace IS {
 									vertices[(i + 1) % vertices.size()].y };
 				// emplace into the vector list
 				Light::shadowLineSegments.emplace_back(vec);
+				//Sprite::drawDebugLine({ vec.x, vec.y }, { vec.z, vec.w }, { 1.f, 1.f, 1.f });
 
 			}
 		}

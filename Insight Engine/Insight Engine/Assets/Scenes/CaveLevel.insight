@@ -105,6 +105,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -205,6 +209,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -401,6 +409,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -689,6 +701,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1444,9 +1460,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 113,
+				"SpriteTexture" : 115,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 112,
+				"SpriteTextureIndex" : 114,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1261.601806640625,
@@ -2024,9 +2040,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 113,
+				"SpriteTexture" : 115,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 112,
+				"SpriteTextureIndex" : 114,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 318.76602172851562,
@@ -4637,6 +4653,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -4733,6 +4753,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -4933,9 +4957,9 @@
 				"SpriteFilename" : "Prop_Lantern_NoLights.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 94,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 94,
+				"SpriteTextureIndex" : 93,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.33181762695312,
 				"SpriteTransformScalingX" : 284.008544921875,
@@ -5530,6 +5554,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -6884,9 +6912,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.054750584065914154,
+						"frame_timer" : 0.071417249739170074,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -7141,6 +7169,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7340,9 +7372,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.018831187859177589,
+						"frame_timer" : 0.035497855395078659,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -7359,6 +7391,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7455,6 +7491,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7551,6 +7591,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7647,6 +7691,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7743,6 +7791,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -7918,9 +7970,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 113,
+				"SpriteTexture" : 115,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 112,
+				"SpriteTextureIndex" : 114,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 318.76602172851562,
@@ -7939,6 +7991,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8035,6 +8091,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8138,6 +8198,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8238,6 +8302,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8334,6 +8402,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8434,6 +8506,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8534,6 +8610,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8634,6 +8714,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8734,6 +8818,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8834,6 +8922,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -8934,6 +9026,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -9034,6 +9130,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -9134,6 +9234,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -9234,6 +9338,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -9551,7 +9659,7 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_y" : 3.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -10007,6 +10115,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -10107,6 +10219,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -10207,6 +10323,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -10338,9 +10458,9 @@
 				"SpriteFilename" : "pause_button.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 82,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 258,
-				"SpriteTextureIndex" : 81,
+				"SpriteTextureIndex" : 80,
 				"SpriteTextureWidth" : 234,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 117.0,
@@ -10359,6 +10479,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -10459,6 +10583,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -10659,9 +10787,9 @@
 				"SpriteFilename" : "Prop_Lantern_NoLights.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 94,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 94,
+				"SpriteTextureIndex" : 93,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.86602783203125,
 				"SpriteTransformScalingX" : 284.00216674804688,
@@ -11080,6 +11208,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "None"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11276,6 +11408,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11376,6 +11512,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11476,6 +11616,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11576,6 +11720,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11676,6 +11824,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -11875,9 +12027,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 9.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -11993,9 +12145,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 6.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0021645203232765198,
+						"frame_timer" : 0.018831187859177589,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -12204,6 +12356,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -12617,7 +12773,7 @@
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_y" : 3.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -12747,9 +12903,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 2.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.050517968833446503,
+						"frame_timer" : 0.067184634506702423,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -12766,6 +12922,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -14213,9 +14373,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 9.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -14331,9 +14491,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 9.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -14449,9 +14609,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 9.0,
+						"frame_index_x" : 11.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.068831190466880798,
+						"frame_timer" : 0.0021645203232765198,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -14577,9 +14737,9 @@
 				"SpriteFilename" : "Vines 01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 115,
+				"SpriteTexture" : 117,
 				"SpriteTextureHeight" : 1699,
-				"SpriteTextureIndex" : 114,
+				"SpriteTextureIndex" : 116,
 				"SpriteTextureWidth" : 279,
 				"SpriteTransformRotation" : 15.712554931640625,
 				"SpriteTransformScalingX" : 571.94970703125,
@@ -14611,9 +14771,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 114,
+				"SpriteTexture" : 116,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 113,
+				"SpriteTextureIndex" : 115,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 106.90039825439453,
@@ -14645,9 +14805,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 114,
+				"SpriteTexture" : 116,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 113,
+				"SpriteTextureIndex" : 115,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 126.05632019042969,
@@ -14679,9 +14839,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 114,
+				"SpriteTexture" : 116,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 113,
+				"SpriteTextureIndex" : 115,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 185.73590087890625,
@@ -14713,9 +14873,9 @@
 				"SpriteFilename" : "Vines 01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 115,
+				"SpriteTexture" : 117,
 				"SpriteTextureHeight" : 1699,
-				"SpriteTextureIndex" : 114,
+				"SpriteTextureIndex" : 116,
 				"SpriteTextureWidth" : 279,
 				"SpriteTransformRotation" : 353.07125854492188,
 				"SpriteTransformScalingX" : 195.30000305175781,
@@ -14747,9 +14907,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 114,
+				"SpriteTexture" : 116,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 113,
+				"SpriteTextureIndex" : 115,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 181.86563110351562,
 				"SpriteTransformScalingX" : 239.29580688476562,
@@ -14781,9 +14941,9 @@
 				"SpriteFilename" : "Vines 01 V2.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 114,
+				"SpriteTexture" : 116,
 				"SpriteTextureHeight" : 1536,
-				"SpriteTextureIndex" : 113,
+				"SpriteTextureIndex" : 115,
 				"SpriteTextureWidth" : 233,
 				"SpriteTransformRotation" : 181.86563110351562,
 				"SpriteTransformScalingX" : 239.29580688476562,
