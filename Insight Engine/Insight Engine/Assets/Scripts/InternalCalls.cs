@@ -318,7 +318,7 @@ namespace IS
         internal extern static bool IsFullscreen();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void ToggleFullscreen(bool toggle);
+        internal extern static void ToggleFullscreen();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int ButtonRenderText(int entity, float x, float y, float size, (float, float, float) color);

@@ -144,10 +144,12 @@ namespace IS {
         /**
          * \brief Sets the ratio of the 'screen' the mouse is in relative to the window
          */
-        void setRatio(float widthR, float heightR) {
+        void setRatio(float widthR, float heightR)
+        {
             InsightEngine& engine = InsightEngine::Instance();
             //auto const& window_sys = engine.GetSystem<WindowSystem>("Window");
-            auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+            int width, height;
+            engine.GetWindowSize(width, height);
             //glfwGetWindowSize(window, &width, &height);
             // ratio_width =  (float)width / widthR;
             // ratio_height =  (float)height / heightR;

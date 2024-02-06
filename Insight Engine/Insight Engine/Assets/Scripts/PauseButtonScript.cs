@@ -23,7 +23,6 @@ namespace IS
         // Pause Button
         static public Vector2D pause_button_pos = new Vector2D(0f, 0f);
         static public bool paused = false;
-        static public bool fullscreen_mode = false;
         static public SimpleImage paused_button_image = InternalCalls.GetSpriteImage("pause_button.png");
         static public SimpleImage paused_button_clicked_image = InternalCalls.GetSpriteImage("pause_button_clicked.png");
         // Pause Menu
@@ -218,8 +217,7 @@ namespace IS
         {
             if (InternalCalls.KeyPressed((int)KeyCodes.F11))
             {
-                fullscreen_mode = !fullscreen_mode;
-                InternalCalls.ToggleFullscreen(fullscreen_mode);
+                InternalCalls.ToggleFullscreen();
             }
         }
 

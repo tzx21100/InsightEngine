@@ -183,16 +183,10 @@ namespace IS {
 		}
 #else
 		glfwGetCursorPos(window->GetNativeWindow(), &xPos, &yPos);
-		if (engine.IsFullScreen())
-		{
-			width = static_cast<float>(engine.GetMonitorWidth());
-			height = static_cast<float>(engine.GetMonitorHeight());
-		}
-		else
-		{
-			width = static_cast<float>(engine.GetWindowWidth());
-			height = static_cast<float>(engine.GetWindowHeight());
-		}
+		int w, h;
+		engine.GetWindowSize(w, h);
+		width = static_cast<float>(w);
+		height = static_cast<float>(h);
 #endif // USING_IMGUI
 
 		// Get normalized device coordinates

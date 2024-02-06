@@ -87,7 +87,7 @@ namespace IS {
             return; 
         }
 
-        if (InsightEngine::Instance().GetSystem<WindowSystem>("Window")->GetFocus() == false) {
+        if (!InsightEngine::Instance().GetSystem<WindowSystem>("Window")->IsFocused()) {
 
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
             sys->ClearAllSounds();

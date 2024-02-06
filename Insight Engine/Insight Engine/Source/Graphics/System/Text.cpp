@@ -44,7 +44,8 @@ namespace IS {
             drawFirst = !drawFirst;
         }
 
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+        int width, height;
+        InsightEngine::Instance().GetWindowSize(width, height);
 
         // draw either text strings
         if (drawFirst) font1.renderText(str1, 0.39f, 0.89f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
@@ -54,7 +55,8 @@ namespace IS {
     void Text::initText(std::string const& filepath) {
 
         // compile and setup the shader
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+        int width, height;
+        InsightEngine::Instance().GetWindowSize(width, height);
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
         textShader.use();
         glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -220,7 +222,8 @@ namespace IS {
         textHeight += lineHeight; // Add the height of the last line
 
         auto& engine = InsightEngine::Instance();
-        auto [width, height] = engine.GetWindowSize();
+        int width, height;
+        engine.GetWindowSize(width, height);
 
         if (!engine.IsFullScreen())
         {

@@ -59,9 +59,11 @@ namespace IS {
 		mFar = distance * 2.f; // To cover zooming in and out
 	}
 
-	void Camera3D::Reset() {
+	void Camera3D::Reset()
+	{
 		auto& engine = InsightEngine::Instance();
-		auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+		int width, height;
+		engine.GetWindowSize(width, height);
 
 		mProjectionType = ProjectionType_Othographic;
 		mFront = glm::vec3(0.f, 0.f, -1.f);
@@ -82,7 +84,8 @@ namespace IS {
 		case ProjectionType_Othographic:
 		{
 			InsightEngine& engine = InsightEngine::Instance();
-			auto [width, height] = engine.GetWindowSize();
+			int width, height;
+			engine.GetWindowSize(width, height);
 			float fWidth = static_cast<float>(width) / GetZoomLevel() / 2.f;
 			float fHeight = fWidth / GetAspectRatio();
 			mProjection = glm::ortho(-fWidth, fWidth, -fHeight, fHeight, mNear, mFar);

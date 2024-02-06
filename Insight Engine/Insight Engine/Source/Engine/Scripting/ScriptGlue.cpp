@@ -904,11 +904,11 @@ namespace IS {
         return InsightEngine::Instance().IsFullScreen();
     }
 
-    static void ToggleFullscreen(bool toggle)
+    static void ToggleFullscreen()
     {
         auto& engine = InsightEngine::Instance();
         auto const window = engine.GetSystem<WindowSystem>("Window");
-        window->SetFullScreen(toggle);
+        window->ToggleFullScreen();
     }
 
     static bool IsWindowFocused()
@@ -1004,16 +1004,6 @@ namespace IS {
     static int GetWindowHeight()
     {
         return InsightEngine::Instance().GetWindowHeight();
-    }
-
-    static int GetMonitorWidth()
-    {
-        return InsightEngine::Instance().GetMonitorWidth();
-    }
-
-    static int GetMonitorHeight()
-    {
-        return InsightEngine::Instance().GetMonitorHeight();
     }
 
     static SimpleVector2D GetCameraPos() {
@@ -1428,8 +1418,6 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
-        IS_ADD_INTERNAL_CALL(GetMonitorWidth);
-        IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);

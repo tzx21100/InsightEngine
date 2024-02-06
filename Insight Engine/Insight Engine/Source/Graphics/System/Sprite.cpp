@@ -331,8 +331,10 @@ namespace IS {
 
         InsightEngine& engine = InsightEngine::Instance();
 
-        if (!engine.mRenderGUI) {
-            auto const& [width, height] = engine.GetWindowSize();
+        if (!engine.mRenderGUI)
+        {
+            int width, height;
+            engine.GetWindowSize(width, height);
             resolution.x = static_cast<float>(width);
             resolution.y = static_cast<float>(height);
         }

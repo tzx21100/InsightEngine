@@ -322,11 +322,14 @@ namespace IS {
 	}
 
 	// Creates a random entity for demo testing
-	Entity InsightEngine::GenerateRandomEntity(bool with_texture) {
+	Entity InsightEngine::GenerateRandomEntity(bool with_texture)
+	{
 		PRNG& prng = PRNG::Instance();
 		InsightEngine& engine = Instance();
 		Camera3D& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-		Vector2D window_size = { static_cast<float>(GetWindowWidth()), static_cast<float>(GetWindowHeight()) };
+		int width, height;
+		GetWindowSize(width, height);
+		Vector2D window_size = { static_cast<float>(width), static_cast<float>(height) };
 		window_size /= camera.GetZoomLevel();
 
 		Entity e = engine.CreateEntityWithComponents<Sprite, Transform>("Random Entity");
@@ -624,19 +627,16 @@ namespace IS {
 
 	// Abstracted functions for window getters/setters
 	// Getters
-	int InsightEngine::GetMonitorWidth() { return GetSystem<WindowSystem>("Window")->GetMonitorWidth(); }
-	int InsightEngine::GetMonitorHeight() { return GetSystem<WindowSystem>("Window")->GetMonitorHeight(); }
-	std::pair<int, int> InsightEngine::GetMonitorSize() { return GetSystem<WindowSystem>("Window")->GetMonitorSize(); }
-	int InsightEngine::GetWindowWidth() { return GetSystem<WindowSystem>("Window")->GetWidth(); }
-	int InsightEngine::GetWindowHeight() { return GetSystem<WindowSystem>("Window")->GetHeight(); }
-	std::pair<int, int> InsightEngine::GetWindowSize() { return GetSystem<WindowSystem>("Window")->GetWindowSize(); }
-	bool InsightEngine::IsVSync() { return GetSystem<WindowSystem>("Window")->IsVSync(); }
-	bool InsightEngine::IsFullScreen() { return GetSystem<WindowSystem>("Window")->IsFullScreen(); }
-	bool InsightEngine::IsWindowMinimized() { return GetSystem<WindowSystem>("Window")->IsMinimized(); }
-	bool InsightEngine::IsWindowFocused() { return GetSystem<WindowSystem>("Window")->IsFocused(); }
-	int InsightEngine::GetTitleBarHeight() { return GetSystem<WindowSystem>("Window")->GetTitleBarHeight(); }
+	void InsightEngine::GetWindowSize(int& width, int& height)	{ GetSystem<WindowSystem>("Window")->GetWindowSize(width, height); }
+	int InsightEngine::GetWindowWidth()							{ return GetSystem<WindowSystem>("Window")->GetWindowWidth(); }
+	int InsightEngine::GetWindowHeight()						{ return GetSystem<WindowSystem>("Window")->GetWindowHeight(); }
+	bool InsightEngine::IsVSync()								{ return GetSystem<WindowSystem>("Window")->IsVSync(); }
+	bool InsightEngine::IsFullScreen()							{ return GetSystem<WindowSystem>("Window")->IsFullScreen(); }
+	bool InsightEngine::IsWindowFocused()						{ return GetSystem<WindowSystem>("Window")->IsFocused(); }
+	bool InsightEngine::IsWindowMinimized()						{ return GetSystem<WindowSystem>("Window")->IsMinimized(); }
+	int InsightEngine::GetTitleBarHeight()						{ return GetSystem<WindowSystem>("Window")->GetTitleBarHeight(); }
 	// Setters
-	void InsightEngine::EnableVSync(bool enabled) { GetSystem<WindowSystem>("Window")->EnableVsync(enabled); }
+	void InsightEngine::EnableVSync(bool enabled)				{ GetSystem<WindowSystem>("Window")->EnableVsync(enabled); }
 
 	//abstracted function to make game script
 	void InsightEngine::CreateGameScript(const std::string& ScriptName) {

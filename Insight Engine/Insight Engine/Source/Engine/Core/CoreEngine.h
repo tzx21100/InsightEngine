@@ -163,40 +163,20 @@ namespace IS {
         // abstracted functions to get window properties
 
         /*!
-         * \brief Gets the width of the monitor.
-         * \return The width of the monitor.
+         * \brief Gets the title of the window.
+         * \return The title of the window.
          */
-        int GetMonitorWidth();
-
-        /*!
-         * \brief Gets the height of the monitor.
-         * \return The height of the monitor.
-         */
-        int GetMonitorHeight();
-
-        /*!
-         * \brief Gets the size of the monitor.
-         * \return A pair containing the width and height of the monitor.
-         */
-        std::pair<int, int> GetMonitorSize();
+        void GetWindowSize(int& width, int& height);
 
         /*!
          * \brief Gets the width of the window.
-         * \return The width of the window.
          */
         int GetWindowWidth();
 
         /*!
          * \brief Gets the height of the window.
-         * \return The height of the window.
          */
         int GetWindowHeight();
-
-        /*!
-         * \brief Gets the size of the window.
-         * \return A pair containing the width and height of the window.
-         */
-        std::pair<int, int> GetWindowSize();
 
         /*!
          * \brief Checks if vsync is enabled for the window.
@@ -217,16 +197,16 @@ namespace IS {
         void EnableVSync(bool enabled = true);
 
         /*!
-         * \brief Checks if window is minimized.
-         * \return Boolean flag indicating if window is minimized.
-         */
-        bool IsWindowMinimized();
-
-        /*!
          * \brief Checks if window is focused.
          * \return Boolean flag indicating if window is focused.
          */
         bool IsWindowFocused();
+
+        /*!
+         * \brief Checks if window is minimized.
+         * \return Boolean flag indicating if window is minimized.
+         */
+        bool IsWindowMinimized();
 
         /*!
          * \brief Get the height of the title bar of the window.
