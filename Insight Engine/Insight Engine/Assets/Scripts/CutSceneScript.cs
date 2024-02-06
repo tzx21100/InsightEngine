@@ -39,7 +39,7 @@ namespace IS
             {
                 image_swap_timer = image_swap_set;
                 current_image++;
-                if(current_image == 17) {
+                if(current_image == 16) {
                     InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
                 }
             }
