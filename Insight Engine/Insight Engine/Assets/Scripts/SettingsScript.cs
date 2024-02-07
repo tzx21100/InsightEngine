@@ -63,8 +63,6 @@ namespace IS
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
-        static public float upper_limit;
-        static public float lower_limit; 
 
         static public float master_multiplier;
         static public float bgm_multiplier;
@@ -72,6 +70,7 @@ namespace IS
 
         static public float bgm_vol;
         static public float vfx_vol;
+
         static public void Init()
         {
             show_settings = false;
@@ -80,8 +79,7 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-            upper_limit = origin.x + (0.558f * win_dimension.x);
-            lower_limit = origin.x + (0.442f * win_dimension.x);
+
             master_multiplier = MasterSliderKnobScript.normalised_adjustment;
             bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
             vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
@@ -134,6 +132,8 @@ namespace IS
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
+     
+
         }
 
         static public void Update()
@@ -154,8 +154,6 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-            upper_limit = origin.x + (0.558f * win_dimension.x);
-            lower_limit = origin.x + (0.442f * win_dimension.x);
 
 
             // Dimensions
@@ -181,7 +179,9 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(bgm_slider_bar.x, bgm_slider_bar.y, bgm_slider_bar_entity);
             InternalCalls.TransformSetScaleEntity(vfx_slider_bar.x, vfx_slider_bar.y, vfx_slider_bar_entity);
             InternalCalls.SetButtonSize(master_slider_knob_entity, new SimpleVector2D(master_slider_knob.x, master_slider_knob.y));
+
             InternalCalls.SetButtonSize(bgm_slider_knob_entity, new SimpleVector2D(bgm_slider_knob.x, bgm_slider_knob.y));
+
             InternalCalls.SetButtonSize(vfx_slider_knob_entity, new SimpleVector2D(vfx_slider_knob.x, vfx_slider_knob.y));
             InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
 
@@ -195,128 +195,19 @@ namespace IS
             bgm_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.43f * win_dimension.y));
             vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.32f * win_dimension.y));
             master_slider_knob_pos.Set(master_slider_knob_pos.x, origin.y + (0.543f * win_dimension.y));
-            //bgm_slider_knob_pos.Set(origin.x + (0.442f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
-            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y));
+
+            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y)); //Change 9999?
+
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
-          
-      
-
-            /*// Initial setting of images based on the toggled state of A (MasterCheckbox)
-            if (MasterCheckboxScript.toggled)
-            {
-                // When A is on, B & C turn on
-                master_checkbox_image = MasterCheckboxScript.toggled_image;
-                bgm_checkbox_image = BGMCheckboxScript.toggled_image; // Ensure B is turned on
-                vfx_checkbox_image = VFXCheckboxScript.toggled_image; // Ensure C is turned on
-
-             *//*   if (BGMCheckboxScript.clicked)
-                {
-                    BGMCheckboxScript.toggled = false;
-                    bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-                }
-                else
-                {
-                    BGMCheckboxScript.toggled=true;
-                    bgm_checkbox_image= BGMCheckboxScript.checkbox_image;
-                }*/
-            /*if (VFXCheckboxScript.clicked)
-            {
-                VFXCheckboxScript.toggled = false;
-                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-            }*//*
-        }
-        else
-        {
-            // When A is off, ensure images reflect the non-toggled state
-            master_checkbox_image = MasterCheckboxScript.checkbox_image;
-            bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-            vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-
-        }
-
-        // Adjust logic for when A is off but B or C are toggled
-        if (!MasterCheckboxScript.toggled)
-        {
-            if (BGMCheckboxScript.toggled)
-            {
-                // Only B is turned on/off based on its current state
-                bgm_checkbox_image = BGMCheckboxScript.toggled_image;
-            }
-            else
-            {
-                bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-            }
-
-            if (VFXCheckboxScript.toggled)
-            {
-                // Only C is turned on/off based on its current state
-                vfx_checkbox_image = VFXCheckboxScript.toggled_image;
-            }
-            else
-            {
-                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-            }
-        }   
-
-        // Ensure A is turned on if both B and C are toggled on separately
-        if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
-        {
-            MasterCheckboxScript.toggled = true;
-            master_checkbox_image = MasterCheckboxScript.toggled_image;
-        }
-
-        if (BGMCheckboxScript.toggled)
-        {
-            if (MasterCheckboxScript.clicked || VFXCheckboxScript.clicked)
-            {
-                MasterCheckboxScript.toggled = true;
-                VFXCheckboxScript.toggled = true;
-                master_checkbox_image = MasterCheckboxScript.toggled_image;
-                vfx_checkbox_image = VFXCheckboxScript.toggled_image;
-            }
-            else
-            {
-                MasterCheckboxScript.toggled = false;
-                VFXCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                vfx_checkbox_image = VFXCheckboxScript.checkbox_image;
-            }
-        }
-
-        if (VFXCheckboxScript.toggled)
-        {
-            if (MasterCheckboxScript.clicked || BGMCheckboxScript.clicked)
-            {
-                MasterCheckboxScript.toggled = true;
-                BGMCheckboxScript.toggled = true;
-                master_checkbox_image = MasterCheckboxScript.toggled_image;
-                bgm_checkbox_image = BGMCheckboxScript.toggled_image;
-            }
-            else
-            {
-                MasterCheckboxScript.toggled = false;
-                BGMCheckboxScript.toggled = false;
-                master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                bgm_checkbox_image = BGMCheckboxScript.checkbox_image;
-            }
-        }*/
-            /*            if (BGMCheckboxScript.toggled && !VFXCheckboxScript.toggled)
-                        {
-                            MasterCheckboxScript.toggled = false;
-                            master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                        }
-                        if (!BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
-                        {
-                            MasterCheckboxScript.toggled = false;
-                            master_checkbox_image = MasterCheckboxScript.checkbox_image;
-                        }*/
             bgm_vol = master_multiplier * bgm_multiplier;
             vfx_vol = master_multiplier * vfx_multiplier;
+
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(vfx_checkbox_image, vfx_checkbox_entity);
+
             bgm_vol = master_multiplier * bgm_multiplier;
             vfx_vol = master_multiplier * vfx_multiplier;
             //hovered
@@ -368,9 +259,11 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(master_slider_bar_pos.x, master_slider_bar_pos.y, master_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(bgm_slider_bar_pos.x, bgm_slider_bar_pos.y, bgm_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(vfx_slider_bar_pos.x, vfx_slider_bar_pos.y, vfx_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(master_slider_knob_pos.x, master_slider_knob_pos.y, master_slider_knob_entity);
-            InternalCalls.TransformSetPositionEntity(bgm_slider_knob_pos.x, bgm_slider_knob_pos.y, bgm_slider_knob_entity);
-            InternalCalls.TransformSetPositionEntity(vfx_slider_knob_pos.x, vfx_slider_knob_pos.y, vfx_slider_knob_entity);
+            //InternalCalls.TransformSetPositionEntity(master_slider_knob_pos.x, master_slider_knob_pos.y, master_slider_knob_entity);
+
+            //InternalCalls.TransformSetPositionEntity(bgm_slider_knob_pos.x, bgm_slider_knob_pos.y, bgm_slider_knob_entity);
+
+            //InternalCalls.TransformSetPositionEntity(vfx_slider_knob_pos.x, vfx_slider_knob_pos.y, vfx_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
             /*   InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
                InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
@@ -393,9 +286,11 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_slider_knob_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_knob_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_knob_entity);
+            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_slider_knob_entity);
+            
+            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_knob_entity);
+
+            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_knob_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 
         }
 
