@@ -121,8 +121,8 @@ namespace IS {
 
         // Set viewport to window size
         InsightEngine& engine = InsightEngine::Instance();
-        auto const& window = engine.GetSystem<WindowSystem>("Window");
-        auto [width, height] = window->GetWindowSize();
+        int width, height;
+        engine.GetWindowSize(width, height);
 
         glViewport(0, 0, width, height);
     }

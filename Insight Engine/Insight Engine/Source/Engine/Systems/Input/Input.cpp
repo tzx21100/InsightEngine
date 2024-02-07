@@ -44,29 +44,23 @@ namespace IS {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             
             // Store non-fullscreen window size (top-left of window)
-            if (!(input.mWindow->IsFullScreen() || width == 0 || height == 0))
-            {
-                input.mWindow->SetWindowSize(width, height);
-                // ISGraphics::InitFonts();
-                IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
-            }
-        });
+            if (input.mWindow->mProps.fullscreen || input.mWindow->mProps.maximized || !input.mWindow->mIsFocused)
+                return;
 
-        // Window position callback
-        glfwSetWindowPosCallback(native_window, [](GLFWwindow* window, int xpos, int ypos)
-        {
-            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-
-            // Store non-fullscreen window position (top-left of window)
-            if (!input.mWindow->IsFullScreen())
-                input.mWindow->SetWindowPos(xpos, ypos);
+            input.mWindow->SetWindowSize(width, height);
+            IS_CORE_DEBUG("Width : {}, Height : {}", width, height);
         });
 
         // Window maximize callback
         glfwSetWindowMaximizeCallback(native_window, [](GLFWwindow* window, int maximized)
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-            input.mWindow->SetMaximized(maximized ? true : false);
+            input.mWindow->mProps.maximized = maximized ? true : false;
+            input.mWindow->StorePreviousWindowData();
+            if (!maximized)
+            {
+                input.mWindow->SetWindowSize(input.mWindow->mProps.width, input.mWindow->mProps.height);
+            }
         });
 
         // Accept file payload
@@ -76,18 +70,36 @@ namespace IS {
         glfwSetWindowFocusCallback(native_window, [](GLFWwindow* window, int focused)
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-            input.mWindow->SetFocused(focused ? true : false);
+            input.mWindow->mIsFocused = focused ? true : false;
             if (!focused && InsightEngine::Instance().mRuntime)
             {
-                input.mWindow->SetMinimized();
+                glfwIconifyWindow(window);
             }
         });
 
-        // Minimize window callback
         glfwSetWindowIconifyCallback(native_window, [](GLFWwindow* window, int iconified)
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
-            input.mWindow->SetMinimized(iconified ? true : false);
+            input.mWindow->mIsMinimized = iconified ? true : false;
+            if (!iconified)
+            {
+                if (!input.mWindow->IsFullScreen())
+                {
+                    glfwSetWindowMonitor(window, nullptr, input.mWindow->mPreviousX, input.mWindow->mPreviousY,
+                                         input.mWindow->mPreviousWidth, input.mWindow->mPreviousHeight, 0);
+                }
+                else
+                {
+                    GLFWmonitor* monitor = input.mWindow->GetActiveMonitor();
+                    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+                    glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+                }
+                //glfwRestoreWindow(window);
+
+                int width, height;
+                input.mWindow->GetWindowSize(width, height);
+                IS_CORE_DEBUG("Window Width : {}, Window Height : {}", width, height);
+            }
         });
     }
 

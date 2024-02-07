@@ -72,7 +72,8 @@ namespace IS
 		auto& engine = InsightEngine::Instance();
 		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
-		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+		int x, y;
+		engine.GetWindowSize(x, y);
 		// set the grid's width and height as 2 times bigger than camera's width and height
 		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
 		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;
@@ -473,7 +474,8 @@ namespace IS
 		// getting the width and height of the camera
 		auto& engine = InsightEngine::Instance();
 		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
-		auto [x, y] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+		int x, y;
+		engine.GetWindowSize(x, y);
 		// set the grid's width and height as 2 times bigger than camera's width and height
 		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
 		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;

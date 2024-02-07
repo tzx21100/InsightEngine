@@ -195,7 +195,8 @@ namespace IS {
             //if (InsightEngine::Instance().mRuntime == false) { return; }
             // Disable mouse/key event when GUI is using them
             auto const& gui = engine.GetImGuiLayer();
-            auto [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+            int width, height;
+            engine.GetWindowSize(width, height);
 
             if (input->IsKeyPressed(GLFW_KEY_L)) {
                 ISGraphics::mLightsOn=!ISGraphics::mLightsOn;
@@ -263,7 +264,8 @@ namespace IS {
 
                 // Offset mouse position
                 if (!engine.mRenderGUI) {
-                    auto [width2, height2] = window_sys->GetWindowSize();
+                    int width2, height2;
+                    engine.GetWindowSize(width2, height2);
                     input->setCenterPos(width2 / 2.f, height2 / 2.f);
                     input->setRatio(static_cast<float>(width2), static_cast<float>(height2));
                     

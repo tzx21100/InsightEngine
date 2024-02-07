@@ -84,7 +84,8 @@ namespace IS {
 
         glClearColor(0.f, 0.f, 0.f, 0.f); // set background to black
 
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+        int width, height;
+        InsightEngine::Instance().GetWindowSize(width, height);
         glViewport(0, 0, width, height); // set viewport to window size
 
         // init graphics systems
@@ -282,8 +283,10 @@ namespace IS {
             glClear(GL_COLOR_BUFFER_BIT);
 
             /// get width and height, set viewport size
-            if (!engine.mRenderGUI) {
-                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+            if (!engine.mRenderGUI)
+            {
+                int width, height;
+                engine.GetWindowSize(width, height);
                 glViewport(0, 0, width, height);
             }
 
@@ -312,7 +315,8 @@ namespace IS {
 
             /// get width and height, set viewport size
             if (!engine.mRenderGUI) {
-                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                int width, height;
+                engine.GetWindowSize(width, height);
                 glViewport(0, 0, width, height);
             }
 
@@ -331,7 +335,8 @@ namespace IS {
             glClear(GL_COLOR_BUFFER_BIT);
             /// get width and height, set viewport size
             if (!engine.mRenderGUI) {
-                auto const& [width, height] = engine.IsFullScreen() ? engine.GetMonitorSize() : engine.GetWindowSize();
+                int width, height;
+                engine.GetWindowSize(width, height);
                 glViewport(0, 0, width, height);
             }
             // render lighting
@@ -362,7 +367,8 @@ namespace IS {
         // const float scale = 20.f;
         //const float x_padding = scale;
         //const float y_padding = (scale * 3.f);
-        auto [width, height] = InsightEngine::Instance().GetWindowSize();
+        int width, height;
+        engine.GetWindowSize(width, height);
         // const float pos_x = .5f;
         // const float pos_y = .5f;
         const glm::vec3 islamic_green = { 0.f, .56f, .066f };

@@ -607,7 +607,8 @@ namespace IS {
     void EditorLayer::RenderConfirmDelete(Entity entity)
     {
         InsightEngine& engine = InsightEngine::Instance();
-        auto [width, height] = engine.GetWindowSize();
+        int width, height;
+        engine.GetWindowSize(width, height);
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize;
 
         ImGui::OpenPopup("Confirm Delete?");
@@ -708,11 +709,9 @@ namespace IS {
     void EditorLayer::ToggleFullscreen()
     {
         InsightEngine& engine = InsightEngine::Instance();
+        if (engine.mRuntime) return;
         auto const& window = engine.GetSystem<WindowSystem>("Window");
-        static bool fullscreen = window->IsFullScreen();
-        fullscreen = !fullscreen;
-        window->SetFullScreen(fullscreen);
-        IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
+        window->ToggleFullScreen();
     }
 
     void EditorLayer::ExitProgram()

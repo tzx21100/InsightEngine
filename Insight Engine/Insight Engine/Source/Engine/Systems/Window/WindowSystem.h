@@ -31,31 +31,29 @@
 namespace IS {
 
     /*!
+     * \brief Structure encapsulating properties of a window.
+     */
+    struct WindowProperties
+    {
+        std::string title;
+        int width;
+        int height;
+        int fps;
+        bool vsync;
+        bool maximized;
+        bool fullscreen;
+    };
+
+    // In case "WindowProperties.json" is not found, window will use default properties
+    static const WindowProperties DEFAULT_PROPERTIES{ "Insight Engine", 1280, 720, 60, false, false, false };
+
+    /*!
      * \brief The WindowSystem class manages application windows.
      *
      * \brief WindowSystem is a subclass of ParentSystem and handles window-related functionality.
      */
     class WindowSystem : public ParentSystem {
     public:
-        /*!
-         * \brief Structure encapsulating properties of a window.
-         */
-        struct WindowProperties {
-            std::string mTitle; ///< The title of the window.
-            int mXpos{}; ///< The x-position of the window.
-            int mYpos{}; ///< The y-position of the window.
-            int mWidth{}; ///< The width of the window.
-            int mHeight{}; ///< The height of the window.
-            int mTargetFPS{}; ///< The target FPS of the window.
-            bool mVSync{}; ///< Flag indicating whether vsync is enabled.
-            bool mMaximized{}; ///< Flag indicating whether window is maximzed.
-            bool mFullscreen{}; ///< Flag indicating whether window is fullscreen.
-
-            WindowProperties() = default;
-            WindowProperties(std::string const& title, int width, int height, int fps, bool vsync = true, bool maximized = false, bool fullscreen = false)
-                : mTitle(title), mXpos(), mYpos(), mWidth(width), mHeight(height), mTargetFPS(fps), mVSync(vsync), mMaximized(maximized), mFullscreen(fullscreen) {}
-        };
-
         /*!
          * \brief Constructs a WindowSystem object.
          */
@@ -101,64 +99,27 @@ namespace IS {
         GLFWwindow* GetNativeWindow() const;
 
         /*!
-         * \brief Gets the width of the monitor.
-         * \return The width of the monitor.
-         */
-        int GetMonitorWidth() const;
-
-        /*!
-         * \brief Gets the height of the monitor.
-         * \return The height of the monitor.
-         */
-        int GetMonitorHeight() const;
-
-        /*!
-         * \brief Gets the size of the monitor.
-         * \return A pair containing the width and height of the monitor.
-         */
-        std::pair<int, int> GetMonitorSize() const;
-
-        /*!
          * \brief Gets the title of the window.
          * \return The title of the window.
          */
         std::string GetWindowTitle() const;
 
         /*!
-         * \brief Gets the xpos of the window.
-         * \return The xpos of the window.
+         * \brief Gets the size of the window.
+         * \param width The width of the window.
+         * \param height The height of the window.
          */
-        int GetWindowXpos() const;
-
-        /*!
-         * \brief Gets the ypos of the window.
-         * \return The ypos of the window.
-         */
-        int GetWindowYpos() const;
-
-        /*!
-         * \brief Gets the position of the window.
-         * \return The position of the window.
-         */
-        std::pair<int, int> GetWindowPos() const;
+        void GetWindowSize(int& width, int& height) const;
 
         /*!
          * \brief Gets the width of the window.
-         * \return The width of the window.
          */
-        int GetWidth() const;
+        int GetWindowWidth() const;
 
         /*!
          * \brief Gets the height of the window.
-         * \return The height of the window.
          */
-        int GetHeight() const;
-
-        /*!
-         * \brief Gets the size of the window.
-         * \return A pair containing the width and height of the window.
-         */
-        std::pair<int, int> GetWindowSize() const;
+        int GetWindowHeight() const;
 
         /*!
          * \brief Gets the target FPS of the window.
@@ -191,13 +152,6 @@ namespace IS {
         void SetWindowTitle(std::string const& title);
 
         /*!
-         * \brief Sets the position of the window.
-         * \param xpos The new xpos of the window.
-         * \param ypos The new ypos of the window.
-         */
-        void SetWindowPos(int xpos, int ypos);
-
-        /*!
          * \brief Sets the size of the window.
          * \param width The new width of the window.
          * \param height The new height of the window.
@@ -211,33 +165,9 @@ namespace IS {
         void EnableVsync(bool enabled = true);
 
         /*!
-         * \brief Set window to maximized.
-         * \param maximized if true, normal otherwise. (default true)
+         * \brief Toggles fullscreen mode for the window.
          */
-        void SetMaximized(bool maximized = true);
-
-        /*!
-         * \brief Set window to minimized.
-         */
-        void SetMinimized();
-
-        /*!
-         * \brief Set window to fullscreen/windowed
-         * \param fullscreen fullscreen if true, windowed otherwise. (default true)
-         */
-        void SetFullScreen(bool fullscreen = true);
-
-        /*!
-         * \brief Checks if window is minimized.
-         * \return Boolean flag indicating if window is minimized.
-         */
-        bool IsMinimized() const { return mIsMinimized; }
-
-        /*!
-         * \brief Save the window minimized state.
-         * \param focused Save the window minimized state.
-         */
-        void SetMinimized(bool minimized) { mIsMinimized = minimized; }
+        void ToggleFullScreen();
 
         /*!
          * \brief Checks if window is focused.
@@ -246,10 +176,10 @@ namespace IS {
         bool IsFocused() const { return mIsFocused; }
 
         /*!
-         * \brief Save the window focused state.
-         * \param focused Save the window focused state.
+         * \brief Checks if window is minimized.
+         * \return Boolean flag indicating if window is minimized.
          */
-        void SetFocused(bool focused) { mIsFocused = focused; }
+        bool IsMinimized() const { return mIsMinimized; }
 
         /*!
          * \brief Show a pop-up message box using Win32 API.
@@ -269,18 +199,16 @@ namespace IS {
          */
         void LoadCustomCursor();
 
-        bool GetFocus() { return mIsFocused; }
-
     private:
-        GLFWwindow* mWindow = nullptr; ///< Pointer to the GLFW window.
-        GLFWcursor* mCursor = nullptr; ///< Pointer to the GLFW cursor.
+        GLFWwindow* mWindow; ///< Pointer to the GLFW window.
+        GLFWcursor* mCursor; ///< Pointer to the GLFW cursor.
         WindowProperties mProps; ///< The properties of the window.
-        int mMonitorWidth; ///< The width of the monitor.
-        int mMonitorHeight; ///< The height of the monitor.
-        int mWidthBeforeFullscreen; ///< The width of the window before entering fullscreen mode.
-        int mHeightBeforeFullscreen; ///< The height of the window before entering fullscreen mode.
-        bool mIsMinimized = false; ///< Boolean flag indicating if window is minimized.
-        bool mIsFocused = true; ///<  Boolean flag indicating if window is focused.
+        bool mIsFocused; ///<  Boolean flag indicating if window is focused.
+        bool mIsMinimized; ///< Boolean flag indicating if window is minimized.
+        int mPreviousX{};
+        int mPreviousY{};
+        int mPreviousWidth{};
+        int mPreviousHeight{};
 
         /*!
          * \brief Loads window properties.
@@ -291,6 +219,15 @@ namespace IS {
          * \brief Saves window properties.
          */
         void SaveProperties();
+
+        void PrintProperties();
+
+        void SetWindowHints();
+        void CenterWindow();
+        void StorePreviousWindowData();
+        GLFWmonitor* GetActiveMonitor();
+
+        friend class InputManager;
     };
 
 } // end namespace IS
