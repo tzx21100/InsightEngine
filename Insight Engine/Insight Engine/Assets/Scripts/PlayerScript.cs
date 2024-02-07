@@ -124,7 +124,7 @@ namespace IS
         static private float jumpHeight = 1100f;
 
         //coyote time
-        static private float coyote_timer_duration = 0.2f;
+        static private float coyote_timer_duration = 0.15f;
         static private float coyote_timer;
 
         //dashing 
