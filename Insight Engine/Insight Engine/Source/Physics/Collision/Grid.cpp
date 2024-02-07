@@ -75,8 +75,8 @@ namespace IS
 		int x, y;
 		engine.GetWindowSize(x, y);
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
-		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.5f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.5f;
 		//IS_CORE_DEBUG("Width : {:.2f}", width);
 		//IS_CORE_DEBUG("Height : {:.2f}", height);
 		/*float width = 12000.f;
@@ -477,8 +477,8 @@ namespace IS
 		int x, y;
 		engine.GetWindowSize(x, y);
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
-		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.5f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.5f;
 
 		/*float width = 12000.f;
 		float height = 5000.f;*/

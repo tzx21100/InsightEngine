@@ -9,7 +9,7 @@ uniform vec4 uLightColors[128]; // light color + intensity (as alpha value)
 uniform float uLightRadius[128]; // light radiuses
 uniform vec2 uLightWorldPos[128]; // light world positions
 uniform int uNoOfWorldLights; // light count
-uniform vec4 uLineSegments[128]; // line segment world positions (x,y) to (z,w)
+uniform vec4 uLineSegments[256]; // line segment world positions (x,y) to (z,w)
 uniform int uNoOfLineSegments; // line segment count
 uniform vec2 uResolution; // resolution of game
 uniform mat4 uInverseVP; // Inverse of View-Projection Matrix
