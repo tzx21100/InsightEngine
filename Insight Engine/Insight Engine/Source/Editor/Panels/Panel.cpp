@@ -47,13 +47,6 @@ namespace IS {
 
         ImGuiWindowFlags window_flags = 0;
         ImGui::Begin((ICON_LC_GAMEPAD_2 "  " + mName).c_str(), nullptr, window_flags);
-
-        if (mHovered)
-        {
-            ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-            ImVec2 cusor_pos = ImGui::GetMousePos();
-            ImGui::GetForegroundDrawList()->AddImage(mEditorLayer.GetIcon("Cursor"), cusor_pos, ImVec2(cusor_pos.x + 32, cusor_pos.y + 32));
-        }
         
         // Window contents
         {
@@ -68,6 +61,13 @@ namespace IS {
 
             // Display Game scene
             ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
+        }
+
+        if (mHovered)
+        {
+            ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+            ImVec2 cusor_pos = ImGui::GetMousePos();
+            ImGui::GetWindowDrawList()->AddImage(mEditorLayer.GetIcon("Cursor"), cusor_pos, ImVec2(cusor_pos.x + 32, cusor_pos.y + 32));
         }
 
         // Save window states

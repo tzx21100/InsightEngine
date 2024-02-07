@@ -195,9 +195,19 @@ namespace IS {
         int GetTitleBarHeight();
 
         /*!
-         * \brief Loads a custom cursor for the window.
+         * \brief Use the custom cursor for the window.
          */
-        void LoadCustomCursor();
+        void UseCustomCursor();
+
+        /*!
+         * \brief Use default cursor for the window.
+         */
+        void UseDefaultCursor();
+
+        /*!
+         * \brief Hide the cursor for the window.
+         */
+        void HideCursor();
 
     private:
         GLFWwindow* mWindow; ///< Pointer to the GLFW window.
@@ -205,10 +215,10 @@ namespace IS {
         WindowProperties mProps; ///< The properties of the window.
         bool mIsFocused; ///<  Boolean flag indicating if window is focused.
         bool mIsMinimized; ///< Boolean flag indicating if window is minimized.
-        int mPreviousX{};
-        int mPreviousY{};
-        int mPreviousWidth{};
-        int mPreviousHeight{};
+        int mPreviousX{}; ///< Previous x-coordinate of the window.
+        int mPreviousY{}; ///< Previous y-coordinate of the window.
+        int mPreviousWidth{}; ///< Previous width of the window.
+        int mPreviousHeight{}; ///< Previous height of the window;
 
         /*!
          * \brief Loads window properties.
@@ -220,14 +230,32 @@ namespace IS {
          */
         void SaveProperties();
 
+        /*!
+         * \brief Prints window properties.
+         */
         void PrintProperties();
 
+        /*!
+         * \brief Set window hints for GLFW.
+         */
         void SetWindowHints();
+
+        /*!
+         * \brief Center the window on the screen.
+         */
         void CenterWindow();
+
+        /*!
+         * \brief Store previous window data before fullscreen and minimize.
+         */
         void StorePreviousWindowData();
+
+        /*!
+         * \brief Get the active monitor of the window.
+         */
         GLFWmonitor* GetActiveMonitor();
 
-        friend class InputManager;
+        friend class InputManager; // InputManager needs to access mWindow
     };
 
 } // end namespace IS
