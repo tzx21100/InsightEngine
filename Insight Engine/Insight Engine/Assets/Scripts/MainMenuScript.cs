@@ -21,6 +21,10 @@ namespace IS
         static Vector2D win_dimension = new Vector2D(0, 0);
         static Vector2D origin = new Vector2D(0, 0);
 
+        // Camera
+        static Vector2D camera_pos = new Vector2D(0, 0);
+        static float camera_zoom = 0f;
+
         static private int game_title_entity;
         static private int start_button_entity;
         static private int settings_button_entity;
@@ -56,14 +60,19 @@ namespace IS
 
         static public void Update()
         {
-            // get window size
-            win_dimension.x = (float)InternalCalls.GetWindowWidth();
-            win_dimension.y = (float)InternalCalls.GetWindowHeight();
-            InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
+            // Camera
+            camera_zoom = InternalCalls.CameraGetZoom();
 
-            // set origin
-            origin.x = -(win_dimension.x / 2f);
-            origin.y = -(win_dimension.y / 2f);
+            //set camera pos
+            camera_pos.x = InternalCalls.GetCameraPos().x;
+            camera_pos.y = InternalCalls.GetCameraPos().y;
+
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+            origin.x = camera_pos.x - (win_dimension.x / 2f);
+            origin.y = camera_pos.y - (win_dimension.y / 2f);
+            InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
 
             // set sizes
             InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
