@@ -154,6 +154,7 @@ namespace IS {
                 i->setVolume(mCurrentVolume);
             }
             if (mCurrentVolume <= 0) {
+                StopAllAudio();
                 mFadeOutAudio = false;
                 mCurrentVolume = MasterAudioLevel;
            }
