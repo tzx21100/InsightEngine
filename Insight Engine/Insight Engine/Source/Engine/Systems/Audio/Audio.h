@@ -207,7 +207,7 @@ namespace IS {
         FMOD::Channel* PlaySound(FMOD::Sound* sound, bool loop, float volume, float pitch);
         FMOD::Channel* PlaySoundCheck(FMOD::Sound* Ssound, FMOD::Channel* channel, bool loop, float volume, float pitch);
 
-        void FadeOutAudio();
+        void FadeOutAudio( float time_to_fade );
 
         void StopAllAudio();
 

@@ -26,6 +26,7 @@ namespace IS
         static private int current_image = 1;
 
         static public void Init(){
+            InternalCalls.FadeOutAudio(3f);
             InternalCalls.CameraSetZoom(0.6f);
             current_image = 1;
             image_swap_timer = 2.6f;
@@ -111,6 +112,7 @@ namespace IS
                     break;
                 case 15:
                     InternalCalls.SetSpriteImage(image15);
+
                     break;
             }
 

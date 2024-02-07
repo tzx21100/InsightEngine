@@ -1256,6 +1256,11 @@ namespace IS {
         ISGraphics::mLayers[layer].mLayerActive=boolean;
     }
 
+    static void FadeOutAudio(float fade_time) {
+        auto sys = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        sys->FadeOutAudio( fade_time);
+    }
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -1334,6 +1339,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioEmitterEnableEntity);
         IS_ADD_INTERNAL_CALL(AudioStopAllSounds);
         IS_ADD_INTERNAL_CALL(AudioSetMaster);
+        IS_ADD_INTERNAL_CALL(FadeOutAudio);
 
         // Button
         IS_ADD_INTERNAL_CALL(GetButtonState);
