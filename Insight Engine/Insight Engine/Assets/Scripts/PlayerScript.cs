@@ -687,7 +687,7 @@ namespace IS
                 isFirstGrounded = false;
             }
 
-            if (isGrounded) // check and update for coyote time
+            if (isGrounded && !isJumping) // check and update for coyote time
             {
                 coyote_timer = coyote_timer_duration;
             }
@@ -695,7 +695,7 @@ namespace IS
             {
                 coyote_timer -= InternalCalls.GetDeltaTime();
             }
-
+            
             if (isGrounded)
             {
                 if (!isJumping)
@@ -844,7 +844,6 @@ namespace IS
                 }*/
                 initial_land = false;
             }
-
             // limit the vel
             player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
             if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
