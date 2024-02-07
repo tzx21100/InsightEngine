@@ -209,6 +209,11 @@ namespace IS {
          */
         void HideCursor();
 
+        /*!
+         * \brief Show the cursor for the window.
+         */
+        void ShowCursor();
+
     private:
         GLFWwindow* mWindow; ///< Pointer to the GLFW window.
         GLFWcursor* mCursor; ///< Pointer to the GLFW cursor.

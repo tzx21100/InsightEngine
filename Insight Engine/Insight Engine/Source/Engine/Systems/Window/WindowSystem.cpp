@@ -232,6 +232,11 @@ namespace IS {
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     }
 
+    void WindowSystem::ShowCursor()
+    {
+        glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
     /*                                                                 Properties
     ----------------------------------------------------------------------------- */
     void WindowSystem::LoadProperties()

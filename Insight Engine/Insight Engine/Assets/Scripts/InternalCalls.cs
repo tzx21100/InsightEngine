@@ -321,7 +321,7 @@ namespace IS
         internal extern static void ToggleFullscreen();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void UseCustomCursor();
+        internal extern static void ShowCursor();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void HideCursor();

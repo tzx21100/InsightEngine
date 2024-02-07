@@ -17,7 +17,9 @@ namespace IS
         static private float fragment_logo_timer = 3.12f;
         static private float fragment_fade_in = 1.2f;
 
-        static public void Init(){
+        static public void Init()
+        {
+            InternalCalls.ShowCursor();
             tutorial_state = 0;
             fragment_logo_timer = 3.12f;
             fragment_fade_in = 1.2f;

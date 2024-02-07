@@ -128,7 +128,7 @@ namespace IS
         
         static public void CleanUp()
         {
-            InternalCalls.UseCustomCursor();
+            InternalCalls.ShowCursor();
         }
 
     }

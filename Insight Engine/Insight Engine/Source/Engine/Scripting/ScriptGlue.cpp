@@ -917,11 +917,11 @@ namespace IS {
         return InsightEngine::Instance().IsWindowFocused();
     }
 
-    static void UseCustomCursor()
+    static void ShowCursor()
     {
         auto& engine = InsightEngine::Instance();
         auto const& window = engine.GetSystem<WindowSystem>("Window");
-        window->UseCustomCursor();
+        window->ShowCursor();
     }
 
     static void HideCursor()
@@ -1460,7 +1460,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CreateEntityPrefab);
         IS_ADD_INTERNAL_CALL(IsFullscreen);
         IS_ADD_INTERNAL_CALL(ToggleFullscreen);
-        IS_ADD_INTERNAL_CALL(UseCustomCursor);
+        IS_ADD_INTERNAL_CALL(ShowCursor);
         IS_ADD_INTERNAL_CALL(HideCursor);
 
 
