@@ -259,6 +259,19 @@ namespace IS {
     
     }
 
+    void ISAudio::FadeOutAudio() {
+        auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        sys->ClearAllSounds();
+        mChannel->stop();
+
+        for (auto& i : mChannelList) {
+            i->stop();
+        }
+
+    }
+
+    
+
 #pragma warning(push)
 #pragma warning(disable: 4458)
     FMOD::Channel* ISAudio::ISAudioLoadSound(const char* file_path) {
@@ -470,6 +483,12 @@ namespace IS {
         bool is_playing = false;
         Cchannel->isPlaying(&is_playing);
         return is_playing;
+    }
+
+    void ISAudio::SetMasterVolume(float volume) {
+        for (auto& i : mChannelList) {
+            i->setVolume(volume);
+        }
     }
 
     Json::Value AudioListener::Serialize()

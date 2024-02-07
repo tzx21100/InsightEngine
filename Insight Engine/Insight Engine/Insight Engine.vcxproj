@@ -285,11 +285,9 @@
 copy "$(ProjectDir)libraries\fmod\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)libraries\jsoncpp\lib\jsoncppD.dll" "$(TargetDir)jsoncpp.dll" /Y
 copy "$(ProjectDir)libraries\freetype\lib\freetype.dll" "$(TargetDir)freetype.dll" /Y
-copy "$(ProjectDir)libraries\mono\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y
-copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
-xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
+xcopy "$(ProjectDir)libraries\mono\*" "$(TargetDir)libraries\mono\" /E /Y
 xcopy "$(ProjectDir)Resources\*" "$(TargetDir)Resources\" /E /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y</Command>
     </PostBuildEvent>

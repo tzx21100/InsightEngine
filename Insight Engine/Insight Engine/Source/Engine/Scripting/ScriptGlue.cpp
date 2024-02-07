@@ -398,7 +398,8 @@ namespace IS {
     }
 
     static void AudioSetMaster(float volume) {
-        MasterAudioLevel = volume;
+        auto sys = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
+        sys->SetMasterVolume(volume);
     }
 
     static int GetButtonState() {
