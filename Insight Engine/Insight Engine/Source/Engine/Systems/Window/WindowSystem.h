@@ -220,6 +220,8 @@ namespace IS {
          */
         void SaveProperties();
 
+        void PrintProperties();
+
         void SetWindowHints();
         void CenterWindow();
         void StorePreviousWindowData();

@@ -22,6 +22,8 @@
 #include "Engine/JSON/JsonSaveLoad.h"
 #include "Engine/Systems/Asset/Asset.h"
 
+#include <sstream>
+#include <iomanip>
 #pragma warning(push)
 #pragma warning(disable: 4005) // redefine APIENTRY and IS_ERROR macros
 #include <Windows.h>
@@ -43,25 +45,24 @@ namespace IS {
         }
 
         LoadProperties();
+        PrintProperties();
         SetWindowHints();
 
         // Create a window and its OpenGL context
-        mWindow = glfwCreateWindow(mProps.width, mProps.height, mProps.title.c_str(), nullptr, nullptr);
+        {
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+            mWindow = mProps.fullscreen
+                ? glfwCreateWindow(mode->width, mode->height, mProps.title.c_str(), monitor, nullptr)
+                : glfwCreateWindow(mProps.width, mProps.height, mProps.title.c_str(), nullptr, nullptr);
+        }
 
         // Validate window
         if (!mWindow)
         {
             IS_CORE_CRITICAL("Failed to create OpenGL context!");
             glfwTerminate();
-        }
-
-        GLFWmonitor* monitor = GetActiveMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-        if (mProps.fullscreen)
-        {
-            // Store the window size and position before going fullscreen
-            StorePreviousWindowData();
-            glfwSetWindowMonitor(mWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
 
         // Set icon
@@ -75,6 +76,8 @@ namespace IS {
         EnableVsync(mProps.vsync);
 
         // Set window size limites and aspect ratio
+        GLFWmonitor* monitor = GetActiveMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         glfwSetWindowSizeLimits(mWindow, DEFAULT_PROPERTIES.width, DEFAULT_PROPERTIES.height, mode->width, mode->height);
 
         // Load OpenGL function pointers using GLAD
@@ -101,6 +104,7 @@ namespace IS {
         glfwDestroyWindow(mWindow);
         glfwTerminate();
         SaveProperties();
+        PrintProperties();
     }
 
     void WindowSystem::Initialize()
@@ -189,12 +193,10 @@ namespace IS {
             int monitorX, monitorY, monitorWidth, monitorHeight;
             glfwGetMonitorWorkarea(monitor, &monitorX, &monitorY, &monitorWidth, &monitorHeight);
 
-            int windowWidth = static_cast<int>(monitorWidth * 0.75);
-            int windowHeight = static_cast<int>(monitorHeight * 0.75);
-            int xpos = monitorX + (monitorWidth - windowWidth) / 2;
-            int ypos = monitorY + (monitorHeight - windowHeight) / 2;
+            int xpos = monitorX + (monitorWidth - mProps.width) / 2;
+            int ypos = monitorY + (monitorHeight - mProps.height) / 2;
 
-            glfwSetWindowMonitor(mWindow, nullptr, xpos, ypos, windowWidth, windowHeight, 0);
+            glfwSetWindowMonitor(mWindow, nullptr, xpos, ypos, mProps.width, mProps.height, 0);
             return;
         }
 
@@ -252,10 +254,11 @@ namespace IS {
             }
 
             mProps.title      = win_props["Title"].asString();
-            mProps.fps  = win_props["TargetFPS"].asInt();
+            mProps.fps        = win_props["TargetFPS"].asInt();
             mProps.vsync      = win_props["Vsync"].asBool();
             mProps.maximized  = win_props["Maximized"].asBool();
             mProps.fullscreen = win_props["Fullscreen"].asBool();
+            if (mProps.fullscreen) mProps.maximized = false;
 
             IS_CORE_INFO("Loaded window properties from \"{}\"", filename);
         }
@@ -279,13 +282,33 @@ namespace IS {
         win_props["Height"]     = mProps.height;
         win_props["TargetFPS"]  = mProps.fps;
         win_props["Vsync"]      = mProps.vsync;
-        win_props["Maximized"]  = mProps.maximized;
         win_props["Fullscreen"] = mProps.fullscreen;
+        win_props["Maximized"]  = mProps.fullscreen ? false : mProps.maximized;
 
         // Save window propeties to JSON file
         bool success = SaveJsonToFile(properties, filepath);
         success ? IS_CORE_INFO("Successfully saved window properties to \"{}\"!", filepath) :
                   IS_CORE_ERROR("Failed to save window propeties to \"{}\"!", filepath);
+    }
+
+    void WindowSystem::PrintProperties()
+    {
+        std::ostringstream oss;
+        oss << "Window Properties:\n"
+            << "------------------------------\n"
+            << std::left 
+            << std::setw(12) << "Property" << "| Value\n"
+            << "------------------------------\n"
+            << std::setw(12) << "Title:"      << "| " << mProps.title << "\n"
+            << std::setw(12) << "Width:"      << "| " << mProps.width << "\n"
+            << std::setw(12) << "Height:"     << "| " << mProps.height << "\n"
+            << std::setw(12) << "Target FPS:" << "| " << mProps.fps << "\n"
+            << std::setw(12) << "Vsync:"      << "| " << (mProps.vsync ? "On" : "Off") << "\n"
+            << std::setw(12) << "Maximized:"  << "| " << (mProps.maximized ? "Yes" : "No") << "\n"
+            << std::setw(12) << "Fullscreen:" << "| " << (mProps.fullscreen ? "Yes" : "No") << "\n"
+            << "------------------------------";
+
+        IS_CORE_INFO(oss.str().c_str());
     }
 
     void WindowSystem::SetWindowHints()
@@ -304,7 +327,7 @@ namespace IS {
 
     void WindowSystem::CenterWindow()
     {
-        if (mProps.fullscreen) return;
+        if (mProps.fullscreen || mProps.maximized) return;
 
         GLFWmonitor* monitor = GetActiveMonitor();
 
@@ -314,17 +337,7 @@ namespace IS {
         int xpos = monitor_x = (monitor_width - mProps.width) / 2;
         int ypos = monitor_y = (monitor_height - mProps.height) / 2;
 
-        if (mProps.maximized)
-        {
-            glfwRestoreWindow(mWindow);
-        }
-
         glfwSetWindowPos(mWindow, xpos, ypos);
-
-        if (mProps.maximized)
-        {
-            glfwMaximizeWindow(mWindow);
-        }
     }
 
     void WindowSystem::StorePreviousWindowData()

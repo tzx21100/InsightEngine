@@ -44,7 +44,7 @@ namespace IS {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             
             // Store non-fullscreen window size (top-left of window)
-            if (input.mWindow->mProps.fullscreen || input.mWindow->mProps.maximized || input.mWindow->mIsFocused)
+            if (input.mWindow->mProps.fullscreen || input.mWindow->mProps.maximized || !input.mWindow->mIsFocused)
                 return;
 
             input.mWindow->SetWindowSize(width, height);
@@ -56,6 +56,11 @@ namespace IS {
         {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             input.mWindow->mProps.maximized = maximized ? true : false;
+            input.mWindow->StorePreviousWindowData();
+            if (!maximized)
+            {
+                input.mWindow->SetWindowSize(input.mWindow->mProps.width, input.mWindow->mProps.height);
+            }
         });
 
         // Accept file payload
@@ -78,18 +83,18 @@ namespace IS {
             input.mWindow->mIsMinimized = iconified ? true : false;
             if (!iconified)
             {
-                //if (input.mWindow->IsFullScreen())
-                //{
-                //    glfwSetWindowMonitor(window, nullptr, input.mWindow->mPreviousX, input.mWindow->mPreviousY,
-                //                         input.mWindow->mPreviousWidth, input.mWindow->mPreviousHeight, 0);
-                //}
-                //else
-                //{
-                //    GLFWmonitor* monitor = input.mWindow->GetActiveMonitor();
-                //    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-                //    glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-                //}
-                glfwRestoreWindow(window);
+                if (!input.mWindow->IsFullScreen())
+                {
+                    glfwSetWindowMonitor(window, nullptr, input.mWindow->mPreviousX, input.mWindow->mPreviousY,
+                                         input.mWindow->mPreviousWidth, input.mWindow->mPreviousHeight, 0);
+                }
+                else
+                {
+                    GLFWmonitor* monitor = input.mWindow->GetActiveMonitor();
+                    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+                    glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+                }
+                //glfwRestoreWindow(window);
 
                 int width, height;
                 input.mWindow->GetWindowSize(width, height);

@@ -712,8 +712,6 @@ namespace IS {
         if (engine.mRuntime) return;
         auto const& window = engine.GetSystem<WindowSystem>("Window");
         window->ToggleFullScreen();
-        static bool fullscreen = window->IsFullScreen();
-        IS_CORE_DEBUG("{} mode", fullscreen ? "Fullscreen" : "Windowed");
     }
 
     void EditorLayer::ExitProgram()
