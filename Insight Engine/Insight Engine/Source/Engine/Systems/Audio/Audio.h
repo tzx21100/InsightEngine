@@ -222,6 +222,8 @@ namespace IS {
 
         //for fade
         bool mFadeOutAudio = false;
+        float mCurrentVolume = 0.f;
+
 
     };
 

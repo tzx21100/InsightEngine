@@ -147,6 +147,20 @@ namespace IS {
             
         
         }
+
+        if (mFadeOutAudio) {
+            mCurrentVolume -= deltaTime * 1.4f;
+            for (auto& i : mChannelList) {
+                i->setVolume(mCurrentVolume);
+            }
+            if (mCurrentVolume <= 0) {
+                mFadeOutAudio = false;
+                mCurrentVolume = MasterAudioLevel;
+           }
+        }
+
+        
+
        
     }
 
@@ -260,13 +274,8 @@ namespace IS {
     }
 
     void ISAudio::FadeOutAudio() {
-        auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        sys->ClearAllSounds();
-        mChannel->stop();
-
-        for (auto& i : mChannelList) {
-            i->stop();
-        }
+        mFadeOutAudio = true;
+        mCurrentVolume = MasterAudioLevel;
 
     }
 
@@ -489,6 +498,7 @@ namespace IS {
         for (auto& i : mChannelList) {
             i->setVolume(volume);
         }
+        MasterAudioLevel = volume;
     }
 
     Json::Value AudioListener::Serialize()
