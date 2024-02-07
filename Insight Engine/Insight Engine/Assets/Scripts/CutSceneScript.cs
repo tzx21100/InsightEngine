@@ -25,7 +25,9 @@ namespace IS
         static private float image_swap_set = 2.6f;
         static private int current_image = 1;
 
-        static public void Init(){
+        static public void Init()
+        {
+            InternalCalls.HideCursor();
             InternalCalls.CameraSetZoom(0.6f);
             current_image = 1;
             image_swap_timer = 2.6f;
@@ -124,8 +126,9 @@ namespace IS
 
         }
         
-        static public void CleanUp(){
-
+        static public void CleanUp()
+        {
+            InternalCalls.UseCustomCursor();
         }
 
     }

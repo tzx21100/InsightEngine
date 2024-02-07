@@ -321,6 +321,12 @@ namespace IS
         internal extern static void ToggleFullscreen();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void UseCustomCursor();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void HideCursor();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int ButtonRenderText(int entity, float x, float y, float size, (float, float, float) color);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

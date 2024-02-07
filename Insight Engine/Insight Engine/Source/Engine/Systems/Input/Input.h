@@ -104,6 +104,11 @@ namespace IS {
         InputManager(std::shared_ptr<WindowSystem> window);
 
         /**
+         * \brief Polls for events from GLFW.
+         */
+        void PollEvents();
+
+        /**
          * \brief Checks if a key is currently triggered.
          */
         bool IsKeyPressed(int glfwKeyCode) const;

@@ -748,7 +748,15 @@ namespace IS {
          */
         void PushImGuiLayers();
 
+        /**
+         * \brief Swap the front and back buffers.
+         */
+        void SwapBuffers();
 
+        /**
+         * \brief Poll for GLFW events. (should always run right after swapping buffers)
+         */
+        void PollEvents();
 
     };
 

@@ -908,13 +908,27 @@ namespace IS {
     static void ToggleFullscreen()
     {
         auto& engine = InsightEngine::Instance();
-        auto const window = engine.GetSystem<WindowSystem>("Window");
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
         window->ToggleFullScreen();
     }
 
     static bool IsWindowFocused()
     {
         return InsightEngine::Instance().IsWindowFocused();
+    }
+
+    static void UseCustomCursor()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
+        window->UseCustomCursor();
+    }
+
+    static void HideCursor()
+    {
+        auto& engine = InsightEngine::Instance();
+        auto const& window = engine.GetSystem<WindowSystem>("Window");
+        window->HideCursor();
     }
 
     static void ButtonRenderText(int entity, float x, float y, float size, Vector3D color, MonoString* font)
@@ -1446,6 +1460,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CreateEntityPrefab);
         IS_ADD_INTERNAL_CALL(IsFullscreen);
         IS_ADD_INTERNAL_CALL(ToggleFullscreen);
+        IS_ADD_INTERNAL_CALL(UseCustomCursor);
+        IS_ADD_INTERNAL_CALL(HideCursor);
 
 
         // Layers

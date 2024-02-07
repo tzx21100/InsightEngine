@@ -103,10 +103,8 @@ namespace IS {
         });
     }
 
-    void InputManager::Update([[maybe_unused]] float deltaTime) {
-        // poll for mouse/keyboard events before any update
-        glfwPollEvents();
-
+    void InputManager::Update([[maybe_unused]] float deltaTime)
+    {
         //keyboard
         for (auto const& key : held_keys) {
             pressed_keys.erase(key);
@@ -140,6 +138,11 @@ namespace IS {
 
     InputManager::InputManager(std::shared_ptr<WindowSystem> window) {
         mWindow = window;
+    }
+
+    void InputManager::PollEvents()
+    {
+        glfwPollEvents();
     }
 
     bool InputManager::IsKeyPressed(int glfwKeyCode) const {

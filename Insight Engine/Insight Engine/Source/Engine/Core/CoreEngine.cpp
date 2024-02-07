@@ -168,21 +168,26 @@ namespace IS {
 	}
 
 	// Moved all the engine stuff under this run function so we can have draw() load() etc. next time with a GSM
-	void InsightEngine::Run() {
-		FileWatcher fw;
+	void InsightEngine::Run()
+	{
 		IS_PROFILE_FUNCTION();
+		FileWatcher fw;
 		Initialize();
 		//this is the game loop
-		while (mIsRunning) {
+		while (mIsRunning)
+		{
+			PollEvents(); // Always run at the start of the loop
+
+
 			Update();
 			std::string directory_to_watch = "Assets/Scripts";
 			std::string shader_to_watch = "Assets/Shaders";
 			fw.Start(directory_to_watch,shader_to_watch); //we watch for changes
-			auto const& window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
-			window->SwapBuffers(); // swap buffers after all the rendering
 			ProcessEntityDeletion(); // destroy deleted entities
 			SceneManager::Instance().UpdateActiveScene(); // update active scene
-			
+
+
+			SwapBuffers(); // Always run at the end of the loop
 		}
 		ISGraphics::Shutdown();
 		DestroyAllSystems();
@@ -686,6 +691,9 @@ namespace IS {
 #endif // USING_IMGUI
 
 	}
+
+	void InsightEngine::SwapBuffers() { GetSystem<WindowSystem>("Window")->SwapBuffers(); }
+	void InsightEngine::PollEvents()  { GetSystem<InputManager>("Input")->PollEvents(); }
 
 
 }
