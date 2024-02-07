@@ -811,6 +811,7 @@ namespace IS
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
                         jump_amount--;
+                        isJumping = true;
                     }
                 }
                 ApplyGravityChange();

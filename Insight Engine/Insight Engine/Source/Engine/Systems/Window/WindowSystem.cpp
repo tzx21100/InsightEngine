@@ -71,7 +71,7 @@ namespace IS {
 
         // Default setting
         glfwMakeContextCurrent(mWindow);
-        LoadCustomCursor();
+        UseCustomCursor();
         CenterWindow();
         EnableVsync(mProps.vsync);
 
@@ -216,10 +216,20 @@ namespace IS {
         return GetSystemMetrics(SM_CYCAPTION);
     }
 
-    void WindowSystem::LoadCustomCursor()
+    void WindowSystem::UseCustomCursor()
     {
         glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         glfwSetCursor(mWindow, mCursor);
+    }
+
+    void WindowSystem::UseDefaultCursor()
+    {
+        glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
+    void WindowSystem::HideCursor()
+    {
+        glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     }
 
     /*                                                                 Properties

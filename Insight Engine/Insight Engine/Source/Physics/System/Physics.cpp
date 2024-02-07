@@ -367,10 +367,10 @@ namespace IS {
 
 		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
-		auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
+		//auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
 		if (collider.IsBoxColliderEnable()
 			//&& collider.mResponseEnable
-			&& (cate.mCategory == "Ground")
+			//&& (cate.mCategory == "Ground")
 			&& body.mBodyType == BodyType::Static) { // if check
 
 			std::vector<Vector2D> vertices = collider.mBoxCollider.transformedVertices;
