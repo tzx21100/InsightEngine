@@ -271,7 +271,7 @@ namespace IS {
         // loading fb texture onto quad
         //mFramebuffer->Bind();
 
-        //mLightsOn = false; //// TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+        // mLightsOn = false; //// TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 
         if (mLightsOn)
         {
@@ -282,13 +282,13 @@ namespace IS {
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
 
-            /// get width and height, set viewport size
-            if (!engine.mRenderGUI)
-            {
-                int width, height;
-                engine.GetWindowSize(width, height);
-                glViewport(0, 0, width, height);
-            }
+            // get width and height, set viewport size
+            // if (!engine.mRenderGUI)
+            // {
+            //     int width, height;
+            //     engine.GetWindowSize(width, height);
+            //     glViewport(0, 0, width, height);
+            // }
 
             // quads will be drawn first
             if (mGlitched) // glitch effect
