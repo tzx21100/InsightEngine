@@ -258,7 +258,7 @@ namespace IS {
 
                     if (!engine.mRenderGUI)
                     {
-                        window_sys->LoadCustomCursor();
+                        window_sys->UseCustomCursor();
                     }
                 }
 
