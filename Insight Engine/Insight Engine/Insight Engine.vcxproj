@@ -16,10 +16,10 @@
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64' Or '$(Configuration)|$(Platform)'=='Release|x64'">
     <ProjectReference Include="..\ImGui\ImGui.vcxproj">
-        <Project>{cf9cf7cc-7dfc-4a32-9872-b7689f65a852}</Project>
+      <Project>{cf9cf7cc-7dfc-4a32-9872-b7689f65a852}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ImGuizmo\ImGuizmo.vcxproj">
-        <Project>{d1b82ce9-bde1-4f51-9a78-1849676c2516}</Project>
+      <Project>{d1b82ce9-bde1-4f51-9a78-1849676c2516}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -336,8 +336,7 @@ copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelpe
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
-xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
-</Command>
+xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='GameRelease|x64'">
