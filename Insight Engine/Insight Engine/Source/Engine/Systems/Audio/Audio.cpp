@@ -23,6 +23,7 @@
 #include "Engine/Systems/Asset/Asset.h"
 #include "Graphics/Core/Graphics.h"
 #include "Math/ISMath.h"
+#include <iostream>
 
 namespace IS {
     
@@ -149,9 +150,12 @@ namespace IS {
         }
 
         if (mFadeOutAudio) {
-            mCurrentVolume -= deltaTime * 1.4f;
-            for (auto& i : mChannelList) {
-                i->setVolume(mCurrentVolume);
+            mCurrentVolume -= deltaTime;
+            for (auto i : mChannelList) {
+                float vol;
+                i->getVolume(&vol);
+                i->setVolume(0);
+                //std::cout<< mCurrentVolume * vol << std::endl;
             }
             if (mCurrentVolume <= 0) {
                 StopAllAudio();
@@ -274,9 +278,9 @@ namespace IS {
     
     }
 
-    void ISAudio::FadeOutAudio() {
+    void ISAudio::FadeOutAudio(float time_to_fade) {
         mFadeOutAudio = true;
-        mCurrentVolume = MasterAudioLevel;
+        mCurrentVolume = time_to_fade;
 
     }
 

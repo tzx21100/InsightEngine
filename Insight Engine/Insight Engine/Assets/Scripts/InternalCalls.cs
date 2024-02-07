@@ -470,6 +470,9 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage texture, float alpha, int layer );
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void FadeOutAudio(float fade_time);
+
 
     }
 }
