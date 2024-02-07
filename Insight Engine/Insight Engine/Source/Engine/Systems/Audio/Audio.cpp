@@ -150,17 +150,33 @@ namespace IS {
         }
 
         if (mFadeOutAudio) {
-            mCurrentVolume -= deltaTime;
-            for (auto i : mChannelList) {
+            mCurrentVolume -= deltaTime/mFadeTime;
+            auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+            auto& channels = sys->mChannelList;
+            for (auto& i : mChannelList) {
                 float vol;
                 i->getVolume(&vol);
-                i->setVolume(0);
+                i->setVolume(vol*mCurrentVolume *100);
                 //std::cout<< mCurrentVolume * vol << std::endl;
+            }
+            //asset channel list
+            for (auto& i : channels) {
+                float vol=0.2f;
+                FMOD_RESULT result;
+                result=i.second->getVolume(&vol);
+                if (result != FMOD_OK) {
+                    // Handle error appropriately
+                    vol = 0.02f;
+                }
+                else {
+                    i.second->setVolume(vol * mCurrentVolume);
+                }
+
             }
             if (mCurrentVolume <= 0) {
                 StopAllAudio();
                 mFadeOutAudio = false;
-                mCurrentVolume = MasterAudioLevel;
+                mCurrentVolume = 1.f;
            }
         }
 
@@ -279,8 +295,10 @@ namespace IS {
     }
 
     void ISAudio::FadeOutAudio(float time_to_fade) {
+
         mFadeOutAudio = true;
-        mCurrentVolume = time_to_fade;
+        mCurrentVolume = 1.f;
+        mFadeTime = time_to_fade;
 
     }
 
@@ -503,6 +521,11 @@ namespace IS {
         for (auto& i : mChannelList) {
             i->setVolume(volume);
         }
+        auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        auto& channels = sys->mChannelList;
+        for (auto& i : channels) {
+			i.second->setVolume(volume);
+		}
         MasterAudioLevel = volume;
     }
 
