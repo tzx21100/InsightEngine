@@ -260,6 +260,11 @@ namespace IS {
                     {
                         window_sys->UseCustomCursor();
                     }
+                    else
+                    {
+                        ImGuiIO& io = ImGui::GetIO();
+                        io.ClearEventsQueue();
+                    }
                 }
 
                 // Offset mouse position

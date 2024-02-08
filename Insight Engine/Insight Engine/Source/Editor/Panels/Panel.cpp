@@ -63,12 +63,12 @@ namespace IS {
             ImGui::Image(EditorUtils::ConvertTextureID(ISGraphics::GetScreenTexture()), panel_size, { 0, 1 }, { 1, 0 });
         }
 
-        if (mHovered)
+        /*if (mHovered)
         {
             ImGui::SetMouseCursor(ImGuiMouseCursor_None);
             ImVec2 cusor_pos = ImGui::GetMousePos();
             ImGui::GetWindowDrawList()->AddImage(mEditorLayer.GetIcon("Cursor"), cusor_pos, ImVec2(cusor_pos.x + 32, cusor_pos.y + 32));
-        }
+        }*/
 
         // Save window states
         mFocused = ImGui::IsWindowFocused();

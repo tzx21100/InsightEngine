@@ -274,10 +274,10 @@ namespace IS {
                 ImGui::TableSetupColumn("Visible", ImGuiTableColumnFlags_WidthFixed, ImGui::CalcTextSize(ICON_LC_EYE).x + style.FramePadding.x);
                 static bool already_selected = false;
 
-                const ImVec4 COLOR_CLEAR = ImVec4(0.f, 0.f, 0.f, 0.f);
+                const ImVec4 COLOR_CLEAR    = ImVec4(0.f, 0.f, 0.f, 0.f);
                 const ImVec4 COLOR_BLACK_BG = ImVec4(0.f, 0.f, 0.f, 1.f);
-                const ImVec4 COLOR_GREY = ImVec4(.8f, .8f, .8f, .8f);
-                const ImVec4 COLOR_WHITE = ImVec4(1.f, 1.f, 1.f, 1.f);
+                const ImVec4 COLOR_GREY     = ImVec4(.8f, .8f, .8f, .8f);
+                const ImVec4 COLOR_WHITE    = ImVec4(1.f, 1.f, 1.f, 1.f);
 
                 ImVec4 original_button_color = style.Colors[ImGuiCol_ButtonHovered];
                 for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
@@ -363,6 +363,9 @@ namespace IS {
                     }
 
                     ImGui::PopStyleColor(push_count);
+
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImVec4(.8f, .8f, .8f, .8f), "(%d)", layer.mLayerEntities.size());
 
                     if (layer_opened)
                     {
