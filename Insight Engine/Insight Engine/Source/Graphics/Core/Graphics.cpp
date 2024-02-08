@@ -228,7 +228,7 @@ namespace IS {
                     // insert to multiset with comparator function
                     layeredQuadInstances.insert(instData);
 
-                    if (engine.HasComponent<Light>(entity))
+                    if (engine.HasComponent<Light>(entity) && mLightsOn)
                     {
                         auto& light = engine.GetComponent<Light>(entity);
                         light.FollowTransform(trans.world_position);
