@@ -17,8 +17,11 @@ namespace IS
         static private float fragment_logo_timer = 3.12f;
         static private float fragment_fade_in = 1.2f;
 
+        static private bool play_audio=false;
+
         static public void Init()
         {
+            play_audio = false;
             InternalCalls.ShowCursor();
             tutorial_state = 0;
             fragment_logo_timer = 3.12f;
@@ -84,10 +87,16 @@ namespace IS
 
             if (tutorial_state == 6)
             {
+
                 if (PlayerScript.player_pos.x > 7279)
                 {
                     SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x - InternalCalls.GetWindowWidth() / 3f, PlayerScript.player_pos.y);
                     InternalCalls.DrawImageAt(pos, 0, new SimpleVector2D(870, 540), teamlogo, 1, InternalCalls.GetTopLayer());
+                    if (play_audio == false)
+                    {
+                        InternalCalls.AudioPlayMusic("ENCOURAGEMENT - Corporate MSCCRP1_60.wav", 0.5f);
+                        play_audio = true;
+                    }
                     if (PlayerScript.player_pos.x > 11500)
                     {
                         InternalCalls.RenderTextFont("Presents", "MedusaGothic_D", 0.8f, 0.5f, 17.5f, (1f, 1f, 1f));
@@ -111,6 +120,8 @@ namespace IS
                 fragment_logo_timer -= InternalCalls.GetDeltaTime();
                 fragment_fade_in -= InternalCalls.GetDeltaTime();
                 if(fragment_logo_timer <= 0) {
+
+
                     tutorial_state++;
                 }
 
