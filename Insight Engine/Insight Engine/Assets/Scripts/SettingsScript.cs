@@ -141,7 +141,7 @@ namespace IS
         static public void Update()
         {
 
-            InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
+            //InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
 
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
@@ -273,10 +273,10 @@ namespace IS
                InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004572271f * win_dimension.y), 10f, (1f, 1f, 1f));
                InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", origin.x + (0.5002578125f * win_dimension.x), origin.y + (0.5003539823f * win_dimension.y), 10f, (1f, 1f, 1f));*/
 
-            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.666f, 12.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.575f, 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.465f, 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.355f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.68f, 12.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.585f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.475f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.365f, 10f, (1f, 1f, 1f));
         }
 
         static private void HideSettings()

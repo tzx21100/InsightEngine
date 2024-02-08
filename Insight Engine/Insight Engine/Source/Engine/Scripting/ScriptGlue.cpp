@@ -448,7 +448,7 @@ namespace IS {
         auto& sprite_component=InsightEngine::Instance().GetComponent<Sprite>(entity);
         sprite_component.layer = 1;
         sprite_component.img = ConvertToImage(image);
-
+        ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
     }
 
@@ -463,7 +463,7 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
         sprite_component.layer = UI_LAYER;
         sprite_component.img = ConvertToImage(image);
-
+        ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
     }
 

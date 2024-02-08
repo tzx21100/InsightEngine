@@ -143,7 +143,7 @@ namespace IS
             InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.500373648f * win_dimension.y), 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5003343166f * win_dimension.y), 10.5f, (1f, 1f, 1f));*/
 
-            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.66f, 12.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.67f, 12.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", 0.5f, 0.54f, 10.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("Collect Fragments for movement abilities", "Semplicita_Light", 0.5f, 0.47f, 10.5f, (1f, 1f, 1f));

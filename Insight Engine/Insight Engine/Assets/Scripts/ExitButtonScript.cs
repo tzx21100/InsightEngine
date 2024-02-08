@@ -63,6 +63,8 @@ namespace IS
 
         static public void Update(){
 
+            camera_zoom = InternalCalls.CameraGetZoom();
+
             //set camera pos
             camera_pos.x = InternalCalls.GetCameraPos().x;
             camera_pos.y = InternalCalls.GetCameraPos().y;
@@ -129,7 +131,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(exit_overlay_pos.x, exit_overlay_pos.y, exit_overlay_entity);
             InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
-            InternalCalls.RenderTextFont("CONFIRM EXIT?", "MedusaGothic_D", 0.5f, 0.525f, 13f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("CONFIRM EXIT?", "MedusaGothic_D", 0.5f, 0.535f, 13f, (1f, 1f, 1f));
 
         }
 
