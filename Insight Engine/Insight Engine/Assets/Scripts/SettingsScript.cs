@@ -141,7 +141,7 @@ namespace IS
         static public void Update()
         {
 
-            InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
+            //InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
 
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
