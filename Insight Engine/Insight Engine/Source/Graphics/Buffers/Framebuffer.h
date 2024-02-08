@@ -9,7 +9,7 @@
  * pipeline.
  * 
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -109,8 +109,8 @@ namespace IS {
         void SetColorAttachment(GLuint color_attachment);        
 
     private:
-        GLuint mFramebufferID;  ///< ID of the framebuffer
-        FramebufferProps mProps; ///< Properties of the framebuffer.
+        GLuint mFramebufferID{};  ///< ID of the framebuffer
+        FramebufferProps mProps{}; ///< Properties of the framebuffer.
     };
 
 } // end namespace IS

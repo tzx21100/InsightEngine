@@ -10,7 +10,7 @@
  * direct events such as quitting or debugging system to system.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -69,9 +69,9 @@ namespace IS {
         int GetInt() const { return int_value; }
 
         MessageType type;  ///< Holds the type of the message.
-        float float_value; ///< A float value that the message might carry.
-        int int_value;     ///< An integer value that the message might carry.
-        int int_value2;
+        float float_value{}; ///< A float value that the message might carry.
+        int int_value{};     ///< An integer value that the message might carry.
+        int int_value2{};
     };
 
     /**

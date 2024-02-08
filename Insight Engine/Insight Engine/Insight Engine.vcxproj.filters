@@ -176,9 +176,6 @@
       <Filter>Utils\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Systems\Category\Category.cpp" />
-    <ClCompile Include="Source\Graphics\System\Shadow.cpp">
-      <Filter>Graphics\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\Systems\FSM\FSM.cpp">
       <Filter>Engine\Systems\FSM</Filter>
     </ClCompile>
@@ -418,9 +415,6 @@
     <ClInclude Include="Source\Engine\Systems\EntityFSM\EntityFSM.h" />
     <ClInclude Include="Source\Engine\Scripting\Filewatcher.h" />
     <ClInclude Include="Source\Engine\Systems\Category\Category.h" />
-    <ClInclude Include="Source\Graphics\System\Shadow.h">
-      <Filter>Graphics\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Memory Manager\MemoryManager.h">
       <Filter>Engine\Memory Manager</Filter>
     </ClInclude>
