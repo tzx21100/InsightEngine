@@ -1,4 +1,24 @@
-#pragma once
+/*!
+* \file FSM.cpp
+* \author  Tan Zheng Xun, t.zhengxun@digipen.edu
+* \par Course: CSD2401
+* \date  08-02-2024
+* \brief
+* This header file defines the FSM functions to create scripts and attach
+* them to the fsm class. This helps developers create any sort of FSM
+* they wish to use during development. 
+*
+* \copyright
+* All content (C) 2023 DigiPen Institute of Technology Singapore.
+* All rights reserved.
+* Reproduction or disclosure of this file or its contents without the prior written
+* consent of DigiPen Institute of Technology is prohibited.
+*____________________________________________________________________________*/
+
+
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 #include "Pch.h"
 #include "FSM.h"
 #include "../../Core/CoreEngine.h"

@@ -1,4 +1,26 @@
-#pragma once
+/*!
+* \file FileWatcher.h
+* \author  Tan Zheng Xun, t.zhengxun@digipen.edu
+* \par Course: CSD2401
+* \date  08-02-2024
+* \brief
+* This header file declares the FileWatcher and the files it will watch
+* this relies heavily on filesystem to mantain and watchover the files its responsible for.
+*
+* \copyright
+* All content (C) 2023 DigiPen Institute of Technology Singapore.
+* All rights reserved.
+* Reproduction or disclosure of this file or its contents without the prior written
+* consent of DigiPen Institute of Technology is prohibited.
+*____________________________________________________________________________*/
+
+/*                                                                      guard
+----------------------------------------------------------------------------- */
+#ifndef GAM200_INSIGHT_ENGINE_EDITOR_SCENE_FILEWATCHER_H
+#define GAM200_INSIGHT_ENGINE_EDITOR_SCENE_FILEWATCHER_H
+
+/*                                                                   includes
+----------------------------------------------------------------------------- */
 //this is the filewatcher class meant for hot reloading
 #include <filesystem>
 #include <chrono>
@@ -103,3 +125,4 @@ namespace IS {
 }
 
 
+#endif

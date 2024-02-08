@@ -154,6 +154,7 @@ namespace IS
                     break;
                 case 15:
                     InternalCalls.SetSpriteImage(image14);
+                    CameraScript.CameraTargetZoom(0.8f, 0.3f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 16:
