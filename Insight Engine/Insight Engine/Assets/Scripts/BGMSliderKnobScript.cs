@@ -42,11 +42,8 @@ namespace IS
             first_open_settings = false;
             diff_x = 0.5f;
 
-            Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
-            //adjustment = Math.Min(111.36f, Math.Max(-111.36f, mouse_pos.x));
-            //normalised_adjustment = (adjustment + 111.36f) / (111.36f + 111.36f);
+            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             adjustment = origin.x + diff_x * win_dimension.x;
-            //adjustment = Math.Min(upper_limit_bgm_knob, Math.Max(lower_limit_bgm_knob, mouse_pos.x));
             normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
 
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
@@ -90,10 +87,7 @@ namespace IS
                     diff_x = (adjustment - origin.x) / win_dimension.x;
                     InternalCalls.TransformSetPosition(adjustment, origin.y + (0.433f * win_dimension.y));
                     SettingsScript.bgm_slider_knob_pos.x = adjustment;
-                    //normalised_adjustment = (adjustment + 111.36f) / (111.36f + 111.36f);
                     normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
-
-
 
                 }
 
