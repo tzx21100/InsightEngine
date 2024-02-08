@@ -17,7 +17,7 @@ namespace IS
 
         static public Vector2D camera_pos = new Vector2D(0, 0);
         static public Vector2D target_pos = new Vector2D(0, 0);
-        static public float camera_zoom = 0.7f;
+        static public float camera_zoom = 1f;
 
         //zoom
         static public bool zoom_enable = false;
@@ -27,7 +27,7 @@ namespace IS
 
 
         static public void Init(){
-            camera_zoom = 0.7f;
+            camera_zoom = 1f;
             //camera zoom
             InternalCalls.CameraSetZoom(camera_zoom);
             InternalCalls.AttachCamera(PlayerScript.player_pos.x, PlayerScript.player_pos.y);

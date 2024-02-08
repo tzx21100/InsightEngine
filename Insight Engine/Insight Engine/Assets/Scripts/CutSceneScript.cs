@@ -16,6 +16,7 @@ namespace IS
         static private SimpleImage image9 = InternalCalls.GetSpriteImage("9.jpg");
         static private SimpleImage image10 = InternalCalls.GetSpriteImage("10.jpg");
         static private SimpleImage image11 = InternalCalls.GetSpriteImage("11.jpg");
+        static private SimpleImage image11_2 = InternalCalls.GetSpriteImage("11_2.jpg");
         static private SimpleImage image12 = InternalCalls.GetSpriteImage("12.jpg");
         static private SimpleImage image13 = InternalCalls.GetSpriteImage("13.jpg");
         static private SimpleImage image14 = InternalCalls.GetSpriteImage("14.jpg");
@@ -28,41 +29,49 @@ namespace IS
         static public void Init()
         {
             InternalCalls.HideCursor();
-            InternalCalls.CameraSetZoom(0.6f);
-            current_image = 1;
+            current_image = 0;
             image_swap_timer = 2.6f;
-            InternalCalls.AudioPlayMusic("JOHN_The Choice_No Clock_Loop_60bpm.wav",0.2f);
+            InternalCalls.AudioPlayMusic("JOHN_The Choice_No Clock_Loop_60bpm.wav",0.4f);
         }
 
         static public void Update(){
+            InternalCalls.TransformSetScale(InternalCalls.GetWindowWidth(),InternalCalls.GetWindowHeight());
 
             image_swap_timer -= InternalCalls.GetDeltaTime();
             if(image_swap_timer < 0)
             {
                 image_swap_timer = image_swap_set;
                 current_image++;
-                if(current_image == 16) {
+                if(current_image == 17) {
                     InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
                 }
             }
 
+            if(current_image==0)
+            {
+                InternalCalls.CameraSetZoom(1f);
+                current_image++;
+            }
+
             if (current_image == 1)
             {
-                CameraScript.CameraTargetZoom(1.2f, 0.2f);
+                CameraScript.CameraTargetZoom(1.5f, 0.2f);
             }            
             
             if (current_image == 2)
             {
-                CameraScript.CameraTargetZoom(0.6f, 0.5f);
+                CameraScript.CameraTargetZoom(1.2f, 0.5f);
             }
             if (current_image == 3)
             {
-                CameraScript.CameraShake(0.5f);
+                CameraScript.CameraShake(0.1f);
                 CameraScript.camera_shake_duration = 0.2f;
             }
             if (current_image == 4)
             {
-                CameraScript.CameraTargetZoom(0.5f, 0.5f);
+                CameraScript.CameraTargetZoom(1.3f, 0.5f);
+                CameraScript.CameraShake(2.5f);
+                CameraScript.camera_shake_duration = 0.2f;
             }
 
 
@@ -103,18 +112,20 @@ namespace IS
                     InternalCalls.SetSpriteImage(image11);
                     break;
                 case 12:
-                    InternalCalls.SetSpriteImage(image12);
+                    InternalCalls.SetSpriteImage(image11_2);
                     break;
                 case 13:
-                    InternalCalls.SetSpriteImage(image13);
+                    InternalCalls.SetSpriteImage(image12);
                     break;
                 case 14:
-                    InternalCalls.SetSpriteImage(image14);
+                    InternalCalls.SetSpriteImage(image13);
                     break;
                 case 15:
+                    InternalCalls.SetSpriteImage(image14);
+                    break;
+                case 16:
                     InternalCalls.SetSpriteImage(image15);
                     InternalCalls.FadeOutAudio(1.2f);
-
                     break;
             }
 

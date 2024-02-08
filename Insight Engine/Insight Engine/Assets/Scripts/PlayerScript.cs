@@ -281,7 +281,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
 
 
-            entity_feet = InternalCalls.CreateEntityVFX("FeetCollider",player_land);
+            entity_feet = InternalCalls.CreateEntity("FeetCollider");
             entityWall = InternalCalls.CreateEntity("WallCollider");
             entity_attack = InternalCalls.CreateEntity("AttackCollider");
             width = InternalCalls.GetTransformScaling().x / 3f;

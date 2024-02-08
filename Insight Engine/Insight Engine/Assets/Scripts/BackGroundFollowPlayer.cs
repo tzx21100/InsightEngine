@@ -36,6 +36,7 @@ namespace IS
             bg_image3 = InternalCalls.GetSpriteImage("3rd.png");
             bg_image4 = InternalCalls.GetSpriteImage("4th.png");
             bg_image5 = InternalCalls.GetSpriteImage("5th.png");
+            CameraScript.CameraTargetZoom(0.7f, 0.5f);
 
 
         }
