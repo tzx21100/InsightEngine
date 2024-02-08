@@ -410,8 +410,9 @@ namespace IS {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 
 				body.BodyFollowTransform(trans);
-
-				AddLineSegementsForLights(entity); // render shadow lights
+				if (ISGraphics::mLightsOn) {
+					AddLineSegementsForLights(entity); // render shadow lights
+				}
 
 				if (body.mBodyType == BodyType::Static) {
 					continue; // skip the update for static entity

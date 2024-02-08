@@ -90,10 +90,12 @@ namespace IS
 
             if (SettingsScript.show_settings || HowToPlayScript.show_how_to_play || ExitButtonScript.exit_confirmation)
             {
+                InternalCalls.SetLightsToggle(false);
                 HideMenuButtons();
             }
             else //draw 
             {
+                InternalCalls.SetLightsToggle(true);
                 DrawMenuButtons();
             }
         }

@@ -115,12 +115,12 @@ namespace IS
             if (show_how_to_play)
             {
 
-                InternalCalls.SetLightsToggle(false);
+                //InternalCalls.SetLightsToggle(false);
                 DrawHowToPlay();
             }
             else
             {
-                InternalCalls.SetLightsToggle(true);
+                //InternalCalls.SetLightsToggle(true);
                 HideHowToPlay();
             }
         }

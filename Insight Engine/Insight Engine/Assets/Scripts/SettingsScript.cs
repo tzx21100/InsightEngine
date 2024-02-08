@@ -230,17 +230,18 @@ namespace IS
             {
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 show_settings = true;
-                  
+
+
             }
 
             if (show_settings)
             {
-                InternalCalls.SetLightsToggle(false);
+                //InternalCalls.SetLightsToggle(false);
                 DrawSettings(); 
             }
             else
             {
-                InternalCalls.SetLightsToggle(true);
+                //InternalCalls.SetLightsToggle(true);
                 HideSettings(); 
             }
         }
