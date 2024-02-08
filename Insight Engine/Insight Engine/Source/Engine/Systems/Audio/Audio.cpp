@@ -156,7 +156,7 @@ namespace IS {
             for (auto& i : mChannelList) {
                 float vol;
                 i->getVolume(&vol);
-                i->setVolume(vol*mCurrentVolume *100);
+                i->setVolume(vol*mCurrentVolume);
                 //std::cout<< mCurrentVolume * vol << std::endl;
             }
             //asset channel list

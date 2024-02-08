@@ -32,6 +32,7 @@ namespace IS
             current_image = 0;
             image_swap_timer = 2.6f;
             InternalCalls.AudioPlayMusic("JOHN_The Choice_No Clock_Loop_60bpm.wav",0.4f);
+            //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
         }
 
         static public void Update(){
