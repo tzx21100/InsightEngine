@@ -262,17 +262,24 @@ namespace IS {
                 EditorUtils::RenderTableLabel("Layer");
 
                 ImGui::TableNextColumn();
-                if (ImGui::BeginCombo("##Layer", ISGraphics::mLayers[sprite.layer].mName.c_str()))
+                if (sprite.layer < ISGraphics::mLayers.size() && sprite.layer >= 0)
                 {
-                    for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
+                    if (ImGui::BeginCombo("##Layer", ISGraphics::mLayers[sprite.layer].mName.c_str()))
                     {
-                        if (ImGui::Selectable(ISGraphics::mLayers[i].mName.c_str(), sprite.layer == i))
+                        for (int i{ static_cast<int>(ISGraphics::mLayers.size() - 1) }; i >= 0; --i)
                         {
-                            //sprite.layer = i;
-                            ISGraphics::ChangeEntityLayer(sprite.layer, i, entity);
+                            if (ImGui::Selectable(ISGraphics::mLayers[i].mName.c_str(), sprite.layer == i))
+                            {
+                                //sprite.layer = i;
+                                ISGraphics::ChangeEntityLayer(sprite.layer, i, entity);
+                            }
                         }
+                        ImGui::EndCombo();
                     }
-                    ImGui::EndCombo();
+                }
+                else
+                {
+                    IS_CORE_ERROR("{} is in a layer that does not exist! Layer : {}, Layers : {}", engine.GetEntityName(entity), sprite.layer, ISGraphics::mLayers.size());
                 }
 
                 EditorUtils::RenderTableLabel("Color");
