@@ -194,6 +194,13 @@ namespace IS {
     void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
         scale = scale * 48.f / (base_size * 16);
 
+        int width, height;
+        InsightEngine::Instance().GetWindowSize(width, height);
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
+        textShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        textShader.unUse();
+
         // Calculate the width and height of the text
         float textWidth = 0.0f;
         float textHeight = 0.0f;
@@ -221,14 +228,14 @@ namespace IS {
         }
         textHeight += lineHeight; // Add the height of the last line
 
-        auto& engine = InsightEngine::Instance();
-        int width, height;
-        engine.GetWindowSize(width, height);
+        // auto& engine = InsightEngine::Instance();
+        // int width, height;
+        // engine.GetWindowSize(width, height);
 
-        if (!engine.IsFullScreen())
-        {
-           height += engine.GetTitleBarHeight();
-        }
+        // if (!engine.IsFullScreen())
+        // {
+        //    height += engine.GetTitleBarHeight();
+        // }
 
         // Calculate the adjusted starting position for center alignment
         float x = widthScalar * width - textWidth / 2.0f;
