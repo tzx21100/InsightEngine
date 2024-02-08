@@ -1384,10 +1384,9 @@ namespace IS
             {*/
 
             //}
-            //Console.WriteLine(combo_step);
         }
 
-        static private void PlayAttack1Sound()
+        static private void PlayAttack1Sound() // random attack1 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1410,7 +1409,7 @@ namespace IS
             }
         }
 
-        static private void PlayAttack2Sound()
+        static private void PlayAttack2Sound() // random attack2 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1433,7 +1432,7 @@ namespace IS
             }
         }
 
-        static private void PlayAttack3Sound()
+        static private void PlayAttack3Sound() // random attack3 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1456,11 +1455,10 @@ namespace IS
             }
         }
 
-        static private void AttackAreaUpdate()
+        static private void AttackAreaUpdate() // update attack area range
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
             
-
             CalibrateAttackAngle();
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
@@ -1486,7 +1484,7 @@ namespace IS
                 );*/
         }
 
-        static private void CalibrateAttackAngle()
+        static private void CalibrateAttackAngle() // helper function
         {
             // calibrate the fangle to make attack area not towards to floor (when isGrounded)
             if (isGrounded)
@@ -1505,7 +1503,7 @@ namespace IS
             }
         }
 
-        static private void HitEnemy()
+        static private void HitEnemy() // check weapon hit enemy
         {
             // check attack collider when colliding
             if (InternalCalls.OnEntityCollisionEnter(entity_attack))
@@ -1561,21 +1559,8 @@ namespace IS
             }
         }
 
-        static public void EnemyAttack()
+        static public void EnemyAttack() // check getting hit from enemy
         {
-            /*if (InternalCalls.CompareCategory("Enemy"))
-            {
-                is_colliding_enemy = true;
-                // GetCollidingEntity func not accurate
-                //colliding_enemy_id = InternalCalls.GetCollidingEntity(PLAYER_ID);
-                //Console.WriteLine(colliding_enemy_id);
-            }
-            else
-            {
-                *//*is_colliding_enemy = false;
-                colliding_enemy_id = -1;*//*
-            }*/
-
             if (is_colliding_enemy)
             {
                 // player get hit back
@@ -1587,11 +1572,10 @@ namespace IS
             }
         }
 
-        static public void CheckPlayerGetHitAndFreeze()
+        static public void CheckPlayerGetHitAndFreeze() // player flicker when get hit
         {
             if (is_colliding_enemy)
             {
-                //Console.WriteLine(player_get_hit_timer);
                 player_get_hit_timer -= InternalCalls.GetDeltaTime();
                 if (player_get_hit_timer > 0f)
                 {
@@ -1624,7 +1608,7 @@ namespace IS
             }
         }
 
-        static private void PlayerGetHit()
+        static private void PlayerGetHit() // when get hit by enemy
         {
             if (!initial_get_hit)
             {
@@ -1650,7 +1634,7 @@ namespace IS
             }
         }
 
-        static private void Render_Being_Hit_Flicker()
+        static private void Render_Being_Hit_Flicker() // render flicker when get hit
         {
             being_hit_flicker_timer -= InternalCalls.GetDeltaTime();
             if (being_hit_flicker_timer > 0.1f)
@@ -1667,7 +1651,7 @@ namespace IS
             }
         }
 
-        static private void AttackCameraShake()
+        static private void AttackCameraShake() // camera shake when attacking
         {
             if (isAttack && initial_attack) {
                 if (camera_shake_duration > 0)
@@ -1712,10 +1696,10 @@ namespace IS
             }
         }
 
-        static private void DrawHealthBar()
+        static private void DrawHealthBar() // draw health bar
         {
             if(hideHealth==true) return;
-            //Console.WriteLine(Health);
+
             SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
             float interval = scaling.x / 1.6f;
