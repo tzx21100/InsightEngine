@@ -41,7 +41,7 @@ namespace IS
             first_open_settings = false;
             diff_x = 0.5f;
 
-            Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             adjustment = origin.x + diff_x * win_dimension.x;
             normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.543f * win_dimension.y));

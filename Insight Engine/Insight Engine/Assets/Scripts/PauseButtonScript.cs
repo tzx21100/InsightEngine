@@ -127,6 +127,7 @@ namespace IS
             if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
             {
                 paused = !paused;
+                SettingsScript.show_settings = false;
                 ExitButtonScript.exit_confirmation = false;
                 HowToPlayScript.show_how_to_play = false;
             }
