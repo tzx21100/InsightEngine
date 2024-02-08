@@ -122,10 +122,11 @@ namespace IS {
 
             // Save Prefab
             ImGui::SameLine();
-            if (ImGui::Button("Save as prefab"))
+            if (ImGui::Button(ICON_LC_SAVE))
             {
                 engine.SaveAsPrefab(entity, name);
             }
+            ImGui::SetItemTooltip("Save as a prefab");
 
             // Category
             EditorUtils::RenderTableLabel("Category", "Categorizes Entities.\n(i.e., Player, Platform, Background, etc.)");
