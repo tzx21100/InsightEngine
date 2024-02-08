@@ -53,6 +53,9 @@ namespace IS {
          */
         static void compileAllShaders();
         
+        /**
+         * @brief Delete all shaders used in the application.
+         */
         static void deleteAllShaders();
 
         /**

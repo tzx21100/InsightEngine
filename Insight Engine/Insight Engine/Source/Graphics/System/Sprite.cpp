@@ -359,21 +359,6 @@ namespace IS {
         else
             IS_CORE_ERROR({ "uShaderEffectTimer Uniform not found, shader compilation failed?" });
 
-        //glm::mat3 transform
-        //{
-        //    1.f, 0.f, 0.f,
-        //    0.f, 1.f, 0.f,
-        //    0.f, 0.f, 1.f,
-        //};
-        //tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "model_to_NDC_xform");
-        //if (tex_arr_uniform >= 0)
-        //    glUniformMatrix3fv(tex_arr_uniform, 1, GL_FALSE, glm::value_ptr(transform));
-        //else
-        //    IS_CORE_ERROR({ "id_tex Uniform not found, shader compilation failed?" });
-
-        // draw instanced quads
-        // GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
-        // GL_CALL(glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, ISGraphics::meshes[3].draw_count, 1));
         GL_CALL(glDrawArrays(GL_TRIANGLES, 0, ISGraphics::meshes[5].draw_count));
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
