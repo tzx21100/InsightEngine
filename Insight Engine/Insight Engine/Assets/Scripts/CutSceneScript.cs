@@ -28,6 +28,7 @@ namespace IS
 
         static private bool play_audio_collapse = false;
 
+
         static public void Init()
         {
             play_audio_collapse = false;
@@ -87,13 +88,16 @@ namespace IS
 
 
 
+
             switch (current_image)
             {
                 case 1:
                     InternalCalls.SetSpriteImage(image1);
+                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 2:
                     InternalCalls.SetSpriteImage(image2);
+                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 3:
                     InternalCalls.SetSpriteImage(image3);
@@ -106,7 +110,7 @@ namespace IS
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
-                    CameraScript.CameraTargetZoom(2f, 1.5f);
+                    CameraScript.CameraTargetZoom(2f, 0.2f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
@@ -116,21 +120,29 @@ namespace IS
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
+                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 9:
                     InternalCalls.SetSpriteImage(image9);
+                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 10:
                     InternalCalls.SetSpriteImage(image10);
+                    InternalCalls.RenderTextFont("Stayback Cipher! Something's wrong...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 11:
                     InternalCalls.SetSpriteImage(image11);
                     break;
                 case 12:
                     InternalCalls.SetSpriteImage(image11_2);
+                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 13:
                     InternalCalls.SetSpriteImage(image12);
+                    CameraScript.CameraShake(0.2f);
+                    CameraScript.camera_shake_duration = 0.1f;
+                    CameraScript.camera_shake_intensity = 0.2f;
+                    InternalCalls.RenderTextFont("Huh?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 14:
                     InternalCalls.SetSpriteImage(image13);

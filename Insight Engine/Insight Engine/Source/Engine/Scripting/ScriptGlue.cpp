@@ -1263,7 +1263,7 @@ namespace IS {
     // layers
 
     static int GetTopLayer() {
-        return static_cast<int>(ISGraphics::mLayers.size()-1);
+        return static_cast<int>(ISGraphics::mLayers.size());
     }
 
     static void SetLayerVisible(int layer, bool boolean) {
