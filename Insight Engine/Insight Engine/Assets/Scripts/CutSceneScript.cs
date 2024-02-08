@@ -96,9 +96,11 @@ namespace IS
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
                     InternalCalls.SetSpriteImage(image7);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
@@ -123,6 +125,7 @@ namespace IS
                     break;
                 case 15:
                     InternalCalls.SetSpriteImage(image14);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 16:
                     InternalCalls.SetSpriteImage(image15);
