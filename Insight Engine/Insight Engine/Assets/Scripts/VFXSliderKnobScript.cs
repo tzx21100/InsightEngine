@@ -5,6 +5,8 @@ namespace IS
     class VFXSliderKnobScript
     {
         static public bool first_hover = false;
+        static private float diff_x;
+        static private bool first_open_settings = false;
         static private float adjustment;
         static public float normalised_adjustment;
         // Windows
@@ -35,8 +37,12 @@ namespace IS
 
             lower_limit_vfx_knob = origin.x + (0.442f * win_dimension.x);
             upper_limit_vfx_knob = origin.x + (0.558f * win_dimension.x);
-            Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
-            adjustment = Math.Min(upper_limit_vfx_knob, Math.Max(lower_limit_vfx_knob, mouse_pos.x));
+
+            first_open_settings = false;
+            diff_x = 0.5f;
+
+            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+            adjustment = origin.x + diff_x * win_dimension.x;
             normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.323f * win_dimension.y));
 
@@ -72,6 +78,7 @@ namespace IS
                 if (InternalCalls.MouseHeld(0)==true)
                 {
                     adjustment = Math.Min(upper_limit_vfx_knob, Math.Max(lower_limit_vfx_knob, mouse_pos.x));
+                    diff_x = (adjustment - origin.x) / win_dimension.x;
                     InternalCalls.TransformSetPosition(adjustment, origin.y + (0.323f * win_dimension.y));
                     SettingsScript.vfx_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
@@ -97,10 +104,16 @@ namespace IS
             }
             if (SettingsScript.show_settings)
             {
+                if (!first_open_settings)
+                {
+                    adjustment = origin.x + diff_x * win_dimension.x;
+                    first_open_settings = true;
+                }
                 InternalCalls.TransformSetPosition(adjustment, origin.y + (0.323f * win_dimension.y));
             }
             if (!SettingsScript.show_settings)
             {
+                first_open_settings = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
             SettingsScript.vfx_multiplier = normalised_adjustment;
