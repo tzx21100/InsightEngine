@@ -74,6 +74,7 @@ namespace IS
 	void CollisionSystem::BroadPhase() 
 	{
 		Physics::PhysicsEnableList.clear(); // clear the list
+
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -82,7 +83,7 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			Physics::PhysicsEnableList = mEntities; // update to list
+			Physics::PhysicsEnableList = mEntities; // update to physics enable list
 			CollisionDetect(Physics::PhysicsEnableList);
 		}
 	}

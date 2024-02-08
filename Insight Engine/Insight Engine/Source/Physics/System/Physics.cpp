@@ -358,13 +358,9 @@ namespace IS {
 		//if (mShowVelocity) Sprite::drawDebugLine(body.mBodyTransform.getWorldPosition(), body.mBodyTransform.getWorldPosition() + body.mVelocity, { 1.f, 0.f, 0.f });
 	}
 
-
+	// for shadow light rendering
 	void Physics::AddLineSegementsForLights(Entity const& entity)
 	{
-		//for (auto const& entity: Physics::PhysicsEnableList) {
-			
-		//}
-
 		auto& collider = InsightEngine::Instance().GetComponent<Collider>(entity);
 		auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 		//auto& cate = InsightEngine::Instance().GetComponent<Category>(entity);
@@ -410,7 +406,8 @@ namespace IS {
 				auto& body = InsightEngine::Instance().GetComponent<RigidBody>(entity);
 
 				body.BodyFollowTransform(trans);
-				if (ISGraphics::mLightsOn) {
+
+				if (ISGraphics::mLightsOn) { // only if the light toggle is on
 					AddLineSegementsForLights(entity); // render shadow lights
 				}
 

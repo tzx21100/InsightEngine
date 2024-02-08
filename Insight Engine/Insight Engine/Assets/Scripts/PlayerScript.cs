@@ -202,6 +202,7 @@ namespace IS
         static public Vector2D player_pos = new Vector2D(0, 0);
         static public Vector2D trans_scaling = new Vector2D(0, 0);
         static public Vector2D player_vel = new Vector2D(0, 0);
+        //static public float collider_offset_x = 22f;
 
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
@@ -510,6 +511,16 @@ namespace IS
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
 
+            // update player collider offset
+            /*if (isGrounded)
+            {
+                InternalCalls.SetCircleColliderOffsetX(MathF.Sign(-trans_scaling.x) * collider_offset_x);
+                
+            }
+            else
+            {
+                InternalCalls.SetCircleColliderOffsetX(0); // reset collider offset when climbing
+            }*/
 
             /*            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
                         trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();*/
@@ -1056,12 +1067,12 @@ namespace IS
 
         static private void WallCheckerUpdate()
         {
-            if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-999, -99999, entityWall); return; }
+            if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entityWall); return; }
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width*0.68f * hori_movement;
+            float distanceLeft = width * 0.68f * hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft, 0);
 
@@ -1080,7 +1091,6 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
             InternalCalls.TransformSetScaleEntity(2f, height / 2f, entityWall);
-
         }
 
         static float distance_light = width;
@@ -1124,7 +1134,8 @@ namespace IS
 
 
             }
-            Vector2D relativePosition = new Vector2D(distance_light, 0);
+            //Vector2D relativePosition = new Vector2D(distance_light, 0);
+            Vector2D relativePosition = new Vector2D(0, 0);
 
             // Apply rotation to the relative position
             Vector2D rotatedRelativePosition = new Vector2D(
@@ -1373,10 +1384,9 @@ namespace IS
             {*/
 
             //}
-            //Console.WriteLine(combo_step);
         }
 
-        static private void PlayAttack1Sound()
+        static private void PlayAttack1Sound() // random attack1 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1399,7 +1409,7 @@ namespace IS
             }
         }
 
-        static private void PlayAttack2Sound()
+        static private void PlayAttack2Sound() // random attack2 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1422,7 +1432,7 @@ namespace IS
             }
         }
 
-        static private void PlayAttack3Sound()
+        static private void PlayAttack3Sound() // random attack3 sound
         {
             float volume = 0.2f;
             switch (random_attack_sound)
@@ -1445,11 +1455,10 @@ namespace IS
             }
         }
 
-        static private void AttackAreaUpdate()
+        static private void AttackAreaUpdate() // update attack area range
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
             
-
             CalibrateAttackAngle();
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
@@ -1475,7 +1484,7 @@ namespace IS
                 );*/
         }
 
-        static private void CalibrateAttackAngle()
+        static private void CalibrateAttackAngle() // helper function
         {
             // calibrate the fangle to make attack area not towards to floor (when isGrounded)
             if (isGrounded)
@@ -1494,7 +1503,7 @@ namespace IS
             }
         }
 
-        static private void HitEnemy()
+        static private void HitEnemy() // check weapon hit enemy
         {
             // check attack collider when colliding
             if (InternalCalls.OnEntityCollisionEnter(entity_attack))
@@ -1550,21 +1559,8 @@ namespace IS
             }
         }
 
-        static public void EnemyAttack()
+        static public void EnemyAttack() // check getting hit from enemy
         {
-            /*if (InternalCalls.CompareCategory("Enemy"))
-            {
-                is_colliding_enemy = true;
-                // GetCollidingEntity func not accurate
-                //colliding_enemy_id = InternalCalls.GetCollidingEntity(PLAYER_ID);
-                //Console.WriteLine(colliding_enemy_id);
-            }
-            else
-            {
-                *//*is_colliding_enemy = false;
-                colliding_enemy_id = -1;*//*
-            }*/
-
             if (is_colliding_enemy)
             {
                 // player get hit back
@@ -1576,11 +1572,10 @@ namespace IS
             }
         }
 
-        static public void CheckPlayerGetHitAndFreeze()
+        static public void CheckPlayerGetHitAndFreeze() // player flicker when get hit
         {
             if (is_colliding_enemy)
             {
-                //Console.WriteLine(player_get_hit_timer);
                 player_get_hit_timer -= InternalCalls.GetDeltaTime();
                 if (player_get_hit_timer > 0f)
                 {
@@ -1613,7 +1608,7 @@ namespace IS
             }
         }
 
-        static private void PlayerGetHit()
+        static private void PlayerGetHit() // when get hit by enemy
         {
             if (!initial_get_hit)
             {
@@ -1639,7 +1634,7 @@ namespace IS
             }
         }
 
-        static private void Render_Being_Hit_Flicker()
+        static private void Render_Being_Hit_Flicker() // render flicker when get hit
         {
             being_hit_flicker_timer -= InternalCalls.GetDeltaTime();
             if (being_hit_flicker_timer > 0.1f)
@@ -1656,7 +1651,7 @@ namespace IS
             }
         }
 
-        static private void AttackCameraShake()
+        static private void AttackCameraShake() // camera shake when attacking
         {
             if (isAttack && initial_attack) {
                 if (camera_shake_duration > 0)
@@ -1701,10 +1696,10 @@ namespace IS
             }
         }
 
-        static private void DrawHealthBar()
+        static private void DrawHealthBar() // draw health bar
         {
             if(hideHealth==true) return;
-            //Console.WriteLine(Health);
+
             SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
             float interval = scaling.x / 1.6f;

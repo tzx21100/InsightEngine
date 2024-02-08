@@ -1,10 +1,10 @@
 /*!
- * \file YouWinScript.cs
+ * \file Enemy.cs
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
- * \date 26-01-2024
+ * \par Course: CSD2451
+ * \date 08-02-2024
  * \brief
- * This header file contains
+ * This header file contains the implementation of the Enemy class
  *
  * \copyright
  * All content (C) 2023 DigiPen Institute of Technology Singapore.
@@ -129,10 +129,6 @@ namespace IS
         // states
         //EnemyState previous_state;
         EnemyState current_state;
-        /*public bool isPatrolling;
-        public bool isAttacking;
-        public bool isFollowingPlayer;
-        public bool isDead;*/
 
         // enemy inof
         public float max_health = 100f;
@@ -176,10 +172,6 @@ namespace IS
             // init states
             //previous_state = (EnemyState)(-1);
             current_state = EnemyState.PATROLLING;
-            /*isPatrolling = true;
-            isAttacking = false;
-            isFollowingPlayer = false;
-            isDead = false;*/
 
         }
 
@@ -259,7 +251,7 @@ namespace IS
                 );
         }
 
-        private void UpdateEnemyDirection()
+        private void UpdateEnemyDirection() // update enemy direction, view and attack position
         {
             if (MathF.Sign(scaling.x) != MathF.Sign(direction.x))
             {
@@ -269,14 +261,13 @@ namespace IS
             attack_pos = new Vector2D(enemy_pos.x + MathF.Sign(-direction.x) * attack_area.x / 2, enemy_pos.y);
         }
 
-        public void EnemyCollidingPlayer()
+        public void EnemyCollidingPlayer() // check if enemy colliding with player
         {
             // check enemy colliding with enemy
             if (InternalCalls.OnCollisionEnter() && current_state != EnemyState.DEAD)
             {
                 if (InternalCalls.CompareCategory("Player"))
                 {
-                    //Console.WriteLine(PlayerScript.colliding_enemy_id); 
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
                 }
@@ -296,16 +287,15 @@ namespace IS
                     PlayerScript.hitting_enemy_id = -1;
                     BEING_ATTACK_ENEMY_ID = -1;
                 }
-                //Console.WriteLine(PlayerScript.colliding_enemy_id);
             }
 
         }
 
-        private void EnemyGetHit()
+        private void EnemyGetHit() // enemy get hit by player
         {
-            //Console.WriteLine("getting enemy");
             float vel_x = direction.x * speed;
             //float vel_y = direction.y * speed;
+
             // first hit
             if (!initialHit)
             {
@@ -334,7 +324,7 @@ namespace IS
             }
         }
 
-        private void EnemyInitialGetHit()
+        private void EnemyInitialGetHit() // enemy get hit sound and vfx
         {
             switch (random_being_hit_sound)
             {
@@ -384,7 +374,7 @@ namespace IS
             }
         }
 
-        private void EnemyPatrolling()
+        private void EnemyPatrolling() // enemy patrolling
         {
             Random rnd = new Random();
             if (idle_sound_timer > 0f)
@@ -476,7 +466,7 @@ namespace IS
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
 
-        private bool CheckPlayerNearby()
+        private bool CheckPlayerNearby() // helper function check whether player is nearby
         {
             Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
             float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
@@ -490,7 +480,7 @@ namespace IS
             }
         }
 
-        private void UpdateVolume()
+        private void UpdateVolume() // update overall volume
         {
             Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
             float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
@@ -505,7 +495,7 @@ namespace IS
             volume = max_volume * volume_scale;
         }
 
-        private void EnemyStateMechine()
+        private void EnemyStateMechine() // enemy state machine
         {
             EnemyChangeState();
             switch (current_state)
@@ -533,7 +523,7 @@ namespace IS
             }
         }
 
-        private void EnemyDead()
+        private void EnemyDead() // enemy dead
         {
             Random rnd = new Random();
             random_dead_sound = rnd.Next(0, 7);
@@ -577,7 +567,7 @@ namespace IS
            
         }
 
-        private void EnemyChangeState()
+        private void EnemyChangeState() // enemy change state
         {
             // if no health bar, then dead
             if (health <= 0f)
@@ -614,10 +604,10 @@ namespace IS
             }
         }
 
-        private void EnemyFollowingPlayer()
+        private void EnemyFollowingPlayer() // enemy following player
         {
             float dist = PlayerScript.player_pos.x - enemy_pos.x;
-            //Console.WriteLine(dist);
+
             if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
             {
                 Random rnd = new Random();
@@ -639,7 +629,7 @@ namespace IS
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
 
-        private void EnemyAttacking()
+        private void EnemyAttacking() // enemy attacking player
         {
             switch (random_attack)
             {
@@ -744,7 +734,7 @@ namespace IS
             }
         }
 
-        private bool PlayerInSight()
+        private bool PlayerInSight() // check if player in sight of enemy
         {
             // check if enemy has see player
             Vector2D min = new Vector2D(view_port_pos.x - view_port_area.x / 2, view_port_pos.y - view_port_area.y / 2);
@@ -760,7 +750,7 @@ namespace IS
             }
         }
 
-        private bool PlayerInAttackRange()
+        private bool PlayerInAttackRange() // check if player in attack range
         {
             // check if player in attack range
             Vector2D min = new Vector2D(attack_pos.x - attack_area.x / 2, attack_pos.y - attack_area.y / 2);
@@ -776,7 +766,7 @@ namespace IS
             }
         }
 
-        private void DrawHealthBar()
+        private void DrawHealthBar() // draw health bar
         {
             Vector3 color = new Vector3(0f, 0f, 0f);
             if (health > 50f)
