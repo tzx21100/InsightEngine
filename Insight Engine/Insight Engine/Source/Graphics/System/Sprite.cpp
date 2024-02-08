@@ -55,6 +55,8 @@ namespace IS {
         // Bind the instance VBO
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
 
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+
         // Upload the quadInstances data to the GPU
         GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 
@@ -78,6 +80,7 @@ namespace IS {
         else {
             // Handle the case where mapping the buffer was not successful
             std::cerr << "Failed to map the buffer for writing." << std::endl;
+            return;
         }
 
         // bind shader
@@ -238,46 +241,7 @@ namespace IS {
     void Sprite::draw_lights() {
         GLuint clr_attach_id = ISGraphics::mShaderFrameBuffer.GetColorAttachment(); // texture ID
         GLuint entt_attach_id = ISGraphics::mShaderFrameBuffer.GetEntityIDAttachment();
-       /* Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, 100.f, 100.f, 100.f));
-        Light::shadowLineSegments.emplace_back(glm::vec4(100.f, 100.f, 100.f, -100.f));
-        Light::shadowLineSegments.emplace_back(glm::vec4(100.f, -100.f, -100.f, -100.f));
-        Light::shadowLineSegments.emplace_back(glm::vec4(-100.f, -100.f, -100.f, 100.f));*/
-
-
-        //std::vector<glm::vec2> lightPos;
-
-        //glm::mat4 camXform = ISGraphics::cameras3D[Camera3D::mActiveCamera].getCameraToNDCXform();
-
-        //for (auto& lineSeg : line) {
-        //    glm::vec2 p0 = glm::vec4(lineSeg.x, lineSeg.y, 0.f, 1.f) * camXform;
-        //    glm::vec2 p1 = glm::vec4(lineSeg.z, lineSeg.w, 0.f, 1.f) * camXform;
-        //    lineSeg.x = p0.x, lineSeg.y = p0.y, lineSeg.z = p1.x, lineSeg.w = p1.y;
-        //}
-
-        // Bind the instance VBO
-        //GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ISGraphics::meshes[3].instance_vbo_ID));
-
-        //glUnmapBuffer(GL_ARRAY_BUFFER);
-
-        //// Upload the quadInstances data to the GPU
-        //GL_CALL(Sprite::instanceData* buffer = reinterpret_cast<Sprite::instanceData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
-
-        //if (buffer) {
-        //    // Copy the instance data to the mapped buffer
-        //    std::memcpy(buffer, ISGraphics::lightInstances.data(), ISGraphics::lightInstances.size() * sizeof(Sprite::instanceData));
-
-        //    // Unmap the buffer
-        //    if (glUnmapBuffer(GL_ARRAY_BUFFER) == GL_FALSE) {
-        //        // Handle the case where unmap was not successful
-        //        std::cerr << "Failed to unmap the buffer." << std::endl;
-        //    }
-
-        //}
-        //else {
-        //    // Handle the case where mapping the buffer was not successful
-        //    std::cerr << "Failed to map the buffer for writing." << std::endl;
-        //}        glClear(GL_COLOR_BUFFER_BIT);
-        // bind shader
+      
         GL_CALL(glUseProgram(ISGraphics::light_shader_pgm.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[5].vao_ID)); // will change to enums
 
