@@ -69,13 +69,15 @@ namespace IS
             }
             if (current_image == 3)
             {
-                CameraScript.CameraShake(0.1f);
+                CameraScript.CameraShake(0.5f);
                 CameraScript.camera_shake_duration = 0.2f;
+                CameraScript.camera_shake_intensity = 0.2f;
             }
             if (current_image == 4)
             {
-                CameraScript.CameraTargetZoom(1.3f, 0.5f);
-                CameraScript.CameraShake(2.5f);
+                CameraScript.CameraTargetZoom(1.2f, 0.5f);
+                CameraScript.CameraShake(0.5f);
+                CameraScript.camera_shake_intensity = 2f;
                 CameraScript.camera_shake_duration = 0.2f;
             }
             if (current_image == 13)
@@ -104,10 +106,12 @@ namespace IS
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
+                    CameraScript.CameraTargetZoom(2f, 1.5f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
                     InternalCalls.SetSpriteImage(image7);
+                    CameraScript.CameraTargetZoom(1f, 1.5f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 8:
