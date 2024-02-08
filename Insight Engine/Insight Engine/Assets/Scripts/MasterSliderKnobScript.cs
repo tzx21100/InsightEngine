@@ -1,3 +1,16 @@
+/*!
+ * \file MasterSliderKnobScript.cs
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu 
+ * \par Course: CSD2451
+ * \brief
+ * This C# file contains the MasterSliderKnobScript class, used for the MasterSliderKnob in settings page.
+ *
+ * \copyright
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
 using System;
 namespace IS

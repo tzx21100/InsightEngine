@@ -6,7 +6,7 @@
  * This c# file contains the HowToPlayScript class, used for "How To Play" of the game
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -135,13 +135,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
             InternalCalls.TransformSetPositionEntity(how_to_play_overlay_pos.x, how_to_play_overlay_pos.y, how_to_play_overlay_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
-            //Console.WriteLine("hi");
-            /*InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006489676f * win_dimension.y), 12.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5005309735f * win_dimension.y), 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Collect Fragments for movement abilities", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004621436f * win_dimension.y), 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.500373648f * win_dimension.y), 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5003343166f * win_dimension.y), 10.5f, (1f, 1f, 1f));*/
+         
 
             InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.67f, 12.5f, (1f, 1f, 1f));
             InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f));

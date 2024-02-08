@@ -1,3 +1,16 @@
+/*!
+ * \file MasterCheckboxScript.cs
+ * \author Matthew Ng, matthewdeen.ng@digipen.edu 
+ * \par Course: CSD2451
+ * \brief
+ * This C# file contains the MasterCheckboxScript class, used for the MasterCheckbox in settings page. When it is toggled on means audio on, when toggled off means audio off.
+ *
+ * \copyright
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
+ * All rights reserved.
+ * Reproduction or disclosure of this file or its contents without the prior written
+ * consent of DigiPen Institute of Technology is prohibited.
+ *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
 namespace IS
 {
