@@ -1,13 +1,12 @@
 /*!
  * \file YouWinScript.cs
  * \author Wu Zekai, zekai.wu@digipen.edu (90%), Matthew Ng, matthewdeen.ng@digipen.edu (10%)
- * \par Course: CSD2401
- * \date 26-11-2023
+ * \par Course: CSD2451
  * \brief
  * This header file contains the YouWinScript class, used for the win scene
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
