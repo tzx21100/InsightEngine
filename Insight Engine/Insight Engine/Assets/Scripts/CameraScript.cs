@@ -24,12 +24,12 @@ namespace IS
         static public float camera_zoom_duration = 0f;
         static private float targeted_zoom_level;
 
-
+         
 
         static public void Init(){
-            camera_zoom = 1f;
+            //camera_zoom = 1f;
             //camera zoom
-            InternalCalls.CameraSetZoom(camera_zoom);
+            //InternalCalls.CameraSetZoom(camera_zoom);
             InternalCalls.AttachCamera(PlayerScript.player_pos.x, PlayerScript.player_pos.y);
         }
 
