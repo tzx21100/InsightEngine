@@ -858,7 +858,6 @@ namespace IS
 
             if (canDash && isDashing == false && Reward_Dash)
             {
-                InternalCalls.GlitchEnable(false);
                 if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift))
                 {
                     isDashing = true;

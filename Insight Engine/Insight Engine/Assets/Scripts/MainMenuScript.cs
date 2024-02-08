@@ -32,10 +32,7 @@ namespace IS
         static private int exit_button_entity;
 
         static SimpleImage game_title_image;
-        static SimpleImage start_button_image;
-        static SimpleImage settings_button_image;
-        static SimpleImage how_to_play_button_image;
-        static SimpleImage exit_button_image;
+        static SimpleImage button_frame;
 
         static Vector2D game_title_pos = new Vector2D(0, 0);
         static Vector2D start_button_pos = new Vector2D(0, 0);
@@ -46,16 +43,13 @@ namespace IS
         static public void Init()
         {
             game_title_image = InternalCalls.GetSpriteImage("fragments_game_logo.png");
-            start_button_image = InternalCalls.GetSpriteImage("menu_start_button.png");
-            settings_button_image = InternalCalls.GetSpriteImage("menu_settings_button.png");
-            how_to_play_button_image = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
-            exit_button_image = InternalCalls.GetSpriteImage("menu_exit_button.png");
+            button_frame = InternalCalls.GetSpriteImage("button_frame.png");
 
             game_title_entity = InternalCalls.CreateEntityUI("Game Title", game_title_image);
-            start_button_entity = InternalCalls.CreateEntityButtonNoText("Start Button", start_button_image, "StartButtonScript"); //look thru
-            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Settings Button", settings_button_image, "SettingsScript"); //done for now
-            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How To Play Button", how_to_play_button_image, "HowToPlayScript"); //done
-            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", exit_button_image, "ExitButtonScript"); //done
+            start_button_entity = InternalCalls.CreateEntityButtonNoText("Start Button", button_frame, "StartButtonScript"); //look thru
+            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Settings Button", button_frame, "SettingsScript"); //done for now
+            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How To Play Button", button_frame, "HowToPlayScript"); //done
+            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", button_frame, "ExitButtonScript"); //done
         }
 
         static public void Update()
@@ -73,13 +67,14 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
             InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
+            Vector2D button = new Vector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y);
 
             // set sizes
             InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
-            InternalCalls.SetButtonSize(start_button_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
-            InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
-            InternalCalls.SetButtonSize(how_to_play_button_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
-            InternalCalls.SetButtonSize(exit_button_entity, new SimpleVector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y));
+            InternalCalls.SetButtonSize(start_button_entity, new SimpleVector2D(button.x,button.y));
+            InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(button.x, button.y));
+            InternalCalls.SetButtonSize(how_to_play_button_entity, new SimpleVector2D(button.x, button.y));
+            InternalCalls.SetButtonSize(exit_button_entity, new SimpleVector2D  (button.x, button.y));
 
             // set pos
             game_title_pos.Set(origin.x + (0.33f * win_dimension.x), origin.y + (0.76f * win_dimension.y));
@@ -111,6 +106,12 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(settings_button_pos.x, settings_button_pos.y, settings_button_entity);
             InternalCalls.TransformSetPositionEntity(how_to_play_button_pos.x, how_to_play_button_pos.y, how_to_play_button_entity);
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
+
+            InternalCalls.RenderTextFont("START", "MedusaGothic_D", 0.3118f, 0.583f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.3118f, 0.463f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.3118f, 0.343f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.3118f, 0.223f, 7.5f, (1f, 1f, 1f));
+
         }
 
         static public void HideMenuButtons()

@@ -461,7 +461,7 @@ namespace IS {
         InsightEngine::Instance().AddComponentAndUpdateSignature<Transform>(entity, Transform());
         InsightEngine::Instance().AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-        sprite_component.layer = UI_LAYER;
+        sprite_component.layer = static_cast<int>(ISGraphics::mLayers.size()-1);
         sprite_component.img = ConvertToImage(image);
         ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
@@ -486,7 +486,7 @@ namespace IS {
         std::string str2(c_str2);
         mono_free(c_str2);
         script_component.mScriptName = str2;
-        sprite_component.layer = UI_LAYER;
+        sprite_component.layer = static_cast<int>(ISGraphics::mLayers.size()-1);
         sprite_component.img = ConvertToImage(image);
         //button_component.followTransform();
         button_component.mIdleAlpha = 0.8f;
@@ -499,7 +499,7 @@ namespace IS {
         mono_free(c_str3);
         button_component.mButtonText = str3;
         
-
+        ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
     }
 
@@ -522,7 +522,7 @@ namespace IS {
         std::string str2(c_str2);
         mono_free(c_str2);
         script_component.mScriptName = str2;
-        sprite_component.layer = UI_LAYER;
+        sprite_component.layer = static_cast<int>(ISGraphics::mLayers.size()-1);
         sprite_component.img = ConvertToImage(image);
         //button_component.followTransform();
         button_component.mIdleAlpha = 0.8f;
@@ -530,7 +530,7 @@ namespace IS {
         button_component.mIdleScale = 0.9f;
         button_component.mHoverScale = 1.05f;
 
-
+        ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
     }
 
@@ -1263,7 +1263,7 @@ namespace IS {
     // layers
 
     static int GetTopLayer() {
-        return static_cast<int>(ISGraphics::mLayers.size());
+        return static_cast<int>(ISGraphics::mLayers.size()-1);
     }
 
     static void SetLayerVisible(int layer, bool boolean) {

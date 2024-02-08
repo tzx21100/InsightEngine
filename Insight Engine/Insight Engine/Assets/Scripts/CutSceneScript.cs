@@ -26,12 +26,16 @@ namespace IS
         static private float image_swap_set = 2.6f;
         static private int current_image = 1;
 
+        static private bool play_audio_collapse = false;
+
         static public void Init()
         {
+            play_audio_collapse = false;
             InternalCalls.HideCursor();
             current_image = 0;
             image_swap_timer = 2.6f;
             InternalCalls.AudioPlayMusic("JOHN_The Choice_No Clock_Loop_60bpm.wav",0.4f);
+            InternalCalls.AttachCamera(0, 0);
             //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
         }
 
@@ -65,14 +69,20 @@ namespace IS
             }
             if (current_image == 3)
             {
-                CameraScript.CameraShake(0.1f);
+                CameraScript.CameraShake(0.5f);
                 CameraScript.camera_shake_duration = 0.2f;
+                CameraScript.camera_shake_intensity = 0.2f;
             }
             if (current_image == 4)
             {
-                CameraScript.CameraTargetZoom(1.3f, 0.5f);
-                CameraScript.CameraShake(2.5f);
+                CameraScript.CameraTargetZoom(1.2f, 0.5f);
+                CameraScript.CameraShake(0.5f);
+                CameraScript.camera_shake_intensity = 2f;
                 CameraScript.camera_shake_duration = 0.2f;
+            }
+            if (current_image == 13)
+            {
+                image_swap_set = 2.0f;
             }
 
 
@@ -96,9 +106,13 @@ namespace IS
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
+                    CameraScript.CameraTargetZoom(2f, 1.5f);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
                     InternalCalls.SetSpriteImage(image7);
+                    CameraScript.CameraTargetZoom(1f, 1.5f);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
@@ -120,9 +134,15 @@ namespace IS
                     break;
                 case 14:
                     InternalCalls.SetSpriteImage(image13);
+                    if (!play_audio_collapse)
+                    {
+                        InternalCalls.AudioPlayMusic("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
+                    }
+                    play_audio_collapse = true;
                     break;
                 case 15:
                     InternalCalls.SetSpriteImage(image14);
+                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 16:
                     InternalCalls.SetSpriteImage(image15);

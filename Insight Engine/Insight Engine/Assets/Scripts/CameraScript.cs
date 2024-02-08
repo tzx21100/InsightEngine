@@ -19,6 +19,8 @@ namespace IS
         static public Vector2D target_pos = new Vector2D(0, 0);
         static public float camera_zoom = 1f;
 
+        static public float camera_shake_intensity = 1f;
+
         //zoom
         static public bool zoom_enable = false;
         static public float camera_zoom_duration = 0f;
@@ -65,11 +67,12 @@ namespace IS
                     camera_shake_timer = camera_shake_set;
                     camera_shake_angle += CustomMath.PI / 4;
                 }
-                InternalCalls.AttachCamera(camera_pos.x + 10 * camera_shake_dir.x, camera_pos.y + 10 * camera_shake_dir.y);
+                InternalCalls.AttachCamera(camera_pos.x + (10*camera_shake_intensity) * camera_shake_dir.x, camera_pos.y + (10 * camera_shake_intensity) * camera_shake_dir.y);
 
                 return true;
             }
 
+            camera_shake_intensity = 1f;
             return false;
         }
 
