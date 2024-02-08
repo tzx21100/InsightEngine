@@ -27,11 +27,19 @@ namespace IS
         static private int current_image = 1;
 
         static private bool play_audio_collapse = false;
+        static private bool play_yk_voicelines = false;
+        static private bool play_first_explosion= false;
+        static private bool play_second_explosion=false;
+        static private bool play_third_explosion = false;
 
 
         static public void Init()
         {
+            play_yk_voicelines = false;
             play_audio_collapse = false;
+            play_first_explosion = false;
+            play_second_explosion = false;
+            play_third_explosion = false;
             InternalCalls.HideCursor();
             current_image = 0;
             image_swap_timer = 2.6f;
@@ -101,15 +109,37 @@ namespace IS
                     break;
                 case 3:
                     InternalCalls.SetSpriteImage(image3);
+                    if (!play_yk_voicelines)
+                    {
+                        InternalCalls.AudioPlayMusic("VO-MadCoder-001.wav", 0.2f);
+                        play_yk_voicelines= true;
+                    }
                     break;
                 case 4:
                     InternalCalls.SetSpriteImage(image4);
+                    if (!play_first_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
+                        play_first_explosion = true;
+                    }
                     break;
                 case 5:
                     InternalCalls.SetSpriteImage(image5);
+                    if (!play_second_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
+                        play_second_explosion = true;
+                    }
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
+                    if (!play_third_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("SCI-FI-GROUND-BREAK_GEN-HDF-20675.wav", 0.2f);
+                        play_third_explosion = true;
+                    }
+
+
                     CameraScript.CameraTargetZoom(2f, 0.2f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
@@ -149,6 +179,7 @@ namespace IS
                     if (!play_audio_collapse)
                     {
                         InternalCalls.AudioPlayMusic("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
+
                     }
                     play_audio_collapse = true;
                     break;
@@ -159,7 +190,7 @@ namespace IS
                     break;
                 case 16:
                     InternalCalls.SetSpriteImage(image15);
-                    InternalCalls.FadeOutAudio(1.2f);
+                    InternalCalls.FadeOutAudio(1f);
                     break;
             }
 
