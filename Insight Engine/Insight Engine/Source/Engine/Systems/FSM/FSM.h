@@ -1,7 +1,7 @@
 /*!
 * \file FSM.h
 * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
-* \par Course: CSD2401
+* \par Course: CSD2451
 * \date  08-02-2024
 * \brief
 * This header file declares the FSM system integrated with scripts.

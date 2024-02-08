@@ -1,7 +1,7 @@
 /*!
  * \file Camera3D.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This file defines the Camera class used for managing view and projection in graphics systems.

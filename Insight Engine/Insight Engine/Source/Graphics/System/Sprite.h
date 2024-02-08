@@ -1,7 +1,7 @@
 /*!
  * \file Sprite.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This header file defines the Sprite class, which represents a 2D sprite with transformation, rendering properties,

@@ -1,7 +1,7 @@
 /*!
  * \file Light.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This file defines the Light class, representing a light component used in the graphics system.

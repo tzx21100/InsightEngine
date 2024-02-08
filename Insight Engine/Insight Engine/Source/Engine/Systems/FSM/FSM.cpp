@@ -1,7 +1,7 @@
 /*!
 * \file FSM.cpp
 * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
-* \par Course: CSD2401
+* \par Course: CSD2451
 * \date  08-02-2024
 * \brief
 * This header file defines the FSM functions to create scripts and attach

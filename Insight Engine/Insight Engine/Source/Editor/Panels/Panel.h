@@ -1,7 +1,7 @@
 /*!
  * \file Panel.h
  * \author Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 17-10-2023
  * \brief
  * This header file declares the interface for parent class Panel and its derived classes,

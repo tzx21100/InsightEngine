@@ -1,7 +1,7 @@
 /*!
  * \file InspectorPanel.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 23-09-2023
  * \brief
  * This source file defines the implementation for class InspectorPanel,
@@ -122,10 +122,11 @@ namespace IS {
 
             // Save Prefab
             ImGui::SameLine();
-            if (ImGui::Button("Save as prefab"))
+            if (ImGui::Button(ICON_LC_SAVE))
             {
                 engine.SaveAsPrefab(entity, name);
             }
+            ImGui::SetItemTooltip("Save as a prefab");
 
             // Category
             EditorUtils::RenderTableLabel("Category", "Categorizes Entities.\n(i.e., Player, Platform, Background, etc.)");

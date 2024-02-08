@@ -1,7 +1,7 @@
 /*!
  * \file Collision.h
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains various collision detection and resolution functions for different geometric shapes,

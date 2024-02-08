@@ -1,7 +1,7 @@
 /*!
  * \file ScriptEngine.h
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 27-09-2023
  * \brief
  * This header file declares the implementation of the Script engine

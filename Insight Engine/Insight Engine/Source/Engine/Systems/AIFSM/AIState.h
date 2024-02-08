@@ -2,7 +2,7 @@
 /*!
 \file	AIState.h
 \author Matthew Ng, matthewdeen.ng@digipen.edu
-\par Course: CSD2401
+\par Course: CSD2451
 \date 02-11-2023
 \brief
 Component of AIFSM system

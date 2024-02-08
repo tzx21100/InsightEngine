@@ -1,7 +1,7 @@
 /*!
  * \file GameLoop.h
  * \author NA Not applicable.
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-09-2023
  * \brief
  *

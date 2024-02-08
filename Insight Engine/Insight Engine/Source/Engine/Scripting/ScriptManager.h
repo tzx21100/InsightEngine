@@ -1,7 +1,7 @@
     /*!
  * \file SceneManager.h
  * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 02-11-2023
  * \brief
  * This header file declares the ScriptManager system and ScriptComponent for

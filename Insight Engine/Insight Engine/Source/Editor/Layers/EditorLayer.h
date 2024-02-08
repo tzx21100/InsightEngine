@@ -1,7 +1,7 @@
 /*!
  * \file EditorLayer.h
  * \author Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 27-09-2023
  * \brief
  * This header file declares the interface for class EditorLayer which

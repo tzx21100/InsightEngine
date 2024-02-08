@@ -1,7 +1,7 @@
 /*!
  * \file Collision.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains functions needed for handling collision detection between

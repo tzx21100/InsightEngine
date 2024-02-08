@@ -1,7 +1,7 @@
 /*!
  * \file Component.h
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-09-2023
  * \brief
  * This header file defines the implementation of the Components in our

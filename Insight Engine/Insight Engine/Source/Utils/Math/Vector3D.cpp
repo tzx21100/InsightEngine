@@ -1,7 +1,7 @@
 /*!
  * \file Vector3D.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * Definition of the Vector3D class for representing 3D vectors and

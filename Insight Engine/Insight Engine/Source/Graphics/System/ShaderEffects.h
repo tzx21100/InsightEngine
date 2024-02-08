@@ -1,7 +1,7 @@
 /*!
  * \file Animation.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 09-02-2024
  * \brief
  * This header file defines the ShaderEffect class, which manages shader generated visual effects.

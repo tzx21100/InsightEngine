@@ -1,7 +1,7 @@
 /*!
  * \file ISMath.h
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file defines the ISMath class for representing Min and Max operations.
