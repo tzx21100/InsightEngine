@@ -150,6 +150,11 @@ namespace IS {
         static void DrawOutLine(Collider& collider, std::tuple<float, float, float> const& color = { 0.f, 1.f, 0.f });
 
         // for shadow lights
+        /*!
+         * \brief Add into line segements for shadow lights
+         *
+         * \param entity The set of entities to consider in the physics step.
+         */
         void AddLineSegementsForLights(Entity const& entity);
 
         /*!
