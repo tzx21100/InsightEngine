@@ -9,7 +9,7 @@
  * This header file declares the ISAudio class for handling audio in the game engine.
  * The ISAudio class provides functions for initializing, playing, and managing audio and sound groups.
  *
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.

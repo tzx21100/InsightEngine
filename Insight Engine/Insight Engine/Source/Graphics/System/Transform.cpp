@@ -8,7 +8,7 @@
  * for game objects in an OpenGL-based application.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.

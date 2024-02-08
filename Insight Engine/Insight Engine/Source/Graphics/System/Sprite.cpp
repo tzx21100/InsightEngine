@@ -8,7 +8,7 @@
  * and animation capabilities.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -144,7 +144,7 @@ namespace IS {
         }
 
         // bind shader
-        GL_CALL(glUseProgram(ISGraphics::main_quad_shader.getHandle()));
+        GL_CALL(glUseProgram(ISGraphics::glitched_quad_shader_pgm.getHandle()));
         GL_CALL(glBindVertexArray(ISGraphics::meshes[3].vao_ID)); // will change to enums
 
         // store texture array indices
