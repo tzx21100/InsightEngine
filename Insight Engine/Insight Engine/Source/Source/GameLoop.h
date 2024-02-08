@@ -469,11 +469,15 @@ namespace IS {
             //    }
             //    else { buttonsprite.color = glm::vec3(1.f, 1.f, 1.f); }
             //}
+        #endif // USING_IMGUI
 
             if (input->IsKeyPressed(GLFW_KEY_X)) {
                 ShaderEffect::play_fragment_light();
             }
-        #endif // USING_IMGUI
+
+            if (input->IsKeyPressed(GLFW_KEY_F3)) {
+                ISGraphics::mDisplayFPS = !ISGraphics::mDisplayFPS;
+            }
         }
 
         virtual void Draw([[maybe_unused]] float delta) override {

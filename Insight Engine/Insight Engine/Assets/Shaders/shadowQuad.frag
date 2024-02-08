@@ -45,9 +45,9 @@ float generate_rand(vec2 uv)
     return fract(sin(uTimeElapsed));
 }
 
-float real_random_thing(vec2 some_parameter)
+float random_generator(vec2 param)
 {
-    return fract(sin(dot(some_parameter, vec2(12.9898, 78.233))) * 43758.5453) * uTimeElapsed;
+    return fract(sin(dot(param, vec2(12.9898, 78.233))) * 43758.5453) * uTimeElapsed;
 }
 
 vec2 applyLensDistortion(vec2 uv, float distortionAmount) {
@@ -67,7 +67,6 @@ void main() {
     vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Pixel position to NDC
     vec4 worldPos = uInverseVP * ndcPos; // NDC to world coordinates
     vec2 current_pixel = worldPos.xy / worldPos.w; // Correct by perspective division
-    int render = 0;
     float dist = 1.0;
 
     for (int i = 0; i < uNoOfWorldLights; ++i) 
@@ -76,11 +75,10 @@ void main() {
         float distance = length(lightDirection);
         float radius = uLightRadius[i];
 
-        // change to sepia
+        // tutorial shader effect
         if (uShaderEffect == 1){
-            radius = radius * 3;
+            radius = radius * 1;
         }
-        //end of change to sepia 
 
         if (distance < radius) {
             float attenuation = pow(1.0 - (distance / radius), 2.0); // Squared falloff attenuation
@@ -94,11 +92,11 @@ void main() {
                 vec2 p1 = vec2(uLineSegments[j].z, uLineSegments[j].w);
                 if (doLineSegmentsIntersect(uLightWorldPos[i], current_pixel, p0, p1)) {
 
-                    if (uShaderEffect==0){
-                    lightContribution *= 0.0; // Shadow attenuation
+                    if (uShaderEffect==0) {
+                        lightContribution *= 0.0; // Shadow attenuation
                     }
-                    else{
-                        lightContribution*=0.8;
+                    else {
+                        lightContribution *= 0.0;
                     }
                     inShadow = true;
                 }
@@ -106,29 +104,17 @@ void main() {
 
             // Blend light contribution using custom blend function
             final_frag_clr.rgb = blendLight(final_frag_clr.rgb, lightContribution);
-            ++render;
-
-            if ((distance / radius) < dist)
-                dist = distance / radius;
+            if ((distance / radius) < dist) dist = distance / radius;
         }
     }
-
+    
     if (uShaderEffect == 0)
     {
-        fFragColor = final_frag_clr;    
-
+        fFragColor = final_frag_clr;
     }
     if (uShaderEffect == 1)
     {
-        if (render == 0)
-        {
-            fFragColor = fFragColor;
-        }
-        else
-        {
-            fFragColor = final_frag_clr * (1.0 - dist);
-        }
-        
+        fFragColor = final_frag_clr * (1.0 - dist / 2.5); // light circle around player
     }
     if (uShaderEffect==2)
     {
@@ -137,8 +123,8 @@ void main() {
         avr *= 1.0;
         fFragColor = vec4(vec3(avr), final_frag_clr.a);
 
-        if (mod(gl_FragCoord.x, real_random_thing(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, real_random_thing(vTexCoord) * 10.0) < 0.1)
-            fFragColor = vec4(real_random_thing(vTexCoord));
+        if (mod(gl_FragCoord.x, random_generator(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, random_generator(vTexCoord) * 10.0) < 0.1)
+            fFragColor = vec4(random_generator(vTexCoord));
     }
     if (uShaderEffect == 3) { // static glitch
         // Determine glitch activation based on uTimeElapsed

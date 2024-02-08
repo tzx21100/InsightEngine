@@ -18,14 +18,13 @@ namespace IS {
             fragment_light
         };
 
-        
-
         static void play_static_glitch();
         static void play_fragment_light();
         static void shader_effect_update(float dt);
 
 
         static shaderEffect currentShaderEffect;
+        static shaderEffect prevShaderEffect;
         static float shader_effect_timer;
     };
 } // end namespace IS

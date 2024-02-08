@@ -163,6 +163,7 @@ namespace IS {
 		// Flags
 		static bool mGlitched;
 		static bool mLightsOn;
+		static bool mDisplayFPS;
 
 		// Layers
 		static std::vector<Layering>mLayers;

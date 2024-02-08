@@ -24,7 +24,6 @@
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 
-
 #include <stb_image.h>
 
 namespace IS {
@@ -71,6 +70,7 @@ namespace IS {
 
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
+    bool ISGraphics::mDisplayFPS = false;
 
 
     // Layering
@@ -377,12 +377,17 @@ namespace IS {
         color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
 
         // Text Attribute
-        //std::ostringstream render_text;
-        //render_text << "FPS: " << std::fixed << std::setprecision(0) << 1 / engine.mDeltaTime << "\nFuck";
-        //render_text << "Delta Time: " << std::fixed << std::setprecision(6) << engine.mDeltaTime << '\n';
+        std::ostringstream render_text;
+        render_text << "FPS: " << std::fixed << std::setprecision(2) << 1 / engine.mDeltaTime << "\n\n\n\n\n";
+        render_text << "Delta Time: " << std::fixed << std::setprecision(4) << engine.mDeltaTime << '\n';
 
         // Render Text
-        //mTexts["MedusaGothic_D"].addTextRenderCall(render_text.str(), pos_x, pos_y, scale, color);
+
+        if (mDisplayFPS) {
+            
+
+            mTexts["Times_New_Roman"].addTextRenderCall(render_text.str(), 0.10f, 0.98f, 8.f, color);
+        }
         //North_Forest_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         
         // render all text
