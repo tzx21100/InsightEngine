@@ -32,7 +32,7 @@ namespace IS
         static private int settings_button_entity;
         static private int back_to_menu_button_entity;
         static private int exit_button_entity;
-        
+
 
         static SimpleImage pause_menu_image;
         static SimpleImage resume_button_image;
@@ -42,14 +42,14 @@ namespace IS
         static SimpleImage exit_button_image;
 
         static Vector2D pause_menu_pos = new Vector2D(0, 0);
-        static Vector2D resume_button_pos = new Vector2D(0,0);
-        static Vector2D how_to_play_button_pos = new Vector2D(0,0);
-        static Vector2D settings_button_pos = new Vector2D(0,0);
-        static Vector2D back_to_menu_button_pos = new Vector2D(0,0);
-        static Vector2D exit_button_pos = new Vector2D(0,0);
+        static Vector2D resume_button_pos = new Vector2D(0, 0);
+        static Vector2D how_to_play_button_pos = new Vector2D(0, 0);
+        static Vector2D settings_button_pos = new Vector2D(0, 0);
+        static Vector2D back_to_menu_button_pos = new Vector2D(0, 0);
+        static Vector2D exit_button_pos = new Vector2D(0, 0);
 
         // Camera Pos
-        static Vector2D camera_pos = new Vector2D(0,0);
+        static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
         // Windows
@@ -61,22 +61,22 @@ namespace IS
             paused = false;
 
             // Pause Menu
-            pause_menu_image    = InternalCalls.GetSpriteImage("pause_menu_image.png");
-            resume_button_image        = InternalCalls.GetSpriteImage("resume_game_button.png");
-            settings_button_image     = InternalCalls.GetSpriteImage("menu_settings_button.png");
-            how_to_play_button_image   = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
-            back_to_menu_button_image          = InternalCalls.GetSpriteImage("main_menu_button.png");
-            exit_button_image          = InternalCalls.GetSpriteImage("quit_game_button.png");
+            pause_menu_image = InternalCalls.GetSpriteImage("pause_menu_image.png");
+            resume_button_image = InternalCalls.GetSpriteImage("resume_game_button.png");
+            settings_button_image = InternalCalls.GetSpriteImage("menu_settings_button.png");
+            how_to_play_button_image = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
+            back_to_menu_button_image = InternalCalls.GetSpriteImage("main_menu_button.png");
+            exit_button_image = InternalCalls.GetSpriteImage("quit_game_button.png");
 
-            pause_menu_entity   = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
-            resume_button_entity       = InternalCalls.CreateEntityButtonNoText("Resume Game", resume_button_image, "ResumeButtonScript");
+            pause_menu_entity = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
+            resume_button_entity = InternalCalls.CreateEntityButtonNoText("Resume Game", resume_button_image, "ResumeButtonScript");
             settings_button_entity = InternalCalls.CreateEntityButtonNoText("Setting", settings_button_image, "SettingsScript");
-            how_to_play_button_entity  = InternalCalls.CreateEntityButtonNoText("How to Play Button", how_to_play_button_image, "HowToPlayScript");
+            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How to Play Button", how_to_play_button_image, "HowToPlayScript");
             back_to_menu_button_entity = InternalCalls.CreateEntityButtonNoText("Main Menu", back_to_menu_button_image, "BackToMenuButtonScript");
             exit_button_entity = InternalCalls.CreateEntityButtonNoText("Quit Game", exit_button_image, "ExitButtonScript");
 
-            
-            
+
+
         }
 
         static public void Update()
@@ -115,7 +115,7 @@ namespace IS
 
             // Offset pause button position
             InternalCalls.TransformSetPosition(camera_pos.x + offset_xpos, camera_pos.y + offset_ypos);
-            
+
             // Positions
             pause_menu_pos.Set(camera_pos.x, camera_pos.y);
             resume_button_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y + 0.12f * win_dimension.y);
@@ -143,7 +143,7 @@ namespace IS
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
             }
             //click
-            if (InternalCalls.GetButtonState() == 2) 
+            if (InternalCalls.GetButtonState() == 2)
             {
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
@@ -160,8 +160,8 @@ namespace IS
 
             if (paused) // if game paused
             {
-
                 InternalCalls.GamePause(true);
+                InternalCalls.SetLightsToggle(false);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
                     // move away the pause button
@@ -178,6 +178,7 @@ namespace IS
             else
             {
                 InternalCalls.GamePause(false);
+                InternalCalls.SetLightsToggle(true);
                 HidePauseMenu();
             }
             
