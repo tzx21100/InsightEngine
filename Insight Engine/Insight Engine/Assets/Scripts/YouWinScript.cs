@@ -21,7 +21,7 @@ namespace IS
 
         static private int back_button_entity;
 
-        static SimpleImage back_button_image;
+        static SimpleImage button_frame;
 
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
@@ -35,9 +35,8 @@ namespace IS
 
         static public void Init()
         {
-            back_button_image = InternalCalls.GetSpriteImage("win_back_button.png");
-
-            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromWinScript");
+            button_frame = InternalCalls.GetSpriteImage("button_frame.png");
+            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", button_frame, "BackFromWinScript");
 
         }
 
@@ -68,6 +67,8 @@ namespace IS
             InternalCalls.TransformSetPosition(camera_pos.x, camera_pos.y);
 
             back_button_pos.Set(origin.x + (0.16f * win_dimension.x), origin.y + (0.85f * win_dimension.y));
+            InternalCalls.RenderTextFont("BACK", "MedusaGothic_D", 0.163f, 0.856f, 14f, (1f, 1f, 1f));
+
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
             //hover

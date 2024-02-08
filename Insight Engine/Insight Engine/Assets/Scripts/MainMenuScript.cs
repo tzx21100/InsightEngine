@@ -107,10 +107,10 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(how_to_play_button_pos.x, how_to_play_button_pos.y, how_to_play_button_entity);
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
 
-            InternalCalls.RenderTextFont("START", "Semplicita_Light", 0.3095f, 0.583f, 11f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("SETTINGS", "Semplicita_Light", 0.3095f, 0.463f, 11f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("HOW TO PLAY", "Semplicita_Light", 0.3095f, 0.343f, 11f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("EXIT", "Semplicita_Light", 0.3095f, 0.223f, 11f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("START", "MedusaGothic_D", 0.3118f, 0.583f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.3118f, 0.463f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.3118f, 0.343f, 7.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.3118f, 0.223f, 7.5f, (1f, 1f, 1f));
 
         }
 

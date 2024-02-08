@@ -35,11 +35,7 @@ namespace IS
 
 
         static SimpleImage pause_menu_image;
-        static SimpleImage resume_button_image;
-        static SimpleImage how_to_play_button_image;
-        static SimpleImage settings_button_image;
-        static SimpleImage back_to_menu_button_image;
-        static SimpleImage exit_button_image;
+        static SimpleImage button_frame;
 
         static Vector2D pause_menu_pos = new Vector2D(0, 0);
         static Vector2D resume_button_pos = new Vector2D(0, 0);
@@ -62,18 +58,13 @@ namespace IS
 
             // Pause Menu
             pause_menu_image = InternalCalls.GetSpriteImage("pause_menu_image.png");
-            resume_button_image = InternalCalls.GetSpriteImage("resume_game_button.png");
-            settings_button_image = InternalCalls.GetSpriteImage("menu_settings_button.png");
-            how_to_play_button_image = InternalCalls.GetSpriteImage("menu_how_to_play_button.png");
-            back_to_menu_button_image = InternalCalls.GetSpriteImage("main_menu_button.png");
-            exit_button_image = InternalCalls.GetSpriteImage("quit_game_button.png");
-
+            button_frame = InternalCalls.GetSpriteImage("button_frame.png");
             pause_menu_entity = InternalCalls.CreateEntityUI("Pause Menu", pause_menu_image);
-            resume_button_entity = InternalCalls.CreateEntityButtonNoText("Resume Game", resume_button_image, "ResumeButtonScript");
-            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Setting", settings_button_image, "SettingsScript");
-            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How to Play Button", how_to_play_button_image, "HowToPlayScript");
-            back_to_menu_button_entity = InternalCalls.CreateEntityButtonNoText("Main Menu", back_to_menu_button_image, "BackToMenuButtonScript");
-            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Quit Game", exit_button_image, "ExitButtonScript");
+            resume_button_entity = InternalCalls.CreateEntityButtonNoText("Resume Game", button_frame, "ResumeButtonScript");
+            settings_button_entity = InternalCalls.CreateEntityButtonNoText("Setting", button_frame, "SettingsScript");
+            how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How to Play Button", button_frame, "HowToPlayScript");
+            back_to_menu_button_entity = InternalCalls.CreateEntityButtonNoText("Main Menu", button_frame, "BackToMenuButtonScript");
+            exit_button_entity = InternalCalls.CreateEntityButtonNoText("Quit Game", button_frame, "ExitButtonScript");
 
 
 
@@ -202,6 +193,12 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(how_to_play_button_pos.x, how_to_play_button_pos.y, how_to_play_button_entity);
             InternalCalls.TransformSetPositionEntity(back_to_menu_button_pos.x, back_to_menu_button_pos.y, back_to_menu_button_entity);
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
+
+            InternalCalls.RenderTextFont("RESUME GAME", "MedusaGothic_D", 0.497f, 0.625f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.497f, 0.52f, 8f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.497f, 0.433f, 8f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.497f, 0.35f, 8f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.497f, 0.267f, 8f, (1f, 1f, 1f));
 
         }
 
