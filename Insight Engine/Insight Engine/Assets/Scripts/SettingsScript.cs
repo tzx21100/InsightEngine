@@ -132,8 +132,10 @@ namespace IS
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
-     
 
+            /*master_slider_knob_pos = new Vector2D(0, 0);
+            bgm_slider_knob_pos = new Vector2D(0, 0);
+            vfx_slider_knob_pos = new Vector2D(0, 0);*/
         }
 
         static public void Update()
@@ -197,7 +199,7 @@ namespace IS
             master_slider_knob_pos.Set(master_slider_knob_pos.x, origin.y + (0.543f * win_dimension.y));
 
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y)); //Change 9999?
-
+            
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
