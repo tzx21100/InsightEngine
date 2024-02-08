@@ -1,7 +1,7 @@
 /*!
  * \file Matrix3x3.h
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 28-09-2023
  * \brief
  * This header file defines the Matrix3x3 class for representing 3x3 matrices

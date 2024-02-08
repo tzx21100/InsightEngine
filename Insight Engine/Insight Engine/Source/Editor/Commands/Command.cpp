@@ -1,7 +1,7 @@
 /*!
  * \file Command.cpp
  * \author Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 20-11-2023
  * \brief
  * This source file defines the implementation for class ICommmand and its

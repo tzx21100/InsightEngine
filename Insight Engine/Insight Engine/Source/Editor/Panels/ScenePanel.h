@@ -1,7 +1,7 @@
 /*!
  * \file ScenePanel.h
  * \author Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 12-11-2023
  * \brief
  * This header file declares the interface for class ScenePanel, which encapsulates

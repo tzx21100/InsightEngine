@@ -1,7 +1,7 @@
 /*!
  * \file Vector2D.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 28-09-2023
  * \brief
  * This header file defines the Vector2D class for representing 2D vectors and

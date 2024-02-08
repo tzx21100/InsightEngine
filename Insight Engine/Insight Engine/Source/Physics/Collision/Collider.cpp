@@ -1,7 +1,7 @@
 /*!
  * \file Collider.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains the Collider class and associated structures for

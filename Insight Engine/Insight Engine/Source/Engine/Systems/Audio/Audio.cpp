@@ -3,7 +3,7 @@
  * \file Audio.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
  *          Tan Zheng Xun, t.zhengxun@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 27-09-2023
  * \brief
  * Implementation of the ISAudio class for handling audio in the game engine.

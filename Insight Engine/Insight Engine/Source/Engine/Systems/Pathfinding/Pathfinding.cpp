@@ -2,7 +2,7 @@
 /*!
  * \file Pathfinding.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 02-11-2023
  * \brief
  * Definition of the Pathfinding class for managing pathfinding for AI (will be incoorporated in M3)

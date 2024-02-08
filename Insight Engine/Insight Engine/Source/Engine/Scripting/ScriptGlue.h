@@ -2,7 +2,7 @@
 /*!
 \file    ScriptGlue.h
 \author  Matthew Ng, matthewdeen.ng@digipen.edu
-\par     Course: CSD2401
+\par     Course: CSD2451
 \date    27-09-2023
 \brief   This header file declares the implementation of the ScriptGlue class,
          which is responsible for registering C++ functions to be accessible from

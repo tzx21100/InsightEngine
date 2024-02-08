@@ -1,7 +1,7 @@
 /*!
  * \file Button.cpp
  * \author Tan Zheng Xun, t.zhengxun@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 02-11-2023
  * \brief
  * This is a simple in-game GUI system that defines a single button component and the

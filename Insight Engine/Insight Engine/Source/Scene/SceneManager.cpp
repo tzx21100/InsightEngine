@@ -2,7 +2,7 @@
  * \file SceneManager.cpp
  * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
 			Guo Yiming, yiming.guo@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 23-10-2023
  * \brief
  * This source file defines the implementation for class SceneManager,

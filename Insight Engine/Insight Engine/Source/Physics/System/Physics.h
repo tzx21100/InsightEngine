@@ -1,7 +1,7 @@
 /*!
  * \file Physics.h
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains the Physics class and related functions for real world physics simulation 

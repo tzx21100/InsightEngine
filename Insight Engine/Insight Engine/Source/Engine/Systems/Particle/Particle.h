@@ -2,7 +2,7 @@
 /*!
  * \file Particle.h
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * Declaration of structs/class, systems for particles

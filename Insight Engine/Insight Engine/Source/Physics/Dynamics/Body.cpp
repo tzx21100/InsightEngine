@@ -1,7 +1,7 @@
 /*!
  * \file Body.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 28-09-2023
  * \brief
  * This header file contains the definitions of the `RigidBody` class, which is used to represent 

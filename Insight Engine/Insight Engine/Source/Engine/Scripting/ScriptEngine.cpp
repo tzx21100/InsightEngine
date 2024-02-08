@@ -1,7 +1,7 @@
 /*!
  * \file ScriptEngine.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 27-09-2023
  * \brief
  * This source file implements the ScriptEngine class and related functionality for interacting with C# scripting.

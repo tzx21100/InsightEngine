@@ -2,7 +2,7 @@
 /*!
  * \file Vector4D.cpp
  * \author Matthew Ng, matthewdeen.ng@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * Definition of the Vector4D class for representing 4D vectors and

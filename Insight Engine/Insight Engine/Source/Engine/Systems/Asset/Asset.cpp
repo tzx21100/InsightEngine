@@ -2,7 +2,7 @@
 /*!
 \file	Asset.cpp
 \author Matthew Ng, matthewdeen.ng@digipen.edu
-\par Course: CSD2401
+\par Course: CSD2451
 \date 27-09-2023
 \brief
 Definition of the AssetManager class for managing game assets.

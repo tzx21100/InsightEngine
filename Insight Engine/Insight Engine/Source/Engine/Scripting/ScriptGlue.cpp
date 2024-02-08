@@ -5,7 +5,7 @@
          Tan Zheng Xun, t.zhengxun@digipen.edu  (40%)
          Guo Yiming, yiming.guo@digipen.edu (5%)
          Wu Zekai, zekai.wu@digipen.edu (20%)
-\par     Course: CSD2401
+\par     Course: CSD2451
 \date    2-11-2023
 \brief   This source file defines the implementation of the ScriptGlue class, which
          registers C++ functions to be accessible from C# scripts. 
