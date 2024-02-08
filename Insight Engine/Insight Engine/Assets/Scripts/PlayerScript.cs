@@ -215,6 +215,7 @@ namespace IS
 
         // stablize player
         static private float prev_x = 0f;
+        static private float prev_rotation=0f;
 
         // Collectible
 
@@ -280,7 +281,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
 
 
-            entity_feet = InternalCalls.CreateEntity("FeetCollider");
+            entity_feet = InternalCalls.CreateEntityVFX("FeetCollider",player_land);
             entityWall = InternalCalls.CreateEntity("WallCollider");
             entity_attack = InternalCalls.CreateEntity("AttackCollider");
             width = InternalCalls.GetTransformScaling().x / 3f;
@@ -748,8 +749,13 @@ namespace IS
                         {
                             InternalCalls.TransformSetRotation(collided_angle, 0);
                             prev_x = InternalCalls.GetTransformPosition().x;
+                            prev_rotation = InternalCalls.GetTransformRotation();
                         }
-                        
+                        else
+                        {
+                            InternalCalls.TransformSetRotation(prev_rotation, 0);
+                        }
+
                     }
                     else
                     {
