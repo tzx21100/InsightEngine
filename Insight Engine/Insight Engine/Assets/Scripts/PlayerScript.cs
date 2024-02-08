@@ -202,6 +202,7 @@ namespace IS
         static public Vector2D player_pos = new Vector2D(0, 0);
         static public Vector2D trans_scaling = new Vector2D(0, 0);
         static public Vector2D player_vel = new Vector2D(0, 0);
+        //static public float collider_offset_x = 22f;
 
         //camera pos
         static public Vector2D camera_pos = new Vector2D(0, 0);
@@ -510,6 +511,16 @@ namespace IS
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
 
+            // update player collider offset
+            /*if (isGrounded)
+            {
+                InternalCalls.SetCircleColliderOffsetX(MathF.Sign(-trans_scaling.x) * collider_offset_x);
+                
+            }
+            else
+            {
+                InternalCalls.SetCircleColliderOffsetX(0); // reset collider offset when climbing
+            }*/
 
             /*            int rotate = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.Q)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.E));
                         trans_rotate += rotate * InternalCalls.GetRigidBodyAngularVelocity();*/
@@ -1056,12 +1067,12 @@ namespace IS
 
         static private void WallCheckerUpdate()
         {
-            if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-999, -99999, entityWall); return; }
+            if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entityWall); return; }
             xCoord = InternalCalls.GetTransformPosition().x;
             yCoord = InternalCalls.GetTransformPosition().y;
             float rotationAngle = InternalCalls.GetTransformRotation();
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceLeft = width*0.68f * hori_movement;
+            float distanceLeft = width * 0.68f * hori_movement;
 
             Vector2D relativePosition = new Vector2D(distanceLeft, 0);
 
@@ -1080,7 +1091,6 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
             InternalCalls.TransformSetScaleEntity(2f, height / 2f, entityWall);
-
         }
 
         static float distance_light = width;
@@ -1124,7 +1134,8 @@ namespace IS
 
 
             }
-            Vector2D relativePosition = new Vector2D(distance_light, 0);
+            //Vector2D relativePosition = new Vector2D(distance_light, 0);
+            Vector2D relativePosition = new Vector2D(0, 0);
 
             // Apply rotation to the relative position
             Vector2D rotatedRelativePosition = new Vector2D(
