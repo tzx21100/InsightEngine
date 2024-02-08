@@ -225,6 +225,8 @@ namespace IS
         // hide health
         static public bool hideHealth = false;
 
+        // light type
+        static public int PLAYER_LIGHT = 0;
 
         public static int BoolToInt(bool boolValue)
         {

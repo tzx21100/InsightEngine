@@ -82,6 +82,7 @@ namespace IS
                 if (PlayerScript.player_pos.y > 4600)
                 {
                     InternalCalls.ChangeLightType(0);
+                    PlayerScript.PLAYER_LIGHT = 0;
                     CameraScript.camera_pos.x = -591;
                     CameraScript.camera_pos.y = 76;
                     InternalCalls.AttachCamera(-591, 76);
