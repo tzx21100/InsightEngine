@@ -32,7 +32,7 @@ namespace IS
             //camera_zoom = 1f;
             //camera zoom
             //InternalCalls.CameraSetZoom(camera_zoom);
-            InternalCalls.AttachCamera(PlayerScript.player_pos.x, PlayerScript.player_pos.y);
+            InternalCalls.AttachCamera(camera_pos.x,camera_pos.y);
         }
 
         static public void Update() {

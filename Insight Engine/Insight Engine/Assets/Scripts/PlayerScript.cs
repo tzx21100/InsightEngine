@@ -321,6 +321,9 @@ namespace IS
             // init enemy info
             is_colliding_enemy = false;
 
+            CameraScript.camera_pos.x = player_pos.x;
+            CameraScript.camera_pos.y = player_pos.y;
+            InternalCalls.ChangeLightType(PLAYER_LIGHT);
 
         }
 

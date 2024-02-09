@@ -19,7 +19,7 @@ namespace IS
 {
     class FragmentScript
     {
-        static float glitch_timer = 1.0f;
+        static float glitch_timer = 0f;
         static public void Init(){
 
         }
