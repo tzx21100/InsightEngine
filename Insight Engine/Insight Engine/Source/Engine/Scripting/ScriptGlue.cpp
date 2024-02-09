@@ -873,17 +873,23 @@ namespace IS {
     }
 
 
+    static void SetStartAnimationEntity(int entity, int start_idx) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+
+        sprite_component.animation_index = start_idx;
+    }
+
     static int GetCurrentAnimationEntity(int entity) {
         if (InsightEngine::Instance().HasComponent<Sprite>(entity)) {
             auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-            
+
             int frame_indexX = (int)sprite_component.anims[sprite_component.animation_index].frame_index.x;
             int frame_indexY = (int)sprite_component.anims[sprite_component.animation_index].frame_index.y;
             int x_frames = sprite_component.anims[sprite_component.animation_index].x_frames;
 
             return frame_indexY * x_frames + frame_indexX;
         }
-        
+
         return 0;
     }
 
@@ -1344,6 +1350,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ResetSpriteAnimationFrameEntity);
         IS_ADD_INTERNAL_CALL(GetCurrentAnimationEntity);
         IS_ADD_INTERNAL_CALL(SetAnimationAlpha);
+        IS_ADD_INTERNAL_CALL(SetStartAnimationEntity);
 
         // Camera
         IS_ADD_INTERNAL_CALL(AttachCamera);

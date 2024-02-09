@@ -114,7 +114,6 @@ namespace IS
         // enemy death
         SimpleImage enemy_death;
         private bool initialDeath = false;
-        private float death_timer = 1f;
 
         // enemy patrol
         SimpleImage enemy_idle;
@@ -558,8 +557,9 @@ namespace IS
             InternalCalls.RemoveColliderComponentEntity(ENEMY_ID);
             InternalCalls.SetSpriteImage(enemy_death);
             InternalCalls.SetSpriteAnimationIndex(2);
-            death_timer -= InternalCalls.GetDeltaTime();
-            if (death_timer <= 0f)
+
+            // if the animation finish, destory enemy
+            if (InternalCalls.GetCurrentAnimationEntity(ENEMY_ID) == 20)
             {
                 initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);

@@ -1330,7 +1330,7 @@ namespace IS
                     //attack_timer = attack_interval;
                     attack_timer = 0f; // reset timer
                 }
-                
+                InternalCalls.SetStartAnimationEntity(PLAYER_ID, 0); // play the animation from the start index
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
@@ -1351,8 +1351,10 @@ namespace IS
                     {
                         case 1:
                             //InternalCalls.SetSpriteAnimationIndex(0);
+                            
                             InternalCalls.SetSpriteImage(player_attack1);
                             InternalCalls.SetSpriteAnimationIndex(3);
+                            //Console.WriteLine(InternalCalls.GetCurrentAnimationEntity(PLAYER_ID));
                             //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
                         case 2:
@@ -1366,6 +1368,7 @@ namespace IS
                             InternalCalls.SetSpriteAnimationIndex(5);
                             break;
                     }
+                    
 
                     // limit the player vel when doing attack
                     InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocityX() / 3f, InternalCalls.RigidBodyGetVelocityY() / 3f);
