@@ -33,13 +33,26 @@ namespace IS
         static private bool play_third_explosion = false;
 
 
+        //setting text window size
+        static public float textbox_width_ratio = 0.95f;
+        static public float textbox_height_ratio = 0.3f;
+        static private float textbox_width = InternalCalls.GetWindowWidth();
+        static private float textbox_height = InternalCalls.GetWindowHeight();
+
+        static private SimpleVector2D position_of_textbox = new SimpleVector2D();
+        static private SimpleVector2D image_scale = new SimpleVector2D(1f, 1f);
+
+        static private bool showText = false;
+
         static public void Init()
         {
+            InternalCalls.ChangeLightType(0);
             play_yk_voicelines = false;
             play_audio_collapse = false;
             play_first_explosion = false;
             play_second_explosion = false;
             play_third_explosion = false;
+            showText = false;
             InternalCalls.HideCursor();
             current_image = 0;
             image_swap_timer = 2.6f;
@@ -95,22 +108,39 @@ namespace IS
             }
 
             float offset_text = 0.5005f;
+            float text_height = 0.155f;
+
+            if (showText)
+            {
+                textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
+                textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
+                image_scale = new SimpleVector2D(textbox_width, textbox_height);
+
+                position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x,
+                                                                       CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.8f);
+
+                SimpleImage image = InternalCalls.GetSpriteImage("Text box.png");
+                InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
+            }
 
 
             switch (current_image)
             {
                 case 1:
                     InternalCalls.SetSpriteImage(image1);
-                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 2:
                     InternalCalls.SetSpriteImage(image2);
-                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 3:
                     InternalCalls.SetSpriteImage(image3);
+                    showText = false;
                     if (!play_yk_voicelines)
                     {
                         InternalCalls.AudioPlayMusic("VO-MadCoder-001.wav", 0.2f);
@@ -152,36 +182,43 @@ namespace IS
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
-                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 9:
                     InternalCalls.SetSpriteImage(image9);
-                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 10:
                     InternalCalls.SetSpriteImage(image10);
-                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 11:
                     InternalCalls.SetSpriteImage(image11);
+                    showText = false;
                     break;
                 case 12:
                     InternalCalls.SetSpriteImage(image11_2);
-                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
-                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    showText = true;
+                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 13:
                     InternalCalls.SetSpriteImage(image12);
+                    showText = true;
                     CameraScript.CameraShake(0.2f);
                     CameraScript.camera_shake_duration = 0.1f;
                     CameraScript.camera_shake_intensity = 0.2f;
-                    InternalCalls.RenderTextFont("Huh?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("Huh?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f));
                     break;
                 case 14:
                     InternalCalls.SetSpriteImage(image13);
+                    showText = false;
                     if (!play_audio_collapse)
                     {
                         InternalCalls.AudioPlayMusic("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
