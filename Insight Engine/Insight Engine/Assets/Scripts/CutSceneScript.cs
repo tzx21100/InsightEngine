@@ -94,17 +94,19 @@ namespace IS
                 image_swap_set = 2.0f;
             }
 
-
+            float offset_text = 0.5005f;
 
 
             switch (current_image)
             {
                 case 1:
                     InternalCalls.SetSpriteImage(image1);
+                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
                     InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 2:
                     InternalCalls.SetSpriteImage(image2);
+                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
                     InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 3:
@@ -141,30 +143,34 @@ namespace IS
 
 
                     CameraScript.CameraTargetZoom(2f, 0.2f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
+                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
                     InternalCalls.SetSpriteImage(image7);
                     CameraScript.CameraTargetZoom(1f, 1.5f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
+                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
+                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
                     InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 9:
                     InternalCalls.SetSpriteImage(image9);
+                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
                     InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 10:
                     InternalCalls.SetSpriteImage(image10);
-                    InternalCalls.RenderTextFont("Stayback Cipher! Something's wrong...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
+                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 11:
                     InternalCalls.SetSpriteImage(image11);
                     break;
                 case 12:
                     InternalCalls.SetSpriteImage(image11_2);
+                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", offset_text, 0.2f, 12f, (0f, 0f, 0f));
                     InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 13:
@@ -186,7 +192,7 @@ namespace IS
                 case 15:
                     InternalCalls.SetSpriteImage(image14);
                     CameraScript.CameraTargetZoom(0.8f, 0.3f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
+                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     InternalCalls.FadeOutAudio(2.1f);
                     break;
                 case 16:

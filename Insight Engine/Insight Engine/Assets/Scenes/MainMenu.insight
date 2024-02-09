@@ -7,8 +7,14 @@
 				"AudioFalloffFactor" : 1.0,
 				"AudioIsLoop" : false,
 				"AudioPitch" : 1.0,
-				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-				"AudioVolumeLevel" : 1.0
+				"AudioSoundName" : "BENNY - Jazz MSCLJZ1_52.wav",
+				"AudioVolumeLevel" : 0.62999999523162842
+			},
+			"AudioListener" : 
+			{
+				"AudioHearingRange" : 3000.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
 			},
 			"Name" : "Background",
 			"Script" : 
@@ -27,9 +33,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 72,
+				"SpriteTexture" : 69,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 71,
+				"SpriteTextureIndex" : 68,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -90,9 +96,9 @@
 				"SpriteFilename" : "team_logo.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 112,
+				"SpriteTexture" : 99,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 111,
+				"SpriteTextureIndex" : 98,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 684.28997802734375,
