@@ -13,6 +13,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
     class BackFromHowToPlayButtonScript
@@ -30,6 +31,7 @@ namespace IS
 
         static public void Update()
         {
+            //first_hover = false;
             InternalCalls.SetSpriteImage(back_button_image);
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -41,12 +43,16 @@ namespace IS
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                     first_hover = true;
                 }
+
             }
             else
             {
                 first_hover = false;
             }
-
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {

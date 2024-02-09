@@ -103,7 +103,10 @@ namespace IS
             {
                 first_hover = false;
             }
-
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
             // clicking
             if (MasterCheckboxScript.toggled)
             {

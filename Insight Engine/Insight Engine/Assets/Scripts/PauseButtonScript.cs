@@ -148,7 +148,7 @@ namespace IS
                     paused = false;
                 }
             }
-
+            
             if (paused) // if game paused
             {
                 InternalCalls.GamePause(true);

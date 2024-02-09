@@ -226,7 +226,10 @@ namespace IS
             {
                 first_hover = false;
             }
-
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
             //click
             if (InternalCalls.GetButtonState() == 2)
             {

@@ -39,7 +39,10 @@ namespace IS
             {
                 first_hovering = false;
             }
-
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hovering = true;
+            }
 
             if (InternalCalls.GetButtonState() == 2)
             {

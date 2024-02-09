@@ -83,9 +83,12 @@ namespace IS
             {
                 first_hover = false;
             }
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
 
-
-             //click
+            //click
             if (InternalCalls.GetButtonState() == 2)
             {
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
