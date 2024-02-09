@@ -256,7 +256,8 @@ namespace IS {
 
             // update active camera
             cameras3D[Camera3D::mActiveCamera].Update();
-            ShaderEffect::shader_effect_update(delta_time);
+
+            // ShaderEffect::shader_effect_update(delta_time); // not working yet
 
             // Graphics system's draw
 

@@ -31,15 +31,17 @@ namespace IS {
 
     // fragment collection visual effect
     void ShaderEffect::play_fragment_light() {
-        shader_effect_timer = 4.2f;
-        prevShaderEffect = currentShaderEffect;
-        currentShaderEffect = shaderEffect::fragment_light;
+        // shader_effect_timer = 4.2f;
+        // prevShaderEffect = currentShaderEffect;
+        // currentShaderEffect = shaderEffect::fragment_light;
     }
 
     // updating the shader effect
-    void ShaderEffect::shader_effect_update(float dt) {
-        shader_effect_timer -= dt;
-        if (shader_effect_timer <= 0.f) {
+    void ShaderEffect::shader_effect_update(float dt) { // not working
+        if (currentShaderEffect == shaderEffect::static_glitch) {
+            shader_effect_timer -= dt;
+        }
+        if (shader_effect_timer < 0.f) {
            currentShaderEffect = prevShaderEffect;
         }
     }
