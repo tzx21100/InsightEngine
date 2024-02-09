@@ -1,14 +1,14 @@
 /*!
  * \file Grid.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains the declaration of the `ImplicitGrid` class, which is responsible
  * for managing an implicit grid system used for optimizing spatial partitioning in a game engine.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -61,26 +61,16 @@ namespace IS
 	// Get the cell corresponding to a given position in the grid.
 	Cell ImplicitGrid::GetCell(Vector2D const& position) {
 
-		//// Set cell size based on current window size
-		//glm::vec2 camera_dimension = ISGraphics::cameras[Camera::mActiveCamera].GetCamDim();
-		//glm::vec2 camera_center = ISGraphics::cameras[Camera::mActiveCamera].GetCamPos();
-
-		//// set the grid's width and height as 2 times bigger than camera's width and height
-		//float width = camera_dimension.x * 2;
-		//float height = camera_dimension.y * 2;
+		// Set cell size based on current camera size
 
 		auto& engine = InsightEngine::Instance();
 		auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
 		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
 		int x, y;
 		engine.GetWindowSize(x, y);
-		// set the grid's width and height as 2 times bigger than camera's width and height
+		// set the grid's width and height as 1.5 times bigger than camera's width and height
 		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.5f;
 		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.5f;
-		//IS_CORE_DEBUG("Width : {:.2f}", width);
-		//IS_CORE_DEBUG("Height : {:.2f}", height);
-		/*float width = 12000.f;
-		float height = 5000.f;*/
 
 		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
@@ -102,94 +92,6 @@ namespace IS
 	bool ImplicitGrid::areCellsEqual(Cell const& c1, Cell const& c2, Cell const& c3, Cell const& c4) {
 		return (c1.row == c2.row == c1.col == c2.col == c3.row == c4.row == c3.col == c4.col);
 	}
-#if 0
-	// Add entities into the appropriate cell of the grid.
-	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
-
-		InsightEngine& engine = InsightEngine::Instance();
-		// loop through all the entities
-		for (auto const& entity : Entities) {
-			if (engine.HasComponent<RigidBody>(entity)) { // if entity has rigidbody component
-				//getting rigidbody component for each entity
-				auto& body = engine.GetComponent<RigidBody>(entity);
-				if (body.mGridState == GridState::Uninitialized) { // if the body is not initialized with grid
-					auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-					body.BodyFollowTransform(trans);
-					// getting the min & max for checking which cell contain the entity
-					Box box = body.GetAABB();
-					Cell min_cell = GetCell(box.min);
-					Cell max_cell = GetCell(box.max);
-					Cell center = GetCell(body.mBodyTransform.world_position);
-
-					if (GridContains(min_cell) && GridContains(max_cell)) {
-						body.mGridState = GridState::Inside;
-						AddToBitArray(min_cell, max_cell, entity);
-					}else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
-							(!GridContains(min_cell) && GridContains(max_cell))) {
-						// body box overlap on the grid edge, half inside half outside
-						body.mGridState = GridState::Overlap;
-						mOverlapGridList.emplace_back(entity);
-					}
-					else if (GridContains(center) || CheckOverlap(min_cell, max_cell)) {
-						// the obj is too big, min and max both outside of the grid but a small part of the obj is inside the grid
-						body.mGridState = GridState::Overlap;
-						mOverlapGridList.emplace_back(entity);
-					}
-					else { // body box fully outside of the grid
-						body.mGridState = GridState::Outside;
-						mOutsideGridList.emplace_back(entity);
-					}
-				}
-				else {
-					continue;
-				}
-			}
-		}
-	}
-#endif
-
-#if 0 
-	// Add entities into the appropriate cell of the grid.
-	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities) {
-
-		InsightEngine& engine = InsightEngine::Instance();
-		// loop through all the entities
-		for (auto const& entity : Entities) {
-			if (engine.HasComponent<RigidBody>(entity)) { // if entity has rigidbody component
-				//getting rigidbody component for each entity
-				auto& body = engine.GetComponent<RigidBody>(entity);
-
-				auto& trans = InsightEngine::Instance().GetComponent<Transform>(entity);
-				body.BodyFollowTransform(trans);
-				// getting the min & max for checking which cell contain the entity
-				Box box = body.GetAABB();
-				Cell min_cell = GetCell(box.min);
-				Cell max_cell = GetCell(box.max);
-				Cell center = GetCell(body.mBodyTransform.world_position);
-
-				if (GridContains(min_cell) && GridContains(max_cell)) {
-					// fully in grid
-					AddToBitArray(min_cell, max_cell, entity);
-				}
-				else if ((GridContains(min_cell) && !GridContains(max_cell)) ||
-					(!GridContains(min_cell) && GridContains(max_cell))) {
-					// body box overlap on the grid edge, half inside half outside
-					AddToBitArray(min_cell, max_cell, entity);
-					mOutsideGridList.emplace_back(entity);
-				}
-				else if (GridContains(center) || CheckOverlap(min_cell, max_cell)) {
-					// the obj is too big, min and max both outside of the grid but a 
-					// small part of the obj is inside the grid
-					AddToBitArray(min_cell, max_cell, entity);
-					mOutsideGridList.emplace_back(entity);
-				}
-				else { // body box fully outside of the grid
-					mOutsideGridList.emplace_back(entity);
-				}
-			}
-		}
-	}
-#endif
 
 	// Add entities into the appropriate cell of the grid.
 	void ImplicitGrid::AddIntoCell(std::set<Entity> const& Entities)

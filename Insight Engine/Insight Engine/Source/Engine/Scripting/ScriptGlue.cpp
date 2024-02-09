@@ -5,13 +5,13 @@
          Tan Zheng Xun, t.zhengxun@digipen.edu  (40%)
          Guo Yiming, yiming.guo@digipen.edu (5%)
          Wu Zekai, zekai.wu@digipen.edu (20%)
-\par     Course: CSD2401
+\par     Course: CSD2451
 \date    2-11-2023
 \brief   This source file defines the implementation of the ScriptGlue class, which
          registers C++ functions to be accessible from C# scripts. 
 
 \copyright
-All content (C) 2023 DigiPen Institute of Technology Singapore.
+All content (C) 2024 DigiPen Institute of Technology Singapore.
 All rights reserved.
 Reproduction or disclosure of this file or its contents without the prior written
 consent of DigiPen Institute of Technology is prohibited.
@@ -717,6 +717,11 @@ namespace IS {
         InsightEngine::Instance().RemoveComponent<Collider>(entity);
     }
 
+    static void SetCircleColliderOffsetX(float x) {
+		auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(InsightEngine::Instance().GetScriptCaller());
+		collider_component.mCircleCollider.offset.x = x;
+	}
+
     static bool CollidingObjectIsStatic(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
         return body_component.mBodyType == BodyType::Static ? 1 : 0;
@@ -1263,7 +1268,7 @@ namespace IS {
     // layers
 
     static int GetTopLayer() {
-        return static_cast<int>(ISGraphics::mLayers.size()-1);
+        return static_cast<int>(ISGraphics::mLayers.size());
     }
 
     static void SetLayerVisible(int layer, bool boolean) {
@@ -1383,6 +1388,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsWall);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);
+        IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetX);
 
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);

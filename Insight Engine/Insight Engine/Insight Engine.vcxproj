@@ -64,7 +64,6 @@
     <ClCompile Include="Source\Graphics\System\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\System\Shader.cpp" />
     <ClCompile Include="Source\Graphics\System\ShaderEffects.cpp" />
-    <ClCompile Include="Source\Graphics\System\Shadow.cpp" />
     <ClCompile Include="Source\Graphics\System\Sprite.cpp" />
     <ClCompile Include="Source\Graphics\System\Text.cpp" />
     <ClCompile Include="Source\Graphics\System\Transform.cpp" />
@@ -147,7 +146,6 @@
     <ClInclude Include="Source\Graphics\System\Mesh.h" />
     <ClInclude Include="Source\Graphics\System\Shader.h" />
     <ClInclude Include="Source\Graphics\System\ShaderEffects.h" />
-    <ClInclude Include="Source\Graphics\System\Shadow.h" />
     <ClInclude Include="Source\Graphics\System\Sprite.h" />
     <ClInclude Include="Source\Graphics\System\Text.h" />
     <ClInclude Include="Source\Graphics\System\Transform.h" />

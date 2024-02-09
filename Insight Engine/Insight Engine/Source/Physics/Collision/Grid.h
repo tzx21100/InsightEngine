@@ -1,14 +1,14 @@
 /*!
  * \file Grid.h
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains the declaration of the `ImplicitGrid` class, which is responsible 
  * for managing an implicit grid system used for optimizing spatial partitioning in a game engine.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.

@@ -19,6 +19,7 @@ namespace IS
             {
                 CameraScript.CameraTargetZoom(0.4f, 0.3f);
                 InternalCalls.ChangeLightType(0);
+                PlayerScript.PLAYER_LIGHT = 0;
                 activated = true;
 
             }

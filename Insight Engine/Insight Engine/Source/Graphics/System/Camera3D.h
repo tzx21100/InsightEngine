@@ -1,7 +1,7 @@
 /*!
  * \file Camera3D.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This file defines the Camera3D class, which is responsible for managing the view and projection in mock 3D graphics systems.
@@ -11,7 +11,7 @@
  * This file establishes the Camera3D class and its associated constants.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.

@@ -1,9 +1,9 @@
-===== Milestone 3 - Insight Engine Project Guide =====
+===== Milestone 4 - Insight Engine Project Guide =====
 
 ===== Overview =====
 Project Name: Insight Engine
 Game Name: Fragments
-Version : 3
+Version : 4
 
 ======================== Team Members =============================
 
@@ -45,9 +45,9 @@ Projects In Solution
 Total Number of Projects: 5
 
 |  GLAD  | ImGui | ImGuizmo | - Compiles as a static library.
-| IS-ScriptCore  |            - Compiles as a dynamic library.
+| CS-ScriptingForEdit  |      - Doesn't need to be compiled or built. MCS will build it.
 | Insight Engine |            - References the libraries above,
                                 compiled last as .exe.
 
 Author: Tan Zheng Xun (t.zhengxun@digipen.edu)
-TimeStamp: 4:40 am 26/11/2023 
+TimeStamp: 10:23 pm 08/02/2024 

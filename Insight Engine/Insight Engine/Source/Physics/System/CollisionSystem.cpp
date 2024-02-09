@@ -1,7 +1,7 @@
 /*!
  * \file CollisionSystem.cpp
  * \author Wu Zekai, zekai.wu@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 26-11-2023
  * \brief
  * This header file contains CollisionSystem class. This class is responsible for
@@ -9,7 +9,7 @@
  * It includes functions for detecting and resolving collisions.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -74,6 +74,7 @@ namespace IS
 	void CollisionSystem::BroadPhase() 
 	{
 		Physics::PhysicsEnableList.clear(); // clear the list
+
 		// if using implicit grid
 		if (Physics::mEnableImplicitGrid)
 		{
@@ -82,7 +83,7 @@ namespace IS
 		}
 		else
 		{ // not using implict grid (Brute Force)
-			Physics::PhysicsEnableList = mEntities; // update to list
+			Physics::PhysicsEnableList = mEntities; // update to physics enable list
 			CollisionDetect(Physics::PhysicsEnableList);
 		}
 	}

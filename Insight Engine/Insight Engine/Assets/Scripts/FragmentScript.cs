@@ -7,7 +7,7 @@
  * This source file is meant for the player movement and camera.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -25,8 +25,34 @@ namespace IS
         }
 
         static public void Update(){
+
+
+
+
+
             int entity = InternalCalls.GetCurrentEntityID();
             Vector2D my_position = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+
+
+
+            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 1500f && !PlayerScript.Reward_Dash)
+            {
+                glitch_timer = 1f;
+            }
+
+            if (glitch_timer > 0)
+            {
+                InternalCalls.ChangeLightType(3);
+                InternalCalls.GlitchEnable(true);
+                glitch_timer -= InternalCalls.GetDeltaTime();
+            }
+            else
+            {
+                InternalCalls.ChangeLightType(PlayerScript.PLAYER_LIGHT);
+                InternalCalls.GlitchEnable(false);
+            }
+
+
             if (InternalCalls.EntityCheckCollide(entity) && InternalCalls.GetCollidingEntityCheck(entity,PlayerScript.PLAYER_ID)) {
                 if (!PlayerScript.Reward_DoubleJump) { PlayerScript.Reward_DoubleJump = true; } else
                 {
@@ -52,7 +78,7 @@ namespace IS
                 InternalCalls.AudioPlaySound("StartClick.wav",false,0.15f);
                 PlayerScript.initialPowerUp = true;
                 InternalCalls.GlitchEnable(false);
-
+                InternalCalls.ChangeLightType(PlayerScript.PLAYER_LIGHT);
                 InternalCalls.DestroyEntity(entity);
                 
             }
@@ -61,21 +87,6 @@ namespace IS
 
 
 
-            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 1500f && !PlayerScript.Reward_Dash)
-            {
-                glitch_timer = 1f;
-            }
-
-            if (glitch_timer > 0)
-            {
-                InternalCalls.GlitchEnable(true);
-                glitch_timer -= InternalCalls.GetDeltaTime();
-            }
-            else
-            {
-
-                InternalCalls.GlitchEnable(false);
-            }
 
 
         }

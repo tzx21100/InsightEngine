@@ -27,14 +27,23 @@ namespace IS
         static private int current_image = 1;
 
         static private bool play_audio_collapse = false;
+        static private bool play_yk_voicelines = false;
+        static private bool play_first_explosion= false;
+        static private bool play_second_explosion=false;
+        static private bool play_third_explosion = false;
+
 
         static public void Init()
         {
+            play_yk_voicelines = false;
             play_audio_collapse = false;
+            play_first_explosion = false;
+            play_second_explosion = false;
+            play_third_explosion = false;
             InternalCalls.HideCursor();
             current_image = 0;
             image_swap_timer = 2.6f;
-            InternalCalls.AudioPlayMusic("JOHN_The Choice_No Clock_Loop_60bpm.wav",0.4f);
+            //InternalCalls.AudioPlayMusic("BENNY - Jazz MSCLJZ1_52.wav", 0.4f);
             InternalCalls.AttachCamera(0, 0);
             //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
         }
@@ -87,26 +96,51 @@ namespace IS
 
 
 
+
             switch (current_image)
             {
                 case 1:
                     InternalCalls.SetSpriteImage(image1);
+                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 2:
                     InternalCalls.SetSpriteImage(image2);
+                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 3:
                     InternalCalls.SetSpriteImage(image3);
+                    if (!play_yk_voicelines)
+                    {
+                        InternalCalls.AudioPlayMusic("VO-MadCoder-001.wav", 0.2f);
+                        play_yk_voicelines= true;
+                    }
                     break;
                 case 4:
                     InternalCalls.SetSpriteImage(image4);
+                    if (!play_first_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
+                        play_first_explosion = true;
+                    }
                     break;
                 case 5:
                     InternalCalls.SetSpriteImage(image5);
+                    if (!play_second_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
+                        play_second_explosion = true;
+                    }
                     break;
                 case 6:
                     InternalCalls.SetSpriteImage(image6);
-                    CameraScript.CameraTargetZoom(2f, 1.5f);
+                    if (!play_third_explosion)
+                    {
+                        InternalCalls.AudioPlayMusic("SCI-FI-GROUND-BREAK_GEN-HDF-20675.wav", 0.2f);
+                        play_third_explosion = true;
+                    }
+
+
+                    CameraScript.CameraTargetZoom(2f, 0.2f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
                     break;
                 case 7:
@@ -116,37 +150,47 @@ namespace IS
                     break;
                 case 8:
                     InternalCalls.SetSpriteImage(image8);
+                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 9:
                     InternalCalls.SetSpriteImage(image9);
+                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 10:
                     InternalCalls.SetSpriteImage(image10);
+                    InternalCalls.RenderTextFont("Stayback Cipher! Something's wrong...", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 11:
                     InternalCalls.SetSpriteImage(image11);
                     break;
                 case 12:
                     InternalCalls.SetSpriteImage(image11_2);
+                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 13:
                     InternalCalls.SetSpriteImage(image12);
+                    CameraScript.CameraShake(0.2f);
+                    CameraScript.camera_shake_duration = 0.1f;
+                    CameraScript.camera_shake_intensity = 0.2f;
+                    InternalCalls.RenderTextFont("Huh?", "Semplicita_Light", 0.5f, 0.2f, 12f, (1f, 1f, 1f));
                     break;
                 case 14:
                     InternalCalls.SetSpriteImage(image13);
                     if (!play_audio_collapse)
                     {
                         InternalCalls.AudioPlayMusic("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
+
                     }
                     play_audio_collapse = true;
                     break;
                 case 15:
                     InternalCalls.SetSpriteImage(image14);
+                    CameraScript.CameraTargetZoom(0.8f, 0.3f);
                     InternalCalls.DrawSquare(0, 0, 10000, 1000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
+                    InternalCalls.FadeOutAudio(2.1f);
                     break;
                 case 16:
                     InternalCalls.SetSpriteImage(image15);
-                    InternalCalls.FadeOutAudio(1.2f);
                     break;
             }
 

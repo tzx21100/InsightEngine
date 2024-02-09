@@ -1,4 +1,17 @@
-#pragma once
+/*!
+* \file FSM.h
+* \author  Tan Zheng Xun, t.zhengxun@digipen.edu
+* \par Course: CSD2451
+* \date  08-02-2024
+* \brief
+* This header file declares the FSM system integrated with scripts.
+*
+* \copyright
+* All content (C) 2024 DigiPen Institute of Technology Singapore.
+* All rights reserved.
+* Reproduction or disclosure of this file or its contents without the prior written
+* consent of DigiPen Institute of Technology is prohibited.
+*____________________________________________________________________________*/
 #include "../../ECS/System.h"
 #include "../../ECS/Component.h"
 #include <functional>
@@ -19,7 +32,13 @@ namespace IS {
 
 	public:
 
-		//Adding script to simple state
+		/**
+		 * \brief
+		 *
+		 * Sets the script that the fsm is currently running
+		 * 
+		 * \param std::string name of the script
+		 */
 		void SetSimpleState(std::string script_name) {
 			mScriptName = script_name;
 			mScriptClass = ScriptClass("IS",mScriptName);
@@ -33,11 +52,25 @@ namespace IS {
 		}
 
 
+
+		/**
+		 * \brief State enter
+		 *
+		 * Runs the init function of the attached script.
+		 *
+		 */
 		void Enter() 
 		{
 			MonoMethod* update_method = mScriptClass.GetMethod("Init", 0);
 			mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
 		};
+
+		/**
+		 * \brief State update
+		 *
+		 * Runs the update function of the attached script.
+		 *
+		 */
 		void Update() 
 		{
 			if (!mHasScript && mScriptName != "") {
@@ -49,6 +82,13 @@ namespace IS {
 				mScriptClass.InvokeMethod(mMonoObject, update_method, nullptr);
 			}
 		};
+
+		/**
+		 * \brief State exit
+		 *
+		 * Runs the cleanup function of the attached script.
+		 *
+		 */
 		void Exit() 
 		{
 			MonoMethod* update_method = mScriptClass.GetMethod("CleanUp", 0);
@@ -72,12 +112,64 @@ namespace IS {
 	class ChangeState {
 
 	public:
+		/**
+		 * \brief
+		 *
+		 * Adds a script as a condition for the FSM
+		 *
+		 * \param std::string name of the script
+		 */
 		void AddCondition(std::string script_name);
+
+		/**
+		 * \brief
+		 *
+		 * Sets the script that the entity will run if the Condition Script is fufilled
+		 *
+		 * \param std::string name of the script
+		 */
 		void SetTargetState(SimpleState state);
+
+		/**
+		 * \brief
+		 *
+		 * Sets the current state with a state of a  simple script that should contain the
+		 * current running state. This is used for the Condition script to check and is not what is
+		 * currently running. 
+		 *
+		 * \param std::string name of the script
+		 */
 		void SetCurrentState(SimpleState state);
+
+		/**
+		 * \brief
+		 *
+		 * Returns the current condition
+		 *
+		 */
 		SimpleState GetCondition();
+
+		/**
+		 * \brief
+		 *
+		 *  Gets the targeted state 
+		 */
 		SimpleState GetTargetState();
+
+		/**
+		 * \brief
+		 *
+		 * Returns the current state
+		 *
+		 */
 		SimpleState GetCurrentState();
+
+		/**
+		 * \brief
+		 *
+		 * Returns a boolean to check if the condition script has been fulfilled.
+		 *
+		 */
 		bool CheckConditionsFufilled();
 
 	private:
@@ -121,6 +213,10 @@ namespace IS {
 		void HandleMessage(const Message& message) override;
 		
 
+
+		/**
+		 * \brief This fuction actiavates all the scripts for running.
+		 */
 		void ActivateScripts();
 
 	};

@@ -2,14 +2,14 @@
 /*!
  * \file Graphics.cpp
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This source file defines the implementation for class ISGraphics which
  * encapsulates the functionalities of a Graphics Engine.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -282,19 +282,9 @@ namespace IS {
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
 
-            // get width and height, set viewport size
-            // if (!engine.mRenderGUI)
-            // {
-            //     int width, height;
-            //     engine.GetWindowSize(width, height);
-            //     glViewport(0, 0, width, height);
-            // }
-
             // quads will be drawn first
-            if (mGlitched) // glitch effect
-                Sprite::draw_instanced_glitched_quads();
-            else
-                Sprite::draw_instanced_quads();
+            Sprite::draw_instanced_quads();
+
             mShaderFrameBuffer.Unbind();
         }
 

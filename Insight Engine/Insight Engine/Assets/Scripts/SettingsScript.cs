@@ -1,12 +1,12 @@
 /*!
  * \file SettingsScript.cs
- * \author Wu Zekai, zekai.wu@digipen.edu (10%), Matthew Ng, matthewdeen.ng@digipen.edu (90%)
+ * \author Wu Zekai, zekai.wu@digipen.edu (40%), Matthew Ng, matthewdeen.ng@digipen.edu (60%)
  * \par Course: CSD2451
  * \brief
  * This c# file contains the SettingsScript class, used for settings menu of the game
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.

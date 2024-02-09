@@ -2,14 +2,14 @@
 /*!
 \file    ScriptGlue.h
 \author  Matthew Ng, matthewdeen.ng@digipen.edu
-\par     Course: CSD2401
+\par     Course: CSD2451
 \date    27-09-2023
 \brief   This header file declares the implementation of the ScriptGlue class,
          which is responsible for registering C++ functions to be accessible from
          C# scripts.
 
 \copyright
-All content (C) 2023 DigiPen Institute of Technology Singapore.
+All content (C) 2024 DigiPen Institute of Technology Singapore.
 All rights reserved.
 Reproduction or disclosure of this file or its contents without the prior written
 consent of DigiPen Institute of Technology is prohibited.

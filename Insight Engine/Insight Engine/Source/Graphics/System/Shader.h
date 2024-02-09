@@ -1,14 +1,14 @@
 /*!
  * \file Shader.h
  * \author Koh Yan Khang, yankhang.k@digipen.edu
- * \par Course: CSD2401
+ * \par Course: CSD2451
  * \date 25-11-2023
  * \brief
  * This header file defines the Shader class, which encapsulates shader compilation,
  * linking, and usage in OpenGL applications.
  *
  * \copyright
- * All content (C) 2023 DigiPen Institute of Technology Singapore.
+ * All content (C) 2024 DigiPen Institute of Technology Singapore.
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
@@ -53,6 +53,9 @@ namespace IS {
          */
         static void compileAllShaders();
         
+        /**
+         * @brief Delete all shaders used in the application.
+         */
         static void deleteAllShaders();
 
         /**
