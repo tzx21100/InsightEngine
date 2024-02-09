@@ -22,6 +22,13 @@ using System.Reflection.Metadata;
 
 namespace IS
 {
+    enum PlayerAttackCombo : int
+    {
+        LightAttack  = 3,
+        MediumAttack = 4,
+        HeavyAttack  = 5
+    }
+
     public class PlayerScript
     {
         //death timers
@@ -1298,7 +1305,7 @@ namespace IS
         static private void Attack()
         {
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
-            if (InternalCalls.MousePressed(0) && (!isAttack ))
+            if (InternalCalls.MousePressed(0) && (!isAttack))
             {
                 // play attack sound
                 Random rnd = new Random();
@@ -1330,7 +1337,10 @@ namespace IS
                     //attack_timer = attack_interval;
                     attack_timer = 0f; // reset timer
                 }
-                InternalCalls.SetStartAnimationEntity(PLAYER_ID, 0); // play the animation from the start index
+
+                // Reset all attack animation frames
+                InternalCalls.ResetAnimationFrames(PLAYER_ID, (int)PlayerAttackCombo.LightAttack, (int)PlayerAttackCombo.LightAttack);
+
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
@@ -1353,19 +1363,19 @@ namespace IS
                             //InternalCalls.SetSpriteAnimationIndex(0);
                             
                             InternalCalls.SetSpriteImage(player_attack1);
-                            InternalCalls.SetSpriteAnimationIndex(3);
+                            InternalCalls.SetSpriteAnimationIndex((int)PlayerAttackCombo.LightAttack);
                             //Console.WriteLine(InternalCalls.GetCurrentAnimationEntity(PLAYER_ID));
                             //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
                         case 2:
                             //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack2);
-                            InternalCalls.SetSpriteAnimationIndex(4);
+                            InternalCalls.SetSpriteAnimationIndex((int)PlayerAttackCombo.MediumAttack);
                             break;
                         case 3:
                             //InternalCalls.SetSpriteAnimationIndex(0);
                             InternalCalls.SetSpriteImage(player_attack3);
-                            InternalCalls.SetSpriteAnimationIndex(5);
+                            InternalCalls.SetSpriteAnimationIndex((int)PlayerAttackCombo.HeavyAttack);
                             break;
                     }
                     
@@ -1522,6 +1532,17 @@ namespace IS
                     // enemy get hit
                     if (isAttack && !initial_attack)
                     {
+                        Random rnd = new Random();
+                        int random_hit_sound = rnd.Next(0, 2);
+                        switch (random_hit_sound)
+                        {
+                            case 0:
+                                InternalCalls.AudioPlaySound("HitSoft CTE01_80.2.wav", false, 0.5f);
+                                break;
+                            case 1:
+                                InternalCalls.AudioPlaySound("HitSoft CTE01_80.1.wav", false, 0.5f);
+                                break;
+                        }
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         // // get the id for enemy being attack (one only)

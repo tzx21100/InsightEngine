@@ -528,6 +528,8 @@ namespace IS
             random_dead_sound = rnd.Next(0, 7);
             if (!initialDeath)
             {
+                InternalCalls.AudioPlaySound("SquirtCartoon CTE02_63.5.wav", false, volume);
+
                 switch (random_dead_sound)
                 {
                     case 0:

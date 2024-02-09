@@ -152,6 +152,9 @@ namespace IS
         internal extern static void ResetAnimations();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void ResetAnimationFrames(int entity, int start_index, int end_index);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetButtonState();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

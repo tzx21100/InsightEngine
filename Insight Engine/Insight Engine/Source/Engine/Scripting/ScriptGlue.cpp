@@ -875,8 +875,24 @@ namespace IS {
 
     static void SetStartAnimationEntity(int entity, int start_idx) {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
-
         sprite_component.animation_index = start_idx;
+    }
+
+    static void ResetAnimationFrames(int entity, int start_index, int end_index)
+    {
+        auto& sprite = InsightEngine::Instance().GetComponent<Sprite>(entity);
+
+        // Validate if index out of range
+        if (start_index < 0 || end_index < 0 || start_index > end_index || start_index >= sprite.anims.size() || end_index >= sprite.anims.size())
+        {
+            IS_CORE_WARN("Invalid start or end index for animation reset");
+            return;
+        }
+
+        for (int i = start_index; i <= end_index; i++)
+        {
+            sprite.anims[i].resetAnimation();
+        }
     }
 
     static int GetCurrentAnimationEntity(int entity) {
@@ -1347,6 +1363,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSpriteEntity);
         IS_ADD_INTERNAL_CALL(ResetAnimations);
+        IS_ADD_INTERNAL_CALL(ResetAnimationFrames);
         IS_ADD_INTERNAL_CALL(ResetSpriteAnimationFrameEntity);
         IS_ADD_INTERNAL_CALL(GetCurrentAnimationEntity);
         IS_ADD_INTERNAL_CALL(SetAnimationAlpha);
