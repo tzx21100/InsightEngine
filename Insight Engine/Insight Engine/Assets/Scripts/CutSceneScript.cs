@@ -56,7 +56,7 @@ namespace IS
             InternalCalls.HideCursor();
             current_image = 0;
             image_swap_timer = 2.6f;
-            //InternalCalls.AudioPlayMusic("BENNY - Jazz MSCLJZ1_52.wav", 0.4f);
+            InternalCalls.AudioPlayMusic("BENNY - Jazz MSCLJZ1_52.wav", 0.4f);
             InternalCalls.AttachCamera(0, 0);
             //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
         }
@@ -144,13 +144,15 @@ namespace IS
                     if (!play_yk_voicelines)
                     {
                         InternalCalls.AudioPlayMusic("VO-MadCoder-001.wav", 0.2f);
-                        play_yk_voicelines= true;
+                        InternalCalls.AudioPlayMusic("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
+                        play_yk_voicelines = true;
                     }
                     break;
                 case 4:
                     InternalCalls.SetSpriteImage(image4);
                     if (!play_first_explosion)
                     {
+                        InternalCalls.FadeOutAudio(1f);
                         InternalCalls.AudioPlayMusic("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
                         play_first_explosion = true;
                     }
@@ -161,6 +163,8 @@ namespace IS
                     {
                         InternalCalls.AudioPlayMusic("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
                         play_second_explosion = true;
+                        InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.3f);
+                        InternalCalls.AudioPlayMusic("JOHN_The Choice_Loop_60bpm.wav", 0.3f);
                     }
                     break;
                 case 6:

@@ -2,14 +2,6 @@
 	"Entities" : 
 	[
 		{
-			"AudioEmitter" : 
-			{
-				"AudioFalloffFactor" : 1.0,
-				"AudioIsLoop" : false,
-				"AudioPitch" : 1.0,
-				"AudioSoundName" : "Fragments_Music_Tension 2.wav",
-				"AudioVolumeLevel" : 0.15999999642372131
-			},
 			"AudioListener" : 
 			{
 				"AudioHearingRange" : 286.0,
