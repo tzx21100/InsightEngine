@@ -1278,6 +1278,12 @@ namespace IS {
         body.mGravityScale = scale;
     }
 
+    static void SetStatic() {
+        auto& engine = InsightEngine::Instance();
+        auto& body = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
+        body.mBodyType = BodyType::Static;
+    }
+
     static void SendCondition(bool bo) {
         RecievedScriptCondition = bo;
     }
@@ -1483,6 +1489,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(OnEntityCollisionEnter);
         IS_ADD_INTERNAL_CALL(GetGravityScale);
         IS_ADD_INTERNAL_CALL(SetGravityScale);
+        IS_ADD_INTERNAL_CALL(SetStatic);
         IS_ADD_INTERNAL_CALL(GetCollidingEnemyEntity);
 
 
