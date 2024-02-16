@@ -88,6 +88,7 @@ namespace IS
             if (tutorial_state == 6)
             {
 
+
                 if (PlayerScript.player_pos.x > 7279)
                 {
                     SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x - InternalCalls.GetWindowWidth() / 3f, PlayerScript.player_pos.y);

@@ -31,6 +31,9 @@ namespace IS
 
     public class PlayerScript
     {
+        //kill counter
+        static public int ENEMY_SLAIN = 0;
+
         //death timers
         static private float respawn_timer = 0.6f;
         static private float respawn_timer_set = 0.6f;
@@ -242,6 +245,9 @@ namespace IS
 
         static public void Init()
         {
+            //reset variables
+            ENEMY_SLAIN = 0;
+
             WindowWidth = InternalCalls.GetWindowWidth();
             WindowHeight = InternalCalls.GetWindowHeight();
 

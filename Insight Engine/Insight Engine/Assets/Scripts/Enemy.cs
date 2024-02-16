@@ -19,8 +19,11 @@ using System.Linq.Expressions;
 using System.ComponentModel;
 namespace IS
 {
+
+
     class Enemy
     {
+
         static public Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
 
         static public void Init()
@@ -524,6 +527,7 @@ namespace IS
 
         private void EnemyDead() // enemy dead
         {
+
             Random rnd = new Random();
             random_dead_sound = rnd.Next(0, 7);
             if (!initialDeath)
@@ -554,6 +558,7 @@ namespace IS
                         InternalCalls.AudioPlaySound("Blobby Death_7.wav", false, volume);
                         break;
                 }
+                PlayerScript.ENEMY_SLAIN++;
                 initialDeath = true;
             }
             InternalCalls.RemoveColliderComponentEntity(ENEMY_ID);
