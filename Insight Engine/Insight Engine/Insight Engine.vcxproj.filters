@@ -427,6 +427,9 @@
     <ClInclude Include="Source\Graphics\System\ShaderEffects.h">
       <Filter>Graphics\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Systems\Rewinder\Rewinder.h">
+      <Filter>Engine\Systems\Rewinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -545,6 +548,9 @@
     </Filter>
     <Filter Include="Engine\Systems\FSM">
       <UniqueIdentifier>{518ea196-49f2-459c-84c4-d1487221cc32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Systems\Rewinder">
+      <UniqueIdentifier>{11a89edc-d632-4eeb-a507-ec681db11208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

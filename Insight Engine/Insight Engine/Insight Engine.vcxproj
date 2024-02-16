@@ -135,6 +135,7 @@
     <ClInclude Include="Source\Engine\Systems\Particle\ParticleEmitter.h" />
     <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinder.h" />
     <ClInclude Include="Source\Engine\Systems\Pathfinding\Pathfinding.h" />
+    <ClInclude Include="Source\Engine\Systems\Rewinder\Rewinder.h" />
     <ClInclude Include="Source\Engine\Systems\Window\WindowSystem.h" />
     <ClInclude Include="Source\Graphics\Buffers\Framebuffer.h" />
     <ClInclude Include="Source\Graphics\Core\Graphics.h" />

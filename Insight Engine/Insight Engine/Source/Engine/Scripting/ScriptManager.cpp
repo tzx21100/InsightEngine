@@ -55,7 +55,22 @@ namespace IS {
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
 
 
-            if (InsightEngine::Instance().mRuntime == false) { return; }
+        if (InsightEngine::Instance().mRuntime == false) { mEngineWasStopped = true; return;  }
+
+        if (mEngineWasStopped) {
+            for (auto& entity : mEntities) {
+                auto& engine = InsightEngine::Instance();
+                auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
+                if (scriptcomponent.instance != nullptr) {
+                    MonoMethod* init_method = scriptcomponent.scriptClass.GetMethod("Init", 0);
+                    scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, init_method, nullptr);
+                }
+            }
+            mEngineWasStopped = false;
+        }
+
+
+
             mScriptDeltaTime = deltaTime;
             auto& engine = InsightEngine::Instance();
             for (auto& entity : mEntities) {
@@ -76,9 +91,10 @@ namespace IS {
                     CleanUp();
                     break;
                 }
-
-            
         }
+
+
+
         
     }
 
