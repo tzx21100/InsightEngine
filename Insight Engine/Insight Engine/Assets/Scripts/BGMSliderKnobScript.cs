@@ -18,6 +18,7 @@ namespace IS
     class BGMSliderKnobScript
     {
         static public bool first_hover = false;
+        static private int id;
         static private float diff_x;
         static private bool first_open_settings = false;
         static private float adjustment;
@@ -35,6 +36,7 @@ namespace IS
 
         static public void Init()
         {
+            id = InternalCalls.GetCurrentEntityID();
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
@@ -49,8 +51,8 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            lower_limit_bgm_knob = origin.x + (0.442f * win_dimension.x);
-            upper_limit_bgm_knob = origin.x + (0.558f * win_dimension.x);
+            lower_limit_bgm_knob = origin.x + (0.438f * win_dimension.x);
+            upper_limit_bgm_knob = origin.x + (0.562f * win_dimension.x);
 
             first_open_settings = false;
             diff_x = 0.5f;
@@ -59,7 +61,7 @@ namespace IS
             adjustment = origin.x + diff_x * win_dimension.x;
             normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
 
-            //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
+            InternalCalls.SetButtonHoverScale(id, 0.95f);
 
         }
 
@@ -81,8 +83,8 @@ namespace IS
             origin.y = camera_pos.y - (win_dimension.y / 2f);
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
 
-            lower_limit_bgm_knob = origin.x + (0.442f * win_dimension.x);
-            upper_limit_bgm_knob = origin.x + (0.558f * win_dimension.x);
+            lower_limit_bgm_knob = origin.x + (0.438f * win_dimension.x);
+            upper_limit_bgm_knob = origin.x + (0.562f * win_dimension.x);
             //InternalCalls.TransformSetPosition(pos, origin.y + (0.433f * win_dimension.y));
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             //hovered

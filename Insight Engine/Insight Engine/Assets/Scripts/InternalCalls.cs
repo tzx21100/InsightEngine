@@ -348,6 +348,9 @@ namespace IS
         internal extern static int SetButtonSize(int entity, SimpleVector2D size);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int SetButtonHoverScale(int entity, float scale);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetButtonHoverScale(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

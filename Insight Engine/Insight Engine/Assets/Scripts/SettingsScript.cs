@@ -39,6 +39,8 @@ namespace IS
         static private int master_slider_knob_entity;
         static private int bgm_slider_knob_entity;
         static private int vfx_slider_knob_entity;
+        static private int scroll_bar_entity;
+        static private int scroll_bar_tracker_entity;
         static private int back_button_entity;
 
         static SimpleImage background_image;
@@ -48,6 +50,8 @@ namespace IS
         static SimpleImage vfx_checkbox_image;
         static SimpleImage slider_bar_image;
         static SimpleImage slider_knob_image;
+        static SimpleImage scroll_bar_image;
+        static SimpleImage scroll_bar_tracker_image;
         static SimpleImage back_button_image;
 
         static Vector2D background_pos = new Vector2D(0, 0);
@@ -61,6 +65,8 @@ namespace IS
         static public Vector2D master_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
+        static public Vector2D scroll_bar_pos = new Vector2D(0, 0);
+        static public Vector2D scroll_bar_tracker_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
 
 
@@ -114,10 +120,11 @@ namespace IS
 
             }
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
-            //settings_overlay_image = InternalCalls.GetSpriteImage("temp_settings_overlay.png");
             settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
             slider_bar_image = InternalCalls.GetSpriteImage("slider_bar.png");
             slider_knob_image = InternalCalls.GetSpriteImage("slider_knob.png");
+            scroll_bar_image = InternalCalls.GetSpriteImage("scroll_bar.png");
+            scroll_bar_tracker_image = InternalCalls.GetSpriteImage("scroll_bar_tracker.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
@@ -131,11 +138,10 @@ namespace IS
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
+            scroll_bar_entity = InternalCalls.CreateEntityUI("Scroll Bar", scroll_bar_image);
+            scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
 
-            /*master_slider_knob_pos = new Vector2D(0, 0);
-            bgm_slider_knob_pos = new Vector2D(0, 0);
-            vfx_slider_knob_pos = new Vector2D(0, 0);*/
         }
 
         static public void Update()
@@ -170,6 +176,8 @@ namespace IS
             Vector2D master_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
             Vector2D bgm_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
             Vector2D vfx_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
+            Vector2D scroll_bar = new Vector2D(0.02f * win_dimension.x, 0.17f * win_dimension.x);
+            Vector2D scroll_bar_tracker = new Vector2D(0.02f * win_dimension.x, 0.086f * win_dimension.x);
             Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.12f * win_dimension.x);
 
             InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
@@ -181,10 +189,10 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(bgm_slider_bar.x, bgm_slider_bar.y, bgm_slider_bar_entity);
             InternalCalls.TransformSetScaleEntity(vfx_slider_bar.x, vfx_slider_bar.y, vfx_slider_bar_entity);
             InternalCalls.SetButtonSize(master_slider_knob_entity, new SimpleVector2D(master_slider_knob.x, master_slider_knob.y));
-
             InternalCalls.SetButtonSize(bgm_slider_knob_entity, new SimpleVector2D(bgm_slider_knob.x, bgm_slider_knob.y));
-
             InternalCalls.SetButtonSize(vfx_slider_knob_entity, new SimpleVector2D(vfx_slider_knob.x, vfx_slider_knob.y));
+            InternalCalls.TransformSetScaleEntity(scroll_bar.x, scroll_bar.y, scroll_bar_entity);
+            InternalCalls.SetButtonSize(scroll_bar_tracker_entity, new SimpleVector2D(scroll_bar_tracker.x, scroll_bar_tracker.y));
             InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
 
             // Positions    
@@ -193,14 +201,15 @@ namespace IS
             master_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.585f * win_dimension.y));
             bgm_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.475f * win_dimension.y));
             vfx_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.365f * win_dimension.y));
-            master_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.54f * win_dimension.y));
-            bgm_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.43f * win_dimension.y));
-            vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.32f * win_dimension.y));
+            master_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.541f * win_dimension.y));
+            bgm_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.431f * win_dimension.y));
+            vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.321f * win_dimension.y));
             master_slider_knob_pos.Set(master_slider_knob_pos.x, origin.y + (0.543f * win_dimension.y));
-
-            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y)); //Change 9999?
-            
+            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y));
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
+            scroll_bar_pos.Set(origin.x + (0.593f * win_dimension.x), origin.y + (0.45f * win_dimension.y));
+            scroll_bar_tracker_pos.Set(origin.x + (0.593f * win_dimension.x), scroll_bar_tracker_pos.y); //532-365
+
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
             bgm_vol = master_multiplier * bgm_multiplier;
@@ -266,10 +275,10 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(bgm_slider_bar_pos.x, bgm_slider_bar_pos.y, bgm_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(vfx_slider_bar_pos.x, vfx_slider_bar_pos.y, vfx_slider_bar_entity);
             //InternalCalls.TransformSetPositionEntity(master_slider_knob_pos.x, master_slider_knob_pos.y, master_slider_knob_entity);
-
             //InternalCalls.TransformSetPositionEntity(bgm_slider_knob_pos.x, bgm_slider_knob_pos.y, bgm_slider_knob_entity);
-
             //InternalCalls.TransformSetPositionEntity(vfx_slider_knob_pos.x, vfx_slider_knob_pos.y, vfx_slider_knob_entity);
+            InternalCalls.TransformSetPositionEntity(scroll_bar_pos.x, scroll_bar_pos.y, scroll_bar_entity);
+            //InternalCalls.TransformSetPositionEntity(scroll_bar_tracker_pos.x, scroll_bar_tracker_pos.y, scroll_bar_tracker_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
             /*   InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
                InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
@@ -293,10 +302,10 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_bar_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_bar_entity);
             //InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_slider_knob_entity);
-            
             //InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_knob_entity);
-
             //InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_knob_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, scroll_bar_entity);
+            //InternalCalls.TransformSetPositionEntity(9999f, 9999f, scroll_bar_tracker_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 
         }
 
