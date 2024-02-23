@@ -41,7 +41,7 @@ namespace IS
         internal extern static void RigidBodyAddForce(float x, float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodyAddForceEntity(float x, float y, uint entity);
+        internal extern static void RigidBodyAddForceEntity(float x, float y, int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void TransformSetRotation(float angle, float angle_speed);

@@ -65,6 +65,7 @@ namespace IS
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(500f, 500f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
+        private Vector2D enemy_dash_vel = new Vector2D(600f, 600f);
 
         // get hit
         //public bool isHit;
@@ -86,6 +87,8 @@ namespace IS
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(220f, 200f);
         public int attack_damage = 1;
+        private bool initialDashAttack = false;
+        private bool nextAttackReady = false;
 
         // random stuff
         private int random_attack;
@@ -464,6 +467,7 @@ namespace IS
             direction.x = target_point.x - enemy_pos.x;
             // set enemy vel
             enemy_vel.x = speed * MathF.Sign(direction.x);
+            enemy_vel.y = 0f;
             direction.x = -direction.x;// going left is positive, right is negative
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
@@ -615,12 +619,28 @@ namespace IS
         {
             float dist = PlayerScript.player_pos.x - enemy_pos.x;
 
-            if (MathF.Abs(dist) <= 220f) // attack player when getting close enough
-            {
+            if (!nextAttackReady) {
+
                 Random rnd = new Random();
                 random_attack = rnd.Next(0, 2);
-                current_state = EnemyState.ATTACKING;
-                return;
+                nextAttackReady = true;
+            }
+            switch (random_attack) // condition check for different attack
+            {
+                case 0:
+                    if (MathF.Abs(dist) <= view_port_area.x) // attack player when getting close enough, within the view port, release first dash attack
+                    {
+                        current_state = EnemyState.ATTACKING;
+                        return;
+                    }
+                    break;
+                case 1:
+                    if (MathF.Abs(dist) <= attack_area.x) // attack player when getting close enough, within the attack area, release the second tornado
+                    {
+                        current_state = EnemyState.ATTACKING;
+                        return;
+                    }
+                    break;
             }
 
             if (enemy_pos.x < enemy_left_point.x || enemy_pos.x > enemy_right_point.x || !PlayerInSight())
@@ -632,6 +652,7 @@ namespace IS
             direction.x = PlayerScript.player_pos.x - enemy_pos.x;
             // set enemy vel
             enemy_vel.x = speed * MathF.Sign(direction.x) * 1.8f;
+            enemy_vel.y = 0f;
             direction.x = -direction.x;// going left is positive, right is negative
             InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
         }
@@ -641,6 +662,14 @@ namespace IS
             switch (random_attack)
             {
                 case 0: // atack 1 animation
+                    if (!initialDashAttack) // adding vel for enemy to dash to player
+                    {
+                        float dir = PlayerScript.player_pos.x - enemy_pos.x;
+                        enemy_vel.x = enemy_dash_vel.x * MathF.Sign(dir);
+                        enemy_vel.y = enemy_dash_vel.y;
+                        InternalCalls.RigidBodyAddForceEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
+                    }
+                    initialDashAttack = true;
                     InternalCalls.SetSpriteImage(enemy_attack1);
 
                     break;
@@ -737,6 +766,8 @@ namespace IS
                 attack_timer = attack_timer_duration;
                 initialAttack = false;
                 initialAttackSound = false;
+                initialDashAttack = false; // reset for dash adding vel
+                nextAttackReady = false; // for enemy to change attack pattern
                 current_state = EnemyState.FOLLOWING_PLAYER;
             }
         }
