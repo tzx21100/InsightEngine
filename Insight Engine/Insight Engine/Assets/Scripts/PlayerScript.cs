@@ -188,6 +188,9 @@ namespace IS
         static public int hitting_enemy_id;
         static public float attack_damage = 10f;
         static public Vector2D attack_range = new Vector2D(150f, 300f);
+        static public float attack_stun_timer = 0.2f;
+        static public bool IsAttackStun = false;
+        static public bool IsFirstAttackStun = false;
 
         static int random_attack_sound;
 
@@ -1354,7 +1357,10 @@ namespace IS
             }
             if (attack_timer < combo_interval)
             {
-                attack_timer += InternalCalls.GetDeltaTime();
+                if (!IsAttackStun)
+                {
+                    attack_timer += InternalCalls.GetDeltaTime();
+                }
                 
                 if (attack_timer < attack_interval) // play attack animation
                 {
@@ -1367,9 +1373,34 @@ namespace IS
                     {
                         case 1:
                             //InternalCalls.SetSpriteAnimationIndex(0);
-                            
+
                             InternalCalls.SetSpriteImage(player_attack1);
                             InternalCalls.SetSpriteAnimationIndex((int)PlayerAttackCombo.LightAttack);
+
+                            /*if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun)
+                            {
+                                IsAttackStun = true;
+                                IsFirstAttackStun = true;
+                                attack_stun_timer = 0.2f;
+                            }
+
+                            if (IsAttackStun)
+                            {
+                                attack_stun_timer -= InternalCalls.GetDeltaTime();
+                                InternalCalls.SetAnimationEntityPlaying(PLAYER_ID, false);
+                                //InternalCalls.DrawImageExtraAt(0, 4, 1, 6, new SimpleVector2D(player_pos.x, player_pos.y), 0, new SimpleVector2D(trans_scaling.x, trans_scaling.y), player_attack1, 1);
+                            }
+                            else
+                            {
+                                InternalCalls.SetAnimationEntityPlaying(PLAYER_ID, true);
+                            }
+
+                            if (attack_stun_timer <= 0f)
+                            {
+                                IsAttackStun = false;
+                            }*/
+
+
                             //Console.WriteLine(InternalCalls.GetCurrentAnimationEntity(PLAYER_ID));
                             //InternalCalls.DrawNonEnityAnimation(InternalCalls.GetDeltaTime(),new SimpleVector2D(player_pos.x,player_pos.y),0,new SimpleVector2D(InternalCalls.GetTransformScaling().x,InternalCalls.GetTransformScaling().y),player_attack1,1,2);
                             break;
@@ -1396,12 +1427,14 @@ namespace IS
                     //combo_step = 0;
                     isAttack = false;
                     initial_attack = false;
+                    IsFirstAttackStun = false;
                 }
                 if (attack_timer >= combo_interval) // reset sth when a combo ends
                 {
                     combo_step = 0;
                     isAttack = false;
                     initial_attack = false;
+                    IsFirstAttackStun = false;
                 }
             }
             /*if (isAttack)

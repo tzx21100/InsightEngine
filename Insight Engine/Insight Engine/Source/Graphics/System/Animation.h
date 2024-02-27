@@ -106,6 +106,7 @@ namespace IS {
         float animation_duration{}; // The total duration of the animation in seconds.
         float time_per_frame{};     // The duration of each frame in seconds.
         float frame_timer{};        // Timer to keep track of elapsed time for frame updates.
+        bool is_playing = true;
 
     private:
 

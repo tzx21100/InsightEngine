@@ -491,6 +491,9 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetCircleColliderOffsetX(float x);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetAnimationEntityPlaying(int entity, bool toggle);
+
 
     }
 }

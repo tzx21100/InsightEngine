@@ -35,12 +35,15 @@ namespace IS {
             //Loop using Fixed DT
             //deltaTime = static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
             // Update function to advance the animation
+
+            if (time_per_frame == 0 || !is_playing)
+                return;
+
             frame_timer += deltaTime;
             frame_dimension = glm::vec2{ (1.f / x_frames), (1.f / y_frames) };
             time_per_frame = animation_duration / (x_frames * y_frames);
 
-            if (time_per_frame == 0)
-                return;
+            
 
             while (frame_timer >= time_per_frame) {
                 frame_timer -= time_per_frame;
