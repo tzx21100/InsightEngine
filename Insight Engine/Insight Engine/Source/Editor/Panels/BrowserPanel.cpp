@@ -65,6 +65,14 @@ namespace IS {
                         {
                             SwitchImportedAsset(IMPORTED);
                         }
+                        ImGui::SameLine();
+                        if (ImGui::Button(ICON_LC_ROTATE_CW))
+                        {
+                            auto& engine = InsightEngine::Instance();
+                            auto const asset = engine.GetSystem<AssetManager>("Asset");
+                            asset->RefreshDirectiories();
+                        }
+                        ImGui::SetItemTooltip("Reload Imported Assets");
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();
@@ -78,14 +86,6 @@ namespace IS {
                         {
                             SwitchCurrentDirectory(ASSETS_PATH);
                         }
-                        ImGui::SameLine();
-                        if (ImGui::Button(ICON_LC_ROTATE_CW))
-                        {
-                            auto& engine = InsightEngine::Instance();
-                            auto const asset = engine.GetSystem<AssetManager>("Asset");
-                            asset->RefreshDirectiories();
-                        }
-                        ImGui::SetItemTooltip("Reload Assets");
                         ImGui::PopStyleColor();
 
                         ImGui::TableNextColumn();
@@ -194,7 +194,7 @@ namespace IS {
                         extension == ".mp3" || extension == ".MP3" ? "MP3" :
                         extension == ".wav" || extension == ".WAV" ? "WAV" :
                         extension == ".png" ? "PNG" :
-                        extension == ".jpeg" ? "JPEG" : "File";
+                        extension == ".jpeg" || "jpg" ? "JPEG" : "File";
 
                     ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
                     RenderAssetItem(filename_string, selected_file, icon);
@@ -700,6 +700,5 @@ namespace IS {
     }
 
 } // end namespace IS
-
 
 #endif // USING_IMGUI
