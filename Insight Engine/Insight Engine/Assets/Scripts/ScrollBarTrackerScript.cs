@@ -9,6 +9,7 @@ namespace IS
         static private float diff_y;
         static private float adjustment;
         static private bool first_open_settings = false;
+
         // Windows
         static public Vector2D win_dimension = new Vector2D(0, 0);
         static public Vector2D origin = new Vector2D(0, 0);
@@ -20,6 +21,7 @@ namespace IS
         static public float upper_limit_scroll_track;
         static public float lower_limit_scroll_track;
 
+        static public float virtual_y;
         static public void Init()
         {
             id = InternalCalls.GetCurrentEntityID();

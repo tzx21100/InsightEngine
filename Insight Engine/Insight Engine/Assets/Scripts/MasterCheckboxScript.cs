@@ -41,17 +41,19 @@ namespace IS
             }
             else
             {
-                SettingsScript.master_multiplier= MasterSliderKnobScript.normalised_adjustment;
+                SettingsScript.master_multiplier = MasterSliderKnobScript.normalised_adjustment;
                 InternalCalls.SetSpriteImage(toggled_image);
                 
 
             }
+
             if (!BGMCheckboxScript.toggled||!VFXCheckboxScript.toggled) {
                 toggled = false;
             }else if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
             {
                 toggled= true;
             }
+
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
@@ -66,6 +68,7 @@ namespace IS
             {
                 first_hover = false;
             }
+
             if (!InternalCalls.IsWindowFocused())
             {
                 first_hover = true;
@@ -73,9 +76,6 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                //clicked = !clicked;
-                //BGMCheckboxScript.clicked = clicked;
-                //VFXCheckboxScript.clicked = clicked;
                 toggled = !toggled;
                 BGMCheckboxScript.toggled = toggled;
                 VFXCheckboxScript.toggled = toggled;
