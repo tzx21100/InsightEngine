@@ -92,8 +92,24 @@ namespace IS {
          */
         void ProcessSelectedEntityShortcuts();
 
+        /*!
+         * \brief Checks if the given layer is the selected layer.
+         *
+         * \param layer_index The index of the layer to check.
+         * \return True if the given layer is the selected layer, false otherwise.
+         */
         bool IsSelectedLayer(int layer_index) const;
+
+        /*!
+         * \brief Sets the given layer as the selected layer.
+         *
+         * \param layer_index The index of the layer to set as selected.
+         */
         void MakeSelectedLayer(int layer_index);
+
+        /*!
+         * \brief Resets the selected layer to none.
+         */
         void ResetSelectedLayer();
 
         friend class EditorLayer; ///< Grant EditorLayer access to private data members.

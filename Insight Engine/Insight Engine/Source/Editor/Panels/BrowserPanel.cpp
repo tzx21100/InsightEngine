@@ -181,12 +181,13 @@ namespace IS {
                         continue;
                     }
 
+                    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsAnyItemHovered())
+                    {
+                        selected_file = std::string();
+                    }
+
                     const bool is_directory = entry.is_directory();
                     ImGui::TableNextColumn();
-                    if (selected_file != filename_string)
-                    {
-                        ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                    }
                     std::string icon_name = is_directory ? "Folder" :
                         extension == ".insight" ? "Insight" :
                         extension == ".json" ? "Json" :
@@ -196,11 +197,7 @@ namespace IS {
                         extension == ".jpeg" ? "JPEG" : "File";
 
                     ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
-                    bool selected = ImGui::ImageButton(("##" + filename_string).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    if (selected_file != filename_string)
-                    {
-                        ImGui::PopStyleColor();
-                    }
+                    RenderAssetItem(filename_string, selected_file, icon);
 
                     // Start file drag
                     if (ImGui::BeginDragDropSource())
@@ -215,29 +212,41 @@ namespace IS {
                         ImGui::EndDragDropSource();
                     }
 
-                    if (selected)
-                    {
-                        selected_file = filename_string;
-                    }
-
-                    // Clicking Item
+                    // Double-click
                     if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     {
-                        if (is_directory) { mCurrentDirectory /= path.filename(); } else
+                        if (!is_directory)
                         {
                             std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
                             path.extension() == ".insight" ? SceneManager::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
                         }
+                        else { mCurrentDirectory /= path.filename(); }
                     }
-                    if (ImGui::BeginPopupContextItem())
-                    {
-                        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
-                        {
-                            std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
-                            FileUtils::FileDelete(filepath);
-                        }
 
-                        ImGui::EndPopup();
+                    if (!is_directory)
+                    {
+                        // Right-click
+                        if (ImGui::BeginPopupContextItem())
+                        {
+                            // Construct filepath
+                            std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
+
+                            // Open file
+                            if (ImGui::MenuItem(ICON_LC_EXTERNAL_LINK "  Open File"))
+                            {
+                                FileUtils::OpenFileFromDefaultApp(filepath.c_str());
+                            }
+                            ImGui::SetItemTooltip("Opens file in its default application.");
+
+                            // Delete file
+                            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete File"))
+                            {
+                                FileUtils::FileDelete(filepath);
+                            }
+                            ImGui::SetItemTooltip("Deletes file from local hard disk.");
+
+                            ImGui::EndPopup();
+                        }
                     }
 
                     // Render label
@@ -371,9 +380,9 @@ namespace IS {
             return;
 
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        ImGui::SameLine();
-        ImGui::TextUnformatted(">");
-        ImGui::SameLine();
+        ImGui::SameLine(0.f, 0.f);
+        ImGui::TextUnformatted(ICON_LC_CHEVRON_RIGHT);
+        ImGui::SameLine(0.f, 0.f);
         if (ImGui::Button(mSelectedImportedAsset.c_str())) { SwitchImportedAsset(mSelectedImportedAsset); }
         ImGui::PopStyleColor();
     }
@@ -405,34 +414,16 @@ namespace IS {
         {
             EditorUtils::RenderTable("Imported Assets Layout", column_count, [&]()
             {
-                ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
-                if (mSelectedImportedAsset == IMPORTED)
+                static std::string selected_file;
+
+                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsAnyItemHovered())
                 {
-                    ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Textures", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-                    {
-                        SwitchImportedAsset("Textures");
-                    }
-                    ImGui::TextWrapped("Textures");
-
-                    ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Sounds", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-                    {
-                        SwitchImportedAsset("Sounds");
-                    }
-                    ImGui::TextWrapped("Sounds");
-
-                    ImGui::TableNextColumn();
-                    ImGui::ImageButton("##Prefabs", mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-                    {
-                        SwitchImportedAsset("Prefabs");
-                    }
-                    ImGui::TextWrapped("Prefabs");
+                    selected_file = std::string();
                 }
 
+                if (mSelectedImportedAsset == IMPORTED)
+                    RenderImportedAssetFolder({ "Textures", "Sounds", "Prefabs" }, selected_file);
+                                
                 // Show all imported textures
                 if (mSelectedImportedAsset == "Textures")
                 {
@@ -449,8 +440,9 @@ namespace IS {
                         ImTextureID icon = EditorUtils::ConvertTextureID(img.texture_id);
                         float aspect_ratio = static_cast<float>(img.width) / static_cast<float>(img.height);
                         ImGui::TableNextColumn();
+
                         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1, 1));
-                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize * aspect_ratio, mControls.mThumbnailSize });
+                        RenderAssetItem(name, selected_file, icon, aspect_ratio);
                         ImGui::PopStyleVar();
 
                         // Texture Tooltip
@@ -458,6 +450,12 @@ namespace IS {
                         {
                             ImGui::Image(icon, { 48.f * aspect_ratio, 48.f });
                             ImGui::EndTooltip();
+                        }
+
+                        // Double-click
+                        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                        {
+                            FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::TEXTURE_DIRECTORY);
                         }
 
                         // Right-click
@@ -496,7 +494,15 @@ namespace IS {
                         bool is_mp3 = extension == "MP3" || extension == "mp3";
                         ImTextureID icon = mEditorLayer.GetIcon(is_mp3 ? "MP3" : "WAV");
                         ImGui::TableNextColumn();
-                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Render image
+                        RenderAssetItem(name, selected_file, icon);
+
+                        // Double-click
+                        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                        {
+                            FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SOUND_DIRECTORY);
+                        }
 
                         // Right-click
                         RenderContextMenuImported(asset->mSoundList, it, path.string(), AssetManager::SOUND_DIRECTORY);
@@ -533,7 +539,16 @@ namespace IS {
                         std::filesystem::path path(name);
                         ImTextureID icon = mEditorLayer.GetIcon("Json");
                         ImGui::TableNextColumn();
-                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Render image
+                        RenderAssetItem(name, selected_file, icon);
+
+                        // Double-click
+                        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                        {
+                            std::string filepath = path.string() + ".json";
+                            FileUtils::OpenFileFromDefaultApp(filepath.c_str(), AssetManager::PREFAB_DIRECTORY);
+                        }
 
                         // Right-click
                         RenderContextMenuImported(asset->mPrefabList, it, path.string(), AssetManager::PREFAB_DIRECTORY);
@@ -570,7 +585,11 @@ namespace IS {
                         std::filesystem::path path(name);
                         ImTextureID icon = mEditorLayer.GetIcon("C#");
                         ImGui::TableNextColumn();
-                        ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Render image
+                        RenderAssetItem(name, selected_file, icon);
+
+                        // Double-click
                         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                         {
                             FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
@@ -596,7 +615,6 @@ namespace IS {
                     }
                 }
 
-                ImGui::PopStyleColor();
             });
             mChildWindowHovered = ImGui::IsWindowHovered();
         }
@@ -636,6 +654,48 @@ namespace IS {
             }, 0, label_width);
 
             ImGui::EndPopup(); // end popup BrowserSettings
+        }
+    }
+
+    void BrowserPanel::RenderImportedAssetFolder(std::initializer_list<std::string> imported_assets, std::string& selected_filename)
+    {
+        for (std::string const& asset : imported_assets)
+        {
+            ImGui::TableNextColumn();
+
+            if (selected_filename != asset)
+                ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
+
+            bool selected = ImGui::ImageButton(("##" + asset).c_str(), mEditorLayer.GetIcon("Folder"), { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+            if (selected_filename != asset)
+                ImGui::PopStyleColor();
+
+            if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+            {
+                SwitchImportedAsset(asset.c_str());
+            }
+            ImGui::TextWrapped(asset.c_str());
+
+            if (selected)
+                selected_filename = asset;
+        }
+    }
+
+    void BrowserPanel::RenderAssetItem(std::string const& item, std::string& selected_filename, ImTextureID& icon, float aspect_ratio)
+    {
+        if (selected_filename != item)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, { 0.f, 0.f, 0.f, 0.f });
+        }
+        bool selected = ImGui::ImageButton(("##" + item).c_str(), icon, { mControls.mThumbnailSize * aspect_ratio, mControls.mThumbnailSize });
+        if (selected_filename != item)
+        {
+            ImGui::PopStyleColor();
+        }
+        if (selected)
+        {
+            selected_filename = item;
         }
     }
 
