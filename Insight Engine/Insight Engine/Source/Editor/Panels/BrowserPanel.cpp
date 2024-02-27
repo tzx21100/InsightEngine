@@ -230,6 +230,16 @@ namespace IS {
                             path.extension() == ".insight" ? SceneManager::Instance().LoadScene(filepath) : FileUtils::OpenFileFromDefaultApp(filepath.c_str());
                         }
                     }
+                    if (ImGui::BeginPopupContextItem())
+                    {
+                        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
+                        {
+                            std::string filepath = mCurrentDirectory.string() + "\\" + path.filename().string();
+                            FileUtils::FileDelete(filepath);
+                        }
+
+                        ImGui::EndPopup();
+                    }
 
                     // Render label
                     ImGui::TextWrapped(filename_string.c_str());
@@ -533,8 +543,10 @@ namespace IS {
                 // Show all imported scripts
                 else if (mSelectedImportedAsset == "Scripts")
                 {
-                    for (auto const& name : asset->mScriptList)
+                    for (auto it{ asset->mScriptList.begin() }; it != asset->mScriptList.end(); ++it)
                     {
+                        std::string const& name = *it;
+
                         if (!mFilter.PassFilter(name.c_str()))
                         {
                             continue;
@@ -547,6 +559,27 @@ namespace IS {
                         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                         {
                             FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
+                        }
+                        if (ImGui::BeginPopupContextItem())
+                        {
+                            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
+                            {
+                                // Delete from script list
+                                {
+                                    it = asset->mScriptList.erase(it);
+                                    if (it != asset->mScriptList.begin())
+                                        --it;
+                                }
+
+                                // Delete from hard disk
+                                {
+                                    std::ostringstream oss;
+                                    oss << AssetManager::SCRIPT_DIRECTORY << "/" << path.string();
+                                    FileUtils::FileDelete(oss.str());
+                                }
+                            }
+
+                            ImGui::EndPopup();
                         }
 
                         // Start file drag
@@ -564,6 +597,49 @@ namespace IS {
 
                         ImGui::TextWrapped(path.filename().string().c_str());
                     }
+
+                    //for (auto const& name : asset->mScriptList)
+                    //{
+                    //    if (!mFilter.PassFilter(name.c_str()))
+                    //    {
+                    //        continue;
+                    //    }
+
+                    //    std::filesystem::path path(name);
+                    //    ImTextureID icon = mEditorLayer.GetIcon("C#");
+                    //    ImGui::TableNextColumn();
+                    //    ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+                    //    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                    //    {
+                    //        FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
+                    //    }
+                    //    if (ImGui::BeginPopupContextItem())
+                    //    {
+                    //        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
+                    //        {
+                    //            std::ostringstream oss;
+                    //            oss << AssetManager::SCRIPT_DIRECTORY << "/" << path.string();
+                    //            FileUtils::FileDelete(oss.str());
+                    //        }
+
+                    //        ImGui::EndPopup();
+                    //    }
+
+                    //    // Start file drag
+                    //    if (ImGui::BeginDragDropSource())
+                    //    {
+                    //        const wchar_t* item_path = path.c_str();
+                    //        ImGui::SetDragDropPayload("IMPORTED_SCRIPT", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+
+                    //        // Tooltip
+                    //        const ImVec2 image_size = { 48.f , 48.f };
+                    //        ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
+
+                    //        ImGui::EndDragDropSource();
+                    //    }
+
+                    //    ImGui::TextWrapped(path.filename().string().c_str());
+                    //}
                 }
 
                 ImGui::PopStyleColor();

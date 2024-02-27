@@ -205,10 +205,10 @@ namespace IS {
         glfwSetWindowMonitor(mWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
     }
 
-    void WindowSystem::ShowMessageBox(std::string const& message, std::string const& title)
+    int WindowSystem::ShowMessageBox(std::string const& message, std::string const& title)
     {
         HWND hwnd = glfwGetWin32Window(mWindow);
-        MessageBox(hwnd, message.c_str(), title.c_str(), MB_OK | MB_ICONINFORMATION);
+        return MessageBox(hwnd, message.c_str(), title.c_str(), MB_OK | MB_ICONINFORMATION);
     }
 
     int WindowSystem::GetTitleBarHeight()
