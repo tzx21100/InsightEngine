@@ -33,6 +33,8 @@ namespace IS
 
         static public float lower_limit_master_knob;
         static public float upper_limit_master_knob;
+        static public float y_pos;
+
         static public void Init()
         {
             id = InternalCalls.GetCurrentEntityID();
@@ -56,10 +58,8 @@ namespace IS
             first_open_settings = false;
             diff_x = 0.5f;
 
-            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             adjustment = origin.x + diff_x * win_dimension.x;
             normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
-            //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.543f * win_dimension.y));
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
         }
@@ -92,11 +92,12 @@ namespace IS
                     InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
                     first_hover = true;
                 }
+
                 if (InternalCalls.MouseHeld(0) == true)
                 {
                     adjustment = Math.Min(upper_limit_master_knob, Math.Max(lower_limit_master_knob, mouse_pos.x));
                     diff_x = (adjustment - origin.x) / win_dimension.x;
-                    InternalCalls.TransformSetPosition(adjustment, origin.y + (0.543f * win_dimension.y));
+                    InternalCalls.TransformSetPosition(adjustment, SettingsScript.master_slider_knob_pos.y);
                     SettingsScript.master_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
 
@@ -118,6 +119,8 @@ namespace IS
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
             }
+
+            y_pos = origin.y + (0.543f * win_dimension.y);
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
@@ -125,7 +128,7 @@ namespace IS
                     adjustment = origin.x + diff_x * win_dimension.x;
                     first_open_settings = true;
                 }
-                InternalCalls.TransformSetPosition(adjustment, origin.y + (0.543f * win_dimension.y));
+                InternalCalls.TransformSetPosition(adjustment, y_pos);
             }
             if (!SettingsScript.show_settings)
             {

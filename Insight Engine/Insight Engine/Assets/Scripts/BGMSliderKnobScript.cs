@@ -20,9 +20,11 @@ namespace IS
         static public bool first_hover = false;
         static private int id;
         static private float diff_x;
+
         static private bool first_open_settings = false;
         static private float adjustment;
         static public float normalised_adjustment;
+
         // Windows
         static public Vector2D win_dimension = new Vector2D(0, 0);
         static public Vector2D origin = new Vector2D(0, 0);
@@ -33,6 +35,8 @@ namespace IS
 
         static public float lower_limit_bgm_knob;
         static public float upper_limit_bgm_knob;
+        static public float y_pos;
+
 
         static public void Init()
         {
@@ -100,7 +104,7 @@ namespace IS
                 {
                     adjustment = Math.Min(upper_limit_bgm_knob, Math.Max(lower_limit_bgm_knob, mouse_pos.x));
                     diff_x = (adjustment - origin.x) / win_dimension.x;
-                    InternalCalls.TransformSetPosition(adjustment, origin.y + (0.433f * win_dimension.y));
+                    InternalCalls.TransformSetPosition(adjustment, SettingsScript.bgm_slider_knob_pos.y);
                     SettingsScript.bgm_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
 
@@ -129,6 +133,7 @@ namespace IS
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.vfx_vol);
             }
 
+            y_pos = origin.y + (0.433f * win_dimension.y);
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
@@ -136,7 +141,7 @@ namespace IS
                     adjustment = origin.x + diff_x * win_dimension.x;
                     first_open_settings = true;
                 }
-                InternalCalls.TransformSetPosition(adjustment, origin.y + (0.433f * win_dimension.y));
+                InternalCalls.TransformSetPosition(adjustment, y_pos);
                 
             }
             if (!SettingsScript.show_settings)

@@ -202,6 +202,7 @@ namespace IS
             settings_overlay_pos.Set(camera_pos.x, camera_pos.y);
 
             // =========================================================================================================
+            // Move the Y values to be handled by their individual scripts
             master_checkbox_pos.Set(MasterCheckboxScript.x_pos, MasterCheckboxScript.y_pos);
             bgm_checkbox_pos.Set(BGMCheckboxScript.x_pos, BGMCheckboxScript.y_pos);
             vfx_checkbox_pos.Set(VFXCheckboxScript.x_pos, VFXCheckboxScript.y_pos);
@@ -213,7 +214,7 @@ namespace IS
             master_slider_knob_pos.Set(master_slider_knob_pos.x, MasterSliderKnobScript.y_pos);
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, VFXSliderKnobScript.y_pos); //442-558
-
+            
             // =========================================================================================================
 
             scroll_bar_pos.Set(origin.x + (0.593f * win_dimension.x), origin.y + (0.45f * win_dimension.y));

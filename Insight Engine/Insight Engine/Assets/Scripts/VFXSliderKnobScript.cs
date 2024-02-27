@@ -33,6 +33,8 @@ namespace IS
 
         static public float lower_limit_vfx_knob;
         static public float upper_limit_vfx_knob;
+        static public float y_pos;
+
         static public void Init()
         {
             id = InternalCalls.GetCurrentEntityID();
@@ -95,7 +97,7 @@ namespace IS
                 {
                     adjustment = Math.Min(upper_limit_vfx_knob, Math.Max(lower_limit_vfx_knob, mouse_pos.x));
                     diff_x = (adjustment - origin.x) / win_dimension.x;
-                    InternalCalls.TransformSetPosition(adjustment, origin.y + (0.323f * win_dimension.y));
+                    InternalCalls.TransformSetPosition(adjustment, SettingsScript.vfx_slider_knob_pos.y);
                     SettingsScript.vfx_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
 
@@ -121,6 +123,7 @@ namespace IS
                 //Console.WriteLine(SettingsScript.master_multiplier);
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
             }
+            y_pos = origin.y + (0.323f * win_dimension.y);
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
@@ -128,7 +131,7 @@ namespace IS
                     adjustment = origin.x + diff_x * win_dimension.x;
                     first_open_settings = true;
                 }
-                InternalCalls.TransformSetPosition(adjustment, origin.y + (0.323f * win_dimension.y));
+                InternalCalls.TransformSetPosition(adjustment, y_pos);
             }
             if (!SettingsScript.show_settings)
             {
