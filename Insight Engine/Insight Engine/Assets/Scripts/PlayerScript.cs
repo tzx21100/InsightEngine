@@ -179,7 +179,7 @@ namespace IS
 
         static private int combo_step = 0;
         static private int total_attack_in_one_combo = 3;
-        static private float attack_interval = 0.5f;
+        static private float attack_interval = 0.5f; // same as the animation player
         static private float combo_interval = 1f;
         static private float attack_timer = 1f;
         static private bool isAttack = false;
@@ -188,7 +188,8 @@ namespace IS
         static public int hitting_enemy_id;
         static public float attack_damage = 10f;
         static public Vector2D attack_range = new Vector2D(150f, 300f);
-        static public float attack_stun_timer = 0.2f;
+        static public float attack_stun_timer_duration = 0.2f;
+        static public float attack_stun_timer = attack_stun_timer_duration;
         static public bool IsAttackStun = false;
         static public bool IsFirstAttackStun = false;
 
@@ -1348,7 +1349,7 @@ namespace IS
                 }
 
                 // Reset all attack animation frames
-                InternalCalls.ResetAnimationFrames(PLAYER_ID, (int)PlayerAttackCombo.LightAttack, (int)PlayerAttackCombo.LightAttack);
+                InternalCalls.ResetAnimationFrames(PLAYER_ID, (int)PlayerAttackCombo.LightAttack, (int)PlayerAttackCombo.HeavyAttack);
 
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
@@ -1381,7 +1382,7 @@ namespace IS
                             {
                                 IsAttackStun = true;
                                 IsFirstAttackStun = true;
-                                attack_stun_timer = 0.2f;
+                                attack_stun_timer = attack_stun_timer_duration;
                             }
 
                             if (IsAttackStun)
@@ -1569,7 +1570,7 @@ namespace IS
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
                 {
                     // enemy get hit
-                    if (isAttack && !initial_attack)
+                    if (isAttack && !initial_attack) // enemy get hit for the first time
                     {
                         Random rnd = new Random();
                         int random_hit_sound = rnd.Next(0, 2);
@@ -1596,7 +1597,7 @@ namespace IS
                             initial_attack = true;
                         }
                     }
-                    else if (isAttack)
+                    else if (isAttack) // still hitting the enemy
                     {
                         // drawing hitting enemy vfx
                         CalibrateAttackAngle();
@@ -1616,6 +1617,9 @@ namespace IS
                         InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
                         //InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
                         InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);
+
+                        // Apply Attack Stun Effect
+                        AttackStunEffect();
                     }
                     else
                     {
@@ -1624,6 +1628,30 @@ namespace IS
                         InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
                     }
                 }
+            }
+        }
+        static public void AttackStunEffect()
+        {
+            if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun)
+            {
+                IsAttackStun = true;
+                IsFirstAttackStun = true;
+                attack_stun_timer = attack_stun_timer_duration;
+            }
+
+            if (IsAttackStun)
+            {
+                attack_stun_timer -= InternalCalls.GetDeltaTime();
+                InternalCalls.SetAnimationEntityPlaying(PLAYER_ID, false);
+            }
+            else
+            {
+                InternalCalls.SetAnimationEntityPlaying(PLAYER_ID, true);
+            }
+
+            if (attack_stun_timer <= 0f)
+            {
+                IsAttackStun = false;
             }
         }
 
@@ -1732,12 +1760,19 @@ namespace IS
                     {
                         //camera_shake_dir = Vector2D.DirectionFromAngle(camera_shake_angle);
                         //camera_shake_angle += CustomMath.PI / 4;
-                      
+
+                        float extent = 0.5f;
+                        if (combo_step == 3)
+                        {
+                            extent = 1.5f;
+                        }
+
                         CameraScript.camera_shake_dir.x = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
                         CameraScript.camera_shake_dir.y = (float)rnd.NextDouble() - 0.5f;
 
                         CameraScript.camera_shake_timer = camera_shake_set;
                         CameraScript.camera_shake_duration = 0.1f;
+                        CameraScript.camera_shake_intensity = extent;
                         Vector2D attack_dir = new Vector2D(0f, 0f);
                         attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
                         attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
