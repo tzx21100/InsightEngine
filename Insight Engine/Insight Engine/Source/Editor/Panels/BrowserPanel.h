@@ -24,6 +24,7 @@
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
 #include "Engine/Systems/Asset/Asset.h"
+#include "Editor/Utils/FileUtils.h"
 
 #include <filesystem>
 
@@ -163,6 +164,43 @@ namespace IS {
          * \brief Renders the controls for configuring the asset browser's appearance and behavior.
          */
         void RenderControls();
+
+        /*!
+         * \brief Render context menu for imported assets
+         * 
+         * \tparam Container The type of container.
+         * \tparam Iterator The type of iterator.
+         * 
+         * \param container Reference to the container to delete from.
+         * \param it Reference to the iterator to delete.
+         * \param filename Name of file to delete.
+         * \param directory Path to the directory to delete from.
+         */
+        template <typename Container, typename Iterator>
+        void RenderContextMenuImported(Container& container, Iterator& it, std::string const& filename, std::string const& directory)
+        {
+            // Delete sound
+            if (ImGui::BeginPopupContextItem())
+            {
+                if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
+                {
+                    // Delete from container
+                    it = container.erase(it);
+                    if (it != container.begin())
+                        it = std::prev(it);
+
+                    // Delete from hard disk
+                    std::ostringstream oss;
+                    oss << directory << filename;
+                    if (directory == AssetManager::PREFAB_DIRECTORY)
+                        oss << ".json";
+
+                    FileUtils::FileDelete(oss.str());
+                }
+
+                ImGui::EndPopup();
+            }
+        }
     };
 
 } // end namespace IS
