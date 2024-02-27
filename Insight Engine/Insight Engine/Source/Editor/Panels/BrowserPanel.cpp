@@ -22,7 +22,6 @@
 #include "BrowserPanel.h"
 #include "Engine/Systems/Input/Input.h"
 #include "Editor/Utils/EditorUtils.h"
-#include "Editor/Utils/FileUtils.h"
 
 #include <imgui.h>
 
@@ -437,8 +436,10 @@ namespace IS {
                 // Show all imported textures
                 if (mSelectedImportedAsset == "Textures")
                 {
-                    for (auto const& [name, img] : asset->mImageList)
+                    for (auto it = asset->mImageList.begin(); it != asset->mImageList.end(); ++it)
                     {
+                        auto const& [name, img] = *it;
+
                         if (!mFilter.PassFilter(name.c_str()))
                         {
                             continue;
@@ -458,6 +459,9 @@ namespace IS {
                             ImGui::Image(icon, { 48.f * aspect_ratio, 48.f });
                             ImGui::EndTooltip();
                         }
+
+                        // Right-click
+                        RenderContextMenuImported(asset->mImageList, it, path.string(), AssetManager::TEXTURE_DIRECTORY);
 
                         // Start texture drag
                         if (ImGui::BeginDragDropSource())
@@ -479,8 +483,10 @@ namespace IS {
                 // Show all imported sounds
                 else if (mSelectedImportedAsset == "Sounds")
                 {
-                    for (auto const& [name, sound] : asset->mSoundList)
+                    for (auto it = asset->mSoundList.begin(); it != asset->mSoundList.end(); ++it)
                     {
+                        auto const& [name, sound] = *it;
+
                         if (!mFilter.PassFilter(name.c_str()))
                         {
                             continue;
@@ -491,6 +497,10 @@ namespace IS {
                         ImTextureID icon = mEditorLayer.GetIcon(is_mp3 ? "MP3" : "WAV");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Right-click
+                        RenderContextMenuImported(asset->mSoundList, it, path.string(), AssetManager::SOUND_DIRECTORY);
+
                         // Start file drag
                         if (ImGui::BeginDragDropSource())
                         {
@@ -511,8 +521,10 @@ namespace IS {
                 // Show all imported prefabs
                 else if (mSelectedImportedAsset == "Prefabs")
                 {
-                    for (auto const& [name, prefab] : asset->mPrefabList)
+                    for (auto it = asset->mPrefabList.begin(); it != asset->mPrefabList.end(); ++it)
                     {
+                        auto const& [name, prefab] = *it;
+
                         if (!mFilter.PassFilter(name.c_str()))
                         {
                             continue;
@@ -522,6 +534,9 @@ namespace IS {
                         ImTextureID icon = mEditorLayer.GetIcon("Json");
                         ImGui::TableNextColumn();
                         ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
+
+                        // Right-click
+                        RenderContextMenuImported(asset->mPrefabList, it, path.string(), AssetManager::PREFAB_DIRECTORY);
 
                         // Start file drag
                         if (ImGui::BeginDragDropSource())
@@ -560,27 +575,9 @@ namespace IS {
                         {
                             FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
                         }
-                        if (ImGui::BeginPopupContextItem())
-                        {
-                            if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
-                            {
-                                // Delete from script list
-                                {
-                                    it = asset->mScriptList.erase(it);
-                                    if (it != asset->mScriptList.begin())
-                                        --it;
-                                }
 
-                                // Delete from hard disk
-                                {
-                                    std::ostringstream oss;
-                                    oss << AssetManager::SCRIPT_DIRECTORY << "/" << path.string();
-                                    FileUtils::FileDelete(oss.str());
-                                }
-                            }
-
-                            ImGui::EndPopup();
-                        }
+                        // Right-click
+                        RenderContextMenuImported(asset->mScriptList, it, path.string(), AssetManager::SCRIPT_DIRECTORY);
 
                         // Start file drag
                         if (ImGui::BeginDragDropSource())
@@ -597,49 +594,6 @@ namespace IS {
 
                         ImGui::TextWrapped(path.filename().string().c_str());
                     }
-
-                    //for (auto const& name : asset->mScriptList)
-                    //{
-                    //    if (!mFilter.PassFilter(name.c_str()))
-                    //    {
-                    //        continue;
-                    //    }
-
-                    //    std::filesystem::path path(name);
-                    //    ImTextureID icon = mEditorLayer.GetIcon("C#");
-                    //    ImGui::TableNextColumn();
-                    //    ImGui::ImageButton(("##" + name).c_str(), icon, { mControls.mThumbnailSize, mControls.mThumbnailSize });
-                    //    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
-                    //    {
-                    //        FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SCRIPT_DIRECTORY);
-                    //    }
-                    //    if (ImGui::BeginPopupContextItem())
-                    //    {
-                    //        if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete"))
-                    //        {
-                    //            std::ostringstream oss;
-                    //            oss << AssetManager::SCRIPT_DIRECTORY << "/" << path.string();
-                    //            FileUtils::FileDelete(oss.str());
-                    //        }
-
-                    //        ImGui::EndPopup();
-                    //    }
-
-                    //    // Start file drag
-                    //    if (ImGui::BeginDragDropSource())
-                    //    {
-                    //        const wchar_t* item_path = path.c_str();
-                    //        ImGui::SetDragDropPayload("IMPORTED_SCRIPT", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
-
-                    //        // Tooltip
-                    //        const ImVec2 image_size = { 48.f , 48.f };
-                    //        ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
-
-                    //        ImGui::EndDragDropSource();
-                    //    }
-
-                    //    ImGui::TextWrapped(path.filename().string().c_str());
-                    //}
                 }
 
                 ImGui::PopStyleColor();
