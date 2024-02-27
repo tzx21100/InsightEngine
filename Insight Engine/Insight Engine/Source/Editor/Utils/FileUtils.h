@@ -79,6 +79,31 @@ namespace IS { namespace FileUtils {
     */
     std::string OpenAndGetScript();
 
+    /*!
+    * \brief Check if file exists.
+    *
+    * \param filename Filepath to the file to check for. (ONLY ASCII)
+    * \return True if file exists, false otherwise.
+    */
+    bool FileExists(std::string const& filename);
+
+    /*!
+    * \brief Makes a copy of a file.
+    *
+    * \param source_filepath The filepath to the source file. (ONLY ASCII)
+    * \param destination_directory The filepath to the destination directory. (ONLY ASCII)
+    * \return True if operation succeeded, false otherwise.
+    */
+    bool FileMakeCopy(std::string const& source_filepath, std::string const& destination_directory);
+
+    /*!
+    * \brief Deletes file specified.
+    *
+    * \param filename Filepath to the file to delete. (ONLY ASCII)
+    * \return True if operation succeeded, false otherwise.
+    */
+    bool FileDelete(std::string const& filename);
+
 } } // end namespace IS::FileUtils
 
 #endif // !GAM200_INSIGHT_ENGINE_EDITOR_UTILS_FILE_UTILS_H

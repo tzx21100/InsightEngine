@@ -111,6 +111,75 @@ namespace IS::FileUtils {
         return FileUtils::OpenFile("C# Script File (*.cs)\0*.cs\0", "..\\Insight Engine\\Assets\\Scripts");
     }
 
+    bool FileExists(std::string const& filename)
+    {
+        DWORD attributes = GetFileAttributes(filename.c_str());
+        return (attributes != INVALID_FILE_ATTRIBUTES && !(attributes & FILE_ATTRIBUTE_DIRECTORY));
+    }
+
+    bool FileMakeCopy(std::string const& source_filepath, std::string const& destination_directory)
+    {
+        // Check if file exists
+        if (!FileExists(source_filepath))
+            return false;
+
+        // Get filename from source filepath
+        std::filesystem::path source(source_filepath);
+        std::string filename = source.filename().string();
+
+        // Construct destination filepath
+        std::string destination_filepath = destination_directory + "\\" + filename;
+
+        // Check if file already exists in destination
+        bool file_exists = FileExists(destination_filepath);
+        if (file_exists)
+        {
+            int response = MessageBox(NULL, "File already eixists. Do you wish to overwrite it?", "File Exists", MB_YESNO | MB_ICONQUESTION);
+            if (response != IDYES)
+            {
+                IS_CORE_WARN("File copy aborted.");
+                return false;
+            }
+        }
+
+        // Copy file
+        if (CopyFile(source_filepath.c_str(), destination_filepath.c_str(), FALSE))
+        {
+            IS_CORE_INFO("File copied successfully to directory : {}", destination_directory);
+            return true;
+        }
+
+        IS_CORE_WARN("Failed to copy file!");
+        return false;
+    }
+
+    bool FileDelete(std::string const& filename)
+    {
+        if (!FileExists(filename.c_str()))
+        {
+            IS_CORE_WARN("File {} does not exist.");
+            return false;
+        }
+
+        int response = MessageBox(NULL, "Are you sure you want to delete this file?", "Delete File", MB_YESNO | MB_ICONQUESTION);
+        if (response == IDYES)
+        {
+            if (DeleteFile(filename.c_str()))
+            {
+                IS_CORE_INFO("File deleted successfully: {}", filename);
+                return true;
+            }
+            else
+            {
+                IS_CORE_WARN("Failed to delete file: {}", filename);
+                return false;
+            }
+        }
+        
+        IS_CORE_WARN("File deletion aborted by user.");
+        return false;
+    }
+
 } // end namespcae IS
 
 #endif // USING_IMGUI

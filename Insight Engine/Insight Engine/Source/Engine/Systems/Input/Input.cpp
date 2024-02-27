@@ -24,6 +24,7 @@
 #include "Engine/Systems/Asset/Asset.h"
 #include "Graphics/Core/Graphics.h"
 #include "Scene/SceneManager.h"
+#include "Editor/Utils/FileUtils.h"
 
 
 namespace IS {
@@ -198,24 +199,42 @@ namespace IS {
         auto& scene_manager = SceneManager::Instance();
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
-        std::string const& filename = std::filesystem::relative(filepath).string();
+        std::string const& relative_filepath = std::filesystem::relative(filepath).string();
         std::filesystem::path const& extension = filepath.extension();
+        std::ostringstream oss; // used to construct new filepath
+        std::string directory;
 
         if (extension == ".insight") // Scene
         {
-            scene_manager.LoadScene(filename);
+            directory = AssetManager::SCENE_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            scene_manager.LoadScene(new_filepath);
         }
         else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")  // Texture
-        { 
-            asset->LoadImage(filename);
+        {
+            directory = AssetManager::TEXTURE_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            asset->LoadImage(new_filepath);
         }
         else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") // Audio
-        { 
-            asset->LoadAudio(filename);
+        {
+            directory = AssetManager::SOUND_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            asset->LoadAudio(new_filepath);
         }
         else if (extension == ".json") // Prefab
         {
-            asset->LoadPrefab(filename);
+            directory = AssetManager::PREFAB_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            asset->LoadPrefab(new_filepath);
         }
         else // Unsupported file type
         {

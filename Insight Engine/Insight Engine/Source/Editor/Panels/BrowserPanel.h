@@ -24,6 +24,7 @@
 ----------------------------------------------------------------------------- */
 #include "Panel.h"
 #include "Engine/Systems/Asset/Asset.h"
+#include "Editor/Utils/FileUtils.h"
 
 #include <filesystem>
 
@@ -163,6 +164,80 @@ namespace IS {
          * \brief Renders the controls for configuring the asset browser's appearance and behavior.
          */
         void RenderControls();
+
+        /*!
+         * \brief Renders the folder of imported assets.
+         *
+         * This method is used to render a folder containing imported assets. It provides a visual representation
+         * of the assets in the folder and allows for interaction with them.
+         *
+         * \param imported_assets An initializer list of strings representing the names of the imported assets.
+         * \param selected_filename A reference to a string that will be updated with the name of the selected file.
+         */
+        void RenderImportedAssetFolder(std::initializer_list<std::string> imported_assets, std::string& selected_filename);
+
+        /*!
+         * \brief Renders an asset item.
+         *
+         * This method is used to render a single asset item. It provides a visual representation
+         * of the asset and allows for interaction with it.
+         *
+         * \param item A string representing the name of the asset.
+         * \param selected_filename A reference to a string that will be updated with the name of the selected file.
+         * \param icon A reference to an ImTextureID that represents the icon of the asset.
+         * \param aspect_ratio A float representing the aspect ratio of the asset. Default value is 1.f.
+         */
+        void RenderAssetItem(std::string const& item, std::string& selected_filename, ImTextureID& icon, float aspect_ratio = 1.f);
+
+        /*!
+         * \brief Renders the context menu for imported assets.
+         *
+         * This method is used to render a context menu for imported assets. It provides options for managing the assets.
+         * If the 'Delete' option is selected, the asset is deleted from the hard disk and the container.
+         *
+         * \tparam Container The type of container holding the assets.
+         * \tparam Iterator The type of iterator for the container.
+         *
+         * \param container Reference to the container holding the assets.
+         * \param iterator Reference to the iterator pointing to the current asset.
+         * \param filename The name of the file to delete.
+         * \param directory The directory path from which to delete the file.
+         */
+        template <typename Container, typename Iterator>
+        void RenderContextMenuImported(Container& container, Iterator& iterator, std::string const& filename, std::string const& directory)
+        {
+            if (ImGui::BeginPopupContextItem())
+            {
+                // Open file
+                if (ImGui::MenuItem(ICON_LC_EXTERNAL_LINK "  Open File"))
+                {
+                    FileUtils::OpenFileFromDefaultApp(filename.c_str(), directory.c_str());
+                }
+                ImGui::SetItemTooltip("Opens file in its default application.");
+
+                // Delete file
+                if (ImGui::MenuItem(ICON_LC_TRASH_2 "  Delete File"))
+                {
+                    // Construct filepath
+                    std::ostringstream oss;
+                    oss << directory << filename;
+                    if (directory == AssetManager::PREFAB_DIRECTORY)
+                        oss << ".json";
+
+                    // Delete from hard disk
+                    if (FileUtils::FileDelete(oss.str()))
+                    {
+                        // Delete from container
+                        iterator = container.erase(iterator);
+                        if (iterator != container.begin())
+                            iterator = std::prev(iterator);
+                    }
+                }
+                ImGui::SetItemTooltip("Deletes file from local hard disk.");
+
+                ImGui::EndPopup();
+            }
+        } // end RenderContextMenuImported()
     };
 
 } // end namespace IS

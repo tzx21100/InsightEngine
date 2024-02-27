@@ -106,14 +106,81 @@ namespace IS {
          */
         bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
 
+        /*!
+         * \brief Renders a control for a 3D vector using ImGui.
+         *
+         * This function renders a control for a 3D vector with provided label and values using ImGui.
+         * The control allows resetting the x, y, and z values to specified values.
+         *
+         * \param label The label for the control.
+         * \param values The reference to the Vector3D to be controlled and displayed.
+         * \param x_reset The value to reset the x-component to (default is 0.0f).
+         * \param y_reset The value to reset the y-component to (default is 0.0f).
+         * \param z_reset The value to reset the z-component to (default is 0.0f).
+         * \param column_width The width of the control column (default is 100.0f).
+         * \return Boolean value indicating whether control has been adjusted.
+         */
         bool RenderControlVec3(std::string const& label, Vector3D& values, float x_reset = 0.f, float y_reset = 0.f, float z_reset = 0.f, float column_width = 100.f);
 
+        /*!
+         * \brief Renders a table label with optional tooltip.
+         *
+         * \param label The label to render.
+         * \param tooltip Optional tooltip to display when hovering over the label.
+         */
         void RenderTableLabel(std::string const& label, std::string const& tooltip = std::string());
+
+        /*!
+         * \brief Renders a bold table label with optional tooltip.
+         *
+         * \param label The label to render.
+         * \param tooltip Optional tooltip to display when hovering over the label.
+         */
         void RenderTableBoldLabel(std::string const& label, std::string const& tooltip = std::string());
+
+        /*!
+         * \brief Renders a table with fixed width columns.
+         *
+         * \param label The label for the table.
+         * \param columns The number of columns in the table.
+         * \param contents Function to render the contents of the table.
+         * \param flags ImGuiTableFlags for the table.
+         * \param label_width The fixed width for the columns.
+         */
         void RenderTableFixedWidth(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0, float label_width = 100.f);
+
+        /*!
+         * \brief Renders a table.
+         *
+         * \param label The label for the table.
+         * \param columns The number of columns in the table.
+         * \param contents Function to render the contents of the table.
+         * \param flags ImGuiTableFlags for the table.
+         */
         void RenderTable(std::string const& label, int columns, std::function<void(void)> contents, ImGuiTableFlags flags = 0);
+
+        /*!
+         * \brief Renders a table input text field.
+         *
+         * \param text The text to display and edit.
+         * \param action Optional action to perform when the text is edited.
+         */
         void RenderTableInputText(std::string& text, std::function<void(void)> action = nullptr);
+
+        /*!
+         * \brief Renders an input text field.
+         *
+         * \param text The text to display and edit.
+         * \param action Optional action to perform when the text is edited.
+         */
         void RenderInputText(std::string& text, std::function<void(void)> action = nullptr);
+
+        /*!
+         * \brief Renders a toggle button.
+         *
+         * \param str_id The string identifier for the button.
+         * \param value The current value of the toggle, which will be changed when the button is clicked.
+         */
         void RenderToggleButton(std::string const& str_id, bool& value);
 
         /*!
