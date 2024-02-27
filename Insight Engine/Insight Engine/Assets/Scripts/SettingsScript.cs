@@ -280,10 +280,10 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
             
 
-            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.68f, 12.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.585f, 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.475f, 10f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.365f, 10f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.68f, 12.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.585f, 10f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.475f, 10f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", 0.495f, 0.365f, 10f, (1f, 1f, 1f, 1f));
             /* InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5006548673f * win_dimension.y), 12.5f, (1f, 1f, 1f));
                InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", origin.x + (0.5002630208f * win_dimension.x), origin.y + (0.5005703048f * win_dimension.y), 10f, (1f, 1f, 1f));
                InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", origin.x + (0.5002604167f * win_dimension.x), origin.y + (0.5004572271f * win_dimension.y), 10f, (1f, 1f, 1f));

@@ -140,13 +140,13 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
          
 
-            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.67f, 12.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", 0.5f, 0.54f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Collect Blue Fragments for movement abilities,", "Semplicita_Light", 0.5f, 0.47f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Red Fragments to restore the world. (WIP)", "Semplicita_Light", 0.5f, 0.43f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", 0.5f, 0.36f, 10.5f, (1f, 1f, 1f));
-            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", 0.5f, 0.32f, 10.5f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.67f, 12.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("W, A, S, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", 0.5f, 0.54f, 10.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Collect Blue Fragments for movement abilities,", "Semplicita_Light", 0.5f, 0.47f, 10.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Red Fragments to restore the world. (WIP)", "Semplicita_Light", 0.5f, 0.43f, 10.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("Activate Lampposts to set your", "Semplicita_Light", 0.5f, 0.36f, 10.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("respawn checkpoint", "Semplicita_Light", 0.5f, 0.32f, 10.5f, (1f, 1f, 1f, 1f));
         }
 
         static public void HideHowToPlay()

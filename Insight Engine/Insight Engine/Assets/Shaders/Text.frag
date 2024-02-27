@@ -9,10 +9,10 @@ in VS_OUT{
 
 uniform sampler2DArray text; // texture array
 uniform int letterMap[128];
-uniform vec3 textColor;
+uniform vec4 textColor;
 
 void main()
 {    
     vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, vec3(fs_in.TexCoords.xy,letterMap[fs_in.index])).r);
-    color = vec4(textColor, 1.0) * sampled;
+    color = textColor * sampled;
 }

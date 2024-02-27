@@ -66,7 +66,7 @@ namespace IS
             InternalCalls.TransformSetPosition(camera_pos.x, camera_pos.y);
 
             back_button_pos.Set(origin.x + (0.16f * win_dimension.x), origin.y + (0.85f * win_dimension.y));
-            InternalCalls.RenderTextFont("BACK", "MedusaGothic_D", 0.163f, 0.856f, 14f, (1f, 1f, 1f));
+            InternalCalls.RenderTextFont("BACK", "MedusaGothic_D", 0.163f, 0.856f, 14f, (1f, 1f, 1f, 1f));
 
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 

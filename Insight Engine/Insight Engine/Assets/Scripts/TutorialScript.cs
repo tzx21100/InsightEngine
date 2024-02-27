@@ -36,7 +36,7 @@ namespace IS
                 //SimpleVector2D textboxscale = new SimpleVector2D(InternalCalls.GetWindowWidth() * 0.8f, InternalCalls.GetWindowHeight() * 0.2f);
 
                 //InternalCalls.DrawImageAt(textboxposition, 0, textboxscale, textboximage, 1, InternalCalls.GetTopLayer());
-                InternalCalls.RenderTextFont("Press 'A' and 'D' to move", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Press 'A' and 'D' to move", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
                 if (PlayerScript.player_pos.x > -283)
                 {
                     tutorial_state++;
@@ -46,7 +46,7 @@ namespace IS
             if (tutorial_state == 2)
             {
 
-                InternalCalls.RenderTextFont("Press Space To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Press Space To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
                 if (InternalCalls.KeyPressed((int)KeyCodes.Space))
                 {
                     tutorial_state++;
@@ -56,7 +56,7 @@ namespace IS
             if (tutorial_state == 3)
             {
 
-                InternalCalls.RenderTextFont("Hold Space To Jump Further", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Hold Space To Jump Further", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
                 if (PlayerScript.player_pos.x >2220)
                 {
                     tutorial_state++;
@@ -68,7 +68,7 @@ namespace IS
             if (tutorial_state == 4)
             {
 
-                InternalCalls.RenderTextFont("Prepare for combat..", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Prepare for combat..", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
                 if (PlayerScript.player_pos.x > 3450)
                 {
                     tutorial_state++;
@@ -78,7 +78,7 @@ namespace IS
             if (tutorial_state == 5)
             {
 
-                InternalCalls.RenderTextFont("Left click to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Left click to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
                 if (InternalCalls.MousePressed(0))
                 {
                     tutorial_state++;
@@ -100,7 +100,7 @@ namespace IS
                     }
                     if (PlayerScript.player_pos.x > 11500)
                     {
-                        InternalCalls.RenderTextFont("Presents", "MedusaGothic_D", 0.8f, 0.5f, 17.5f, (1f, 1f, 1f));
+                        InternalCalls.RenderTextFont("Presents", "MedusaGothic_D", 0.8f, 0.5f, 17.5f, (1f, 1f, 1f, 1f));
                     }
                     if (PlayerScript.player_pos.x > 14500)
                     {

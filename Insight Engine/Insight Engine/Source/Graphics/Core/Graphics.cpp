@@ -362,9 +362,9 @@ namespace IS {
         engine.GetWindowSize(width, height);
         // const float pos_x = .5f;
         // const float pos_y = .5f;
-        const glm::vec3 islamic_green = { 0.f, .56f, .066f };
-        const glm::vec3 malachite = { 0.f, 1.f, .25f };
-        static glm::vec3 color = islamic_green;
+        const glm::vec4 islamic_green = { 0.f, .56f, .066f, 1.f };
+        const glm::vec4 malachite = { 0.f, 1.f, .25f, 1.f };
+        static glm::vec4 color = islamic_green;
         color = (0 == (engine.FrameCount() % 180)) ? ((color == islamic_green) ? malachite : islamic_green) : color;
 
         // Text Attribute

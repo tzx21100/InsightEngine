@@ -48,8 +48,8 @@ namespace IS {
         InsightEngine::Instance().GetWindowSize(width, height);
 
         // draw either text strings
-        if (drawFirst) font1.renderText(str1, 0.39f, 0.89f, 16.f, glm::vec3(0.529f, 0.808f, 0.922f));
-        else font2.renderText(str2, 0.36f, 0.87f, 24.f, glm::vec3(0.255f, 0.412f, 0.882f));
+        if (drawFirst) font1.renderText(str1, 0.39f, 0.89f, 16.f, glm::vec4(0.529f, 0.808f, 0.922f, 1.f));
+        else font2.renderText(str2, 0.36f, 0.87f, 24.f, glm::vec4(0.255f, 0.412f, 0.882f, 1.f));
     }
 
     void Text::initText(std::string const& filepath) {
@@ -191,7 +191,7 @@ namespace IS {
     }
 
     // render line of text
-    void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
+    void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color) {
         scale = scale * 48.f / (base_size * 16);
 
         int width, height;
@@ -249,7 +249,7 @@ namespace IS {
 
         // Activate the specified shader and set the text color.
         textShader.use();
-        glUniform3f(glGetUniformLocation(textShader.getHandle(), "textColor"), color.x, color.y, color.z);
+        glUniform4f(glGetUniformLocation(textShader.getHandle(), "textColor"), color.r, color.g, color.b, color.a);
 
         // Bind textures and buffers.
         glActiveTexture(GL_TEXTURE0);
@@ -314,7 +314,7 @@ namespace IS {
         }
     }
 
-    void Text::addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color) {
+    void Text::addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color) {
         TextRenderCall renderCall;
         renderCall.text = text;
         renderCall.widthScalar = widthScalar;

@@ -72,7 +72,7 @@ namespace IS {
          * \param scale The scale of the text.
          * \param color The color of the text.
          */
-        void renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
+        void renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
 
         /*!
          * \brief Renders text using instanced rendering.
@@ -96,7 +96,7 @@ namespace IS {
          * @param scale The overall scale factor for the text rendering.
          * @param color The color of the rendered text, specified as a glm::vec3 (RGB).
          */
-        void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec3 color);
+        void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
         
         /**
          * @brief Render all the queued text rendering calls.
@@ -133,11 +133,11 @@ namespace IS {
          * width and height scaling factors, scale, and color.
          */
         struct TextRenderCall {
-            std::string text;
-            float widthScalar;
-            float heightScalar;
-            float scale;
-            glm::vec3 color;
+            std::string text{};
+            float widthScalar{};
+            float heightScalar{};
+            float scale{};
+            glm::vec4 color{};
         };
 
     public:
