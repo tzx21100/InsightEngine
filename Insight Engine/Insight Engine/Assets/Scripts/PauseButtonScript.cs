@@ -50,10 +50,12 @@ namespace IS
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
         static Vector2D orgin = new Vector2D(0, 0);
+        static private bool light_switch = true;
 
         static public void Init()
         {
             paused = false;
+            light_switch = true;
 
             // Pause Menu
             pause_menu_image = InternalCalls.GetSpriteImage("pause_menu_image.png");
@@ -120,6 +122,8 @@ namespace IS
                 SettingsScript.show_settings = false;
                 ExitButtonScript.exit_confirmation = false;
                 HowToPlayScript.show_how_to_play = false;
+                light_switch = !light_switch;
+                InternalCalls.SetLightsToggle(light_switch);
             }
 
             if (!InternalCalls.IsWindowFocused())
@@ -142,22 +146,27 @@ namespace IS
                 if (!paused)
                 {
                     paused = true;
+                    light_switch = !light_switch;
+                    InternalCalls.SetLightsToggle(light_switch);
                 }
                 else
                 {
                     paused = false;
+                    light_switch = !light_switch;
+                    InternalCalls.SetLightsToggle(light_switch);
                 }
             }
             
             if (paused) // if game paused
             {
                 InternalCalls.GamePause(true);
-                InternalCalls.SetLightsToggle(false);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);
                     HidePauseMenu();
+                    light_switch =false;
+                    InternalCalls.SetLightsToggle(light_switch);
                 }
                 else
                 {
@@ -169,7 +178,6 @@ namespace IS
             else
             {
                 InternalCalls.GamePause(false);
-                InternalCalls.SetLightsToggle(true);
                 HidePauseMenu();
             }
             

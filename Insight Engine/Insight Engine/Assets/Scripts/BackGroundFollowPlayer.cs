@@ -28,9 +28,11 @@ namespace IS
         static private Vector2D bg_scale=new Vector2D(4096*2.5f,756*2.5f);
 
 
-        static private float fade_out_timer = 1f;
+        static private float fade_out_timer = 1.7f;
 
         static public void Init(){
+
+            fade_out_timer = 1.7f;
             bg_image1 = InternalCalls.GetSpriteImage("1st.png");
             bg_image2 = InternalCalls.GetSpriteImage("2nd.png");
             bg_image3 = InternalCalls.GetSpriteImage("3rd.png");
@@ -80,7 +82,23 @@ namespace IS
 
             InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, fade_out_timer, InternalCalls.GetTopLayer());
             leaves_timer -= InternalCalls.GetDeltaTime();
-            fade_out_timer -= InternalCalls.GetDeltaTime()*0.8f;
+            if (fade_out_timer > 0)
+            {
+                fade_out_timer -= InternalCalls.GetDeltaTime() * 0.8f;
+            }
+
+            if (fade_out_timer > 1)
+            {
+                
+                InternalCalls.SetLightsToggle(false);
+            }
+            else
+            {
+                if (fade_out_timer > 0)
+                {
+                    InternalCalls.SetLightsToggle(true);
+                }
+            }
             if(leaves_timer <= 0 )
             {
 

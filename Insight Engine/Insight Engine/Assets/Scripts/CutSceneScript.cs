@@ -62,6 +62,9 @@ namespace IS
         }
 
         static public void Update(){
+            InternalCalls.AttachCamera(0, 0);
+            CameraScript.camera_pos.x = 0;
+            CameraScript.camera_pos.y = 0;
             InternalCalls.TransformSetScale(InternalCalls.GetWindowWidth(),InternalCalls.GetWindowHeight());
 
             image_swap_timer -= InternalCalls.GetDeltaTime();
