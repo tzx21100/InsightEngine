@@ -56,15 +56,17 @@ namespace IS
 
         static Vector2D background_pos = new Vector2D(0, 0);
         static Vector2D settings_overlay_pos = new Vector2D(0, 0);
-        static Vector2D master_checkbox_pos = new Vector2D(0, 0);
-        static Vector2D bgm_checkbox_pos = new Vector2D(0, 0);
-        static Vector2D vfx_checkbox_pos = new Vector2D(0, 0);
-        static Vector2D master_slider_bar_pos = new Vector2D(0, 0);
-        static Vector2D bgm_slider_bar_pos = new Vector2D(0, 0);
-        static Vector2D vfx_slider_bar_pos = new Vector2D(0, 0);
+
+        static public Vector2D master_checkbox_pos = new Vector2D(0, 0);
+        static public Vector2D bgm_checkbox_pos = new Vector2D(0, 0);
+        static public Vector2D vfx_checkbox_pos = new Vector2D(0, 0);
+        static public Vector2D master_slider_bar_pos = new Vector2D(0, 0);
+        static public Vector2D bgm_slider_bar_pos = new Vector2D(0, 0);
+        static public Vector2D vfx_slider_bar_pos = new Vector2D(0, 0);
         static public Vector2D master_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
+
         static public Vector2D scroll_bar_pos = new Vector2D(0, 0);
         static public Vector2D scroll_bar_tracker_pos = new Vector2D(0, 0);
         static Vector2D back_button_pos = new Vector2D(0, 0);
@@ -132,9 +134,9 @@ namespace IS
             master_checkbox_entity = InternalCalls.CreateEntityButtonNoText("Master Checkbox", master_checkbox_image, "MasterCheckboxScript");
             bgm_checkbox_entity = InternalCalls.CreateEntityButtonNoText("BGM Checkbox", bgm_checkbox_image, "BGMCheckboxScript");
             vfx_checkbox_entity = InternalCalls.CreateEntityButtonNoText("VFX Checkbox", vfx_checkbox_image, "VFXCheckboxScript");
-            master_slider_bar_entity = InternalCalls.CreateEntityUI("Master Slider", slider_bar_image);
-            bgm_slider_bar_entity = InternalCalls.CreateEntityUI("BGM Slider", slider_bar_image);
-            vfx_slider_bar_entity = InternalCalls.CreateEntityUI("VFX Slider", slider_bar_image);
+            master_slider_bar_entity = InternalCalls.CreateEntityUIScript("Master Slider Bar", slider_bar_image, "MasterSliderBarScript");
+            bgm_slider_bar_entity = InternalCalls.CreateEntityUIScript("BGM Slider Bar", slider_bar_image, "BGMSliderBarScript");
+            vfx_slider_bar_entity = InternalCalls.CreateEntityUIScript("VFX Slider Bar", slider_bar_image, "VFXSliderBarScript");
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
@@ -200,16 +202,17 @@ namespace IS
             settings_overlay_pos.Set(camera_pos.x, camera_pos.y);
 
             // =========================================================================================================
-            // Move the Y values to be handled by their individual scripts
-            master_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.585f * win_dimension.y));
-            bgm_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.475f * win_dimension.y));
-            vfx_checkbox_pos.Set(origin.x + (0.44f * win_dimension.x), origin.y + (0.365f * win_dimension.y));
-            master_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.541f * win_dimension.y));
-            bgm_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.431f * win_dimension.y));
-            vfx_slider_bar_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.321f * win_dimension.y));
-            master_slider_knob_pos.Set(master_slider_knob_pos.x, origin.y + (0.543f * win_dimension.y));
-            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, origin.y + (0.433f * win_dimension.y));
-            vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, origin.y + (0.323f * win_dimension.y)); //442-558
+            master_checkbox_pos.Set(MasterCheckboxScript.x_pos, MasterCheckboxScript.y_pos);
+            bgm_checkbox_pos.Set(BGMCheckboxScript.x_pos, BGMCheckboxScript.y_pos);
+            vfx_checkbox_pos.Set(VFXCheckboxScript.x_pos, VFXCheckboxScript.y_pos);
+
+            master_slider_bar_pos.Set(MasterSliderBarScript.x_pos, MasterSliderBarScript.y_pos);
+            bgm_slider_bar_pos.Set(BGMSliderBarScript.x_pos, BGMSliderBarScript.y_pos);
+            vfx_slider_bar_pos.Set(VFXSliderBarScript.x_pos, VFXSliderBarScript.y_pos);
+
+            master_slider_knob_pos.Set(master_slider_knob_pos.x, MasterSliderKnobScript.y_pos);
+            bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
+            vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, VFXSliderKnobScript.y_pos); //442-558
             // =========================================================================================================
 
             scroll_bar_pos.Set(origin.x + (0.593f * win_dimension.x), origin.y + (0.45f * win_dimension.y));
@@ -273,15 +276,6 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
             InternalCalls.TransformSetPositionEntity(settings_overlay_pos.x, settings_overlay_pos.y, settings_overlay_entity);
 
-            // ===========================================================================================================================
-            InternalCalls.TransformSetPositionEntity(master_checkbox_pos.x, master_checkbox_pos.y, master_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(bgm_checkbox_pos.x, bgm_checkbox_pos.y, bgm_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(vfx_checkbox_pos.x, vfx_checkbox_pos.y, vfx_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(master_slider_bar_pos.x, master_slider_bar_pos.y, master_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(bgm_slider_bar_pos.x, bgm_slider_bar_pos.y, bgm_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(vfx_slider_bar_pos.x, vfx_slider_bar_pos.y, vfx_slider_bar_entity);
-            // ===========================================================================================================================
-
             InternalCalls.TransformSetPositionEntity(scroll_bar_pos.x, scroll_bar_pos.y, scroll_bar_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
             
@@ -296,19 +290,11 @@ namespace IS
                InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", origin.x + (0.5002578125f * win_dimension.x), origin.y + (0.5003539823f * win_dimension.y), 10f, (1f, 1f, 1f));*/
         }
 
+
         static private void HideSettings()
         {
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, background_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_entity);
-
-            // ===============================================================================
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_checkbox_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, master_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, bgm_slider_bar_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, vfx_slider_bar_entity);
-            // ===============================================================================
             
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, scroll_bar_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 

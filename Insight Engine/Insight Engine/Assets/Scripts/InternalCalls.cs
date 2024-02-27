@@ -310,7 +310,10 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityUI(string name, SimpleImage image);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityUIScript(string name, SimpleImage image, string filename);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetEntityButtonState(int entity);
         

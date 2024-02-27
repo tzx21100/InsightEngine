@@ -466,6 +466,28 @@ namespace IS {
         ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
         return static_cast<int>(entity);
     }
+    
+    static int CreateEntityUIScript(MonoString* name, SimpleImage image, MonoString* filename)
+    {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = InsightEngine::Instance().CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<Transform>(entity, Transform());
+        engine.AddComponentAndUpdateSignature<Sprite>(entity, Sprite());
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(entity);
+        sprite_component.layer = static_cast<int>(ISGraphics::mLayers.size() - 1);
+        sprite_component.img = ConvertToImage(image);
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+        char* c_str2 = mono_string_to_utf8(filename);
+        std::string str2(c_str2);
+        mono_free(c_str2);
+        script_component.mScriptName = str2;
+        ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
+        return static_cast<int>(entity);
+    }
 
     static int CreateEntityButton(MonoString* name, SimpleImage image, MonoString* filename, MonoString* text)
     {
@@ -1470,6 +1492,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
         IS_ADD_INTERNAL_CALL(CreateEntityButtonNoText);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
+        IS_ADD_INTERNAL_CALL(CreateEntityUIScript);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
         IS_ADD_INTERNAL_CALL(GetTitleBarHeight);
         IS_ADD_INTERNAL_CALL(ButtonRenderText);
