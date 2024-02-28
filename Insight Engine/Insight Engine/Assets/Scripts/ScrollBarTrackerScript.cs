@@ -21,6 +21,7 @@ namespace IS
         static public float upper_limit_scroll_track;
         static public float lower_limit_scroll_track;
 
+        static public float x_pos;
         static public float virtual_y;
         static public void Init()
         {
@@ -102,6 +103,7 @@ namespace IS
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.vfx_vol);
             }
 
+            x_pos = origin.x + (0.593f * win_dimension.x);
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
@@ -109,7 +111,7 @@ namespace IS
                     adjustment = origin.y + diff_y * win_dimension.y;
                     first_open_settings = true;
                 }
-                InternalCalls.TransformSetPosition(origin.x + (0.593f * win_dimension.x), adjustment);
+                InternalCalls.TransformSetPosition(x_pos, adjustment);
                 
             }
             if (!SettingsScript.show_settings)

@@ -140,7 +140,7 @@ namespace IS
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
-            scroll_bar_entity = InternalCalls.CreateEntityUI("Scroll Bar", scroll_bar_image);
+            scroll_bar_entity = InternalCalls.CreateEntityUIScript("Scroll Bar", scroll_bar_image, "ScrollBarScript");
             scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
 
@@ -201,7 +201,6 @@ namespace IS
             background_pos.Set(camera_pos.x, camera_pos.y);
             settings_overlay_pos.Set(camera_pos.x, camera_pos.y);
 
-            // =========================================================================================================
             master_checkbox_pos.Set(MasterCheckboxScript.x_pos, MasterCheckboxScript.y_pos);
             bgm_checkbox_pos.Set(BGMCheckboxScript.x_pos, BGMCheckboxScript.y_pos);
             vfx_checkbox_pos.Set(VFXCheckboxScript.x_pos, VFXCheckboxScript.y_pos);
@@ -213,10 +212,9 @@ namespace IS
             master_slider_knob_pos.Set(master_slider_knob_pos.x, MasterSliderKnobScript.y_pos);
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, VFXSliderKnobScript.y_pos); //442-558
-            // =========================================================================================================
 
-            scroll_bar_pos.Set(origin.x + (0.593f * win_dimension.x), origin.y + (0.45f * win_dimension.y));
-            scroll_bar_tracker_pos.Set(origin.x + (0.593f * win_dimension.x), scroll_bar_tracker_pos.y); //532-365
+            scroll_bar_pos.Set(ScrollBarScript.x_pos, ScrollBarScript.y_pos);
+            scroll_bar_tracker_pos.Set(ScrollBarTrackerScript.x_pos, scroll_bar_tracker_pos.y); //532-365
 
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
@@ -275,11 +273,8 @@ namespace IS
         {
             InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
             InternalCalls.TransformSetPositionEntity(settings_overlay_pos.x, settings_overlay_pos.y, settings_overlay_entity);
-
-            InternalCalls.TransformSetPositionEntity(scroll_bar_pos.x, scroll_bar_pos.y, scroll_bar_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
-            
-
+         
             InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.5f, 0.68f, 12.5f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("Master Volume", "Semplicita_Light", 0.505f, 0.585f, 10f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("BGM Volume", "Semplicita_Light", 0.5f, 0.475f, 10f, (1f, 1f, 1f, 1f));
@@ -295,8 +290,6 @@ namespace IS
         {
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, background_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_entity);
-            
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, scroll_bar_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 
         }
 
