@@ -2253,7 +2253,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : 3046.349853515625,
-						"Y" : 1061.9122314453125
+						"Y" : 1084.8485107421875
 					},
 					"BoxColliderOffset" : 
 					{
@@ -2329,7 +2329,7 @@
 				"SpriteTransformScalingX" : 1161.0,
 				"SpriteTransformScalingY" : 2080.0,
 				"SpriteTransformWorldPositionX" : 3046.349853515625,
-				"SpriteTransformWorldPositionY" : 1061.9122314453125,
+				"SpriteTransformWorldPositionY" : 1084.8485107421875,
 				"animations" : []
 			},
 			"Transform" : 
@@ -2338,7 +2338,7 @@
 				"TransformScalingX" : 1161.0,
 				"TransformScalingY" : 2080.0,
 				"TransformWorldPositionX" : 3046.349853515625,
-				"TransformWorldPositionY" : 1061.9122314453125
+				"TransformWorldPositionY" : 1084.8485107421875
 			}
 		},
 		{
@@ -2464,7 +2464,7 @@
 						"frame_dimension_y" : 1.0,
 						"frame_index_x" : 4.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.054750584065914154,
+						"frame_timer" : 0.038083914667367935,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -3297,7 +3297,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : 5124.00830078125,
-						"Y" : 1080.3760986328125
+						"Y" : 1097.578125
 					},
 					"BoxColliderOffset" : 
 					{
@@ -3373,7 +3373,7 @@
 				"SpriteTransformScalingX" : 1161.0,
 				"SpriteTransformScalingY" : 2080.0,
 				"SpriteTransformWorldPositionX" : 5124.00830078125,
-				"SpriteTransformWorldPositionY" : 1080.3760986328125,
+				"SpriteTransformWorldPositionY" : 1097.578125,
 				"animations" : []
 			},
 			"Transform" : 
@@ -3382,7 +3382,7 @@
 				"TransformScalingX" : 1161.0,
 				"TransformScalingY" : 2080.0,
 				"TransformWorldPositionX" : 5124.00830078125,
-				"TransformWorldPositionY" : 1080.3760986328125
+				"TransformWorldPositionY" : 1097.578125
 			}
 		},
 		{
@@ -3923,7 +3923,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : -737.56048583984375,
-						"Y" : 901.5760498046875
+						"Y" : 1333.3380126953125
 					},
 					"BoxColliderOffset" : 
 					{
@@ -4003,7 +4003,7 @@
 				"SpriteTransformScalingX" : 1261.601806640625,
 				"SpriteTransformScalingY" : 3078.75,
 				"SpriteTransformWorldPositionX" : -737.56048583984375,
-				"SpriteTransformWorldPositionY" : 901.5760498046875,
+				"SpriteTransformWorldPositionY" : 1333.3380126953125,
 				"animations" : []
 			},
 			"Transform" : 
@@ -4012,7 +4012,7 @@
 				"TransformScalingX" : 1261.601806640625,
 				"TransformScalingY" : 3078.75,
 				"TransformWorldPositionX" : -737.56048583984375,
-				"TransformWorldPositionY" : 901.5760498046875
+				"TransformWorldPositionY" : 1333.3380126953125
 			}
 		},
 		{
@@ -4315,7 +4315,7 @@
 					"BoxColliderCenter" : 
 					{
 						"X" : 7193.96923828125,
-						"Y" : 1080.3760986328125
+						"Y" : 1131.158935546875
 					},
 					"BoxColliderOffset" : 
 					{
@@ -4391,7 +4391,7 @@
 				"SpriteTransformScalingX" : 1161.0,
 				"SpriteTransformScalingY" : 2080.0,
 				"SpriteTransformWorldPositionX" : 7193.96923828125,
-				"SpriteTransformWorldPositionY" : 1080.3760986328125,
+				"SpriteTransformWorldPositionY" : 1131.158935546875,
 				"animations" : []
 			},
 			"Transform" : 
@@ -4400,199 +4400,7 @@
 				"TransformScalingX" : 1161.0,
 				"TransformScalingY" : 2080.0,
 				"TransformWorldPositionX" : 7193.96923828125,
-				"TransformWorldPositionY" : 1080.3760986328125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 10340.541015625,
-						"Y" : 2608.719970703125
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 1.0,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -1040.0,
-							"y" : 1040.0
-						},
-						{
-							"x" : 1040.0,
-							"y" : 1040.0
-						},
-						{
-							"x" : 1040.0,
-							"y" : -1040.0
-						},
-						{
-							"x" : -1040.0,
-							"y" : -1040.0
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallTile",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 2,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 33,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 32,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 2080.0,
-				"SpriteTransformScalingY" : 2080.0,
-				"SpriteTransformWorldPositionX" : 10340.541015625,
-				"SpriteTransformWorldPositionY" : 2608.719970703125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 2080.0,
-				"TransformScalingY" : 2080.0,
-				"TransformWorldPositionX" : 10340.541015625,
-				"TransformWorldPositionY" : 2608.719970703125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 9272.7685546875,
-						"Y" : 1080.3760986328125
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : -1040.0
-						},
-						{
-							"x" : -522.45001220703125,
-							"y" : -1040.0
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 32,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 31,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 1161.0,
-				"SpriteTransformScalingY" : 2080.0,
-				"SpriteTransformWorldPositionX" : 9272.7685546875,
-				"SpriteTransformWorldPositionY" : 1080.3760986328125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 1161.0,
-				"TransformScalingY" : 2080.0,
-				"TransformWorldPositionX" : 9272.7685546875,
-				"TransformWorldPositionY" : 1080.3760986328125
+				"TransformWorldPositionY" : 1131.158935546875
 			}
 		},
 		{
@@ -4693,7 +4501,7 @@
 						"frame_dimension_y" : 0.5,
 						"frame_index_x" : 4.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.041667144745588303,
+						"frame_timer" : 0.025000477209687233,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -5156,198 +4964,6 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 12380.5986328125,
-						"Y" : 2608.719970703125
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 1.0,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -1040.0,
-							"y" : 1040.0
-						},
-						{
-							"x" : 1040.0,
-							"y" : 1040.0
-						},
-						{
-							"x" : 1040.0,
-							"y" : -1040.0
-						},
-						{
-							"x" : -1040.0,
-							"y" : -1040.0
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallTile",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 2,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 33,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 32,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 2080.0,
-				"SpriteTransformScalingY" : 2080.0,
-				"SpriteTransformWorldPositionX" : 12380.5986328125,
-				"SpriteTransformWorldPositionY" : 2608.719970703125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 2080.0,
-				"TransformScalingY" : 2080.0,
-				"TransformWorldPositionX" : 12380.5986328125,
-				"TransformWorldPositionY" : 2608.719970703125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 11348.2451171875,
-						"Y" : 1080.3760986328125
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : -1040.0
-						},
-						{
-							"x" : -522.45001220703125,
-							"y" : -1040.0
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 32,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 31,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 1161.0,
-				"SpriteTransformScalingY" : 2080.0,
-				"SpriteTransformWorldPositionX" : 11348.2451171875,
-				"SpriteTransformWorldPositionY" : 1080.3760986328125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 1161.0,
-				"TransformScalingY" : 2080.0,
-				"TransformWorldPositionX" : 11348.2451171875,
-				"TransformWorldPositionY" : 1080.3760986328125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
 						"X" : 9911.9755859375,
 						"Y" : -2997.041259765625
 					},
@@ -5532,9 +5148,1815 @@
 				"TransformWorldPositionX" : 9919.1943359375,
 				"TransformWorldPositionY" : -1413.252197265625
 			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 8101.9169921875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 8101.9169921875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 8284.8359375,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 8284.8359375,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 8464.681640625,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 8464.681640625,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 8644.52734375,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 8644.52734375,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 8824.373046875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 8824.373046875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 9007.296875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 9007.296875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 9187.142578125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 9187.142578125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 9360.8408203125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 9360.8408203125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 9537.611328125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 9537.611328125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 9717.845703125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 9717.845703125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 10093.10546875,
+						"Y" : 650.9112548828125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.80000001192092896,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : -561.5999755859375
+						},
+						{
+							"x" : -206.80000305175781,
+							"y" : -561.5999755859375
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_platform_tall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_platform_tall.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 28,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 27,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 517.0,
+				"SpriteTransformScalingY" : 1248.0,
+				"SpriteTransformWorldPositionX" : 10093.10546875,
+				"SpriteTransformWorldPositionY" : 650.9112548828125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 517.0,
+				"TransformScalingY" : 1248.0,
+				"TransformWorldPositionX" : 10093.10546875,
+				"TransformWorldPositionY" : 650.9112548828125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 8986.546875,
+						"Y" : -534.780517578125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.60000002384185791,
+						"Y" : 0.5
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -222.15019226074219,
+							"y" : 70.625
+						},
+						{
+							"x" : 222.15019226074219,
+							"y" : 70.625
+						},
+						{
+							"x" : 222.15019226074219,
+							"y" : -70.625
+						},
+						{
+							"x" : -222.15019226074219,
+							"y" : -70.625
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Gitchy Platform",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 209191.421875,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "GlitchingPlatform"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "glitched_platform_vfx 2R6C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 59,
+				"SpriteTextureHeight" : 594,
+				"SpriteTextureIndex" : 58,
+				"SpriteTextureWidth" : 4092,
+				"SpriteTransformRotation" : 358.97549438476562,
+				"SpriteTransformScalingX" : 740.5006103515625,
+				"SpriteTransformScalingY" : 282.5,
+				"SpriteTransformWorldPositionX" : 8986.546875,
+				"SpriteTransformWorldPositionY" : -534.780517578125,
+				"animations" : 
+				[
+					{
+						"Name" : "gl",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.1666666716337204,
+						"frame_dimension_y" : 0.5,
+						"frame_index_x" : 4.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.025000477209687233,
+						"time_per_frame" : 0.083333335816860199,
+						"x_frames" : 6,
+						"y_frames" : 2
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 358.97549438476562,
+				"TransformScalingX" : 740.5006103515625,
+				"TransformScalingY" : 282.5,
+				"TransformWorldPositionX" : 8986.546875,
+				"TransformWorldPositionY" : -534.780517578125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 9855.0458984375,
+						"Y" : 2608.719970703125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 9855.0458984375,
+				"SpriteTransformWorldPositionY" : 2608.719970703125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 9855.0458984375,
+				"TransformWorldPositionY" : 2608.719970703125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 9272.7685546875,
+						"Y" : 1147.12646484375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 9272.7685546875,
+				"SpriteTransformWorldPositionY" : 1147.12646484375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 9272.7685546875,
+				"TransformWorldPositionY" : 1147.12646484375
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 11987.21875,
+						"Y" : -2997.041259765625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : -1040.0
+						},
+						{
+							"x" : -1040.0,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallTile",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 33,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 32,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 2080.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 11987.21875,
+				"SpriteTransformWorldPositionY" : -2997.041259765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 2080.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 11987.21875,
+				"TransformWorldPositionY" : -2997.041259765625
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 11979.35546875,
+						"Y" : -1413.252197265625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 11979.35546875,
+				"SpriteTransformWorldPositionY" : -1413.252197265625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 11979.35546875,
+				"TransformWorldPositionY" : -1413.252197265625
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 10476.9716796875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 10476.9716796875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 10660.671875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 10660.671875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 10835.587890625,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 10835.587890625,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 11012.416015625,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 11012.416015625,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 11187.33203125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 11187.33203125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 11360.3349609375,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 11360.3349609375,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 11380.3349609375,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 11380.3349609375,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 214.53999328613281,
+				"SpriteTransformScalingY" : 489.86734008789062,
+				"SpriteTransformWorldPositionX" : 11568.2861328125,
+				"SpriteTransformWorldPositionY" : -661.9627685546875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 214.53999328613281,
+				"TransformScalingY" : 489.86734008789062,
+				"TransformWorldPositionX" : 11568.2861328125,
+				"TransformWorldPositionY" : -661.9627685546875
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 214.53572082519531,
+				"SpriteTransformScalingY" : 489.86734008789062,
+				"SpriteTransformWorldPositionX" : 11777.2099609375,
+				"SpriteTransformWorldPositionY" : -661.9627685546875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 214.53572082519531,
+				"TransformScalingY" : 489.86734008789062,
+				"TransformWorldPositionX" : 11777.2099609375,
+				"TransformWorldPositionY" : -661.9627685546875
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 11626.2021484375,
+						"Y" : 780.6055908203125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.80000001192092896,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : -561.5999755859375
+						},
+						{
+							"x" : -206.80000305175781,
+							"y" : -561.5999755859375
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_platform_tall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_platform_tall.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 28,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 27,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 517.0,
+				"SpriteTransformScalingY" : 1248.0,
+				"SpriteTransformWorldPositionX" : 11626.2021484375,
+				"SpriteTransformWorldPositionY" : 780.6055908203125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 517.0,
+				"TransformScalingY" : 1248.0,
+				"TransformWorldPositionX" : 11626.2021484375,
+				"TransformWorldPositionY" : 780.6055908203125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 11968.6220703125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 11968.6220703125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12132.814453125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12132.814453125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12305.4892578125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12305.4892578125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12474.876953125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12474.876953125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 14042.73046875,
+						"Y" : -2997.041259765625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : -1040.0
+						},
+						{
+							"x" : -1040.0,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallTile",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 33,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 32,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 2080.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 14042.73046875,
+				"SpriteTransformWorldPositionY" : -2997.041259765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 2080.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 14042.73046875,
+				"TransformWorldPositionY" : -2997.041259765625
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 14046.34375,
+						"Y" : -1413.252197265625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 2,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 14046.34375,
+				"SpriteTransformWorldPositionY" : -1413.252197265625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 14046.34375,
+				"TransformWorldPositionY" : -1413.252197265625
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 12796.6748046875,
+						"Y" : -420.9635009765625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.80000001192092896,
+						"Y" : 0.89999997615814209
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : 561.5999755859375
+						},
+						{
+							"x" : 206.80000305175781,
+							"y" : -561.5999755859375
+						},
+						{
+							"x" : -206.80000305175781,
+							"y" : -561.5999755859375
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_platform_tall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_platform_tall.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 28,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 27,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 517.0,
+				"SpriteTransformScalingY" : 1248.0,
+				"SpriteTransformWorldPositionX" : 12796.6748046875,
+				"SpriteTransformWorldPositionY" : -420.9635009765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 517.0,
+				"TransformScalingY" : 1248.0,
+				"TransformWorldPositionX" : 12796.6748046875,
+				"TransformWorldPositionY" : -420.9635009765625
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12668.486328125,
+				"SpriteTransformWorldPositionY" : 241.22210693359375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12668.486328125,
+				"TransformWorldPositionY" : 241.22210693359375
+			}
 		}
 	],
-	"EntityAmount" : 74,
+	"EntityAmount" : 104,
 	"Layers" : 
 	[
 		{
