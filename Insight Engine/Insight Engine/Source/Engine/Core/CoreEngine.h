@@ -44,6 +44,8 @@ namespace IS {
     class Sprite;
     class ISGraphics;
 
+
+
     /*!
        * \brief The central engine class for the game.
        *
@@ -757,6 +759,10 @@ namespace IS {
          * \brief Poll for GLFW events. (should always run right after swapping buffers)
          */
         void PollEvents();
+
+
+        //threads
+        std::vector<std::thread> mThreads;
 
     };
 

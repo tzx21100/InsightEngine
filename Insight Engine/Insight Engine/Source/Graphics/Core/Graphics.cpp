@@ -453,6 +453,9 @@ namespace IS {
         GLuint textureID;
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glGenTextures(1, &textureID);
+        // textureID = InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexId;
+        IS_CORE_DEBUG("GL GEN TEXTURE: {}", textureID);
+
         glBindTexture(GL_TEXTURE_2D, textureID);
 
         // create texture

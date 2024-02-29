@@ -45,20 +45,6 @@ namespace IS {
         namespace fs = std::filesystem;
         std::string path = TEXTURE_DIRECTORY; // Path to the Assets directory
 
-        for (const auto& entry : fs::directory_iterator(path)) {
-            std::string file_path = entry.path().string();
-            std::string extension = entry.path().extension().string();
-
-            // Check image extensions
-            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                LoadImage(file_path);
-            }
-            else if (!entry.is_directory())
-            {
-                window->ShowMessageBox("Image file must be either \".png\", \".jpg\" or \".jpeg\"!");
-            }
-        }
-
         for (const auto& entry : fs::directory_iterator(ICON_DIRECTORY)) {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
@@ -73,6 +59,34 @@ namespace IS {
                 window->ShowMessageBox("Icon file must be \".png\"!");
             }
         }
+        path = TEXTURE_DIRECTORY;
+        for (const auto& entry : fs::directory_iterator(path)) {
+            std::string file_path = entry.path().string();
+            std::string extension = entry.path().extension().string();
+
+            // Check image extensions
+            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
+                // LoadImage(file_path);
+                //{ // Critical section protected by mutex
+                //    std::lock_guard<std::mutex> lock(InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexIdMutex);
+                //    // Increment mCurrentTexId (now within the critical section)
+                //    mCurrentTexId++;
+                //}
+                mThreads.emplace_back(std::thread(AssetManager::LoadImage, file_path));
+
+                //AssetManager::LoadImage(file_path);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Image file must be either \".png\", \".jpg\" or \".jpeg\"!");
+            }
+        }
+
+        //for (auto& threads : mThreads) {
+        //    threads.join();
+        //}
+
+
 
         // Gets all prefabs and loads them to a list.
         path = PREFAB_DIRECTORY;
@@ -265,15 +279,22 @@ namespace IS {
             IS_CORE_INFO("Handling Debug");
         }
     }
-    
+
+    std::mutex assetMutex; // Mutex for thread safety
+
     void AssetManager::LoadImage(std::string const& filepath)
     {
-        ImageLoad(filepath);
-        Image* img = GetImage(std::filesystem::path(filepath).filename().string());
-        img->texture_index = mCurrentTexId;
-        img->mFileName = std::filesystem::path(filepath).filename().string();
-        mCurrentTexId++;
-        ISGraphics::textures.emplace_back(*img);
+        {
+            std::lock_guard<std::mutex> lock(assetMutex);
+            IS_CORE_DEBUG("CURRENT Texture ID: {}", InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexId);
+            ImageLoad(filepath);
+            Image* img = GetImage(std::filesystem::path(filepath).filename().string());
+            img->texture_index = InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexId;
+            img->mFileName = std::filesystem::path(filepath).filename().string();
+
+            InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexId++;
+            ISGraphics::textures.emplace_back(*img);
+        }
     }
 
     void AssetManager::LoadAudio(std::filesystem::path const& path)
@@ -298,8 +319,8 @@ namespace IS {
     }
 
     Image* AssetManager::GetImage(const std::string& file_name)  {
-        auto iter = mImageList.find(file_name);
-        if (iter != mImageList.end()) {
+        auto iter = InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mImageList.find(file_name);
+        if (iter != InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mImageList.end()) {
             return &(iter->second);
         }
         return nullptr;
@@ -327,6 +348,7 @@ namespace IS {
         Image new_image;
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
         graphics->initTextures(filepath, new_image);
+        InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mCurrentTexId++;
         SaveIconData(new_image);
         IS_CORE_INFO("Using Icon: {} \"{}\"", new_image.texture_id, filepath.substr(7));
     }
@@ -337,8 +359,8 @@ namespace IS {
     }
 
     void AssetManager::SaveImageData(const Image image_data) {
-        mImageList[image_data.mFileName] = image_data;
-        mImageNames.emplace_back(image_data.mFileName);
+        InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mImageList[image_data.mFileName] = image_data;
+        InsightEngine::Instance().GetSystem<AssetManager>("Asset")->mImageNames.emplace_back(image_data.mFileName);
     }
 
     void AssetManager::RemoveImageData(const std::string& file_name) {

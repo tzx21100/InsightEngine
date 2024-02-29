@@ -32,6 +32,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <thread>
+#include <mutex>
 
 //#define ON_ERROR(condition, msg) \
 //do { \
@@ -66,7 +68,6 @@ namespace IS {
         SelfAllocated,
         StbAllocated
     };
-
 
     struct Image { 
         //image data should just be in image itself
@@ -191,7 +192,7 @@ namespace IS {
             mSceneList.clear();
         }
 
-        void LoadImage(std::string const& filepath);
+        static void LoadImage(std::string const& filepath);
         void LoadAudio(std::filesystem::path const& filepath);
         void LoadPrefab(std::string const& filepath);
 
@@ -201,7 +202,7 @@ namespace IS {
          * \param file_name The name of the image file.
          * \return A reference to the Image structure containing image data.
          */
-        Image* GetImage(const std::string& file_name);
+        static Image* GetImage(const std::string& file_name);
         Image* GetIcon(const std::string& file_name);
 
         /*!
@@ -209,7 +210,7 @@ namespace IS {
          *
          * \param file_path The file path to the image.
          */
-        void ImageLoad(const std::string& file_path);
+        static void ImageLoad(const std::string& file_path);
 
         void IconLoad(const std::string& file_path);
         /*!
@@ -217,7 +218,7 @@ namespace IS {
          *
          * \param image_data The Image structure containing image data to be saved.
          */
-        void SaveImageData(const Image image_data);
+        static void SaveImageData(const Image image_data);
 
         void SaveIconData(const Image icon_data);
 
@@ -347,6 +348,8 @@ namespace IS {
                 sound.second->stop();
             }
         }
+        
+        void LoadImagesAndIcons();
 
 
         //saving and loading particles
@@ -406,6 +409,7 @@ namespace IS {
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
         std::vector<std::string>mScriptList;
+        std::vector<std::thread>mThreads;
 
         
         std::unordered_map<std::string,Particle>mParticleList;
@@ -419,8 +423,12 @@ namespace IS {
         static constexpr const char* PARTICLE_DIRECTORY = "Assets/Particles/";
         static constexpr const char* SCRIPT_DIRECTORY    = "Assets/Scripts/";
 
-    private:
         int mCurrentTexId{};
+
+        std::mutex mCurrentTexIdMutex;
+
+    private:
+        // int mCurrentTexId{};
         //const char* filename;
         //int width;
         //int height;
