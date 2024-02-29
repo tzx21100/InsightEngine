@@ -118,7 +118,7 @@ namespace IS
             }
 
             x_pos = origin.x + (0.44f * win_dimension.x);
-            y_pos = origin.y + (0.585f * win_dimension.y);
+            y_pos = origin.y + (0.585f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
 
             if (SettingsScript.show_settings)
             {

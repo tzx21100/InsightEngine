@@ -22,6 +22,7 @@ namespace IS
         static public float lower_limit_scroll_track;
 
         static public float x_pos;
+
         static public float virtual_y;
         static public void Init()
         {
@@ -46,6 +47,11 @@ namespace IS
             first_open_settings = false;
             diff_y = 0.532f;
             InternalCalls.SetButtonHoverScale(id, 0.95f);
+
+            virtual_y = 0f;
+
+            Console.WriteLine(upper_limit_scroll_track);
+            Console.WriteLine(lower_limit_scroll_track);
         }
 
         static public void Update()
@@ -82,7 +88,10 @@ namespace IS
                     diff_y = (adjustment - origin.y) / win_dimension.y;
                     InternalCalls.TransformSetPosition(origin.x + (0.593f * win_dimension.x), adjustment);
                     SettingsScript.scroll_bar_tracker_pos.y = adjustment;
-
+                    virtual_y = adjustment - upper_limit_scroll_track;
+                    virtual_y *= 1.85f;
+                    //virtual_y = -virtual_y;
+                    Console.WriteLine(virtual_y);
                 }
 
             }
@@ -112,7 +121,10 @@ namespace IS
                     first_open_settings = true;
                 }
                 InternalCalls.TransformSetPosition(x_pos, adjustment);
-                
+                virtual_y = adjustment - upper_limit_scroll_track;
+                virtual_y *= 1.85f;
+                //virtual_y = -virtual_y;
+
             }
             if (!SettingsScript.show_settings)
             {

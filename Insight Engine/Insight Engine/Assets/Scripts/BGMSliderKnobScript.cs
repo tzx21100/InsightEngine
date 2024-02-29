@@ -133,7 +133,7 @@ namespace IS
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.vfx_vol);
             }
 
-            y_pos = origin.y + (0.433f * win_dimension.y);
+            y_pos = origin.y + (0.433f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
