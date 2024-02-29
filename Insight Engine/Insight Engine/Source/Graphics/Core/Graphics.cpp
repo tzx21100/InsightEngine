@@ -415,14 +415,25 @@ namespace IS {
         Mesh::cleanupMeshes(meshes); // delete array and buffers
     }
 
-    void ISGraphics::initTextures(const std::string& filepath, Image& image)
+    ImageData ISGraphics::loadImageData(const std::string& filepath) {
+        // load texture
+        int width{}, height{}, channels{};
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+        ImageData img_data;
+        img_data.width = width; img_data.height = height; img_data.channels = channels;
+        img_data.data = data;
+        return img_data;
+    }
+
+    void ISGraphics::initTextures(const std::string& filepath, Image& image , ImageData img_data)
     {
+
         // get asset manager
         InsightEngine& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
-        int width, height, channels;
+        int width{img_data.width}, height{img_data.height}, channels{img_data.channels};
         // load texture
-        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0); 
+        uint8_t* data = img_data.data;
 
         // error checking
         if (!data) {
@@ -482,6 +493,75 @@ namespace IS {
         image.mFileName = std::filesystem::path(filepath).filename().string();
         image.texture_id = textureID;
     }
+
+    void ISGraphics::initFastTextures(const std::string& filepath, Image& image)
+    {
+        // get asset manager
+        InsightEngine& engine = InsightEngine::Instance();
+        auto asset = engine.GetSystem<AssetManager>("Asset");
+        int width, height, channels;
+        // load texture
+        uint8_t* data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
+
+        // error checking
+        if (!data) {
+            IS_CORE_ERROR("Failed to load image: {}", filepath.empty() ? "No filepath provided!" : filepath);
+            return;
+        }
+
+        // Enable blending for transparency
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        // for different png formats
+        GLuint format = GL_RGBA;
+        if (channels == 1) {
+            format = GL_RED;
+        }
+        else if (channels == 2) {
+            format = GL_RG;
+        }
+        else if (channels == 3) {
+            format = GL_RGB;
+        }
+        else if (channels == 4) {
+            format = GL_RGBA;
+        }
+
+        // bind texture
+        GLuint textureID;
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+
+        // create texture
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            IS_CORE_DEBUG("OpenGL error: {}", err);
+        }
+
+        // Set texture wrapping parameters to GL_CLAMP_TO_EDGE
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        // Use stbi_image_free instead of delete[]
+        stbi_image_free(data);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        // unbind
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        // update asset members
+        image.width = width;
+        image.height = height;
+        image.channels = channels;
+        image.mFileName = std::filesystem::path(filepath).filename().string();
+        image.texture_id = textureID;
+    }
+
 
     void ISGraphics::InitFonts()
     {

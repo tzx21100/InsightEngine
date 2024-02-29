@@ -39,6 +39,19 @@ consent of DigiPen Institute of Technology is prohibited.
 
 namespace IS {
 
+
+    static void TLoadParticles(std::string path) {
+        ASSET_MANAGER->LoadParticle(path);
+    }
+
+    static void TLoadPrefab(std::string path) {
+        ASSET_MANAGER->LoadPrefab(path);
+    }
+
+    static void TWorkerCreateData(std::string path) {
+        ASSET_MANAGER->WorkerLoadImageData(path);
+    }
+
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
         auto const window = engine.GetSystem<WindowSystem>("Window");
@@ -51,7 +64,9 @@ namespace IS {
 
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                LoadImage(file_path);
+                mThreads.emplace_back([file_path]() {
+                    TWorkerCreateData(file_path);
+                    });
             }
             else if (!entry.is_directory())
             {
@@ -83,7 +98,9 @@ namespace IS {
             // Check for json extensions
             if (extension == ".json")
             {
-                LoadPrefab(file_path);
+                mThreads.emplace_back([file_path]() {
+                    TLoadPrefab(file_path);
+                    });
                 IS_CORE_INFO("Loaded Prefab: {} ", file_path);
             }
             else if (!entry.is_directory())
@@ -91,6 +108,7 @@ namespace IS {
                 window->ShowMessageBox("Prefab file must be \".json\"!");
             }
         }
+
 
         // Gets all the scenes and stores them into a list
         path = SCENE_DIRECTORY;
@@ -113,7 +131,9 @@ namespace IS {
             std::string file_path = entry.path().string();
             std::string extension = entry.path().extension().string();
             if (extension == ".txt") {
-                LoadParticle(file_path);
+                mThreads.emplace_back([file_path]() {
+                    TLoadParticles(file_path);
+                    });
                 IS_CORE_INFO("Loaded Particle: {} ", file_path);
             }
             else if (!entry.is_directory())
@@ -156,6 +176,29 @@ namespace IS {
                 window->ShowMessageBox("Audio file must be either \".mp3\" or \".wav\"!");
             }
         }
+
+        //mThreads.emplace_back(std::thread(LoadEverythingButImages));
+
+        // Wait for all threads to finish and then join them
+        for (auto& thread : mThreads) {
+            if (thread.joinable()) { // Check if the thread is joinable
+                thread.join(); // Join the thread if it's joinable
+            }
+        }
+
+        for (auto& [name,data] : mImageData) {
+            LoadImage(name, data);
+        }
+        mImageData.clear();
+
+    }
+
+    void AssetManager::WorkerLoadImageData(const std::string& filepath) {
+        ImageData imageData = ISGraphics::loadImageData(filepath);
+       
+            std::lock_guard<std::mutex> lock(mImageDataMutex);
+            mImageData.emplace_back(filepath, imageData);
+
     }
 
     Prefab AssetManager::GetPrefab(std::string name) { return mPrefabList[name]; }
@@ -266,9 +309,9 @@ namespace IS {
         }
     }
     
-    void AssetManager::LoadImage(std::string const& filepath)
+    void AssetManager::LoadImage(std::string const& filepath , ImageData image_data)
     {
-        ImageLoad(filepath);
+        ImageLoad(filepath,image_data);
         Image* img = GetImage(std::filesystem::path(filepath).filename().string());
         img->texture_index = mCurrentTexId;
         img->mFileName = std::filesystem::path(filepath).filename().string();
@@ -313,11 +356,10 @@ namespace IS {
         throw std::runtime_error("Image not found.");
     }
 
-    void AssetManager::ImageLoad(const std::string& filepath) {
-        
+    void AssetManager::ImageLoad(const std::string& filepath, ImageData image_data) {
         Image new_image;
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
-        graphics->initTextures(filepath,new_image);
+        graphics->initTextures(filepath,new_image,image_data);
         SaveImageData(new_image);
         IS_CORE_INFO("Using Texture: {} \"{}\"", new_image.texture_id, filepath.substr(7));
     }
@@ -326,7 +368,7 @@ namespace IS {
 
         Image new_image;
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
-        graphics->initTextures(filepath, new_image);
+        graphics->initTextures(filepath, new_image,graphics->loadImageData(filepath));
         SaveIconData(new_image);
         IS_CORE_INFO("Using Icon: {} \"{}\"", new_image.texture_id, filepath.substr(7));
     }

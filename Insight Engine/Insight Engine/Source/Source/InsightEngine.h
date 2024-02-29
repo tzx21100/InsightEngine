@@ -137,6 +137,9 @@ void RunInsightEngine() {
     InsightEngine::Instance().Run();
     ScriptEngine::Shutdown();
     IS_CORE_WARN("Insight Engine has terminated!");
+
+
+
 }
 
 

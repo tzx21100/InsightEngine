@@ -219,7 +219,7 @@ namespace IS {
             FileUtils::FileMakeCopy(relative_filepath, directory);
             oss << directory << "/" << filepath.filename().string();
             std::string new_filepath = oss.str();
-            asset->LoadImage(new_filepath);
+            asset->WorkerLoadImageData(new_filepath);
         }
         else if (extension == ".MP3" || extension == ".WAV" || extension == ".wav" || extension == ".mp3") // Audio
         {

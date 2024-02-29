@@ -98,7 +98,11 @@ namespace IS {
 		* \param filepath The file path to the texture image.
 		* \param image An Image struct to store texture information.
 		*/
-		static void initTextures(const std::string& filepath, Image& image);
+		static void initTextures(const std::string& filepath, Image& image, ImageData stbi_data);
+		static void initFastTextures(const std::string& filepath, Image& image);// needed for icons etc
+
+		static ImageData loadImageData(const std::string& filepath);
+
 
 		static void InitFonts();
 

@@ -68,7 +68,7 @@ namespace IS {
     };
 
 
-    struct Image { 
+    struct Image {
         //image data should just be in image itself
         std::string mFileName{};
         int width{};
@@ -127,7 +127,7 @@ namespace IS {
         return simg;
     }
     // Convert from SimpleImage
-    inline Image ConvertToImage(const SimpleImage &simg) {
+    inline Image ConvertToImage(const SimpleImage& simg) {
         Image img;
         img.mFileName = std::string(simg.mFileName); // Convert char* to std::string
 
@@ -140,6 +140,14 @@ namespace IS {
         img.texture_index = simg.texture_index;
         return img;
     }
+
+
+    struct ImageData {
+        uint8_t* data;
+        int width;
+        int height;
+        int channels;
+    };
 
     /*!
      * \brief The AssetManager class manages game assets.
@@ -189,9 +197,10 @@ namespace IS {
             // Clear other lists
             mPrefabList.clear();
             mSceneList.clear();
+
         }
 
-        void LoadImage(std::string const& filepath);
+        void LoadImage(std::string const& filepath, ImageData image_data);
         void LoadAudio(std::filesystem::path const& filepath);
         void LoadPrefab(std::string const& filepath);
 
@@ -209,7 +218,7 @@ namespace IS {
          *
          * \param file_path The file path to the image.
          */
-        void ImageLoad(const std::string& file_path);
+        void ImageLoad(const std::string& file_path,ImageData image_data);
 
         void IconLoad(const std::string& file_path);
         /*!
@@ -235,6 +244,7 @@ namespace IS {
          */
         void ImageFree(const std::string& file_name);
 
+        void WorkerLoadImageData(const std::string& filepath);
 
         /*!
          * \brief Converts an image to grayscale.
@@ -418,6 +428,10 @@ namespace IS {
         static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
         static constexpr const char* PARTICLE_DIRECTORY = "Assets/Particles/";
         static constexpr const char* SCRIPT_DIRECTORY    = "Assets/Scripts/";
+
+        std::vector<std::thread> mThreads;
+        std::vector<std::pair<std::string, ImageData>> mImageData;
+        std::mutex mImageDataMutex;
 
     private:
         int mCurrentTexId{};
