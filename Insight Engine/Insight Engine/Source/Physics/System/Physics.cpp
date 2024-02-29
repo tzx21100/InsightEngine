@@ -86,10 +86,11 @@ namespace IS {
 		for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
 		{
 			// physics update iteration
-
+			for (; mCurrentIterations < mTotalIterations; mCurrentIterations++)
+			{
 				// Performs a physics step for the set of entities with dt, updates velocities and positions for game entities
 				Step(dt, PhysicsEnableList);
-			
+			}
 		}
 			// set it back to 0 for next iteration loop
 			mCurrentIterations = 0;
@@ -449,7 +450,7 @@ namespace IS {
 				sprite.followTransform(trans);
 
 				//body.mRotation = trans.getRotation();
-				body.mRotation += body.mAngularVelocity * time * 15.f;
+				body.mRotation += body.mAngularVelocity * time * 25.f;
 				trans.setRotation(body.mRotation, body.mAngularVelocity);
 				//trans.world_position += body.mVelocity * time;
 			}

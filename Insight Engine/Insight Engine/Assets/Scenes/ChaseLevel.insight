@@ -72,7 +72,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -168,7 +168,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -264,7 +264,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -360,7 +360,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -456,7 +456,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -552,7 +552,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -648,7 +648,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -744,7 +744,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -840,7 +840,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -936,7 +936,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1032,7 +1032,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1132,7 +1132,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1232,7 +1232,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1332,7 +1332,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1432,7 +1432,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1532,7 +1532,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1632,7 +1632,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1732,7 +1732,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1832,7 +1832,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -1928,7 +1928,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2024,7 +2024,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2120,7 +2120,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2216,7 +2216,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2312,7 +2312,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2425,7 +2425,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 1,
-				"Layer" : 1,
+				"Layer" : 2,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2462,9 +2462,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.083333335816860199,
 						"frame_dimension_y" : 1.0,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.038083914667367935,
+						"frame_timer" : 0.054750584065914154,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 12,
 						"y_frames" : 1
@@ -2566,7 +2566,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2662,7 +2662,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2758,7 +2758,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2854,7 +2854,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2954,7 +2954,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -2988,7 +2988,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3022,7 +3022,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3056,7 +3056,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3090,7 +3090,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3124,7 +3124,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3158,7 +3158,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3192,7 +3192,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3226,7 +3226,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3260,7 +3260,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3356,7 +3356,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3452,7 +3452,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3548,7 +3548,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3582,7 +3582,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3616,7 +3616,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3650,7 +3650,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3684,7 +3684,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3718,7 +3718,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3752,7 +3752,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3786,7 +3786,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3886,7 +3886,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -3986,7 +3986,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 1,
+				"Layer" : 2,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4086,7 +4086,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 0.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 0.0,
@@ -4182,7 +4182,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4278,7 +4278,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4374,7 +4374,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4474,7 +4474,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4499,9 +4499,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.025000477209687233,
+						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -4588,7 +4588,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4622,7 +4622,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4656,7 +4656,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4690,7 +4690,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4724,7 +4724,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4758,7 +4758,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4792,7 +4792,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4826,7 +4826,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4860,7 +4860,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4894,7 +4894,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -4928,7 +4928,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5024,7 +5024,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5120,7 +5120,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5154,7 +5154,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5188,7 +5188,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5222,7 +5222,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5256,7 +5256,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5290,7 +5290,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5324,7 +5324,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5358,7 +5358,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5392,7 +5392,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5426,7 +5426,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5460,7 +5460,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5560,7 +5560,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5660,7 +5660,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5685,9 +5685,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 4.0,
+						"frame_index_x" : 5.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.025000477209687233,
+						"frame_timer" : 0.041667144745588303,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -5770,7 +5770,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -5797,102 +5797,6 @@
 				"TransformScalingY" : 2080.0,
 				"TransformWorldPositionX" : 9855.0458984375,
 				"TransformWorldPositionY" : 2608.719970703125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 9272.7685546875,
-						"Y" : 1147.12646484375
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : 1040.0
-						},
-						{
-							"x" : 522.45001220703125,
-							"y" : -1040.0
-						},
-						{
-							"x" : -522.45001220703125,
-							"y" : -1040.0
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 0.0,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 1.0,
-				"RigidBodyMass" : 1.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 2,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 32,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 31,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 1161.0,
-				"SpriteTransformScalingY" : 2080.0,
-				"SpriteTransformWorldPositionX" : 9272.7685546875,
-				"SpriteTransformWorldPositionY" : 1147.12646484375,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 1161.0,
-				"TransformScalingY" : 2080.0,
-				"TransformWorldPositionX" : 9272.7685546875,
-				"TransformWorldPositionY" : 1147.12646484375
 			}
 		},
 		{
@@ -5962,7 +5866,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6058,7 +5962,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6092,7 +5996,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6126,7 +6030,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6160,7 +6064,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6194,7 +6098,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6228,7 +6132,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6262,7 +6166,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6296,7 +6200,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6330,7 +6234,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6364,7 +6268,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6464,7 +6368,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6498,7 +6402,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6532,7 +6436,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6566,7 +6470,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6600,7 +6504,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6696,7 +6600,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6792,7 +6696,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 2,
+				"Layer" : 3,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6828,8 +6732,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 12796.6748046875,
-						"Y" : -420.9635009765625
+						"X" : 12709.4775390625,
+						"Y" : -415.203369140625
 					},
 					"BoxColliderOffset" : 
 					{
@@ -6844,19 +6748,19 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -206.80000305175781,
+							"x" : -135.97636413574219,
 							"y" : 561.5999755859375
 						},
 						{
-							"x" : 206.80000305175781,
+							"x" : 135.97636413574219,
 							"y" : 561.5999755859375
 						},
 						{
-							"x" : 206.80000305175781,
+							"x" : 135.97636413574219,
 							"y" : -561.5999755859375
 						},
 						{
-							"x" : -206.80000305175781,
+							"x" : -135.97636413574219,
 							"y" : -561.5999755859375
 						}
 					]
@@ -6892,7 +6796,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -6906,19 +6810,19 @@
 				"SpriteTextureIndex" : 27,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 517.0,
+				"SpriteTransformScalingX" : 339.94088745117188,
 				"SpriteTransformScalingY" : 1248.0,
-				"SpriteTransformWorldPositionX" : 12796.6748046875,
-				"SpriteTransformWorldPositionY" : -420.9635009765625,
+				"SpriteTransformWorldPositionX" : 12709.4775390625,
+				"SpriteTransformWorldPositionY" : -415.203369140625,
 				"animations" : []
 			},
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 517.0,
+				"TransformScalingX" : 339.94088745117188,
 				"TransformScalingY" : 1248.0,
-				"TransformWorldPositionX" : 12796.6748046875,
-				"TransformWorldPositionY" : -420.9635009765625
+				"TransformWorldPositionX" : 12709.4775390625,
+				"TransformWorldPositionY" : -415.203369140625
 			}
 		},
 		{
@@ -6942,7 +6846,7 @@
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
 				"SpriteTransformScalingY" : 222.81999206542969,
-				"SpriteTransformWorldPositionX" : 12668.486328125,
+				"SpriteTransformWorldPositionX" : 12625.8955078125,
 				"SpriteTransformWorldPositionY" : 241.22210693359375,
 				"animations" : []
 			},
@@ -6951,14 +6855,782 @@
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 170.81999206542969,
 				"TransformScalingY" : 222.81999206542969,
-				"TransformWorldPositionX" : 12668.486328125,
+				"TransformWorldPositionX" : 12625.8955078125,
 				"TransformWorldPositionY" : 241.22210693359375
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 9272.7685546875,
+						"Y" : 1147.12646484375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 3,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 9272.7685546875,
+				"SpriteTransformWorldPositionY" : 1147.12646484375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 9272.7685546875,
+				"TransformWorldPositionY" : 1147.12646484375
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12788.8779296875,
+				"SpriteTransformWorldPositionY" : 241.22210693359375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12788.8779296875,
+				"TransformWorldPositionY" : 241.22210693359375
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12484.6572265625,
+				"SpriteTransformWorldPositionY" : 60.5205078125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12484.6572265625,
+				"TransformWorldPositionY" : 60.5205078125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12498.16796875,
+				"SpriteTransformWorldPositionY" : -110.36386108398438,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12498.16796875,
+				"TransformWorldPositionY" : -110.36386108398438
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12500.86328125,
+				"SpriteTransformWorldPositionY" : -279.0849609375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12500.86328125,
+				"TransformWorldPositionY" : -279.0849609375
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12497.0693359375,
+				"SpriteTransformWorldPositionY" : -447.8057861328125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12497.0693359375,
+				"TransformWorldPositionY" : -447.8057861328125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12497.6015625,
+				"SpriteTransformWorldPositionY" : -614.36383056640625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12497.6015625,
+				"TransformWorldPositionY" : -614.36383056640625
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12928.8798828125,
+				"SpriteTransformWorldPositionY" : 60.5205078125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12928.8798828125,
+				"TransformWorldPositionY" : 60.5205078125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12929.6240234375,
+				"SpriteTransformWorldPositionY" : -110.36367797851562,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12929.6240234375,
+				"TransformWorldPositionY" : -110.36367797851562
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12927.9482421875,
+				"SpriteTransformWorldPositionY" : -276.92166137695312,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12927.9482421875,
+				"TransformWorldPositionY" : -276.92166137695312
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12922.013671875,
+				"SpriteTransformWorldPositionY" : -443.4794921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12922.013671875,
+				"TransformWorldPositionY" : -443.4794921875
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12918.197265625,
+				"SpriteTransformWorldPositionY" : -612.20050048828125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12918.197265625,
+				"TransformWorldPositionY" : -612.20050048828125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 12954.1474609375,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 12954.1474609375,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 13116.8876953125,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 13116.8876953125,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Name" : "Cave_spikes",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_spikes.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 30,
+				"SpriteTextureHeight" : 857,
+				"SpriteTextureIndex" : 29,
+				"SpriteTextureWidth" : 657,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 170.81999206542969,
+				"SpriteTransformScalingY" : 222.81999206542969,
+				"SpriteTransformWorldPositionX" : 13283.8232421875,
+				"SpriteTransformWorldPositionY" : -819.16436767578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 170.81999206542969,
+				"TransformScalingY" : 222.81999206542969,
+				"TransformWorldPositionX" : 13283.8232421875,
+				"TransformWorldPositionY" : -819.16436767578125
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 16110.7099609375,
+						"Y" : -2997.041259765625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : 1040.0
+						},
+						{
+							"x" : 1040.0,
+							"y" : -1040.0
+						},
+						{
+							"x" : -1040.0,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallTile",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 3,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 33,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 32,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 2080.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 16110.7099609375,
+				"SpriteTransformWorldPositionY" : -2997.041259765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 2080.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 16110.7099609375,
+				"TransformWorldPositionY" : -2997.041259765625
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 16116.2314453125,
+						"Y" : -1413.252197265625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : 1040.0
+						},
+						{
+							"x" : 522.45001220703125,
+							"y" : -1040.0
+						},
+						{
+							"x" : -522.45001220703125,
+							"y" : -1040.0
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 3,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 32,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 31,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 1161.0,
+				"SpriteTransformScalingY" : 2080.0,
+				"SpriteTransformWorldPositionX" : 16116.2314453125,
+				"SpriteTransformWorldPositionY" : -1413.252197265625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 1161.0,
+				"TransformScalingY" : 2080.0,
+				"TransformWorldPositionX" : 16116.2314453125,
+				"TransformWorldPositionY" : -1413.252197265625
 			}
 		}
 	],
-	"EntityAmount" : 104,
+	"EntityAmount" : 120,
 	"Layers" : 
 	[
+		{
+			"Active" : true,
+			"Name" : "backbackground"
+		},
 		{
 			"Active" : true,
 			"Name" : "background"
@@ -6972,5 +7644,5 @@
 			"Name" : "foreground"
 		}
 	],
-	"LayersAmount" : 3
+	"LayersAmount" : 4
 }

@@ -168,7 +168,7 @@ namespace IS
 					//ResolveCollision(contact);
 					//ResolveCollisionWithRotation(contact, transA, transB);
 					
-						ResolveCollisionWithRotationAndFriction(contact, transA, transB);
+					ResolveCollisionWithRotationAndFriction(contact, transA, transB);
 					}
 				}
 			}
@@ -706,8 +706,14 @@ namespace IS
 		}
 
 		// clamp if angular velocity nearly equal to 0
-		bodyA->mVelocity = (mManifoldInfo.NearlyEqual(bodyA->mVelocity, Vector2D())) ? Vector2D() : bodyA->mVelocity;
-		bodyB->mVelocity = (mManifoldInfo.NearlyEqual(bodyB->mVelocity, Vector2D())) ? Vector2D() : bodyB->mVelocity;
+		/*bodyA->mVelocity = (mManifoldInfo.NearlyEqual(bodyA->mVelocity, Vector2D())) ? Vector2D() : bodyA->mVelocity;
+		bodyB->mVelocity = (mManifoldInfo.NearlyEqual(bodyB->mVelocity, Vector2D())) ? Vector2D() : bodyB->mVelocity;*/
+
+		// nearly equal
+		bodyA->mVelocity.x = (mManifoldInfo.NearlyEqual(bodyA->mVelocity.x, 0.f)) ? 0.f : bodyA->mVelocity.x;
+		bodyB->mVelocity.x = (mManifoldInfo.NearlyEqual(bodyB->mVelocity.x, 0.f)) ? 0.f : bodyB->mVelocity.x;
+		bodyA->mVelocity.y = (mManifoldInfo.NearlyEqual(bodyA->mVelocity.y, 0.f)) ? 0.f : bodyA->mVelocity.y;
+		bodyB->mVelocity.y = (mManifoldInfo.NearlyEqual(bodyB->mVelocity.y, 0.f)) ? 0.f : bodyB->mVelocity.y;
 		bodyA->mAngularVelocity = (mManifoldInfo.NearlyEqual(bodyA->mAngularVelocity, 0.f)) ? 0.f : bodyA->mAngularVelocity;
 		bodyB->mAngularVelocity = (mManifoldInfo.NearlyEqual(bodyB->mAngularVelocity, 0.f)) ? 0.f : bodyB->mAngularVelocity;
 
