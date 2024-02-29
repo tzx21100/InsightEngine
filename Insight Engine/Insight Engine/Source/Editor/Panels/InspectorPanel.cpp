@@ -212,11 +212,14 @@ namespace IS {
         // Transform Component
         RenderComponent<Transform>(ICON_LC_MOVE "  Transform", entity, [this, entity, FONT_BOLD](Transform& transform)
         {
-            // Render Translation            
-            if (Vector2D position = transform.world_position; EditorUtils::RenderControlVec2("Translation", position))
+            // Render Translation
+            Vector2D position = transform.world_position;
+            EditorUtils::WidgetState trans_state = EditorUtils::RenderControlVec2("Translation", position);
+            if (trans_state.mIsModified)
             {
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(transform.world_position, position);
             }
+            CommandHistory::SetNoMergeMostRecent(trans_state.mIsDeactivatedAfterEdit);
 
             // Render Rotation
             EditorUtils::RenderTableFixedWidth("TransformRotation", 2, [&]()
@@ -233,11 +236,14 @@ namespace IS {
             });
 
             // Render Scale
-            if (Vector2D scaling = transform.scaling; EditorUtils::RenderControlVec2("Scale", scaling, 128.f, 128.f))
+            Vector2D scaling = transform.scaling;
+            EditorUtils::WidgetState scale_state = EditorUtils::RenderControlVec2("Scale", scaling, 128.f, 128.f);
+            if (scale_state.mIsModified)
             {
                 scaling = { abs(scaling.x), abs(scaling.y) };
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(transform.scaling, scaling);
             }
+            CommandHistory::SetNoMergeMostRecent(scale_state.mIsDeactivatedAfterEdit);
 
         }); // end render Transform Component
 
@@ -308,6 +314,7 @@ namespace IS {
                         if (ImGui::Selectable(filename.c_str(), filename == sprite.img.mFileName))
                         {
                             CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
+                            CommandHistory::SetNoMergeMostRecent();
                         }
                     }
 
@@ -323,6 +330,7 @@ namespace IS {
                         auto asset = engine.GetSystem<AssetManager>("Asset");
                         Image const& img = *asset->GetImage(path.string());
                         CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -365,6 +373,7 @@ namespace IS {
                         auto asset = engine.GetSystem<AssetManager>("Asset");
                         Image const& img = *asset->GetImage(path.string());
                         CommandHistory::AddCommand<ChangeCommand<Image>>(sprite.img, img);
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -488,15 +497,21 @@ namespace IS {
         // Rigidbody Component
         RenderComponent<RigidBody>(ICON_LC_PERSON_STANDING "  Rigidbody", entity, [entity, FONT_BOLD](RigidBody& rigidbody)
         {
-            if (Vector2D velocity = rigidbody.mVelocity; EditorUtils::RenderControlVec2("Velocity", rigidbody.mVelocity))
+            Vector2D velocity = rigidbody.mVelocity;
+            EditorUtils::WidgetState vel_state = EditorUtils::RenderControlVec2("Velocity", velocity);
+            if (vel_state.mIsModified)
             {
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(rigidbody.mVelocity, velocity);
             }
+            CommandHistory::SetNoMergeMostRecent(vel_state.mIsDeactivatedAfterEdit);
             
-            if (Vector2D force = rigidbody.mForce; EditorUtils::RenderControlVec2("Force", rigidbody.mForce))
+            Vector2D force = rigidbody.mForce;
+            EditorUtils::WidgetState force_state = EditorUtils::RenderControlVec2("Force", force);
+            if (force_state.mIsModified)
             {
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(rigidbody.mForce, force);
             }
+            CommandHistory::SetNoMergeMostRecent(force_state.mIsDeactivatedAfterEdit);
 
             // Render Other Component Attributes
             EditorUtils::RenderTableFixedWidth("Rigidbody Table", 2, [&]()
@@ -610,21 +625,78 @@ namespace IS {
 
             if (ImGui::RadioButton("All", all_enabled))
             {
-                all_enabled ? collider.DisableAllColliders() : collider.EnableAllColliders();
+                if (all_enabled)
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.DisableAllColliders();
+                    }, [&collider]()
+                    {
+                        collider.EnableAllColliders();
+                    });
+                }
+                else
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.EnableAllColliders();
+                    }, [&collider]()
+                    {
+                        collider.DisableAllColliders();
+                    });
+                }
             }
 
             ImGui::SameLine();
 
             if (ImGui::RadioButton("Box", box_enabled))
             {
-                box_enabled ? collider.DisableBoxCollider() : collider.EnableBoxCollider();
+                if (box_enabled)
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.DisableBoxCollider();
+                    }, [&collider]()
+                    {
+                        collider.EnableBoxCollider();
+                    });
+                }
+                else
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.EnableBoxCollider();
+                    }, [&collider]()
+                    {
+                        collider.DisableBoxCollider();
+                    });
+                }
             }
 
             ImGui::SameLine();
 
             if (ImGui::RadioButton("Circle", circle_enabled))
             {
-                circle_enabled ? collider.DisableCircleCollider() : collider.EnableCircleCollider();
+                if (circle_enabled)
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.DisableCircleCollider();
+                    }, [&collider]()
+                    {
+                        collider.EnableCircleCollider();
+                    });
+                }
+                else
+                {
+                    CommandHistory::AddCommand<FunctionCommand>([&collider]()
+                    {
+                        collider.EnableCircleCollider();
+                    }, [&collider]()
+                    {
+                        collider.DisableCircleCollider();
+                    });
+                }
             }
 
             ImGui::Spacing();
@@ -632,24 +704,33 @@ namespace IS {
             if (box_enabled)
             {
                 ImGui::SeparatorText(ICON_LC_BOX_SELECT "  Box Collider");
-                if (Vector2D offset = collider.mBoxCollider.offset; EditorUtils::RenderControlVec2("Offset", offset))
+                Vector2D offset = collider.mBoxCollider.offset;
+                EditorUtils::WidgetState offset_state = EditorUtils::RenderControlVec2("Offset", offset);
+                if (offset_state.mIsModified)
                 {
                     CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mBoxCollider.offset, offset);
                 }
+                CommandHistory::SetNoMergeMostRecent(offset_state.mIsDeactivatedAfterEdit);
 
-                if (Vector2D scale = collider.mBoxCollider.sizeScale; EditorUtils::RenderControlVec2("Scale", scale))
+                Vector2D scale = collider.mBoxCollider.sizeScale;
+                EditorUtils::WidgetState scale_state = EditorUtils::RenderControlVec2("Scale", scale);
+                if (scale_state.mIsModified)
                 {
                     CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mBoxCollider.sizeScale, scale);
                 }
+                CommandHistory::SetNoMergeMostRecent(scale_state.mIsDeactivatedAfterEdit);
             }
             
             if (circle_enabled)
             {
                 ImGui::SeparatorText(ICON_LC_CIRCLE_DASHED "  Circle Collider");
-                if (Vector2D offset = collider.mCircleCollider.offset; EditorUtils::RenderControlVec2("Offset", offset))
+                Vector2D offset = collider.mCircleCollider.offset;
+                EditorUtils::WidgetState offset_state = EditorUtils::RenderControlVec2("Offset", offset);
+                if (offset_state.mIsModified)
                 {
                     CommandHistory::AddCommand<ChangeCommand<Vector2D>>(collider.mCircleCollider.offset, offset);
                 }
+                CommandHistory::SetNoMergeMostRecent(offset_state.mIsDeactivatedAfterEdit);
 
                 EditorUtils::RenderTableFixedWidth("Circle Radius Scale Table", 2, [&]()
                 {
@@ -685,6 +766,7 @@ namespace IS {
                         if (ImGui::Selectable(stem.c_str(), script.mScriptName == stem))
                         {
                             CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, stem);
+                            CommandHistory::SetNoMergeMostRecent();
                         }
                     }
 
@@ -698,6 +780,7 @@ namespace IS {
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, path.stem().string());
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -710,6 +793,7 @@ namespace IS {
                     if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                     {
                         CommandHistory::AddCommand<ChangeCommand<std::string>>(script.mScriptName, filepath.stem().string());
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                 }
                 ImGui::SetItemTooltip("Browse and replace the existing script");
@@ -741,9 +825,16 @@ namespace IS {
                     {
                         std::filesystem::path path(name);
                         std::string stem = path.stem().string();
-                        if (ImGui::Selectable(stem.c_str(), state.mCurrentState.mScriptName == stem))
+                        std::string current = state.mCurrentState.mScriptName;
+                        if (ImGui::Selectable(stem.c_str(), current == stem))
                         {
-                            state.mCurrentState.SetSimpleState(stem);
+                            CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                            {
+                                state.mCurrentState.SetSimpleState(stem);
+                            }, [&state, current]()
+                            {
+                                state.mCurrentState.SetSimpleState(current);
+                            });
                         }
                     }
 
@@ -757,7 +848,17 @@ namespace IS {
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         std::string stem = path.stem().string();
-                        state.mCurrentState.SetSimpleState(stem);
+                        std::string current = state.mCurrentState.mScriptName;
+                        if (stem != current)
+                        {
+                            CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                            {
+                                state.mCurrentState.SetSimpleState(stem);
+                            }, [&state, current]()
+                            {
+                                state.mCurrentState.SetSimpleState(current);
+                            });
+                        }
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -770,7 +871,17 @@ namespace IS {
                     if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                     {
                         std::string stem = filepath.stem().string();
-                        state.mCurrentState.SetSimpleState(stem);
+                        std::string current = state.mCurrentState.mScriptName;
+                        if (stem != current)
+                        {
+                            CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                            {
+                                state.mCurrentState.SetSimpleState(stem);
+                            }, [&state, current]()
+                            {
+                                state.mCurrentState.SetSimpleState(current);
+                            });
+                        }
                     }
                 }
                 ImGui::SetItemTooltip("Browse and replace the current state.");
@@ -806,9 +917,16 @@ namespace IS {
                         {
                             std::filesystem::path path(name);
                             std::string stem = path.stem().string();
-                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCondition().mScriptName == stem))
+                            std::string current = state.mEntityConditions.GetCondition().mScriptName;
+                            if (ImGui::Selectable(stem.c_str(), current == stem))
                             {
-                                state.mEntityConditions.AddCondition(stem);
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    state.mEntityConditions.AddCondition(stem);
+                                }, [&state, current]()
+                                {
+                                    state.mEntityConditions.AddCondition(current);
+                                });
                             }
                         }
 
@@ -822,7 +940,17 @@ namespace IS {
                         {
                             std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                             std::string stem = path.stem().string();
-                            state.mEntityConditions.AddCondition(stem);
+                            std::string current = state.mEntityConditions.GetCondition().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    state.mEntityConditions.AddCondition(stem);
+                                }, [&state, current]()
+                                {
+                                    state.mEntityConditions.AddCondition(current);
+                                });
+                            }
                         }
                         ImGui::EndDragDropTarget();
                     }
@@ -835,7 +963,17 @@ namespace IS {
                         if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                         {
                             std::string stem = filepath.stem().string();
-                            state.mEntityConditions.AddCondition(stem);
+                            std::string current = state.mEntityConditions.GetCondition().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    state.mEntityConditions.AddCondition(stem);
+                                }, [&state, current]()
+                                {
+                                    state.mEntityConditions.AddCondition(current);
+                                });
+                            }
                         }
                     }
                     ImGui::SetItemTooltip("Browse and replace the state condition.");
@@ -861,10 +999,21 @@ namespace IS {
                         {
                             std::filesystem::path path(name);
                             std::string stem = path.stem().string();
-                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCurrentState().mScriptName == stem))
+                            std::string current = state.mEntityConditions.GetCurrentState().mScriptName;
+                            if (ImGui::Selectable(stem.c_str(), current == stem))
                             {
-                                SimpleState temp = CreateSimpleState(stem);
-                                state.mEntityConditions.SetCurrentState(temp);
+                                if (stem != current)
+                                {
+                                    CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                    {
+                                        SimpleState temp = CreateSimpleState(stem);
+                                        state.mEntityConditions.SetCurrentState(temp);
+                                    }, [&state, current]()
+                                    {
+                                        SimpleState temp = CreateSimpleState(current);
+                                        state.mEntityConditions.SetCurrentState(temp);
+                                    });
+                                }
                             }
                         }
 
@@ -878,8 +1027,19 @@ namespace IS {
                         {
                             std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                             std::string stem = path.stem().string();
-                            SimpleState temp = CreateSimpleState(stem);
-                            state.mEntityConditions.SetCurrentState(temp);
+                            std::string current = state.mEntityConditions.GetCurrentState().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    SimpleState temp = CreateSimpleState(stem);
+                                    state.mEntityConditions.SetCurrentState(temp);
+                                }, [&state, current]()
+                                {
+                                    SimpleState temp = CreateSimpleState(current);
+                                    state.mEntityConditions.SetCurrentState(temp);
+                                });
+                            }
                         }
                         ImGui::EndDragDropTarget();
                     }
@@ -892,8 +1052,19 @@ namespace IS {
                         if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                         {
                             std::string stem = filepath.stem().string();
-                            SimpleState temp = CreateSimpleState(stem);
-                            state.mEntityConditions.SetCurrentState(temp);
+                            std::string current = state.mEntityConditions.GetCurrentState().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    SimpleState temp = CreateSimpleState(stem);
+                                    state.mEntityConditions.SetCurrentState(temp);
+                                }, [&state, current]()
+                                {
+                                    SimpleState temp = CreateSimpleState(current);
+                                    state.mEntityConditions.SetCurrentState(temp);
+                                });
+                            }
                         }
                     }
                     ImGui::SetItemTooltip("Browse and replace the state condition current state.");
@@ -919,10 +1090,18 @@ namespace IS {
                         {
                             std::filesystem::path path(name);
                             std::string stem = path.stem().string();
-                            if (ImGui::Selectable(stem.c_str(), state.mEntityConditions.GetCondition().mScriptName == stem))
+                            std::string current = state.mEntityConditions.GetTargetState().mScriptName;
+                            if (ImGui::Selectable(stem.c_str(), current == stem))
                             {
-                                SimpleState temp = CreateSimpleState(stem);
-                                state.mEntityConditions.SetTargetState(temp);
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    SimpleState temp = CreateSimpleState(stem);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                }, [&state, current]()
+                                {
+                                    SimpleState temp = CreateSimpleState(current);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                });
                             }
                         }
 
@@ -936,8 +1115,19 @@ namespace IS {
                         {
                             std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                             std::string stem = path.stem().string();
-                            SimpleState temp = CreateSimpleState(stem);
-                            state.mEntityConditions.SetTargetState(temp);
+                            std::string current = state.mEntityConditions.GetTargetState().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    SimpleState temp = CreateSimpleState(stem);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                }, [&state, current]()
+                                {
+                                    SimpleState temp = CreateSimpleState(current);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                });
+                            }
                         }
                         ImGui::EndDragDropTarget();
                     }
@@ -950,8 +1140,19 @@ namespace IS {
                         if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                         {
                             std::string stem = filepath.stem().string();
-                            SimpleState temp = CreateSimpleState(stem);
-                            state.mEntityConditions.SetTargetState(temp);
+                            std::string current = state.mEntityConditions.GetTargetState().mScriptName;
+                            if (stem != current)
+                            {
+                                CommandHistory::AddCommand<FunctionCommand>([&state, stem]()
+                                {
+                                    SimpleState temp = CreateSimpleState(stem);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                }, [&state, current]()
+                                {
+                                    SimpleState temp = CreateSimpleState(current);
+                                    state.mEntityConditions.SetTargetState(temp);
+                                });
+                            }
                         }
                     }
                     ImGui::SetItemTooltip("Browse and replace the state condition target state.");
@@ -969,7 +1170,7 @@ namespace IS {
                 ImGui::TreePop();
             }
 
-        }); // end render Script Component
+        }); // end render State Component
 
         // Light Component
         RenderComponent<Light>(ICON_LC_SUN "  Light", entity, [](Light& light)
@@ -981,10 +1182,13 @@ namespace IS {
                 EditorUtils::RenderToggleButton("Render Light", light.mRender);
             });
 
-            if (Vector2D offset = light.mOffset; EditorUtils::RenderControlVec2("Offset", offset))
+            Vector2D offset = light.mOffset;
+            EditorUtils::WidgetState offset_state = EditorUtils::RenderControlVec2("Offset", offset);
+            if (offset_state.mIsModified)
             {
                 CommandHistory::AddCommand<ChangeCommand<Vector2D>>(light.mOffset, offset);
             }
+            CommandHistory::SetNoMergeMostRecent(offset_state.mIsDeactivatedAfterEdit);
 
             EditorUtils::RenderTableFixedWidth("Light Table", 2, [&]()
             {
@@ -1069,6 +1273,7 @@ namespace IS {
                         if (ImGui::Selectable(sound_name.c_str(), emitter.soundName == sound_name))
                         {
                             CommandHistory::AddCommand<ChangeCommand<std::string>>(emitter.soundName, sound_name);
+                            CommandHistory::SetNoMergeMostRecent();
                         }
                     }
 
@@ -1081,6 +1286,7 @@ namespace IS {
                     {
                         std::filesystem::path path = static_cast<wchar_t*>(payload->Data);
                         CommandHistory::AddCommand<ChangeCommand<std::string>>(emitter.soundName, path.string());
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                     ImGui::EndDragDropTarget();
                 }
@@ -1317,10 +1523,12 @@ namespace IS {
 
         // Camera Position
         Vector3D position = { camera.mPosition.x, camera.mPosition.y, camera.mPosition.z };
-        if (EditorUtils::RenderControlVec3("Position", position))
+        EditorUtils::WidgetState position_state = EditorUtils::RenderControlVec3("Position", position);
+        if (position_state.mIsModified)
         {
-            camera.SetPosition(position.x, position.y, position.z);
+            CommandHistory::AddCommand<ChangeCommand<glm::vec3>>(camera.mPosition, glm::vec3(position.x, position.y, position.z));
         }
+        CommandHistory::SetNoMergeMostRecent(position_state.mIsDeactivatedAfterEdit);
         ImGui::SetItemTooltip("Adjust the position of the camera in world space");
 
         EditorUtils::RenderTableFixedWidth("CameraTable", 2, [&]()

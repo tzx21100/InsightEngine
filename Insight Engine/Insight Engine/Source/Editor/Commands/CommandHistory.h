@@ -83,6 +83,8 @@ namespace IS {
                     }
                 }
             }
+
+            IS_CORE_DEBUG("Undo : {}, Redo : {}", mUndoStack.size(), mRedoStack.size());
         }
 
         /*!
@@ -97,9 +99,9 @@ namespace IS {
 
         /*!
          * \brief Set whether the most recent command can be merged with subsequent commands.
-         * \param changed True if the most recent command should not be mergeable, false otherwise.
+         * \param changed True if the most recent command should not be mergeable, false otherwise. (Default true)
          */
-        static void SetNoMergeMostRecent(bool changed);
+        static void SetNoMergeMostRecent(bool changed = true);
 
         static void Clear();
 

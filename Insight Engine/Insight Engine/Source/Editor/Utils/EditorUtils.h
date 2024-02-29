@@ -23,6 +23,7 @@
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "Math/ISMath.h"
+#include "Editor/Commands/CommandHistory.h"
 
 #include <functional>
 #include <glad/glad.h> // for GLuint
@@ -43,7 +44,15 @@ namespace IS {
     /*!
      * \brief Namespace containing all utility functions for the editor.
      */
-    namespace EditorUtils {
+    namespace EditorUtils
+    {
+        struct WidgetState
+        {
+            bool mIsModified = false;
+            bool mIsActive = false;
+            bool mIsDeactivated = false;
+            bool mIsDeactivatedAfterEdit = false;
+        };
 
         /*!
          * \brief Converts tex id from GLuint to ImTextureID.
@@ -102,9 +111,9 @@ namespace IS {
          * \param x_reset The value to reset the x-component to (default is 0.0f).
          * \param y_reset The value to reset the y-component to (default is 0.0f).
          * \param column_width The width of the control column (default is 100.0f).
-         * \return Boolean value indicating whether control has been adjusted.
+         * \return WidgetState indicating the state of the widget.
          */
-        bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
+        WidgetState RenderControlVec2(std::string const& label, Vector2D& values, float x_reset = 0.f, float y_reset = 0.f, float column_width = 100.f);
 
         /*!
          * \brief Renders a control for a 3D vector using ImGui.
@@ -118,9 +127,9 @@ namespace IS {
          * \param y_reset The value to reset the y-component to (default is 0.0f).
          * \param z_reset The value to reset the z-component to (default is 0.0f).
          * \param column_width The width of the control column (default is 100.0f).
-         * \return Boolean value indicating whether control has been adjusted.
+         * \return WidgetState indicating the state of the widget.
          */
-        bool RenderControlVec3(std::string const& label, Vector3D& values, float x_reset = 0.f, float y_reset = 0.f, float z_reset = 0.f, float column_width = 100.f);
+        WidgetState RenderControlVec3(std::string const& label, Vector3D& values, float x_reset = 0.f, float y_reset = 0.f, float z_reset = 0.f, float column_width = 100.f);
 
         /*!
          * \brief Renders a table label with optional tooltip.
@@ -215,7 +224,8 @@ namespace IS {
                     const bool is_selected = (current_item == i);
                     if (ImGui::Selectable(items[i], is_selected)) {
                         current_item = i;
-                        enum_value = static_cast<EnumType>(i);
+                        CommandHistory::AddCommand<ChangeCommand<EnumType>>(enum_value, static_cast<EnumType>(i));
+                        CommandHistory::SetNoMergeMostRecent();
                     }
                     if (is_selected)
                         ImGui::SetItemDefaultFocus();

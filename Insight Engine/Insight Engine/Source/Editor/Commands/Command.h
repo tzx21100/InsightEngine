@@ -287,7 +287,7 @@ namespace IS {
      * \tparam Component The type of component to add.
      */
     template <typename Component>
-    class AddComponentCommand final : public ICommand
+    class AddComponentCommand : public ICommand
     {
     public:
         /*!
@@ -302,7 +302,6 @@ namespace IS {
         /*!
          * \brief Executes the add component command.
          */
-
         void Execute() override
         {
             auto& engine = InsightEngine::Instance();
@@ -321,6 +320,67 @@ namespace IS {
     private:
         Entity mEntity;             ///< The entity to which the component will be added.
     };
+
+    /*!
+     * \class AddScriptComponentCommand
+     * \brief Represents a command for adding a script to an entity.
+     */
+    class AddScriptComponentCommand final : public ICommand
+    {
+    public:
+        /*!
+         * \brief Constructor for AddScriptComponentCommand.
+         * \param entity The entity to which the script will be added.
+         */
+        AddScriptComponentCommand(Entity entity, std::string const& script);
+
+        /*!
+         * \brief Executes the add script command.
+         */
+        void Execute() override;
+
+        /*!
+         * \brief Undoes the add script command.
+         */
+        void Undo() override;
+    private:
+        Entity mEntity; ///< The entity to which the script will be added.
+        std::string mScriptName; ///< The name of the script to be added.
+    };
+
+    /*!
+     * \class AddStateComponentCommand
+     * \brief A command for adding a state component to an entity.
+     *
+     * This command adds a state component to an entity. The state component
+     * is defined by a list of state scripts. The command can be undone,
+     * which removes the state component from the entity.
+     */
+    class AddStateComponentCommand final : public ICommand
+    {
+    public:
+        /*!
+         * \brief Constructor for AddStateComponentCommand.
+         * \param entity The entity to which the state component will be added.
+         * \param state_scripts The state scripts that define the state component.
+         */
+        AddStateComponentCommand(Entity entity, std::vector<std::string> const& state_scripts);
+
+        /*!
+         * \brief Execute the command by adding the state component to the entity.
+         */
+        void Execute() override;
+
+        /*!
+         * \brief Undo the command by removing the state component from the entity.
+         */
+        void Undo() override;
+
+    private:
+        Entity mEntity; ///< The entity to which the state component will be added.
+        std::vector<std::string> mStateScripts; ///< The state scripts that define the state component.
+    };
+
 
     static int mRemoveCount = 0; ///< The counter for remove component command.
 
@@ -372,6 +432,42 @@ namespace IS {
     private:
         Entity mEntity;             ///< The entity from which the component will be removed.
         std::string mFileName;      ///< The file name associated with the removal.
+    };
+
+    /*!
+     * \class FunctionCommand
+     * \brief A command that encapsulates a pair of functions for execution and undo.
+     * This class is derived from ICommand.
+     */
+    class FunctionCommand final : public ICommand
+    {
+    public:
+        /*!
+         * \typedef Func
+         * \brief Typedef for a function that takes no arguments and returns no value.
+         */
+        using Func = std::function<void()>;
+
+        /*!
+         * \brief Constructor for FunctionCommand.
+         * \param execute The function to be executed when the command is run.
+         * \param undo The function to be executed when the command is undone.
+         */
+        FunctionCommand(Func const& execute, Func const& undo);
+
+        /*!
+         * \brief Execute the command by calling the execute function.
+         */
+        void Execute() override;
+
+        /*!
+         * \brief Undo the command by calling the undo function.
+         */
+        void Undo() override;
+
+    private:
+        Func mExecute; ///< The function to be executed when the command is run.
+        Func mUndo;    ///< The function to be executed when the command is undone.
     };
 
 } // end namespace IS

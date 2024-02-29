@@ -23,6 +23,8 @@
 #include "Command.h"
 #include "Graphics/System/Sprite.h"
 #include "Graphics/System/Transform.h"
+#include "Engine/Scripting/ScriptManager.h"
+#include "Engine/Systems/FSM/FSM.h"
 
 namespace IS {
 
@@ -214,6 +216,56 @@ namespace IS {
         auto const editor_layer = engine.GetEditorLayer();
         editor_layer->ResetEntitySelection();
         engine.DeleteEntity(mDupe);
+    }
+
+    FunctionCommand::FunctionCommand(Func const& execute, Func const& undo) : mExecute(execute), mUndo(undo) { mCanMerge = false; }
+
+    void FunctionCommand::Execute() { mExecute(); }
+
+    void FunctionCommand::Undo() { mUndo(); }
+
+    AddScriptComponentCommand::AddScriptComponentCommand(Entity entity, std::string const& script) : mEntity(entity), mScriptName(script)
+    {
+        mCanMerge = false;
+    }
+
+    void AddScriptComponentCommand::Execute()
+    {
+        auto& engine = InsightEngine::Instance();
+        engine.AddComponent<ScriptComponent>(mEntity, ScriptComponent());
+        auto& script = engine.GetComponent<ScriptComponent>(mEntity);
+        script.mScriptName = mScriptName;
+    }
+
+    void AddScriptComponentCommand::Undo()
+    {
+        auto& engine = InsightEngine::Instance();
+        engine.RemoveComponent<ScriptComponent>(mEntity);
+    }
+
+    AddStateComponentCommand::AddStateComponentCommand(Entity entity, std::vector<std::string> const& state_scripts) : mEntity(entity), mStateScripts(state_scripts)
+    {
+        mCanMerge = false;
+    }
+
+    void AddStateComponentCommand::Execute()
+    {
+        auto& engine = InsightEngine::Instance();
+        engine.AddComponent<StateComponent>(mEntity, StateComponent());
+
+        auto& state = engine.GetComponent<StateComponent>(mEntity);
+        state.mCurrentState.SetSimpleState(mStateScripts[0]);
+        state.mEntityConditions.AddCondition(mStateScripts[1]);
+        SimpleState temp = CreateSimpleState(mStateScripts[2]);
+        state.mEntityConditions.SetCurrentState(temp);
+        temp = CreateSimpleState(mStateScripts[3]);
+        state.mEntityConditions.SetTargetState(temp);
+    }
+
+    void AddStateComponentCommand::Undo()
+    {
+        auto& engine = InsightEngine::Instance();
+        engine.RemoveComponent<StateComponent>(mEntity);
     }
 
 } // end namespace IS

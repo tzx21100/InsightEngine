@@ -548,7 +548,7 @@ namespace IS {
         {
             if (mGizmoInUse)
             {
-                CommandHistory::SetNoMergeMostRecent(true);
+                CommandHistory::SetNoMergeMostRecent();
             }
             mGizmoInUse = false;
         }

@@ -437,11 +437,11 @@ namespace IS {
         auto& engine = InsightEngine::Instance();
 
         // Entity already has all the components
-        if (engine.HasComponent<Transform>(entity) && engine.HasComponent<Sprite>(entity) &&
-            engine.HasComponent<RigidBody>(entity) && engine.HasComponent<Collider>(entity) &&
-            engine.HasComponent<ScriptComponent>(entity) && engine.HasComponent<AudioListener>(entity) &&
-            engine.HasComponent<AudioEmitter>(entity) && engine.HasComponent<Light>(entity) &&
-            engine.HasComponent<ButtonComponent>(entity) && engine.HasComponent<StateComponent>(entity))
+        if (engine.HasComponent<Transform>(entity)          && engine.HasComponent<Sprite>(entity) &&
+            engine.HasComponent<RigidBody>(entity)          && engine.HasComponent<Collider>(entity) &&
+            engine.HasComponent<ScriptComponent>(entity)    && engine.HasComponent<AudioListener>(entity) &&
+            engine.HasComponent<AudioEmitter>(entity)       && engine.HasComponent<Light>(entity) &&
+            engine.HasComponent<ButtonComponent>(entity)    && engine.HasComponent<StateComponent>(entity))
         {
             if (ImGui::MenuItem("Already have all components"))
                 ImGui::CloseCurrentPopup();
@@ -498,9 +498,7 @@ namespace IS {
                 // Browse for script to add
                 if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
                 {
-                    engine.AddComponent<ScriptComponent>(entity, ScriptComponent());
-                    auto& script = engine.GetComponent<ScriptComponent>(entity);
-                    script.mScriptName = filepath.stem().string();
+                    CommandHistory::AddCommand<AddScriptComponentCommand>(entity, filepath.stem().string());
                 }
                 ImGui::CloseCurrentPopup();
             }
@@ -511,40 +509,16 @@ namespace IS {
         {
             if (ImGui::MenuItem(ICON_LC_FLAG "  State"))
             {
-                // Browse for script to add
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                std::vector<std::string> state_scripts;
+                for (int i{}; i < 4; ++i)
                 {
-                    std::string stem = filepath.stem().string();
-                    engine.AddComponent<StateComponent>(entity, StateComponent());
-                    auto& state = engine.GetComponent<StateComponent>(entity);
-                    state.mCurrentState.SetSimpleState(stem);
+                    if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
+                    {
+                        state_scripts.emplace_back(filepath.stem().string());
+                    }
                 }
-                // Browse for condition to add
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
-                {
-                    std::string stem = filepath.stem().string();
-                    engine.AddComponent<StateComponent>(entity, StateComponent());
-                    auto& state = engine.GetComponent<StateComponent>(entity);
-                    state.mEntityConditions.AddCondition(stem);
-                }
-                // Browse for current state to add
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
-                {
-                    std::string stem = filepath.stem().string();
-                    engine.AddComponent<StateComponent>(entity, StateComponent());
-                    auto& state = engine.GetComponent<StateComponent>(entity);
-                    SimpleState temp = CreateSimpleState(stem);
-                    state.mEntityConditions.SetCurrentState(temp);
-                }
-                // Browse for target state to add
-                if (std::filesystem::path filepath(FileUtils::OpenAndGetScript()); !filepath.empty())
-                {
-                    std::string stem = filepath.stem().string();
-                    engine.AddComponent<StateComponent>(entity, StateComponent());
-                    auto& state = engine.GetComponent<StateComponent>(entity);
-                    SimpleState temp = CreateSimpleState(stem);
-                    state.mEntityConditions.SetTargetState(temp);
-                }
+
+                CommandHistory::AddCommand<AddStateComponentCommand>(entity, state_scripts);
                 ImGui::CloseCurrentPopup();
             }
         }

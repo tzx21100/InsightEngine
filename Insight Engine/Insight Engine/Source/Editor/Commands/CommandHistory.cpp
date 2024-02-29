@@ -67,6 +67,7 @@ namespace IS {
             command->Undo();
             mRedoStack.push_back(command);
         }
+        IS_CORE_DEBUG("Undo : {}, Redo : {}", mUndoStack.size(), mRedoStack.size());
     }
 
     void CommandHistory::Redo()
@@ -81,17 +82,15 @@ namespace IS {
             mUndoStack.push_back(command);
             LimitStackSize(mUndoStack, MAX_COMMANDS);
         }
+        IS_CORE_DEBUG("Undo : {}, Redo : {}", mUndoStack.size(), mRedoStack.size());
     }
 
     void CommandHistory::SetNoMergeMostRecent(bool changed)
     {
-        if (!changed)
+        if (!changed || mUndoStack.empty())
             return;
 
-        if (mUndoStack.size() - 1 >= 0)
-        {
-            mUndoStack.back()->SetNoMerge();
-        }
+        mUndoStack.back()->SetNoMerge();
     }
 
     void CommandHistory::Clear()

@@ -66,9 +66,9 @@ namespace IS::EditorUtils {
         }
     }
 
-    bool RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
+    WidgetState RenderControlVec2(std::string const& label, Vector2D& values, float x_reset, float y_reset, float column_width)
     {
-        bool adjusted = false;
+        WidgetState state;
 
         ImGui::PushID(label.c_str());
 
@@ -93,16 +93,22 @@ namespace IS::EditorUtils {
             if (ImGui::Button("X", button_size))
             {
                 values.x = x_reset;
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
 
             if (ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f"))
             {
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopItemWidth();
             ImGui::SameLine();
 
@@ -113,28 +119,33 @@ namespace IS::EditorUtils {
             if (ImGui::Button("Y", button_size))
             {
                 values.y = y_reset;
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
             if (ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f"))
             {
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopItemWidth();
 
             ImGui::PopStyleVar();
         }, 0, column_width);
 
         ImGui::PopID();
-        return adjusted;
+        return state;
     }
 
-    bool RenderControlVec3(std::string const& label, Vector3D& values, float x_reset, float y_reset, float z_reset, float column_width)
+    WidgetState RenderControlVec3(std::string const& label, Vector3D& values, float x_reset, float y_reset, float z_reset, float column_width)
     {
-        bool adjusted = false;
-
+        WidgetState state;
         ImGui::PushID(label.c_str());
 
         EditorUtils::RenderTableFixedWidth(label, 2, [&]()
@@ -157,15 +168,21 @@ namespace IS::EditorUtils {
             if (ImGui::Button("X", button_size))
             {
                 values.x = x_reset;
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
             if (ImGui::DragFloat("##X", &values.x, .1f, 0.f, 0.f, "%.2f"))
             {
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopItemWidth();
 
             // Render the Y component with green color
@@ -176,15 +193,21 @@ namespace IS::EditorUtils {
             if (ImGui::Button("Y", button_size))
             {
                 values.y = y_reset;
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
             if (ImGui::DragFloat("##Y", &values.y, .1f, 0.f, 0.f, "%.2f"))
             {
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopItemWidth();
 
             // Render the Z component with blue color
@@ -195,15 +218,21 @@ namespace IS::EditorUtils {
             if (ImGui::Button("Z", button_size))
             {
                 values.z = z_reset;
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
             if (ImGui::DragFloat("##Z", &values.z, .1f, 0.f, 0.f, "%.2f"))
             {
-                adjusted = true;
+                state.mIsModified = true;
             }
+            state.mIsActive |= ImGui::IsItemActive();
+            state.mIsDeactivated |= ImGui::IsItemDeactivated();
+            state.mIsDeactivatedAfterEdit |= ImGui::IsItemDeactivatedAfterEdit();
             ImGui::PopItemWidth();
 
             ImGui::PopStyleVar();
@@ -211,7 +240,7 @@ namespace IS::EditorUtils {
         }, 0, column_width);
 
         ImGui::PopID();
-        return adjusted;
+        return state;
     }
 
     void RenderTableLabel(std::string const& label, std::string const& tooltip)
@@ -270,6 +299,7 @@ namespace IS::EditorUtils {
             if (strlen(buffer) > 0)
             {
                 CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
+                CommandHistory::SetNoMergeMostRecent();
                 if (action != nullptr)
                 {
                     action();
@@ -290,6 +320,7 @@ namespace IS::EditorUtils {
             if (strlen(buffer) > 0)
             {
                 CommandHistory::AddCommand<ChangeCommand<std::string>>(text, buffer);
+                CommandHistory::SetNoMergeMostRecent();
                 if (action != nullptr)
                 {
                     action();
@@ -310,7 +341,8 @@ namespace IS::EditorUtils {
 
         if (ImGui::InvisibleButton(str_id.c_str(), ImVec2(width, height)))
         {
-            value = !value;
+            CommandHistory::AddCommand<ChangeCommand<bool>>(value, !value);
+            CommandHistory::SetNoMergeMostRecent();
         }
         ImU32 color_background;
         ImVec4 color_active = ImGui::GetStyleColorVec4(ImGuiCol_CheckMark);
