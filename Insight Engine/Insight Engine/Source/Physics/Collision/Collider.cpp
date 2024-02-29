@@ -95,14 +95,19 @@ namespace IS
 
 	void Collider::UpdateBoxCollider(Transform const& trans) {
 
-		mBoxCollider.center = trans.world_position + mBoxCollider.offset;
+		//mBoxCollider.center = trans.world_position + mBoxCollider.offset;
+		float angle = glm::radians(trans.rotation);
+		// make collider follow the center of the entity
+		mBoxCollider.center.x = cosf(angle) * mBoxCollider.offset.x - sinf(angle) * mBoxCollider.offset.y + trans.world_position.x;
+		mBoxCollider.center.y = sinf(angle) * mBoxCollider.offset.x + cosf(angle) * mBoxCollider.offset.y + trans.world_position.y;
+
 		float width = trans.scaling.x * mBoxCollider.sizeScale.x;
 		float height = trans.scaling.y * mBoxCollider.sizeScale.y;
 
 		CreateBoxVertices(width, height);
 
 		for (int i = 0; i < mBoxCollider.vertices.size(); i++) {
-			float angle = glm::radians(trans.rotation);
+			//float angle = glm::radians(trans.rotation);
 			mBoxCollider.transformedVertices[i].x = cosf(angle) * mBoxCollider.vertices[i].x - sinf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.x;
 			mBoxCollider.transformedVertices[i].y = sinf(angle) * mBoxCollider.vertices[i].x + cosf(angle) * mBoxCollider.vertices[i].y + mBoxCollider.center.y;
 		}
@@ -110,6 +115,11 @@ namespace IS
 
 	void Collider::UpdateCircleCollider(Transform const& trans) {
 		mCircleCollider.center = trans.world_position + mCircleCollider.offset;
+		float angle = glm::radians(trans.rotation);
+		// make collider follow the center of the entity
+		mCircleCollider.center.x = cosf(angle) * mCircleCollider.offset.x - sinf(angle) * mCircleCollider.offset.y + trans.world_position.x;
+		mCircleCollider.center.y = sinf(angle) * mCircleCollider.offset.x + cosf(angle) * mCircleCollider.offset.y + trans.world_position.y;
+
 		// radius calculation will follows the larger scale of x/y
 		mCircleCollider.radius = std::max(std::abs(trans.scaling.x), std::abs(trans.scaling.y)) * mCircleCollider.radiusScale;
 	}
@@ -158,7 +168,45 @@ namespace IS
 		float maxX = -std::numeric_limits<float>::max();
 		float maxY = -std::numeric_limits<float>::max();
 
-		if (IsBoxColliderEnable())
+		float minBoxX = minX;
+		float minBoxY = minY;
+		float maxBoxX = maxX;
+		float maxBoxY = maxY;
+
+		float minCircleX = minX;
+		float minCircleY = minY;
+		float maxCircleX = maxX;
+		float maxCircleY = maxY;
+
+		if (IsBoxColliderEnable() && IsCircleColliderEnable()) { // if eneity got both 2 colliders
+
+			// box collider
+			// loop through the vertices to get a bigger(if necessary) box for grid cell calculation
+			for (int i = 0; i < mBoxCollider.transformedVertices.size(); i++)
+			{
+				Vector2D v = mBoxCollider.transformedVertices[i];
+
+				if (v.x < minBoxX) { minBoxX = v.x; }
+				if (v.x > maxBoxX) { maxBoxX = v.x; }
+				if (v.y < minBoxY) { minBoxY = v.y; }
+				if (v.y > maxBoxY) { maxBoxY = v.y; }
+			}
+
+			// circle collider
+			float radius = mCircleCollider.radius;
+			minCircleX = mCircleCollider.center.x - radius;
+			minCircleY = mCircleCollider.center.y - radius;
+			maxCircleX = mCircleCollider.center.x + radius;
+			maxCircleY = mCircleCollider.center.y + radius;
+
+			minX = (minBoxX < minCircleX) ? minBoxX : minCircleX;
+			minY = (minBoxY < minCircleY) ? minBoxY : minCircleY;
+			maxX = (maxBoxX > maxCircleX) ? maxBoxX : maxCircleX;
+			maxY = (maxBoxY > maxCircleY) ? maxBoxY : maxCircleY;
+
+			Box aabb = Box(minX, minY, maxX, maxY);
+		}
+		else if (IsBoxColliderEnable()) // box collider only
 		{
 			// loop through the vertices to get a bigger(if necessary) box for grid cell calculation
 			for (int i = 0; i < mBoxCollider.transformedVertices.size(); i++)
@@ -171,7 +219,7 @@ namespace IS
 				if (v.y > maxY) { maxY = v.y; }
 			}
 		}
-		else if (IsCircleColliderEnable())
+		else if (IsCircleColliderEnable()) // circle collider only
 		{
 			float radius = mCircleCollider.radius;
 
@@ -179,10 +227,9 @@ namespace IS
 			minY = mCircleCollider.center.y - radius;
 			maxX = mCircleCollider.center.x + radius;
 			maxY = mCircleCollider.center.y + radius;
-		}
+		}		
 
 		Box aabb = Box(minX, minY, maxX, maxY);
-
 		return aabb;
 	}
 

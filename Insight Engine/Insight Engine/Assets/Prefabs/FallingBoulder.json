@@ -1,0 +1,120 @@
+{
+	"Category" : 
+	{
+		"Category" : "Boulder"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -427.38766479492188,
+				"Y" : 184.7855224609375
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 70.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.69999998807907104,
+				"Y" : 0.5
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -79.240005493164062,
+					"y" : 107.80001068115234
+				},
+				{
+					"x" : 79.240005493164062,
+					"y" : 107.80001068115234
+				},
+				{
+					"x" : 79.240005493164062,
+					"y" : -107.80001068115234
+				},
+				{
+					"x" : -79.240005493164062,
+					"y" : -107.80001068115234
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleCollider" : 
+		{
+			"CircleColliderCenter" : 
+			{
+				"X" : -422.78765869140625,
+				"Y" : 6.3855209350585938
+			},
+			"CircleColliderOffset" : 
+			{
+				"X" : 4.5999999046325684,
+				"Y" : -108.40000152587891
+			},
+			"CircleColliderRadius" : 64.680007934570312,
+			"CircleColliderRadiusScale" : 0.15000000596046448
+		},
+		"CircleColliderEnabled" : true,
+		"ResponseEnabled" : true
+	},
+	"Name" : "FallingBoulder",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1000.0,
+		"RigidBodyRestitution" : 0.0,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 0.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "FallingBoulder"
+	},
+	"Signature" : "00000000000000000010010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 2,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_spikes_droppable.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 31,
+		"SpriteTextureHeight" : 1078,
+		"SpriteTextureIndex" : 30,
+		"SpriteTextureWidth" : 566,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 226.40000915527344,
+		"SpriteTransformScalingY" : 431.20004272460938,
+		"SpriteTransformWorldPositionX" : -427.38766479492188,
+		"SpriteTransformWorldPositionY" : 114.7855224609375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 226.40000915527344,
+		"TransformScalingY" : 431.20004272460938,
+		"TransformWorldPositionX" : -427.38766479492188,
+		"TransformWorldPositionY" : 114.7855224609375
+	}
+}
