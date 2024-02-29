@@ -1,7 +1,8 @@
 /* Start Header **************************************************************/
 /*!
 \file	Asset.cpp
-\author Matthew Ng, matthewdeen.ng@digipen.edu
+\author Tan Zheng Xun , t.zhengxun@digipen.edu  (80%)
+        Matthew Ng, matthewdeen.ng@digipen.edu (20%)
 \par Course: CSD2451
 \date 27-09-2023
 \brief
@@ -40,17 +41,6 @@ consent of DigiPen Institute of Technology is prohibited.
 namespace IS {
 
 
-    static void TLoadParticles(std::string path) {
-        ASSET_MANAGER->LoadParticle(path);
-    }
-
-    static void TLoadPrefab(std::string path) {
-        ASSET_MANAGER->LoadPrefab(path);
-    }
-
-    static void TWorkerCreateData(std::string path) {
-        ASSET_MANAGER->WorkerLoadImageData(path);
-    }
 
     void AssetManager::Initialize() {//call once
         InsightEngine& engine = InsightEngine::Instance();
@@ -65,7 +55,7 @@ namespace IS {
             // Check image extensions
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
                 mThreads.emplace_back([file_path]() {
-                    TWorkerCreateData(file_path);
+                    ASSET_MANAGER->WorkerLoadImageData(file_path);
                     });
             }
             else if (!entry.is_directory())
@@ -99,7 +89,7 @@ namespace IS {
             if (extension == ".json")
             {
                 mThreads.emplace_back([file_path]() {
-                    TLoadPrefab(file_path);
+                    ASSET_MANAGER->LoadPrefab(file_path);
                     });
                 IS_CORE_INFO("Loaded Prefab: {} ", file_path);
             }
@@ -132,7 +122,7 @@ namespace IS {
             std::string extension = entry.path().extension().string();
             if (extension == ".txt") {
                 mThreads.emplace_back([file_path]() {
-                    TLoadParticles(file_path);
+                    ASSET_MANAGER->LoadParticle(file_path);
                     });
                 IS_CORE_INFO("Loaded Particle: {} ", file_path);
             }
@@ -189,7 +179,9 @@ namespace IS {
         for (auto& [name,data] : mImageData) {
             LoadImage(name, data);
         }
+
         mImageData.clear();
+        mThreads.clear();
 
     }
 
@@ -368,7 +360,7 @@ namespace IS {
 
         Image new_image;
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
-        graphics->initTextures(filepath, new_image,graphics->loadImageData(filepath));
+        graphics->initFastTextures(filepath, new_image);
         SaveIconData(new_image);
         IS_CORE_INFO("Using Icon: {} \"{}\"", new_image.texture_id, filepath.substr(7));
     }
@@ -447,22 +439,48 @@ namespace IS {
 
 
     void AssetManager::RefreshDirectiories() {
+
+        //IS_CORE_DEBUG("SIZE OF mSoundList: {}", mSoundList.size());
+        //IS_CORE_DEBUG("SIZE OF mChannelList: {}", mChannelList.size());
+        //IS_CORE_DEBUG("SIZE OF mImageList: {}", mImageList.size());
+        //IS_CORE_DEBUG("SIZE OF mIconList: {}", mIconList.size());
+        //IS_CORE_DEBUG("SIZE OF mImageNames: {}", mImageNames.size());
+        //IS_CORE_DEBUG("SIZE OF mIconNames: {}", mIconNames.size());
+        //IS_CORE_DEBUG("SIZE OF mPrefabList: {}", mPrefabList.size());
+        //IS_CORE_DEBUG("SIZE OF mSceneList: {}", mSceneList.size());
+        //IS_CORE_DEBUG("SIZE OF mScriptList: {}", mScriptList.size());
+        //IS_CORE_DEBUG("SIZE OF mParticleList: {}", mParticleList.size());
+        //IS_CORE_DEBUG("SIZE OF mImageData: {}", mImageData.size());
+        //IS_CORE_DEBUG("SIZE OF mThreads: {}", mThreads.size());
+        //IS_CORE_DEBUG("VALUE OF mCurrentTexId: {}", mCurrentTexId);
+
+
         IS_PROFILE_FUNCTION();
         std::shared_ptr<ISGraphics> graphics = InsightEngine::Instance().GetSystem<ISGraphics>("Graphics");
+        for (auto& img : mIconList) {
+            graphics->deleteTexture(img.second);
+            IS_CORE_DEBUG("DELETED TEXTURE:{} {}", img.second.texture_id,img.first);
+        }
         for (auto& img : mImageList) {
             graphics->deleteTexture(img.second);
+            IS_CORE_DEBUG("DELETED TEXTURE:{} {}", img.second.texture_id, img.first);
         }
+        ISGraphics::textures.clear();
 
         mSoundList.clear();
         mChannelList.clear();
         mImageList.clear();
         mImageNames.clear();
         mIconNames.clear();
+        mIconList.clear();
         mPrefabList.clear();
         mSceneList.clear();
         mScriptList.clear();
         mParticleList.clear();
+        mImageData.clear();
+        mThreads.clear();
         mCurrentTexId = 0;
+
 
         Initialize();
         InsightEngine::Instance().mRuntime = false;

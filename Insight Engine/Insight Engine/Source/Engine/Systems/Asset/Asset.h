@@ -416,10 +416,11 @@ namespace IS {
         std::unordered_map<std::string, Prefab> mPrefabList;
         std::vector<std::string>mSceneList;
         std::vector<std::string>mScriptList;
-
-        
         std::unordered_map<std::string,Particle>mParticleList;
-
+        std::vector<std::thread> mThreads;
+        std::vector<std::pair<std::string, ImageData>> mImageData;
+        std::mutex mImageDataMutex;
+        int mCurrentTexId{};
 
         static constexpr const char* TEXTURE_DIRECTORY  = "Assets/Textures/";
         static constexpr const char* ICON_DIRECTORY     = "Assets/Icons/";
@@ -429,12 +430,10 @@ namespace IS {
         static constexpr const char* PARTICLE_DIRECTORY = "Assets/Particles/";
         static constexpr const char* SCRIPT_DIRECTORY    = "Assets/Scripts/";
 
-        std::vector<std::thread> mThreads;
-        std::vector<std::pair<std::string, ImageData>> mImageData;
-        std::mutex mImageDataMutex;
+
 
     private:
-        int mCurrentTexId{};
+
         //const char* filename;
         //int width;
         //int height;
