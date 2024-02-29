@@ -992,7 +992,7 @@ namespace IS {
                     //--------------------------------------------------------------------------------
                     EditorUtils::RenderTableLabel("Current State:");
                     ImGui::TableNextColumn();
-                    if (ImGui::BeginCombo("##CurrentState", state.mCurrentState.mScriptName.c_str()))
+                    if (ImGui::BeginCombo("##CurrentState", state.mEntityConditions.GetCurrentState().mScriptName.c_str()))
                     {
                         auto const asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
                         for (std::string const& name : asset->mScriptList)
