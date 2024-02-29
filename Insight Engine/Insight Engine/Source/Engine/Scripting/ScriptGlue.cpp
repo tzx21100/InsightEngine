@@ -223,6 +223,13 @@ namespace IS {
         return vec;
     }
 
+    static void SetSpriteAlpha(float alpha)
+    {
+        auto& engine = InsightEngine::Instance();
+        auto& sprite = engine.GetComponent<Sprite>(engine.GetScriptCaller());
+        sprite.color.a = alpha;
+    }
+
     static SimpleVector2D GetTransformPositionEntity(int entity) {
         auto& engine = InsightEngine::Instance();
         auto& trans_component = engine.GetComponent<Transform>(entity);
@@ -1397,6 +1404,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
         IS_ADD_INTERNAL_CALL(SetSpriteAlphaEntity);
+        IS_ADD_INTERNAL_CALL(SetSpriteAlpha);
         IS_ADD_INTERNAL_CALL(GetSpriteAlphaEntity);
         IS_ADD_INTERNAL_CALL(FreeSpriteImage);
         IS_ADD_INTERNAL_CALL(CreateAnimationFromSprite);
@@ -1471,7 +1479,6 @@ namespace IS {
 
 
         // Drawing functions
-
         IS_ADD_INTERNAL_CALL(DrawLineBetweenPoints);
         IS_ADD_INTERNAL_CALL(DrawCircle);
         IS_ADD_INTERNAL_CALL(DrawDarkCircle);

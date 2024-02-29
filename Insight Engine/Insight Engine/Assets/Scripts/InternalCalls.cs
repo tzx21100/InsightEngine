@@ -95,6 +95,9 @@ namespace IS
         internal extern static void SetSpriteAlphaEntity(float alpha, int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetSpriteAlpha(float alpha);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetSpriteAlphaEntity(int entity);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
