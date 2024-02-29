@@ -194,8 +194,9 @@ namespace IS {
         }
     }
 
-    void InputManager::ProcessPayloadFile(std::filesystem::path const& filepath)
+    void InputManager::ProcessPayloadFile([[maybe_unused]] std::filesystem::path const& filepath)
     {
+#ifdef USING_IMGUI
         auto& scene_manager = SceneManager::Instance();
         auto& engine = InsightEngine::Instance();
         auto asset = engine.GetSystem<AssetManager>("Asset");
@@ -242,6 +243,7 @@ namespace IS {
             std::string title = "Unsupported File Type";
             mWindow->ShowMessageBox(message, title);
         }
+#endif
     }
 
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
