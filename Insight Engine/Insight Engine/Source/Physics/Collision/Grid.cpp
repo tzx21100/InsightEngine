@@ -68,9 +68,9 @@ namespace IS
 		glm::vec2 camera_center = ISGraphics::cameras3D[Camera3D::mActiveCamera].GetPosition2D();
 		int x, y;
 		engine.GetWindowSize(x, y);
-		// set the grid's width and height as 1.5 times bigger than camera's width and height
-		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.5f;
-		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.5f;
+		// set the grid's width and height as 2 times bigger than camera's width and height
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;
 
 		mGridSize = { static_cast<float>(width), static_cast<float>(height) };
 		mCellSize = { static_cast<float>(width) / mCols, static_cast<float>(height) / mRows };
@@ -379,8 +379,8 @@ namespace IS
 		int x, y;
 		engine.GetWindowSize(x, y);
 		// set the grid's width and height as 2 times bigger than camera's width and height
-		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 1.5f;
-		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 1.5f;
+		float width = (static_cast<float>(x) / camera.GetZoomLevel()) * 2.f;
+		float height = (static_cast<float>(y) / camera.GetZoomLevel()) * 2.f;
 
 		/*float width = 12000.f;
 		float height = 5000.f;*/
