@@ -114,7 +114,7 @@ namespace IS
 	}
 
 	void Collider::UpdateCircleCollider(Transform const& trans) {
-		mCircleCollider.center = trans.world_position + mCircleCollider.offset;
+		//mCircleCollider.center = trans.world_position + mCircleCollider.offset;
 		float angle = glm::radians(trans.rotation);
 		// make collider follow the center of the entity
 		mCircleCollider.center.x = cosf(angle) * mCircleCollider.offset.x - sinf(angle) * mCircleCollider.offset.y + trans.world_position.x;
