@@ -185,6 +185,7 @@ namespace IS
         static private bool isAttack = false;
         static private float attack_angle = 0f;
         static private bool initial_attack = false;
+        static private bool hitting_enemy = false;
         static public int hitting_enemy_id;
         static public float attack_damage = 10f;
         static public Vector2D attack_range = new Vector2D(150f, 300f);
@@ -1570,6 +1571,7 @@ namespace IS
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
                 {
                     // enemy get hit
+                    hitting_enemy = true;
                     if (isAttack && !initial_attack) // enemy get hit for the first time
                     {
                         Random rnd = new Random();
@@ -1618,8 +1620,6 @@ namespace IS
                         //InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
                         InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);
 
-                        // Apply Attack Stun Effect
-                        AttackStunEffect();
                     }
                     else
                     {
@@ -1628,15 +1628,30 @@ namespace IS
                         InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
                     }
                 }
+                else
+                {
+                    hitting_enemy = false; // if attack area not collide with enemy
+                }
             }
+            else
+            {
+                hitting_enemy = false; // if attack area nbot collide with anything
+            }
+
+            // Apply Attack Stun Effect
+            AttackStunEffect();
         }
         static public void AttackStunEffect()
         {
-            if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun)
+            if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun && hitting_enemy)
             {
                 IsAttackStun = true;
                 IsFirstAttackStun = true;
                 attack_stun_timer = attack_stun_timer_duration;
+                if (combo_step == 3) // if is the last attack, make th attack stun longer
+                {
+                    attack_stun_timer = attack_stun_timer_duration * 1.5f;
+                }
             }
 
             if (IsAttackStun)
@@ -1649,7 +1664,7 @@ namespace IS
                 InternalCalls.SetAnimationEntityPlaying(PLAYER_ID, true);
             }
 
-            if (attack_stun_timer <= 0f)
+            if (attack_stun_timer <= 0f || !hitting_enemy)
             {
                 IsAttackStun = false;
             }

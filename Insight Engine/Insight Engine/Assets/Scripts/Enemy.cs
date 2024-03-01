@@ -63,7 +63,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(500f, 500f);
+        private Vector2D scaling = new Vector2D(341f, 448);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
         private Vector2D enemy_dash_vel = new Vector2D(600f, 600f);
 
