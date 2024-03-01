@@ -49,9 +49,6 @@ namespace IS
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
             virtual_y = 0f;
-
-            Console.WriteLine(upper_limit_scroll_track);
-            Console.WriteLine(lower_limit_scroll_track);
         }
 
         static public void Update()
@@ -91,7 +88,7 @@ namespace IS
                     virtual_y = adjustment - upper_limit_scroll_track;
                     virtual_y *= 1.85f;
                     //virtual_y = -virtual_y;
-                    Console.WriteLine(virtual_y);
+                    //Console.WriteLine(virtual_y);
                 }
 
             }

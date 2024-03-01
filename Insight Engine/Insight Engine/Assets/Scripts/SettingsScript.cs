@@ -30,6 +30,8 @@ namespace IS
 
         static private int background_entity;
         static private int settings_overlay_entity;
+        static private int settings_overlay_top_entity;
+        static private int settings_overlay_bot_entity;
         static private int master_checkbox_entity;
         static private int bgm_checkbox_entity;
         static private int vfx_checkbox_entity;
@@ -46,6 +48,8 @@ namespace IS
 
         static SimpleImage background_image;
         static SimpleImage settings_overlay_image;
+        static SimpleImage settings_overlay_top_image;
+        static SimpleImage settings_overlay_bot_image;
         static SimpleImage master_checkbox_image;
         static SimpleImage bgm_checkbox_image;
         static SimpleImage vfx_checkbox_image;
@@ -58,6 +62,8 @@ namespace IS
 
         static Vector2D background_pos = new Vector2D(0, 0);
         static Vector2D settings_overlay_pos = new Vector2D(0, 0);
+        static Vector2D settings_overlay_top_pos = new Vector2D(0, 0);
+        static Vector2D settings_overlay_bot_pos = new Vector2D(0, 0);
         static Vector2D trans_pos = new Vector2D(0, 0);
 
         static public Vector2D master_checkbox_pos = new Vector2D(0, 0);
@@ -126,6 +132,8 @@ namespace IS
             }
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
             settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
+            settings_overlay_top_image = InternalCalls.GetSpriteImage("settings_overlay_top.png");
+            settings_overlay_bot_image = InternalCalls.GetSpriteImage("settings_overlay_bot.png");
             slider_bar_image = InternalCalls.GetSpriteImage("slider_bar.png");
             slider_knob_image = InternalCalls.GetSpriteImage("slider_knob.png");
             scroll_bar_image = InternalCalls.GetSpriteImage("scroll_bar.png");
@@ -135,6 +143,8 @@ namespace IS
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
             settings_overlay_entity = InternalCalls.CreateEntityUI("Settings Overlay", settings_overlay_image);
+            settings_overlay_top_entity = InternalCalls.CreateEntityUI("Settings Overlay Top", settings_overlay_top_image);
+            settings_overlay_bot_entity = InternalCalls.CreateEntityUI("Settings Overlay Bottom", settings_overlay_bot_image);
             master_checkbox_entity = InternalCalls.CreateEntityButtonNoText("Master Checkbox", master_checkbox_image, "MasterCheckboxScript");
             bgm_checkbox_entity = InternalCalls.CreateEntityButtonNoText("BGM Checkbox", bgm_checkbox_image, "BGMCheckboxScript");
             vfx_checkbox_entity = InternalCalls.CreateEntityButtonNoText("VFX Checkbox", vfx_checkbox_image, "VFXCheckboxScript");
@@ -173,6 +183,8 @@ namespace IS
             // Dimensions
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D settings_overlay = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D settings_overlay_top = new Vector2D(0.8f * win_dimension.x, 0.224f * win_dimension.y);
+            Vector2D settings_overlay_bot = new Vector2D(0.8f * win_dimension.x, 0.15f * win_dimension.y);
             Vector2D master_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
             Vector2D bgm_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
             Vector2D vfx_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
@@ -189,6 +201,8 @@ namespace IS
 
             InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
             InternalCalls.TransformSetScaleEntity(settings_overlay.x, settings_overlay.y, settings_overlay_entity);
+            InternalCalls.TransformSetScaleEntity(settings_overlay_top.x, settings_overlay_top.y, settings_overlay_top_entity);
+            InternalCalls.TransformSetScaleEntity(settings_overlay_bot.x, settings_overlay_bot.y, settings_overlay_bot_entity);
             InternalCalls.SetButtonSize(master_checkbox_entity, new SimpleVector2D(master_checkbox.x, master_checkbox.y));
             InternalCalls.SetButtonSize(bgm_checkbox_entity, new SimpleVector2D(bgm_checkbox.x, bgm_checkbox.y));
             InternalCalls.SetButtonSize(vfx_checkbox_entity, new SimpleVector2D(vfx_checkbox.x, vfx_checkbox.y));
@@ -206,6 +220,8 @@ namespace IS
             // Positions    
             background_pos.Set(camera_pos.x, camera_pos.y);
             settings_overlay_pos.Set(camera_pos.x, camera_pos.y);
+            settings_overlay_top_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.733f * win_dimension.y));
+            settings_overlay_bot_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.223f * win_dimension.y));
 
             master_checkbox_pos.Set(MasterCheckboxScript.x_pos, MasterCheckboxScript.y_pos);
             bgm_checkbox_pos.Set(BGMCheckboxScript.x_pos, BGMCheckboxScript.y_pos);
@@ -223,7 +239,7 @@ namespace IS
             scroll_bar_tracker_pos.Set(ScrollBarTrackerScript.x_pos, scroll_bar_tracker_pos.y); //532-365
 
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
-            trans_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.62f * win_dimension.y)); //62 - 27
+            trans_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.27f * win_dimension.y)); //62 - 27
 
             bgm_vol = master_multiplier * bgm_multiplier;
             vfx_vol = master_multiplier * vfx_multiplier;
@@ -280,6 +296,8 @@ namespace IS
         {
             InternalCalls.TransformSetPositionEntity(background_pos.x, background_pos.y, background_entity);
             InternalCalls.TransformSetPositionEntity(settings_overlay_pos.x, settings_overlay_pos.y, settings_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(settings_overlay_top_pos.x, settings_overlay_top_pos.y, settings_overlay_top_entity);
+            InternalCalls.TransformSetPositionEntity(settings_overlay_bot_pos.x, settings_overlay_bot_pos.y, settings_overlay_bot_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
             InternalCalls.TransformSetPositionEntity(trans_pos.x, trans_pos.y, trans_entity);
 
@@ -298,6 +316,8 @@ namespace IS
         {
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, background_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_top_entity);
+            InternalCalls.TransformSetPositionEntity(9999f, 9999f, settings_overlay_bot_entity);
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, back_button_entity); 
             InternalCalls.TransformSetPositionEntity(9999f, 9999f, trans_entity);
         }
