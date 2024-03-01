@@ -12,6 +12,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
     class MasterCheckboxScript
@@ -119,12 +120,14 @@ namespace IS
 
             x_pos = origin.x + (0.44f * win_dimension.x);
             y_pos = origin.y + (0.585f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
-
+            //y_pos = origin.y + (0.7f * win_dimension.y);
+            //Console.WriteLine(y_pos);
+            //Console.WriteLine(ScrollBarTrackerScript.virtual_y);
             if (SettingsScript.show_settings)
             {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
             }
-            if (!SettingsScript.show_settings)
+            if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)))
             {
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }

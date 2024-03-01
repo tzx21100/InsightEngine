@@ -130,7 +130,7 @@ namespace IS
                 }
                 InternalCalls.TransformSetPosition(adjustment, y_pos);
             }
-            if (!SettingsScript.show_settings)
+            if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)))
             {
                 first_open_settings = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
