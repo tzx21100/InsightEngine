@@ -83,6 +83,7 @@ namespace IS
         static SimpleImage player_walk;
         static SimpleImage player_idle;
         static SimpleImage player_climb;
+        static SimpleImage player_fall;
         static SimpleImage player_transparent;
         static SimpleImage player_land;
         static SimpleImage player_jump;
@@ -262,6 +263,7 @@ namespace IS
             player_walk = InternalCalls.GetSpriteImage("run_strip.png");
             player_idle = InternalCalls.GetSpriteImage("idle_strip.png");
             player_jump = InternalCalls.GetSpriteImage("jump_strip.png");
+            player_fall = InternalCalls.GetSpriteImage("player_fall.png");
             player_climb = InternalCalls.GetSpriteImage("wall_climb_anim 4R3C.png");
             player_transparent = InternalCalls.GetSpriteImage("transparent.png");
             player_land = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
@@ -827,10 +829,16 @@ namespace IS
             else if (!isClimbing)
             { //while in the air
 
+
+
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
                 InternalCalls.SetSpriteImage(player_jump);
+                if(InternalCalls.RigidBodyGetVelocityY() < 0f)
+                {
+                    InternalCalls.SetSpriteImage(player_fall);
+                }
                 InternalCalls.SetSpriteAnimationIndex(2);
                 
                 if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
