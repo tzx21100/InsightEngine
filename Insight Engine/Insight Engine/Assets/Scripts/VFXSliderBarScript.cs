@@ -54,7 +54,7 @@ namespace IS
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
 
             }
-            if (!SettingsScript.show_settings|| y_pos > (origin.y + (0.7f * win_dimension.y)))
+            if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)) || y_pos < (origin.y + (0.25f * win_dimension.y)))
             {
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }

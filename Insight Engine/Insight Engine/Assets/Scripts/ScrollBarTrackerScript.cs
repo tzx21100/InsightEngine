@@ -119,7 +119,7 @@ namespace IS
                 }
                 InternalCalls.TransformSetPosition(x_pos, adjustment);
                 virtual_y = adjustment - upper_limit_scroll_track;
-                virtual_y *= 1.85f;
+                virtual_y *= 1.89f;
                 //virtual_y = -virtual_y;
 
             }
