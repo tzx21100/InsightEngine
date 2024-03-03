@@ -430,6 +430,7 @@
     <ClInclude Include="Source\Engine\Systems\Rewinder\Rewinder.h">
       <Filter>Engine\Systems\Rewinder</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Scripting\SimpleArray.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

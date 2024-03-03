@@ -27,13 +27,13 @@ namespace IS
         {
 
             int entity_id = InternalCalls.GetCurrentEntityID();
-            if (InternalCalls.EntityCheckCollide(entity_id) && !InternalCalls.CollidingObjectIsStatic(entity_id))
+            SimpleArray array = InternalCalls.GetCollidingEntityArray(entity_id);
+
+            if(array.FindIndex(PlayerScript.PLAYER_ID) != -1)
             {
-                if (InternalCalls.GetCollidingEntityCheck(entity_id, PlayerScript.PLAYER_ID))
-                {
-                    PlayerScript.isDead = true;
-                }
+                PlayerScript.isDead = true;
             }
+
         }
 
         static public void CleanUp()

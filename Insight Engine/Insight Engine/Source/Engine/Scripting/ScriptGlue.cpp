@@ -30,6 +30,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 #include "Graphics/System/ShaderEffects.h"
+#include "SimpleArray.h"
 
 #include <vector>
 #include <mono/metadata/object.h>
@@ -40,7 +41,6 @@ consent of DigiPen Institute of Technology is prohibited.
 namespace IS {
     // Macro to add internal calls for C# access
 #define IS_ADD_INTERNAL_CALL(Name) mono_add_internal_call("IS.InternalCalls::" #Name, Name)
-
 
     /**
      * \brief Native function to log a message with an integer parameter.
@@ -1353,11 +1353,31 @@ namespace IS {
     }
 
 
+
+    // passing arrays to c#
+    static void DeleteSimpleArray(SimpleArray array) {
+        DeleteArray(array);
+    }
+
+    // sending simple arrays
+    //static SimpleArray SendSimpleArray(SimpleArray array) {
+    //    return array;
+    //}
+
+    // returns a list of collided entities
+    static SimpleArray GetCollidingEntityArray(int entity) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(entity);
+        return CreateSimpleArrayFromVector<Entity>(collider_component.mCollidingEntity);
+    }
+
+
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
     void ScriptGlue::RegisterFunctions()
     {
+        IS_ADD_INTERNAL_CALL(DeleteSimpleArray);
+        IS_ADD_INTERNAL_CALL(GetCollidingEntityArray);
         IS_ADD_INTERNAL_CALL(ChangeLightType);
 
         IS_ADD_INTERNAL_CALL(NativeLog);

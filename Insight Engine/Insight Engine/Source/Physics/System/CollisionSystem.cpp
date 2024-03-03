@@ -158,7 +158,7 @@ namespace IS
 				}
 
 				if (colliderA.mResponseEnable && colliderB.mResponseEnable) {
-					if (typeA != BodyType::Ignore && typeB != BodyType::Ignore) { // i WANT TO IGNORE THE RESPONSE
+					if (typeA != BodyType::Ignore && typeB != BodyType::Ignore && typeA != BodyType::Spikes && typeB != BodyType::Spikes) { // i WANT TO IGNORE THE RESPONSE
 					// vector of penetration depth to move entities apart
 					SeparateColliders(typeA, typeB, transA, transB, mManifoldInfo.mNormal * mManifoldInfo.mDepth);
 

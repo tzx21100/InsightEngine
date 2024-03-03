@@ -122,6 +122,7 @@
     <ClInclude Include="Source\Engine\Scripting\ScriptEngine.h" />
     <ClInclude Include="Source\Engine\Scripting\ScriptGlue.h" />
     <ClInclude Include="Source\Engine\Scripting\ScriptManager.h" />
+    <ClInclude Include="Source\Engine\Scripting\SimpleArray.h" />
     <ClInclude Include="Source\Engine\Systems\AIFSM\AIFSM.h" />
     <ClInclude Include="Source\Engine\Systems\AIFSM\AIState.h" />
     <ClInclude Include="Source\Engine\Systems\Asset\Asset.h" />

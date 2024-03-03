@@ -506,6 +506,12 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetAnimationEntityPlaying(int entity, bool toggle);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DeleteSimpleArray(SimpleArray array);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static SimpleArray GetCollidingEntityArray(int entity);
+
 
     }
 }
