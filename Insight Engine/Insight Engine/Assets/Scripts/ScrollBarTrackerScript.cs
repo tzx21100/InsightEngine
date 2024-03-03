@@ -41,11 +41,11 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            upper_limit_scroll_track = origin.y + (0.532f * win_dimension.y);
-            lower_limit_scroll_track = origin.y + (0.365f * win_dimension.y);
+            upper_limit_scroll_track = origin.y + (0.535f * win_dimension.y);
+            lower_limit_scroll_track = origin.y + (0.368f * win_dimension.y);
 
             first_open_settings = false;
-            diff_y = 0.532f;
+            diff_y = 0.535f;
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
             virtual_y = 0f;
@@ -67,8 +67,8 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-            upper_limit_scroll_track = origin.y + (0.532f * win_dimension.y);
-            lower_limit_scroll_track = origin.y + (0.365f * win_dimension.y);
+            upper_limit_scroll_track = origin.y + (0.535f * win_dimension.y);
+            lower_limit_scroll_track = origin.y + (0.368f * win_dimension.y);
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             //hovered
             if (InternalCalls.GetButtonState() == 1)
@@ -119,7 +119,7 @@ namespace IS
                 }
                 InternalCalls.TransformSetPosition(x_pos, adjustment);
                 virtual_y = adjustment - upper_limit_scroll_track;
-                virtual_y *= 1.89f;
+                virtual_y *= 1.9f;
                 //virtual_y = -virtual_y;
 
             }
