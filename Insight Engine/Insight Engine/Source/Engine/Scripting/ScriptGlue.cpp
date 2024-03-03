@@ -1019,7 +1019,11 @@ namespace IS {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
         button_component.mHoverScale = scale;
     }
-
+    static void SetButtonIdleAlpha(int entity, float alpha)
+    {
+        auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
+        button_component.mIdleAlpha = alpha;
+    }
     static float GetButtonHoverScale(int entity)
     {
         auto& button_component = InsightEngine::Instance().GetComponent<ButtonComponent>(entity);
@@ -1514,6 +1518,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetButtonSizeScale);
         IS_ADD_INTERNAL_CALL(SetButtonSize);
         IS_ADD_INTERNAL_CALL(SetButtonHoverScale);
+        IS_ADD_INTERNAL_CALL(SetButtonIdleAlpha);
         IS_ADD_INTERNAL_CALL(GetButtonHoverScale);
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);

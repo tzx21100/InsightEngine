@@ -48,7 +48,7 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
             x_pos = origin.x + (0.593f * win_dimension.x);
-            y_pos = origin.y + (0.45f * win_dimension.y);
+            y_pos = origin.y + (0.453f * win_dimension.y);
             if (SettingsScript.show_settings)
             {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
