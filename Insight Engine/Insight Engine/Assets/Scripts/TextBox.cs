@@ -35,10 +35,15 @@ namespace IS
             isVisible = true;
             text = "This is a test to see if the newline thing works or not :) as u can tell its not very accurate";
 
-            textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio;
-            textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio;
+            textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
+            textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
+            image_scale = new SimpleVector2D(textbox_width, textbox_height);
+
             position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x,
-                                                     CameraScript.camera_pos.y + textbox_height / 2f);
+            CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.8f);
+
+            
+
 
             // Initialize text processing
             text_to_draw = text; // Assuming 'text' contains the entire text to be displayed
@@ -55,8 +60,20 @@ namespace IS
             if (!isVisible) return;
 
             // Draw textbox
-            SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
+            Vector2D camera_pos =new Vector2D(0,0)  ;
+            camera_pos.x = InternalCalls.GetCameraPos().x;
+            camera_pos.y = InternalCalls.GetCameraPos().y;
+
+
+            position_of_textbox = new SimpleVector2D(camera_pos.x,
+            camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.8f);
+            textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
+            textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
+            image_scale = new SimpleVector2D(textbox_width, textbox_height);
+            SimpleImage image = InternalCalls.GetSpriteImage("Text box.png");
             InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
+            // End of draw textbox
+
 
             // Update and draw the text letter by letter
             if (current_text_id < text_to_draw.Length)
