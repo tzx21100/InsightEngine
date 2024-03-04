@@ -4,13 +4,14 @@ namespace IS
 {
     class TutorialScript
     {
-        static private bool tutorial_over = false;
-        static private float first_tutorial_x;
+
+        static private int tutorial_state = 0;
+/*      static private float first_tutorial_x;
         static private float first_tutorial_y;
         static private float second_tutorial_x;
         static private float second_tutorial_y;
-        static private int tutorial_state=0;
         static private SimpleImage textboximage = InternalCalls.GetSpriteImage("textbox.png");
+        static private bool tutorial_over = false;*/
         static private SimpleImage teamlogo = InternalCalls.GetSpriteImage("team_logo.png");
         static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("fragments_game_logo.png");
 

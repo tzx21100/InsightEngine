@@ -1124,7 +1124,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(2f, height / 2f, entityWall);
         }
 
-        static float distance_light = width;
+        static float distance_light;
         static MyRandom randomlights = new MyRandom(12314);
         static private void LightUpdate()
         {

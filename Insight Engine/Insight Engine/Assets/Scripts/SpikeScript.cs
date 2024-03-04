@@ -34,6 +34,15 @@ namespace IS
                 PlayerScript.isDead = true;
             }
 
+            foreach (var key in Enemy.enemies.Keys)
+            {
+                if (array.FindIndex(key) != -1)
+                {
+                    Enemy.enemies[key].health= 0;
+                }
+            }
+
+
         }
 
         static public void CleanUp()

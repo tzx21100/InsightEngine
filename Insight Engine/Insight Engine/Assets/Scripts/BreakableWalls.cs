@@ -21,15 +21,40 @@ namespace IS
 
     class BreakableWalls
     {
-        static Dictionary<int, int> created_entities = new Dictionary<int, int>();
+        static public Dictionary<int, ActualBreakAbleWalls> created_entities = new Dictionary< int, ActualBreakAbleWalls>();
 
 
         static public void Init(){
             int entity_id = InternalCalls.GetCurrentEntityID();
-            created_entities[entity_id] = new int();
+            created_entities[entity_id] = new ActualBreakAbleWalls();
+            created_entities[entity_id].timer_to_allow_break = 1.5f;
+
         }
 
         static public void Update(){
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            created_entities[entity_id].Update();
+        }
+
+ 
+
+        }
+
+    // the real class called by the wrapper above
+    class ActualBreakAbleWalls
+    {
+
+        public float timer_to_allow_break = 1.5f;
+        public void Update()
+        {
+            if (timer_to_allow_break > 0f) { timer_to_allow_break -= InternalCalls.GetDeltaTime(); }
+
+
+            // dont allow if too small
+            if (InternalCalls.GetTransformScaling().x < 30 || timer_to_allow_break>0f)
+            {
+                return;
+            }
 
             int entity_id = InternalCalls.GetCurrentEntityID();
             if (InternalCalls.EntityCheckCollide(entity_id))
@@ -40,32 +65,32 @@ namespace IS
                 }
             }
 
+            SimpleArray array = InternalCalls.GetCollidingEntityArray(entity_id);
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.H))
+            if (array.FindIndex(PlayerScript.PLAYER_ID) != -1)
             {
-                Console.WriteLine(entity_id+ "calling H IS PRESSED");
-                int entity = InternalCalls.CloneEntity(InternalCalls.GetCurrentEntityID());
-            }
-
-
-            if (InternalCalls.GetCollidingEntityCheck(InternalCalls.GetCurrentEntityID(), PlayerScript.PLAYER_ID) && InternalCalls.RigidBodyGetBodyTypeEntity(InternalCalls.GetCurrentEntityID())==0)
-            {
-                if (PlayerScript.isDashing && PlayerScript.bullet_time_timer<=0) {
-
+                if (PlayerScript.isDashing && PlayerScript.bullet_time_timer <= 0)
+                {
 
                     InternalCalls.RigidBodySetBodyTypeEntity(1, InternalCalls.GetCurrentEntityID());
 
                     InternalCalls.AudioPlaySound("AXE_GEN-HDF-02675.wav", false, 0.6f);
-                    
-                    Vector2D trans =  Vector2D.FromSimpleVector2D( InternalCalls.GetTransformScaling());
-                    InternalCalls.TransformSetScale(trans.x / 2f, trans.y );
+
+                    Vector2D trans = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
+                    InternalCalls.TransformSetScale(trans.x / 2f, trans.y);
                     int entity = InternalCalls.CloneEntity(InternalCalls.GetCurrentEntityID());
 
+                    BreakableWalls.created_entities[entity] = new ActualBreakAbleWalls();
+                    BreakableWalls.created_entities[entity].timer_to_allow_break = 1.5f;
 
+                    timer_to_allow_break = 1.5f;
 
                 }
             }
         }
+
+
+
 
 
 
