@@ -50,7 +50,7 @@ namespace IS
 		//Loop using Fixed DT
 		for (int step = 0; step < InsightEngine::Instance().GetCurrentNumberOfSteps(); ++step)
 		{
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 1; i++) {
 				// empty contact pair before going into collision step
 				mContactPair.clear();
 

@@ -40,7 +40,7 @@ namespace IS {
 		mMaxVelocity = 20000.f;									// Maximum velocity for game bodies
 		mMinVelocity = -20000.f;								// Minimum velocity for game bodies
 		mCurrentIterations = 0;									// Number of current iterations for physics step
-		mTotalIterations = 10;									// Number of iterations for physics step
+		mTotalIterations = 1;									// Number of iterations for physics step
 	}
 
 	// Initializes the physics system
