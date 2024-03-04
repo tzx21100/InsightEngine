@@ -147,7 +147,7 @@ namespace IS
         static private bool initialDash = true;
         static public bool isDashing;
 
-        static private float dashSpeed = 5000f;
+        static private float dashSpeed = 3000f;
 
         static public bool isGrounded;
         static public bool isFirstGrounded = false;
@@ -478,7 +478,7 @@ namespace IS
                 {
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
                     CameraScript.camera_shake_duration = 0.1f;
-
+                    Health = Max_Health;
                     respawn_timer -= InternalCalls.GetDeltaTime();
                     if (respawn_timer <= 0)
                     {

@@ -78,11 +78,12 @@ namespace IS
 
                     Vector2D trans = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
                     InternalCalls.TransformSetScale(trans.x / 2f, trans.y);
+                    InternalCalls.RigidBodySetMassEntity(5, entity_id);
+
                     int entity = InternalCalls.CloneEntity(InternalCalls.GetCurrentEntityID());
 
-                    BreakableWalls.created_entities[entity] = new ActualBreakAbleWalls();
-                    BreakableWalls.created_entities[entity].timer_to_allow_break = 1.5f;
-
+                    InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
+                    InternalCalls.RigidBodySetMassEntity(5, entity);
                     timer_to_allow_break = 1.5f;
 
                 }

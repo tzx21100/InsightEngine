@@ -644,6 +644,17 @@ namespace IS {
         }
     }
 
+    static void RigidBodySetMassEntity(float mass, int entity) {
+        auto& component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        component.mMass = mass;
+    }
+
+
+    static float RigidBodyGetMassEntity(int entity) {
+        auto& component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
+        return component.mMass;
+    }
+
     static short RigidBodyGetBodyTypeEntity(int entity) {
     if (!InsightEngine::Instance().HasComponent<RigidBody>(entity)) {
         InsightEngine::Instance().AddComponent<RigidBody>(entity, RigidBody());
@@ -1404,6 +1415,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityY);
         IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetBodyTypeEntity);
+        IS_ADD_INTERNAL_CALL(RigidBodySetMassEntity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetMassEntity);
 
         // Transform
         IS_ADD_INTERNAL_CALL(TransformSetPosition);

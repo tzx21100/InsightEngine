@@ -510,7 +510,13 @@ namespace IS
         internal extern static void DeleteSimpleArray(SimpleArray array);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static SimpleArray GetCollidingEntityArray(int entity);
+        internal extern static SimpleArray GetCollidingEntityArray(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodySetMassEntity(float mass, int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void RigidBodyGetMassEntity(int entity);
 
 
     }
