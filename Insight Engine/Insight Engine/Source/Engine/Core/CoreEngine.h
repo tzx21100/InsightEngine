@@ -20,6 +20,7 @@
 #ifndef GAM200_INSIGHT_ENGINE_CORE_COREENGINE_H_
 #define GAM200_INSIGHT_ENGINE_CORE_COREENGINE_H_
 #define ASSET_MANAGER InsightEngine::Instance().GetSystem<AssetManager>("Asset")
+#define INPUT_MANAGER InsightEngine::Instance().GetSystem<InputManager>("Input")
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */

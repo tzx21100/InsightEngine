@@ -388,6 +388,10 @@ namespace IS {
 			auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(new_entity);
 			ISGraphics::AddEntityToLayer(sprite_component.layer, new_entity);
 		}
+		if (HasComponent<ScriptComponent>(new_entity)) {
+			auto& script_component = InsightEngine::Instance().GetComponent<ScriptComponent>(new_entity);
+			script_component.mInited = false;
+		}
 
 		return new_entity;
 	}

@@ -13,6 +13,7 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 namespace IS
@@ -39,7 +40,14 @@ namespace IS
                 }
             }
 
-            
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.H))
+            {
+                Console.WriteLine(entity_id+ "calling H IS PRESSED");
+                int entity = InternalCalls.CloneEntity(InternalCalls.GetCurrentEntityID());
+            }
+
+
             if (InternalCalls.GetCollidingEntityCheck(InternalCalls.GetCurrentEntityID(), PlayerScript.PLAYER_ID) && InternalCalls.RigidBodyGetBodyTypeEntity(InternalCalls.GetCurrentEntityID())==0)
             {
                 if (PlayerScript.isDashing && PlayerScript.bullet_time_timer<=0) {

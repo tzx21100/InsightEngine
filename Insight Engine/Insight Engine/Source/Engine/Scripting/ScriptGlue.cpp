@@ -431,8 +431,8 @@ namespace IS {
     } 
 
     static int CloneEntity(int entity) {
-        InsightEngine::Instance().CopyEntity(entity);
-        return static_cast<int>(entity);
+        Entity created_entity=InsightEngine::Instance().CopyEntity(static_cast<Entity>(entity));
+        return static_cast<int>(created_entity);
     }
     
     static int CreateEntitySprite(MonoString* name) {

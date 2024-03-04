@@ -21,6 +21,7 @@
 #include "ScriptManager.h"
 #include "Engine/Core/CoreEngine.h"
 #include "Editor/Utils/FileUtils.h"
+#include "../Systems/Input/Input.h"
 
 namespace IS {
 
@@ -55,8 +56,8 @@ namespace IS {
     void ScriptManager::Update([[maybe_unused]] float deltaTime) {
 
 
-        if (InsightEngine::Instance().mRuntime == false) { mEngineWasStopped = true; return;  }
-
+       if (InsightEngine::Instance().mRuntime == false) { mEngineWasStopped = true; return;  }
+       
         if (mEngineWasStopped) {
             for (auto& entity : mEntities) {
                 auto& engine = InsightEngine::Instance();
@@ -77,7 +78,7 @@ namespace IS {
                 mEntityScriptCaller = entity;
                 auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
                 if (&scriptcomponent == nullptr) { continue; }
-                if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; } }
+                if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; continue; } }
                 if (scriptcomponent.instance != nullptr) {
                     MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);
                     scriptcomponent.scriptClass.InvokeMethod(scriptcomponent.instance, update_method, nullptr);
@@ -92,8 +93,6 @@ namespace IS {
                     break;
                 }
         }
-
-
 
         
     }
