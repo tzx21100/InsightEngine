@@ -1009,7 +1009,7 @@ namespace IS {
         char* f_str = mono_string_to_utf8(font);
         std::string font_name(f_str);
         mono_free(f_str);
-        std::cout << "yeap";
+        //std::cout << "yeap";
         ISGraphics::mTexts[font_name].addTextRenderCall(button_component.mButtonText, x, y, size * button_component.mSizeScale, { color.x, color.y, color.z, color.w });
     }
 
@@ -1089,6 +1089,19 @@ namespace IS {
         std::string font_name(f_str);
         mono_free(f_str);
         ISGraphics::mTexts[font_name].addTextRenderCall(part_name, x, y, size, { color.x, color.y, color.z, color.w });
+
+        //ISGraphics::mTexts[font_name].renderText(c_str, x, y, size, { color.x,color.y,color.z });
+    }
+
+    static void RenderLeftAlignTextFont(MonoString* text, MonoString* font, float x, float y, float size, Vector4D color)
+    {
+        char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
+        std::string part_name(c_str);
+        mono_free(c_str);
+        char* f_str = mono_string_to_utf8(font);
+        std::string font_name(f_str);
+        mono_free(f_str);
+        ISGraphics::mTexts[font_name].addLeftAlignTextRenderCall(part_name, x, y, size, { color.x, color.y, color.z, color.w });
 
         //ISGraphics::mTexts[font_name].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }

@@ -192,10 +192,20 @@ namespace IS {
 
     // render line of text
     void Text::renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color) {
-        scale = scale * 48.f / (base_size * 16);
+        // Base window size for reference
+        const float BASE_WINDOW_WIDTH = 1920.0f;
+        const float BASE_WINDOW_HEIGHT = 1080.0f;
 
+        // Get current window size
         int width, height;
         InsightEngine::Instance().GetWindowSize(width, height);
+
+        float scaleX = static_cast<float>(width) / BASE_WINDOW_WIDTH;
+        float scaleY = static_cast<float>(height) / BASE_WINDOW_HEIGHT;
+        scale = scale * std::min(scaleX, scaleY); // Use the smaller of the two to maintain aspect ratio
+
+        // Adjust scale for text based on the original text size design
+        scale = scale * 48.f / (base_size * 16);
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
         textShader.use();
         glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -205,7 +215,7 @@ namespace IS {
         float textWidth = 0.0f;
         float textHeight = 0.0f;
 
-        const float yPadding = 50; // for newline
+        const float yPadding = 180; // for newline
 
         // Iterate through all characters in the text.
         std::string::const_iterator c;
@@ -228,24 +238,9 @@ namespace IS {
         }
         textHeight += lineHeight; // Add the height of the last line
 
-        // auto& engine = InsightEngine::Instance();
-        // int width, height;
-        // engine.GetWindowSize(width, height);
-
-        // if (!engine.IsFullScreen())
-        // {
-        //    height += engine.GetTitleBarHeight();
-        // }
-
         // Calculate the adjusted starting position for center alignment
         float x = widthScalar * width - textWidth / 2.0f;
         float y = heightScalar * height - textHeight / 2.0f;
-
-       
-
-        // Reset the position for rendering
-        // x = widthScalar * 1920;
-        // y = heightScalar * 1080;
 
         // Activate the specified shader and set the text color.
         textShader.use();
@@ -265,8 +260,113 @@ namespace IS {
 
             if (*c == '\n') { // if new line
                 y -= lineHeight + (yPadding * scale); // Move to the next line by subtracting the line height
-                // textWidth = 0.0f; // Reset the width for the new line
                 x = widthScalar * width - textWidth / 2.0f; // Adjust for center alignment
+            }
+            else if (*c == ' ') { // if whitespace
+                x += (ch.Advance >> 6) * scale; // add empty space in texture
+            }
+            else {
+                // Calculate the position and transformation for the character
+                float xpos = x + ch.Bearing.x * scale;
+                float ypos = y - (base_size - ch.Bearing.y) * scale;
+
+                // Store the transformation matrix and character texture ID
+                transforms[char_index] = glm::translate(glm::mat4(1.0f), glm::vec3(xpos, ypos, 0)) * glm::scale(glm::mat4(1.0f), glm::vec3(base_size * scale, base_size * scale, 0));
+                letterMap[char_index] = ch.TextureID;
+
+                // Render the character as a quad
+                x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+                char_index++;
+            }
+
+            // Perform a render call if the character limit is reached
+            if (char_index == ARRAY_LIMIT - 1) {
+                textRenderCall(char_index);
+                char_index = 0;
+            }
+        }
+
+        // Perform the final render call for any remaining characters
+        textRenderCall(char_index);
+
+        // Unbind buffers and textures
+        textShader.unUse();
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+    }
+
+    // render line of text
+    void Text::renderTextLeftAlign(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color) {
+        // Base window size for reference
+        const float BASE_WINDOW_WIDTH = 1920.0f;
+        const float BASE_WINDOW_HEIGHT = 1080.0f;
+
+        // Get current window size
+        int width, height;
+        InsightEngine::Instance().GetWindowSize(width, height);
+
+        float scaleX = static_cast<float>(width) / BASE_WINDOW_WIDTH;
+        float scaleY = static_cast<float>(height) / BASE_WINDOW_HEIGHT;
+        scale = scale * std::min(scaleX, scaleY); // Use the smaller of the two to maintain aspect ratio
+
+        // Adjust scale for text based on the original text size design
+        scale = scale * 48.f / (base_size * 16);
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
+        textShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(textShader.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        textShader.unUse();
+
+        // Calculate the width and height of the text
+        float textWidth = 0.0f;
+        float textHeight = 0.0f;
+
+        const float yPadding = 180; // for newline
+
+        // Iterate through all characters in the text.
+        std::string::const_iterator c;
+        float lineHeight = 0.0f; // Initialize the height for the current line
+        for (c = text.begin(); c != text.end(); c++) {
+            Character ch = Characters[*c];
+
+            if (*c == '\n') { // if new line
+                textHeight += lineHeight; // Increase total height for the current line
+                lineHeight = 0.0f; // Reset height for the next line
+                textWidth = std::max(textWidth, 0.0f); // Reset width for new line
+            }
+            else if (*c == ' ') { // if whitespace
+                textWidth += (ch.Advance >> 6) * scale; // Increase total width for whitespace
+            }
+            else {
+                textWidth += (ch.Advance >> 6) * scale; // Increase total width for character
+                lineHeight = std::max(lineHeight, static_cast<float>(ch.Size.y) * scale); // Update maximum character height for the current line
+            }
+        }
+        textHeight += lineHeight; // Add the height of the last line
+
+        // Calculate the adjusted starting position for left alignment
+        float x = widthScalar * width;
+        float y = heightScalar * height;
+
+        // Activate the specified shader and set the text color.
+        textShader.use();
+        glUniform4f(glGetUniformLocation(textShader.getHandle(), "textColor"), color.r, color.g, color.b, color.a);
+
+        // Bind textures and buffers.
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray);
+        glBindVertexArray(text_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, text_vbo);
+
+        int char_index = 0;
+
+        // Iterate through all characters in the text again for rendering.
+        for (c = text.begin(); c != text.end(); c++) {
+            Character ch = Characters[*c];
+
+            if (*c == '\n') { // if new line
+                y -= lineHeight + (yPadding * scale); // Move to the next line by subtracting the line height
+                x = widthScalar * width; // Adjust for left alignment
             }
             else if (*c == ' ') { // if whitespace
                 x += (ch.Advance >> 6) * scale; // add empty space in texture
@@ -325,6 +425,17 @@ namespace IS {
         renderCalls.emplace_back(renderCall);
     }
 
+    void Text::addLeftAlignTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color) {
+        TextRenderCall renderCall;
+        renderCall.text = text;
+        renderCall.widthScalar = widthScalar;
+        renderCall.heightScalar = heightScalar;
+        renderCall.scale = scale;
+        renderCall.color = color;
+
+        leftAlignRenderCalls.emplace_back(renderCall);
+    }
+
     void Text::renderAllText(std::unordered_map<std::string, Text>& textMap) {
         for (auto& [font, text] : textMap) {
             if (text.renderCalls.empty()) continue;
@@ -332,9 +443,13 @@ namespace IS {
             for (const auto& renderCall : text.renderCalls) {
                 text.renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
             }
+
+            for (const auto& LARenderCall : text.leftAlignRenderCalls) {
+                text.renderTextLeftAlign(LARenderCall.text, LARenderCall.widthScalar, LARenderCall.heightScalar, LARenderCall.scale, LARenderCall.color);
+            }
+
             text.renderCalls.clear();
+            text.leftAlignRenderCalls.clear();
         }
-        
-        // renderCalls.clear(); // Clear the render calls after rendering
     }
 }

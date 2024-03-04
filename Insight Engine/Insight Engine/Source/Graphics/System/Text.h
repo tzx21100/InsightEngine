@@ -74,6 +74,8 @@ namespace IS {
          */
         void renderText(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
 
+        void renderTextLeftAlign(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
+
         /*!
          * \brief Renders text using instanced rendering.
          *
@@ -97,6 +99,9 @@ namespace IS {
          * @param color The color of the rendered text, specified as a glm::vec3 (RGB).
          */
         void addTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
+
+        void addLeftAlignTextRenderCall(std::string text, float widthScalar, float heightScalar, float scale, glm::vec4 color);
+
         
         /**
          * @brief Render all the queued text rendering calls.
@@ -149,6 +154,7 @@ namespace IS {
          * The vector is static to ensure that it is shared among all instances of the Text class.
          */
        std::vector<TextRenderCall> renderCalls;
+       std::vector<TextRenderCall> leftAlignRenderCalls;
     };
 }
 
