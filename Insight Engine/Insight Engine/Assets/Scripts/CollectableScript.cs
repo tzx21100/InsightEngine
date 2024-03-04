@@ -26,7 +26,7 @@ namespace IS
         static public void Update()
         {
             int entity = InternalCalls.GetCurrentEntityID();
-            Vector2D my_position = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
+            //Vector2D my_position = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             if (InternalCalls.EntityCheckCollide(entity) && InternalCalls.GetCollidingEntityCheck(entity, PlayerScript.PLAYER_ID))
             {
 

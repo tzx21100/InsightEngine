@@ -251,6 +251,7 @@ namespace IS
 
         static public void Init()
         {
+
             //reset variables
             ENEMY_SLAIN = 0;
 
@@ -1124,7 +1125,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(2f, height / 2f, entityWall);
         }
 
-        static float distance_light;
+     //   static private float distance_light=width;
         static MyRandom randomlights = new MyRandom(12314);
         static private void LightUpdate()
         {
@@ -1150,7 +1151,7 @@ namespace IS
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
 
 
-            if (hori_movement != 0)
+/*            if (hori_movement != 0)
             {
                 distance_light = width * hori_movement;
 
@@ -1164,7 +1165,7 @@ namespace IS
                 }
 
 
-            }
+            }*/
             //Vector2D relativePosition = new Vector2D(distance_light, 0);
             Vector2D relativePosition = new Vector2D(0, 0);
 

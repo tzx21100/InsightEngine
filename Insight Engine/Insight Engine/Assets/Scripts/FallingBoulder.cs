@@ -53,7 +53,13 @@ namespace IS
 
             public void InitializeBoulder()
             {
-                mIsActivated = mIsGrounded = mPlayBreakAudio = mPlayShakeAudio = mPlayShakeAudio = mPlayGroundedAudio = false;
+                // Reset Boulder properties
+                mIsActivated = false;
+                mIsGrounded = false;
+                mPlayBreakAudio = false;
+                mPlayShakeAudio = false;
+                mPlayGroundedAudio = false;
+
                 mShakeIntensity = mShakeTimer = mGroundedTimer = 0f;
                 mOriginalPosition.x = InternalCalls.GetTransformPosition().x;
                 mOriginalPosition.y = InternalCalls.GetTransformPosition().y;
@@ -156,7 +162,12 @@ namespace IS
             private void ResetBoulder()
             {
                 // Reset boulder properties
-                mIsActivated = mIsGrounded = mPlayBreakAudio = mPlayShakeAudio = mPlayShakeAudio = mPlayGroundedAudio = false;
+                mIsActivated = false;
+                mIsGrounded = false;
+                mPlayBreakAudio = false;
+                mPlayShakeAudio = false;
+                mPlayGroundedAudio = false;
+
                 mShakeIntensity = mShakeTimer = mGroundedTimer = 0f;
                 InternalCalls.SetSpriteAlpha(1f); // Reset sprite alpha
                 InternalCalls.SetGravityScale(0f); // Reset gravity scale
