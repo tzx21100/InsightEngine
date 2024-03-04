@@ -112,7 +112,7 @@ namespace IS {
 
         if (CTRL_HELD && N_PRESSED) { mShowNewScene = true; }        // Ctrl+N
         if (CTRL_HELD && O_PRESSED) { OpenScene(); }                 // Ctrl+O
-        if (CTRL_HELD && S_PRESSED) { SaveScene(); }                 // Ctrl+S
+        if (CTRL_HELD && S_PRESSED) { if (engine.mRuntime == false) { SaveScene(); } } // Ctrl+S
         if (CTRL_HELD && SHIFT_HELD && S_PRESSED) { SaveSceneAs(); } // Ctrl+Shift+S
         if (ALT_HELD && F4_PRESSED) { ExitProgram(); }               // Alt+F4
         if (F11_PRESSED) { ToggleFullscreen(); }                     // F11
