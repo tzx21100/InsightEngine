@@ -4,6 +4,33 @@ using System.Runtime.CompilerServices;
 
 namespace IS
 {
+    class FallingBoulderSet
+    {
+        static public Dictionary<int, FallingBoulder> falling_boulder_set = new Dictionary<int, FallingBoulder>();
+
+        static public void Init()
+        {
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            falling_boulder_set[entity_id] = new FallingBoulder();
+            falling_boulder_set[entity_id].init();
+        }
+
+        static public void Update()
+        {
+            int entity_id = InternalCalls.GetCurrentEntityID();
+            falling_boulder_set[entity_id].update(); // Call Update on each GlitchingPlatform instance
+
+        }
+
+
+
+        static public void CleanUp()
+        {
+            //InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
+        }
+
+    }
+
     class FallingBoulder
     {
         private const float MAX_INTENSITY  = 5f;
@@ -14,17 +41,17 @@ namespace IS
 
         private static Dictionary<int, BoulderHelper> mBoulders = new Dictionary<int, BoulderHelper>();
 
-        static public void Init()
+        public void init()
         {
             GetActiveBoulder().InitializeBoulder();
         }
 
-        static public void Update()
+        public void update()
         {
             GetActiveBoulder().UpdateBoulder();
         }
 
-        static public void CleanUp()
+        public void CleanUp()
         {
             // Empty for now.
         }
@@ -67,15 +94,19 @@ namespace IS
                 mActivateRange = InternalCalls.CreateEntityPrefab("BoulderRange");
 
                 float boulder_height = InternalCalls.GetTransformScaling().y;
-                float offsetx = boulder_height * .65f;
-                float offsety = boulder_height * .75f;
+                float offsetx = boulder_height * .0f;
+                float offsety = boulder_height * .35f;
+                InternalCalls.TransformSetScaleEntity(1200f, 800f, mActivateRange);
                 InternalCalls.TransformSetPositionEntity(mOriginalPosition.x - offsetx, mOriginalPosition.y - offsety, mActivateRange);
             }
 
             public void UpdateBoulder()
             {
-                int player = PlayerScript.PLAYER_ID;
-                if (InternalCalls.GetCollidingEntityCheck(mActivateRange, player))
+                //int player = PlayerScript.PLAYER_ID;
+                SimpleArray array = InternalCalls.GetCollidingEntityArray(mActivateRange);
+
+                if (array.FindIndex(PlayerScript.PLAYER_ID) != -1)
+                    //if (InternalCalls.GetCollidingEntityCheck(mActivateRange, player))
                     mIsActivated = true;
 
                 if (mIsActivated)
@@ -175,6 +206,7 @@ namespace IS
                 // Reset boulder position to original position
                 InternalCalls.TransformSetPosition(mOriginalPosition.x, mOriginalPosition.y);
                 InternalCalls.TransformSetRotation(18f, 0f);
+                InternalCalls.RigidBodySetForce(0f, 0f);
             }
         }
     }

@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -427.38766479492188,
-				"Y" : 184.7855224609375
+				"X" : -449.01885986328125,
+				"Y" : 181.35948181152344
 			},
 			"BoxColliderOffset" : 
 			{
@@ -47,8 +47,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -422.78765869140625,
-				"Y" : 6.3855209350585938
+				"X" : -389.51535034179688,
+				"Y" : 13.112472534179688
 			},
 			"CircleColliderOffset" : 
 			{
@@ -83,7 +83,7 @@
 	},
 	"Script" : 
 	{
-		"ScriptName" : "FallingBoulder"
+		"ScriptName" : "FallingBoulderSet"
 	},
 	"Signature" : "00000000000000000010010000100111",
 	"Sprite" : 
@@ -98,11 +98,11 @@
 		"SpriteFilename" : "Cave_spikes_droppable.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 31,
+		"SpriteTexture" : 38,
 		"SpriteTextureHeight" : 1078,
-		"SpriteTextureIndex" : 30,
+		"SpriteTextureIndex" : 21,
 		"SpriteTextureWidth" : 566,
-		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformRotation" : 18.0,
 		"SpriteTransformScalingX" : 226.40000915527344,
 		"SpriteTransformScalingY" : 431.20004272460938,
 		"SpriteTransformWorldPositionX" : -427.38766479492188,
@@ -111,7 +111,7 @@
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 0.0,
+		"TransformRotation" : 18.0,
 		"TransformScalingX" : 226.40000915527344,
 		"TransformScalingY" : 431.20004272460938,
 		"TransformWorldPositionX" : -427.38766479492188,

@@ -141,13 +141,13 @@ namespace IS
         //dashing 
         static public float bullet_time_timer = 0.5f;
         static private float bullet_time_set = 0.5f;
-        static private float dash_timer = 0.2f;
-        static private float dash_set = 0.2f;
+        static private float dash_timer = 0.3f;
+        static private float dash_set = 0.3f;
         static private bool canDash = false;
         static private bool initialDash = true;
         static public bool isDashing;
 
-        static private float dashSpeed = 3000f;
+        static private float dashSpeed = 3500f;
 
         static public bool isGrounded;
         static public bool isFirstGrounded = false;

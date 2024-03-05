@@ -381,7 +381,7 @@ namespace IS {
 		if (HasComponent<Transform>(new_entity))
 		{
 			Transform& transform = GetComponent<Transform>(new_entity);
-			transform.world_position += Vector2D(20.f, 0.f);
+			transform.world_position += Vector2D(0.f, 0.f);
 		}
 		if (HasComponent<Sprite>(new_entity)) 
 		{
