@@ -33,9 +33,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 69,
+				"SpriteTexture" : 87,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 68,
+				"SpriteTextureIndex" : 70,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -59,65 +59,9 @@
 			{
 				"ScriptName" : "MainMenuBackgroundLight"
 			}
-		},
-		{
-			"ButtonComponent" : 
-			{
-				"ButtonClickAlpha" : 0.89999997615814209,
-				"ButtonHoverAlpha" : 1.0,
-				"ButtonHoverScale" : 1.1499999761581421,
-				"ButtonIdleAlpha" : 0.80000001192092896,
-				"ButtonIdleScale" : 1.0,
-				"ButtonImageName" : "",
-				"ButtonSize" : 
-				{
-					"X" : 684.28997802734375,
-					"Y" : 286.04998779296875
-				},
-				"ButtonState" : 0,
-				"ButtonText" : "",
-				"ButtonTextScale" : 0.0,
-				"ButtonType" : 0
-			},
-			"Name" : "Team Logo",
-			"Script" : 
-			{
-				"ScriptName" : "TeamLogoScript"
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 0.80000001192092896,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "team_logo.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 99,
-				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 98,
-				"SpriteTextureWidth" : 3840,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 684.28997802734375,
-				"SpriteTransformScalingY" : 286.04998779296875,
-				"SpriteTransformWorldPositionX" : 768.32000732421875,
-				"SpriteTransformWorldPositionY" : -373.32998657226562,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 684.28997802734375,
-				"TransformScalingY" : 286.04998779296875,
-				"TransformWorldPositionX" : 768.32000732421875,
-				"TransformWorldPositionY" : -373.32998657226562
-			}
 		}
 	],
-	"EntityAmount" : 3,
+	"EntityAmount" : 2,
 	"Layers" : 
 	[
 		{

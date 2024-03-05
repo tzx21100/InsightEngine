@@ -42,7 +42,7 @@ namespace IS
 
             InternalCalls.AttachLightComponentToEntityWithOffset(entity_id, original_hue.x, original_hue.y, original_hue.z, 1.0f, 400.0f, new SimpleVector2D(5.0f,60.0f));
             InternalCalls.SetLightToggleEntity(entity_id, is_lighted);
-            InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
+            //InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
 
 
         }
@@ -57,12 +57,8 @@ namespace IS
                 if (!InternalCalls.ButtonComponentExists(entity_id))
                 {
                     InternalCalls.ButtonComponentAdd(entity_id, 0.8f, 1.0f, 0.9f, 1.0f, 1.150f);
-                    InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
+                    //InternalCalls.SetButtonSize(entity_id, new SimpleVector2D(684.29f, 286.05f));
                 }
-            }
-
-            if (!InternalCalls.ButtonComponentExists(entity_id)) {
-                InternalCalls.TransformSetScale(684.29f, 286.05f);
             }
 
             //click
