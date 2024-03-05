@@ -231,8 +231,8 @@ namespace IS
 
 
         // stablize player
-        static private float prev_x = 0f;
-        static private float prev_rotation=0f;
+        static public float prev_x = 0f;
+        static public float prev_rotation=0f;
 
         // Collectible
 

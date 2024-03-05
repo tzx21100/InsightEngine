@@ -1,0 +1,152 @@
+{
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "JOHN_Mindy-Theme2_Consequence-Finale_Loop_80bpm.wav",
+		"AudioVolumeLevel" : 0.68000000715255737
+	},
+	"AudioListener" : 
+	{
+		"AudioHearingRange" : 2708.0,
+		"AudioPitchCorrectness" : 0.0,
+		"AudioVolume" : 0.56000000238418579
+	},
+	"Category" : 
+	{
+		"Category" : "Player"
+	},
+	"Collider" : 
+	{
+		"BoxColliderEnabled" : false,
+		"CircleCollider" : 
+		{
+			"CircleColliderCenter" : 
+			{
+				"X" : -555.5,
+				"Y" : 1126.8250732421875
+			},
+			"CircleColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : -9.1000003814697266
+			},
+			"CircleColliderRadius" : 80.0,
+			"CircleColliderRadiusScale" : 0.20000000298023224
+		},
+		"CircleColliderEnabled" : true,
+		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.43037974834442139,
+			"R" : 1.0
+		},
+		"LightIntensity" : 1.0,
+		"LightOffset" : 
+		{
+			"X" : -58.700000762939453,
+			"Y" : 0.0
+		},
+		"LightRender" : false,
+		"LightSize" : 404.0
+	},
+	"Name" : "Player",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -1962.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 36000.0,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyDensity" : 180000.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.20000000298023224,
+		"RigidBodyMass" : 5.0,
+		"RigidBodyRestitution" : 0.0,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 2.0,
+		"mDynamicFriction" : 0.80000001192092896,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "PlayerScript"
+	},
+	"Signature" : "00000000000000000011011100100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 1,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 1,
+		"SpriteFilename" : "idle_strip.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 81,
+		"SpriteTextureHeight" : 219,
+		"SpriteTextureIndex" : 64,
+		"SpriteTextureWidth" : 4096,
+		"SpriteTransformRotation" : 358.06292724609375,
+		"SpriteTransformScalingX" : 400.0,
+		"SpriteTransformScalingY" : 360.0,
+		"SpriteTransformWorldPositionX" : -555.1923828125,
+		"SpriteTransformWorldPositionY" : 1135.919921875,
+		"animations" : 
+		[
+			{
+				"Name" : "",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 9.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.050188589841127396,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 12,
+				"y_frames" : 1
+			},
+			{
+				"Name" : "",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 8.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.071417249739170074,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 12,
+				"y_frames" : 1
+			},
+			{
+				"Name" : "",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.083333335816860199,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.01082388311624527,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 12,
+				"y_frames" : 1
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 358.06292724609375,
+		"TransformScalingX" : 400.0,
+		"TransformScalingY" : 360.0,
+		"TransformWorldPositionX" : -555.1923828125,
+		"TransformWorldPositionY" : 1135.919921875
+	}
+}
