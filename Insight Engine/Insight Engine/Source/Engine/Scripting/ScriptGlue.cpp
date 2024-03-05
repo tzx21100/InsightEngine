@@ -1561,6 +1561,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(ButtonRenderText);
         IS_ADD_INTERNAL_CALL(RenderText);
         IS_ADD_INTERNAL_CALL(RenderTextFont);
+        IS_ADD_INTERNAL_CALL(RenderLeftAlignTextFont);
         IS_ADD_INTERNAL_CALL(SetButtonSizeScale);
         IS_ADD_INTERNAL_CALL(SetButtonSize);
         IS_ADD_INTERNAL_CALL(SetButtonHoverScale);
