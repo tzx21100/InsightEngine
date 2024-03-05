@@ -215,17 +215,18 @@ namespace IS {
         float textWidth = 0.0f;
         float textHeight = 0.0f;
 
-        const float yPadding = 180; // for newline
+        const float yPadding = 120; // for newline
+
+        Character longestChar = Characters['l'];
+        float lineHeight = static_cast<float>(longestChar.Size.y) * scale; // Initialize the height for the current line
 
         // Iterate through all characters in the text.
         std::string::const_iterator c;
-        float lineHeight = 0.0f; // Initialize the height for the current line
         for (c = text.begin(); c != text.end(); c++) {
             Character ch = Characters[*c];
 
             if (*c == '\n') { // if new line
                 textHeight += lineHeight; // Increase total height for the current line
-                lineHeight = 0.0f; // Reset height for the next line
                 textWidth = std::max(textWidth, 0.0f); // Reset width for new line
             }
             else if (*c == ' ') { // if whitespace
@@ -233,7 +234,6 @@ namespace IS {
             }
             else {
                 textWidth += (ch.Advance >> 6) * scale; // Increase total width for character
-                lineHeight = std::max(lineHeight, static_cast<float>(ch.Size.y) * scale); // Update maximum character height for the current line
             }
         }
         textHeight += lineHeight; // Add the height of the last line
@@ -321,17 +321,18 @@ namespace IS {
         float textWidth = 0.0f;
         float textHeight = 0.0f;
 
-        const float yPadding = 180; // for newline
+        const float yPadding = 120; // for newline
+
+        Character longestChar = Characters['l'];
+        float lineHeight = static_cast<float>(longestChar.Size.y) * scale; // Initialize the height for the current line
 
         // Iterate through all characters in the text.
         std::string::const_iterator c;
-        float lineHeight = 0.0f; // Initialize the height for the current line
         for (c = text.begin(); c != text.end(); c++) {
             Character ch = Characters[*c];
 
             if (*c == '\n') { // if new line
                 textHeight += lineHeight; // Increase total height for the current line
-                lineHeight = 0.0f; // Reset height for the next line
                 textWidth = std::max(textWidth, 0.0f); // Reset width for new line
             }
             else if (*c == ' ') { // if whitespace
@@ -339,7 +340,6 @@ namespace IS {
             }
             else {
                 textWidth += (ch.Advance >> 6) * scale; // Increase total width for character
-                lineHeight = std::max(lineHeight, static_cast<float>(ch.Size.y) * scale); // Update maximum character height for the current line
             }
         }
         textHeight += lineHeight; // Add the height of the last line
@@ -438,7 +438,7 @@ namespace IS {
 
     void Text::renderAllText(std::unordered_map<std::string, Text>& textMap) {
         for (auto& [font, text] : textMap) {
-            if (text.renderCalls.empty()) continue;
+            if (text.renderCalls.empty() && text.leftAlignRenderCalls.empty()) continue;
 
             for (const auto& renderCall : text.renderCalls) {
                 text.renderText(renderCall.text, renderCall.widthScalar, renderCall.heightScalar, renderCall.scale, renderCall.color);
