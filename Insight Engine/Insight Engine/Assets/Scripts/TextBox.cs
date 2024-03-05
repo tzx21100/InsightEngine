@@ -6,7 +6,7 @@ namespace IS
     {
         static public bool isVisible = false;
         static public float textSpeed = 0.05f; // Time in seconds per character
-        static public float fontSize = 24f;
+        static public float fontSize = 22f;
         static public string font = "Semplicita_Light";
         static public string text = "";
 
@@ -26,14 +26,14 @@ namespace IS
         static private string current_text_shown = "";
         static private int current_text_id = 0;
         static private float text_timer = 0f; // New timer variable
-        static private float text_height = 0.255f;
+        static private float text_height = 0.185f;
 
 
         static public void Init()
         {
 
             isVisible = true;
-            text = "This is a test to see if the newline thing works or not :) as u can tell its not very accurate";
+            text = "This is a test to see if the newline thing works or not :)\nas u can tell its not very accurate";
 
             textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
             textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
@@ -88,7 +88,7 @@ namespace IS
             }
 
             // Assuming there's a method to draw text. Adjust parameters as needed.
-            InternalCalls.RenderTextFont(current_text_shown,font,0.5f,text_height, fontSize, (1f,1f,1f,1f) );
+            InternalCalls.RenderLeftAlignTextFont(current_text_shown,font,0.13f,text_height, fontSize, (1f,1f,1f,1f) );
         }
 
         static public void CleanUp()

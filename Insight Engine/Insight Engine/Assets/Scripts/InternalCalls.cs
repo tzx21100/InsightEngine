@@ -348,6 +348,9 @@ namespace IS
         internal extern static int RenderTextFont(string text, string font, float x, float y, float size, (float, float, float, float) color);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int RenderLeftAlignTextFont(string text, string font, float x, float y, float size, (float, float, float, float) color);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int SetButtonSizeScale(int entity, float scale);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
