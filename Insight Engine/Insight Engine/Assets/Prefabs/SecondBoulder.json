@@ -1,0 +1,79 @@
+{
+	"Collider" : 
+	{
+		"BoxColliderEnabled" : false,
+		"CircleCollider" : 
+		{
+			"CircleColliderCenter" : 
+			{
+				"X" : 3794.61328125,
+				"Y" : 222.7039794921875
+			},
+			"CircleColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"CircleColliderRadius" : 344.87857055664062,
+			"CircleColliderRadiusScale" : 0.30000001192092896
+		},
+		"CircleColliderEnabled" : true,
+		"ResponseEnabled" : true
+	},
+	"Name" : "SecondBoulder",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 30.0,
+		"RigidBodyRestitution" : 0.0,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 0.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "FallingTwoRoundBoulders"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Env_Round_Boulder.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 79,
+		"SpriteTextureHeight" : 2080,
+		"SpriteTextureIndex" : 62,
+		"SpriteTextureWidth" : 2080,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1149.59521484375,
+		"SpriteTransformScalingY" : 1149.59521484375,
+		"SpriteTransformWorldPositionX" : 3794.61328125,
+		"SpriteTransformWorldPositionY" : 222.7039794921875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1149.59521484375,
+		"TransformScalingY" : 1149.59521484375,
+		"TransformWorldPositionX" : 3794.61328125,
+		"TransformWorldPositionY" : 222.7039794921875
+	}
+}

@@ -72,7 +72,7 @@ namespace IS
             // get the angle of the normal vector
             double angle = Math.Atan((double)(push_direction.y / push_direction.x));
             angle = CustomMath.ToDegrees((float)angle);
-            Console.WriteLine(angle);
+
             if(angle >= min_angle && angle <= max_angle)
             {
                 InternalCalls.TransformSetRotationEntity((float)angle, 0f, PlayerScript.PLAYER_ID);
