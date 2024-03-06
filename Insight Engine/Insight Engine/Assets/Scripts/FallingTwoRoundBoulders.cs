@@ -9,7 +9,7 @@ namespace IS
         private const float MIN_INTENSITY = 0.5f;
         private const float SHAKE_DURATION = 0.55f;
         private const float RESET_DURATION = 5f;
-        private const float TWO_BOULDERS_FALLING_INTERVAL = 0.15f;
+        private const float TWO_BOULDERS_FALLING_INTERVAL = 0.05f;
         static private Random mRandom = new Random();
 
         static private int SecondBoulderID;
