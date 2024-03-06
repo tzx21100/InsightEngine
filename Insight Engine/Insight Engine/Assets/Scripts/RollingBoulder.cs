@@ -83,7 +83,7 @@ namespace IS
 
             // get the push speed
             push_direction =push_direction.Normalize();
-            push_direction = push_direction.Multiply(linear_veloctiy/44 *InternalCalls.GetDeltaTime()); //account for SI unit meters
+            push_direction = push_direction.Multiply(linear_veloctiy/45 *InternalCalls.GetDeltaTime()); //account for SI unit meters
 
 
             // Set Direction of player
