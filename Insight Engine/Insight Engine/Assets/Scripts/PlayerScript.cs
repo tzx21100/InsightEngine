@@ -305,7 +305,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
 
 
-            entity_feet = InternalCalls.CreateEntity("FeetCollider");
+            entity_feet = InternalCalls.CreateEntityVFX("FeetCollider",player_land);
             entityWall = InternalCalls.CreateEntity("WallCollider");
             entity_attack = InternalCalls.CreateEntity("AttackCollider");
             width = InternalCalls.GetTransformScaling().x / 3f;
@@ -1064,15 +1064,15 @@ namespace IS
             }
         }
 
-        static private void FloorCheckerUpdate()
+        static public void FloorCheckerUpdate()
         {
 
             //Player x y coord
-            xCoord = InternalCalls.GetTransformPosition().x;
-            yCoord = InternalCalls.GetTransformPosition().y;
-            float rotationAngle = InternalCalls.GetTransformRotation();
+            xCoord = player_pos.x;
+            yCoord = player_pos.y;
+            float rotationAngle = InternalCalls.GetTransformRotationEntity(PLAYER_ID);
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
-            float distanceBelow = height / 3.2f;
+            float distanceBelow = height / 3.8f;
 
             Vector2D relativePosition = new Vector2D(0, distanceBelow);
 
