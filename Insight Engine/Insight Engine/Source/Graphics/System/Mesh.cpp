@@ -225,9 +225,9 @@ namespace IS {
         // Define the vertices of the quad as a triangle strip
         std::array<Vertex, 4> vertices{
             Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
-            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
-            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) },
-            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) }
+                Vertex{ glm::vec2(1.0f, -1.0f), glm::vec2(1.f, 1.f) },
+                Vertex{ glm::vec2(1.0f, 1.0f), glm::vec2(1.f, 0.0f) },
+                Vertex{ glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO
@@ -247,6 +247,11 @@ namespace IS {
         glEnableVertexArrayAttrib(vao_hdl, 0);
         glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
         glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Enable the texture coordinate attribute
+        glEnableVertexArrayAttrib(vao_hdl, 1); // This line is crucial
+        glVertexArrayAttribFormat(vao_hdl, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord)); // And this one as well
+        glVertexArrayAttribBinding(vao_hdl, 1, 0); // And also this one
 
         // Unbind the VAO (not necessary to unbind buffers individually)
         glBindVertexArray(0);

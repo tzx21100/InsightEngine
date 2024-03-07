@@ -50,6 +50,7 @@ namespace IS {
     Shader ISGraphics::glitched_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
     Shader ISGraphics::light_shader_pgm;
+    Shader ISGraphics::videoShader;
 
     // Texture vector
     std::vector<Image> ISGraphics::textures;

@@ -147,6 +147,7 @@ namespace IS {
 		static Shader non_quad_shader_pgm;
 		static Shader quad_border_shader_pgm;
 		static Shader light_shader_pgm;
+		static Shader videoShader;
 
 		// Texture vector
 		static std::vector<Image> textures;
