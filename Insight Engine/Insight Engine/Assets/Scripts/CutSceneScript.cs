@@ -126,6 +126,11 @@ namespace IS
                 InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
             }
 
+            if (InternalCalls.KeyPressed((int)KeyCodes.Escape)){
+                current_image = 16;
+                showText = false;
+            }
+
 
             switch (current_image)
             {
