@@ -35,7 +35,7 @@ namespace IS
 
 
 
-            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 1500f && !PlayerScript.Reward_Dash)
+            if (Vector2D.Distance(my_position, PlayerScript.player_pos) < 900f && !PlayerScript.Reward_Dash)
             {
                 glitch_timer = 1f;
             }

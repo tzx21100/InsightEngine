@@ -9,7 +9,7 @@ namespace IS
 
         static public bool isVisible = false;
         static public float textSpeed = 0.05f; // Time in seconds per character
-        static public float fontSize = 22f;
+        static public float fontSize = 18f;
         static public string font = "Semplicita_Light";
         static public string text = "";
 
@@ -29,7 +29,10 @@ namespace IS
         static private string current_text_shown = "";
         static private int current_text_id = 0;
         static private float text_timer = 0f; // New timer variable
-        static private float text_height = 0.185f;
+        static private float text_height = 0.165f;
+
+        // keep track of which page of text the textbox is on
+        static public int PAGE_NUMBER = 0;
 
 
         static public Queue<string> mTexts = new Queue<string>();
@@ -37,7 +40,7 @@ namespace IS
 
         static public void Init()
         {
-
+            PAGE_NUMBER = 0;
             //isVisible = true;
             text = "This is a test to see if the newline thing works or not :) as u can tell its not very accurate";
 
@@ -80,6 +83,8 @@ namespace IS
             InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
             // End of draw textbox
 
+           // text_height =  ( (position_of_textbox.y) / (position_of_textbox.y+ InternalCalls.GetWindowHeight()));
+            //Console.WriteLine(text_height);
 
             // Update and draw the text letter by letter
             if (current_text_id < text_to_draw.Length)
@@ -114,6 +119,7 @@ namespace IS
                         if (mTexts.Count > 0)
                         {
                             text = mTexts.Dequeue();
+                            PAGE_NUMBER++;
                             ProcessTextForLineBreaks();
                         }
                     }
@@ -168,7 +174,7 @@ namespace IS
         static private int CalculateMaxLineLength()
         {
 
-            return (int)(InternalCalls.GetWindowWidth() /1.8/ fontSize) ; // Will change later when proper text draw comes out
+            return (int)(InternalCalls.GetWindowWidth() / (fontSize*1.8))+12 ; // Will change later when proper text draw comes out
         }
 
         static public void CreateTextBox(string text2)
@@ -177,6 +183,7 @@ namespace IS
             text = text2;
             ProcessTextForLineBreaks();
             mTexts.Clear();
+            PAGE_NUMBER = 0;
         }
         static public void AddTextLines(string text2)
         {

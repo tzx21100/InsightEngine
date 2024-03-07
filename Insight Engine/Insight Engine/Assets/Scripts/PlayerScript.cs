@@ -19,6 +19,7 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection.Metadata;
+using System.Diagnostics.Contracts;
 
 namespace IS
 {
@@ -251,7 +252,7 @@ namespace IS
 
         static public void Init()
         {
-
+            InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
             //reset variables
             ENEMY_SLAIN = 0;
 
@@ -350,11 +351,11 @@ namespace IS
 
         static public void Update()
         {
-            
+
             if (initialPowerUp)
             {
                 InternalCalls.ResetSpriteAnimationFrameEntity(powerup_entity);
-                InternalCalls.TransformSetScaleEntity(trans_scaling.x , trans_scaling.y , powerup_entity);
+                InternalCalls.TransformSetScaleEntity(trans_scaling.x, trans_scaling.y, powerup_entity);
                 InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, powerup_entity);
                 InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, powerup_entity);
                 initialPowerUp = false;
@@ -464,7 +465,7 @@ namespace IS
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySound("PlayerDeath.wav", false, 0.2f);
-                    
+
                     for (int i = 0; i < 36; i++)
                     {
                         InternalCalls.GameSpawnParticleExtra(
@@ -520,11 +521,11 @@ namespace IS
 
             camera_pos = Vector2D.Lerp(camera_pos, target_pos, interpolate_speed * InternalCalls.GetDeltaTime());
 
-            CameraScript.camera_pos = camera_pos;
+            CameraScript.SetCameraPosition(camera_pos);
 
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
-            
+
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
@@ -593,7 +594,7 @@ namespace IS
                 && !InternalCalls.CollidingObjectTypeIsIgnore(InternalCalls.GetCollidingEntity(entityWall)))
             {
                 if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
-                isClimbing = true; 
+                isClimbing = true;
             }
             else { isClimbing = false; animation_current_frame = 0; animation_speed = animation_speed_set; }
 
@@ -624,7 +625,7 @@ namespace IS
                 float x_offset = 28 * hori_movement;
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 pos.x += x_offset;
-                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x *0.7f, InternalCalls.GetTransformScaling().y * 0.7f);
+                SimpleVector2D scale = new SimpleVector2D(InternalCalls.GetTransformScaling().x * 0.7f, InternalCalls.GetTransformScaling().y * 0.7f);
 
                 SimpleImage curr_image = player_climb;
                 int cur_col = 0; int cur_row = 0;
@@ -699,11 +700,24 @@ namespace IS
 
             //jumping bool
             if (isJumping && jump_timer > 0f) { jump_timer -= InternalCalls.GetDeltaTime(); if (jump_timer <= 0) { isJumping = false; jump_timer = jump_timer_set; } }
+
+            SimpleArray array = InternalCalls.GetCollidingEntityArray(entity_feet);
+            bool check_feet_collided = false;
+            for (int i = 0; i < array.length; i++)
+            {
+                int entity = array.GetValue(i);
+
+                if(entity== PLAYER_ID) { continue; }
+
+                short body_type = InternalCalls.RigidBodyGetBodyTypeEntity(entity);
+                if (body_type !=3 && body_type !=5 && body_type != 6)
+                {
+                    check_feet_collided = true;     
+                }
+            }
+            
             //if is grounded
-            if (InternalCalls.EntityCheckCollide(entity_feet) && isClimbing == false && InternalCalls.GetCollidingEntity(entity_feet) != PLAYER_ID
-                && !InternalCalls.CollidingObjectTypeIsIgnore(InternalCalls.GetCollidingEntity(entity_feet))
-                && InternalCalls.GetCollidingEntity(entity_feet) != SAVE_POINT_ID && !InternalCalls.CollidingObjectIsSpikes(InternalCalls.GetCollidingEntity(entity_feet))
-                 && !InternalCalls.CollidingObjectTypeIsGhost(InternalCalls.GetCollidingEntity(entity_feet)))
+            if (check_feet_collided)
             {
                 isGrounded = true;
                 // make player not slide when on slope

@@ -67,7 +67,7 @@ namespace IS
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
 
                 // Update the position
-                Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x+initialPos.x - layerOffsetX, PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
+                Vector2D newPos = new Vector2D(CameraScript.camera_pos.x+initialPos.x - layerOffsetX, CameraScript.camera_pos.y + initialPos.y - layerOffsetY);
 
                 // Draw the layer at its new position
                 InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
@@ -76,11 +76,11 @@ namespace IS
             //InternalCalls.GameSpawnParticle(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, "ParticleLeaves.txt");
 
             // Update the camera position
-            InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
+            InternalCalls.TransformSetPosition(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
 
-            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.2f, 0);
+            InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.2f, 0);
 
-            InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, fade_out_timer, InternalCalls.GetTopLayer());
+            InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 0, 0, 0, fade_out_timer, InternalCalls.GetTopLayer());
             leaves_timer -= InternalCalls.GetDeltaTime();
             if (fade_out_timer > 0)
             {
@@ -110,7 +110,7 @@ namespace IS
                     float size = InternalCalls.GetRandomFloat() * 150;
                     float speed = InternalCalls.GetRandomFloat() * 800f;
                     float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFrames((PlayerScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), PlayerScript.camera_pos.y+2000f,
+                    InternalCalls.GameSpawnParticleExtraFrames((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y+2000f,
                         direction, size, 0f, 1f,
                         0f, lifespan, speed, "ParticleLeaves.txt"
                         ,col,0);

@@ -61,7 +61,10 @@ namespace IS
             //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
         }
 
-        static public void Update(){
+        static public void Update() {
+
+
+
             InternalCalls.AttachCamera(0, 0);
             CameraScript.camera_pos.x = 0;
             CameraScript.camera_pos.y = 0;

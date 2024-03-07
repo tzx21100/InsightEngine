@@ -1,12 +1,4 @@
 {
-	"AudioEmitter" : 
-	{
-		"AudioFalloffFactor" : 0.80000001192092896,
-		"AudioIsLoop" : false,
-		"AudioPitch" : 1.0,
-		"AudioSoundName" : "Near-Fragments_SFX.wav",
-		"AudioVolumeLevel" : 0.38999998569488525
-	},
 	"Collider" : 
 	{
 		"BoxCollider" : 
@@ -70,7 +62,11 @@
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Signature" : "00000000000000000000010100000111",
+	"Script" : 
+	{
+		"ScriptName" : "InGameCutscene"
+	},
+	"Signature" : "00000000000000000000010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -83,9 +79,9 @@
 		"SpriteFilename" : "npc_anim 3R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 136,
+		"SpriteTexture" : 135,
 		"SpriteTextureHeight" : 2604,
-		"SpriteTextureIndex" : 119,
+		"SpriteTextureIndex" : 118,
 		"SpriteTextureWidth" : 3464,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 217.01678466796875,
@@ -99,8 +95,8 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.3333333432674408,
-				"frame_index_x" : 3.0,
-				"frame_index_y" : 1.0,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 2.0,
 				"frame_timer" : 0.053509712219238281,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 4,
