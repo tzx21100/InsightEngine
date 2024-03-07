@@ -33,7 +33,7 @@ namespace IS
 
     class FallingBoulder
     {
-        private const float MAX_INTENSITY  = 5f;
+        private const float MAX_INTENSITY  = 20f;
         private const float MIN_INTENSITY  = .5f;
         private const float SHAKE_DURATION = .55f;
         private const float RESET_DURATION = 5f;
