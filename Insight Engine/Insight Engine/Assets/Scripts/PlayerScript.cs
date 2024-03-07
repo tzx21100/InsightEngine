@@ -396,10 +396,11 @@ namespace IS
 
 
 
-            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true)
+            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
+                InternalCalls.SetSpriteImage(player_idle);
                 return;
             }
 
