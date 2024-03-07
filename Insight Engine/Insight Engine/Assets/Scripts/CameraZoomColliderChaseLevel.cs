@@ -13,7 +13,7 @@ namespace IS
             int entity = InternalCalls.GetCurrentEntityID();
             if (InternalCalls.EntityCheckCollide(entity) && InternalCalls.GetCollidingEntityCheck(entity, PlayerScript.PLAYER_ID)) {
                 CameraScript.CameraTargetZoom(0.5f,0.5f);
-                InternalCalls.ChangeLightType(1);
+                InternalCalls.ChangeLightType(2);
                 PlayerScript.PLAYER_LIGHT = 1;
                 PlayerScript.hideHealth = false;
             }

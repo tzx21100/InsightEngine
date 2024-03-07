@@ -1,9 +1,12 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace IS
 {
     class TextBox
     {
+
         static public bool isVisible = false;
         static public float textSpeed = 0.05f; // Time in seconds per character
         static public float fontSize = 22f;
@@ -29,11 +32,14 @@ namespace IS
         static private float text_height = 0.185f;
 
 
+        static public Queue<string> mTexts = new Queue<string>();
+
+
         static public void Init()
         {
 
-            isVisible = true;
-            text = "This is a test to see if the newline thing works or not :)\nas u can tell its not very accurate";
+            //isVisible = true;
+            text = "This is a test to see if the newline thing works or not :) as u can tell its not very accurate";
 
             textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
             textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
@@ -85,6 +91,34 @@ namespace IS
                     current_text_id++;
                     text_timer = 0f; // Reset timer after adding a character
                 }
+
+                if (InternalCalls.KeyPressed((int)KeyCodes.Enter) || InternalCalls.MousePressed(0))
+                {
+
+                    current_text_shown = text_to_draw;
+                    current_text_id = text_to_draw.Length;
+                }
+
+            }
+            else
+            {
+                if (InternalCalls.KeyPressed((int)KeyCodes.Enter) || InternalCalls.MousePressed(0))
+                {
+                    if (mTexts.Count == 0)
+                    {
+                        isVisible = false;
+                    }
+
+                    if (current_text_id == text_to_draw.Length)
+                    {
+                        if (mTexts.Count > 0)
+                        {
+                            text = mTexts.Dequeue();
+                            ProcessTextForLineBreaks();
+                        }
+                    }
+
+                }
             }
 
             // Assuming there's a method to draw text. Adjust parameters as needed.
@@ -98,6 +132,14 @@ namespace IS
 
         static private void ProcessTextForLineBreaks()
         {
+
+            // Initialize text processing
+            text_to_draw = text; // Assuming 'text' contains the entire text to be displayed
+            current_text_shown = "";
+            current_text_id = 0;
+            text_timer = 0f;
+
+
             string processedText = "";
             int lineLength = 0;
             int maxLineLength = CalculateMaxLineLength(); // Implement this method based on your textbox size and font size
@@ -126,7 +168,20 @@ namespace IS
         static private int CalculateMaxLineLength()
         {
 
-            return (int)(textbox_width / fontSize); // Will change later when proper text draw comes out
+            return (int)(InternalCalls.GetWindowWidth() /1.8/ fontSize) ; // Will change later when proper text draw comes out
+        }
+
+        static public void CreateTextBox(string text2)
+        {
+            isVisible = true;
+            text = text2;
+            ProcessTextForLineBreaks();
+            mTexts.Clear();
+        }
+        static public void AddTextLines(string text2)
+        {
+            isVisible = true;
+            mTexts.Enqueue(text2);
         }
 
     }
