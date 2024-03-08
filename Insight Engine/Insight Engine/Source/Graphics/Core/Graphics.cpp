@@ -120,6 +120,9 @@ namespace IS {
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
+
+        videoplayer.initVideoPlayer();
+        videoplayer.loadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4");
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -257,15 +260,12 @@ namespace IS {
             }
         }
 
-            // update active camera
-            cameras3D[Camera3D::mActiveCamera].Update();
+        // update active camera
+        cameras3D[Camera3D::mActiveCamera].Update();
 
-            // ShaderEffect::shader_effect_update(delta_time); // not working yet
+        // ShaderEffect::shader_effect_update(delta_time); // not working yet
 
-            // Graphics system's draw
-
-            //Draw(delta_time);
-        
+        videoplayer.update(delta_time);
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
@@ -346,6 +346,8 @@ namespace IS {
             setLineWidth(2.f);
         }
     #endif // USING_IMGUI
+
+        videoplayer.render(0.5f, 0.5f, 0.f, 0.f);
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();

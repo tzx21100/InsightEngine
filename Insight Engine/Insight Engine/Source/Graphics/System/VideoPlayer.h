@@ -20,8 +20,9 @@ extern "C" {
 namespace IS {
     class VideoPlayer {
     public:
-        VideoPlayer();
+        VideoPlayer() = default;
         ~VideoPlayer();
+        void initVideoPlayer();
         bool loadVideo(const std::string& filepath);
         void update(float deltaTime);
         void render(float scaleX, float scaleY, float translateX, float translateY);
