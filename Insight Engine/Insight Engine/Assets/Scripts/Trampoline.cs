@@ -38,10 +38,11 @@ namespace IS
             {
                 Vector2D vel = PlayerScript.player_vel;
                 Vector2D pos = PlayerScript.player_pos;
-                Vector2D impluse = new Vector2D(vel.x, -vel.y);
+                //Vector2D impluse = new Vector2D(vel.x, -vel.y*5f);
                 //PlayerScript.isGrounded = false;
-                InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 120f, pos.y + 150f, PlayerScript.PLAYER_ID);
-                InternalCalls.RigidBodySetVelocityEntity(impluse.x, impluse.y, PlayerScript.PLAYER_ID);
+                InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 0f, pos.y + 50f, PlayerScript.PLAYER_ID); ;
+                /*InternalCalls.RigidBodySetVelocityEntity(impluse.x, 2000f, PlayerScript.PLAYER_ID);*/
+                PlayerScript.AddForcesToPlayer(0f, 1000f, 0.5f);
             }
 
             /*foreach (var key in Enemy.enemies.Keys)
