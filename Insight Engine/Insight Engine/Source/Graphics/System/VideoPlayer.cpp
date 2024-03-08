@@ -127,63 +127,79 @@ namespace IS {
     }
 
     void VideoPlayer::update(float deltaTime) {
+        deltaTime = deltaTime;
+
         // If no frame to display or video is over, just return
         if (!state.av_format_ctx || !state.av_codec_ctx || !state.av_frame || !state.av_packet) {
             return; // Added checks to ensure pointers are valid before using them
         }
 
-        // If no frame to display or video is over, just return
-        if (av_read_frame(state.av_format_ctx, state.av_packet) >= 0) {
-            if (state.av_packet->stream_index == state.video_stream_index) {
-                if (avcodec_send_packet(state.av_codec_ctx, state.av_packet) >= 0) {
-                    while (avcodec_receive_frame(state.av_codec_ctx, state.av_frame) >= 0) {
-                        // Calculate the PTS (Presentation Time Stamp) for the frame
-                        double pts = static_cast<double>(state.av_frame->best_effort_timestamp);
+        // Read the next frame
+        int ret = av_read_frame(state.av_format_ctx, state.av_packet);
+        if (ret < 0) {
+            // End of stream or error. In real application, handle EOF from here.
+            IS_CORE_ERROR("Could not read frame (maybe end of stream or error)");
+            return;
+        }
 
-                        if (pts == AV_NOPTS_VALUE) {
-                            pts = 0;
-                        }
-                        pts *= av_q2d(state.av_format_ctx->streams[state.video_stream_index]->time_base);
-                        double delay = pts - state.frame_last_pts;
-                        if (delay <= 0 || delay >= 1.0) {
-                            delay = state.frame_last_delay; // If incorrect delay, use the last known good one
-                        }
-                        state.frame_last_delay = delay;
-                        state.frame_last_pts = pts;
+        // Check if the new packet is from the video stream
+        if (state.av_packet->stream_index == state.video_stream_index) {
+            // Send the packet to the decoder
+            ret = avcodec_send_packet(state.av_codec_ctx, state.av_packet);
+            if (ret < 0) {
+                IS_CORE_ERROR("Error while sending a packet to the decoder");
+                return;
+            }
 
-                        // Update the video clock
-                        state.video_clock += delay;
-
-                        // Check to see if we should display this frame
-                        double actual_delay = state.video_clock - (glfwGetTime() / 1000000.0);
-                        if (actual_delay < deltaTime) {
-                            // We are behind schedule: skip this frame
-                            av_packet_unref(state.av_packet);
-                            continue;
-                        }
-
-                        // Break out and let the rendering code run
-                        break;
-                    }
+            // Receive frame from the decoder
+            while (ret >= 0) {
+                ret = avcodec_receive_frame(state.av_codec_ctx, state.av_frame);
+                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                    break; // The decoder has been fully flushed, or there is more data required to produce a frame.
                 }
-                av_packet_unref(state.av_packet);
+                else if (ret < 0) {
+                    IS_CORE_ERROR("Error while receiving a frame from the decoder");
+                    break;
+                }
+
+                // At this point, a frame has been decoded
+                // Make sure that the frame data is ready to be processed
+                if (state.av_frame->data[0] == NULL) {
+                    IS_CORE_ERROR("Frame data is not ready in update");
+                    continue; // Skipping this frame but not returning entirely, allows for trying the next one
+                }
+                else {
+                    state.frame_ready = true;
+                }
+
+                // Here, process your frame, convert to RGB, and upload it to GPU if necessary.
+                // If necessary, calculate the display time based on the stream's time_base and the frame's pts.
+                // You can also update your video_clock here based on the pts and time_base.
+
+                break; // Usually we break here to display one frame at a time per update call
             }
         }
-        else {
-            // End of stream or error. In real application, handle EOF from here.
-            IS_CORE_ERROR("Could not read frame (maybe end of stream)");
-        }
+
+        // Free the packet that was allocated by av_read_frame
+        av_packet_unref(state.av_packet);
     }
 
     void VideoPlayer::render(float scaleX, float scaleY, float translateX, float translateY) {
-        if (!state.av_frame || !frameBuffer || !textureID) {
+        if (!state.av_frame || !frameBuffer || !textureID || !state.frame_ready) {
+            // Log which resources are missing for easier debugging
             if (!state.av_frame) IS_CORE_ERROR("AV Frame is null");
             if (!frameBuffer) IS_CORE_ERROR("Frame buffer is null");
             if (!textureID) IS_CORE_ERROR("Texture ID is zero");
-            return; // Then return after logging which conditions failed
+            return; // Exiting if any required resources are missing
         }
 
-        // Scale the frame from its native format to RGB
+        // Make sure that the frame data is ready to be processed
+        if (state.av_frame->data[0] == NULL) {
+            IS_CORE_ERROR("Frame data is not ready");
+            return; // Exiting if frame data is not ready
+        }
+
+        // Convert the frame from its native format to RGB
         uint8_t* outPlanes[1] = { frameBuffer }; // The buffer where the RGB image will be stored
         int lineSize[1] = { 3 * state.width }; // Size of a single row in bytes
         int response = sws_scale(state.sws_scaler_ctx,
@@ -192,9 +208,10 @@ namespace IS {
             0, state.height,
             outPlanes, lineSize);
         if (response < 0) {
-            IS_CORE_ERROR("Error while converting frame to RGB");
+            IS_CORE_ERROR("Error while converting frame to RGB: {}", response);
             return;
         }
+        
 
         // Update OpenGL texture with new frame data
         glBindTexture(GL_TEXTURE_2D, textureID);
@@ -233,6 +250,7 @@ namespace IS {
         glBindVertexArray(0);  // Unbind the VAO
 
         ISGraphics::videoShader.unUse(); // Unuse the shader program
+        state.frame_ready = false;
     }
 
     void VideoPlayer::cleanup() {

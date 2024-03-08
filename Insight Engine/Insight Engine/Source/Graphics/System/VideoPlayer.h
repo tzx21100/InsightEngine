@@ -45,6 +45,7 @@ namespace IS {
             double frame_last_pts = 0; // Last presentation timestamp for the frame
             double frame_last_delay = 40e-3; // Initial assumption of frame delay (25 fps)
             double video_clock = 0; // Video clock to track actual video time
+            bool frame_ready = false;
         } state;
 
         GLuint textureID{};
