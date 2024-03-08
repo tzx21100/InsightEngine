@@ -7,7 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace IS {
-    void VideoPlayer::initVideoPlayer() {
+    void VideoPlayer::initVideoPlayer(float widthScalar, float heightScalar, float xPosScalar, float yPosScalar, bool loop) {
         avformat_network_init();
         textureID = 0;
         frameBuffer = nullptr;
@@ -16,24 +16,26 @@ namespace IS {
         state.av_frame = nullptr;
         state.av_packet = nullptr;
         state.sws_scaler_ctx = nullptr;
-        state.toLoop = true;
+
+        state.toLoop = loop;
+        state.scaleX = widthScalar;
+        state.scaleY = heightScalar;
+        state.transX = xPosScalar;
+        state.transY = yPosScalar;
     }
 
-    VideoPlayer::~VideoPlayer() {
-        cleanup();
-    }
 
-    bool VideoPlayer::loadVideo(const std::string& filepath) {
+    void VideoPlayer::loadVideo(const std::string& filepath) {
         cleanup(); // Ensure previous resources are released
 
         if (avformat_open_input(&state.av_format_ctx, filepath.c_str(), nullptr, nullptr) != 0) {
             IS_CORE_ERROR("Failed to open video file: {}", filepath);
-            return false;
+            return;
         }
 
         if (avformat_find_stream_info(state.av_format_ctx, nullptr) < 0) {
             IS_CORE_ERROR("Failed to find stream information");
-            return false;
+            return;
         }
 
         state.video_stream_index = -1;
@@ -45,51 +47,48 @@ namespace IS {
         }
         if (state.video_stream_index == -1) {
             IS_CORE_ERROR("Failed to find a video stream");
-            return false;
+            return;
         }
 
         AVCodecParameters* codec_params = state.av_format_ctx->streams[state.video_stream_index]->codecpar;
         const AVCodec* codec = avcodec_find_decoder(codec_params->codec_id);
         if (!codec) {
             IS_CORE_ERROR("Unsupported codec!");
-            return false;
+            return;
         }
 
         state.av_codec_ctx = avcodec_alloc_context3(codec);
         if (!state.av_codec_ctx) {
             IS_CORE_ERROR("Failed to allocate codec context");
-            return false;
+            return;
         }
 
         if (avcodec_parameters_to_context(state.av_codec_ctx, codec_params) < 0) {
             IS_CORE_ERROR("Failed to copy codec parameters");
-            return false;
+            return;
         }
 
         if (avcodec_open2(state.av_codec_ctx, codec, nullptr) < 0) {
             IS_CORE_ERROR("Failed to open codec");
-            return false;
+            return;
         }
 
         state.av_frame = av_frame_alloc();
         state.av_packet = av_packet_alloc();
         if (!state.av_frame || !state.av_packet) {
             IS_CORE_ERROR("Failed to allocate frame or packet");
-            return false;
+            return;
         }
 
         state.width = state.av_codec_ctx->width;
         state.height = state.av_codec_ctx->height;
         prepareFrameBufferAndTexture();
         prepareScalerContext();
-
-        return true; // Video setup was successful
     }
 
-    void VideoPlayer::update(float deltaTime) {
-        deltaTime = deltaTime; // placeholder for now
+    void VideoPlayer::update() {
 
-        if (!state.av_format_ctx || !state.av_codec_ctx) return;
+        if (!state.av_format_ctx || !state.av_codec_ctx || !state.playing) return;
 
         // Receiving and decoding
         int response = av_read_frame(state.av_format_ctx, state.av_packet);
@@ -131,7 +130,7 @@ namespace IS {
         av_packet_unref(state.av_packet); // Release resources
     }
 
-    void VideoPlayer::render(float scaleX, float scaleY, float translateX, float translateY) {
+    void VideoPlayer::render() {
         if (!state.av_frame || !frameBuffer || !textureID || !state.playing) return;
 
         // Update and bind the texture
@@ -140,8 +139,8 @@ namespace IS {
         glBindTexture(GL_TEXTURE_2D, 0);
 
         // Setup transformation and rendering
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(translateX, translateY, 0.0f)) *
-            glm::scale(glm::mat4(1.0f), glm::vec3(scaleX, scaleY, 1.0f));
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(state.transX, state.transY, 0.0f)) *
+            glm::scale(glm::mat4(1.0f), glm::vec3(state.scaleX, state.scaleY, 1.0f));
         ISGraphics::videoShader.use();
 
         GLint tex_arr_uniform = glGetUniformLocation(ISGraphics::videoShader.getHandle(), "uModel_to_ndc_xform");
@@ -232,4 +231,44 @@ namespace IS {
         sws_scale(state.sws_scaler_ctx, (const uint8_t* const*)state.av_frame->data, state.av_frame->linesize,
             0, state.height, dest, lineSize);
     }
+
+    void VideoPlayer::createAndLoadVideo(const std::string& filepath, float widthScalar, float heightScalar, float xPosScalar, float yPosScalar, bool loop) {
+        VideoPlayer video;
+        video.initVideoPlayer(widthScalar, heightScalar, xPosScalar, yPosScalar, loop);
+        video.loadVideo(filepath);
+
+        ISGraphics::videos.emplace_back(video);
+    }
+
+    void VideoPlayer::pauseVideo(int index) {
+        if (index < ISGraphics::videos.size() && index >= 0)
+            ISGraphics::videos[index].state.playing = false;
+    }
+
+    void VideoPlayer::resumeVideo(int index) {
+        if (index < ISGraphics::videos.size() && index >= 0)
+            ISGraphics::videos[index].state.playing = true;
+    }
+
+    void VideoPlayer::restartVideo(int index) {
+        if (index < ISGraphics::videos.size() && index >= 0)
+            av_seek_frame(ISGraphics::videos[index].state.av_format_ctx, 
+                          ISGraphics::videos[index].state.video_stream_index, 0, 
+                          AVSEEK_FLAG_FRAME);
+    }
+
+    void VideoPlayer::unloadVideos() {
+        for (auto& vid : ISGraphics::videos) {
+            vid.cleanup();
+        }
+        ISGraphics::videos.clear();
+    }
+
+    void VideoPlayer::playVideos() {
+        for (auto& vid : ISGraphics::videos) {
+            vid.update();
+            vid.render();
+        }
+    }
+
 }

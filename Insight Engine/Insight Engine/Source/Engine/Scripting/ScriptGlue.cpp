@@ -30,6 +30,7 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "Physics/Collision/Collider.h"
 #include "Physics/System/Physics.h"
 #include "Graphics/System/ShaderEffects.h"
+#include "Graphics/System/VideoPlayer.h"
 #include "SimpleArray.h"
 
 #include <vector>
@@ -1106,6 +1107,30 @@ namespace IS {
         //ISGraphics::mTexts[font_name].renderText(c_str, x, y, size, { color.x,color.y,color.z });
     }
 
+    static void loadVideo(MonoString* text, float widthScalar, float heightScalar, float xPosScalar, float yPosScalar, bool loop) {
+        char* c_str = mono_string_to_utf8(text); // Convert Mono string to char*
+        std::string file_path(c_str);
+        mono_free(c_str);
+
+        VideoPlayer::createAndLoadVideo(file_path, widthScalar, heightScalar, xPosScalar, yPosScalar, loop);
+    }
+
+    static void pauseVideo(int index) {
+        VideoPlayer::pauseVideo(index);
+    }
+
+    static void resumeVideo(int index) {
+        VideoPlayer::resumeVideo(index);
+    }
+
+    static void restartVideo(int index) {
+        VideoPlayer::restartVideo(index);
+    }
+
+    static void unloadVideos() {
+        VideoPlayer::unloadVideos();
+    }
+
     static int GetWindowWidth()
     {
         return InsightEngine::Instance().GetWindowWidth();
@@ -1575,6 +1600,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RenderText);
         IS_ADD_INTERNAL_CALL(RenderTextFont);
         IS_ADD_INTERNAL_CALL(RenderLeftAlignTextFont);
+        IS_ADD_INTERNAL_CALL(loadVideo);
+        IS_ADD_INTERNAL_CALL(pauseVideo);
+        IS_ADD_INTERNAL_CALL(resumeVideo);
+        IS_ADD_INTERNAL_CALL(restartVideo);
+        IS_ADD_INTERNAL_CALL(unloadVideos);
         IS_ADD_INTERNAL_CALL(SetButtonSizeScale);
         IS_ADD_INTERNAL_CALL(SetButtonSize);
         IS_ADD_INTERNAL_CALL(SetButtonHoverScale);

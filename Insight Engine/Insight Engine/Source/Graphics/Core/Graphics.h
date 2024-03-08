@@ -126,7 +126,6 @@ namespace IS {
 		 * @param lWidth - The desired line width to set in OpenGL.
 		 */
 		static void setLineWidth(float lWidth) { glLineWidth(lWidth); }
-
 		
 		static void deleteTexture(Image& image);
 		static void Shutdown();
@@ -166,7 +165,9 @@ namespace IS {
 		// Text Objects
 		static std::unordered_map<std::string, Text> mTexts;
 
+		// Video objects
 		static VideoPlayer videoplayer;
+		static std::vector<VideoPlayer> videos;
 
 		// Flags
 		static bool mGlitched;

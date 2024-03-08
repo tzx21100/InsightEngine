@@ -74,6 +74,7 @@ namespace IS {
     bool ISGraphics::mDisplayFPS = false;
 
     VideoPlayer ISGraphics::videoplayer;
+    std::vector<VideoPlayer> ISGraphics::videos;
 
 
     // Layering
@@ -121,8 +122,15 @@ namespace IS {
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
 
-        videoplayer.initVideoPlayer();
+        videoplayer.initVideoPlayer(0.1f, 0.1f, 0.9f, -0.9f);
         videoplayer.loadVideo("Assets/Videos/SG_handsomest.mp4");
+
+       /* VideoPlayer::createAndLoadVideo("Assets/Videos/SG_handsomest.mp4", 0.1f, 0.1f, -0.8f, 0.9f, true);
+        VideoPlayer::createAndLoadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4", 0.1f, 0.1f, -0.5f, 0.33f, true);
+        VideoPlayer::createAndLoadVideo("Assets/Videos/SG_handsomest.mp4", 0.1f, 0.1f, 0.4f, -0.9f, true);
+        VideoPlayer::createAndLoadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4", 0.1f, 0.1f, 0.2f, 0.2f, true);
+        VideoPlayer::createAndLoadVideo("Assets/Videos/SG_handsomest.mp4", 0.1f, 0.1f, -0.7f, -0.3f, true);
+        VideoPlayer::createAndLoadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4", 0.1f, 0.1f, 0.6f, 0.5f, true);*/
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -265,7 +273,7 @@ namespace IS {
 
         // ShaderEffect::shader_effect_update(delta_time); // not working yet
 
-        videoplayer.update(delta_time);
+        videoplayer.update();
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
@@ -347,7 +355,8 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
-        videoplayer.render(0.1f, 0.1f, 0.9f, -0.9f);
+        videoplayer.render();
+        VideoPlayer::playVideos();
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
@@ -605,6 +614,7 @@ namespace IS {
 
     void ISGraphics::Shutdown()
     {
+        VideoPlayer::unloadVideos();
         mFramebuffer->Destroy();
         mShaderFrameBuffer.Destroy();
     }
