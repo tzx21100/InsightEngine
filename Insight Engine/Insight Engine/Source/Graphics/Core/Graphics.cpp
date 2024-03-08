@@ -73,6 +73,8 @@ namespace IS {
     bool ISGraphics::mLightsOn = true;
     bool ISGraphics::mDisplayFPS = false;
 
+    VideoPlayer ISGraphics::videoplayer;
+
 
     // Layering
     std::vector<Layering> ISGraphics::mLayers;

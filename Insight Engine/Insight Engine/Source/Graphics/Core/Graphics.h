@@ -34,6 +34,7 @@
 #include "Graphics/System/Camera3D.h"
 #include "Graphics/System/Layering.h"
 #include "Graphics/System/ShaderEffects.h"
+#include "Graphics/System/Videoplayer.h"
 
 #include "Graphics/Buffers/Framebuffer.h"
 
@@ -164,6 +165,8 @@ namespace IS {
 
 		// Text Objects
 		static std::unordered_map<std::string, Text> mTexts;
+
+		static VideoPlayer videoplayer;
 
 		// Flags
 		static bool mGlitched;

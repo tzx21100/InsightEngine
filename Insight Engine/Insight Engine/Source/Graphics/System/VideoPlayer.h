@@ -31,18 +31,23 @@ namespace IS {
 
     private:
         struct VideoReaderState {
-            int width, height;
-            AVRational time_base;
-            AVFormatContext* av_format_ctx;
-            AVCodecContext* av_codec_ctx;
-            int video_stream_index;
-            AVFrame* av_frame;
-            AVPacket* av_packet;
-            SwsContext* sws_scaler_ctx;
+            int width, height{};
+            AVRational time_base{};
+            AVFormatContext* av_format_ctx{};
+            AVCodecContext* av_codec_ctx{};
+            int video_stream_index{};
+            AVFrame* av_frame{};
+            AVPacket* av_packet{};
+            SwsContext* sws_scaler_ctx{};
+
+            // to sync video with framerate
+            double frame_last_pts = 0; // Last presentation timestamp for the frame
+            double frame_last_delay = 40e-3; // Initial assumption of frame delay (25 fps)
+            double video_clock = 0; // Video clock to track actual video time
         } state;
 
-        GLuint textureID;
-        unsigned char* frameBuffer;
+        GLuint textureID{};
+        unsigned char* frameBuffer{};
 
         //void closeVideo();
     };
