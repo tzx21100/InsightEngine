@@ -122,7 +122,7 @@ namespace IS {
         setLineWidth(2.f);
 
         videoplayer.initVideoPlayer();
-        videoplayer.loadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4");
+        videoplayer.loadVideo("Assets/Videos/SG_handsomest.mp4");
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -347,7 +347,7 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
-        videoplayer.render(0.5f, 0.5f, 0.f, 0.f);
+        videoplayer.render(0.1f, 0.1f, 0.9f, -0.9f);
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();

@@ -22,7 +22,7 @@ namespace IS {
 
     void Mesh::initMeshes(std::vector<Mesh>& meshes) {
         // Create, init and emplace into mesh vector
-        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh, fb_mesh;
+        Mesh inst_quad_mesh, inst_line_mesh, inst_circle_mesh, inst_3d_quad_mesh, outline_mesh, fb_mesh, video_player_mesh;
 
         // inst_quad_mesh.setupInstancedQuadVAO();
         inst_line_mesh.setupInstancedLineVAO();
@@ -30,6 +30,7 @@ namespace IS {
         inst_3d_quad_mesh.setupInstanced3DQuadVAO();
         outline_mesh.setupOutlineVAO();
         fb_mesh.setupFBVAO();
+        video_player_mesh.setupVideoPlayerVAO();
 
         meshes.emplace_back(inst_quad_mesh);
         meshes.emplace_back(inst_line_mesh);
@@ -37,6 +38,7 @@ namespace IS {
         meshes.emplace_back(inst_3d_quad_mesh);
         meshes.emplace_back(outline_mesh);
         meshes.emplace_back(fb_mesh);
+        meshes.emplace_back(video_player_mesh);
     }
 
     void Mesh::setupInstanced3DQuadVAO() {
@@ -228,6 +230,47 @@ namespace IS {
                 Vertex{ glm::vec2(1.0f, -1.0f), glm::vec2(1.f, 1.f) },
                 Vertex{ glm::vec2(1.0f, 1.0f), glm::vec2(1.f, 0.0f) },
                 Vertex{ glm::vec2(-1.0f, 1.0f), glm::vec2(0.0f, 0.0f) }
+        };
+
+        // Generate a VAO handle to encapsulate the VBO
+        GLuint vao_hdl;
+        glCreateVertexArrays(1, &vao_hdl);
+        glBindVertexArray(vao_hdl);
+
+        // Create and bind a VBO to store the vertex data
+        GLuint vbo_hdl;
+        glCreateBuffers(1, &vbo_hdl);
+        glNamedBufferStorage(vbo_hdl, sizeof(Vertex) * vertices.size(), vertices.data(), 0);
+
+        // Bind the VBO to the VAO
+        glVertexArrayVertexBuffer(vao_hdl, 0, vbo_hdl, 0, sizeof(Vertex));
+
+        // Enable the position attribute
+        glEnableVertexArrayAttrib(vao_hdl, 0);
+        glVertexArrayAttribFormat(vao_hdl, 0, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, position));
+        glVertexArrayAttribBinding(vao_hdl, 0, 0);
+
+        // Enable the texture coordinate attribute
+        glEnableVertexArrayAttrib(vao_hdl, 1); // This line is crucial
+        glVertexArrayAttribFormat(vao_hdl, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoord)); // And this one as well
+        glVertexArrayAttribBinding(vao_hdl, 1, 0); // And also this one
+
+        // Unbind the VAO (not necessary to unbind buffers individually)
+        glBindVertexArray(0);
+
+        // save VAO, VBO and draw count
+        vao_ID = vao_hdl;
+        vbo_ID = vbo_hdl;
+        draw_count = static_cast<GLuint>(vertices.size());
+    }
+
+    void Mesh::setupVideoPlayerVAO() {
+        // Define the vertices of the quad as a triangle strip
+        std::array<Vertex, 4> vertices{
+            Vertex{glm::vec2(-1.0f, -1.0f), glm::vec2(0.0f, 1.f)},
+            Vertex{ glm::vec2(1.0f, -1.0f),  glm::vec2(1.f, 1.f) },
+            Vertex{ glm::vec2(-1.0f, 1.0f),  glm::vec2(0.0f, 0.0f) },
+            Vertex{ glm::vec2(1.0f, 1.0f),   glm::vec2(1.f, 0.0f) }
         };
 
         // Generate a VAO handle to encapsulate the VBO

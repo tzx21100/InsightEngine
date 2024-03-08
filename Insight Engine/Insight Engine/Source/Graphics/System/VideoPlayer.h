@@ -28,6 +28,10 @@ namespace IS {
         void render(float scaleX, float scaleY, float translateX, float translateY);
         void cleanup();
 
+        void prepareFrameBufferAndTexture();
+        void prepareScalerContext();
+        void updateTexture();
+
         //static Shader videoShader;
 
     private:
@@ -46,6 +50,7 @@ namespace IS {
             double frame_last_delay = 40e-3; // Initial assumption of frame delay (25 fps)
             double video_clock = 0; // Video clock to track actual video time
             bool frame_ready = false;
+            bool toLoop = false;
         } state;
 
         GLuint textureID{};
