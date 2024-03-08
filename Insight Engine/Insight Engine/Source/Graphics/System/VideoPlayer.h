@@ -42,7 +42,6 @@ namespace IS {
         } state;
 
         GLuint textureID;
-        GLuint VAO, VBO;
         unsigned char* frameBuffer;
 
         //void closeVideo();

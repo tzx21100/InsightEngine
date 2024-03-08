@@ -72,8 +72,8 @@ namespace IS {
         }
 
         // Allocate memory for frames and packets
-        //state.av_frame = av_frame_alloc();
-        //state.av_packet = av_packet_alloc();
+        state.av_frame = av_frame_alloc();
+        state.av_packet = av_packet_alloc();
 
         if (!state.av_frame || !state.av_packet) {
             std::cerr << "Failed to allocate memory for AVFrame or AVPacket" << std::endl;
@@ -196,7 +196,7 @@ namespace IS {
     void VideoPlayer::cleanup() {
         // Free the YUV frame
         if (state.av_frame) {
-            //av_frame_free(&state.av_frame);
+            av_frame_free(&state.av_frame);
             state.av_frame = nullptr;
         }
 
