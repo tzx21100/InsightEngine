@@ -93,6 +93,11 @@ namespace IS {
         void setupOutlineVAO();
 
         /**
+         * @brief Set up a video player mesh.
+         */
+        void setupVideoPlayerVAO();
+
+        /**
          * @brief Set up a frame buffer mesh.
          */
         void setupFBVAO();

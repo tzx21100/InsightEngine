@@ -185,6 +185,9 @@
     <ClCompile Include="Source\Graphics\System\ShaderEffects.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Graphics\System\VideoPlayer.cpp">
+      <Filter>Graphics\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">
@@ -431,6 +434,9 @@
       <Filter>Engine\Systems\Rewinder</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Scripting\SimpleArray.h" />
+    <ClInclude Include="Source\Graphics\System\VideoPlayer.h">
+      <Filter>Graphics\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
