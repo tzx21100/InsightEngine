@@ -58,15 +58,16 @@ namespace IS
             // Dimensions
             InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
 
-            Vector2D back = new Vector2D(0.23f * win_dimension.x, 0.13f * win_dimension.y);
+            Vector2D button = new Vector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y);
 
-            InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
+            InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
 
             // Positions    
             InternalCalls.TransformSetPosition(camera_pos.x, camera_pos.y);
 
-            back_button_pos.Set(origin.x + (0.16f * win_dimension.x), origin.y + (0.85f * win_dimension.y));
-            InternalCalls.RenderTextFont("BACK", "MedusaGothic_D", 0.163f, 0.856f, 14f, (1f, 1f, 1f, 1f));
+            back_button_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.35f * win_dimension.y));
+            InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.5f, 0.355f, 7.5f, (1f, 1f, 1f, 1f));
+            //InternalCalls.RenderTextFont("BACK", "MedusaGothic_D", 0.163f, 0.856f, 14f, (1f, 1f, 1f, 1f));
 
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
