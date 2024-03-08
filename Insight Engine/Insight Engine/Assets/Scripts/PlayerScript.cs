@@ -589,10 +589,28 @@ namespace IS
 
 
 
+            SimpleArray array_wall = InternalCalls.GetCollidingEntityArray(entityWall);
+            bool check_wall_collided = false;
+            int collided_wall_entity =0;
+            for (int i = 0; i < array_wall.length; i++)
+            {
+                int entity = array_wall.GetValue(i);
+
+                if (entity == PLAYER_ID) { continue; }
+
+                short body_type = InternalCalls.RigidBodyGetBodyTypeEntity(entity);
+                if (body_type == 4 && hori_movement != 0 && Reward_WallClimb)
+                {
+                    check_wall_collided = true;
+                    collided_wall_entity = entity;
+                }
+            }
+
+
+
+
             //wall checking
-            if (InternalCalls.EntityCheckCollide(entityWall) && hori_movement != 0 && InternalCalls.GetCollidingEntity(entityWall) != InternalCalls.GetCurrentEntityID()
-                && InternalCalls.CollidingObjectTypeIsWall(InternalCalls.GetCollidingEntity(entityWall)) && Reward_WallClimb
-                && !InternalCalls.CollidingObjectTypeIsIgnore(InternalCalls.GetCollidingEntity(entityWall)))
+            if (check_wall_collided)
             {
                 if (!isClimbing) { InternalCalls.RigidBodySetForce(0, 0); climbdir = hori_movement; }
                 isClimbing = true;
@@ -609,7 +627,14 @@ namespace IS
                 InternalCalls.SetSpriteImage(player_transparent);
                 InternalCalls.SetSpriteAnimationIndex(0);
 
-                float collided_angle = InternalCalls.GetCollidedObjectAngle(entityWall) - (90 * hori_movement);
+                float collided_angle = InternalCalls.GetTransformRotationEntity(collided_wall_entity) - (90 * hori_movement);
+
+                SimpleVector2D wall_pos = InternalCalls.GetTransformPositionEntity(collided_wall_entity);
+                //Line vector
+                Vector2D line_vector = new Vector2D(wall_pos.x - player_pos.x, wall_pos.y - player_pos.y);
+
+                //Calclualted line_direction to the left assuming rotating left
+                //Vector2D push_direction = new Vector2D(line_vector.y, -line_vector.x);
 
                 InternalCalls.TransformSetRotation(collided_angle, 0);
                 Vector2D force_from_angle = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(collided_angle * -hori_movement));
