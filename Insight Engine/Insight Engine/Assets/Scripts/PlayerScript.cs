@@ -48,6 +48,13 @@ namespace IS
         //static private Vector2D camera_shake_dir = new Vector2D(0, 0);
         //static private float camera_shake_angle = 0f;
 
+
+        //PUBLIC VELOCITY AFFECTORS
+        static public float VelocityAffector_x=0f;
+        static public float VelocityAffector_y=0f;
+        static public float VelocityAffector_timer=0f;
+
+
         //Powerup triggers
         static public bool Reward_DoubleJump = false;
         static public bool Reward_Dash = false;
@@ -351,6 +358,18 @@ namespace IS
 
         static public void Update()
         {
+
+            if (VelocityAffector_timer > 0f)
+            {
+                InternalCalls.RigidBodyAddForce(VelocityAffector_x, VelocityAffector_y);
+                VelocityAffector_timer -= InternalCalls.GetDeltaTime();
+            }
+            else
+            {
+                VelocityAffector_x = 0f;
+                VelocityAffector_y = 0f;
+            }
+
 
             if (initialPowerUp)
             {
@@ -805,7 +824,7 @@ namespace IS
 
                     //set move speed when grounded
                     // normal movement
-                    InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), f_angle.y * move_speed * hori_movement);
+                    InternalCalls.RigidBodySetForce(VelocityAffector_x + hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), VelocityAffector_y + f_angle.y * move_speed  * hori_movement);
                     /*if (!isAttack)
                     {   
                     }
@@ -915,7 +934,7 @@ namespace IS
                     }
                     else
                     {
-                        InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                       // InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
                     }
                     
                 }
@@ -924,8 +943,9 @@ namespace IS
                 InternalCalls.RigidBodyAddForce(hori_movement * move_speed / 10, 0f);
                 // limit the vel
                 player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
-                if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
-                if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
+
+                if (MathF.Abs(player_vel.x) > (max_speed +VelocityAffector_x)) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed + VelocityAffector_x, player_vel.y); }
+                if (MathF.Abs(player_vel.y) > (jumpHeight + VelocityAffector_y)) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight + VelocityAffector_y); }
 
                 /*if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > max_speed)
                 {
@@ -935,8 +955,8 @@ namespace IS
             }
             // limit the vel
             player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
-            if (MathF.Abs(player_vel.x) > max_speed) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed, player_vel.y); }
-            if (MathF.Abs(player_vel.y) > jumpHeight) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight); }
+            if (MathF.Abs(player_vel.x) > (max_speed + VelocityAffector_x)) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed + VelocityAffector_x, player_vel.y); }
+            if (MathF.Abs(player_vel.y) > (jumpHeight + VelocityAffector_y)) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight + VelocityAffector_y); }
 
 
             if (canDash && isDashing == false && Reward_Dash)
@@ -1904,6 +1924,18 @@ namespace IS
                     break;
             }
         }
+
+
+
+        //player helper function
+        static public void AddForcesToPlayer(float x_force, float y_force, float timer)
+        {
+            VelocityAffector_x = x_force;
+            VelocityAffector_y = y_force;
+            VelocityAffector_timer = timer;
+            InternalCalls.RigidBodyAddForce(x_force, y_force);
+        }
+
 
     } //player script
 
