@@ -87,7 +87,7 @@ namespace IS {
     }
 
     void VideoPlayer::update(float deltaTime) {
-        deltaTime = deltaTime;
+        deltaTime = deltaTime; // placeholder for now
 
         if (!state.av_format_ctx || !state.av_codec_ctx) return;
 
@@ -98,6 +98,9 @@ namespace IS {
             if (state.toLoop) {
                 av_seek_frame(state.av_format_ctx, state.video_stream_index, 0, AVSEEK_FLAG_FRAME);
                 avcodec_flush_buffers(state.av_codec_ctx);
+            }
+            else {
+                state.playing = false;
             }
             return; // Exit if not looping
         }
@@ -129,7 +132,7 @@ namespace IS {
     }
 
     void VideoPlayer::render(float scaleX, float scaleY, float translateX, float translateY) {
-        if (!state.av_frame || !frameBuffer || !textureID) return;
+        if (!state.av_frame || !frameBuffer || !textureID || !state.playing) return;
 
         // Update and bind the texture
         glBindTexture(GL_TEXTURE_2D, textureID);
