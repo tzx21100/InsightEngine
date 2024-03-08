@@ -57,6 +57,11 @@ namespace IS {
 		ISGraphics::fb_shader_pgm.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "fb.frag");
 		ISGraphics::fb_shader_pgm.link();
 		ISGraphics::fb_shader_pgm.validate();
+
+		ISGraphics::videoShader.compileShaderFromFile(GL_VERTEX_SHADER, directory + "Video.vert");
+		ISGraphics::videoShader.compileShaderFromFile(GL_FRAGMENT_SHADER, directory + "Video.frag");
+		ISGraphics::videoShader.link();
+		ISGraphics::videoShader.validate();
 	}
 
 	void Shader::deleteAllShaders() {
@@ -83,6 +88,9 @@ namespace IS {
 		if (glIsProgram(ISGraphics::fb_shader_pgm.getHandle()))
 			glDeleteProgram(ISGraphics::fb_shader_pgm.getHandle());
 
+		if (glIsProgram(ISGraphics::videoShader.getHandle()))
+			glDeleteProgram(ISGraphics::videoShader.getHandle());
+
 		ISGraphics::quad_shader_pgm.Unlink();
 		ISGraphics::glitched_quad_shader_pgm.Unlink();
 		ISGraphics::non_quad_shader_pgm.Unlink();
@@ -90,6 +98,7 @@ namespace IS {
 		ISGraphics::light_shader_pgm.Unlink();
 		Text::textShader.Unlink();
 		ISGraphics::fb_shader_pgm.Unlink();
+		ISGraphics::videoShader.Unlink();
 	}
 
 	void Shader::setMainQuadShader(Shader const& shader) {

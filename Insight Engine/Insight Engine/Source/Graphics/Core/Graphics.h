@@ -34,6 +34,7 @@
 #include "Graphics/System/Camera3D.h"
 #include "Graphics/System/Layering.h"
 #include "Graphics/System/ShaderEffects.h"
+#include "Graphics/System/Videoplayer.h"
 
 #include "Graphics/Buffers/Framebuffer.h"
 
@@ -147,6 +148,7 @@ namespace IS {
 		static Shader non_quad_shader_pgm;
 		static Shader quad_border_shader_pgm;
 		static Shader light_shader_pgm;
+		static Shader videoShader;
 
 		// Texture vector
 		static std::vector<Image> textures;
@@ -163,6 +165,8 @@ namespace IS {
 
 		// Text Objects
 		static std::unordered_map<std::string, Text> mTexts;
+
+		static VideoPlayer videoplayer;
 
 		// Flags
 		static bool mGlitched;

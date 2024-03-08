@@ -50,6 +50,7 @@ namespace IS {
     Shader ISGraphics::glitched_quad_shader_pgm;
     Shader ISGraphics::quad_border_shader_pgm;
     Shader ISGraphics::light_shader_pgm;
+    Shader ISGraphics::videoShader;
 
     // Texture vector
     std::vector<Image> ISGraphics::textures;
@@ -71,6 +72,8 @@ namespace IS {
     bool ISGraphics::mGlitched = false;
     bool ISGraphics::mLightsOn = true;
     bool ISGraphics::mDisplayFPS = false;
+
+    VideoPlayer ISGraphics::videoplayer;
 
 
     // Layering
@@ -117,6 +120,9 @@ namespace IS {
 
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
+
+        videoplayer.initVideoPlayer();
+        videoplayer.loadVideo("Assets/Videos/SG_handsomest.mp4");
     }
 
     std::string ISGraphics::GetName() { return "Graphics"; };
@@ -254,15 +260,12 @@ namespace IS {
             }
         }
 
-            // update active camera
-            cameras3D[Camera3D::mActiveCamera].Update();
+        // update active camera
+        cameras3D[Camera3D::mActiveCamera].Update();
 
-            // ShaderEffect::shader_effect_update(delta_time); // not working yet
+        // ShaderEffect::shader_effect_update(delta_time); // not working yet
 
-            // Graphics system's draw
-
-            //Draw(delta_time);
-        
+        videoplayer.update(delta_time);
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
@@ -343,6 +346,8 @@ namespace IS {
             setLineWidth(2.f);
         }
     #endif // USING_IMGUI
+
+        videoplayer.render(0.1f, 0.1f, 0.9f, -0.9f);
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();
