@@ -28,6 +28,11 @@ namespace IS
 
                 if (fade_out_timer > fade_out_duration)
                 {
+                    if (PlayerScript.high_score > PlayerScript.speed_run_timer)
+                    {
+                        PlayerScript.high_score = PlayerScript.speed_run_timer;
+                    }
+
                     InternalCalls.LoadScene("Assets/Scenes/PuzzleLevel.insight");
                 }
             }

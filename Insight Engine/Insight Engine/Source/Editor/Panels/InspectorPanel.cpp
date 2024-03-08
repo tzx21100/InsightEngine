@@ -738,7 +738,7 @@ namespace IS {
 
                     ImGui::TableNextColumn();
                     ImGui::PushItemWidth(80.f);
-                    if (float scale = collider.mCircleCollider.radiusScale; ImGui::DragFloat("##Radius Scale", &scale))
+                    if (float scale = collider.mCircleCollider.radiusScale; ImGui::DragFloat("##Radius Scale", &scale, 0.01f, 0.01f, 10.f, "%.2f"))
                     {
                         CommandHistory::AddCommand<ChangeCommand<float>>(collider.mCircleCollider.radiusScale, scale);
                     }
