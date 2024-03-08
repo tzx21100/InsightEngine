@@ -32,6 +32,11 @@ namespace IS
 
     public class PlayerScript
     {
+
+        //speed run timer
+        static public float speed_run_timer = 0f;
+        static public float high_score = 9999f;
+
         //kill counter
         static public int ENEMY_SLAIN = 0;
 
@@ -259,6 +264,7 @@ namespace IS
 
         static public void Init()
         {
+            speed_run_timer = 0f;
             InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
             //reset variables
             ENEMY_SLAIN = 0;
@@ -358,6 +364,7 @@ namespace IS
 
         static public void Update()
         {
+            DrawTimer();
 
             if (VelocityAffector_timer > 0f)
             {
@@ -1934,6 +1941,17 @@ namespace IS
             VelocityAffector_y = y_force;
             VelocityAffector_timer = timer;
             InternalCalls.RigidBodyAddForce(x_force, y_force);
+        }
+
+        static public void DrawTimer()
+        {
+            speed_run_timer += InternalCalls.GetDeltaTime();
+            string text = "Timer: " + speed_run_timer;
+             float fontSize = 18f;
+            string font = "Semplicita_Light";
+            InternalCalls.RenderTextFont(text, font, 0.5f, 0.8f, fontSize, (1f, 1f, 1f, 1f));
+            text = "Current HighScore Timer: " + high_score;
+            InternalCalls.RenderTextFont(text, font, 0.5f, 0.9f, fontSize, (1f, 1f, 1f, 1f));
         }
 
 
