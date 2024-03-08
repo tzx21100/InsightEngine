@@ -95,7 +95,7 @@ namespace IS
 
                 float boulder_height = InternalCalls.GetTransformScaling().y;
                 float offsetx = boulder_height * .0f;
-                float offsety = boulder_height * .35f;
+                float offsety = boulder_height * .75f;
                 InternalCalls.TransformSetScaleEntity(1200f, 800f, mActivateRange);
                 InternalCalls.TransformSetPositionEntity(mOriginalPosition.x - offsetx, mOriginalPosition.y - offsety, mActivateRange);
             }
@@ -205,7 +205,7 @@ namespace IS
 
                 // Reset boulder position to original position
                 InternalCalls.TransformSetPosition(mOriginalPosition.x, mOriginalPosition.y);
-                InternalCalls.TransformSetRotation(18f, 0f);
+                InternalCalls.TransformSetRotation(8f, 0f);
                 InternalCalls.RigidBodySetForce(0f, 0f);
             }
         }
