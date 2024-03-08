@@ -1,0 +1,101 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -872.86212158203125,
+				"Y" : -300.98696899414062
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -139.5,
+					"y" : 849.5
+				},
+				{
+					"x" : 139.5,
+					"y" : 849.5
+				},
+				{
+					"x" : 139.5,
+					"y" : -849.5
+				},
+				{
+					"x" : -139.5,
+					"y" : -849.5
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "BreakableVine",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "BreakableHORI"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Vines 01.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 129,
+		"SpriteTextureHeight" : 1699,
+		"SpriteTextureIndex" : 112,
+		"SpriteTextureWidth" : 279,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 279.0,
+		"SpriteTransformScalingY" : 1699.0,
+		"SpriteTransformWorldPositionX" : -872.86212158203125,
+		"SpriteTransformWorldPositionY" : -300.98696899414062,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 279.0,
+		"TransformScalingY" : 1699.0,
+		"TransformWorldPositionX" : -872.86212158203125,
+		"TransformWorldPositionY" : -300.98696899414062
+	}
+}

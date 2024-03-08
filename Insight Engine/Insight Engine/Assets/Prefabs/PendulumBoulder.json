@@ -1,0 +1,79 @@
+{
+	"Collider" : 
+	{
+		"BoxColliderEnabled" : false,
+		"CircleCollider" : 
+		{
+			"CircleColliderCenter" : 
+			{
+				"X" : 891.35546875,
+				"Y" : 2012.2354736328125
+			},
+			"CircleColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"CircleColliderRadius" : 624.0,
+			"CircleColliderRadiusScale" : 0.30000001192092896
+		},
+		"CircleColliderEnabled" : true,
+		"ResponseEnabled" : true
+	},
+	"Name" : "PendulumBoulder",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.0,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "PendulumBoulder"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Env_Round_Boulder.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 94,
+		"SpriteTextureHeight" : 2080,
+		"SpriteTextureIndex" : 77,
+		"SpriteTextureWidth" : 2080,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 2080.0,
+		"SpriteTransformScalingY" : 2080.0,
+		"SpriteTransformWorldPositionX" : 891.35546875,
+		"SpriteTransformWorldPositionY" : 2012.2354736328125,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 2080.0,
+		"TransformScalingY" : 2080.0,
+		"TransformWorldPositionX" : 891.35546875,
+		"TransformWorldPositionY" : 2012.2354736328125
+	}
+}
