@@ -41,7 +41,7 @@ namespace IS
         static private int master_slider_knob_entity;
         static private int bgm_slider_knob_entity;
         static private int vfx_slider_knob_entity;
-        static private int fps_dropdown_entity;
+        //static private int fps_dropdown_entity;
         static private int resolution_dropdown_entity;
         static private int scroll_bar_entity;
         static private int scroll_bar_tracker_entity;
@@ -78,7 +78,7 @@ namespace IS
         static public Vector2D master_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D vfx_slider_knob_pos = new Vector2D(0, 0);
-        static public Vector2D fps_dropdown_pos = new Vector2D(0, 0);
+        //static public Vector2D fps_dropdown_pos = new Vector2D(0, 0);
         static public Vector2D resolution_dropdown_pos = new Vector2D(0, 0);
 
         static public Vector2D scroll_bar_pos = new Vector2D(0, 0);
@@ -89,7 +89,7 @@ namespace IS
         static public Vector2D master_vol_text_pos = new Vector2D(0, 0);
         static public Vector2D bgm_vol_text_pos = new Vector2D(0, 0);
         static public Vector2D vfx_vol_text_pos = new Vector2D(0, 0);
-        static public Vector2D fps_text_pos = new Vector2D(0, 0);
+        //static public Vector2D fps_text_pos = new Vector2D(0, 0);
         static public Vector2D resolution_text_pos = new Vector2D(0, 0);
 
         static public float master_multiplier;
@@ -164,7 +164,7 @@ namespace IS
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
-            fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", dropdown_minimized_image, "FPSDropdownScript");
+            //fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", dropdown_minimized_image, "FPSDropdownScript");
             resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", dropdown_minimized_image, "ResolutionDropdownScript");
             scroll_bar_entity = InternalCalls.CreateEntityUIScript("Scroll Bar", scroll_bar_image, "ScrollBarScript");
             scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
@@ -209,8 +209,8 @@ namespace IS
             Vector2D bgm_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
             Vector2D vfx_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
 
-            Vector2D fps_dropdown = new Vector2D(0.177f * win_dimension.x, 0.0979f * win_dimension.x);
-            Vector2D resolution_dropdown = new Vector2D(0.177f * win_dimension.x, 0.0979f * win_dimension.x);
+            //Vector2D fps_dropdown = new Vector2D(0.177f * win_dimension.x, 0.029f * win_dimension.x);
+            Vector2D resolution_dropdown = new Vector2D(0.177f * win_dimension.x, 0.029f * win_dimension.x);
 
             Vector2D scroll_bar = new Vector2D(0.02f * win_dimension.x, 0.17f * win_dimension.x);
             Vector2D scroll_bar_tracker = new Vector2D(0.02f * win_dimension.x, 0.086f * win_dimension.x);
@@ -230,7 +230,7 @@ namespace IS
             InternalCalls.SetButtonSize(master_slider_knob_entity, new SimpleVector2D(master_slider_knob.x, master_slider_knob.y));
             InternalCalls.SetButtonSize(bgm_slider_knob_entity, new SimpleVector2D(bgm_slider_knob.x, bgm_slider_knob.y));
             InternalCalls.SetButtonSize(vfx_slider_knob_entity, new SimpleVector2D(vfx_slider_knob.x, vfx_slider_knob.y));
-            InternalCalls.SetButtonSize(fps_dropdown_entity, new SimpleVector2D(fps_dropdown.x, fps_dropdown.y));
+            //InternalCalls.SetButtonSize(fps_dropdown_entity, new SimpleVector2D(fps_dropdown.x, fps_dropdown.y));
             InternalCalls.SetButtonSize(resolution_dropdown_entity, new SimpleVector2D(resolution_dropdown.x, resolution_dropdown.y));
             InternalCalls.TransformSetScaleEntity(scroll_bar.x, scroll_bar.y, scroll_bar_entity);
             InternalCalls.SetButtonSize(scroll_bar_tracker_entity, new SimpleVector2D(scroll_bar_tracker.x, scroll_bar_tracker.y));
@@ -255,7 +255,7 @@ namespace IS
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
             vfx_slider_knob_pos.Set(vfx_slider_knob_pos.x, VFXSliderKnobScript.y_pos); //442-558
 
-            fps_dropdown_pos.Set(FPSDropdownScript.x_pos, FPSDropdownScript.y_pos);
+            //fps_dropdown_pos.Set(FPSDropdownScript.x_pos, FPSDropdownScript.y_pos);
             resolution_dropdown_pos.Set(ResolutionDropdownScript.x_pos, ResolutionDropdownScript.y_pos);
 
             scroll_bar_pos.Set(ScrollBarScript.x_pos, ScrollBarScript.y_pos);
@@ -268,8 +268,8 @@ namespace IS
             master_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.505f * win_dimension.x), origin.y + (0.585f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
             bgm_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.475f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
             vfx_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.495f * win_dimension.x), origin.y + (0.365f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            fps_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.445f * win_dimension.x), origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            resolution_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.465f * win_dimension.x), origin.y + (0.145f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
+            //fps_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.445f * win_dimension.x), origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
+            resolution_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.465f * win_dimension.x), origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
 
             bgm_vol = master_multiplier * bgm_multiplier;
             vfx_vol = master_multiplier * vfx_multiplier;
@@ -328,14 +328,14 @@ namespace IS
                 {
                 InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", vfx_vol_text_pos.x, vfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
                 }
-                if (!(fps_text_pos.y > upper_limit_normalized) && !(fps_text_pos.y < lower_limit_normalized))
-                {
-                    InternalCalls.RenderTextFont("FPS", "Semplicita_Light", fps_text_pos.x, fps_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-                }
                 if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized))
                 {
                     InternalCalls.RenderTextFont("Resolution", "Semplicita_Light", resolution_text_pos.x, resolution_text_pos.y, 10f, (1f, 1f, 1f, 1f));
                 }
+                //if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized) && !FPSDropdownScript.dropdown_open)
+                //{
+                //    InternalCalls.RenderTextFont("Resolution", "Semplicita_Light", resolution_text_pos.x, resolution_text_pos.y, 10f, (1f, 1f, 1f, 1f));
+                //}
             }
             else
             {
