@@ -36,6 +36,7 @@ namespace IS
         //speed run timer
         static public float speed_run_timer = 0f;
         static public float high_score = 9999f;
+        static public bool high_score_toggle = false;
 
         //kill counter
         static public int ENEMY_SLAIN = 0;
@@ -364,7 +365,17 @@ namespace IS
 
         static public void Update()
         {
-            DrawTimer();
+
+            //just for highscores
+            if (InternalCalls.KeyPressed((int)KeyCodes.O))
+            {
+                high_score_toggle=!high_score_toggle;
+            }
+            if (high_score_toggle)
+            {
+                DrawTimer();
+            }
+            
 
             if (VelocityAffector_timer > 0f)
             {
@@ -1951,7 +1962,14 @@ namespace IS
              float fontSize = 18f;
             string font = "Semplicita_Light";
             InternalCalls.RenderTextFont(text, font, 0.5f, 0.8f, fontSize, (1f, 1f, 1f, 1f));
-            text = "Current HighScore Timer: " + high_score;
+            if (high_score != 9999f)
+            {
+                text = "Current HighScore Timer: " + high_score;
+            }
+            else
+            {
+                text = "No HighScore Set Yet!";
+            }
             InternalCalls.RenderTextFont(text, font, 0.5f, 0.9f, fontSize, (1f, 1f, 1f, 1f));
         }
 

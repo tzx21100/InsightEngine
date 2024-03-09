@@ -122,8 +122,8 @@ namespace IS {
         // set line width for all GL_LINES and GL_LINE_LOOP
         setLineWidth(2.f);
 
-        videoplayer.initVideoPlayer(0.1f, 0.1f, 0.9f, -0.9f);
-        videoplayer.loadVideo("Assets/Videos/SG_handsomest.mp4");
+        //videoplayer.initVideoPlayer(0.1f, 0.1f, 0.9f, -0.9f);
+        //videoplayer.loadVideo("Assets/Videos/SG_handsomest.mp4");
 
        /* VideoPlayer::createAndLoadVideo("Assets/Videos/SG_handsomest.mp4", 0.1f, 0.1f, -0.8f, 0.9f, true);
         VideoPlayer::createAndLoadVideo("Assets/Videos/Insight_LevelEditorVideo.mp4", 0.1f, 0.1f, -0.5f, 0.33f, true);
