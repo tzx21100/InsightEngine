@@ -36,8 +36,8 @@ namespace IS
                 PlayerScript.initialPowerUp = true;
                 PlayerScript.collection_count += 1;
                 InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
-                PlayerScript.PLAYER_LIGHT = 1;
-                InternalCalls.ChangeLightType(1);
+                PlayerScript.PLAYER_LIGHT = 4;
+                InternalCalls.ChangeLightType(4);
 
 
             }

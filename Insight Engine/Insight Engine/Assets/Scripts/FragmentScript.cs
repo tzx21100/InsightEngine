@@ -54,15 +54,17 @@ namespace IS
 
 
             if (InternalCalls.EntityCheckCollide(entity) && InternalCalls.GetCollidingEntityCheck(entity,PlayerScript.PLAYER_ID)) {
-                if (!PlayerScript.Reward_DoubleJump) { PlayerScript.Reward_DoubleJump = true; } else
+                if (!PlayerScript.Reward_DoubleJump) { PlayerScript.Reward_DoubleJump = true; PlayerScript.hasDoubleJump = true; } else
                 {
                     if (!PlayerScript.Reward_WallClimb) {
                         PlayerScript.Reward_WallClimb = true;
+                        PlayerScript.hasWallClimb = true;
                     }
                     else
                     {
                         if (!PlayerScript.Reward_Dash) {
                             PlayerScript.Reward_Dash = true;
+                            PlayerScript.hasDash = true;    
                         }
                         else
                         {

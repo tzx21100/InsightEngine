@@ -33,6 +33,11 @@ namespace IS
     public class PlayerScript
     {
 
+        //popup for abilities to show or not show
+        static public bool hasDoubleJump = false;
+        static public bool hasWallClimb=false;
+        static public bool hasDash=false;
+
         //speed run timer
         static public float speed_run_timer = 0f;
         static public float high_score = 9999f;
@@ -265,6 +270,9 @@ namespace IS
 
         static public void Init()
         {
+            //remove all existing vidoes
+            InternalCalls.unloadVideos();
+
             speed_run_timer = 0f;
             InternalCalls.AttachCamera(camera_pos.x, camera_pos.y);
             //reset variables
@@ -398,7 +406,27 @@ namespace IS
                 initialPowerUp = false;
             }
 
-            SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
+            // DISPLAY POWERUP TEXT FOR FIRST TIME
+            if(hasDoubleJump)
+            {
+                Popup_Ability.DisplayDoubleJumpGuide();
+            }
+            if (hasWallClimb)
+            {
+                Popup_Ability.DisplayWallGuide();
+            }
+            if(hasDash)
+            {
+                Popup_Ability.DisplayDashGuide();
+            }
+/*            if (InternalCalls.KeyPressed((int)KeyCodes.G))
+            {
+                hasWallClimb = true;
+            }*/
+
+
+                SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
+
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
             {
@@ -1057,6 +1085,9 @@ namespace IS
             Reward_DoubleJump = false;
             Reward_Dash = false;
             Reward_WallClimb = false;
+            hasDash = false;
+            hasDoubleJump = false;
+            hasWallClimb = false;
 
         }
 
