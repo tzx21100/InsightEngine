@@ -15,10 +15,11 @@ namespace IS
         static string text6 = "Though I wish I could explain further, there is no helping it. You must GO.";
 
         static float switch_view_timer = 2.5f;
-
+        static bool play_audio = true;
         static bool textshow = true;
         static public void Init(){
             textshow = true;
+            play_audio = true;
             switch_view_timer = 2.5f;
         }
 
@@ -43,8 +44,14 @@ namespace IS
             }
 
             if (TextBox.PAGE_NUMBER == 1) { //play yiming VA
-
-                                          }
+                if(play_audio)
+                {
+                    InternalCalls.AudioPlaySound("Narrator_1.wav", false, 0.4f);
+                    play_audio = false;
+                }
+                
+                
+            }
 
             if(TextBox.PAGE_NUMBER == 5) {
                 CameraScript.CameraPanToTime(new Vector2D(15658.83f, 1579.83f), 1f, 2.5f);
@@ -68,6 +75,7 @@ namespace IS
             //end of camera pan and dialogue
             if (textshow==false && TextBox.isVisible == false)
             {
+                InternalCalls.AudioPlaySound("Narrator_2.wav", false, 0.4f);
                 CameraScript.StopCameraPan();
 
                 //yiming VA plays "Left without a choice, you can only do as the strange man says"

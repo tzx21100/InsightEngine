@@ -43,6 +43,8 @@ namespace IS
 
         static public void Update()
         {
+
+            NarratorVoices.NarrateUpdate();//annoying narrator
             float playerOffsetX = PlayerScript.player_pos.x;
             float playerOffsetY = PlayerScript.player_pos.y;
 

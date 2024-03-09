@@ -1075,6 +1075,7 @@ namespace IS
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
 
+
             Xforce = 0f; 
             //Yforce = 0f;
         }
