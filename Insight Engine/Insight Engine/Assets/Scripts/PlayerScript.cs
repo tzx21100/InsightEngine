@@ -496,7 +496,7 @@ namespace IS
                     for (int i = 0; i < 36; i++)
                     {
                         InternalCalls.GameSpawnParticleExtra(
-                            player_pos.x, player_pos.y, i * 10, 8, -2, 0.9f, -0.1f, 1f, 300f, "Particle Test"
+                            player_pos.x, player_pos.y, i * 10, 8, -2, 0.9f, -0.1f, 1f, 300f, "ParticleDust.txt"
                          );
                     }
 
@@ -506,7 +506,8 @@ namespace IS
                 else
                 {
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
-                    CameraScript.camera_shake_duration = 0.1f;
+                    CameraScript.camera_shake_duration = 0.1f;  
+
                     Health = Max_Health;
                     respawn_timer -= InternalCalls.GetDeltaTime();
                     if (respawn_timer <= 0)
@@ -1070,7 +1071,7 @@ namespace IS
                 float speed = 10000f;
                 InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y,
                     direction, size, scale, dash_particle_alpha,
-                    growth, bullet_time_set, speed, "Particle Test.txt");
+                    growth, bullet_time_set, speed, "ParticleDust.txt");
 
             }
 
@@ -1088,7 +1089,7 @@ namespace IS
                 for (int i = 0; i < 72; i++)
                 {
 
-                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "Particle Test.txt");
+                    InternalCalls.GameSpawnParticleExtra(player_pos.x, player_pos.y, -1 ^ i * 5, 10, -1, 1, -0.005f, 2f, 1000, "ParticleDust.txt");
 
 
                 }

@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 namespace IS
 {
-    class CollectableScript
+    class FirstCollectableInChase
     {
         static public void Init() {
 
@@ -36,6 +36,8 @@ namespace IS
                 PlayerScript.initialPowerUp = true;
                 PlayerScript.collection_count += 1;
                 InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
+                PlayerScript.PLAYER_LIGHT = 1;
+                InternalCalls.ChangeLightType(1);
 
 
             }
