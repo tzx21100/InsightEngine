@@ -77,6 +77,7 @@ namespace IS {
         static shaderEffect currentShaderEffect;
         static shaderEffect prevShaderEffect;
         static float shader_effect_timer;
+        static float shader_intensity;
     };
 } // end namespace IS
 #endif // !GAM200_INSIGHT_ENGINE_GRAPHICS_SYSTEM_SHADEREFFECTS_H

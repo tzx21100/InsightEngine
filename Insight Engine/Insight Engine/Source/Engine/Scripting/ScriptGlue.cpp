@@ -1419,6 +1419,10 @@ namespace IS {
         ShaderEffect::currentShaderEffect = static_cast<ShaderEffect::shaderEffect>(lighttype);
     }
 
+    static void ChangeShaderIntensity(float intensity) {
+        ShaderEffect::shader_intensity = intensity;
+    }
+
 
     // layers
 
@@ -1462,6 +1466,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(DeleteSimpleArray);
         IS_ADD_INTERNAL_CALL(GetCollidingEntityArray);
         IS_ADD_INTERNAL_CALL(ChangeLightType);
+        IS_ADD_INTERNAL_CALL(ChangeShaderIntensity);
 
         IS_ADD_INTERNAL_CALL(NativeLog);
         IS_ADD_INTERNAL_CALL(NativeLogVector);

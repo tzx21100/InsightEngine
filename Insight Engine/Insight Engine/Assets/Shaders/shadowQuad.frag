@@ -16,10 +16,10 @@ uniform mat4 uInverseVP; // Inverse of View-Projection Matrix
 uniform int uShaderEffect;
 uniform float uTimeElapsed;
 uniform float uShaderEffectTimer;
+uniform float uShaderIntensity;
 
 uniform sampler2D bg_tex; // background framebuffer texture
 uniform isampler2D id_tex; // ID framebuffer texture
-uniform sampler2D shadowMap; // Shadow map texture
 
 // Function to check if two line segments intersect
 bool doLineSegmentsIntersect(vec2 p0, vec2 p1, vec2 q0, vec2 q1) {
@@ -63,6 +63,7 @@ float filmReelNoise(vec2 uv, float time) {
 }
 
 void main() {
+
     vec4 final_frag_clr = texture(bg_tex, vTexCoord); // Base color from background texture
     vec4 ndcPos = vec4(2.0 * (gl_FragCoord.xy / uResolution) - 1.0, 0.0, 1.0); // Pixel position to NDC
     vec4 worldPos = uInverseVP * ndcPos; // NDC to world coordinates
@@ -112,21 +113,59 @@ void main() {
     {
         fFragColor = final_frag_clr;
     }
-    if (uShaderEffect == 1)
+    else if (uShaderEffect == 1)
     {
         fFragColor = final_frag_clr * (1.0 - dist / 2.5); // light circle around player
     }
-    if (uShaderEffect==2)
+    else if (uShaderEffect==2) // black and white chase level
     {
         // type of light is normal
-        float avr = (final_frag_clr.x + final_frag_clr.y + final_frag_clr.z) / 3.0;
-        avr *= 1.0;
-        fFragColor = vec4(vec3(avr), final_frag_clr.a);
+        // float avr = (final_frag_clr.x + final_frag_clr.y + final_frag_clr.z) / 3.0;
+        // avr *= 1.0;
+        // fFragColor = vec4(vec3(avr), final_frag_clr.a);
 
-        if (mod(gl_FragCoord.x, random_generator(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, random_generator(vTexCoord) * 10.0) < 0.1)
-            fFragColor = vec4(random_generator(vTexCoord));
+        // if (mod(gl_FragCoord.x, random_generator(vTexCoord) * 10.0) < 0.2 || mod(gl_FragCoord.y, random_generator(vTexCoord) * 10.0) < 0.1)
+        //     fFragColor = vec4(random_generator(vTexCoord));
+   
+        
+        // Calculate screen coordinates and normalized distance from the center
+        vec2 screenCoord = gl_FragCoord.xy / uResolution.xy;
+        vec2 centerCoord = screenCoord - vec2(0.5, 0.5); // Center is (0.5, 0.5) in normalized coords
+        float distFromCenter = length(centerCoord); // Distance from the center
+        float edgeDist = min(min(screenCoord.x, 1.0 - screenCoord.x), min(screenCoord.y, 1.0 - screenCoord.y));
+
+        // Increase distortion towards the edges
+        float intensity = smoothstep(0.0, 0.1, edgeDist); // Reversed the smoothstep parameters to correctly increase intensity towards edges
+
+        // Apply more noticeable warping and displacement effects
+        float warpEffect = sin(uTimeElapsed * 5.0 + screenCoord.y * 20.0) * 0.02; // Increased effect
+        float displaceEffect = cos(uTimeElapsed * 5.0 + screenCoord.x * 20.0) * 0.02; // Using cos for a varied effect and increased displacement
+        
+        // Distorted coordinates
+        vec2 distortedCoord = screenCoord + vec2(warpEffect, displaceEffect) * (1.0 - intensity);
+
+        // Sample the background texture with distorted coordinates
+        vec4 bgTexColor = texture(bg_tex, distortedCoord);
+
+        // Convert to grayscale
+        float avr = (bgTexColor.r + bgTexColor.g + bgTexColor.b) / 3.0;
+        vec3 grayscale = vec3(avr);
+
+        // Interpolate between grayscale and original color based on the distance and uShaderIntensity
+        float radiusOfMonochrome = 1 - uShaderIntensity; // 1 = full screen, 0.5 = half
+        float colorRestoreFactor = smoothstep(0.0, radiusOfMonochrome, distFromCenter);
+        vec3 finalColor = mix(final_frag_clr.rgb, grayscale, colorRestoreFactor);
+
+        // Flashing side borders
+        float borderWidth = 0.05;
+        float flashIntensity = abs(sin(uTimeElapsed * 5.0));
+        float borderIntensity = (1.0 - smoothstep(0.0, borderWidth, edgeDist)) * flashIntensity;
+        vec3 borderColor = mix(finalColor, vec3(0.0, 0.0, 0.0), borderIntensity);
+
+        // Output the final color with applied effects
+        fFragColor = vec4(borderColor, final_frag_clr.a);
     }
-    if (uShaderEffect == 3) { // static glitch
+    else if (uShaderEffect == 3) { // static glitch
         // Determine glitch activation based on uTimeElapsed
         float glitchCycle = 3.0; // Glitch every 5 seconds
         float glitchDuration = 0.2; // Glitch is active for 0.2 seconds
@@ -152,7 +191,7 @@ void main() {
         // Output the final color, applying the glitch effect conditionally
         fFragColor = vec4(finalColorWithEffects, final_frag_clr.a);
     }
-    if (uShaderEffect == 4 && uShaderEffectTimer >= 0.0) {
+    else if (uShaderEffect == 4 && uShaderEffectTimer >= 0.0) {
         vec3 colorEffect = vec3(0.0);
         vec2 uv = vTexCoord;
         vec2 position = (gl_FragCoord.xy / uResolution.xy) * 2.0 - 1.0;

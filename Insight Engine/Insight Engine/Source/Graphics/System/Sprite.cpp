@@ -359,6 +359,12 @@ namespace IS {
         else
             IS_CORE_ERROR({ "uShaderEffectTimer Uniform not found, shader compilation failed?" });
 
+        tex_arr_uniform = glGetUniformLocation(ISGraphics::light_shader_pgm.getHandle(), "uShaderIntensity");
+        if (tex_arr_uniform >= 0)
+            glUniform1f(tex_arr_uniform, ShaderEffect::shader_intensity);
+        else
+            IS_CORE_ERROR({ "uShaderIntensity Uniform not found, shader compilation failed?" });
+
         GL_CALL(glDrawArrays(GL_TRIANGLES, 0, ISGraphics::meshes[5].draw_count));
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 

@@ -22,6 +22,7 @@ namespace IS {
     ShaderEffect::shaderEffect ShaderEffect::prevShaderEffect = shaderEffect::no_effect;
 
     float ShaderEffect::shader_effect_timer = 0.f;
+    float ShaderEffect::shader_intensity = 1.f;
 
     // Static method implementation
     void ShaderEffect::play_static_glitch() {
