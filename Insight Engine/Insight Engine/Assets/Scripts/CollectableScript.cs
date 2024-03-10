@@ -32,6 +32,16 @@ namespace IS
             if (array.FindIndex(PlayerScript.PLAYER_ID) != -1)
             {
 
+                if(PlayerScript.collection_count == 0)
+                {
+                    CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 3f);
+                }
+                if (PlayerScript.collection_count == 1)
+                {
+                    CameraScript.CameraPanToTime(FogBlockade2.current_pos, 2.6f, 3f);
+                }
+
+
                 InternalCalls.AudioPlaySound("Collect.wav", false, 0.15f);
                 PlayerScript.initialPowerUp = true;
                 PlayerScript.collection_count += 1;

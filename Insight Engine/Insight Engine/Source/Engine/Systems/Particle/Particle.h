@@ -24,7 +24,7 @@
 #include <array>
 #include <fstream>
 #include <sstream>
-#define MAX_PARTICLES 20000
+#define MAX_PARTICLES 50000
 
 
 namespace IS {
