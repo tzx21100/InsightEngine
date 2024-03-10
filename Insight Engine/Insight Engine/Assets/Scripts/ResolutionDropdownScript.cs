@@ -294,7 +294,7 @@ namespace IS
                 if (!option_highlight_entities.ContainsKey(entity))
                 {
                     InternalCalls.DestroyEntity(entity);
-                    Console.WriteLine("deleted {0}",entity);
+                    //Console.WriteLine("deleted {0}",entity);
                 }
             }
 

@@ -81,10 +81,10 @@ namespace IS
             //DeleteExtraOptionHighlightEntities();
             //Console.WriteLine(option_highlight_entities[id]);
 
-            foreach (KeyValuePair<int, string> entry in ResolutionDropdownScript.option_entities)
-            {
-                Console.WriteLine("Key: {0}, Value: {1}", entry.Key, entry.Value);
-            }
+            //foreach (KeyValuePair<int, string> entry in ResolutionDropdownScript.option_entities)
+            //{
+            //    Console.WriteLine("Key: {0}, Value: {1}", entry.Key, entry.Value);
+            //}
 
         }
 
