@@ -73,6 +73,8 @@ namespace IS
         private float being_hit_timer = 0f;
         static public int ENEMY_ID;
         static public int BEING_ATTACK_ENEMY_ID;
+        private float being_hit_flicker_timer_duration = 0.2f;
+        private float being_hit_flicker_timer = 0.2f;
 
         // attack
         SimpleImage enemy_attack1;
@@ -271,7 +273,10 @@ namespace IS
             // check enemy colliding with enemy
             if (InternalCalls.OnCollisionEnter() && current_state != EnemyState.DEAD)
             {
-                if (InternalCalls.CompareCategory("Player"))
+                SimpleArray array = InternalCalls.GetCollidingEntityArray(ENEMY_ID);
+
+                if(array.FindIndex(PlayerScript.PLAYER_ID) != -1)
+                //if (InternalCalls.CompareCategory("Player"))
                 {
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
@@ -322,10 +327,30 @@ namespace IS
                 current_state = EnemyState.FOLLOWING_PLAYER;
                 initialHit = false;
                 being_hit_timer = 0f;
+                InternalCalls.SetAnimationAlpha(1f); // reset alpha
             }
             else
             {
                 // being hit animation here
+                RenderBeingHitFlicker();
+                
+            }
+        }
+
+        private void RenderBeingHitFlicker()
+        {
+            being_hit_flicker_timer -= InternalCalls.GetDeltaTime();
+            if (being_hit_flicker_timer > 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(0.5f);
+            }
+            else if (being_hit_flicker_timer > 0f && being_hit_flicker_timer < 0.1f)
+            {
+                InternalCalls.SetAnimationAlpha(1f);
+            }
+            else
+            {
+                being_hit_flicker_timer = being_hit_flicker_timer_duration;
             }
         }
 
@@ -825,7 +850,7 @@ namespace IS
             Vector2D health_bar_length = new Vector2D(health_wdith, 20f);
 
             // draw health bar only when the health is lesser
-            if (health < max_health) {
+            if (health < max_health && health > 0f) {
                 // draw health blood
                 InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 6f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
 
