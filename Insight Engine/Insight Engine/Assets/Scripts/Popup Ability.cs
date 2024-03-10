@@ -4,9 +4,9 @@ namespace IS
     // this is a class for other classes to call no need to be added to script engine.
     class Popup_Ability
     {
-        static public string doublejumpVideo = "Assets/Videos/Insight_LevelEditorVideo.mp4";
-        static public string vineVideo = "Assets/Videos/Insight_LevelEditorVideo.mp4";
-        static public string dashVideo = "Assets/Videos/Insight_LevelEditorVideo.mp4";
+        static public string doublejumpVideo = "Assets/Videos/Double_Jump_Tutorial.mp4";
+        static public string vineVideo = "Assets/Videos/Vine_Climb_Tutorial.mp4";
+        static public string dashVideo = "Assets/Videos/Dash_Tutorial.mp4";
         static public bool doublejumpvideoloaded=false;
         static public bool vinevideoloaded=false;
         static public bool dashvideoloaded=false;
