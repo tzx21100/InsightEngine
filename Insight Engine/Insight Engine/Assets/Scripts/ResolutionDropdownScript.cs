@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System;
+using System.Linq;
+
 namespace IS
 {
     class ResolutionDropdownScript
@@ -19,11 +21,8 @@ namespace IS
         static public bool first_hover = false;
 
         static public bool dropdown_open = false;
-
-        //static private int dropdown_entity;
-        //static private int dropdown_option_entity;
-        static private int dropdown_option_highlight_entity;
-        static private int dropdown_option_end_entity;
+        static public bool options_created = false;
+        static public bool option_highlights_created = false;
 
         static SimpleImage dropdown_minimized_image;
         static SimpleImage dropdown_open_image;
@@ -31,10 +30,16 @@ namespace IS
         static SimpleImage dropdown_option_highlight_image;
         static SimpleImage dropdown_option_end_image;
 
-        static private List<string> resolution_options = new List<string>();
-        static private List<int> option_entities = new List<int>();
-        static private List<Vector2D> position_of_entities = new List<Vector2D>();
+        static public List<string> resolution_options = new List<string>();
+        static public Dictionary<int, string> option_entities = new Dictionary<int, string>();
+        static public List<int> option_entities_list = new List<int>();
+        static public List<Vector2D> position_of_entities = new List<Vector2D>();
+        static public List<int> key_list = new List<int>();
+        static public int last_key;
+        static private int last_pos_index;
 
+        static public Dictionary<int, int> option_highlight_entities = new Dictionary<int, int>();
+        static public List<int> option_highlight_entities_list = new List<int>();
         static public void Init()
         {
             dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
@@ -44,8 +49,6 @@ namespace IS
             dropdown_option_end_image = InternalCalls.GetSpriteImage("dropdown_option_end.png");
 
             //dropdown_option_entity = InternalCalls.CreateEntityUI("Option", dropdown_option_image);
-            dropdown_option_highlight_entity = InternalCalls.CreateEntityUI("Option Highlight", dropdown_option_highlight_image);
-            dropdown_option_end_entity = InternalCalls.CreateEntityUI("Option End", dropdown_option_end_image);
 
             id = InternalCalls.GetCurrentEntityID();
             // Camera
@@ -71,12 +74,39 @@ namespace IS
             InternalCalls.SetButtonIdleAlpha(id, 1f);
             InternalCalls.SetButtonHoverScale(id, 0.9f);
 
-            dropdown_open = false;
+            dropdown_open = false; 
             CreateOptionEntities();
+            CreateOptionHighlightEntities();
+
+            if (!options_created)
+            {
+                for (int i = 0; i < option_entities_list.Count; i++)
+                {
+                    option_entities.Add(option_entities_list[i], resolution_options[i]);
+                }
+                options_created = true;
+            }
+
+            if (!option_highlights_created)
+            {
+                for (int i = 0; i < option_highlight_entities_list.Count; i++)
+                {
+                    option_highlight_entities.Add(option_highlight_entities_list[i], option_entities_list[i]);
+                }
+                option_highlights_created = true;
+            }
+
+            DeleteExtraOptionEntities();
+            DeleteExtraOptionHighlightEntities();
+            key_list = option_entities.Keys.ToList();
+            last_key = key_list[key_list.Count - 1];
             for (int i = 0; i < option_entities.Count; i++)
             {
                 position_of_entities.Add(new Vector2D(0, 0));
             }
+            last_pos_index = position_of_entities.Count - 1;
+            InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);
+
         }
 
         static public void Update()
@@ -129,26 +159,44 @@ namespace IS
 
             y_pos = origin.y + (0.215f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
 
+
             //sizes
             Vector2D option = new Vector2D(0.1591f * win_dimension.x, 0.015f * win_dimension.x); //651 x 57
-            Vector2D option_highlight = new Vector2D(0.1591f * win_dimension.x, 0.031f * win_dimension.x); //651 x 140 
             Vector2D option_end = new Vector2D(0.1591f * win_dimension.x, 0.018f * win_dimension.x); //651 x 63
             //scale
-            //InternalCalls.TransformSetScaleEntity(option.x, option.y, dropdown_option_entity);
-            for (int i = 0; i < option_entities.Count - 1; i++)
+            for (int i = 0; i < key_list.Count - 1; i++)
             {
-                InternalCalls.TransformSetScaleEntity(option.x, option.y, option_entities[i]);
+                int key = key_list[i];
+                InternalCalls.TransformSetScaleEntity(option.x, option.y, key);
             }
-            InternalCalls.TransformSetScaleEntity(option_highlight.x, option_highlight.y, dropdown_option_highlight_entity);
-            InternalCalls.TransformSetScaleEntity(option_end.x, option_end.y, dropdown_option_end_entity);
-
-            for (int i = 0; i < option_entities.Count - 1; i++)
+            if (key_list.Count > 0)
+            {
+                InternalCalls.TransformSetScaleEntity(option_end.x, option_end.y, last_key);
+            }
+            for (int i = 0; i < key_list.Count - 1; i++)
             {
                 position_of_entities[i].x = x_pos - (0.0001f * win_dimension.x);
                 position_of_entities[i].y = y_pos - (0.033f * win_dimension.y) - (i * 0.024f * win_dimension.y);
                 position_of_entities[i].Set(position_of_entities[i].x, position_of_entities[i].y);
             }
 
+            if (key_list.Count > 0)
+            {
+                position_of_entities[last_pos_index].x = x_pos - (0.0001f * win_dimension.x);
+                position_of_entities[last_pos_index].y = y_pos - (0.033f * win_dimension.y) - (last_pos_index * 0.024f * win_dimension.y);
+                position_of_entities[last_pos_index].Set(position_of_entities[last_pos_index].x, position_of_entities[last_pos_index].y);
+            }
+            if (dropdown_open)
+            {
+                //foreach (KeyValuePair<int, string> entry in option_entities)
+                {
+                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.177f *win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.153f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.129f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.105f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.081f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                }
+            }
             if (dropdown_open)
             {
                 InternalCalls.SetSpriteImage(dropdown_open_image);
@@ -175,16 +223,16 @@ namespace IS
 
         static public void CleanUp()
         {
-
         }
 
         static private void Draw()
         {
-            for (int i = 0; i < option_entities.Count; i++)
+            for (int i = 0; i < key_list.Count; i++)
             {
                 if (i < position_of_entities.Count)
                 {
-                    InternalCalls.TransformSetPositionEntity(position_of_entities[i].x, position_of_entities[i].y, option_entities[i]);
+                    int key = key_list[i];
+                    InternalCalls.TransformSetPositionEntity(position_of_entities[i].x, position_of_entities[i].y, key);
                 }
             }
 
@@ -195,28 +243,73 @@ namespace IS
         static private void Hide()
         {
             //InternalCalls.TransformSetPositionEntity(9999f, 9999f, dropdown_option_entity);
-            for (int i = 0; i < option_entities.Count; i++)
+            for (int i = 0; i < key_list.Count; i++)
             {
                 if (i < position_of_entities.Count)
                 {
-                    InternalCalls.TransformSetPositionEntity(9999f, 9999f, option_entities[i]);
+                    int key = key_list[i];
+                    InternalCalls.TransformSetPositionEntity(9999f, 9999f, key);
                 }
             }
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, dropdown_option_highlight_entity);
-            InternalCalls.TransformSetPositionEntity(9999f, 9999f, dropdown_option_end_entity);
         }
 
         static private void CreateOptionEntities()
         {
-
-            for (int i = 0; i < resolution_options.Count; i++)
+            for (int i = 0; i < resolution_options.Count - 1; i++)
             {
                 string option = resolution_options[i];
-                int entity = InternalCalls.CreateEntityUI(option, dropdown_option_image);
-                option_entities.Add(entity);
+                int entity = InternalCalls.CreateEntityUIScript(option, dropdown_option_image, "DropdownOptionScript");
 
-
+                option_entities_list.Add(entity);
             }
+            int last_index = resolution_options.Count - 1;
+            string last_option = resolution_options[last_index];
+            int last_entity = InternalCalls.CreateEntityUIScript(last_option, dropdown_option_end_image, "DropdownOptionScript");
+            option_entities_list.Add(last_entity);
+        }
+        static private void DeleteExtraOptionEntities()
+        {
+            for (int i = 0; i < option_entities_list.Count; i++)
+            {
+                if (!option_entities.ContainsKey(option_entities_list[i]))
+                {
+                    InternalCalls.DestroyEntity(option_entities_list[i]);
+                }
+            }
+        }
+
+        static private void CreateOptionHighlightEntities()
+        {
+            for (int i = 0; i < resolution_options.Count; i++)
+            {
+                int entity = InternalCalls.CreateEntityUI("Option Highlight", dropdown_option_highlight_image);
+                option_highlight_entities_list.Add(entity);
+            }
+        }
+
+        static private void DeleteExtraOptionHighlightEntities()
+        {
+            foreach (var entity in option_highlight_entities_list)
+            {
+                if (!option_highlight_entities.ContainsKey(entity))
+                {
+                    InternalCalls.DestroyEntity(entity);
+                    Console.WriteLine("deleted {0}",entity);
+                }
+            }
+
+        }
+
+        static public Vector2D ConvertAbsoluteToNormalizedPosition(float x, float y)
+        {
+            float normalized_x = (x - origin.x) / win_dimension.x;
+            float normalized_y = (y - origin.y) / win_dimension.y;
+
+            // Ensure the normalized values are clamped between 0 and 1 to avoid going out of bounds
+            normalized_x = Math.Clamp(normalized_x, 0f, 1f);
+            normalized_y = Math.Clamp(normalized_y, 0f, 1f);
+
+            return new Vector2D(normalized_x, normalized_y);
         }
     }
 }
