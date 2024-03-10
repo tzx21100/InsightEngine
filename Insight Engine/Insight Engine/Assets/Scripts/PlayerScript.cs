@@ -225,7 +225,7 @@ namespace IS
         // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
-        static public Vector2D enemy_impulse = new Vector2D(3000f, 2000f);
+        static public Vector2D enemy_impulse = new Vector2D(100f, 80f);
         static private bool initial_get_hit = false;
         //static private string attack_type;
 
@@ -1858,8 +1858,11 @@ namespace IS
                 Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
 
                 // player get hit back
-                InternalCalls.TransformSetPosition(player_pos.x + MathF.Sign(dir) * 20f, player_pos.y + 50f);
-                InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                isGrounded = false;
+                isFirstGrounded = false;
+                InternalCalls.TransformSetPosition(player_pos.x, player_pos.y + 50f);
+                //InternalCalls.RigidBodySetForce(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y);
+                PlayerScript.AddForcesToPlayer(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y, 0.2f);
                 //reset
                 hori_movement = 0;
                 InternalCalls.SetSpriteImage(player_idle);
