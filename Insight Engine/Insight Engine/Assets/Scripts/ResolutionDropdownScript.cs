@@ -42,7 +42,7 @@ namespace IS
         static public List<int> option_highlight_entities_list = new List<int>();
         static public void Init()
         {
-            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
+/*            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
             dropdown_open_image = InternalCalls.GetSpriteImage("dropdown_open.png");
             dropdown_option_image = InternalCalls.GetSpriteImage("dropdown_option.png");
             dropdown_option_highlight_image = InternalCalls.GetSpriteImage("dropdown_option_highlight.png");
@@ -105,13 +105,13 @@ namespace IS
                 position_of_entities.Add(new Vector2D(0, 0));
             }
             last_pos_index = position_of_entities.Count - 1;
-            InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);
+            InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);*/
 
         }
 
         static public void Update()
         {
-            camera_zoom = InternalCalls.CameraGetZoom();
+          /*  camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
             camera_pos.x = InternalCalls.GetCameraPos().x;
@@ -217,7 +217,7 @@ namespace IS
             {
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-
+*/
 
         }
 
