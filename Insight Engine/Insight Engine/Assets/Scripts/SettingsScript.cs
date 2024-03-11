@@ -149,7 +149,6 @@ namespace IS
             scroll_bar_image = InternalCalls.GetSpriteImage("scroll_bar.png");
             scroll_bar_tracker_image = InternalCalls.GetSpriteImage("scroll_bar_tracker.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
-            //trans_image = InternalCalls.GetSpriteImage("black_bg.png");
             settings_overlay_top_image = InternalCalls.GetSpriteImage("settings_overlay_top.png");
             settings_overlay_bot_image = InternalCalls.GetSpriteImage("settings_overlay_bot.png");
 
@@ -164,12 +163,11 @@ namespace IS
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             vfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("VFX Slider Knob", slider_knob_image, "VFXSliderKnobScript");
-            //fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", dropdown_minimized_image, "FPSDropdownScript");
-            resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", dropdown_minimized_image, "ResolutionDropdownScript");
+            //comment out later to show
+            //resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", dropdown_minimized_image, "ResolutionDropdownScript");
             scroll_bar_entity = InternalCalls.CreateEntityUIScript("Scroll Bar", scroll_bar_image, "ScrollBarScript");
             scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
-            //trans_entity = InternalCalls.CreateEntityUI("Transparent", trans_image);
             settings_overlay_top_entity = InternalCalls.CreateEntityUI("Settings Overlay Top", settings_overlay_top_image);
             settings_overlay_bot_entity = InternalCalls.CreateEntityUI("Settings Overlay Bottom", settings_overlay_bot_image);
         }
