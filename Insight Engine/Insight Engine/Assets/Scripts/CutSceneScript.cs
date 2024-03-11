@@ -22,9 +22,13 @@ namespace IS
         static private SimpleImage image14 = InternalCalls.GetSpriteImage("14.jpg");
         static private SimpleImage image15 = InternalCalls.GetSpriteImage("15.jpg");
 
-        static private float image_swap_timer = 2.6f;
-        static private float image_swap_set = 2.6f;
+        static public string cutsceneVideo = "Assets/Videos/cutscene.mov";
+
+        static private float image_swap_timer = 3.0f;
+        static private float image_swap_set = 3.0f;
         static private int current_image = 1;
+
+        static private float wait_for_video = 1.5f;
 
         static private bool play_audio_collapse = false;
         static private bool play_yk_voicelines = false;
@@ -55,10 +59,17 @@ namespace IS
             showText = false;
             InternalCalls.HideCursor();
             current_image = 0;
-            image_swap_timer = 2.6f;
+            image_swap_timer = 3.0f;
+            wait_for_video = 1.8f;
             InternalCalls.AudioPlayMusic("BENNY - Jazz MSCLJZ1_52.wav", 0.4f);
             InternalCalls.AttachCamera(0, 0);
             //InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.4f);
+
+            InternalCalls.loadVideo(cutsceneVideo, 1f, 1f, 0f, 0f, true);
+            InternalCalls.SetLightsToggle(true); // to draw videos first then video
+                                                  // (so that the textbox can still be shown)
+                                                  // will not matter in the future because videos will have
+                                                  // their own textboxes. fucking duct tape i know 8(
         }
 
         static public void Update() {
@@ -68,15 +79,28 @@ namespace IS
             InternalCalls.AttachCamera(0, 0);
             CameraScript.camera_pos.x = 0;
             CameraScript.camera_pos.y = 0;
-            InternalCalls.TransformSetScale(InternalCalls.GetWindowWidth(),InternalCalls.GetWindowHeight());
+
+            /// FOR M5 PRESENTATION ///
+            // InternalCalls.TransformSetScale(InternalCalls.GetWindowWidth(),InternalCalls.GetWindowHeight());
+            InternalCalls.TransformSetScale(0f, 0f); // dont show cutscene images
 
             image_swap_timer -= InternalCalls.GetDeltaTime();
             if(image_swap_timer < 0)
             {
-                image_swap_timer = image_swap_set;
-                current_image++;
-                if(current_image == 17) {
-                    InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
+                if (wait_for_video >= 0) {
+                    wait_for_video -= InternalCalls.GetDeltaTime();
+                }
+                else
+                {
+                    image_swap_timer = image_swap_set;
+                    current_image++;
+                    if (current_image == 17)
+                    {
+                        InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
+
+                        InternalCalls.unloadVideos();
+                        InternalCalls.SetLightsToggle(true);
+                    }
                 }
             }
 

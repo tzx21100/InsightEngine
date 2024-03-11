@@ -273,7 +273,7 @@ namespace IS {
 
         // ShaderEffect::shader_effect_update(delta_time); // not working yet
 
-        videoplayer.update();
+        videoplayer.update(delta_time);
     }
 
     void ISGraphics::Draw([[maybe_unused]] float delta_time) {
@@ -293,6 +293,9 @@ namespace IS {
 
             // clear color buffer
             glClear(GL_COLOR_BUFFER_BIT);
+
+            videoplayer.render(); // render video before quads (M5 presentation duct tape)
+            VideoPlayer::playVideos(delta_time);
 
             // quads will be drawn first
             Sprite::draw_instanced_quads();
@@ -322,11 +325,16 @@ namespace IS {
                 glViewport(0, 0, width, height);
             }
 
+            
+
             // quads will be drawn first
             if (mGlitched) // glitch effect
                 Sprite::draw_instanced_glitched_quads();
             else
                 Sprite::draw_instanced_quads();
+
+            videoplayer.render(); // render video before quads (M5 presentation duct tape)
+            VideoPlayer::playVideos(delta_time);
         }
         else
         {
@@ -342,8 +350,7 @@ namespace IS {
                 glViewport(0, 0, width, height);
             }
             // render lighting
-            if (mLightsOn)
-                Sprite::draw_lights();
+            Sprite::draw_lights();
         }
 
     #ifdef USING_IMGUI
@@ -355,8 +362,6 @@ namespace IS {
         }
     #endif // USING_IMGUI
 
-        videoplayer.render();
-        VideoPlayer::playVideos();
 
         // followed by debugging circles and lines
         Sprite::draw_instanced_circles();

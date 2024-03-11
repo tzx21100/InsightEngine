@@ -28,7 +28,7 @@ namespace IS {
         // translate: [-1 to 1]
         void initVideoPlayer(float widthScalar, float heightScalar, float xPosScalar, float yPosScalar, bool loop = false);
         void loadVideo(const std::string& filepath);
-        void update();
+        void update(double deltaTime);
 
         
         void render();
@@ -45,7 +45,7 @@ namespace IS {
         static void restartVideo(int index);
         static void unloadVideos();
 
-        static void playVideos();
+        static void playVideos(double deltaTime);
         
 
         //static Shader videoShader;
@@ -69,6 +69,9 @@ namespace IS {
             bool frame_ready = false;
             bool toLoop = true;
             bool playing = true;
+
+            double timeSinceLastFrame = 0.0; // Time elapsed since the last frame was shown
+            double frameDuration = 0.0;      // Duration of a single frame
         } state;
 
         GLuint textureID{};
