@@ -86,48 +86,63 @@ namespace IS {
         prepareScalerContext();
     }
 
-    void VideoPlayer::update() {
+    void VideoPlayer::update(double deltaTime) {
 
         if (!state.av_format_ctx || !state.av_codec_ctx || !state.playing) return;
 
-        // Receiving and decoding
-        int response = av_read_frame(state.av_format_ctx, state.av_packet);
+        state.timeSinceLastFrame += deltaTime;
 
-        if (response == AVERROR_EOF) {
-            if (state.toLoop) {
-                av_seek_frame(state.av_format_ctx, state.video_stream_index, 0, AVSEEK_FLAG_FRAME);
-                avcodec_flush_buffers(state.av_codec_ctx);
-            }
-            else {
-                state.playing = false;
-            }
-            return; // Exit if not looping
+        // Calculate frame duration based on the video's framerate
+        if (state.frameDuration == 0.0 && state.av_codec_ctx->framerate.num != 0) {
+            state.frameDuration = av_q2d(av_inv_q(state.av_codec_ctx->framerate));
         }
 
-        if (response >= 0 && state.av_packet->stream_index == state.video_stream_index) {
-            response = avcodec_send_packet(state.av_codec_ctx, state.av_packet);
-            if (response < 0) {
-                IS_CORE_ERROR("Error sending packet to decoder: {}", response);
-                return;
+        // Only attempt to decode and display a new frame if enough time has passed
+        if (state.timeSinceLastFrame >= state.frameDuration) {
+            // Reset the timer for the next frame
+            state.timeSinceLastFrame -= state.frameDuration;
+
+            // Receiving and decoding
+            int response = av_read_frame(state.av_format_ctx, state.av_packet);
+
+            if (response == AVERROR_EOF) {
+                if (state.toLoop) {
+                    av_seek_frame(state.av_format_ctx, state.video_stream_index, 0, AVSEEK_FLAG_FRAME);
+                    avcodec_flush_buffers(state.av_codec_ctx);
+                }
+                else {
+                    state.playing = false;
+                }
+                return; // Exit if not looping
             }
 
-            while (response >= 0) {
-                response = avcodec_receive_frame(state.av_codec_ctx, state.av_frame);
-                if (response == AVERROR(EAGAIN)) {
-                    break;
-                }
-                else if (response < 0) {
-                    IS_CORE_ERROR("Error receiving frame from decoder: {}", response);
+            if (response >= 0 && state.av_packet->stream_index == state.video_stream_index) {
+                response = avcodec_send_packet(state.av_codec_ctx, state.av_packet);
+                if (response < 0) {
+                    IS_CORE_ERROR("Error sending packet to decoder: {}", response);
                     return;
                 }
-                // Frame is ready
-                if (state.av_frame->data[0] != nullptr) {
-                    // Update texture with the new frame
-                    updateTexture();
+
+                while (response >= 0) {
+                    response = avcodec_receive_frame(state.av_codec_ctx, state.av_frame);
+                    if (response == AVERROR(EAGAIN)) {
+                        break;
+                    }
+                    else if (response < 0) {
+                        IS_CORE_ERROR("Error receiving frame from decoder: {}", response);
+                        return;
+                    }
+                    // Frame is ready
+                    if (state.av_frame->data[0] != nullptr) {
+                        // Update texture with the new frame
+                        updateTexture();
+                        break; // Display one frame per update, based on deltaTime
+                    }
                 }
             }
+            av_packet_unref(state.av_packet); // Release resources
         }
-        av_packet_unref(state.av_packet); // Release resources
+        // No else part needed; if not enough time has passed, simply skip frame decoding
     }
 
     void VideoPlayer::render() {
@@ -264,9 +279,9 @@ namespace IS {
         ISGraphics::videos.clear();
     }
 
-    void VideoPlayer::playVideos() {
+    void VideoPlayer::playVideos(double deltaTime) {
         for (auto& vid : ISGraphics::videos) {
-            vid.update();
+            vid.update(deltaTime);
             vid.render();
         }
     }
