@@ -149,6 +149,8 @@ namespace IS {
         
         }
 
+
+
         if (mFadeOutAudio) {
             mCurrentVolume -= deltaTime/mFadeTime;
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
@@ -518,14 +520,6 @@ namespace IS {
     }
 
     void ISAudio::SetMasterVolume(float volume) {
-        for (auto& i : mChannelList) {
-            i->setVolume(volume);
-        }
-        auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
-        auto& channels = sys->mChannelList;
-        for (auto& i : channels) {
-			i.second->setVolume(volume);
-		}
         MasterAudioLevel = volume;
     }
 

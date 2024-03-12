@@ -175,6 +175,9 @@ namespace IS
         static public void Update()
         {
 
+            InternalCalls.AudioSetMaster(0f);
+           // Console.WriteLine("Mster volume:" + master_multiplier);
+
             //InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
 
             // Camera
@@ -302,7 +305,6 @@ namespace IS
             {
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 show_settings = true;
-
 
             }
 

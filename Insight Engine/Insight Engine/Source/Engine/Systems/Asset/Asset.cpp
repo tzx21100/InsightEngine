@@ -208,8 +208,9 @@ namespace IS {
             return nullptr;
         }
 
-        return audio->PlaySound(sound, loop, volume, pitch);
+        return audio->PlaySound(sound, loop, volume *MasterAudioLevel, pitch);
     }
+
 
     FMOD::Channel* AssetManager::PlayMusicByName(const std::string& sound_name, bool loop, float volume, float pitch) {
         FMOD::Sound* sound = GetSound(sound_name);
@@ -232,7 +233,7 @@ namespace IS {
             return channel;
         }
         else {
-            FMOD::Channel* newChannel = audio->PlaySound(sound, loop, volume, pitch);
+            FMOD::Channel* newChannel = audio->PlaySound(sound, loop, volume *MasterAudioLevel, pitch);
             if (newChannel) {
                 mChannelList[sound_name] = newChannel;
             }

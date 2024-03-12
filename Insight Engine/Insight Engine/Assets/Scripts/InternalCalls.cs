@@ -143,13 +143,31 @@ namespace IS
         internal extern static void AudioPlaySound(string name, bool loop,float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlaySoundBGM(string name, bool loop, float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlaySoundSFX(string name, bool loop, float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioPlayMusic(string name ,float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlayMusicSFX(string name, float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioPlayMusicBGM(string name, float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioEmitterEnableEntity(bool enable, int entity);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioSetMaster(float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioSetBGM(float volume);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioSetSFX(float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void ResetAnimations();

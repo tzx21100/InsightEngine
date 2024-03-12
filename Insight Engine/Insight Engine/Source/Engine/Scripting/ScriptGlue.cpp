@@ -397,6 +397,39 @@ namespace IS {
         asset->PlayMusicByName(str ,1,volume,1);
     }
 
+    static void AudioPlaySoundBGM(MonoString* name, bool loop = 0, float volume = 1.f) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlaySoundByName(str, loop, volume*BGMAudioLevel);
+    }
+
+    static void AudioPlaySoundSFX(MonoString* name, bool loop = 0, float volume = 1.f) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlaySoundByName(str, loop, volume * SFXAudioLevel);
+    }
+
+    static void AudioPlayMusicBGM(MonoString* name, float volume) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlayMusicByName(str, 1, volume*BGMAudioLevel, 1);
+    }
+
+    static void AudioPlayMusicSFX(MonoString* name, float volume) {
+        auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        asset->PlayMusicByName(str, 1, volume * SFXAudioLevel, 1);
+    }
+
+
     static void AudioEmitterEnableEntity(bool enable , int entity) {
         auto& component = InsightEngine::Instance().GetComponent<AudioEmitter>(entity);
         if (enable) {
@@ -408,9 +441,19 @@ namespace IS {
     }
 
     static void AudioSetMaster(float volume) {
-        auto sys = InsightEngine::Instance().GetSystem<ISAudio>("Audio");
-        sys->SetMasterVolume(volume);
+        MasterAudioLevel = volume;
+        std::cout << "master vs volume "<< MasterAudioLevel;
+        std::cout << ": " <<volume << std::endl;
     }
+
+    static void AudioSetBGM(float volume) {
+        BGMAudioLevel = volume;
+    }
+
+    static void AudioSetSFX(float volume) {
+        SFXAudioLevel = volume;
+    }
+
 
     static int GetButtonState() {
         auto& button=InsightEngine::Instance().GetComponent<ButtonComponent>(InsightEngine::Instance().GetScriptCaller());
@@ -1541,10 +1584,16 @@ namespace IS {
 
         // Audio
         IS_ADD_INTERNAL_CALL(AudioPlaySound);
+        IS_ADD_INTERNAL_CALL(AudioPlaySoundSFX);
+        IS_ADD_INTERNAL_CALL(AudioPlaySoundBGM);
         IS_ADD_INTERNAL_CALL(AudioPlayMusic);
+        IS_ADD_INTERNAL_CALL(AudioPlayMusicSFX);
+        IS_ADD_INTERNAL_CALL(AudioPlayMusicBGM);
         IS_ADD_INTERNAL_CALL(AudioEmitterEnableEntity);
         IS_ADD_INTERNAL_CALL(AudioStopAllSounds);
         IS_ADD_INTERNAL_CALL(AudioSetMaster);
+        IS_ADD_INTERNAL_CALL(AudioSetSFX);
+        IS_ADD_INTERNAL_CALL(AudioSetBGM);
         IS_ADD_INTERNAL_CALL(FadeOutAudio);
 
         // Button
