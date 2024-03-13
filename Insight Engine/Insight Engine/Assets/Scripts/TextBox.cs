@@ -79,7 +79,7 @@ namespace IS
             textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
             textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
             image_scale = new SimpleVector2D(textbox_width, textbox_height);
-            SimpleImage image = InternalCalls.GetSpriteImage("Text box.png");
+            SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
             InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
             // End of draw textbox
 
