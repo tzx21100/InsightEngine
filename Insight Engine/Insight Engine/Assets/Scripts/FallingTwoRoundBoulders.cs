@@ -240,7 +240,8 @@ namespace IS
                 }
             }
         }
-        //static MyRandom my_rand = new MyRandom(12314);
+        static uint r = (uint)(12314 * InternalCalls.GetRandomFloat());
+        static MyRandom my_rand = new MyRandom(r);
         static public void FirstBoulderShake()
         {
             if (!mPlayFirstShakeAudio)
@@ -257,33 +258,43 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(mFirstOriginalPosition.x + offsetx, mFirstOriginalPosition.y + offsety, FirstBoulderID);
 
             // draw shaking particles
-            /*Vector2D pos = mFirstOriginalPosition;
+            Vector2D pos = mFirstOriginalPosition;
             
-            int num = (int)(10f * my_rand.NextFloat());
+            int num = (int)(3f * my_rand.NextFloat());
             int top_layer = InternalCalls.GetTopLayer();
             Vector2D scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScalingEntity(FirstBoulderID));
             for (int i = 0; i < num; i++)
             {
-                float rand = my_rand.NextFloat();
-                //Console.WriteLine(rand - 0.5f);
-                //float my_rand = InternalCalls.GetRandomFloat();
-                //float dir_rand = my_rand;
-                float dir = 270f;
-                float size = 50f * (rand-0.5f);
-                float size_scale = 10 * rand;
-                float alpha = rand;
-                float lifetime = 10.8f * rand;
-                float speed = 100f * rand - 100f;
-                //float x = pos.x + scaling.x * (rand - 0.5f);
-                float off = 2000f * (rand - 0.5f);
-                //Console.WriteLine(off);
-                float x = pos.x + 2000f * (rand - 0.5f);
-                float y = pos.y + scaling.y / 2.5f * (rand - 0.5f);
-                //Console.WriteLine(p);
+
+
+                float rand = InternalCalls.GetRandomFloat();
+                float dir = 270 + 30 * (rand-0.5f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float size = 20f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float size_scale = 20 * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float alpha = 0.5f + 0.5f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float lifetime = 0.3f+1f*rand;
+                
+                rand = InternalCalls.GetRandomFloat();
+                float speed = 1000f + 500f * rand;
+                
+                rand = InternalCalls.GetRandomFloat();
+                float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+                
+                rand = InternalCalls.GetRandomFloat();
+                float y = pos.y + scaling.y / 2f * (rand - 0.2f);
+                
                 InternalCalls.GameSpawnParticleExtraLayer(
                     x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleDust.txt", 
                 (1f, 1f, 1f), top_layer);
-            }*/
+            }
         }
 
         static public void FirstBoulderFall()
