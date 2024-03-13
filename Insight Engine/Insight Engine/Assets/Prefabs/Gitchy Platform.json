@@ -1,54 +1,11 @@
 {
-	"Collider" : 
-	{
-		"BoxCollider" : 
-		{
-			"BoxColliderCenter" : 
-			{
-				"X" : -314.05419921875,
-				"Y" : 724.47418212890625
-			},
-			"BoxColliderOffset" : 
-			{
-				"X" : 0.0,
-				"Y" : 0.0
-			},
-			"BoxColliderSizeScale" : 
-			{
-				"X" : 0.60000002384185791,
-				"Y" : 0.5
-			},
-			"BoxColliderVertices" : 
-			[
-				{
-					"x" : -222.15019226074219,
-					"y" : 70.625
-				},
-				{
-					"x" : 222.15019226074219,
-					"y" : 70.625
-				},
-				{
-					"x" : 222.15019226074219,
-					"y" : -70.625
-				},
-				{
-					"x" : -222.15019226074219,
-					"y" : -70.625
-				}
-			]
-		},
-		"BoxColliderEnabled" : true,
-		"CircleColliderEnabled" : false,
-		"ResponseEnabled" : true
-	},
 	"Name" : "Gitchy Platform",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : 0.0,
 		"RigidBodyAngularVelocity" : 0.0,
-		"RigidBodyArea" : 209191.421875,
+		"RigidBodyArea" : 209191.25,
 		"RigidBodyBodyType" : 0,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
@@ -66,50 +23,50 @@
 	{
 		"ScriptName" : "GlitchingPlatform"
 	},
-	"Signature" : "00000000000000000000010000100111",
+	"Signature" : "00000000000000000000000000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
 		"Layer" : 1,
-		"SpriteColorA" : 1.0,
+		"SpriteColorA" : 0.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "glitched_platform_vfx 2R6C.png",
+		"SpriteFilename" : "glitched_overworld_platform 5R2C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 36,
-		"SpriteTextureHeight" : 594,
-		"SpriteTextureIndex" : 35,
-		"SpriteTextureWidth" : 4092,
-		"SpriteTransformRotation" : 358.97549438476562,
-		"SpriteTransformScalingX" : 740.5006103515625,
-		"SpriteTransformScalingY" : 282.5,
-		"SpriteTransformWorldPositionX" : -314.05419921875,
-		"SpriteTransformWorldPositionY" : 724.47418212890625,
+		"SpriteTexture" : 68,
+		"SpriteTextureHeight" : 810,
+		"SpriteTextureIndex" : 51,
+		"SpriteTextureWidth" : 804,
+		"SpriteTransformRotation" : 0.40301513671875,
+		"SpriteTransformScalingX" : 444.0,
+		"SpriteTransformScalingY" : 141.0,
+		"SpriteTransformWorldPositionX" : -1068.7325439453125,
+		"SpriteTransformWorldPositionY" : 986.6866455078125,
 		"animations" : 
 		[
 			{
-				"Name" : "gl",
-				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.1666666716337204,
-				"frame_dimension_y" : 0.5,
-				"frame_index_x" : 4.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.075000479817390442,
-				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 6,
-				"y_frames" : 2
+				"Name" : "Glitch",
+				"animation_duration" : 2.0,
+				"frame_dimension_x" : 0.5,
+				"frame_dimension_y" : 0.20000000298023224,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.12639980018138885,
+				"time_per_frame" : 0.20000000298023224,
+				"x_frames" : 2,
+				"y_frames" : 5
 			}
 		]
 	},
 	"Transform" : 
 	{
-		"TransformRotation" : 358.97549438476562,
-		"TransformScalingX" : 740.5006103515625,
-		"TransformScalingY" : 282.5,
-		"TransformWorldPositionX" : -314.05419921875,
-		"TransformWorldPositionY" : 724.47418212890625
+		"TransformRotation" : 0.40301513671875,
+		"TransformScalingX" : 444.0,
+		"TransformScalingY" : 141.0,
+		"TransformWorldPositionX" : -1068.7325439453125,
+		"TransformWorldPositionY" : 986.6866455078125
 	}
 }

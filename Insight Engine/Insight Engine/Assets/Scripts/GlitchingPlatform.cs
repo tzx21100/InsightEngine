@@ -37,7 +37,7 @@ namespace IS
 
 
         static public void CleanUp(){
-            InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
+            InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_overworld_platform 5R2C.png"), InternalCalls.GetCurrentEntityID());
         }
 
     }
@@ -61,7 +61,7 @@ namespace IS
 
             if (TimeOutTimer <= 0)
             {
-                InternalCalls.SetSpriteAlphaEntity(0f, entity_id);
+                //InternalCalls.SetSpriteAlphaEntity(0f, entity_id);
                 InternalCalls.ColliderComponentRemove(entity_id);
                 RespawnTimer -= InternalCalls.GetDeltaTime();
             }
@@ -87,7 +87,7 @@ namespace IS
 
             if (RespawnTimer < 0)
             {
-                InternalCalls.ColliderComponentAdd(entity_id, 0.6f, 0.5f);
+                InternalCalls.ColliderComponentAdd(entity_id, 0.80f, 0.85f);
                 InternalCalls.SetSpriteAlphaEntity(1, entity_id); 
                 TimeOutTimer = TimeOutTimerSet;
                 RespawnTimer = RespawnTimerSet;

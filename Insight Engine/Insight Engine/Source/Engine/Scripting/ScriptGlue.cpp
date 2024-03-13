@@ -442,8 +442,8 @@ namespace IS {
 
     static void AudioSetMaster(float volume) {
         MasterAudioLevel = volume;
-        std::cout << "master vs volume "<< MasterAudioLevel;
-        std::cout << ": " <<volume << std::endl;
+        // std::cout << "master vs volume "<< MasterAudioLevel;
+        // std::cout << ": " <<volume << std::endl;
     }
 
     static void AudioSetBGM(float volume) {
