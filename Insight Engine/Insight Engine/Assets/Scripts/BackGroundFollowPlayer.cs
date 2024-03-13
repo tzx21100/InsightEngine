@@ -33,10 +33,10 @@ namespace IS
         static public void Init(){
 
             fade_out_timer = 1.7f;
-            bg_image1 = InternalCalls.GetSpriteImage("1st.png");
-            bg_image2 = InternalCalls.GetSpriteImage("2nd.png");
+            bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
+            bg_image2 = InternalCalls.GetSpriteImage("1st.png");
             bg_image3 = InternalCalls.GetSpriteImage("3rd.png");
-            bg_image4 = InternalCalls.GetSpriteImage("4th.png");
+            bg_image4 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image5 = InternalCalls.GetSpriteImage("5th.png");
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
 
