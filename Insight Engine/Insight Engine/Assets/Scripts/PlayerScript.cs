@@ -313,7 +313,7 @@ namespace IS
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
-            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
+            InternalCalls.CreateAnimationFromSprite(6, 2, 0.7f); // idle n jump
             InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
 
             // attack 1
@@ -466,6 +466,7 @@ namespace IS
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
                 return;
             }
@@ -915,6 +916,7 @@ namespace IS
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
+                        InternalCalls.SetSpriteAnimationIndex(2);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
@@ -942,6 +944,7 @@ namespace IS
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
+                InternalCalls.SetSpriteAnimationIndex(2);
                 InternalCalls.SetSpriteImage(player_jump);
                 if(InternalCalls.RigidBodyGetVelocityY() < 0f)
                 {
@@ -955,6 +958,7 @@ namespace IS
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
+                        InternalCalls.SetSpriteAnimationIndex(2);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
@@ -1031,6 +1035,7 @@ namespace IS
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
 
                     hori_movement = 0;
+                    InternalCalls.SetSpriteAnimationIndex(1);
                     InternalCalls.SetSpriteImage(player_idle);
 
                     if (mouse_pos.x < player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
@@ -1865,6 +1870,7 @@ namespace IS
                 PlayerScript.AddForcesToPlayer(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y, 0.2f);
                 //reset
                 hori_movement = 0;
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
             }
         }
