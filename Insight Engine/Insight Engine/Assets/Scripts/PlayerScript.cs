@@ -270,6 +270,10 @@ namespace IS
 
         static public void Init()
         {
+            // reset intensity
+            InternalCalls.ChangeShaderIntensity(1f);
+
+
             //remove all existing vidoes
             InternalCalls.unloadVideos();
 

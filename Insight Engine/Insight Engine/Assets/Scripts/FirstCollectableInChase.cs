@@ -41,7 +41,7 @@ namespace IS
                 PlayerScript.PLAYER_LIGHT = 2;
                 InternalCalls.ChangeLightType(2);
 
-                InternalCalls.ChangeShaderIntensity(0.8f);
+                InternalCalls.ChangeShaderIntensity(0.6f);
             }
         }
 

@@ -146,27 +146,26 @@ namespace IS
                 if (!paused)
                 {
                     paused = true;
-                    light_switch = !light_switch;
-                    InternalCalls.SetLightsToggle(light_switch);
                 }
                 else
                 {
                     paused = false;
-                    light_switch = !light_switch;
-                    InternalCalls.SetLightsToggle(light_switch);
+
+                    return;
                 }
             }
             
             if (paused) // if game paused
             {
+                light_switch = false;
+                InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.GamePause(true);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);
                     HidePauseMenu();
-                    light_switch =false;
-                    InternalCalls.SetLightsToggle(light_switch);
+
                 }
                 else
                 {
@@ -178,6 +177,8 @@ namespace IS
             else
             {
                 InternalCalls.GamePause(false);
+                light_switch = true;
+                InternalCalls.SetLightsToggle(light_switch);
                 HidePauseMenu();
             }
             

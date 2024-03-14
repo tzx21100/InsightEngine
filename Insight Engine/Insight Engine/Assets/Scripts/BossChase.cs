@@ -14,6 +14,7 @@ namespace IS
 
         static public void Update()
         {
+            if (PauseButtonScript.paused) { return; }
 
             current_pos = new Vector2D(InternalCalls.GetTransformPosition().x, InternalCalls.GetTransformPosition().y);
 
