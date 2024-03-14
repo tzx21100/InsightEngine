@@ -12,7 +12,7 @@ Alpha Growth: 0.1
 Rotation: 270
 Direction: 270
 Particle Type: 3
-Image Name: leaves_spritesheet.png
+Image Name: ParticleFX_Leaf.png
 Particle Position: 1588, -1022
-Total Cols: 9
+Total Cols: 1
 Total Rows: 1
