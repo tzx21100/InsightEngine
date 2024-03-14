@@ -48,6 +48,8 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
+                PauseButtonScript.light_switch = !PauseButtonScript.light_switch;
+                InternalCalls.SetLightsToggle(PauseButtonScript.light_switch);
                 //click
                 InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
                 PauseButtonScript.paused = false;

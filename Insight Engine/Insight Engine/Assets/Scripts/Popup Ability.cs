@@ -28,7 +28,7 @@ namespace IS
 
         static public void DisplayDoubleJumpGuide()
         {
-            InternalCalls.SetLightsToggle(false);
+            InternalCalls.SetLightsToggle(false); 
             if (doublejumpvideoloaded == false)
             {
                 InternalCalls.loadVideo(doublejumpVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);

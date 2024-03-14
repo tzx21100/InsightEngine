@@ -410,9 +410,9 @@ namespace IS
                 InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, powerup_entity);
                 initialPowerUp = false;
             }
-
+            
             // DISPLAY POWERUP TEXT FOR FIRST TIME
-            if(hasDoubleJump)
+            if (hasDoubleJump)
             {
                 Popup_Ability.DisplayDoubleJumpGuide();
             }
