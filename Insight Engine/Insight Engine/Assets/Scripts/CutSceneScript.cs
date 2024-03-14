@@ -142,7 +142,7 @@ namespace IS
                 showText = false;
             }
 
-
+            InternalCalls.RenderTextFont("Press 'ESC' to skip cutscene", "Semplicita_Light", 0.7f, 0.05f, 8f, (1f, 1f, 1f, 1f));
             switch (current_image)
             {
                 case 1:

@@ -71,6 +71,8 @@ namespace IS
                             InternalCalls.CameraSetZoom(1f);
                             InternalCalls.AttachCamera(0, 0);
                             InternalCalls.AudioStopAllSounds();
+                            PlayerScript.PLAYER_LIGHT = 0;
+                            InternalCalls.ChangeShaderIntensity(0f);
                             InternalCalls.LoadScene("Assets/Scenes/YouWin.insight");
                         }
                     }
