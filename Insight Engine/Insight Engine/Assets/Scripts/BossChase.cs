@@ -4,7 +4,7 @@ namespace IS
 {
     class BossChase
     {
-        static float chase_speed = 12f;
+        static float chase_speed = 9f;
         static Vector2D current_pos = new Vector2D(0,0);
 
         static public void Init()
