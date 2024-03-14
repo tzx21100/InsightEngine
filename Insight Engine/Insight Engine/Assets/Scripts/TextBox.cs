@@ -174,7 +174,7 @@ namespace IS
         static private int CalculateMaxLineLength()
         {
 
-            return (int)(InternalCalls.GetWindowWidth() / ((fontSize+2)*2.2)) ; // Will change later when proper text draw comes out
+            return (int)(InternalCalls.GetWindowWidth() / ((fontSize+2)*2.15)) ; // Will change later when proper text draw comes out
         }
 
         static public void CreateTextBox(string text2)
