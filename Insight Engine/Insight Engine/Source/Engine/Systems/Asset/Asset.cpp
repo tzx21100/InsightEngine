@@ -167,6 +167,26 @@ namespace IS {
             }
         }
 
+
+        // stores shaders
+        path = SHADER_DIRECTORY;
+        for (const auto& entry : fs::directory_iterator(path)) {
+            auto const& filepath = entry.path().filename().string();
+            std::string extension = entry.path().extension().string();
+
+            // Check shader extensions
+            if (extension == ".frag" || extension == ".vert" )
+            {
+                mShaderList.emplace_back(filepath);
+                IS_CORE_INFO("Loaded Shaders: {} ", filepath);
+            }
+            else if (!entry.is_directory())
+            {
+                window->ShowMessageBox("Shader file must be either \".vert\" or \".frag\"!");
+            }
+        }
+
+
         //mThreads.emplace_back(std::thread(LoadEverythingButImages));
 
         // Wait for all threads to finish and then join them

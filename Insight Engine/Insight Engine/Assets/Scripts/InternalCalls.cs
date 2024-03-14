@@ -318,8 +318,11 @@ namespace IS
         internal extern static void GameSpawnParticleExtra(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name);                    
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void GameSpawnParticleExtraLayer(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, (float, float, float) color,int layer);            
-        
+        internal extern static void GameSpawnParticleExtraLayer(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, (float, float, float) color,int layer);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GameSpawnParticleExtraLayerFrames(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, (float, float, float) color, int layer ,int col, int row);
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GameSpawnParticleExtraFrames(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name,int col, int rows);        
 

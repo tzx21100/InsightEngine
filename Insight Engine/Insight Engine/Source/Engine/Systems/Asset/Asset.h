@@ -411,6 +411,7 @@ namespace IS {
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
         std::unordered_map<std::string, Image>mImageList;
         std::unordered_map <std::string, Image> mIconList;
+        std::vector <std::string> mShaderList;
         std::vector<std::string>mImageNames;
         std::vector<std::string>mIconNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
@@ -429,6 +430,10 @@ namespace IS {
         static constexpr const char* SOUND_DIRECTORY    = "Assets/Sounds/";
         static constexpr const char* PARTICLE_DIRECTORY = "Assets/Particles/";
         static constexpr const char* SCRIPT_DIRECTORY    = "Assets/Scripts/";
+        static constexpr const char* SHADER_DIRECTORY    = "Assets/Shaders/";
+        static constexpr const char* VIDEO_DIRECTORY    = "Assets/Videos/";
+
+
 
 
 
