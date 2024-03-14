@@ -1,6 +1,6 @@
 /*!
  * \file SettingsScript.cs
- * \author Wu Zekai, zekai.wu@digipen.edu (40%), Matthew Ng, matthewdeen.ng@digipen.edu (60%)
+ * \author Wu Zekai, zekai.wu@digipen.edu (40%), Matthew Ng, matthewdeen.ng@digipen.edu (70%)
  * \par Course: CSD2451
  * \brief
  * This c# file contains the SettingsScript class, used for settings menu of the game
