@@ -83,6 +83,9 @@ namespace IS
             upper_limit_master_knob = origin.x + (0.562f * win_dimension.x);
 
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+
+
+
             //hovered
             if (InternalCalls.GetButtonState() == 1)
             {
@@ -100,6 +103,11 @@ namespace IS
                     InternalCalls.TransformSetPosition(adjustment, SettingsScript.master_slider_knob_pos.y);
                     SettingsScript.master_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
+
+                    //set master volume
+                    SimpleVector2D trans = InternalCalls.GetTransformPosition();
+                    float master_volume = (trans.x - lower_limit_master_knob) / (lower_limit_master_knob - upper_limit_master_knob);
+                    InternalCalls.AudioSetMaster(master_volume);
 
                 }
 

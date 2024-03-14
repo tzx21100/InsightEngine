@@ -28,9 +28,7 @@
 namespace IS {
 
 
-    static float MasterAudioLevel=1.f;
-    static float SFXAudioLevel=1.f;
-    static float BGMAudioLevel=1.f;
+
 
     class AudioListener : public IComponent {
     public:
@@ -79,6 +77,11 @@ namespace IS {
      */
     class ISAudio :public ParentSystem {
     public:
+
+         float MasterAudioLevel = 1.f;
+         float SFXAudioLevel = 1.f;
+         float BGMAudioLevel = 1.f;
+
         //override parent sys
         void Update(float deltaTime) override;
         std::string GetName() override;

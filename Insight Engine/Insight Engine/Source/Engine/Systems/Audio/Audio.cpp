@@ -136,10 +136,10 @@ namespace IS {
                 float volume = CalculateGain(distance, emitter.falloff_factor);
                 
                 if (IsSoundPlaying(emitter.Channel)){
-                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume *MasterAudioLevel *2.f);
+                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume *MasterAudioLevel *2.f *BGMAudioLevel);
                 }
                 else {
-                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume * MasterAudioLevel *2.f, emitter.pitch);
+                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume * MasterAudioLevel *2.f * BGMAudioLevel, emitter.pitch);
                     mChannelList.emplace_back(emitter.Channel);
                 }
 

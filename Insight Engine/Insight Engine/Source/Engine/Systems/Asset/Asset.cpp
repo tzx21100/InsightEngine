@@ -228,7 +228,9 @@ namespace IS {
             return nullptr;
         }
 
-        return audio->PlaySound(sound, loop, volume *MasterAudioLevel, pitch);
+
+
+        return audio->PlaySound(sound, loop, volume * AUDIO_MANAGER->MasterAudioLevel, pitch);
     }
 
 
@@ -253,7 +255,7 @@ namespace IS {
             return channel;
         }
         else {
-            FMOD::Channel* newChannel = audio->PlaySound(sound, loop, volume *MasterAudioLevel, pitch);
+            FMOD::Channel* newChannel = audio->PlaySound(sound, loop, volume * AUDIO_MANAGER->MasterAudioLevel, pitch);
             if (newChannel) {
                 mChannelList[sound_name] = newChannel;
             }

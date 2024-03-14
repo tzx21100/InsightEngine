@@ -543,7 +543,7 @@ namespace IS
                     dash_timer = dash_set;
                     bullet_time_timer = bullet_time_set;
                     InternalCalls.RigidBodySetForce(0, 0);
-                    InternalCalls.AudioPlaySound("PlayerDeath.wav", false, 0.2f);
+                    InternalCalls.AudioPlaySoundSFX("PlayerDeath.wav", false, 0.2f);
 
                     for (int i = 0; i < 36; i++)
                     {
@@ -1115,7 +1115,7 @@ namespace IS
 
             if (initialDash == true)
             {
-                InternalCalls.AudioPlaySound("Sward-Whoosh_3.wav", false, 0.3f);
+                InternalCalls.AudioPlaySoundSFX("Sward-Whoosh_3.wav", false, 0.3f);
                 initialDash = false;
             }
 
@@ -1328,62 +1328,62 @@ namespace IS
             {
                 if (num <= 0.1f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_1.wav", false, volume);
                     return;
                 }
                 if (num <= 0.2f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_2.wav", false, volume);
                     return;
                 }
                 if (num <= 0.3f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_3.wav", false, volume);
                     return;
                 }
                 if (num <= 0.4f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_4.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_4.wav", false, volume);
                     return;
                 }
                 if (num <= 0.5f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_5.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_5.wav", false, volume);
                     return;
                 }
                 if (num <= 0.6f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_6.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_6.wav", false, volume);
                     return;
                 }
                 if (num <= 0.7f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_7.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_7.wav", false, volume);
                     return;
                 }
                 if (num <= 0.8f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_8.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_8.wav", false, volume);
                     return;
                 }
                 if (num <= 0.85f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_9.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_9.wav", false, volume);
                     return;
                 }
                 if (num <= 0.9f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_10.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_10.wav", false, volume);
                     return;
                 }
                 if (num <= 0.95f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_11.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_11.wav", false, volume);
                     return;
                 }
                 if (num <= 1f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps-Grass-Far-Small_12.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps-Grass-Far-Small_12.wav", false, volume);
                     return;
                 }
 
@@ -1395,52 +1395,52 @@ namespace IS
 
                 if (num <= 0.1f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, volume);
                     return;
                 }
                 if (num <= 0.2f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_2.wav", false, volume);
                     return;
                 }
                 if (num <= 0.3f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_3.wav", false, volume);
                     return;
                 }
                 if (num <= 0.4f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_4.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_4.wav", false, volume);
                     return;
                 }
                 if (num <= 0.5f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_5.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_5.wav", false, volume);
                     return;
                 }
                 if (num <= 0.6f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_6.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_6.wav", false, volume);
                     return;
                 }
                 if (num <= 0.7f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_7.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_7.wav", false, volume);
                     return;
                 }
                 if (num <= 0.8f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_8.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_8.wav", false, volume);
                     return;
                 }
                 if (num <= 0.9f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_9.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_9.wav", false, volume);
                     return;
                 }
                 if (num <= 1f)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_10.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Footsteps_Dirt-Gravel-Far-Small_10.wav", false, volume);
                     return;
                 }
 
@@ -1626,19 +1626,19 @@ namespace IS
             switch (random_attack_sound)
             {
                 case 0:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_1_1.wav", false, volume);
                     break;
                 case 1:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_2_1.wav", false, volume);
                     break;
                 case 2:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_3_1.wav", false, volume);
                     break;
                 case 3:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_4_1.wav", false, volume);
                     break;
                 case 4:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_5_1.wav", false, volume);
                     break;
             }
         }
@@ -1649,19 +1649,19 @@ namespace IS
             switch (random_attack_sound)
             {
                 case 0:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_1_2.wav", false, volume);
                     break;
                 case 1:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_2_2.wav", false, volume);
                     break;
                 case 2:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_3_2.wav", false, volume);
                     break;
                 case 3:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_4_2.wav", false, volume);
                     break;
                 case 4:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_5_2.wav", false, volume);
                     break;
             }
         }
@@ -1672,19 +1672,19 @@ namespace IS
             switch (random_attack_sound)
             {
                 case 0:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_1_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_1_3.wav", false, volume);
                     break;
                 case 1:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_2_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_2_3.wav", false, volume);
                     break;
                 case 2:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_3_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_3_3.wav", false, volume);
                     break;
                 case 3:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_4_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_4_3.wav", false, volume);
                     break;
                 case 4:
-                    InternalCalls.AudioPlaySound("Main Character Combo Attack_5_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Main Character Combo Attack_5_3.wav", false, volume);
                     break;
             }
         }
@@ -1754,10 +1754,10 @@ namespace IS
                         switch (random_hit_sound)
                         {
                             case 0:
-                                InternalCalls.AudioPlaySound("HitSoft CTE01_80.2.wav", false, 0.5f);
+                                InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
                                 break;
                             case 1:
-                                InternalCalls.AudioPlaySound("HitSoft CTE01_80.1.wav", false, 0.5f);
+                                InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.1.wav", false, 0.5f);
                                 break;
                         }
 
@@ -1899,7 +1899,7 @@ namespace IS
             if (!initial_get_hit)
             {
                 CameraScript.camera_shake_duration = 0.2f;
-                InternalCalls.AudioPlaySound("DieSound.wav", false, 0.2f);
+                InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
                 initial_get_hit = true;
 
                 // getting enemy position

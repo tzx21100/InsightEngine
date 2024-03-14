@@ -359,31 +359,31 @@ namespace IS
             switch (random_being_hit_sound)
             {
                 case 0:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_1.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_1.wav", false, volume);
                     break;
                 case 1:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_2.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_2.wav", false, volume);
                     break;
                 case 2:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_3.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_3.wav", false, volume);
                     break;
                 case 3:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_4.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_4.wav", false, volume);
                     break;
                 case 4:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_5.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_5.wav", false, volume);
                     break;
                 case 5:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_6.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_6.wav", false, volume);
                     break;
                 case 6:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_7.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_7.wav", false, volume);
                     break;
                 case 7:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_8.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_8.wav", false, volume);
                     break;
                 case 8:
-                    InternalCalls.AudioPlaySound("Blobby Hurt_9.wav", false, volume);
+                    InternalCalls.AudioPlaySoundSFX("Blobby Hurt_9.wav", false, volume);
                     break;
             }
 
@@ -424,34 +424,34 @@ namespace IS
                     switch (random_idle_sound)
                     {
                         case 0:
-                            InternalCalls.AudioPlaySound("Blobby Idle_1.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_1.wav", false, volume);
                             break;
                         case 1:
-                            InternalCalls.AudioPlaySound("Blobby Idle_2.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_2.wav", false, volume);
                             break;
                         case 2:
-                            InternalCalls.AudioPlaySound("Blobby Idle_3.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_3.wav", false, volume);
                             break;
                         case 3:
-                            InternalCalls.AudioPlaySound("Blobby Idle_4.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_4.wav", false, volume);
                             break;
                         case 4:
-                            InternalCalls.AudioPlaySound("Blobby Idle_5.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_5.wav", false, volume);
                             break;
                         case 5:
-                            InternalCalls.AudioPlaySound("Blobby Idle_6.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_6.wav", false, volume);
                             break;
                         case 6:
-                            InternalCalls.AudioPlaySound("Blobby Idle_7.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_7.wav", false, volume);
                             break;
                         case 7:
-                            InternalCalls.AudioPlaySound("Blobby Idle_8.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_8.wav", false, volume);
                             break;
                         case 8:
-                            InternalCalls.AudioPlaySound("Blobby Idle_9.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_9.wav", false, volume);
                             break;
                         case 9:
-                            InternalCalls.AudioPlaySound("Blobby Idle_10.wav", false, volume);
+                            InternalCalls.AudioPlaySoundSFX("Blobby Idle_10.wav", false, volume);
                             break;
                     }
                     idle_sound_timer = idle_sound_timer_duration + (float)rnd.NextDouble() * 5f; // reset sound timer
@@ -561,30 +561,30 @@ namespace IS
             random_dead_sound = rnd.Next(0, 7);
             if (!initialDeath)
             {
-                InternalCalls.AudioPlaySound("SquirtCartoon CTE02_63.5.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("SquirtCartoon CTE02_63.5.wav", false, volume);
 
                 switch (random_dead_sound)
                 {
                     case 0:
-                        InternalCalls.AudioPlaySound("Blobby Death_1.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_1.wav", false, volume);
                         break;
                     case 1:
-                        InternalCalls.AudioPlaySound("Blobby Death_2.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_2.wav", false, volume);
                         break;
                     case 2:
-                        InternalCalls.AudioPlaySound("Blobby Death_3.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_3.wav", false, volume);
                         break;
                     case 3:
-                        InternalCalls.AudioPlaySound("Blobby Death_4.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_4.wav", false, volume);
                         break;
                     case 4:
-                        InternalCalls.AudioPlaySound("Blobby Death_5.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_5.wav", false, volume);
                         break;
                     case 5:
-                        InternalCalls.AudioPlaySound("Blobby Death_6.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_6.wav", false, volume);
                         break;
                     case 6:
-                        InternalCalls.AudioPlaySound("Blobby Death_7.wav", false, volume);
+                        InternalCalls.AudioPlaySoundSFX("Blobby Death_7.wav", false, volume);
                         break;
                 }
                 PlayerScript.ENEMY_SLAIN++;
@@ -717,31 +717,31 @@ namespace IS
                         switch (random_attack1_sound)
                         {
                             case 0:
-                                InternalCalls.AudioPlaySound("Blobby Attack_1.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_1.wav", false, volume);
                                 break;
                             case 1:
-                                InternalCalls.AudioPlaySound("Blobby Attack_2.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_2.wav", false, volume);
                                 break;
                             case 2:
-                                InternalCalls.AudioPlaySound("Blobby Attack_3.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_3.wav", false, volume);
                                 break;
                             case 3:
-                                InternalCalls.AudioPlaySound("Blobby Attack_4.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_4.wav", false, volume);
                                 break;
                             case 4:
-                                InternalCalls.AudioPlaySound("Blobby Attack_5.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_5.wav", false, volume);
                                 break;
                             case 5:
-                                InternalCalls.AudioPlaySound("Blobby Attack_6.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_6.wav", false, volume);
                                 break;
                             case 6:
-                                InternalCalls.AudioPlaySound("Blobby Attack_7.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_7.wav", false, volume);
                                 break;
                             case 7:
-                                InternalCalls.AudioPlaySound("Blobby Attack_8.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_8.wav", false, volume);
                                 break;
                             case 8:
-                                InternalCalls.AudioPlaySound("Blobby Attack_9.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_9.wav", false, volume);
                                 break;
                         }
                         break;
@@ -751,22 +751,22 @@ namespace IS
                         switch (random_attack2_sound)
                         {
                             case 0:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_1.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_1.wav", false, volume);
                                 break;
                             case 1:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_2.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_2.wav", false, volume);
                                 break;
                             case 2:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_3.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_3.wav", false, volume);
                                 break;
                             case 3:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_4.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_4.wav", false, volume);
                                 break;
                             case 4:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_5.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_5.wav", false, volume);
                                 break;
                             case 5:
-                                InternalCalls.AudioPlaySound("Blobby Attack-Swirl_6.wav", false, volume);
+                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_6.wav", false, volume);
                                 break;
                         }
                         break;
