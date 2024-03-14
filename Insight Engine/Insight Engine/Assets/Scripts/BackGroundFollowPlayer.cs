@@ -105,15 +105,15 @@ namespace IS
 
                 for (int i = 0;i<leaves_amount;i++)
                 {
-                    int col= (int)(InternalCalls.GetRandomFloat()*9);
+                    int col= (int)(InternalCalls.GetRandomFloat()*2);
                     float direction =InternalCalls.GetRandomFloat() * 360;
                     float size = InternalCalls.GetRandomFloat() * 150;
                     float speed = InternalCalls.GetRandomFloat() * 800f;
                     float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFrames((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y+2000f,
+                    InternalCalls.GameSpawnParticleExtraFramesFull((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y+2000f,
                         direction, size, 0f, 1f,
                         0f, lifespan, speed, "ParticleLeaves.txt"
-                        ,col,0);
+                        ,col,0,direction,2,1f,lifespan * CustomMath.Normalize(lifespan-6f) /5f , 3, (1,1,1));
 
                 }
 

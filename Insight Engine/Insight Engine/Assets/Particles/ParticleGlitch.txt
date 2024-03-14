@@ -11,7 +11,7 @@ Alpha: 1
 Alpha Growth: 0.1
 Rotation: 270
 Direction: 270
-Particle Type: 2
+Particle Type: 4
 Image Name: GlitchParticle 1R4C.png
 Particle Position: 1588, -1022
 Total Cols: 4
