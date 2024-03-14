@@ -6,11 +6,11 @@ namespace IS
 {
     class InGameCutscene2
     {
-        static string text0 = "Hello Cipher, it's only been a short time";
-        static string text1 = "It looks like things are progressing well, the world seems to have been restored a little";
-        static string text2 = "Just a little more and I think that we will be done.";
-        static string text3 = "Wait... something is wrong"; //camera shake
-        static string text4 = "RUN CIPHER! HE HAS FOUND US!"; // pm appears and smacks after this
+        static string text0 = "Hello Cipher, it has been a while. I am so proud of your progress.";
+        static string text1 = "It looks like things are progressing well, little by little, the world is being restored.";
+        static string text2 = "Just a couple more fragments, and our world's back in one piece.";
+        static string text3 = "Wait... something's not right."; //camera shake
+        static string text4 = "FLEE CIPHER! HE HAS FOUND US!"; // pm appears and smacks after this
 
         static private int entity_boss;
         static private bool triggered;

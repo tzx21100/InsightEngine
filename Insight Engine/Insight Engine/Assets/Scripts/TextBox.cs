@@ -9,12 +9,12 @@ namespace IS
 
         static public bool isVisible = false;
         static public float textSpeed = 0.05f; // Time in seconds per character
-        static public float fontSize = 18f;
+        static public float fontSize = 14f;
         static public string font = "Semplicita_Light";
         static public string text = "";
 
-        static public float textbox_width_ratio = 0.8f;
-        static public float textbox_height_ratio = 0.4f;
+        static public float textbox_width_ratio = 0.7f;
+        static public float textbox_height_ratio = 0.26f;
         static private float textbox_width = InternalCalls.GetWindowWidth();
         static private float textbox_height = InternalCalls.GetWindowHeight();
 
@@ -29,7 +29,7 @@ namespace IS
         static private string current_text_shown = "";
         static private int current_text_id = 0;
         static private float text_timer = 0f; // New timer variable
-        static private float text_height = 0.165f;
+        static private float text_height = 0.141f;
 
         // keep track of which page of text the textbox is on
         static public int PAGE_NUMBER = 0;
@@ -77,7 +77,7 @@ namespace IS
             position_of_textbox = new SimpleVector2D(camera_pos.x,
             camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.8f);
             textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
-            textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
+            textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom;
             image_scale = new SimpleVector2D(textbox_width, textbox_height);
             SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
             InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
@@ -128,7 +128,7 @@ namespace IS
             }
 
             // Assuming there's a method to draw text. Adjust parameters as needed.
-            InternalCalls.RenderLeftAlignTextFont(current_text_shown,font,0.13f,text_height, fontSize, (1f,1f,1f,1f) );
+            InternalCalls.RenderLeftAlignTextFont(current_text_shown,font,0.24f,text_height, fontSize, (1f,1f,1f,1f) );
         }
 
         static public void CleanUp()
@@ -174,7 +174,7 @@ namespace IS
         static private int CalculateMaxLineLength()
         {
 
-            return (int)(InternalCalls.GetWindowWidth() / ((fontSize+2)*1.8)) ; // Will change later when proper text draw comes out
+            return (int)(InternalCalls.GetWindowWidth() / ((fontSize+2)*2.2)) ; // Will change later when proper text draw comes out
         }
 
         static public void CreateTextBox(string text2)

@@ -6,9 +6,9 @@ namespace IS
 {
     class InGameCutscene
     {
-        static string text0 = "Hello there Cipher. I've been expecting you.";
-        static string text1 = ""; //yiming voice line (you try to speak, however you find yourself baffled, unable to muster even the slightest of sounds.)
-        static string text2 = "Try as you will, as you can tell however, your ability to speak is hindered.";
+        static string text0 = "Hello there Cipher. I have been expecting you.";
+        static string text1 = "<You try to speak, however, you find yourself baffled - unable to muster even the slighest sound.>"; //yiming voice line (you try to speak, however you find yourself baffled, unable to muster even the slightest of sounds.)
+        static string text2 = "I am Archivist X3-R0, your guide in the fragments of a hopeful, broken world.";
         static string text3 = "Listen closely, your world as you know it is slowly being deleted.";
         static string text4 = "A being of another dimension has unfortunately went mad. You must collect FRAGMENTS to save it.";
         static string text5 = "The RED ones restore the world. The BLUE ones give you the ability."; // pan here
