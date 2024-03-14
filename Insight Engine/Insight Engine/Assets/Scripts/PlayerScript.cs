@@ -466,6 +466,7 @@ namespace IS
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
                 return;
             }
@@ -1034,6 +1035,7 @@ namespace IS
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
 
                     hori_movement = 0;
+                    InternalCalls.SetSpriteAnimationIndex(1);
                     InternalCalls.SetSpriteImage(player_idle);
 
                     if (mouse_pos.x < player_pos.x) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
@@ -1868,6 +1870,7 @@ namespace IS
                 PlayerScript.AddForcesToPlayer(MathF.Sign(dir) * enemy_impulse.x, enemy_impulse.y, 0.2f);
                 //reset
                 hori_movement = 0;
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
             }
         }
