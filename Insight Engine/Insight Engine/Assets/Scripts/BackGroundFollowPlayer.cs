@@ -39,7 +39,8 @@ namespace IS
             bg_image4 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image5 = InternalCalls.GetSpriteImage("5th.png");
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
-
+            InternalCalls.AudioStopAllSounds();
+            InternalCalls.AudioPlayMusicSFX("01.Daytime_Forest_Field_Sun_Loop.wav", 0.4f);
 
         }
 

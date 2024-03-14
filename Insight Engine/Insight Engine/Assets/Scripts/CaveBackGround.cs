@@ -94,8 +94,6 @@ namespace IS
                 InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.8f, 0);
             /*                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.3f, 10);*/
 
-            InternalCalls.TransformSetPosition(CameraScript.camera_pos.x+10f,CameraScript.camera_pos.y);   
-
             leaves_timer -= InternalCalls.GetDeltaTime();
             if (leaves_timer <= 0)
             {
