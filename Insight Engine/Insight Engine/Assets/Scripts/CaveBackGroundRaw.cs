@@ -37,7 +37,7 @@ namespace IS
             bg_image4 = InternalCalls.GetSpriteImage("Env_cave_2ndbackground.png");
             bg_image5 = InternalCalls.GetSpriteImage("Env_cave_background.png");
             InternalCalls.AudioStopAllSounds();
-            InternalCalls.AudioPlayMusicSFX("05.Fog-Desert_Loop.wav", 0.7f);
+            InternalCalls.AudioPlayMusicSFX("05.Fog-Desert_Loop.wav", 0.6f);
         }
 
 

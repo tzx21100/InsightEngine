@@ -1170,6 +1170,7 @@ namespace IS
 
         static private void Jump()
         {
+            PlayerScript.RandomJumpSounds();
             InternalCalls.ResetSpriteAnimationFrameEntity(jump_entity);
             InternalCalls.TransformSetScaleEntity(100 * -hori_movement, 100, jump_entity);
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
@@ -1448,6 +1449,43 @@ namespace IS
 
 
             return;
+        }
+
+
+        static private void RandomJumpSounds()
+        {
+            float num = rando_footsteps.NextFloat();
+            float volume = 0.1f;
+            if (num <= 0.18f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.36f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_6.wav", false, volume);
+                return;
+            }
+            if (num <= 0.54f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.72f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_4.wav", false, volume);
+                return;
+            }
+            if (num <= 0.9f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_5.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Main Character_6.wav", false, volume);
+                return;
+            }
         }
 
         static private void Attack()
