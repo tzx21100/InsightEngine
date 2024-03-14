@@ -466,12 +466,19 @@ namespace IS
 
 
 
-            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible)
+            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible ||Popup_Ability.popup_shown ||CameraScript.panning_enable)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, land_entity);
+                InternalCalls.TransformSetPositionEntity(-999, -9999, jump_entity);
+                if (InternalCalls.GetCurrentAnimationEntity(powerup_entity) >= 11)
+                {
+                    InternalCalls.TransformSetScaleEntity(0, 0, powerup_entity);
+                    InternalCalls.TransformSetPositionEntity(-999, -9999, powerup_entity);
+                }
                 return;
             }
 
