@@ -50,7 +50,7 @@ namespace IS
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
         static Vector2D orgin = new Vector2D(0, 0);
-        static private bool light_switch = true;
+        static public bool light_switch = true;
 
         static public void Init()
         {
@@ -140,6 +140,8 @@ namespace IS
             //click
             if (InternalCalls.GetButtonState() == 2)
             {
+                light_switch = !light_switch;
+                InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
 
@@ -157,8 +159,7 @@ namespace IS
             
             if (paused) // if game paused
             {
-                light_switch = false;
-                InternalCalls.SetLightsToggle(light_switch);
+
                 InternalCalls.GamePause(true);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
@@ -177,8 +178,6 @@ namespace IS
             else
             {
                 InternalCalls.GamePause(false);
-                light_switch = true;
-                InternalCalls.SetLightsToggle(light_switch);
                 HidePauseMenu();
             }
             

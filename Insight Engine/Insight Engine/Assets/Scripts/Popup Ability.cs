@@ -4,6 +4,8 @@ namespace IS
     // this is a class for other classes to call no need to be added to script engine.
     class Popup_Ability
     {
+        static public bool popup_shown = false;
+
         static public string doublejumpVideo = "Assets/Videos/Double_Jump_Tutorial.mp4";
         static public string vineVideo = "Assets/Videos/Vine_Climb_Tutorial.mp4";
         static public string dashVideo = "Assets/Videos/Dash_Tutorial.mp4";
@@ -28,11 +30,12 @@ namespace IS
 
         static public void DisplayDoubleJumpGuide()
         {
-            InternalCalls.SetLightsToggle(false);
+            InternalCalls.SetLightsToggle(false); 
             if (doublejumpvideoloaded == false)
             {
                 InternalCalls.loadVideo(doublejumpVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);
                 doublejumpvideoloaded = true;
+                popup_shown = true;
             }
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer()+2);
@@ -49,6 +52,7 @@ namespace IS
                 doublejumpvideoloaded = false;
                 InternalCalls.unloadVideos();
                 InternalCalls.SetLightsToggle(true);
+                popup_shown = false;
             }
 
             
@@ -62,6 +66,7 @@ namespace IS
             {
                 InternalCalls.loadVideo(vineVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);
                 vinevideoloaded = true;
+                popup_shown = true;
             }
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer() + 2);
@@ -79,6 +84,7 @@ namespace IS
                 vinevideoloaded = false;
                 InternalCalls.unloadVideos();
                 InternalCalls.SetLightsToggle(true);
+                popup_shown = false;
             }
 
 
@@ -91,6 +97,7 @@ namespace IS
             {
                 InternalCalls.loadVideo(dashVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);
                 dashvideoloaded = true;
+                popup_shown = true;
             }
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer() + 2);
@@ -108,6 +115,7 @@ namespace IS
                 dashvideoloaded = false;
                 InternalCalls.unloadVideos();
                 InternalCalls.SetLightsToggle(true);
+                popup_shown = false;
             }
 
 
