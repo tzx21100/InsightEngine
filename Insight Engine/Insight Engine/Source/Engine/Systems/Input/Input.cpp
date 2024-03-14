@@ -237,6 +237,22 @@ namespace IS {
             std::string new_filepath = oss.str();
             asset->LoadPrefab(new_filepath);
         }
+        else if (extension == ".vert" || extension == ".frag") // Shader
+        {
+            directory = AssetManager::SHADER_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            asset->LoadShader(new_filepath);
+        }
+        else if (extension == ".txt") // Particle
+        {
+            directory = AssetManager::PARTICLE_DIRECTORY;
+            FileUtils::FileMakeCopy(relative_filepath, directory);
+            oss << directory << "/" << filepath.filename().string();
+            std::string new_filepath = oss.str();
+            asset->LoadParticleFromFile(new_filepath);
+        }
         else // Unsupported file type
         {
             std::string message = std::format("File type \"{}\" not supported!", extension.string());

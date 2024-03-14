@@ -191,10 +191,10 @@ namespace IS {
                     std::string icon_name = is_directory ? "Folder" :
                         extension == ".insight" ? "Insight" :
                         extension == ".json" ? "Json" :
-                        extension == ".mp3" || extension == ".MP3" ? "MP3" :
-                        extension == ".wav" || extension == ".WAV" ? "WAV" :
+                        (extension == ".mp3" || extension == ".MP3") ? "MP3" :
+                        (extension == ".wav" || extension == ".WAV") ? "WAV" :
                         extension == ".png" ? "PNG" :
-                        extension == ".jpeg" || "jpg" ? "JPEG" : "File";
+                        (extension == ".jpeg" || extension == "jpg") ? "JPEG" : "File";
 
                     ImTextureID icon = mEditorLayer.GetIcon(icon_name.c_str());
                     RenderAssetItem(filename_string, selected_file, icon);
@@ -262,14 +262,16 @@ namespace IS {
     void BrowserPanel::RenderImportedAssetsTree()
     {
         const std::string textures = "Textures";
-        const std::string sounds = "Sounds";
-        const std::string prefabs = "Prefabs";
-        const std::string scripts = "Scripts";
+        const std::string sounds   = "Sounds";
+        const std::string prefabs  = "Prefabs";
+        const std::string scripts  = "Scripts";
+        const std::string shaders  = "Shaders";
 
         ImGuiTreeNodeFlags textures_tree_flags = (textures == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
-        ImGuiTreeNodeFlags sounds_tree_flags = (sounds == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
-        ImGuiTreeNodeFlags prefabs_tree_flags = (prefabs == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
-        ImGuiTreeNodeFlags scripts_tree_flags = (scripts == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags sounds_tree_flags   = (sounds   == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags prefabs_tree_flags  = (prefabs  == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags scripts_tree_flags  = (scripts  == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
+        ImGuiTreeNodeFlags shaders_tree_flags  = (shaders  == mSelectedImportedAsset ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_Leaf;
 
         if (ImGui::TreeNodeEx((ICON_LC_IMAGE "  " + textures).c_str(), textures_tree_flags))
         {
@@ -296,6 +298,13 @@ namespace IS {
         {
             if (ImGui::IsItemClicked())
                 SwitchImportedAsset(scripts);
+            ImGui::TreePop();
+        }
+
+        if (ImGui::TreeNodeEx((ICON_LC_IMAGE_PLUS "  " + shaders).c_str(), shaders_tree_flags))
+        {
+            if (ImGui::IsItemClicked())
+                SwitchImportedAsset(shaders);
             ImGui::TreePop();
         }
     }
@@ -422,7 +431,7 @@ namespace IS {
                 }
 
                 if (mSelectedImportedAsset == IMPORTED)
-                    RenderImportedAssetFolder({ "Textures", "Sounds", "Prefabs" }, selected_file);
+                    RenderImportedAssetFolder({ "Textures", "Sounds", "Prefabs", "Scripts", "Shaders" }, selected_file);
                                 
                 // Show all imported textures
                 if (mSelectedImportedAsset == "Textures")
@@ -603,6 +612,51 @@ namespace IS {
                         {
                             const wchar_t* item_path = path.c_str();
                             ImGui::SetDragDropPayload("IMPORTED_SCRIPT", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
+
+                            // Tooltip
+                            const ImVec2 image_size = { 48.f , 48.f };
+                            ImGui::Image(icon, image_size, { 0, 0 }, { 1, 1 }, { 1, 1, 1, .5f });
+
+                            ImGui::EndDragDropSource();
+                        }
+
+                        ImGui::TextWrapped(path.filename().string().c_str());
+                    }
+                }
+
+                // Show all imported shaders
+                else if (mSelectedImportedAsset == "Shaders")
+                {
+                    for (auto it{ asset->mShaderList.begin() }; it != asset->mShaderList.end(); ++it)
+                    {
+                        std::string const& name = *it;
+
+                        if (!mFilter.PassFilter(name.c_str()))
+                        {
+                            continue;
+                        }
+
+                        std::filesystem::path path(name);
+                        ImTextureID icon = mEditorLayer.GetIcon("File");
+                        ImGui::TableNextColumn();
+
+                        // Render image
+                        RenderAssetItem(name, selected_file, icon);
+
+                        // Double-click
+                        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+                        {
+                            FileUtils::OpenFileFromDefaultApp(path.string().c_str(), AssetManager::SHADER_DIRECTORY);
+                        }
+
+                        // Right-click
+                        RenderContextMenuImported(asset->mShaderList, it, path.string(), AssetManager::SHADER_DIRECTORY);
+
+                        // Start file drag
+                        if (ImGui::BeginDragDropSource())
+                        {
+                            const wchar_t* item_path = path.c_str();
+                            ImGui::SetDragDropPayload("IMPORTED_SHADER", item_path, (wcslen(item_path) + 1) * sizeof(wchar_t));
 
                             // Tooltip
                             const ImVec2 image_size = { 48.f , 48.f };

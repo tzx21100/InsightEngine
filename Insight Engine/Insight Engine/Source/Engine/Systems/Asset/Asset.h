@@ -180,7 +180,8 @@ namespace IS {
          *
          * Unloads all assets and releases resources.
          */
-        ~AssetManager() { 
+        ~AssetManager()
+        { 
             // Release memory for images
             for (auto& imagePair : mImageList) {
                 if (imagePair.second.texture_id) {
@@ -197,12 +198,37 @@ namespace IS {
             // Clear other lists
             mPrefabList.clear();
             mSceneList.clear();
-
+            mShaderList.clear();
         }
 
+        /*!
+         * \brief Loads an image from a file and stores it in the AssetManager.
+         *
+         * \param filepath The path to the image file.
+         * \param image_data The ImageData structure to store the loaded image data.
+         */
         void LoadImage(std::string const& filepath, ImageData image_data);
+
+        /*!
+         * \brief Loads an audio file and stores it in the AssetManager.
+         *
+         * \param filepath The path to the audio file.
+         */
         void LoadAudio(std::filesystem::path const& filepath);
+
+        /*!
+         * \brief Loads a prefab from a file and stores it in the AssetManager.
+         *
+         * \param filepath The path to the prefab file.
+         */
         void LoadPrefab(std::string const& filepath);
+
+        /*!
+         * \brief Loads a shader from a file and stores it in the AssetManager.
+         *
+         * \param filepath The path to the shader file.
+         */
+        void LoadShader(std::string const& filepath);
 
         /*!
          * \brief Retrieves image data by file name.
@@ -211,6 +237,13 @@ namespace IS {
          * \return A reference to the Image structure containing image data.
          */
         Image* GetImage(const std::string& file_name);
+
+        /*!
+         * \brief Retrieves icon image data by file name.
+         *
+         * \param file_name The name of the icon image file.
+         * \return A pointer to the Image structure containing icon image data.
+         */
         Image* GetIcon(const std::string& file_name);
 
         /*!
@@ -220,7 +253,13 @@ namespace IS {
          */
         void ImageLoad(const std::string& file_path,ImageData image_data);
 
+        /*!
+         * \brief Loads an icon image from a file.
+         *
+         * \param file_path The path to the icon image file.
+         */
         void IconLoad(const std::string& file_path);
+
         /*!
          * \brief Saves image data.
          *
@@ -228,6 +267,11 @@ namespace IS {
          */
         void SaveImageData(const Image image_data);
 
+        /*!
+         * \brief Saves icon image data.
+         *
+         * \param icon_data The Image structure containing icon image data to be saved.
+         */
         void SaveIconData(const Image icon_data);
 
         /*!
@@ -244,6 +288,11 @@ namespace IS {
          */
         void ImageFree(const std::string& file_name);
 
+        /*!
+         * \brief Loads image data from a file in a separate worker thread.
+         *
+         * \param filepath The path to the image file.
+         */
         void WorkerLoadImageData(const std::string& filepath);
 
         /*!
@@ -351,7 +400,9 @@ namespace IS {
             }
         }
 
-
+        /*!
+         * \brief Stops all currently playing sounds.
+         */
         void ClearAllSounds() {
             for (auto sound : mChannelList) {
                 sound.second->stop();
@@ -361,6 +412,12 @@ namespace IS {
 
         //saving and loading particles
 
+        /*!
+         * \brief Saves a particle to a file.
+         *
+         * \param particle The Particle to save.
+         * \param filename The name of the file to save to.
+         */
         void SaveParticleToFile(const Particle& particle, const std::string& filename) {
             std::ofstream file(filename, std::ios::out | std::ios::trunc); // Open file in write mode, truncating existing content
 
@@ -374,6 +431,12 @@ namespace IS {
             }
         }
 
+        /*!
+         * \brief Loads a particle from a file.
+         *
+         * \param filename The name of the file to load from.
+         * \return The loaded Particle.
+         */
         Particle LoadParticleFromFile(const std::string& filename) {
             std::ifstream file(filename);
             std::stringstream data;
@@ -384,11 +447,23 @@ namespace IS {
             return Particle::Deserialize(data.str());
         }
 
+        /*!
+         * \brief Saves a particle to a file in the particle directory.
+         *
+         * \param part The Particle to save.
+         * \param filename The name of the file to save to.
+         */
         void SaveParticle(Particle part, std::string filename) {
             filename = PARTICLE_DIRECTORY + filename;
             SaveParticleToFile(part, filename);
         
         }
+
+        /*!
+         * \brief Loads a particle from a file in the particle directory.
+         *
+         * \param filename The name of the file to load from.
+         */
         void LoadParticle(std::string filename) {
            
             IS_CORE_DEBUG("{}", filename);
@@ -396,28 +471,50 @@ namespace IS {
 
         }
 
+        /*!
+         * \brief Retrieves a particle by filename from the particle directory.
+         *
+         * \param filename The name of the file to retrieve.
+         * \return The retrieved Particle.
+         */
         Particle GetParticle(std::string filename) {
             filename = PARTICLE_DIRECTORY + filename;
             return mParticleList[filename];
         }
 
+        /*!
+         * \brief Refreshes the directories for assets.
+         */
         void RefreshDirectiories();
 
+        /*!
+         * \brief Loads an icon for the window.
+         *
+         * \param window The window to load the icon for.
+         * \param filepath The path to the icon file.
+         */
         static void LoadWindowIcon(GLFWwindow* window, const char* filepath);
+
+        /*!
+         * \brief Loads a cursor for the window.
+         *
+         * \param filepath The path to the cursor file.
+         * \return The loaded GLFWcursor.
+         */
         static GLFWcursor* LoadWindowCursor(const char* filepath);
 
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
-        std::unordered_map<std::string, Image>mImageList;
+        std::unordered_map<std::string, Image> mImageList;
         std::unordered_map <std::string, Image> mIconList;
-        std::vector <std::string> mShaderList;
-        std::vector<std::string>mImageNames;
-        std::vector<std::string>mIconNames;
+        std::vector<std::string> mShaderList;
+        std::vector<std::string> mImageNames;
+        std::vector<std::string> mIconNames;
         std::unordered_map<std::string, Prefab> mPrefabList;
-        std::vector<std::string>mSceneList;
-        std::vector<std::string>mScriptList;
-        std::unordered_map<std::string,Particle>mParticleList;
+        std::vector<std::string> mSceneList;
+        std::vector<std::string> mScriptList;
+        std::unordered_map<std::string,Particle> mParticleList;
         std::vector<std::thread> mThreads;
         std::vector<std::pair<std::string, ImageData>> mImageData;
         std::mutex mImageDataMutex;
