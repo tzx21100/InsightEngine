@@ -353,6 +353,12 @@ namespace IS {
         IS_CORE_INFO("Loaded Prefab: {} ", filepath);
     }
 
+    void AssetManager::LoadShader(std::string const& filepath)
+    {
+        if (std::find(mShaderList.begin(), mShaderList.end(), filepath) != mShaderList.end())
+            mShaderList.emplace_back(filepath);
+    }
+
     Image* AssetManager::GetImage(const std::string& file_name)  {
         auto iter = mImageList.find(file_name);
         if (iter != mImageList.end()) {
