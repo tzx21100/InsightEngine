@@ -100,7 +100,10 @@ namespace IS
                     InternalCalls.TransformSetPosition(adjustment, SettingsScript.vfx_slider_knob_pos.y);
                     SettingsScript.vfx_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
-
+                    //sfx volume
+                    SimpleVector2D trans = InternalCalls.GetTransformPosition();
+                    float sfx_volume = (trans.x - lower_limit_vfx_knob) / (lower_limit_vfx_knob - upper_limit_vfx_knob);
+                    InternalCalls.AudioSetSFX(sfx_volume);
                 }
 
             }

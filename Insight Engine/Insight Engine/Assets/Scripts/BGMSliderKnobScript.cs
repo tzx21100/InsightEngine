@@ -108,6 +108,9 @@ namespace IS
                     SettingsScript.bgm_slider_knob_pos.x = adjustment;
                     normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
 
+                    SimpleVector2D trans = InternalCalls.GetTransformPosition();
+                    float bgm_volume = (trans.x - lower_limit_bgm_knob) / (lower_limit_bgm_knob - upper_limit_bgm_knob);
+                    InternalCalls.AudioSetBGM(bgm_volume);
                 }
 
             }

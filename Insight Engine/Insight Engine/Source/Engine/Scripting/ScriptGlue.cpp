@@ -402,7 +402,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlaySoundByName(str, loop, volume*BGMAudioLevel);
+        asset->PlaySoundByName(str, loop, volume* AUDIO_MANAGER->BGMAudioLevel);
     }
 
     static void AudioPlaySoundSFX(MonoString* name, bool loop = 0, float volume = 1.f) {
@@ -410,7 +410,8 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlaySoundByName(str, loop, volume * SFXAudioLevel);
+        std::cout << "SFX AUDIO : " << AUDIO_MANAGER->SFXAudioLevel << std::endl;
+        asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->SFXAudioLevel);
     }
 
     static void AudioPlayMusicBGM(MonoString* name, float volume) {
@@ -418,7 +419,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName(str, 1, volume*BGMAudioLevel, 1);
+        asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->BGMAudioLevel, 1);
     }
 
     static void AudioPlayMusicSFX(MonoString* name, float volume) {
@@ -426,7 +427,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName(str, 1, volume * SFXAudioLevel, 1);
+        asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->SFXAudioLevel, 1);
     }
 
 
@@ -441,17 +442,20 @@ namespace IS {
     }
 
     static void AudioSetMaster(float volume) {
-        MasterAudioLevel = volume;
+        AUDIO_MANAGER->MasterAudioLevel = volume;
         // std::cout << "master vs volume "<< MasterAudioLevel;
         // std::cout << ": " <<volume << std::endl;
+        //for (auto& channel : ASSET_MANAGER->mChannelList) {
+        //    channel.second->setVolume(volume);
+        //}
     }
 
     static void AudioSetBGM(float volume) {
-        BGMAudioLevel = volume;
+        AUDIO_MANAGER->BGMAudioLevel = volume;
     }
 
     static void AudioSetSFX(float volume) {
-        SFXAudioLevel = volume;
+        AUDIO_MANAGER->SFXAudioLevel = volume;
     }
 
 

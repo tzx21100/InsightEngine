@@ -21,6 +21,7 @@
 #define GAM200_INSIGHT_ENGINE_CORE_COREENGINE_H_
 #define ASSET_MANAGER InsightEngine::Instance().GetSystem<AssetManager>("Asset")
 #define INPUT_MANAGER InsightEngine::Instance().GetSystem<InputManager>("Input")
+#define AUDIO_MANAGER InsightEngine::Instance().GetSystem<ISAudio>("Audio")
 
  /*                                                                   includes
  ----------------------------------------------------------------------------- */
@@ -28,6 +29,7 @@
 #include "Engine/ECS/System.h"
 #include "Engine/JSON/Prefab.h"
 #include "Engine/Scripting/ScriptManager.h"
+#include "../Systems/Audio/Audio.h"
 #include "Editor/Layers/LayerStack.h"
 #include "Editor/Layers/ImGuiLayer.h"
 #include "Editor/Layers/EditorLayer.h"

@@ -101,6 +101,7 @@ namespace IS
 
         static public void Init()
         {
+            
             show_settings = false;
             win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
             win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
@@ -175,10 +176,9 @@ namespace IS
         static public void Update()
         {
 
-            InternalCalls.AudioSetMaster(0f);
-           // Console.WriteLine("Mster volume:" + master_multiplier);
+           // InternalCalls.AudioSetMaster(master_multiplier);
 
-            //InternalCalls.AudioSetMaster(SettingsScript.master_multiplier);
+            
 
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
