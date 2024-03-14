@@ -34,6 +34,11 @@ namespace IS
         static public void SpawnFog()
         {
 
+            if (InternalCalls.GetRandomFloat()+randomfloat.NextFloat() < 0.6f)
+            {
+                return;
+            }
+
             if(fog_timer > 0)
             {
                 fog_timer -= InternalCalls.GetDeltaTime();
@@ -42,7 +47,7 @@ namespace IS
             fog_timer = fog_timer_set;
 
             float lifetime = fog_timer_set;
-            float direction = InternalCalls.GetRandomFloat()*360f; // Direction of the particles, can be randomized for more natural effect
+            float direction = InternalCalls.GetRandomFloat()*360; // Direction of the particles, can be randomized for more natural effect
             float size = fog_size; // Size of the particles
             float scale = 2f; // Scale of the particles
             float dash_particle_alpha = 1f; // Alpha transparency of the particles
@@ -76,10 +81,21 @@ namespace IS
                         lifetime = CustomMath.max(fog_timer_set, randomfloat.NextFloat() *2f);
                         posX += size * randomfloat.NextFloat();
                         posY += size * randomfloat.NextFloat();
-                        InternalCalls.GameSpawnParticleExtraLayer(posX, posY,
+                        InternalCalls.GameSpawnParticleExtraLayerFrames(posX, posY,
                         direction, size, scale, dash_particle_alpha,
                         growth, lifetime, speed, "ParticleDust.txt",
-                        (1f, 1f, 1f),top_layer);
+                        (1f, 1f, 1f), top_layer, 0, 4);
+                        if (InternalCalls.GetRandomFloat() + randomfloat.NextFloat() < 0.6f)
+                        {
+                            InternalCalls.GameSpawnParticleExtraFramesFull(posX, posY,
+                                            direction, size / 2f, scale, 1f,
+                                            0f, lifetime * 1.5f, 0f, "ParticleGlitch.txt"
+                                            , 0, 0, direction, 0, 1f, 1f, top_layer,
+                                            (1f, 1f, 1f)
+                                            );
+
+                        }
+
                     }
 
                 }

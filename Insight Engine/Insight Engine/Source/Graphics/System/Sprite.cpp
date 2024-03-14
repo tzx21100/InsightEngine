@@ -210,6 +210,25 @@ namespace IS {
         }
     }
 
+    void Sprite::draw_textured_quad_colour(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer, std::tuple<float,float,float> colour) {
+        // only render if layer not ignored
+        if (Sprite::layersToIgnore.find(layer) == Sprite::layersToIgnore.end()) {
+            Transform quadTRS(pos, rotation, scale);
+
+            // get line scaling matrix
+            glm::mat4 world_to_NDC_xform = quadTRS.Return3DXformMatrix();
+            Sprite::instanceData instData;
+            instData.color = { std::get<0>(colour), std::get<1>(colour), std::get<2>(colour), alpha };
+            instData.tex_index = static_cast<float>(texture.texture_index);
+            instData.model_to_ndc_xform = world_to_NDC_xform;
+            instData.layer = layer;
+
+            // add to multiset to render everything at the end
+            ISGraphics::layeredQuadInstances.insert(instData);
+        }
+    }
+
+
     void Sprite::drawSpritesheetFrame(int rowIndex, int columnIndex, int totalRows, int totalCols, Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer) {
         // error handling
         if (rowIndex < 0 || rowIndex >= totalRows || columnIndex < 0 || columnIndex >= totalCols) {
