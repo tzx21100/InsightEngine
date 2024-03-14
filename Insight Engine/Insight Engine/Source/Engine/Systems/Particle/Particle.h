@@ -46,6 +46,13 @@ namespace IS {
 
 	};
 
+	enum Particle_Effect : int {
+		effect_normal=0,
+		effect_swing=1,
+		effect_spin=2,
+		effect_animate=3
+	};
+
 	/*!
 	 * \class Color
 	 * \brief Represents a color with red, green, blue, and alpha components.
@@ -138,8 +145,11 @@ namespace IS {
 		int mRowIndex = 0;
 		int mTotalCols = 0;
 		int mTotalRows = 0;
-
+		float mRotationSpeed = 0.f;
 		Vector2D mParticlePos = { 0.f,0.f };
+		Particle_Effect mEffect = effect_normal;
+		float mParticleEffectTimer = 0.f;
+		float mParticleEffectTimerSet = 2.f;
 
 		/*!
 		 * \brief Creates and returns a new Particle object.

@@ -324,7 +324,13 @@ namespace IS
         internal extern static void GameSpawnParticleExtraLayerFrames(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, (float, float, float) color, int layer ,int col, int row);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void GameSpawnParticleExtraFrames(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name,int col, int rows);        
+        internal extern static void GameSpawnParticleExtraFrames(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name,int col, int rows);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GameSpawnParticleExtraFramesRotate(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, int col, int rows,float rotate);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void GameSpawnParticleExtraFramesFull(float x, float y, float direction, float size, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, int col, int row, float rotate, int particle_effect, float particle_effect_timer, float rotation_speed, int layer, (float, float, float) color);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void GameSpawnParticleExtraImage(float x, float y, float direction, float sizeX, float sizeY, float size_scale, float alpha, float alpha_growth, float lifespan, float speed, string particle_name, string image_name); 

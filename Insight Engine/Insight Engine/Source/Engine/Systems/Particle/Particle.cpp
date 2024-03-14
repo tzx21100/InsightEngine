@@ -32,7 +32,7 @@ namespace IS {
         //Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
 
-        run_anim.initAnimation(1, 9, 1.f);
+        run_anim.initAnimation(1, 4, 1.f);
     }
 
     void ParticleSystem::Update(float deltaTime) {
@@ -68,7 +68,7 @@ namespace IS {
                     break;
 
                 case pt_texture:
-                    Sprite::draw_textured_quad(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, mParticleList[id].mLayer);
+                    Sprite::draw_textured_quad_colour(mParticleList[id].mParticlePos, mParticleList[id].mRotation, mParticleList[id].mScale, *asset->GetImage(mParticleList[id].mImageName), mParticleList[id].mAlpha, mParticleList[id].mLayer, std::tuple<float,float,float>(mParticleList[id].mColor.R, mParticleList[id].mColor.G, mParticleList[id].mColor.B));
                     break;
 
                 case pt_texture_frames:
@@ -92,6 +92,52 @@ namespace IS {
                     mParticleList[id].mAlpha += mParticleList[id].mAlphaGrowth * deltaTime;
                     mParticleList[id].mParticlePos.y -= 98.f * deltaTime * static_cast<int>(mParticleList[id].mGravity);
                 }
+
+                //particle effect
+                switch (mParticleList[id].mEffect) {
+                    case effect_normal:
+                        break;
+
+                    case effect_swing:
+                    mParticleList[id].mParticleEffectTimer -= deltaTime;
+                    if (mParticleList[id].mParticleEffectTimer <= 0.f) {
+                        if (mParticleList[id].mDirection > 180 && mParticleList[id].mDirection < 270) {
+                            mParticleList[id].mDirection += 70;
+                        }
+                        else if (mParticleList[id].mDirection > 270 && mParticleList[id].mDirection < 360) {
+                            mParticleList[id].mDirection -= 70;
+                        }
+                        mParticleList[id].mRotation += 180;
+                        mParticleList[id].mParticleEffectTimer= mParticleList[id].mParticleEffectTimerSet;
+                    }
+                        break;
+
+                    case effect_spin:
+                        mParticleList[id].mRotation += mParticleList[id].mRotationSpeed;
+                        break;
+
+                    case effect_animate:
+                        mParticleList[id].mParticleEffectTimer -= deltaTime;
+                        if (mParticleList[id].mParticleEffectTimer <= 0.f) {
+                            if (mParticleList[id].mColIndex < mParticleList[id].mTotalCols-1) {
+                                mParticleList[id].mColIndex++;
+                            }
+                            else {
+                                mParticleList[id].mColIndex = 0;
+                            }
+
+                            mParticleList[id].mParticleEffectTimer = mParticleList[id].mParticleEffectTimerSet;
+                        }
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
+
+                
             }
 
             for (auto const& emitters : mEntities) {

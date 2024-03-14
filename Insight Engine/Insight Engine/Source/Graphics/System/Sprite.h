@@ -190,6 +190,7 @@ namespace IS {
          * The layer determines the rendering order.
          */
         static void draw_textured_quad(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer = DrawLayer::DEFAULT_LAYER);
+        static void draw_textured_quad_colour(Vector2D const& pos, float rotation, Vector2D const& scale, Image const& texture, float alpha, int layer = DrawLayer::DEFAULT_LAYER ,std::tuple<float,float,float> colour = std::tuple<float, float, float>(1.f,1.f,1.f));
 
         /**
          * @brief Draw a specific frame from a spritesheet at the specified position with rotation, scale, texture, alpha, and layer.

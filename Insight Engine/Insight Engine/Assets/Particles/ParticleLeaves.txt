@@ -12,7 +12,7 @@ Alpha Growth: 0.1
 Rotation: 270
 Direction: 270
 Particle Type: 3
-Image Name: ParticleFX_Leaf.png
+Image Name: OverworldLeaf 1R2C.png
 Particle Position: 1588, -1022
-Total Cols: 1
+Total Cols: 2
 Total Rows: 1
