@@ -22,8 +22,8 @@ namespace IS
 
 
         //setting text window size
-        static public float textbox_width_ratio = 0.95f;
-        static public float textbox_height_ratio = 0.3f;
+        static public float textbox_width_ratio = 0.7f;
+        static public float textbox_height_ratio = 0.26f;
         static private float textbox_width = InternalCalls.GetWindowWidth();
         static private float textbox_height = InternalCalls.GetWindowHeight();
 
@@ -127,11 +127,11 @@ namespace IS
             if (showText)
             {
                 textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
-                textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom / 2f;
+                textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom;
                 image_scale = new SimpleVector2D(textbox_width, textbox_height);
 
                 position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x,
-                                                                       CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.8f);
+                                                                       CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.91f);
 
                 SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
                 InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
