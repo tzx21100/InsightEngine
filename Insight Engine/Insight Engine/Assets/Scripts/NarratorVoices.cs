@@ -19,7 +19,7 @@ namespace IS
 
             if (array.FindIndex(PlayerScript.PLAYER_ID) != -1 && announce_help)
             {
-                InternalCalls.AudioPlaySound("Narrator_3.wav", false, 0.4f);
+                InternalCalls.AudioPlaySoundSFX("Narrator_3.wav", false, 0.4f);
                 announce_help = false;
             }
         }
@@ -52,32 +52,32 @@ namespace IS
 
             if (num <= 0.16f)
             {
-                InternalCalls.AudioPlaySound("Narrator_4.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_4.wav", false, volume);
                 return;
             }
             if (num <= 0.32f)
             {
-                InternalCalls.AudioPlaySound("Narrator_5.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_5.wav", false, volume);
                 return;
             }
             if (num <= 0.48f)
             {
-                InternalCalls.AudioPlaySound("Narrator_6.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_6.wav", false, volume);
                 return;
             }
             if (num <= 0.64f)
             {
-                InternalCalls.AudioPlaySound("Narrator_7.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_7.wav", false, volume);
                 return;
             }
             if (num <= 0.80f)
             {
-                InternalCalls.AudioPlaySound("Narrator_8.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_8.wav", false, volume);
                 return;
             }
             if (num <= 1f)
             {
-                InternalCalls.AudioPlaySound("Narrator_9.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("Narrator_9.wav", false, volume);
                 return;
             }
 

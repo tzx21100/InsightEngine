@@ -46,7 +46,7 @@ namespace IS
             if (TextBox.PAGE_NUMBER == 1) { //play yiming VA
                 if(play_audio)
                 {
-                    InternalCalls.AudioPlaySound("Narrator_1.wav", false, 0.4f);
+                    InternalCalls.AudioPlaySoundSFX("Narrator_1.wav", false, 0.4f);
                     play_audio = false;
                 }
                 
@@ -75,7 +75,7 @@ namespace IS
             //end of camera pan and dialogue
             if (textshow==false && TextBox.isVisible == false)
             {
-                InternalCalls.AudioPlaySound("Narrator_2.wav", false, 0.4f);
+                InternalCalls.AudioPlaySoundSFX("Narrator_2.wav", false, 0.4f);
                 CameraScript.StopCameraPan();
 
                 //yiming VA plays "Left without a choice, you can only do as the strange man says"
