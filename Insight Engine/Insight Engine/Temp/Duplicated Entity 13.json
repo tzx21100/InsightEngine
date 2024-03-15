@@ -1,0 +1,35 @@
+{
+	"Name" : "SpikeImage",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Spikes.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 104,
+		"SpriteTextureHeight" : 888,
+		"SpriteTextureIndex" : 87,
+		"SpriteTextureWidth" : 1548,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 150.0,
+		"SpriteTransformScalingY" : 150.0,
+		"SpriteTransformWorldPositionX" : -1703.1748046875,
+		"SpriteTransformWorldPositionY" : -451.905029296875,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 150.0,
+		"TransformScalingY" : 150.0,
+		"TransformWorldPositionX" : -1703.1748046875,
+		"TransformWorldPositionY" : -451.905029296875
+	}
+}
