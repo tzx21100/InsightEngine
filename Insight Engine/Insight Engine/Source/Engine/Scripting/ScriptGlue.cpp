@@ -431,7 +431,8 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->BGMAudioLevel, 1);
+        FMOD::Channel* channel= asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->BGMAudioLevel, 1);
+        asset->mBGMChannel.emplace_back(str, channel, volume);
     }
 
     static void AudioPlayMusicSFX(MonoString* name, float volume) {
@@ -439,7 +440,8 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->SFXAudioLevel, 1);
+        FMOD::Channel* channel = asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->SFXAudioLevel, 1);
+        asset->mSFXChannel.emplace_back(str, channel, volume);
     }
 
 
@@ -464,10 +466,18 @@ namespace IS {
 
     static void AudioSetBGM(float volume) {
         AUDIO_MANAGER->BGMAudioLevel = volume;
+        for (auto& audiodata : ASSET_MANAGER->mBGMChannel)
+        {
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->BGMAudioLevel);
+        }
     }
 
     static void AudioSetSFX(float volume) {
         AUDIO_MANAGER->SFXAudioLevel = volume;
+        for (auto& audiodata : ASSET_MANAGER->mSFXChannel)
+        {
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->SFXAudioLevel);
+        }
     }
 
 
