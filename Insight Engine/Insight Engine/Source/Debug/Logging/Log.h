@@ -91,7 +91,7 @@ namespace IS {
 #ifdef _DEBUG
 #define IS_CORE_DEBUG(...) ::IS::Log::GetCoreLogger()->Debug(__VA_ARGS__)
 #else
-#define IS_CORE_DEBUG(...) (void)(__VA_ARGS__)
+#define IS_CORE_DEBUG(...) 
 #endif
 #define IS_CORE_INFO(...) ::IS::Log::GetCoreLogger()->Info(__VA_ARGS__)
 #define IS_CORE_WARN(...) ::IS::Log::GetCoreLogger()->Warn(__VA_ARGS__)
@@ -103,7 +103,7 @@ namespace IS {
 #ifdef _DEBUG
 #define IS_DEBUG(...) ::IS::Log::GetClientLogger()->Debug(__VA_ARGS__)
 #else
-#define IS_DEBUG(...) (void)(__VA_ARGS__)
+#define IS_DEBUG(...) 
 #endif
 #define IS_INFO(...) ::IS::Log::GetClientLogger()->Info(__VA_ARGS__)
 #define IS_WARN(...) ::IS::Log::GetClientLogger()->Warn(__VA_ARGS__)
