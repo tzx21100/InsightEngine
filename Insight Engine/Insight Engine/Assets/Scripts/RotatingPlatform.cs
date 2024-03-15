@@ -1,10 +1,10 @@
 /*!
- * \file SpikeScript.cs
- * \author  Tan Zheng Xun, t.zhengxun@digipen.edu
- * \par Course: CSD2401
- * \date 26-11-2023
+ * \file RotatingPlatform.cs
+ * \author Wu Zekai, zekai.wu@digipen.edu
+ * \par Course: CSD2451
+ * \date 15-03-2024
  * \brief
- * This source file is meant for the player movement and camera.
+ * This header file contains the implementation of the rotating platform class
  *
  * \copyright
  * All content (C) 2024 DigiPen Institute of Technology Singapore.

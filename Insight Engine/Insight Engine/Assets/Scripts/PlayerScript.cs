@@ -884,7 +884,9 @@ namespace IS
 
                     //set move speed when grounded
                     // normal movement
-                    InternalCalls.RigidBodySetForce(VelocityAffector_x + hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), VelocityAffector_y + f_angle.y * move_speed  * hori_movement);
+                    if (!isClimbing) {
+                        InternalCalls.RigidBodySetForce(VelocityAffector_x + hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), VelocityAffector_y + f_angle.y * move_speed * hori_movement);
+                    }
                     /*if (!isAttack)
                     {   
                     }

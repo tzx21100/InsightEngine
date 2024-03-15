@@ -326,7 +326,7 @@ namespace IS
                 }
                 if (!(vfx_vol_text_pos.y > upper_limit_normalized) && !(vfx_vol_text_pos.y < lower_limit_normalized))
                 {
-                InternalCalls.RenderTextFont("VFX Volume", "Semplicita_Light", vfx_vol_text_pos.x, vfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("SFX Volume", "Semplicita_Light", vfx_vol_text_pos.x, vfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
                 }
                 if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized))
                 {

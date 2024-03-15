@@ -506,6 +506,17 @@ namespace IS {
         // for save sounds and fonts
         std::unordered_map<std::string, FMOD::Sound*> mSoundList;
         std::unordered_map<std::string, FMOD::Channel*> mChannelList;
+
+        using AudioChannel = std::pair<std::string, FMOD::Channel*>;
+        struct AudioData
+        {
+            std::string name;
+            FMOD::Channel* channel;
+            float base_volume;
+        };
+        std::vector<AudioData> mBGMChannel;
+        std::vector<AudioData> mSFXChannel;
+
         std::unordered_map<std::string, Image> mImageList;
         std::unordered_map <std::string, Image> mIconList;
         std::vector<std::string> mShaderList;

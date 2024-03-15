@@ -141,8 +141,8 @@ namespace IS
             //click
             if (InternalCalls.GetButtonState() == 2)
             {
-                //light_switch = !light_switch;
-                //InternalCalls.SetLightsToggle(light_switch);
+                light_switch = !light_switch;
+                InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
 
@@ -161,8 +161,8 @@ namespace IS
             
             if (paused) // if game paused
             {
-                light_switch = false;
-                InternalCalls.SetLightsToggle(light_switch);
+                //light_switch = false;
+                //InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.GamePause(true);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
@@ -180,8 +180,8 @@ namespace IS
             }
             else
             {
-                light_switch = true;
-                InternalCalls.SetLightsToggle(light_switch); 
+                //light_switch = true;
+                //InternalCalls.SetLightsToggle(light_switch); 
                 InternalCalls.GamePause(false);
                 HidePauseMenu();
             }
@@ -206,6 +206,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(back_to_menu_button_pos.x, back_to_menu_button_pos.y, back_to_menu_button_entity);
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
 
+            //InternalCalls.RenderTextFont("PAUSED", "MedusaGothic_D", 0.497f, 0.72f, 12f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("RESUME GAME", "MedusaGothic_D", 0.497f, 0.625f, 10f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.497f, 0.52f, 8f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.497f, 0.433f, 8f, (1f, 1f, 1f, 1f));
