@@ -142,8 +142,8 @@ namespace IS {
          * \brief Sets the center world position for the mouse relative to the GLFW window
          */
         void setCenterPos(float posx, float posy) {
-            center_x = posx;
-            center_y = posy;
+            mCenterX = posx;
+            mCenterY = posy;
         }
 
         /**
@@ -159,19 +159,51 @@ namespace IS {
             // ratio_width =  (float)width / widthR;
             // ratio_height =  (float)height / heightR;
 
-            ratio_width = widthR / static_cast<float>(width);
-            if (engine.IsFullScreen()) ratio_height = heightR / (static_cast<float>(height));
-            else ratio_height = heightR / (static_cast<float>(height) + 32.f); // 32.f for the white title bar
+            mRatioWidth = widthR / static_cast<float>(width);
+            if (engine.IsFullScreen()) mRatioHeight = heightR / (static_cast<float>(height));
+            else mRatioHeight = heightR / (static_cast<float>(height) + 32.f); // 32.f for the white title bar
         }
 
+        /**
+         * \brief Get the held duration of a key.
+         * 
+         * \param glfw_keycode Keycode for the keyboard key.
+         * \return held duration of the key as a double.
+         */
         double GetHeldDuration(int glfw_keycode) const
         {
-            if (held_keys.count(glfw_keycode) > 0)
+            if (mHeldKeys.count(glfw_keycode) > 0)
             {
-                double held_duration = glfwGetTime() - key_pressed_time.at(glfw_keycode);
+                double held_duration = glfwGetTime() - mKeyPressTime.at(glfw_keycode);
                 return held_duration;
             }
             return 0.0; // Key not currently held
+        }
+
+        /**
+         * \brief Get the mouse scroll x-offset.
+         *
+         * \return the mouse scroll x-offset.
+         */
+        double GetMouseScrollXOffset() const { return mMouseScrollXOffset; }
+
+        /**
+         * \brief Get the mouse scroll y-offset.
+         *
+         * \return the mouse scroll y-offset.
+         */
+        double GetMouseScrollYOffset() const { return mMouseScrollYOffset; }
+
+        /**
+         * \brief Get the mouse scroll x and y offset.
+         *
+         * \param xoffset Reference to store mouse scroll x-offset.
+         * \param yoffset Reference to store mouse scroll y-offset.
+         */
+        void GetMouseScrollOffset(double& xoffset, double& yoffset) const
+        {
+            xoffset = mMouseScrollXOffset;
+            yoffset = mMouseScrollYOffset;
         }
 
         // for mouse dragging testing
@@ -183,23 +215,25 @@ namespace IS {
         std::shared_ptr<WindowSystem> mWindow;
 
         //for keyboard keys
-        std::unordered_set<int> pressed_keys;
-        std::unordered_set<int> released_keys;
-        std::unordered_set<int> held_keys;
+        std::unordered_set<int> mPressedKeys;
+        std::unordered_set<int> mReleasedKeys;
+        std::unordered_set<int> mHeldKeys;
+        std::unordered_map<int, double> mKeyPressTime; // Map to store the press time of keys
         //for mouse button
-        std::unordered_set<int> pressed_mouse_buttons;
-        std::unordered_set<int> released_mouse_buttons;
-        std::unordered_set<int> held_mouse_buttons;
-        std::unordered_map<int, double> key_pressed_time; // Map to store the press time of keys
+        std::unordered_set<int> mPressedMouseButtons;
+        std::unordered_set<int> mReleasedMouseButtons;
+        std::unordered_set<int> mHeldMouseButtons;
+        double mMouseScrollXOffset = 0.0;
+        double mMouseScrollYOffset = 0.0;
 
         //for file drag/drop from file explorer
-        std::unordered_set<std::filesystem::path> payloads;
+        std::unordered_set<std::filesystem::path> mPayloads;
 
         // variables to calculate and translate the mouse position relative to the GLFW window
-        float center_x = 0.f;
-        float center_y = 0.f;
-        float ratio_width = 1.f;
-        float ratio_height = 1.f;
+        float mCenterX = 0.f;
+        float mCenterY = 0.f;
+        float mRatioWidth = 1.f;
+        float mRatioHeight = 1.f;
 
         /**
          * \brief Process payloads from windows file explorer.
