@@ -188,6 +188,7 @@
     <ClCompile Include="Source\Graphics\System\VideoPlayer.cpp">
       <Filter>Graphics\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Scripting\SimpleArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debug\Utils\MemoryLeakCheck.h">

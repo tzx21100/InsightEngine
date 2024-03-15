@@ -11,7 +11,7 @@
 #include "Pch.h"
 #include "InsightEngine.h"
 #include "Debug/Utils/MemoryLeakCheck.h"
-
+#include "../Engine/Scripting/SimpleArray.h"
 
 int main() {
     // Enable memory leaks check

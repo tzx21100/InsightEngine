@@ -16,6 +16,8 @@
 #ifndef GAM200_INSIGHT_ENGINE_SOURCE_INSIGHTENGINE_H_
 #define GAM200_INSIGHT_ENGINE_SOURCE_INSIGHTENGINE_H_
 
+
+
 #include "Engine/Core/CoreEngine.h"
 #include "Graphics/Core/Graphics.h"
 #include "Engine/Systems/Input/Input.h"
@@ -34,6 +36,8 @@
 #include "Graphics/System/Light.h"
 #include "../Engine/Systems/Category/Category.h"
 #include "../Engine/Systems/FSM/FSM.h"
+#include "../Engine/Scripting/SimpleArray.h"
+
 
 using namespace IS;
 
@@ -131,14 +135,14 @@ void EngineSetup() {
 
 // The only function that main should ever call
 void RunInsightEngine() {
-
+    
     //This is to set the flow of the engine
     EngineSetup();
     InsightEngine::Instance().Run();
     ScriptEngine::Shutdown();
+    ClearSimpleArray();
     IS_CORE_WARN("Insight Engine has terminated!");
-
-
+   
 
 }
 

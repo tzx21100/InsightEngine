@@ -44,6 +44,7 @@
     <ClCompile Include="Source\Engine\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="Source\Engine\Scripting\ScriptGlue.cpp" />
     <ClCompile Include="Source\Engine\Scripting\ScriptManager.cpp" />
+    <ClCompile Include="Source\Engine\Scripting\SimpleArray.cpp" />
     <ClCompile Include="Source\Engine\Systems\AIFSM\AIFSM.cpp" />
     <ClCompile Include="Source\Engine\Systems\Asset\Asset.cpp" />
     <ClCompile Include="Source\Engine\Systems\Audio\Audio.cpp" />

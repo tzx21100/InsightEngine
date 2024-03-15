@@ -123,7 +123,7 @@ namespace IS
                 ExitButtonScript.exit_confirmation = false;
                 HowToPlayScript.show_how_to_play = false;
                 light_switch = !light_switch;
-                //InternalCalls.SetLightsToggle(light_switch);
+                InternalCalls.SetLightsToggle(light_switch);
             }
 
             if (!InternalCalls.IsWindowFocused())

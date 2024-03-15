@@ -1586,6 +1586,10 @@ namespace IS {
         DeleteArray(array);
     }
 
+    static void clearSimpleArray() {
+        ClearSimpleArray();
+    }
+
     // sending simple arrays
     //static SimpleArray SendSimpleArray(SimpleArray array) {
     //    return array;
@@ -1604,6 +1608,7 @@ namespace IS {
     void ScriptGlue::RegisterFunctions()
     {
         IS_ADD_INTERNAL_CALL(DeleteSimpleArray);
+        IS_ADD_INTERNAL_CALL(clearSimpleArray);
         IS_ADD_INTERNAL_CALL(GetCollidingEntityArray);
         IS_ADD_INTERNAL_CALL(ChangeLightType);
         IS_ADD_INTERNAL_CALL(ChangeShaderIntensity);
