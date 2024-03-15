@@ -422,7 +422,7 @@ namespace IS {
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        std::cout << "SFX AUDIO : " << AUDIO_MANAGER->SFXAudioLevel << std::endl;
+        // std::cout << "SFX AUDIO : " << AUDIO_MANAGER->SFXAudioLevel << std::endl;
         asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->SFXAudioLevel);
     }
 
