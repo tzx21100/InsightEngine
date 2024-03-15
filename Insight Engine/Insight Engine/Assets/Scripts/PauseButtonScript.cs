@@ -129,6 +129,7 @@ namespace IS
             if (!InternalCalls.IsWindowFocused())
             {
                 paused = true;
+
             }
 
             //mouse hovering
@@ -140,14 +141,15 @@ namespace IS
             //click
             if (InternalCalls.GetButtonState() == 2)
             {
-                light_switch = !light_switch;
-                InternalCalls.SetLightsToggle(light_switch);
+                //light_switch = !light_switch;
+                //InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
 
                 if (!paused)
                 {
                     paused = true;
+
                 }
                 else
                 {
@@ -159,7 +161,8 @@ namespace IS
             
             if (paused) // if game paused
             {
-
+                light_switch = false;
+                InternalCalls.SetLightsToggle(light_switch);
                 InternalCalls.GamePause(true);
                 if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
                 {
@@ -177,6 +180,8 @@ namespace IS
             }
             else
             {
+                light_switch = true;
+                InternalCalls.SetLightsToggle(light_switch); 
                 InternalCalls.GamePause(false);
                 HidePauseMenu();
             }
