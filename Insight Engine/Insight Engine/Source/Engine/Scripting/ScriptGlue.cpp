@@ -104,6 +104,18 @@ namespace IS {
         return SimpleVector2D((float)Transform::GetMousePosition().first, (float)Transform::GetMousePosition().second);
     }
 
+    static double GetMouseScrollXOffset()
+    {
+        auto const input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->GetMouseScrollXOffset();
+    }
+
+    static double GetMouseScrollYOffset()
+    {
+        auto const input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->GetMouseScrollYOffset();
+    }
+
     static void RigidBodyAddForceEntity(float x, float y, Entity entity_id) {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(entity_id);
@@ -1597,6 +1609,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);
         IS_ADD_INTERNAL_CALL(GetMousePosition);
+        IS_ADD_INTERNAL_CALL(GetMouseScrollXOffset);
+        IS_ADD_INTERNAL_CALL(GetMouseScrollYOffset);
 
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);

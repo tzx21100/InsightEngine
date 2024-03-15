@@ -40,6 +40,15 @@ namespace IS {
         glfwSetKeyCallback(native_window, KeyCallback);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
 
+        // Mouse scroll callback
+        glfwSetScrollCallback(native_window, [](GLFWwindow* window, double xoffset, double yoffset)
+        {
+            InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
+            input.mMouseScrollXOffset = xoffset;
+            input.mMouseScrollYOffset = yoffset;
+            IS_CORE_DEBUG("X: {}, Y: {}", input.mMouseScrollXOffset, input.mMouseScrollYOffset);
+        });
+
         // Window size callback
         glfwSetWindowSizeCallback(native_window, [](GLFWwindow* window, int width, int height) {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
@@ -107,26 +116,26 @@ namespace IS {
     void InputManager::Update([[maybe_unused]] float deltaTime)
     {
         //keyboard
-        for (auto const& key : held_keys) {
-            pressed_keys.erase(key);
+        for (auto const& key : mHeldKeys) {
+            mPressedKeys.erase(key);
         }
-        for (auto const& key : pressed_keys) {
-            held_keys.insert(key);
+        for (auto const& key : mPressedKeys) {
+            mHeldKeys.insert(key);
         }
 
         //mouse
-        for (auto const& button : held_mouse_buttons) {
-            pressed_mouse_buttons.erase(button);
+        for (auto const& button : mHeldMouseButtons) {
+            mPressedMouseButtons.erase(button);
         }
-        for (auto const& button : pressed_mouse_buttons) {
-            held_mouse_buttons.insert(button);
+        for (auto const& button : mPressedMouseButtons) {
+            mHeldMouseButtons.insert(button);
         }
 
         // process file payloads
         ProcessPayloads();
 
         // clear the file payloads after processing
-        payloads.clear();
+        mPayloads.clear();
     }
 
     void InputManager::HandleMessage(const Message& message) {
@@ -147,32 +156,32 @@ namespace IS {
     }
 
     bool InputManager::IsKeyPressed(int glfwKeyCode) const {
-        return pressed_keys.count(glfwKeyCode) > 0;
+        return mPressedKeys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsKeyReleased(int glfwKeyCode) const {
-        return released_keys.count(glfwKeyCode) > 0;
+        return mReleasedKeys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsKeyHeld(int glfwKeyCode) const {
-        return held_keys.count(glfwKeyCode) > 0;
+        return mHeldKeys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsMouseButtonPressed(int button) const {
-        return pressed_mouse_buttons.count(button) > 0;
+        return mPressedMouseButtons.count(button) > 0;
     }
 
     bool InputManager::IsMouseButtonReleased(int button) const {
-        return released_mouse_buttons.count(button) > 0;
+        return mReleasedMouseButtons.count(button) > 0;
     }
 
     bool InputManager::IsMouseButtonHeld(int button) const {
-        return held_mouse_buttons.count(button) > 0;
+        return mHeldMouseButtons.count(button) > 0;
     }
 
     void InputManager::ProcessPayloads()
     {
-        for (auto const& payload : payloads)
+        for (auto const& payload : mPayloads)
         {
             ProcessPayloadDirectory(payload);
         }
@@ -265,14 +274,14 @@ namespace IS {
     void InputManager::KeyCallback(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
-            inputManager->pressed_keys.insert(key);
-            inputManager->released_keys.erase(key);
-            inputManager->key_pressed_time[key] = glfwGetTime();
+            inputManager->mPressedKeys.insert(key);
+            inputManager->mReleasedKeys.erase(key);
+            inputManager->mKeyPressTime[key] = glfwGetTime();
         }
         if (action == GLFW_RELEASE) {
-            inputManager->pressed_keys.erase(key);
-            inputManager->released_keys.insert(key);
-            inputManager->held_keys.erase(key); // Remove from held_keys when released
+            inputManager->mPressedKeys.erase(key);
+            inputManager->mReleasedKeys.insert(key);
+            inputManager->mHeldKeys.erase(key); // Remove from held_keys when released
         }
         
     }
@@ -280,13 +289,13 @@ namespace IS {
     void InputManager::MouseButtonCallback(GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         InputManager* inputManager = static_cast<InputManager*>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS) {
-            inputManager->pressed_mouse_buttons.insert(button);
-            inputManager->released_mouse_buttons.erase(button);
+            inputManager->mPressedMouseButtons.insert(button);
+            inputManager->mReleasedMouseButtons.erase(button);
         }
         if (action == GLFW_RELEASE) {
-            inputManager->pressed_mouse_buttons.erase(button);
-            inputManager->released_mouse_buttons.insert(button);
-            inputManager->held_mouse_buttons.erase(button); // Remove from held_mouse_buttons when released
+            inputManager->mPressedMouseButtons.erase(button);
+            inputManager->mReleasedMouseButtons.insert(button);
+            inputManager->mHeldMouseButtons.erase(button); // Remove from held_mouse_buttons when released
         }
     }
 
@@ -296,7 +305,7 @@ namespace IS {
         for (int i{}; i < count; ++i)
         {
             std::filesystem::path path = std::filesystem::relative(paths[i]);
-            input->payloads.emplace(path);
+            input->mPayloads.emplace(path);
         }
     }
 

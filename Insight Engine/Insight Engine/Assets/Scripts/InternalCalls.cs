@@ -37,6 +37,12 @@ namespace IS
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal extern static bool MouseReleased(int mouseButton);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static double GetMouseScrollXOffset();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static double GetMouseScrollYOffset();
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void RigidBodyAddForce(float x, float y);
 
