@@ -75,7 +75,7 @@ namespace IS
 
             //dimensions
             Vector2D team_logo = new Vector2D(0.4f * win_dimension.x, 0.2f * win_dimension.x);
-            Vector2D button = new Vector2D(0.16f * win_dimension.x, 0.09f * win_dimension.y);
+            Vector2D button = new Vector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y);
 
             // set sizes
             InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
