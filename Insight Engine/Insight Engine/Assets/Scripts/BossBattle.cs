@@ -13,6 +13,11 @@ namespace IS
         static private bool smash=false;
         static private float miss_smash_y_pos = -600f;
 
+
+        // for idle
+        static private float idle_timer = 2f;
+        static private float idle_timer_set = 2f;
+
         private enum BossStates : int
         {
             Idle=0,
@@ -30,7 +35,9 @@ namespace IS
         static public void Update(){
             InternalCalls.SetGravityScale(0f);
             InternalCalls.TransformSetRotation(0, 0);
-            FollowBeforeSmash();
+
+
+            BossFSM();
         }
         
         static public void CleanUp(){
@@ -45,6 +52,7 @@ namespace IS
             switch (current_state)
             {
                 case BossStates.Idle:
+                    Rest();
                     break;
                 case BossStates.Clap:
                     break;
@@ -59,16 +67,31 @@ namespace IS
         static private void StateChanger()
         {
             float random=InternalCalls.GetRandomFloat();
-            if (random <=1f)
+            if (random <=0.5f)
             {
                 ResetPosition();
                 current_state = BossStates.Smash;
+                return;
             }
+            if(random <= 1f)
+            {
+                ResetPosition();
+                current_state = BossStates.Idle;
+                return;
+            }
+
         }
 
 
         static private void Rest()
         {
+            ResetPosition();
+            idle_timer-=InternalCalls.GetDeltaTime();
+            if(idle_timer<=0)
+            {
+                idle_timer = idle_timer_set;
+                StateChanger();
+            }
 
         }
 
@@ -83,6 +106,7 @@ namespace IS
         {
             InternalCalls.TransformSetPosition(Boss_spawn_pos.x, Boss_spawn_pos.y);
             InternalCalls.RigidBodySetForce(0, 0);
+            CameraScript.CameraTargetZoom(0.5f, 1f);
         }
 
         
@@ -93,6 +117,7 @@ namespace IS
 
             if (!smash)
             {
+                CameraScript.CameraTargetZoom(0.3f, 1f);
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 if(pos.x != PlayerScript.player_pos.x)
                 {
@@ -123,6 +148,8 @@ namespace IS
         {
             // going down
             InternalCalls.RigidBodyAddForce(0, -200);
+
+
 
             // check for collide
             int boss = InternalCalls.GetCurrentEntityID();
