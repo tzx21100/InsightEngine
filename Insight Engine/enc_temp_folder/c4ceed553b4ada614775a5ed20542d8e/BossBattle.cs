@@ -36,14 +36,6 @@ namespace IS
             InternalCalls.SetGravityScale(0f);
             InternalCalls.TransformSetRotation(0, 0);
 
-            // restart level if player lose
-            if (PlayerScript.isDead)
-            {
-                PlayerScript.isDead = false;
-                InternalCalls.LoadScene("Assets/Scenes/BossLevel.insight");
-            }
-
-
 
             BossFSM();
         }
@@ -165,15 +157,6 @@ namespace IS
             for (int i = 0; i < collided_objects.length; i++)
             {
                 int entity = collided_objects.GetValue(i);
-                if(entity==PlayerScript.PLAYER_ID)
-                {
-                    PlayerScript.Health -= 1;
-                    smash_timer = smash_timer_set;
-                    StateChanger();
-                    return;
-                }
-
-
                 if (InternalCalls.RigidBodyGetBodyTypeEntity(entity) == 0)
                 {
                     DoFloorBreak(entity);
