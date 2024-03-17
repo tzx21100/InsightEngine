@@ -30,6 +30,8 @@ namespace IS
         static public void Init(){
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
+            InternalCalls.AudioStopAllSounds();
+            InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
         }
 
         static public void Update(){
@@ -169,8 +171,15 @@ namespace IS
                 {
                     PlayerScript.Health -= 1;
                     smash_timer = smash_timer_set;
+                    smash = false;
                     StateChanger();
                     return;
+                }
+
+                if(InternalCalls.RigidBodyGetBodyTypeEntity(entity) == 1)
+                {
+                    float x_dir = CustomMath.Abs(InternalCalls.GetTransformPositionEntity(entity).x - InternalCalls.GetTransformPosition().x);
+                    InternalCalls.RigidBodyAddForceEntity(x_dir * 200, 0, entity);
                 }
 
 
@@ -201,6 +210,7 @@ namespace IS
             CameraScript.CameraShake(2f);
             CameraScript.camera_shake_intensity = 3f;
             CameraScript.camera_shake_duration = 0.2f;
+            InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav",false, 0.6f);
             SimpleVector2D pos=InternalCalls.GetTransformPosition();
             SimpleVector2D entity_pos = InternalCalls.GetTransformPositionEntity(entity);
             SimpleVector2D size= InternalCalls.GetTransformScaling();
