@@ -198,6 +198,9 @@ namespace IS
 
         static private void DoFloorBreak(int entity)
         {
+            CameraScript.CameraShake(2f);
+            CameraScript.camera_shake_intensity = 3f;
+            CameraScript.camera_shake_duration = 0.2f;
             SimpleVector2D pos=InternalCalls.GetTransformPosition();
             SimpleVector2D entity_pos = InternalCalls.GetTransformPositionEntity(entity);
             SimpleVector2D size= InternalCalls.GetTransformScaling();
@@ -254,6 +257,7 @@ namespace IS
                 InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
                 InternalCalls.TransformSetScaleEntity(size.x, entity_size.y, entity);
                 InternalCalls.TransformSetPositionEntity(pos.x, entity_pos.y, entity);
+                InternalCalls.RigidBodySetMassEntity(size.x, entity);
 
                 return;
             }
@@ -276,6 +280,7 @@ namespace IS
                 InternalCalls.TransformSetScaleEntity(lengthR, entity_size.y, new_entityR);
                 InternalCalls.TransformSetPositionEntity(x_pos, entity_pos.y,new_entityR);
                 InternalCalls.RigidBodySetBodyTypeEntity(1, new_entityR);
+                InternalCalls.RigidBodySetMassEntity(lengthR, new_entityR);
 
                 // change old block pos
                 InternalCalls.TransformSetScaleEntity(entity_size.x - lengthR, entity_size.y, entity);
@@ -302,6 +307,7 @@ namespace IS
                 InternalCalls.TransformSetScaleEntity(lengthL, entity_size.y, new_entityL);
                 InternalCalls.TransformSetPositionEntity(x_pos, entity_pos.y, new_entityL);
                 InternalCalls.RigidBodySetBodyTypeEntity(1, new_entityL);
+                InternalCalls.RigidBodySetMassEntity(lengthL, new_entityL);
 
                 // change old block pos
                 InternalCalls.TransformSetScaleEntity(entity_size.x - lengthL, entity_size.y, entity);
