@@ -153,6 +153,8 @@ namespace IS
         static private bool initial_land = false;
         static private float jumpHeight = 1100f;
 
+        static private bool is_walking_and_colliding_sth = false;
+
         //coyote time
         static private float coyote_timer_duration = 0.15f;
         static private float coyote_timer;
@@ -1093,7 +1095,8 @@ namespace IS
             WallCheckerUpdate();
             InternalCalls.TransformSetScale(trans_scaling.x, trans_scaling.y);//setting image flips
 
-
+            WalkAndJumpAndCollideCheck();
+            //Console.WriteLine(is_walking_and_colliding_sth);
             Xforce = 0f; 
             //Yforce = 0f;
         }
@@ -1228,6 +1231,22 @@ namespace IS
 
         }
 
+        // Check if the player is walking and colliding with something
+        // used to fix the issue about the player was having lower jump when walk and jump against the wall/ground
+        static private void WalkAndJumpAndCollideCheck()
+        {
+            is_walking_and_colliding_sth = false;
+            if (InternalCalls.CompareEntityCategory(entityWall, "Ground"))
+            {
+                is_walking_and_colliding_sth = true;
+            }
+
+            if (is_walking_and_colliding_sth) { 
+                InternalCalls.RigidBodySetForceX(0); // if walking and colliding towards wall/ground, set vel x to 0
+            }
+
+        }
+
         static private void WallCheckerUpdate()
         {
             if (hori_movement == 0) { InternalCalls.TransformSetPositionEntity(-99999, -99999, entityWall); return; }
@@ -1253,7 +1272,7 @@ namespace IS
 
             InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, entityWall);
             InternalCalls.TransformSetRotationEntity(rotationAngle, 0, entityWall);
-            InternalCalls.TransformSetScaleEntity(2f, height / 2f, entityWall);
+            InternalCalls.TransformSetScaleEntity(2f, height / 3f, entityWall);
         }
 
      //   static private float distance_light=width;
