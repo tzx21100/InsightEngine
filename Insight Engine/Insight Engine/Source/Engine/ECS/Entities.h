@@ -80,9 +80,10 @@ namespace IS {
 					return MAX_ENTITIES + 1;
 				}
 				id = mEntitiesAlive;
+				mEntitiesAlive++;
 			}
 
-			mEntitiesAlive++;
+
 			// Set the name for the entity
 			mEntityNames[name].push_back(id);
 			// Set the entity for the name
