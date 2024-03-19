@@ -33,10 +33,10 @@ namespace IS
         static public void Init(){
 
             fade_out_timer = 1.7f;
-            bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
+            // bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image2 = InternalCalls.GetSpriteImage("1st.png");
             bg_image3 = InternalCalls.GetSpriteImage("3rd.png");
-            bg_image4 = InternalCalls.GetSpriteImage("transparent.png");
+            // bg_image4 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image5 = InternalCalls.GetSpriteImage("5th.png");
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
             InternalCalls.AudioStopAllSounds();
@@ -131,10 +131,10 @@ namespace IS
             switch (index)
             {
                 case 0: return bg_image5;
-                case 1: return bg_image4;
+                case 1: //return bg_image4;
                 case 2: return bg_image3;
                 case 3: return bg_image2;
-                case 4: return bg_image1;
+                case 4: //return bg_image1;
                 default: return bg_image5;
             }
         }
