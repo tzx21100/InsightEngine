@@ -17,6 +17,11 @@ namespace IS
 {
     class ScrollBarTrackerScript
     {
+        // Constants
+        private const float SCROLL_SPEED = 4f;
+        public const float LOWER_LIMIT_SCALE = 0.368f;
+        public const float UPPER_LIMIT_SCALE = 0.538f;
+
         static public bool first_hover = false;
         static private int id;
         static private float diff_y;
@@ -54,11 +59,11 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            upper_limit_scroll_track = origin.y + (0.535f * win_dimension.y);
-            lower_limit_scroll_track = origin.y + (0.368f * win_dimension.y);
+            upper_limit_scroll_track = origin.y + (UPPER_LIMIT_SCALE * win_dimension.y);
+            lower_limit_scroll_track = origin.y + (LOWER_LIMIT_SCALE * win_dimension.y);
 
             first_open_settings = false;
-            diff_y = 0.535f;
+            diff_y = UPPER_LIMIT_SCALE;
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
             virtual_y = 0f;
@@ -80,30 +85,35 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-            upper_limit_scroll_track = origin.y + (0.535f * win_dimension.y);
-            lower_limit_scroll_track = origin.y + (0.368f * win_dimension.y);
+            upper_limit_scroll_track = origin.y + (UPPER_LIMIT_SCALE * win_dimension.y);
+            lower_limit_scroll_track = origin.y + (LOWER_LIMIT_SCALE * win_dimension.y);
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+
+            // Mouse Scroll
+            float yoffset = (float)InternalCalls.GetMouseScrollYOffset();
+            if (yoffset != 0)
+            {
+                AdjustScroll(InternalCalls.GetTransformPosition().y + SCROLL_SPEED * yoffset);
+            }
+
+            if (InternalCalls.MousePressed(0) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.scroll_bar_entity))
+            {
+                AdjustScroll(mouse_pos.y);
+            }
+
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.vfx_vol);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
-                if (InternalCalls.MouseHeld(0) == true)
+                if (InternalCalls.MouseHeld((int)MouseButton.Left))
                 {
-                    adjustment = Math.Min(upper_limit_scroll_track, Math.Max(lower_limit_scroll_track, mouse_pos.y));
-                    diff_y = (adjustment - origin.y) / win_dimension.y;
-                    InternalCalls.TransformSetPosition(origin.x + (0.593f * win_dimension.x), adjustment);
-                    SettingsScript.scroll_bar_tracker_pos.y = adjustment;
-                    virtual_y = adjustment - upper_limit_scroll_track;
-                    virtual_y *= 1.85f;
-                    //virtual_y = -virtual_y;
-                    //Console.WriteLine(virtual_y);
+                    AdjustScroll(mouse_pos.y);
                 }
-
             }
             else
             {
@@ -114,12 +124,11 @@ namespace IS
                 first_hover = true;
             }
 
-
             // clicking
-            if (InternalCalls.GetButtonState() == 2)
-            { 
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
+            {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.vfx_vol);
+                SettingsScript.PlayClickSound();
             }
 
             x_pos = origin.x + (0.593f * win_dimension.x);
@@ -144,10 +153,19 @@ namespace IS
 
         }
 
-
         static public void CleanUp()
         {
 
+        }
+
+        static private void AdjustScroll(float ypos)
+        {
+            adjustment = Math.Clamp(ypos, lower_limit_scroll_track, upper_limit_scroll_track);
+            diff_y = (adjustment - origin.y) / win_dimension.y;
+            InternalCalls.TransformSetPosition(origin.x + (0.593f * win_dimension.x), adjustment);
+            SettingsScript.scroll_bar_tracker_pos.y = adjustment;
+            virtual_y = adjustment - upper_limit_scroll_track;
+            virtual_y *= 1.85f;
         }
     }
 }

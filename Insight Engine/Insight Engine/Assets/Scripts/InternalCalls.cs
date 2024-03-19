@@ -300,10 +300,13 @@ namespace IS
         internal extern static bool CollidingObjectIsSpikes(int entity);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static bool CollidingObjectTypeIsGhost(int entity);        
+        internal extern static bool CollidingObjectTypeIsGhost(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static bool CollidingObjectTypeIsIgnore(int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool CheckMouseIntersectEntity(int entity);
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]        
         internal extern static bool CollidingObjectTypeIsWall(int entity);

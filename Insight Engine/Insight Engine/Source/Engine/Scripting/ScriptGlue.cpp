@@ -859,6 +859,12 @@ namespace IS {
         return body_component.mBodyType == BodyType::Ignore ? true : false;
     }
 
+    static bool CheckMouseIntersectEntity(int entity)
+    {
+        SimpleVector2D mouse = GetMousePosition();
+        return GuiSystem::GameButtonContainsMouse(mouse.x, mouse.y, entity);
+    }
+
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer=1) {
         
         Sprite::draw_textured_quad(Vector2D(pos.x,pos.y), rotation, Vector2D(scale.x,scale.y), ConvertToImage(image), alpha, layer);
@@ -1729,6 +1735,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);
         IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetX);
+        IS_ADD_INTERNAL_CALL(CheckMouseIntersectEntity);
 
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);

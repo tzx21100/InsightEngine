@@ -78,13 +78,11 @@ namespace IS
             {
                 SettingsScript.master_multiplier = MasterSliderKnobScript.normalised_adjustment;
                 InternalCalls.SetSpriteImage(toggled_image);
-                
-
             }
 
-            if (!BGMCheckboxScript.toggled||!VFXCheckboxScript.toggled) {
+            if (!BGMCheckboxScript.toggled||!SFXCheckboxScript.toggled) {
                 toggled = false;
-            }else if (BGMCheckboxScript.toggled && VFXCheckboxScript.toggled)
+            }else if (BGMCheckboxScript.toggled && SFXCheckboxScript.toggled)
             {
                 toggled= true;
             }
@@ -95,7 +93,7 @@ namespace IS
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
                     first_hover = true;
                 }
             }
@@ -113,9 +111,9 @@ namespace IS
             {
                 toggled = !toggled;
                 BGMCheckboxScript.toggled = toggled;
-                VFXCheckboxScript.toggled = toggled;
+                SFXCheckboxScript.toggled = toggled;
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
             }
 
             x_pos = origin.x + (0.44f * win_dimension.x);

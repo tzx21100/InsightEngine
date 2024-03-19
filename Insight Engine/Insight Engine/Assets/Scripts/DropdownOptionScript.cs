@@ -131,7 +131,7 @@ namespace IS
             // clicking
             if (InternalCalls.GetButtonState() == 2)
             {
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
             }
 
 

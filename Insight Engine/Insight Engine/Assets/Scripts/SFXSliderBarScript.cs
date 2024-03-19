@@ -1,9 +1,9 @@
 /*!
- * \file VFXCheckboxScript.cs
+ * \file SFXSliderBarScript.cs
  * \author Matthew Ng, matthewdeen.ng@digipen.edu 
  * \par Course: CSD2451
  * \brief
- * This C# file contains the VFXCheckboxScript class, used for the VFXCheckbox in settings page. When it is toggled on means audio on, when toggled off means audio off.
+ * This C# file contains the SFXSliderBarScript class, used for the SFXSliderBar in settings page.
  *
  * \copyright
  * All content (C) 2024 DigiPen Institute of Technology Singapore.
@@ -12,16 +12,11 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
+using System;
 namespace IS
 {
-    class VFXCheckboxScript
+    class SFXSliderBarScript
     {
-        static public bool first_hover = false;
-        static public bool toggled = true;
-        static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
-        static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
-        static public bool clicked = false;
-
         // Windows
         static public Vector2D win_dimension = new Vector2D(0, 0);
         static public Vector2D origin = new Vector2D(0, 0);
@@ -48,6 +43,7 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
+
         }
 
         static public void Update()
@@ -64,57 +60,18 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-
-            if (!toggled)
-            {
-                InternalCalls.SetSpriteImage(checkbox_image);
-                SettingsScript.vfx_multiplier = 0f;
-            }
-            else
-            {
-                InternalCalls.SetSpriteImage(toggled_image);
-                SettingsScript.vfx_multiplier = VFXSliderKnobScript.normalised_adjustment;
-            }
-
-
-            //hovered
-            if (InternalCalls.GetButtonState() == 1)
-            {
-                //hovering
-                if (!first_hover)
-                {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
-                    first_hover = true;
-                }
-            }
-            else
-            {
-                first_hover = false;
-            }
-            if (!InternalCalls.IsWindowFocused())
-            {
-                first_hover = true;
-            }
-            // clicking
-            if (InternalCalls.GetButtonState() == 2)
-            {
-                //clicked = !clicked;
-                //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
-                toggled = !toggled;
-            }
-
-            x_pos = origin.x + (0.44f * win_dimension.x);
-            y_pos = origin.y + (0.365f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
-
+            x_pos = origin.x + (0.5f * win_dimension.x);
+            y_pos = origin.y + (0.321f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
             if (SettingsScript.show_settings)
             {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
+
             }
             if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)) || y_pos < (origin.y + (0.25f * win_dimension.y)))
             {
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
+
 
         }
 

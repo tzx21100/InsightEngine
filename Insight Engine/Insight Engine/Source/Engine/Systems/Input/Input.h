@@ -185,14 +185,24 @@ namespace IS {
          *
          * \return the mouse scroll x-offset.
          */
-        double GetMouseScrollXOffset() const { return mMouseScrollXOffset; }
+        double GetMouseScrollXOffset() 
+        {
+            double xoffset = mMouseScrollXOffset;
+            mMouseScrollXOffset = 0.0;
+            return xoffset;
+        }
 
         /**
          * \brief Get the mouse scroll y-offset.
          *
          * \return the mouse scroll y-offset.
          */
-        double GetMouseScrollYOffset() const { return mMouseScrollYOffset; }
+        double GetMouseScrollYOffset()
+        {
+            double yoffset = mMouseScrollYOffset;
+            mMouseScrollYOffset = 0.0;
+            return yoffset;
+        }
 
         /**
          * \brief Get the mouse scroll x and y offset.
