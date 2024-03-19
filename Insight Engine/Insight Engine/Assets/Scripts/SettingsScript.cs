@@ -295,12 +295,12 @@ namespace IS
             sfx_vol = master_multiplier * sfx_multiplier;
 
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    PlayHoverSound();
                     first_hover = true;
                 }
             }
@@ -313,9 +313,9 @@ namespace IS
                 first_hover = true;
             }
             //click
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                PlayClickSound();
                 show_settings = true;
 
             }

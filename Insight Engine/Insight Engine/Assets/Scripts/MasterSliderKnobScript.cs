@@ -20,6 +20,7 @@ namespace IS
         public const float LOWER_LIMIT_SCALE = 0.432f;
         public const float UPPER_LIMIT_SCALE = 0.568f;
 
+        static private bool is_adjusting_slider = false;
         static public bool first_hover = false;
         static private int id;
         static private float diff_x;
@@ -87,10 +88,21 @@ namespace IS
             lower_limit_master_knob = origin.x + (LOWER_LIMIT_SCALE * win_dimension.x);
             upper_limit_master_knob = origin.x + (UPPER_LIMIT_SCALE * win_dimension.x);
 
-            if (InternalCalls.MousePressed(0) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.master_slider_bar_entity))
+            if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.master_slider_bar_entity))
+            {
+                is_adjusting_slider = true;
+            }
+
+            if (InternalCalls.MouseHeld((int)MouseButton.Left) && is_adjusting_slider)
             {
                 AdjustSlider(mouse_pos.x);
                 AdjustVolume();
+            }
+
+            // If the mouse button is released, stop adjusting the slider
+            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            {
+                is_adjusting_slider = false;
             }
 
             //hovered
@@ -101,12 +113,6 @@ namespace IS
                 {
                     SettingsScript.PlayHoverSound();
                     first_hover = true;
-                }
-
-                if (InternalCalls.MouseHeld((int)MouseButton.Left))
-                {
-                    AdjustSlider(mouse_pos.x);
-                    AdjustVolume();
                 }
 
             }

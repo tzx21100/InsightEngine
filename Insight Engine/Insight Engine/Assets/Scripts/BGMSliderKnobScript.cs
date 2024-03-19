@@ -21,6 +21,7 @@ namespace IS
         static private int id;
         static private float diff_x;
 
+        static private bool is_adjusting_slider = false;
         static private bool first_open_settings = false;
         static private float adjustment;
         static public float normalised_adjustment;
@@ -92,8 +93,19 @@ namespace IS
 
             if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.bgm_slider_bar_entity))
             {
+                is_adjusting_slider = true;
+            }
+
+            if (InternalCalls.MouseHeld((int)MouseButton.Left) && is_adjusting_slider)
+            {
                 AdjustSlider(mouse_pos.x);
                 AdjustVolume();
+            }
+
+            // If the mouse button is released, stop adjusting the slider
+            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            {
+                is_adjusting_slider = false;
             }
 
             //hovered
@@ -105,12 +117,6 @@ namespace IS
                     SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
-                if (InternalCalls.MouseHeld((int)MouseButton.Left))
-                {
-                    AdjustSlider(mouse_pos.x);
-                    AdjustVolume();
-                }
-
             }
             else
             {

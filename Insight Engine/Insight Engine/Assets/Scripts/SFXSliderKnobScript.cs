@@ -17,6 +17,7 @@ namespace IS
 {
     class SFXSliderKnobScript
     {
+        static private bool is_adjusting_slider = false;
         static public bool first_hover = false;
         static private int id;
         static private float diff_x;
@@ -87,9 +88,21 @@ namespace IS
 
             if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.sfx_slider_bar_entity))
             {
+                is_adjusting_slider = true;
+            }
+
+            if (InternalCalls.MouseHeld((int)MouseButton.Left) && is_adjusting_slider)
+            {
                 AdjustSlider(mouse_pos.x);
                 AdjustVolume();
             }
+
+            // If the mouse button is released, stop adjusting the slider
+            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            {
+                is_adjusting_slider = false;
+            }
+
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
@@ -98,11 +111,6 @@ namespace IS
                 {
                     SettingsScript.PlayHoverSound();
                     first_hover = true;
-                }
-                if (InternalCalls.MouseHeld((int)MouseButton.Left))
-                {
-                    AdjustSlider(mouse_pos.x);
-                    AdjustVolume();
                 }
 
             }

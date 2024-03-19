@@ -22,6 +22,7 @@ namespace IS
         public const float LOWER_LIMIT_SCALE = 0.368f;
         public const float UPPER_LIMIT_SCALE = 0.538f;
 
+        static private bool is_adjusting_scroll = false;
         static public bool first_hover = false;
         static private int id;
         static private float diff_y;
@@ -98,7 +99,18 @@ namespace IS
 
             if (InternalCalls.MousePressed(0) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.scroll_bar_entity))
             {
+                is_adjusting_scroll = true;
+            }
+
+            if (InternalCalls.MouseHeld((int)MouseButton.Left) && is_adjusting_scroll)
+            {
                 AdjustScroll(mouse_pos.y);
+            }
+
+            // If the mouse button is released, stop adjusting the slider
+            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            {
+                is_adjusting_scroll = false;
             }
 
             //hovered
@@ -109,10 +121,6 @@ namespace IS
                 {
                     SettingsScript.PlayHoverSound();
                     first_hover = true;
-                }
-                if (InternalCalls.MouseHeld((int)MouseButton.Left))
-                {
-                    AdjustScroll(mouse_pos.y);
                 }
             }
             else
