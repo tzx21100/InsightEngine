@@ -611,6 +611,10 @@ namespace IS
 
             //movement
             hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
+            if (InternalCalls.ControllerConnected())
+            {
+                hori_movement = BoolToInt(InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT)) - BoolToInt(InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT));
+            }
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             // scaling transform with movement
@@ -619,6 +623,12 @@ namespace IS
             float trans_rotate = InternalCalls.GetTransformRotation();
             if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
             if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
+
+            if (InternalCalls.ControllerConnected())
+            {
+                if (InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
+                if (InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
+            }
 
             // update player collider offset
             /*if (isGrounded)
@@ -927,7 +937,7 @@ namespace IS
                     jump_amount = jump_amount_set;
                     canDash = true;
 
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -969,7 +979,7 @@ namespace IS
                 
                 if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -981,7 +991,7 @@ namespace IS
                 
                 else if (jump_amount > 0 && Reward_DoubleJump) // double jump
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -992,7 +1002,7 @@ namespace IS
                 ApplyGravityChange();
 
                 // no key input in the air
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !InternalCalls.KeyHeld((int)KeyCodes.Space) &&!isDashing )
+                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !InternalCalls.KeyHeld((int)KeyCodes.Space) && !InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A) && !isDashing )
                 {
                     if (InternalCalls.RigidBodyGetVelocityY() > 10f) // if still going up, set vel y to 0 to make it falls
                     {
@@ -1192,7 +1202,7 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
             }
             else if (jump_amount != 1 /*not apply to first jump only*/ ||
-                InternalCalls.RigidBodyGetVelocity().y > 0f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
+                InternalCalls.RigidBodyGetVelocity().y > 0f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)) && !InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A))
             {
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
             }
@@ -1512,7 +1522,7 @@ namespace IS
         static private void Attack()
         {
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
-            if (InternalCalls.MousePressed(0) && (!isAttack))
+            if ( ( InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X) ) && (!isAttack))
             {
                 // play attack sound
                 Random rnd = new Random();
@@ -1715,10 +1725,16 @@ namespace IS
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
             
             CalibrateAttackAngle();
+
+
+
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
-
-            //float distanceLeft = 150f;
+            if (InternalCalls.ControllerConnected())
+            {
+                f_angle.x = CustomMath.Normalize(trans_scaling.x);
+            }
+                //float distanceLeft = 150f;
 
             Vector2D attack_pos = new Vector2D(
                 player_pos.x + f_angle.x * attack_range.x,
@@ -1726,7 +1742,13 @@ namespace IS
             );
             //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
             // flip player if neccessary
-            if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+
+
+            if (!InternalCalls.ControllerConnected())
+            {
+                if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            }
+
 
             //Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
             InternalCalls.TransformSetPositionEntity(attack_pos.x, attack_pos.y, entity_attack);

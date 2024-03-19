@@ -26,7 +26,19 @@ namespace IS
         internal extern static bool KeyHeld(int keycode);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal extern static bool KeyReleased(int keycode);
+        internal extern static bool KeyReleased(int keycode);        
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static bool ControllerKeyPressed(int keycode);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static bool ControllerKeyHeld(int keycode);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static bool ControllerKeyReleased(int keycode);        
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal extern static bool ControllerConnected();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal extern static bool MousePressed(int mouseButton);

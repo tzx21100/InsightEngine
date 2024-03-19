@@ -84,6 +84,21 @@ namespace IS {
         return input->IsKeyReleased(keycode);
     }
 
+    static bool ControllerKeyPressed(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsControllerKeyPressed(keycode);
+    }
+
+    static bool ControllerKeyHeld(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsControllerKeyHeld(keycode);
+    }
+
+    static bool ControllerKeyReleased(int keycode) {
+        std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
+        return input->IsControllerKeyReleased(keycode);
+    }
+
     static bool MousePressed(int mousebutton) {
         std::shared_ptr<InputManager> input = InsightEngine::Instance().GetSystem<InputManager>("Input");
         return input->IsMouseButtonPressed(mousebutton);
@@ -1601,12 +1616,19 @@ namespace IS {
         return CreateSimpleArrayFromVector<Entity>(collider_component.mCollidingEntity);
     }
 
+    static bool ControllerConnected() {
+        return INPUT_MANAGER->mControllerConnected;
+    }
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
     void ScriptGlue::RegisterFunctions()
     {
+
+        IS_ADD_INTERNAL_CALL(ControllerConnected);
+
         IS_ADD_INTERNAL_CALL(DeleteSimpleArray);
         IS_ADD_INTERNAL_CALL(clearSimpleArray);
         IS_ADD_INTERNAL_CALL(GetCollidingEntityArray);
@@ -1618,8 +1640,12 @@ namespace IS {
 
         //input functions
         IS_ADD_INTERNAL_CALL(KeyPressed);
+        IS_ADD_INTERNAL_CALL(ControllerKeyPressed);
         IS_ADD_INTERNAL_CALL(KeyHeld);
+        IS_ADD_INTERNAL_CALL(ControllerKeyHeld);
         IS_ADD_INTERNAL_CALL(KeyReleased);
+        IS_ADD_INTERNAL_CALL(ControllerKeyReleased);
+        IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MousePressed);
         IS_ADD_INTERNAL_CALL(MouseHeld);
         IS_ADD_INTERNAL_CALL(MouseReleased);

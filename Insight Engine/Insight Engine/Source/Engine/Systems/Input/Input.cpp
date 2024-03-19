@@ -31,6 +31,13 @@ namespace IS {
 
     std::string InputManager::GetName() { return "Input"; }
 
+    static void controllerCallBack(int jid, int event1)
+    {
+        if (jid != GLFW_JOYSTICK_1)
+            return;
+        INPUT_MANAGER->mControllerConnected = event1 == GLFW_CONNECTED;
+    }
+
     void InputManager::Initialize() {
         // Subscirbe to messages
         Subscribe(MessageType::DebugInfo);
@@ -38,6 +45,7 @@ namespace IS {
         GLFWwindow* native_window = mWindow->GetNativeWindow();
         glfwSetWindowUserPointer(native_window, this); // Set InputManager as user pointer
         glfwSetKeyCallback(native_window, KeyCallback);
+        glfwSetJoystickCallback(controllerCallBack);
         glfwSetMouseButtonCallback(native_window, MouseButtonCallback);
 
         // Mouse scroll callback
@@ -115,6 +123,44 @@ namespace IS {
 
     void InputManager::Update([[maybe_unused]] float deltaTime)
     {
+
+        mReleasedControllerKeys.clear();
+
+        // Important comments. Do not delete.
+        if (true) {
+
+            if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+                if (glfwJoystickIsGamepad(GLFW_JOYSTICK_1)) { //>+O
+                    //record key inputs                         -|
+                    GLFWgamepadstate a;
+                    if (glfwGetGamepadState(GLFW_JOYSTICK_1, &a)) {
+                        for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
+                        {
+                            if (a.buttons[i] == GLFW_PRESS) {                        // --------  |
+                                if (mPressedControllerKeys.count(i) > 0) {//       |   |
+                                    mHeldControllerKeys.insert(i); //              |   |
+                                    mPressedControllerKeys.erase(i);//             ~~~~~
+                                }
+                                else {
+                                    mPressedControllerKeys.insert(i);
+                                }
+                            }
+                            else {
+                                mReleasedControllerKeys.insert(i);
+                                mHeldControllerKeys.erase(i);
+                                mPressedControllerKeys.erase(i);
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+
+
         //keyboard
         for (auto const& key : mHeldKeys) {
             mPressedKeys.erase(key);
@@ -165,6 +211,18 @@ namespace IS {
 
     bool InputManager::IsKeyHeld(int glfwKeyCode) const {
         return mHeldKeys.count(glfwKeyCode) > 0;
+    }
+
+    bool InputManager::IsControllerKeyPressed(int glfwKeyCode) const {
+        return mPressedControllerKeys.count(glfwKeyCode) > 0;
+    }
+
+    bool InputManager::IsControllerKeyReleased(int glfwKeyCode) const {
+        return mReleasedControllerKeys.count(glfwKeyCode) > 0;
+    }
+
+    bool InputManager::IsControllerKeyHeld(int glfwKeyCode) const {
+        return mHeldControllerKeys.count(glfwKeyCode) > 0;
     }
 
     bool InputManager::IsMouseButtonPressed(int button) const {
