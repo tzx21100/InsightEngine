@@ -87,8 +87,12 @@ namespace IS
             origin.y = camera_pos.y - (win_dimension.y / 2f);
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
 
-            lower_limit_bgm_knob = origin.x + (0.438f * win_dimension.x);
-            upper_limit_bgm_knob = origin.x + (0.562f * win_dimension.x);
+            SimpleVector2D knob_size = InternalCalls.GetTransformScaling();
+            SimpleVector2D bar_size = InternalCalls.GetTransformScalingEntity(SettingsScript.bgm_slider_bar_entity);
+            float width_offset = 0.5f * (knob_size.x + bar_size.x);
+
+            lower_limit_bgm_knob = origin.x + width_offset;
+            upper_limit_bgm_knob = origin.x - width_offset;
             //InternalCalls.TransformSetPosition(pos, origin.y + (0.433f * win_dimension.y));
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
             //hovered

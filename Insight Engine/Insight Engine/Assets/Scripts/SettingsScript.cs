@@ -28,19 +28,19 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
-        static private int background_entity;
-        static private int settings_overlay_entity;
-        static private int settings_overlay_top_entity;
-        static private int settings_overlay_bot_entity;
-        static private int master_checkbox_entity;
-        static private int bgm_checkbox_entity;
-        static private int vfx_checkbox_entity;
-        static private int master_slider_bar_entity;
-        static private int bgm_slider_bar_entity;
-        static private int vfx_slider_bar_entity; 
-        static private int master_slider_knob_entity;
-        static private int bgm_slider_knob_entity;
-        static private int vfx_slider_knob_entity;
+        static public int background_entity;
+        static public int settings_overlay_entity;
+        static public int settings_overlay_top_entity;
+        static public int settings_overlay_bot_entity;
+        static public int master_checkbox_entity;
+        static public int bgm_checkbox_entity;
+        static public int vfx_checkbox_entity;
+        static public int master_slider_bar_entity;
+        static public int bgm_slider_bar_entity;
+        static public int vfx_slider_bar_entity; 
+        static public int master_slider_knob_entity;
+        static public int bgm_slider_knob_entity;
+        static public int vfx_slider_knob_entity;
         //static private int fps_dropdown_entity;
         static private int resolution_dropdown_entity;
         static private int scroll_bar_entity;
@@ -196,19 +196,23 @@ namespace IS
 
 
             // Dimensions
+            const float CHECKBOX_SCALE    = 0.02f;
+            const float SLIDER_BAR_SCALE  = 0.16f;
+            const float SLIDER_BAR_AR     = 149f / 1060f;
+            const float SLIDER_KNOB_SCALE = 0.8f;
+
+            float checkbox_scaled_uniform    = CHECKBOX_SCALE * win_dimension.x;
+            float slider_bar_scaled_width    = SLIDER_BAR_SCALE * win_dimension.x;
+            float slider_bar_scaled_height   = SLIDER_BAR_AR * slider_bar_scaled_width;
+            float slider_knob_scaled_uniform = SLIDER_KNOB_SCALE * slider_bar_scaled_height;
+
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D settings_overlay = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D settings_overlay_top = new Vector2D(0.8f * win_dimension.x, 0.224f * win_dimension.y);
             Vector2D settings_overlay_bot = new Vector2D(0.8f * win_dimension.x, 0.15f * win_dimension.y);
-            Vector2D master_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
-            Vector2D bgm_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
-            Vector2D vfx_checkbox = new Vector2D(0.08f * win_dimension.x, 0.08f * win_dimension.x);
-            Vector2D master_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
-            Vector2D bgm_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
-            Vector2D vfx_slider_bar = new Vector2D(0.27f * win_dimension.x, 0.27f * win_dimension.y);
-            Vector2D master_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
-            Vector2D bgm_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
-            Vector2D vfx_slider_knob = new Vector2D(0.04f * win_dimension.x, 0.04f * win_dimension.x);
+
+            SimpleVector2D checkbox_size = new SimpleVector2D(checkbox_scaled_uniform, checkbox_scaled_uniform);
+            SimpleVector2D slider_knob_size = new SimpleVector2D(slider_knob_scaled_uniform, slider_knob_scaled_uniform);
 
             //Vector2D fps_dropdown = new Vector2D(0.177f * win_dimension.x, 0.029f * win_dimension.x);
             Vector2D resolution_dropdown = new Vector2D(0.177f * win_dimension.x, 0.029f * win_dimension.x);
@@ -222,15 +226,15 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(settings_overlay.x, settings_overlay.y, settings_overlay_entity);
             InternalCalls.TransformSetScaleEntity(settings_overlay_top.x, settings_overlay_top.y, settings_overlay_top_entity);
             InternalCalls.TransformSetScaleEntity(settings_overlay_bot.x, settings_overlay_bot.y, settings_overlay_bot_entity);
-            InternalCalls.SetButtonSize(master_checkbox_entity, new SimpleVector2D(master_checkbox.x, master_checkbox.y));
-            InternalCalls.SetButtonSize(bgm_checkbox_entity, new SimpleVector2D(bgm_checkbox.x, bgm_checkbox.y));
-            InternalCalls.SetButtonSize(vfx_checkbox_entity, new SimpleVector2D(vfx_checkbox.x, vfx_checkbox.y));
-            InternalCalls.TransformSetScaleEntity(master_slider_bar.x, master_slider_bar.y, master_slider_bar_entity);
-            InternalCalls.TransformSetScaleEntity(bgm_slider_bar.x, bgm_slider_bar.y, bgm_slider_bar_entity);
-            InternalCalls.TransformSetScaleEntity(vfx_slider_bar.x, vfx_slider_bar.y, vfx_slider_bar_entity);
-            InternalCalls.SetButtonSize(master_slider_knob_entity, new SimpleVector2D(master_slider_knob.x, master_slider_knob.y));
-            InternalCalls.SetButtonSize(bgm_slider_knob_entity, new SimpleVector2D(bgm_slider_knob.x, bgm_slider_knob.y));
-            InternalCalls.SetButtonSize(vfx_slider_knob_entity, new SimpleVector2D(vfx_slider_knob.x, vfx_slider_knob.y));
+            InternalCalls.SetButtonSize(master_checkbox_entity, checkbox_size);
+            InternalCalls.SetButtonSize(bgm_checkbox_entity, checkbox_size);
+            InternalCalls.SetButtonSize(vfx_checkbox_entity, checkbox_size);
+            InternalCalls.TransformSetScaleEntity(slider_bar_scaled_width, slider_bar_scaled_height, master_slider_bar_entity);
+            InternalCalls.TransformSetScaleEntity(slider_bar_scaled_width, slider_bar_scaled_height, bgm_slider_bar_entity);
+            InternalCalls.TransformSetScaleEntity(slider_bar_scaled_width, slider_bar_scaled_height, vfx_slider_bar_entity);
+            InternalCalls.SetButtonSize(master_slider_knob_entity, slider_knob_size);
+            InternalCalls.SetButtonSize(bgm_slider_knob_entity, slider_knob_size);
+            InternalCalls.SetButtonSize(vfx_slider_knob_entity, slider_knob_size);
             //InternalCalls.SetButtonSize(fps_dropdown_entity, new SimpleVector2D(fps_dropdown.x, fps_dropdown.y));
             InternalCalls.SetButtonSize(resolution_dropdown_entity, new SimpleVector2D(resolution_dropdown.x, resolution_dropdown.y));
             InternalCalls.TransformSetScaleEntity(scroll_bar.x, scroll_bar.y, scroll_bar_entity);
