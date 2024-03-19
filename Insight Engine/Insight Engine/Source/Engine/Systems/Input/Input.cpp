@@ -33,8 +33,10 @@ namespace IS {
 
     static void controllerCallBack(int jid, int event1)
     {
-        if (jid != GLFW_JOYSTICK_1)
+        if (jid != GLFW_JOYSTICK_1) {
+            INPUT_MANAGER->mControllerConnected = false;
             return;
+        }
         INPUT_MANAGER->mControllerConnected = event1 == GLFW_CONNECTED;
     }
 
@@ -125,9 +127,11 @@ namespace IS {
     {
 
         mReleasedControllerKeys.clear();
+        int event = 0;
+        controllerCallBack(GLFW_JOYSTICK_1, event);
 
         // Important comments. Do not delete.
-        if (true) {
+        if (mControllerConnected) {
 
             if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
                 if (glfwJoystickIsGamepad(GLFW_JOYSTICK_1)) { //>+O
