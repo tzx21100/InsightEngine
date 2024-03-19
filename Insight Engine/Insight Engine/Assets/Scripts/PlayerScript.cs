@@ -318,18 +318,18 @@ namespace IS
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
-            InternalCalls.CreateAnimationFromSprite(6, 2, 0.7f); // idle n jump
-            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
+            InternalCalls.CreateAnimationFromSprite(2, 6, 0.7f);  // run
+            InternalCalls.CreateAnimationFromSprite(6, 2, 0.7f);  // idle n jump
+            InternalCalls.CreateAnimationFromSprite(3, 4, 0.7f); // fall
 
             // attack 1
-            InternalCalls.CreateAnimationFromSprite(1, 6, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(3, 2, 0.5f);
 
             // attack 2
-            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(2, 4, 0.5f);
 
             // attack 3
-            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(2, 4, 0.5f);
 
             // attack total
             InternalCalls.CreateAnimationFromSprite(1,22,3f);
@@ -716,7 +716,7 @@ namespace IS
                 jump_amount = jump_amount_set; //allow double dash
 
                 InternalCalls.SetSpriteImage(player_transparent);
-                InternalCalls.SetSpriteAnimationIndex(0);
+                //InternalCalls.SetSpriteAnimationIndex(0);
 
                 float collided_angle = InternalCalls.GetTransformRotationEntity(collided_wall_entity) - (90 * hori_movement);
 
@@ -941,7 +941,7 @@ namespace IS
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
-                        InternalCalls.SetSpriteAnimationIndex(2);
+                        InternalCalls.SetSpriteAnimationIndex(1);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
@@ -969,13 +969,14 @@ namespace IS
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
-                InternalCalls.SetSpriteAnimationIndex(2);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_jump);
                 if(InternalCalls.RigidBodyGetVelocityY() < 0f)
                 {
+                    InternalCalls.SetSpriteAnimationIndex(2);
                     InternalCalls.SetSpriteImage(player_fall);
                 }
-                InternalCalls.SetSpriteAnimationIndex(2);
+                //InternalCalls.SetSpriteAnimationIndex(2);
                 
                 if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
@@ -983,7 +984,7 @@ namespace IS
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
-                        InternalCalls.SetSpriteAnimationIndex(2);
+                        InternalCalls.SetSpriteAnimationIndex(1);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
@@ -1813,11 +1814,13 @@ namespace IS
                             //Console.WriteLine(attacking_enemy_id);
                             //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
                             //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attack_damage);
+                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(
+                                new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
+                                (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
                             initial_attack = true;
                         }
                     }
-                    else if (isAttack) // still hitting the enemy
+                    else if (isAttack) // still hitting the enemy 
                     {
                         // drawing hitting enemy vfx
                         CalibrateAttackAngle();

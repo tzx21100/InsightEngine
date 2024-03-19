@@ -63,7 +63,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(341f, 448);
+        private Vector2D scaling = new Vector2D(341f, 448f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
         private Vector2D enemy_dash_vel = new Vector2D(600f, 600f);
 
@@ -165,9 +165,9 @@ namespace IS
 
             // animation 
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 22, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 21, 1f);
+            InternalCalls.CreateAnimationFromSprite(2, 6, 1f); // idle
+            InternalCalls.CreateAnimationFromSprite(2, 11, 1f); // attack 1, 2
+            InternalCalls.CreateAnimationFromSprite(7, 3, 1f); // death
 
             // enemy patrol
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -653,14 +653,14 @@ namespace IS
             switch (random_attack) // condition check for different attack
             {
                 case 0:
-                    if (MathF.Abs(dist) <= view_port_area.x) // attack player when getting close enough, within the view port, release first dash attack
+                    if (PlayerInSight()) // attack player when getting close enough, within the view port, release first dash attack
                     {
                         current_state = EnemyState.ATTACKING;
                         return;
                     }
                     break;
                 case 1:
-                    if (MathF.Abs(dist) <= attack_area.x) // attack player when getting close enough, within the attack area, release the second tornado
+                    if (PlayerInAttackRange()) // attack player when getting close enough, within the attack area, release the second tornado
                     {
                         current_state = EnemyState.ATTACKING;
                         return;
