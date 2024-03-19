@@ -1792,11 +1792,13 @@ namespace IS
                             //Console.WriteLine(attacking_enemy_id);
                             //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
                             //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attack_damage);
+                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(
+                                new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
+                                (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
                             initial_attack = true;
                         }
                     }
-                    else if (isAttack) // still hitting the enemy
+                    else if (isAttack) // still hitting the enemy 
                     {
                         // drawing hitting enemy vfx
                         CalibrateAttackAngle();

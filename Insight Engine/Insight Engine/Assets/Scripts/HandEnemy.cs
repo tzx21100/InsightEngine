@@ -11,7 +11,7 @@
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
- *____________________________________________________________________________*/
+ *____________________________________________________________________________*//*
 using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
@@ -21,15 +21,15 @@ namespace IS
 {
 
 
-    class Enemy
+    class HandEnemy
     {
 
-        static public Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
+        static public Dictionary<int, EachHandEnemy> enemies = new Dictionary<int, EachHandEnemy>();
 
         static public void Init()
         {
             int entity_id = InternalCalls.GetCurrentEntityID();
-            enemies[entity_id] = new EachEnemy();
+            enemies[entity_id] = new EachHandEnemy();
             enemies[entity_id].Init();
         }
 
@@ -42,30 +42,29 @@ namespace IS
 
 
 
-        /*static public void CleanUp()
+        *//*static public void CleanUp()
         {
             InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
-        }*/
+        }*//*
     }
 
-    public enum EnemyState : short
+    public enum HandEnemyState : short
     {
-        PATROLLING,
-        FOLLOWING_PLAYER,
-        ATTACKING,
+        SPAWNING,
+        CHARGING,
         BEING_HIT,
+        IDLE,
         DEAD
     }
 
-    class EachEnemy
+    class EachHandEnemy
     {
         // common
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(341f, 448f);
+        private Vector2D scaling = new Vector2D(223f, 256f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
-        private Vector2D enemy_dash_vel = new Vector2D(600f, 600f);
 
         // get hit
         //public bool isHit;
@@ -77,17 +76,16 @@ namespace IS
         private float being_hit_flicker_timer = 0.2f;
 
         // attack
-        SimpleImage enemy_attack1;
-        SimpleImage enemy_attack2;
+        SimpleImage enemy_charging;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
-        public Vector2D view_port_area = new Vector2D(500f, 200f);
+        public Vector2D view_port_area = new Vector2D(1000f, 200f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
         private float attack_hit_timer = 0.5f;
         private bool initialAttack = false;
         private bool initialAttackSound = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
-        public Vector2D attack_area = new Vector2D(220f, 200f);
+        public Vector2D attack_area = new Vector2D(1220f, 200f);
         public int attack_damage = 1;
         private bool initialDashAttack = false;
         private bool nextAttackReady = false;
@@ -95,10 +93,11 @@ namespace IS
         // random stuff
         private int random_attack;
         private int random_being_hit_sound;
-        private int random_dead_sound;
-        private int random_attack1_sound;
-        private int random_attack2_sound;
+        private int random_spawning_sound;
+        private int random_charging_sound;
+        private int random_attack_sound;
         private int random_idle_sound;
+        private int random_dead_sound;
 
         // sound
         private float volume = 0.2f;
@@ -113,7 +112,7 @@ namespace IS
 
         // image and vfx
         //SimpleImage enemy_get_hit_vfx;
-        SimpleImage check_point;
+        //SimpleImage check_point;
 
         // health bar
         SimpleImage health_bar;
@@ -123,19 +122,15 @@ namespace IS
         SimpleImage enemy_death;
         private bool initialDeath = false;
 
+        // enemy spawn
+        SimpleImage enemy_spawn;
+        SimpleImage testimage;
+
         // enemy patrol
         SimpleImage enemy_idle;
-        public Vector2D enemy_left_point = new Vector2D(0f, 0f);
-        public Vector2D enemy_right_point = new Vector2D(0f, 0f);
-        public Vector2D target_point = new Vector2D(0f, 0f);
-        public float enemy_patrol_distance = 500f;
-        public float enemy_rest_timer_duration = 0.95f;
-        public float enemy_rest_timer = 0f;
-        public bool going_left;
 
         // states
-        //EnemyState previous_state;
-        EnemyState current_state;
+        HandEnemyState current_state;
 
         // enemy inof
         public float max_health = 100f;
@@ -149,15 +144,13 @@ namespace IS
             enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
             direction.x = 1f; // init
-            //InternalCalls.ColliderNone(ENEMY_ID);
 
             // image and vfx
-            //enemy_get_hit_vfx = InternalCalls.GetSpriteImage("land_vfx 2R7C.png");
-            check_point = InternalCalls.GetSpriteImage("dark_circle.png");
-            enemy_attack1 = InternalCalls.GetSpriteImage("enemy_attack1.png");
-            enemy_attack2 = InternalCalls.GetSpriteImage("enemy_attack2.png");
-            enemy_death = InternalCalls.GetSpriteImage("enemy_death.png");
-            enemy_idle = InternalCalls.GetSpriteImage("Enemy_Idle.png");
+            testimage = InternalCalls.GetSpriteImage("dark_circle.png");
+            enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn.png");
+            enemy_charging = InternalCalls.GetSpriteImage("enemy_attack1.png");
+            enemy_death = InternalCalls.GetSpriteImage("handEnemyDeath.png");
+            enemy_idle = InternalCalls.GetSpriteImage("handEnemyIdle.png");
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
@@ -165,20 +158,20 @@ namespace IS
 
             // animation 
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(2, 6, 1f); // idle
-            InternalCalls.CreateAnimationFromSprite(2, 11, 1f); // attack 1, 2
-            InternalCalls.CreateAnimationFromSprite(7, 3, 1f); // death
+            InternalCalls.CreateAnimationFromSprite(11, 4, 1f); // spawn
+            InternalCalls.CreateAnimationFromSprite(1, 22, 1f); // idle
+            InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // dead
 
             // enemy patrol
-            enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
+            *//*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
             enemy_right_point = new Vector2D(enemy_pos.x + enemy_patrol_distance / 2f, enemy_pos.y);
             target_point = enemy_left_point;
             enemy_rest_timer = enemy_rest_timer_duration;
-            going_left = true;
+            going_left = true;*//*
 
             // init states
             //previous_state = (EnemyState)(-1);
-            current_state = EnemyState.PATROLLING;
+            current_state = HandEnemyState.SPAWNING;
 
         }
 
@@ -200,7 +193,7 @@ namespace IS
 
             UpdateEnemyDirection();
             UpdateVolume();
-            //DrawPatrolPoint();
+            DrawPoint();
             //EnemyPatrolling();
             EnemyStateMechine();
             DrawHealthBar();
@@ -216,45 +209,20 @@ namespace IS
         public void GetHitByPlayer(Vector2D vec, float damage)
         {
             //previous_state = current_state;
-            current_state = EnemyState.BEING_HIT;
+            current_state = HandEnemyState.BEING_HIT;
             direction = vec;
             health -= damage;
         }
 
-        private void DrawGetHitVFX()
+        private void DrawPoint()
         {
-            //InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
-            //InternalCalls.TransformSetPositionEntity(enemy_pos.x + MathF.Sign(scaling.x) * -100f, enemy_pos.y + (InternalCalls.GetTransformScalingEntity(get_hit_vfx_entity).y - 200f) / 2f, get_hit_vfx_entity);
-            //InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation() + MathF.Sign(-scaling.x) * 270f, 0, get_hit_vfx_entity);
-        }
-
-        private void RemoveGetHitVFX()
-        {
-            //InternalCalls.TransformSetScaleEntity(0, 0, get_hit_vfx_entity);
-            //InternalCalls.TransformSetPositionEntity(-99999, -99999, get_hit_vfx_entity);
-        }
-
-        private void DrawPatrolPoint()
-        {
-            /*InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, get_hit_vfx_entity);
-            InternalCalls.TransformSetPositionEntity(enemy_left_point.x, enemy_left_point.y, get_hit_vfx_entity);
-            InternalCalls.TransformSetRotationEntity(0f, 0f, get_hit_vfx_entity);*/
             InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(enemy_left_point.x, enemy_left_point.y), 0, new SimpleVector2D(100f, 100f), check_point, 1f, 6
+                    new SimpleVector2D(view_port_pos.x, view_port_pos.y), 0, new SimpleVector2D(view_port_area.x, view_port_area.y), testimage, 0.2f, 6
                 );
             InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(enemy_right_point.x, enemy_right_point.y), 0, new SimpleVector2D(100f, 100f), check_point, 1f, 6
-                );
-
-            InternalCalls.DrawImageAt
-                (
-                    new SimpleVector2D(view_port_pos.x, view_port_pos.y), 0, new SimpleVector2D(view_port_area.x, view_port_area.y), check_point, 0.2f, 6
-                );
-            InternalCalls.DrawImageAt
-                (
-                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_area.x, attack_area.y), check_point, 0.3f, 6
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_area.x, attack_area.y), testimage, 0.3f, 6
                 );
         }
 
@@ -271,7 +239,7 @@ namespace IS
         public void EnemyCollidingPlayer() // check if enemy colliding with player
         {
             // check enemy colliding with enemy
-            if (InternalCalls.OnCollisionEnter() && current_state != EnemyState.DEAD)
+            if (InternalCalls.OnCollisionEnter() && current_state != HandEnemyState.DEAD)
             {
                 SimpleArray array = InternalCalls.GetCollidingEntityArray(ENEMY_ID);
 
@@ -281,11 +249,11 @@ namespace IS
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
                 }
-                /*else
+                *//*else
                 {
                     PlayerScript.is_colliding_enemy = false;
                     PlayerScript.colliding_enemy_id = -1;
-                }*/
+                }*//*
 
                 if (InternalCalls.CompareCategory("Weapon"))
                 {
@@ -303,7 +271,7 @@ namespace IS
 
         private void EnemyGetHit() // enemy get hit by player
         {
-            float vel_x = direction.x * speed;
+            //float vel_x = direction.x * speed;
             //float vel_y = direction.y * speed;
 
             // first hit
@@ -318,13 +286,14 @@ namespace IS
             }
             //DrawGetHitVFX(); // update vfx 
             // enemy moving backwards abit
-            InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
+            //InternalCalls.RigidBodySetVelocityEntity(vel_x, 0f, ENEMY_ID);
+            
             being_hit_timer += InternalCalls.GetDeltaTime();
             if (being_hit_timer > 0.5f)
             {
                 //isHit = false;
                 //current_state = previous_state; // back to previous state
-                current_state = EnemyState.FOLLOWING_PLAYER;
+                current_state = HandEnemyState.IDLE;
                 initialHit = false;
                 being_hit_timer = 0f;
                 InternalCalls.SetAnimationAlpha(1f); // reset alpha
@@ -394,7 +363,7 @@ namespace IS
             {
                 float rand = (float)rnd.NextDouble();
                 float dir_rand = my_rand.NextFloat();
-                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
+                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand *//* 330 to 360 *//*: 180 + 30 * dir_rand*//* 180 to 210 *//*;
                 float size = 10f * rand;
                 float size_scale = 20 * rand;
                 float alpha = 0.8f * rand;
@@ -531,27 +500,32 @@ namespace IS
             EnemyChangeState();
             switch (current_state)
             {
-                case EnemyState.PATROLLING:
+                case HandEnemyState.SPAWNING:
                     //Console.WriteLine("patrolling");
-                    EnemyPatrolling();
+                    //EnemyPatrolling();
                     break;
-                case EnemyState.FOLLOWING_PLAYER:
+                case HandEnemyState.CHARGING:
                     //Console.WriteLine("following player");
-                    EnemyFollowingPlayer();
+                    //EnemyFollowingPlayer();
                     break;
-                case EnemyState.ATTACKING:
-                   // Console.WriteLine("attacking");
-                    EnemyAttacking();
-                    break;
-                case EnemyState.BEING_HIT:
-                   // Console.WriteLine("being hit");
+                case HandEnemyState.BEING_HIT:
+                    Console.WriteLine("being hit");
                     EnemyGetHit();
                     break;
-                case EnemyState.DEAD:
-                    //Console.WriteLine("dead");
+                case HandEnemyState.IDLE:
+                    // Console.WriteLine("attacking");
+                    EnemyIdle();
+                    break;
+                case HandEnemyState.DEAD:
+                    Console.WriteLine("dead");
                     EnemyDead();
                     break;
             }
+        }
+
+        private void EnemyIdle()
+        {
+
         }
 
         private void EnemyDead() // enemy dead
@@ -595,7 +569,7 @@ namespace IS
             InternalCalls.SetSpriteAnimationIndex(2);
 
             // if the animation finish, destory enemy
-            if (InternalCalls.GetCurrentAnimationEntity(ENEMY_ID) == 20)
+            if (InternalCalls.GetCurrentAnimationEntity(ENEMY_ID) == 24)
             {
                 initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);
@@ -653,14 +627,14 @@ namespace IS
             switch (random_attack) // condition check for different attack
             {
                 case 0:
-                    if (PlayerInSight()) // attack player when getting close enough, within the view port, release first dash attack
+                    if (MathF.Abs(dist) <= view_port_area.x) // attack player when getting close enough, within the view port, release first dash attack
                     {
                         current_state = EnemyState.ATTACKING;
                         return;
                     }
                     break;
                 case 1:
-                    if (PlayerInAttackRange()) // attack player when getting close enough, within the attack area, release the second tornado
+                    if (MathF.Abs(dist) <= attack_area.x) // attack player when getting close enough, within the attack area, release the second tornado
                     {
                         current_state = EnemyState.ATTACKING;
                         return;
@@ -690,16 +664,13 @@ namespace IS
                     if (!initialDashAttack) // adding vel for enemy to dash to player
                     {
                         float dir = PlayerScript.player_pos.x - enemy_pos.x;
-                        enemy_vel.x = enemy_dash_vel.x * MathF.Sign(dir);
-                        enemy_vel.y = enemy_dash_vel.y;
                         InternalCalls.RigidBodyAddForceEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
                     }
                     initialDashAttack = true;
-                    InternalCalls.SetSpriteImage(enemy_attack1);
+                    InternalCalls.SetSpriteImage(enemy_charging);
 
                     break;
                 case 1: // attack 2 animation
-                    InternalCalls.SetSpriteImage(enemy_attack2);
 
                     break;
             }
@@ -864,3 +835,4 @@ namespace IS
         }
     }
 }
+*/
