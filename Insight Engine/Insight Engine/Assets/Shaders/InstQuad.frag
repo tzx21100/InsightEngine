@@ -9,7 +9,7 @@ layout(location = 5) in flat float vEntityID;
 layout(location = 0) out vec4 fFragColor;
 layout(location = 1) out int fEntityID;
 
-uniform sampler2D uTex2d[128];
+uniform sampler2D uTex2d[191];
   
 void main()
 {

@@ -165,9 +165,9 @@ namespace IS
 
             // animation 
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1, 12, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 22, 1f);
-            InternalCalls.CreateAnimationFromSprite(1, 21, 1f);
+            InternalCalls.CreateAnimationFromSprite(2, 6, 1f); // idle
+            InternalCalls.CreateAnimationFromSprite(2, 11, 1f); // attack 1, 2
+            InternalCalls.CreateAnimationFromSprite(7, 3, 1f); // death
 
             // enemy patrol
             enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
