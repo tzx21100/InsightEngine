@@ -11,7 +11,7 @@
  * All rights reserved.
  * Reproduction or disclosure of this file or its contents without the prior written
  * consent of DigiPen Institute of Technology is prohibited.
- *____________________________________________________________________________*//*
+ *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
@@ -42,10 +42,10 @@ namespace IS
 
 
 
-        *//*static public void CleanUp()
+        /*static public void CleanUp()
         {
             InternalCalls.SetSpriteImageEntity(InternalCalls.GetSpriteImage("glitched_platform_vfx 2R6C.png"), InternalCalls.GetCurrentEntityID());
-        }*//*
+        }*/
     }
 
     public enum HandEnemyState : short
@@ -163,11 +163,11 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // dead
 
             // enemy patrol
-            *//*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
+            /*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
             enemy_right_point = new Vector2D(enemy_pos.x + enemy_patrol_distance / 2f, enemy_pos.y);
             target_point = enemy_left_point;
             enemy_rest_timer = enemy_rest_timer_duration;
-            going_left = true;*//*
+            going_left = true;*/
 
             // init states
             //previous_state = (EnemyState)(-1);
@@ -249,11 +249,11 @@ namespace IS
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
                 }
-                *//*else
+                /*else
                 {
                     PlayerScript.is_colliding_enemy = false;
                     PlayerScript.colliding_enemy_id = -1;
-                }*//*
+                }*/
 
                 if (InternalCalls.CompareCategory("Weapon"))
                 {
@@ -363,7 +363,7 @@ namespace IS
             {
                 float rand = (float)rnd.NextDouble();
                 float dir_rand = my_rand.NextFloat();
-                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand *//* 330 to 360 *//*: 180 + 30 * dir_rand*//* 180 to 210 *//*;
+                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
                 float size = 10f * rand;
                 float size_scale = 20 * rand;
                 float alpha = 0.8f * rand;
@@ -373,8 +373,82 @@ namespace IS
             }
         }
 
-        private void EnemyPatrolling() // enemy patrolling
+        private bool CheckPlayerNearby() // helper function check whether player is nearby
         {
+            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
+            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
+            if (length < idle_sound_radius)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void UpdateVolume() // update overall volume
+        {
+            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
+            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
+            if (length < idle_sound_radius)
+            {
+                volume_scale = (idle_sound_radius - length) / idle_sound_radius;
+            }
+            else
+            {
+                volume_scale = 0f;
+            }
+            volume = max_volume * volume_scale;
+        }
+
+        private void EnemyStateMechine() // enemy state machine
+        {
+            EnemyChangeState();
+            switch (current_state)
+            {
+                case HandEnemyState.SPAWNING:
+                    Console.WriteLine("spawning");
+                    EnemySpawn();
+                    break;
+                case HandEnemyState.CHARGING:
+                    Console.WriteLine("charging");
+                    EnemyCharging();
+                    break;
+                case HandEnemyState.BEING_HIT:
+                    Console.WriteLine("being hit");
+                    EnemyGetHit();
+                    break;
+                case HandEnemyState.IDLE:
+                    Console.WriteLine("Idle");
+                    EnemyIdle();
+                    break;
+                case HandEnemyState.DEAD:
+                    Console.WriteLine("dead");
+                    EnemyDead();
+                    break;
+            }
+        }
+
+        // enemy charging and attack
+        private void EnemyCharging(){
+
+        }
+
+        private void EnemySpawn()
+        {
+            // random choose a position to spawn
+
+            // play animation
+
+            // after spawning, change to idle status
+        }
+
+        private void EnemyIdle()
+        {
+            InternalCalls.SetSpriteImage(enemy_idle);
+            InternalCalls.SetSpriteAnimationIndex(0);
+
             Random rnd = new Random();
             if (idle_sound_timer > 0f)
             {
@@ -426,106 +500,8 @@ namespace IS
                     idle_sound_timer = idle_sound_timer_duration + (float)rnd.NextDouble() * 5f; // reset sound timer
                     initialIdleSound = true;
                 }
-                
-            }
-
-            float dist = target_point.x - enemy_pos.x;
-            //Vector2D dir = new Vector2D(0f, 0f);
-
-            if (MathF.Abs(dist) < 10f) // rest then turn around
-            {
-                if (enemy_rest_timer > 0f) // enemy in resting
-                {
-                    enemy_rest_timer -= InternalCalls.GetDeltaTime();
-                    InternalCalls.RigidBodySetVelocityEntity(0f, enemy_vel.y, ENEMY_ID);
-                    if (enemy_rest_timer <= 0f)
-                    {
-                        if (going_left)
-                        {
-                            target_point = enemy_right_point;
-                        }
-                        else
-                        {
-                            target_point = enemy_left_point;
-                        }
-                        going_left = !going_left; // change direction
-                        enemy_rest_timer = enemy_rest_timer_duration; // rest timer
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
 
             }
-            direction.x = target_point.x - enemy_pos.x;
-            // set enemy vel
-            enemy_vel.x = speed * MathF.Sign(direction.x);
-            enemy_vel.y = 0f;
-            direction.x = -direction.x;// going left is positive, right is negative
-            InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
-        }
-
-        private bool CheckPlayerNearby() // helper function check whether player is nearby
-        {
-            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
-            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
-            if (length < idle_sound_radius)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private void UpdateVolume() // update overall volume
-        {
-            Vector2D distance = new Vector2D(PlayerScript.player_pos.x - enemy_pos.x, PlayerScript.player_pos.y - enemy_pos.y);
-            float length = InternalCalls.MathSqrt(distance.x * distance.x + distance.y * distance.y);
-            if (length < idle_sound_radius)
-            {
-                volume_scale = (idle_sound_radius - length) / idle_sound_radius;
-            }
-            else
-            {
-                volume_scale = 0f;
-            }
-            volume = max_volume * volume_scale;
-        }
-
-        private void EnemyStateMechine() // enemy state machine
-        {
-            EnemyChangeState();
-            switch (current_state)
-            {
-                case HandEnemyState.SPAWNING:
-                    //Console.WriteLine("patrolling");
-                    //EnemyPatrolling();
-                    break;
-                case HandEnemyState.CHARGING:
-                    //Console.WriteLine("following player");
-                    //EnemyFollowingPlayer();
-                    break;
-                case HandEnemyState.BEING_HIT:
-                    Console.WriteLine("being hit");
-                    EnemyGetHit();
-                    break;
-                case HandEnemyState.IDLE:
-                    // Console.WriteLine("attacking");
-                    EnemyIdle();
-                    break;
-                case HandEnemyState.DEAD:
-                    Console.WriteLine("dead");
-                    EnemyDead();
-                    break;
-            }
-        }
-
-        private void EnemyIdle()
-        {
-
         }
 
         private void EnemyDead() // enemy dead
@@ -582,189 +558,35 @@ namespace IS
             // if no health bar, then dead
             if (health <= 0f)
             {
-                current_state = EnemyState.DEAD;
+                current_state = HandEnemyState.DEAD;
                 return;
             }
 
 
-            if (current_state == EnemyState.PATROLLING || current_state == EnemyState.FOLLOWING_PLAYER)
+            /*if (current_state == HandEnemyState.PATROLLING || current_state == HandEnemyState.FOLLOWING_PLAYER)
             {
                 InternalCalls.SetSpriteImage(enemy_idle);
                 InternalCalls.SetSpriteAnimationIndex(0);
-            }
+            }*/
 
             switch (current_state)
             {
-                case EnemyState.PATROLLING:
+                case HandEnemyState.IDLE:
 
                     if (PlayerInSight())
                     {
-                        current_state = EnemyState.FOLLOWING_PLAYER;
+                        current_state = HandEnemyState.CHARGING;
                     }
 
                     break;
-                case EnemyState.FOLLOWING_PLAYER:
+                case HandEnemyState.SPAWNING:
                     break;
-                case EnemyState.ATTACKING:
+                case HandEnemyState.CHARGING:
                     break;
-                case EnemyState.BEING_HIT:
+                case HandEnemyState.BEING_HIT:
                     break;
-                case EnemyState.DEAD:
+                case HandEnemyState.DEAD:
                     break;
-            }
-        }
-
-        private void EnemyFollowingPlayer() // enemy following player
-        {
-            float dist = PlayerScript.player_pos.x - enemy_pos.x;
-
-            if (!nextAttackReady) {
-
-                Random rnd = new Random();
-                random_attack = rnd.Next(0, 2);
-                nextAttackReady = true;
-            }
-            switch (random_attack) // condition check for different attack
-            {
-                case 0:
-                    if (MathF.Abs(dist) <= view_port_area.x) // attack player when getting close enough, within the view port, release first dash attack
-                    {
-                        current_state = EnemyState.ATTACKING;
-                        return;
-                    }
-                    break;
-                case 1:
-                    if (MathF.Abs(dist) <= attack_area.x) // attack player when getting close enough, within the attack area, release the second tornado
-                    {
-                        current_state = EnemyState.ATTACKING;
-                        return;
-                    }
-                    break;
-            }
-
-            if (enemy_pos.x < enemy_left_point.x || enemy_pos.x > enemy_right_point.x || !PlayerInSight())
-            {
-                current_state = EnemyState.PATROLLING;
-                //return;
-            }
-
-            direction.x = PlayerScript.player_pos.x - enemy_pos.x;
-            // set enemy vel
-            enemy_vel.x = speed * MathF.Sign(direction.x) * 1.8f;
-            enemy_vel.y = 0f;
-            direction.x = -direction.x;// going left is positive, right is negative
-            InternalCalls.RigidBodySetVelocityEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
-        }
-
-        private void EnemyAttacking() // enemy attacking player
-        {
-            switch (random_attack)
-            {
-                case 0: // atack 1 animation
-                    if (!initialDashAttack) // adding vel for enemy to dash to player
-                    {
-                        float dir = PlayerScript.player_pos.x - enemy_pos.x;
-                        InternalCalls.RigidBodyAddForceEntity(enemy_vel.x, enemy_vel.y, ENEMY_ID);
-                    }
-                    initialDashAttack = true;
-                    InternalCalls.SetSpriteImage(enemy_charging);
-
-                    break;
-                case 1: // attack 2 animation
-
-                    break;
-            }
-            InternalCalls.SetSpriteAnimationIndex(1);
-
-            Random rnd = new Random();
-            // enemy attack sound
-            if (!initialAttackSound)
-            {
-                // enemy attack sound
-                switch (random_attack)
-                {
-                    case 0: // atack 1
-                        random_attack1_sound = rnd.Next(0, 9);
-                        switch (random_attack1_sound)
-                        {
-                            case 0:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_1.wav", false, volume);
-                                break;
-                            case 1:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_2.wav", false, volume);
-                                break;
-                            case 2:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_3.wav", false, volume);
-                                break;
-                            case 3:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_4.wav", false, volume);
-                                break;
-                            case 4:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_5.wav", false, volume);
-                                break;
-                            case 5:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_6.wav", false, volume);
-                                break;
-                            case 6:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_7.wav", false, volume);
-                                break;
-                            case 7:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_8.wav", false, volume);
-                                break;
-                            case 8:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack_9.wav", false, volume);
-                                break;
-                        }
-                        break;
-                    case 1: // attack 2
-                        random_attack2_sound = rnd.Next(0, 6);
-
-                        switch (random_attack2_sound)
-                        {
-                            case 0:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_1.wav", false, volume);
-                                break;
-                            case 1:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_2.wav", false, volume);
-                                break;
-                            case 2:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_3.wav", false, volume);
-                                break;
-                            case 3:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_4.wav", false, volume);
-                                break;
-                            case 4:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_5.wav", false, volume);
-                                break;
-                            case 5:
-                                InternalCalls.AudioPlaySoundSFX("Blobby Attack-Swirl_6.wav", false, volume);
-                                break;
-                        }
-                        break;
-                }
-
-                initialAttackSound = true;
-            }
-            attack_timer -= InternalCalls.GetDeltaTime();
-            if (attack_timer < attack_hit_timer && attack_timer > 0.3f) // attack timing 0.5s to 0.3s
-            {
-                if (!initialAttack && PlayerInAttackRange())
-                {
-                    PlayerScript.is_colliding_enemy = true;
-                    PlayerScript.colliding_enemy_id = ENEMY_ID;
-
-                    initialAttack = true;
-                }
-            }
-            
-            if (attack_timer <= 0f)
-            {
-                attack_timer = attack_timer_duration;
-                initialAttack = false;
-                initialAttackSound = false;
-                initialDashAttack = false; // reset for dash adding vel
-                nextAttackReady = false; // for enemy to change attack pattern
-                current_state = EnemyState.FOLLOWING_PLAYER;
             }
         }
 
@@ -835,4 +657,3 @@ namespace IS
         }
     }
 }
-*/
