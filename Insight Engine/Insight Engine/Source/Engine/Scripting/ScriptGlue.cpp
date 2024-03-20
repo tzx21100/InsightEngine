@@ -1309,6 +1309,11 @@ namespace IS {
         return InsightEngine::Instance().GetWindowHeight();
     }
 
+    static int GetTargetFPS()
+    {
+        return InsightEngine::Instance().GetTargetFPS();
+    }
+
     static SimpleVector2D GetCameraPos() {
         return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
     }
@@ -1804,6 +1809,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(GetTargetFPS);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);

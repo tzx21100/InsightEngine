@@ -42,16 +42,17 @@ namespace IS
         static public List<int> option_highlight_entities_list = new List<int>();
         static public void Init()
         {
-/*            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
+            id = InternalCalls.GetCurrentEntityID();
+
+            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
             dropdown_open_image = InternalCalls.GetSpriteImage("dropdown_open.png");
             dropdown_option_image = InternalCalls.GetSpriteImage("dropdown_option.png");
             dropdown_option_highlight_image = InternalCalls.GetSpriteImage("dropdown_option_highlight.png");
             dropdown_option_end_image = InternalCalls.GetSpriteImage("dropdown_option_end.png");
 
-            //dropdown_option_entity = InternalCalls.CreateEntityUI("Option", dropdown_option_image);
+            InternalCalls.SetButtonIdleAlpha(id, 1f);
+            InternalCalls.SetButtonHoverScale(id, 0.9f);
 
-            id = InternalCalls.GetCurrentEntityID();
-            // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -71,10 +72,7 @@ namespace IS
             resolution_options.Add("1600 x 900");
             resolution_options.Add("1920 x 1080");
 
-            InternalCalls.SetButtonIdleAlpha(id, 1f);
-            InternalCalls.SetButtonHoverScale(id, 0.9f);
-
-            dropdown_open = false; 
+            dropdown_open = false;
             CreateOptionEntities();
             CreateOptionHighlightEntities();
 
@@ -105,13 +103,185 @@ namespace IS
                 position_of_entities.Add(new Vector2D(0, 0));
             }
             last_pos_index = position_of_entities.Count - 1;
-            InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);*/
+            InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);
+
+            /*            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
+                        dropdown_open_image = InternalCalls.GetSpriteImage("dropdown_open.png");
+                        dropdown_option_image = InternalCalls.GetSpriteImage("dropdown_option.png");
+                        dropdown_option_highlight_image = InternalCalls.GetSpriteImage("dropdown_option_highlight.png");
+                        dropdown_option_end_image = InternalCalls.GetSpriteImage("dropdown_option_end.png");
+
+                        //dropdown_option_entity = InternalCalls.CreateEntityUI("Option", dropdown_option_image);
+
+                        id = InternalCalls.GetCurrentEntityID();
+                        // Camera
+                        camera_zoom = InternalCalls.CameraGetZoom();
+
+                        //set camera pos
+                        camera_pos.x = InternalCalls.GetCameraPos().x;
+                        camera_pos.y = InternalCalls.GetCameraPos().y;
+
+                        // Windows
+                        win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+                        win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+                        origin.x = camera_pos.x - (win_dimension.x / 2f);
+                        origin.y = camera_pos.y - (win_dimension.y / 2f);
+
+                        resolution_options.Add("800 x 600");
+                        resolution_options.Add("1024 x 768");
+                        resolution_options.Add("1280 x 720");
+                        resolution_options.Add("1600 x 900");
+                        resolution_options.Add("1920 x 1080");
+
+                        InternalCalls.SetButtonIdleAlpha(id, 1f);
+                        InternalCalls.SetButtonHoverScale(id, 0.9f);
+
+                        dropdown_open = false; 
+                        CreateOptionEntities();
+                        CreateOptionHighlightEntities();
+
+                        if (!options_created)
+                        {
+                            for (int i = 0; i < option_entities_list.Count; i++)
+                            {
+                                option_entities.Add(option_entities_list[i], resolution_options[i]);
+                            }
+                            options_created = true;
+                        }
+
+                        if (!option_highlights_created)
+                        {
+                            for (int i = 0; i < option_highlight_entities_list.Count; i++)
+                            {
+                                option_highlight_entities.Add(option_highlight_entities_list[i], option_entities_list[i]);
+                            }
+                            option_highlights_created = true;
+                        }
+
+                        DeleteExtraOptionEntities();
+                        DeleteExtraOptionHighlightEntities();
+                        key_list = option_entities.Keys.ToList();
+                        last_key = key_list[key_list.Count - 1];
+                        for (int i = 0; i < option_entities.Count; i++)
+                        {
+                            position_of_entities.Add(new Vector2D(0, 0));
+                        }
+                        last_pos_index = position_of_entities.Count - 1;
+                        InternalCalls.SetSpriteImageEntity(dropdown_option_end_image, last_key);*/
 
         }
 
         static public void Update()
         {
-          /*  camera_zoom = InternalCalls.CameraGetZoom();
+            /*  camera_zoom = InternalCalls.CameraGetZoom();
+
+              //set camera pos
+              camera_pos.x = InternalCalls.GetCameraPos().x;
+              camera_pos.y = InternalCalls.GetCameraPos().y;
+
+              // Windows
+              win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+              win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+              origin.x = camera_pos.x - (win_dimension.x / 2f);
+              origin.y = camera_pos.y - (win_dimension.y / 2f);
+              //hovered
+              if (InternalCalls.GetButtonState() == 1)
+              {
+                  //hovering
+                  if (!first_hover)
+                  {
+                      InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                      first_hover = true;
+                  }
+              }
+              else
+              {
+                  first_hover = false;
+              }
+              if (!InternalCalls.IsWindowFocused())
+              {
+                  first_hover = true;
+              }
+              // clicking
+              if (InternalCalls.GetButtonState() == 2)
+              {
+                  dropdown_open = !dropdown_open;
+                  InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+              }
+
+              if (!dropdown_open)
+              {
+                  x_pos = origin.x + (0.5f * win_dimension.x);
+              }
+              else
+              {
+                  x_pos = origin.x + (0.5005f * win_dimension.x);
+              }
+
+              y_pos = origin.y + (0.215f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
+
+
+              //sizes
+              Vector2D option = new Vector2D(0.1591f * win_dimension.x, 0.015f * win_dimension.x); //651 x 57
+              Vector2D option_end = new Vector2D(0.1591f * win_dimension.x, 0.018f * win_dimension.x); //651 x 63
+              //scale
+              for (int i = 0; i < key_list.Count - 1; i++)
+              {
+                  int key = key_list[i];
+                  InternalCalls.TransformSetScaleEntity(option.x, option.y, key);
+              }
+              if (key_list.Count > 0)
+              {
+                  InternalCalls.TransformSetScaleEntity(option_end.x, option_end.y, last_key);
+              }
+              for (int i = 0; i < key_list.Count - 1; i++)
+              {
+                  position_of_entities[i].x = x_pos - (0.0001f * win_dimension.x);
+                  position_of_entities[i].y = y_pos - (0.033f * win_dimension.y) - (i * 0.024f * win_dimension.y);
+                  position_of_entities[i].Set(position_of_entities[i].x, position_of_entities[i].y);
+              }
+
+              if (key_list.Count > 0)
+              {
+                  position_of_entities[last_pos_index].x = x_pos - (0.0001f * win_dimension.x);
+                  position_of_entities[last_pos_index].y = y_pos - (0.033f * win_dimension.y) - (last_pos_index * 0.024f * win_dimension.y);
+                  position_of_entities[last_pos_index].Set(position_of_entities[last_pos_index].x, position_of_entities[last_pos_index].y);
+              }
+              if (dropdown_open)
+              {
+                  //foreach (KeyValuePair<int, string> entry in option_entities)
+                  {
+                      InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.177f *win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                      InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.153f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                      InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.129f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                      InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.105f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                      InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.081f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                  }
+              }
+              if (dropdown_open)
+              {
+                  InternalCalls.SetSpriteImage(dropdown_open_image);
+                  Draw();
+              }
+              else
+              {
+                  InternalCalls.SetSpriteImage(dropdown_minimized_image);
+                  Hide();
+              }
+
+              if (SettingsScript.show_settings)
+              {
+                  InternalCalls.TransformSetPosition(x_pos, y_pos);
+
+              }
+              if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)) || y_pos < (origin.y + (0.25f * win_dimension.y)))
+              {
+                  InternalCalls.TransformSetPosition(9999f, 9999f);
+              }
+  */
+            camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
             camera_pos.x = InternalCalls.GetCameraPos().x;
@@ -124,12 +294,12 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
             }
@@ -142,28 +312,19 @@ namespace IS
                 first_hover = true;
             }
             // clicking
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
                 dropdown_open = !dropdown_open;
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                SettingsScript.PlayClickSound();
             }
 
-            if (!dropdown_open)
-            {
-                x_pos = origin.x + (0.5f * win_dimension.x);
-            }
-            else
-            {
-                x_pos = origin.x + (0.5005f * win_dimension.x);
-            }
-
+            x_pos = origin.x + (dropdown_open ? 0.5005f : 0.5f) * win_dimension.x;
             y_pos = origin.y + (0.215f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
-
 
             //sizes
             Vector2D option = new Vector2D(0.1591f * win_dimension.x, 0.015f * win_dimension.x); //651 x 57
             Vector2D option_end = new Vector2D(0.1591f * win_dimension.x, 0.018f * win_dimension.x); //651 x 63
-            //scale
+                                                                                                     //scale
             for (int i = 0; i < key_list.Count - 1; i++)
             {
                 int key = key_list[i];
@@ -186,19 +347,18 @@ namespace IS
                 position_of_entities[last_pos_index].y = y_pos - (0.033f * win_dimension.y) - (last_pos_index * 0.024f * win_dimension.y);
                 position_of_entities[last_pos_index].Set(position_of_entities[last_pos_index].x, position_of_entities[last_pos_index].y);
             }
+
             if (dropdown_open)
             {
-                //foreach (KeyValuePair<int, string> entry in option_entities)
+                float yoffset = 0.177f;
+                foreach (KeyValuePair<int, string> entry in option_entities)
                 {
-                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.177f *win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
-                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.153f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
-                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.129f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
-                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.105f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
-                    InternalCalls.RenderLeftAlignTextFont("800x600", "Semplicita_Light", ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x, ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.081f * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y, 7f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderLeftAlignTextFont(entry.Value, SettingsScript.FONT_NAME,
+                        ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x), 0f).x,
+                        ConvertAbsoluteToNormalizedPosition(0f, origin.y + (yoffset * win_dimension.y) - ScrollBarTrackerScript.virtual_y).y,
+                        7f, (1f, 1f, 1f, 1f));
+                    yoffset -= 0.023f;
                 }
-            }
-            if (dropdown_open)
-            {
                 InternalCalls.SetSpriteImage(dropdown_open_image);
                 Draw();
             }
@@ -209,15 +369,12 @@ namespace IS
             }
 
             if (SettingsScript.show_settings)
-            {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
-
-            }
             if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)) || y_pos < (origin.y + (0.25f * win_dimension.y)))
             {
+                dropdown_open = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-*/
 
         }
 
