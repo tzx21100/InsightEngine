@@ -120,6 +120,7 @@ namespace IS
         static SimpleImage player_health_empty;
         static SimpleImage player_health_full;
         static SimpleImage player_health_half;
+        static SimpleImage damage_screen_flash;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -175,6 +176,8 @@ namespace IS
         static public Vector2D player_ground_pos = new Vector2D(0, 0);
         static private Vector2D apply_force = new Vector2D(0, 0);//dash dir
 
+        //screen flash
+        static public float screen_flash_timer = 0.0f;
 
         static public int entity_feet;
 
@@ -313,6 +316,9 @@ namespace IS
             player_health_empty = InternalCalls.GetSpriteImage("player_health_empty.png");
             player_health_full = InternalCalls.GetSpriteImage("player_health_full.png");
             player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
+
+            damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
+
             //player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
             // Initialization code
@@ -432,7 +438,7 @@ namespace IS
             }*/
 
 
-                SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
+            SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
 
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
@@ -462,6 +468,15 @@ namespace IS
                     pos, 0, scaler, player_reward_wallclimb, 1f, 4
                 );
 
+            }
+
+            // screen flash upon damage
+            if (screen_flash_timer > 0.0f)
+            {
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
+                SimpleVector2D scaling = new SimpleVector2D(WindowWidth / CameraScript.camera_zoom * 1.03f, WindowHeight / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
+                InternalCalls.DrawImageAt(pos, 0, scaling, damage_screen_flash, screen_flash_timer / 1.5f, InternalCalls.GetTopLayer() - 1);
+                screen_flash_timer -= InternalCalls.GetDeltaTime();
             }
 
             DrawHealthBar();
@@ -1967,6 +1982,8 @@ namespace IS
                 hori_movement = 0;
                 InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
+
+                screen_flash_timer += 1.5f;
             }
         }
 

@@ -32,6 +32,7 @@ namespace IS
             if(array.FindIndex(PlayerScript.PLAYER_ID) != -1)
             {
                 PlayerScript.isDead = true;
+                PlayerScript.screen_flash_timer += 1.5f;
             }
 
             foreach (var key in Enemy.enemies.Keys)

@@ -182,6 +182,7 @@ namespace IS
                     if (InternalCalls.GetCollidingEntityCheck(player, boulder))
                     {
                         PlayerScript.isDead = true;
+                        PlayerScript.screen_flash_timer = 1.5f;
                     }
                 }
                 if (mIsGrounded)
