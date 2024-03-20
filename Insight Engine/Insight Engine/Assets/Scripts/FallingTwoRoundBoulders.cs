@@ -221,6 +221,7 @@ namespace IS
                     {
                         // if the player contact with lower part of the boulder, he dies
                         PlayerScript.isDead = true;
+                        PlayerScript.screen_flash_timer += 1.5f;
                     }
                 }
             }
@@ -339,6 +340,7 @@ namespace IS
                     {
                         // if the player contact with lower part of the boulder, he dies
                         PlayerScript.isDead = true;
+                        PlayerScript.screen_flash_timer += 1.5f;
                     }
                 }
             }
