@@ -9,36 +9,36 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 4456.6826171875,
-				"Y" : 210.59757995605469
+				"X" : 560.4853515625,
+				"Y" : 557.4635009765625
 			},
 			"BoxColliderOffset" : 
 			{
-				"X" : -9.3999996185302734,
-				"Y" : -52.799999237060547
+				"X" : -6.1999998092651367,
+				"Y" : 0.0
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 0.33000001311302185,
-				"Y" : 0.30000001192092896
+				"X" : 0.60000002384185791,
+				"Y" : 1.0
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -82.5,
-					"y" : 75.0
+					"x" : -66.900001525878906,
+					"y" : 128.0
 				},
 				{
-					"x" : 82.5,
-					"y" : 75.0
+					"x" : 66.900001525878906,
+					"y" : 128.0
 				},
 				{
-					"x" : 82.5,
-					"y" : -75.0
+					"x" : 66.900001525878906,
+					"y" : -128.0
 				},
 				{
-					"x" : -82.5,
-					"y" : -75.0
+					"x" : -66.900001525878906,
+					"y" : -128.0
 				}
 			]
 		},
@@ -46,7 +46,7 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "enemy",
+	"Name" : "HandEnemy",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
@@ -68,7 +68,7 @@
 	},
 	"Script" : 
 	{
-		"ScriptName" : "Enemy"
+		"ScriptName" : "HandEnemy"
 	},
 	"Signature" : "00000000000000000010010000100111",
 	"Sprite" : 
@@ -80,40 +80,40 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "Enemy_Idle.png",
+		"SpriteFilename" : "handEnemyIdle 1R22C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 49,
-		"SpriteTextureHeight" : 627,
-		"SpriteTextureIndex" : 32,
-		"SpriteTextureWidth" : 8604,
+		"SpriteTexture" : 67,
+		"SpriteTextureHeight" : 256,
+		"SpriteTextureIndex" : 50,
+		"SpriteTextureWidth" : 2684,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 500.0,
-		"SpriteTransformScalingY" : 500.0,
-		"SpriteTransformWorldPositionX" : 4466.08251953125,
-		"SpriteTransformWorldPositionY" : 263.3975830078125,
+		"SpriteTransformScalingX" : 223.0,
+		"SpriteTransformScalingY" : 256.0,
+		"SpriteTransformWorldPositionX" : 566.68536376953125,
+		"SpriteTransformWorldPositionY" : 557.4635009765625,
 		"animations" : 
 		[
 			{
 				"Name" : "ah ma",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.1666666716337204,
-				"frame_dimension_y" : 0.5,
-				"frame_index_x" : 3.0,
+				"frame_dimension_x" : 0.045454546809196472,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 6.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.004311002790927887,
-				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 6,
-				"y_frames" : 2
+				"frame_timer" : 0.020899893715977669,
+				"time_per_frame" : 0.045454546809196472,
+				"x_frames" : 22,
+				"y_frames" : 1
 			}
 		]
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 500.0,
-		"TransformScalingY" : 500.0,
-		"TransformWorldPositionX" : 4466.08251953125,
-		"TransformWorldPositionY" : 263.3975830078125
+		"TransformScalingX" : 223.0,
+		"TransformScalingY" : 256.0,
+		"TransformWorldPositionX" : 566.68536376953125,
+		"TransformWorldPositionY" : 557.4635009765625
 	}
 }

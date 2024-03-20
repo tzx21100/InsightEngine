@@ -147,10 +147,10 @@ namespace IS
 
             // image and vfx
             testimage = InternalCalls.GetSpriteImage("dark_circle.png");
-            enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn.png");
+            enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn 11R4C.png");
             enemy_charging = InternalCalls.GetSpriteImage("enemy_attack1.png");
-            enemy_death = InternalCalls.GetSpriteImage("handEnemyDeath.png");
-            enemy_idle = InternalCalls.GetSpriteImage("handEnemyIdle.png");
+            enemy_death = InternalCalls.GetSpriteImage("handEnemyDeath 2R12C.png");
+            enemy_idle = InternalCalls.GetSpriteImage("handEnemyIdle 1R22C.png");
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
@@ -193,7 +193,7 @@ namespace IS
 
             UpdateEnemyDirection();
             UpdateVolume();
-            DrawPoint();
+            //DrawPoint();
             //EnemyPatrolling();
             EnemyStateMechine();
             DrawHealthBar();
@@ -440,14 +440,17 @@ namespace IS
             // random choose a position to spawn
 
             // play animation
+            InternalCalls.SetSpriteImage(enemy_spawn);
+            InternalCalls.SetSpriteAnimationIndex(0);
 
             // after spawning, change to idle status
+            current_state = HandEnemyState.IDLE;
         }
 
         private void EnemyIdle()
         {
             InternalCalls.SetSpriteImage(enemy_idle);
-            InternalCalls.SetSpriteAnimationIndex(0);
+            InternalCalls.SetSpriteAnimationIndex(1);
 
             Random rnd = new Random();
             if (idle_sound_timer > 0f)

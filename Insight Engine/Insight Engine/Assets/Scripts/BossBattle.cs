@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 namespace IS
 {
@@ -13,6 +14,11 @@ namespace IS
         static private bool smash=false;
         static private float miss_smash_y_pos = -600f;
 
+        // for summon enemy
+        static private float singing_spell_timer_set = 2f;
+        static private float singing_spell_timer = 2f;
+        static private bool isSummoning = false;
+
 
         // for idle
         static private float idle_timer = 2f;
@@ -22,7 +28,8 @@ namespace IS
         {
             Idle=0,
             Clap=1,
-            Smash=2
+            Smash=2,
+            SummonEnemy=3
         }
 
         static private BossStates current_state = BossStates.Smash;
@@ -69,6 +76,9 @@ namespace IS
                 case BossStates.Smash:
                     FollowBeforeSmash();
                     break;
+                case BossStates.SummonEnemy:
+                    SummonEnemy();
+                    break;
             }
         }
 
@@ -76,17 +86,27 @@ namespace IS
 
         static private void StateChanger()
         {
-            float random=InternalCalls.GetRandomFloat();
-            if (random <=0.5f)
+            //float random=InternalCalls.GetRandomFloat();
+            MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+            uint random = rnd.Next(0,3); // random from 0 to 2
+            //random = 2;
+            if (random == 0)
             {
                 ResetPosition();
                 current_state = BossStates.Smash;
                 return;
             }
-            if(random <= 1f)
+            if(random == 1)
             {
                 ResetPosition();
                 current_state = BossStates.Idle;
+                return;
+            }
+            if (random == 2)
+            {
+                ResetPosition();
+                current_state = BossStates.SummonEnemy;
+                Console.WriteLine("summoning");
                 return;
             }
 
@@ -327,12 +347,109 @@ namespace IS
                 return;
             }
 
+        }
+
+        static private void SummonEnemy()
+        {
+            CameraScript.CameraTargetZoom(0.3f, 2f);
+            SingingSpell();
+            
+        }
+
+        static private void SingingSpell()
+        {
+            if (singing_spell_timer > 0f)
+            {
+                singing_spell_timer -= InternalCalls.GetDeltaTime();
+
+                // spawn particles
+                SpawnSummoningParticles();
+
+                // shake camera
+                SummoningCameraShake();
+
+                // summoning
+                Summoning();
 
 
+            }
+            else
+            {
+                // summon ends
 
+                // reset
+                singing_spell_timer = singing_spell_timer_set;
+                isSummoning = false;
+                //StateChanger();
+            }
+        }
 
+        static private void Summoning()
+        {
+            if (!isSummoning) // summon enemy once only
+            {
+                // spawn random number of enemies in random location on the ground
+                MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+                int random = (int)rnd.Next(1, 4); // random from 1 to 3
+                for (int i = 0; i < 1; i++)
+                {
+                    int enemy_id = InternalCalls.CreateEntityPrefab("HandEnemy");
+                    HandEnemy.enemies.Add(enemy_id, new EachHandEnemy());
+                    Console.WriteLine("spawn enemy");
+                    InternalCalls.TransformSetPositionEntity(100*i, 100*i, enemy_id);
+                }
+                isSummoning = true;
+            }
+        }
+
+        static private void SpawnSummoningParticles()
+        {
+            MyRandom rnd = new MyRandom((uint)(12924 * InternalCalls.GetRandomFloat()));
+
+            SimpleVector2D pos = InternalCalls.GetTransformPosition();
+            SimpleVector2D scaling = InternalCalls.GetTransformScaling();
+
+            for (int i = 0; i < 30; i++)
+            {
+
+                float rand = rnd.NextFloat();
+                float dir = rnd.NextFloat() * 360;
+                //float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
+                
+                rand = rnd.NextFloat();
+                float size = 30f * rand;
+
+                rand = rnd.NextFloat();
+                float size_scale = 30 * rand;
+
+                rand = rnd.NextFloat();
+                float alpha = 0.8f * rand;
+
+                rand = rnd.NextFloat();
+                float lifetime = 0.5f + 0.5f * rand;
+
+                rand = rnd.NextFloat();
+                float speed = 500f + 500f * rand;
+
+                rand = rnd.NextFloat();
+                float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+
+                rand = rnd.NextFloat();
+                float y = pos.y + scaling.y / 2f * (rand - 0.5f);
+
+                InternalCalls.GameSpawnParticleExtra(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                 );
+            }
+        }
+
+        static private void SummoningCameraShake()
+        {
+            CameraScript.CameraShake(2f);
+            CameraScript.camera_shake_intensity = 2f;
+            CameraScript.camera_shake_duration = 0.2f;
         }
 
 
-    }
+    } // class end here
 }
