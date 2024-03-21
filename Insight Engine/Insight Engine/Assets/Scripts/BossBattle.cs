@@ -39,6 +39,10 @@ namespace IS
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
             InternalCalls.AudioStopAllSounds();
             InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
+
+            // clear all enemy dic
+            HandEnemy.enemies.Clear();
+            Enemy.enemies.Clear();
         }
 
         static public void Update(){
@@ -380,7 +384,7 @@ namespace IS
                 // reset
                 singing_spell_timer = singing_spell_timer_set;
                 isSummoning = false;
-                //StateChanger();
+                StateChanger();
             }
         }
 
@@ -396,7 +400,10 @@ namespace IS
                     int enemy_id = InternalCalls.CreateEntityPrefab("HandEnemy");
                     HandEnemy.enemies.Add(enemy_id, new EachHandEnemy());
                     Console.WriteLine("spawn enemy");
-                    InternalCalls.TransformSetPositionEntity(100*i, 100*i, enemy_id);
+                    Vector2D rnd_pos = PlayerScript.player_pos;
+                    // random left/right pos around player
+                    rnd_pos.x = rnd_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
+                    InternalCalls.TransformSetPositionEntity(rnd_pos.x, rnd_pos.y, enemy_id);
                 }
                 isSummoning = true;
             }

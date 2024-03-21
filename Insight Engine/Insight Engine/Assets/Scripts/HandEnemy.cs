@@ -23,7 +23,7 @@ namespace IS
 
     class HandEnemy
     {
-
+        //static public string type = "Hand";
         static public Dictionary<int, EachHandEnemy> enemies = new Dictionary<int, EachHandEnemy>();
 
         static public void Init()
@@ -89,6 +89,9 @@ namespace IS
         public int attack_damage = 1;
         private bool initialDashAttack = false;
         private bool nextAttackReady = false;
+
+        // bullets
+
 
         // random stuff
         private int random_attack;
@@ -161,6 +164,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(11, 4, 1f); // spawn
             InternalCalls.CreateAnimationFromSprite(1, 22, 1f); // idle
             InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // dead
+            InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // charging
 
             // enemy patrol
             /*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -193,7 +197,7 @@ namespace IS
 
             UpdateEnemyDirection();
             UpdateVolume();
-            //DrawPoint();
+            DrawPoint();
             //EnemyPatrolling();
             EnemyStateMechine();
             DrawHealthBar();
@@ -248,6 +252,7 @@ namespace IS
                 {
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
+                    PlayerScript.colliding_enemy_type = (int)EnemyType.Hand;
                 }
                 /*else
                 {
@@ -417,7 +422,7 @@ namespace IS
                     break;
                 case HandEnemyState.BEING_HIT:
                     Console.WriteLine("being hit");
-                    EnemyGetHit();
+                    //EnemyGetHit();
                     break;
                 case HandEnemyState.IDLE:
                     Console.WriteLine("Idle");
@@ -432,7 +437,11 @@ namespace IS
 
         // enemy charging and attack
         private void EnemyCharging(){
+            // player charging animation
+            InternalCalls.SetSpriteImage(enemy_charging);
+            InternalCalls.SetSpriteAnimationIndex(3);
 
+            // spawn bullets
         }
 
         private void EnemySpawn()
