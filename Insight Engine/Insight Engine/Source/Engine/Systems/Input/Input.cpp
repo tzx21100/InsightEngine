@@ -28,6 +28,7 @@
 
 
 namespace IS {
+    float deadzone_value = 0.2f;
 
     std::string InputManager::GetName() { return "Input"; }
 
@@ -135,10 +136,12 @@ namespace IS {
                 if (glfwJoystickIsGamepad(GLFW_JOYSTICK_1)) { //>+O
                     //record key inputs                         -|
                     GLFWgamepadstate a;
+                    
                     if (glfwGetGamepadState(GLFW_JOYSTICK_1, &a)) {
                         for (int i = 0; i < GLFW_JOYSTICK_LAST; i++)
                         {
                             if (a.buttons[i] == GLFW_PRESS) {                        // --------  |
+                                if (mHeldControllerKeys.count(i) > 0) { continue; }//|   |
                                 if (mPressedControllerKeys.count(i) > 0) {//       |   |
                                     mHeldControllerKeys.insert(i); //              |   |
                                     mPressedControllerKeys.erase(i);//             ~~~~~
@@ -152,9 +155,15 @@ namespace IS {
                                 mHeldControllerKeys.erase(i);
                                 mPressedControllerKeys.erase(i);
                             }
-
                         }
-
+                        for (unsigned char i = 0; i < GLFW_GAMEPAD_AXIS_LAST; ++i)
+                        {
+                            mAxisStates[i] = a.axes[i];
+                            if (mAxisStates[i] < deadzone_value && mAxisStates[i] >-deadzone_value) {
+                                mAxisStates[i] = 0.f;
+                            }
+                            
+                        }
                     }
                 }
             }

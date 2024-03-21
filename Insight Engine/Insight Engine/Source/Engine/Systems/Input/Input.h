@@ -230,6 +230,7 @@ namespace IS {
         std::unordered_set<int> mPressedControllerKeys;
         std::unordered_set<int> mReleasedControllerKeys;
         std::unordered_set<int> mHeldControllerKeys;
+        std::unordered_map<unsigned char, float> mAxisStates;
         private:
 
         // window

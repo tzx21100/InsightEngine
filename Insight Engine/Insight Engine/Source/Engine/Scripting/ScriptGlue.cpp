@@ -1620,6 +1620,14 @@ namespace IS {
         return INPUT_MANAGER->mControllerConnected;
     }
 
+    static float GetLeftTriggerX() {
+        return INPUT_MANAGER->mAxisStates[0];
+    }
+
+    static float GetLeftTriggerY() {
+        return INPUT_MANAGER->mAxisStates[1];
+    }
+
 
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
@@ -1652,6 +1660,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetMousePosition);
         IS_ADD_INTERNAL_CALL(GetMouseScrollXOffset);
         IS_ADD_INTERNAL_CALL(GetMouseScrollYOffset);
+        IS_ADD_INTERNAL_CALL(GetLeftTriggerX);
+        IS_ADD_INTERNAL_CALL(GetLeftTriggerY);
 
         // Physics 
         IS_ADD_INTERNAL_CALL(RigidBodyAddForce);

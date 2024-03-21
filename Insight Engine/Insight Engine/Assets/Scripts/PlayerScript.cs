@@ -284,6 +284,7 @@ namespace IS
         static public bool jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
         static public bool jump_held = InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
         static public bool attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
+        static public bool dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
         static public bool select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B) || InternalCalls.KeyPressed((int)KeyCodes.Enter);
 
 
@@ -406,12 +407,13 @@ namespace IS
 
         static public void Update()
         {
-            left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT);
-            right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT);
+            left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT) || InternalCalls.GetLeftTriggerX()<0;
+            right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT) || InternalCalls.GetLeftTriggerX() > 0;
             jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
             jump_held= InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
-            attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
+            attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_RIGHTBUMPER);
             select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B);
+            dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
 
             //just for highscores
             if (InternalCalls.KeyPressed((int)KeyCodes.O))
@@ -1071,7 +1073,7 @@ namespace IS
 
             if (canDash && isDashing == false && Reward_Dash)
             {
-                if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift))
+                if (dash_trigger)
                 {
                     isDashing = true;
                 }
@@ -1084,13 +1086,20 @@ namespace IS
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer -= InternalCalls.GetDeltaTime();
-                    InternalCalls.SetGravityScale(gravity_scale * 0f);
+                    InternalCalls.SetGravityScale(0f);
                     InternalCalls.RigidBodySetForce(0, 0);
 
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
 
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+                    Vector2D controller_dir = new Vector2D(InternalCalls.GetLeftTriggerX(), -InternalCalls.GetLeftTriggerY());
+                    if (InternalCalls.ControllerConnected())
+                    {
+                        
+                        angle = CustomMath.AngleBetweenPoints(new Vector2D(0,0), controller_dir);
+                    }
+
 
                     hori_movement = 0;
                     InternalCalls.SetSpriteAnimationIndex(1);
@@ -1104,7 +1113,16 @@ namespace IS
                     /*                    InternalCalls.NativeLog("DIR_X IS: ", apply_force.x);
                                         InternalCalls.NativeLog("DIR_Y IS: ", apply_force.y);*/
                     var color = (1f, 1f, 1f);
-                    InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+
+                    if (InternalCalls.ControllerConnected())
+                    {
+                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + controller_dir.x * 200, player_pos.y + controller_dir.y * 200, color);
+                    }
+                    else
+                    {
+                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+                    }
+                    
                     // Render Circles
                     for (int i = 1; i <= 5; i++)
                     {
@@ -1555,7 +1573,7 @@ namespace IS
         static private void Attack()
         {
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
-            if ( ( InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X) ) && (!isAttack))
+            if ( ( attack_trigger ) && (!isAttack))
             {
                 // play attack sound
                 Random rnd = new Random();

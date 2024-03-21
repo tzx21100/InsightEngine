@@ -591,7 +591,13 @@ namespace IS
         internal extern static void RigidBodySetMassEntity(float mass, int entity);        
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void RigidBodyGetMassEntity(int entity);
+        internal extern static void RigidBodyGetMassEntity(int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetLeftTriggerY();        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float GetLeftTriggerX();
 
 
     }
