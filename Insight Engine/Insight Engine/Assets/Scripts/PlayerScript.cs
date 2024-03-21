@@ -30,6 +30,13 @@ namespace IS
         HeavyAttack  = 5
     }
 
+    enum EnemyType : int
+    {
+        None = 0,
+        Normal = 1,
+        Hand = 2
+    }
+
     public class PlayerScript
     {
 
@@ -230,6 +237,7 @@ namespace IS
         // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
+        static public int colliding_enemy_type = (int)EnemyType.None;
         static public Vector2D enemy_impulse = new Vector2D(100f, 80f);
         static private bool initial_get_hit = false;
         //static private string attack_type;
@@ -1829,9 +1837,20 @@ namespace IS
                             //Console.WriteLine(attacking_enemy_id);
                             //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
                             //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(
+
+                            if (Enemy.enemies.ContainsKey(attacking_enemy_id)) // id in normal enemy dictionary
+                            {
+                                Enemy.enemies[attacking_enemy_id].GetHitByPlayer(
                                 new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
                                 (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
+                            }
+                            else if (HandEnemy.enemies.ContainsKey(attacking_enemy_id)) // id in hand enemy dictionary
+                            {
+                                HandEnemy.enemies[attacking_enemy_id].GetHitByPlayer(
+                                new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
+                                (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
+                            }
+                            
                             initial_attack = true;
                         }
                     }
@@ -1877,6 +1896,7 @@ namespace IS
             // Apply Attack Stun Effect
             AttackStunEffect();
         }
+
         static public void AttackStunEffect()
         {
             if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun && hitting_enemy)
@@ -1950,6 +1970,7 @@ namespace IS
 
                     is_colliding_enemy = false;
                     colliding_enemy_id = -1;
+                    colliding_enemy_type = (int)EnemyType.None;
 
                 }
             }
@@ -1966,11 +1987,26 @@ namespace IS
                 // getting enemy position
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;
-                // make enemy facing player
-                Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
 
-                // damage the player
-                Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
+                if (colliding_enemy_type == (int)EnemyType.Normal)
+                {
+                    // make enemy facing player
+                    Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
+
+                    // damage the player
+                    Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
+
+                }
+                else if (colliding_enemy_type == (int)EnemyType.Hand)
+                {
+                    // make enemy facing player
+                    HandEnemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
+
+                    // damage the player
+                    Health -= HandEnemy.enemies[colliding_enemy_id].attack_damage;
+                }
+
+                
 
                 // player get hit back
                 isGrounded = false;
@@ -2041,7 +2077,7 @@ namespace IS
                     /*attack_dir.x /= attack_dir.x;
                     attack_dir.y /= attack_dir.y;*/
                     //float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
-                    //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
+                    
                     if (hitting_enemy_id != -1) { }
 /*                    CameraScript.camera_shake_duration = 4f;
                     CameraScript.camera_pos.x=camera_pos.x + 0.01f * attack_dir.x;

@@ -24,6 +24,7 @@ namespace IS
     class Enemy
     {
 
+        //static public string type = "Normal";
         static public Dictionary<int, EachEnemy> enemies = new Dictionary<int, EachEnemy>();
 
         static public void Init()
@@ -280,6 +281,7 @@ namespace IS
                 {
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
+                    PlayerScript.colliding_enemy_type = (int)EnemyType.Normal;
                 }
                 /*else
                 {
@@ -781,6 +783,7 @@ namespace IS
                 {
                     PlayerScript.is_colliding_enemy = true;
                     PlayerScript.colliding_enemy_id = ENEMY_ID;
+                    PlayerScript.colliding_enemy_type = (int)EnemyType.Normal;
 
                     initialAttack = true;
                 }
