@@ -34,7 +34,8 @@ namespace IS
     {
         None = 0,
         Normal = 1,
-        Hand = 2
+        Hand = 2,
+        Bullet = 3
     }
 
     public class PlayerScript
@@ -2033,6 +2034,15 @@ namespace IS
 
                     // damage the player
                     Health -= HandEnemy.enemies[colliding_enemy_id].attack_damage;
+                }
+                else if (colliding_enemy_type == (int)EnemyType.Bullet)
+                {
+                    // damage the player
+                    Health -= HandEnemyBullets.bullets[colliding_enemy_id].attack_damage;
+
+                    if (HandEnemyBullets.bullets.ContainsKey(colliding_enemy_id))
+                    // destory
+                    InternalCalls.DestroyEntity(colliding_enemy_id);
                 }
 
 

@@ -91,7 +91,10 @@ namespace IS
         private bool nextAttackReady = false;
 
         // bullets
-
+        private float shooting_bullets_timer_set = 1f;
+        private float shooting_bullets_timer = 1f;
+        private float shooting_bullets_timing = 0.5f;
+        private bool is_shooting = false;
 
         // random stuff
         private int random_attack;
@@ -177,6 +180,9 @@ namespace IS
             //previous_state = (EnemyState)(-1);
             current_state = HandEnemyState.SPAWNING;
 
+            // clear bullet
+            HandEnemyBullets.bullets.Clear();
+
         }
 
         public void update()
@@ -197,7 +203,7 @@ namespace IS
 
             UpdateEnemyDirection();
             UpdateVolume();
-            DrawPoint();
+            //DrawPoint();
             //EnemyPatrolling();
             EnemyStateMechine();
             DrawHealthBar();
@@ -417,7 +423,7 @@ namespace IS
                     EnemySpawn();
                     break;
                 case HandEnemyState.CHARGING:
-                    Console.WriteLine("charging");
+                    //Console.WriteLine("charging");
                     EnemyCharging();
                     break;
                 case HandEnemyState.BEING_HIT:
@@ -442,6 +448,49 @@ namespace IS
             InternalCalls.SetSpriteAnimationIndex(3);
 
             // spawn bullets
+            if (shooting_bullets_timer > 0f)
+            {
+                shooting_bullets_timer -= InternalCalls.GetDeltaTime();
+                // enemy will charge for 0.5s then shoot out the bullet
+
+                // shoot bullets from hand enemy when less than the timing 0.5
+                if (shooting_bullets_timer < shooting_bullets_timing)
+                {
+                    ShootBullets();
+                }
+            }
+            else
+            {
+                // reset
+                shooting_bullets_timer = shooting_bullets_timer_set;
+                is_shooting = false;
+                current_state = HandEnemyState.IDLE; // the state back to idle
+            }
+        }
+
+        private void ShootBullets()
+        {
+            if (!is_shooting)
+            {
+                Console.WriteLine("shooting");
+                int bullet_id = InternalCalls.CreateEntityPrefab("HandEnemyBullet");
+                //Console.WriteLine(bullet_id);
+                // create new bullet with dir and pos
+                /*                EachBullet new_b = new EachBullet();*/
+                Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * scaling.x / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
+                //new_b.UpdateBullet(bullet_id, dir, pos);
+                //Console.WriteLine(dir.x);
+                HandEnemyBullets.bullets[bullet_id].direction = dir;
+                HandEnemyBullets.bullets[bullet_id].pos = pos;
+                InternalCalls.RigidBodySetVelocityEntity(dir.x * 300f, 0f, bullet_id);
+                InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
+                InternalCalls.SetEntityGravityScale(0f, bullet_id);
+                
+
+                is_shooting = true;
+            }
         }
 
         private void EnemySpawn()
@@ -667,5 +716,5 @@ namespace IS
                     );
             }
         }
-    }
+    } // each hand enemy clss ends here
 }
