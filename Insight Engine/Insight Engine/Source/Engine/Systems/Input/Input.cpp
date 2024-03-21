@@ -127,8 +127,6 @@ namespace IS {
     {
 
         mReleasedControllerKeys.clear();
-        int event = 0;
-        controllerCallBack(GLFW_JOYSTICK_1, event);
 
         // Important comments. Do not delete.
         if (mControllerConnected) {
