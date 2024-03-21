@@ -428,10 +428,10 @@ namespace IS
                     break;
                 case HandEnemyState.BEING_HIT:
                     Console.WriteLine("being hit");
-                    //EnemyGetHit();
+                    EnemyGetHit();
                     break;
                 case HandEnemyState.IDLE:
-                    Console.WriteLine("Idle");
+                    //Console.WriteLine("Idle");
                     EnemyIdle();
                     break;
                 case HandEnemyState.DEAD:
@@ -478,13 +478,13 @@ namespace IS
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/
                 Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
-                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * scaling.x / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);
                 HandEnemyBullets.bullets[bullet_id].direction = dir;
                 HandEnemyBullets.bullets[bullet_id].pos = pos;
-                InternalCalls.RigidBodySetVelocityEntity(dir.x * 300f, 0f, bullet_id);
+                InternalCalls.RigidBodySetVelocityEntity(dir.x * 500f, 0f, bullet_id);
                 InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
                 InternalCalls.SetEntityGravityScale(0f, bullet_id);
                 

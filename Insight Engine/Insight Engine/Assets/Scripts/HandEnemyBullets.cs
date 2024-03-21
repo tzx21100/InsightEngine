@@ -20,8 +20,8 @@ namespace IS
         static public void Update()
         {
             int bullet_id = InternalCalls.GetCurrentEntityID();
-            if (bullets.ContainsKey(bullet_id))
-                bullets[bullet_id].update(); // Call Update on each bullet instance
+            if (bullets.ContainsKey(bullet_id)) // only update when it is exist in the dictionary
+                bullets[bullet_id].update();
 
         }
     }
@@ -33,6 +33,11 @@ namespace IS
         public Vector2D pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(100f, 100f);
 
+        // life time
+        public float max_life_timer = 2f;
+        public float life_timer = 0f;
+        public bool is_alive = true;
+
         static public int BULLET_ID;
 
         SimpleImage bullet_image;
@@ -43,11 +48,16 @@ namespace IS
             BULLET_ID = InternalCalls.GetCurrentEntityID();
 
             bullet_image = InternalCalls.GetSpriteImage("dark_circle.png");
+
+            life_timer = max_life_timer;
+            is_alive = true;
         }
 
         public void update()
         {
             BULLET_ID = InternalCalls.GetCurrentEntityID();
+            //pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BULLET_ID));
+            //InternalCalls.TransformSetPositionEntity(pos.x, pos.y, BULLET_ID);
             // update bullet position
             //UpdatePosition();
 
@@ -56,8 +66,7 @@ namespace IS
 
             // check collision with player
             CheckCollideWithPlayer();
-
-            //Console.WriteLine(direction.x);
+            CheckLifeTime();
         }
 
         public void CleanUp()
@@ -107,9 +116,10 @@ namespace IS
                     PlayerScript.colliding_enemy_id = BULLET_ID;
                     PlayerScript.colliding_enemy_type = (int)EnemyType.Bullet;
 
-                    // remove out from dic
-                    if (HandEnemyBullets.bullets.ContainsKey(BULLET_ID))
-                        HandEnemyBullets.bullets.Remove(BULLET_ID);
+                    // damage player and destory bullet was handled in player script
+                    // render destory particle
+                    RenderDestoryParticle();
+
                 }
 
                 /*if (InternalCalls.CompareCategory("Weapon"))
@@ -123,6 +133,39 @@ namespace IS
                     BEING_ATTACK_ENEMY_ID = -1;
                 }*/
             }
+        }
+
+        private void CheckLifeTime()
+        {
+            if (is_alive)
+            {
+                life_timer -= InternalCalls.GetDeltaTime();
+
+                if (life_timer < 0f)
+                {
+                    is_alive = false;
+
+                    // destory bullet and render destory particle
+                    DestoryBullet();
+                }
+            }
+        }
+
+        private void DestoryBullet()
+        {
+            if (HandEnemyBullets.bullets.ContainsKey(BULLET_ID))
+            {
+                HandEnemyBullets.bullets.Remove(BULLET_ID);
+                InternalCalls.DestroyEntity(BULLET_ID);
+            }
+            // render particle
+            RenderDestoryParticle();
+        }
+
+        private void RenderDestoryParticle()
+        {
+            // render particle
+            Console.WriteLine("Render particle");
         }
     }
 }
