@@ -276,6 +276,18 @@ namespace IS
         // light type
         static public int PLAYER_LIGHT = 0;
 
+
+        // Key Input
+         
+        static public bool left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT);
+        static public bool right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT);
+        static public bool jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
+        static public bool jump_held = InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
+        static public bool attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
+        static public bool select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B) || InternalCalls.KeyPressed((int)KeyCodes.Enter);
+
+
+
         public static int BoolToInt(bool boolValue)
         {
             return boolValue ? 1 : 0;
@@ -394,6 +406,12 @@ namespace IS
 
         static public void Update()
         {
+            left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT);
+            right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT);
+            jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
+            jump_held= InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
+            attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
+            select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B);
 
             //just for highscores
             if (InternalCalls.KeyPressed((int)KeyCodes.O))
@@ -633,25 +651,16 @@ namespace IS
 
 
             //movement
-            hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
-            if (InternalCalls.ControllerConnected())
-            {
-                hori_movement = BoolToInt(InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT)) - BoolToInt(InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT));
-            }
+            hori_movement = BoolToInt(right_trigger) - BoolToInt(left_trigger);
+
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             // scaling transform with movement
             //Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
-            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
-            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
-
-            if (InternalCalls.ControllerConnected())
-            {
-                if (InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
-                if (InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
-            }
+            if (left_trigger) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
+            if (right_trigger) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
 
             // update player collider offset
             /*if (isGrounded)
@@ -867,7 +876,7 @@ namespace IS
                     player_ground_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
                 }
                 // let player rest and stop sliding when grounding
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping)
+                if (!left_trigger && !right_trigger && !isJumping)
                 {
                     InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y);
                     InternalCalls.RigidBodySetForce(0f, 0f);
@@ -960,7 +969,7 @@ namespace IS
                     jump_amount = jump_amount_set;
                     canDash = true;
 
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -1003,7 +1012,7 @@ namespace IS
                 
                 if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -1015,7 +1024,7 @@ namespace IS
                 
                 else if (jump_amount > 0 && Reward_DoubleJump) // double jump
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -1026,7 +1035,7 @@ namespace IS
                 ApplyGravityChange();
 
                 // no key input in the air
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !InternalCalls.KeyHeld((int)KeyCodes.Space) && !InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A) && !isDashing )
+                if (!left_trigger && !right_trigger && !jump_held && !isDashing )
                 {
                     if (InternalCalls.RigidBodyGetVelocityY() > 10f) // if still going up, set vel y to 0 to make it falls
                     {
@@ -1226,7 +1235,7 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
             }
             else if (jump_amount != 1 /*not apply to first jump only*/ ||
-                InternalCalls.RigidBodyGetVelocity().y > 0f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)) && !InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A))
+                InternalCalls.RigidBodyGetVelocity().y > 0f && !jump_held)
             {
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
             }
@@ -1754,24 +1763,19 @@ namespace IS
 
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
-            if (InternalCalls.ControllerConnected())
-            {
-                f_angle.x = CustomMath.Normalize(trans_scaling.x);
-            }
                 //float distanceLeft = 150f;
 
             Vector2D attack_pos = new Vector2D(
-                player_pos.x + f_angle.x * attack_range.x,
+                player_pos.x + CustomMath.Normalize( -trans_scaling.x ) * attack_range.x,
                 player_pos.y
             );
             //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
             // flip player if neccessary
 
 
-            if (!InternalCalls.ControllerConnected())
-            {
-                if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
-            }
+
+                //if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+            
 
 
             //Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
@@ -1779,10 +1783,10 @@ namespace IS
             InternalCalls.TransformSetRotationEntity(0, 0, entity_attack);
             InternalCalls.TransformSetScaleEntity(attack_range.x, attack_range.y, entity_attack);
             // draw attack range
-            /*InternalCalls.DrawImageAt
+            InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack, 0.5f, 6
-                );*/
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack1, 0.5f, 6
+                );
         }
 
         static private void CalibrateAttackAngle() // helper function
