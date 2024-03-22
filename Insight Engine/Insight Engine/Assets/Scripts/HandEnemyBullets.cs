@@ -34,7 +34,7 @@ namespace IS
         private Vector2D scaling = new Vector2D(100f, 100f);
 
         // life time
-        public float max_life_timer = 2f;
+        public float max_life_timer = 12f;
         public float life_timer = 0f;
         public bool is_alive = true;
 
@@ -51,6 +51,8 @@ namespace IS
 
             life_timer = max_life_timer;
             is_alive = true;
+            Console.WriteLine("spawn-");
+            Console.WriteLine(BULLET_ID);
         }
 
         public void update()
@@ -60,7 +62,7 @@ namespace IS
             //InternalCalls.TransformSetPositionEntity(pos.x, pos.y, BULLET_ID);
             // update bullet position
             //UpdatePosition();
-
+            
             // draw bullet
             //DrawBullet();
 
@@ -118,7 +120,8 @@ namespace IS
 
                     // damage player and destory bullet was handled in player script
                     // render destory particle
-                    RenderDestoryParticle();
+                    
+                    //RenderDestoryParticle();
 
                 }
 
@@ -144,10 +147,12 @@ namespace IS
                 if (life_timer < 0f)
                 {
                     is_alive = false;
-
-                    // destory bullet and render destory particle
-                    DestoryBullet();
                 }
+            }
+            else // bullet not alive, destory it
+            {
+                // destory bullet and render destory particle
+                DestoryBullet();
             }
         }
 
@@ -166,6 +171,7 @@ namespace IS
         {
             // render particle
             Console.WriteLine("Render particle");
+            Console.WriteLine(BULLET_ID);
         }
     }
 }

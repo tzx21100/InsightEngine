@@ -451,16 +451,18 @@ namespace IS
             if (shooting_bullets_timer > 0f)
             {
                 shooting_bullets_timer -= InternalCalls.GetDeltaTime();
-                // enemy will charge for 0.5s then shoot out the bullet
+                // enemy will charge for 1s then shoot out the bullet
 
                 // shoot bullets from hand enemy when less than the timing 0.5
-                if (shooting_bullets_timer < shooting_bullets_timing)
+                /*if (shooting_bullets_timer < shooting_bullets_timing)
                 {
                     ShootBullets();
-                }
+                }*/
             }
             else
             {
+                // shoot bullets from hand enemy when less than the timing 1f
+                ShootBullets();
                 // reset
                 shooting_bullets_timer = shooting_bullets_timer_set;
                 is_shooting = false;
@@ -474,11 +476,12 @@ namespace IS
             {
                 Console.WriteLine("shooting");
                 int bullet_id = InternalCalls.CreateEntityPrefab("HandEnemyBullet");
+                Console.WriteLine(bullet_id);
                 //Console.WriteLine(bullet_id);
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/
                 Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
-                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);
@@ -509,6 +512,10 @@ namespace IS
         {
             InternalCalls.SetSpriteImage(enemy_idle);
             InternalCalls.SetSpriteAnimationIndex(1);
+
+            // reset bullet stuff
+            //shooting_bullets_timer = shooting_bullets_timer_set;
+            //is_shooting = false;
 
             Random rnd = new Random();
             if (idle_sound_timer > 0f)
@@ -606,7 +613,7 @@ namespace IS
             InternalCalls.SetSpriteAnimationIndex(2);
 
             // if the animation finish, destory enemy
-            if (InternalCalls.GetCurrentAnimationEntity(ENEMY_ID) == 24)
+            if (InternalCalls.GetCurrentAnimationEntity(ENEMY_ID) == 23) // last animiation index is 23
             {
                 initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);

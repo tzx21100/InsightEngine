@@ -2038,12 +2038,13 @@ namespace IS
                 else if (colliding_enemy_type == (int)EnemyType.Bullet)
                 {
                     // damage the player 
-                    if (HandEnemyBullets.bullets.ContainsKey(colliding_enemy_id))
+                    if (HandEnemyBullets.bullets.ContainsKey(colliding_enemy_id)) {
                         Health -= HandEnemyBullets.bullets[colliding_enemy_id].attack_damage;
+                        HandEnemyBullets.bullets[colliding_enemy_id].is_alive = false;
                         // destory
-                        HandEnemyBullets.bullets.Remove(colliding_enemy_id);
-                        InternalCalls.DestroyEntity(colliding_enemy_id);
-
+                        //HandEnemyBullets.bullets.Remove(colliding_enemy_id);
+                        //InternalCalls.DestroyEntity(colliding_enemy_id);
+                        }
                 }
 
 
