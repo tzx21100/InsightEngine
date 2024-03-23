@@ -125,6 +125,11 @@ namespace IS
 
                 }
 
+                if (!InternalCalls.CompareEntityCategory(BULLET_ID, "Player"))
+                {
+                    is_alive = false; // destory bullet if collide with sth other than player
+                }
+
                 /*if (InternalCalls.CompareCategory("Weapon"))
                 {
                     PlayerScript.hitting_enemy_id = ENEMY_ID;
@@ -197,10 +202,10 @@ namespace IS
                 float speed = 300f + 200f * rand;
 
                 rand = my_rand.NextFloat();
-                float x = pos.x + scaling.x * (rand);
+                float x = pos.x;
 
                 rand = my_rand.NextFloat();
-                float y = pos.y + scaling.y * (rand);
+                float y = pos.y;
 
                 InternalCalls.GameSpawnParticleExtra(
                     x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"

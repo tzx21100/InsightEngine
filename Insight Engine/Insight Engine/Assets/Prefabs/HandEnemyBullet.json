@@ -1,7 +1,7 @@
 {
 	"Category" : 
 	{
-		"Category" : "Enemy"
+		"Category" : "Bullet"
 	},
 	"Collider" : 
 	{
@@ -83,9 +83,9 @@
 		"SpriteFilename" : "handEnemyIdle 1R22C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 73,
+		"SpriteTexture" : 68,
 		"SpriteTextureHeight" : 256,
-		"SpriteTextureIndex" : 56,
+		"SpriteTextureIndex" : 51,
 		"SpriteTextureWidth" : 2684,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 100.0,
@@ -99,9 +99,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.045454546809196472,
 				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 16.0,
+				"frame_index_x" : 9.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.033026635646820068,
+				"frame_timer" : 0.0012091584503650665,
 				"time_per_frame" : 0.045454546809196472,
 				"x_frames" : 22,
 				"y_frames" : 1
