@@ -63,7 +63,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(223f, 256f);
+        private Vector2D scaling = new Vector2D(-223f, 256f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
@@ -78,14 +78,14 @@ namespace IS
         // attack
         SimpleImage enemy_charging;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
-        public Vector2D view_port_area = new Vector2D(1000f, 200f);
+        public Vector2D view_port_area = new Vector2D(1500f, 300f);
         private float attack_timer_duration = 1f;
         private float attack_timer = 1f;
         private float attack_hit_timer = 0.5f;
         private bool initialAttack = false;
         private bool initialAttackSound = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
-        public Vector2D attack_area = new Vector2D(1220f, 200f);
+        public Vector2D attack_area = new Vector2D(1600f, 300f);
         public int attack_damage = 1;
         private bool initialDashAttack = false;
         private bool nextAttackReady = false;
@@ -504,9 +504,10 @@ namespace IS
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);
+                float bullet_speed = HandEnemyBullets.bullets[bullet_id].speed;
                 HandEnemyBullets.bullets[bullet_id].direction = dir;
                 HandEnemyBullets.bullets[bullet_id].pos = pos;
-                InternalCalls.RigidBodySetVelocityEntity(dir.x * 500f, 0f, bullet_id);
+                InternalCalls.RigidBodySetVelocityEntity(dir.x * bullet_speed, 0f, bullet_id);
                 InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
                 InternalCalls.SetEntityGravityScale(0f, bullet_id);
                 
@@ -518,6 +519,9 @@ namespace IS
         private void EnemySpawn()
         {
             // random choose a position to spawn
+
+            // make enemy face to player when spawning
+            direction.x = -MathF.Sign(PlayerScript.player_pos.x - enemy_pos.x); // take left as +
 
             // play animation
             InternalCalls.SetSpriteImage(enemy_spawn);

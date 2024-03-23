@@ -28,7 +28,7 @@ namespace IS
 
     class EachBullet
     {
-        public float speed = 200f;
+        public float speed = 700f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D pos = new Vector2D(0f, 0f);
         private Vector2D scaling = new Vector2D(100f, 100f);
@@ -125,7 +125,9 @@ namespace IS
 
                 }
 
-                if (!InternalCalls.CompareEntityCategory(BULLET_ID, "Player"))
+                // if bullet collide with ground or wall, destory it
+                if (InternalCalls.CompareEntityCategory(BULLET_ID, "Ground") ||
+                    InternalCalls.CompareEntityCategory(BULLET_ID, "Wall"))
                 {
                     is_alive = false; // destory bullet if collide with sth other than player
                 }
