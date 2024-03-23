@@ -90,6 +90,8 @@ namespace IS
             executives.Add("Prasanna Kumar Ghali");
             executives.Add("Mandy Wong");
             executives.Add("Johnny Deek");
+
+            InternalCalls.SetSpriteAlpha(0.95f);
         }
 
         static public void Update()
