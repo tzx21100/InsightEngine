@@ -368,18 +368,38 @@ namespace IS
             }
 
             // load bleeding particles
-            Random rnd = new Random();
-            MyRandom my_rand = new MyRandom(129248189);
-            for (int i = 0; i < 30; i++)
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(30, 41)); // random from 30 to 40 particles
+            for (int i = 0; i < particle_count; i++)
             {
-                float rand = (float)rnd.NextDouble();
-                float dir_rand = my_rand.NextFloat();
-                float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
-                float size = 10f * rand;
-                float size_scale = 20 * rand;
-                float alpha = 0.8f * rand;
+                float rand = my_rand.NextFloat();
+                float dir = MathF.Sign(scaling.x) > 0 ? 360 + 30 * rand /* 360 to 390 */: 150 + 30 * rand/* 150 to 180 */;
+                //float dir = MathF.Sign(scaling.x) > 0 ? 90 /* 330 to 360 */: 180/* 180 to 210 */;
+
+                rand = my_rand.NextFloat();
+                float size = 30f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -20 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.7f + 0.3f * rand; // 0.7s to 1s
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.3f * rand; // 0.5s to 0.8s
+
+                rand = my_rand.NextFloat();
+                float speed = 300f + 200f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = enemy_pos.x + scaling.x * (rand) / 2f;
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                float y = enemy_pos.y + scaling.y * (rand - 0.5f) / 2f;
+
                 InternalCalls.GameSpawnParticleExtra(
-                    enemy_pos.x + scaling.x * (rand - 0.5f), enemy_pos.y + scaling.y * (rand - 0.5f) / 6f, dir, size, size_scale, alpha, 0f, 0.6f, 500f * rand, "Particle Enemy Bleeding.txt"
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
                  );
             }
         }
