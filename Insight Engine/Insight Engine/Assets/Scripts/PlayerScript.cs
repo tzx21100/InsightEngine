@@ -287,6 +287,7 @@ namespace IS
         static public bool attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
         static public bool dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
         static public bool select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B) || InternalCalls.KeyPressed((int)KeyCodes.Enter);
+        static public bool flight_held;
 
 
 
@@ -415,6 +416,7 @@ namespace IS
             attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_RIGHTBUMPER);
             select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B);
             dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
+            flight_held = InternalCalls.KeyHeld((int)KeyCodes.W) || InternalCalls.GetLeftTriggerY()< 0 || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_UP);
 
             //just for highscores
             if (InternalCalls.KeyPressed((int)KeyCodes.O))
