@@ -396,7 +396,6 @@ namespace IS
             {
                 float rand = my_rand.NextFloat();
                 float dir = MathF.Sign(scaling.x) > 0 ? 360 + 30 * rand /* 360 to 390 */: 150 + 30 * rand/* 150 to 180 */;
-                //float dir = MathF.Sign(scaling.x) > 0 ? 90 /* 330 to 360 */: 180/* 180 to 210 */;
 
                 rand = my_rand.NextFloat();
                 float size = 30f * rand; // initial size
@@ -405,7 +404,7 @@ namespace IS
                 float size_scale = -20 * rand; // pariticles going smaller
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.7f + 0.3f * rand; // 0.7s to 1s
+                float alpha = 0.7f + 0.3f * rand; // 0.7 to 1
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.3f * rand; // 0.5s to 0.8s

@@ -34,7 +34,7 @@ namespace IS
         private Vector2D scaling = new Vector2D(100f, 100f);
 
         // life time
-        public float max_life_timer = 12f;
+        public float max_life_timer = 2f;
         public float life_timer = 0f;
         public bool is_alive = true;
 
@@ -58,7 +58,7 @@ namespace IS
         public void update()
         {
             BULLET_ID = InternalCalls.GetCurrentEntityID();
-            //pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BULLET_ID));
+            pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BULLET_ID));
             //InternalCalls.TransformSetPositionEntity(pos.x, pos.y, BULLET_ID);
             // update bullet position
             //UpdatePosition();
@@ -170,8 +170,42 @@ namespace IS
         private void RenderDestoryParticle()
         {
             // render particle
-            Console.WriteLine("Render particle");
+            Console.WriteLine("Destory and Render particle");
             Console.WriteLine(BULLET_ID);
+
+            // load bleeding particles
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(20, 31)); // random from 20 to 30 particles
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = 360 * rand;
+
+                rand = my_rand.NextFloat();
+                float size = 20f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -10 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.6f + 0.3f * rand; // 0.6 to 0.9
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.3f + 0.3f * rand; // 0.3s to 0.6s
+
+                rand = my_rand.NextFloat();
+                float speed = 300f + 200f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = pos.x + scaling.x * (rand);
+
+                rand = my_rand.NextFloat();
+                float y = pos.y + scaling.y * (rand);
+
+                InternalCalls.GameSpawnParticleExtra(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                 );
+            }
         }
     }
 }
