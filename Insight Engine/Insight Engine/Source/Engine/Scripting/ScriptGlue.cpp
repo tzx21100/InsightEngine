@@ -1309,6 +1309,18 @@ namespace IS {
         return InsightEngine::Instance().GetWindowHeight();
     }
 
+    static int GetMonitorWidth()
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        return window->GetMonitorWidth();
+    }
+
+    static int GetMonitorHeight()
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        return window->GetMonitorHeight();
+    }
+
     static int GetTargetFPS()
     {
         return InsightEngine::Instance().GetTargetFPS();
@@ -1809,6 +1821,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(GetMonitorWidth);
+        IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(GetTargetFPS);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);

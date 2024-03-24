@@ -63,10 +63,15 @@ namespace IS
         static SimpleImage sfx_checkbox_image;
         static SimpleImage slider_bar_image;
         static SimpleImage slider_knob_image;
-        static SimpleImage dropdown_minimized_image;
         static SimpleImage scroll_bar_image;
         static SimpleImage scroll_bar_tracker_image;
         static SimpleImage back_button_image;
+
+        static public SimpleImage DROPDOWN_MINIMIZED;
+        static public SimpleImage DROPDOWN_EXPANDED;
+        static public SimpleImage DROPDOWN_OPTION;
+        static public SimpleImage DROPDOWN_OPTION_HIGHLIGHT;
+        static public SimpleImage DROPDOWN_OPTION_END;
         //static SimpleImage trans_image;
 
         static Vector2D background_pos = new Vector2D(0, 0);
@@ -128,12 +133,17 @@ namespace IS
             settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
             slider_bar_image = InternalCalls.GetSpriteImage("slider_bar.png");
             slider_knob_image = InternalCalls.GetSpriteImage("slider_knob.png");
-            dropdown_minimized_image = InternalCalls.GetSpriteImage("dropdown_minimized.png");
             scroll_bar_image = InternalCalls.GetSpriteImage("scroll_bar.png");
             scroll_bar_tracker_image = InternalCalls.GetSpriteImage("scroll_bar_tracker.png");
             back_button_image = InternalCalls.GetSpriteImage("back_button.png");
             settings_overlay_top_image = InternalCalls.GetSpriteImage("settings_overlay_top.png");
             settings_overlay_bot_image = InternalCalls.GetSpriteImage("settings_overlay_bot.png");
+
+            DROPDOWN_MINIMIZED          = InternalCalls.GetSpriteImage("dropdown_minimized.png");
+            DROPDOWN_EXPANDED           = InternalCalls.GetSpriteImage("dropdown_open.png");
+            DROPDOWN_OPTION             = InternalCalls.GetSpriteImage("dropdown_option.png");
+            DROPDOWN_OPTION_HIGHLIGHT   = InternalCalls.GetSpriteImage("dropdown_option_highlight.png");
+            DROPDOWN_OPTION_END         = InternalCalls.GetSpriteImage("dropdown_option_last.png");
 
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
             settings_overlay_entity = InternalCalls.CreateEntityUI("Settings Overlay", settings_overlay_image);
@@ -147,8 +157,8 @@ namespace IS
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             sfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("SFX Slider Knob", slider_knob_image, "SFXSliderKnobScript");
             //comment out later to show
-            resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", dropdown_minimized_image, "ResolutionDropdownScript");
-            fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", dropdown_minimized_image, "FPSDropdownScript");
+            fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", DROPDOWN_MINIMIZED, "FPSDropdownScript");
+            resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", DROPDOWN_MINIMIZED, "ResolutionDropdownScript");
             scroll_bar_entity = InternalCalls.CreateEntityUIScript("Scroll Bar", scroll_bar_image, "ScrollBarScript");
             scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
@@ -188,7 +198,7 @@ namespace IS
             const float SCROLL_BAR_TRACKER_SCALE = 25f / 52f;
             const float SCROLL_BAR_TRACKER_AR    = 343f / 25f;
             const float DROPDOWN_LIST_SCALE      = 0.177f;
-            const float DROPDOWN_LIST_AR         = 111f / 651f;
+            const float DROPDOWN_LIST_AR         = 86f / 610f;
 
             float checkbox_scaled_uniform           = CHECKBOX_SCALE * win_dimension.x;
             float slider_bar_scaled_width           = SLIDER_BAR_SCALE * win_dimension.x;
@@ -249,7 +259,7 @@ namespace IS
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
             sfx_slider_knob_pos.Set(sfx_slider_knob_pos.x, SFXSliderKnobScript.y_pos); //442-558
 
-            //fps_dropdown_pos.Set(FPSDropdownScript.x_pos, FPSDropdownScript.y_pos);
+            fps_dropdown_pos.Set(FPSDropdownScript.x_pos, FPSDropdownScript.y_pos);
             resolution_dropdown_pos.Set(ResolutionDropdownScript.x_pos, ResolutionDropdownScript.y_pos);
 
             scroll_bar_pos.Set(ScrollBarScript.x_pos, ScrollBarScript.y_pos);
@@ -271,9 +281,6 @@ namespace IS
             InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
             InternalCalls.SetSpriteImageEntity(sfx_checkbox_image, sfx_checkbox_entity);
-
-            bgm_vol = master_multiplier * bgm_multiplier;
-            sfx_vol = master_multiplier * sfx_multiplier;
 
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
@@ -317,7 +324,7 @@ namespace IS
                     InternalCalls.RenderTextFont("SFX Volume", FONT_NAME, sfx_vol_text_pos.x, sfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
                 if (!(fps_text_pos.y > upper_limit_normalized) && !(fps_text_pos.y < lower_limit_normalized))
                     InternalCalls.RenderTextFont("FPS", FONT_NAME, fps_text_pos.x, fps_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-                if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized)/* && !FPSDropdownScript.dropdown_open*/)
+                if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized) && !FPSDropdownScript.dropdown_open)
                     InternalCalls.RenderTextFont("Resolution", FONT_NAME, resolution_text_pos.x, resolution_text_pos.y, 10f, (1f, 1f, 1f, 1f));
             }
             else

@@ -46,7 +46,6 @@ namespace IS {
             InputManager& input = *(static_cast<InputManager*>(glfwGetWindowUserPointer(window)));
             input.mMouseScrollXOffset = xoffset;
             input.mMouseScrollYOffset = yoffset;
-            IS_CORE_DEBUG("X: {}, Y: {}", input.mMouseScrollXOffset, input.mMouseScrollYOffset);
         });
 
         // Window size callback

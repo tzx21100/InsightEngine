@@ -22,7 +22,7 @@ namespace IS
         public const float LOWER_LIMIT_SCALE = 0.368f;
         public const float UPPER_LIMIT_SCALE = 0.538f;
 
-        static private bool is_adjusting_scroll = false;
+        static public bool is_adjusting_scroll = false;
         static public bool first_hover = false;
         static private int id;
         static private float diff_y;
@@ -92,12 +92,13 @@ namespace IS
 
             // Mouse Scroll
             float yoffset = (float)InternalCalls.GetMouseScrollYOffset();
-            if (yoffset != 0)
+            if (yoffset != 0 && InternalCalls.IsWindowFocused())
             {
                 AdjustScroll(InternalCalls.GetTransformPosition().y + SCROLL_SPEED * yoffset);
+                is_adjusting_scroll = true;
             }
 
-            if (InternalCalls.MousePressed(0) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.scroll_bar_entity))
+            if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.scroll_bar_entity))
             {
                 is_adjusting_scroll = true;
             }
@@ -108,7 +109,7 @@ namespace IS
             }
 
             // If the mouse button is released, stop adjusting the slider
-            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            if (yoffset == 0 && InternalCalls.MouseReleased((int)MouseButton.Left))
             {
                 is_adjusting_scroll = false;
             }

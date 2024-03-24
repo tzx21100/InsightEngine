@@ -121,6 +121,9 @@ namespace IS {
          */
         int GetWindowHeight() const;
 
+        int GetMonitorWidth();
+        int GetMonitorHeight();
+
         /*!
          * \brief Gets the target FPS of the window.
          * \return The target FPS of the window.
