@@ -97,7 +97,7 @@ namespace IS
                     text_timer = 0f; // Reset timer after adding a character
                 }
 
-                if (InternalCalls.KeyPressed((int)KeyCodes.Enter) || InternalCalls.MousePressed(0))
+                if (PlayerScript.select_trigger )
                 {
 
                     current_text_shown = text_to_draw;
@@ -107,7 +107,7 @@ namespace IS
             }
             else
             {
-                if (InternalCalls.KeyPressed((int)KeyCodes.Enter) || InternalCalls.MousePressed(0))
+                if (PlayerScript.select_trigger)
                 {
                     if (mTexts.Count == 0)
                     {

@@ -1,4 +1,4 @@
-﻿public enum KeyCodes
+﻿public enum KeyCodes :  int
 {
     Unknown = -1,
     Space = 32,
@@ -121,5 +121,22 @@
     RightAlt = 346,
     RightSuper = 347,
     Menu = 348,
-    Last = Menu
+    Last = Menu,
+
+    Button_A=0,
+    Button_B=1,
+    Button_X=2,
+    Button_Y=3,
+    Button_LEFTBUMPER=4,
+    Button_RIGHTBUMPER=5,
+    Button_BACK=6,
+    Button_START=7,
+    Button_GUIDE=8,
+    Button_LEFTTHUMB=9,
+    Button_RIGHTTHUMB=10,
+    Button_UP=11,
+    Button_RIGHT=12,
+    Button_DOWN=13,
+    Button_LEFT=14
+
 }

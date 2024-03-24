@@ -48,7 +48,7 @@ namespace IS
             {
 
                 InternalCalls.RenderTextFont("Press Space To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
-                if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                if (PlayerScript.jump_trigger)
                 {
                     tutorial_state++;
                 }
@@ -80,7 +80,7 @@ namespace IS
             {
 
                 InternalCalls.RenderTextFont("Left click to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
-                if (InternalCalls.MousePressed(0))
+                if (PlayerScript.attack_trigger)
                 {
                     tutorial_state++;
                 }

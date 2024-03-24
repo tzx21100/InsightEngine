@@ -46,7 +46,7 @@ namespace IS
                                 "Left Click To Close Tutorial...";
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.1f, 0.5f, 16f, (1, 1, 1, 1));
 
-            if (InternalCalls.MousePressed(0))
+            if (PlayerScript.select_trigger)
             {
                 PlayerScript.hasDoubleJump = false; //boolean for showing double jump
                 doublejumpvideoloaded = false;
@@ -78,7 +78,7 @@ namespace IS
                                 "Left Click To Close Tutorial...";
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.55f, 16f, (1, 1, 1, 1));
 
-            if (InternalCalls.MousePressed(0))
+            if (PlayerScript.select_trigger)
             {
                 PlayerScript.hasWallClimb = false; //boolean for showing double jump
                 vinevideoloaded = false;
@@ -109,7 +109,7 @@ namespace IS
                                  "Left Click To Close Tutorial...";
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.5f, 16f, (1, 1, 1, 1));
 
-            if (InternalCalls.MousePressed(0))
+            if (PlayerScript.select_trigger)
             {
                 PlayerScript.hasDash = false; //boolean for showing double jump
                 dashvideoloaded = false;

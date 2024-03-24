@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -1146.8682861328125,
-				"Y" : -178.71485900878906
+				"X" : 4456.6826171875,
+				"Y" : 210.59757995605469
 			},
 			"BoxColliderOffset" : 
 			{
@@ -83,28 +83,28 @@
 		"SpriteFilename" : "Enemy_Idle.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 30,
+		"SpriteTexture" : 49,
 		"SpriteTextureHeight" : 627,
-		"SpriteTextureIndex" : 29,
+		"SpriteTextureIndex" : 32,
 		"SpriteTextureWidth" : 8604,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 500.0,
 		"SpriteTransformScalingY" : 500.0,
-		"SpriteTransformWorldPositionX" : -1137.46826171875,
-		"SpriteTransformWorldPositionY" : -125.91485595703125,
+		"SpriteTransformWorldPositionX" : 4466.08251953125,
+		"SpriteTransformWorldPositionY" : 263.3975830078125,
 		"animations" : 
 		[
 			{
 				"Name" : "ah ma",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.083333335816860199,
-				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 2.0,
+				"frame_dimension_x" : 0.1666666716337204,
+				"frame_dimension_y" : 0.5,
+				"frame_index_x" : 3.0,
 				"frame_index_y" : 0.0,
-				"frame_timer" : 0.068831190466880798,
+				"frame_timer" : 0.004311002790927887,
 				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 12,
-				"y_frames" : 1
+				"x_frames" : 6,
+				"y_frames" : 2
 			}
 		]
 	},
@@ -113,7 +113,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 500.0,
 		"TransformScalingY" : 500.0,
-		"TransformWorldPositionX" : -1137.46826171875,
-		"TransformWorldPositionY" : -125.91485595703125
+		"TransformWorldPositionX" : 4466.08251953125,
+		"TransformWorldPositionY" : 263.3975830078125
 	}
 }

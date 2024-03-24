@@ -156,6 +156,9 @@ namespace IS
                 float offsety = (float)(mRandom.NextDouble() * 2 - 1) * mShakeIntensity;
 
                 InternalCalls.TransformSetPosition(mOriginalPosition.x + offsetx, mOriginalPosition.y + offsety);
+
+                // draw particles
+                DrawParticles(InternalCalls.GetCurrentEntityID());
             }
 
             public void BoulderFall()
@@ -182,6 +185,7 @@ namespace IS
                     if (InternalCalls.GetCollidingEntityCheck(player, boulder))
                     {
                         PlayerScript.isDead = true;
+                        PlayerScript.screen_flash_timer = 1.5f;
                     }
                 }
                 if (mIsGrounded)
@@ -207,6 +211,47 @@ namespace IS
                 InternalCalls.TransformSetPosition(mOriginalPosition.x, mOriginalPosition.y);
                 InternalCalls.TransformSetRotation(8f, 0f);
                 InternalCalls.RigidBodySetForce(0f, 0f);
+            }
+
+            private void DrawParticles(int entity_id)
+            {
+                Vector2D pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(entity_id));
+                uint r = (uint)(12314 * InternalCalls.GetRandomFloat());
+                MyRandom my_rand = new MyRandom(r);
+                int num = (int)(3f * my_rand.NextFloat());
+                int top_layer = InternalCalls.GetTopLayer();
+                Vector2D scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScalingEntity(entity_id));
+                for (int i = 0; i < num; i++)
+                {
+
+                    float rand = InternalCalls.GetRandomFloat();
+                    float dir = 270 + 30 * (rand - 0.5f);
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float size = 20f + 10f * rand;
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float size_scale = -10 * rand;
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float alpha = 0.5f + 0.5f * rand;
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float lifetime = 0.3f + 1f * rand;
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float speed = 1000f + 500f * rand;
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+
+                    rand = InternalCalls.GetRandomFloat();
+                    float y = pos.y + scaling.y / 2f * (rand - 0.2f);
+
+                    InternalCalls.GameSpawnParticleExtraLayer(
+                        x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleDust.txt",
+                    (1f, 1f, 1f), top_layer);
+                }
             }
         }
     }

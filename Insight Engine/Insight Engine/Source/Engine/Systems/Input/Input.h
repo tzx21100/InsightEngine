@@ -123,6 +123,21 @@ namespace IS {
          */
         bool IsKeyHeld(int glfwKeyCode) const;
 
+         /**
+         * \brief Checks if a key is currently triggered.
+         */
+        bool IsControllerKeyPressed(int glfwKeyCode) const;
+
+        /**
+         * \brief Checks if a key was just released.
+         */
+        bool IsControllerKeyReleased(int glfwKeyCode) const;
+
+        /**
+         * \brief Checks if a key is currently held down.
+         */
+        bool IsControllerKeyHeld(int glfwKeyCode) const;
+
         /**
          * \brief Checks if a mouse button is currently triggered.
          */
@@ -220,10 +235,16 @@ namespace IS {
         Vec2D previousWorldMousePos{ 0.0,0.0 };
         Vec2D currentWorldMousePos{ 0.0,0.0 };
 
-    private:
+        //for controller keys
+        bool mControllerConnected{ true };
+        std::unordered_set<int> mPressedControllerKeys;
+        std::unordered_set<int> mReleasedControllerKeys;
+        std::unordered_set<int> mHeldControllerKeys;
+        std::unordered_map<unsigned char, float> mAxisStates;
+        private:
+
         // window
         std::shared_ptr<WindowSystem> mWindow;
-
         //for keyboard keys
         std::unordered_set<int> mPressedKeys;
         std::unordered_set<int> mReleasedKeys;

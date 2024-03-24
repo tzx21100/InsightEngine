@@ -25,9 +25,17 @@ namespace IS
 {
     enum PlayerAttackCombo : int
     {
-        LightAttack  = 3,
+        LightAttack = 3,
         MediumAttack = 4,
-        HeavyAttack  = 5
+        HeavyAttack = 5
+    }
+
+    enum EnemyType : int
+    {
+        None = 0,
+        Normal = 1,
+        Hand = 2,
+        Bullet = 3
     }
 
     public class PlayerScript
@@ -35,8 +43,8 @@ namespace IS
 
         //popup for abilities to show or not show
         static public bool hasDoubleJump = false;
-        static public bool hasWallClimb=false;
-        static public bool hasDash=false;
+        static public bool hasWallClimb = false;
+        static public bool hasDash = false;
 
         //speed run timer
         static public float speed_run_timer = 0f;
@@ -61,9 +69,9 @@ namespace IS
 
 
         //PUBLIC VELOCITY AFFECTORS
-        static public float VelocityAffector_x=0f;
-        static public float VelocityAffector_y=0f;
-        static public float VelocityAffector_timer=0f;
+        static public float VelocityAffector_x = 0f;
+        static public float VelocityAffector_y = 0f;
+        static public float VelocityAffector_timer = 0f;
 
 
         //Powerup triggers
@@ -120,6 +128,7 @@ namespace IS
         static SimpleImage player_health_empty;
         static SimpleImage player_health_full;
         static SimpleImage player_health_half;
+        static SimpleImage damage_screen_flash;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -175,6 +184,8 @@ namespace IS
         static public Vector2D player_ground_pos = new Vector2D(0, 0);
         static private Vector2D apply_force = new Vector2D(0, 0);//dash dir
 
+        //screen flash
+        static public float screen_flash_timer = 0.0f;
 
         static public int entity_feet;
 
@@ -227,6 +238,7 @@ namespace IS
         // enemy info
         static public bool is_colliding_enemy;
         static public int colliding_enemy_id;
+        static public int colliding_enemy_type = (int)EnemyType.None;
         static public Vector2D enemy_impulse = new Vector2D(100f, 80f);
         static private bool initial_get_hit = false;
         //static private string attack_type;
@@ -253,7 +265,7 @@ namespace IS
 
         // stablize player
         static public float prev_x = 0f;
-        static public float prev_rotation=0f;
+        static public float prev_rotation = 0f;
 
         // Collectible
 
@@ -264,6 +276,20 @@ namespace IS
 
         // light type
         static public int PLAYER_LIGHT = 0;
+
+
+        // Key Input
+
+        static public bool left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT);
+        static public bool right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT);
+        static public bool jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
+        static public bool jump_held = InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
+        static public bool attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X);
+        static public bool dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
+        static public bool select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B) || InternalCalls.KeyPressed((int)KeyCodes.Enter);
+        static public bool flight_held;
+
+
 
         public static int BoolToInt(bool boolValue)
         {
@@ -313,26 +339,29 @@ namespace IS
             player_health_empty = InternalCalls.GetSpriteImage("player_health_empty.png");
             player_health_full = InternalCalls.GetSpriteImage("player_health_full.png");
             player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
+
+            damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
+
             //player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
             // Initialization code
             //InternalCalls.NativeLog("Entity Initialized", (int)entity);
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
-            InternalCalls.CreateAnimationFromSprite(6, 2, 0.7f); // idle n jump
-            InternalCalls.CreateAnimationFromSprite(1, 12, 0.7f);
+            InternalCalls.CreateAnimationFromSprite(2, 6, 0.7f);  // run
+            InternalCalls.CreateAnimationFromSprite(6, 2, 0.7f);  // idle n jump
+            InternalCalls.CreateAnimationFromSprite(3, 4, 0.7f); // fall
 
             // attack 1
-            InternalCalls.CreateAnimationFromSprite(1, 6, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(3, 2, 0.5f);
 
             // attack 2
-            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(2, 4, 0.5f);
 
             // attack 3
-            InternalCalls.CreateAnimationFromSprite(1, 8, 0.5f);
+            InternalCalls.CreateAnimationFromSprite(2, 4, 0.5f);
 
             // attack total
-            InternalCalls.CreateAnimationFromSprite(1,22,3f);
+            InternalCalls.CreateAnimationFromSprite(1, 22, 3f);
 
 
             entity_feet = InternalCalls.CreateEntity("FeetCollider");
@@ -380,17 +409,25 @@ namespace IS
 
         static public void Update()
         {
+            left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT) || InternalCalls.GetLeftTriggerX() < 0;
+            right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT) || InternalCalls.GetLeftTriggerX() > 0;
+            jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
+            jump_held = InternalCalls.KeyHeld((int)KeyCodes.Space) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_A);
+            attack_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_X) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_RIGHTBUMPER);
+            select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B);
+            dash_trigger = InternalCalls.KeyPressed((int)KeyCodes.LeftShift) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_Y);
+            flight_held = InternalCalls.KeyHeld((int)KeyCodes.W) || InternalCalls.GetLeftTriggerY()< 0 || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_UP);
 
             //just for highscores
             if (InternalCalls.KeyPressed((int)KeyCodes.O))
             {
-                high_score_toggle=!high_score_toggle;
+                high_score_toggle = !high_score_toggle;
             }
             if (high_score_toggle)
             {
                 DrawTimer();
             }
-            
+
 
             if (VelocityAffector_timer > 0f)
             {
@@ -412,7 +449,7 @@ namespace IS
                 InternalCalls.TransformSetRotationEntity(InternalCalls.GetTransformRotation(), 0, powerup_entity);
                 initialPowerUp = false;
             }
-            
+
             // DISPLAY POWERUP TEXT FOR FIRST TIME
             if (hasDoubleJump)
             {
@@ -422,17 +459,17 @@ namespace IS
             {
                 Popup_Ability.DisplayWallGuide();
             }
-            if(hasDash)
+            if (hasDash)
             {
                 Popup_Ability.DisplayDashGuide();
             }
-/*            if (InternalCalls.KeyPressed((int)KeyCodes.G))
-            {
-                hasWallClimb = true;
-            }*/
+            /*            if (InternalCalls.KeyPressed((int)KeyCodes.G))
+                        {
+                            hasWallClimb = true;
+                        }*/
 
 
-                SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
+            SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
 
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
             if (Reward_Dash)
@@ -464,11 +501,20 @@ namespace IS
 
             }
 
+            // screen flash upon damage
+            if (screen_flash_timer > 0.0f)
+            {
+                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
+                SimpleVector2D scaling = new SimpleVector2D(WindowWidth / CameraScript.camera_zoom * 1.03f, WindowHeight / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
+                InternalCalls.DrawImageAt(pos, 0, scaling, damage_screen_flash, screen_flash_timer / 1.5f, InternalCalls.GetTopLayer() - 1);
+                screen_flash_timer -= InternalCalls.GetDeltaTime();
+            }
+
             DrawHealthBar();
 
 
 
-            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible ||Popup_Ability.popup_shown ||CameraScript.panning_enable)
+            if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible || Popup_Ability.popup_shown || CameraScript.panning_enable)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
@@ -560,7 +606,7 @@ namespace IS
                 else
                 {
                     InternalCalls.TransformSetPosition(respawn_x, respawn_y);
-                    CameraScript.camera_shake_duration = 0.1f;  
+                    CameraScript.camera_shake_duration = 0.1f;
 
                     Health = Max_Health;
                     respawn_timer -= InternalCalls.GetDeltaTime();
@@ -610,15 +656,16 @@ namespace IS
 
 
             //movement
-            hori_movement = BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.D)) - BoolToInt(InternalCalls.KeyHeld((int)KeyCodes.A));
+            hori_movement = BoolToInt(right_trigger) - BoolToInt(left_trigger);
+
             player_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
 
             // scaling transform with movement
             //Vector2D trans_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
             trans_scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScaling());
             float trans_rotate = InternalCalls.GetTransformRotation();
-            if (InternalCalls.KeyHeld((int)KeyCodes.A)) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
-            if (InternalCalls.KeyHeld((int)KeyCodes.D)) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
+            if (left_trigger) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } isFirstGrounded = false;/* update player ground pos */ }
+            if (right_trigger) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } isFirstGrounded = false; }
 
             // update player collider offset
             /*if (isGrounded)
@@ -672,7 +719,7 @@ namespace IS
 
             SimpleArray array_wall = InternalCalls.GetCollidingEntityArray(entityWall);
             bool check_wall_collided = false;
-            int collided_wall_entity =0;
+            int collided_wall_entity = 0;
             for (int i = 0; i < array_wall.length; i++)
             {
                 int entity = array_wall.GetValue(i);
@@ -706,7 +753,7 @@ namespace IS
                 jump_amount = jump_amount_set; //allow double dash
 
                 InternalCalls.SetSpriteImage(player_transparent);
-                InternalCalls.SetSpriteAnimationIndex(0);
+                //InternalCalls.SetSpriteAnimationIndex(0);
 
                 float collided_angle = InternalCalls.GetTransformRotationEntity(collided_wall_entity) - (90 * hori_movement);
 
@@ -814,15 +861,15 @@ namespace IS
             {
                 int entity = array.GetValue(i);
 
-                if(entity== PLAYER_ID) { continue; }
+                if (entity == PLAYER_ID) { continue; }
 
                 short body_type = InternalCalls.RigidBodyGetBodyTypeEntity(entity);
-                if (body_type !=3 && body_type !=5 && body_type != 6)
+                if (body_type != 3 && body_type != 5 && body_type != 6)
                 {
-                    check_feet_collided = true;     
+                    check_feet_collided = true;
                 }
             }
-            
+
             //if is grounded
             if (check_feet_collided)
             {
@@ -834,7 +881,7 @@ namespace IS
                     player_ground_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPosition());
                 }
                 // let player rest and stop sliding when grounding
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !isJumping)
+                if (!left_trigger && !right_trigger && !isJumping)
                 {
                     InternalCalls.TransformSetPosition(player_ground_pos.x, player_ground_pos.y);
                     InternalCalls.RigidBodySetForce(0f, 0f);
@@ -854,7 +901,7 @@ namespace IS
             {
                 coyote_timer -= InternalCalls.GetDeltaTime();
             }
-            
+
             if (isGrounded)
             {
                 if (!isJumping)
@@ -886,7 +933,8 @@ namespace IS
 
                     //set move speed when grounded
                     // normal movement
-                    if (!isClimbing) {
+                    if (!isClimbing)
+                    {
                         InternalCalls.RigidBodySetForce(VelocityAffector_x + hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), VelocityAffector_y + f_angle.y * move_speed * hori_movement);
                     }
                     /*if (!isAttack)
@@ -897,7 +945,7 @@ namespace IS
                         // moving due to attack
                         //InternalCalls.RigidBodySetVelocityEntity();
                     }*/
-                    
+
                     //InternalCalls.RigidBodySetForce(hori_movement * (move_speed + ((BoolToInt(isDashing)) * dashSpeed) * f_angle.x * -1f), 0f);
 
 
@@ -905,7 +953,7 @@ namespace IS
                     float collided_angle = InternalCalls.GetCollidedObjectAngle(entity_feet);
                     if ((collided_angle > 0 && collided_angle < 45) || (collided_angle > 315 && collided_angle < 360))
                     {
-                        if(InternalCalls.GetTransformPosition().x!=prev_x)
+                        if (InternalCalls.GetTransformPosition().x != prev_x)
                         {
                             InternalCalls.TransformSetRotation(collided_angle, 0);
                             prev_x = InternalCalls.GetTransformPosition().x;
@@ -927,11 +975,11 @@ namespace IS
                     jump_amount = jump_amount_set;
                     canDash = true;
 
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
-                        InternalCalls.SetSpriteAnimationIndex(2);
+                        InternalCalls.SetSpriteAnimationIndex(1);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
@@ -959,29 +1007,30 @@ namespace IS
                 trans_rotate = 0;
                 InternalCalls.TransformSetRotation(trans_rotate, 0);
 
-                InternalCalls.SetSpriteAnimationIndex(2);
+                InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_jump);
-                if(InternalCalls.RigidBodyGetVelocityY() < 0f)
+                if (InternalCalls.RigidBodyGetVelocityY() < 0f)
                 {
+                    InternalCalls.SetSpriteAnimationIndex(2);
                     InternalCalls.SetSpriteImage(player_fall);
                 }
-                InternalCalls.SetSpriteAnimationIndex(2);
-                
+                //InternalCalls.SetSpriteAnimationIndex(2);
+
                 if (coyote_timer > 0f && !isJumping) // coyote time for the first time 
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
-                        InternalCalls.SetSpriteAnimationIndex(2);
+                        InternalCalls.SetSpriteAnimationIndex(1);
                         InternalCalls.SetSpriteImage(player_jump);
                         isJumping = true;
                     }
                 }
-                
+
                 else if (jump_amount > 0 && Reward_DoubleJump) // double jump
                 {
-                    if (InternalCalls.KeyPressed((int)KeyCodes.Space))
+                    if (jump_trigger)
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
@@ -992,7 +1041,7 @@ namespace IS
                 ApplyGravityChange();
 
                 // no key input in the air
-                if (!InternalCalls.KeyHeld((int)KeyCodes.A) && !InternalCalls.KeyHeld((int)KeyCodes.D) && !InternalCalls.KeyHeld((int)KeyCodes.Space) &&!isDashing )
+                if (!left_trigger && !right_trigger && !jump_held && !isDashing)
                 {
                     if (InternalCalls.RigidBodyGetVelocityY() > 10f) // if still going up, set vel y to 0 to make it falls
                     {
@@ -1001,9 +1050,9 @@ namespace IS
                     }
                     else
                     {
-                       // InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
+                        // InternalCalls.RigidBodySetForce(0f, InternalCalls.RigidBodyGetVelocityY());
                     }
-                    
+
                 }
 
                 Xforce += hori_movement * move_speed;
@@ -1011,7 +1060,7 @@ namespace IS
                 // limit the vel
                 player_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
 
-                if (MathF.Abs(player_vel.x) > (max_speed +VelocityAffector_x)) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed + VelocityAffector_x, player_vel.y); }
+                if (MathF.Abs(player_vel.x) > (max_speed + VelocityAffector_x)) { InternalCalls.RigidBodySetForce(MathF.Sign(player_vel.x) * max_speed + VelocityAffector_x, player_vel.y); }
                 if (MathF.Abs(player_vel.y) > (jumpHeight + VelocityAffector_y)) { InternalCalls.RigidBodySetForce(player_vel.x, MathF.Sign(player_vel.y) * jumpHeight + VelocityAffector_y); }
 
                 /*if (CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x) > max_speed)
@@ -1028,7 +1077,7 @@ namespace IS
 
             if (canDash && isDashing == false && Reward_Dash)
             {
-                if (InternalCalls.KeyPressed((int)KeyCodes.LeftShift))
+                if (dash_trigger)
                 {
                     isDashing = true;
                 }
@@ -1041,13 +1090,20 @@ namespace IS
                 if (bullet_time_timer > 0)
                 {
                     bullet_time_timer -= InternalCalls.GetDeltaTime();
-                    InternalCalls.SetGravityScale(gravity_scale * 0f);
+                    InternalCalls.SetGravityScale(0f);
                     InternalCalls.RigidBodySetForce(0, 0);
 
                     //Get mouse
                     Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
 
                     float angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
+                    Vector2D controller_dir = new Vector2D(InternalCalls.GetLeftTriggerX(), -InternalCalls.GetLeftTriggerY());
+                    if (InternalCalls.ControllerConnected())
+                    {
+                        if (controller_dir.x < 0) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+                        angle = CustomMath.AngleBetweenPoints(new Vector2D(0, 0), controller_dir);
+                    }
+
 
                     hori_movement = 0;
                     InternalCalls.SetSpriteAnimationIndex(1);
@@ -1061,7 +1117,21 @@ namespace IS
                     /*                    InternalCalls.NativeLog("DIR_X IS: ", apply_force.x);
                                         InternalCalls.NativeLog("DIR_Y IS: ", apply_force.y);*/
                     var color = (1f, 1f, 1f);
-                    InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+
+                    if (InternalCalls.ControllerConnected())
+                    {
+                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + controller_dir.x * 200, player_pos.y + controller_dir.y * 200, color);
+                        if (controller_dir.x == 0 && controller_dir.y == 0)
+                        {
+                            InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + 200, player_pos.y + controller_dir.y * 200, color);
+                        }
+
+                    }
+                    else
+                    {
+                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+                    }
+
                     // Render Circles
                     for (int i = 1; i <= 5; i++)
                     {
@@ -1089,7 +1159,7 @@ namespace IS
             AttackCameraShake(); // camera shake
             HitEnemy();
             EnemyAttack();
-            
+
 
             FloorCheckerUpdate();
             WallCheckerUpdate();
@@ -1097,7 +1167,7 @@ namespace IS
 
             WalkAndJumpAndCollideCheck();
             //Console.WriteLine(is_walking_and_colliding_sth);
-            Xforce = 0f; 
+            Xforce = 0f;
             //Yforce = 0f;
         }
 
@@ -1142,7 +1212,7 @@ namespace IS
 
             float alpha = 1f - (dash_timer / dash_set);
             InternalCalls.GameSpawnParticleExtraImage(player_pos.x, player_pos.y,
-                                                        0.0f, trans_scaling.x/2f, trans_scaling.y/2f, 1, alpha, 0.0f, 0.2f,
+                                                        0.0f, trans_scaling.x / 2f, trans_scaling.y / 2f, 1, alpha, 0.0f, 0.2f,
                                                         0, "Particle Empty.txt", "Dash AfterImage.png");
             canDash = false;
             isDashing = true;
@@ -1192,7 +1262,7 @@ namespace IS
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier * 1.1f); // higher jump
             }
             else if (jump_amount != 1 /*not apply to first jump only*/ ||
-                InternalCalls.RigidBodyGetVelocity().y > 0f && !(InternalCalls.KeyHeld((int)KeyCodes.Space)))
+                InternalCalls.RigidBodyGetVelocity().y > 0f && !jump_held)
             {
                 InternalCalls.SetGravityScale(gravity_scale * fall_multiplier / 1.1f); // lower jump
             }
@@ -1241,7 +1311,8 @@ namespace IS
                 is_walking_and_colliding_sth = true;
             }
 
-            if (is_walking_and_colliding_sth) { 
+            if (is_walking_and_colliding_sth)
+            {
                 InternalCalls.RigidBodySetForceX(0); // if walking and colliding towards wall/ground, set vel x to 0
             }
 
@@ -1275,7 +1346,7 @@ namespace IS
             InternalCalls.TransformSetScaleEntity(2f, height / 3f, entityWall);
         }
 
-     //   static private float distance_light=width;
+        //   static private float distance_light=width;
         static MyRandom randomlights = new MyRandom(12314);
         static private void LightUpdate()
         {
@@ -1301,21 +1372,21 @@ namespace IS
             float angleRadians = rotationAngle * (CustomMath.PI / 180.0f);
 
 
-/*            if (hori_movement != 0)
-            {
-                distance_light = width * hori_movement;
+            /*            if (hori_movement != 0)
+                        {
+                            distance_light = width * hori_movement;
 
-                if (isClimbing)
-                {
-                    distance_light = width * hori_movement * -1;
-                }
-                if (isDashing)
-                {
-                    distance_light = width * CustomMath.Normalize(trans_scaling.x);
-                }
+                            if (isClimbing)
+                            {
+                                distance_light = width * hori_movement * -1;
+                            }
+                            if (isDashing)
+                            {
+                                distance_light = width * CustomMath.Normalize(trans_scaling.x);
+                            }
 
 
-            }*/
+                        }*/
             //Vector2D relativePosition = new Vector2D(distance_light, 0);
             Vector2D relativePosition = new Vector2D(0, 0);
 
@@ -1512,7 +1583,7 @@ namespace IS
         static private void Attack()
         {
             //if (InternalCalls.MousePressed(0) && (!isAttack ))
-            if (InternalCalls.MousePressed(0) && (!isAttack))
+            if ((attack_trigger) && (!isAttack))
             {
                 // play attack sound
                 Random rnd = new Random();
@@ -1551,7 +1622,7 @@ namespace IS
                 //Get mouse and attack angle
                 Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
                 attack_angle = CustomMath.AngleBetweenPoints(player_pos, mouse_pos);
-                
+
             }
             if (attack_timer < combo_interval)
             {
@@ -1559,12 +1630,12 @@ namespace IS
                 {
                     attack_timer += InternalCalls.GetDeltaTime();
                 }
-                
+
                 if (attack_timer < attack_interval) // play attack animation
                 {
-                    attack_animation_speed-=InternalCalls.GetDeltaTime();
+                    attack_animation_speed -= InternalCalls.GetDeltaTime();
                     if (attack_animation_current_frame > 21) { attack_animation_current_frame = 0; }
-                    if (attack_animation_speed < 0) { attack_animation_speed=attack_animation_speed_set; }
+                    if (attack_animation_speed < 0) { attack_animation_speed = attack_animation_speed_set; }
 
                     // render attacking combo animation 123
                     switch (combo_step)
@@ -1613,7 +1684,7 @@ namespace IS
                             InternalCalls.SetSpriteAnimationIndex((int)PlayerAttackCombo.HeavyAttack);
                             break;
                     }
-                    
+
 
                     // limit the player vel when doing attack
                     InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocityX() / 3f, InternalCalls.RigidBodyGetVelocityY() / 3f);
@@ -1713,29 +1784,36 @@ namespace IS
         static private void AttackAreaUpdate() // update attack area range
         {
             if (!isAttack) { InternalCalls.TransformSetPositionEntity(-999999, -999999, entity_attack); return; }
-            
+
             CalibrateAttackAngle();
+
+
+
             Vector2D f_angle = Vector2D.DirectionFromAngle(attack_angle);
             f_angle = f_angle.Normalize();
-
             //float distanceLeft = 150f;
 
             Vector2D attack_pos = new Vector2D(
-                player_pos.x + f_angle.x * attack_range.x,
+                player_pos.x + CustomMath.Normalize(-trans_scaling.x) * attack_range.x,
                 player_pos.y
             );
             //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
             // flip player if neccessary
-            if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+
+
+
+            //if (attack_pos.x > player_pos.x) { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } }
+
+
 
             //Vector2D attack_area_scaling = new Vector2D(150f, height / 2f);
             InternalCalls.TransformSetPositionEntity(attack_pos.x, attack_pos.y, entity_attack);
             InternalCalls.TransformSetRotationEntity(0, 0, entity_attack);
             InternalCalls.TransformSetScaleEntity(attack_range.x, attack_range.y, entity_attack);
             // draw attack range
-            /*InternalCalls.DrawImageAt
+/*            InternalCalls.DrawImageAt
                 (
-                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack, 0.5f, 6
+                    new SimpleVector2D(attack_pos.x, attack_pos.y), 0, new SimpleVector2D(attack_range.x, attack_range.y), player_attack1, 0.5f, 6
                 );*/
         }
 
@@ -1791,11 +1869,24 @@ namespace IS
                             //Console.WriteLine(attacking_enemy_id);
                             //EachEnemy.BEING_ATTACK_ENEMY_ID = attacking_enemy_id;
                             //EachEnemy.GetHit(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attacking_enemy_id);
-                            Enemy.enemies[attacking_enemy_id].GetHitByPlayer(new Vector2D(-MathF.Sign(trans_scaling.x), 0f), attack_damage);
+
+                            if (Enemy.enemies.ContainsKey(attacking_enemy_id)) // id in normal enemy dictionary
+                            {
+                                Enemy.enemies[attacking_enemy_id].GetHitByPlayer(
+                                new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
+                                (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
+                            }
+                            else if (HandEnemy.enemies.ContainsKey(attacking_enemy_id)) // id in hand enemy dictionary
+                            {
+                                HandEnemy.enemies[attacking_enemy_id].GetHitByPlayer(
+                                new Vector2D(-MathF.Sign(trans_scaling.x), 0f),
+                                (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
+                            }
+
                             initial_attack = true;
                         }
                     }
-                    else if (isAttack) // still hitting the enemy
+                    else if (isAttack) // still hitting the enemy 
                     {
                         // drawing hitting enemy vfx
                         CalibrateAttackAngle();
@@ -1837,6 +1928,7 @@ namespace IS
             // Apply Attack Stun Effect
             AttackStunEffect();
         }
+
         static public void AttackStunEffect()
         {
             if (InternalCalls.GetCurrentAnimationEntity(PLAYER_ID) == 3 && !IsFirstAttackStun && hitting_enemy)
@@ -1910,6 +2002,7 @@ namespace IS
 
                     is_colliding_enemy = false;
                     colliding_enemy_id = -1;
+                    colliding_enemy_type = (int)EnemyType.None;
 
                 }
             }
@@ -1926,11 +2019,37 @@ namespace IS
                 // getting enemy position
                 Vector2D enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id));
                 float dir = player_pos.x - enemy_pos.x;
-                // make enemy facing player
-                Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
 
-                // damage the player
-                Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
+                if (colliding_enemy_type == (int)EnemyType.Normal)
+                {
+                    // make enemy facing player
+                    Enemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
+
+                    // damage the player
+                    Health -= Enemy.enemies[colliding_enemy_id].attack_damage;
+
+                }
+                else if (colliding_enemy_type == (int)EnemyType.Hand)
+                {
+                    // make enemy facing player
+                    HandEnemy.enemies[colliding_enemy_id].direction.x = MathF.Sign(-dir);
+
+                    // damage the player
+                    Health -= HandEnemy.enemies[colliding_enemy_id].attack_damage;
+                }
+                else if (colliding_enemy_type == (int)EnemyType.Bullet)
+                {
+                    // damage the player 
+                    if (HandEnemyBullets.bullets.ContainsKey(colliding_enemy_id)) {
+                        Health -= HandEnemyBullets.bullets[colliding_enemy_id].attack_damage;
+                        HandEnemyBullets.bullets[colliding_enemy_id].is_alive = false;
+                        // destory
+                        //HandEnemyBullets.bullets.Remove(colliding_enemy_id);
+                        //InternalCalls.DestroyEntity(colliding_enemy_id);
+                        }
+                }
+
+
 
                 // player get hit back
                 isGrounded = false;
@@ -1942,6 +2061,8 @@ namespace IS
                 hori_movement = 0;
                 InternalCalls.SetSpriteAnimationIndex(1);
                 InternalCalls.SetSpriteImage(player_idle);
+
+                screen_flash_timer += 1.5f;
             }
         }
 
@@ -1964,7 +2085,8 @@ namespace IS
 
         static private void AttackCameraShake() // camera shake when attacking
         {
-            if (isAttack && initial_attack) {
+            if (isAttack && initial_attack)
+            {
                 if (camera_shake_duration > 0)
                 {
                     camera_shake_duration -= InternalCalls.GetDeltaTime();
@@ -1991,19 +2113,19 @@ namespace IS
                         Vector2D attack_dir = new Vector2D(0f, 0f);
                         attack_dir.x = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).x - player_pos.x;
                         attack_dir.y = InternalCalls.GetTransformPositionEntity(hitting_enemy_id).y - player_pos.y;
-                      //  if (hitting_enemy_id != -1)
-/*                            CameraScript.camera_pos.x = CameraScript.camera_pos.x + 0.01f * attack_dir.x;
-                        CameraScript.camera_pos.y = CameraScript.camera_pos.y + 0.01f * attack_dir.y;*/
+                        //  if (hitting_enemy_id != -1)
+                        /*                            CameraScript.camera_pos.x = CameraScript.camera_pos.x + 0.01f * attack_dir.x;
+                                                CameraScript.camera_pos.y = CameraScript.camera_pos.y + 0.01f * attack_dir.y;*/
                     }
 
                     /*attack_dir.x /= attack_dir.x;
                     attack_dir.y /= attack_dir.y;*/
                     //float rand = (float)rnd.NextDouble() - 0.5f; // random range from -0.5 to 0.5
-                    //Console.WriteLine(Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(colliding_enemy_id)));
+
                     if (hitting_enemy_id != -1) { }
-/*                    CameraScript.camera_shake_duration = 4f;
-                    CameraScript.camera_pos.x=camera_pos.x + 0.01f * attack_dir.x;
-                    CameraScript.camera_pos.y = camera_pos.y + 0.01f * attack_dir.y;*/
+                    /*                    CameraScript.camera_shake_duration = 4f;
+                                        CameraScript.camera_pos.x=camera_pos.x + 0.01f * attack_dir.x;
+                                        CameraScript.camera_pos.y = camera_pos.y + 0.01f * attack_dir.y;*/
                 }
             }
             else
@@ -2016,13 +2138,14 @@ namespace IS
 
         static private void DrawHealthBar() // draw health bar
         {
-            if(hideHealth==true) return;
+            if (hideHealth == true) return;
 
             SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
             float interval = scaling.x / 1.6f;
             // draw health bar
-            switch (Health){
+            switch (Health)
+            {
                 case 1:
                     InternalCalls.DrawImageAt(new SimpleVector2D(pos.x, pos.y), 0, scaling, player_health_half, 1f, 6);
                     InternalCalls.DrawImageAt(new SimpleVector2D(pos.x + interval, pos.y), 0, scaling, player_health_empty, 1f, 6);
@@ -2071,7 +2194,7 @@ namespace IS
         {
             speed_run_timer += InternalCalls.GetDeltaTime();
             string text = "Timer: " + speed_run_timer;
-             float fontSize = 18f;
+            float fontSize = 18f;
             string font = "Semplicita_Light";
             InternalCalls.RenderTextFont(text, font, 0.5f, 0.8f, fontSize, (1f, 1f, 1f, 1f));
             if (high_score != 9999f)
