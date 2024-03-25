@@ -438,10 +438,16 @@ namespace IS
         internal extern static int GetWindowWidth();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int GetWindowHeight();    
+        internal extern static int GetWindowHeight();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static int GetTargetFPS();    
+        internal extern static void SetWindowSize(int width, int height);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetTargetFPS();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetTargetFPS(int fps);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int GetMonitorWidth();

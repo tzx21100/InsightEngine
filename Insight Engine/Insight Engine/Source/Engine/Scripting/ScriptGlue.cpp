@@ -1324,6 +1324,12 @@ namespace IS {
         return InsightEngine::Instance().GetWindowHeight();
     }
 
+    static void SetWindowSize(int width, int height)
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        window->SetWindowSize(width, height);
+    }
+
     static int GetMonitorWidth()
     {
         auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
@@ -1339,6 +1345,11 @@ namespace IS {
     static int GetTargetFPS()
     {
         return InsightEngine::Instance().GetTargetFPS();
+    }
+
+    static void SetTargetFPS(int fps)
+    {
+        InsightEngine::Instance().SetFPS(fps);
     }
 
     static SimpleVector2D GetCameraPos() {
@@ -1857,9 +1868,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(SetWindowSize);
         IS_ADD_INTERNAL_CALL(GetMonitorWidth);
         IS_ADD_INTERNAL_CALL(GetMonitorHeight);
         IS_ADD_INTERNAL_CALL(GetTargetFPS);
+        IS_ADD_INTERNAL_CALL(SetTargetFPS);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);
