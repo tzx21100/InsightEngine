@@ -50,7 +50,8 @@ namespace IS {
 		effect_normal=0,
 		effect_swing=1,
 		effect_spin=2,
-		effect_animate=3
+		effect_animate=3,
+		effect_light=4
 	};
 
 	/*!
