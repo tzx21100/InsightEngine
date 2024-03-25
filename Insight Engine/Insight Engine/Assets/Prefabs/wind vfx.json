@@ -1,0 +1,49 @@
+{
+	"Name" : "wind vfx",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "wind vfx.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 128,
+		"SpriteTextureHeight" : 256,
+		"SpriteTextureIndex" : 111,
+		"SpriteTextureWidth" : 1792,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1096.9599609375,
+		"SpriteTransformScalingY" : 1096.9599609375,
+		"SpriteTransformWorldPositionX" : 507.56198120117188,
+		"SpriteTransformWorldPositionY" : -638.6748046875,
+		"animations" : 
+		[
+			{
+				"Name" : "a",
+				"animation_duration" : 0.5,
+				"frame_dimension_x" : 0.1428571492433548,
+				"frame_dimension_y" : 1.0,
+				"frame_index_x" : 6.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.038095239549875259,
+				"time_per_frame" : 0.071428574621677399,
+				"x_frames" : 7,
+				"y_frames" : 1
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1096.9599609375,
+		"TransformScalingY" : 1096.9599609375,
+		"TransformWorldPositionX" : 507.56198120117188,
+		"TransformWorldPositionY" : -638.6748046875
+	}
+}

@@ -295,7 +295,7 @@ namespace IS {
     }
             
     static float GetDeltaTime() {
-        return static_cast<float>(InsightEngine::Instance().mFixedDeltaTime);
+        return static_cast<float>(InsightEngine::Instance().mDeltaTime);
     }
 
     static float GetFixedDeltaTime() {
@@ -892,6 +892,12 @@ namespace IS {
     static void DrawNonEnityAnimation(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage  texture, float alpha, int layer=1) {
         free_anim.initAnimation(1, 6, 0.5f);
         free_anim.drawNonEntityAnimation( deltaTime, Vector2D(pos.x,pos.y),  rotation, Vector2D(scale.x,scale.y), ConvertToImage(texture), alpha, layer);
+    }
+
+    Animation free_anim2;
+    static void DrawNonEnityAnimationSet(float deltaTime, SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage  texture, float alpha, int layer = 1, int row=1, int col=6 ,float speed=0.5) {
+        free_anim2.initAnimation(row, col,speed);
+        free_anim2.drawNonEntityAnimation(deltaTime, Vector2D(pos.x, pos.y), rotation, Vector2D(scale.x, scale.y), ConvertToImage(texture), alpha, layer);
     }
 
 
@@ -1882,6 +1888,7 @@ namespace IS {
 
         // Animation
         IS_ADD_INTERNAL_CALL(DrawNonEnityAnimation);
+        IS_ADD_INTERNAL_CALL(DrawNonEnityAnimationSet);
 
     }
 }

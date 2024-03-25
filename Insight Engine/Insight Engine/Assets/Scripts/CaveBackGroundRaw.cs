@@ -63,8 +63,8 @@ namespace IS
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
                 bg_scale = new Vector2D((5850 * 0.8f) /CameraScript.camera_zoom, (1080 * 1.1f) / CameraScript.camera_zoom);
                 // Update the position
-                Vector2D newPos = new Vector2D(PlayerScript.camera_pos.x + initialPos.x - layerOffsetX,
-                                               PlayerScript.camera_pos.y + initialPos.y - layerOffsetY);
+                Vector2D newPos = new Vector2D(CameraScript.camera_pos.x + initialPos.x - layerOffsetX,
+                                               CameraScript.camera_pos.y + initialPos.y - layerOffsetY);
 
                 // Draw the layer at its new position
                 int layer = 0;
@@ -77,7 +77,7 @@ namespace IS
             //InternalCalls.TransformSetPosition(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y);
 
 
-                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.8f, 0);
+                InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.8f, 0);
             /*                InternalCalls.DrawSquare(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, 7000, 7000, 0, 0, 0, 0.3f, 10);*/
 
             leaves_timer -= InternalCalls.GetDeltaTime();
@@ -92,7 +92,7 @@ namespace IS
                     float size = InternalCalls.GetRandomFloat() * 25;
                     float speed = InternalCalls.GetRandomFloat() * 800f;
                     float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFrames((PlayerScript.camera_pos.x-2000) +(2000* InternalCalls.GetRandomFloat()), PlayerScript.camera_pos.y + 2000f,
+                    InternalCalls.GameSpawnParticleExtraFrames((CameraScript.camera_pos.x-2000) +(2000* InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y + 2000f,
                         direction, size, 0f, 1f,
                         0f, lifespan, speed, "ParticleDust.txt"
                         , col, 0);
