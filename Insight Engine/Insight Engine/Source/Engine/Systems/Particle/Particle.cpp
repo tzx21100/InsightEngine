@@ -1,9 +1,9 @@
 /* Start Header **************************************************************/
 /*!
  * \file Particle.cpp
- * \author Matthew Ng, matthewdeen.ng@digipen.edu
+ * \author Tab Zheng Xun, t.zhengxun@digipen.edu
  * \par Course: CSD2451
- * \date 25-11-2023
+ * \date 25-03-2024
  * \brief
  * Implementation of ParticleSystem
  *
@@ -20,6 +20,9 @@
 #include "Engine/Systems/Asset/Asset.h"
 #include "Graphics/System/Animation.h"
 #include "Graphics/System/Sprite.h"
+#include "../Graphics/System/Transform.h"
+#include "../Graphics/System/Light.h"
+#include "Graphics/Core/Graphics.h"
 
 namespace IS {
     Animation run_anim;
@@ -130,9 +133,21 @@ namespace IS {
                         }
                         break;
 
-                    default:
+                    case effect_light: 
+                        Sprite::instanceData lightData;
 
+                        lightData.color = { mParticleList[id].mColor.R, mParticleList[id].mColor.G, mParticleList[id].mColor.B, mParticleList[id].mColor.A };
+
+                        Transform lightXform(mParticleList[id].mParticlePos, 0.f, mParticleList[id].mScale);
+                        lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
+                        lightData.entID = 20000; // no idea what its supposed to do
+
+                        Light::lightPos.emplace_back(mParticleList[id].mParticlePos.x, mParticleList[id].mParticlePos.y);
+                        Light::lightClr.emplace_back(lightData.color);
+                        ISGraphics::lightInstances.emplace_back(lightData);
+                        ISGraphics::lightRadius.emplace_back(mParticleList[id].mScale.x);
                         break;
+                    
 
                 }
 
