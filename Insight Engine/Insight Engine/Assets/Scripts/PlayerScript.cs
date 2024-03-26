@@ -299,6 +299,12 @@ namespace IS
 
         static public void Init()
         {
+            //reset HP
+            Health = Max_Health;
+
+            //reset invul
+            invulnerable = false;
+
             // reset intensity
             InternalCalls.ChangeShaderIntensity(1f);
 
@@ -410,6 +416,9 @@ namespace IS
 
         static public void Update()
         {
+            //make sure playerid is always updated
+            PLAYER_ID = InternalCalls.GetCurrentEntityID();
+
             left_trigger = InternalCalls.KeyHeld((int)KeyCodes.A) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_LEFT) || InternalCalls.GetLeftTriggerX() < 0;
             right_trigger = InternalCalls.KeyHeld((int)KeyCodes.D) || InternalCalls.ControllerKeyHeld((int)KeyCodes.Button_RIGHT) || InternalCalls.GetLeftTriggerX() > 0;
             jump_trigger = InternalCalls.KeyPressed((int)KeyCodes.Space) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_A);
@@ -591,6 +600,7 @@ namespace IS
                     isDashing = false;
                     dash_timer = dash_set;
                     bullet_time_timer = bullet_time_set;
+                    Health = Max_Health;
                     InternalCalls.RigidBodySetForce(0, 0);
                     InternalCalls.AudioPlaySoundSFX("PlayerDeath.wav", false, 0.2f);
 
@@ -631,7 +641,7 @@ namespace IS
 
             if (Health <= 0)
             {
-
+                invulnerable = false;
                 Health = Max_Health;
                 isDead = true;
             }

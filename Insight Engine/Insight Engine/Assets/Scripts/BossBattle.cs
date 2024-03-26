@@ -217,6 +217,7 @@ namespace IS
             if(random == 3)
             {
                 ResetPosition();
+                ClearBullets();
                 current_state= BossStates.LeftSweep;
                 return;
             }
@@ -624,7 +625,21 @@ namespace IS
             }
         }
 
+        static private void ClearBullets()
+        {
+            //clear all existing bullet directions
+            for (int i = 0; i < number_of_bullets; i++)
+            {
+                if (bullet_array[i] != 0) //since 0 is cleared value we ignore
+                {
+                    InternalCalls.DestroyEntity(bullet_array[i]);
+                }
 
+
+
+                BossProjectile.bullet_direction.Clear();
+            }
+        }
         static private void LeftSweep()
         {
             // ensure the boss is at the defaulted position
@@ -662,11 +677,11 @@ namespace IS
 
             sweep_timer-=InternalCalls.GetDeltaTime();
 
-            if (sweep_timer > 1 && sweep_timer < 2)
+            if (sweep_timer > 1.5 && sweep_timer < 2)
             {
                 for (int i = 0; i < number_of_bullets; i++)
                 {
-                    BossProjectile.bullet_direction.TryAdd(bullet_array[i], (-20, 0));
+                    BossProjectile.bullet_direction.TryAdd(bullet_array[i], (-40, 0));
                 }
             }
 

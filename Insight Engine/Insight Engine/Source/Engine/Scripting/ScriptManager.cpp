@@ -85,6 +85,7 @@ namespace IS {
 
                 }
                 if (mLoadScene) {
+                    ReloadAllScriptClasses();
                     mLoadScene = false;
                     break;
                 }
@@ -163,6 +164,7 @@ namespace IS
         for (auto& entity : mEntities) {
             auto& scriptcomponent = InsightEngine::Instance().GetComponent<ScriptComponent>(entity);
             scriptcomponent.scriptClass.Unload();
+            scriptcomponent.mInited = false;
         }
 
         //InitScripts();
