@@ -438,7 +438,7 @@ namespace IS
             switch (current_state)
             {
                 case HandEnemyState.SPAWNING:
-                    Console.WriteLine("spawning");
+                    //Console.WriteLine("spawning");
                     EnemySpawn();
                     break;
                 case HandEnemyState.CHARGING:
@@ -446,7 +446,7 @@ namespace IS
                     EnemyCharging();
                     break;
                 case HandEnemyState.BEING_HIT:
-                    Console.WriteLine("being hit");
+                    //Console.WriteLine("being hit");
                     EnemyGetHit();
                     break;
                 case HandEnemyState.IDLE:
@@ -454,7 +454,7 @@ namespace IS
                     EnemyIdle();
                     break;
                 case HandEnemyState.DEAD:
-                    Console.WriteLine("dead");
+                    //Console.WriteLine("dead");
                     EnemyDead();
                     break;
             }
@@ -493,9 +493,9 @@ namespace IS
         {
             if (!is_shooting)
             {
-                Console.WriteLine("shooting");
+                //Console.WriteLine("shooting");
                 int bullet_id = InternalCalls.CreateEntityPrefab("HandEnemyBullet");
-                Console.WriteLine(bullet_id);
+               // Console.WriteLine(bullet_id);
                 //Console.WriteLine(bullet_id);
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/

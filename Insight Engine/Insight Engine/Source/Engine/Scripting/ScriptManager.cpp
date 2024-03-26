@@ -77,7 +77,7 @@ namespace IS {
             for (auto& entity : mEntities) {
                 mEntityScriptCaller = entity;
                 auto& scriptcomponent = engine.GetComponent<ScriptComponent>(entity);
-                if (&scriptcomponent == nullptr) { continue; }
+                //if (&scriptcomponent == nullptr) { continue; }
                 if (scriptcomponent.mInited == false) { if (InitScript(scriptcomponent)) { scriptcomponent.mInited = true; continue; } }
                 if (scriptcomponent.instance != nullptr) {
                     MonoMethod* update_method = scriptcomponent.scriptClass.GetMethod("Update", 0);

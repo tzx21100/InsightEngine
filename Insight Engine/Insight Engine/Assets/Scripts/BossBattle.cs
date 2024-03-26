@@ -40,9 +40,20 @@ namespace IS
         static SimpleImage health_bar;
         static private Vector2D health_bar_scaling = new Vector2D(1000f, 250f);
 
-        //boss invul after hit duration
+        // boss invul after hit duration
         static private float invul_timer = 0.1f;
         static private float invul_timer_set = 0.1f;
+
+        // projectile image
+        static SimpleImage boss_bullet;
+
+        // sweep timer for projectiles
+        static private float sweep_timer = 3f;
+        static private float sweep_timer_set = 3f;
+        static private bool sweeped=false;
+        // bullet direction
+        static int number_of_bullets = 40;
+        static int[] bullet_array = new int[number_of_bullets];
 
 
 
@@ -51,7 +62,9 @@ namespace IS
             Idle=0,
             Clap=1,
             Smash=2,
-            SummonEnemy=3
+            SummonEnemy=3,
+            LeftSweep=4,
+            RightSweep=5,
         }
 
         static private BossStates current_state = BossStates.Smash;
@@ -64,6 +77,7 @@ namespace IS
             // reseting boss health
             boss_hp = boss_max_hp;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
+            boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
@@ -167,6 +181,9 @@ namespace IS
                 case BossStates.SummonEnemy:
                     SummonEnemy();
                     break;
+                case BossStates.LeftSweep:
+                    LeftSweep();
+                    break;
             }
         }
 
@@ -176,7 +193,7 @@ namespace IS
         {
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            uint random = rnd.Next(0,3); // random from 0 to 2
+            uint random = rnd.Next(0,4); // random from 0 to 3
             //random = 2;
             if (random == 0)
             {
@@ -194,7 +211,13 @@ namespace IS
             {
                 ResetPosition();
                 current_state = BossStates.SummonEnemy;
-                Console.WriteLine("summoning");
+                //Console.WriteLine("summoning");
+                return;
+            }
+            if(random == 3)
+            {
+                ResetPosition();
+                current_state= BossStates.LeftSweep;
                 return;
             }
 
@@ -502,7 +525,7 @@ namespace IS
                     int enemy_id = InternalCalls.CreateEntityPrefab("HandEnemy");
 
                     HandEnemy.enemies.TryAdd(enemy_id, new EachHandEnemy());
-                    Console.WriteLine("spawn enemy");
+                   // Console.WriteLine("spawn enemy");
                     //Vector2D rnd_pos = PlayerScript.player_pos;
                     // random left/right pos around player
                     //rnd_pos.x = rnd_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
@@ -599,6 +622,64 @@ namespace IS
                     enemy_spawn_pos.x, enemy_spawn_pos.y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
                  );
             }
+        }
+
+
+        static private void LeftSweep()
+        {
+            // ensure the boss is at the defaulted position
+            ResetPosition();
+
+            //create all entities
+
+            if (!sweeped)
+            {
+                //clear all existing bullet directions
+                BossProjectile.bullet_direction.Clear();
+
+                int flipper = 1;
+                for (int i = 0; i < number_of_bullets; i++)
+                {
+                    //flip flipper
+                    flipper *= -1;
+
+                    int entity = InternalCalls.CreateEntityPrefab("Boss Projectile");
+                    SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
+                    InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
+                    InternalCalls.TransformSetPositionEntity(PlayerScript.player_pos.x+500f/CameraScript.camera_zoom, PlayerScript.player_pos.y+ i*flipper*scale.y*1.5f,entity);
+                    bullet_array[i] = entity;
+                }
+
+
+                MyRandom rnd = new MyRandom((uint)(221 * InternalCalls.GetRandomFloat()));
+                // sweep chooser
+                int rand = (int)rnd.Next(0, (uint)number_of_bullets);
+
+                InternalCalls.DestroyEntity(bullet_array[rand]);
+
+                sweeped = true;
+            }
+
+            sweep_timer-=InternalCalls.GetDeltaTime();
+
+            if (sweep_timer > 1 && sweep_timer < 2)
+            {
+                for (int i = 0; i < number_of_bullets; i++)
+                {
+                    BossProjectile.bullet_direction.TryAdd(bullet_array[i], (-20, 0));
+                }
+            }
+
+            if (sweep_timer < 0)
+            {
+
+
+                sweep_timer = sweep_timer_set;
+                sweeped = false;
+                StateChanger();
+            }
+
+
         }
 
 
