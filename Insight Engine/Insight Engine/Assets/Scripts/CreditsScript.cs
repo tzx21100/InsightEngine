@@ -63,8 +63,15 @@ namespace IS
         static private List<string> instructors = new List<string>();
         static private List<string> boardOfDirectors = new List<string>();
         static private List<string> executives = new List<string>();
+
+        static float leaves_timer;
+        static float leaves_timer_set=2f;
+        static int leaves_amount = 100;
+
         static public void Init()
         {
+            
+
             total_timer = 0f;
             timer = 0f;
             dt = InternalCalls.GetDeltaTime();
@@ -137,6 +144,38 @@ namespace IS
 
         static public void Update()
         {
+            //zx added stuff
+            InternalCalls.DrawSquare(0, 0, 7000, 7000, 0, 0, 0, 0.5f, 2);
+            InternalCalls.AttachCamera(0, 0);
+            leaves_timer -= InternalCalls.GetDeltaTime();
+            //spawn leaves
+            if (leaves_timer <= 0)
+            {
+
+
+                for (int i = 0; i < leaves_amount; i++)
+                {
+                    int col = (int)(InternalCalls.GetRandomFloat() * 2);
+                    float direction = InternalCalls.GetRandomFloat() * 360;
+                    float size = InternalCalls.GetRandomFloat() * 150;
+                    float speed = InternalCalls.GetRandomFloat() * 800f;
+                    float lifespan = InternalCalls.GetRandomFloat() * 12f;
+                    InternalCalls.GameSpawnParticleExtraFramesFull((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y + 2000f,
+                        direction, size, 0f, 1f,
+                        0f, lifespan, speed, "ParticleLeaves.txt"
+                        , col, 0, direction, 4, 1f, lifespan * CustomMath.Normalize(lifespan - 6f) / 5f, InternalCalls.GetTopLayer(), (1, 1, 1));
+
+                }
+
+                leaves_timer = leaves_timer_set;
+            }
+
+            //ends here
+
+
+
+
+
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 

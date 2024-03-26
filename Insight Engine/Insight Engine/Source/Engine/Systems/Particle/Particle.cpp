@@ -140,7 +140,7 @@ namespace IS {
 
                         Transform lightXform(mParticleList[id].mParticlePos, 0.f, mParticleList[id].mScale);
                         lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
-                        lightData.entID = 20000; // no idea what its supposed to do
+                        lightData.entID = 2; // no idea what its supposed to do
 
                         Light::lightPos.emplace_back(mParticleList[id].mParticlePos.x, mParticleList[id].mParticlePos.y);
                         Light::lightClr.emplace_back(lightData.color);
