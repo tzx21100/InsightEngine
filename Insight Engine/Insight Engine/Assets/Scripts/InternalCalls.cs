@@ -604,7 +604,9 @@ namespace IS
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static float GetLeftTriggerX();
-
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetEntityLayer(int layer, int entity);
 
     }
 }
