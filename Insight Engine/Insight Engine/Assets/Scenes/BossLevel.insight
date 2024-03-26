@@ -2,6 +2,10 @@
 	"Entities" : 
 	[
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -482,9 +486,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 84,
+				"SpriteTexture" : 85,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 67,
+				"SpriteTextureIndex" : 68,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -512,7 +516,7 @@
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
 						"frame_index_y" : 2.0,
-						"frame_timer" : 0.072492606937885284,
+						"frame_timer" : 0.0058259367942810059,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -548,6 +552,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -644,6 +652,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -838,9 +850,51 @@
 				"TransformWorldPositionX" : -109.18447113037109,
 				"TransformWorldPositionY" : -1327.497314453125
 			}
+		},
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
+				"AudioVolumeLevel" : 1.0
+			},
+			"Name" : "Background",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "BossLevel_Background.png",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 53,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 36,
+				"SpriteTextureWidth" : 2048,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 4480.0,
+				"SpriteTransformScalingY" : 2520.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 4480.0,
+				"TransformScalingY" : 2520.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
 		}
 	],
-	"EntityAmount" : 9,
+	"EntityAmount" : 10,
 	"Layers" : 
 	[
 		{

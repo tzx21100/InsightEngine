@@ -38,6 +38,8 @@ namespace IS
         public float life_timer = 0f;
         public bool is_alive = true;
 
+        public bool being_hit_by_weapon = false;
+
         static public int BULLET_ID;
 
         SimpleImage bullet_image;
@@ -51,8 +53,8 @@ namespace IS
 
             life_timer = max_life_timer;
             is_alive = true;
-            Console.WriteLine("spawn-");
-            Console.WriteLine(BULLET_ID);
+            //Console.WriteLine("spawn-");
+            //Console.WriteLine(BULLET_ID);
         }
 
         public void update()
@@ -132,6 +134,52 @@ namespace IS
                     is_alive = false; // destory bullet if collide with sth other than player
                 }
 
+                // check collide with player attack weapon
+                if (InternalCalls.CompareEntityCategory(BULLET_ID, "Weapon"))
+                {
+                    if (!being_hit_by_weapon) // check collide once only
+                    {
+                        SimpleVector2D vel = InternalCalls.RigidBodyGetVelocityEntity(BULLET_ID);
+                        InternalCalls.RigidBodySetVelocityEntity(vel.x * -1, vel.y, BULLET_ID); // make the bullet fly backs
+                        being_hit_by_weapon = true;
+                    }
+                    
+                }
+
+                // check collide with other bullets, destory both bullets when colliding
+                if (InternalCalls.CompareEntityCategory(BULLET_ID, "Bullet"))
+                {
+                    for (int i = 0; i < array.length; i++)
+                    {
+                        int entity = array.GetValue(i);
+                        if (InternalCalls.CheckEntityCategory(entity, "Bullet"))
+                        {
+                            if (HandEnemyBullets.bullets.ContainsKey(entity))
+                            {
+                                HandEnemyBullets.bullets[entity].is_alive = false;
+                            }
+                            
+                        }
+                    }
+                    is_alive = false;
+
+                }
+
+                // check collide with enemy
+                if (InternalCalls.CompareEntityCategory(BULLET_ID, "Enemy"))
+                {
+                    for (int i = 0; i < array.length; i++)
+                    {
+                        int entity = array.GetValue(i);
+                        if (InternalCalls.CheckEntityCategory(entity, "Enemy"))
+                        {
+                            HandEnemy.enemies[entity].health -= 20;
+                        }
+                    }
+
+                    is_alive = false;
+                }
+
                 /*if (InternalCalls.CompareCategory("Weapon"))
                 {
                     PlayerScript.hitting_enemy_id = ENEMY_ID;
@@ -177,8 +225,8 @@ namespace IS
         private void RenderDestoryParticle()
         {
             // render particle
-            Console.WriteLine("Destory and Render particle");
-            Console.WriteLine(BULLET_ID);
+            //Console.WriteLine("Destory and Render particle");
+            //Console.WriteLine(BULLET_ID);
 
             // load bleeding particles
             MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));

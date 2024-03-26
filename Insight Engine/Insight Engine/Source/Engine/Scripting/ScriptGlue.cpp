@@ -174,6 +174,12 @@ namespace IS {
         return SimpleVector2D(body_component.mVelocity.x,body_component.mVelocity.y);
     }
 
+    static SimpleVector2D RigidBodyGetVelocityEntity(int entity_id) {
+        auto& engine = InsightEngine::Instance();
+        auto& body_component = engine.GetComponent<RigidBody>(entity_id);
+        return SimpleVector2D(body_component.mVelocity.x, body_component.mVelocity.y);
+    }
+
     static float RigidBodyGetVelocityX() {
         auto& engine = InsightEngine::Instance();
         auto& body_component = engine.GetComponent<RigidBody>(engine.GetScriptCaller());
@@ -1677,6 +1683,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(RigidBodyAddForceEntity);
         IS_ADD_INTERNAL_CALL(GetRigidBodyAngularVelocity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocity);
+        IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityEntity);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityX);
         IS_ADD_INTERNAL_CALL(RigidBodyGetVelocityY);
         IS_ADD_INTERNAL_CALL(RigidBodySetBodyTypeEntity);

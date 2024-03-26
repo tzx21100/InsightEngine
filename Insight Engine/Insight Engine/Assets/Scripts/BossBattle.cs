@@ -17,7 +17,9 @@ namespace IS
         // for summon enemy
         static private float singing_spell_timer_set = 2f;
         static private float singing_spell_timer = 2f;
+        static private bool isSingingSpell = false;
         static private bool isSummoning = false;
+        static private Vector2D enemy_spawn_pos = new Vector2D(0f, 0f);
 
 
         // for idle
@@ -372,18 +374,22 @@ namespace IS
                 // shake camera
                 SummoningCameraShake();
 
-                // summoning
-                Summoning();
-
+                // draw spawn position
+                RenderSpawnPosition();
 
             }
             else
             {
+                // summoning
+                Summoning();
+
                 // summon ends
 
                 // reset
                 singing_spell_timer = singing_spell_timer_set;
+                isSingingSpell = false;
                 isSummoning = false;
+
                 StateChanger();
             }
         }
@@ -393,17 +399,17 @@ namespace IS
             if (!isSummoning) // summon enemy once only
             {
                 // spawn random number of enemies in random location on the ground
-                MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-                int random = (int)rnd.Next(1, 4); // random from 1 to 3
-                for (int i = 0; i < 1; i++)
+                //MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+                //int random = (int)rnd.Next(1, 4); // random from 1 to 3
+                for (int i = 0; i < 1; i++) // spawn one enemy each time
                 {
                     int enemy_id = InternalCalls.CreateEntityPrefab("HandEnemy");
                     HandEnemy.enemies.Add(enemy_id, new EachHandEnemy());
                     Console.WriteLine("spawn enemy");
-                    Vector2D rnd_pos = PlayerScript.player_pos;
+                    //Vector2D rnd_pos = PlayerScript.player_pos;
                     // random left/right pos around player
-                    rnd_pos.x = rnd_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
-                    InternalCalls.TransformSetPositionEntity(rnd_pos.x, rnd_pos.y, enemy_id);
+                    //rnd_pos.x = rnd_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
+                    InternalCalls.TransformSetPositionEntity(enemy_spawn_pos.x, enemy_spawn_pos.y, enemy_id); // enemy spawn position was defined by RenderSpawnPosition()
                 }
                 isSummoning = true;
             }
@@ -455,6 +461,47 @@ namespace IS
             CameraScript.CameraShake(2f);
             CameraScript.camera_shake_intensity = 2f;
             CameraScript.camera_shake_duration = 0.2f;
+        }
+
+        static private void RenderSpawnPosition()
+        {
+            // spawn random number of enemies in random location on the ground
+            MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+            if (!isSingingSpell) // render spawn position once only
+            {
+                enemy_spawn_pos = PlayerScript.player_pos;
+                // random left/right pos around player
+                enemy_spawn_pos.x = enemy_spawn_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
+                isSingingSpell = true;
+            }
+
+            // render spawning particles
+            for (int i = 0; i < 3; i++)
+            {
+
+                float rand = rnd.NextFloat();
+                float dir = rnd.NextFloat() * 360;
+                //float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
+
+                rand = rnd.NextFloat();
+                float size = 20f * rand;
+
+                rand = rnd.NextFloat();
+                float size_scale = 20 * rand;
+
+                rand = rnd.NextFloat();
+                float alpha = 0.8f * rand;
+
+                rand = rnd.NextFloat();
+                float lifetime = 0.3f + 0.3f * rand;
+
+                rand = rnd.NextFloat();
+                float speed = 200f + 200f * rand;
+
+                InternalCalls.GameSpawnParticleExtra(
+                    enemy_spawn_pos.x, enemy_spawn_pos.y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                 );
+            }
         }
 
 

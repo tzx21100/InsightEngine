@@ -139,8 +139,8 @@ namespace IS
         HandEnemyState current_state;
 
         // enemy inof
-        public float max_health = 100f;
-        public float health = 100f;
+        public float max_health = 50f;
+        public float health = 50f;
 
         //static private int get_hit_vfx_entity;
         public void Init()
