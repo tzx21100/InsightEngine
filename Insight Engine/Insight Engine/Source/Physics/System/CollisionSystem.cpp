@@ -185,7 +185,7 @@ namespace IS
 				// check the existence of the objects in a cell, simply perform a bitwise AND operation
 				std::bitset<MAX_ENTITIES> test_cell;
 
-				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i)
+				for (Entity i = 0; i < InsightEngine::Instance().LatestEntity() && i < MAX_ENTITIES; ++i)
 				{
 					test_cell[i] = mImplicitGrid.mRowsBitArray[row][i] && mImplicitGrid.mColsBitArray[col][i];
 				}
@@ -199,7 +199,7 @@ namespace IS
 				// getting entity number in this cell
 				size_t totalEntities = 0;
 
-				for (Entity i = 0; i < InsightEngine::Instance().EntitiesAlive() && i < MAX_ENTITIES; ++i)
+				for (Entity i = 0; i < InsightEngine::Instance().LatestEntity() && i < MAX_ENTITIES; ++i)
 				{
 					if (test_cell[i])
 					{
@@ -209,7 +209,7 @@ namespace IS
 
 				// for use in physics update
 				if (totalEntities > 0) {
-					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e) {
+					for (Entity e = 0; e < InsightEngine::Instance().LatestEntity(); ++e) {
 						if (test_cell.test(e))
 							Physics::PhysicsEnableList.emplace(e);
 					}
@@ -220,7 +220,7 @@ namespace IS
 				if (totalEntities > 1)
 				{
 					// emplace all the entities in current cell
-					for (Entity e = 0; e < InsightEngine::Instance().EntitiesAlive(); ++e)
+					for (Entity e = 0; e < InsightEngine::Instance().LatestEntity(); ++e)
 					{
 						if (test_cell.test(e))
 						{ // if the current bit entity is true

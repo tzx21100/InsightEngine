@@ -350,6 +350,12 @@ namespace IS {
             return mEntityManager->EntitiesAlive();
         }
 
+        // for the latest entity ID
+        uint32_t LatestEntity() {
+            return mEntityManager->LatestEntityID();
+        }
+
+
         /**
          * \brief Retrieves a mapping of all living entities and their associated names.
          * \return An unordered map of entities and their respective names.

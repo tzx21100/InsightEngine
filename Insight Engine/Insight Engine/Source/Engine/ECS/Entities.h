@@ -121,7 +121,7 @@ namespace IS {
 				mEntityNames.erase(entityName);
 			}
 
-			mAvailableEntityIDs.push_back(entity);
+			mAvailableEntityIDs.push_front(entity);
 
 			// Decrement the count of living entities
 			//--mEntitiesAlive;
@@ -180,6 +180,11 @@ namespace IS {
 			}
 			return false;
 		}
+
+		uint32_t LatestEntityID() {
+			return mEntitiesAlive;
+		}
+
 
 		/**
 		 * \brief Resets all entities, making them available for reuse.
