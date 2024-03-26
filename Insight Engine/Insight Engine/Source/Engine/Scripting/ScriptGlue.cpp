@@ -1597,6 +1597,12 @@ namespace IS {
         return static_cast<int>(ISGraphics::mLayers.size());
     }
 
+    static void SetEntityLayer(int layer, int entity) {
+        auto& engine = InsightEngine::Instance();
+        auto& sprite_component = engine.GetComponent<Sprite>(entity);
+        sprite_component.layer = layer;
+    }
+
     static void SetLayerVisible(int layer, bool boolean) {
         ISGraphics::mLayers[layer].mLayerActive=boolean;
     }
@@ -1877,7 +1883,7 @@ namespace IS {
         // Layers
         IS_ADD_INTERNAL_CALL(GetTopLayer);
         IS_ADD_INTERNAL_CALL(SetLayerVisible);
-
+        IS_ADD_INTERNAL_CALL(SetEntityLayer);
 
         //FSM Condition
         IS_ADD_INTERNAL_CALL(SendCondition);

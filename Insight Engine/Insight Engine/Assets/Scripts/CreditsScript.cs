@@ -66,9 +66,15 @@ namespace IS
         static float leaves_timer_set=2f;
         static int leaves_amount = 100;
 
+        static private int back_button_entity;
+
+        static SimpleImage button_frame;
+
+        static Vector2D back_button_pos = new Vector2D(0, 0);
         static public void Init()
         {
-            
+            button_frame = InternalCalls.GetSpriteImage("button_frame.png");
+            back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", button_frame, "BackFromWinScript");
 
             total_timer = 0f;
             timer = 0f;
@@ -135,7 +141,7 @@ namespace IS
             executives.Add("Mandy Wong");
             executives.Add("Johnny Deek");
 
-            InternalCalls.SetSpriteAlpha(0.95f);
+            //InternalCalls.SetSpriteAlpha(0.95f);
         }
 
         static public void Update()
@@ -168,10 +174,6 @@ namespace IS
 
             //ends here
 
-
-
-
-
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
@@ -198,6 +200,9 @@ namespace IS
             //    duration = 10f;
             //    topY = releasedYPos;
             //}
+
+            Vector2D button = new Vector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y);
+
 
 
 
@@ -311,10 +316,12 @@ namespace IS
                 }
                 else if (currentTimeInFadeEffect > fadeDuration + 5f)
                 {
-                    //add button
-                    //InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
+                    InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), back_button_entity);
+                    InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
+                    back_button_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
+                    InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.5f, 0.505f, 7.5f, (1f, 1f, 1f, 1f));
+                    InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
-                    //timer = 0f; 
                 }
             }
 
