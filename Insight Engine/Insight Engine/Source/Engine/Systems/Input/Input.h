@@ -226,7 +226,7 @@ namespace IS {
         Vec2D currentWorldMousePos{ 0.0,0.0 };
 
         //for controller keys
-        bool mControllerConnected{ true };
+        bool mControllerConnected{ false };
         std::unordered_set<int> mPressedControllerKeys;
         std::unordered_set<int> mReleasedControllerKeys;
         std::unordered_set<int> mHeldControllerKeys;
