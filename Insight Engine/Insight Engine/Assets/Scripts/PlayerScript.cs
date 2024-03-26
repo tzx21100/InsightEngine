@@ -209,6 +209,7 @@ namespace IS
 
         // combat system
         static public int entity_attack;
+        static public bool invulnerable = false;
 
         static private int combo_step = 0;
         static private int total_attack_in_one_combo = 3;
@@ -1217,7 +1218,7 @@ namespace IS
             canDash = false;
             isDashing = true;
             dash_timer -= InternalCalls.GetDeltaTime();
-
+            invulnerable = true;
             if (dash_timer <= 0)
             {
 
@@ -1234,6 +1235,7 @@ namespace IS
                 bullet_time_timer = bullet_time_set;
                 initialDash = true;
                 InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x / 3f, InternalCalls.RigidBodyGetVelocity().y / 3f);
+                invulnerable = false;
                 return;
             }
 
@@ -1841,7 +1843,23 @@ namespace IS
             // check attack collider when colliding
             if (InternalCalls.OnEntityCollisionEnter(entity_attack))
             {
-                // when colliding with enemy
+                // collide with boss
+                if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
+                {
+                    
+                    
+                    if (!initial_attack)
+                    {
+                        BossBattle.boss_hp -= PlayerScript.attack_damage;
+                    }
+                    initial_attack = true;
+
+                }
+
+
+
+
+               // when colliding with enemy
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
                 {
                     // enemy get hit

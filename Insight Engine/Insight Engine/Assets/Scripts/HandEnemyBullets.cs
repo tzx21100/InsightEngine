@@ -173,7 +173,10 @@ namespace IS
                         int entity = array.GetValue(i);
                         if (InternalCalls.CheckEntityCategory(entity, "Enemy"))
                         {
-                            HandEnemy.enemies[entity].health -= 20;
+                            if (HandEnemy.enemies.ContainsKey(entity))
+                            {
+                                HandEnemy.enemies[entity].health -= 20;
+                            }
                         }
                     }
 

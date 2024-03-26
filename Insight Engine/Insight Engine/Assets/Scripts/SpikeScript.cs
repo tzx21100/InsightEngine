@@ -43,6 +43,14 @@ namespace IS
                 }
             }
 
+            foreach (var key in HandEnemy.enemies.Keys)
+            {
+                if (array.FindIndex(key) != -1)
+                {
+                    HandEnemy.enemies[key].health = 0;
+                }
+            }
+
 
         }
 

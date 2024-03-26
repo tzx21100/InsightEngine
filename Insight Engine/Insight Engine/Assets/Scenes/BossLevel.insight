@@ -294,6 +294,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Boss"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -486,9 +490,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 85,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 68,
+				"SpriteTextureIndex" : 64,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -515,7 +519,7 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 2.0,
+						"frame_index_y" : 1.0,
 						"frame_timer" : 0.0058259367942810059,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
@@ -873,9 +877,9 @@
 				"SpriteFilename" : "BossLevel_Background.png",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 53,
+				"SpriteTexture" : 69,
 				"SpriteTextureHeight" : 1080,
-				"SpriteTextureIndex" : 36,
+				"SpriteTextureIndex" : 52,
 				"SpriteTextureWidth" : 2048,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 4480.0,

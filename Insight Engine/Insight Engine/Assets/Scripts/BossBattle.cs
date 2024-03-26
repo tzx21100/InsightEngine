@@ -7,6 +7,16 @@ namespace IS
 
         static SimpleVector2D Boss_spawn_pos;
 
+        //boss stats
+        static public float boss_hp=150;
+        static private float boss_max_hp=500;
+        static private int boss_phase = 0; // when health drops below 0 go to next phase
+
+        //boss projectiles
+        static private float boss_projectile_timer;
+        static private float boss_projectile_timer_set;
+
+
 
         // for smash follow
         static private float smash_timer = 2f;
@@ -26,6 +36,16 @@ namespace IS
         static private float idle_timer = 2f;
         static private float idle_timer_set = 2f;
 
+        // health bar
+        static SimpleImage health_bar;
+        static private Vector2D health_bar_scaling = new Vector2D(1000f, 250f);
+
+        //boss invul after hit duration
+        static private float invul_timer = 0.1f;
+        static private float invul_timer_set = 0.1f;
+
+
+
         private enum BossStates : int
         {
             Idle=0,
@@ -36,7 +56,15 @@ namespace IS
 
         static private BossStates current_state = BossStates.Smash;
 
+
+
+
         static public void Init(){
+
+            // reseting boss health
+            boss_hp = boss_max_hp;
+            health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
+
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
             InternalCalls.AudioStopAllSounds();
@@ -61,14 +89,68 @@ namespace IS
 
 
             BossFSM();
+
+            DrawHealthBar();
+            //TakeDamage();
         }
         
         static public void CleanUp(){
 
         }
 
+        static private void DrawHealthBar() // draw health bar
+        {
+            
+            Vector3 color = new Vector3(0f, 0f, 0f);
+            if (boss_hp > boss_max_hp/2)
+            {
+                color = new Vector3(0f, 1f, 0f);
+            }
+            else if (boss_hp > boss_max_hp/5)
+            {
+                color = new Vector3(1f, 1f, 0f);
+            }
+            else
+            {
+                color = new Vector3(1f, 0f, 0f);
+            }
+            int layer = InternalCalls.GetTopLayer();
+            float health_wdith = (((boss_hp > 0) ? boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x*0.8f /CameraScript.camera_zoom; // width lenght of the health bar
+            float health_pos_x = CameraScript.camera_pos.x;
+            float health_pos_y = CameraScript.camera_pos.y+400f/CameraScript.camera_zoom;
+            Vector2D health_bar_length = new Vector2D(health_wdith, 84f / CameraScript.camera_zoom);
+
+            // draw health bar only when the health is lesser
+            if (boss_hp <= boss_max_hp && boss_hp > 0f)
+            {
+                // draw health blood
+                InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+
+                // draw health bar UI
+                SimpleVector2D pos = new SimpleVector2D(health_pos_x- 8f / CameraScript.camera_zoom, health_pos_y);
+                InternalCalls.DrawImageAt
+                    (
+                        pos, 0, new SimpleVector2D(health_bar_scaling.x / CameraScript.camera_zoom, health_bar_scaling.y / CameraScript.camera_zoom), health_bar, 1f, layer
+                    );
+            }
+        }
 
 
+        static private void TakeDamage()
+        {
+            SimpleArray array = InternalCalls.GetCollidingEntityArray(InternalCalls.GetCurrentEntityID());
+
+            if (invul_timer > 0)
+            {
+                invul_timer -= InternalCalls.GetDeltaTime();
+            }
+
+            if (array.FindIndex(PlayerScript.entity_attack) != -1 && invul_timer <=0)
+            {
+                boss_hp -= PlayerScript.attack_damage;
+                invul_timer = invul_timer_set;
+            }
+        }
 
         static private void BossFSM()
         {
@@ -195,7 +277,11 @@ namespace IS
                 int entity = collided_objects.GetValue(i);
                 if(entity==PlayerScript.PLAYER_ID)
                 {
-                    PlayerScript.Health -= 1;
+                    if (PlayerScript.invulnerable == false)
+                    {
+                        PlayerScript.Health -= 1;
+                    }
+
                     smash_timer = smash_timer_set;
                     smash = false;
                     StateChanger();
@@ -217,15 +303,25 @@ namespace IS
                     StateChanger();
 
                 }
+
+                if (InternalCalls.RigidBodyGetBodyTypeEntity(entity) == 5)
+                {
+                    boss_hp -= boss_max_hp/12;
+                    smash = false;
+                    smash_timer = smash_timer_set;
+                    StateChanger();
+
+                }
+
             }
 
             // if the boss miss
-            if(InternalCalls.GetTransformPosition().y < miss_smash_y_pos)
+/*            if(InternalCalls.GetTransformPosition().y < miss_smash_y_pos)
             {
                 smash = false;
                 smash_timer = smash_timer_set;
                 StateChanger();
-            }
+            }*/
 
 
         }
@@ -404,7 +500,8 @@ namespace IS
                 for (int i = 0; i < 1; i++) // spawn one enemy each time
                 {
                     int enemy_id = InternalCalls.CreateEntityPrefab("HandEnemy");
-                    HandEnemy.enemies.Add(enemy_id, new EachHandEnemy());
+
+                    HandEnemy.enemies.TryAdd(enemy_id, new EachHandEnemy());
                     Console.WriteLine("spawn enemy");
                     //Vector2D rnd_pos = PlayerScript.player_pos;
                     // random left/right pos around player
