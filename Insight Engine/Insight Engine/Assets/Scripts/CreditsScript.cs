@@ -73,7 +73,7 @@ namespace IS
             total_timer = 0f;
             timer = 0f;
             dt = InternalCalls.GetDeltaTime();
-            bottomY = 3.3f; // End position for the text (above the top of the screen)
+            bottomY = 3.5f; // End position for the text (above the top of the screen)
             topY = 0f; // Top position for the text (below the bottom of the screen)
             duration = 40f;
             normalizedYPos = 0f;
@@ -88,22 +88,22 @@ namespace IS
             boardOfDirectors.Clear();
             executives.Clear();
 
-            teamMembers.Add(("Koh Yan Khang", "Product Manager"));
-            teamMembers.Add(("Tan Zheng Xun", "Technical Lead"));
-            teamMembers.Add(("Ee Tze Rong Cheryl", "Design Lead"));
-            teamMembers.Add(("Lim Wan Jin", "Art Lead"));
-            teamMembers.Add(("Guo Yiming", "Programmer"));
-            teamMembers.Add(("Ng De En Matthew", "Programmer"));
-            teamMembers.Add(("Wu Zekai", "Programmer"));
+            teamMembers.Add(("Koh  Yan  Khang", "Product Manager"));
+            teamMembers.Add(("Tan  Zheng  Xun", "Technical Lead"));
+            teamMembers.Add(("Ee  Tze  Rong  Cheryl", "Design Lead"));
+            teamMembers.Add(("Lim  Wan  Jin", "Art Lead"));
+            teamMembers.Add(("Guo  Yiming", "Programmer"));
+            teamMembers.Add(("Ng  De  En  Matthew", "Programmer"));
+            teamMembers.Add(("Wu  Zekai", "Programmer"));
             teamMembers.Add(("Ang Qin Tian Rachel", "Artist"));
 
             isFadingIn = true;
             alpha = 0f;
 
-            fadeDuration = 3f;
+            fadeDuration =  1.5f;
             durationBetweenGroups = 1f;
             gameByGroupStart = 0f;
-            gameByGroupDuration = 3f;
+            gameByGroupDuration = 1.5f;
             memberGroupStart = gameByGroupStart + gameByGroupDuration + durationBetweenGroups;
             memberDisplayDuration = 3f;
             totalMemberDisplayTime = teamMembers.Count * (memberDisplayDuration + durationBetweenGroups);
@@ -112,7 +112,7 @@ namespace IS
             memberGroupEnd = memberGroupStart + totalMemberDisplayTime + postMemberGroupWaitTime;
             nextSectionStartTime = memberGroupEnd;
 
-            postDisplayWaitTime = 3f;
+            postDisplayWaitTime = 2f;
             endingGroupStartTime = 0f;
             instructors.Add("Elie Hosry");
             instructors.Add("Goh Dian Yang");
@@ -262,14 +262,14 @@ namespace IS
                     instructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Created At", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Created  At", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
                 InternalCalls.RenderTextFont("Digipen Insitute of Technology Singapore", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 3f), 18f, (1f, 1f, 1f, 1f));
 
                 InternalCalls.RenderTextFont("President", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 6f), 15f, (1f, 1f, 1f, 1f));
                 InternalCalls.RenderTextFont("Claude Comair", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 7.5f), 18f, (1f, 1f, 1f, 1f));
 
 
-                InternalCalls.RenderTextFont("Board of Directors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 10.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Board  of  Directors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 10.5f), 15f, (1f, 1f, 1f, 1f));
                 float bodLineBreak = instructorLineBreak + 12f;
                 foreach (string bod in boardOfDirectors)
                 {
@@ -286,35 +286,34 @@ namespace IS
                     execLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("www.digipen.edu", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (execLineBreak + .5f), 9f, (1f, 1f, 1f, 1f));
-                InternalCalls.RenderTextFont("All content 2024 DigiPen Institute of Technology Singapore. All Rights Reserved.", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (execLineBreak + 1.25f), 9f, (1f, 1f, 1f, 1f));
+                float specialThanksLineBreak = execLineBreak + 1.5f;
+
+                InternalCalls.RenderTextFont("Special  Thanks", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 15f, (1f, 1f, 1f, 1f));
+                specialThanksLineBreak += 1.5f;
+                InternalCalls.RenderTextFont("Ian Chua Rong Bin", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 18f, (1f, 1f, 1f, 1f));
+                specialThanksLineBreak += 1.5f;
+                InternalCalls.RenderTextFont("www.digipen.edu", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (specialThanksLineBreak + .5f), 9f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("All content 2024 DigiPen Institute of Technology Singapore. All Rights Reserved.", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (specialThanksLineBreak + 1.25f), 9f, (1f, 1f, 1f, 1f));
                 
                 endingGroupStartTime = nextSectionStartTime + duration + postDisplayWaitTime;
                 //float fadeEffectDuration = 5f; // Total duration of the fade effect
                 float currentTimeInFadeEffect = total_timer - endingGroupStartTime;
 
-                if (currentTimeInFadeEffect >= 0 && currentTimeInFadeEffect <= fadeDuration)
+                if (currentTimeInFadeEffect >= 0 && currentTimeInFadeEffect <= fadeDuration + 2f) 
                 {
-                    // Calculate alpha for fade in and out
-                    if (currentTimeInFadeEffect <= fadeDuration / 2)
+                    if (currentTimeInFadeEffect <= fadeDuration)
                     {
                         // Fade in
-                        alpha = currentTimeInFadeEffect / (fadeDuration / 2);
+                        alpha = currentTimeInFadeEffect / (fadeDuration / 2 );
                     }
-                    else
-                    {
-                        // Fade out
-                        alpha = 1 - ((currentTimeInFadeEffect - (fadeDuration / 2)) / (fadeDuration / 2));
-                    }
-
-                    //text
-                    InternalCalls.RenderTextFont("HAHAHAHAHAHAHHA", "MedusaGothic_D", 0.5f, 0.5f, 15f, (1f, 1f, 1f, alpha));
+                 
+                    InternalCalls.RenderTextFont("Thank you for playing", "MedusaGothic_D", 0.5f, 0.5f, 15f, (1f, 1f, 1f, alpha));
                 }
-                else if (currentTimeInFadeEffect > fadeDuration + 3f)
+                else if (currentTimeInFadeEffect > fadeDuration + 5f)
                 {
-                    //do smth
+                    //add button
                     //InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
-                  
+
                     //timer = 0f; 
                 }
             }
