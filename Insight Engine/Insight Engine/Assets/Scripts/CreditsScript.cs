@@ -46,8 +46,6 @@ namespace IS
 
         static private float gameByGroupStart;
         static private float gameByGroupDuration;
-        static private float teamGroupStart; 
-        static private float teamGroupDuration;
         static private float memberGroupStart; 
         static private float memberGroupEnd;
         static private float postMemberGroupWaitTime;
@@ -92,11 +90,11 @@ namespace IS
 
             teamMembers.Add(("Koh Yan Khang", "Product Manager"));
             teamMembers.Add(("Tan Zheng Xun", "Technical Lead"));
+            teamMembers.Add(("Ee Tze Rong Cheryl", "Design Lead"));
+            teamMembers.Add(("Lim Wan Jin", "Art Lead"));
             teamMembers.Add(("Guo Yiming", "Programmer"));
             teamMembers.Add(("Ng De En Matthew", "Programmer"));
             teamMembers.Add(("Wu Zekai", "Programmer"));
-            teamMembers.Add(("Ee Tze Rong Cheryl", "Design Lead"));
-            teamMembers.Add(("Lim Wan Jin", "Art Lead"));
             teamMembers.Add(("Ang Qin Tian Rachel", "Artist"));
 
             isFadingIn = true;
@@ -106,9 +104,7 @@ namespace IS
             durationBetweenGroups = 1f;
             gameByGroupStart = 0f;
             gameByGroupDuration = 3f;
-            teamGroupStart = gameByGroupStart + gameByGroupDuration + durationBetweenGroups;
-            teamGroupDuration = 3f;
-            memberGroupStart = teamGroupStart + teamGroupDuration + durationBetweenGroups;
+            memberGroupStart = gameByGroupStart + gameByGroupDuration + durationBetweenGroups;
             memberDisplayDuration = 3f;
             totalMemberDisplayTime = teamMembers.Count * (memberDisplayDuration + durationBetweenGroups);
 
@@ -211,16 +207,7 @@ namespace IS
                 InternalCalls.RenderTextFont("FRAGMENTS", "MedusaGothic_D", 0.5f, 0.55f, 15f, (1f, 1f, 1f, alpha));
                 InternalCalls.RenderTextFont("By Insight", "Semplicita_Light", 0.5f, 0.5f, 18f, (1f, 1f, 1f, alpha));
             }
-            else if (total_timer > gameByGroupStart + gameByGroupDuration && total_timer <= teamGroupStart)
-            {
-                timer = 0f; // Reset for the next group
-            }
-            else if (total_timer > teamGroupStart && total_timer <= teamGroupStart + teamGroupDuration)
-            {
-                alpha = CalculateFadeAlpha();
-                InternalCalls.RenderTextFont("TEAM", "MedusaGothic_D", 0.5f, 0.5f, 15f, (1f, 1f, 1f, alpha));
-            }
-            else if (total_timer > teamGroupStart + teamGroupDuration && total_timer <= memberGroupStart)
+            else if (total_timer > gameByGroupStart + gameByGroupDuration && total_timer <= memberGroupStart)
             {
                 timer = 0f; // Reset for the next group
             }
@@ -252,7 +239,7 @@ namespace IS
                     InternalCalls.RenderTextFont(member.role, "Semplicita_Light", 0.5f, 0.55f - lineBreak, 18f, (1f, 1f, 1f, alpha));
                 }
             }
-            else if (total_timer > teamGroupStart + teamGroupDuration && total_timer <= memberGroupStart)
+            else if (total_timer > gameByGroupStart + gameByGroupDuration && total_timer <= memberGroupStart)
             {
                 timer = 0f; // Reset for the next group
             }
