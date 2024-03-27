@@ -7,11 +7,17 @@ namespace IS
     {
 
         static public Dictionary<int, (float,float)> bullet_direction = new Dictionary<int, (float,float)>();
+        static public bool destroy_self = false;
         static public void Init(){
 
         }
 
         static public void Update(){
+
+            if (destroy_self)
+            {
+                DestroySelf();
+            }
 
             int entity_id = InternalCalls.GetCurrentEntityID();
             SimpleArray array = InternalCalls.GetCollidingEntityArray(entity_id);
@@ -75,8 +81,8 @@ namespace IS
         static private void DestroySelf()
         {
             int entity_id = InternalCalls.GetCurrentEntityID();
-            InternalCalls.DestroyEntity(entity_id);
             bullet_direction.Remove(entity_id);
+            InternalCalls.DestroyEntity(entity_id);
         }
 
         static void ParticleTrail()
