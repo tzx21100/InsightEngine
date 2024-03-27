@@ -22,10 +22,7 @@ namespace IS
             int entity_id = InternalCalls.GetCurrentEntityID();
             SimpleArray array = InternalCalls.GetCollidingEntityArray(entity_id);
 
-            if (PlayerScript.attack_trigger)
-            {
-                Console.WriteLine("Calling from entity" + entity_id + "ARray size: " + array.length);
-            }
+
            
 
             SimpleVector2D pos = InternalCalls.GetTransformPosition();
@@ -38,7 +35,7 @@ namespace IS
 
             if (array.FindIndex(PlayerScript.PLAYER_ID) != -1 &&PlayerScript.invulnerable==false)
             {
-                Console.WriteLine("Collision Happened At playerid: "+ PlayerScript.PLAYER_ID);
+               // Console.WriteLine("Collision Happened At playerid: "+ PlayerScript.PLAYER_ID);
                 PlayerScript.Health -= 1;
                 DestroySelf();
                 

@@ -2038,7 +2038,7 @@ namespace IS
 
         static private void PlayerGetHit() // when get hit by enemy
         {
-            if (!initial_get_hit)
+            if (!initial_get_hit && !invulnerable)
             {
                 CameraScript.camera_shake_duration = 0.2f;
                 InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
