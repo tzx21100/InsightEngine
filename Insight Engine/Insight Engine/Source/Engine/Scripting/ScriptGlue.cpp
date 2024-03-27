@@ -1650,13 +1650,16 @@ namespace IS {
         return INPUT_MANAGER->mAxisStates[1];
     }
 
-
+    static int GetTotalEntities() {
+        return static_cast<int>(InsightEngine::Instance().LatestEntity());
+    }
+    
     /**
      * \brief Registers C++ functions to be accessible from C# scripts.
      */
     void ScriptGlue::RegisterFunctions()
     {
-
+        IS_ADD_INTERNAL_CALL(GetTotalEntities);
         IS_ADD_INTERNAL_CALL(ControllerConnected);
 
         IS_ADD_INTERNAL_CALL(DeleteSimpleArray);

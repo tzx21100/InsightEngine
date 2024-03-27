@@ -61,6 +61,8 @@ namespace IS
         static private float boss_move_away_timer_set = 2f;
         static private float boss_move_away_timer = 2f;
 
+        // for scene transition to restore sweep
+        static private bool restore_sweep = false;  
 
         public enum BossStates : int
         {
@@ -83,14 +85,17 @@ namespace IS
 
 
         static public void Init(){
+            CameraScript.StopCameraPan();
             ClearBullets();
             index360 = 0; //this is for spawning one by one
+            restore_sweep=false; //scene transistion
+
             boss_phase = 0;
             // reseting boss health
-            boss_hp = boss_max_hp;
+            boss_hp = 1;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
-            current_state = BossStates.Boss360;
+            current_state = BossStates.Smash;
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
@@ -116,6 +121,22 @@ namespace IS
                 InternalCalls.LoadScene("Assets/Scenes/BossLevel.insight");
             }
 
+
+            // stopping the scene and playing transition to next phase
+            if (boss_hp <= 0)
+            {
+                if (boss_phase==0)
+                {
+                    if (!restore_sweep)
+                    {
+                        sweeped = false;
+                        sweep_timer = sweep_timer_set;
+                        restore_sweep = true;
+                    }
+                    GoNextPhase(); // this will increase the boss_phase itself
+                    return;
+                }
+            }
 
 
             BossFSM();
@@ -572,7 +593,7 @@ namespace IS
 
         static private void SummonEnemy()
         {
-            CameraScript.CameraTargetZoom(0.3f, 2f);
+           // CameraScript.CameraTargetZoom(0.3f, 2f); //zoom is hard to see so i remove for now
             SingingSpell();
             
         }
@@ -675,7 +696,7 @@ namespace IS
         static private void SummoningCameraShake()
         {
             CameraScript.CameraShake(2f);
-            CameraScript.camera_shake_intensity = 2f;
+            CameraScript.camera_shake_intensity = 0.2f;
             CameraScript.camera_shake_duration = 0.2f;
         }
 
@@ -810,7 +831,7 @@ namespace IS
 
                     int entity = InternalCalls.CreateEntityPrefab("Boss Projectile");
                     SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
-                    InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
+                    InternalCalls.TransformSetScaleEntity(scale.x, scale.y, entity);
                     InternalCalls.TransformSetPositionEntity(PlayerScript.player_pos.x - 500f / CameraScript.camera_zoom, PlayerScript.player_pos.y + i * flipper * scale.y * 1.5f, entity);
                     bullet_array[i] = entity;
                 }
@@ -841,7 +862,8 @@ namespace IS
 
                 sweep_timer = sweep_timer_set;
                 sweeped = false;
-                StateChanger();
+                current_state = BossStates.LeftSweep;
+                ClearBullets();
             }
 
 
@@ -1029,7 +1051,7 @@ namespace IS
         // if movement is completed return false
         static private bool MoveToLocation( float directed_x, float directed_y)
         {
-
+            InternalCalls.RigidBodySetBodyTypeEntity(6, InternalCalls.GetCurrentEntityID());
             float move_speed = 15f;
             SimpleVector2D current_pos = InternalCalls.GetTransformPosition();
             SimpleVector2D directed = new SimpleVector2D(directed_x, directed_y);
@@ -1068,6 +1090,65 @@ namespace IS
                 int left_hand = InternalCalls.CreateEntityPrefab("BossLeftHand");
                 is_clapping = true;
             }
+        }
+
+        static private void GoNextPhase()
+        {
+            //clear bullets
+            ClearBullets();
+            InternalCalls.TransformSetPositionEntity(0, 500, PlayerScript.PLAYER_ID);
+            BossProjectile.bullet_direction.Clear();
+            CameraScript.CameraShake(2f);
+            CameraScript.camera_shake_duration = 0.1f;
+            CameraScript.camera_shake_intensity = 1f;
+           // CameraScript.CameraPanTo(new Vector2D(0,500),0.5f);
+            CameraScript.CameraTargetZoom(0.5f, 0.5f);
+
+            if (MoveToLocation(0f, -2000f)) { return; } //prevents anything from happening when not done
+
+            if (!sweeped)
+            {
+                for (int i = 0; i < InternalCalls.GetTotalEntities(); i++)
+                {
+                    if (InternalCalls.CheckEntityCategory(i, "Ground"))
+                    {
+                        InternalCalls.RigidBodySetBodyTypeEntity(1, i);
+                    }
+                }
+
+                sweeped = true; //cleanup all the floors
+                sweep_timer = 3f; //1s to destroy all entities
+            }
+            sweep_timer -= InternalCalls.GetDeltaTime();
+            if (sweep_timer <= 0f)
+            {
+                for (int i = 0; i < InternalCalls.GetTotalEntities(); i++)
+                {
+                    if (InternalCalls.CheckEntityCategory(i, "Ground"))
+                    {
+                        InternalCalls.DestroyEntity(i);
+                    }
+                }
+
+                for (int i = 0; i< 5; i++)
+                {
+                    int entity = InternalCalls.CreateEntityPrefab("Floor");
+                    InternalCalls.TransformSetPositionEntity(-2000 + i * 900, -1000,entity);
+                }
+                
+
+
+                sweep_timer = sweep_timer_set;
+                sweeped=false;
+                boss_phase = 1;
+                boss_hp = boss_max_hp;
+                Boss_spawn_pos.x = 0;
+                Boss_spawn_pos.y = -300;
+                current_state = BossStates.Idle;
+                PlayerScript.player_cam_y_offset = 300f;
+                CameraScript.StopCameraPan();
+            }
+
         }
 
 

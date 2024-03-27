@@ -1,11 +1,7 @@
 {
-	"AudioEmitter" : 
+	"Category" : 
 	{
-		"AudioFalloffFactor" : 1.0,
-		"AudioIsLoop" : false,
-		"AudioPitch" : 1.0,
-		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
-		"AudioVolumeLevel" : 1.0
+		"Category" : "Ground"
 	},
 	"Collider" : 
 	{
@@ -13,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 0.0,
-				"Y" : -400.0
+				"X" : 1352.634033203125,
+				"Y" : -118.82496643066406
 			},
 			"BoxColliderOffset" : 
 			{
@@ -29,202 +25,77 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -556.36572265625,
+					"y" : 201.49998474121094
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 556.36572265625,
+					"y" : 201.49998474121094
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 556.36572265625,
+					"y" : -201.49998474121094
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -556.36572265625,
+					"y" : -201.49998474121094
 				}
 			]
 		},
 		"BoxColliderEnabled" : true,
-		"CircleColliderEnabled" : false
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
 	},
 	"Name" : "Floor",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
-		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAccelerationY" : 0.0,
 		"RigidBodyAngularVelocity" : 0.0,
-		"RigidBodyArea" : 300000.0,
+		"RigidBodyArea" : 0.0,
 		"RigidBodyBodyType" : 0,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
-		"RigidBodyInvMass" : 0.0,
-		"RigidBodyMass" : 0.0,
-		"RigidBodyRestitution" : 0.80000001192092896,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.5,
 		"RigidBodyVelocityX" : 0.0,
 		"RigidBodyVelocityY" : 0.0,
-		"mDynamicFriction" : 0.0,
-		"mStaticFriction" : 0.0
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
 	},
-	"Signature" : "00000000000000000000010100000111",
+	"Signature" : "00000000000000000010010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
-		"Layer" : 0,
-		"SpriteColorX" : 0.54492461681365967,
-		"SpriteColorY" : 0.27639034390449524,
-		"SpriteColorZ" : 0.28316143155097961,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "Platform01_Tileable.png",
-		"SpriteName" : "Box",
+		"SpriteFilename" : "Environment without grass03.png",
+		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 6,
-		"SpriteTextureHeight" : 565,
-		"SpriteTextureIndex" : 5,
-		"SpriteTextureWidth" : 1481,
+		"SpriteTexture" : 25,
+		"SpriteTextureHeight" : 400,
+		"SpriteTextureIndex" : 8,
+		"SpriteTextureWidth" : 1265,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1000.0,
-		"SpriteTransformScalingY" : 300.0,
-		"SpriteTransformWorldPositionX" : 0.0,
-		"SpriteTransformWorldPositionY" : -400.0,
+		"SpriteTransformScalingX" : 1112.7314453125,
+		"SpriteTransformScalingY" : 402.99996948242188,
+		"SpriteTransformWorldPositionX" : 1352.634033203125,
+		"SpriteTransformWorldPositionY" : -118.82496643066406,
 		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1000.0,
-		"TransformScalingY" : 300.0,
-		"TransformWorldPositionX" : 0.0,
-		"TransformWorldPositionY" : -400.0
+		"TransformScalingX" : 1112.7314453125,
+		"TransformScalingY" : 402.99996948242188,
+		"TransformWorldPositionX" : 1352.634033203125,
+		"TransformWorldPositionY" : -118.82496643066406
 	}
 }

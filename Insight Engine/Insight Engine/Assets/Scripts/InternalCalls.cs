@@ -611,5 +611,8 @@ namespace IS
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void DrawLightAt(SimpleVector2D position, float r, float g, float b, float a, float size);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int GetTotalEntities();
+
     }
 }

@@ -81,9 +81,9 @@
 				"SpriteFilename" : "Environment without grass03.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 57,
+				"SpriteTexture" : 25,
 				"SpriteTextureHeight" : 400,
-				"SpriteTextureIndex" : 40,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1265,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2283.379150390625,
@@ -102,6 +102,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -177,9 +181,9 @@
 				"SpriteFilename" : "Environment without grass03.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 57,
+				"SpriteTexture" : 25,
 				"SpriteTextureHeight" : 400,
-				"SpriteTextureIndex" : 40,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1265,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 276.11203002929688,
@@ -198,6 +202,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -273,9 +281,9 @@
 				"SpriteFilename" : "Environment without grass03.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 57,
+				"SpriteTexture" : 25,
 				"SpriteTextureHeight" : 400,
-				"SpriteTextureIndex" : 40,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1265,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 276.11203002929688,
@@ -377,9 +385,9 @@
 				"SpriteFilename" : "tempboss.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 121,
+				"SpriteTexture" : 123,
 				"SpriteTextureHeight" : 1098,
-				"SpriteTextureIndex" : 104,
+				"SpriteTextureIndex" : 106,
 				"SpriteTextureWidth" : 1098,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 521.50018310546875,
@@ -490,9 +498,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 83,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 66,
+				"SpriteTextureIndex" : 64,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -518,9 +526,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 4.0,
-						"frame_timer" : 0.055825941264629364,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.0058259367942810059,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -635,9 +643,9 @@
 				"SpriteFilename" : "Environment without grass03.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 57,
+				"SpriteTexture" : 25,
 				"SpriteTextureHeight" : 400,
-				"SpriteTextureIndex" : 40,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1265,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2283.379150390625,
@@ -735,9 +743,9 @@
 				"SpriteFilename" : "Environment without grass03.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 57,
+				"SpriteTexture" : 25,
 				"SpriteTextureHeight" : 400,
-				"SpriteTextureIndex" : 40,
+				"SpriteTextureIndex" : 8,
 				"SpriteTextureWidth" : 1265,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2283.379150390625,
@@ -756,6 +764,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Spike"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 

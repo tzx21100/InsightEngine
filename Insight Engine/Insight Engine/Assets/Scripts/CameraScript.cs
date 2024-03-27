@@ -5,7 +5,9 @@ namespace IS
 
     class CameraScript
     {
-
+        //cam offset
+        static public float cam_x_offset = 0;
+        static public float cam_y_offset = 0;
 
         //cam shake
         static public float camera_shake_duration = 0f;
@@ -41,6 +43,7 @@ namespace IS
         }
 
         static public void Update() {
+           // CameraShake(camera_shake_duration);
             if (zoom_enable)
             {
                 CameraDoZoom();
@@ -49,6 +52,7 @@ namespace IS
 
             if (panning_enable)
             {
+                
                 CameraDoPan();
 
                 return;
@@ -80,7 +84,7 @@ namespace IS
                     camera_shake_timer = camera_shake_set;
                     camera_shake_angle += CustomMath.PI / 4;
                 }
-                InternalCalls.AttachCamera(camera_pos.x + (10*camera_shake_intensity) * camera_shake_dir.x, camera_pos.y + (10 * camera_shake_intensity) * camera_shake_dir.y);
+                InternalCalls.AttachCamera(camera_pos.x  + (10*camera_shake_intensity) * camera_shake_dir.x, camera_pos.y + (10 * camera_shake_intensity) * camera_shake_dir.y);
 
                 return true;
             }
@@ -178,6 +182,14 @@ namespace IS
             }
            
         }
+
+        static public void CameraForcePosition(float x,float y)
+        {
+            
+            CameraScript.camera_pos.x = x;
+            CameraScript.camera_pos.y = y;
+        }
+
 
 
     }

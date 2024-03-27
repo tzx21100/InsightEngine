@@ -41,6 +41,9 @@ namespace IS
     public class PlayerScript
     {
 
+        // camera
+        static public float player_cam_y_offset = 0;
+
         //popup for abilities to show or not show
         static public bool hasDoubleJump = false;
         static public bool hasWallClimb = false;
@@ -302,7 +305,8 @@ namespace IS
 
         static public void Init()
         {
-
+            //reset cam y offset
+            player_cam_y_offset= 0;
 
             //reset HP
             Health = Max_Health;
@@ -415,7 +419,7 @@ namespace IS
             is_colliding_enemy = false;
 
             CameraScript.camera_pos.x = player_pos.x;
-            CameraScript.camera_pos.y = player_pos.y;
+            CameraScript.camera_pos.y = player_pos.y + player_cam_y_offset;
             InternalCalls.ChangeLightType(PLAYER_LIGHT);
 
         }
@@ -655,7 +659,7 @@ namespace IS
             //Attach Camera
 
             target_pos.x = player_pos.x + hori_movement * CustomMath.min(200f, CustomMath.Abs(InternalCalls.RigidBodyGetVelocity().x));
-            target_pos.y = player_pos.y + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y / 20f);
+            target_pos.y = player_pos.y + CustomMath.min(100f, InternalCalls.RigidBodyGetVelocity().y / 20f) +player_cam_y_offset;
 
             float interpolate_speed = 4f;
 
