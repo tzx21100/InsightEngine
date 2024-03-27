@@ -30,18 +30,14 @@ namespace IS
         static private float total_timer;
         static private float timer;
         static private float dt;
-        static private float t;
         static private float bottomY;
         static private float topY;
-        static private float duration;
-        static private float normalizedYPos;
         static private float offset;
         static private float lineBreak;
         static private float releasedYPos;
 
         static private float fadeDuration;
         static private float alpha;
-        static private bool isFadingIn;
 
 
         static private float gameByGroupStart;
@@ -58,7 +54,10 @@ namespace IS
         static private float endingGroupStartTime;
 
         static private List<(string name, string role)> teamMembers = new List<(string name, string role)>();
-        static private List<string> instructors = new List<string>();
+        static private List<string> tech_instructors = new List<string>();
+        static private List<string> design_instructors = new List<string>();
+        static private List<string> audio_instructors = new List<string>();
+        static private List<string> art_instructors = new List<string>();
         static private List<string> boardOfDirectors = new List<string>();
         static private List<string> executives = new List<string>();
 
@@ -79,18 +78,18 @@ namespace IS
             total_timer = 0f;
             timer = 0f;
             dt = InternalCalls.GetDeltaTime();
-            bottomY = 3.5f; // End position for the text (above the top of the screen)
+            bottomY =3.95f; // End position for the text (above the top of the screen)
             topY = 0f; // Top position for the text (below the bottom of the screen)
-            duration = 40f;
-            normalizedYPos = 0f;
-            t = 0f;
 
             //offsets
             offset = 0.05f;
             lineBreak = offset;
 
             teamMembers.Clear();
-            instructors.Clear();
+            tech_instructors.Clear();
+            design_instructors.Clear();
+            audio_instructors.Clear();
+            art_instructors.Clear();
             boardOfDirectors.Clear();
             executives.Clear();
 
@@ -103,7 +102,6 @@ namespace IS
             teamMembers.Add(("Wu  Zekai", "Programmer"));
             teamMembers.Add(("Ang Qin Tian Rachel", "Artist"));
 
-            isFadingIn = true;
             alpha = 0f;
 
             fadeDuration =  1.5f;
@@ -120,15 +118,15 @@ namespace IS
 
             postDisplayWaitTime = 2f;
             endingGroupStartTime = 0f;
-            instructors.Add("Elie Hosry");
-            instructors.Add("Goh Dian Yang");
-            instructors.Add("Lee Chee Yuan Alwyn");
-            instructors.Add("Goh Jing Ying");
-            instructors.Add("Danielle Fong Sum Yee");
-            instructors.Add("Holger Liebnitz");
-            instructors.Add("Vuk Krakovic");
-            instructors.Add("Gavin Parker");
-            instructors.Add("Keh Choon Wee");
+            tech_instructors.Add("Elie Hosry");
+            tech_instructors.Add("Goh Dian Yang");
+            design_instructors.Add("Lee Chee Yuan Alwyn");
+            design_instructors.Add("Goh Jing Ying");
+            design_instructors.Add("Danielle Fong Sum Yee");
+            design_instructors.Add("Holger Liebnitz");
+            audio_instructors.Add("Vuk Krakovic");
+            audio_instructors.Add("Gavin Parker");
+            art_instructors.Add("Keh Choon Wee");
 
             boardOfDirectors.Add("Chu Jason Yeu Tat");
             boardOfDirectors.Add("Michele Comair");
@@ -258,24 +256,47 @@ namespace IS
                 float normalizedYPos = Lerp(topY, bottomY, t);
 
 
-                InternalCalls.RenderTextFont("Instructors", "MedusaGothic_D", 0.5f, normalizedYPos, 15f, (1f, 1f, 1f, 1f));
-
-                float instructorLineBreak = 1.5f;
-                foreach (string instructor in instructors)
+                InternalCalls.RenderTextFont("Tech Instructors", "MedusaGothic_D", 0.5f, normalizedYPos, 15f, (1f, 1f, 1f, 1f));
+                float techInstructorLineBreak = 1.5f;
+                foreach (string instructor in tech_instructors)
                 {
-                    InternalCalls.RenderTextFont(instructor, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * instructorLineBreak, 18f, (1f, 1f, 1f, 1f));
-                    instructorLineBreak += 1.5f;
+                    InternalCalls.RenderTextFont(instructor, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * techInstructorLineBreak, 18f, (1f, 1f, 1f, 1f));
+                    techInstructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Created  At", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
-                InternalCalls.RenderTextFont("Digipen Insitute of Technology Singapore", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 3f), 18f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Design Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (techInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                float designInstructorLineBreak = techInstructorLineBreak + 3f;
+                foreach (string instructor in design_instructors)
+                {
+                    InternalCalls.RenderTextFont(instructor, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * designInstructorLineBreak, 18f, (1f, 1f, 1f, 1f));
+                    designInstructorLineBreak += 1.5f;
+                }
 
-                InternalCalls.RenderTextFont("President", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 6f), 15f, (1f, 1f, 1f, 1f));
-                InternalCalls.RenderTextFont("Claude Comair", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 7.5f), 18f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Audio Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (designInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                float audioInstructorLineBreak = designInstructorLineBreak + 3f;
+                foreach (string instructor in audio_instructors)
+                {
+                    InternalCalls.RenderTextFont(instructor, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * audioInstructorLineBreak, 18f, (1f, 1f, 1f, 1f));
+                    audioInstructorLineBreak += 1.5f;
+                }
+
+                InternalCalls.RenderTextFont("Art Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (audioInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                float artInstructorLineBreak = audioInstructorLineBreak + 3f;
+                foreach (string instructor in art_instructors)
+                {
+                    InternalCalls.RenderTextFont(instructor, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * artInstructorLineBreak, 18f, (1f, 1f, 1f, 1f));
+                    artInstructorLineBreak += 1.5f;
+                }
+
+                InternalCalls.RenderTextFont("Created  At", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Digipen Insitute of Technology Singapore", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 3f), 18f, (1f, 1f, 1f, 1f));
+
+                InternalCalls.RenderTextFont("President", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 6f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Claude Comair", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 7.5f), 18f, (1f, 1f, 1f, 1f));
 
 
-                InternalCalls.RenderTextFont("Board  of  Directors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (instructorLineBreak + 10.5f), 15f, (1f, 1f, 1f, 1f));
-                float bodLineBreak = instructorLineBreak + 12f;
+                InternalCalls.RenderTextFont("Board  of  Directors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 10.5f), 15f, (1f, 1f, 1f, 1f));
+                float bodLineBreak = artInstructorLineBreak + 12f;
                 foreach (string bod in boardOfDirectors)
                 {
                     InternalCalls.RenderTextFont(bod, "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * bodLineBreak, 18f, (1f, 1f, 1f, 1f));
@@ -314,7 +335,7 @@ namespace IS
                  
                     InternalCalls.RenderTextFont("Thank you for playing", "MedusaGothic_D", 0.5f, 0.5f, 15f, (1f, 1f, 1f, alpha));
                 }
-                else if (currentTimeInFadeEffect > fadeDuration + 5f)
+                else if (currentTimeInFadeEffect > fadeDuration + 3f)
                 {
                     InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), back_button_entity);
                     InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
@@ -333,18 +354,6 @@ namespace IS
         static public void CleanUp()
         {
         }
-
-        //static private void DrawCredits()
-        //{
-
-        //}
-
-        //static private float GetNormalizedX(float x)
-        //{
-        //    float normalized_x = (x - origin.x) / win_dimension.x;
-        //    normalized_x = Math.Clamp(normalized_x, 0f, 1f);
-        //    return normalized_x;
-        //}
 
         static private float Lerp(float start, float end, float t)
         {
