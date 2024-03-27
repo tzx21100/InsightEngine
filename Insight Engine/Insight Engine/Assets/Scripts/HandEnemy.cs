@@ -154,7 +154,7 @@ namespace IS
             // image and vfx
             testimage = InternalCalls.GetSpriteImage("dark_circle.png");
             enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn 11R4C.png");
-            enemy_charging = InternalCalls.GetSpriteImage("enemy_attack1.png");
+            enemy_charging = InternalCalls.GetSpriteImage("handEnemyAttack 2R11C.png");
             enemy_death = InternalCalls.GetSpriteImage("handEnemyDeath 2R12C.png");
             enemy_idle = InternalCalls.GetSpriteImage("handEnemyIdle 1R22C.png");
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
@@ -167,7 +167,7 @@ namespace IS
             InternalCalls.CreateAnimationFromSprite(11, 4, 1f); // spawn
             InternalCalls.CreateAnimationFromSprite(1, 22, 1f); // idle
             InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // dead
-            InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // charging
+            InternalCalls.CreateAnimationFromSprite(2, 11, 1f); // charging
 
             // enemy patrol
             /*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
@@ -640,6 +640,10 @@ namespace IS
             {
                 initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);
+
+                // render destory particles
+
+                // clean all his bullets set
             }
            
         }
