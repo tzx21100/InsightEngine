@@ -184,6 +184,9 @@ namespace IS
                 case BossStates.LeftSweep:
                     LeftSweep();
                     break;
+                case BossStates.RightSweep:
+                    RightSweep();
+                    break;
             }
         }
 
@@ -193,7 +196,7 @@ namespace IS
         {
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            uint random = rnd.Next(0,4); // random from 0 to 3
+            uint random = rnd.Next(0,5); // random from 0 to 4
             //random = 2;
             if (random == 0)
             {
@@ -219,6 +222,14 @@ namespace IS
                 ResetPosition();
                 ClearBullets();
                 current_state= BossStates.LeftSweep;
+                return;
+            }
+
+            if(random == 4)
+            {
+                ResetPosition();
+                ClearBullets();
+                current_state = BossStates.RightSweep;
                 return;
             }
 
@@ -689,6 +700,71 @@ namespace IS
 
 
         }
+
+
+        static private void RightSweep()
+        {
+            // ensure the boss is at the defaulted position
+            ResetPosition();
+
+            //create all entities
+
+            if (!sweeped)
+            {
+                //clear all existing bullet directions
+                BossProjectile.bullet_direction.Clear();
+
+                // allow bullets to exist
+                BossProjectile.destroy_self = false;
+
+                int flipper = 1;
+                for (int i = 0; i < number_of_bullets; i++)
+                {
+                    //flip flipper
+                    flipper *= -1;
+
+                    int entity = InternalCalls.CreateEntityPrefab("Boss Projectile Spikes");
+                    SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
+                    InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
+                    InternalCalls.TransformSetPositionEntity(PlayerScript.player_pos.x - 1000f / CameraScript.camera_zoom, PlayerScript.player_pos.y + i * flipper * scale.y * 4f, entity);
+                    bullet_array[i] = entity;
+                }
+
+
+                MyRandom rnd = new MyRandom((uint)(221 * InternalCalls.GetRandomFloat()));
+                // sweep chooser
+                int rand = (int)rnd.Next(0, 3);
+
+                InternalCalls.DestroyEntity(bullet_array[rand]);
+                BossProjectile.bullet_direction.Remove(bullet_array[rand]);
+
+                sweeped = true;
+            }
+
+            sweep_timer -= InternalCalls.GetDeltaTime();
+
+            if (sweep_timer > 1.5 && sweep_timer < 2)
+            {
+                for (int i = 0; i < number_of_bullets; i++)
+                {
+                    if (bullet_array[i]!=0)
+                    BossProjectile.bullet_direction.TryAdd(bullet_array[i], (30, 0));
+                }
+            }
+
+            if (sweep_timer < 0)
+            {
+
+
+                sweep_timer = sweep_timer_set;
+                sweeped = false;
+                StateChanger();
+            }
+
+
+        }
+
+
 
 
     } // class end here
