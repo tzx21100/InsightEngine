@@ -16,9 +16,13 @@ namespace IS
         static private Vector2D clapping_vel = new Vector2D(100f, 100f);
         static private Vector2D left_hand_pos = new Vector2D(0f, 0f);
         static private Vector2D right_hand_pos = new Vector2D(0f, 0f);
-        static private float speed = 30f;
+        static private float two_hand_speed = 25f;
         static private bool is_two_hand_clapping = false;
+
         static private bool is_one_hand_waiting = false;
+        static private uint random_hand_stay = 0;
+        static private bool is_one_hand_ready = false;
+        static private float one_hand_speed = 50f;
 
         static private float resting_timer_set = 0.5f;
         static private float resting_timer = 0.5f;
@@ -45,6 +49,7 @@ namespace IS
 
             // reset
             is_two_hand_clapping = false;
+            is_one_hand_waiting = false;
             clapping_pos = new Vector2D(99999f, 99999f);
         }
 
@@ -61,7 +66,7 @@ namespace IS
 
         static private void HandClapFSM()
         {
-            attack_type = 0;
+            attack_type = ClapAttackTypes.OneHandWaiting;
             switch (attack_type)
             {
                 case ClapAttackTypes.TwoHand:
@@ -83,10 +88,10 @@ namespace IS
                 attack_type = ClapAttackTypes.TwoHand;
                 return;
             }
-            /*if (random == 1)
+            if (random == 1)
             {
                 attack_type = ClapAttackTypes.OneHandWaiting;
-            }*/
+            }
         }
 
         static private void TwoHandClap()
@@ -109,10 +114,10 @@ namespace IS
             Vector2D right_hand_direction = new Vector2D(clapping_pos.x - right_hand_pos.x, clapping_pos.y - right_hand_pos.y);
             right_hand_direction = right_hand_direction.Normalize();
             
-            left_hand_pos.x += left_hand_direction.x * speed;
-            left_hand_pos.y += left_hand_direction.y * speed;
-            right_hand_pos.x += right_hand_direction.x * speed;
-            right_hand_pos.y += right_hand_direction.y * speed;
+            left_hand_pos.x += left_hand_direction.x * two_hand_speed;
+            left_hand_pos.y += left_hand_direction.y * two_hand_speed;
+            right_hand_pos.x += right_hand_direction.x * two_hand_speed;
+            right_hand_pos.y += right_hand_direction.y * two_hand_speed;
 
             InternalCalls.TransformSetPositionEntity(left_hand_pos.x, left_hand_pos.y, LEFT_HAND_ID);
             InternalCalls.TransformSetPositionEntity(right_hand_pos.x, right_hand_pos.y, RIGHT_HAND_ID);
@@ -152,6 +157,96 @@ namespace IS
         }
 
         static private void OneHandWaitingForClapping()
+        {
+            if (!is_one_hand_waiting)
+            {
+                MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+                random_hand_stay = rnd.Next(0, 2); // random from 0 to 1
+            }
+            if (random_hand_stay == 0)
+            {
+                LeftHandStays();
+            }
+            if (random_hand_stay == 1)
+            {
+                RightHandStays();
+            }
+        }
+
+        static private void LeftHandStays()
+        {
+            if (!is_one_hand_waiting)
+            {
+                clapping_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(PlayerScript.PLAYER_ID));
+                clapping_pos.x -= 500f;
+
+                Vector2D left_offset = new Vector2D(0f, 2500f);
+                Vector2D right_offset = new Vector2D(4500f, 0f);
+
+                left_hand_pos = new Vector2D(clapping_pos.x + left_offset.x, clapping_pos.y + left_offset.y);
+                right_hand_pos = new Vector2D(clapping_pos.x + right_offset.x, clapping_pos.y + right_offset.y);
+                is_one_hand_waiting = true;
+                is_one_hand_ready = false;
+            }
+
+            if (!is_one_hand_ready)
+            {
+                Vector2D left_hand_direction = new Vector2D(clapping_pos.x - left_hand_pos.x, clapping_pos.y - left_hand_pos.y);
+                if (MathF.Abs(left_hand_direction.x) < 100f && MathF.Abs(left_hand_direction.y) < 100f)
+                {
+                    is_one_hand_ready = true;
+                }
+                left_hand_direction = left_hand_direction.Normalize();
+
+                left_hand_pos.x += left_hand_direction.x * one_hand_speed;
+                left_hand_pos.y += left_hand_direction.y * one_hand_speed;
+            }
+            //Console.WriteLine(is_one_hand_ready);
+            if (is_one_hand_ready)
+            {
+                Vector2D right_hand_direction = new Vector2D(clapping_pos.x - right_hand_pos.x, clapping_pos.y - right_hand_pos.y);
+                right_hand_direction = right_hand_direction.Normalize();
+
+                right_hand_pos.x += right_hand_direction.x * one_hand_speed * 2f;
+                right_hand_pos.y += right_hand_direction.y * one_hand_speed * 2f;
+            }
+
+            InternalCalls.TransformSetPositionEntity(left_hand_pos.x, left_hand_pos.y, LEFT_HAND_ID);
+            InternalCalls.TransformSetPositionEntity(right_hand_pos.x, right_hand_pos.y, RIGHT_HAND_ID);
+
+            // if two hand collide with player, damage player, render particles and disappear
+            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player") &&
+                InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
+            {
+                DestoryHands();
+
+                // damage player
+                return;
+            }
+
+            // if one of the hands collides with player, it will push the player to the center
+            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player"))
+            {
+                PlayerScript.isGrounded = false;
+                PlayerScript.isFirstGrounded = false;
+                PlayerScript.AddForcesToPlayer(1000f, 5f, 0.2f);
+            }
+            else if (InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
+            {
+                PlayerScript.isGrounded = false;
+                PlayerScript.isFirstGrounded = false;
+                PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.2f);
+            }
+
+            // if left hand and right hand collide each other, destory them
+            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
+            {
+                DestoryHands();
+            }
+
+        }
+
+        static private void RightHandStays()
         {
 
         }
