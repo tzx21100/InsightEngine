@@ -627,18 +627,8 @@ namespace IS
 
         static private void ClearBullets()
         {
-            //clear all existing bullet directions
-            for (int i = 0; i < number_of_bullets; i++)
-            {
-                if (bullet_array[i] != 0) //since 0 is cleared value we ignore
-                {
-                    InternalCalls.DestroyEntity(bullet_array[i]);
-                }
-
-
-
-                BossProjectile.bullet_direction.Clear();
-            }
+            BossProjectile.destroy_self = true;
+            
         }
         static private void LeftSweep()
         {
@@ -651,6 +641,9 @@ namespace IS
             {
                 //clear all existing bullet directions
                 BossProjectile.bullet_direction.Clear();
+
+                // allow bullets to exist
+                BossProjectile.destroy_self = false;
 
                 int flipper = 1;
                 for (int i = 0; i < number_of_bullets; i++)
@@ -665,12 +658,12 @@ namespace IS
                     bullet_array[i] = entity;
                 }
 
-
+/*
                 MyRandom rnd = new MyRandom((uint)(221 * InternalCalls.GetRandomFloat()));
                 // sweep chooser
                 int rand = (int)rnd.Next(0, (uint)number_of_bullets);
 
-                InternalCalls.DestroyEntity(bullet_array[rand]);
+                InternalCalls.DestroyEntity(bullet_array[rand]);*/
 
                 sweeped = true;
             }
