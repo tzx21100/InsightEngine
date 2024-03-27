@@ -92,7 +92,7 @@ namespace IS
 
             boss_phase = 0;
             // reseting boss health
-            boss_hp = 1;
+            boss_hp = boss_max_hp;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
             current_state = BossStates.Smash;
@@ -111,7 +111,14 @@ namespace IS
         }
 
         static public void Update(){
-            InternalCalls.SetGravityScale(0f);
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.Slash))
+            {
+                boss_hp = 0;
+            }
+
+
+                InternalCalls.SetGravityScale(0f);
             InternalCalls.TransformSetRotation(0, 0);
 
             // restart level if player lose
@@ -136,6 +143,12 @@ namespace IS
                     GoNextPhase(); // this will increase the boss_phase itself
                     return;
                 }
+
+                if(boss_phase==1)
+                {
+                    InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
+                }
+
             }
 
 
