@@ -84,6 +84,8 @@ namespace IS {
 		 */
 		void Deserialize(Json::Value data) override;
 
+		static void DrawNonEntityLight(Vector2D position, float r, float g, float b, float a, float size);
+
 		Vector2D mPosition{};
 		Vector2D mOffset{};
 		Vector3D mHue{ 1.f, 1.f, 1.f };

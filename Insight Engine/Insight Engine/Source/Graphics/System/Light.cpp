@@ -52,6 +52,22 @@ namespace IS {
 		mPosition = position + mOffset;
 	}
 
+	void Light::DrawNonEntityLight(Vector2D position, float r, float g, float b, float a, float size) {
+		Sprite::instanceData lightData;
+
+		lightData.color = { r, g, b, a };
+
+		Transform lightXform(position, 0.f, { size, size });
+		lightData.model_to_ndc_xform = lightXform.Return3DXformMatrix();
+		lightData.entID = 20000; // to allow mousepicking past light
+
+		lightPos.emplace_back(position.x, position.y);
+		lightClr.emplace_back(lightData.color);
+		ISGraphics::lightInstances.emplace_back(lightData);
+		ISGraphics::lightRadius.emplace_back(size);
+	}
+
+
 	Json::Value Light::Serialize()
 	{
 		Json::Value data;

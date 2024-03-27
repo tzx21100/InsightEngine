@@ -278,6 +278,9 @@ namespace IS
         // light type
         static public int PLAYER_LIGHT = 0;
 
+        // dash image
+        static SimpleImage dash_indicator;
+
 
         // Key Input
 
@@ -299,6 +302,8 @@ namespace IS
 
         static public void Init()
         {
+
+
             //reset HP
             Health = Max_Health;
 
@@ -348,6 +353,7 @@ namespace IS
             player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
 
             damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
+            dash_indicator = InternalCalls.GetSpriteImage("Dash_Indicator.png");
 
             //player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
@@ -1131,29 +1137,47 @@ namespace IS
 
                     if (InternalCalls.ControllerConnected())
                     {
-                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + controller_dir.x * 200, player_pos.y + controller_dir.y * 200, color);
+                        //InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + controller_dir.x * 200, player_pos.y + controller_dir.y * 200, color);
+
+                        angle = CustomMath.AngleBetweenPoints(new Vector2D(0, 0), controller_dir);
+                        Vector2D anglevec = Vector2D.DirectionFromAngle(angle);
+                        float degree = CustomMath.RadiansToDegrees(angle);
+                        InternalCalls.DrawImageAt(new SimpleVector2D(player_pos.x + 368 *anglevec.x, player_pos.y +368 *anglevec.y), degree, new SimpleVector2D(736 , 100 ), dash_indicator, 1, InternalCalls.GetTopLayer());
+
                         if (controller_dir.x == 0 && controller_dir.y == 0)
                         {
-                            InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + 200, player_pos.y + controller_dir.y * 200, color);
+                            //InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, player_pos.x + 200, player_pos.y + controller_dir.y * 200, color);
+                            Vector2D line = new Vector2D(player_pos.x + 200, player_pos.y + controller_dir.y * 200);
+                            //InternalCalls.DrawImageAt(new SimpleVector2D(player_pos.x+368/2f,player_pos.y), angle, new SimpleVector2D(736/2f,100/2f), dash_indicator, 1, InternalCalls.GetTopLayer());
                         }
+
+                        //for pointing towards controller
+                        if (controller_dir.x < 0) { if (trans_scaling.x < 0) { trans_scaling.x *= -1; } } else { if (trans_scaling.x > 0) { trans_scaling.x *= -1; } }
+
 
                     }
                     else
                     {
-                        InternalCalls.DrawLineBetweenPoints(player_pos.x, player_pos.y, mouse_pos.x, mouse_pos.y, color);
+                        Vector2D anglevec = Vector2D.DirectionFromAngle(angle);
+                        float degree = CustomMath.RadiansToDegrees(angle);
+                        InternalCalls.DrawImageAt(new SimpleVector2D(player_pos.x + 368 * anglevec.x, player_pos.y + 368 * anglevec.y), degree, new SimpleVector2D(736, 100), dash_indicator, 1, InternalCalls.GetTopLayer());
                     }
 
                     // Render Circles
-                    for (int i = 1; i <= 5; i++)
-                    {
-                        float scale_multiplier = (i / (float)bullet_time_set);
-                        InternalCalls.DrawCircle(
-                            player_pos.x, player_pos.y,
-                            trans_scaling.x * 50f * (bullet_time_timer / scale_multiplier),
-                            trans_scaling.y * 50f * (bullet_time_timer / scale_multiplier),
-                            color
-                        );
+                    for (int i = 1; i < 2; i++) {
+                        float scale_multiplier = ( (float)bullet_time_set/i);
+                        float intensity = 0.01f;
+                        InternalCalls.DrawLightAt(new SimpleVector2D(player_pos.x, player_pos.y), 113, 68, 51, intensity,1000f* (bullet_time_timer / bullet_time_set));
                     }
+
+                       
+                        /*                        InternalCalls.DrawCircle(
+                                                    player_pos.x, player_pos.y,
+                                                    trans_scaling.x * 50f * (bullet_time_timer / scale_multiplier),
+                                                    trans_scaling.y * 50f * (bullet_time_timer / scale_multiplier),
+                                                    color
+                                                );*/
+                    
 
                 }
                 else

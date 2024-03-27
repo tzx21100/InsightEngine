@@ -606,7 +606,10 @@ namespace IS
         internal extern static float GetLeftTriggerX();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetEntityLayer(int layer, int entity);
+        internal extern static void SetEntityLayer(int layer, int entity);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void DrawLightAt(SimpleVector2D position, float r, float g, float b, float a, float size);
 
     }
 }

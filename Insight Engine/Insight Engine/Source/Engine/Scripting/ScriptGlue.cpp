@@ -1441,6 +1441,10 @@ namespace IS {
         return Vector3D();
     }
 
+    static void DrawLightAt(SimpleVector2D position, float r, float g, float b, float a, float size) {
+        Light::DrawNonEntityLight(Vector2D(position.x,position.y),r, g, b, a, size);
+    }
+
     static void FollowMouseCursorEntity(int entity)
     {
         if (auto& engine = InsightEngine::Instance(); engine.HasComponent<Transform>(entity))
@@ -1799,6 +1803,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(IsLightRenderingEntity);
         IS_ADD_INTERNAL_CALL(SetLightHueEntity);
         IS_ADD_INTERNAL_CALL(GetLightHueEntity);
+        IS_ADD_INTERNAL_CALL(DrawLightAt);
 
 
         // Drawing functions
