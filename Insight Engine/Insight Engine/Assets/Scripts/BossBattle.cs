@@ -71,7 +71,7 @@ namespace IS
 
         }
 
-        static private BossStates current_state = BossStates.Smash;
+        static private BossStates current_state = BossStates.Boss360;
 
 
 
@@ -905,7 +905,7 @@ namespace IS
 
         }
 
-
+        static int index360 = 0;
         static private void BossAOE()
         {
             // ensure the boss is at the center position
@@ -922,27 +922,31 @@ namespace IS
                 BossProjectile.destroy_self = false;
 
                 int flipper = 1;
-                for (int i = 0; i < number_of_bullets; i++)
-                {
-                    //flip flipper
-                    flipper *= -1;
+                int i = index360;
+                //flip flipper
+                flipper *= -1;
 
-                    int entity = InternalCalls.CreateEntityPrefab("Boss Projectile");
-                    SimpleVector2D pos = InternalCalls.GetTransformPosition();
-                    SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
-                    InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
-                    for (int j = 0; j < number_of_bullets; j++)
-                    {
-                        float degree = i * 360 / number_of_bullets;
-                        Vector2D from_dir = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(degree));
-                        from_dir = from_dir.Multiply(800);
-                        InternalCalls.TransformSetPositionEntity(pos.x+from_dir.x,pos.y+from_dir.y,entity);
-                        InternalCalls.TransformSetRotationEntity(degree+180, 0, entity);
-                    }
+                int entity = InternalCalls.CreateEntityPrefab("Boss Projectile");
+                SimpleVector2D pos = InternalCalls.GetTransformPosition();
+                SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
+                InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
+
+                float degree = i * 360 / number_of_bullets;
+                Vector2D from_dir = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(degree));
+                from_dir = from_dir.Multiply(800);
+                InternalCalls.TransformSetPositionEntity(pos.x+from_dir.x,pos.y+from_dir.y,entity);
+                InternalCalls.TransformSetRotationEntity(degree+180, 0, entity);
+                
                    
-                    bullet_array[i] = entity;
+                bullet_array[i] = entity;
+
+                if (index360 < number_of_bullets-1)
+                {
+                    index360++;
+                    return;
                 }
 
+                index360 = 0;
                 sweeped = true;
             }
 
