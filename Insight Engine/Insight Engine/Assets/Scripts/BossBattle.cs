@@ -72,6 +72,8 @@ namespace IS
             RightSweep=5,
             SpikesSpawn=6,
             Boss360=7,
+            ReturnSpikesSpawn=8,
+            ReturnBoss360=9
 
         }
 
@@ -81,12 +83,14 @@ namespace IS
 
 
         static public void Init(){
-            boss_phase = 1;
+            ClearBullets();
+            index360 = 0; //this is for spawning one by one
+            boss_phase = 0;
             // reseting boss health
             boss_hp = boss_max_hp;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
-            current_state = BossStates.Smash;
+            current_state = BossStates.Boss360;
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
@@ -123,6 +127,47 @@ namespace IS
         static public void CleanUp(){
 
         }
+
+        static private void BossFSM()
+        {
+            switch (current_state)
+            {
+                case BossStates.Idle:
+                    Rest();
+                    break;
+                case BossStates.Clap: //clap function to add here
+                    BossHandClap();
+                    break;
+                case BossStates.Smash:
+                    FollowBeforeSmash();
+                    break;
+                case BossStates.SummonEnemy:
+                    SummonEnemy();
+                    break;
+                case BossStates.LeftSweep:
+                    LeftSweep();
+                    break;
+                case BossStates.RightSweep:
+                    RightSweep();
+                    break;
+                case BossStates.SpikesSpawn:
+                    SpikesSpawn(-1f);
+                    break;
+                case BossStates.ReturnSpikesSpawn:
+                    SpikesSpawn(1f);
+                    break;
+                case BossStates.Boss360:
+                    BossAOE();
+                    break;
+                case BossStates.ReturnBoss360:
+                    ReverseAOE();
+                    break;
+
+            }
+        }
+
+
+
 
         static private void DrawHealthBar() // draw health bar
         {
@@ -178,37 +223,7 @@ namespace IS
             }
         }
 
-        static private void BossFSM()
-        {
-            switch (current_state)
-            {
-                case BossStates.Idle:
-                    Rest();
-                    break;
-                case BossStates.Clap: //clap function to add here
-                    BossHandClap();
-                    break;
-                case BossStates.Smash:
-                    FollowBeforeSmash();
-                    break;
-                case BossStates.SummonEnemy:
-                    SummonEnemy();
-                    break;
-                case BossStates.LeftSweep:
-                    LeftSweep();
-                    break;
-                case BossStates.RightSweep:
-                    RightSweep();
-                    break;
-                case BossStates.SpikesSpawn:
-                    SpikesSpawn(-1f);
-                    break;
-                case BossStates.Boss360:
-                    BossAOE();
-                    break;
 
-            }
-        }
 
 
 
@@ -216,8 +231,8 @@ namespace IS
         {
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            //uint random = rnd.Next(0,4); // random from 0 to 3
-            uint random = 3; // random from 0 to 3
+            uint random = rnd.Next(0,4); // random from 0 to 3
+            //uint random = 3; // random from 0 to 3
             //random = 2;
             if (random == 0)
             {
@@ -858,7 +873,7 @@ namespace IS
 
                     int entity = InternalCalls.CreateEntityPrefab("Boss Projectile Spikes");
                     SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
-                    InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
+                    InternalCalls.TransformSetScaleEntity(-scale.x *left_or_right, scale.y, entity);
                     InternalCalls.TransformSetPositionEntity(CameraScript.camera_pos.x - left_or_right*800f / CameraScript.camera_zoom, CameraScript.camera_pos.y + i * scale.y/2f *flipper , entity);
                     bullet_array[i] = entity;
                 }
@@ -875,27 +890,7 @@ namespace IS
             }
 
             sweep_timer -= InternalCalls.GetDeltaTime();
-/*
-            if (sweep_timer >1.5)
-            {
-                float flipper = 1;
-                for (int i = 0; i < number_of_bullets; i++)
-                {
-                    if (bullet_array[i] != 0)
-                    {
-                        //flip flipper
-                        flipper *= -1;
 
-                        int entity = bullet_array[i];
-                        SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(entity);
-                        InternalCalls.TransformSetScaleEntity(-scale.x, scale.y, entity);
-                        InternalCalls.TransformSetPositionEntity(CameraScript.camera_pos.x - 800f / CameraScript.camera_zoom, CameraScript.camera_pos.y + i * scale.y / 2f * flipper, entity);
-                    }
-
-
-                }
-            }
-*/
 
             if (sweep_timer > 1 && sweep_timer < 1.5)
             {
@@ -911,7 +906,18 @@ namespace IS
 
                 sweep_timer = sweep_timer_set;
                 sweeped = false;
-                StateChanger();
+                if (left_or_right == -1)
+                {
+                    ClearBullets();
+                    current_state = BossStates.ReturnSpikesSpawn;
+                 
+                }
+                else
+                {
+                    ClearBullets();
+                    current_state = BossStates.Smash;
+                }
+                
             }
 
 
@@ -968,22 +974,54 @@ namespace IS
             {
                 for (int i = 0; i < number_of_bullets; i++)
                 {
-                    Vector2D from_dir = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(i * 360/number_of_bullets));
-                    from_dir=from_dir.Multiply(40);
-                    BossProjectile.bullet_direction.TryAdd(bullet_array[i], (from_dir.x, from_dir.y));
+                    if (bullet_array[i] != 0)
+                    {
+                        Vector2D from_dir = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(i * 360 / number_of_bullets));
+                        from_dir = from_dir.Multiply(40);
+                        BossProjectile.bullet_direction.TryAdd(bullet_array[i], (from_dir.x, from_dir.y));
+                    }
+
                 }
             }
 
             if (sweep_timer < 0)
             {
-
-
-                sweep_timer = sweep_timer_set;
+                sweep_timer = sweep_timer_set/1.4f; //this is for the return to be shorter
                 sweeped = false;
-                StateChanger();
+                current_state = BossStates.ReturnBoss360;
             }
 
 
+        }
+
+        static private void ReverseAOE()
+        {
+            if (!sweeped)
+            {
+                for (int i = 0; i < number_of_bullets; i++)
+                {
+                    if (bullet_array[i] != 0 && BossProjectile.bullet_direction.ContainsKey(bullet_array[i]))
+                    {
+                        // Correctly declare 'tuple' with its explicit type.
+                        float i1= BossProjectile.bullet_direction[bullet_array[i]].Item1;
+                        float i2= BossProjectile.bullet_direction[bullet_array[i]].Item2;
+
+
+                        Vector2D from_dir = new Vector2D(-i1, -i2);
+                        BossProjectile.bullet_direction[bullet_array[i]] = (from_dir.x, from_dir.y);
+                        
+                    }
+                }
+                sweeped = true;
+            }
+
+            sweep_timer-=InternalCalls.GetDeltaTime();
+            if (sweep_timer < 0)
+            {
+                sweep_timer = sweep_timer_set;
+                sweeped = false;
+                current_state = BossStates.Idle;
+            }
         }
 
 
