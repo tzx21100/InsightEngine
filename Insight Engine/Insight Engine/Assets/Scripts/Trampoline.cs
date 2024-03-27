@@ -45,7 +45,7 @@ namespace IS
                 Vector2D pos = PlayerScript.player_pos;
                 //Vector2D impluse = new Vector2D(vel.x, -vel.y*5f);
                 //PlayerScript.isGrounded = false;
-                InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 0f, pos.y + 50f, PlayerScript.PLAYER_ID); ;
+                InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 0f, pos.y + 50f, PlayerScript.PLAYER_ID);
                 /*InternalCalls.RigidBodySetVelocityEntity(impluse.x, 2000f, PlayerScript.PLAYER_ID);*/
                 PlayerScript.AddForcesToPlayer(0f, 1000f, 0.5f);
 

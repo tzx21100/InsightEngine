@@ -56,9 +56,13 @@ namespace IS
         static int number_of_bullets = 40;
         static int[] bullet_array = new int[number_of_bullets];
 
+        // hand clap
+        static private bool is_clapping = false;
+        static private float boss_move_away_timer_set = 2f;
+        static private float boss_move_away_timer = 2f;
 
 
-        private enum BossStates : int
+        public enum BossStates : int
         {
             Idle=0,
             Clap=1,
@@ -71,13 +75,13 @@ namespace IS
 
         }
 
-        static private BossStates current_state = BossStates.Boss360;
+        static public BossStates current_state = BossStates.Boss360;
 
 
 
 
         static public void Init(){
-
+            boss_phase = 1;
             // reseting boss health
             boss_hp = boss_max_hp;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
@@ -92,6 +96,9 @@ namespace IS
             // clear all enemy dic
             HandEnemy.enemies.Clear();
             Enemy.enemies.Clear();
+
+            // init 
+            is_clapping = false;
         }
 
         static public void Update(){
@@ -179,6 +186,7 @@ namespace IS
                     Rest();
                     break;
                 case BossStates.Clap: //clap function to add here
+                    BossHandClap();
                     break;
                 case BossStates.Smash:
                     FollowBeforeSmash();
@@ -204,11 +212,12 @@ namespace IS
 
 
 
-        static private void StateChanger()
+        static public void StateChanger()
         {
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            uint random = rnd.Next(0,4); // random from 0 to 3
+            //uint random = rnd.Next(0,4); // random from 0 to 3
+            uint random = 3; // random from 0 to 3
             //random = 2;
             if (random == 0)
             {
@@ -280,6 +289,9 @@ namespace IS
                 if (boss_phase == 1) // switching to clap here
                 {
                     current_state = BossStates.Clap;
+                    // reset before clapping
+                    boss_move_away_timer = boss_move_away_timer_set;
+                    is_clapping = false;
                     return;
                 }
 
@@ -615,9 +627,9 @@ namespace IS
             {
 
                 float rand = rnd.NextFloat();
-                float dir = rnd.NextFloat() * 360;
+                float dir = 80 + 20 * rand;
                 //float dir = MathF.Sign(scaling.x) > 0 ? 330 + 30 * dir_rand /* 330 to 360 */: 180 + 30 * dir_rand/* 180 to 210 */;
-                
+
                 rand = rnd.NextFloat();
                 float size = 30f * rand;
 
@@ -997,6 +1009,27 @@ namespace IS
             }
 
             return false;
+        }
+
+        static private void BossHandClap()
+        {
+            // move current boss away
+            SimpleVector2D pos = InternalCalls.GetTransformPosition();
+            pos.y += 20f;
+            InternalCalls.TransformSetPosition(pos.x, pos.y);
+
+            if (boss_move_away_timer > 0f)
+            {
+                boss_move_away_timer -= InternalCalls.GetDeltaTime();
+                return;
+            }
+
+            if (!is_clapping)
+            {
+                // create left hand
+                int left_hand = InternalCalls.CreateEntityPrefab("BossLeftHand");
+                is_clapping = true;
+            }
         }
 
 

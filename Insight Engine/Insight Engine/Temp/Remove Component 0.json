@@ -1,0 +1,105 @@
+{
+	"Category" : 
+	{
+		"Category" : "Boss"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -346.102294921875,
+				"Y" : 566.3148193359375
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -260.75009155273438,
+					"y" : 260.75009155273438
+				},
+				{
+					"x" : 260.75009155273438,
+					"y" : 260.75009155273438
+				},
+				{
+					"x" : 260.75009155273438,
+					"y" : -260.75009155273438
+				},
+				{
+					"x" : -260.75009155273438,
+					"y" : -260.75009155273438
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "BossLeftHand",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "BossClap"
+	},
+	"Signature" : "00000000000000000010010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 0.33146396279335022,
+		"SpriteColorY" : 0.90295356512069702,
+		"SpriteColorZ" : 0.44720867276191711,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "tempboss.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 121,
+		"SpriteTextureHeight" : 1098,
+		"SpriteTextureIndex" : 104,
+		"SpriteTextureWidth" : 1098,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 521.50018310546875,
+		"SpriteTransformScalingY" : 521.50018310546875,
+		"SpriteTransformWorldPositionX" : -346.102294921875,
+		"SpriteTransformWorldPositionY" : 566.3148193359375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 521.50018310546875,
+		"TransformScalingY" : 521.50018310546875,
+		"TransformWorldPositionX" : -346.102294921875,
+		"TransformWorldPositionY" : 566.3148193359375
+	}
+}
