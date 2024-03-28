@@ -22,7 +22,7 @@ namespace IS
         static private bool is_one_hand_waiting = false;
         static private uint random_hand_stay = 0;
         static private bool is_one_hand_ready = false;
-        static private float one_hand_speed = 50f;
+        static private float one_hand_speed = 35f;
 
         static private float resting_timer_set = 0.5f;
         static private float resting_timer = 0.5f;
@@ -119,41 +119,17 @@ namespace IS
             right_hand_pos.x += right_hand_direction.x * two_hand_speed;
             right_hand_pos.y += right_hand_direction.y * two_hand_speed;
 
+            // render hands flying particles
+            LeftHandFlyingParticles(left_hand_direction);
+            RightHandFlyingParticles(right_hand_direction);
+
             InternalCalls.TransformSetPositionEntity(left_hand_pos.x, left_hand_pos.y, LEFT_HAND_ID);
             InternalCalls.TransformSetPositionEntity(right_hand_pos.x, right_hand_pos.y, RIGHT_HAND_ID);
 
             // render clapping position particles
             RenderClappingPosParticles();
 
-            // if two hand collide with player, damage player, render particles and disappear
-            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player") &&
-                InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
-            {
-                DestoryHands();
-
-                // damage player
-                return;
-            }
-
-            // if one of the hands collides with player, it will push the player to the center
-            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player"))
-            {
-                PlayerScript.isGrounded = false;
-                PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(1000f, 5f, 0.2f);
-            }
-            else if (InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
-            {
-                PlayerScript.isGrounded = false;
-                PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.2f);
-            }
-
-            // if left hand and right hand collide each other, destory them
-            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
-            {
-                DestoryHands();
-            }
+            CheckCollide();
         }
 
         static private void OneHandWaitingForClapping()
@@ -179,9 +155,10 @@ namespace IS
             {
                 clapping_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(PlayerScript.PLAYER_ID));
                 clapping_pos.x -= 500f;
+                clapping_pos.y -= 100f;
 
                 Vector2D left_offset = new Vector2D(0f, 2500f);
-                Vector2D right_offset = new Vector2D(4500f, 0f);
+                Vector2D right_offset = new Vector2D(4000f, 0f);
 
                 left_hand_pos = new Vector2D(clapping_pos.x + left_offset.x, clapping_pos.y + left_offset.y);
                 right_hand_pos = new Vector2D(clapping_pos.x + right_offset.x, clapping_pos.y + right_offset.y);
@@ -189,10 +166,11 @@ namespace IS
                 is_one_hand_ready = false;
             }
 
+            // left hand get ready first
             if (!is_one_hand_ready)
             {
                 Vector2D left_hand_direction = new Vector2D(clapping_pos.x - left_hand_pos.x, clapping_pos.y - left_hand_pos.y);
-                if (MathF.Abs(left_hand_direction.x) < 100f && MathF.Abs(left_hand_direction.y) < 100f)
+                if (MathF.Abs(left_hand_direction.x) < 50f && MathF.Abs(left_hand_direction.y) < 50f)
                 {
                     is_one_hand_ready = true;
                 }
@@ -200,19 +178,91 @@ namespace IS
 
                 left_hand_pos.x += left_hand_direction.x * one_hand_speed;
                 left_hand_pos.y += left_hand_direction.y * one_hand_speed;
+                
+                // render hands flying particles
+                LeftHandFlyingParticles(left_hand_direction);
+                
             }
-            //Console.WriteLine(is_one_hand_ready);
+            
+            // right hand coming over
             if (is_one_hand_ready)
             {
                 Vector2D right_hand_direction = new Vector2D(clapping_pos.x - right_hand_pos.x, clapping_pos.y - right_hand_pos.y);
                 right_hand_direction = right_hand_direction.Normalize();
 
-                right_hand_pos.x += right_hand_direction.x * one_hand_speed * 2f;
-                right_hand_pos.y += right_hand_direction.y * one_hand_speed * 2f;
+                right_hand_pos.x += right_hand_direction.x * one_hand_speed * 1.5f;
+                right_hand_pos.y += right_hand_direction.y * one_hand_speed * 1.5f;
+
+                // render hands flying particles
+                RightHandFlyingParticles(right_hand_direction);
             }
 
             InternalCalls.TransformSetPositionEntity(left_hand_pos.x, left_hand_pos.y, LEFT_HAND_ID);
             InternalCalls.TransformSetPositionEntity(right_hand_pos.x, right_hand_pos.y, RIGHT_HAND_ID);
+
+            CheckCollide();
+
+        }
+
+        static private void RightHandStays()
+        {
+            if (!is_one_hand_waiting)
+            {
+                clapping_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(PlayerScript.PLAYER_ID));
+                clapping_pos.x += 500f;
+                clapping_pos.y -= 100f;
+
+                Vector2D right_offset = new Vector2D(0f, 2500f);
+                Vector2D left_offset = new Vector2D(-4000f, 0f);
+
+                left_hand_pos = new Vector2D(clapping_pos.x + left_offset.x, clapping_pos.y + left_offset.y);
+                right_hand_pos = new Vector2D(clapping_pos.x + right_offset.x, clapping_pos.y + right_offset.y);
+                is_one_hand_waiting = true;
+                is_one_hand_ready = false;
+            }
+
+            // right hand get ready first
+            if (!is_one_hand_ready)
+            {
+                Vector2D right_hand_direction = new Vector2D(clapping_pos.x - right_hand_pos.x, clapping_pos.y - right_hand_pos.y);
+                if (MathF.Abs(right_hand_direction.x) < 50f && MathF.Abs(right_hand_direction.y) < 50f)
+                {
+                    is_one_hand_ready = true;
+                }
+                right_hand_direction = right_hand_direction.Normalize();
+
+                right_hand_pos.x += right_hand_direction.x * one_hand_speed;
+                right_hand_pos.y += right_hand_direction.y * one_hand_speed;
+
+                // render hands flying particles
+                RightHandFlyingParticles(right_hand_direction);
+
+            }
+            //Console.WriteLine(is_one_hand_ready);
+            if (is_one_hand_ready)
+            {
+                Vector2D left_hand_direction = new Vector2D(clapping_pos.x - left_hand_pos.x, clapping_pos.y - left_hand_pos.y);
+                left_hand_direction = left_hand_direction.Normalize();
+
+                left_hand_pos.x += left_hand_direction.x * one_hand_speed * 1.5f;
+                left_hand_pos.y += left_hand_direction.y * one_hand_speed * 1.5f;
+
+                // render hands flying particles
+                LeftHandFlyingParticles(left_hand_direction);
+            }
+
+            InternalCalls.TransformSetPositionEntity(left_hand_pos.x, left_hand_pos.y, LEFT_HAND_ID);
+            InternalCalls.TransformSetPositionEntity(right_hand_pos.x, right_hand_pos.y, RIGHT_HAND_ID);
+
+            CheckCollide();
+        }
+
+        static private void CheckCollide()
+        {
+            if (PlayerScript.invulnerable) // player is dashing
+            {
+                return;
+            }
 
             // if two hand collide with player, damage player, render particles and disappear
             if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player") &&
@@ -221,6 +271,16 @@ namespace IS
                 DestoryHands();
 
                 // damage player
+                PlayerScript.is_colliding_enemy = true;
+                PlayerScript.colliding_enemy_id = LEFT_HAND_ID;
+                PlayerScript.colliding_enemy_type = (int)EnemyType.BossHand;
+                return;
+            }
+            
+            // if left hand and right hand collide each other, destory them
+            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
+            {
+                DestoryHands();
                 return;
             }
 
@@ -229,25 +289,16 @@ namespace IS
             {
                 PlayerScript.isGrounded = false;
                 PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(1000f, 5f, 0.2f);
+                PlayerScript.AddForcesToPlayer(2000f, 5f, 0.25f);
+                return;
             }
             else if (InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
             {
                 PlayerScript.isGrounded = false;
                 PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.2f);
+                PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.25f);
+                return;
             }
-
-            // if left hand and right hand collide each other, destory them
-            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
-            {
-                DestoryHands();
-            }
-
-        }
-
-        static private void RightHandStays()
-        {
 
         }
 
@@ -330,6 +381,86 @@ namespace IS
 
                 rand = my_rand.NextFloat();
                 float y = (clapping_pos.y - scaling.y / 4f) + scaling.y / 4f * (rand);
+
+                InternalCalls.GameSpawnParticleExtra(
+                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                     );
+            }
+        }
+
+        
+
+        static private void LeftHandFlyingParticles(Vector2D direction)
+        {
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(5, 11)); // random from 5 to 10 particles
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = MathF.Atan2(direction.y, direction.x) * (180 / MathF.PI) + (160 + 40 * rand);
+
+                rand = my_rand.NextFloat();
+                float size = 50f + 30f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -20 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.8f + 0.2f * rand;
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.5f * rand;
+
+                rand = my_rand.NextFloat();
+                float speed = 300f + 200f * rand;
+
+                SimpleVector2D scaling = InternalCalls.GetTransformScalingEntity(LEFT_HAND_ID);
+                rand = my_rand.NextFloat();
+                float x = left_hand_pos.x + scaling.x / 2f * (rand - 0.5f);
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                //float y = (left_hand_pos.y - scaling.y / 4f) + scaling.y / 4f * (rand);
+                float y = left_hand_pos.y + scaling.y / 2f * (rand - 0.5f); ;
+
+                InternalCalls.GameSpawnParticleExtra(
+                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                     );
+            }
+        }
+
+        static private void RightHandFlyingParticles(Vector2D direction)
+        {
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(5, 11)); // random from 5 to 10 particles
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = MathF.Atan2(direction.y, direction.x) * (180 / MathF.PI) + (160 + 40 * rand);
+
+                rand = my_rand.NextFloat();
+                float size = 50f + 30f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -20 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.8f + 0.2f * rand;
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.5f * rand;
+
+                rand = my_rand.NextFloat();
+                float speed = 300f + 200f * rand;
+
+                SimpleVector2D scaling = InternalCalls.GetTransformScalingEntity(RIGHT_HAND_ID);
+                rand = my_rand.NextFloat();
+                float x = right_hand_pos.x + scaling.x / 2f * (rand - 0.5f);
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                //float y = (left_hand_pos.y - scaling.y / 4f) + scaling.y / 4f * (rand);
+                float y = right_hand_pos.y + scaling.y / 2f * (rand - 0.5f); ;
 
                 InternalCalls.GameSpawnParticleExtra(
                         x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"

@@ -35,7 +35,8 @@ namespace IS
         None = 0,
         Normal = 1,
         Hand = 2,
-        Bullet = 3
+        Bullet = 3,
+        BossHand = 4
     }
 
     public class PlayerScript
@@ -2103,6 +2104,11 @@ namespace IS
                         //HandEnemyBullets.bullets.Remove(colliding_enemy_id);
                         //InternalCalls.DestroyEntity(colliding_enemy_id);
                         }
+                }
+                else if (colliding_enemy_type == (int)EnemyType.BossHand)
+                {
+                    // damage the player
+                    Health -= 1;
                 }
 
 
