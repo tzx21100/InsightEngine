@@ -222,6 +222,7 @@ namespace IS
             int layer = InternalCalls.GetTopLayer();
             float health_wdith = (((boss_hp > 0) ? boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x*0.8f /CameraScript.camera_zoom; // width lenght of the health bar
             float health_pos_x = CameraScript.camera_pos.x;
+            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.8f / CameraScript.camera_zoom) / 2f;
             float health_pos_y = CameraScript.camera_pos.y+400f/CameraScript.camera_zoom;
             Vector2D health_bar_length = new Vector2D(health_wdith, 84f / CameraScript.camera_zoom);
 
@@ -229,7 +230,7 @@ namespace IS
             if (boss_hp <= boss_max_hp && boss_hp > 0f)
             {
                 // draw health blood
-                InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+                InternalCalls.DrawSquare(health_blood_x, health_pos_y, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
 
                 // draw health bar UI
                 SimpleVector2D pos = new SimpleVector2D(health_pos_x- 8f / CameraScript.camera_zoom, health_pos_y);
