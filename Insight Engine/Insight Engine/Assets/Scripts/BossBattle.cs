@@ -13,6 +13,10 @@ namespace IS
         static private float boss_max_hp=500;
         static private int boss_phase = 0; // when health drops below 0 go to next phase
 
+        static private float temp_boss_hp=150; // for decrease hp animation
+        static private float minus_hp_timer_set = 0.5f;
+        static private float minus_hp_timer = 0.5f;
+
         //boss projectiles
         static private float boss_projectile_timer;
         static private float boss_projectile_timer_set;
@@ -93,6 +97,8 @@ namespace IS
             boss_phase = 0;
             // reseting boss health
             boss_hp = boss_max_hp;
+            temp_boss_hp = boss_hp;
+            minus_hp_timer = minus_hp_timer_set;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
             current_state = BossStates.Smash;
@@ -205,7 +211,16 @@ namespace IS
 
         static private void DrawHealthBar() // draw health bar
         {
-            
+            if (temp_boss_hp >= boss_hp)
+            {
+                // render the white bar for the minus health effect
+                RenderMinusHealthBarEffect();
+            }
+            else
+            {
+                minus_hp_timer = minus_hp_timer_set; // reset the timer when the white bar is same as the health bar
+            }
+
             Vector3 color = new Vector3(0f, 0f, 0f);
             if (boss_hp > boss_max_hp/2)
             {
@@ -238,6 +253,35 @@ namespace IS
                     (
                         pos, 0, new SimpleVector2D(health_bar_scaling.x / CameraScript.camera_zoom, health_bar_scaling.y / CameraScript.camera_zoom), health_bar, 1f, layer
                     );
+            }
+        }
+
+        static private void RenderMinusHealthBarEffect()
+        {
+            // it will pause the white bar for a while
+            if (minus_hp_timer > 0f)
+            {
+                minus_hp_timer -= InternalCalls.GetDeltaTime();
+            }
+            else
+            {
+                // decrease the hp only when the timer is less than 0
+                temp_boss_hp -= 0.5f;
+            }
+
+            int layer = InternalCalls.GetTopLayer() - 1;
+            float health_wdith = (((temp_boss_hp > 0) ? temp_boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x * 0.8f / CameraScript.camera_zoom; // width lenght of the health bar
+            //float health_pos_x = CameraScript.camera_pos.x;
+            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - temp_boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.8f / CameraScript.camera_zoom) / 2f;
+            float health_pos_y = CameraScript.camera_pos.y + 400f / CameraScript.camera_zoom;
+            Vector2D health_bar_length = new Vector2D(health_wdith, 84f / CameraScript.camera_zoom);
+
+            // draw health bar only when the health is lesser
+            if (temp_boss_hp <= boss_max_hp && temp_boss_hp > 0f)
+            {
+                // draw white bar
+                InternalCalls.DrawSquare(health_blood_x, health_pos_y, health_bar_length.x, health_bar_length.y, 1f, 1f, 1f, 0.7f, layer);
+
             }
         }
 
