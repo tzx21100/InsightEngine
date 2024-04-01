@@ -153,10 +153,10 @@ namespace IS
 
             // image and vfx
             testimage = InternalCalls.GetSpriteImage("dark_circle.png");
-            enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn 11R4C.png");
-            enemy_charging = InternalCalls.GetSpriteImage("handEnemyAttack 2R11C.png");
-            enemy_death = InternalCalls.GetSpriteImage("handEnemyDeath 2R12C.png");
-            enemy_idle = InternalCalls.GetSpriteImage("handEnemyIdle 1R22C.png");
+            enemy_spawn = InternalCalls.GetSpriteImage("HandEnemySpawn 11R4C.png");
+            enemy_charging = InternalCalls.GetSpriteImage("HandEnemyAttack 11R2C.png");
+            enemy_death = InternalCalls.GetSpriteImage("HandEnemyDeath 6R4C.png");
+            enemy_idle = InternalCalls.GetSpriteImage("HandEnemyIdle 11R2C.png");
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
 
             //get_hit_vfx_entity = InternalCalls.CreateEntityVFX("enemy get hit", enemy_get_hit_vfx);
@@ -165,9 +165,9 @@ namespace IS
             // animation 
             InternalCalls.ResetAnimations();
             InternalCalls.CreateAnimationFromSprite(11, 4, 1f); // spawn
-            InternalCalls.CreateAnimationFromSprite(1, 22, 1f); // idle
-            InternalCalls.CreateAnimationFromSprite(2, 12, 1f); // dead
-            InternalCalls.CreateAnimationFromSprite(2, 11, 1f); // charging
+            InternalCalls.CreateAnimationFromSprite(11, 2, 1f); // idle
+            InternalCalls.CreateAnimationFromSprite(6, 4, 1f); // dead
+            InternalCalls.CreateAnimationFromSprite(11, 2, 1f); // charging
 
             // enemy patrol
             /*enemy_left_point = new Vector2D(enemy_pos.x - enemy_patrol_distance / 2f, enemy_pos.y);
