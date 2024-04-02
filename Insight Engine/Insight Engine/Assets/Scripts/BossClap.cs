@@ -55,7 +55,7 @@ namespace IS
 
         static public void Update()
         {
-            //RandomAttackType();
+            RandomAttackType();
             HandClapFSM();
         }
 
@@ -81,7 +81,7 @@ namespace IS
         static private void RandomAttackType() 
         { 
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            uint random = rnd.Next(0,5); // random from 0 to 4
+            uint random = rnd.Next(0,2); // random from 0 to 1
             //random = 2;
             if (random == 0)
             {
