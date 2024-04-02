@@ -1882,24 +1882,13 @@ namespace IS
             // check attack collider when colliding
             if (InternalCalls.OnEntityCollisionEnter(entity_attack))
             {
-                // collide with boss
-                if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
-                {
-                    
-                    
-                    if (!initial_attack)
-                    {
-                        BossBattle.boss_hp -= PlayerScript.attack_damage;
-                    }
-                    initial_attack = true;
-
-                }
+                
 
 
 
 
                // when colliding with enemy
-                if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy"))
+                if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy") || InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
                 {
                     // enemy get hit
                     hitting_enemy = true;
@@ -1940,6 +1929,13 @@ namespace IS
                                 (combo_step == 3) ? attack_damage * 2f : attack_damage); // more damage for the last combo attack
                             }
 
+                            initial_attack = true;
+                        }
+
+                        // collide with boss
+                        if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
+                        {
+                            BossBattle.boss_hp -= PlayerScript.attack_damage;
                             initial_attack = true;
                         }
                     }

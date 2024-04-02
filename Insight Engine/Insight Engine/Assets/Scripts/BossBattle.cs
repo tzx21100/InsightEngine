@@ -1200,6 +1200,7 @@ namespace IS
                 sweeped=false;
                 boss_phase = 1;
                 boss_hp = boss_max_hp;
+                temp_boss_hp = boss_max_hp; // reset the white bg bar
                 Boss_spawn_pos.x = 0;
                 Boss_spawn_pos.y = -300;
                 current_state = BossStates.Idle;
