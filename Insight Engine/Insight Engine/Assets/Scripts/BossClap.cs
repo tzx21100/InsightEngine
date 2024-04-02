@@ -24,6 +24,8 @@ namespace IS
         static private bool is_one_hand_ready = false;
         static private float one_hand_speed = 35f;
 
+        static private bool is_attacking = false;
+
         static private float resting_timer_set = 0.5f;
         static private float resting_timer = 0.5f;
 
@@ -50,12 +52,13 @@ namespace IS
             // reset
             is_two_hand_clapping = false;
             is_one_hand_waiting = false;
+            is_attacking = false;
             clapping_pos = new Vector2D(99999f, 99999f);
         }
 
         static public void Update()
         {
-            //RandomAttackType();
+            RandomAttackType();
             HandClapFSM();
         }
 
@@ -79,18 +82,21 @@ namespace IS
         }
 
         static private void RandomAttackType() 
-        { 
-            MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-            uint random = rnd.Next(0,5); // random from 0 to 4
-            //random = 2;
-            if (random == 0)
-            {
-                attack_type = ClapAttackTypes.TwoHand;
-                return;
-            }
-            if (random == 1)
-            {
-                attack_type = ClapAttackTypes.OneHandWaiting;
+        {
+            if (!is_attacking) {
+                MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+                uint random = rnd.Next(0, 2); // random from 0 to 1
+                                              //random = 2;
+                if (random == 0)
+                {
+                    attack_type = ClapAttackTypes.TwoHand;
+                    return;
+                }
+                if (random == 1)
+                {
+                    attack_type = ClapAttackTypes.OneHandWaiting;
+                }
+                is_attacking = true;
             }
         }
 
@@ -310,6 +316,9 @@ namespace IS
 
             // render particles
             HandClapParticles();
+
+            // reset attack
+            is_attacking = false;
         }
 
         static private void HandClapParticles()
