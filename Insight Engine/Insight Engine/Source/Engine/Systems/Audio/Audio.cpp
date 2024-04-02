@@ -23,6 +23,7 @@
 #include "Engine/Systems/Asset/Asset.h"
 #include "Graphics/Core/Graphics.h"
 #include "Math/ISMath.h"
+#include "Engine/JSON/JsonSaveLoad.h"
 #include <iostream>
 
 namespace IS {
@@ -53,6 +54,7 @@ namespace IS {
             // Handle initialization error
             return;
         }
+        LoadConfig();
     }
 
     // Function to calculate distance between two points in 2D
@@ -75,6 +77,9 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
+        if (mAudioConfig.mBGMControl.mIsMute)
+            return;
+
         mSystem->update();
         if (InsightEngine::Instance().mRuntime == false) {
             auto sys = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
@@ -118,7 +123,7 @@ namespace IS {
                 auto& emitting_transform = engine.GetComponent<Transform>(emittingEntities);
                 auto &emitter = engine.GetComponent<AudioEmitter>(emittingEntities);
 
-                if (emitter.isPlaying == false) { continue; }
+                if (emitter.isPlaying == false ) { continue; }
 
                 float distance = CalculateDistance(current_entity_transform.world_position.x,
                                                     current_entity_transform.world_position.y,
@@ -136,10 +141,10 @@ namespace IS {
                 float volume = CalculateGain(distance, emitter.falloff_factor);
                 
                 if (IsSoundPlaying(emitter.Channel)){
-                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume *MasterAudioLevel *2.f *BGMAudioLevel);
+                    emitter.Channel->setVolume(emitter.volumeLevel * listener.volume * volume *mAudioConfig.mMasterControl.mVolume *2.f * mAudioConfig.mBGMControl.mVolume);
                 }
                 else {
-                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume * MasterAudioLevel *2.f * BGMAudioLevel, emitter.pitch);
+                    emitter.Channel=PlaySoundCheck(assetsys->GetSound(emitter.soundName),emitter.Channel, emitter.isLoop, emitter.volumeLevel * listener.volume * volume * mAudioConfig.mMasterControl.mVolume *2.f * mAudioConfig.mBGMControl.mVolume, emitter.pitch);
                     mChannelList.emplace_back(emitter.Channel);
                 }
 
@@ -210,6 +215,7 @@ namespace IS {
         mSystem = nullptr;
         mSound = nullptr;
         mChannel = nullptr;
+        mAudioConfig = AudioConfig();
     }
 
     ISAudio::~ISAudio() {
@@ -219,6 +225,49 @@ namespace IS {
          * Releases all resources associated with the ISAudio system.
          */
         ISAudioRelease();
+        SaveConfig();
+    }
+
+    void ISAudio::LoadConfig()
+    {
+        Json::Value config;
+        bool success = LoadJsonFromFile(config, CONFIG_FILEPATH);
+        if (success)
+        {
+            auto& audio_config = config["AudioConfig"];
+            mAudioConfig.mMasterControl.mIsMute = audio_config["Master"]["Mute"].asBool();
+            mAudioConfig.mMasterControl.mVolume = audio_config["Master"]["Volume"].asFloat();
+            mAudioConfig.mBGMControl.mIsMute = audio_config["BGM"]["Mute"].asBool();
+            mAudioConfig.mBGMControl.mVolume = audio_config["BGM"]["Volume"].asFloat();
+            mAudioConfig.mSFXControl.mIsMute = audio_config["SFX"]["Mute"].asBool();
+            mAudioConfig.mSFXControl.mVolume = audio_config["SFX"]["Volume"].asFloat();
+            IS_CORE_INFO("Loaded audio config from \"{}\"", CONFIG_FILEPATH);
+        }
+        else
+        {
+            mAudioConfig = AudioConfig();
+            IS_CORE_INFO("Using default audio config");
+        }
+    }
+
+    void ISAudio::SaveConfig()
+    {
+        Json::Value config;
+        auto& audio_config = config["AudioConfig"];
+        Json::Value master, bgm, sfx;
+        master["Volume"] = mAudioConfig.mMasterControl.mVolume;
+        master["Mute"] = mAudioConfig.mMasterControl.mIsMute;
+        bgm["Volume"] = mAudioConfig.mMasterControl.mVolume;
+        bgm["Mute"] = mAudioConfig.mMasterControl.mIsMute;
+        sfx["Volume"] = mAudioConfig.mMasterControl.mVolume;
+        sfx["Mute"] = mAudioConfig.mMasterControl.mIsMute;
+        audio_config["Master"] = master;
+        audio_config["BGM"] = bgm;
+        audio_config["SFX"] = sfx;
+
+        bool success = SaveJsonToFile(config, CONFIG_FILEPATH);
+        success ? IS_CORE_INFO("Successfully saved audio config to \"{}\"!", CONFIG_FILEPATH) :
+            IS_CORE_ERROR("Failed to save audio config to \"{}\"!", CONFIG_FILEPATH);
     }
 
     void ISAudio::ISAudioRelease() {
@@ -519,8 +568,9 @@ namespace IS {
         return is_playing;
     }
 
-    void ISAudio::SetMasterVolume(float volume) {
-        MasterAudioLevel = volume;
+    void ISAudio::SetMasterVolume(float volume)
+    {
+        mAudioConfig.mMasterControl.mVolume = volume;
     }
 
     Json::Value AudioListener::Serialize()

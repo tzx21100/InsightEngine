@@ -125,9 +125,9 @@ namespace IS
             bgm_vol = master_multiplier * bgm_multiplier;
             sfx_vol = master_multiplier * sfx_multiplier;
 
-            master_checkbox_image = MasterCheckboxScript.toggled ? MasterCheckboxScript.toggled_image : MasterCheckboxScript.checkbox_image;
-            bgm_checkbox_image = BGMCheckboxScript.toggled ? BGMCheckboxScript.toggled_image : BGMCheckboxScript.checkbox_image;
-            sfx_checkbox_image = SFXCheckboxScript.toggled ? SFXCheckboxScript.toggled_image : SFXCheckboxScript.checkbox_image;
+            master_checkbox_image = !InternalCalls.AudioIsMasterMute() ? MasterCheckboxScript.toggled_image : MasterCheckboxScript.checkbox_image;
+            bgm_checkbox_image = !InternalCalls.AudioIsBGMMute() ? BGMCheckboxScript.toggled_image : BGMCheckboxScript.checkbox_image;
+            sfx_checkbox_image = !InternalCalls.AudioIsSFXMute() ? SFXCheckboxScript.toggled_image : SFXCheckboxScript.checkbox_image;
 
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
             settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
@@ -193,7 +193,7 @@ namespace IS
             const float SLIDER_BAR_SCALE         = 0.16f;
             const float SLIDER_BAR_AR            = 86f / 609f;
             const float SLIDER_KNOB_SCALE        = 0.7f;
-            const float SCROLL_BAR_SCALE         = 0.011f;
+            const float SCROLL_BAR_SCALE         = 0.018f;
             const float SCROLL_BAR_AR            = 777f / 52f;
             const float SCROLL_BAR_TRACKER_SCALE = 25f / 52f;
             const float SCROLL_BAR_TRACKER_AR    = 343f / 25f;
@@ -204,7 +204,7 @@ namespace IS
             float slider_bar_scaled_width           = SLIDER_BAR_SCALE * win_dimension.x;
             float slider_bar_scaled_height          = SLIDER_BAR_AR * slider_bar_scaled_width;
             float slider_knob_scaled_uniform        = SLIDER_KNOB_SCALE * slider_bar_scaled_height;
-            float scroll_bar_scaled_width           = SCROLL_BAR_SCALE * win_dimension.x;
+            float scroll_bar_scaled_width           = SCROLL_BAR_SCALE * win_dimension.y;
             float scroll_bar_scaled_height          = SCROLL_BAR_AR * scroll_bar_scaled_width;
             float scroll_bar_tracker_scaled_width   = SCROLL_BAR_TRACKER_SCALE * scroll_bar_scaled_width;
             float scroll_bar_tracker_scaled_height  = SCROLL_BAR_TRACKER_AR * scroll_bar_tracker_scaled_width;

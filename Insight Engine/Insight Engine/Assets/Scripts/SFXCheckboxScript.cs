@@ -17,7 +17,6 @@ namespace IS
     class SFXCheckboxScript
     {
         static public bool first_hover = false;
-        static public bool toggled = true;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
@@ -52,6 +51,7 @@ namespace IS
 
         static public void Update()
         {
+            bool toggled = !InternalCalls.AudioIsSFXMute();
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -65,25 +65,15 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            if (!toggled)
-            {
-                InternalCalls.SetSpriteImage(checkbox_image);
-                SettingsScript.sfx_multiplier = 0f;
-            }
-            else
-            {
-                InternalCalls.SetSpriteImage(toggled_image);
-                SettingsScript.sfx_multiplier = SFXSliderKnobScript.normalised_adjustment;
-            }
-
+            InternalCalls.SetSpriteImage(!toggled ? checkbox_image : toggled_image);
 
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
             }
@@ -96,12 +86,11 @@ namespace IS
                 first_hover = true;
             }
             // clicking
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
-                //clicked = !clicked;
-                //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
+                SettingsScript.PlayClickSound();
                 toggled = !toggled;
+                InternalCalls.AudioMuteSFX(!toggled);
             }
 
             x_pos = origin.x + (0.44f * win_dimension.x);

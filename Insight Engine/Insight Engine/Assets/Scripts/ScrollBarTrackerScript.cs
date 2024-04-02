@@ -19,8 +19,8 @@ namespace IS
     {
         // Constants
         private const float SCROLL_SPEED = 4f;
-        public const float LOWER_LIMIT_SCALE = 0.368f;
-        public const float UPPER_LIMIT_SCALE = 0.538f;
+        public const float LOWER_LIMIT_SCALE = 0.38f;
+        public const float UPPER_LIMIT_SCALE = 0.525f;
 
         static public bool is_adjusting_scroll = false;
         static public bool first_hover = false;

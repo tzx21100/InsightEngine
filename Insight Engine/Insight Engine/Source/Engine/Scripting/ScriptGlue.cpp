@@ -425,37 +425,46 @@ namespace IS {
     }
 
     static void AudioPlaySoundBGM(MonoString* name, bool loop = 0, float volume = 1.f) {
+        if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
+            return;
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlaySoundByName(str, loop, volume* AUDIO_MANAGER->BGMAudioLevel);
+        asset->PlaySoundByName(str, loop, volume* AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume);
     }
 
     static void AudioPlaySoundSFX(MonoString* name, bool loop = 0, float volume = 1.f) {
+        if (AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute)
+            return;
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
         // std::cout << "SFX AUDIO : " << AUDIO_MANAGER->SFXAudioLevel << std::endl;
-        asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->SFXAudioLevel);
+        asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume);
     }
 
     static void AudioPlayMusicBGM(MonoString* name, float volume) {
+        if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
+            return;
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        FMOD::Channel* channel= asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->BGMAudioLevel, 1);
+        FMOD::Channel* channel= asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume, 1);
         asset->mBGMChannel.emplace_back(str, channel, volume);
     }
 
     static void AudioPlayMusicSFX(MonoString* name, float volume) {
+        if (AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute)
+            return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        FMOD::Channel* channel = asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->SFXAudioLevel, 1);
+        FMOD::Channel* channel = asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume, 1);
         asset->mSFXChannel.emplace_back(str, channel, volume);
     }
 
@@ -471,7 +480,7 @@ namespace IS {
     }
 
     static void AudioSetMaster(float volume) {
-        AUDIO_MANAGER->MasterAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mMasterControl.mVolume = volume;
         // std::cout << "master vs volume "<< MasterAudioLevel;
         // std::cout << ": " <<volume << std::endl;
         //for (auto& channel : ASSET_MANAGER->mChannelList) {
@@ -480,21 +489,52 @@ namespace IS {
     }
 
     static void AudioSetBGM(float volume) {
-        AUDIO_MANAGER->BGMAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume = volume;
         for (auto& audiodata : ASSET_MANAGER->mBGMChannel)
         {
-            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->BGMAudioLevel);
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume);
         }
     }
 
     static void AudioSetSFX(float volume) {
-        AUDIO_MANAGER->SFXAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume = volume;
         for (auto& audiodata : ASSET_MANAGER->mSFXChannel)
         {
-            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->SFXAudioLevel);
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume);
         }
     }
 
+    static void AudioMuteMaster(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mMasterControl.mIsMute =
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute = 
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute = mute;
+    }
+
+    static void AudioMuteBGM(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute = mute;
+    }
+
+    static void AudioMuteSFX(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute = mute;
+    }
+
+    static bool AudioIsMasterMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mMasterControl.mIsMute;
+    }
+
+    static bool AudioIsBGMMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute;
+    }
+
+    static bool AudioIsSFXMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute;
+    }
 
     static int GetButtonState() {
         auto& button=InsightEngine::Instance().GetComponent<ButtonComponent>(InsightEngine::Instance().GetScriptCaller());
@@ -1768,6 +1808,12 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioSetMaster);
         IS_ADD_INTERNAL_CALL(AudioSetSFX);
         IS_ADD_INTERNAL_CALL(AudioSetBGM);
+        IS_ADD_INTERNAL_CALL(AudioMuteMaster);
+        IS_ADD_INTERNAL_CALL(AudioMuteBGM);
+        IS_ADD_INTERNAL_CALL(AudioMuteSFX);
+        IS_ADD_INTERNAL_CALL(AudioIsMasterMute);
+        IS_ADD_INTERNAL_CALL(AudioIsBGMMute);
+        IS_ADD_INTERNAL_CALL(AudioIsSFXMute);
         IS_ADD_INTERNAL_CALL(FadeOutAudio);
 
         // Button

@@ -188,6 +188,24 @@ namespace IS
         internal extern static void AudioSetSFX(float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioMuteMaster(bool mute);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioMuteBGM(bool mute);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void AudioMuteSFX(bool mute);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool AudioIsMasterMute();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool AudioIsBGMMute();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static bool AudioIsSFXMute();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void ResetAnimations();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

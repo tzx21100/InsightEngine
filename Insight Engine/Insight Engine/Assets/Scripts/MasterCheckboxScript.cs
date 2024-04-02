@@ -18,7 +18,6 @@ namespace IS
     class MasterCheckboxScript
     {
         static public bool first_hover = false;
-        static public bool toggled = true;
         static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
         static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
@@ -53,6 +52,8 @@ namespace IS
 
         static public void Update()
         {
+            bool toggled = !InternalCalls.AudioIsMasterMute();
+
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -66,34 +67,20 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
+            InternalCalls.SetSpriteImage(!toggled ? checkbox_image : toggled_image);
 
-            if (!toggled)
-            {
-                
-                InternalCalls.SetSpriteImage(checkbox_image);
-                SettingsScript.master_multiplier = 0f;
-
-            }
-            else
-            {
-                SettingsScript.master_multiplier = MasterSliderKnobScript.normalised_adjustment;
-                InternalCalls.SetSpriteImage(toggled_image);
-            }
-
-            if (!BGMCheckboxScript.toggled||!SFXCheckboxScript.toggled) {
+            if (InternalCalls.AudioIsBGMMute() || InternalCalls.AudioIsSFXMute())
                 toggled = false;
-            }else if (BGMCheckboxScript.toggled && SFXCheckboxScript.toggled)
-            {
-                toggled= true;
-            }
+            else if (!(InternalCalls.AudioIsBGMMute() && InternalCalls.AudioIsSFXMute()))
+                toggled = true;
 
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
             }
@@ -101,19 +88,16 @@ namespace IS
             {
                 first_hover = false;
             }
-
             if (!InternalCalls.IsWindowFocused())
             {
                 first_hover = true;
             }
             // clicking
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
+                SettingsScript.PlayClickSound();
                 toggled = !toggled;
-                BGMCheckboxScript.toggled = toggled;
-                SFXCheckboxScript.toggled = toggled;
-                //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.sfx_multiplier);
+                InternalCalls.AudioMuteMaster(!toggled);
             }
 
             x_pos = origin.x + (0.44f * win_dimension.x);
