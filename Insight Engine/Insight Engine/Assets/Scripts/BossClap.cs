@@ -66,7 +66,7 @@ namespace IS
 
         static private void HandClapFSM()
         {
-            attack_type = ClapAttackTypes.OneHandWaiting;
+            //attack_type = ClapAttackTypes.OneHandWaiting;
             switch (attack_type)
             {
                 case ClapAttackTypes.TwoHand:
