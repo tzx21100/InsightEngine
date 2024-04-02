@@ -66,7 +66,15 @@ namespace IS
         static private float boss_move_away_timer = 2f;
 
         // for scene transition to restore sweep
-        static private bool restore_sweep = false;  
+        static private bool restore_sweep = false;
+
+        //images
+        static SimpleImage boss_smash_image;
+        static SimpleImage boss_clap_image;
+        static SimpleImage boss_idle_image;
+        static SimpleImage boss_grab_image;
+        static SimpleImage boss_death_image;
+
 
         public enum BossStates : int
         {
@@ -89,6 +97,26 @@ namespace IS
 
 
         static public void Init(){
+
+            boss_idle_image = InternalCalls.GetSpriteImage("BossIdle 4R4C.png");
+            boss_smash_image = InternalCalls.GetSpriteImage("BossSmash 5R4C.png");
+            boss_clap_image = InternalCalls.GetSpriteImage("BossClap 6R4C.png");
+            boss_grab_image = InternalCalls.GetSpriteImage("BossGrab 6R4C.png");
+            boss_death_image = InternalCalls.GetSpriteImage("BossDeath 6R4C.png");
+
+
+            InternalCalls.SetSpriteImage(boss_idle_image);
+
+            InternalCalls.ResetAnimations();
+            InternalCalls.CreateAnimationFromSprite(4, 4, 0.7f);  // idle
+            InternalCalls.CreateAnimationFromSprite(5, 4, 0.7f);  //smash
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // clap
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f);  //grab
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // death
+
+
+
+
             CameraScript.StopCameraPan();
             ClearBullets();
             index360 = 0; //this is for spawning one by one
@@ -397,6 +425,7 @@ namespace IS
 
         static private void Rest()
         {
+            InternalCalls.SetSpriteImage(boss_idle_image);
             idle_timer-=InternalCalls.GetDeltaTime();
             if(idle_timer<=0)
             {
