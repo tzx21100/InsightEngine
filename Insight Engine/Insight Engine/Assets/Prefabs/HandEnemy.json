@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 560.4853515625,
-				"Y" : 557.4635009765625
+				"X" : -946.5111083984375,
+				"Y" : -121.1715087890625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -80,31 +80,31 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "handEnemyIdle 1R22C.png",
+		"SpriteFilename" : "HandEnemyIdle 11R2C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 67,
-		"SpriteTextureHeight" : 256,
-		"SpriteTextureIndex" : 50,
-		"SpriteTextureWidth" : 2684,
+		"SpriteTexture" : 77,
+		"SpriteTextureHeight" : 2816,
+		"SpriteTextureIndex" : 60,
+		"SpriteTextureWidth" : 432,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 223.0,
 		"SpriteTransformScalingY" : 256.0,
-		"SpriteTransformWorldPositionX" : 566.68536376953125,
-		"SpriteTransformWorldPositionY" : 557.4635009765625,
+		"SpriteTransformWorldPositionX" : -940.31109619140625,
+		"SpriteTransformWorldPositionY" : -121.1715087890625,
 		"animations" : 
 		[
 			{
 				"Name" : "ah ma",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.045454546809196472,
-				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 11.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.026960330083966255,
+				"frame_dimension_x" : 0.5,
+				"frame_dimension_y" : 0.090909093618392944,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.0026495009660720825,
 				"time_per_frame" : 0.045454546809196472,
-				"x_frames" : 22,
-				"y_frames" : 1
+				"x_frames" : 2,
+				"y_frames" : 11
 			}
 		]
 	},
@@ -113,7 +113,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 223.0,
 		"TransformScalingY" : 256.0,
-		"TransformWorldPositionX" : 566.68536376953125,
-		"TransformWorldPositionY" : 557.4635009765625
+		"TransformWorldPositionX" : -940.31109619140625,
+		"TransformWorldPositionY" : -121.1715087890625
 	}
 }

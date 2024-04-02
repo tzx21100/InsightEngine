@@ -63,7 +63,7 @@ namespace IS
         public float speed = 150f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D enemy_pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(-223f, 256f);
+        private Vector2D scaling = new Vector2D(-216f, 256f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
         // get hit
@@ -138,9 +138,13 @@ namespace IS
         // states
         HandEnemyState current_state;
 
-        // enemy inof
+        // enemy info
         public float max_health = 50f;
         public float health = 50f;
+        static private float temp_health = 50; // for decrease hp animation
+        static private float minus_hp_timer_set = 0.5f;
+        static private float minus_hp_timer = 0.5f;
+
 
         //static private int get_hit_vfx_entity;
         public void Init()
@@ -153,7 +157,7 @@ namespace IS
 
             // image and vfx
             testimage = InternalCalls.GetSpriteImage("dark_circle.png");
-            enemy_spawn = InternalCalls.GetSpriteImage("HandEnemySpawn 11R4C.png");
+            enemy_spawn = InternalCalls.GetSpriteImage("handEnemySpawn 11R4C.png");
             enemy_charging = InternalCalls.GetSpriteImage("HandEnemyAttack 11R2C.png");
             enemy_death = InternalCalls.GetSpriteImage("HandEnemyDeath 6R4C.png");
             enemy_idle = InternalCalls.GetSpriteImage("HandEnemyIdle 11R2C.png");
@@ -175,6 +179,11 @@ namespace IS
             target_point = enemy_left_point;
             enemy_rest_timer = enemy_rest_timer_duration;
             going_left = true;*/
+
+            // reset health
+            health = max_health;
+            temp_health = max_health;
+            minus_hp_timer = minus_hp_timer_set;
 
             // init states
             //previous_state = (EnemyState)(-1);
@@ -500,7 +509,7 @@ namespace IS
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/
                 Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
-                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 2f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);
@@ -719,6 +728,21 @@ namespace IS
 
         private void DrawHealthBar() // draw health bar
         {
+            if (health <= 0f)
+            {
+                return; // do not render health bar when enemy dies
+            }
+
+            if (temp_health >= health)
+            {
+                // render the white bar for the minus health effect
+                RenderMinusHealthBarEffect();
+            }
+            else
+            {
+                minus_hp_timer = minus_hp_timer_set; // reset the timer when the white bar is same as the health bar
+            }
+
             Vector3 color = new Vector3(0f, 0f, 0f);
             if (health > 50f)
             {
@@ -735,20 +759,53 @@ namespace IS
             int layer = InternalCalls.GetTopLayer();
             float health_wdith = (((health > 0) ? health : 0f) / max_health) * 155f; // width lenght of the health bar
             float health_pos_x = enemy_pos.x - ((max_health - health) / max_health) * 155f / 2f; // render position append of the health bar
+            float health_pos_y = enemy_pos.y + scaling.y / 2f;
             Vector2D health_bar_length = new Vector2D(health_wdith, 20f);
 
             // draw health bar only when the health is lesser
             if (health < max_health && health > 0f) {
                 // draw health blood
-                InternalCalls.DrawSquare(health_pos_x, enemy_pos.y + scaling.y / 6f, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
+                InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, color.x, color.y, color.z, 0.7f, layer);
 
                 // draw health bar UI
-                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, enemy_pos.y + scaling.y / 6f);
+                SimpleVector2D pos = new SimpleVector2D(enemy_pos.x, health_pos_y);
                 InternalCalls.DrawImageAt
                     (
                         pos, 0, new SimpleVector2D(health_bar_scaling.x, health_bar_scaling.y), health_bar, 1f, layer
                     );
             }
         }
+
+        private void RenderMinusHealthBarEffect()
+        {
+            // it will pause the white bar for a while
+            if (minus_hp_timer > 0f)
+            {
+                minus_hp_timer -= InternalCalls.GetDeltaTime();
+            }
+            else
+            {
+                // decrease the hp only when the timer is less than 0
+                temp_health -= 0.5f;
+            }
+
+            int layer = InternalCalls.GetTopLayer() - 1;
+            float health_wdith = (((temp_health > 0) ? temp_health : 0f) / max_health) * 155f; // width lenght of the health bar
+            //float health_pos_x = CameraScript.camera_pos.x;
+            /*float health_blood_x = CameraScript.camera_pos.x - ((max_health - temp_health) / max_health) * (155f / CameraScript.camera_zoom) / 2f;
+            float health_pos_y = CameraScript.camera_pos.y + 400f / CameraScript.camera_zoom;*/
+            float health_pos_x = enemy_pos.x - ((max_health - temp_health) / max_health) * 155f / 2f; // render position append of the health bar
+            float health_pos_y = enemy_pos.y + scaling.y / 2f;
+            Vector2D health_bar_length = new Vector2D(health_wdith, 20f);
+
+            // draw health bar only when the health is lesser
+            if (temp_health <= max_health && temp_health > 0f)
+            {
+                // draw white bar
+                InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, 1f, 1f, 1f, 0.7f, layer);
+
+            }
+        }
+
     } // each hand enemy clss ends here
 }
