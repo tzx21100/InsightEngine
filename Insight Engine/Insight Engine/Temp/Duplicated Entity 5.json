@@ -1,0 +1,119 @@
+{
+	"Category" : 
+	{
+		"Category" : "BreakableGround"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 8274.94921875,
+				"Y" : 3540.855224609375
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 30.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.85000002384185791,
+				"Y" : 0.64999997615814209
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -592.9605712890625,
+					"y" : 201.80955505371094
+				},
+				{
+					"x" : 592.9605712890625,
+					"y" : 201.80955505371094
+				},
+				{
+					"x" : 592.9605712890625,
+					"y" : -201.80955505371094
+				},
+				{
+					"x" : -592.9605712890625,
+					"y" : -201.80955505371094
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "CavePlatform",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "CameraScript"
+	},
+	"Signature" : "00000000000000000010010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "glitched_cave_platform 5R2C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 75,
+		"SpriteTextureHeight" : 845,
+		"SpriteTextureIndex" : 58,
+		"SpriteTextureWidth" : 788,
+		"SpriteTransformRotation" : 11.381927490234375,
+		"SpriteTransformScalingX" : 1395.2012939453125,
+		"SpriteTransformScalingY" : 620.9525146484375,
+		"SpriteTransformWorldPositionX" : 8280.8701171875,
+		"SpriteTransformWorldPositionY" : 3511.4453125,
+		"animations" : 
+		[
+			{
+				"Name" : "glitchy",
+				"animation_duration" : 2.0,
+				"frame_dimension_x" : 0.5,
+				"frame_dimension_y" : 0.20000000298023224,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.1666666716337204,
+				"time_per_frame" : 0.20000000298023224,
+				"x_frames" : 2,
+				"y_frames" : 5
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 11.381927490234375,
+		"TransformScalingX" : 1395.2012939453125,
+		"TransformScalingY" : 620.9525146484375,
+		"TransformWorldPositionX" : 8280.8701171875,
+		"TransformWorldPositionY" : 3511.4453125
+	}
+}

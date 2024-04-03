@@ -1,0 +1,35 @@
+{
+	"Name" : "Cave_spikes_droppable",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 3,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_spikes_droppable.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 38,
+		"SpriteTextureHeight" : 1078,
+		"SpriteTextureIndex" : 21,
+		"SpriteTextureWidth" : 566,
+		"SpriteTransformRotation" : 151.0780029296875,
+		"SpriteTransformScalingX" : 566.00030517578125,
+		"SpriteTransformScalingY" : 1078.0001220703125,
+		"SpriteTransformWorldPositionX" : 8115.31005859375,
+		"SpriteTransformWorldPositionY" : 839.58538818359375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 151.0780029296875,
+		"TransformScalingX" : 566.00030517578125,
+		"TransformScalingY" : 1078.0001220703125,
+		"TransformWorldPositionX" : 8115.31005859375,
+		"TransformWorldPositionY" : 839.58538818359375
+	}
+}

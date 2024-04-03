@@ -175,6 +175,7 @@ namespace IS
                         {
                             if (HandEnemy.enemies.ContainsKey(entity))
                             {
+                                HandEnemy.enemies[entity].current_state = HandEnemyState.BEING_HIT;
                                 HandEnemy.enemies[entity].health -= 20;
                             }
                         }

@@ -44,6 +44,8 @@ namespace IS
                     indexToFloatMap[(i + 32, j + 32)] = (InternalCalls.GetRandomFloat(), InternalCalls.GetRandomFloat()*0.1f);
                 }
             }
+
+            PlayerScript.collection_count = 0; // reset in flight level
         }
 
         static public void Update(){
@@ -66,7 +68,7 @@ namespace IS
                 {
                     InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 0f, pos.y + 50f, PlayerScript.PLAYER_ID);
                 }
-                PlayerScript.AddForcesToPlayer(0, 400, 0.1f);
+                PlayerScript.AddForcesToPlayer(0, 150, 0.1f);
             }
 
             float size = 1200f;

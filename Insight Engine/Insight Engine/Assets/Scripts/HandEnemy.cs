@@ -136,14 +136,16 @@ namespace IS
         SimpleImage enemy_idle;
 
         // states
-        HandEnemyState current_state;
+        public HandEnemyState current_state;
 
         // enemy info
         public float max_health = 50f;
         public float health = 50f;
-        static private float temp_health = 50; // for decrease hp animation
-        static private float minus_hp_timer_set = 0.5f;
-        static private float minus_hp_timer = 0.5f;
+        private float temp_health = 50; // for decrease hp animation
+        private float minus_hp_timer_set = 0.5f;
+        private float minus_hp_timer = 0.5f;
+
+        private bool check_first_grounded = false;
 
 
         //static private int get_hit_vfx_entity;
@@ -180,6 +182,8 @@ namespace IS
             enemy_rest_timer = enemy_rest_timer_duration;
             going_left = true;*/
 
+            check_first_grounded = false;
+
             // reset health
             health = max_health;
             temp_health = max_health;
@@ -209,6 +213,17 @@ namespace IS
             enemy_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
 
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
+
+            if (InternalCalls.RigidBodyGetVelocityEntity(ENEMY_ID).y > 1f) // means enemy landed
+            {
+                check_first_grounded = true;
+            }
+
+            if (check_first_grounded)
+            {
+                // make the hand enemy not moving
+                InternalCalls.RigidBodySetVelocityEntity(0f, 0f, ENEMY_ID);
+            }
 
             UpdateEnemyDirection();
             UpdateVolume();
@@ -509,7 +524,7 @@ namespace IS
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/
                 Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
-                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 2f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);

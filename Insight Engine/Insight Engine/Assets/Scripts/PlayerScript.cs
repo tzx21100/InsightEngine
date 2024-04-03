@@ -534,7 +534,6 @@ namespace IS
             DrawHealthBar();
 
 
-
             if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible || Popup_Ability.popup_shown || CameraScript.panning_enable)
             {
                 InternalCalls.RigidBodySetForce(0f, 0f);
@@ -1935,7 +1934,7 @@ namespace IS
                         // collide with boss
                         if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
                         {
-                            BossBattle.boss_hp -= PlayerScript.attack_damage;
+                            BossBattle.boss_hp -= (combo_step == 3) ? attack_damage * 2f : attack_damage;
                             initial_attack = true;
                         }
                     }

@@ -33,7 +33,7 @@ namespace IS
         mForce = Vector2D();
         mAcceleration = Vector2D();
         mDensity = 0.f;
-        mMass = 99999999999999995.f;
+        mMass = 100.f;
         mInvMass = 1.f / mMass;
         mRestitution = 0.5f;
         mArea = 0.f;
