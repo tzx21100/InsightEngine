@@ -748,9 +748,18 @@ namespace IS
                 if (entity == PLAYER_ID) { continue; }
 
                 short body_type = InternalCalls.RigidBodyGetBodyTypeEntity(entity);
+                if (body_type == 4)
+                {
+                    canDash = true;
+                    isGrounded = true;
+                    jump_amount = jump_amount_set; //allow double dash
+                }
+
                 if (body_type == 4 && hori_movement != 0 && Reward_WallClimb)
                 {
                     check_wall_collided = true;
+                    //allow dashing when climbing
+
                     collided_wall_entity = entity;
                 }
             }
@@ -768,6 +777,13 @@ namespace IS
 
             if (isClimbing)
             {
+
+                if (jump_trigger)
+                {
+                    InternalCalls.TransformSetPosition(player_pos.x + hori_movement, player_pos.y);
+                    PlayerScript.AddForcesToPlayer(0f, 200f, 0.1f);
+                }
+
                 //allow dashing when climbing
                 canDash = true;
                 isGrounded = true;
