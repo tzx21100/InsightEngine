@@ -80,6 +80,8 @@ namespace IS
         static float random_x_location;
         static float random_y_location;
 
+        //spawning one by one
+        static int index360 = 0;
 
         public enum BossStates : int
         {
@@ -956,7 +958,7 @@ namespace IS
 
                 sweep_timer = sweep_timer_set;
                 sweeped = false;
-                StateChanger();
+                current_state = BossStates.RightSweep;
             }
 
 
@@ -980,7 +982,7 @@ namespace IS
                 {
                     //flip flipper
                     flipper *= -1;
-                    Vector2D bullet_pos = new Vector2D(PlayerScript.player_pos.x + 500f / CameraScript.camera_zoom, PlayerScript.player_pos.y + i * flipper * 50 * 1.5f);
+                    Vector2D bullet_pos = new Vector2D(PlayerScript.player_pos.x - 500f / CameraScript.camera_zoom, PlayerScript.player_pos.y + i * flipper * 50 * 1.5f);
                     BossProjectile.CreateProjectile("Boss Projectile", 0, 0, 0, bullet_pos.x, bullet_pos.y);
                 }
 
@@ -1026,7 +1028,7 @@ namespace IS
                     //flip flipper
                     flipper *= -1;
 
-                   Vector2D pos= new Vector2D(CameraScript.camera_pos.x - left_or_right*800f / CameraScript.camera_zoom, CameraScript.camera_pos.y+ 200 + i * 200 *flipper);
+                   Vector2D pos= new Vector2D(CameraScript.camera_pos.x - left_or_right*800f / CameraScript.camera_zoom, CameraScript.camera_pos.y+ 250 + i * 250 *flipper);
 
                     float dir = 90;
                     if (left_or_right == 1) { dir = 270; }
@@ -1066,7 +1068,7 @@ namespace IS
 
         }
 
-        static int index360 = 0;
+
         static private void BossAOE()
         {
             // ensure the boss is at the center position
@@ -1195,6 +1197,7 @@ namespace IS
             InternalCalls.SetSpriteImage(boss_idle_image);
             InternalCalls.SetSpriteAnimationIndex(0);
             InternalCalls.TransformSetPositionEntity(0, 500, PlayerScript.PLAYER_ID);
+            //InternalCalls.SetEntityGravityScale(0, PlayerScript.PLAYER_ID);
             CameraScript.CameraShake(2f);
             CameraScript.camera_shake_duration = 0.1f;
             CameraScript.camera_shake_intensity = 1f;

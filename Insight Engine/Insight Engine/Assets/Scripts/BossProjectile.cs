@@ -36,6 +36,7 @@ namespace IS
                     PlayerScript.is_colliding_enemy = true;
                     InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
                     DestroyProjectile(entity_id);
+                    return;
                 }
 
                 // hit enemy

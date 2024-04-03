@@ -9,36 +9,36 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : 1352.634033203125,
-				"Y" : -118.82496643066406
+				"X" : -2729.173583984375,
+				"Y" : -1387.5406494140625
 			},
 			"BoxColliderOffset" : 
 			{
-				"X" : 0.0,
-				"Y" : 0.0
+				"X" : 17.299999237060547,
+				"Y" : 30.799999237060547
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 1.0,
-				"Y" : 1.0
+				"X" : 0.89999997615814209,
+				"Y" : 0.69999998807907104
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -556.36572265625,
-					"y" : 201.49998474121094
+					"x" : -500.7291259765625,
+					"y" : 141.04998779296875
 				},
 				{
-					"x" : 556.36572265625,
-					"y" : 201.49998474121094
+					"x" : 500.7291259765625,
+					"y" : 141.04998779296875
 				},
 				{
-					"x" : 556.36572265625,
-					"y" : -201.49998474121094
+					"x" : 500.7291259765625,
+					"y" : -141.04998779296875
 				},
 				{
-					"x" : -556.36572265625,
-					"y" : -201.49998474121094
+					"x" : -500.7291259765625,
+					"y" : -141.04998779296875
 				}
 			]
 		},
@@ -76,18 +76,18 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "Environment without grass03.png",
+		"SpriteFilename" : "PlatformBossLevel1.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 25,
-		"SpriteTextureHeight" : 400,
-		"SpriteTextureIndex" : 8,
-		"SpriteTextureWidth" : 1265,
+		"SpriteTexture" : 105,
+		"SpriteTextureHeight" : 418,
+		"SpriteTextureIndex" : 88,
+		"SpriteTextureWidth" : 1024,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1112.7314453125,
 		"SpriteTransformScalingY" : 402.99996948242188,
-		"SpriteTransformWorldPositionX" : 1352.634033203125,
-		"SpriteTransformWorldPositionY" : -118.82496643066406,
+		"SpriteTransformWorldPositionX" : -2746.4736328125,
+		"SpriteTransformWorldPositionY" : -1418.3406982421875,
 		"animations" : []
 	},
 	"Transform" : 
@@ -95,7 +95,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1112.7314453125,
 		"TransformScalingY" : 402.99996948242188,
-		"TransformWorldPositionX" : 1352.634033203125,
-		"TransformWorldPositionY" : -118.82496643066406
+		"TransformWorldPositionX" : -2746.4736328125,
+		"TransformWorldPositionY" : -1418.3406982421875
 	}
 }

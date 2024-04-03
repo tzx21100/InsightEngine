@@ -72,6 +72,7 @@ namespace IS
         static Vector2D back_button_pos = new Vector2D(0, 0);
         static public void Init()
         {
+            InternalCalls.AudioStopAllSounds();
             button_frame = InternalCalls.GetSpriteImage("button_frame.png");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", button_frame, "BackFromWinScript");
 
