@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -946.5111083984375,
-				"Y" : -121.1715087890625
+				"X" : -1152.8792724609375,
+				"Y" : 4817.19287109375
 			},
 			"BoxColliderOffset" : 
 			{
@@ -46,6 +46,23 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 1.0,
+			"G" : 1.0,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.18000000715255737,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 500.0
+	},
 	"Name" : "HandEnemy",
 	"RigidBody" : 
 	{
@@ -70,7 +87,7 @@
 	{
 		"ScriptName" : "HandEnemy"
 	},
-	"Signature" : "00000000000000000010010000100111",
+	"Signature" : "00000000000000000011010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -83,15 +100,15 @@
 		"SpriteFilename" : "HandEnemyIdle 11R2C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 77,
+		"SpriteTexture" : 84,
 		"SpriteTextureHeight" : 2816,
-		"SpriteTextureIndex" : 60,
+		"SpriteTextureIndex" : 67,
 		"SpriteTextureWidth" : 432,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 223.0,
 		"SpriteTransformScalingY" : 256.0,
-		"SpriteTransformWorldPositionX" : -940.31109619140625,
-		"SpriteTransformWorldPositionY" : -121.1715087890625,
+		"SpriteTransformWorldPositionX" : -1146.6793212890625,
+		"SpriteTransformWorldPositionY" : 4817.19287109375,
 		"animations" : 
 		[
 			{
@@ -99,9 +116,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.5,
 				"frame_dimension_y" : 0.090909093618392944,
-				"frame_index_x" : 0.0,
-				"frame_index_y" : 2.0,
-				"frame_timer" : 0.0026495009660720825,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 7.0,
+				"frame_timer" : 0.035991761833429337,
 				"time_per_frame" : 0.045454546809196472,
 				"x_frames" : 2,
 				"y_frames" : 11
@@ -113,7 +130,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 223.0,
 		"TransformScalingY" : 256.0,
-		"TransformWorldPositionX" : -940.31109619140625,
-		"TransformWorldPositionY" : -121.1715087890625
+		"TransformWorldPositionX" : -1146.6793212890625,
+		"TransformWorldPositionY" : 4817.19287109375
 	}
 }

@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System;
 using System.Linq.Expressions;
 using System.ComponentModel;
+using static IS.BossBattle;
+
 namespace IS
 {
     class HandEnemyBullets
@@ -28,10 +30,10 @@ namespace IS
 
     class EachBullet
     {
-        public float speed = 700f;
+        public float speed = 800f;
         public Vector2D direction = new Vector2D(0f, 0f);
         public Vector2D pos = new Vector2D(0f, 0f);
-        private Vector2D scaling = new Vector2D(100f, 100f);
+        public Vector2D scaling = new Vector2D(160.5f, 40f);
 
         // life time
         public float max_life_timer = 2f;
@@ -49,8 +51,8 @@ namespace IS
         {
             BULLET_ID = InternalCalls.GetCurrentEntityID();
 
-            bullet_image = InternalCalls.GetSpriteImage("dark_circle.png");
-
+            bullet_image = InternalCalls.GetSpriteImage("HandEnemy bullet.png");
+            InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, BULLET_ID);
             life_timer = max_life_timer;
             is_alive = true;
             //Console.WriteLine("spawn-");
@@ -71,6 +73,9 @@ namespace IS
             // check collision with player
             CheckCollideWithPlayer();
             CheckLifeTime();
+
+            // render bullet flying particles
+            RenderFlyingParticles();
         }
 
         public void CleanUp()
@@ -139,6 +144,9 @@ namespace IS
                 {
                     if (!being_hit_by_weapon) // check collide once only
                     {
+                        // reverse bullet
+                        InternalCalls.TransformSetScaleEntity(scaling.x * -1, scaling.y, BULLET_ID);
+
                         SimpleVector2D vel = InternalCalls.RigidBodyGetVelocityEntity(BULLET_ID);
                         InternalCalls.RigidBodySetVelocityEntity(vel.x * -1, vel.y, BULLET_ID); // make the bullet fly backs
                         being_hit_by_weapon = true;
@@ -224,6 +232,8 @@ namespace IS
             }
             // render particle
             RenderDestoryParticle();
+
+            InternalCalls.SetLightIntensityEntity(BULLET_ID, 0.8f);
         }
 
         private void RenderDestoryParticle()
@@ -232,11 +242,14 @@ namespace IS
             //Console.WriteLine("Destory and Render particle");
             //Console.WriteLine(BULLET_ID);
 
-            // load bleeding particles
+            // load destory bullet particles
             MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
             int particle_count = (int)(my_rand.Next(20, 31)); // random from 20 to 30 particles
+            
             for (int i = 0; i < particle_count; i++)
             {
+                int rand_color = (int)(my_rand.Next(0, 3)); // random color
+
                 float rand = my_rand.NextFloat();
                 float dir = 360 * rand;
 
@@ -261,9 +274,67 @@ namespace IS
                 rand = my_rand.NextFloat();
                 float y = pos.y;
 
-                InternalCalls.GameSpawnParticleExtra(
-                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
-                 );
+                switch (rand_color)
+                {
+                    case 0:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying.txt");
+                        break;
+                    case 1:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying2.txt");
+                        break;
+                    case 2:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying3.txt");
+                        break;
+                }
+            }
+        }
+
+        private void RenderFlyingParticles()
+        {
+            // load flying particles
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(2, 6)); // random from 2 to 5 particles
+            SimpleVector2D vel = InternalCalls.RigidBodyGetVelocityEntity(BULLET_ID);
+            for (int i = 0; i < particle_count; i++)
+            {
+                int rand_color = (int)(my_rand.Next(0, 3)); // random color
+
+                float rand = my_rand.NextFloat();
+                float dir = (vel.x > 0) ? 180 + 30 * (rand - 0.5f): 0 + 30 * (rand - 0.5f);
+
+                rand = my_rand.NextFloat();
+                float size = 5f + 5f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -20 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.5f + 0.3f * rand; // 0.6 to 0.9
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.2f + 0.2f * rand; // 0.3s to 0.6s
+
+                rand = my_rand.NextFloat();
+                float speed = 300f + 200f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = (vel.x > 0) ? pos.x - scaling.x / 2f * (rand) : pos.x + scaling.x / 2f * (rand);
+
+                rand = my_rand.NextFloat();
+                float y = pos.y + scaling.x / 2f * (rand - 0.5f);
+
+                switch (rand_color)
+                {
+                    case 0:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying.txt");
+                        break;
+                    case 1:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying2.txt");
+                        break;
+                    case 2:
+                        InternalCalls.GameSpawnParticleExtra(x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bullet Flying3.txt");
+                        break;
+                }
             }
         }
     }
