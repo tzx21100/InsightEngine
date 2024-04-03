@@ -13,7 +13,7 @@ namespace IS
         //static SimpleImage bg_image1;
         static SimpleImage bg_image2;
         static SimpleImage bg_image3;
-        //static SimpleImage bg_image4;
+        static SimpleImage bg_image4;
         static SimpleImage bg_image5;
 
         static private Vector2D bg1_pos = new Vector2D(0, 0);
@@ -33,7 +33,7 @@ namespace IS
             //bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image2 = InternalCalls.GetSpriteImage("BossLevel_Foreground.png");
             bg_image3 = InternalCalls.GetSpriteImage("BossLevel_Midground.png");
-            // bg_image4 = InternalCalls.GetSpriteImage("transparent.png");
+            bg_image4 = InternalCalls.GetSpriteImage("GlitchTree_Prop.png");
             bg_image5 = InternalCalls.GetSpriteImage("BossLevel_Background.png");
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
             InternalCalls.AudioStopAllSounds();
@@ -57,7 +57,7 @@ namespace IS
             // Adjust the position of each background layer based on the player's offset
             for (int i = 0; i < offsetRatios.Length; i++)
             {
-                if (i == 1 || i == 4) continue;
+                if (i == 1 ) continue;
 
                 // Calculate the offset for this layer
                 float layerOffsetX = playerOffsetX * offsetRatios[i];
@@ -91,11 +91,11 @@ namespace IS
         {
             switch (index)
             {
-                case 0: return bg_image5;
+                //case 0: return bg_image5;
                 //case 1: return SimpleImage;
-                case 2: return bg_image3;
-                case 3: return bg_image2;
-                //case 4: return bg_image1;
+                case 2: return bg_image4;
+                case 3: return bg_image3;
+                case 4: return bg_image2;
                 default: return bg_image5;
             }
         }
