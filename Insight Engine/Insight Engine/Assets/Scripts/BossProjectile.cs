@@ -37,7 +37,10 @@ namespace IS
             {
                // Console.WriteLine("Collision Happened At playerid: "+ PlayerScript.PLAYER_ID);
                 PlayerScript.Health -= 1;
+                PlayerScript.screen_flash_timer += 1.5f;
+                PlayerScript.is_colliding_enemy = true;
                 DestroySelf();
+                return;
                 
             }
 

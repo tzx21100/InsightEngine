@@ -341,6 +341,8 @@ namespace IS
         static public void StateChanger()
         {
             InternalCalls.SetColliderOffset(0, 0); //reset collider
+            InternalCalls.SetSpriteAnimationIndex(0); //reset animation
+            InternalCalls.SetSpriteImage(boss_idle_image);
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
             uint random = rnd.Next(0,4); // random from 0 to 3
@@ -532,6 +534,8 @@ namespace IS
                     if (PlayerScript.invulnerable == false)
                     {
                         PlayerScript.Health -= 1;
+                        PlayerScript.screen_flash_timer += 1.5f;
+                        PlayerScript.is_colliding_enemy = true;
                     }
 
                     smash_timer = smash_timer_set;
@@ -601,6 +605,11 @@ namespace IS
 
                 //destroy
                 InternalCalls.DestroyEntity(entity);
+                for (int i = 0; i < 52; i++)
+                {
+                    DrawParticles(entity);
+                }
+
                 return;
             }
             else
@@ -611,6 +620,11 @@ namespace IS
                 InternalCalls.TransformSetRotationEntity(rotation, 0, new_entity);
                 //destroy the old entity
                 InternalCalls.DestroyEntity(entity);
+                for(int i=0; i < 32; i++)
+                {
+                    DrawParticles(entity);
+                }
+               
 
             }
 
@@ -1206,13 +1220,14 @@ namespace IS
         // if movement is completed return false
         static private bool MoveToLocation( float directed_x, float directed_y)
         {
+
             InternalCalls.RigidBodySetBodyTypeEntity(6, InternalCalls.GetCurrentEntityID());
-            float move_speed = 15f;
+            float move_speed = 20f;
             SimpleVector2D current_pos = InternalCalls.GetTransformPosition();
             SimpleVector2D directed = new SimpleVector2D(directed_x, directed_y);
             Vector2D direction = new Vector2D(directed.x - current_pos.x,
                                               directed.y - current_pos.y);
-            if (Vector2D.Distance(Vector2D.FromSimpleVector2D(current_pos), Vector2D.FromSimpleVector2D(directed)) > 15f)
+            if (Vector2D.Distance(Vector2D.FromSimpleVector2D(current_pos), Vector2D.FromSimpleVector2D(directed)) > 20f)
             {
 
 
@@ -1309,7 +1324,51 @@ namespace IS
 
         }
 
+        static private void DrawParticles(int entity_id)
+        {
+            Vector2D pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(entity_id));
+            uint r = (uint)(12314 * InternalCalls.GetRandomFloat());
+            MyRandom my_rand = new MyRandom(r);
+            int num = (int)(3f * my_rand.NextFloat());
+            int top_layer = InternalCalls.GetTopLayer();
+            Vector2D scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScalingEntity(entity_id));
+            for (int i = 0; i < num; i++)
+            {
 
+                float rand = InternalCalls.GetRandomFloat();
+                float dir = 270 + 30 * (rand - 0.5f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float size = 20f + 10f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float size_scale = -10 * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float alpha = 0.5f + 0.5f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float lifetime = 0.3f + 1f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float speed = 1000f + 500f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float y = pos.y + scaling.y / 2f * (rand - 0.2f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float rotation = rand * 360;
+
+/*                InternalCalls.GameSpawnParticleExtraLayer(
+                    x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleSpike.txt",
+                (1f, 1f, 1f), top_layer);*/
+                InternalCalls.GameSpawnParticleExtraFramesRotate(x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleSpike.txt", 0, 0, 20f);
+
+            }
+        }
 
     } // class end here
 }
