@@ -38,7 +38,9 @@ namespace IS
                // Console.WriteLine("Collision Happened At playerid: "+ PlayerScript.PLAYER_ID);
                 PlayerScript.Health -= 1;
                 PlayerScript.screen_flash_timer += 1.5f;
+                PlayerScript.invulnerable = true;
                 PlayerScript.is_colliding_enemy = true;
+                InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
                 DestroySelf();
                 return;
                 

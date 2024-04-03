@@ -542,6 +542,10 @@ namespace IS
                     smash = false;
                     InternalCalls.RigidBodySetBodyTypeEntity(6, InternalCalls.GetCurrentEntityID());
                     StateChanger();
+                    InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
+                    CameraScript.camera_shake_intensity = 3f;
+                    CameraScript.camera_shake_duration = 0.2f;
+                    InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
                     return;
                 }
 
