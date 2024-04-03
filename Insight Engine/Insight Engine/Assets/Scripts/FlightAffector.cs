@@ -30,6 +30,12 @@ namespace IS
         static int[,] index_array= new int[64,64];
         static float[,] index_random= new float[64,64];
         static Dictionary<(int, int), (float,float)> indexToFloatMap = new Dictionary<(int, int), (float,float)>();
+
+        static private Vector2D fog_pos = new Vector2D(0, 0);
+        static private Vector2D fog_scaling = new Vector2D(0, 0);
+        static private float flying_fog_render_timer_set = 0.2f;
+        static private float flying_fog_render_timer = 0.2f;
+
         static public void Init(){
             CaveBackGroundRaw.Init();
             PlayerScript.isDead = false;
@@ -44,6 +50,7 @@ namespace IS
                     indexToFloatMap[(i + 32, j + 32)] = (InternalCalls.GetRandomFloat(), InternalCalls.GetRandomFloat()*0.1f);
                 }
             }
+            flying_fog_render_timer = flying_fog_render_timer_set;
 
             PlayerScript.collection_count = 0; // reset in flight level
         }
@@ -75,6 +82,12 @@ namespace IS
                 }
                 PlayerScript.AddForcesToPlayer(0, 150, 0.1f);
             }
+
+            // update fog scaling base on player
+            fog_scaling = new Vector2D(MathF.Abs(PlayerScript.trans_scaling.x / 1.5f), PlayerScript.trans_scaling.y / 10f);
+
+            // render flying gas
+            DrawFlyingFogs(colliding);
 
             float size = 1200f;
             float ratio_inbetween = 0.7f; //more less gap inbetwen
@@ -174,6 +187,44 @@ namespace IS
 
         static public void CleanUp(){
 
+        }
+
+        static private void DrawFlyingFogs(bool check_colliding)
+        {
+            if (PlayerScript.flight_held && check_colliding)
+            {
+                if (flying_fog_render_timer > 0f)
+                {
+                    flying_fog_render_timer -= InternalCalls.GetDeltaTime();
+
+                    if (flying_fog_render_timer > 0.13f)
+                    {
+                        // fog position follows player position
+                        fog_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(PlayerScript.entity_feet));
+
+                        // draw flying fogs under player
+                        FogCover.fog_position = fog_pos;
+                        FogCover.fog_width = fog_scaling.x;
+                        FogCover.fog_height = fog_scaling.y;
+                        FogCover.fog_density = 20f;
+                        FogCover.fog_size = 50f;
+                        FogCover.fog_timer_set = 0.001f;
+                        FogCover.random_fog_life_timer_set = 0f;
+                        FogCover.SpawnFog();
+                    }
+
+                }
+                else
+                {
+                    flying_fog_render_timer = flying_fog_render_timer_set;
+                }
+
+                
+            }
+            else
+            {
+                // move the fogs away
+            }
         }
 
     }

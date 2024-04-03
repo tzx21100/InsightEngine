@@ -25,6 +25,7 @@ namespace IS
             FogCover.fog_density = 14f;
             FogCover.fog_size = 300f;
             FogCover.fog_timer_set = 0.02f;
+            FogCover.is_random_life_time = true;
             FogCover.SpawnFog();
 
             if (PlayerScript.collection_count >=1)

@@ -223,6 +223,13 @@ namespace IS
                             InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
                             InternalCalls.SetEntityGravityScale(5f, entity);
 
+                            // play landing sound
+                            if (!mPlayGroundedAudio)
+                            {
+                                mPlayGroundedAudio = true;
+                                InternalCalls.AudioPlaySound("ROCK-DROP_GEN-HDF-20027.wav", false, .15f);
+                            }
+
                             // render particles
                             if (check_colliding_breakable < 3 && check_colliding_breakable > 0)
                             {
@@ -324,7 +331,7 @@ namespace IS
                 Vector2D scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScalingEntity(entity_id));
                 uint r = (uint)(12314 * InternalCalls.GetRandomFloat());
                 MyRandom my_rand = new MyRandom(r);
-                int num = (int)(30 + 30 * my_rand.NextFloat());
+                int num = (int)(40 + 30 * my_rand.NextFloat());
                 int top_layer = InternalCalls.GetTopLayer();
                 for (int i = 0; i < num; i++)
                 {

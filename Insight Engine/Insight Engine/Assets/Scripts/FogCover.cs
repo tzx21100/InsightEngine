@@ -12,6 +12,8 @@ namespace IS
         static public Vector2D fog_position = new Vector2D(0, 0); // Starting position of the fog
         static public float fog_timer = 2f;
         static public float fog_timer_set = 2f;
+        static public float random_fog_life_timer_set = 2f;
+        static public bool is_random_life_time = false;
 
         static public void Init()
         {
@@ -78,7 +80,8 @@ namespace IS
 
                         size = CustomMath.max(fog_size /4f, randomfloat.NextFloat() * size);
                         dash_particle_alpha = CustomMath.max(0.2f, randomfloat.NextFloat());
-                        lifetime = CustomMath.max(fog_timer_set, randomfloat.NextFloat() *2f);
+                        if (is_random_life_time) { random_fog_life_timer_set = randomfloat.NextFloat(); }
+                        lifetime = CustomMath.max(fog_timer_set, random_fog_life_timer_set * 2f);
                         posX += size * randomfloat.NextFloat();
                         posY += size * randomfloat.NextFloat();
                         InternalCalls.GameSpawnParticleExtraLayerFrames(posX, posY,
