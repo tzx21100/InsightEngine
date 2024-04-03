@@ -525,18 +525,25 @@ namespace IS
             // screen flash upon damage
             if (screen_flash_timer > 0.0f)
             {
+                invulnerable = true;
                 SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
                 SimpleVector2D scaling = new SimpleVector2D(WindowWidth / CameraScript.camera_zoom * 1.03f, WindowHeight / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
                 InternalCalls.DrawImageAt(pos, 0, scaling, damage_screen_flash, screen_flash_timer / 1.5f, InternalCalls.GetTopLayer() - 1);
                 screen_flash_timer -= InternalCalls.GetDeltaTime();
+                if (screen_flash_timer <= 0.0f)
+                {
+                    invulnerable = false;
+                }
             }
 
             DrawHealthBar();
 
+            
 
 
             if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible || Popup_Ability.popup_shown || CameraScript.panning_enable)
             {
+                InternalCalls.SetGravityScale(0f);
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 InternalCalls.SetSpriteAnimationIndex(1);
@@ -749,9 +756,18 @@ namespace IS
                 if (entity == PLAYER_ID) { continue; }
 
                 short body_type = InternalCalls.RigidBodyGetBodyTypeEntity(entity);
+                if (body_type == 4)
+                {
+                    canDash = true;
+                    isGrounded = true;
+                    jump_amount = jump_amount_set; //allow double dash
+                }
+
                 if (body_type == 4 && hori_movement != 0 && Reward_WallClimb)
                 {
                     check_wall_collided = true;
+                    //allow dashing when climbing
+
                     collided_wall_entity = entity;
                 }
             }
@@ -769,6 +785,13 @@ namespace IS
 
             if (isClimbing)
             {
+
+                if (jump_trigger)
+                {
+                    InternalCalls.TransformSetPosition(player_pos.x + hori_movement, player_pos.y);
+                    PlayerScript.AddForcesToPlayer(0f, 200f, 0.1f);
+                }
+
                 //allow dashing when climbing
                 canDash = true;
                 isGrounded = true;
@@ -1935,7 +1958,7 @@ namespace IS
                         // collide with boss
                         if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
                         {
-                            BossBattle.boss_hp -= PlayerScript.attack_damage;
+                            BossBattle.boss_hp -= (combo_step == 3) ? attack_damage * 2f : attack_damage;
                             initial_attack = true;
                         }
                     }

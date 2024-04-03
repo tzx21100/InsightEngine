@@ -30,6 +30,9 @@ namespace IS
         }
 
         static public void Update(){
+
+            bool controller_connected = InternalCalls.ControllerConnected();
+
             if (PlayerScript.isGrounded == true && tutorial_state==0 ) { tutorial_state = 1; }
             if (tutorial_state == 1)
             {
@@ -37,7 +40,15 @@ namespace IS
                 //SimpleVector2D textboxscale = new SimpleVector2D(InternalCalls.GetWindowWidth() * 0.8f, InternalCalls.GetWindowHeight() * 0.2f);
 
                 //InternalCalls.DrawImageAt(textboxposition, 0, textboxscale, textboximage, 1, InternalCalls.GetTopLayer());
-                InternalCalls.RenderTextFont("Press 'A' and 'D' to move", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                if (controller_connected)
+                {
+                    InternalCalls.RenderTextFont("Press the Left Buttons / Left joystick To Move!", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                else
+                {
+                    InternalCalls.RenderTextFont("Press 'A' and 'D' to move", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                
                 if (PlayerScript.player_pos.x > -283)
                 {
                     tutorial_state++;
@@ -47,7 +58,15 @@ namespace IS
             if (tutorial_state == 2)
             {
 
-                InternalCalls.RenderTextFont("Press Space To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                if (controller_connected)
+                {
+                    InternalCalls.RenderTextFont("Press 'A' To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                else
+                {
+                    InternalCalls.RenderTextFont("Press Space To Jump", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                
                 if (PlayerScript.jump_trigger)
                 {
                     tutorial_state++;
@@ -57,7 +76,16 @@ namespace IS
             if (tutorial_state == 3)
             {
 
-                InternalCalls.RenderTextFont("Hold Space To Jump Further", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                if (controller_connected)
+                {
+                    InternalCalls.RenderTextFont("Hold The Jump Key To Jump Further", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                else
+                {
+
+                    InternalCalls.RenderTextFont("Hold Space To Jump Further", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+
                 if (PlayerScript.player_pos.x >2220)
                 {
                     tutorial_state++;
@@ -79,7 +107,16 @@ namespace IS
             if (tutorial_state == 5)
             {
 
-                InternalCalls.RenderTextFont("Left click to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                if (controller_connected)
+                {
+                    InternalCalls.RenderTextFont("Press 'X' or RB to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+                else
+                {
+                    InternalCalls.RenderTextFont("Left click to attack", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
+                }
+
+                
                 if (PlayerScript.attack_trigger)
                 {
                     tutorial_state++;
@@ -92,7 +129,7 @@ namespace IS
 
                 if (PlayerScript.player_pos.x > 7279)
                 {
-                    SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x - InternalCalls.GetWindowWidth() / 3f, PlayerScript.player_pos.y);
+                    SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / 3f, CameraScript.camera_pos.y);
                     InternalCalls.DrawImageAt(pos, 0, new SimpleVector2D(870, 540), teamlogo, 1, InternalCalls.GetTopLayer());
                     if (play_audio == false)
                     {

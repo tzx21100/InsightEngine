@@ -97,6 +97,7 @@ namespace IS
 
 
         static public void Init(){
+            InternalCalls.SetColliderOffset(0, 0);
 
             boss_idle_image = InternalCalls.GetSpriteImage("BossIdle 4R4C.png");
             boss_smash_image = InternalCalls.GetSpriteImage("BossSmash 5R4C.png");
@@ -104,16 +105,19 @@ namespace IS
             boss_grab_image = InternalCalls.GetSpriteImage("BossGrab 6R4C.png");
             boss_death_image = InternalCalls.GetSpriteImage("BossDeath 6R4C.png");
 
+            InternalCalls.SetAnimationEntityPlaying(InternalCalls.GetCurrentEntityID(), true);
+            //Change size of the collider
 
             InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
 
             InternalCalls.ResetAnimations();
-            InternalCalls.CreateAnimationFromSprite(4, 4, 0.7f);  // idle
-            InternalCalls.CreateAnimationFromSprite(5, 4, 0.7f);  //smash
-            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // clap
-            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f);  //grab
-            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // death
-
+            InternalCalls.CreateAnimationFromSprite(4, 4, 0.7f);  // idle 0
+            InternalCalls.CreateAnimationFromSprite(5, 4, 0.7f);  //smash 1
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // clap 2
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f);  //grab 3
+            InternalCalls.CreateAnimationFromSprite(6, 4, 0.7f); // death 4
+            
 
 
 
@@ -336,6 +340,9 @@ namespace IS
 
         static public void StateChanger()
         {
+            InternalCalls.SetColliderOffset(0, 0); //reset collider
+            InternalCalls.SetSpriteAnimationIndex(0); //reset animation
+            InternalCalls.SetSpriteImage(boss_idle_image);
             //float random=InternalCalls.GetRandomFloat();
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
             uint random = rnd.Next(0,4); // random from 0 to 3
@@ -426,7 +433,8 @@ namespace IS
         static private void Rest()
         {
             InternalCalls.SetSpriteImage(boss_idle_image);
-            idle_timer-=InternalCalls.GetDeltaTime();
+            InternalCalls.SetSpriteAnimationIndex(0);
+            idle_timer -=InternalCalls.GetDeltaTime();
             if(idle_timer<=0)
             {
                 idle_timer = idle_timer_set;
@@ -444,7 +452,8 @@ namespace IS
 
         static private void ResetPosition()
         {
-            InternalCalls.TransformSetPosition(Boss_spawn_pos.x, Boss_spawn_pos.y);
+            MoveToLocation(Boss_spawn_pos.x, Boss_spawn_pos.y);
+            //InternalCalls.TransformSetPosition(Boss_spawn_pos.x, Boss_spawn_pos.y);
             InternalCalls.RigidBodySetForce(0, 0);
             CameraScript.CameraTargetZoom(0.5f, 1f);
         }
@@ -457,6 +466,19 @@ namespace IS
 
             if (!smash)
             {
+
+                
+                InternalCalls.SetSpriteImage(boss_smash_image);
+                InternalCalls.SetSpriteAnimationIndex(1);
+                int index = InternalCalls.GetCurrentAnimationEntity(InternalCalls.GetCurrentEntityID());
+                InternalCalls.SetAnimationFrameIndex(7);
+                InternalCalls.SetAnimationEntityPlaying(InternalCalls.GetCurrentEntityID(), false);
+                /*                if (index >= 7)
+                                {
+                                    InternalCalls.SetAnimationEntityPlaying(InternalCalls.GetCurrentEntityID(), false);
+                                }*/
+
+
                 CameraScript.CameraTargetZoom(0.3f, 1f);
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 if(pos.x != PlayerScript.player_pos.x)
@@ -464,10 +486,12 @@ namespace IS
                     pos.x = CameraScript.camera_pos.x;
                     InternalCalls.TransformSetPosition(CameraScript.camera_pos.x, pos.y);
                 }
+                MoveToLocation(pos.x, Boss_spawn_pos.y);
 
-                smash_timer-=InternalCalls.GetDeltaTime();
+                smash_timer -=InternalCalls.GetDeltaTime();
                 if(smash_timer <= 0)
                 {
+
                     smash = true;
                     smash_timer = smash_timer_set;
                 }
@@ -475,7 +499,13 @@ namespace IS
             }
             else
             {
+                InternalCalls.SetColliderOffset(0, -300);
+                InternalCalls.SetAnimationFrameIndex(10);
+                InternalCalls.SetAnimationEntityPlaying(InternalCalls.GetCurrentEntityID(), true);
                 Smash();
+                //SimpleVector2D pos = InternalCalls.GetTransformPosition();
+                
+
             }
 
 
@@ -504,6 +534,8 @@ namespace IS
                     if (PlayerScript.invulnerable == false)
                     {
                         PlayerScript.Health -= 1;
+                        PlayerScript.screen_flash_timer += 1.5f;
+                        PlayerScript.is_colliding_enemy = true;
                     }
 
                     smash_timer = smash_timer_set;
@@ -562,64 +594,102 @@ namespace IS
             InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav",false, 0.6f);
             SimpleVector2D pos=InternalCalls.GetTransformPosition();
             SimpleVector2D entity_pos = InternalCalls.GetTransformPositionEntity(entity);
-            SimpleVector2D size= InternalCalls.GetTransformScaling();
+            SimpleVector2D size= new SimpleVector2D(InternalCalls.GetTransformScaling().x*0.4f, InternalCalls.GetTransformScaling().y * 0.4f);
             SimpleVector2D entity_size= InternalCalls.GetTransformScalingEntity(entity);
+            float rotation = InternalCalls.GetTransformRotationEntity(entity);
 
+            // if the floor can be broken
+            if (InternalCalls.CheckEntityCategory(entity, "BreakingPoint"))
+            {
+                //spawn particles
+
+                //destroy
+                InternalCalls.DestroyEntity(entity);
+                for (int i = 0; i < 52; i++)
+                {
+                    DrawParticles(entity);
+                }
+
+                return;
+            }
+            else
+            {
+                int new_entity = InternalCalls.CreateEntityPrefab("PlatformBossLevel2");
+                InternalCalls.TransformSetPositionEntity(entity_pos.x, entity_pos.y, new_entity);
+                InternalCalls.TransformSetScaleEntity(entity_size.x, entity_size.y, new_entity);
+                InternalCalls.TransformSetRotationEntity(rotation, 0, new_entity);
+                //destroy the old entity
+                InternalCalls.DestroyEntity(entity);
+                for(int i=0; i < 32; i++)
+                {
+                    DrawParticles(entity);
+                }
+               
+
+            }
+
+
+
+
+
+
+
+            //old code to break accurately
             //if the boss is bigger
-            if (size.x>entity_size.x)
-            {
-                InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
+            /* if (size.x>entity_size.x)
+             {
+                 InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
 
-                return;
-            }
+                 return;
+             }
 
-            // local var
-            float entity_rightmost = entity_pos.x + entity_size.x / 2f;
-            float entity_leftmost = entity_pos.x - entity_size.x / 2f;
-            float boss_right = pos.x + size.x / 2f;
-            float boss_left = pos.x - size.x / 2f;
+             // local var
+             float entity_rightmost = entity_pos.x + entity_size.x / 2f;
+             float entity_leftmost = entity_pos.x - entity_size.x / 2f;
+             float boss_right = pos.x + size.x / 2f;
+             float boss_left = pos.x - size.x / 2f;
 
-            if (entity_rightmost > boss_right && entity_leftmost < boss_left)
-            {
-                // following code assumes there are left and right sides of the smashed block
+             if (entity_rightmost > boss_right && entity_leftmost < boss_left)
+             {
+                 // following code assumes there are left and right sides of the smashed block
 
-                int new_entity1 = InternalCalls.CloneEntity(entity);
-                int new_entity2 = InternalCalls.CloneEntity(entity);
+                 int new_entity1 = InternalCalls.CloneEntity(entity);
+                 int new_entity2 = InternalCalls.CloneEntity(entity);
 
-                //determine start of entity1
-                float start_point1 = entity_pos.x - entity_size.x / 2f;
-                //determine end point of entity1
-                float end_point1 = pos.x - size.x / 2f;
-                //determine lenght of entity1
-                float length1 = end_point1 - start_point1;
-                // entity 1 spawn point
-                SimpleVector2D entity1_pos = new SimpleVector2D(start_point1 + length1 / 2f, entity_pos.y);
-                // set entity 1 pos and scale
-                InternalCalls.TransformSetPositionEntity(entity1_pos.x, entity1_pos.y, new_entity1);
-                InternalCalls.TransformSetScaleEntity(length1, entity_size.y, new_entity1);
-
-
-                //determine start point of entity2
-                float start_point2 = pos.x + size.x / 2f;
-                //determine end point of entity2
-                float end_point2 = entity_pos.x + entity_size.x / 2f;
-                //determine length of entity2
-                float length = end_point2 - start_point2;
-                //new entity 2 spawn point
-                SimpleVector2D entity2_pos = new SimpleVector2D(start_point2 + length / 2, entity_pos.y);
-                // set entity position and scale
-                InternalCalls.TransformSetPositionEntity(entity2_pos.x, entity2_pos.y, new_entity2);
-                InternalCalls.TransformSetScaleEntity(length, entity_size.y, new_entity2);
+                 //determine start of entity1
+                 float start_point1 = entity_pos.x - entity_size.x / 2f;
+                 //determine end point of entity1
+                 float end_point1 = pos.x - size.x / 2f;
+                 //determine lenght of entity1
+                 float length1 = end_point1 - start_point1;
+                 // entity 1 spawn point
+                 SimpleVector2D entity1_pos = new SimpleVector2D(start_point1 + length1 / 2f, entity_pos.y);
+                 // set entity 1 pos and scale
+                 InternalCalls.TransformSetPositionEntity(entity1_pos.x, entity1_pos.y, new_entity1);
+                 InternalCalls.TransformSetScaleEntity(length1, entity_size.y, new_entity1);
 
 
-                // make the first entity fall
-                InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
-                InternalCalls.TransformSetScaleEntity(size.x, entity_size.y, entity);
-                InternalCalls.TransformSetPositionEntity(pos.x, entity_pos.y, entity);
-                InternalCalls.RigidBodySetMassEntity(size.x, entity);
+                 //determine start point of entity2
+                 float start_point2 = pos.x + size.x / 2f;
+                 //determine end point of entity2
+                 float end_point2 = entity_pos.x + entity_size.x / 2f;
+                 //determine length of entity2
+                 float length = end_point2 - start_point2;
+                 //new entity 2 spawn point
+                 SimpleVector2D entity2_pos = new SimpleVector2D(start_point2 + length / 2, entity_pos.y);
+                 // set entity position and scale
+                 InternalCalls.TransformSetPositionEntity(entity2_pos.x, entity2_pos.y, new_entity2);
+                 InternalCalls.TransformSetScaleEntity(length, entity_size.y, new_entity2);
 
-                return;
-            }
+
+                 // make the first entity fall
+                 InternalCalls.RigidBodySetBodyTypeEntity(1, entity);
+                 InternalCalls.TransformSetScaleEntity(size.x, entity_size.y, entity);
+                 InternalCalls.TransformSetPositionEntity(pos.x, entity_pos.y, entity);
+                 InternalCalls.RigidBodySetMassEntity(size.x, entity);
+
+                 return;
+        }
 
 
 
@@ -675,7 +745,7 @@ namespace IS
 
                 return;
             }
-
+            */
         }
 
         static private void SummonEnemy()
@@ -830,11 +900,13 @@ namespace IS
 
         static private void ClearBullets()
         {
+            BossProjectile.bullet_direction.Clear();
             BossProjectile.destroy_self = true;
             
         }
         static private void LeftSweep()
         {
+            InternalCalls.SetSpriteImage(boss_idle_image);
             // ensure the boss is at the defaulted position
             if (MoveToLocation(Boss_spawn_pos.x, Boss_spawn_pos.y)) { return; }
 
@@ -897,6 +969,8 @@ namespace IS
 
         static private void RightSweep()
         {
+            InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
             // ensure the boss is at the defaulted position
             if (MoveToLocation(Boss_spawn_pos.x, Boss_spawn_pos.y)) { return; }
 
@@ -961,6 +1035,8 @@ namespace IS
 
         static private void SpikesSpawn(float left_or_right)
         {
+            InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
             // ensure the boss is at the defaulted position
             if (MoveToLocation(Boss_spawn_pos.x, Boss_spawn_pos.y)) { return; } 
 
@@ -1037,6 +1113,8 @@ namespace IS
         {
             // ensure the boss is at the center position
             if (MoveToLocation(0, 0)) { return; };
+            InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
 
             //create all entities
 
@@ -1105,6 +1183,10 @@ namespace IS
 
         static private void ReverseAOE()
         {
+
+            InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
+
             if (!sweeped)
             {
                 for (int i = 0; i < number_of_bullets; i++)
@@ -1138,13 +1220,14 @@ namespace IS
         // if movement is completed return false
         static private bool MoveToLocation( float directed_x, float directed_y)
         {
+
             InternalCalls.RigidBodySetBodyTypeEntity(6, InternalCalls.GetCurrentEntityID());
-            float move_speed = 15f;
+            float move_speed = 20f;
             SimpleVector2D current_pos = InternalCalls.GetTransformPosition();
             SimpleVector2D directed = new SimpleVector2D(directed_x, directed_y);
             Vector2D direction = new Vector2D(directed.x - current_pos.x,
                                               directed.y - current_pos.y);
-            if (Vector2D.Distance(Vector2D.FromSimpleVector2D(current_pos), Vector2D.FromSimpleVector2D(directed)) > 15f)
+            if (Vector2D.Distance(Vector2D.FromSimpleVector2D(current_pos), Vector2D.FromSimpleVector2D(directed)) > 20f)
             {
 
 
@@ -1181,6 +1264,8 @@ namespace IS
 
         static private void GoNextPhase()
         {
+            InternalCalls.SetSpriteImage(boss_idle_image);
+            InternalCalls.SetSpriteAnimationIndex(0);
             //clear bullets
             ClearBullets();
             InternalCalls.TransformSetPositionEntity(0, 500, PlayerScript.PLAYER_ID);
@@ -1239,7 +1324,51 @@ namespace IS
 
         }
 
+        static private void DrawParticles(int entity_id)
+        {
+            Vector2D pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(entity_id));
+            uint r = (uint)(12314 * InternalCalls.GetRandomFloat());
+            MyRandom my_rand = new MyRandom(r);
+            int num = (int)(3f * my_rand.NextFloat());
+            int top_layer = InternalCalls.GetTopLayer();
+            Vector2D scaling = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformScalingEntity(entity_id));
+            for (int i = 0; i < num; i++)
+            {
 
+                float rand = InternalCalls.GetRandomFloat();
+                float dir = 270 + 30 * (rand - 0.5f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float size = 20f + 10f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float size_scale = -10 * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float alpha = 0.5f + 0.5f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float lifetime = 0.3f + 1f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float speed = 1000f + 500f * rand;
+
+                rand = InternalCalls.GetRandomFloat();
+                float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float y = pos.y + scaling.y / 2f * (rand - 0.2f);
+
+                rand = InternalCalls.GetRandomFloat();
+                float rotation = rand * 360;
+
+/*                InternalCalls.GameSpawnParticleExtraLayer(
+                    x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleSpike.txt",
+                (1f, 1f, 1f), top_layer);*/
+                InternalCalls.GameSpawnParticleExtraFramesRotate(x, y, dir, size, size_scale, alpha, 0.5f, lifetime, speed, "ParticleSpike.txt", 0, 0, 20f);
+
+            }
+        }
 
     } // class end here
 }
