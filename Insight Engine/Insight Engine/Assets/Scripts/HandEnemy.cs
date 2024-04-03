@@ -147,6 +147,9 @@ namespace IS
 
         private bool check_first_grounded = false;
 
+        private float min_light_intensity = 0.2f;
+        private float max_light_intensity = 0.6f;
+        private float light_intensity = 0.2f;
 
         //static private int get_hit_vfx_entity;
         public void Init()
@@ -183,6 +186,7 @@ namespace IS
             going_left = true;*/
 
             check_first_grounded = false;
+            light_intensity = min_light_intensity;
 
             // reset health
             health = max_health;
@@ -224,6 +228,8 @@ namespace IS
                 // make the hand enemy not moving
                 InternalCalls.RigidBodySetVelocityEntity(0f, 0f, ENEMY_ID);
             }
+
+            InternalCalls.SetLightIntensityEntity(ENEMY_ID, light_intensity);
 
             UpdateEnemyDirection();
             UpdateVolume();
@@ -501,9 +507,16 @@ namespace IS
                 {
                     ShootBullets();
                 }*/
+
+                // increase the light intensity
+                light_intensity += 0.01f;
+                light_intensity = (light_intensity > max_light_intensity) ? max_light_intensity : light_intensity;
             }
             else
             {
+                // reset light intensity
+                light_intensity = min_light_intensity;
+
                 // shoot bullets from hand enemy when less than the timing 1f
                 ShootBullets();
                 // reset
@@ -524,13 +537,14 @@ namespace IS
                 // create new bullet with dir and pos
                 /*                EachBullet new_b = new EachBullet();*/
                 Vector2D dir = new Vector2D(MathF.Sign(-scaling.x), 0f);
-                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1.5f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
+                Vector2D pos = new Vector2D(enemy_pos.x + MathF.Sign(-scaling.x) * MathF.Abs(scaling.x) / 1f, InternalCalls.GetTransformPositionEntity(ENEMY_ID).y);
                 HandEnemyBullets.bullets.Add(bullet_id, new EachBullet());
                 //new_b.UpdateBullet(bullet_id, dir, pos);
                 //Console.WriteLine(dir.x);
                 float bullet_speed = HandEnemyBullets.bullets[bullet_id].speed;
                 HandEnemyBullets.bullets[bullet_id].direction = dir;
                 HandEnemyBullets.bullets[bullet_id].pos = pos;
+                HandEnemyBullets.bullets[bullet_id].scaling.x *= dir.x;
                 InternalCalls.RigidBodySetVelocityEntity(dir.x * bullet_speed, 0f, bullet_id);
                 InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
                 InternalCalls.SetEntityGravityScale(0f, bullet_id);

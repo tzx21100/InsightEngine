@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -855.359619140625,
-				"Y" : 211.260986328125
+				"X" : -496.16259765625,
+				"Y" : 5054.04931640625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -46,6 +46,23 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 0.0,
+			"G" : 0.0,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.4699999988079071,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 200.0
+	},
 	"Name" : "HandEnemyBullet",
 	"RigidBody" : 
 	{
@@ -70,7 +87,7 @@
 	{
 		"ScriptName" : "HandEnemyBullets"
 	},
-	"Signature" : "00000000000000000010010000100111",
+	"Signature" : "00000000000000000011010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -80,40 +97,26 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "handEnemyIdle 1R22C.png",
+		"SpriteFilename" : "HandEnemy bullet.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 68,
-		"SpriteTextureHeight" : 256,
-		"SpriteTextureIndex" : 51,
-		"SpriteTextureWidth" : 2684,
+		"SpriteTexture" : 77,
+		"SpriteTextureHeight" : 70,
+		"SpriteTextureIndex" : 60,
+		"SpriteTextureWidth" : 749,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 100.0,
 		"SpriteTransformScalingY" : 100.0,
-		"SpriteTransformWorldPositionX" : -855.359619140625,
-		"SpriteTransformWorldPositionY" : 211.260986328125,
-		"animations" : 
-		[
-			{
-				"Name" : "ah ma",
-				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.045454546809196472,
-				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 9.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.0012091584503650665,
-				"time_per_frame" : 0.045454546809196472,
-				"x_frames" : 22,
-				"y_frames" : 1
-			}
-		]
+		"SpriteTransformWorldPositionX" : -496.16259765625,
+		"SpriteTransformWorldPositionY" : 5054.04931640625,
+		"animations" : []
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 100.0,
 		"TransformScalingY" : 100.0,
-		"TransformWorldPositionX" : -855.359619140625,
-		"TransformWorldPositionY" : 211.260986328125
+		"TransformWorldPositionX" : -496.16259765625,
+		"TransformWorldPositionY" : 5054.04931640625
 	}
 }
