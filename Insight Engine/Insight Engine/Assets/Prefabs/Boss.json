@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -346.102294921875,
-				"Y" : 1171.1884765625
+				"X" : 0.0,
+				"Y" : 1304.953369140625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -19,26 +19,26 @@
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 1.0,
-				"Y" : 1.0
+				"X" : 0.40000000596046448,
+				"Y" : 0.40000000596046448
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -260.75009155273438,
-					"y" : 260.75009155273438
+					"x" : -303.20635986328125,
+					"y" : 177.06779479980469
 				},
 				{
-					"x" : 260.75009155273438,
-					"y" : 260.75009155273438
+					"x" : 303.20635986328125,
+					"y" : 177.06779479980469
 				},
 				{
-					"x" : 260.75009155273438,
-					"y" : -260.75009155273438
+					"x" : 303.20635986328125,
+					"y" : -177.06779479980469
 				},
 				{
-					"x" : -260.75009155273438,
-					"y" : -260.75009155273438
+					"x" : -303.20635986328125,
+					"y" : -177.06779479980469
 				}
 			]
 		},
@@ -76,30 +76,44 @@
 		"AnimationIndex" : 0,
 		"Layer" : 3,
 		"SpriteColorA" : 1.0,
-		"SpriteColorX" : 0.33146396279335022,
-		"SpriteColorY" : 0.90295356512069702,
-		"SpriteColorZ" : 0.44720867276191711,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "tempboss.png",
+		"SpriteFilename" : "BossIdle 4R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 120,
-		"SpriteTextureHeight" : 1098,
-		"SpriteTextureIndex" : 103,
-		"SpriteTextureWidth" : 1098,
+		"SpriteTexture" : 25,
+		"SpriteTextureHeight" : 1196,
+		"SpriteTextureIndex" : 8,
+		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 521.50018310546875,
-		"SpriteTransformScalingY" : 521.50018310546875,
-		"SpriteTransformWorldPositionX" : -346.102294921875,
-		"SpriteTransformWorldPositionY" : 1171.1884765625,
-		"animations" : []
+		"SpriteTransformScalingX" : 1516.03173828125,
+		"SpriteTransformScalingY" : 885.33892822265625,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 1304.953369140625,
+		"animations" : 
+		[
+			{
+				"Name" : "idle",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.016750635579228401,
+				"time_per_frame" : 0.0625,
+				"x_frames" : 4,
+				"y_frames" : 4
+			}
+		]
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 521.50018310546875,
-		"TransformScalingY" : 521.50018310546875,
-		"TransformWorldPositionX" : -346.102294921875,
-		"TransformWorldPositionY" : 1171.1884765625
+		"TransformScalingX" : 1516.03173828125,
+		"TransformScalingY" : 885.33892822265625,
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 1304.953369140625
 	}
 }
