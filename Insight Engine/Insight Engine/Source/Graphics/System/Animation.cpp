@@ -104,4 +104,14 @@ namespace IS {
         frame_index.y = 0;
         frame_timer = 0;
     }
+
+    void Animation::setFrameIndex(int frameIndex) {
+        if (frameIndex < 0 || frameIndex >= (x_frames * y_frames)) {
+            IS_CORE_ERROR("setFrameIndex function - invalid index entered.");
+            return;
+        }
+
+        frame_index.x = static_cast<float>(frameIndex % x_frames);
+        frame_index.y = static_cast<float>(frameIndex / x_frames);
+    }
 }

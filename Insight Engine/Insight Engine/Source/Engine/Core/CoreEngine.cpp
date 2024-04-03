@@ -622,6 +622,7 @@ namespace IS {
 	}
 
 	void InsightEngine::NewScene() {
+		mEntitiesToDelete.clear();//clear this entity list
 		auto scriptsystem = GetSystem<ScriptManager>("ScriptManager");
 		//scriptsystem->CleanUp();
 		// Destroy all existing entities

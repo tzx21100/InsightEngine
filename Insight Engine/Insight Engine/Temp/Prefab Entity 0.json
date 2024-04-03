@@ -1,0 +1,39 @@
+{
+	"Category" : 
+	{
+		"Category" : "BreakingPoint"
+	},
+	"Name" : "PlatformBossLevel2",
+	"Signature" : "00000000000000000010000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "PlatformBossLevel2.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 104,
+		"SpriteTextureHeight" : 418,
+		"SpriteTextureIndex" : 87,
+		"SpriteTextureWidth" : 1024,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1024.0,
+		"SpriteTransformScalingY" : 418.0,
+		"SpriteTransformWorldPositionX" : 1809.1728515625,
+		"SpriteTransformWorldPositionY" : -555.1251220703125,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1024.0,
+		"TransformScalingY" : 418.0,
+		"TransformWorldPositionX" : 1371.226806640625,
+		"TransformWorldPositionY" : -360.80502319335938
+	}
+}

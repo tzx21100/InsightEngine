@@ -363,6 +363,11 @@ namespace IS {
         sprite_component.animation_index = num;
     }
 
+    static void SetAnimationFrameIndex(int index) {
+        auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
+        sprite_component.anims[sprite_component.animation_index].setFrameIndex(index);
+    }
+
     static void FreeSpriteImage(SimpleImage* simg)
     {
         auto script_sys = InsightEngine::Instance().GetSystem<ScriptManager>("ScriptManager");
@@ -403,6 +408,8 @@ namespace IS {
         auto& sprite_component = InsightEngine::Instance().GetComponent<Sprite>(InsightEngine::Instance().GetScriptCaller());
         sprite_component.color = { 1.f, 1.f, 1.f, val };
     }
+
+
     
     static void AttachCamera(float xoffset, float yoffset) {
         auto& camera = ISGraphics::cameras3D[Camera3D::mActiveCamera];
@@ -854,6 +861,17 @@ namespace IS {
 		auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(InsightEngine::Instance().GetScriptCaller());
 		collider_component.mCircleCollider.offset.x = x;
 	}
+
+    static void SetCircleColliderOffsetY(float y) {
+        auto& collider_component = InsightEngine::Instance().GetComponent<Collider>(InsightEngine::Instance().GetScriptCaller());
+        collider_component.mCircleCollider.offset.y = y;
+    }
+
+    static void SetColliderOffset(float x, float y) {
+        auto& collider = InsightEngine::Instance().GetComponent<Collider>(InsightEngine::Instance().GetScriptCaller());
+        collider.mBoxCollider.offset.x = x;
+        collider.mBoxCollider.offset.y = y;
+    }
 
     static bool CollidingObjectIsStatic(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
@@ -1727,6 +1745,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetSpriteImage);
         IS_ADD_INTERNAL_CALL(EmplaceImageToGraphics);
         IS_ADD_INTERNAL_CALL(SetSpriteAnimationIndex);
+        IS_ADD_INTERNAL_CALL(SetAnimationFrameIndex);
         IS_ADD_INTERNAL_CALL(SetSpriteAlphaEntity);
         IS_ADD_INTERNAL_CALL(SetSpriteAlpha);
         IS_ADD_INTERNAL_CALL(GetSpriteAlphaEntity);
@@ -1791,6 +1810,8 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsGhost);
         IS_ADD_INTERNAL_CALL(CollidingObjectTypeIsIgnore);
         IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetX);
+        IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetY);
+        IS_ADD_INTERNAL_CALL(SetColliderOffset);
 
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
