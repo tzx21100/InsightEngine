@@ -100,9 +100,9 @@ namespace IS
 
         static public void DestroyAllProjectiles()
         {
-            for (int i = 0; i < Projectile_list.Count; i++)
+            while(Projectile_list.Count > 0) 
             {
-                int entity_id = Projectile_list[i];
+                int entity_id = Projectile_list[0];
                 DestroyProjectile(entity_id);
             }
 

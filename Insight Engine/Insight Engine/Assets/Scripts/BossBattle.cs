@@ -76,6 +76,10 @@ namespace IS
         static SimpleImage boss_grab_image;
         static SimpleImage boss_death_image;
 
+        // for 360 random locations
+        static float random_x_location;
+        static float random_y_location;
+
 
         public enum BossStates : int
         {
@@ -139,7 +143,7 @@ namespace IS
             minus_hp_timer = minus_hp_timer_set;
             health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
-            current_state = BossStates.SpikesSpawn;
+            current_state = BossStates.Smash;
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
@@ -389,7 +393,8 @@ namespace IS
                 if (boss_phase == 0)
                 {
                     ResetPosition();
-
+                    random_x_location =-1938+ InternalCalls.GetRandomFloat()*2000;
+                    random_y_location = -700+ InternalCalls.GetRandomFloat()* 600;
                     current_state = BossStates.Boss360;
                     return;
                 }
@@ -933,7 +938,7 @@ namespace IS
                     //flip flipper
                     flipper *= -1;
                     Vector2D bullet_pos=new Vector2D(PlayerScript.player_pos.x+500f/CameraScript.camera_zoom, PlayerScript.player_pos.y+ i*flipper*50*1.5f);
-                    BossProjectile.CreateProjectile("Boss Projectile",180,0,0,bullet_pos.x,bullet_pos.y);
+                    BossProjectile.CreateProjectile("Boss Projectile",180,180,0,bullet_pos.x,bullet_pos.y);
                 }
 
                 sweeped = true;
@@ -976,7 +981,7 @@ namespace IS
                     //flip flipper
                     flipper *= -1;
                     Vector2D bullet_pos = new Vector2D(PlayerScript.player_pos.x + 500f / CameraScript.camera_zoom, PlayerScript.player_pos.y + i * flipper * 50 * 1.5f);
-                    BossProjectile.CreateProjectile("Boss Projectile", 0, 180, 0, bullet_pos.x, bullet_pos.y);
+                    BossProjectile.CreateProjectile("Boss Projectile", 0, 0, 0, bullet_pos.x, bullet_pos.y);
                 }
 
                 sweeped = true;
@@ -1065,7 +1070,7 @@ namespace IS
         static private void BossAOE()
         {
             // ensure the boss is at the center position
-            if (MoveToLocation(0, 0)) { return; };
+            if (MoveToLocation(random_x_location, random_y_location)) { return; };
             InternalCalls.SetSpriteImage(boss_idle_image);
             InternalCalls.SetSpriteAnimationIndex(0);
 
