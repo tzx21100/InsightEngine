@@ -44,6 +44,15 @@ namespace IS
             string DisplayText = "You can now double jump!\n" +
                                 "Use this ability wisely to cross distances.\n" +
                                 "Left Click To Close Tutorial...";
+
+            if (InternalCalls.ControllerConnected())
+            {
+                DisplayText = "You can now double jump!\n" +
+                                "Use this ability wisely to cross distances.\n" +
+                                "Press 'B' To Close Tutorial...";
+            }
+
+
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.1f, 0.5f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)
@@ -76,6 +85,14 @@ namespace IS
                                 "Use this ability to go up sloped walls \nand reset abilities.\n" +
                                 "If it's too steep, you might fall!\n" +
                                 "Left Click To Close Tutorial...";
+            if (InternalCalls.ControllerConnected())
+            {
+                DisplayText = "You can now Climb Vines!\n" +
+                                "Use this ability to go up sloped walls \nand reset abilities.\n" +
+                                "If it's too steep, you might fall!\n" +
+                                "Press 'B' To Close Tutorial...";
+            }
+
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.55f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)
@@ -107,6 +124,16 @@ namespace IS
                                  "Use this ability to move around and break walls!\n" +
                                  "Climbing on vines will reset this ability.\n" +
                                  "Left Click To Close Tutorial...";
+
+
+            if (InternalCalls.ControllerConnected())
+            {
+                DisplayText = "Press 'Left Shift' to Dash!\n" +
+                                 "Use this ability to move around and break walls!\n" +
+                                 "Climbing on vines will reset this ability.\n" +
+                                 "Press 'B' To Close Tutorial...";
+            }
+
             InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.5f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)

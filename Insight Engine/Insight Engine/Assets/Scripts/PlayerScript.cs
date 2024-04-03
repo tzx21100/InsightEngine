@@ -525,17 +525,25 @@ namespace IS
             // screen flash upon damage
             if (screen_flash_timer > 0.0f)
             {
+                invulnerable = true;
                 SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
                 SimpleVector2D scaling = new SimpleVector2D(WindowWidth / CameraScript.camera_zoom * 1.03f, WindowHeight / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
                 InternalCalls.DrawImageAt(pos, 0, scaling, damage_screen_flash, screen_flash_timer / 1.5f, InternalCalls.GetTopLayer() - 1);
                 screen_flash_timer -= InternalCalls.GetDeltaTime();
+                if (screen_flash_timer <= 0.0f)
+                {
+                    invulnerable = false;
+                }
             }
 
             DrawHealthBar();
 
+            
+
 
             if (GameManager.isGamePaused == true || PauseButtonScript.paused == true || TextBox.isVisible || Popup_Ability.popup_shown || CameraScript.panning_enable)
             {
+                InternalCalls.SetGravityScale(0f);
                 InternalCalls.RigidBodySetForce(0f, 0f);
                 InternalCalls.TransformSetRotation(InternalCalls.GetTransformRotation(), 0f);
                 InternalCalls.SetSpriteAnimationIndex(1);
