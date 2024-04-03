@@ -37,7 +37,7 @@ namespace IS
             bg_image5 = InternalCalls.GetSpriteImage("BossLevel_Background.png");
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
             InternalCalls.AudioStopAllSounds();
-            InternalCalls.AudioPlayMusicSFX("01.Daytime_Forest_Field_Sun_Loop.wav", 0.4f);
+            InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.05f);
 
         }
 

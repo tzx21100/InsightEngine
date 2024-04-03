@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -722.18341064453125,
-				"Y" : 257.1409912109375
+				"X" : -2372.4013671875,
+				"Y" : -503.28683471679688
 			},
 			"BoxColliderOffset" : 
 			{
@@ -62,11 +62,7 @@
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Script" : 
-	{
-		"ScriptName" : "BossProjectile"
-	},
-	"Signature" : "00000000000000000000010000100111",
+	"Signature" : "00000000000000000000010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -79,15 +75,15 @@
 		"SpriteFilename" : "Boss Projectile.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 21,
+		"SpriteTexture" : 24,
 		"SpriteTextureHeight" : 404,
-		"SpriteTextureIndex" : 4,
+		"SpriteTextureIndex" : 7,
 		"SpriteTextureWidth" : 726,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 91.475997924804688,
 		"SpriteTransformScalingY" : 50.904003143310547,
-		"SpriteTransformWorldPositionX" : -722.18341064453125,
-		"SpriteTransformWorldPositionY" : 257.1409912109375,
+		"SpriteTransformWorldPositionX" : -2372.4013671875,
+		"SpriteTransformWorldPositionY" : -503.28683471679688,
 		"animations" : []
 	},
 	"Transform" : 
@@ -95,7 +91,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 91.475997924804688,
 		"TransformScalingY" : 50.904003143310547,
-		"TransformWorldPositionX" : -722.18341064453125,
-		"TransformWorldPositionY" : 257.1409912109375
+		"TransformWorldPositionX" : -2372.4013671875,
+		"TransformWorldPositionY" : -503.28683471679688
 	}
 }

@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -346.102294921875,
-				"Y" : 566.3148193359375
+				"X" : -5576.51708984375,
+				"Y" : -270.5093994140625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -25,20 +25,20 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -260.75009155273438,
-					"y" : 260.75009155273438
+					"x" : -758.0150146484375,
+					"y" : 442.67001342773438
 				},
 				{
-					"x" : 260.75009155273438,
-					"y" : 260.75009155273438
+					"x" : 758.0150146484375,
+					"y" : 442.67001342773438
 				},
 				{
-					"x" : 260.75009155273438,
-					"y" : -260.75009155273438
+					"x" : 758.0150146484375,
+					"y" : -442.67001342773438
 				},
 				{
-					"x" : -260.75009155273438,
-					"y" : -260.75009155273438
+					"x" : -758.0150146484375,
+					"y" : -442.67001342773438
 				}
 			]
 		},
@@ -76,30 +76,44 @@
 		"AnimationIndex" : 0,
 		"Layer" : 3,
 		"SpriteColorA" : 1.0,
-		"SpriteColorX" : 0.33146396279335022,
-		"SpriteColorY" : 0.90295356512069702,
-		"SpriteColorZ" : 0.44720867276191711,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "tempboss.png",
+		"SpriteFilename" : "BossClap 6R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 121,
-		"SpriteTextureHeight" : 1098,
-		"SpriteTextureIndex" : 104,
-		"SpriteTextureWidth" : 1098,
+		"SpriteTexture" : 34,
+		"SpriteTextureHeight" : 1794,
+		"SpriteTextureIndex" : 17,
+		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 521.50018310546875,
-		"SpriteTransformScalingY" : 521.50018310546875,
-		"SpriteTransformWorldPositionX" : -346.102294921875,
-		"SpriteTransformWorldPositionY" : 566.3148193359375,
-		"animations" : []
+		"SpriteTransformScalingX" : 1516.030029296875,
+		"SpriteTransformScalingY" : 885.34002685546875,
+		"SpriteTransformWorldPositionX" : -5576.51708984375,
+		"SpriteTransformWorldPositionY" : -270.5093994140625,
+		"animations" : 
+		[
+			{
+				"Name" : "clap",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.1666666716337204,
+				"frame_index_x" : 3.0,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.0083333365619182587,
+				"time_per_frame" : 0.041666667908430099,
+				"x_frames" : 4,
+				"y_frames" : 6
+			}
+		]
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 521.50018310546875,
-		"TransformScalingY" : 521.50018310546875,
-		"TransformWorldPositionX" : -346.102294921875,
-		"TransformWorldPositionY" : 566.3148193359375
+		"TransformScalingX" : 1516.030029296875,
+		"TransformScalingY" : 885.34002685546875,
+		"TransformWorldPositionX" : -5576.51708984375,
+		"TransformWorldPositionY" : -270.5093994140625
 	}
 }

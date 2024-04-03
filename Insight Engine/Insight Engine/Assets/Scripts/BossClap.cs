@@ -12,7 +12,7 @@ namespace IS
         static private int RIGHT_HAND_ID;
 
         static private Vector2D clapping_pos = new Vector2D(99999f, 99999f);
-        static private Vector2D clapping_scaling = new Vector2D(500f, 500f);
+        static private Vector2D clapping_scaling = new Vector2D(1516.03f, 885.34f);
         static private Vector2D clapping_vel = new Vector2D(100f, 100f);
         static private Vector2D left_hand_pos = new Vector2D(0f, 0f);
         static private Vector2D right_hand_pos = new Vector2D(0f, 0f);
@@ -46,8 +46,8 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(-999999f, -999999f, LEFT_HAND_ID);
             InternalCalls.TransformSetPositionEntity(999999f, 999999f, RIGHT_HAND_ID);
 
-            InternalCalls.TransformSetScaleEntity(clapping_scaling.x, clapping_scaling.y, LEFT_HAND_ID);
-            InternalCalls.TransformSetScaleEntity(-clapping_scaling.x, clapping_scaling.y, RIGHT_HAND_ID);
+            InternalCalls.TransformSetScaleEntity(-clapping_scaling.x, clapping_scaling.y, LEFT_HAND_ID);
+            InternalCalls.TransformSetScaleEntity(clapping_scaling.x, clapping_scaling.y, RIGHT_HAND_ID);
 
             // reset
             is_two_hand_clapping = false;
