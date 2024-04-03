@@ -1,0 +1,119 @@
+{
+	"Category" : 
+	{
+		"Category" : "Boss"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -346.102294921875,
+				"Y" : 1171.1884765625
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.40000000596046448,
+				"Y" : 0.40000000596046448
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -268.48333740234375,
+					"y" : 268.48333740234375
+				},
+				{
+					"x" : 268.48333740234375,
+					"y" : 268.48333740234375
+				},
+				{
+					"x" : 268.48333740234375,
+					"y" : -268.48333740234375
+				},
+				{
+					"x" : -268.48333740234375,
+					"y" : -268.48333740234375
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "Boss",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "BossBattle"
+	},
+	"Signature" : "00000000000000000010010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "BossIdle 4R4C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 25,
+		"SpriteTextureHeight" : 1196,
+		"SpriteTextureIndex" : 8,
+		"SpriteTextureWidth" : 2048,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1342.4166259765625,
+		"SpriteTransformScalingY" : 1342.4166259765625,
+		"SpriteTransformWorldPositionX" : -346.102294921875,
+		"SpriteTransformWorldPositionY" : 1171.1884765625,
+		"animations" : 
+		[
+			{
+				"Name" : "idle",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.025049062445759773,
+				"time_per_frame" : 0.0625,
+				"x_frames" : 4,
+				"y_frames" : 4
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1342.4166259765625,
+		"TransformScalingY" : 1342.4166259765625,
+		"TransformWorldPositionX" : -346.102294921875,
+		"TransformWorldPositionY" : 1171.1884765625
+	}
+}

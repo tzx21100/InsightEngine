@@ -131,6 +131,9 @@ namespace IS
         internal extern static void SetSpriteAnimationIndex(int num);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetAnimationFrameIndex(int index);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetStartAnimationEntity(int entity, int start_idx);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -582,7 +585,13 @@ namespace IS
         internal extern static void FadeOutAudio(float fade_time);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void SetCircleColliderOffsetX(float x);
+        internal extern static void SetCircleColliderOffsetX(float x);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetCircleColliderOffsetY(float y);        
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void SetColliderOffset(float x, float y);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void SetAnimationEntityPlaying(int entity, bool toggle);

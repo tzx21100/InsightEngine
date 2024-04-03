@@ -97,6 +97,8 @@ namespace IS {
          */
         void resetAnimation();
 
+        void setFrameIndex(int frameIndex);
+
         // need to be accessed by shader
         std::string name{};
         glm::vec2 frame_dimension{1.f, 1.f};
