@@ -348,7 +348,7 @@ namespace IS
                     float speed = 500f + 200f * rand; // base on size
 
                     rand = InternalCalls.GetRandomFloat();
-                    float x = pos.x + scaling.x / 4f * (rand - 0.5f);
+                    float x = pos.x + scaling.x / 3f * (rand - 0.5f);
 
                     rand = InternalCalls.GetRandomFloat();
                     float y = pos.y + scaling.y / 4f + scaling.y / 4f * (rand - 0.2f);
