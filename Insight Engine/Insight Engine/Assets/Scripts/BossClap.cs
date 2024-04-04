@@ -24,7 +24,9 @@ namespace IS
         static private bool is_one_hand_ready = false;
         static private float one_hand_speed = 35f;
 
-        static private bool is_attacking = false;
+        static public bool is_attacking = false;
+        static public bool is_destoryed = false;
+        static private bool start_slap = false;
 
         static private float resting_timer_set = 0.5f;
         static private float resting_timer = 0.5f;
@@ -53,12 +55,17 @@ namespace IS
             is_two_hand_clapping = false;
             is_one_hand_waiting = false;
             is_attacking = false;
+            is_destoryed = false;
+            start_slap = false;
             clapping_pos = new Vector2D(99999f, 99999f);
+
+            InternalCalls.ResetSpriteAnimationFrameEntity(LEFT_HAND_ID);
+            InternalCalls.ResetSpriteAnimationFrameEntity(RIGHT_HAND_ID);
         }
 
         static public void Update()
         {
-            RandomAttackType();
+            //RandomAttackType();
             HandClapFSM();
         }
 
@@ -69,14 +76,16 @@ namespace IS
 
         static private void HandClapFSM()
         {
-            //attack_type = ClapAttackTypes.OneHandWaiting;
+            attack_type = ClapAttackTypes.OneHandWaiting;
             switch (attack_type)
             {
                 case ClapAttackTypes.TwoHand:
                     TwoHandClap();
+                    TwoHandSlapPauseAnimation();
                     break;
                 case ClapAttackTypes.OneHandWaiting:
                     OneHandWaitingForClapping();
+                    OneHandSlapPauseAnimation();
                     break;
             }
         }
@@ -198,7 +207,7 @@ namespace IS
 
                 right_hand_pos.x += right_hand_direction.x * one_hand_speed * 1.5f;
                 right_hand_pos.y += right_hand_direction.y * one_hand_speed * 1.5f;
-
+                left_hand_pos.x += 0.5f;
                 // render hands flying particles
                 RightHandFlyingParticles(right_hand_direction);
             }
@@ -252,7 +261,7 @@ namespace IS
 
                 left_hand_pos.x += left_hand_direction.x * one_hand_speed * 1.5f;
                 left_hand_pos.y += left_hand_direction.y * one_hand_speed * 1.5f;
-
+                right_hand_pos.x -= 0.5f;
                 // render hands flying particles
                 LeftHandFlyingParticles(left_hand_direction);
             }
@@ -319,6 +328,8 @@ namespace IS
 
             // reset attack
             is_attacking = false;
+
+            is_destoryed = true;
         }
 
         static private void HandClapParticles()
@@ -475,6 +486,117 @@ namespace IS
                         x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
                      );
             }
+        }
+
+        static private void TwoHandSlapPauseAnimation()
+        {
+            if (is_destoryed)
+            {
+                return;
+            }
+
+            // limit left hand animation
+            if (InternalCalls.GetCurrentAnimationEntity(LEFT_HAND_ID) >= 13)
+            {
+                InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, false);
+            }
+
+            // limit right hand animation
+            if (InternalCalls.GetCurrentAnimationEntity(RIGHT_HAND_ID) >= 13)
+            {
+                InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, false);
+                return; // return check
+            }
+
+            // control animation player for left hand (right hand same indx)
+            if (InternalCalls.GetCurrentAnimationEntity(LEFT_HAND_ID) == 3 && !start_slap)
+            {
+                start_slap = true;
+            }
+
+            if (start_slap)
+            {
+                float left_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
+                float right_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
+
+                if (MathF.Abs(left_distance) < 900f || MathF.Abs(right_distance) < 800f)
+                {
+                    InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
+                    InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);
+                }
+                else
+                {
+                    InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, false);
+                    InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, false);
+                }
+            }
+        }
+
+        static private void OneHandSlapPauseAnimation()
+        {
+            if (is_destoryed)
+            {
+                return;
+            }
+
+            // limit left hand animation
+            if (InternalCalls.GetCurrentAnimationEntity(LEFT_HAND_ID) >= 13)
+            {
+                InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, false);
+            }
+
+            // limit right hand animation
+            if (InternalCalls.GetCurrentAnimationEntity(RIGHT_HAND_ID) >= 13)
+            {
+                InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, false);
+                return; // return check
+            }
+
+            // control animation player for left hand (right hand same indx)
+            if (InternalCalls.GetCurrentAnimationEntity(LEFT_HAND_ID) == 3 && !start_slap)
+            {
+                start_slap = true;
+            }
+
+            if (random_hand_stay == 0)
+            {
+                if (start_slap)
+                {
+                    //float left_distance = PlayerScript.player_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
+                    float right_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
+
+                    if (MathF.Abs(right_distance) < 1500f)
+                    {
+                        InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
+                        InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);
+                    }
+                    else
+                    {
+                        InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, false);
+                        InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, false);
+                    }
+                }
+            }
+            else if (random_hand_stay == 1)
+            {
+                if (start_slap)
+                {
+                    float left_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
+                    //float right_distance = PlayerScript.player_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
+
+                    if (MathF.Abs(left_distance) < 1500f)
+                    {
+                        InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
+                        InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);
+                    }
+                    else
+                    {
+                        InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, false);
+                        InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, false);
+                    }
+                }
+            }
+            
         }
 
     }

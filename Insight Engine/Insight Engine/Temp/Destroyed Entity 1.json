@@ -1,7 +1,7 @@
 {
 	"Category" : 
 	{
-		"Category" : "LeftHandBoss"
+		"Category" : "RightHandBoss"
 	},
 	"Collider" : 
 	{
@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -1385.7784423828125,
-				"Y" : 1312.092041015625
+				"X" : 1899.20556640625,
+				"Y" : 1250.29052734375
 			},
 			"BoxColliderOffset" : 
 			{
@@ -46,7 +46,7 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "BossLeftHand",
+	"Name" : "BossRightHand",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
@@ -66,11 +66,7 @@
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Script" : 
-	{
-		"ScriptName" : "BossClap"
-	},
-	"Signature" : "00000000000000000010010000100111",
+	"Signature" : "00000000000000000010010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -90,8 +86,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1516.030029296875,
 		"SpriteTransformScalingY" : 885.34002685546875,
-		"SpriteTransformWorldPositionX" : -1385.7784423828125,
-		"SpriteTransformWorldPositionY" : 1312.092041015625,
+		"SpriteTransformWorldPositionX" : 1899.20556640625,
+		"SpriteTransformWorldPositionY" : 1250.29052734375,
 		"animations" : 
 		[
 			{
@@ -100,7 +96,7 @@
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.1666666716337204,
 				"frame_index_x" : 2.0,
-				"frame_index_y" : 4.0,
+				"frame_index_y" : 5.0,
 				"frame_timer" : 0.033333338797092438,
 				"time_per_frame" : 0.041666667908430099,
 				"x_frames" : 4,
@@ -113,7 +109,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1516.030029296875,
 		"TransformScalingY" : 885.34002685546875,
-		"TransformWorldPositionX" : -1385.7784423828125,
-		"TransformWorldPositionY" : 1312.092041015625
+		"TransformWorldPositionX" : 1899.20556640625,
+		"TransformWorldPositionY" : 1250.29052734375
 	}
 }

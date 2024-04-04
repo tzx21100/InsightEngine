@@ -219,6 +219,7 @@ namespace IS
 
         static private void BossFSM()
         {
+            //current_state = BossStates.Clap;
             switch (current_state)
             {
                 case BossStates.Idle:
@@ -1176,8 +1177,9 @@ namespace IS
         {
             // move current boss away
             SimpleVector2D pos = InternalCalls.GetTransformPosition();
-            pos.y += 20f;
-            InternalCalls.TransformSetPosition(pos.x, pos.y);
+            /*pos.y += 20f;
+            InternalCalls.TransformSetPosition(pos.x, pos.y);*/
+            MoveToLocation(pos.x, 1500f);
 
             if (boss_move_away_timer > 0f)
             {
@@ -1190,6 +1192,11 @@ namespace IS
                 // create left hand
                 int left_hand = InternalCalls.CreateEntityPrefab("BossLeftHand");
                 is_clapping = true;
+            }
+
+            if (BossClap.is_destoryed)
+            {
+                StateChanger();
             }
         }
 
@@ -1215,7 +1222,7 @@ namespace IS
                     if (InternalCalls.RigidBodyGetBodyTypeEntity(i)==0)//if static
                     {
                         InternalCalls.RigidBodySetBodyTypeEntity(1, i);
-                        BossBackground.phase_move -= 20f;
+                        //BossBackground.phase_move -= 20f;
                     }
                 }
 
