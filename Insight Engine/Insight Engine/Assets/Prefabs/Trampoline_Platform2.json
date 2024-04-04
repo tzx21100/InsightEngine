@@ -1,0 +1,105 @@
+{
+	"Category" : 
+	{
+		"Category" : "Ground"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 18317.142578125,
+				"Y" : 1836.52001953125
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : -7.4000000953674316,
+				"Y" : 77.199996948242188
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : -0.89999997615814209,
+				"Y" : -0.090000003576278687
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : 174.77220153808594,
+					"y" : -7.7784600257873535
+				},
+				{
+					"x" : -174.77220153808594,
+					"y" : -7.7784600257873535
+				},
+				{
+					"x" : -174.77220153808594,
+					"y" : 7.7784600257873535
+				},
+				{
+					"x" : 174.77220153808594,
+					"y" : 7.7784600257873535
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "Trampoline_Platform2",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 132894.203125,
+		"RigidBodyBodyType" : 0,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "Trampoline"
+	},
+	"Signature" : "00000000000000000010010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 0.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "Cave_platform_small.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 38,
+		"SpriteTextureHeight" : 561,
+		"SpriteTextureIndex" : 21,
+		"SpriteTextureWidth" : 771,
+		"SpriteTransformRotation" : 337.80349731445312,
+		"SpriteTransformScalingX" : 388.3826904296875,
+		"SpriteTransformScalingY" : 172.85466003417969,
+		"SpriteTransformWorldPositionX" : 18294.830078125,
+		"SpriteTransformWorldPositionY" : 1762.2454833984375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 337.80349731445312,
+		"TransformScalingX" : 388.3826904296875,
+		"TransformScalingY" : 172.85466003417969,
+		"TransformWorldPositionX" : 18294.830078125,
+		"TransformWorldPositionY" : 1762.2454833984375
+	}
+}

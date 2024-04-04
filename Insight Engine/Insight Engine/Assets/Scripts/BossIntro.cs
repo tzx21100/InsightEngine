@@ -14,6 +14,8 @@ namespace IS
 
         static private int current_phase = 0;
 
+        static private float fade_out_timer = 1f;
+
 
         static int other_hand;
 
@@ -35,6 +37,7 @@ namespace IS
             //create the other hand
             other_hand = InternalCalls.CreateEntityPrefab("BossIntroOther");
 
+            fade_out_timer = 2f;
 
             current_phase = 0;
             grow_timer = 2f;
@@ -72,16 +75,20 @@ namespace IS
             switch (current_phase)
             {
                 case 0:
+                    FadeOutFromWhite();
+                    break;
+
+                case 1:
                     GrowAndAppear();
 
                     break;
-                case 1:
+                case 2:
                     FlyAround();
                     break;
-                case 2:
+                case 3:
                     GrowAndAppear();
                     break;
-                case 3:
+                case 4:
                     if (!MoveToLocation(0,1304.95f))
                     {
                         int boss=InternalCalls.CreateEntityPrefab("Boss");
@@ -100,6 +107,17 @@ namespace IS
         static public void CleanUp(){
 
         }
+
+        static private void FadeOutFromWhite()
+        {
+            fade_out_timer -= InternalCalls.GetDeltaTime();
+            InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 1, 1, 1, fade_out_timer, InternalCalls.GetTopLayer());
+            if (fade_out_timer <= 0)
+            {
+                current_phase++;
+            }
+        }
+
 
         static private void GrowAndAppear()
         {

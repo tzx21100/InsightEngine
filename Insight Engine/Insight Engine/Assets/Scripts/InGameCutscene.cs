@@ -14,9 +14,38 @@ namespace IS
         static string text5 = "The RED ones restore the portions of the world. The BLUE ones empower you with an ability."; // pan here
         static string text6 = "Though I wish I could explain further, there is no helping it. You must GO.";
 
+        static SimpleImage MCImage = InternalCalls.GetSpriteImage("MC.png");
+        static SimpleImage NPCImage = InternalCalls.GetSpriteImage("NPC.png");
+
         static float switch_view_timer = 2.5f;
         static bool play_audio = true;
         static bool textshow = true;
+
+        static public void drawBigNPC()
+        {
+            SimpleVector2D position_of_NPC = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / CameraScript.camera_zoom / 3.1f,
+                                                                   CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 5.0f);
+            float xScale = 1887f / InternalCalls.GetWindowWidth();
+            float yScale = 2160.0f / InternalCalls.GetWindowHeight();
+            float NPCImageWidth = InternalCalls.GetWindowWidth() * -xScale / CameraScript.camera_zoom / 2.5f;
+            float NPCImageHeight = InternalCalls.GetWindowHeight() * yScale / CameraScript.camera_zoom / 2.5f;
+            SimpleVector2D image_scale = new SimpleVector2D(NPCImageWidth, NPCImageHeight);
+            InternalCalls.DrawImageAt(position_of_NPC, 0, image_scale, NPCImage, 1, InternalCalls.GetTopLayer() - 1);
+        }
+
+        static public void drawBigMC()
+        {
+            SimpleVector2D position_of_MC = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / CameraScript.camera_zoom / 3.1f,
+                                                                   CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 5.0f);
+
+            float xScale = 1273f / InternalCalls.GetWindowWidth();
+            float yScale = 2031f / InternalCalls.GetWindowHeight();
+            float MCImageWidth = InternalCalls.GetWindowWidth() * xScale / CameraScript.camera_zoom / 2.5f;
+            float MCImageHeight = InternalCalls.GetWindowHeight() * yScale / CameraScript.camera_zoom / 2.5f;
+            SimpleVector2D image_scale = new SimpleVector2D(MCImageWidth, MCImageHeight);
+            InternalCalls.DrawImageAt(position_of_MC, 0, image_scale, MCImage, 1, InternalCalls.GetTopLayer() - 1);
+        }
+
         static public void Init(){
             textshow = true;
             play_audio = true;
@@ -42,18 +71,26 @@ namespace IS
                 CameraScript.CameraPanTo(pan_position, 1f);
             
             }
+            
 
             if (TextBox.PAGE_NUMBER == 1) { //play yiming VA
-                if(play_audio)
+                drawBigMC();
+                if (play_audio)
                 {
                     InternalCalls.AudioPlaySoundSFX("Narrator_1.wav", false, 0.4f);
                     play_audio = false;
                 }
                 
                 
+                
             }
+            else if (!textshow)
+            {
+                drawBigNPC();
+            }
+            
 
-            if(TextBox.PAGE_NUMBER == 5) {
+            if (TextBox.PAGE_NUMBER == 5) {
                 CameraScript.CameraPanToTime(new Vector2D(15658.83f, 1579.83f), 1f, 2.5f);
                 switch_view_timer -= InternalCalls.GetDeltaTime();
                 if (switch_view_timer <= 0)
