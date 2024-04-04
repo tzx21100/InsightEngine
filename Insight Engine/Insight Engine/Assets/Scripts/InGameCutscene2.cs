@@ -63,7 +63,9 @@ namespace IS
                 CameraScript.CameraPanToTime(new Vector2D(2485, 3600), 1f, 2.5f);
             }
 
-            if(triggered)
+            if (!textshow) InGameCutscene.drawBigNPC();
+
+            if (triggered)
             {
                 BossCutScenePush.triggered = true;
             }

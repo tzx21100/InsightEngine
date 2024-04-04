@@ -141,7 +141,7 @@ namespace IS {
 
     private:
         struct VideoReaderState {
-            int width, height{};
+            int width{}, height{};
             AVRational time_base{};
             AVFormatContext* av_format_ctx{};
             AVCodecContext* av_codec_ctx{};
