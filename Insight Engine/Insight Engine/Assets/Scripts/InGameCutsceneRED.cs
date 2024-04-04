@@ -48,9 +48,11 @@ namespace IS
 
         static public void Init()
         {
+            InternalCalls.FadeOutAudio(0.1f);
             textshow = true;
             play_audio = true;
             switch_view_timer = 2.5f;
+            FINAL_SPIKE = 999;
             TextBox.CleanUp();
         }
 

@@ -4,7 +4,7 @@
 		"AudioFalloffFactor" : 1.0,
 		"AudioIsLoop" : false,
 		"AudioPitch" : 1.0,
-		"AudioSoundName" : "JOHN_The Choice_No Clock_Loop_60bpm.wav",
+		"AudioSoundName" : "JOHN_IntroWork-Office-Pantry_Loop_3_4_100bpm.wav",
 		"AudioVolumeLevel" : 0.23999999463558197
 	},
 	"AudioListener" : 
@@ -24,8 +24,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : 1042.9705810546875,
-				"Y" : 155.14674377441406
+				"X" : 278.7947998046875,
+				"Y" : 3.0526723861694336
 			},
 			"CircleColliderOffset" : 
 			{
@@ -99,8 +99,8 @@
 		"SpriteTransformRotation" : 358.06292724609375,
 		"SpriteTransformScalingX" : 400.0,
 		"SpriteTransformScalingY" : 360.0,
-		"SpriteTransformWorldPositionX" : 1043.2781982421875,
-		"SpriteTransformWorldPositionY" : 164.24154663085938,
+		"SpriteTransformWorldPositionX" : 279.10238647460938,
+		"SpriteTransformWorldPositionY" : 12.147472381591797,
 		"animations" : 
 		[
 			{
@@ -120,8 +120,8 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.5,
 				"frame_dimension_y" : 0.1666666716337204,
-				"frame_index_x" : 0.0,
-				"frame_index_y" : 5.0,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 3.0,
 				"frame_timer" : 0.055825941264629364,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 2,
@@ -146,7 +146,7 @@
 		"TransformRotation" : 358.06292724609375,
 		"TransformScalingX" : 400.0,
 		"TransformScalingY" : 360.0,
-		"TransformWorldPositionX" : 1043.2781982421875,
-		"TransformWorldPositionY" : 164.24154663085938
+		"TransformWorldPositionX" : 279.10238647460938,
+		"TransformWorldPositionY" : 12.147472381591797
 	}
 }

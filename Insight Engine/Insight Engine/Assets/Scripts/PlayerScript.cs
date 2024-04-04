@@ -133,6 +133,7 @@ namespace IS
         static SimpleImage player_health_full;
         static SimpleImage player_health_half;
         static SimpleImage damage_screen_flash;
+        static SimpleImage npc_image;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -285,6 +286,11 @@ namespace IS
         // dash image
         static SimpleImage dash_indicator;
 
+        // transform to npc
+        static public bool NPC_Transformation=false;
+        static private float NPC_timer = 2f;
+        static private float NPC_timer_set = 2f;
+
 
         // Key Input
 
@@ -306,8 +312,15 @@ namespace IS
 
         static public void Init()
         {
+            //reset final
+            NPC_Transformation = false;
+            NPC_timer = NPC_timer_set;
+
             //reset cam y offset
-            player_cam_y_offset= 0;
+            player_cam_y_offset = 0;
+
+            //reset camera panning
+            CameraScript.StopCameraPan();
 
             //reset HP
             Health = Max_Health;
@@ -359,6 +372,8 @@ namespace IS
 
             damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
             dash_indicator = InternalCalls.GetSpriteImage("Dash_Indicator.png");
+
+            npc_image = InternalCalls.GetSpriteImage("npc_anim 3R4C.png");
 
             //player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
 
@@ -427,6 +442,27 @@ namespace IS
 
         static public void Update()
         {
+            //transform
+            if (NPC_Transformation)
+            {
+                CameraScript.CameraPanTo(player_pos, 2f);
+                CameraScript.CameraTargetZoom(1.5f, 2f);
+                InternalCalls.SetGravityScale(0);
+                InternalCalls.RigidBodySetForce(0, 0);
+                TransformToNPC();
+
+                NPC_timer -= InternalCalls.GetDeltaTime();
+                InternalCalls.DrawSquare(camera_pos.x, camera_pos.y, 10000, 10000, 0, 0, 0, 1 - NPC_timer / 2, InternalCalls.GetTopLayer());
+                if (NPC_timer <= 0) {
+                    InternalCalls.LoadScene("Assets/Scenes/CreditsSad.insight");
+                }
+
+                return;
+            }
+
+
+
+
             //make sure playerid is always updated
             PLAYER_ID = InternalCalls.GetCurrentEntityID();
 
@@ -1232,6 +1268,11 @@ namespace IS
             //Console.WriteLine(is_walking_and_colliding_sth);
             Xforce = 0f;
             //Yforce = 0f;
+
+
+            
+
+
         }
 
         static public void CleanUp()
@@ -2291,6 +2332,14 @@ namespace IS
             }
             InternalCalls.RenderTextFont(text, font, 0.5f, 0.9f, fontSize, (1f, 1f, 1f, 1f));
         }
+
+
+        static public void TransformToNPC()
+        {
+            InternalCalls.SetSpriteImage(npc_image);
+            InternalCalls.SetSpriteAnimationIndex(2);
+        }
+
 
 
     } //player script

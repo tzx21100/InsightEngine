@@ -1,0 +1,70 @@
+{
+	"Entities" : 
+	[
+		{
+			"AudioEmitter" : 
+			{
+				"AudioFalloffFactor" : 1.0,
+				"AudioIsLoop" : false,
+				"AudioPitch" : 1.0,
+				"AudioSoundName" : "JOHN_The Choice_Loop_60bpm.wav",
+				"AudioVolumeLevel" : 0.070000000298023224
+			},
+			"AudioListener" : 
+			{
+				"AudioHearingRange" : 3000.0,
+				"AudioPitchCorrectness" : 0.0,
+				"AudioVolume" : 1.0
+			},
+			"Name" : "Background",
+			"Script" : 
+			{
+				"ScriptName" : "CreditsScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "credits_bg.jpg",
+				"SpriteName" : "Box",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 115,
+				"SpriteTextureHeight" : 2160,
+				"SpriteTextureIndex" : 98,
+				"SpriteTextureWidth" : 3840,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 1902.0,
+				"SpriteTransformScalingY" : 991.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 1902.0,
+				"TransformScalingY" : 991.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		}
+	],
+	"EntityAmount" : 1,
+	"Layers" : 
+	[
+		{
+			"Active" : true,
+			"Name" : "Background"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
+		}
+	],
+	"LayersAmount" : 2
+}

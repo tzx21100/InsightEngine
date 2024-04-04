@@ -76,7 +76,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -85,9 +85,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 46,
+				"SpriteTexture" : 50,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 29,
+				"SpriteTextureIndex" : 33,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1438.0,
@@ -181,9 +181,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 77,
+				"SpriteTexture" : 76,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 60,
+				"SpriteTextureIndex" : 59,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1161.0,
@@ -276,7 +276,7 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
-				"Layer" : 0,
+				"Layer" : 1,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
 				"SpriteColorY" : 1.0,
@@ -285,9 +285,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 46,
+				"SpriteTexture" : 50,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 29,
+				"SpriteTextureIndex" : 33,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1438.0,
@@ -389,9 +389,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 46,
+				"SpriteTexture" : 50,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 29,
+				"SpriteTextureIndex" : 33,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1438.0,
@@ -485,9 +485,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 77,
+				"SpriteTexture" : 76,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 60,
+				"SpriteTextureIndex" : 59,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 1161.0,
@@ -622,9 +622,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 3.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0035097077488899231,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.020176375284790993,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
 						"y_frames" : 3
@@ -639,9 +639,907 @@
 				"TransformWorldPositionX" : 1984.5543212890625,
 				"TransformWorldPositionY" : -112.88836669921875
 			}
+		},
+		{
+			"Name" : "black_bg",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "black_bg.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 22,
+				"SpriteTextureHeight" : 1080,
+				"SpriteTextureIndex" : 5,
+				"SpriteTextureWidth" : 1920,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 10175.9990234375,
+				"SpriteTransformScalingY" : 5723.99951171875,
+				"SpriteTransformWorldPositionX" : 1134.99853515625,
+				"SpriteTransformWorldPositionY" : 554.93255615234375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 10175.9990234375,
+				"TransformScalingY" : 5723.99951171875,
+				"TransformWorldPositionX" : 1134.99853515625,
+				"TransformWorldPositionY" : 554.93255615234375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 181.01264953613281,
+				"SpriteTransformWorldPositionY" : 1124.488037109375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.01666666753590107,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 181.01264953613281,
+				"TransformWorldPositionY" : 1124.488037109375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 892.57489013671875,
+				"SpriteTransformWorldPositionY" : 911.347412109375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 892.57489013671875,
+				"TransformWorldPositionY" : 911.347412109375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : -281.32937622070312,
+				"SpriteTransformWorldPositionY" : 616.23919677734375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : -281.32937622070312,
+				"TransformWorldPositionY" : 616.23919677734375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 1669.7281494140625,
+				"SpriteTransformWorldPositionY" : 721.16998291015625,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 1669.7281494140625,
+				"TransformWorldPositionY" : 721.16998291015625
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2204.21923828125,
+				"SpriteTransformWorldPositionY" : 1121.21875,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2204.21923828125,
+				"TransformWorldPositionY" : 1121.21875
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2210.77734375,
+				"SpriteTransformWorldPositionY" : 616.2392578125,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 1.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2210.77734375,
+				"TransformWorldPositionY" : 616.2392578125
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 1404.1116943359375,
+				"SpriteTransformWorldPositionY" : 1026.11376953125,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 1404.1116943359375,
+				"TransformWorldPositionY" : 1026.11376953125
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2158.31103515625,
+				"SpriteTransformWorldPositionY" : 865.44842529296875,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2158.31103515625,
+				"TransformWorldPositionY" : 865.44842529296875
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2594.410888671875,
+				"SpriteTransformWorldPositionY" : 849.03277587890625,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2594.410888671875,
+				"TransformWorldPositionY" : 849.03277587890625
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2830.505126953125,
+				"SpriteTransformWorldPositionY" : 429.309326171875,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2830.505126953125,
+				"TransformWorldPositionY" : 429.309326171875
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 2837.063232421875,
+				"SpriteTransformWorldPositionY" : 1114.638671875,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 2837.063232421875,
+				"TransformWorldPositionY" : 1114.638671875
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 3197.76318359375,
+				"SpriteTransformWorldPositionY" : 786.7298583984375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.13333334028720856,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 3197.76318359375,
+				"TransformWorldPositionY" : 786.7298583984375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 224.13790893554688,
+				"SpriteTransformWorldPositionY" : 639.49505615234375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 224.13790893554688,
+				"TransformWorldPositionY" : 639.49505615234375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 460.80914306640625,
+				"SpriteTransformWorldPositionY" : 882.56292724609375,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 460.80914306640625,
+				"TransformWorldPositionY" : 882.56292724609375
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 927.7554931640625,
+				"SpriteTransformWorldPositionY" : 1164.009765625,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 927.7554931640625,
+				"TransformWorldPositionY" : 1164.009765625
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 687.884033203125,
+				"SpriteTransformWorldPositionY" : 581.92431640625,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 687.884033203125,
+				"TransformWorldPositionY" : 581.92431640625
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 1253.9783935546875,
+				"SpriteTransformWorldPositionY" : 556.340087890625,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 1253.9783935546875,
+				"TransformWorldPositionY" : 556.340087890625
+			}
+		},
+		{
+			"Name" : "GlitchParticle 1R4C",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "GlitchParticle 1R4C.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 84,
+				"SpriteTextureHeight" : 256,
+				"SpriteTextureIndex" : 67,
+				"SpriteTextureWidth" : 1024,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 294.70697021484375,
+				"SpriteTransformScalingY" : 280.24319458007812,
+				"SpriteTransformWorldPositionX" : 1816.872802734375,
+				"SpriteTransformWorldPositionY" : 1151.216796875,
+				"animations" : 
+				[
+					{
+						"Name" : "a",
+						"animation_duration" : 1.0,
+						"frame_dimension_x" : 0.25,
+						"frame_dimension_y" : 1.0,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.083333335816860199,
+						"time_per_frame" : 0.25,
+						"x_frames" : 4,
+						"y_frames" : 1
+					}
+				]
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 294.70697021484375,
+				"TransformScalingY" : 280.24319458007812,
+				"TransformWorldPositionX" : 1816.872802734375,
+				"TransformWorldPositionY" : 1151.216796875
+			}
 		}
 	],
-	"EntityAmount" : 9,
+	"EntityAmount" : 28,
 	"Layers" : 
 	[
 		{

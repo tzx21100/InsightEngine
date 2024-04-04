@@ -1,0 +1,140 @@
+{
+	"AudioEmitter" : 
+	{
+		"AudioFalloffFactor" : 1.0,
+		"AudioIsLoop" : false,
+		"AudioPitch" : 1.0,
+		"AudioSoundName" : "Near-Fragments_SFX.wav",
+		"AudioVolumeLevel" : 0.54000002145767212
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 615.47174072265625,
+				"Y" : 302.726806640625
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -140.91999816894531,
+					"y" : 120.89999389648438
+				},
+				{
+					"x" : 140.91999816894531,
+					"y" : 120.89999389648438
+				},
+				{
+					"x" : 140.91999816894531,
+					"y" : -120.89999389648438
+				},
+				{
+					"x" : -140.91999816894531,
+					"y" : -120.89999389648438
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 1.0,
+			"G" : 0.32414698600769043,
+			"R" : 0.06329113245010376
+		},
+		"LightIntensity" : 1.0,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 1345.0
+	},
+	"Name" : "NPCBlueFragment",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 1.0,
+		"RigidBodyMass" : 1.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "FinalNPCFragment"
+	},
+	"Signature" : "00000000000000000001010100100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "fragment_anim 4R3C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 94,
+		"SpriteTextureHeight" : 1860,
+		"SpriteTextureIndex" : 77,
+		"SpriteTextureWidth" : 1626,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 281.83999633789062,
+		"SpriteTransformScalingY" : 241.79998779296875,
+		"SpriteTransformWorldPositionX" : 615.47174072265625,
+		"SpriteTransformWorldPositionY" : 302.726806640625,
+		"animations" : 
+		[
+			{
+				"Name" : "Frag",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.3333333432674408,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.050517968833446503,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 3,
+				"y_frames" : 4
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 281.83999633789062,
+		"TransformScalingY" : 241.79998779296875,
+		"TransformWorldPositionX" : 615.47174072265625,
+		"TransformWorldPositionY" : 302.726806640625
+	}
+}

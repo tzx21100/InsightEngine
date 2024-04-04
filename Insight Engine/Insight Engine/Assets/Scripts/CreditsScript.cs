@@ -72,6 +72,7 @@ namespace IS
         static Vector2D back_button_pos = new Vector2D(0, 0);
         static public void Init()
         {
+            InternalCalls.FadeOutAudio(0.1f);
             InternalCalls.SetSpriteImage(InternalCalls.GetSpriteImage("credits_bg.jpg"));
 
             win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
@@ -82,7 +83,6 @@ namespace IS
             InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
 
 
-            InternalCalls.AudioStopAllSounds();
             button_frame = InternalCalls.GetSpriteImage("button_frame.png");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", button_frame, "BackFromWinScript");
 
