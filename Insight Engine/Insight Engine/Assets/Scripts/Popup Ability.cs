@@ -15,13 +15,16 @@ namespace IS
         static public string font = "Semplicita_Light";
         static public float BG_ALPHA = 0.6f;
         static private float VIDEO_Y = -0.1f;
+        static private int winHeight = 0;
+        static private int winWidth = 0;
 
         static public void Init(){
 
         }
 
         static public void Update(){
-            
+            winWidth = InternalCalls.GetWindowWidth();
+            winHeight = InternalCalls.GetWindowHeight();
         }
 
         static public void CleanUp(){
@@ -39,11 +42,24 @@ namespace IS
             }
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer()+2);
+
+            float textbox_width = InternalCalls.GetWindowWidth() * 0.55f / CameraScript.camera_zoom;
+            float textbox_height = InternalCalls.GetWindowHeight() * 0.5f / CameraScript.camera_zoom;
+            SimpleVector2D image_scale = new SimpleVector2D(textbox_width, textbox_height);
+
+            SimpleVector2D position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / CameraScript.camera_zoom / 4.3f,
+                                                                   CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 30.0f);
+
+            SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
+            InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer()+4);
+
+
             string Header_text = "DOUBLE JUMP UNLOCKED";
             InternalCalls.RenderTextFont(Header_text,font, 0.5f, 0.8f, 24f, (1, 1, 1, 1));
             string DisplayText = "You can now double jump!\n" +
                                 "Use this ability wisely to cross distances.\n" +
                                 "Left Click To Close Tutorial...";
+
 
             if (InternalCalls.ControllerConnected())
             {
@@ -53,7 +69,7 @@ namespace IS
             }
 
 
-            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.1f, 0.5f, 16f, (1, 1, 1, 1));
+            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.09f, 0.5f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)
             {
@@ -80,6 +96,17 @@ namespace IS
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer() + 2);
             string Header_text = "VINE MECHANICS UNLOCKED";
+
+            float textbox_width = InternalCalls.GetWindowWidth() * 0.55f / CameraScript.camera_zoom;
+            float textbox_height = InternalCalls.GetWindowHeight() * 0.5f / CameraScript.camera_zoom;
+            SimpleVector2D image_scale = new SimpleVector2D(textbox_width, textbox_height);
+
+            SimpleVector2D position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / CameraScript.camera_zoom / 4.3f,
+                                                                    CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 30.0f);
+
+            SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
+            InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer() + 4);
+
             InternalCalls.RenderTextFont(Header_text, font, 0.5f, 0.8f, 24f, (1, 1, 1, 1));
             string DisplayText = "You can now Climb Vines!\n" +
                                 "Use this ability to go up sloped walls \nand reset abilities.\n" +
@@ -93,7 +120,7 @@ namespace IS
                                 "Press 'B' To Close Tutorial...";
             }
 
-            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.55f, 16f, (1, 1, 1, 1));
+            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.09f, 0.545f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)
             {
@@ -119,9 +146,20 @@ namespace IS
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer() + 2);
             string Header_text = "DASH UNLOCKED";
+
+            float textbox_width = InternalCalls.GetWindowWidth() * 0.55f / CameraScript.camera_zoom;
+            float textbox_height = InternalCalls.GetWindowHeight() * 0.5f / CameraScript.camera_zoom;
+            SimpleVector2D image_scale = new SimpleVector2D(textbox_width, textbox_height);
+
+            SimpleVector2D position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x - InternalCalls.GetWindowWidth() / CameraScript.camera_zoom / 4.3f,
+                                                                   CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 30.0f);
+
+            SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
+            InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer()+4);
+
             InternalCalls.RenderTextFont(Header_text, font, 0.5f, 0.8f, 24f, (1, 1, 1, 1));
             string DisplayText = "Press 'Left Shift' to Dash!\n" +
-                                 "Use this ability to move around and break walls!\n" +
+                                 "Use this ability to move around,\nbreak walls and dodge attacks!\n" +
                                  "Climbing on vines will reset this ability.\n" +
                                  "Left Click To Close Tutorial...";
 
@@ -129,12 +167,12 @@ namespace IS
             if (InternalCalls.ControllerConnected())
             {
                 DisplayText = "Press 'Left Shift' to Dash!\n" +
-                                 "Use this ability to move around and break walls!\n" +
+                                 "Use this ability to move around,\nbreak walls and dodge attacks!\n" +
                                  "Climbing on vines will reset this ability.\n" +
                                  "Press 'B' To Close Tutorial...";
             }
 
-            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.05f, 0.5f, 16f, (1, 1, 1, 1));
+            InternalCalls.RenderLeftAlignTextFont(DisplayText, font, 0.09f, 0.545f, 16f, (1, 1, 1, 1));
 
             if (PlayerScript.select_trigger)
             {
