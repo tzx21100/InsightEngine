@@ -10,16 +10,13 @@ namespace IS
         static public void Update()
         {
 
-            SimpleArray array = InternalCalls.GetCollidingEntityArray(InternalCalls.GetCurrentEntityID());
-
-            for (int i = 0; i < array.length; i++)
+            if (InternalCalls.GetTransformPosition().x < 740)
             {
-                int entity =array.FindIndex(i);
-                if(entity==InGameCutsceneRED.FINAL_SPIKE)
-                {
-                    InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
-                }
+                InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
+
+                TextBox.CreateTextBox("Looks like you made the same choice after all");
             }
+                   
 
 
         }

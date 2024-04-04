@@ -46,6 +46,8 @@ namespace IS
         static private Vector2D health_bar_scaling = new Vector2D(1000f, 250f);
 
         // boss invul after hit duration
+
+        static public bool wasHit=false;
         static private float invul_timer = 0.1f;
         static private float invul_timer_set = 0.1f;
 
@@ -208,7 +210,7 @@ namespace IS
             BossFSM();
 
             DrawHealthBar();
-            //TakeDamage();
+            TakeDamage();
             //update projectile
             BossProjectile.Update();
 
@@ -339,17 +341,17 @@ namespace IS
 
         static private void TakeDamage()
         {
-            SimpleArray array = InternalCalls.GetCollidingEntityArray(InternalCalls.GetCurrentEntityID());
-
-            if (invul_timer > 0)
+            if(wasHit)
             {
-                invul_timer -= InternalCalls.GetDeltaTime();
-            }
+                InternalCalls.SetSpriteAlpha(InternalCalls.GetRandomFloat() * 2f);
 
-            if (array.FindIndex(PlayerScript.entity_attack) != -1 && invul_timer <=0)
-            {
-                boss_hp -= PlayerScript.attack_damage;
-                invul_timer = invul_timer_set;
+                invul_timer-=InternalCalls.GetDeltaTime();
+                if(invul_timer < 0 )
+                {
+                    invul_timer = invul_timer_set;
+                    wasHit = false;
+                    InternalCalls.SetSpriteAlpha(1f);
+                }
             }
         }
 

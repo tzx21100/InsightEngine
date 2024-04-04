@@ -37,6 +37,9 @@ namespace IS
         static private float flying_fog_render_timer = 0.2f;
 
         static public void Init(){
+
+            FastScene.Init();
+
             CaveBackGroundRaw.Init();
             PlayerScript.isDead = false;
 
@@ -57,6 +60,8 @@ namespace IS
 
         static public void Update()
         {
+            FastScene.vidUpdate();
+
             if (PlayerScript.isDead)
             {
                 InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");

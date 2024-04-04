@@ -1907,7 +1907,10 @@ namespace IS
             {
                 
 
-
+                if(InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
+                {
+                    BossBattle.wasHit = true;
+                }
 
 
                // when colliding with enemy

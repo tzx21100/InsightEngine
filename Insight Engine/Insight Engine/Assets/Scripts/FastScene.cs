@@ -26,6 +26,19 @@ namespace IS
             }
         }
         
+        static public void vidUpdate()
+        {
+            float dt = InternalCalls.GetDeltaTime();
+            timer -= dt;
+            if (timer <= 0.0f)
+            {
+                InternalCalls.SetLightsToggle(true);
+                InternalCalls.unloadVideos();
+            }
+
+        }
+
+
         static public void CleanUp(){
 
         }
