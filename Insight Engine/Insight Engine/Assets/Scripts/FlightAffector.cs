@@ -90,7 +90,7 @@ namespace IS
             DrawFlyingFogs(colliding);
 
             float size = 1200f;
-            float ratio_inbetween = 0.7f; //more less gap inbetwen
+            float ratio_inbetween = 1f; //more less gap inbetwen
             float speed = 0.1f;
             float squash_y = 400f;
             float squash_x = 0f;
@@ -138,16 +138,16 @@ namespace IS
 
 
             for (int i=-32; i< 32;i++) {
-                for (int j=-32; j< 32;j++)
+                for (int j = -32; j < 32; j++)
                 {
-
+                    
                     InternalCalls.DrawImageExtraAt(0, index, 1, 7, new SimpleVector2D(i * (size - squash_x) / ratio_inbetween, j * (size - squash_y)),
-            0f, new SimpleVector2D(size - squash_x, size - squash_y), wind_vfx, 0.7f, InternalCalls.GetTopLayer() - 4);
+            0f, new SimpleVector2D(size - squash_x, size - squash_y), wind_vfx, 0.9f, InternalCalls.GetTopLayer() - 4);
 
                     InternalCalls.DrawImageExtraAt(0, index, 1, 7, new SimpleVector2D(i * (size - squash_x + index_random[i + 32, j + 32]) / ratio_inbetween, j * (size - squash_y)),
-0f, new SimpleVector2D(size - squash_x+ index_random[i + 32, j + 32], size - squash_y), wind_vfx, 0.3f, InternalCalls.GetTopLayer() - 4);
+0f, new SimpleVector2D(size - squash_x+ index_random[i + 32, j + 32], size - squash_y), wind_vfx, 0.7f, InternalCalls.GetTopLayer() - 4);
                     InternalCalls.DrawImageExtraAt(0, index, 1, 7, new SimpleVector2D(i * (size - squash_x - index_random[i + 32, j + 32]) / ratio_inbetween, j * (size - squash_y)),
-0f, new SimpleVector2D(size - squash_x + index_random[i + 32, j + 32], size - squash_y), wind_vfx, 0.2f, InternalCalls.GetTopLayer() - 4);
+0f, new SimpleVector2D(size - squash_x + index_random[i + 32, j + 32], size - squash_y), wind_vfx, 0.5f, InternalCalls.GetTopLayer() - 4);
 
                     // for random insertions inbetween
 
@@ -174,7 +174,7 @@ namespace IS
 
 
             //cave backgrond
-            CaveBackGroundRaw.Update();
+/*            CaveBackGroundRaw.Update();*/
 
             
         }
