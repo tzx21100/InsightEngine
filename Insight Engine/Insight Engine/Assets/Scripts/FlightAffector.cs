@@ -40,7 +40,7 @@ namespace IS
             CaveBackGroundRaw.Init();
             PlayerScript.isDead = false;
 
-            CameraScript.CameraTargetZoom(0.5f, 0.1f);
+            CameraScript.CameraTargetZoom(0.4f, 0.1f);
             for (int i = -32; i < 32; i++)
             {
                 for (int j = -32; j < 32; j++)
