@@ -9,7 +9,8 @@ namespace IS
 
         static public void Init()
         {
-
+            SimpleVector2D scale = InternalCalls.GetTransformScaling();
+            InternalCalls.TransformSetScale(-scale.x, scale.y);
         }
 
         static public void Update()

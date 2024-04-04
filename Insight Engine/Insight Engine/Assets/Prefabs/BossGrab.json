@@ -1,7 +1,7 @@
 {
 	"Category" : 
 	{
-		"Category" : "LeftHandBoss"
+		"Category" : "Boss"
 	},
 	"Collider" : 
 	{
@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -5576.51708984375,
-				"Y" : -270.5093994140625
+				"X" : -3269.39453125,
+				"Y" : -1491.523681640625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -19,42 +19,26 @@
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 1.0,
-				"Y" : 1.0
+				"X" : 0.40000000596046448,
+				"Y" : 0.40000000596046448
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -303.20635986328125,
+					"y" : 177.06779479980469
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 303.20635986328125,
+					"y" : 177.06779479980469
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : 303.20635986328125,
+					"y" : -177.06779479980469
 				},
 				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
-				},
-				{
-					"x" : 0.0,
-					"y" : 0.0
+					"x" : -303.20635986328125,
+					"y" : -177.06779479980469
 				}
 			]
 		},
@@ -62,7 +46,7 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "BossLeftHand",
+	"Name" : "BossGrab",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
@@ -84,38 +68,38 @@
 	},
 	"Script" : 
 	{
-		"ScriptName" : "BossClap"
+		"ScriptName" : "BossGrabEnd"
 	},
 	"Signature" : "00000000000000000010010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
-		"Layer" : 3,
+		"Layer" : 1,
 		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "BossClap 6R4C.png",
+		"SpriteFilename" : "BossGrab 6R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 34,
+		"SpriteTexture" : 33,
 		"SpriteTextureHeight" : 1794,
-		"SpriteTextureIndex" : 17,
+		"SpriteTextureIndex" : 16,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1516.030029296875,
-		"SpriteTransformScalingY" : 885.34002685546875,
-		"SpriteTransformWorldPositionX" : -5576.51708984375,
-		"SpriteTransformWorldPositionY" : -270.5093994140625,
+		"SpriteTransformScalingX" : 1516.03173828125,
+		"SpriteTransformScalingY" : 885.33892822265625,
+		"SpriteTransformWorldPositionX" : -3269.39453125,
+		"SpriteTransformWorldPositionY" : -1491.523681640625,
 		"animations" : 
 		[
 			{
-				"Name" : "clap",
+				"Name" : "grab",
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.1666666716337204,
-				"frame_index_x" : 3.0,
+				"frame_index_x" : 1.0,
 				"frame_index_y" : 1.0,
 				"frame_timer" : 0.0083333365619182587,
 				"time_per_frame" : 0.041666667908430099,
@@ -127,9 +111,9 @@
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1516.030029296875,
-		"TransformScalingY" : 885.34002685546875,
-		"TransformWorldPositionX" : -1385.7784423828125,
-		"TransformWorldPositionY" : 1312.092041015625
+		"TransformScalingX" : 1516.03173828125,
+		"TransformScalingY" : 885.33892822265625,
+		"TransformWorldPositionX" : -3269.39453125,
+		"TransformWorldPositionY" : -1491.523681640625
 	}
 }

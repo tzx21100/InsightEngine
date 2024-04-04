@@ -198,7 +198,8 @@ namespace IS
                 {
                     BossProjectile.DestroyAllProjectiles();
                     BossProjectile.CLEAN();
-                    InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
+                    InternalCalls.CreateEntityPrefab("BossDeath");
+                    InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
                 }
 
             }
