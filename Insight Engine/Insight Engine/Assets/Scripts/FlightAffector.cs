@@ -191,6 +191,11 @@ namespace IS
 
         static private void DrawFlyingFogs(bool check_colliding)
         {
+            if (TransitionToBossLevel.is_transiting)
+            {
+                return; // if it is transiting, do not render the fogs
+            }
+
             if (PlayerScript.flight_held && check_colliding)
             {
                 if (flying_fog_render_timer > 0f)
