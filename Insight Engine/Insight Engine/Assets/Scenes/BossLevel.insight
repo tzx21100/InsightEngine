@@ -12,8 +12,8 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 0.0,
-						"Y" : 1304.953369140625
+						"X" : 247.80535888671875,
+						"Y" : -57.9779052734375
 					},
 					"BoxColliderOffset" : 
 					{
@@ -28,20 +28,20 @@
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -303.20635986328125,
-							"y" : 177.06779479980469
+							"x" : -100.96800231933594,
+							"y" : 58.964000701904297
 						},
 						{
-							"x" : 303.20635986328125,
-							"y" : 177.06779479980469
+							"x" : 100.96800231933594,
+							"y" : 58.964000701904297
 						},
 						{
-							"x" : 303.20635986328125,
-							"y" : -177.06779479980469
+							"x" : 100.96800231933594,
+							"y" : -58.964000701904297
 						},
 						{
-							"x" : -303.20635986328125,
-							"y" : -177.06779479980469
+							"x" : -100.96800231933594,
+							"y" : -58.964000701904297
 						}
 					]
 				},
@@ -49,7 +49,7 @@
 				"CircleColliderEnabled" : false,
 				"ResponseEnabled" : true
 			},
-			"Name" : "Boss",
+			"Name" : "BossIntro",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -71,7 +71,7 @@
 			},
 			"Script" : 
 			{
-				"ScriptName" : "BossBattle"
+				"ScriptName" : "BossIntro"
 			},
 			"Sprite" : 
 			{
@@ -85,15 +85,15 @@
 				"SpriteFilename" : "BossIdle 4R4C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 29,
+				"SpriteTexture" : 27,
 				"SpriteTextureHeight" : 1196,
-				"SpriteTextureIndex" : 12,
+				"SpriteTextureIndex" : 10,
 				"SpriteTextureWidth" : 2048,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 1516.03173828125,
-				"SpriteTransformScalingY" : 885.33892822265625,
-				"SpriteTransformWorldPositionX" : 0.0,
-				"SpriteTransformWorldPositionY" : 1304.953369140625,
+				"SpriteTransformScalingX" : 504.83999633789062,
+				"SpriteTransformScalingY" : 294.82000732421875,
+				"SpriteTransformWorldPositionX" : 247.80535888671875,
+				"SpriteTransformWorldPositionY" : -57.9779052734375,
 				"animations" : 
 				[
 					{
@@ -101,9 +101,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.016809972003102303,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.04181443527340889,
 						"time_per_frame" : 0.0625,
 						"x_frames" : 4,
 						"y_frames" : 4
@@ -113,10 +113,10 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 1516.03173828125,
-				"TransformScalingY" : 885.33892822265625,
-				"TransformWorldPositionX" : 0.0,
-				"TransformWorldPositionY" : 1304.953369140625
+				"TransformScalingX" : 504.83999633789062,
+				"TransformScalingY" : 294.82000732421875,
+				"TransformWorldPositionX" : 247.80535888671875,
+				"TransformWorldPositionY" : -57.9779052734375
 			}
 		},
 		{
@@ -212,9 +212,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 97,
+				"SpriteTexture" : 88,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 80,
+				"SpriteTextureIndex" : 71,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -240,9 +240,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 1.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.055825941264629364,
+						"frame_timer" : 0.039159271866083145,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -664,9 +664,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -760,9 +760,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -856,9 +856,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -952,9 +952,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -1048,9 +1048,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -1144,9 +1144,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 25.54656982421875,
 				"SpriteTransformScalingX" : 396.38031005859375,
@@ -1240,9 +1240,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 334.0,
 				"SpriteTransformScalingX" : 396.38031005859375,
@@ -1336,9 +1336,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -1432,9 +1432,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 777.2159423828125,
@@ -1528,9 +1528,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 26.0,
 				"SpriteTransformScalingX" : 396.38031005859375,
@@ -1624,9 +1624,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 606.2283935546875,
@@ -1720,9 +1720,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 606.2283935546875,
@@ -1816,9 +1816,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 248.55364990234375,
@@ -1912,9 +1912,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 26.0,
 				"SpriteTransformScalingX" : 396.38031005859375,
@@ -2008,9 +2008,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 334.0,
 				"SpriteTransformScalingX" : 396.38031005859375,
@@ -2104,9 +2104,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 105,
+				"SpriteTexture" : 108,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 88,
+				"SpriteTextureIndex" : 91,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 334.0,
 				"SpriteTransformScalingX" : 396.38031005859375,

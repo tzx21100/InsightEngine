@@ -24,14 +24,18 @@ namespace IS
         static private Vector2D bg_scale = new Vector2D(2048 * 2.5f, 1080 * 2.5f);
 
 
+        //phase 2
+        static public float phase_move = 0;
+
+
         static private float fade_out_timer = 1.7f;
 
         static public void Init()
         {
-
+            phase_move = 0;
             fade_out_timer = 1.7f;
             //bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
-            bg_image2 = InternalCalls.GetSpriteImage("BossLevel_Foreground.png");
+            bg_image2 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image3 = InternalCalls.GetSpriteImage("BossLevel_Midground.png");
             bg_image4 = InternalCalls.GetSpriteImage("GlitchTree_Prop.png");
             bg_image5 = InternalCalls.GetSpriteImage("BossLevel_Background.png");
@@ -44,6 +48,8 @@ namespace IS
 
         static public void Update()
         {
+
+
             bg_scale = new Vector2D(2048*1.2f /CameraScript.camera_zoom, 1080*1.2f / CameraScript.camera_zoom);
 
             //InternalCalls.DrawImageAt(PlayerScript.camera_pos.ToSimpleVector2D() ,0, bg_scale.ToSimpleVector2D(), bg_image5, 0);
@@ -67,7 +73,7 @@ namespace IS
                 Vector2D initialPos = GetCurrentPositionForLayer(i);
 
                 // Update the position
-                Vector2D newPos = new Vector2D(CameraScript.camera_pos.x + initialPos.x - layerOffsetX, CameraScript.camera_pos.y + initialPos.y - layerOffsetY);
+                Vector2D newPos = new Vector2D(CameraScript.camera_pos.x + initialPos.x - layerOffsetX, CameraScript.camera_pos.y + initialPos.y - layerOffsetY +phase_move);
 
                 // Draw the layer at its new position
                 InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);

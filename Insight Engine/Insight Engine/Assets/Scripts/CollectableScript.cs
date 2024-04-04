@@ -40,6 +40,10 @@ namespace IS
                 {
                     CameraScript.CameraPanToTime(FogBlockade2.current_pos, 2.6f, 3f);
                 }
+                else
+                {
+                    CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 5f);
+                }
 
 
                 InternalCalls.AudioPlaySound("Collect.wav", false, 0.15f);
