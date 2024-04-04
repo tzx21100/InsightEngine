@@ -13,7 +13,9 @@ namespace IS
 
             if (array.FindIndex(PlayerScript.PLAYER_ID) != -1)
             {
-
+                InternalCalls.LoadScene("Assets/Scenes/RedEnding.insight");
+                InternalCalls.AudioPlaySound("StartClick.wav", false, 0.15f);
+                PlayerScript.initialPowerUp = true;
 
             }
         }

@@ -1,0 +1,115 @@
+{
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : 1443.864013671875,
+				"Y" : -119.07962036132812
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 1.0,
+				"Y" : 1.0
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -108.50839233398438,
+					"y" : 93.092994689941406
+				},
+				{
+					"x" : 108.50839233398438,
+					"y" : 93.092994689941406
+				},
+				{
+					"x" : 108.50839233398438,
+					"y" : -93.092994689941406
+				},
+				{
+					"x" : -108.50839233398438,
+					"y" : -93.092994689941406
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Name" : "NPCFinal",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : -981.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 68148.90625,
+		"RigidBodyBodyType" : 1,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 0.0,
+		"RigidBodyMass" : 0.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "InGameCutsceneRED"
+	},
+	"Signature" : "00000000000000000000010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "npc_anim 3R4C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 152,
+		"SpriteTextureHeight" : 2604,
+		"SpriteTextureIndex" : 135,
+		"SpriteTextureWidth" : 3464,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 217.01678466796875,
+		"SpriteTransformScalingY" : 186.18598937988281,
+		"SpriteTransformWorldPositionX" : 1443.864013671875,
+		"SpriteTransformWorldPositionY" : -119.07962036132812,
+		"animations" : 
+		[
+			{
+				"Name" : "a",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.3333333432674408,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.053509712219238281,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 4,
+				"y_frames" : 3
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 217.01678466796875,
+		"TransformScalingY" : 186.18598937988281,
+		"TransformWorldPositionX" : 1443.864013671875,
+		"TransformWorldPositionY" : -119.07962036132812
+	}
+}

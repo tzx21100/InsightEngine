@@ -4,8 +4,8 @@
 		"AudioFalloffFactor" : 1.0,
 		"AudioIsLoop" : false,
 		"AudioPitch" : 1.0,
-		"AudioSoundName" : "JOHN_Mindy-Theme2_Consequence-Finale_Loop_80bpm.wav",
-		"AudioVolumeLevel" : 0.68000000715255737
+		"AudioSoundName" : "JOHN_The Choice_No Clock_Loop_60bpm.wav",
+		"AudioVolumeLevel" : 0.23999999463558197
 	},
 	"AudioListener" : 
 	{
@@ -24,8 +24,8 @@
 		{
 			"CircleColliderCenter" : 
 			{
-				"X" : -591.01898193359375,
-				"Y" : 67.572349548339844
+				"X" : 1042.9705810546875,
+				"Y" : 155.14674377441406
 			},
 			"CircleColliderOffset" : 
 			{
@@ -83,7 +83,7 @@
 	"Sprite" : 
 	{
 		"AnimationIndex" : 1,
-		"Layer" : 1,
+		"Layer" : 3,
 		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
@@ -92,15 +92,15 @@
 		"SpriteFilename" : "idle_strip.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 47,
+		"SpriteTexture" : 97,
 		"SpriteTextureHeight" : 219,
-		"SpriteTextureIndex" : 46,
+		"SpriteTextureIndex" : 80,
 		"SpriteTextureWidth" : 4096,
 		"SpriteTransformRotation" : 358.06292724609375,
 		"SpriteTransformScalingX" : 400.0,
 		"SpriteTransformScalingY" : 360.0,
-		"SpriteTransformWorldPositionX" : -591.01898193359375,
-		"SpriteTransformWorldPositionY" : 76.672348022460938,
+		"SpriteTransformWorldPositionX" : 1043.2781982421875,
+		"SpriteTransformWorldPositionY" : 164.24154663085938,
 		"animations" : 
 		[
 			{
@@ -118,14 +118,14 @@
 			{
 				"Name" : "",
 				"animation_duration" : 1.0,
-				"frame_dimension_x" : 0.083333335816860199,
-				"frame_dimension_y" : 1.0,
-				"frame_index_x" : 2.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.054750584065914154,
+				"frame_dimension_x" : 0.5,
+				"frame_dimension_y" : 0.1666666716337204,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 5.0,
+				"frame_timer" : 0.055825941264629364,
 				"time_per_frame" : 0.083333335816860199,
-				"x_frames" : 12,
-				"y_frames" : 1
+				"x_frames" : 2,
+				"y_frames" : 6
 			},
 			{
 				"Name" : "",
@@ -146,7 +146,7 @@
 		"TransformRotation" : 358.06292724609375,
 		"TransformScalingX" : 400.0,
 		"TransformScalingY" : 360.0,
-		"TransformWorldPositionX" : -591.01898193359375,
-		"TransformWorldPositionY" : 76.672348022460938
+		"TransformWorldPositionX" : 1043.2781982421875,
+		"TransformWorldPositionY" : 164.24154663085938
 	}
 }

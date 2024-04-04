@@ -17,7 +17,8 @@ namespace IS
                 SimpleVector2D pos = InternalCalls.GetTransformPosition();
                 InternalCalls.TransformSetPositionEntity(pos.x,pos.y,grabber);
                 InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
-
+                InternalCalls.AudioPlaySound("StartClick.wav", false, 0.15f);
+                PlayerScript.initialPowerUp = true;
             }
         }
         
