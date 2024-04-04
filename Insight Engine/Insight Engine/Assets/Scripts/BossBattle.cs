@@ -11,7 +11,7 @@ namespace IS
         //boss stats
         static public float boss_hp=150;
         static private float boss_max_hp=500;
-        static private int boss_phase = 0; // when health drops below 0 go to next phase
+        static public int boss_phase = 0; // when health drops below 0 go to next phase
 
         static private float temp_boss_hp=150; // for decrease hp animation
         static private float minus_hp_timer_set = 0.5f;
@@ -196,6 +196,8 @@ namespace IS
 
                 if(boss_phase==1)
                 {
+                    BossProjectile.DestroyAllProjectiles();
+                    BossProjectile.CLEAN();
                     InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
                 }
 
@@ -503,7 +505,7 @@ namespace IS
                 if(pos.x != PlayerScript.player_pos.x)
                 {
                     pos.x = CameraScript.camera_pos.x;
-                    InternalCalls.TransformSetPosition(CameraScript.camera_pos.x, pos.y);
+                    //InternalCalls.TransformSetPosition(CameraScript.camera_pos.x, pos.y);
                 }
                 MoveToLocation(pos.x, Boss_spawn_pos.y);
 
@@ -1213,6 +1215,7 @@ namespace IS
                     if (InternalCalls.RigidBodyGetBodyTypeEntity(i)==0)//if static
                     {
                         InternalCalls.RigidBodySetBodyTypeEntity(1, i);
+                        BossBackground.phase_move -= 20f;
                     }
                 }
 

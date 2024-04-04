@@ -25,20 +25,20 @@
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -303.20635986328125,
-					"y" : 177.06779479980469
+					"x" : -100.96800231933594,
+					"y" : 58.964000701904297
 				},
 				{
-					"x" : 303.20635986328125,
-					"y" : 177.06779479980469
+					"x" : 100.96800231933594,
+					"y" : 58.964000701904297
 				},
 				{
-					"x" : 303.20635986328125,
-					"y" : -177.06779479980469
+					"x" : 100.96800231933594,
+					"y" : -58.964000701904297
 				},
 				{
-					"x" : -303.20635986328125,
-					"y" : -177.06779479980469
+					"x" : -100.96800231933594,
+					"y" : -58.964000701904297
 				}
 			]
 		},
@@ -46,7 +46,7 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "Boss",
+	"Name" : "BossIntro",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
@@ -68,7 +68,7 @@
 	},
 	"Script" : 
 	{
-		"ScriptName" : "BossBattle"
+		"ScriptName" : "BossIntro"
 	},
 	"Signature" : "00000000000000000010010000100111",
 	"Sprite" : 
@@ -88,8 +88,8 @@
 		"SpriteTextureIndex" : 10,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1516.03173828125,
-		"SpriteTransformScalingY" : 885.33892822265625,
+		"SpriteTransformScalingX" : 504.83999633789062,
+		"SpriteTransformScalingY" : 294.82000732421875,
 		"SpriteTransformWorldPositionX" : 0.0,
 		"SpriteTransformWorldPositionY" : 1304.953369140625,
 		"animations" : 
@@ -99,9 +99,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 2.0,
-				"frame_index_y" : 2.0,
-				"frame_timer" : 0.058478273451328278,
+				"frame_index_x" : 3.0,
+				"frame_index_y" : 1.0,
+				"frame_timer" : 0.045979868620634079,
 				"time_per_frame" : 0.0625,
 				"x_frames" : 4,
 				"y_frames" : 4
@@ -111,8 +111,8 @@
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1516.03173828125,
-		"TransformScalingY" : 885.33892822265625,
+		"TransformScalingX" : 504.83999633789062,
+		"TransformScalingY" : 294.82000732421875,
 		"TransformWorldPositionX" : 0.0,
 		"TransformWorldPositionY" : 1304.953369140625
 	}
