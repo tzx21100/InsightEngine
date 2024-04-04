@@ -84,9 +84,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -188,9 +188,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -292,9 +292,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -388,9 +388,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 641.7843017578125,
@@ -488,9 +488,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -584,9 +584,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -680,9 +680,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -784,9 +784,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -884,9 +884,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 133,
+				"SpriteTexture" : 136,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 116,
+				"SpriteTextureIndex" : 119,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1261.601806640625,
@@ -984,9 +984,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 133,
+				"SpriteTexture" : 136,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 116,
+				"SpriteTextureIndex" : 119,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 318.76602172851562,
@@ -1080,9 +1080,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1176,9 +1176,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1272,9 +1272,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1368,9 +1368,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1464,9 +1464,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1560,9 +1560,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1656,9 +1656,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1752,9 +1752,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1848,9 +1848,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -1944,9 +1944,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2040,9 +2040,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2136,9 +2136,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2232,9 +2232,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2328,9 +2328,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2424,9 +2424,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2520,9 +2520,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2616,9 +2616,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2712,9 +2712,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2808,9 +2808,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -2904,9 +2904,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -3004,9 +3004,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -3104,9 +3104,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -3229,9 +3229,9 @@
 				"SpriteFilename" : "Prop_Lantern_NoLights.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 117,
+				"SpriteTexture" : 124,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 100,
+				"SpriteTextureIndex" : 107,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.33181762695312,
 				"SpriteTransformScalingX" : 284.008544921875,
@@ -3363,9 +3363,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3397,9 +3397,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3531,9 +3531,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3565,9 +3565,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3599,9 +3599,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3712,9 +3712,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 88,
+				"SpriteTexture" : 96,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 71,
+				"SpriteTextureIndex" : 79,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -3741,8 +3741,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.071417354047298431,
+						"frame_index_y" : 5.0,
+						"frame_timer" : 0.038084018975496292,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -3784,9 +3784,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 170.81999206542969,
@@ -3880,9 +3880,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -3976,9 +3976,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4080,9 +4080,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4184,9 +4184,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 67,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 50,
+				"SpriteTextureIndex" : 47,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 500.0,
@@ -4200,9 +4200,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.037644337862730026,
+						"frame_index_x" : 4.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.004311002790927887,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -4298,9 +4298,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4398,9 +4398,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4498,9 +4498,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4598,9 +4598,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4698,9 +4698,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4798,9 +4798,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 133,
+				"SpriteTexture" : 136,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 116,
+				"SpriteTextureIndex" : 119,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 318.76602172851562,
@@ -4898,9 +4898,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -4998,9 +4998,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -5109,9 +5109,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -5209,9 +5209,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -5313,9 +5313,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -5417,9 +5417,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 27.5919189453125,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -5521,9 +5521,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 19.005767822265625,
 				"SpriteTransformScalingX" : 344.25726318359375,
@@ -5625,9 +5625,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 358.70443725585938,
 				"SpriteTransformScalingX" : 344.25732421875,
@@ -5729,9 +5729,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 54.738800048828125,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -5833,9 +5833,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 354.04684448242188,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -5937,9 +5937,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 1.163421630859375,
 				"SpriteTransformScalingX" : 344.25729370117188,
@@ -6041,9 +6041,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 347.41854858398438,
 				"SpriteTransformScalingX" : 344.25738525390625,
@@ -6145,9 +6145,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 338.44732666015625,
 				"SpriteTransformScalingX" : 344.25732421875,
@@ -6249,9 +6249,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 19.02880859375,
 				"SpriteTransformScalingX" : 344.25726318359375,
@@ -6345,9 +6345,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -6470,9 +6470,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 89,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 72,
+				"SpriteTextureIndex" : 64,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -6486,8 +6486,8 @@
 						"animation_duration" : 0.40000000596046448,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -6718,9 +6718,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 55.498260498046875,
 				"SpriteTransformScalingX" : 104.06883239746094,
@@ -6752,9 +6752,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 55.498260498046875,
 				"SpriteTransformScalingX" : 104.06883239746094,
@@ -6786,9 +6786,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 55.498260498046875,
 				"SpriteTransformScalingX" : 104.06883239746094,
@@ -6820,9 +6820,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 33.4534912109375,
 				"SpriteTransformScalingX" : 104.06883239746094,
@@ -6854,9 +6854,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 17.499359130859375,
 				"SpriteTransformScalingX" : 104.06887054443359,
@@ -6888,9 +6888,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 17.499359130859375,
 				"SpriteTransformScalingX" : 104.06887054443359,
@@ -6922,9 +6922,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 17.499359130859375,
 				"SpriteTransformScalingX" : 104.06887054443359,
@@ -7026,9 +7026,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -7130,9 +7130,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -7230,9 +7230,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -7286,9 +7286,9 @@
 				"SpriteFilename" : "pause_button.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 98,
+				"SpriteTexture" : 99,
 				"SpriteTextureHeight" : 258,
-				"SpriteTextureIndex" : 81,
+				"SpriteTextureIndex" : 82,
 				"SpriteTextureWidth" : 234,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 117.0,
@@ -7390,9 +7390,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -7490,9 +7490,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -7615,9 +7615,9 @@
 				"SpriteFilename" : "Prop_Lantern_NoLights.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 117,
+				"SpriteTexture" : 124,
 				"SpriteTextureHeight" : 791,
-				"SpriteTextureIndex" : 100,
+				"SpriteTextureIndex" : 107,
 				"SpriteTextureWidth" : 570,
 				"SpriteTransformRotation" : 359.86602783203125,
 				"SpriteTransformScalingX" : 284.00216674804688,
@@ -7749,9 +7749,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -7783,9 +7783,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -7817,9 +7817,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -7851,9 +7851,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -7885,9 +7885,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -7919,9 +7919,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 104.06886291503906,
@@ -8023,9 +8023,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -8127,9 +8127,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 329.70590209960938,
 				"SpriteTransformScalingX" : 344.25738525390625,
@@ -8231,9 +8231,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 16.94207763671875,
 				"SpriteTransformScalingX" : 344.25732421875,
@@ -8335,9 +8335,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 3.88323974609375,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -8439,9 +8439,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 3.88323974609375,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -8543,9 +8543,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 3.88323974609375,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -8647,9 +8647,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 67,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 50,
+				"SpriteTextureIndex" : 47,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 6.720458984375,
 				"SpriteTransformScalingX" : 500.00009155273438,
@@ -8663,9 +8663,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 5.0,
+						"frame_index_x" : 0.0,
 						"frame_index_y" : 0.0,
-						"frame_timer" : 0.026226567104458809,
+						"frame_timer" : 0.076226569712162018,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -8765,9 +8765,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 67,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 50,
+				"SpriteTextureIndex" : 47,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 6.720458984375,
 				"SpriteTransformScalingX" : 500.00009155273438,
@@ -8781,9 +8781,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0095598995685577393,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.059559904038906097,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -8883,9 +8883,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 6.849884033203125,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -9008,9 +9008,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 89,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 72,
+				"SpriteTextureIndex" : 64,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -9024,8 +9024,8 @@
 						"animation_duration" : 0.40000000596046448,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 2.0,
 						"frame_timer" : 0.00051816552877426147,
 						"time_per_frame" : 0.033333335071802139,
 						"x_frames" : 3,
@@ -9139,9 +9139,9 @@
 				"SpriteFilename" : "fragment_anim 4R3C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 89,
+				"SpriteTexture" : 81,
 				"SpriteTextureHeight" : 1860,
-				"SpriteTextureIndex" : 72,
+				"SpriteTextureIndex" : 64,
 				"SpriteTextureWidth" : 1626,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 281.83999633789062,
@@ -9155,9 +9155,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.3333333432674408,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.050517968833446503,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 3.0,
+						"frame_timer" : 0.017184631898999214,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 3,
 						"y_frames" : 4
@@ -9257,9 +9257,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 352.25051879882812,
 				"SpriteTransformScalingX" : 344.25735473632812,
@@ -9353,9 +9353,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -9449,9 +9449,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -9641,9 +9641,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -9737,9 +9737,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -9833,9 +9833,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -9937,9 +9937,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 67,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 50,
+				"SpriteTextureIndex" : 47,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 6.720458984375,
 				"SpriteTransformScalingX" : 500.00009155273438,
@@ -9953,9 +9953,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.042893234640359879,
+						"frame_index_x" : 4.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.0095598995685577393,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -10055,9 +10055,9 @@
 				"SpriteFilename" : "Enemy_Idle.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 67,
+				"SpriteTexture" : 64,
 				"SpriteTextureHeight" : 627,
-				"SpriteTextureIndex" : 50,
+				"SpriteTextureIndex" : 47,
 				"SpriteTextureWidth" : 8604,
 				"SpriteTransformRotation" : 6.720458984375,
 				"SpriteTransformScalingX" : 500.00009155273438,
@@ -10071,9 +10071,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.1666666716337204,
 						"frame_dimension_y" : 0.5,
-						"frame_index_x" : 1.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.0095598995685577393,
+						"frame_index_x" : 2.0,
+						"frame_index_y" : 0.0,
+						"frame_timer" : 0.059559904038906097,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 6,
 						"y_frames" : 2
@@ -10199,9 +10199,9 @@
 				"SpriteFilename" : "Vines 01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 139,
+				"SpriteTexture" : 143,
 				"SpriteTextureHeight" : 1699,
-				"SpriteTextureIndex" : 122,
+				"SpriteTextureIndex" : 126,
 				"SpriteTextureWidth" : 279,
 				"SpriteTransformRotation" : 15.712554931640625,
 				"SpriteTransformScalingX" : 571.94970703125,
@@ -10303,9 +10303,9 @@
 				"SpriteFilename" : "Cave_platform_tall.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 24,
+				"SpriteTexture" : 39,
 				"SpriteTextureHeight" : 1248,
-				"SpriteTextureIndex" : 7,
+				"SpriteTextureIndex" : 22,
 				"SpriteTextureWidth" : 517,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 517.0,
@@ -10410,9 +10410,9 @@
 				"SpriteFilename" : "npc_anim 3R4C.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 143,
+				"SpriteTexture" : 150,
 				"SpriteTextureHeight" : 2604,
-				"SpriteTextureIndex" : 126,
+				"SpriteTextureIndex" : 133,
 				"SpriteTextureWidth" : 3464,
 				"SpriteTransformRotation" : 352.87347412109375,
 				"SpriteTransformScalingX" : 217.01681518554688,
@@ -10426,9 +10426,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.3333333432674408,
-						"frame_index_x" : 0.0,
-						"frame_index_y" : 1.0,
-						"frame_timer" : 0.020176375284790993,
+						"frame_index_x" : 3.0,
+						"frame_index_y" : 2.0,
+						"frame_timer" : 0.070176377892494202,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 4,
 						"y_frames" : 3
@@ -10665,9 +10665,9 @@
 				"SpriteFilename" : "CaveVineStart.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 39,
+				"SpriteTexture" : 31,
 				"SpriteTextureHeight" : 1344,
-				"SpriteTextureIndex" : 22,
+				"SpriteTextureIndex" : 14,
 				"SpriteTextureWidth" : 242,
 				"SpriteTransformRotation" : 354.99996948242188,
 				"SpriteTransformScalingX" : 86.376899719238281,
@@ -10857,9 +10857,9 @@
 				"SpriteFilename" : "CaveEnvironment without grass01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 38,
+				"SpriteTexture" : 30,
 				"SpriteTextureHeight" : 1152,
-				"SpriteTextureIndex" : 21,
+				"SpriteTextureIndex" : 13,
 				"SpriteTextureWidth" : 476,
 				"SpriteTransformRotation" : 175.0,
 				"SpriteTransformScalingX" : 416.11917114257812,
@@ -10953,9 +10953,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 354.99996948242188,
 				"SpriteTransformScalingX" : 396.5009765625,
@@ -11049,9 +11049,9 @@
 				"SpriteFilename" : "CaveEnvironment without grass01.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 38,
+				"SpriteTexture" : 30,
 				"SpriteTextureHeight" : 1152,
-				"SpriteTextureIndex" : 21,
+				"SpriteTextureIndex" : 13,
 				"SpriteTextureWidth" : 476,
 				"SpriteTransformRotation" : 5.0,
 				"SpriteTransformScalingX" : 416.11932373046875,
@@ -11083,9 +11083,9 @@
 				"SpriteFilename" : "CaveVineStart.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 39,
+				"SpriteTexture" : 31,
 				"SpriteTextureHeight" : 1344,
-				"SpriteTextureIndex" : 22,
+				"SpriteTextureIndex" : 14,
 				"SpriteTextureWidth" : 242,
 				"SpriteTransformRotation" : 5.0,
 				"SpriteTransformScalingX" : 86.380256652832031,
@@ -11217,9 +11217,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 42.591583251953125,
 				"SpriteTransformScalingX" : 91.980194091796875,
@@ -11251,9 +11251,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 20.430023193359375,
 				"SpriteTransformScalingX" : 91.980171203613281,
@@ -11347,9 +11347,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -11372,6 +11372,74 @@
 			"Sprite" : 
 			{
 				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 589.65863037109375,
+				"SpriteTransformScalingY" : 589.65863037109375,
+				"SpriteTransformWorldPositionX" : -2042.2794189453125,
+				"SpriteTransformWorldPositionY" : 826.656982421875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 589.65863037109375,
+				"TransformScalingY" : 589.65863037109375,
+				"TransformWorldPositionX" : -2042.2794189453125,
+				"TransformWorldPositionY" : 826.656982421875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 6431.986328125,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 6431.986328125,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
 				"Layer" : 0,
 				"SpriteColorA" : 1.0,
 				"SpriteColorX" : 1.0,
@@ -11381,9 +11449,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -11415,9 +11483,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 3.8731689453125,
 				"SpriteTransformScalingX" : 91.980216979980469,
@@ -11449,9 +11517,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 356.02047729492188,
 				"SpriteTransformScalingX" : 91.980224609375,
@@ -11483,9 +11551,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 356.02047729492188,
 				"SpriteTransformScalingX" : 91.980224609375,
@@ -11517,9 +11585,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 356.02047729492188,
 				"SpriteTransformScalingX" : 91.980224609375,
@@ -11538,6 +11606,40 @@
 			}
 		},
 		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 10436.30078125,
+				"SpriteTransformWorldPositionY" : -633.61151123046875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 10436.30078125,
+				"TransformWorldPositionY" : -633.61151123046875
+			}
+		},
+		{
 			"Name" : "Cave_spikes",
 			"Sprite" : 
 			{
@@ -11551,9 +11653,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 340.04653930664062,
 				"SpriteTransformScalingX" : 91.980216979980469,
@@ -11569,6 +11671,74 @@
 				"TransformScalingY" : 119.97998809814453,
 				"TransformWorldPositionX" : 19158.154296875,
 				"TransformWorldPositionY" : 400.57882690429688
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 5299.69921875,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 5299.69921875,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 2998.60400390625,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 2998.60400390625,
+				"TransformWorldPositionY" : 1422.1571044921875
 			}
 		},
 		{
@@ -11647,9 +11817,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -11681,9 +11851,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 22.37933349609375,
 				"SpriteTransformScalingX" : 91.980224609375,
@@ -11699,6 +11869,74 @@
 				"TransformScalingY" : 119.98004150390625,
 				"TransformWorldPositionX" : 18149.181640625,
 				"TransformWorldPositionY" : 1136.058349609375
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 589.65863037109375,
+				"SpriteTransformScalingY" : 589.65863037109375,
+				"SpriteTransformWorldPositionX" : -2042.2794189453125,
+				"SpriteTransformWorldPositionY" : 1979.3272705078125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 589.65863037109375,
+				"TransformScalingY" : 589.65863037109375,
+				"TransformWorldPositionX" : -2042.2794189453125,
+				"TransformWorldPositionY" : 1979.3272705078125
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 111.83090209960938,
+				"SpriteTransformWorldPositionY" : -633.61151123046875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 111.83090209960938,
+				"TransformWorldPositionY" : -633.61151123046875
 			}
 		},
 		{
@@ -11777,9 +12015,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -11795,6 +12033,40 @@
 				"TransformScalingY" : 583.7835693359375,
 				"TransformWorldPositionX" : -35.887180328369141,
 				"TransformWorldPositionY" : 1731.5804443359375
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 90.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 9285.5986328125,
+				"SpriteTransformWorldPositionY" : -633.61151123046875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 90.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 9285.5986328125,
+				"TransformWorldPositionY" : -633.61151123046875
 			}
 		},
 		{
@@ -11873,9 +12145,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -11907,9 +12179,77 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 7576.4423828125,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 7576.4423828125,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 1846.191162109375,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 1846.191162109375,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -11941,9 +12281,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 5.271820068359375,
 				"SpriteTransformScalingX" : 91.980201721191406,
@@ -11962,6 +12302,136 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : -35.887233734130859,
+						"Y" : 2308.83740234375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : -291.89178466796875
+						},
+						{
+							"x" : -146.63343811035156,
+							"y" : -291.89178466796875
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 2414881.75,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 80,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 63,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 325.85208129882812,
+				"SpriteTransformScalingY" : 583.7835693359375,
+				"SpriteTransformWorldPositionX" : -35.887233734130859,
+				"SpriteTransformWorldPositionY" : 2308.83740234375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 325.85208129882812,
+				"TransformScalingY" : 583.7835693359375,
+				"TransformWorldPositionX" : -35.887233734130859,
+				"TransformWorldPositionY" : 2308.83740234375
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 4152.1962890625,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 4152.1962890625,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
 			"Name" : "Cave_WallTile",
 			"Sprite" : 
 			{
@@ -11975,9 +12445,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -11996,6 +12466,40 @@
 			}
 		},
 		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 4727.46875,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 4727.46875,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
 			"Name" : "Cave_spikes",
 			"Sprite" : 
 			{
@@ -12009,9 +12513,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 336.35415649414062,
 				"SpriteTransformScalingX" : 91.980209350585938,
@@ -12027,6 +12531,74 @@
 				"TransformScalingY" : 119.98001861572266,
 				"TransformWorldPositionX" : 18297.921875,
 				"TransformWorldPositionY" : 1144.32470703125
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 9868.404296875,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 9868.404296875,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 703.89691162109375,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 703.89691162109375,
+				"TransformWorldPositionY" : 1422.1571044921875
 			}
 		},
 		{
@@ -12205,9 +12777,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -12223,6 +12795,74 @@
 				"TransformScalingY" : 583.7835693359375,
 				"TransformWorldPositionX" : 19309.708984375,
 				"TransformWorldPositionY" : 342.96551513671875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 9290.087890625,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 9290.087890625,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 19761.962890625,
+				"SpriteTransformWorldPositionY" : 342.17779541015625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 19761.962890625,
+				"TransformWorldPositionY" : 342.17779541015625
 			}
 		},
 		{
@@ -12301,9 +12941,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -12322,6 +12962,106 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 19021.201171875,
+						"Y" : 2531.27099609375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -70.246978759765625,
+							"y" : 17.551691055297852
+						},
+						{
+							"x" : 70.246978759765625,
+							"y" : 17.551691055297852
+						},
+						{
+							"x" : 70.246978759765625,
+							"y" : -17.551691055297852
+						},
+						{
+							"x" : -70.246978759765625,
+							"y" : -17.551691055297852
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 57.6282958984375,
+				"SpriteTransformScalingX" : 140.49395751953125,
+				"SpriteTransformScalingY" : 35.103382110595703,
+				"SpriteTransformWorldPositionX" : 19021.201171875,
+				"SpriteTransformWorldPositionY" : 2531.27099609375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 57.6282958984375,
+				"TransformScalingX" : 140.49395751953125,
+				"TransformScalingY" : 35.103382110595703,
+				"TransformWorldPositionX" : 19021.201171875,
+				"TransformWorldPositionY" : 2531.27099609375
+			}
+		},
+		{
 			"Category" : 
 			{
 				"Category" : "Ground"
@@ -12332,36 +13072,36 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 18956.96484375,
-						"Y" : 2532.6416015625
+						"X" : 18950.4375,
+						"Y" : 2556.80859375
 					},
 					"BoxColliderOffset" : 
 					{
-						"X" : 0.0,
-						"Y" : -7.6999998092651367
+						"X" : 1.5,
+						"Y" : 17.299999237060547
 					},
 					"BoxColliderSizeScale" : 
 					{
-						"X" : 0.89999997615814209,
-						"Y" : 0.81000000238418579
+						"X" : -0.89999997615814209,
+						"Y" : 0.20999999344348907
 					},
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -174.77220153808594,
-							"y" : 70.006156921386719
-						},
-						{
 							"x" : 174.77220153808594,
-							"y" : 70.006156921386719
-						},
-						{
-							"x" : 174.77220153808594,
-							"y" : -70.006156921386719
+							"y" : 18.149738311767578
 						},
 						{
 							"x" : -174.77220153808594,
-							"y" : -70.006156921386719
+							"y" : 18.149738311767578
+						},
+						{
+							"x" : -174.77220153808594,
+							"y" : -18.149738311767578
+						},
+						{
+							"x" : 174.77220153808594,
+							"y" : -18.149738311767578
 						}
 					]
 				},
@@ -12369,7 +13109,7 @@
 				"CircleColliderEnabled" : false,
 				"ResponseEnabled" : true
 			},
-			"Name" : "Trampoline_Platform",
+			"Name" : "Trampoline_Platform2",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -12405,24 +13145,154 @@
 				"SpriteFilename" : "Cave_platform_small.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 40,
+				"SpriteTexture" : 38,
 				"SpriteTextureHeight" : 561,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 21,
 				"SpriteTextureWidth" : 771,
-				"SpriteTransformRotation" : 10.7552490234375,
+				"SpriteTransformRotation" : 22.0,
 				"SpriteTransformScalingX" : 388.3826904296875,
-				"SpriteTransformScalingY" : 172.85470581054688,
+				"SpriteTransformScalingY" : 172.85466003417969,
 				"SpriteTransformWorldPositionX" : 18955.52734375,
 				"SpriteTransformWorldPositionY" : 2540.206298828125,
 				"animations" : []
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 10.7552490234375,
+				"TransformRotation" : 22.0,
 				"TransformScalingX" : 388.3826904296875,
-				"TransformScalingY" : 172.85470581054688,
+				"TransformScalingY" : 172.85466003417969,
 				"TransformWorldPositionX" : 18955.52734375,
 				"TransformWorldPositionY" : 2540.206298828125
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 126.75886535644531,
+				"SpriteTransformWorldPositionY" : 2896.849609375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 126.75886535644531,
+				"TransformWorldPositionY" : 2896.849609375
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 19309.708984375,
+						"Y" : 2637.8623046875
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : -291.89178466796875
+						},
+						{
+							"x" : -146.63343811035156,
+							"y" : -291.89178466796875
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 2414881.75,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 80,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 63,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 325.85208129882812,
+				"SpriteTransformScalingY" : 583.7835693359375,
+				"SpriteTransformWorldPositionX" : 19309.708984375,
+				"SpriteTransformWorldPositionY" : 2637.8623046875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 325.85208129882812,
+				"TransformScalingY" : 583.7835693359375,
+				"TransformWorldPositionX" : 19309.708984375,
+				"TransformWorldPositionY" : 2637.8623046875
 			}
 		},
 		{
@@ -12501,9 +13371,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -12535,9 +13405,9 @@
 				"SpriteFilename" : "Env_Round_Boulder.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 104,
+				"SpriteTexture" : 92,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 87,
+				"SpriteTextureIndex" : 75,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1040.0,
@@ -12569,9 +13439,77 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 7010.302734375,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 7010.302734375,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 270.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 8720.8994140625,
+				"SpriteTransformWorldPositionY" : 1422.1571044921875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 270.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 8720.8994140625,
+				"TransformWorldPositionY" : 1422.1571044921875
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 589.65863037109375,
@@ -12603,9 +13541,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -12621,6 +13559,102 @@
 				"TransformScalingY" : 578.56036376953125,
 				"TransformWorldPositionX" : 19761.962890625,
 				"TransformWorldPositionY" : 2057.37841796875
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 19309.708984375,
+						"Y" : 3803.193603515625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : -291.89178466796875
+						},
+						{
+							"x" : -146.63343811035156,
+							"y" : -291.89178466796875
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 2414881.75,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 0,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 80,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 63,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 325.85208129882812,
+				"SpriteTransformScalingY" : 583.7835693359375,
+				"SpriteTransformWorldPositionX" : 19309.708984375,
+				"SpriteTransformWorldPositionY" : 3803.193603515625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 325.85208129882812,
+				"TransformScalingY" : 583.7835693359375,
+				"TransformWorldPositionX" : 19309.708984375,
+				"TransformWorldPositionY" : 3803.193603515625
 			}
 		},
 		{
@@ -12699,9 +13733,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -12733,9 +13767,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 125.21002197265625,
 				"SpriteTransformScalingX" : 102.88626098632812,
@@ -12829,9 +13863,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -12863,9 +13897,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 143.04193115234375,
 				"SpriteTransformScalingX" : 102.88631439208984,
@@ -12884,6 +13918,40 @@
 			}
 		},
 		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 19761.962890625,
+				"SpriteTransformWorldPositionY" : 2635.869384765625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 19761.962890625,
+				"TransformWorldPositionY" : 2635.869384765625
+			}
+		},
+		{
 			"Name" : "Cave_spikes",
 			"Sprite" : 
 			{
@@ -12897,9 +13965,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 162.47088623046875,
 				"SpriteTransformScalingX" : 102.88631439208984,
@@ -12993,9 +14061,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -13014,6 +14082,102 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 19309.708984375,
+						"Y" : 1486.7940673828125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 0.89999997615814209,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : 291.89178466796875
+						},
+						{
+							"x" : 146.63343811035156,
+							"y" : -291.89178466796875
+						},
+						{
+							"x" : -146.63343811035156,
+							"y" : -291.89178466796875
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Cave_WallSide",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 2414881.75,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallSide.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 80,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 63,
+				"SpriteTextureWidth" : 1161,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 325.85208129882812,
+				"SpriteTransformScalingY" : 583.7835693359375,
+				"SpriteTransformWorldPositionX" : 19309.708984375,
+				"SpriteTransformWorldPositionY" : 1486.7940673828125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 325.85208129882812,
+				"TransformScalingY" : 583.7835693359375,
+				"TransformWorldPositionX" : 19309.708984375,
+				"TransformWorldPositionY" : 1486.7940673828125
+			}
+		},
+		{
 			"Name" : "Cave_spikes",
 			"Sprite" : 
 			{
@@ -13027,9 +14191,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 172.3502197265625,
 				"SpriteTransformScalingX" : 102.88626098632812,
@@ -13061,9 +14225,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 112.06231689453125,
 				"SpriteTransformScalingX" : 102.88625335693359,
@@ -13095,9 +14259,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -13129,9 +14293,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 97.09661865234375,
 				"SpriteTransformScalingX" : 102.88616180419922,
@@ -13163,9 +14327,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 83.1024169921875,
 				"SpriteTransformScalingX" : 102.88622283935547,
@@ -13197,9 +14361,9 @@
 				"SpriteFilename" : "Cave_platform_small.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 40,
+				"SpriteTexture" : 38,
 				"SpriteTextureHeight" : 561,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 21,
 				"SpriteTextureWidth" : 771,
 				"SpriteTransformRotation" : 232.7430419921875,
 				"SpriteTransformScalingX" : 663.0596923828125,
@@ -13331,9 +14495,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -13565,9 +14729,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -13596,36 +14760,36 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 18291.921875,
-						"Y" : 1755.1160888671875
+						"X" : 18317.142578125,
+						"Y" : 1836.52001953125
 					},
 					"BoxColliderOffset" : 
 					{
-						"X" : 0.0,
-						"Y" : -7.6999998092651367
+						"X" : -7.4000000953674316,
+						"Y" : 77.199996948242188
 					},
 					"BoxColliderSizeScale" : 
 					{
-						"X" : 0.89999997615814209,
-						"Y" : 0.81000000238418579
+						"X" : -0.89999997615814209,
+						"Y" : -0.090000003576278687
 					},
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -174.77220153808594,
-							"y" : 70.006134033203125
-						},
-						{
 							"x" : 174.77220153808594,
-							"y" : 70.006134033203125
-						},
-						{
-							"x" : 174.77220153808594,
-							"y" : -70.006134033203125
+							"y" : -7.7784600257873535
 						},
 						{
 							"x" : -174.77220153808594,
-							"y" : -70.006134033203125
+							"y" : -7.7784600257873535
+						},
+						{
+							"x" : -174.77220153808594,
+							"y" : 7.7784600257873535
+						},
+						{
+							"x" : 174.77220153808594,
+							"y" : 7.7784600257873535
 						}
 					]
 				},
@@ -13633,7 +14797,7 @@
 				"CircleColliderEnabled" : false,
 				"ResponseEnabled" : true
 			},
-			"Name" : "Trampoline_Platform",
+			"Name" : "Trampoline_Platform2",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -13669,9 +14833,9 @@
 				"SpriteFilename" : "Cave_platform_small.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 40,
+				"SpriteTexture" : 38,
 				"SpriteTextureHeight" : 561,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 21,
 				"SpriteTextureWidth" : 771,
 				"SpriteTransformRotation" : 337.80349731445312,
 				"SpriteTransformScalingX" : 388.3826904296875,
@@ -13700,36 +14864,36 @@
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 18963.3046875,
-						"Y" : 811.3203125
+						"X" : 18953.185546875,
+						"Y" : 836.56317138671875
 					},
 					"BoxColliderOffset" : 
 					{
-						"X" : 0.0,
-						"Y" : -7.6999998092651367
+						"X" : -0.20000000298023224,
+						"Y" : 19.5
 					},
 					"BoxColliderSizeScale" : 
 					{
-						"X" : 0.89999997615814209,
-						"Y" : 0.81000000238418579
+						"X" : 0.80000001192092896,
+						"Y" : -0.28999999165534973
 					},
 					"BoxColliderVertices" : 
 					[
 						{
-							"x" : -174.77229309082031,
-							"y" : 70.006134033203125
+							"x" : -155.35307312011719,
+							"y" : -25.063924789428711
 						},
 						{
-							"x" : 174.77229309082031,
-							"y" : 70.006134033203125
+							"x" : 155.35307312011719,
+							"y" : -25.063924789428711
 						},
 						{
-							"x" : 174.77229309082031,
-							"y" : -70.006134033203125
+							"x" : 155.35307312011719,
+							"y" : 25.063924789428711
 						},
 						{
-							"x" : -174.77229309082031,
-							"y" : -70.006134033203125
+							"x" : -155.35307312011719,
+							"y" : 25.063924789428711
 						}
 					]
 				},
@@ -13737,7 +14901,7 @@
 				"CircleColliderEnabled" : false,
 				"ResponseEnabled" : true
 			},
-			"Name" : "Trampoline_Platform",
+			"Name" : "Trampoline_Platform2",
 			"RigidBody" : 
 			{
 				"RigidBodyAccelerationX" : 0.0,
@@ -13773,12 +14937,12 @@
 				"SpriteFilename" : "Cave_platform_small.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 40,
+				"SpriteTexture" : 38,
 				"SpriteTextureHeight" : 561,
-				"SpriteTextureIndex" : 23,
+				"SpriteTextureIndex" : 21,
 				"SpriteTextureWidth" : 771,
-				"SpriteTransformRotation" : 19.956268310546875,
-				"SpriteTransformScalingX" : 388.38287353515625,
+				"SpriteTransformRotation" : 22.0,
+				"SpriteTransformScalingX" : 388.3826904296875,
 				"SpriteTransformScalingY" : 172.85466003417969,
 				"SpriteTransformWorldPositionX" : 18960.67578125,
 				"SpriteTransformWorldPositionY" : 818.5579833984375,
@@ -13786,8 +14950,8 @@
 			},
 			"Transform" : 
 			{
-				"TransformRotation" : 19.956268310546875,
-				"TransformScalingX" : 388.38287353515625,
+				"TransformRotation" : 22.0,
+				"TransformScalingX" : 388.3826904296875,
 				"TransformScalingY" : 172.85466003417969,
 				"TransformWorldPositionX" : 18960.67578125,
 				"TransformWorldPositionY" : 818.5579833984375
@@ -13807,9 +14971,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 187.94784545898438,
 				"SpriteTransformScalingX" : 102.88624572753906,
@@ -13841,9 +15005,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 212.72222900390625,
 				"SpriteTransformScalingX" : 102.88624572753906,
@@ -13875,9 +15039,9 @@
 				"SpriteFilename" : "Cave_spikes.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 44,
+				"SpriteTexture" : 41,
 				"SpriteTextureHeight" : 857,
-				"SpriteTextureIndex" : 27,
+				"SpriteTextureIndex" : 24,
 				"SpriteTextureWidth" : 657,
 				"SpriteTransformRotation" : 155.5633544921875,
 				"SpriteTransformScalingX" : 102.88628387451172,
@@ -13971,9 +15135,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14067,9 +15231,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -14163,9 +15327,9 @@
 				"SpriteFilename" : "Cave_platform_wide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 43,
+				"SpriteTexture" : 45,
 				"SpriteTextureHeight" : 640,
-				"SpriteTextureIndex" : 26,
+				"SpriteTextureIndex" : 28,
 				"SpriteTextureWidth" : 1438,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 546.44000244140625,
@@ -14259,9 +15423,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14355,9 +15519,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14451,9 +15615,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14547,9 +15711,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14643,9 +15807,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14739,9 +15903,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14835,9 +15999,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -14931,9 +16095,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15027,9 +16191,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15123,9 +16287,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15219,9 +16383,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15315,9 +16479,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15411,9 +16575,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15507,9 +16671,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15603,9 +16767,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15699,9 +16863,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15795,9 +16959,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15891,9 +17055,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -15987,9 +17151,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16083,9 +17247,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16179,9 +17343,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16275,9 +17439,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16371,9 +17535,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16467,9 +17631,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16563,9 +17727,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16659,9 +17823,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16755,9 +17919,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16851,9 +18015,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -16947,9 +18111,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17043,9 +18207,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17139,9 +18303,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17235,9 +18399,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17331,9 +18495,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17427,9 +18591,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17523,9 +18687,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17541,6 +18705,106 @@
 				"TransformScalingY" : 583.7835693359375,
 				"TransformWorldPositionX" : 1239.19482421875,
 				"TransformWorldPositionY" : -182.46894836425781
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 18895.50390625,
+						"Y" : 2481.577392578125
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -111.81861877441406,
+							"y" : 17.551687240600586
+						},
+						{
+							"x" : 111.81861877441406,
+							"y" : 17.551687240600586
+						},
+						{
+							"x" : 111.81861877441406,
+							"y" : -17.551687240600586
+						},
+						{
+							"x" : -111.81861877441406,
+							"y" : -17.551687240600586
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 357.86380004882812,
+				"SpriteTransformScalingX" : 223.63723754882812,
+				"SpriteTransformScalingY" : 35.103374481201172,
+				"SpriteTransformWorldPositionX" : 18895.50390625,
+				"SpriteTransformWorldPositionY" : 2481.577392578125,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 357.86380004882812,
+				"TransformScalingX" : 223.63723754882812,
+				"TransformScalingY" : 35.103374481201172,
+				"TransformWorldPositionX" : 18895.50390625,
+				"TransformWorldPositionY" : 2481.577392578125
 			}
 		},
 		{
@@ -17619,9 +18883,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17715,9 +18979,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17811,9 +19075,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -17907,9 +19171,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18003,9 +19267,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18099,9 +19363,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18117,6 +19381,40 @@
 				"TransformScalingY" : 583.7835693359375,
 				"TransformWorldPositionX" : -1585.83544921875,
 				"TransformWorldPositionY" : 250.56950378417969
+			}
+		},
+		{
+			"Name" : "Cave_WallTile",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "Cave_WallTile.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 134,
+				"SpriteTextureHeight" : 2080,
+				"SpriteTextureIndex" : 117,
+				"SpriteTextureWidth" : 2080,
+				"SpriteTransformRotation" : 180.0,
+				"SpriteTransformScalingX" : 578.56036376953125,
+				"SpriteTransformScalingY" : 578.56036376953125,
+				"SpriteTransformWorldPositionX" : 19761.962890625,
+				"SpriteTransformWorldPositionY" : 1484.32421875,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 180.0,
+				"TransformScalingX" : 578.56036376953125,
+				"TransformScalingY" : 578.56036376953125,
+				"TransformWorldPositionX" : 19761.962890625,
+				"TransformWorldPositionY" : 1484.32421875
 			}
 		},
 		{
@@ -18195,9 +19493,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18291,9 +19589,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18387,9 +19685,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18483,9 +19781,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -18517,9 +19815,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18551,9 +19849,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18572,6 +19870,106 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 18372.556640625,
+						"Y" : 1725.7255859375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -120.81914520263672,
+							"y" : 12.068144798278809
+						},
+						{
+							"x" : 120.81914520263672,
+							"y" : 12.068144798278809
+						},
+						{
+							"x" : 120.81914520263672,
+							"y" : -12.068144798278809
+						},
+						{
+							"x" : -120.81914520263672,
+							"y" : -12.068144798278809
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 19.7203369140625,
+				"SpriteTransformScalingX" : 241.63829040527344,
+				"SpriteTransformScalingY" : 24.136289596557617,
+				"SpriteTransformWorldPositionX" : 18372.556640625,
+				"SpriteTransformWorldPositionY" : 1725.7255859375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 19.7203369140625,
+				"TransformScalingX" : 241.63829040527344,
+				"TransformScalingY" : 24.136289596557617,
+				"TransformWorldPositionX" : 18372.556640625,
+				"TransformWorldPositionY" : 1725.7255859375
+			}
+		},
+		{
 			"Name" : "Cave_WallTile",
 			"Sprite" : 
 			{
@@ -18585,9 +19983,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18619,9 +20017,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18653,9 +20051,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18687,9 +20085,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18721,9 +20119,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18755,9 +20153,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18776,6 +20174,106 @@
 			}
 		},
 		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 18900.8671875,
+						"Y" : 771.64251708984375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -105.42794036865234,
+							"y" : 25.125846862792969
+						},
+						{
+							"x" : 105.42794036865234,
+							"y" : 25.125846862792969
+						},
+						{
+							"x" : 105.42794036865234,
+							"y" : -25.125846862792969
+						},
+						{
+							"x" : -105.42794036865234,
+							"y" : -25.125846862792969
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 357.86380004882812,
+				"SpriteTransformScalingX" : 210.85588073730469,
+				"SpriteTransformScalingY" : 50.251693725585938,
+				"SpriteTransformWorldPositionX" : 18900.8671875,
+				"SpriteTransformWorldPositionY" : 771.64251708984375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 357.86380004882812,
+				"TransformScalingX" : 210.85588073730469,
+				"TransformScalingY" : 50.251693725585938,
+				"TransformWorldPositionX" : 18900.8671875,
+				"TransformWorldPositionY" : 771.64251708984375
+			}
+		},
+		{
 			"Name" : "Cave_WallTile",
 			"Sprite" : 
 			{
@@ -18789,9 +20287,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18823,9 +20321,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18857,9 +20355,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18891,9 +20389,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18925,9 +20423,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18959,9 +20457,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -18993,9 +20491,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19027,9 +20525,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19061,9 +20559,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19095,9 +20593,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19129,9 +20627,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19163,43 +20661,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 90.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 9285.5986328125,
-				"SpriteTransformWorldPositionY" : -633.61151123046875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 90.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 9285.5986328125,
-				"TransformWorldPositionY" : -633.61151123046875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 90.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19231,43 +20695,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 90.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 10436.30078125,
-				"SpriteTransformWorldPositionY" : -633.61151123046875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 90.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 10436.30078125,
-				"TransformWorldPositionY" : -633.61151123046875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 589.65863037109375,
@@ -19299,43 +20729,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 589.65863037109375,
-				"SpriteTransformScalingY" : 589.65863037109375,
-				"SpriteTransformWorldPositionX" : -2042.2794189453125,
-				"SpriteTransformWorldPositionY" : 826.656982421875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 589.65863037109375,
-				"TransformScalingY" : 589.65863037109375,
-				"TransformWorldPositionX" : -2042.2794189453125,
-				"TransformWorldPositionY" : 826.656982421875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 589.65863037109375,
@@ -19367,43 +20763,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 589.65863037109375,
-				"SpriteTransformScalingY" : 589.65863037109375,
-				"SpriteTransformWorldPositionX" : -2042.2794189453125,
-				"SpriteTransformWorldPositionY" : 1979.3272705078125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 0.0,
-				"TransformScalingX" : 589.65863037109375,
-				"TransformScalingY" : 589.65863037109375,
-				"TransformWorldPositionX" : -2042.2794189453125,
-				"TransformWorldPositionY" : 1979.3272705078125
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 589.65863037109375,
@@ -19435,43 +20797,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 703.89691162109375,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 703.89691162109375,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19503,43 +20831,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 1846.191162109375,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 1846.191162109375,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19571,43 +20865,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 2998.60400390625,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 2998.60400390625,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19639,111 +20899,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 4152.1962890625,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 4152.1962890625,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 4727.46875,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 4727.46875,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 5299.69921875,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 5299.69921875,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19775,111 +20933,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 6431.986328125,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 6431.986328125,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 7010.302734375,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 7010.302734375,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 7576.4423828125,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 7576.4423828125,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 270.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -19911,111 +20967,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 8720.8994140625,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 8720.8994140625,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 9290.087890625,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 9290.087890625,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 9868.404296875,
-				"SpriteTransformWorldPositionY" : 1422.1571044921875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 9868.404296875,
-				"TransformWorldPositionY" : 1422.1571044921875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 589.65863037109375,
@@ -20031,170 +20985,6 @@
 				"TransformScalingY" : 589.65863037109375,
 				"TransformWorldPositionX" : -2042.2794189453125,
 				"TransformWorldPositionY" : -333.00656127929688
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 90.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 111.83090209960938,
-				"SpriteTransformWorldPositionY" : -633.61151123046875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 90.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 111.83090209960938,
-				"TransformWorldPositionY" : -633.61151123046875
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : -35.887233734130859,
-						"Y" : 2308.83740234375
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : -291.89178466796875
-						},
-						{
-							"x" : -146.63343811035156,
-							"y" : -291.89178466796875
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 2414881.75,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 325.85208129882812,
-				"SpriteTransformScalingY" : 583.7835693359375,
-				"SpriteTransformWorldPositionX" : -35.887233734130859,
-				"SpriteTransformWorldPositionY" : 2308.83740234375,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 325.85208129882812,
-				"TransformScalingY" : 583.7835693359375,
-				"TransformWorldPositionX" : -35.887233734130859,
-				"TransformWorldPositionY" : 2308.83740234375
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 270.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 126.75886535644531,
-				"SpriteTransformWorldPositionY" : 2896.849609375,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 270.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 126.75886535644531,
-				"TransformWorldPositionY" : 2896.849609375
 			}
 		},
 		{
@@ -20273,9 +21063,9 @@
 				"SpriteFilename" : "Cave_WallSide.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 80,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
+				"SpriteTextureIndex" : 63,
 				"SpriteTextureWidth" : 1161,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 325.85208129882812,
@@ -20294,294 +21084,6 @@
 			}
 		},
 		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 19309.708984375,
-						"Y" : 1486.7940673828125
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : -291.89178466796875
-						},
-						{
-							"x" : -146.63343811035156,
-							"y" : -291.89178466796875
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 2414881.75,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 325.85208129882812,
-				"SpriteTransformScalingY" : 583.7835693359375,
-				"SpriteTransformWorldPositionX" : 19309.708984375,
-				"SpriteTransformWorldPositionY" : 1486.7940673828125,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 325.85208129882812,
-				"TransformScalingY" : 583.7835693359375,
-				"TransformWorldPositionX" : 19309.708984375,
-				"TransformWorldPositionY" : 1486.7940673828125
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 19309.708984375,
-						"Y" : 2637.8623046875
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : -291.89178466796875
-						},
-						{
-							"x" : -146.63343811035156,
-							"y" : -291.89178466796875
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 2414881.75,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 325.85208129882812,
-				"SpriteTransformScalingY" : 583.7835693359375,
-				"SpriteTransformWorldPositionX" : 19309.708984375,
-				"SpriteTransformWorldPositionY" : 2637.8623046875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 325.85208129882812,
-				"TransformScalingY" : 583.7835693359375,
-				"TransformWorldPositionX" : 19309.708984375,
-				"TransformWorldPositionY" : 2637.8623046875
-			}
-		},
-		{
-			"Collider" : 
-			{
-				"BoxCollider" : 
-				{
-					"BoxColliderCenter" : 
-					{
-						"X" : 19309.708984375,
-						"Y" : 3803.193603515625
-					},
-					"BoxColliderOffset" : 
-					{
-						"X" : 0.0,
-						"Y" : 0.0
-					},
-					"BoxColliderSizeScale" : 
-					{
-						"X" : 0.89999997615814209,
-						"Y" : 1.0
-					},
-					"BoxColliderVertices" : 
-					[
-						{
-							"x" : -146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : 291.89178466796875
-						},
-						{
-							"x" : 146.63343811035156,
-							"y" : -291.89178466796875
-						},
-						{
-							"x" : -146.63343811035156,
-							"y" : -291.89178466796875
-						}
-					]
-				},
-				"BoxColliderEnabled" : true,
-				"CircleColliderEnabled" : false,
-				"ResponseEnabled" : true
-			},
-			"Name" : "Cave_WallSide",
-			"RigidBody" : 
-			{
-				"RigidBodyAccelerationX" : 0.0,
-				"RigidBodyAccelerationY" : 0.0,
-				"RigidBodyAngularVelocity" : 0.0,
-				"RigidBodyArea" : 2414881.75,
-				"RigidBodyBodyType" : 0,
-				"RigidBodyDensity" : 0.0,
-				"RigidBodyForceX" : 0.0,
-				"RigidBodyForceY" : 0.0,
-				"RigidBodyInvMass" : 0.0,
-				"RigidBodyMass" : 0.0,
-				"RigidBodyRestitution" : 0.5,
-				"RigidBodyVelocityX" : 0.0,
-				"RigidBodyVelocityY" : 0.0,
-				"RigidbodyGravityScale" : 1.0,
-				"mDynamicFriction" : 0.40000000596046448,
-				"mStaticFriction" : 0.60000002384185791
-			},
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 0,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallSide.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 54,
-				"SpriteTextureWidth" : 1161,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 325.85208129882812,
-				"SpriteTransformScalingY" : 583.7835693359375,
-				"SpriteTransformWorldPositionX" : 19309.708984375,
-				"SpriteTransformWorldPositionY" : 3803.193603515625,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 325.85208129882812,
-				"TransformScalingY" : 583.7835693359375,
-				"TransformWorldPositionX" : 19309.708984375,
-				"TransformWorldPositionY" : 3803.193603515625
-			}
-		},
-		{
 			"Name" : "Cave_WallTile",
 			"Sprite" : 
 			{
@@ -20595,9 +21097,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -20629,111 +21131,9 @@
 				"SpriteFilename" : "Cave_WallTile.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
+				"SpriteTexture" : 134,
 				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 19761.962890625,
-				"SpriteTransformWorldPositionY" : 342.17779541015625,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 19761.962890625,
-				"TransformWorldPositionY" : 342.17779541015625
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 19761.962890625,
-				"SpriteTransformWorldPositionY" : 1484.32421875,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 19761.962890625,
-				"TransformWorldPositionY" : 1484.32421875
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
-				"SpriteTextureWidth" : 2080,
-				"SpriteTransformRotation" : 180.0,
-				"SpriteTransformScalingX" : 578.56036376953125,
-				"SpriteTransformScalingY" : 578.56036376953125,
-				"SpriteTransformWorldPositionX" : 19761.962890625,
-				"SpriteTransformWorldPositionY" : 2635.869384765625,
-				"animations" : []
-			},
-			"Transform" : 
-			{
-				"TransformRotation" : 180.0,
-				"TransformScalingX" : 578.56036376953125,
-				"TransformScalingY" : 578.56036376953125,
-				"TransformWorldPositionX" : 19761.962890625,
-				"TransformWorldPositionY" : 2635.869384765625
-			}
-		},
-		{
-			"Name" : "Cave_WallTile",
-			"Sprite" : 
-			{
-				"AnimationIndex" : 0,
-				"Layer" : 1,
-				"SpriteColorA" : 1.0,
-				"SpriteColorX" : 1.0,
-				"SpriteColorY" : 1.0,
-				"SpriteColorZ" : 1.0,
-				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "Cave_WallTile.png",
-				"SpriteName" : "Quad",
-				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 123,
-				"SpriteTextureHeight" : 2080,
-				"SpriteTextureIndex" : 106,
+				"SpriteTextureIndex" : 117,
 				"SpriteTextureWidth" : 2080,
 				"SpriteTransformRotation" : 180.0,
 				"SpriteTransformScalingX" : 578.56036376953125,
@@ -20750,9 +21150,209 @@
 				"TransformWorldPositionX" : 19761.962890625,
 				"TransformWorldPositionY" : 3793.435546875
 			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 18188.400390625,
+						"Y" : 1764.2698974609375
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -120.81911468505859,
+							"y" : 12.068143844604492
+						},
+						{
+							"x" : 120.81911468505859,
+							"y" : 12.068143844604492
+						},
+						{
+							"x" : 120.81911468505859,
+							"y" : -12.068143844604492
+						},
+						{
+							"x" : -120.81911468505859,
+							"y" : -12.068143844604492
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 318.82785034179688,
+				"SpriteTransformScalingX" : 241.63822937011719,
+				"SpriteTransformScalingY" : 24.136287689208984,
+				"SpriteTransformWorldPositionX" : 18188.400390625,
+				"SpriteTransformWorldPositionY" : 1764.2698974609375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 318.82785034179688,
+				"TransformScalingX" : 241.63822937011719,
+				"TransformScalingY" : 24.136287689208984,
+				"TransformWorldPositionX" : 18188.400390625,
+				"TransformWorldPositionY" : 1764.2698974609375
+			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 19027.89453125,
+						"Y" : 816.27301025390625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -76.045875549316406,
+							"y" : 18.876777648925781
+						},
+						{
+							"x" : 76.045875549316406,
+							"y" : 18.876777648925781
+						},
+						{
+							"x" : 76.045875549316406,
+							"y" : -18.876777648925781
+						},
+						{
+							"x" : -76.045875549316406,
+							"y" : -18.876777648925781
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Invis Wall",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 0.0,
+				"RigidBodyBodyType" : 0,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 1.0,
+				"RigidBodyMass" : 1.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 1.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "StoneCollider"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 136,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 119,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 56.59747314453125,
+				"SpriteTransformScalingX" : 152.09175109863281,
+				"SpriteTransformScalingY" : 37.753555297851562,
+				"SpriteTransformWorldPositionX" : 19027.89453125,
+				"SpriteTransformWorldPositionY" : 816.27301025390625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 56.59747314453125,
+				"TransformScalingX" : 152.09175109863281,
+				"TransformScalingY" : 37.753555297851562,
+				"TransformWorldPositionX" : 19027.89453125,
+				"TransformWorldPositionY" : 816.27301025390625
+			}
 		}
 	],
-	"EntityAmount" : 280,
+	"EntityAmount" : 286,
 	"Layers" : 
 	[
 		{
