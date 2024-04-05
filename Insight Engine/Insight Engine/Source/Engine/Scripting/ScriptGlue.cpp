@@ -438,37 +438,49 @@ namespace IS {
     }
 
     static void AudioPlaySoundBGM(MonoString* name, bool loop = 0, float volume = 1.f) {
+        if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
+            return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        asset->PlaySoundByName(str, loop, volume* AUDIO_MANAGER->BGMAudioLevel);
+        asset->PlaySoundByName(str, loop, volume* AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume);
     }
 
     static void AudioPlaySoundSFX(MonoString* name, bool loop = 0, float volume = 1.f) {
+        if (AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute)
+            return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
         // std::cout << "SFX AUDIO : " << AUDIO_MANAGER->SFXAudioLevel << std::endl;
-        asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->SFXAudioLevel);
+        asset->PlaySoundByName(str, loop, volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume);
     }
 
     static void AudioPlayMusicBGM(MonoString* name, float volume) {
+        if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
+            return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        FMOD::Channel* channel= asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->BGMAudioLevel, 1);
+        FMOD::Channel* channel= asset->PlayMusicByName(str, 1, volume* AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume, 1);
         asset->mBGMChannel.emplace_back(str, channel, volume);
     }
 
     static void AudioPlayMusicSFX(MonoString* name, float volume) {
+        if (AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute)
+            return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
         mono_free(c_str);
-        FMOD::Channel* channel = asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->SFXAudioLevel, 1);
+        FMOD::Channel* channel = asset->PlayMusicByName(str, 1, volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume, 1);
         asset->mSFXChannel.emplace_back(str, channel, volume);
     }
 
@@ -483,8 +495,23 @@ namespace IS {
         }
     }
 
+    static float AudioGetMaster()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mMasterControl.mVolume;
+    }
+
+    static float AudioGetBGM()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume;
+    }
+
+    static float AudioGetSFX()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume;
+    }
+
     static void AudioSetMaster(float volume) {
-        AUDIO_MANAGER->MasterAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mMasterControl.mVolume = volume;
         // std::cout << "master vs volume "<< MasterAudioLevel;
         // std::cout << ": " <<volume << std::endl;
         //for (auto& channel : ASSET_MANAGER->mChannelList) {
@@ -493,21 +520,52 @@ namespace IS {
     }
 
     static void AudioSetBGM(float volume) {
-        AUDIO_MANAGER->BGMAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume = volume;
         for (auto& audiodata : ASSET_MANAGER->mBGMChannel)
         {
-            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->BGMAudioLevel);
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume);
         }
     }
 
     static void AudioSetSFX(float volume) {
-        AUDIO_MANAGER->SFXAudioLevel = volume;
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume = volume;
         for (auto& audiodata : ASSET_MANAGER->mSFXChannel)
         {
-            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->SFXAudioLevel);
+            audiodata.channel->setVolume(audiodata.base_volume * AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume);
         }
     }
 
+    static void AudioMuteMaster(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mMasterControl.mIsMute =
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute = 
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute = mute;
+    }
+
+    static void AudioMuteBGM(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute = mute;
+    }
+
+    static void AudioMuteSFX(bool mute)
+    {
+        AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute = mute;
+    }
+
+    static bool AudioIsMasterMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mMasterControl.mIsMute;
+    }
+
+    static bool AudioIsBGMMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute;
+    }
+
+    static bool AudioIsSFXMute()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute;
+    }
 
     static int GetButtonState() {
         auto& button=InsightEngine::Instance().GetComponent<ButtonComponent>(InsightEngine::Instance().GetScriptCaller());
@@ -556,6 +614,22 @@ namespace IS {
         sprite_component.layer = 1;
         sprite_component.img = ConvertToImage(image);
         ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
+        return static_cast<int>(entity);
+    }
+
+    static int CreateEntityScript(MonoString* name, MonoString* filename)
+    {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = InsightEngine::Instance().CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+        char* c_str2 = mono_string_to_utf8(filename);
+        std::string str2(c_str2);
+        mono_free(c_str2);
+        script_component.mScriptName = str2;
         return static_cast<int>(entity);
     }
 
@@ -896,6 +970,12 @@ namespace IS {
     static bool CollidingObjectTypeIsIgnore(int entity) {
         auto& body_component = InsightEngine::Instance().GetComponent<RigidBody>(entity);
         return body_component.mBodyType == BodyType::Ignore ? true : false;
+    }
+
+    static bool CheckMouseIntersectEntity(int entity)
+    {
+        SimpleVector2D mouse = GetMousePosition();
+        return GuiSystem::GameButtonContainsMouse(mouse.x, mouse.y, entity);
     }
 
     static void DrawImageAt(SimpleVector2D pos, float rotation, SimpleVector2D scale, SimpleImage image, float alpha, int layer=1) {
@@ -1348,6 +1428,34 @@ namespace IS {
         return InsightEngine::Instance().GetWindowHeight();
     }
 
+    static void SetWindowSize(int width, int height)
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        window->SetWindowSize(width, height);
+    }
+
+    static int GetMonitorWidth()
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        return window->GetMonitorWidth();
+    }
+
+    static int GetMonitorHeight()
+    {
+        auto const window = InsightEngine::Instance().GetSystem<WindowSystem>("Window");
+        return window->GetMonitorHeight();
+    }
+
+    static int GetTargetFPS()
+    {
+        return InsightEngine::Instance().GetTargetFPS();
+    }
+
+    static void SetTargetFPS(int fps)
+    {
+        InsightEngine::Instance().SetFPS(fps);
+    }
+
     static SimpleVector2D GetCameraPos() {
         return SimpleVector2D(ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.x, ISGraphics::cameras3D[Camera3D::mActiveCamera].mPosition.y);
     }
@@ -1779,6 +1887,15 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioSetMaster);
         IS_ADD_INTERNAL_CALL(AudioSetSFX);
         IS_ADD_INTERNAL_CALL(AudioSetBGM);
+        IS_ADD_INTERNAL_CALL(AudioGetMaster);
+        IS_ADD_INTERNAL_CALL(AudioGetSFX);
+        IS_ADD_INTERNAL_CALL(AudioGetBGM);
+        IS_ADD_INTERNAL_CALL(AudioMuteMaster);
+        IS_ADD_INTERNAL_CALL(AudioMuteBGM);
+        IS_ADD_INTERNAL_CALL(AudioMuteSFX);
+        IS_ADD_INTERNAL_CALL(AudioIsMasterMute);
+        IS_ADD_INTERNAL_CALL(AudioIsBGMMute);
+        IS_ADD_INTERNAL_CALL(AudioIsSFXMute);
         IS_ADD_INTERNAL_CALL(FadeOutAudio);
 
         // Button
@@ -1812,6 +1929,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetX);
         IS_ADD_INTERNAL_CALL(SetCircleColliderOffsetY);
         IS_ADD_INTERNAL_CALL(SetColliderOffset);
+        IS_ADD_INTERNAL_CALL(CheckMouseIntersectEntity);
 
         //LIght
         IS_ADD_INTERNAL_CALL(AttachLightComponentToEntity);
@@ -1860,6 +1978,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GamePause);
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
         IS_ADD_INTERNAL_CALL(CreateEntityButtonNoText);
+        IS_ADD_INTERNAL_CALL(CreateEntityScript);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
         IS_ADD_INTERNAL_CALL(CreateEntityUIScript);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);
@@ -1881,6 +2000,11 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GetButtonIdleScale);
         IS_ADD_INTERNAL_CALL(GetWindowWidth);
         IS_ADD_INTERNAL_CALL(GetWindowHeight);
+        IS_ADD_INTERNAL_CALL(SetWindowSize);
+        IS_ADD_INTERNAL_CALL(GetMonitorWidth);
+        IS_ADD_INTERNAL_CALL(GetMonitorHeight);
+        IS_ADD_INTERNAL_CALL(GetTargetFPS);
+        IS_ADD_INTERNAL_CALL(SetTargetFPS);
         IS_ADD_INTERNAL_CALL(IsWindowFocused);
         IS_ADD_INTERNAL_CALL(SetLightsToggle);
         IS_ADD_INTERNAL_CALL(UpdateCategory);

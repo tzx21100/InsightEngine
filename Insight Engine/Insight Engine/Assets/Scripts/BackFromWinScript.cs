@@ -33,7 +33,8 @@ namespace IS
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    //InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
                 }
             }
@@ -49,7 +50,8 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                //InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                SettingsScript.PlayClickSound();
                 PlayerScript.CleanUp();
                 InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
                 InternalCalls.AudioStopAllSounds();

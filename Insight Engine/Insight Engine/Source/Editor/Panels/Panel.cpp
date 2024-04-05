@@ -113,8 +113,8 @@ namespace IS {
 
             ImGui::SameLine();
             static int selected_fps_index = -1;
-            const char* fps_options[] = { "15", "30", "60", "90", "120", "144", "240", "No Limit" };
-            int fps_values[] = { 15, 30, 60, 90, 120, 144, 240, 9999 };
+            const char* fps_options[] = { "15", "30", "45", "60", "75", "90", "120", "144", "240", "No Limit"};
+            int fps_values[] = { 15, 30, 45, 60, 75, 90, 120, 144, 240, 9999 };
 
             for (int i{}; i < IM_ARRAYSIZE(fps_values); ++i)
             {
