@@ -34,6 +34,9 @@ namespace IS
 
         static public void Init(){
 
+            //stop sounds
+            InternalCalls.AudioStopAllSounds();
+
             //create the other hand
             other_hand = InternalCalls.CreateEntityPrefab("BossIntroOther");
 

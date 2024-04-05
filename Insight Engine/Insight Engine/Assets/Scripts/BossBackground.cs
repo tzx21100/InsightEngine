@@ -48,7 +48,12 @@ namespace IS
 
         static public void Update()
         {
-
+            // restart level if player lose
+            if (PlayerScript.isDead)
+            {
+                PlayerScript.isDead = false;
+                InternalCalls.LoadScene("Assets/Scenes/BossLevel.insight");
+            }
 
             bg_scale = new Vector2D(2048*1.2f /CameraScript.camera_zoom, 1080*1.2f / CameraScript.camera_zoom);
 
