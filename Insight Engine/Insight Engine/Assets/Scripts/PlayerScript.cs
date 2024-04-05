@@ -49,6 +49,7 @@ namespace IS
         static public bool hasDoubleJump = false;
         static public bool hasWallClimb = false;
         static public bool hasDash = false;
+        static public bool hasFly = false;
 
         //speed run timer
         static public float speed_run_timer = 0f;
@@ -521,6 +522,10 @@ namespace IS
             if (hasDash)
             {
                 Popup_Ability.DisplayDashGuide();
+            }
+            if(hasFly)
+            {
+                Popup_Ability.DisplayFlyGuide();
             }
             /*            if (InternalCalls.KeyPressed((int)KeyCodes.G))
                         {
@@ -1288,6 +1293,7 @@ namespace IS
             Reward_WallClimb = false;
             Reward_Fly = false;
             hasDash = false;
+            hasFly = false;
             hasDoubleJump = false;
             hasWallClimb = false;
 

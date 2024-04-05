@@ -73,7 +73,8 @@ namespace IS
                             InternalCalls.AudioStopAllSounds();
                             PlayerScript.PLAYER_LIGHT = 0;
                             InternalCalls.ChangeShaderIntensity(0f);
-                            InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
+                            PlayerScript.hasFly = true;
+                            //InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
                         }
                     }
 

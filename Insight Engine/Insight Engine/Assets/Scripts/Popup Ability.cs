@@ -9,9 +9,11 @@ namespace IS
         static public string doublejumpVideo = "Assets/Videos/Double_Jump_Tutorial.mp4";
         static public string vineVideo = "Assets/Videos/Vine_Climb_Tutorial.mp4";
         static public string dashVideo = "Assets/Videos/Dash_Tutorial.mp4";
+        static public string flyVideo = "Assets/Videos/Flight_Tutorial.mp4";
         static public bool doublejumpvideoloaded=false;
         static public bool vinevideoloaded=false;
         static public bool dashvideoloaded=false;
+        static public bool flyvideoloaded=false;
         static public string font = "Semplicita_Light";
         static public float BG_ALPHA = 0.6f;
         static private float VIDEO_Y = -0.1f;
@@ -190,15 +192,15 @@ namespace IS
         static public void DisplayFlyGuide()
         {
             InternalCalls.SetLightsToggle(false);
-            if (dashvideoloaded == false)
+            if (flyvideoloaded == false)
             {
-                InternalCalls.loadVideo(dashVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);
-                dashvideoloaded = true;
+                InternalCalls.loadVideo(flyVideo, 0.4f, 0.4f, 0.5f, VIDEO_Y, true);
+                flyvideoloaded = true;
                 popup_shown = true;
             }
 
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 10000, 10000, 0, 0, 0, BG_ALPHA, InternalCalls.GetTopLayer() + 2);
-            string Header_text = "DASH UNLOCKED";
+            string Header_text = "FLIGHT UNLOCKED";
 
             float textbox_width = InternalCalls.GetWindowWidth() * 0.55f / CameraScript.camera_zoom;
             float textbox_height = InternalCalls.GetWindowHeight() * 0.5f / CameraScript.camera_zoom;
@@ -227,11 +229,13 @@ namespace IS
 
             if (PlayerScript.select_trigger)
             {
-                PlayerScript.hasDash = false; //boolean for showing double jump
-                dashvideoloaded = false;
+                PlayerScript.hasFly = false; //boolean for showing double jump
+                flyvideoloaded = false;
                 InternalCalls.unloadVideos();
                 InternalCalls.SetLightsToggle(true);
                 popup_shown = false;
+                int entt=InternalCalls.CreateEntityPrefab("TransitionToPuzle");
+                InternalCalls.TransformSetPositionEntity(PlayerScript.player_pos.x, PlayerScript.player_pos.y, entt);
             }
 
 
