@@ -6,19 +6,20 @@ namespace IS
     class CutSceneScript
     {
 
-        static public string cutsceneVideo = "Assets/Videos/cutscene.mov";
+        static public string cutsceneVideo = "Assets/Videos/cutscene.mp4";
 
         static private float image_swap_timer = 3.0f;
         static private float image_swap_set = 3.0f;
         static private int current_image = 1;
 
         static private float wait_for_video = 1.5f;
+        static private float video_timer = 0f;
 
-        static private bool play_audio_collapse = false;
         static private bool play_yk_voicelines = false;
         static private bool play_first_explosion= false;
         static private bool play_second_explosion=false;
         static private bool play_third_explosion = false;
+        static private bool play_audio_collapse = false;
 
 
         //setting text window size
@@ -34,14 +35,18 @@ namespace IS
 
         static public void Init()
         {
+            video_timer = 0f;
+
             InternalCalls.ChangeLightType(0);
             play_yk_voicelines = false;
-            play_audio_collapse = false;
             play_first_explosion = false;
             play_second_explosion = false;
             play_third_explosion = false;
-            showText = false;
+            play_audio_collapse = false;
+
+
             InternalCalls.HideCursor();
+
             current_image = 0;
             image_swap_timer = 3.0f;
             wait_for_video = 1.8f;
@@ -66,195 +71,77 @@ namespace IS
 
             /// FOR M5 PRESENTATION ///
             // InternalCalls.TransformSetScale(InternalCalls.GetWindowWidth(),InternalCalls.GetWindowHeight());
-            InternalCalls.TransformSetScale(0f, 0f); // dont show cutscene images
 
-            image_swap_timer -= InternalCalls.GetDeltaTime();
-            if(image_swap_timer < 0)
-            {
-                if (wait_for_video >= 0) {
-                    wait_for_video -= InternalCalls.GetDeltaTime();
-                }
-                else
+            video_timer += InternalCalls.GetDeltaTime();
+            if (video_timer > 7.7f)
+            {   if (!play_yk_voicelines)
                 {
-                    image_swap_timer = image_swap_set;
-                    current_image++;
-                    if (current_image == 17)
-                    {
-                        InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
-
-                        InternalCalls.unloadVideos();
-                        InternalCalls.SetLightsToggle(true);
-                    }
+                    InternalCalls.AudioStopAllSounds();
+                    InternalCalls.AudioPlayMusicSFX("VO-MadCoder-001.wav", 0.2f);
+                    InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
+                    play_yk_voicelines = true;
                 }
             }
 
-            if(current_image==0)
+            if (video_timer > 18f)
             {
-                InternalCalls.CameraSetZoom(1f);
-                current_image++;
+                if (!play_first_explosion)
+                {
+                    InternalCalls.AudioStopAllSounds();
+                    InternalCalls.AudioPlayMusicSFX("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
+                    play_first_explosion = true;
+                }
             }
 
-            if (current_image == 1)
+            if (video_timer > 20.2f)
             {
-                CameraScript.CameraTargetZoom(1.5f, 0.2f);
-            }            
-            
-            if (current_image == 2)
-            {
-                CameraScript.CameraTargetZoom(1.2f, 0.5f);
-            }
-            if (current_image == 3)
-            {
-                CameraScript.CameraShake(0.5f);
-                CameraScript.camera_shake_duration = 0.2f;
-                CameraScript.camera_shake_intensity = 0.2f;
-            }
-            if (current_image == 4)
-            {
-                CameraScript.CameraTargetZoom(1.2f, 0.5f);
-                CameraScript.CameraShake(0.5f);
-                CameraScript.camera_shake_intensity = 2f;
-                CameraScript.camera_shake_duration = 0.2f;
-            }
-            if (current_image == 13)
-            {
-                image_swap_set = 2.0f;
+                if (!play_second_explosion)
+                {
+                    //InternalCalls.AudioStopAllSounds();
+                    InternalCalls.AudioPlayMusicSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
+                    InternalCalls.AudioPlayMusicSFX("Fragments_Music_Tension 2.wav", 0.3f);
+                    InternalCalls.AudioPlayMusicBGM("JOHN_The Choice_Loop_60bpm.wav", 0.3f);
+                    play_second_explosion = true;
+                }
             }
 
-            float offset_text = 0.5005f;
-            float text_height = 0.155f;
-
-            if (showText)
+            if (video_timer > 38f)
             {
-                textbox_width = InternalCalls.GetWindowWidth() * textbox_width_ratio / CameraScript.camera_zoom;
-                textbox_height = InternalCalls.GetWindowHeight() * textbox_height_ratio / CameraScript.camera_zoom;
-                image_scale = new SimpleVector2D(textbox_width, textbox_height);
+                if (!play_third_explosion)
+                {
 
-                position_of_textbox = new SimpleVector2D(CameraScript.camera_pos.x,
-                                                                       CameraScript.camera_pos.y - InternalCalls.GetWindowHeight() / CameraScript.camera_zoom / 2.91f);
-
-                SimpleImage image = InternalCalls.GetSpriteImage("textbox.png");
-                InternalCalls.DrawImageAt(position_of_textbox, 0, image_scale, image, 1, InternalCalls.GetTopLayer());
+                    InternalCalls.AudioPlayMusic("SCI-FI-GROUND-BREAK_GEN-HDF-20675.wav", 0.2f);
+                    play_third_explosion = true;
+                }
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.Escape)){
-                current_image = 16;
-                showText = false;
-            }
-
-            InternalCalls.RenderTextFont("Press 'ESC' to skip cutscene", "Semplicita_Light", 0.7f, 0.05f, 8f, (1f, 1f, 1f, 1f));
-            switch (current_image)
+            if (video_timer > 39f)
             {
-                case 1:
-                    showText = true;
-                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("My name is Cipher. And I live a normal life here with my family.", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 2:
-                    showText = true;
-                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("But everything changed one day when the creators unleashed their wrath...", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 3:
-                    showText = false;
-                    if (!play_yk_voicelines)
-                    {
-                        InternalCalls.AudioPlayMusicSFX("VO-MadCoder-001.wav", 0.2f);
-                        InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
-                        play_yk_voicelines = true;
-                    }
-                    break;
-                case 4:
-                    if (!play_first_explosion)
-                    {
-                        InternalCalls.FadeOutAudio(1f);
-                        InternalCalls.AudioPlayMusicSFX("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
-                        play_first_explosion = true;
-                    }
-                    break;
-                case 5:
-                    if (!play_second_explosion)
-                    {
-                        InternalCalls.AudioPlayMusicSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
-                        play_second_explosion = true;
-                        InternalCalls.AudioPlayMusicSFX("Fragments_Music_Tension 2.wav", 0.3f);
-                        InternalCalls.AudioPlayMusicBGM("JOHN_The Choice_Loop_60bpm.wav", 0.3f);
-                    }
-                    break;
-                case 6:
-                    if (!play_third_explosion)
-                    {
-                        InternalCalls.AudioPlayMusic("SCI-FI-GROUND-BREAK_GEN-HDF-20675.wav", 0.2f);
-                        play_third_explosion = true;
-                    }
-
-
-                    CameraScript.CameraTargetZoom(2f, 0.2f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 1, 1, 1, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
-                    break;
-                case 7:
-                    CameraScript.CameraTargetZoom(1f, 1.5f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
-                    break;
-                case 8:
-                    showText = true;
-                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("Urgh...What was that... Mom...? Dad?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 9:
-                    showText = true;
-                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("MOM! DAD! ARE YOU GUYS ALRIGHT?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 10:
-                    showText = true;
-                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("Stay back Cipher! Something's wrong...", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 11:
-                    showText = false;
-                    break;
-                case 12:
-                    showText = true;
-                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", offset_text, text_height, 12f, (0f, 0f, 0f, 1f));
-                    InternalCalls.RenderTextFont("MOM? DAD?? NO NO NO PLEASE!", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 13:
-                    showText = true;
-                    CameraScript.CameraShake(0.2f);
-                    CameraScript.camera_shake_duration = 0.1f;
-                    CameraScript.camera_shake_intensity = 0.2f;
-                    InternalCalls.RenderTextFont("Huh?", "Semplicita_Light", 0.5f, text_height, 12f, (1f, 1f, 1f, 1f));
-                    break;
-                case 14:
-                    showText = false;
-                    if (!play_audio_collapse)
-                    {
-                        InternalCalls.AudioPlayMusicSFX("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
-
-                    }
+                if (!play_audio_collapse)
+                {
+                    InternalCalls.AudioPlayMusicSFX("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
                     play_audio_collapse = true;
-                    break;
-                case 15:
-                    CameraScript.CameraTargetZoom(0.8f, 0.3f);
-                    InternalCalls.DrawSquare(0, 0, 10000, 10000, 0, 0, 0, 1 - (image_swap_timer / image_swap_set), InternalCalls.GetTopLayer());
-                    InternalCalls.FadeOutAudio(2.1f);
-                    break;
-                case 16:
-                    break;
+                }
             }
 
+            if (video_timer > 43.6f || InternalCalls.KeyPressed((int)KeyCodes.Escape))
+            {
+                InternalCalls.AudioStopAllSounds();
+                InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
+                InternalCalls.unloadVideos();
+                InternalCalls.SetLightsToggle(true);
+            }
 
-
-
-
-
-
+            InternalCalls.RenderTextFont("Press 'ESC' to skip cutscene", "Semplicita_Light", 0.9f, 0.95f, 8f, (1f, 1f, 1f, 1f));
         }
         
         static public void CleanUp()
         {
+            InternalCalls.AudioStopAllSounds();
             InternalCalls.ShowCursor();
+            InternalCalls.LoadScene("Assets/Scenes/CaveLevel.insight");
+            InternalCalls.unloadVideos();
+            InternalCalls.SetLightsToggle(true);
         }
 
     }
