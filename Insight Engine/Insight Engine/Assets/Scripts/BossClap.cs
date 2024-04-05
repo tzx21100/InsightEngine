@@ -355,13 +355,13 @@ namespace IS
                 float dir = 360 * rand;
 
                 rand = my_rand.NextFloat();
-                float size = 50f + 50f * rand; // initial size
+                float size = 20f + 20f * rand; // initial size
 
                 rand = my_rand.NextFloat();
                 float size_scale = -30 * rand; // pariticles going smaller
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.7f + 0.3f * rand;
+                float alpha = 0.5f + 0.3f * rand;
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.5f * rand;
@@ -377,7 +377,7 @@ namespace IS
                 float y = (left_hand_pos.y + right_hand_pos.y) / 2f;
 
             InternalCalls.GameSpawnParticleExtra(
-                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                  );
             }
         }
@@ -385,20 +385,20 @@ namespace IS
         static private void RenderClappingPosParticles()
         {
             MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
-            int particle_count = (int)(my_rand.Next(2, 6)); // random from 2 to 5 particles
+            int particle_count = (int)(my_rand.Next(2, 5)); // random from 2 to 4 particles
             for (int i = 0; i < particle_count; i++)
             {
                 float rand = my_rand.NextFloat();
                 float dir = 80 + 20 * rand;
 
                 rand = my_rand.NextFloat();
-                float size = 10f + 10f * rand; // initial size
+                float size = 10f + 5f * rand; // initial size
 
                 rand = my_rand.NextFloat();
                 float size_scale = -20 * rand; // pariticles going smaller
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.7f + 0.3f * rand;
+                float alpha = 0.5f + 0.3f * rand;
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.5f * rand;
@@ -415,7 +415,7 @@ namespace IS
                 float y = (clapping_pos.y - scaling.y / 4f) + scaling.y / 4f * (rand);
 
                 InternalCalls.GameSpawnParticleExtra(
-                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                      );
             }
         }
@@ -432,13 +432,13 @@ namespace IS
                 float dir = MathF.Atan2(direction.y, direction.x) * (180 / MathF.PI) + (160 + 40 * rand);
 
                 rand = my_rand.NextFloat();
-                float size = 50f + 30f * rand; // initial size
+                float size = 20f + 20f * rand; // initial size
 
                 rand = my_rand.NextFloat();
                 float size_scale = -20 * rand; // pariticles going smaller
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.8f + 0.2f * rand;
+                float alpha = 0.5f + 0.2f * rand;
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.5f * rand;
@@ -456,7 +456,7 @@ namespace IS
                 float y = left_hand_pos.y + scaling.y / 2f * (rand - 0.5f); ;
 
                 InternalCalls.GameSpawnParticleExtra(
-                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                      );
             }
         }
@@ -471,13 +471,13 @@ namespace IS
                 float dir = MathF.Atan2(direction.y, direction.x) * (180 / MathF.PI) + (160 + 40 * rand);
 
                 rand = my_rand.NextFloat();
-                float size = 50f + 30f * rand; // initial size
+                float size = 20f + 20f * rand; // initial size
 
                 rand = my_rand.NextFloat();
                 float size_scale = -20 * rand; // pariticles going smaller
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.8f + 0.2f * rand;
+                float alpha = 0.5f + 0.2f * rand;
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.5f * rand;
@@ -495,7 +495,7 @@ namespace IS
                 float y = right_hand_pos.y + scaling.y / 2f * (rand - 0.5f); ;
 
                 InternalCalls.GameSpawnParticleExtra(
-                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                        x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                      );
             }
         }
