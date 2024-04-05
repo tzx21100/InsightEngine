@@ -135,7 +135,9 @@ namespace IS
 
                 // if bullet collide with ground or wall, destory it
                 if (InternalCalls.CompareEntityCategory(BULLET_ID, "Ground") ||
-                    InternalCalls.CompareEntityCategory(BULLET_ID, "Wall"))
+                    InternalCalls.CompareEntityCategory(BULLET_ID, "Wall") ||
+                    InternalCalls.CompareEntityCategory(BULLET_ID, "RightHandBoss") ||
+                    InternalCalls.CompareEntityCategory(BULLET_ID, "LeftHandBoss"))
                 {
                     is_alive = false; // destory bullet if collide with sth other than player
                 }
