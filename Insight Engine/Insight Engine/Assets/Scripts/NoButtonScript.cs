@@ -18,6 +18,7 @@ namespace IS
     class NoButtonScript
     {
         static public bool first_hovering = false;
+        static public float font_size = MainMenuScript.NORMAL_FONT_SIZE;
 
         static public void Init()
         {
@@ -33,11 +34,13 @@ namespace IS
                 {
                     SettingsScript.PlayHoverSound();
                     first_hovering = true;
+                    font_size = MainMenuScript.HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hovering = false;
+                font_size = MainMenuScript.NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {

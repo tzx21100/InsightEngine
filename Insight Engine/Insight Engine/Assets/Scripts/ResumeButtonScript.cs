@@ -18,7 +18,10 @@ namespace IS
 {
     class ResumeButtonScript
     {
+        public const float NORMAL_FONT_SIZE = 10f;
+        public const float HOVER_FONT_SIZE = 11f;
         static public bool first_hovering = false;
+        static public float font_size = NORMAL_FONT_SIZE;
 
         static public void Init()
         {
@@ -35,11 +38,13 @@ namespace IS
                 {
                     SettingsScript.PlayHoverSound();
                     first_hovering = true;
+                    font_size = HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hovering = false;
+                font_size = NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {
