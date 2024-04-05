@@ -82,6 +82,8 @@ namespace IS
         static public bool Reward_DoubleJump = false;
         static public bool Reward_Dash = false;
         static public bool Reward_WallClimb = false;
+        static public bool Reward_Fly = false;
+
 
         static public bool initialPowerUp = false;
 
@@ -1284,6 +1286,7 @@ namespace IS
             Reward_DoubleJump = false;
             Reward_Dash = false;
             Reward_WallClimb = false;
+            Reward_Fly = false;
             hasDash = false;
             hasDoubleJump = false;
             hasWallClimb = false;
