@@ -881,11 +881,13 @@ namespace IS
         {
             // spawn random number of enemies in random location on the ground
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+            int side = (int)rnd.Next(0, 2); // random from 0 to 1
             if (!isSingingSpell) // render spawn position once only
             {
+                float minx = (side == 0) ? -1000f : 1000f ; // 0 for left side, 1 for right side
                 enemy_spawn_pos = PlayerScript.player_pos;
                 // random left/right pos around player
-                enemy_spawn_pos.x = enemy_spawn_pos.x + 1000f * (rnd.NextFloat() - 0.5f);
+                enemy_spawn_pos.x = enemy_spawn_pos.x + minx + 500f * (rnd.NextFloat() - 0.5f);
                 isSingingSpell = true;
             }
 
