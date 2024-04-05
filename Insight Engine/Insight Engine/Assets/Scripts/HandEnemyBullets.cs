@@ -127,8 +127,9 @@ namespace IS
 
                     // damage player and destory bullet was handled in player script
                     // render destory particle
-                    
+
                     //RenderDestoryParticle();
+                    is_alive = false;
 
                 }
 
