@@ -1,7 +1,7 @@
 {
 	"Category" : 
 	{
-		"Category" : "LeftHandBoss"
+		"Category" : "Boss"
 	},
 	"Collider" : 
 	{
@@ -9,36 +9,52 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -69.196441650390625,
-				"Y" : -663.7032470703125
+				"X" : 0.0,
+				"Y" : 1304.953369140625
 			},
 			"BoxColliderOffset" : 
 			{
-				"X" : -60.0,
+				"X" : 0.0,
 				"Y" : 0.0
 			},
 			"BoxColliderSizeScale" : 
 			{
-				"X" : 0.30000001192092896,
-				"Y" : 0.30000001192092896
+				"X" : 0.40000000596046448,
+				"Y" : 0.40000000596046448
 			},
 			"BoxColliderVertices" : 
 			[
 				{
-					"x" : -227.40451049804688,
-					"y" : 132.80101013183594
+					"x" : 0.0,
+					"y" : 0.0
 				},
 				{
-					"x" : 227.40451049804688,
-					"y" : 132.80101013183594
+					"x" : 0.0,
+					"y" : 0.0
 				},
 				{
-					"x" : 227.40451049804688,
-					"y" : -132.80101013183594
+					"x" : 0.0,
+					"y" : 0.0
 				},
 				{
-					"x" : -227.40451049804688,
-					"y" : -132.80101013183594
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
+				},
+				{
+					"x" : 0.0,
+					"y" : 0.0
 				}
 			]
 		},
@@ -46,14 +62,14 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "BossLeftHand",
+	"Name" : "Boss",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : 0.0,
 		"RigidBodyAngularVelocity" : 0.0,
 		"RigidBodyArea" : 0.0,
-		"RigidBodyBodyType" : 1,
+		"RigidBodyBodyType" : 6,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
@@ -62,13 +78,13 @@
 		"RigidBodyRestitution" : 0.5,
 		"RigidBodyVelocityX" : 0.0,
 		"RigidBodyVelocityY" : 0.0,
-		"RigidbodyGravityScale" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
 	"Script" : 
 	{
-		"ScriptName" : "BossClap"
+		"ScriptName" : "BossBattle"
 	},
 	"Signature" : "00000000000000000010010000100111",
 	"Sprite" : 
@@ -80,40 +96,40 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "BossClap 6R4C.png",
+		"SpriteFilename" : "BossIdle 4R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 29,
-		"SpriteTextureHeight" : 1794,
-		"SpriteTextureIndex" : 12,
+		"SpriteTexture" : 25,
+		"SpriteTextureHeight" : 1196,
+		"SpriteTextureIndex" : 8,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
-		"SpriteTransformScalingX" : 1516.030029296875,
-		"SpriteTransformScalingY" : 885.34002685546875,
-		"SpriteTransformWorldPositionX" : -9.196441650390625,
-		"SpriteTransformWorldPositionY" : -663.7032470703125,
+		"SpriteTransformScalingX" : 1516.03173828125,
+		"SpriteTransformScalingY" : 885.33892822265625,
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 1304.953369140625,
 		"animations" : 
 		[
 			{
-				"Name" : "clap",
+				"Name" : "idle",
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
-				"frame_dimension_y" : 0.1666666716337204,
-				"frame_index_x" : 3.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.0083333365619182587,
-				"time_per_frame" : 0.041666667908430099,
+				"frame_dimension_y" : 0.25,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.058478273451328278,
+				"time_per_frame" : 0.0625,
 				"x_frames" : 4,
-				"y_frames" : 6
+				"y_frames" : 4
 			}
 		]
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
-		"TransformScalingX" : 1516.030029296875,
-		"TransformScalingY" : 885.34002685546875,
-		"TransformWorldPositionX" : -9.196441650390625,
-		"TransformWorldPositionY" : -663.7032470703125
+		"TransformScalingX" : 1516.03173828125,
+		"TransformScalingY" : 885.33892822265625,
+		"TransformWorldPositionX" : 22.199760437011719,
+		"TransformWorldPositionY" : 827.62139892578125
 	}
 }

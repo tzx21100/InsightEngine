@@ -1,7 +1,7 @@
 {
 	"Category" : 
 	{
-		"Category" : "LeftHandBoss"
+		"Category" : "RightHandBoss"
 	},
 	"Collider" : 
 	{
@@ -9,12 +9,12 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -69.196441650390625,
-				"Y" : -663.7032470703125
+				"X" : 1168.1649169921875,
+				"Y" : -636.23138427734375
 			},
 			"BoxColliderOffset" : 
 			{
-				"X" : -60.0,
+				"X" : 0.0,
 				"Y" : 0.0
 			},
 			"BoxColliderSizeScale" : 
@@ -46,14 +46,14 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
-	"Name" : "BossLeftHand",
+	"Name" : "BossRightHand",
 	"RigidBody" : 
 	{
 		"RigidBodyAccelerationX" : 0.0,
 		"RigidBodyAccelerationY" : 0.0,
 		"RigidBodyAngularVelocity" : 0.0,
 		"RigidBodyArea" : 0.0,
-		"RigidBodyBodyType" : 1,
+		"RigidBodyBodyType" : 0,
 		"RigidBodyDensity" : 0.0,
 		"RigidBodyForceX" : 0.0,
 		"RigidBodyForceY" : 0.0,
@@ -62,15 +62,11 @@
 		"RigidBodyRestitution" : 0.5,
 		"RigidBodyVelocityX" : 0.0,
 		"RigidBodyVelocityY" : 0.0,
-		"RigidbodyGravityScale" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
 		"mDynamicFriction" : 0.40000000596046448,
 		"mStaticFriction" : 0.60000002384185791
 	},
-	"Script" : 
-	{
-		"ScriptName" : "BossClap"
-	},
-	"Signature" : "00000000000000000010010000100111",
+	"Signature" : "00000000000000000010010000000111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -90,8 +86,8 @@
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1516.030029296875,
 		"SpriteTransformScalingY" : 885.34002685546875,
-		"SpriteTransformWorldPositionX" : -9.196441650390625,
-		"SpriteTransformWorldPositionY" : -663.7032470703125,
+		"SpriteTransformWorldPositionX" : 1168.1649169921875,
+		"SpriteTransformWorldPositionY" : -636.23138427734375,
 		"animations" : 
 		[
 			{
@@ -99,9 +95,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.1666666716337204,
-				"frame_index_x" : 3.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.0083333365619182587,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 5.0,
+				"frame_timer" : 0.033333338797092438,
 				"time_per_frame" : 0.041666667908430099,
 				"x_frames" : 4,
 				"y_frames" : 6
@@ -113,7 +109,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1516.030029296875,
 		"TransformScalingY" : 885.34002685546875,
-		"TransformWorldPositionX" : -9.196441650390625,
-		"TransformWorldPositionY" : -663.7032470703125
+		"TransformWorldPositionX" : 1168.1649169921875,
+		"TransformWorldPositionY" : -636.23138427734375
 	}
 }
