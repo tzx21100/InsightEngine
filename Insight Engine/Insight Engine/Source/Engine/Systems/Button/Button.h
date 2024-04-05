@@ -119,7 +119,7 @@ namespace IS {
          * \param entity The entity representing the button.
          * \return True if the mouse cursor is over the button, false otherwise.
          */
-        bool GameButtonContainsMouse(float mouse_x, float mouse_y, Entity entity);
+        static bool GameButtonContainsMouse(float mouse_x, float mouse_y, Entity entity);
 
         void Initialize()
         {}

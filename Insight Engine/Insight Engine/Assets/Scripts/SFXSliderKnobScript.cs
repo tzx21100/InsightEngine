@@ -1,9 +1,9 @@
 /*!
- * \file VFXSliderKnobScript.cs
+ * \file SFXSliderKnobScript.cs
  * \author Matthew Ng, matthewdeen.ng@digipen.edu 
  * \par Course: CSD2451
  * \brief
- * This C# file contains the VFXSliderKnobScript class, used for the VFXSliderKnob in settings page.
+ * This C# file contains the SFXSliderKnobScript class, used for the SFXSliderKnob in settings page.
  *
  * \copyright
  * All content (C) 2024 DigiPen Institute of Technology Singapore.
@@ -15,8 +15,9 @@ using System.Runtime.CompilerServices;
 using System;
 namespace IS
 {
-    class VFXSliderKnobScript
+    class SFXSliderKnobScript
     {
+        static private bool is_adjusting_slider = false;
         static public bool first_hover = false;
         static private int id;
         static private float diff_x;
@@ -31,8 +32,6 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
-        static public float lower_limit_vfx_knob;
-        static public float upper_limit_vfx_knob;
         static public float y_pos;
 
         static public void Init()
@@ -52,18 +51,15 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            lower_limit_vfx_knob = origin.x + (0.438f * win_dimension.x);
-            upper_limit_vfx_knob = origin.x + (0.562f * win_dimension.x);
-
             first_open_settings = false;
-            diff_x = 0.5f;
 
-            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
-            adjustment = origin.x + diff_x * win_dimension.x;
-            normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
-            //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.323f * win_dimension.y));
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            diff_x = (upper_limit - lower_limit) * InternalCalls.AudioGetSFX();
+            adjustment = lower_limit + diff_x;
+            normalised_adjustment = (adjustment + lower_limit) / (upper_limit + lower_limit);
             InternalCalls.SetButtonHoverScale(id, 0.95f);
-
         }
 
         static public void Update()
@@ -81,29 +77,33 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            lower_limit_vfx_knob = origin.x + (0.438f * win_dimension.x);
-            upper_limit_vfx_knob = origin.x + (0.562f * win_dimension.x);
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
+
+            if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.sfx_slider_bar_entity))
+            {
+                is_adjusting_slider = true;
+            }
+
+            if (InternalCalls.MouseHeld((int)MouseButton.Left) && is_adjusting_slider)
+            {
+                AdjustSlider(mouse_pos.x);
+                AdjustVolume();
+            }
+
+            // If the mouse button is released, stop adjusting the slider
+            if (InternalCalls.MouseReleased((int)MouseButton.Left))
+            {
+                is_adjusting_slider = false;
+            }
+
             //hovered
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 //hovering
                 if (!first_hover)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
+                    SettingsScript.PlayHoverSound();
                     first_hover = true;
-                }
-                if (InternalCalls.MouseHeld(0)==true)
-                {
-                    adjustment = Math.Min(upper_limit_vfx_knob, Math.Max(lower_limit_vfx_knob, mouse_pos.x));
-                    diff_x = (adjustment - origin.x) / win_dimension.x;
-                    InternalCalls.TransformSetPosition(adjustment, SettingsScript.vfx_slider_knob_pos.y);
-                    SettingsScript.vfx_slider_knob_pos.x = adjustment;
-                    normalised_adjustment = (adjustment + upper_limit_vfx_knob) / (upper_limit_vfx_knob + upper_limit_vfx_knob);
-                    //sfx volume
-                    SimpleVector2D trans = InternalCalls.GetTransformPosition();
-                    float sfx_volume = (trans.x - lower_limit_vfx_knob) / (lower_limit_vfx_knob - upper_limit_vfx_knob);
-                    InternalCalls.AudioSetSFX(sfx_volume);
                 }
 
             }
@@ -116,22 +116,16 @@ namespace IS
                 first_hover = true;
             }
             // clicking
-            if (MasterCheckboxScript.toggled)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
-                SettingsScript.master_multiplier = 0f;
+                SettingsScript.PlayClickSound();
             }
-            if (InternalCalls.GetButtonState() == 2)
-            {
-                //click
-                //Console.WriteLine(SettingsScript.master_multiplier);
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f * SettingsScript.master_multiplier * SettingsScript.vfx_multiplier);
-            }
-            y_pos = origin.y + (0.323f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
+            y_pos = origin.y + (0.321f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
             if (SettingsScript.show_settings)
             {
                 if (!first_open_settings)
                 {
-                    adjustment = origin.x + diff_x * win_dimension.x;
+                    adjustment = MasterSliderKnobScript.lower_limit_master_knob + diff_x;
                     first_open_settings = true;
                 }
                 InternalCalls.TransformSetPosition(adjustment, y_pos);
@@ -141,14 +135,35 @@ namespace IS
                 first_open_settings = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-            SettingsScript.vfx_multiplier = normalised_adjustment;
-
         }
 
 
         static public void CleanUp()
         {
 
+        }
+
+        static public void AdjustSlider(float xpos)
+        {
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            adjustment = Math.Min(upper_limit, Math.Max(lower_limit, xpos));
+            diff_x = adjustment - lower_limit;
+            InternalCalls.TransformSetPosition(adjustment, SettingsScript.sfx_slider_knob_pos.y);
+            SettingsScript.sfx_slider_knob_pos.x = adjustment;
+            normalised_adjustment = (adjustment + lower_limit) / (upper_limit + lower_limit);
+        }
+
+        static public void AdjustVolume()
+        {
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+            //sfx volume
+            float xpos = InternalCalls.GetTransformPosition().x;
+            float sfx_volume = (xpos - lower_limit) / (upper_limit - lower_limit);
+            InternalCalls.AudioSetSFX(sfx_volume);
+            Console.WriteLine("SFX: " + (int)(sfx_volume * 100) + "%");
         }
     }
 }

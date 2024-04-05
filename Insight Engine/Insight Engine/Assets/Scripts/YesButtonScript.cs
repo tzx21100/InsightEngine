@@ -31,7 +31,7 @@ namespace IS
                 //hovering
                 if (!first_hovering)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    SettingsScript.PlayHoverSound();
                     first_hovering = true;
                 }
             }
@@ -47,7 +47,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                SettingsScript.PlayClickSound();
                 InternalCalls.Exit();
             }
         }

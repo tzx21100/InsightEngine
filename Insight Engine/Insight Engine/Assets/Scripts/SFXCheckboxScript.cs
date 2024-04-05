@@ -1,9 +1,9 @@
 /*!
- * \file VFXSliderBarScript.cs
+ * \file SFXCheckboxScript.cs
  * \author Matthew Ng, matthewdeen.ng@digipen.edu 
  * \par Course: CSD2451
  * \brief
- * This C# file contains the VFXSliderBarScript class, used for the VFXSliderBar in settings page.
+ * This C# file contains the SFXCheckboxScript class, used for the SFXCheckbox in settings page. When it is toggled on means audio on, when toggled off means audio off.
  *
  * \copyright
  * All content (C) 2024 DigiPen Institute of Technology Singapore.
@@ -12,11 +12,13 @@
  * consent of DigiPen Institute of Technology is prohibited.
  *____________________________________________________________________________*/
 using System.Runtime.CompilerServices;
-using System;
 namespace IS
 {
-    class VFXSliderBarScript
+    class SFXCheckboxScript
     {
+        static public bool first_hover = false;
+        static public bool clicked = false;
+
         // Windows
         static public Vector2D win_dimension = new Vector2D(0, 0);
         static public Vector2D origin = new Vector2D(0, 0);
@@ -43,11 +45,11 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-
         }
 
         static public void Update()
         {
+            bool toggled = !InternalCalls.AudioIsSFXMute();
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -60,18 +62,46 @@ namespace IS
 
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
-            x_pos = origin.x + (0.5f * win_dimension.x);
-            y_pos = origin.y + (0.321f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
+
+            InternalCalls.SetSpriteImage(!toggled ? SettingsScript.checkbox_image : SettingsScript.checkbox_toggled_image);
+
+            //hovered
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
+            {
+                //hovering
+                if (!first_hover)
+                {
+                    SettingsScript.PlayHoverSound();
+                    first_hover = true;
+                }
+            }
+            else
+            {
+                first_hover = false;
+            }
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
+            // clicking
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
+            {
+                SettingsScript.PlayClickSound();
+                toggled = !toggled;
+                InternalCalls.AudioMuteSFX(!toggled);
+            }
+
+            x_pos = origin.x + (0.44f * win_dimension.x);
+            y_pos = origin.y + (0.365f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
+
             if (SettingsScript.show_settings)
             {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);
-
             }
             if (!SettingsScript.show_settings || y_pos > (origin.y + (0.7f * win_dimension.y)) || y_pos < (origin.y + (0.25f * win_dimension.y)))
             {
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-
 
         }
 

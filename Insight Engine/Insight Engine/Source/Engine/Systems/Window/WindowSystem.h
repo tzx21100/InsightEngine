@@ -45,7 +45,7 @@ namespace IS {
     };
 
     // In case "WindowProperties.json" is not found, window will use default properties
-    static const WindowProperties DEFAULT_PROPERTIES{ "Insight Engine", 1280, 720, 60, false, false, false };
+    static const WindowProperties DEFAULT_PROPERTIES{ "Insight Engine", 1600, 900, 60, false, false, false };
 
     /*!
      * \brief The WindowSystem class manages application windows.
@@ -120,6 +120,9 @@ namespace IS {
          * \brief Gets the height of the window.
          */
         int GetWindowHeight() const;
+
+        int GetMonitorWidth();
+        int GetMonitorHeight();
 
         /*!
          * \brief Gets the target FPS of the window.
