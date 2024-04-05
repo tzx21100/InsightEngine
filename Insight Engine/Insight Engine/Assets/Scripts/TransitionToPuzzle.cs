@@ -19,11 +19,11 @@ namespace IS
     class TransitionToPuzzle
     {
         static private float fade_out_timer = 0f;
-        static private float fade_out_duration = 1.2f;
+        static private float fade_out_duration =0.1f;
         static private bool is_transiting = false;
         static public void Init(){
             fade_out_timer = 0f;
-            fade_out_duration = 1.2f;
+            fade_out_duration = 0.1f;
             is_transiting = false;
         }
 
@@ -48,7 +48,7 @@ namespace IS
                         PlayerScript.high_score = PlayerScript.speed_run_timer;
                     }
 
-                    InternalCalls.LoadScene("Assets/Scenes/PuzzleLevel.insight");
+                    InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
                 }
             }
         }

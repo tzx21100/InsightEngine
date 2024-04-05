@@ -9,8 +9,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -3753.982666015625,
-				"Y" : -415.36102294921875
+				"X" : -12.680769920349121,
+				"Y" : 522.14453125
 			},
 			"BoxColliderOffset" : 
 			{
@@ -46,6 +46,23 @@
 		"CircleColliderEnabled" : false,
 		"ResponseEnabled" : true
 	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 1.0,
+			"G" : 1.0,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.33000001311302185,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 5000.0
+	},
 	"Name" : "BossDeath",
 	"RigidBody" : 
 	{
@@ -70,7 +87,7 @@
 	{
 		"ScriptName" : "BossDeath"
 	},
-	"Signature" : "00000000000000000010010000100111",
+	"Signature" : "00000000000000000011010000100111",
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
@@ -83,15 +100,15 @@
 		"SpriteFilename" : "BossDeath 6R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 34,
+		"SpriteTexture" : 50,
 		"SpriteTextureHeight" : 1794,
-		"SpriteTextureIndex" : 17,
+		"SpriteTextureIndex" : 33,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1516.030029296875,
 		"SpriteTransformScalingY" : 885.34002685546875,
-		"SpriteTransformWorldPositionX" : -3753.982666015625,
-		"SpriteTransformWorldPositionY" : -415.36102294921875,
+		"SpriteTransformWorldPositionX" : -12.680769920349121,
+		"SpriteTransformWorldPositionY" : 522.14453125,
 		"animations" : 
 		[
 			{
@@ -99,9 +116,9 @@
 				"animation_duration" : 2.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.1666666716337204,
-				"frame_index_x" : 2.0,
-				"frame_index_y" : 0.0,
-				"frame_timer" : 0.01666666753590107,
+				"frame_index_x" : 3.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.0,
 				"time_per_frame" : 0.083333335816860199,
 				"x_frames" : 4,
 				"y_frames" : 6
@@ -113,7 +130,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1516.030029296875,
 		"TransformScalingY" : 885.34002685546875,
-		"TransformWorldPositionX" : -3753.982666015625,
-		"TransformWorldPositionY" : -415.36102294921875
+		"TransformWorldPositionX" : -12.680769920349121,
+		"TransformWorldPositionY" : 522.14453125
 	}
 }

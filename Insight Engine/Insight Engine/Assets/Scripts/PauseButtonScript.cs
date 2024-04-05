@@ -133,18 +133,19 @@ namespace IS
             }
 
             //mouse hovering
-            if (InternalCalls.GetButtonState() == 1)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 InternalCalls.TransformSetScale(0.06f * win_dimension.x, 0.1f * win_dimension.y);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
+                SettingsScript.PlayHoverSound();
             }
             //click
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
                 //light_switch = !light_switch;
                 InternalCalls.SetLightsToggle(false);
 
-                InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                SettingsScript.PlayClickSound();
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
 
                 if (!paused)
@@ -210,11 +211,11 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
 
             //InternalCalls.RenderTextFont("PAUSED", "MedusaGothic_D", 0.497f, 0.72f, 12f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("RESUME GAME", "MedusaGothic_D", 0.497f, 0.625f, 10f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", 0.497f, 0.52f, 8f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.497f, 0.433f, 8f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.497f, 0.35f, 8f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.497f, 0.267f, 8f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("RESUME GAME", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.625f, ResumeButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.52f, SettingsScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.433f, HowToPlayScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("MAIN MENU", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.35f, BackToMenuButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("EXIT", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.267f, ExitButtonScript.font_size, (1f, 1f, 1f, 1f));
 
         }
 
