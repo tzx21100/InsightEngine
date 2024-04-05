@@ -877,7 +877,7 @@ namespace IS
                 float y = pos.y + scaling.y / 2f * (rand - 0.5f);
 
                 InternalCalls.GameSpawnParticleExtra(
-                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                  );
             }
         }
@@ -927,7 +927,7 @@ namespace IS
                 float speed = 200f + 200f * rand;
 
                 InternalCalls.GameSpawnParticleExtra(
-                    enemy_spawn_pos.x, enemy_spawn_pos.y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                    enemy_spawn_pos.x, enemy_spawn_pos.y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                  );
             }
         }
@@ -1260,7 +1260,7 @@ namespace IS
                 boss_hp = boss_max_hp;
                 temp_boss_hp = boss_max_hp; // reset the white bg bar
                 Boss_spawn_pos.x = 0;
-                Boss_spawn_pos.y = -300;
+                Boss_spawn_pos.y = -500;
                 current_state = BossStates.Idle;
                 PlayerScript.player_cam_y_offset = 300f;
                 CameraScript.StopCameraPan();

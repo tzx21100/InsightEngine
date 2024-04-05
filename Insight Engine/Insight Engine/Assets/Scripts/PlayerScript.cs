@@ -380,11 +380,11 @@ namespace IS
             player_health_full = InternalCalls.GetSpriteImage("player_health_full.png");
             player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
 
-            player_attack_vfx1 = InternalCalls.GetSpriteImage("player_attack_vfx1");
-            player_attack_vfx2 = InternalCalls.GetSpriteImage("player_attack_vfx2");
-            player_attack_vfx3 = InternalCalls.GetSpriteImage("player_attack_vfx3");
-            player_attack_vfx4 = InternalCalls.GetSpriteImage("player_attack_vfx4");
-            player_attack_vfx5 = InternalCalls.GetSpriteImage("player_attack_vfx5");
+            player_attack_vfx1 = InternalCalls.GetSpriteImage("player_attack_vfx1.png");
+            player_attack_vfx2 = InternalCalls.GetSpriteImage("player_attack_vfx2.png");
+            player_attack_vfx3 = InternalCalls.GetSpriteImage("player_attack_vfx3.png");
+            player_attack_vfx4 = InternalCalls.GetSpriteImage("player_attack_vfx4.png");
+            player_attack_vfx5 = InternalCalls.GetSpriteImage("player_attack_vfx5.png");
 
             damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
             dash_indicator = InternalCalls.GetSpriteImage("Dash_Indicator.png");
