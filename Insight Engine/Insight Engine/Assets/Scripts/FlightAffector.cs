@@ -64,7 +64,12 @@ namespace IS
 
             if (PlayerScript.isDead)
             {
-                NarratorVoices.NarrateDeath();
+                if (InternalCalls.GetRandomFloat() > 0.7f)
+                {
+                    InternalCalls.AudioStopAllSounds();
+                    NarratorVoices.NarrateDeath();
+                }
+                
                 InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
             }
 

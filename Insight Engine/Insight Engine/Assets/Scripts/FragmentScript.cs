@@ -74,6 +74,7 @@ namespace IS
                             PlayerScript.PLAYER_LIGHT = 0;
                             InternalCalls.ChangeShaderIntensity(0f);
                             PlayerScript.hasFly = true;
+                            PlayerScript.Reward_Fly = true;
                             BossChase.chase_speed = 0f;
                             //InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
                         }

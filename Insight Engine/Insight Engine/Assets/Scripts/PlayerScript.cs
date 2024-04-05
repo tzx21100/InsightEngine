@@ -130,6 +130,8 @@ namespace IS
         static SimpleImage player_reward_dash;
         static SimpleImage player_reward_doublejump;
         static SimpleImage player_reward_wallclimb;
+        static SimpleImage player_rewards_spritesheet;
+
         //static SimpleImage player_attack;
         //static SimpleImage player_being_hit;
         static SimpleImage player_attack1;
@@ -385,6 +387,9 @@ namespace IS
             player_reward_dash = InternalCalls.GetSpriteImage("Dash UI.png");
             player_reward_doublejump = InternalCalls.GetSpriteImage("Double Jump UI.png");
             player_reward_wallclimb = InternalCalls.GetSpriteImage("Wall Climb UI.png");
+            player_rewards_spritesheet = InternalCalls.GetSpriteImage("AbilityHUD 1R4C.png");
+
+
             //player_attack = InternalCalls.GetSpriteImage("dark_circle.png");
             //player_being_hit = InternalCalls.GetSpriteImage("Dash AfterImage.png");
             player_attack1 = InternalCalls.GetSpriteImage("player_attack1.png");
@@ -564,34 +569,7 @@ namespace IS
             SimpleVector2D scaler = new SimpleVector2D(200f, 180f);
 
             //DRAW IMAGES OF THE REWARDS!!!! the powerups which are named reward
-            if (Reward_Dash)
-            {
-
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x + scaler.x * 1.3f, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
-                InternalCalls.DrawImageAt
-                (
-                    pos, 0, scaler, player_reward_dash, 1f, 4
-                );
-
-            }
-            if (Reward_DoubleJump)
-            {
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - scaler.x * 1.3f, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
-                InternalCalls.DrawImageAt
-                (
-                    pos, 0, scaler, player_reward_doublejump, 1f, 4
-                );
-
-            }
-            if (Reward_WallClimb)
-            {
-                SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y - WindowHeight / 1.3f + scaler.y);
-                InternalCalls.DrawImageAt
-                (
-                    pos, 0, scaler, player_reward_wallclimb, 1f, 4
-                );
-
-            }
+          
 
             // screen flash upon damage
             if (screen_flash_timer > 0.0f)
@@ -608,7 +586,7 @@ namespace IS
             }
 
             DrawHealthBar();
-
+            DrawRewards();
             
 
 
@@ -2423,7 +2401,7 @@ namespace IS
 
         static private void DrawHealthBar() // draw health bar
         {
-            if (hideHealth == true) return;
+            if (hideHealth == true ||SettingsScript.show_settings) return;
 
             SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
@@ -2464,7 +2442,51 @@ namespace IS
             }
         }
 
+        static private void DrawRewards() // draw powers
+        {
+            if (hideHealth == true || SettingsScript.show_settings) return;
 
+            float scale = 80f;
+            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 3.2f);
+            SimpleVector2D scaling = new SimpleVector2D(scale / CameraScript.camera_zoom, scale / CameraScript.camera_zoom);
+            float padding = scaling.x/1.5f;
+
+            if (Reward_DoubleJump)
+            {
+                SimpleVector2D new_pos = new SimpleVector2D();
+                new_pos.x = pos.x;
+                new_pos.y = pos.y;
+                float alpha = 1f;
+                if (jump_amount < jump_amount_set) { alpha = 0.5f; }
+                InternalCalls.DrawImageExtraAt(0, 0, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet,alpha, 6);//force top
+            }
+            if (Reward_WallClimb)
+            {
+                SimpleVector2D new_pos = new SimpleVector2D();
+                new_pos.x = pos.x + (scale + padding) * 1f ;
+                new_pos.y = pos.y;
+                float alpha = 1f;
+                InternalCalls.DrawImageExtraAt(0, 1, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet, alpha, 6);//force top
+            }
+            if (Reward_Dash)
+            {
+                SimpleVector2D new_pos = new SimpleVector2D();
+                new_pos.x = pos.x + (scale + padding) * 2 ;
+                new_pos.y = pos.y;
+                float alpha = 1f;
+                if (!canDash) { alpha = 0.5f; }
+                InternalCalls.DrawImageExtraAt(0, 2, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet, alpha, 6);//force top
+            }
+            if (Reward_Fly)
+            {
+                SimpleVector2D new_pos = new SimpleVector2D();
+                new_pos.x = pos.x + (scale + padding) * 3f;
+                new_pos.y = pos.y;
+                InternalCalls.DrawImageExtraAt(0, 3, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet, 1f, 6);//force top
+
+            }
+
+        }
 
         //player helper function
         static public void AddForcesToPlayer(float x_force, float y_force, float timer)

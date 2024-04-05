@@ -37,6 +37,7 @@ namespace IS
                 InternalCalls.LoadScene("Assets/Scenes/ChaseLevel.insight");
                 if (InternalCalls.GetRandomFloat() > 0.7f)
                 {
+                    InternalCalls.AudioStopAllSounds();
                     NarratorVoices.NarrateDeath();
                 }
                 

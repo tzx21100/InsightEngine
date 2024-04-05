@@ -404,7 +404,7 @@ namespace IS {
          * \brief Stops all currently playing sounds.
          */
         void ClearAllSounds() {
-            for (auto sound : mChannelList) {
+            for (auto &sound : mChannelList) {
                 sound.second->stop();
             }
         }

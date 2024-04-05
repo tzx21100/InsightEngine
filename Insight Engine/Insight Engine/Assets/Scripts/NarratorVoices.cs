@@ -135,6 +135,7 @@ namespace IS
         {
             //reset narration timer
             narrate_timer = narrater_timer_set;
+            InternalCalls.AudioStopAllSounds();
 
             float volume = 0.5f;
             float num = rando_footsteps.NextFloat();
@@ -175,6 +176,7 @@ namespace IS
         {
             //reset narration timer
             narrate_timer = narrater_timer_set;
+
 
             float volume = 0.5f;
             float num = rando_footsteps.NextFloat();
