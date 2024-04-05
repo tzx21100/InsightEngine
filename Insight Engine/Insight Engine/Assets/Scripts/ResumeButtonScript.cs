@@ -18,7 +18,10 @@ namespace IS
 {
     class ResumeButtonScript
     {
+        public const float NORMAL_FONT_SIZE = 10f;
+        public const float HOVER_FONT_SIZE = 11f;
         static public bool first_hovering = false;
+        static public float font_size = NORMAL_FONT_SIZE;
 
         static public void Init()
         {
@@ -33,13 +36,15 @@ namespace IS
                 //hovering
                 if (!first_hovering)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    SettingsScript.PlayHoverSound();
                     first_hovering = true;
+                    font_size = HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hovering = false;
+                font_size = NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {
@@ -51,7 +56,7 @@ namespace IS
                 PauseButtonScript.light_switch = !PauseButtonScript.light_switch;
                 InternalCalls.SetLightsToggle(PauseButtonScript.light_switch);
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                SettingsScript.PlayClickSound();
                 PauseButtonScript.paused = false;
             }
             

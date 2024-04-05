@@ -62,8 +62,8 @@ namespace IS
         static private List<string> executives = new List<string>();
 
         static float leaves_timer;
-        static float leaves_timer_set=2f;
-        static int leaves_amount = 100;
+        static float leaves_timer_set=0.7f;
+        static int leaves_amount = 50;
 
         static private int back_button_entity;
 
@@ -159,27 +159,44 @@ namespace IS
             InternalCalls.DrawSquare(0, 0, 7000, 7000, 0, 0, 0, 0.5f, 2);
             InternalCalls.AttachCamera(0, 0);
             leaves_timer -= InternalCalls.GetDeltaTime();
-            //spawn leaves
+
+            Firefly.Update();
             if (leaves_timer <= 0)
             {
-
-
-                for (int i = 0; i < leaves_amount; i++)
-                {
-                    int col = (int)(InternalCalls.GetRandomFloat() * 2);
-                    float direction = InternalCalls.GetRandomFloat() * 360;
-                    float size = InternalCalls.GetRandomFloat() * 150;
-                    float speed = InternalCalls.GetRandomFloat() * 800f;
-                    float lifespan = InternalCalls.GetRandomFloat() * 12f;
-                    InternalCalls.GameSpawnParticleExtraFramesFull((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y + 2000f,
-                        direction, size, 0f, 1f,
-                        0f, lifespan, speed, "ParticleLeaves.txt"
-                        , col, 0, direction, 4, 1f, lifespan * CustomMath.Normalize(lifespan - 6f) / 5f, InternalCalls.GetTopLayer(), (1, 1, 1));
-
-                }
+                //fireflies
+                float direction = InternalCalls.GetRandomFloat() * 360;
+                float rotation = InternalCalls.GetRandomFloat() * 360;
+                float speed = InternalCalls.GetRandomFloat() * 3f;
+                float lifespan = InternalCalls.GetRandomFloat() * 25f;
+                float Xpos = -InternalCalls.GetWindowWidth() / 2f + InternalCalls.GetWindowWidth() * InternalCalls.GetRandomFloat();
+                float Ypos = -InternalCalls.GetWindowHeight() / 2f + InternalCalls.GetWindowHeight() * InternalCalls.GetRandomFloat();
+                Firefly.CreateFirefly("firefly", direction, rotation, speed, lifespan, Xpos, Ypos);
 
                 leaves_timer = leaves_timer_set;
             }
+
+
+            //spawn leaves
+
+            //if (leaves_timer <= 0)
+            //{
+
+
+            //    for (int i = 0; i < leaves_amount; i++)
+            //    {
+            //        float direction = InternalCalls.GetRandomFloat() * 360;
+            //        float size = InternalCalls.GetRandomFloat() * 150;
+            //        float speed = InternalCalls.GetRandomFloat() * 800f;
+            //        float lifespan = InternalCalls.GetRandomFloat() * 12f;
+            //        InternalCalls.GameSpawnParticleExtraFramesFull((CameraScript.camera_pos.x - 2000) + (2000 * InternalCalls.GetRandomFloat()), CameraScript.camera_pos.y + 2000f,
+            //            direction, size, 0f, 1f,
+            //            0f, lifespan, speed, "ParticleFirefly.txt"
+            //            , 0, 0, direction, 4, 1f, lifespan * CustomMath.Normalize(lifespan - 6f) / 5f, InternalCalls.GetTopLayer(), (0.15f, 0.81f, 0.57f));
+
+            //    }
+
+            //    leaves_timer = leaves_timer_set;
+            //}
 
             //ends here
 

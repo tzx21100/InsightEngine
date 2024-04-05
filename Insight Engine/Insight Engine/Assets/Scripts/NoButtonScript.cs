@@ -18,6 +18,7 @@ namespace IS
     class NoButtonScript
     {
         static public bool first_hovering = false;
+        static public float font_size = MainMenuScript.NORMAL_FONT_SIZE;
 
         static public void Init()
         {
@@ -31,13 +32,15 @@ namespace IS
                 //hovering
                 if (!first_hovering)
                 {
-                    InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
+                    SettingsScript.PlayHoverSound();
                     first_hovering = true;
+                    font_size = MainMenuScript.HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hovering = false;
+                font_size = MainMenuScript.NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {
@@ -47,7 +50,7 @@ namespace IS
             if (InternalCalls.GetButtonState() == 2)
             {
                 //click
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                SettingsScript.PlayClickSound();
                 ExitButtonScript.exit_confirmation = false;
             }
         }

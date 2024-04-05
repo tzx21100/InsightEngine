@@ -82,6 +82,8 @@ namespace IS
         static public bool Reward_DoubleJump = false;
         static public bool Reward_Dash = false;
         static public bool Reward_WallClimb = false;
+        static public bool Reward_Fly = false;
+
 
         static public bool initialPowerUp = false;
 
@@ -1115,6 +1117,7 @@ namespace IS
                     {
                         InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x, 0f);
                         Jump();
+                        RandomJumpSounds();
                         jump_amount--;
                         isJumping = true;
                     }
@@ -1160,6 +1163,7 @@ namespace IS
             {
                 if (dash_trigger)
                 {
+                    InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.2f); //play dash audio
                     isDashing = true;
                 }
 
@@ -1282,6 +1286,7 @@ namespace IS
             Reward_DoubleJump = false;
             Reward_Dash = false;
             Reward_WallClimb = false;
+            Reward_Fly = false;
             hasDash = false;
             hasDoubleJump = false;
             hasWallClimb = false;
@@ -1350,7 +1355,7 @@ namespace IS
 
         static private void Jump()
         {
-            PlayerScript.RandomJumpSounds();
+            PlayerScript.JumpSounds();
             InternalCalls.ResetSpriteAnimationFrameEntity(jump_entity);
             InternalCalls.TransformSetScaleEntity(100 * -hori_movement, 100, jump_entity);
             InternalCalls.TransformSetPositionEntity(player_pos.x, player_pos.y, jump_entity);
@@ -1651,6 +1656,9 @@ namespace IS
 
         static private void RandomJumpSounds()
         {
+            float rando_pass = InternalCalls.GetRandomFloat();
+            if (rando_pass < 0.7f) { return; }
+
             float num = rando_footsteps.NextFloat();
             float volume = 0.1f;
             if (num <= 0.18f)
@@ -1817,9 +1825,37 @@ namespace IS
             //}
         }
 
+        static private void AttackSlashSound() // random attack1 sound
+        {
+            float volume = 0.05f;
+            switch (random_attack_sound)
+            {
+                case 0:
+                    InternalCalls.AudioPlaySoundSFX("FightWhoosh1.wav", false, volume);
+                    break;
+                case 1:
+                    InternalCalls.AudioPlaySoundSFX("FightWhoosh2.wav", false, volume);
+                    break;
+                case 2:
+                    InternalCalls.AudioPlaySoundSFX("FightWhoosh3.wav", false, volume);
+                    break;
+                case 3:
+                    InternalCalls.AudioPlaySoundSFX("FightWhoosh4.wav", false, volume);
+                    break;
+                case 4:
+                    InternalCalls.AudioPlaySoundSFX("FightWhoosh5.wav", false, volume);
+                    break;
+            }
+        }
+
+
+
         static private void PlayAttack1Sound() // random attack1 sound
         {
             float volume = 0.2f;
+            AttackSlashSound();
+            if (InternalCalls.GetRandomFloat() > 0.2f) { return; }
+
             switch (random_attack_sound)
             {
                 case 0:
@@ -1842,6 +1878,8 @@ namespace IS
 
         static private void PlayAttack2Sound() // random attack2 sound
         {
+            AttackSlashSound();
+            if (InternalCalls.GetRandomFloat() > 0.2f) { return; }
             float volume = 0.2f;
             switch (random_attack_sound)
             {
@@ -1865,6 +1903,8 @@ namespace IS
 
         static private void PlayAttack3Sound() // random attack3 sound
         {
+            AttackSlashSound();
+            if (InternalCalls.GetRandomFloat() > 0.5f) { return; }
             float volume = 0.2f;
             switch (random_attack_sound)
             {
@@ -1961,7 +2001,7 @@ namespace IS
                     hitting_enemy = true;
                     if (isAttack && !initial_attack) // enemy get hit for the first time
                     {
-                        Random rnd = new Random();
+/*                        Random rnd = new Random();
                         int random_hit_sound = rnd.Next(0, 2);
                         switch (random_hit_sound)
                         {
@@ -1971,7 +2011,10 @@ namespace IS
                             case 1:
                                 InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.1.wav", false, 0.5f);
                                 break;
-                        }
+                            default:
+                                InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
+                                break;
+                        }*/
 
                         InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
                         // // get the id for enemy being attack (one only)
@@ -2360,6 +2403,27 @@ namespace IS
             
         }
 
+
+        static private void JumpSounds()
+        {
+            float num = rando_footsteps.NextFloat();
+            float volume = 0.1f;
+            if (num <= 0.33f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Player Jump_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.66f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Player Jump_2.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Player Jump_3.wav", false, volume);
+                return;
+            }
+        }
 
 
     } //player script
