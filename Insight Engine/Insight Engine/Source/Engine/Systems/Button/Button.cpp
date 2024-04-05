@@ -67,7 +67,7 @@ namespace IS {
         float button_top = button_y + trans.getScaling().y / 2;
         float button_bottom = button_y - trans.getScaling().y / 2;
 
-        if (mouse_x<button_left || mouse_x>button_right || mouse_y <button_bottom || mouse_y>button_top)
+        if (mouse_x < button_left || mouse_x > button_right || mouse_y < button_bottom || mouse_y > button_top)
         {
             return false;
         }

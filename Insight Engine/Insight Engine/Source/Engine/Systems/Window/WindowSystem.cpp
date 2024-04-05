@@ -147,6 +147,20 @@ namespace IS {
         GetWindowSize(width, height);
         return height;
     }
+    int WindowSystem::GetMonitorWidth()
+    {
+        GLFWmonitor* active_monitor = GetActiveMonitor();
+        GLFWmonitor* monitor = active_monitor ? active_monitor : glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        return mode->width;
+    }
+    int WindowSystem::GetMonitorHeight()
+    {
+        GLFWmonitor* active_monitor = GetActiveMonitor();
+        GLFWmonitor* monitor = active_monitor ? active_monitor : glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        return mode->height;
+    }
     int WindowSystem::GetTargetFPS() const                          { return mProps.fps; }
     int* WindowSystem::GetTargetFPS()                               { return &mProps.fps; }
     bool WindowSystem::IsVSync() const                              { return mProps.vsync; }

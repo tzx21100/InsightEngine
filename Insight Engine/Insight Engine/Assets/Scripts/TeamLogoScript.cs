@@ -62,9 +62,9 @@ namespace IS
             }
 
             //click
-            if (InternalCalls.GetButtonState() == 2)
+            if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
-                InternalCalls.AudioPlaySound("QubieSFX3.wav", false, 0.4f);
+                SettingsScript.PlayClickSound();
                 rand_hue = GetRandomHue();
                 InternalCalls.SetLightHueEntity(entity_id, rand_hue.x, rand_hue.y, rand_hue.z);
                 is_lighted = !is_lighted;

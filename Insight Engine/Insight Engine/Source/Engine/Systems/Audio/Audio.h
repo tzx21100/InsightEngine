@@ -78,9 +78,26 @@ namespace IS {
     class ISAudio :public ParentSystem {
     public:
 
-         float MasterAudioLevel = 1.f;
-         float SFXAudioLevel = 1.f;
-         float BGMAudioLevel = 1.f;
+        struct AudioConfig
+        {
+            struct VolumeControl
+            {
+                bool mIsMute;
+                float mVolume;
+            };
+
+            VolumeControl mMasterControl;
+            VolumeControl mSFXControl;
+            VolumeControl mBGMControl;
+
+            AudioConfig()
+            {
+                mMasterControl = { false, 1.f };
+                mBGMControl = mSFXControl = { false, .5f };
+            };
+        };
+
+        AudioConfig mAudioConfig;
 
         //override parent sys
         void Update(float deltaTime) override;
@@ -90,6 +107,7 @@ namespace IS {
 
         ISAudio(); //ctor
         ~ISAudio(); //dtor
+
         /*!
          * \brief Releases resources and shuts down the ISAudio system.
          *
@@ -229,6 +247,11 @@ namespace IS {
         bool mFadeOutAudio = false;
         float mCurrentVolume = 0.f;
         float mFadeTime = 0.f;
+
+        const std::string CONFIG_FILEPATH = "AudioConfig.json";
+
+        void LoadConfig();
+        void SaveConfig();
 
 
     };
