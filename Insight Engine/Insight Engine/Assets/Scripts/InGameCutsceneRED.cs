@@ -10,7 +10,7 @@ namespace IS
         static string text3 = "It is not in any ruins or scattered somewhere else. You can find it here.";
         static string text4 = "Within you.";
         static string text5 = "You will have to sacrifice yourself... or choose not to, the choice is yours."; // pan here
-        static string text6 = "Someone has to go.";
+        static string text6 = "SOMEONE has to go.";
 
         static SimpleImage MCImage = InternalCalls.GetSpriteImage("MC.png");
         static SimpleImage NPCImage = InternalCalls.GetSpriteImage("NPC.png");
