@@ -138,6 +138,13 @@ namespace IS
         static SimpleImage damage_screen_flash;
         static SimpleImage npc_image;
 
+        // player attack vfx
+        static SimpleImage player_attack_vfx1;
+        static SimpleImage player_attack_vfx2;
+        static SimpleImage player_attack_vfx3;
+        static SimpleImage player_attack_vfx4;
+        static SimpleImage player_attack_vfx5;
+
         //psuedo animations for images
         static private float animation_speed = 0.07f;
         static private float animation_speed_set = 0.07f;
@@ -372,6 +379,12 @@ namespace IS
             player_health_empty = InternalCalls.GetSpriteImage("player_health_empty.png");
             player_health_full = InternalCalls.GetSpriteImage("player_health_full.png");
             player_health_half = InternalCalls.GetSpriteImage("player_health_half.png");
+
+            player_attack_vfx1 = InternalCalls.GetSpriteImage("player_attack_vfx1");
+            player_attack_vfx2 = InternalCalls.GetSpriteImage("player_attack_vfx2");
+            player_attack_vfx3 = InternalCalls.GetSpriteImage("player_attack_vfx3");
+            player_attack_vfx4 = InternalCalls.GetSpriteImage("player_attack_vfx4");
+            player_attack_vfx5 = InternalCalls.GetSpriteImage("player_attack_vfx5");
 
             damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
             dash_indicator = InternalCalls.GetSpriteImage("Dash_Indicator.png");
@@ -2022,8 +2035,9 @@ namespace IS
                                 break;
                         }*/
 
-                        InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        // // get the id for enemy being attack (one only)
+                        //InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
+                        
+                        // get the id for enemy being attack (one only)
                         int attacking_enemy_id = InternalCalls.GetCollidingEnemyEntity(entity_attack);
 
                         if (InternalCalls.CheckEntityCategory(attacking_enemy_id, "Enemy"))
@@ -2082,6 +2096,8 @@ namespace IS
                         // not drawing hitting enemy vfx
                         InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
                         InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
+
+                        MoveAwayAttackVFX();
                     }
                 }
                 else
@@ -2096,6 +2112,11 @@ namespace IS
 
             // Apply Attack Stun Effect
             AttackStunEffect();
+        }
+
+        static private void MoveAwayAttackVFX()
+        {
+
         }
 
         static public void AttackStunEffect()
