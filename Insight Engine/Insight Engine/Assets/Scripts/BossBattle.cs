@@ -145,7 +145,7 @@ namespace IS
             boss_hp = boss_max_hp;
             temp_boss_hp = boss_hp;
             minus_hp_timer = minus_hp_timer_set;
-            health_bar = InternalCalls.GetSpriteImage("enemy_healthbar.png");
+            health_bar = InternalCalls.GetSpriteImage("UI_Healthbar_Boss.png");
             boss_bullet = InternalCalls.GetSpriteImage("Boss Projectile.png");
             current_state = BossStates.Smash;
 
@@ -192,7 +192,9 @@ namespace IS
                 {
                     BossProjectile.DestroyAllProjectiles();
                     BossProjectile.CLEAN();
-                    InternalCalls.CreateEntityPrefab("BossDeath");
+                    int dead = InternalCalls.CreateEntityPrefab("BossDeath");
+                    SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(InternalCalls.GetCurrentEntityID());
+                    InternalCalls.TransformSetPositionEntity(pos.x, pos.y, dead);
                     InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
                 }
 
@@ -279,9 +281,9 @@ namespace IS
                 color = new Vector3(1f, 0f, 0f);
             }
             int layer = InternalCalls.GetTopLayer();
-            float health_wdith = (((boss_hp > 0) ? boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x*0.8f /CameraScript.camera_zoom; // width lenght of the health bar
+            float health_wdith = (((boss_hp > 0) ? boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x* 0.87f / CameraScript.camera_zoom; // width lenght of the health bar
             float health_pos_x = CameraScript.camera_pos.x;
-            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.8f / CameraScript.camera_zoom) / 2f;
+            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.87f / CameraScript.camera_zoom) / 2f - 8f / CameraScript.camera_zoom;
             float health_pos_y = CameraScript.camera_pos.y+400f/CameraScript.camera_zoom;
             Vector2D health_bar_length = new Vector2D(health_wdith, 84f / CameraScript.camera_zoom);
 
@@ -314,9 +316,9 @@ namespace IS
             }
 
             int layer = InternalCalls.GetTopLayer() - 1;
-            float health_wdith = (((temp_boss_hp > 0) ? temp_boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x * 0.8f / CameraScript.camera_zoom; // width lenght of the health bar
+            float health_wdith = (((temp_boss_hp > 0) ? temp_boss_hp : 0f) / boss_max_hp) * health_bar_scaling.x * 0.87f / CameraScript.camera_zoom; // width lenght of the health bar
             //float health_pos_x = CameraScript.camera_pos.x;
-            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - temp_boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.8f / CameraScript.camera_zoom) / 2f;
+            float health_blood_x = CameraScript.camera_pos.x - ((boss_max_hp - temp_boss_hp) / boss_max_hp) * (health_bar_scaling.x * 0.87f / CameraScript.camera_zoom) / 2f - 8f / CameraScript.camera_zoom;
             float health_pos_y = CameraScript.camera_pos.y + 400f / CameraScript.camera_zoom;
             Vector2D health_bar_length = new Vector2D(health_wdith, 84f / CameraScript.camera_zoom);
 
@@ -771,7 +773,16 @@ namespace IS
 
         static private void SummonEnemy()
         {
-           // CameraScript.CameraTargetZoom(0.3f, 2f); //zoom is hard to see so i remove for now
+            // CameraScript.CameraTargetZoom(0.3f, 2f); //zoom is hard to see so i remove for now
+            SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(InternalCalls.GetCurrentEntityID());
+            Vector2D dir = new Vector2D(Boss_spawn_pos.x - pos.x, Boss_spawn_pos.y - pos.y);
+
+            if (MathF.Abs(dir.x) > 50f || MathF.Abs(dir.y) > 50f)
+            {
+                MoveToLocation(Boss_spawn_pos.x, Boss_spawn_pos.y);
+                return; // wait for boss to reach target position
+            }
+            
             SingingSpell();
             
         }
@@ -1176,7 +1187,7 @@ namespace IS
             SimpleVector2D pos = InternalCalls.GetTransformPosition();
             /*pos.y += 20f;
             InternalCalls.TransformSetPosition(pos.x, pos.y);*/
-            MoveToLocation(pos.x, 1500f);
+            MoveToLocation(pos.x, 2000f);
 
             if (boss_move_away_timer > 0f)
             {

@@ -135,8 +135,8 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
             InternalCalls.RenderTextFont("CONFIRM EXIT?", "MedusaGothic_D", 0.5f, 0.535f, 13f, (1f, 1f, 1f, 1f));
 
-            InternalCalls.RenderTextFont("YES", "MedusaGothic_D", 0.4f, 0.463f, 10f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("NO", "MedusaGothic_D", 0.602f, 0.463f, 10f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("YES", "MedusaGothic_D", 0.4f, 0.463f, YesButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("NO", "MedusaGothic_D", 0.602f, 0.463f, NoButtonScript.font_size, (1f, 1f, 1f, 1f));
 
 
         }
