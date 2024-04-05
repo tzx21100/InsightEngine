@@ -159,8 +159,8 @@ namespace IS
                     showText = false;
                     if (!play_yk_voicelines)
                     {
-                        InternalCalls.AudioPlayMusic("VO-MadCoder-001.wav", 0.2f);
-                        InternalCalls.AudioPlayMusic("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
+                        InternalCalls.AudioPlayMusicSFX("VO-MadCoder-001.wav", 0.2f);
+                        InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
                         play_yk_voicelines = true;
                     }
                     break;
@@ -168,17 +168,17 @@ namespace IS
                     if (!play_first_explosion)
                     {
                         InternalCalls.FadeOutAudio(1f);
-                        InternalCalls.AudioPlayMusic("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
+                        InternalCalls.AudioPlayMusicSFX("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", 0.2f);
                         play_first_explosion = true;
                     }
                     break;
                 case 5:
                     if (!play_second_explosion)
                     {
-                        InternalCalls.AudioPlayMusic("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
+                        InternalCalls.AudioPlayMusicSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", 0.2f);
                         play_second_explosion = true;
-                        InternalCalls.AudioPlayMusic("Fragments_Music_Tension 2.wav", 0.3f);
-                        InternalCalls.AudioPlayMusic("JOHN_The Choice_Loop_60bpm.wav", 0.3f);
+                        InternalCalls.AudioPlayMusicSFX("Fragments_Music_Tension 2.wav", 0.3f);
+                        InternalCalls.AudioPlayMusicBGM("JOHN_The Choice_Loop_60bpm.wav", 0.3f);
                     }
                     break;
                 case 6:
@@ -230,7 +230,7 @@ namespace IS
                     showText = false;
                     if (!play_audio_collapse)
                     {
-                        InternalCalls.AudioPlayMusic("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
+                        InternalCalls.AudioPlayMusicSFX("ROCK-COLLAPSE_GEN-HDF-20004.wav", 0.1f);
 
                     }
                     play_audio_collapse = true;
