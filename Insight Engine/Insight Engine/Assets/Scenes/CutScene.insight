@@ -22,16 +22,16 @@
 				"SpriteColorY" : 1.0,
 				"SpriteColorZ" : 1.0,
 				"SpriteCurrentTexIndex" : 0,
-				"SpriteFilename" : "1.jpg",
+				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 31,
-				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 14,
-				"SpriteTextureWidth" : 3840,
+				"SpriteTexture" : 135,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 118,
+				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 3840.0,
-				"SpriteTransformScalingY" : 2160.0,
+				"SpriteTransformScalingX" : 0.0,
+				"SpriteTransformScalingY" : 0.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : []
@@ -39,21 +39,14 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 3840.0,
-				"TransformScalingY" : 2160.0,
+				"TransformScalingX" : 0.0,
+				"TransformScalingY" : 0.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
-		},
-		{
-			"Name" : "Game Object",
-			"Script" : 
-			{
-				"ScriptName" : "CameraScript"
-			}
 		}
 	],
-	"EntityAmount" : 2,
+	"EntityAmount" : 1,
 	"Layers" : 
 	[
 		{
