@@ -1,0 +1,136 @@
+{
+	"Category" : 
+	{
+		"Category" : "Boss"
+	},
+	"Collider" : 
+	{
+		"BoxCollider" : 
+		{
+			"BoxColliderCenter" : 
+			{
+				"X" : -683.7830810546875,
+				"Y" : -262.09515380859375
+			},
+			"BoxColliderOffset" : 
+			{
+				"X" : 0.0,
+				"Y" : 0.0
+			},
+			"BoxColliderSizeScale" : 
+			{
+				"X" : 0.40000000596046448,
+				"Y" : 0.40000000596046448
+			},
+			"BoxColliderVertices" : 
+			[
+				{
+					"x" : -303.20602416992188,
+					"y" : 177.06800842285156
+				},
+				{
+					"x" : 303.20602416992188,
+					"y" : 177.06800842285156
+				},
+				{
+					"x" : 303.20602416992188,
+					"y" : -177.06800842285156
+				},
+				{
+					"x" : -303.20602416992188,
+					"y" : -177.06800842285156
+				}
+			]
+		},
+		"BoxColliderEnabled" : true,
+		"CircleColliderEnabled" : false,
+		"ResponseEnabled" : true
+	},
+	"Light" : 
+	{
+		"LightHue" : 
+		{
+			"B" : 1.0,
+			"G" : 1.0,
+			"R" : 1.0
+		},
+		"LightIntensity" : 0.33000001311302185,
+		"LightOffset" : 
+		{
+			"X" : 0.0,
+			"Y" : 0.0
+		},
+		"LightRender" : true,
+		"LightSize" : 5000.0
+	},
+	"Name" : "BossDeath",
+	"RigidBody" : 
+	{
+		"RigidBodyAccelerationX" : 0.0,
+		"RigidBodyAccelerationY" : 0.0,
+		"RigidBodyAngularVelocity" : 0.0,
+		"RigidBodyArea" : 0.0,
+		"RigidBodyBodyType" : 6,
+		"RigidBodyDensity" : 0.0,
+		"RigidBodyForceX" : 0.0,
+		"RigidBodyForceY" : 0.0,
+		"RigidBodyInvMass" : 9.9999998377515902e-18,
+		"RigidBodyMass" : 99999998430674944.0,
+		"RigidBodyRestitution" : 0.5,
+		"RigidBodyVelocityX" : 0.0,
+		"RigidBodyVelocityY" : 0.0,
+		"RigidbodyGravityScale" : 1.0,
+		"mDynamicFriction" : 0.40000000596046448,
+		"mStaticFriction" : 0.60000002384185791
+	},
+	"Script" : 
+	{
+		"ScriptName" : "BossDeath"
+	},
+	"Signature" : "00000000000000000011010000100111",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "BossDeath 6R4C.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 27,
+		"SpriteTextureHeight" : 1794,
+		"SpriteTextureIndex" : 10,
+		"SpriteTextureWidth" : 2048,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 1516.030029296875,
+		"SpriteTransformScalingY" : 885.34002685546875,
+		"SpriteTransformWorldPositionX" : -683.7830810546875,
+		"SpriteTransformWorldPositionY" : -262.09515380859375,
+		"animations" : 
+		[
+			{
+				"Name" : "death",
+				"animation_duration" : 2.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.1666666716337204,
+				"frame_index_x" : 1.0,
+				"frame_index_y" : 3.0,
+				"frame_timer" : 0.066666670143604279,
+				"time_per_frame" : 0.083333335816860199,
+				"x_frames" : 4,
+				"y_frames" : 6
+			}
+		]
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 1516.030029296875,
+		"TransformScalingY" : 885.34002685546875,
+		"TransformWorldPositionX" : -683.7830810546875,
+		"TransformWorldPositionY" : -262.09515380859375
+	}
+}

@@ -192,7 +192,9 @@ namespace IS
                 {
                     BossProjectile.DestroyAllProjectiles();
                     BossProjectile.CLEAN();
-                    InternalCalls.CreateEntityPrefab("BossDeath");
+                    int dead = InternalCalls.CreateEntityPrefab("BossDeath");
+                    SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(InternalCalls.GetCurrentEntityID());
+                    InternalCalls.TransformSetPositionEntity(pos.x, pos.y, dead);
                     InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
                 }
 
@@ -1176,7 +1178,7 @@ namespace IS
             SimpleVector2D pos = InternalCalls.GetTransformPosition();
             /*pos.y += 20f;
             InternalCalls.TransformSetPosition(pos.x, pos.y);*/
-            MoveToLocation(pos.x, 1500f);
+            MoveToLocation(pos.x, 2000f);
 
             if (boss_move_away_timer > 0f)
             {
