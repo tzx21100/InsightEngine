@@ -45,7 +45,8 @@ namespace IS
 
         static public void Init()
         {
-            game_title_image = InternalCalls.GetSpriteImage("fragments_game_logo.png");
+            //game_title_image = InternalCalls.GetSpriteImage("fragments_game_logo.png");
+            game_title_image = InternalCalls.GetSpriteImage("GameTitleStatic.png");
             button_frame = InternalCalls.GetSpriteImage("button_frame.png");
             team_logo_image = InternalCalls.GetSpriteImage("team_logo.png");
 
@@ -78,7 +79,8 @@ namespace IS
             Vector2D button = new Vector2D(0.16f * win_dimension.x, 0.09f * win_dimension.y);
 
             // set sizes
-            InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
+            //InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
+            InternalCalls.TransformSetScaleEntity(0.58f * win_dimension.x, 0.29f * win_dimension.x, game_title_entity);
             InternalCalls.SetButtonSize(start_button_entity, new SimpleVector2D(button.x,button.y));
             InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(button.x, button.y));
             InternalCalls.SetButtonSize(how_to_play_button_entity, new SimpleVector2D(button.x, button.y));
@@ -86,7 +88,7 @@ namespace IS
             InternalCalls.SetButtonSize(team_logo_entity, new SimpleVector2D  (team_logo.x, team_logo.y));
 
             // set pos
-            game_title_pos.Set(origin.x + (0.33f * win_dimension.x), origin.y + (0.76f * win_dimension.y));
+            game_title_pos.Set(origin.x + (0.33f * win_dimension.x), origin.y + (0.77f * win_dimension.y));
             start_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.58f * win_dimension.y));
             settings_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
             how_to_play_button_pos.Set(origin.x + (0.31f * win_dimension.x), origin.y + (0.34f * win_dimension.y));

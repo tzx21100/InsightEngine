@@ -13,7 +13,8 @@ namespace IS
         static private SimpleImage textboximage = InternalCalls.GetSpriteImage("textbox.png");
         static private bool tutorial_over = false;*/
         static private SimpleImage teamlogo = InternalCalls.GetSpriteImage("team_logo.png");
-        static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("fragments_game_logo.png");
+        //static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("fragments_game_logo.png");
+        static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("GameTitleStatic.png");
 
         static private float fragment_logo_timer = 3.12f;
         static private float fragment_fade_in = 1.2f;
@@ -151,11 +152,11 @@ namespace IS
 
             if (tutorial_state == 7)
             {
-                SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x, PlayerScript.player_pos.y +InternalCalls.GetWindowHeight()/4f);
+                SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x, PlayerScript.player_pos.y +InternalCalls.GetWindowHeight()/1.8f);
                 float alpha = fragment_logo_timer;
                 if (fragment_logo_timer > 1) { alpha = 1; }
                 if (fragment_fade_in > 0) { alpha = 1 - fragment_fade_in; };
-                InternalCalls.DrawImageAt(pos, 0, new SimpleVector2D(InternalCalls.GetWindowWidth() * 1.3f,  (InternalCalls.GetWindowWidth() * 1.3f)/8.54f), fragmentslogo, alpha, InternalCalls.GetTopLayer());
+                InternalCalls.DrawImageAt(pos, 0, new SimpleVector2D(InternalCalls.GetWindowWidth() * 2f,  (InternalCalls.GetWindowWidth() * 2f)/2f), fragmentslogo, alpha, InternalCalls.GetTopLayer());
                 fragment_logo_timer -= InternalCalls.GetDeltaTime();
                 fragment_fade_in -= InternalCalls.GetDeltaTime();
                 if(fragment_logo_timer <= 0) {
