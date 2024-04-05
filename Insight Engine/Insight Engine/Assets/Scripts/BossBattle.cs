@@ -84,7 +84,7 @@ namespace IS
 
         //spawning one by one
         static int index360 = 0;
-
+        static bool play360audio = false;
         public enum BossStates : int
         {
             Idle=0,
@@ -159,6 +159,10 @@ namespace IS
 
             // init 
             is_clapping = false;
+
+            //update audio
+            play360audio = false;
+
         }
 
         static public void Update(){
@@ -396,6 +400,8 @@ namespace IS
                     ResetPosition();
                     random_x_location =-1938+ InternalCalls.GetRandomFloat()*2000;
                     random_y_location = -700+ InternalCalls.GetRandomFloat()* 600;
+                    index360 = 0;
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-LIGHT-SABRE_GEN-HDF-20726.wav", false, 0.2f);
                     current_state = BossStates.Boss360;
                     return;
                 }
@@ -1119,13 +1125,19 @@ namespace IS
 
             if (sweep_timer > 1.5 && sweep_timer < 2)
             {
-  
+                if (!play360audio)
+                {
+                    play360audio=true;
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-WHOOSH_GEN-HDF-20863.wav", false, 0.2f);
+
+                }
                 BossProjectile.SetAllProjectileSpeed(40f);
  
             }
 
             if (sweep_timer < 0)
             {
+                play360audio = false;
                 sweep_timer = sweep_timer_set/1.4f; //this is for the return to be shorter
                 sweeped = false;
                 current_state = BossStates.ReturnBoss360;
