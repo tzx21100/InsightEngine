@@ -99,9 +99,9 @@
 		"SpriteFilename" : "BossIdle 4R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 28,
+		"SpriteTexture" : 29,
 		"SpriteTextureHeight" : 1196,
-		"SpriteTextureIndex" : 11,
+		"SpriteTextureIndex" : 12,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1516.03173828125,
@@ -129,7 +129,7 @@
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 1516.03173828125,
 		"TransformScalingY" : 885.33892822265625,
-		"TransformWorldPositionX" : -58.994552612304688,
-		"TransformWorldPositionY" : 543.9744873046875
+		"TransformWorldPositionX" : -13.024870872497559,
+		"TransformWorldPositionY" : 588.41180419921875
 	}
 }

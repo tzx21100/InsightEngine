@@ -81,6 +81,8 @@ namespace IS
 
             // turn off the light initially
             InternalCalls.SetLightIntensityEntity(Boss_ID, 0f);
+
+            DestoryAllAliveEnemy();
         }
 
         static public void Update()
@@ -405,7 +407,7 @@ namespace IS
                 {
                     fade_out_timer -= InternalCalls.GetDeltaTime();
 
-                    if (fade_out_timer < -2f)
+                    if (fade_out_timer < -1.5f)
                     {
                         CameraScript.StopCameraPan();
                     }
@@ -413,12 +415,22 @@ namespace IS
                     if (fade_out_timer < 0f)
                     {
                         InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
-                        CameraScript.CameraPanToTime(PlayerScript.player_pos, 15f, 2f);
+                        CameraScript.CameraPanToTime(PlayerScript.player_pos, 15f, 1.5f);
                     }
                 }
                 
             }
             InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 1, 1, 1, fade_out_timer, InternalCalls.GetTopLayer());
+        }
+
+        static private void DestoryAllAliveEnemy()
+        {
+            foreach (var key in HandEnemy.enemies.Keys)
+            {
+                if (HandEnemy.enemies.ContainsKey(key)) {
+                    HandEnemy.enemies[key].current_state = HandEnemyState.DEAD;
+                }
+            }
         }
     }
 }
