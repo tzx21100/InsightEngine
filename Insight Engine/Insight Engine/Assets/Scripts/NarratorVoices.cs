@@ -30,8 +30,8 @@ namespace IS
 
 
 
-        static float narrate_timer = 0f;
-        static float narrater_timer_set = 60f;
+        static public float narrate_timer = 0f;
+        static public float narrater_timer_set = 60f;
         static public void NarrateUpdate()
         {
             narrate_timer-=InternalCalls.GetDeltaTime();
@@ -39,6 +39,16 @@ namespace IS
             {
                 narrate_timer = narrater_timer_set;
                 NarrateAnnoying();
+            }
+        }
+
+        static public void NarrateUpdateFlight()
+        {
+            narrate_timer -= InternalCalls.GetDeltaTime();
+            if (narrate_timer < 0f)
+            {
+                narrate_timer = narrater_timer_set;
+                NarrateFlight();
             }
         }
 
@@ -79,13 +89,88 @@ namespace IS
             {
                 InternalCalls.AudioPlaySoundSFX("Narrator_9.wav", false, volume);
                 return;
-            }
-
-
-
-
-            
+            }  
         }
+
+
+        static public void NarrateFlight()
+        {
+            float volume = 0.5f;
+            float num = rando_footsteps.NextFloat();
+
+            if (num <= 0.16f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.32f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.48f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.64f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.80f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_3.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_3.wav", false, volume);
+                return;
+            }
+        }
+
+
+        static public void NarrateDeath()
+        {
+            //reset narration timer
+            narrate_timer = narrater_timer_set;
+
+            float volume = 0.5f;
+            float num = rando_footsteps.NextFloat();
+
+            if (num <= 0.16f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.32f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.48f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_3.wav", false, volume);
+                return;
+            }
+            if (num <= 0.64f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_4.wav", false, volume);
+                return;
+            }
+            if (num <= 0.80f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_5.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_5.wav", false, volume);
+                return;
+            }
+        }
+
 
 
     }

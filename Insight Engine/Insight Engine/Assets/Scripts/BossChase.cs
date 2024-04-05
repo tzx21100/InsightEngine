@@ -4,7 +4,7 @@ namespace IS
 {
     class BossChase
     {
-        static float chase_speed = 9f;
+        static public float chase_speed = 9f;
         static Vector2D current_pos = new Vector2D(0,0);
 
         static public void Init()
@@ -35,6 +35,11 @@ namespace IS
             {
                 PlayerScript.isDead = false;
                 InternalCalls.LoadScene("Assets/Scenes/ChaseLevel.insight");
+                if (InternalCalls.GetRandomFloat() > 0.7f)
+                {
+                    NarratorVoices.NarrateDeath();
+                }
+                
             }
 
 

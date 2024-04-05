@@ -42,6 +42,9 @@ namespace IS
     public class PlayerScript
     {
 
+        // low hp
+        static public bool play_low_hp = false;
+
         // camera
         static public float player_cam_y_offset = 0;
 
@@ -327,6 +330,9 @@ namespace IS
 
         static public void Init()
         {
+            //play low hp
+            play_low_hp = true;
+
             //reset final
             NPC_Transformation = false;
             NPC_timer = NPC_timer_set;
@@ -1300,7 +1306,7 @@ namespace IS
             Xforce = 0f;
             //Yforce = 0f;
 
-
+            LowHealthSounds();
             
 
 
@@ -1371,7 +1377,11 @@ namespace IS
                 bullet_time_timer = bullet_time_set;
                 initialDash = true;
                 InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x / 3f, InternalCalls.RigidBodyGetVelocity().y / 3f);
-                invulnerable = false;
+                if (!(screen_flash_timer > 0f))
+                {
+                    invulnerable = false;
+                }
+
                 return;
             }
 
@@ -2016,11 +2026,6 @@ namespace IS
             {
                 
 
-                if(InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
-                {
-                    BossBattle.wasHit = true;
-                }
-
 
                // when colliding with enemy
                 if (InternalCalls.CompareEntityCategory(entity_attack, "Enemy") || InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
@@ -2045,7 +2050,7 @@ namespace IS
                         }*/
 
                         //InternalCalls.ResetSpriteAnimationFrameEntity(land_entity);
-                        
+
                         // get the id for enemy being attack (one only)
                         int attacking_enemy_id = InternalCalls.GetCollidingEnemyEntity(entity_attack);
 
@@ -2075,10 +2080,13 @@ namespace IS
                         // collide with boss
                         if (InternalCalls.CompareEntityCategory(entity_attack, "Boss"))
                         {
+                            BossBattle.wasHit = true;
                             BossBattle.boss_hp -= (combo_step == 3) ? attack_damage * 2f : attack_damage;
                             initial_attack = true;
                             // todo
-                            //hitting_enemy_id = BossBattle.boss
+                            hitting_enemy_id = BossBattle.BOSS_ID;
+
+
                         }
                     }
                     else if (isAttack) // still hitting the enemy 
@@ -2186,7 +2194,13 @@ namespace IS
                 player_attack_vfx_using = player_attack_vfx5;
             }
 
-            InternalCalls.DrawImageAt(InternalCalls.GetTransformPositionEntity(hitting_enemy_id), 0, InternalCalls.GetTransformScalingEntity(hitting_enemy_id),
+            // make the image flip with player compared to enemy position
+            SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(hitting_enemy_id);
+            SimpleVector2D pos_entity = InternalCalls.GetTransformPositionEntity(hitting_enemy_id);
+            int flip = (int)CustomMath.Normalize(pos_entity.x - player_pos.x);
+            SimpleVector2D flipped_image = new SimpleVector2D(scale.x * flip, scale.y); //get the flipped scale
+
+            InternalCalls.DrawImageAt(InternalCalls.GetTransformPositionEntity(hitting_enemy_id), 0, flipped_image,
                 player_attack_vfx_using, render_vfx_timer * 5f, InternalCalls.GetTopLayer());
         }
 
@@ -2527,6 +2541,22 @@ namespace IS
                 return;
             }
         }
+
+        static private void LowHealthSounds()
+        {
+            if (Health <= 2)
+            {
+                if (play_low_hp)
+                {
+                    InternalCalls.AudioPlaySoundBGM("Heartbeat_Loop.wav", true, 0.2f);
+                    InternalCalls.AudioPlaySoundBGM("Cypher_Grunts_Loop.wav", true, 0.2f);
+                    play_low_hp = false;
+                }
+            }
+
+
+        }
+
 
 
     } //player script

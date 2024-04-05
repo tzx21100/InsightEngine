@@ -10,7 +10,7 @@
 			"BoxColliderCenter" : 
 			{
 				"X" : 0.0,
-				"Y" : 1004.1787719726562
+				"Y" : 1235.3043212890625
 			},
 			"BoxColliderOffset" : 
 			{
@@ -74,7 +74,7 @@
 	"Sprite" : 
 	{
 		"AnimationIndex" : 0,
-		"Layer" : 3,
+		"Layer" : 1,
 		"SpriteColorA" : 1.0,
 		"SpriteColorX" : 1.0,
 		"SpriteColorY" : 1.0,
@@ -83,15 +83,15 @@
 		"SpriteFilename" : "BossIdle 4R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 27,
+		"SpriteTexture" : 32,
 		"SpriteTextureHeight" : 1196,
-		"SpriteTextureIndex" : 10,
+		"SpriteTextureIndex" : 15,
 		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 1516.03173828125,
 		"SpriteTransformScalingY" : 885.33892822265625,
 		"SpriteTransformWorldPositionX" : 0.0,
-		"SpriteTransformWorldPositionY" : 1004.1787719726562,
+		"SpriteTransformWorldPositionY" : 1235.3043212890625,
 		"animations" : 
 		[
 			{
@@ -99,9 +99,9 @@
 				"animation_duration" : 1.0,
 				"frame_dimension_x" : 0.25,
 				"frame_dimension_y" : 0.25,
-				"frame_index_x" : 3.0,
-				"frame_index_y" : 3.0,
-				"frame_timer" : 0.029313886538147926,
+				"frame_index_x" : 2.0,
+				"frame_index_y" : 2.0,
+				"frame_timer" : 0.0084822028875350952,
 				"time_per_frame" : 0.0625,
 				"x_frames" : 4,
 				"y_frames" : 4
@@ -114,6 +114,6 @@
 		"TransformScalingX" : 1516.03173828125,
 		"TransformScalingY" : 885.33892822265625,
 		"TransformWorldPositionX" : 0.0,
-		"TransformWorldPositionY" : 1004.1787719726562
+		"TransformWorldPositionY" : 1235.3043212890625
 	}
 }

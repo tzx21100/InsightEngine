@@ -7,6 +7,7 @@ namespace IS
     {
 
         static SimpleVector2D Boss_spawn_pos;
+        static public int BOSS_ID=9999;//random number first
 
         //boss stats
         static public float boss_hp=150;
@@ -108,7 +109,7 @@ namespace IS
 
 
         static public void Init(){
-
+            BOSS_ID = InternalCalls.GetCurrentEntityID();
 
             BossProjectile.CLEAN();
 
@@ -168,6 +169,7 @@ namespace IS
         }
 
         static public void Update(){
+            BOSS_ID = InternalCalls.GetCurrentEntityID();
 
             if (InternalCalls.KeyPressed((int)KeyCodes.Slash))
             {
@@ -349,12 +351,12 @@ namespace IS
                     int random_hit_sound = rnd.Next(0, 2);
                     switch (random_hit_sound)
                     {
-                        case 0:
+/*                        case 0:
                             InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
                             break;
                         case 1:
                             InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.1.wav", false, 0.5f);
-                            break;
+                            break;*/
                         default:
                             InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
                             break;
@@ -1320,7 +1322,9 @@ namespace IS
                 Boss_spawn_pos.x = 0;
                 Boss_spawn_pos.y = -500;
                 current_state = BossStates.Idle;
+                PlayerScript.Health = PlayerScript.Max_Health;
                 PlayerScript.player_cam_y_offset = 300f;
+                PlayerScript.invulnerable = false;
                 CameraScript.StopCameraPan();
             }
 

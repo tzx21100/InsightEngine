@@ -44,7 +44,7 @@ namespace IS
 
         static public void Update()
         {
-
+            NarratorVoices.NarrateUpdateFlight();
            
             float playerOffsetX = PlayerScript.player_pos.x;
             float playerOffsetY = PlayerScript.player_pos.y;
