@@ -66,6 +66,9 @@ namespace IS
         private Vector2D scaling = new Vector2D(-216f, 256f);
         private Vector2D enemy_vel = new Vector2D(0f, 0f);
 
+        // individual bullet list
+        static public List<int> bullet_list = new List<int>();
+
         // get hit
         //public bool isHit;
         private bool initialHit = false;
@@ -198,8 +201,8 @@ namespace IS
             current_state = HandEnemyState.SPAWNING;
 
             // clear bullet
-            HandEnemyBullets.bullets.Clear();
-
+            //HandEnemyBullets.bullets.Clear();
+            bullet_list.Clear();
         }
 
         public void update()
@@ -213,19 +216,21 @@ namespace IS
             ENEMY_ID = InternalCalls.GetCurrentEntityID();
             //InternalCalls.RigidBodyAddForce(0f, -9.8f);
             InternalCalls.TransformSetRotationEntity(0f, 0f, ENEMY_ID);
-            enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
+            //enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             enemy_vel = Vector2D.FromSimpleVector2D(InternalCalls.RigidBodyGetVelocity());
 
             InternalCalls.TransformSetScaleEntity(scaling.x, scaling.y, ENEMY_ID);
 
-            if (InternalCalls.RigidBodyGetVelocityEntity(ENEMY_ID).y > 1f) // means enemy landed
+            if (InternalCalls.RigidBodyGetVelocityEntity(ENEMY_ID).y > 1f && !check_first_grounded) // means enemy landed
             {
                 check_first_grounded = true;
+                enemy_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(ENEMY_ID));
             }
 
             if (check_first_grounded)
             {
                 // make the hand enemy not moving
+                InternalCalls.TransformSetPositionEntity(enemy_pos.x, enemy_pos.y, ENEMY_ID);
                 InternalCalls.RigidBodySetVelocityEntity(0f, 0f, ENEMY_ID);
             }
 
@@ -548,7 +553,7 @@ namespace IS
                 InternalCalls.RigidBodySetVelocityEntity(dir.x * bullet_speed, 0f, bullet_id);
                 InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
                 InternalCalls.SetEntityGravityScale(0f, bullet_id);
-                
+                bullet_list.Add(bullet_id);
 
                 is_shooting = true;
             }
@@ -680,8 +685,10 @@ namespace IS
                 InternalCalls.DestroyEntity(ENEMY_ID);
 
                 // render destory particles
+                EnemyDestoryParticles();
 
                 // clean all his bullets set
+                DestoryBulletList();
             }
            
         }
@@ -833,6 +840,56 @@ namespace IS
                 // draw white bar
                 InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, 1f, 1f, 1f, 0.7f, layer);
 
+            }
+        }
+
+        private void DestoryBulletList()
+        {
+            foreach(var key in bullet_list)
+            {
+                // destory all the bullets belong to this enemy
+                if (HandEnemyBullets.bullets.ContainsKey(key))
+                {
+                    HandEnemyBullets.bullets[key].is_alive = false;
+                }
+            }
+        }
+
+        private void EnemyDestoryParticles()
+        {
+            // load bleeding particles
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(20, 31)); // random from 20 to 30 particles
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = 90 + 30 * (rand - 0.5f);
+
+                rand = my_rand.NextFloat();
+                float size = 10 + 20f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -10 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.7f + 0.3f * rand; // 0.7 to 1
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.3f * rand; // 0.5s to 0.8s
+
+                rand = my_rand.NextFloat();
+                float speed = 200f + 200f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = enemy_pos.x + scaling.x / 2f * (rand - 0.5f);
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                float y = enemy_pos.y + scaling.y / 2f * (rand - 0.5f);
+
+                InternalCalls.GameSpawnParticleExtra(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                 );
             }
         }
 

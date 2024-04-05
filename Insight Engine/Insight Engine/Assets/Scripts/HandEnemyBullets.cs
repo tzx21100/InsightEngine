@@ -235,6 +235,7 @@ namespace IS
             RenderDestoryParticle();
 
             InternalCalls.SetLightIntensityEntity(BULLET_ID, 0.8f);
+            HandEnemyBullets.bullets.Remove(BULLET_ID);
         }
 
         private void RenderDestoryParticle()

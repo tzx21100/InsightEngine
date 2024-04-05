@@ -628,6 +628,9 @@ namespace IS
             {
                 initialDeath = false;
                 InternalCalls.DestroyEntity(ENEMY_ID);
+
+                // render destory particles
+                EnemyDestoryParticles();
             }
            
         }
@@ -937,6 +940,44 @@ namespace IS
                 // draw white bar
                 InternalCalls.DrawSquare(health_pos_x, health_pos_y, health_bar_length.x, health_bar_length.y, 1f, 1f, 1f, 0.7f, layer);
 
+            }
+        }
+
+        private void EnemyDestoryParticles()
+        {
+            // load bleeding particles
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(20, 31)); // random from 20 to 30 particles
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = 90 + 30 * (rand - 0.5f);
+
+                rand = my_rand.NextFloat();
+                float size = 10 + 20f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = -10 * rand; // pariticles going smaller
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.7f + 0.3f * rand; // 0.7 to 1
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.3f * rand; // 0.5s to 0.8s
+
+                rand = my_rand.NextFloat();
+                float speed = 200f + 200f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = enemy_pos.x + scaling.x / 2f * (rand - 0.5f);
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                float y = enemy_pos.y + scaling.y / 2f * (rand - 0.5f) ;
+
+                InternalCalls.GameSpawnParticleExtra(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                 );
             }
         }
 
