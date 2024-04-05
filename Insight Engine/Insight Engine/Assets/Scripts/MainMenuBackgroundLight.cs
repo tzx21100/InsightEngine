@@ -6,149 +6,37 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace IS
 {
-    class ParticleEmitter
-    {
-        const int MAX_PARTICLES = 10;
-        public const float PARTICLE_FAST_SPEED = 150f;
-        public const float PARTICLE_SLOW_SPEED = 10f;
-        static public float particleBaseSpeed = PARTICLE_FAST_SPEED;
-        const float PARTICLE_SPEED_VARIATION = 10f;
-        const float PARTICLE_LIFE_TIME = 5f;
-
-        private int[] mParticles;
-        private float[] mParticleLifetimes;
-        private int mCurrentParticleIndex;
-
-        public ParticleEmitter()
-        {
-            mParticles = new int[MAX_PARTICLES];
-            mParticleLifetimes = new float[MAX_PARTICLES];
-            mCurrentParticleIndex = 0;
-
-            // Initialize particles
-            for (int i = 0; i < MAX_PARTICLES; i++)
-            {
-                mParticles[i] = InternalCalls.CreateEntityPrefab("Default Light");
-                mParticleLifetimes[i] = 0f;
-            }
-        }
-
-        public void Emit(float x, float y, float lerpedIntensity)
-        {
-            // Activate and reposition an existing particle
-            InternalCalls.SetLightToggleEntity(mParticles[mCurrentParticleIndex], true);
-            // InternalCalls.TransformSetPositionEntity(x, y, mParticles[mCurrentParticleIndex]);
-            // Define the emission area size
-            const int EMISSION_AREA_SIZE = 32;
-
-            // Generate a random offset within the emission area
-            Random random = new Random();
-            int offsetX = random.Next(0, EMISSION_AREA_SIZE);
-            int offsetY = random.Next(0, EMISSION_AREA_SIZE);
-
-            // Add the offset to the x and y coordinates
-            float newX = x + offsetX;
-            float newY = y - offsetY;
-
-            // Set the new position
-            InternalCalls.TransformSetPositionEntity(newX, newY, mParticles[mCurrentParticleIndex]);
-            mParticleLifetimes[mCurrentParticleIndex] = 0f;
-
-            // Increment the particle index for the next frame
-            mCurrentParticleIndex = (mCurrentParticleIndex + 1) % MAX_PARTICLES;
-
-            // Update the positions and intensities of the emitted particle
-            for (int i = 0; i < MAX_PARTICLES; i++)
-            {
-                if (InternalCalls.IsLightRenderingEntity(mParticles[i]))
-                {
-                    float particleSpeed = particleBaseSpeed + GetRandomFloat(-PARTICLE_SPEED_VARIATION, PARTICLE_SPEED_VARIATION);
-
-                    float xPos = InternalCalls.GetTransformPositionEntity(mParticles[i]).x + particleSpeed * InternalCalls.GetDeltaTime();
-                    float yPos = InternalCalls.GetTransformPositionEntity(mParticles[i]).y + particleSpeed * InternalCalls.GetDeltaTime();
-
-                    // Calculate distance from the cursor
-                    Vector2D mouse = new Vector2D(x, y);
-                    float distanceToCursor = Vector2D.Distance(new Vector2D(xPos, yPos), mouse);
-
-                    // Calculate intensity based on distance
-                    float distanceIntensityFactor = 1f - (distanceToCursor / InternalCalls.GetWindowWidth()); // Adjust based on your screen width
-                    float intensity = lerpedIntensity * distanceIntensityFactor;
-
-                    // Calculate opacity reduction factor
-                    float opacityReductionFactor = GetRandomFloat(0.1f, 0.8f); // Varying opacity for each particle
-
-                    // Reset the particle position and life timer when it goes off-screen
-                    if (mParticleLifetimes[i] > PARTICLE_LIFE_TIME)
-                    {
-                        InternalCalls.SetLightToggleEntity(mParticles[i], false); // Deactivate particle
-                        mParticleLifetimes[i] = 0f;
-                    }
-
-                    InternalCalls.TransformSetPositionEntity(xPos, yPos, mParticles[i]);
-
-                    // Reduce the opacity based on the particle's life time
-                    float opacity = 1f - (mParticleLifetimes[i] / PARTICLE_LIFE_TIME) * opacityReductionFactor;
-                    opacity = CustomMath.clamp(opacity, 0f, 0.6f);
-                    InternalCalls.SetLightIntensityEntity(mParticles[i], intensity * opacity);
-
-                    // Update the life timer
-                    mParticleLifetimes[i] += InternalCalls.GetDeltaTime();
-                }
-            }
-        }
-
-        // Placeholder method for getting a random float within a range
-        private float GetRandomFloat(float min, float max)
-        {
-            return min + InternalCalls.GetRandomFloat() * (max - min);
-        }
-    }
 
     class MainMenuBackgroundLight
     {
         // Constants
         const float LIGHT_TIMER_INIT = 2f;
-        const float MIN_LIGHT_INTENSITY = 0.5f;
-        const float MAX_LIGHT_INTENSITY = 1f;
         static float MIN_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.025f;
         static float MAX_LIGHT_SIZE = InternalCalls.GetWindowWidth() * 0.75f;
-        const float MOUSE_MOVEMENT_THRESHOLD = 100f;
+        static float LIGHT_XOFFSET = .7f;
+        static float LIGHT_YOFFSET = .22f;
 
         // Light Entities
         static private int mBackgroundLantern;
-        static private ParticleEmitter mParticleEmitter; // Nullable reference type
 
         // Parameters
         static private float mBackgroundLanternTimer;
         static private bool mIncreasing = true;
-        static private float lastMouseX;
-        static private float lastMouseY;
 
         static public void Init()
         {
             mBackgroundLantern = InternalCalls.CreateEntityPrefab("Player Lantern Light");
             mBackgroundLanternTimer = LIGHT_TIMER_INIT;
-            mParticleEmitter = new ParticleEmitter();
-            
-            lastMouseX = InternalCalls.GetMousePosition().x;
-            lastMouseY = InternalCalls.GetMousePosition().y;
         }
 
         static public void Update()
         {
-            float mouseX = InternalCalls.GetMousePosition().x;
-            float mouseY = InternalCalls.GetMousePosition().y;
-            float dx = mouseX - lastMouseX;
-            float dy = mouseY - lastMouseY;
-            float mouseMovement = dx * dx + dy * dy;
-            lastMouseX = mouseX;
-            lastMouseY = mouseY;
-            ParticleEmitter.particleBaseSpeed = (mouseMovement < MOUSE_MOVEMENT_THRESHOLD)
-                ? ParticleEmitter.PARTICLE_FAST_SPEED : ParticleEmitter.PARTICLE_SLOW_SPEED;            
+            // Offset light position
+            int width = InternalCalls.GetWindowWidth();
+            int height = InternalCalls.GetWindowHeight();
+            InternalCalls.TransformSetPositionEntity(LIGHT_XOFFSET * (width / 2f), LIGHT_YOFFSET * (height / 2f), mBackgroundLantern);
 
             // Toggle fullscreen mode
             PauseButtonScript.ToggleFullscreenMode();
@@ -166,18 +54,9 @@ namespace IS
             float lerpedSize = mIncreasing
                 ? Vector2D.lerp(MIN_LIGHT_SIZE, MAX_LIGHT_SIZE, t)
                 : Vector2D.lerp(MAX_LIGHT_SIZE, MIN_LIGHT_SIZE, t);
-            float lerpedIntensity = mIncreasing
-                ? Vector2D.lerp(MIN_LIGHT_INTENSITY, MAX_LIGHT_INTENSITY, t)
-                : Vector2D.lerp(MAX_LIGHT_INTENSITY, MIN_LIGHT_INTENSITY, t);
 
             // Set light size based on lerped value
             InternalCalls.SetLightSizeEntity(mBackgroundLantern, lerpedSize);
-
-            // Emit particles every frame
-            if (mParticleEmitter != null)
-            {
-                mParticleEmitter.Emit(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y, lerpedIntensity);
-            }
         }
 
         static public void CleanUp()

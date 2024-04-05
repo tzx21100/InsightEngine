@@ -18,8 +18,6 @@ namespace IS
     class MasterCheckboxScript
     {
         static public bool first_hover = false;
-        static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
-        static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
 
         // Windows
@@ -67,12 +65,22 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            InternalCalls.SetSpriteImage(!toggled ? checkbox_image : toggled_image);
-
             if (InternalCalls.AudioIsBGMMute() || InternalCalls.AudioIsSFXMute())
+            {
                 toggled = false;
-            else if (!(InternalCalls.AudioIsBGMMute() && InternalCalls.AudioIsSFXMute()))
+            }
+            else if (InternalCalls.AudioIsBGMMute() && InternalCalls.AudioIsSFXMute())
+            {
+                toggled = false;
+                InternalCalls.AudioMuteMaster(!toggled);
+            }
+            else
+            {
                 toggled = true;
+                InternalCalls.AudioMuteMaster(!toggled);
+            }
+
+            InternalCalls.SetSpriteImage(!toggled ? SettingsScript.checkbox_image : SettingsScript.checkbox_toggled_image);
 
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
@@ -102,9 +110,7 @@ namespace IS
 
             x_pos = origin.x + (0.44f * win_dimension.x);
             y_pos = origin.y + (0.585f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
-            //y_pos = origin.y + (0.7f * win_dimension.y);
-            //Console.WriteLine(y_pos);
-            //Console.WriteLine(ScrollBarTrackerScript.virtual_y);
+
             if (SettingsScript.show_settings)
             {
                 InternalCalls.TransformSetPosition(x_pos, y_pos);

@@ -176,7 +176,16 @@ namespace IS
         internal extern static void AudioPlayMusicBGM(string name, float volume);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        internal extern static void AudioEmitterEnableEntity(bool enable, int entity);        
+        internal extern static void AudioEmitterEnableEntity(bool enable, int entity);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float AudioGetMaster();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float AudioGetBGM();
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static float AudioGetSFX();
         
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static void AudioSetMaster(float volume);
@@ -379,6 +388,9 @@ namespace IS
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityButtonNoText(string name, SimpleImage image, string filename);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static int CreateEntityScript(string name, string filename);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         internal extern static int CreateEntityUI(string name, SimpleImage image);

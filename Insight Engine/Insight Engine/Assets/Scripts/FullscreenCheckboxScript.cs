@@ -1,20 +1,9 @@
-/*!
- * \file BGMCheckboxScript.cs
- * \author Matthew Ng, matthewdeen.ng@digipen.edu 
- * \par Course: CSD2451
- * \brief
- * This C# file contains the BGMCheckboxScript class, used for the BGMCheckbox in settings page. When it is toggled on means audio on, when toggled off means audio off.
- *
- * \copyright
- * All content (C) 2024 DigiPen Institute of Technology Singapore.
- * All rights reserved.
- * Reproduction or disclosure of this file or its contents without the prior written
- * consent of DigiPen Institute of Technology is prohibited.
- *____________________________________________________________________________*/
+using System;
 using System.Runtime.CompilerServices;
+
 namespace IS
 {
-    class BGMCheckboxScript
+    class FullscreenCheckboxScript
     {
         static public bool first_hover = false;
         static public bool clicked = false;
@@ -29,6 +18,7 @@ namespace IS
 
         static public float x_pos;
         static public float y_pos;
+
         static public void Init()
         {
             // Camera
@@ -48,7 +38,7 @@ namespace IS
 
         static public void Update()
         {
-            bool toggled = !InternalCalls.AudioIsBGMMute();
+            bool toggled = InternalCalls.IsFullscreen();
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -86,12 +76,13 @@ namespace IS
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
                 SettingsScript.PlayClickSound();
-                toggled = !toggled;
-                InternalCalls.AudioMuteBGM(!toggled);
+                InternalCalls.ToggleFullscreen();
+                ScrollBarTrackerScript.UpdateScroll();
+
             }
 
-            x_pos = origin.x + (0.44f * win_dimension.x); 
-            y_pos = origin.y + (0.475f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
+            x_pos = origin.x + (0.44f * win_dimension.x);
+            y_pos = origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y;
 
 
             if (SettingsScript.show_settings)
@@ -103,11 +94,11 @@ namespace IS
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
         }
-
-
+        
         static public void CleanUp()
         {
 
         }
+
     }
 }

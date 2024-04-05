@@ -80,8 +80,8 @@ namespace IS
                 options_created = true;
             }
 
-            highlight_entity = InternalCalls.CreateEntityUI("Option Highlight", SettingsScript.DROPDOWN_OPTION_HIGHLIGHT);
-            selected_entity = InternalCalls.CreateEntityUI("Option Selected", SettingsScript.DROPDOWN_OPTION_HIGHLIGHT);
+            //highlight_entity = InternalCalls.CreateEntityUI("Option Highlight", SettingsScript.DROPDOWN_OPTION_HIGHLIGHT);
+            //selected_entity = InternalCalls.CreateEntityUI("Option Selected", SettingsScript.DROPDOWN_OPTION_HIGHLIGHT);
             InternalCalls.SetSpriteAlphaEntity(.5f, selected_entity);
 
             DeleteExtraOptionEntities();
@@ -89,7 +89,7 @@ namespace IS
             {
                 position_of_entities.Add(new Vector2D(0, 0));
             }
-            InternalCalls.SetSpriteImageEntity(SettingsScript.DROPDOWN_OPTION_END, option_entities_list.Last());
+            //InternalCalls.SetSpriteImageEntity(SettingsScript.DROPDOWN_OPTION_END, option_entities_list.Last());
             Hide();
 
             //sizes
@@ -221,7 +221,7 @@ namespace IS
             if (SettingsScript.show_settings && !(current_resolution_text_pos.y + (0.028f * win_dimension.y) > (origin.y + (0.7f * win_dimension.y))
                 || current_resolution_text_pos.y - (0.028f * win_dimension.y) < (origin.y + (0.25f * win_dimension.y))))
             {
-                InternalCalls.RenderLeftAlignTextFont(current_resolution.ToString(), SettingsScript.FONT_NAME,
+                InternalCalls.RenderLeftAlignTextFont(current_resolution.ToString(), SettingsScript.BODY_FONT_NAME,
                 normalized_pos.x, normalized_pos.y, 7f, (1f, 1f, 1f, 1f));
             }
         }
@@ -251,7 +251,7 @@ namespace IS
                     Vector2D position = ConvertAbsoluteToNormalizedPosition(origin.x + (0.4375f * win_dimension.x),
                         origin.y + (INITIAL_YOFFSET * win_dimension.y) - ScrollBarTrackerScript.virtual_y - i * YOFFSET * win_dimension.y);
 
-                    InternalCalls.RenderLeftAlignTextFont(options[i].ToString(), SettingsScript.FONT_NAME,
+                    InternalCalls.RenderLeftAlignTextFont(options[i].ToString(), SettingsScript.BODY_FONT_NAME,
                         position.x, position.y, 7f, (1f, 1f, 1f, 1f));
                 }
 
@@ -281,12 +281,12 @@ namespace IS
                     }
                 }
 
-                InternalCalls.SetSpriteImage(SettingsScript.DROPDOWN_EXPANDED);
+                //InternalCalls.SetSpriteImage(SettingsScript.DROPDOWN_EXPANDED);
                 Draw();
             }
             else
             {
-                InternalCalls.SetSpriteImage(SettingsScript.DROPDOWN_MINIMIZED);
+                //InternalCalls.SetSpriteImage(SettingsScript.DROPDOWN_MINIMIZED);
                 Hide();
             }
         }
@@ -311,13 +311,13 @@ namespace IS
             for (int i = 0; i < options.Count - 1; i++)
             {
                 string option = options[i].ToString();
-                int entity = InternalCalls.CreateEntityUI(option, SettingsScript.DROPDOWN_OPTION);
+                //int entity = InternalCalls.CreateEntityUI(option, SettingsScript.DROPDOWN_OPTION);
 
-                option_entities_list.Add(entity);
+                //option_entities_list.Add(entity);
             }
 
-            int last_entity = InternalCalls.CreateEntityUI(options.Last().ToString(), SettingsScript.DROPDOWN_OPTION_END);
-            option_entities_list.Add(last_entity);
+            //int last_entity = InternalCalls.CreateEntityUI(options.Last().ToString(), SettingsScript.DROPDOWN_OPTION_END);
+            //option_entities_list.Add(last_entity);
         }
 
         static private void DeleteExtraOptionEntities()

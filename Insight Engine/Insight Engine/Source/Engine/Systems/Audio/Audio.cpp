@@ -77,8 +77,10 @@ namespace IS {
      * \param deltaTime The time elapsed since the last frame in seconds.
      */
     void ISAudio::Update([[maybe_unused]] float deltaTime) {
-        if (mAudioConfig.mBGMControl.mIsMute)
-            return;
+        for (auto& i : mChannelList)
+        {
+            i->setMute(mAudioConfig.mBGMControl.mIsMute);
+        }
 
         mSystem->update();
         if (InsightEngine::Instance().mRuntime == false) {
@@ -254,15 +256,19 @@ namespace IS {
     {
         Json::Value config;
         auto& audio_config = config["AudioConfig"];
-        Json::Value master, bgm, sfx;
+        Json::Value master;
         master["Volume"] = mAudioConfig.mMasterControl.mVolume;
         master["Mute"] = mAudioConfig.mMasterControl.mIsMute;
-        bgm["Volume"] = mAudioConfig.mMasterControl.mVolume;
-        bgm["Mute"] = mAudioConfig.mMasterControl.mIsMute;
-        sfx["Volume"] = mAudioConfig.mMasterControl.mVolume;
-        sfx["Mute"] = mAudioConfig.mMasterControl.mIsMute;
         audio_config["Master"] = master;
+
+        Json::Value bgm;
+        bgm["Volume"] = mAudioConfig.mBGMControl.mVolume;
+        bgm["Mute"] = mAudioConfig.mBGMControl.mIsMute;
         audio_config["BGM"] = bgm;
+
+        Json::Value sfx;
+        sfx["Volume"] = mAudioConfig.mSFXControl.mVolume;;
+        sfx["Mute"] = mAudioConfig.mSFXControl.mIsMute;
         audio_config["SFX"] = sfx;
 
         bool success = SaveJsonToFile(config, CONFIG_FILEPATH);

@@ -427,6 +427,7 @@ namespace IS {
     static void AudioPlaySoundBGM(MonoString* name, bool loop = 0, float volume = 1.f) {
         if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
             return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
@@ -437,6 +438,7 @@ namespace IS {
     static void AudioPlaySoundSFX(MonoString* name, bool loop = 0, float volume = 1.f) {
         if (AUDIO_MANAGER->mAudioConfig.mSFXControl.mIsMute)
             return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
@@ -448,6 +450,7 @@ namespace IS {
     static void AudioPlayMusicBGM(MonoString* name, float volume) {
         if (AUDIO_MANAGER->mAudioConfig.mBGMControl.mIsMute)
             return;
+
         auto asset = InsightEngine::Instance().GetSystem<AssetManager>("Asset");
         char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
         std::string str(c_str);
@@ -477,6 +480,21 @@ namespace IS {
         else {
             component.isPlaying = false;
         }
+    }
+
+    static float AudioGetMaster()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mMasterControl.mVolume;
+    }
+
+    static float AudioGetBGM()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mBGMControl.mVolume;
+    }
+
+    static float AudioGetSFX()
+    {
+        return AUDIO_MANAGER->mAudioConfig.mSFXControl.mVolume;
     }
 
     static void AudioSetMaster(float volume) {
@@ -583,6 +601,22 @@ namespace IS {
         sprite_component.layer = 1;
         sprite_component.img = ConvertToImage(image);
         ISGraphics::AddEntityToLayer(sprite_component.layer, entity);
+        return static_cast<int>(entity);
+    }
+
+    static int CreateEntityScript(MonoString* name, MonoString* filename)
+    {
+        auto& engine = InsightEngine::Instance();
+        char* c_str = mono_string_to_utf8(name); // Convert Mono string to char*
+        std::string str(c_str);
+        mono_free(c_str);
+        Entity entity = InsightEngine::Instance().CreateEntity(str);
+        engine.AddComponentAndUpdateSignature<ScriptComponent>(entity, ScriptComponent());
+        auto& script_component = engine.GetComponent<ScriptComponent>(entity);
+        char* c_str2 = mono_string_to_utf8(filename);
+        std::string str2(c_str2);
+        mono_free(c_str2);
+        script_component.mScriptName = str2;
         return static_cast<int>(entity);
     }
 
@@ -1808,6 +1842,9 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(AudioSetMaster);
         IS_ADD_INTERNAL_CALL(AudioSetSFX);
         IS_ADD_INTERNAL_CALL(AudioSetBGM);
+        IS_ADD_INTERNAL_CALL(AudioGetMaster);
+        IS_ADD_INTERNAL_CALL(AudioGetSFX);
+        IS_ADD_INTERNAL_CALL(AudioGetBGM);
         IS_ADD_INTERNAL_CALL(AudioMuteMaster);
         IS_ADD_INTERNAL_CALL(AudioMuteBGM);
         IS_ADD_INTERNAL_CALL(AudioMuteSFX);
@@ -1893,6 +1930,7 @@ namespace IS {
         IS_ADD_INTERNAL_CALL(GamePause);
         IS_ADD_INTERNAL_CALL(CreateEntityButton);
         IS_ADD_INTERNAL_CALL(CreateEntityButtonNoText);
+        IS_ADD_INTERNAL_CALL(CreateEntityScript);
         IS_ADD_INTERNAL_CALL(CreateEntityUI);
         IS_ADD_INTERNAL_CALL(CreateEntityUIScript);
         IS_ADD_INTERNAL_CALL(GetEntityButtonState);

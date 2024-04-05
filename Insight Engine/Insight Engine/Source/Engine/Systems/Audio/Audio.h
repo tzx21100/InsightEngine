@@ -92,15 +92,12 @@ namespace IS {
 
             AudioConfig()
             {
-                mMasterControl = mBGMControl = mSFXControl = { false, 1.f };
+                mMasterControl = { false, 1.f };
+                mBGMControl = mSFXControl = { false, .5f };
             };
         };
 
         AudioConfig mAudioConfig;
-
-         //float MasterAudioLevel = 1.f;
-         //float SFXAudioLevel = 1.f;
-         //float BGMAudioLevel = 1.f;
 
         //override parent sys
         void Update(float deltaTime) override;

@@ -34,8 +34,6 @@ namespace IS
         static Vector2D camera_pos = new Vector2D(0, 0);
         static float camera_zoom = 0f;
 
-        static public float lower_limit_bgm_knob;
-        static public float upper_limit_bgm_knob;
         static public float y_pos;
 
         static public void Init()
@@ -55,15 +53,14 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            lower_limit_bgm_knob = origin.x + (MasterSliderKnobScript.LOWER_LIMIT_SCALE * win_dimension.x);
-            upper_limit_bgm_knob = origin.x + (MasterSliderKnobScript.UPPER_LIMIT_SCALE * win_dimension.x);
-
             first_open_settings = false;
-            diff_x = 0.5f;
 
-            //Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
-            adjustment = origin.x + diff_x * win_dimension.x;
-            normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            diff_x = (upper_limit - lower_limit) * InternalCalls.AudioGetBGM();
+            adjustment = diff_x;
+            normalised_adjustment = (adjustment + lower_limit) / (upper_limit + lower_limit);
 
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
@@ -86,9 +83,6 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            lower_limit_bgm_knob = origin.x + (MasterSliderKnobScript.LOWER_LIMIT_SCALE * win_dimension.x);
-            upper_limit_bgm_knob = origin.x + (MasterSliderKnobScript.UPPER_LIMIT_SCALE * win_dimension.x);
-            //InternalCalls.TransformSetPosition(pos, origin.y + (0.433f * win_dimension.y));
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
 
             if (InternalCalls.MousePressed((int)MouseButton.Left) && InternalCalls.CheckMouseIntersectEntity(SettingsScript.bgm_slider_bar_entity))
@@ -138,7 +132,7 @@ namespace IS
             {
                 if (!first_open_settings)
                 {
-                    adjustment = origin.x + diff_x * win_dimension.x;
+                    adjustment = MasterSliderKnobScript.lower_limit_master_knob + diff_x;
                     first_open_settings = true;
                 }
                 InternalCalls.TransformSetPosition(adjustment, y_pos);
@@ -150,8 +144,6 @@ namespace IS
                 first_open_settings = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-            SettingsScript.bgm_multiplier = normalised_adjustment;
-            //Console.WriteLine(adjustment);
         }
 
 
@@ -162,18 +154,25 @@ namespace IS
 
         static public void AdjustSlider(float xpos)
         {
-            adjustment = Math.Min(upper_limit_bgm_knob, Math.Max(lower_limit_bgm_knob, xpos));
-            diff_x = (adjustment - origin.x) / win_dimension.x;
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            adjustment = Math.Min(upper_limit, Math.Max(lower_limit, xpos));
+            diff_x = adjustment - lower_limit;
             InternalCalls.TransformSetPosition(adjustment, SettingsScript.bgm_slider_knob_pos.y);
             SettingsScript.bgm_slider_knob_pos.x = adjustment;
-            normalised_adjustment = (adjustment + upper_limit_bgm_knob) / (upper_limit_bgm_knob + upper_limit_bgm_knob);
+            normalised_adjustment = (adjustment + upper_limit) / (upper_limit + lower_limit);
         }
 
         static public void AdjustVolume()
         {
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
             float xpos = InternalCalls.GetTransformPosition().x;
-            float bgm_volume = (xpos - lower_limit_bgm_knob) / (lower_limit_bgm_knob - upper_limit_bgm_knob);
+            float bgm_volume = (xpos - lower_limit) / (upper_limit - lower_limit);
             InternalCalls.AudioSetBGM(bgm_volume);
+            Console.WriteLine("BGM: " + (int)(bgm_volume * 100) + "%");
         }
     }
 }

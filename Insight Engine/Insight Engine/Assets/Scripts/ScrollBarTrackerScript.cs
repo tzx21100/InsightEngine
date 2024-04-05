@@ -19,8 +19,8 @@ namespace IS
     {
         // Constants
         private const float SCROLL_SPEED = 4f;
-        public const float LOWER_LIMIT_SCALE = 0.38f;
-        public const float UPPER_LIMIT_SCALE = 0.525f;
+        public const float LOWER_LIMIT_SCALE = 0.419f;
+        public const float UPPER_LIMIT_SCALE = 0.487f;
 
         static public bool is_adjusting_scroll = false;
         static public bool first_hover = false;
@@ -65,7 +65,7 @@ namespace IS
 
             first_open_settings = false;
             diff_y = UPPER_LIMIT_SCALE;
-            InternalCalls.SetButtonHoverScale(id, 0.95f);
+            InternalCalls.SetButtonHoverScale(id, 0.91f);
 
             virtual_y = 0f;
         }
@@ -175,6 +175,20 @@ namespace IS
             SettingsScript.scroll_bar_tracker_pos.y = adjustment;
             virtual_y = adjustment - upper_limit_scroll_track;
             virtual_y *= 1.85f;
+        }
+
+        static public void UpdateScroll()
+        {
+            // For window resize
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+            origin.x = camera_pos.x - (win_dimension.x / 2f);
+            origin.y = camera_pos.y - (win_dimension.y / 2f);
+            upper_limit_scroll_track = origin.y + (UPPER_LIMIT_SCALE * win_dimension.y);
+            lower_limit_scroll_track = origin.y + (LOWER_LIMIT_SCALE * win_dimension.y);
+
+            AdjustScroll(InternalCalls.GetTransformPosition().y);
         }
     }
 }

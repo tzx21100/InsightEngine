@@ -21,10 +21,20 @@ namespace IS
 
     class SettingsScript
     {
-        public const string FONT_NAME = "Semplicita_Light";
+        public const string TITLE_FONT_NAME = "MedusaGothic_D";
+        public const string BODY_FONT_NAME = "Semplicita_Light";
+        public const string HOVER_SFX_NAME = "Footsteps_Dirt-Gravel-Far-Small_1.wav";
+        public const string CLICK_SFX_NAME = "QubieSFX3.wav";
+        public const float HOVER_SFX_VOLUME = .15f;
+        public const float CLICK_SFX_VOLUME = .4f;
+        public const float TITLE_FONT_SIZE = 12.5f;
+        public const float BODY_FONT_SIZE = 10f;
+        static public (float, float, float, float) FONT_COLOR = (1f, 1f, 1f, 1f); // white color
 
         static public bool show_settings = false;
         static public bool first_hover = false;
+
+        static public float font_size = MainMenuScript.NORMAL_FONT_SIZE;
 
         // Windows
         static public Vector2D win_dimension = new Vector2D(0, 0);
@@ -47,38 +57,27 @@ namespace IS
         static public int master_slider_knob_entity;
         static public int bgm_slider_knob_entity;
         static public int sfx_slider_knob_entity;
-        static private int fps_dropdown_entity;
-        static public int resolution_dropdown_entity;
+        static public int fullscreen_checkbox_entity;
         static public int scroll_bar_entity;
         static public int scroll_bar_tracker_entity;
         static public int back_button_entity;
-        //static private int trans_entity;
 
-        static SimpleImage background_image;
-        static SimpleImage settings_overlay_image;
-        static SimpleImage settings_overlay_top_image;
-        static SimpleImage settings_overlay_bot_image;
-        static SimpleImage master_checkbox_image;
-        static SimpleImage bgm_checkbox_image;
-        static SimpleImage sfx_checkbox_image;
-        static SimpleImage slider_bar_image;
-        static SimpleImage slider_knob_image;
-        static SimpleImage scroll_bar_image;
-        static SimpleImage scroll_bar_tracker_image;
-        static SimpleImage back_button_image;
-
-        static public SimpleImage DROPDOWN_MINIMIZED;
-        static public SimpleImage DROPDOWN_EXPANDED;
-        static public SimpleImage DROPDOWN_OPTION;
-        static public SimpleImage DROPDOWN_OPTION_HIGHLIGHT;
-        static public SimpleImage DROPDOWN_OPTION_END;
-        //static SimpleImage trans_image;
+        static public SimpleImage background_image;
+        static public SimpleImage settings_overlay_image;
+        static public SimpleImage settings_overlay_top_image;
+        static public SimpleImage settings_overlay_bot_image;
+        static public SimpleImage checkbox_image;
+        static public SimpleImage checkbox_toggled_image;
+        static public SimpleImage slider_bar_image;
+        static public SimpleImage slider_knob_image;
+        static public SimpleImage scroll_bar_image;
+        static public SimpleImage scroll_bar_tracker_image;
+        static public SimpleImage back_button_image;
 
         static Vector2D background_pos = new Vector2D(0, 0);
         static Vector2D settings_overlay_pos = new Vector2D(0, 0);
         static Vector2D settings_overlay_top_pos = new Vector2D(0, 0);
         static Vector2D settings_overlay_bot_pos = new Vector2D(0, 0);
-        //static Vector2D trans_pos = new Vector2D(0, 0);
 
         static public Vector2D master_checkbox_pos = new Vector2D(0, 0);
         static public Vector2D bgm_checkbox_pos = new Vector2D(0, 0);
@@ -89,8 +88,6 @@ namespace IS
         static public Vector2D master_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D bgm_slider_knob_pos = new Vector2D(0, 0);
         static public Vector2D sfx_slider_knob_pos = new Vector2D(0, 0);
-        static public Vector2D fps_dropdown_pos = new Vector2D(0, 0);
-        static public Vector2D resolution_dropdown_pos = new Vector2D(0, 0);
 
         static public Vector2D scroll_bar_pos = new Vector2D(0, 0);
         static public Vector2D scroll_bar_tracker_pos = new Vector2D(0, 0);
@@ -100,15 +97,8 @@ namespace IS
         static public Vector2D master_vol_text_pos = new Vector2D(0, 0);
         static public Vector2D bgm_vol_text_pos = new Vector2D(0, 0);
         static public Vector2D sfx_vol_text_pos = new Vector2D(0, 0);
-        static public Vector2D fps_text_pos = new Vector2D(0, 0);
-        static public Vector2D resolution_text_pos = new Vector2D(0, 0);
-
-        static public float master_multiplier;
-        static public float bgm_multiplier;
-        static public float sfx_multiplier;
-
-        static public float bgm_vol;
-        static public float sfx_vol;
+        static public Vector2D fullscreen_text_pos = new Vector2D(0, 0);
+        static public Vector2D fullscreen_checkbox_pos = new Vector2D(0, 0);
 
         static public void Init()
         {            
@@ -119,18 +109,10 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            master_multiplier = MasterSliderKnobScript.normalised_adjustment;
-            bgm_multiplier = BGMSliderKnobScript.normalised_adjustment;
-            sfx_multiplier = SFXSliderKnobScript.normalised_adjustment;
-            bgm_vol = master_multiplier * bgm_multiplier;
-            sfx_vol = master_multiplier * sfx_multiplier;
-
-            master_checkbox_image = !InternalCalls.AudioIsMasterMute() ? MasterCheckboxScript.toggled_image : MasterCheckboxScript.checkbox_image;
-            bgm_checkbox_image = !InternalCalls.AudioIsBGMMute() ? BGMCheckboxScript.toggled_image : BGMCheckboxScript.checkbox_image;
-            sfx_checkbox_image = !InternalCalls.AudioIsSFXMute() ? SFXCheckboxScript.toggled_image : SFXCheckboxScript.checkbox_image;
-
             background_image = InternalCalls.GetSpriteImage("main_menu_bg.jpeg");
             settings_overlay_image = InternalCalls.GetSpriteImage("settings_overlay.png");
+            checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
+            checkbox_toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
             slider_bar_image = InternalCalls.GetSpriteImage("slider_bar.png");
             slider_knob_image = InternalCalls.GetSpriteImage("slider_knob.png");
             scroll_bar_image = InternalCalls.GetSpriteImage("scroll_bar.png");
@@ -139,26 +121,19 @@ namespace IS
             settings_overlay_top_image = InternalCalls.GetSpriteImage("settings_overlay_top.png");
             settings_overlay_bot_image = InternalCalls.GetSpriteImage("settings_overlay_bot.png");
 
-            DROPDOWN_MINIMIZED          = InternalCalls.GetSpriteImage("dropdown_minimized.png");
-            DROPDOWN_EXPANDED           = InternalCalls.GetSpriteImage("dropdown_open.png");
-            DROPDOWN_OPTION             = InternalCalls.GetSpriteImage("dropdown_option.png");
-            DROPDOWN_OPTION_HIGHLIGHT   = InternalCalls.GetSpriteImage("dropdown_option_highlight.png");
-            DROPDOWN_OPTION_END         = InternalCalls.GetSpriteImage("dropdown_option_last.png");
-
             background_entity = InternalCalls.CreateEntityUI("Background", background_image);
             settings_overlay_entity = InternalCalls.CreateEntityUI("Settings Overlay", settings_overlay_image);
-            master_checkbox_entity = InternalCalls.CreateEntityButtonNoText("Master Checkbox", master_checkbox_image, "MasterCheckboxScript");
-            bgm_checkbox_entity = InternalCalls.CreateEntityButtonNoText("BGM Checkbox", bgm_checkbox_image, "BGMCheckboxScript");
-            sfx_checkbox_entity = InternalCalls.CreateEntityButtonNoText("SFX Checkbox", sfx_checkbox_image, "SFXCheckboxScript");
+            master_checkbox_entity = InternalCalls.CreateEntityButtonNoText("Master Checkbox", InternalCalls.AudioIsMasterMute() ? checkbox_image : checkbox_toggled_image, "MasterCheckboxScript");
+            bgm_checkbox_entity = InternalCalls.CreateEntityButtonNoText("BGM Checkbox", InternalCalls.AudioIsBGMMute() ? checkbox_image : checkbox_toggled_image, "BGMCheckboxScript");
+            sfx_checkbox_entity = InternalCalls.CreateEntityButtonNoText("SFX Checkbox", InternalCalls.AudioIsSFXMute() ? checkbox_image : checkbox_toggled_image, "SFXCheckboxScript");
             master_slider_bar_entity = InternalCalls.CreateEntityUIScript("Master Slider Bar", slider_bar_image, "MasterSliderBarScript");
             bgm_slider_bar_entity = InternalCalls.CreateEntityUIScript("BGM Slider Bar", slider_bar_image, "BGMSliderBarScript");
             sfx_slider_bar_entity = InternalCalls.CreateEntityUIScript("SFX Slider Bar", slider_bar_image, "SFXSliderBarScript");
             master_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("Master Slider Knob", slider_knob_image, "MasterSliderKnobScript");
             bgm_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("BGM Slider Knob", slider_knob_image, "BGMSliderKnobScript");
             sfx_slider_knob_entity = InternalCalls.CreateEntityButtonNoText("SFX Slider Knob", slider_knob_image, "SFXSliderKnobScript");
-            //comment out later to show
-            fps_dropdown_entity = InternalCalls.CreateEntityButtonNoText("FPS Dropdown", DROPDOWN_MINIMIZED, "FPSDropdownScript");
-            resolution_dropdown_entity = InternalCalls.CreateEntityButtonNoText("Resolution Dropdown", DROPDOWN_MINIMIZED, "ResolutionDropdownScript");
+            fullscreen_checkbox_entity = InternalCalls.CreateEntityButtonNoText("Fullscreen Checkbox", InternalCalls.IsFullscreen() ? checkbox_toggled_image : checkbox_image, "FullscreenCheckboxScript");
+
             scroll_bar_entity = InternalCalls.CreateEntityUIScript("Scroll Bar", scroll_bar_image, "ScrollBarScript");
             scroll_bar_tracker_entity = InternalCalls.CreateEntityButtonNoText("Scroll Bar Tracker", scroll_bar_tracker_image, "ScrollBarTrackerScript");
             back_button_entity = InternalCalls.CreateEntityButtonNoText("Back Button", back_button_image, "BackFromSettingsButtonScript");
@@ -168,11 +143,6 @@ namespace IS
 
         static public void Update()
         {
-
-           // InternalCalls.AudioSetMaster(master_multiplier);
-
-            
-
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();
 
@@ -187,7 +157,6 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-
             // Dimensions
             const float CHECKBOX_SCALE           = 0.02f;
             const float SLIDER_BAR_SCALE         = 0.16f;
@@ -196,9 +165,7 @@ namespace IS
             const float SCROLL_BAR_SCALE         = 0.018f;
             const float SCROLL_BAR_AR            = 777f / 52f;
             const float SCROLL_BAR_TRACKER_SCALE = 25f / 52f;
-            const float SCROLL_BAR_TRACKER_AR    = 343f / 25f;
-            const float DROPDOWN_LIST_SCALE      = 0.177f;
-            const float DROPDOWN_LIST_AR         = 86f / 610f;
+            const float SCROLL_BAR_TRACKER_AR    = 570f / 24f;
 
             float checkbox_scaled_uniform           = CHECKBOX_SCALE * win_dimension.x;
             float slider_bar_scaled_width           = SLIDER_BAR_SCALE * win_dimension.x;
@@ -208,8 +175,6 @@ namespace IS
             float scroll_bar_scaled_height          = SCROLL_BAR_AR * scroll_bar_scaled_width;
             float scroll_bar_tracker_scaled_width   = SCROLL_BAR_TRACKER_SCALE * scroll_bar_scaled_width;
             float scroll_bar_tracker_scaled_height  = SCROLL_BAR_TRACKER_AR * scroll_bar_tracker_scaled_width;
-            float dropdown_list_scaled_width        = DROPDOWN_LIST_SCALE * win_dimension.x;
-            float dropdown_list_scaled_height       = DROPDOWN_LIST_AR * dropdown_list_scaled_width;
 
             Vector2D background = new Vector2D(win_dimension.x, win_dimension.y);
             Vector2D settings_overlay = new Vector2D(win_dimension.x, win_dimension.y);
@@ -219,7 +184,6 @@ namespace IS
             SimpleVector2D checkbox_size = new SimpleVector2D(checkbox_scaled_uniform, checkbox_scaled_uniform);
             SimpleVector2D slider_knob_size = new SimpleVector2D(slider_knob_scaled_uniform, slider_knob_scaled_uniform);
             Vector2D back = new Vector2D(0.12f * win_dimension.x, 0.12f * win_dimension.x);
-            //Vector2D trans = new Vector2D(0.15f * win_dimension.x, 0.02f * win_dimension.y);
 
             InternalCalls.TransformSetScaleEntity(background.x, background.y, background_entity);
             InternalCalls.TransformSetScaleEntity(settings_overlay.x, settings_overlay.y, settings_overlay_entity);
@@ -234,12 +198,10 @@ namespace IS
             InternalCalls.SetButtonSize(master_slider_knob_entity, slider_knob_size);
             InternalCalls.SetButtonSize(bgm_slider_knob_entity, slider_knob_size);
             InternalCalls.SetButtonSize(sfx_slider_knob_entity, slider_knob_size);
-            InternalCalls.SetButtonSize(fps_dropdown_entity, new SimpleVector2D(dropdown_list_scaled_width, dropdown_list_scaled_height));
-            InternalCalls.SetButtonSize(resolution_dropdown_entity, new SimpleVector2D(dropdown_list_scaled_width, dropdown_list_scaled_height));
+            InternalCalls.SetButtonSize(fullscreen_checkbox_entity, checkbox_size);
             InternalCalls.TransformSetScaleEntity(scroll_bar_scaled_width, scroll_bar_scaled_height, scroll_bar_entity);
             InternalCalls.SetButtonSize(scroll_bar_tracker_entity, new SimpleVector2D(scroll_bar_tracker_scaled_width, scroll_bar_tracker_scaled_height));
             InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(back.x, back.y));
-            //InternalCalls.TransformSetScaleEntity(trans.x, trans.y, trans_entity);
 
             // Positions    
             background_pos.Set(camera_pos.x, camera_pos.y);
@@ -257,30 +219,20 @@ namespace IS
 
             master_slider_knob_pos.Set(master_slider_knob_pos.x, MasterSliderKnobScript.y_pos);
             bgm_slider_knob_pos.Set(bgm_slider_knob_pos.x, BGMSliderKnobScript.y_pos);
-            sfx_slider_knob_pos.Set(sfx_slider_knob_pos.x, SFXSliderKnobScript.y_pos); //442-558
+            sfx_slider_knob_pos.Set(sfx_slider_knob_pos.x, SFXSliderKnobScript.y_pos);
 
-            fps_dropdown_pos.Set(FPSDropdownScript.x_pos, FPSDropdownScript.y_pos);
-            resolution_dropdown_pos.Set(ResolutionDropdownScript.x_pos, ResolutionDropdownScript.y_pos);
+            fullscreen_checkbox_pos.Set(FullscreenCheckboxScript.x_pos, FullscreenCheckboxScript.y_pos);
 
             scroll_bar_pos.Set(ScrollBarScript.x_pos, ScrollBarScript.y_pos);
-            scroll_bar_tracker_pos.Set(ScrollBarTrackerScript.x_pos, scroll_bar_tracker_pos.y); //532-365
+            scroll_bar_tracker_pos.Set(ScrollBarTrackerScript.x_pos, scroll_bar_tracker_pos.y);
 
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
-            //trans_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.27f * win_dimension.y)); //62 - 27
 
-            settings_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.68f * win_dimension.y));
+            settings_text_pos   = ConvertAbsoluteToNormalizedPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.68f * win_dimension.y));
             master_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.505f * win_dimension.x), origin.y + (0.585f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            bgm_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.475f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            sfx_vol_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.495f * win_dimension.x), origin.y + (0.365f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            fps_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.445f * win_dimension.x), origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-            resolution_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.465f * win_dimension.x), origin.y + (0.145f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
-
-            bgm_vol = master_multiplier * bgm_multiplier;
-            sfx_vol = master_multiplier * sfx_multiplier;
-
-            InternalCalls.SetSpriteImageEntity(master_checkbox_image, master_checkbox_entity);
-            InternalCalls.SetSpriteImageEntity(bgm_checkbox_image, bgm_checkbox_entity);
-            InternalCalls.SetSpriteImageEntity(sfx_checkbox_image, sfx_checkbox_entity);
+            bgm_vol_text_pos    = ConvertAbsoluteToNormalizedPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.475f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
+            sfx_vol_text_pos    = ConvertAbsoluteToNormalizedPosition(origin.x + (0.495f * win_dimension.x), origin.y + (0.365f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
+            fullscreen_text_pos = ConvertAbsoluteToNormalizedPosition(origin.x + (0.49f * win_dimension.x), origin.y + (0.255f * win_dimension.y) - ScrollBarTrackerScript.virtual_y);
 
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
@@ -290,11 +242,13 @@ namespace IS
                 {
                     PlayHoverSound();
                     first_hover = true;
+                    font_size = MainMenuScript.HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hover = false;
+                font_size = MainMenuScript.NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {
@@ -311,21 +265,19 @@ namespace IS
             if (show_settings)
             {
                 DrawSettings();
-                InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", settings_text_pos.x, settings_text_pos.y, 12.5f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("SETTINGS", TITLE_FONT_NAME, settings_text_pos.x, settings_text_pos.y, TITLE_FONT_SIZE, FONT_COLOR);
 
                 float upper_limit_normalized = ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.615f * win_dimension.y)).y;
-                float lower_limit_normalized = ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.28f * win_dimension.y)).y; //may need to recalc
+                float lower_limit_normalized = ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.315f * win_dimension.y)).y; //may need to recalc
 
                 if (!(master_vol_text_pos.y > upper_limit_normalized) && !(master_vol_text_pos.y < lower_limit_normalized))
-                    InternalCalls.RenderTextFont("Master Volume", FONT_NAME, master_vol_text_pos.x, master_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("Master Volume", BODY_FONT_NAME, master_vol_text_pos.x, master_vol_text_pos.y, BODY_FONT_SIZE, FONT_COLOR);
                 if (!(bgm_vol_text_pos.y > upper_limit_normalized) && !(bgm_vol_text_pos.y < lower_limit_normalized))
-                    InternalCalls.RenderTextFont("BGM Volume", FONT_NAME, bgm_vol_text_pos.x, bgm_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("BGM Volume", BODY_FONT_NAME, bgm_vol_text_pos.x, bgm_vol_text_pos.y, BODY_FONT_SIZE, FONT_COLOR);
                 if (!(sfx_vol_text_pos.y > upper_limit_normalized) && !(sfx_vol_text_pos.y < lower_limit_normalized))
-                    InternalCalls.RenderTextFont("SFX Volume", FONT_NAME, sfx_vol_text_pos.x, sfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-                if (!(fps_text_pos.y > upper_limit_normalized) && !(fps_text_pos.y < lower_limit_normalized))
-                    InternalCalls.RenderTextFont("FPS", FONT_NAME, fps_text_pos.x, fps_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-                if (!(resolution_text_pos.y > upper_limit_normalized) && !(resolution_text_pos.y < lower_limit_normalized) && !FPSDropdownScript.dropdown_open)
-                    InternalCalls.RenderTextFont("Resolution", FONT_NAME, resolution_text_pos.x, resolution_text_pos.y, 10f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("SFX Volume", BODY_FONT_NAME, sfx_vol_text_pos.x, sfx_vol_text_pos.y, BODY_FONT_SIZE, FONT_COLOR);
+                if (!(fullscreen_text_pos.y > upper_limit_normalized) && !(fullscreen_text_pos.y < lower_limit_normalized))
+                    InternalCalls.RenderTextFont("Fullscreen", BODY_FONT_NAME, fullscreen_text_pos.x, fullscreen_text_pos.y, BODY_FONT_SIZE, FONT_COLOR);
             }
             else
             {
@@ -358,14 +310,6 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(settings_overlay_top_pos.x, settings_overlay_top_pos.y, settings_overlay_top_entity);
             InternalCalls.TransformSetPositionEntity(settings_overlay_bot_pos.x, settings_overlay_bot_pos.y, settings_overlay_bot_entity);
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
-            //InternalCalls.TransformSetPositionEntity(trans_pos.x, trans_pos.y, trans_entity);
-
-            /*InternalCalls.RenderTextFont("SETTINGS", "MedusaGothic_D", settings_text_pos.x, settings_text_pos.y, 12.5f, (1f, 1f, 1f, 1f));
-            //if(master_vol_text_pos.y > (origin.y + (0.7f * win_dimension.y)) || master_vol_text_pos.y < (origin.y + (0.25f * win_dimension.y))) { 
-            //}
-            InternalCalls.RenderTextFont("Master Volume", FONT_NAME, master_vol_text_pos.x, master_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("BGM Volume", FONT_NAME, bgm_vol_text_pos.x, bgm_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("SFX Volume", FONT_NAME, sfx_vol_text_pos.x, sfx_vol_text_pos.y, 10f, (1f, 1f, 1f, 1f));*/
         }
 
 
@@ -381,14 +325,12 @@ namespace IS
 
         static public void PlayHoverSound()
         {
-            const float VOLUME_SCALE = 0.15f;
-            InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, VOLUME_SCALE * master_multiplier * sfx_multiplier);
+            InternalCalls.AudioPlaySoundSFX(HOVER_SFX_NAME, false, HOVER_SFX_VOLUME);
         }
 
         static public void PlayClickSound()
         {
-            const float VOLUME_SCALE = 0.4f;
-            InternalCalls.AudioPlaySound("QubieSFX3.wav", false, VOLUME_SCALE * master_multiplier * sfx_multiplier);
+            InternalCalls.AudioPlaySoundSFX(CLICK_SFX_NAME, false, CLICK_SFX_VOLUME);
         }
     }
 }

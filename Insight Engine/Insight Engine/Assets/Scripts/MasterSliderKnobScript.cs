@@ -60,10 +60,9 @@ namespace IS
             upper_limit_master_knob = origin.x + (UPPER_LIMIT_SCALE * win_dimension.x);
 
             first_open_settings = false;
-            diff_x = 0.5f;
-
-            adjustment = origin.x + diff_x * win_dimension.x;
-            normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
+            diff_x = (upper_limit_master_knob - lower_limit_master_knob) * InternalCalls.AudioGetMaster();
+            adjustment = lower_limit_master_knob + diff_x;
+            normalised_adjustment = (adjustment + lower_limit_master_knob) / (upper_limit_master_knob + lower_limit_master_knob);
             InternalCalls.SetButtonHoverScale(id, 0.95f);
 
         }
@@ -135,7 +134,7 @@ namespace IS
             {
                 if (!first_open_settings)
                 {
-                    adjustment = origin.x + diff_x * win_dimension.x;
+                    adjustment = lower_limit_master_knob + diff_x;
                     first_open_settings = true;
                 }
                 InternalCalls.TransformSetPosition(adjustment, y_pos);
@@ -145,8 +144,6 @@ namespace IS
                 first_open_settings = false;
                 InternalCalls.TransformSetPosition(9999f, 9999f);
             }
-
-            SettingsScript.master_multiplier = normalised_adjustment;
         }
         static public void CleanUp()
         {
@@ -156,17 +153,18 @@ namespace IS
         static private void AdjustSlider(float xpos)
         {
             adjustment = Math.Min(upper_limit_master_knob, Math.Max(lower_limit_master_knob, xpos));
-            diff_x = (adjustment - origin.x) / win_dimension.x;
+            diff_x = adjustment - lower_limit_master_knob;
             InternalCalls.TransformSetPosition(adjustment, SettingsScript.master_slider_knob_pos.y);
             SettingsScript.master_slider_knob_pos.x = adjustment;
-            normalised_adjustment = (adjustment + upper_limit_master_knob) / (upper_limit_master_knob + upper_limit_master_knob);
+            normalised_adjustment = (adjustment + lower_limit_master_knob) / (upper_limit_master_knob + lower_limit_master_knob);
         }
 
         static private void AdjustVolume()
         {
             float xpos = InternalCalls.GetTransformPosition().x;
-            float master_volume = (xpos - lower_limit_master_knob) / (lower_limit_master_knob - upper_limit_master_knob);
+            float master_volume = (xpos - lower_limit_master_knob) / (upper_limit_master_knob - lower_limit_master_knob);
             InternalCalls.AudioSetMaster(master_volume);
+            Console.WriteLine("Master: " + (int)(master_volume * 100) + "%");
         }
     }
 }

@@ -17,8 +17,6 @@ namespace IS
     class SFXCheckboxScript
     {
         static public bool first_hover = false;
-        static public SimpleImage checkbox_image = InternalCalls.GetSpriteImage("checkbox.png");
-        static public SimpleImage toggled_image = InternalCalls.GetSpriteImage("checkbox_toggled.png");
         static public bool clicked = false;
 
         // Windows
@@ -65,7 +63,7 @@ namespace IS
             origin.x = camera_pos.x - (win_dimension.x / 2f);
             origin.y = camera_pos.y - (win_dimension.y / 2f);
 
-            InternalCalls.SetSpriteImage(!toggled ? checkbox_image : toggled_image);
+            InternalCalls.SetSpriteImage(!toggled ? SettingsScript.checkbox_image : SettingsScript.checkbox_toggled_image);
 
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
