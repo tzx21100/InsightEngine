@@ -151,7 +151,6 @@ namespace IS
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
-            InternalCalls.AudioStopAllSounds();
             InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
 
             // clear all enemy dic
@@ -172,13 +171,6 @@ namespace IS
 
                 InternalCalls.SetGravityScale(0f);
             InternalCalls.TransformSetRotation(0, 0);
-
-            // restart level if player lose
-            if (PlayerScript.isDead)
-            {
-                PlayerScript.isDead = false;
-                InternalCalls.LoadScene("Assets/Scenes/BossLevel.insight");
-            }
 
 
             // stopping the scene and playing transition to next phase
