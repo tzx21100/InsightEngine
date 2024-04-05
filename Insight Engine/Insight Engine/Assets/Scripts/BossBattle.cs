@@ -611,7 +611,7 @@ namespace IS
             CameraScript.CameraShake(2f);
             CameraScript.camera_shake_intensity = 3f;
             CameraScript.camera_shake_duration = 0.2f;
-            InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav",false, 0.6f);
+
             SimpleVector2D pos=InternalCalls.GetTransformPosition();
             SimpleVector2D entity_pos = InternalCalls.GetTransformPositionEntity(entity);
             SimpleVector2D size= new SimpleVector2D(InternalCalls.GetTransformScaling().x*0.4f, InternalCalls.GetTransformScaling().y * 0.4f);
@@ -629,7 +629,7 @@ namespace IS
                 {
                     DrawParticles(entity);
                 }
-
+                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
                 return;
             }
             else
@@ -644,7 +644,8 @@ namespace IS
                 {
                     DrawParticles(entity);
                 }
-               
+
+                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
 
             }
 

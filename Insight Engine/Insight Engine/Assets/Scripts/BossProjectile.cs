@@ -23,8 +23,21 @@ namespace IS
                 SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(entity_id);
                 float speed = bullet_direction[entity_id].Item2;
                 InternalCalls.TransformSetPositionEntity(pos.x + bullet_direction[entity_id].Item1.x * speed, pos.y + bullet_direction[entity_id].Item1.y *speed,entity_id);
-                ParticleTrail(entity_id);
+                
 
+
+                // make bullets invul when no speed
+                if (speed == 0)
+                {
+                    InternalCalls.SetSpriteAlphaEntity(0.9f, entity_id);
+                    continue;
+                }
+                else
+                {
+                    InternalCalls.SetSpriteAlphaEntity(1f, entity_id);
+                }
+                //particle when flying
+                ParticleTrail(entity_id);
 
                 //hit player
                 if (array.FindIndex(PlayerScript.PLAYER_ID) != -1 && PlayerScript.invulnerable == false)
