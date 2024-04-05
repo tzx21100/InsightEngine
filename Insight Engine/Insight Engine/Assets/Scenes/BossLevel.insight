@@ -101,9 +101,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.25,
 						"frame_dimension_y" : 0.25,
-						"frame_index_x" : 2.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.0084817558526992798,
+						"frame_index_x" : 0.0,
+						"frame_index_y" : 1.0,
+						"frame_timer" : 0.00015725195407867432,
 						"time_per_frame" : 0.0625,
 						"x_frames" : 4,
 						"y_frames" : 4
@@ -212,9 +212,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 88,
+				"SpriteTexture" : 93,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 71,
+				"SpriteTextureIndex" : 76,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 358.06292724609375,
 				"SpriteTransformScalingX" : 400.0,
@@ -240,9 +240,9 @@
 						"animation_duration" : 1.0,
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
-						"frame_index_x" : 0.0,
+						"frame_index_x" : 1.0,
 						"frame_index_y" : 1.0,
-						"frame_timer" : 0.0058259367942810059,
+						"frame_timer" : 0.039159271866083145,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -589,6 +589,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -685,6 +689,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -781,6 +789,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -877,6 +889,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -973,6 +989,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1069,6 +1089,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1165,6 +1189,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1261,6 +1289,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1357,6 +1389,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1453,6 +1489,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1549,6 +1589,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1645,6 +1689,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1741,19 +1789,23 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
 				{
 					"BoxColliderCenter" : 
 					{
-						"X" : 30.0,
-						"Y" : 379.89999389648438
+						"X" : 0.0,
+						"Y" : 359.89999389648438
 					},
 					"BoxColliderOffset" : 
 					{
-						"X" : 30.0,
-						"Y" : 20.0
+						"X" : 0.0,
+						"Y" : 0.0
 					},
 					"BoxColliderSizeScale" : 
 					{
@@ -1837,6 +1889,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -1933,6 +1989,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 
@@ -2029,6 +2089,10 @@
 			}
 		},
 		{
+			"Category" : 
+			{
+				"Category" : "Ground"
+			},
 			"Collider" : 
 			{
 				"BoxCollider" : 

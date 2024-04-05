@@ -2336,8 +2336,28 @@ namespace IS
 
         static public void TransformToNPC()
         {
-            InternalCalls.SetSpriteImage(npc_image);
-            InternalCalls.SetSpriteAnimationIndex(2);
+            /*float rand = InternalCalls.GetRandomFloat();
+            if (rand > 0.8-(1-NPC_timer/4f))
+            {
+                InternalCalls.SetSpriteImage(npc_image);
+                InternalCalls.TransformSetScale(217, 186);
+                InternalCalls.SetSpriteAnimationIndex(2);
+            }
+            else
+            {
+                InternalCalls.SetSpriteImage(player_idle);
+
+                InternalCalls.TransformSetScale(400, 360);
+                InternalCalls.SetSpriteAnimationIndex(1);
+            }*/
+
+            InternalCalls.SetSpriteImage(player_idle);
+            InternalCalls.SetSpriteAnimationIndex(1);
+            InternalCalls.SetSpriteAlpha(NPC_timer / 2f);
+            SimpleVector2D scale = new SimpleVector2D(217, 186);
+            InternalCalls.DrawImageExtraAt(0, 0, 3, 4, InternalCalls.GetTransformPosition(), 0, scale, npc_image, (1-NPC_timer / 2f),3);
+
+            
         }
 
 
