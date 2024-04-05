@@ -61,11 +61,13 @@ namespace IS
 
             InternalCalls.ResetSpriteAnimationFrameEntity(LEFT_HAND_ID);
             InternalCalls.ResetSpriteAnimationFrameEntity(RIGHT_HAND_ID);
+
+            attack_type = ClapAttackTypes.TwoHand;
         }
 
         static public void Update()
         {
-            //RandomAttackType();
+            RandomAttackType();
             HandClapFSM();
         }
 
@@ -76,7 +78,7 @@ namespace IS
 
         static private void HandClapFSM()
         {
-            attack_type = ClapAttackTypes.OneHandWaiting;
+            //attack_type = ClapAttackTypes.OneHandWaiting;
             switch (attack_type)
             {
                 case ClapAttackTypes.TwoHand:
@@ -92,14 +94,14 @@ namespace IS
 
         static private void RandomAttackType() 
         {
+            MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
+            uint random = rnd.Next(0, 2); // random from 0 to 1
+            //random = 0;
             if (!is_attacking) {
-                MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
-                uint random = rnd.Next(0, 2); // random from 0 to 1
-                                              //random = 2;
                 if (random == 0)
                 {
                     attack_type = ClapAttackTypes.TwoHand;
-                    return;
+                    //return;
                 }
                 if (random == 1)
                 {
@@ -279,6 +281,13 @@ namespace IS
                 return;
             }
 
+            // if left hand and right hand collide each other, destory them
+            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
+            {
+                DestoryHands();
+                return;
+            }
+
             // if two hand collide with player, damage player, render particles and disappear
             if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player") &&
                 InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
@@ -292,26 +301,29 @@ namespace IS
                 return;
             }
             
-            // if left hand and right hand collide each other, destory them
-            if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
-            {
-                DestoryHands();
-                return;
-            }
 
             // if one of the hands collides with player, it will push the player to the center
             if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player"))
             {
                 PlayerScript.isGrounded = false;
                 PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(2000f, 5f, 0.25f);
+                if (PlayerScript.player_vel.x < 0f)
+                {
+                    InternalCalls.RigidBodySetVelocityEntity(0f, 0f, PlayerScript.PLAYER_ID);
+                }
+                
+               // PlayerScript.AddForcesToPlayer(2000f, 5f, 0.25f);
                 return;
             }
             else if (InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
             {
                 PlayerScript.isGrounded = false;
                 PlayerScript.isFirstGrounded = false;
-                PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.25f);
+                if (PlayerScript.player_vel.x > 0f)
+                {
+                    InternalCalls.RigidBodySetVelocityEntity(0f, 0f, PlayerScript.PLAYER_ID);
+                }
+                //PlayerScript.AddForcesToPlayer(-1000f, 5f, 0.25f);
                 return;
             }
 
@@ -519,7 +531,7 @@ namespace IS
                 float left_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
                 float right_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
 
-                if (MathF.Abs(left_distance) < 900f || MathF.Abs(right_distance) < 800f)
+                if (MathF.Abs(left_distance) < 900f || MathF.Abs(right_distance) < 900f)
                 {
                     InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
                     InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);
@@ -565,7 +577,7 @@ namespace IS
                     //float left_distance = PlayerScript.player_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
                     float right_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
 
-                    if (MathF.Abs(right_distance) < 1500f)
+                    if (MathF.Abs(right_distance) < 1800f)
                     {
                         InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
                         InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);
@@ -584,7 +596,7 @@ namespace IS
                     float left_distance = clapping_pos.x - InternalCalls.GetTransformPositionEntity(LEFT_HAND_ID).x;
                     //float right_distance = PlayerScript.player_pos.x - InternalCalls.GetTransformPositionEntity(RIGHT_HAND_ID).x;
 
-                    if (MathF.Abs(left_distance) < 1500f)
+                    if (MathF.Abs(left_distance) < 1800f)
                     {
                         InternalCalls.SetAnimationEntityPlaying(LEFT_HAND_ID, true);
                         InternalCalls.SetAnimationEntityPlaying(RIGHT_HAND_ID, true);

@@ -214,7 +214,6 @@ namespace IS
 
         static private void BossFSM()
         {
-            //current_state = BossStates.Clap;
             switch (current_state)
             {
                 case BossStates.Idle:
@@ -364,7 +363,7 @@ namespace IS
             MyRandom rnd = new MyRandom((uint)(129243 * InternalCalls.GetRandomFloat()));
             uint random = rnd.Next(0,4); // random from 0 to 3
             //uint random = 3; // random from 0 to 3
-            //random = 2;
+            //random = 3;
             if (random == 0)
             {
                 if (boss_phase == 0)
@@ -1182,6 +1181,11 @@ namespace IS
                 return;
             }
 
+            if (InternalCalls.GetTransformPosition().y < 1400f)
+            {
+                return; // boss havent reach top position, do not create clap hand
+            }
+
             if (!is_clapping)
             {
                 // create left hand
@@ -1189,10 +1193,10 @@ namespace IS
                 is_clapping = true;
             }
 
-            if (BossClap.is_destoryed)
+            /*if (BossClap.is_destoryed)
             {
                 StateChanger();
-            }
+            }*/
         }
 
         static private void GoNextPhase()
