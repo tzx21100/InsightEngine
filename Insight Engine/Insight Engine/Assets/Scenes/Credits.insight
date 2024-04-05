@@ -33,9 +33,9 @@
 				"SpriteFilename" : "credits_bg.jpg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 120,
+				"SpriteTexture" : 84,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 103,
+				"SpriteTextureIndex" : 67,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -52,15 +52,70 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Light" : 
+			{
+				"LightHue" : 
+				{
+					"B" : 0.0,
+					"G" : 1.0,
+					"R" : 0.96202540397644043
+				},
+				"LightIntensity" : 1.0,
+				"LightOffset" : 
+				{
+					"X" : 0.0,
+					"Y" : 0.0
+				},
+				"LightRender" : true,
+				"LightSize" : 50.0
+			},
+			"Name" : "firefly",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "transparent.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 138,
+				"SpriteTextureHeight" : 32,
+				"SpriteTextureIndex" : 121,
+				"SpriteTextureWidth" : 32,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 20.0,
+				"SpriteTransformScalingY" : 20.0,
+				"SpriteTransformWorldPositionX" : -689.4310302734375,
+				"SpriteTransformWorldPositionY" : 347.99905395507812,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 20.0,
+				"TransformScalingY" : 20.0,
+				"TransformWorldPositionX" : -689.4310302734375,
+				"TransformWorldPositionY" : 347.99905395507812
+			}
 		}
 	],
-	"EntityAmount" : 1,
+	"EntityAmount" : 2,
 	"Layers" : 
 	[
 		{
 			"Active" : true,
 			"Name" : "Background"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
 		}
 	],
-	"LayersAmount" : 1
+	"LayersAmount" : 2
 }
