@@ -310,6 +310,10 @@ namespace IS
         static public bool NPC_Transformation=false;
         static private float NPC_timer = 2f;
         static private float NPC_timer_set = 2f;
+        static private float NPC_video_timer = 2f;
+        static private float NPC_video_timer_set = 12f;
+        static public string selfish_ending = "Assets/Videos/SelfishEndingNoAudio.mp4";
+
 
 
         // Key Input
@@ -338,6 +342,7 @@ namespace IS
             //reset final
             NPC_Transformation = false;
             NPC_timer = NPC_timer_set;
+            NPC_video_timer=NPC_video_timer_set;
 
             //reset cam y offset
             player_cam_y_offset = 0;
@@ -486,11 +491,36 @@ namespace IS
                 InternalCalls.SetGravityScale(0);
                 InternalCalls.RigidBodySetForce(0, 0);
                 TransformToNPC();
+                if (NPC_timer != -1f) //use this as an arbitary checker
+                {
+                    NPC_timer -= InternalCalls.GetDeltaTime();
+                }
 
-                NPC_timer -= InternalCalls.GetDeltaTime();
                 InternalCalls.DrawSquare(camera_pos.x, camera_pos.y, 10000, 10000, 0, 0, 0, 1 - NPC_timer / 2, InternalCalls.GetTopLayer());
-                if (NPC_timer <= 0) {
-                    InternalCalls.LoadScene("Assets/Scenes/CreditsSad.insight");
+                if (NPC_timer <= 0 && NPC_timer!=-1f) {
+                    //InternalCalls.LoadScene("Assets/Scenes/CreditsSad.insight");
+                    InternalCalls.loadVideo(selfish_ending, 0.5f, 0.5f, 0.0f, 0.0f, true);
+                    InternalCalls.SetLightsToggle(false);
+                    CameraScript.CameraPanTo(new Vector2D(0, 0), 12f);
+                    TextBox.CreateTextBox("By sacrificing the NPC, an imbalance in the game data was found.");
+                    TextBox.AddTextLines("This leads to you following the footsteps of an NPC indefinetly...");
+                    TextBox.AddTextLines("At least, until the next player comes along");
+                    NPC_timer = -1f;
+                }
+
+                if (NPC_timer == -1f)
+                {
+                    select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B); //allow text to move
+                    NPC_video_timer -= InternalCalls.GetDeltaTime();
+                    if (NPC_video_timer <= 0f)
+                    {
+                        CameraScript.StopCameraPan();
+                        InternalCalls.SetLightsToggle(true);
+                        InternalCalls.unloadVideos();
+                        InternalCalls.AudioStopAllSounds();
+                        InternalCalls.LoadScene("Assets/Scenes/CreditsSad.insight");
+                    }
+
                 }
 
                 return;
@@ -2448,7 +2478,7 @@ namespace IS
 
         static private void DrawRewards() // draw powers
         {
-            if (hideHealth == true || SettingsScript.show_settings) return;
+            if (hideHealth == true || SettingsScript.show_settings ||TextBox.isVisible) return;
 
             float scale = 80f;
             SimpleVector2D scaling = new SimpleVector2D(scale / CameraScript.camera_zoom, scale / CameraScript.camera_zoom);

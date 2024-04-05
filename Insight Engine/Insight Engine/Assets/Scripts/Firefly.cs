@@ -6,22 +6,31 @@ namespace IS
     class Firefly
     {
 
-        static public List<int> firefly_list = new List<int>();
-        static public Dictionary<int, (Vector2D dir, float speed )> firefly_dir = new Dictionary<int, (Vector2D, float)>(); // keep a map of projectiles and the speed and direction
-        static public Dictionary<int,float> firefly_lifetime = new Dictionary<int, float>();
-        static public Dictionary<int, float> firefly_flickerlifetime = new Dictionary<int, float>();
+        static private List<int> firefly_list = new List<int>();
+        static private Dictionary<int, (Vector2D dir, float speed )> firefly_dir = new Dictionary<int, (Vector2D, float)>(); // keep a map of projectiles and the speed and direction
+        static private Dictionary<int,float> firefly_lifetime = new Dictionary<int, float>();
+        static private Dictionary<int, float> firefly_flickerlifetime = new Dictionary<int, float>();
 
         static float lifespan = 5f;
         static float direction;
         static public void Init(){
-            
+            ClearAll();
         }
 
         static public void Update(){
 
             for(int i=0; i < firefly_list.Count; i++)
             {
+
+
                 int entity = firefly_list[i];
+
+                if (!firefly_dir.ContainsKey(entity) || !firefly_lifetime.ContainsKey(entity) || !firefly_flickerlifetime.ContainsKey(entity))
+                {
+                    // Skip this iteration if the entity does not exist in all required dictionaries
+                    continue;
+                }
+
 
                 Vector2D dir = firefly_dir[entity].Item1;
                 float speed = firefly_dir[entity].Item2;
@@ -67,16 +76,16 @@ namespace IS
         }
         
         static public void CleanUp(){
-
+            ClearAll();
         }
 
         static public void CreateFirefly(string Prefab, float direction, float rotation, float speed, float lifespan, float Xpos, float Ypos)
         {
             int entity = InternalCalls.CreateEntityPrefab(Prefab);
             Vector2D dir = Vector2D.DirectionFromAngle(CustomMath.DegreesToRadians(direction));
-            firefly_dir.Add(entity, (dir, speed)); //add prefab to the dictionary
-            firefly_lifetime.Add(entity, lifespan);
-            firefly_flickerlifetime.Add(entity, InternalCalls.GetRandomFloat());
+            firefly_dir.TryAdd(entity, (dir, speed)); //add prefab to the dictionary
+            firefly_lifetime.TryAdd(entity, lifespan);
+            firefly_flickerlifetime.TryAdd(entity, InternalCalls.GetRandomFloat());
             firefly_list.Add(entity);
 
             //set the positon rotation etc
@@ -93,6 +102,19 @@ namespace IS
             firefly_lifetime.Remove(entity);
             firefly_flickerlifetime.Remove(entity);
             InternalCalls.DestroyEntity(entity);
+        }
+
+        static void ClearAll()
+        {
+            for(int i = 0; i<firefly_list.Count; i++)
+            {
+                DestroyFirefly(firefly_list[i]);
+            }
+
+            firefly_dir.Clear();
+            firefly_lifetime.Clear();
+            firefly_flickerlifetime.Clear();
+            firefly_list.Clear();
         }
 
 
