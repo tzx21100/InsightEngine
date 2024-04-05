@@ -10,7 +10,7 @@ namespace IS
 
         //boss stats
         static public float boss_hp=150;
-        static private float boss_max_hp=500;
+        static private float boss_max_hp=250;
         static public int boss_phase = 0; // when health drops below 0 go to next phase
 
         static private float temp_boss_hp=150; // for decrease hp animation
@@ -85,6 +85,8 @@ namespace IS
         //spawning one by one
         static int index360 = 0;
         static bool play360audio = false;
+        static bool hitsound = false;
+
         public enum BossStates : int
         {
             Idle=0,
@@ -340,6 +342,25 @@ namespace IS
         {
             if(wasHit)
             {
+                if (!hitsound)
+                {
+                    hitsound = true;
+                    Random rnd = new Random();
+                    int random_hit_sound = rnd.Next(0, 2);
+                    switch (random_hit_sound)
+                    {
+                        case 0:
+                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
+                            break;
+                        case 1:
+                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.1.wav", false, 0.5f);
+                            break;
+                        default:
+                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
+                            break;
+                    }
+
+                }
                 InternalCalls.SetSpriteAlpha(InternalCalls.GetRandomFloat() * 2f);
 
                 invul_timer-=InternalCalls.GetDeltaTime();
@@ -347,6 +368,7 @@ namespace IS
                 {
                     invul_timer = invul_timer_set;
                     wasHit = false;
+                    hitsound = false;
                     InternalCalls.SetSpriteAlpha(1f);
                 }
             }
@@ -401,7 +423,6 @@ namespace IS
                     random_x_location =-1938+ InternalCalls.GetRandomFloat()*2000;
                     random_y_location = -700+ InternalCalls.GetRandomFloat()* 600;
                     index360 = 0;
-                    InternalCalls.AudioPlaySoundSFX("SCI-FI-LIGHT-SABRE_GEN-HDF-20726.wav", false, 0.2f);
                     current_state = BossStates.Boss360;
                     return;
                 }
@@ -435,6 +456,7 @@ namespace IS
                 if (boss_phase == 0) //based on boss phase
                 {
                     ResetPosition();
+                    InternalCalls.AudioPlaySoundSFX("ADDING-MACHINE-ELECTRONIC_GEN-HDF-00040.wav", false, 0.2f);
                     current_state = BossStates.SpikesSpawn;
                     return;
                 }
@@ -587,6 +609,7 @@ namespace IS
                     smash_timer = smash_timer_set;
                     InternalCalls.RigidBodySetBodyTypeEntity(6, InternalCalls.GetCurrentEntityID());
                     StateChanger();
+                    return;
 
                 }
 
@@ -967,12 +990,18 @@ namespace IS
 
             if (sweep_timer > 1.5 && sweep_timer < 2)
             {
+                if (!play360audio)
+                {
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-WHOOSH_GEN-HDF-20863.wav", false, 0.2f);
+                    play360audio = true;
+                }
+
                 BossProjectile.SetAllProjectileSpeed(40);
             }
 
             if (sweep_timer < 0)
             {
-
+                play360audio = false;
                 sweep_timer = sweep_timer_set;
                 sweeped = false;
                 current_state = BossStates.RightSweep;
@@ -1010,12 +1039,17 @@ namespace IS
 
             if (sweep_timer > 1.5 && sweep_timer < 2)
             {
+                if (!play360audio)
+                {
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-WHOOSH_GEN-HDF-20863.wav", false, 0.2f);
+                    play360audio = true;
+                }
                 BossProjectile.SetAllProjectileSpeed(40);
             }
 
             if (sweep_timer < 0)
             {
-
+                play360audio = false;
                 sweep_timer = sweep_timer_set;
                 sweeped = false;
                 StateChanger();
@@ -1063,6 +1097,12 @@ namespace IS
             if (sweep_timer > 1 && sweep_timer < 1.5)
             {
                 BossProjectile.SetAllProjectileSpeed(40);
+                if (!play360audio)
+                {
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-WHOOSH_GEN-HDF-20863.wav", false, 0.2f);
+                    play360audio = true;
+                }
+
             }
 
             if (sweep_timer < 0)
@@ -1072,11 +1112,13 @@ namespace IS
                 sweeped = false;
                 if (left_or_right == -1)
                 {
+                    play360audio = false;
                     current_state = BossStates.ReturnSpikesSpawn;
                  
                 }
                 else
                 {
+                    play360audio = false;
                     current_state = BossStates.Smash;
                 }
                 
@@ -1097,6 +1139,10 @@ namespace IS
 
             if (!sweeped)
             {
+                if (index360 == 1)
+                {
+                    InternalCalls.AudioPlaySoundSFX("SCI-FI-LIGHT-SABRE_GEN-HDF-20726.wav", false, 0.2f); 
+                }
 
                 int flipper = 1;
                 int i = index360;

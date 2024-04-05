@@ -284,6 +284,7 @@ namespace IS
             // if left hand and right hand collide each other, destory them
             if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "RightHandBoss"))
             {
+                InternalCalls.AudioPlaySoundSFX("SCI-FI-IMPACT_GEN-HDF-20692.wav", false, 0.1f);
                 DestoryHands();
                 return;
             }
@@ -292,6 +293,7 @@ namespace IS
             if (InternalCalls.CompareEntityCategory(LEFT_HAND_ID, "Player") &&
                 InternalCalls.CompareEntityCategory(RIGHT_HAND_ID, "Player"))
             {
+                InternalCalls.AudioPlaySoundSFX("SCI-FI-IMPACT_GEN-HDF-20692.wav", false, 0.2f);
                 DestoryHands();
 
                 // damage player

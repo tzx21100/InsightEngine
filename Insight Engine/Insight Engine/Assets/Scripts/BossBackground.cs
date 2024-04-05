@@ -70,6 +70,9 @@ namespace IS
             {
                 if (i == 1 ) continue;
 
+
+
+
                 // Calculate the offset for this layer
                 float layerOffsetX = playerOffsetX * offsetRatios[i];
                 float layerOffsetY = playerOffsetY * offsetRatios[i];
@@ -79,9 +82,17 @@ namespace IS
 
                 // Update the position
                 Vector2D newPos = new Vector2D(CameraScript.camera_pos.x + initialPos.x - layerOffsetX, CameraScript.camera_pos.y + initialPos.y - layerOffsetY +phase_move);
+                
+                float alpha = 1f;
+                if (i == 2) alpha = 0.5f;
+
+                // Draw the layer at its new position 
+                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
+                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), alpha, 0);
+
 
                 // Draw the layer at its new position
-                InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
+                //InternalCalls.DrawImageAt(newPos.ToSimpleVector2D(), 0, bg_scale.ToSimpleVector2D(), GetBackgroundImage(i), 1f, 0);
             }
 
             //InternalCalls.GameSpawnParticle(PlayerScript.camera_pos.x, PlayerScript.camera_pos.y, "ParticleLeaves.txt");
