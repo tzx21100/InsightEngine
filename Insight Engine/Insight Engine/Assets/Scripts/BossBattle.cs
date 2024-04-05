@@ -171,6 +171,11 @@ namespace IS
         static public void Update(){
             BOSS_ID = InternalCalls.GetCurrentEntityID();
 
+            if(PauseButtonScript.paused == true)
+            {
+                return; //do nothing when pause
+            }
+
             if (InternalCalls.KeyPressed((int)KeyCodes.Slash))
             {
                 boss_hp = 0;
@@ -458,7 +463,7 @@ namespace IS
                 if (boss_phase == 0) //based on boss phase
                 {
                     ResetPosition();
-                    InternalCalls.AudioPlaySoundSFX("ADDING-MACHINE-ELECTRONIC_GEN-HDF-00040.wav", false, 0.2f);
+                    InternalCalls.AudioPlaySoundSFX("ADDING-MACHINE-ELECTRONIC_GEN-HDF-00040.wav", false, 0.3f);
                     current_state = BossStates.SpikesSpawn;
                     return;
                 }
@@ -1115,6 +1120,7 @@ namespace IS
                 if (left_or_right == -1)
                 {
                     play360audio = false;
+                    InternalCalls.AudioPlaySoundSFX("ADDING-MACHINE-ELECTRONIC_GEN-HDF-00040.wav", false, 0.3f);
                     current_state = BossStates.ReturnSpikesSpawn;
                  
                 }

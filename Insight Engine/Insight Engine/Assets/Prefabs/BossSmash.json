@@ -5,8 +5,8 @@
 		{
 			"BoxColliderCenter" : 
 			{
-				"X" : -902.7874755859375,
-				"Y" : 2212.737060546875
+				"X" : 0.0,
+				"Y" : 0.0
 			},
 			"BoxColliderOffset" : 
 			{
@@ -76,26 +76,40 @@
 		"SpriteColorY" : 1.0,
 		"SpriteColorZ" : 1.0,
 		"SpriteCurrentTexIndex" : 0,
-		"SpriteFilename" : "tempboss.png",
+		"SpriteFilename" : "BossGrab 6R4C.png",
 		"SpriteName" : "Quad",
 		"SpritePrimitiveType" : 5,
-		"SpriteTexture" : 118,
-		"SpriteTextureHeight" : 129,
-		"SpriteTextureIndex" : 101,
-		"SpriteTextureWidth" : 100,
+		"SpriteTexture" : 33,
+		"SpriteTextureHeight" : 1794,
+		"SpriteTextureIndex" : 16,
+		"SpriteTextureWidth" : 2048,
 		"SpriteTransformRotation" : 0.0,
 		"SpriteTransformScalingX" : 0.0,
 		"SpriteTransformScalingY" : 0.0,
-		"SpriteTransformWorldPositionX" : -902.7874755859375,
-		"SpriteTransformWorldPositionY" : 2212.737060546875,
-		"animations" : []
+		"SpriteTransformWorldPositionX" : 0.0,
+		"SpriteTransformWorldPositionY" : 0.0,
+		"animations" : 
+		[
+			{
+				"Name" : "g",
+				"animation_duration" : 1.0,
+				"frame_dimension_x" : 0.25,
+				"frame_dimension_y" : 0.1666666716337204,
+				"frame_index_x" : 0.0,
+				"frame_index_y" : 0.0,
+				"frame_timer" : 0.033333338797092438,
+				"time_per_frame" : 0.041666667908430099,
+				"x_frames" : 4,
+				"y_frames" : 6
+			}
+		]
 	},
 	"Transform" : 
 	{
 		"TransformRotation" : 0.0,
 		"TransformScalingX" : 0.0,
 		"TransformScalingY" : 0.0,
-		"TransformWorldPositionX" : -902.7874755859375,
-		"TransformWorldPositionY" : 2212.737060546875
+		"TransformWorldPositionX" : 0.0,
+		"TransformWorldPositionY" : 0.0
 	}
 }

@@ -629,7 +629,7 @@ namespace IS
                 return;
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftAlt)) // cheat code
+            if (InternalCalls.KeyPressed((int)KeyCodes.Backslash)) // cheat code
             {
                 player_ground_pos = new Vector2D(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
@@ -1377,7 +1377,7 @@ namespace IS
                 bullet_time_timer = bullet_time_set;
                 initialDash = true;
                 InternalCalls.RigidBodySetForce(InternalCalls.RigidBodyGetVelocity().x / 3f, InternalCalls.RigidBodyGetVelocity().y / 3f);
-                if (!(screen_flash_timer > 0f))
+                if (screen_flash_timer <= 0f)
                 {
                     invulnerable = false;
                 }
@@ -2548,8 +2548,8 @@ namespace IS
             {
                 if (play_low_hp)
                 {
-                    InternalCalls.AudioPlaySoundBGM("Heartbeat_Loop.wav", true, 0.2f);
-                    InternalCalls.AudioPlaySoundBGM("Cypher_Grunts_Loop.wav", true, 0.2f);
+                    InternalCalls.AudioPlayMusicSFX("Heartbeat_Loop.wav", 0.2f);
+                    InternalCalls.AudioPlayMusicSFX("Cypher_Grunts_Loop.wav", 0.2f);
                     play_low_hp = false;
                 }
             }

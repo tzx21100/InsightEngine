@@ -27,7 +27,7 @@ namespace IS
                 if (alpha_value < 1) { alpha_value += InternalCalls.GetDeltaTime(); }
                 if (size < 500) { size += InternalCalls.GetDeltaTime() * 500; }
                 InternalCalls.SetSpriteAlphaEntity(alpha_value, entity_boss);
-                InternalCalls.TransformSetScaleEntity(size, size, entity_boss);
+                InternalCalls.TransformSetScaleEntity(-size*512/299, size, entity_boss);
             }
 
             if(!can_move) { return; }
@@ -49,6 +49,7 @@ namespace IS
                     PlayerScript.player_pos.y = 2800;
                     PlayerScript.prev_x = 6760;
                     PlayerScript.player_ground_pos.x = 6760;
+                    InternalCalls.TransformSetPositionEntity(6760, 2800, PlayerScript.PLAYER_ID);
                     initial_hit = true;
 
                 }
