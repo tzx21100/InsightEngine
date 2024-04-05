@@ -9,10 +9,12 @@ namespace IS
         static string text0 = "Hello there Cipher. I have been expecting you.";
         static string text1 = "<You try to speak, however, you find yourself baffled - unable to muster even the slightest of sounds.>"; //yiming voice line (you try to speak, however you find yourself baffled, unable to muster even the slightest of sounds.)
         static string text2 = "I am Archivist X3-R0, your guide in the fragments of a hopeful, broken world.";
-        static string text3 = "Listen closely, your world as you know it is slowly being deleted.";
-        static string text4 = "A being of another dimension has went mad. You must collect FRAGMENTS to save our world and restore peace.";
-        static string text5 = "The RED ones restore the portions of the world. The BLUE ones empower you with an ability."; // pan here
-        static string text6 = "Though I wish I could explain further, there is no helping it. You must GO.";
+        static string text3 = "Listen closely, the very fabric of your reality is unraveling.";
+        static string text4 = "A malevolent force from another dimension has descended into madness, threatening to erase your loved ones.";
+        static string text4Point1 = "<There's not much time to waste...>";
+        static string text4Point2 = "You alone possess the power to gather the fragments needed to salvage our world.";
+        static string text5 = "The RED fragments restore the portions of the world. The BLUE ones empower you with an ability."; // pan here
+        static string text6 = "You are our last hope for restoring peace and order. Venture forth courageously, and bring back your loved ones.";
 
         static SimpleImage MCImage = InternalCalls.GetSpriteImage("MC.png");
         static SimpleImage NPCImage = InternalCalls.GetSpriteImage("NPC.png");
@@ -64,6 +66,8 @@ namespace IS
                 TextBox.AddTextLines(text2);
                 TextBox.AddTextLines(text3);
                 TextBox.AddTextLines(text4);
+                TextBox.AddTextLines(text4Point1);
+                TextBox.AddTextLines(text4Point2);
                 TextBox.AddTextLines(text5);
                 TextBox.AddTextLines(text6);
 
@@ -81,8 +85,10 @@ namespace IS
                     play_audio = false;
                 }
                 
-                
-                
+            }
+            else if (TextBox.PAGE_NUMBER == 5)
+            {
+                drawBigMC();
             }
             else if (!textshow)
             {
@@ -90,7 +96,7 @@ namespace IS
             }
             
 
-            if (TextBox.PAGE_NUMBER == 5) {
+            if (TextBox.PAGE_NUMBER == 7) {
                 CameraScript.CameraPanToTime(new Vector2D(15658.83f, 1579.83f), 1f, 2.5f);
                 switch_view_timer -= InternalCalls.GetDeltaTime();
                 if (switch_view_timer <= 0)
@@ -99,7 +105,7 @@ namespace IS
                 }
             }
 
-            if (TextBox.PAGE_NUMBER == 6)
+            if (TextBox.PAGE_NUMBER == 8)
             {
                 Vector2D pan_position = new Vector2D(InternalCalls.GetTransformPosition().x, InternalCalls.GetTransformPosition().y);
                 CameraScript.CameraPanTo(pan_position, 1f);
