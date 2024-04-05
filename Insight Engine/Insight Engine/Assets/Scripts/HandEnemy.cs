@@ -433,7 +433,7 @@ namespace IS
                 float y = enemy_pos.y + scaling.y * (rand - 0.5f) / 2f;
 
                 InternalCalls.GameSpawnParticleExtra(
-                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                  );
             }
         }
@@ -888,7 +888,7 @@ namespace IS
                 float y = enemy_pos.y + scaling.y / 2f * (rand - 0.5f);
 
                 InternalCalls.GameSpawnParticleExtra(
-                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Enemy Bleeding.txt"
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed, "Particle Boss Hand.txt"
                  );
             }
         }
