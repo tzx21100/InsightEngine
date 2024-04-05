@@ -73,11 +73,11 @@ namespace IS
             timer = 8.15f;
             InternalCalls.SetLightsToggle(false);
             InternalCalls.loadVideo(splashScreenVideo, 1.0f, 1.0f, 0.0f, 0.0f, true);
-
+            InternalCalls.AudioPlayMusicSFX("splashscreen audio.wav", 0.2f);
 
             //dt = InternalCalls.GetFixedDeltaTime();
-                //jigsaw_animation_duration = 1.5f;
-                //jigsaw_animation_timer = jigsaw_animation_duration;
+            //jigsaw_animation_duration = 1.5f;
+            //jigsaw_animation_timer = jigsaw_animation_duration;
             //logo_animation_duration = 1f;
             //logo_animation_timer = logo_animation_duration;
 
@@ -111,6 +111,7 @@ namespace IS
             {
                 InternalCalls.SetLightsToggle(true);
                 InternalCalls.unloadVideos();
+                InternalCalls.AudioStopAllSounds();
                 InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
             }
 
