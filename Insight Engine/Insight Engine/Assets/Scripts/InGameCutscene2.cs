@@ -9,6 +9,9 @@ namespace IS
         static string text0 = "Hello Cipher, it has been a while. I am so proud of your progress.";
         static string text1 = "It looks like things are progressing well, little by little, the world is being restored.";
         static string text2 = "Just a couple more fragments, and our world's back in one piece.";
+        static string text2Point1 = "<Finally! I'll get to see mom and dad again. Just a little more...>";
+        static string text2Point2 = "<It seems like the world was slowly piecing itself back together,>";
+        static string text2Point3 = "<bringing with it the promise of reuniting with his beloved parents.>";
         static string text3 = "Wait... something's not right."; //camera shake
         static string text4 = "FLEE CIPHER! HE HAS FOUND US!"; // pm appears and smacks after this
 
@@ -37,6 +40,9 @@ namespace IS
                 TextBox.CreateTextBox(text0);
                 TextBox.AddTextLines(text1);
                 TextBox.AddTextLines(text2);
+                TextBox.AddTextLines(text2Point1);
+                TextBox.AddTextLines(text2Point2);
+                TextBox.AddTextLines(text2Point3);
                 TextBox.AddTextLines(text3);
                 TextBox.AddTextLines(text4);
 
@@ -46,13 +52,13 @@ namespace IS
             
             }
 
-            if (TextBox.PAGE_NUMBER == 3) { //play yiming VA
+            if (TextBox.PAGE_NUMBER == 6) { //play yiming VA
                 CameraScript.camera_shake_intensity = 0.4f;
                 CameraScript.camera_shake_duration = 0.2f;
                 CameraScript.CameraShake(0.3f);
-                                          }
+            }
 
-            if(TextBox.PAGE_NUMBER == 4) {
+            if(TextBox.PAGE_NUMBER == 7) {
 
 
                 triggered = true;
@@ -63,7 +69,8 @@ namespace IS
                 CameraScript.CameraPanToTime(new Vector2D(2485, 3600), 1f, 2.5f);
             }
 
-            if (!textshow) InGameCutscene.drawBigNPC();
+            if (TextBox.PAGE_NUMBER == 3) InGameCutscene.drawBigMC();
+            else if (!textshow && (TextBox.PAGE_NUMBER != 4 && TextBox.PAGE_NUMBER != 5)) InGameCutscene.drawBigNPC();
 
             if (triggered)
             {
