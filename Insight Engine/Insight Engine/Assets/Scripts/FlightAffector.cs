@@ -64,6 +64,7 @@ namespace IS
 
             if (PlayerScript.isDead)
             {
+                NarratorVoices.NarrateDeath();
                 InternalCalls.LoadScene("Assets/Scenes/FlightLevel.insight");
             }
 

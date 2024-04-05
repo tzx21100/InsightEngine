@@ -171,6 +171,46 @@ namespace IS
             }
         }
 
+        static public void NarrateDeathFlight()
+        {
+            //reset narration timer
+            narrate_timer = narrater_timer_set;
+
+            float volume = 0.5f;
+            float num = rando_footsteps.NextFloat();
+
+            if (num <= 0.16f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.32f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_Death.wav", false, volume);
+                return;
+            }
+            if (num <= 0.48f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Flight_Death.wav", false, volume);
+                return;
+            }
+            if (num <= 0.64f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_4.wav", false, volume);
+                return;
+            }
+            if (num <= 0.80f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_5.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Narrator_Death_VO_5.wav", false, volume);
+                return;
+            }
+        }
+
 
 
     }
