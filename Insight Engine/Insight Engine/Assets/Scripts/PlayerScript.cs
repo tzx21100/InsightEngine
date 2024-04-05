@@ -144,6 +144,11 @@ namespace IS
         static SimpleImage player_attack_vfx3;
         static SimpleImage player_attack_vfx4;
         static SimpleImage player_attack_vfx5;
+        static SimpleImage player_attack_vfx_using;
+
+        static private float render_vfx_timer_set = 0.3f;
+        static private float render_vfx_timer = 0.3f;
+        static private bool is_randoming_vfx = false;
 
         //psuedo animations for images
         static private float animation_speed = 0.07f;
@@ -335,12 +340,15 @@ namespace IS
             //reset HP
             Health = Max_Health;
 
+            // vfx timer
+            render_vfx_timer = render_vfx_timer_set;
+            is_randoming_vfx = false;
+
             //reset invul
             invulnerable = false;
 
             // reset intensity
             InternalCalls.ChangeShaderIntensity(1f);
-
 
             //remove all existing vidoes
             InternalCalls.unloadVideos();
@@ -385,6 +393,7 @@ namespace IS
             player_attack_vfx3 = InternalCalls.GetSpriteImage("player_attack_vfx3.png");
             player_attack_vfx4 = InternalCalls.GetSpriteImage("player_attack_vfx4.png");
             player_attack_vfx5 = InternalCalls.GetSpriteImage("player_attack_vfx5.png");
+            player_attack_vfx_using = InternalCalls.GetSpriteImage("player_attack_vfx5.png");
 
             damage_screen_flash = InternalCalls.GetSpriteImage("DamageScreenFlash.png");
             dash_indicator = InternalCalls.GetSpriteImage("Dash_Indicator.png");
@@ -2060,6 +2069,7 @@ namespace IS
                             }
 
                             initial_attack = true;
+                            hitting_enemy_id = attacking_enemy_id;
                         }
 
                         // collide with boss
@@ -2067,6 +2077,8 @@ namespace IS
                         {
                             BossBattle.boss_hp -= (combo_step == 3) ? attack_damage * 2f : attack_damage;
                             initial_attack = true;
+                            // todo
+                            //hitting_enemy_id = BossBattle.boss
                         }
                     }
                     else if (isAttack) // still hitting the enemy 
@@ -2085,33 +2097,97 @@ namespace IS
                         );
                         //float angleDegree = attack_angle * (180.0f / CustomMath.PI);
 
-                        InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
+                        /*InternalCalls.TransformSetScaleEntity(MathF.Sign(-trans_scaling.x) * 257f, 183f, land_entity);
                         InternalCalls.TransformSetPositionEntity(checkerPosition.x, checkerPosition.y, land_entity);
                         //InternalCalls.TransformSetRotationEntity(angleDegree - 90f, 0, land_entity);
-                        InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);
+                        InternalCalls.TransformSetRotationEntity(90 * MathF.Sign(trans_scaling.x), 0, land_entity);*/
 
                     }
                     else
                     {
                         // not drawing hitting enemy vfx
-                        InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
-                        InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);
+                        /*InternalCalls.TransformSetScaleEntity(0, 0, land_entity);
+                        InternalCalls.TransformSetPositionEntity(-99999, -99999, land_entity);*/
 
-                        MoveAwayAttackVFX();
+                        
                     }
                 }
                 else
                 {
                     hitting_enemy = false; // if attack area not collide with enemy
+                    hitting_enemy_id = -1;
+
+                    // reset vfx info
+                    render_vfx_timer = render_vfx_timer_set;
+                    is_randoming_vfx = false;
+                    //MoveAwayAttackVFX();
                 }
             }
             else
             {
-                hitting_enemy = false; // if attack area nbot collide with anything
+                hitting_enemy = false; // if attack area not collide with anything
+                hitting_enemy_id = -1;
+
+                // reset vfx info
+                render_vfx_timer = render_vfx_timer_set;
+                is_randoming_vfx = false;
+                //MoveAwayAttackVFX();
+            }
+
+            // render attack vfx, no matter the attack weapon collision
+            if (render_vfx_timer > 0f)
+            {
+                render_vfx_timer -= InternalCalls.GetDeltaTime();
+                RenderAttackVFX();
+                //Console.WriteLine("rendering vfx");
+                //Console.WriteLine(is_randoming_vfx);
             }
 
             // Apply Attack Stun Effect
             AttackStunEffect();
+        }
+        
+        static private void RenderAttackVFX()
+        {
+            //SimpleImage vfx_image = player_attack_vfx1;
+            if (!is_randoming_vfx)
+            {
+                MyRandom rand = new MyRandom((uint)(1292489 * InternalCalls.GetRandomFloat()));
+                int random_vfx = (int)(rand.Next(0, 4)); // 0 to 5
+                
+                switch (random_vfx)
+                {
+                    case 0:
+                        player_attack_vfx_using = player_attack_vfx1;
+                        break;
+                    case 1:
+                        player_attack_vfx_using = player_attack_vfx2;
+                        break;
+                    case 2:
+                        player_attack_vfx_using = player_attack_vfx3;
+                        break;
+                    case 3:
+                        player_attack_vfx_using = player_attack_vfx4;
+                        break;
+                    /*case 4:
+                        player_attack_vfx_using = player_attack_vfx5;
+                        break;*/
+                }
+                is_randoming_vfx = true;
+            }
+
+            if (combo_step == 1)
+            {
+                player_attack_vfx_using = player_attack_vfx3;
+            }
+
+            if (combo_step == 3)
+            {
+                player_attack_vfx_using = player_attack_vfx5;
+            }
+
+            InternalCalls.DrawImageAt(InternalCalls.GetTransformPositionEntity(hitting_enemy_id), 0, InternalCalls.GetTransformScalingEntity(hitting_enemy_id),
+                player_attack_vfx_using, render_vfx_timer * 5f, InternalCalls.GetTopLayer());
         }
 
         static private void MoveAwayAttackVFX()
