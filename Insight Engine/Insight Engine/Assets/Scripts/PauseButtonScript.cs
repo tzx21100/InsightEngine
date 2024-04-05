@@ -20,6 +20,7 @@ namespace IS
     class PauseButtonScript
     {
         // Pause Button
+        static public bool first_hover = false;
         static public Vector2D pause_button_pos = new Vector2D(0f, 0f);
         static public bool paused = false;
         static public SimpleImage paused_button_image = InternalCalls.GetSpriteImage("pause_button.png");
@@ -131,14 +132,27 @@ namespace IS
                 paused = true;
 
             }
-
-            //mouse hovering
+            //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
                 InternalCalls.TransformSetScale(0.06f * win_dimension.x, 0.1f * win_dimension.y);
                 InternalCalls.SetSpriteImage(paused_button_clicked_image);
-                SettingsScript.PlayHoverSound();
+                //hovering
+                if (!first_hover)
+                {
+                    SettingsScript.PlayHoverSound();
+                    first_hover = true;
+                }
             }
+            else
+            {
+                first_hover = false;
+            }
+            if (!InternalCalls.IsWindowFocused())
+            {
+                first_hover = true;
+            }
+
             //click
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Pressed)
             {
