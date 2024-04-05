@@ -615,7 +615,11 @@ namespace IS
 
             if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl)) // cheat code
             {
-                Reward_Dash = true; Reward_DoubleJump = true; Reward_WallClimb = true;
+                
+                Reward_DoubleJump = true; 
+                Reward_WallClimb = true;
+                Reward_Dash = true; 
+                Reward_Fly = true;
             }
 
 
@@ -2447,9 +2451,21 @@ namespace IS
             if (hideHealth == true || SettingsScript.show_settings) return;
 
             float scale = 80f;
-            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 3.2f);
             SimpleVector2D scaling = new SimpleVector2D(scale / CameraScript.camera_zoom, scale / CameraScript.camera_zoom);
-            float padding = scaling.x/1.5f;
+            float padding = scaling.x/1.6f;
+            int count = 0;
+            if (Reward_DoubleJump) { count++; }
+            if(Reward_Dash) { count++; }
+            if(Reward_WallClimb) { count++; }
+            if(Reward_Fly) { count++; }
+
+            float totalWidth = (scale + padding) * (count-1);
+
+            SimpleVector2D pos = new SimpleVector2D(
+                CameraScript.camera_pos.x - totalWidth / 2, // Centralize
+                CameraScript.camera_pos.y - WindowHeight / CameraScript.camera_zoom / 2.4f
+            );
+
 
             if (Reward_DoubleJump)
             {
