@@ -54,6 +54,7 @@ namespace IS
             switch_view_timer = 2.5f;
             FINAL_SPIKE = 999;
             TextBox.CleanUp();
+            CameraScript.CameraTargetZoom(1.5f, 2f);
         }
 
         static public void Update()
