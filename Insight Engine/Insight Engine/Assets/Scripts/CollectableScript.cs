@@ -42,7 +42,7 @@ namespace IS
                 }
                 else
                 {
-                    CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 5f);
+                    CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 3f);
                 }
 
                 if (FlightAffector.player_in_flight_level) // for flight level
