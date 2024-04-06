@@ -637,19 +637,27 @@ namespace IS
                 return;
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.Backslash)) // cheat code
+            if (InternalCalls.KeyPressed((int)KeyCodes.G)) // cheat code
             {
                 player_ground_pos = new Vector2D(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
                 InternalCalls.TransformSetPosition(InternalCalls.GetMousePosition().x, InternalCalls.GetMousePosition().y);
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.LeftControl)) // cheat code
+            if (InternalCalls.KeyPressed((int)KeyCodes.H)) // cheat code
             {
                 
                 Reward_DoubleJump = true; 
                 Reward_WallClimb = true;
                 Reward_Dash = true; 
                 Reward_Fly = true;
+            }
+
+            // cheat key to boss level
+            if (InternalCalls.KeyPressed((int)KeyCodes.K))
+            {
+                // load to selection scene
+                InternalCalls.LoadScene("Assets/Scenes/FinalSelection.insight");
+                return;
             }
 
 

@@ -268,14 +268,16 @@ namespace IS
 
                     // create the red n blue fragments
                     if (!is_destoryed) {
-                        int blue = InternalCalls.CreateEntityPrefab("FinalBlueFragment");
+
+
+                        /*int blue = InternalCalls.CreateEntityPrefab("FinalBlueFragment");
                         int red = InternalCalls.CreateEntityPrefab("FinalRedFragment");
                         //-1800 1800 y -700
 
                         //setting positions
                         InternalCalls.TransformSetPositionEntity(-1800, -700, red);
                         InternalCalls.TransformSetPositionEntity(1800, -700, blue);
-                        InternalCalls.TransformSetPositionEntity(0, -700, PlayerScript.PLAYER_ID);
+                        InternalCalls.TransformSetPositionEntity(0, -700, PlayerScript.PLAYER_ID);*/
 
                         is_breaking = false;
                         is_destoryed = true;
@@ -402,20 +404,24 @@ namespace IS
                 if (white_bg_timer > 0f)
                 {
                     white_bg_timer -= InternalCalls.GetDeltaTime();
+
+                    // load scene
+                    InternalCalls.LoadScene("Assets/Scenes/FinalSelection.insight");
+                    return;
                 }
                 else
                 {
                     fade_out_timer -= InternalCalls.GetDeltaTime();
 
-                    if (fade_out_timer < -1.5f)
+                    /*if (fade_out_timer < -1.5f)
                     {
                         CameraScript.StopCameraPan();
-                    }
+                    }*/
 
                     if (fade_out_timer < 0f)
                     {
                         InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
-                        CameraScript.CameraPanToTime(PlayerScript.player_pos, 15f, 1.5f);
+                        //CameraScript.CameraPanToTime(PlayerScript.player_pos, 15f, 1.5f);
                     }
                 }
                 
