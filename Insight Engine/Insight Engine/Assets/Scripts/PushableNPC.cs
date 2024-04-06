@@ -47,8 +47,8 @@ namespace IS
                     CameraScript.CameraTargetZoom(1f, 0.5f);
                     if (tint_timer <= 0f)
                     {
-                        TextBox.CreateTextBox("In your courageous sacrifice to become the final fragment to this broken world.");
-                        TextBox.AddTextLines("You redeemed your loved ones, and tranquility returned to the village.");
+                        TextBox.CreateTextBox("In your courageous sacrifice to become the final fragment to this broken world,");
+                        TextBox.AddTextLines("you redeemed your loved ones, and tranquility returned to the village.");
                         TextBox.AddTextLines("Yet, admist the semblance of normalcy, there lingered a bittersweet ache.");
                         TextBox.AddTextLines("As if whispers of your presence were fading into the ether...");
                     }
