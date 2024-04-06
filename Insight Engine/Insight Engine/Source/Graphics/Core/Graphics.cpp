@@ -389,7 +389,7 @@ namespace IS {
         // Text Attribute
         std::ostringstream render_text;
         render_text << "FPS: " << std::fixed << std::setprecision(2) << 1 / engine.mDeltaTime << "\n";
-        render_text << "Delta Time: " << std::fixed << std::setprecision(4) << engine.mDeltaTime << '\n';
+        //render_text << "Delta Time: " << std::fixed << std::setprecision(4) << engine.mDeltaTime << '\n';
 
         // Render Text
 
