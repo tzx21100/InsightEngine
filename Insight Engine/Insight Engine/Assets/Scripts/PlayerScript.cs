@@ -2490,14 +2490,14 @@ namespace IS
 
             float scale = 80f;
             SimpleVector2D scaling = new SimpleVector2D(scale / CameraScript.camera_zoom, scale / CameraScript.camera_zoom);
-            float padding = scaling.x/1.6f;
+            float padding = scaling.x/0.8f;
             int count = 0;
             if (Reward_DoubleJump) { count++; }
             if(Reward_Dash) { count++; }
             if(Reward_WallClimb) { count++; }
             if(Reward_Fly) { count++; }
 
-            float totalWidth = (scale + padding) * (count-1);
+            float totalWidth = (padding) * (count-1);
 
             SimpleVector2D pos = new SimpleVector2D(
                 CameraScript.camera_pos.x - totalWidth / 2, // Centralize
@@ -2517,7 +2517,7 @@ namespace IS
             if (Reward_WallClimb)
             {
                 SimpleVector2D new_pos = new SimpleVector2D();
-                new_pos.x = pos.x + (scale + padding) * 1f ;
+                new_pos.x = pos.x + (padding) * 1f ;
                 new_pos.y = pos.y;
                 float alpha = 1f;
                 InternalCalls.DrawImageExtraAt(0, 1, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet, alpha, 6);//force top
@@ -2525,7 +2525,7 @@ namespace IS
             if (Reward_Dash)
             {
                 SimpleVector2D new_pos = new SimpleVector2D();
-                new_pos.x = pos.x + (scale + padding) * 2 ;
+                new_pos.x = pos.x + (padding) * 2 ;
                 new_pos.y = pos.y;
                 float alpha = 1f;
                 if (!canDash) { alpha = 0.5f; }
@@ -2534,7 +2534,7 @@ namespace IS
             if (Reward_Fly)
             {
                 SimpleVector2D new_pos = new SimpleVector2D();
-                new_pos.x = pos.x + (scale + padding) * 3f;
+                new_pos.x = pos.x + (padding) * 3f;
                 new_pos.y = pos.y;
                 InternalCalls.DrawImageExtraAt(0, 3, 1, 4, new_pos, 0f, scaling, player_rewards_spritesheet, 1f, 6);//force top
 

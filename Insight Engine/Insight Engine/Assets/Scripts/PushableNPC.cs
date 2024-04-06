@@ -37,11 +37,15 @@ namespace IS
 
             if (happy_activated)
             {
+
+
+
                 if (tint_timer > 0f)
                 {
                     tint_timer -= InternalCalls.GetDeltaTime();
-                    InternalCalls.DrawImageAt(new SimpleVector2D(0, 0), 0, new SimpleVector2D(InternalCalls.GetWindowHeight()*3840 /2160, InternalCalls.GetWindowHeight()), InternalCalls.GetSpriteImage("credits_bg.jpg"), 1f,6);
+                    InternalCalls.DrawImageAt(new SimpleVector2D(0, 0), 0, new SimpleVector2D(InternalCalls.GetWindowHeight()*3840 /2160, InternalCalls.GetWindowHeight()), InternalCalls.GetSpriteImage("credits_bg.jpg"), 1f, InternalCalls.GetTopLayer() + 2);
                     InternalCalls.SetLightsToggle(false);
+                    InternalCalls.DrawSquare(0, 0, 20000, 20000, 0, 0, 0, tint_timer, InternalCalls.GetTopLayer() + 2);
                     CameraScript.CameraPanTo(new Vector2D(0, 0), 12f);
                     InternalCalls.AttachCamera(0, 0);
                     CameraScript.CameraTargetZoom(1f, 0.5f);
