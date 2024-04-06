@@ -47,7 +47,7 @@ namespace IS
                     {
                         PlayerScript.high_score = PlayerScript.speed_run_timer;
                     }
-
+                    FlightAffector.player_in_flight_level = false;
                     InternalCalls.LoadScene("Assets/Scenes/BossLevel.insight");
                 }
             }

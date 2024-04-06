@@ -36,6 +36,8 @@ namespace IS
         static private float flying_fog_render_timer_set = 0.2f;
         static private float flying_fog_render_timer = 0.2f;
 
+        static public bool player_in_flight_level = false;
+
         static public void Init(){
 
             FastScene.Init();
@@ -54,14 +56,14 @@ namespace IS
                 }
             }
             flying_fog_render_timer = flying_fog_render_timer_set;
-
+            player_in_flight_level = true;
             PlayerScript.collection_count = 0; // reset in flight level
         }
 
         static public void Update()
         {
             FastScene.vidUpdate();
-
+            player_in_flight_level = true;
             if (PlayerScript.isDead)
             {
                 if (InternalCalls.GetRandomFloat() > 0.7f)

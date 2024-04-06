@@ -232,7 +232,6 @@ namespace IS
 
 
 
-
             if (total_timer > gameByGroupStart && total_timer <= gameByGroupStart + gameByGroupDuration)
             {
                 alpha = CalculateFadeAlpha();
@@ -369,7 +368,7 @@ namespace IS
                     InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), back_button_entity);
                     InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
                     back_button_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
-                    InternalCalls.RenderTextFont("EXIT", "MedusaGothic_D", 0.5f, 0.505f, 7.5f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.502f, 0.501f, 7.5f, (1f, 1f, 1f, 1f));
                     InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
                 }
