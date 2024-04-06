@@ -1208,7 +1208,7 @@ namespace IS
             {
                 if (dash_trigger)
                 {
-                    InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.2f); //play dash audio
+                    InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.55f); //play dash audio
                     isDashing = true;
                 }
 

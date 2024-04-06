@@ -46,7 +46,7 @@ namespace IS
                 }
 
 
-                InternalCalls.AudioPlaySound("Collect.wav", false, 0.15f);
+                InternalCalls.AudioPlaySound("Collect.wav", false, 0.07f);
                 PlayerScript.initialPowerUp = true;
                 PlayerScript.collection_count += 1;
                 InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());

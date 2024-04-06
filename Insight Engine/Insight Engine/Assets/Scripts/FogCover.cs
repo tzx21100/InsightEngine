@@ -87,13 +87,13 @@ namespace IS
                         InternalCalls.GameSpawnParticleExtraLayerFrames(posX, posY,
                         direction, size, scale, dash_particle_alpha,
                         growth, lifetime, speed, "ParticleDust.txt",
-                        (1f, 1f, 1f), top_layer, 0, 4);
+                        (1f, 1f, 1f), top_layer-1, 0, 4);
                         if (InternalCalls.GetRandomFloat() + randomfloat.NextFloat() < 0.6f)
                         {
                             InternalCalls.GameSpawnParticleExtraFramesFull(posX, posY,
                                             direction, size / 2f, scale, 1f,
                                             0f, lifetime * 1.5f, 0f, "ParticleGlitch.txt"
-                                            , 0, 0, direction, 0, 1f, 1f, top_layer,
+                                            , 0, 0, direction, 0, 1f, 1f, top_layer-1,
                                             (1f, 1f, 1f)
                                             );
 
