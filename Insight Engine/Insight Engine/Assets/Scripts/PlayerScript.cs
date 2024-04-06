@@ -312,7 +312,7 @@ namespace IS
         static private float NPC_timer_set = 2f;
         static private float NPC_video_timer = 2f;
         static private float NPC_video_timer_set = 12f;
-        static public string selfish_ending = "Assets/Videos/SelfishEndingNoAudio.mp4";
+        static public string selfish_ending = "Assets/Videos/SelfishEnding.mp4";
 
 
 
@@ -502,9 +502,9 @@ namespace IS
                     InternalCalls.loadVideo(selfish_ending, 0.5f, 0.5f, 0.0f, 0.0f, true);
                     InternalCalls.SetLightsToggle(false);
                     CameraScript.CameraPanTo(new Vector2D(0, 0), 12f);
-                    TextBox.CreateTextBox("By sacrificing the NPC, an imbalance in the game data was found.");
-                    TextBox.AddTextLines("This leads to you following the footsteps of an NPC indefinetly...");
-                    TextBox.AddTextLines("At least, until the next player comes along");
+                    TextBox.CreateTextBox("By sacrificing the NPC, an imbalance in the game data was caused.");
+                    TextBox.AddTextLines("Leading to a reset that doomed you to live as an NPC indefinitely...");
+                    TextBox.AddTextLines("At least until another player, following in your footsteps, decides to sacrifice you as well...");
                     NPC_timer = -1f;
                 }
 
