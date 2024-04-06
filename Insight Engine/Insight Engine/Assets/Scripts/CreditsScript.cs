@@ -72,6 +72,7 @@ namespace IS
         static Vector2D back_button_pos = new Vector2D(0, 0);
         static public void Init()
         {
+            InternalCalls.AttachCamera(0, 0);
             InternalCalls.FadeOutAudio(0.1f);
             InternalCalls.SetSpriteImage(InternalCalls.GetSpriteImage("credits_bg.jpg"));
 

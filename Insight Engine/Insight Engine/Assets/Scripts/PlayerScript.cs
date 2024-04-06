@@ -512,7 +512,7 @@ namespace IS
                 {
                     select_trigger = InternalCalls.MousePressed(0) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_B); //allow text to move
                     NPC_video_timer -= InternalCalls.GetDeltaTime();
-                    if (NPC_video_timer <= 0f)
+                    if (NPC_video_timer <= 0f && TextBox.isVisible==false) //ensure textbox is gone as well
                     {
                         CameraScript.StopCameraPan();
                         InternalCalls.SetLightsToggle(true);
