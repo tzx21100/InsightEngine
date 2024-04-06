@@ -367,6 +367,8 @@ namespace IS
                             break;
                     }
 
+                    RenderTakeDamageParticles();
+
                 }
                 InternalCalls.SetSpriteAlpha(InternalCalls.GetRandomFloat() * 2f);
 
@@ -381,7 +383,48 @@ namespace IS
             }
         }
 
+        static private void RenderTakeDamageParticles()
+        {
+            // load particles
+            int boss_id = InternalCalls.GetCurrentEntityID();
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            int particle_count = (int)(my_rand.Next(20, 31)); // random from 80 to 100 particles
+            SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(boss_id);
+            SimpleVector2D scaling = InternalCalls.GetTransformScalingEntity(boss_id);
+            for (int i = 0; i < particle_count; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = 90 + 90 * (rand - 0.5f);
 
+                rand = my_rand.NextFloat();
+                float size = 10 + 10f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = 10f + 10 * rand; // pariticles going nigger
+
+                rand = my_rand.NextFloat();
+                float alpha = rand; // 0 to 1
+
+                rand = my_rand.NextFloat();
+                float lifetime = 0.5f + 0.5f * rand; // 0.5s to 0.8s
+
+                rand = my_rand.NextFloat();
+                float speed = 500f + 500f * rand;
+
+                rand = my_rand.NextFloat();
+                float x = pos.x + scaling.x / 2f * (rand - 0.5f);
+                //float x = enemy_pos.x;
+
+                rand = my_rand.NextFloat();
+                float y = pos.y + scaling.y / 2f * (rand - 0.5f);
+
+                InternalCalls.GameSpawnParticleExtraFramesFull(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed,
+                    "Particle Boss Die.txt", 1, 1, 5f, 2, lifetime, 10f,
+                    InternalCalls.GetTopLayer(), (1f, 1f, 1f)
+                 );
+            }
+        }
 
 
 
