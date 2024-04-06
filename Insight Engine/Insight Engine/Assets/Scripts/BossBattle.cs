@@ -403,7 +403,7 @@ namespace IS
                 float size_scale = 10f + 10 * rand; // pariticles going nigger
 
                 rand = my_rand.NextFloat();
-                float alpha = rand; // 0 to 1
+                float alpha = 0.5f + 0.5f * rand; // 0 to 1
 
                 rand = my_rand.NextFloat();
                 float lifetime = 0.5f + 0.5f * rand; // 0.5s to 0.8s

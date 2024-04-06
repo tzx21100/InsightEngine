@@ -10,6 +10,7 @@ namespace IS
     {
 
         static private float grow_timer = 2f;
+        static private float shouting_timer = 2f;
         static private float speed = 35f;
 
         static private int current_phase = 0;
@@ -44,6 +45,7 @@ namespace IS
 
             current_phase = 0;
             grow_timer = 2f;
+            shouting_timer = 2f;
 
             boss_idle_image = InternalCalls.GetSpriteImage("BossIdle 4R4C.png");
             boss_smash_image = InternalCalls.GetSpriteImage("BossSmash 5R4C.png");
@@ -89,7 +91,7 @@ namespace IS
                     FlyAround();
                     break;
                 case 3:
-                    GrowAndAppear();
+                    LastGrowAndAppear();
                     break;
                 case 4:
                     if (!MoveToLocation(0,1304.95f))
@@ -135,12 +137,90 @@ namespace IS
                 InternalCalls.TransformSetScale(scale.x * 1.01f, scale.y * 1.01f);
                 return;
             }
+
+            
             current_phase++;
 
 
-        }        
+        }   
         
+        static private void LastGrowAndAppear()
+        {
 
+            CameraScript.CameraTargetZoom(0.30f, 0.6f);
+
+            if (grow_timer > 0f)
+            {
+                grow_timer -= InternalCalls.GetDeltaTime();
+                SimpleVector2D scale = InternalCalls.GetTransformScaling();
+                InternalCalls.SetSpriteAlpha((2 - grow_timer) * 0.5f);
+                InternalCalls.TransformSetScale(scale.x * 1.01f, scale.y * 1.01f);
+                return;
+            }
+
+            if (shouting_timer > 0f)
+            {
+                shouting_timer -= InternalCalls.GetDeltaTime();
+
+                CameraScript.CameraShake(2f);
+                CameraScript.camera_shake_intensity = (2f - shouting_timer) * 3f;
+                CameraScript.camera_shake_duration = 2f;
+
+                RenderShoutingParticles();
+
+                return;
+            }
+
+
+            current_phase++;
+
+
+        }
+
+        static private void RenderShoutingParticles()
+        {
+            int id = InternalCalls.GetCurrentEntityID();
+            // load particles
+            MyRandom my_rand = new MyRandom((uint)(129248189 * InternalCalls.GetRandomFloat()));
+            //int particle_count = (int)(my_rand.Next(50, 101)); // random from 80 to 100 particles
+
+            SimpleVector2D pos = InternalCalls.GetTransformPositionEntity(id);
+            SimpleVector2D scaling = InternalCalls.GetTransformScalingEntity(id);
+            for (int i = 0; i < 1; i++)
+            {
+                float rand = my_rand.NextFloat();
+                float dir = 360 * rand;
+
+                rand = my_rand.NextFloat();
+                float size = 3000 + 30f * rand; // initial size
+
+                rand = my_rand.NextFloat();
+                float size_scale = 5000f + 30 * rand; // pariticles going nigger
+
+                rand = my_rand.NextFloat();
+                float alpha = 0.3f + 0.3f * rand; // 0 to 1
+
+                rand = my_rand.NextFloat();
+                float lifetime = 1.5f + 0.5f * rand; // 0.5s to 0.8s
+
+                rand = my_rand.NextFloat();
+                //float speed = 1000f + 500f * rand;
+                float speed = 0;
+
+                //rand = my_rand.NextFloat();
+                float x = pos.x - 350f;
+                //float x = enemy_pos.x;
+
+                //rand = my_rand.NextFloat();
+                float y = pos.y;
+
+                InternalCalls.GameSpawnParticleExtraFramesFull(
+                    x, y, dir, size, size_scale, alpha, 0f, lifetime, speed,
+                    "Particle Boss Die.txt", 1, 1, 5f, 2, lifetime, 10f,
+                    InternalCalls.GetTopLayer(), (1f, 1f, 1f)
+                 );
+            }
+        }
 
         static private void FlyAround()
         {
