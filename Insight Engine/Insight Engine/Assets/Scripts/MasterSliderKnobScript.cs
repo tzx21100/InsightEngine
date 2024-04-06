@@ -69,6 +69,8 @@ namespace IS
 
         static public void Update()
         {
+            diff_x = (upper_limit_master_knob - lower_limit_master_knob) * InternalCalls.AudioGetMaster();
+
             Vector2D mouse_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetMousePosition());
 
             camera_zoom = InternalCalls.CameraGetZoom();
