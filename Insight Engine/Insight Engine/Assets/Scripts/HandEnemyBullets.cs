@@ -63,10 +63,11 @@ namespace IS
         {
             BULLET_ID = InternalCalls.GetCurrentEntityID();
             pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BULLET_ID));
+            //Console.WriteLine(direction.x);
             //InternalCalls.TransformSetPositionEntity(pos.x, pos.y, BULLET_ID);
             // update bullet position
             //UpdatePosition();
-            
+
             // draw bullet
             //DrawBullet();
 

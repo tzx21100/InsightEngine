@@ -5,17 +5,33 @@ using System.Collections.Generic;
 namespace IS
 {
 
-    // fade in white bg
+    
 
     class FinalSelection
     {
+        // ids
+        static private int BLUE_ID;
+        static private int RED_ID;
 
+        // fade in white bg
         static private float fade_in_timer = 2f;
+
+        // text
+        static string text0 = "Which will you choose? The red fragment to restore the world and your loved ones. Or";
+        static string text1 = "The blue fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire";
+
+
 
         static public void Init()
         {
             CameraScript.CameraTargetZoom(0.4f, 1f);
             fade_in_timer = 2f;
+
+            int BLUE_ID = InternalCalls.CreateEntityPrefab("FinalBlueFragment");
+            int RED_ID = InternalCalls.CreateEntityPrefab("FinalRedFragment");
+
+            InternalCalls.TransformSetPositionEntity(-1800, -700, RED_ID);
+            InternalCalls.TransformSetPositionEntity(1800, -700, BLUE_ID);
         }
 
         static public void Update()
@@ -34,6 +50,16 @@ namespace IS
         }
 
         static public void CleanUp()
+        {
+
+        }
+
+        static private void PanToRed()
+        {
+
+        }
+
+        static private void PanToBlue()
         {
 
         }
