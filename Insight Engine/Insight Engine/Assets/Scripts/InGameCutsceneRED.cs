@@ -5,7 +5,7 @@ namespace IS
     class InGameCutsceneRED
     {
         static string text0 = "Welcome Cipher. You have reached the last checkpoint.";
-        static string text1 = "You have overcomed obstacles, defeated the mad being and yet your world remains ruined.";
+        static string text1 = "You have overcame all obstacles and defeated the mad being, yet your world remains ruined.";
         static string text2 = "There is after all... one final FRAGMENT. One that can save this world.";
         static string text3 = "It is not in any ruins or scattered somewhere else. You can find it here.";
         static string text4 = "Within you.";
