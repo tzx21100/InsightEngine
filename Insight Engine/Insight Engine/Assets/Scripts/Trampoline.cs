@@ -48,7 +48,7 @@ namespace IS
                 InternalCalls.TransformSetPositionEntity(pos.x + MathF.Sign(-PlayerScript.trans_scaling.x) * 0f, pos.y + 50f, PlayerScript.PLAYER_ID);
                 /*InternalCalls.RigidBodySetVelocityEntity(impluse.x, 2000f, PlayerScript.PLAYER_ID);*/
                 PlayerScript.AddForcesToPlayer(0f, 1000f, 0.5f);
-                InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.2f);
+                InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.4f);
 
                 //IsTriggered = true;
                 

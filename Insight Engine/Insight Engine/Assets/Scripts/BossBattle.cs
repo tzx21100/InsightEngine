@@ -154,7 +154,7 @@ namespace IS
 
             CameraScript.CameraTargetZoom(0.5f, 1f);
             Boss_spawn_pos = InternalCalls.GetTransformPosition();
-            InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
+            //InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.1f);
 
             // clear all enemy dic
             HandEnemy.enemies.Clear();
@@ -1115,7 +1115,6 @@ namespace IS
 
 
         }
-
 
 
 

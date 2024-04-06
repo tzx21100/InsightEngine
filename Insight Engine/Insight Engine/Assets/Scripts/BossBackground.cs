@@ -42,12 +42,12 @@ namespace IS
             CameraScript.CameraTargetZoom(0.7f, 0.5f);
             InternalCalls.AudioStopAllSounds();
             InternalCalls.AudioPlayMusicSFX("SCI-FI-AMBIENCE_GEN-HDF-20503.wav", 0.05f);
-
         }
 
 
         static public void Update()
         {
+
             // restart level if player lose
             if (PlayerScript.isDead)
             {

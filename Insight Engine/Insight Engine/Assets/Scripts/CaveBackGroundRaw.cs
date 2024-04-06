@@ -31,6 +31,8 @@ namespace IS
 
 
         static public void Init(){
+
+
             bg_image1 = InternalCalls.GetSpriteImage("transparent.png");
             bg_image2 = InternalCalls.GetSpriteImage("Env_cave_foreground.png");
             bg_image3 = InternalCalls.GetSpriteImage("Env_cave_midground.png");

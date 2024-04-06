@@ -1216,7 +1216,7 @@ namespace IS
             {
                 if (dash_trigger)
                 {
-                    InternalCalls.AudioPlaySoundSFX("SciFiPulse CTE02_40.2.wav", false, 0.55f); //play dash audio
+                    DashSounds(); //play dash audio
                     isDashing = true;
                 }
 
@@ -2594,6 +2594,34 @@ namespace IS
             InternalCalls.DrawImageExtraAt(0, 0, 3, 4, InternalCalls.GetTransformPosition(), 0, scale, npc_image, (1-NPC_timer / 2f),3);
 
             
+        }
+
+
+        static private void DashSounds()
+        {
+            float num = rando_footsteps.NextFloat();
+            float volume = 0.4f;
+            if (num <= 0.25f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Dash1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.5)
+            {
+                InternalCalls.AudioPlaySoundSFX("Dash2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.75f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Dash3.wav", false, volume);
+                return;
+            }
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Dash2.wav", false, volume);
+                return;
+            }
+
         }
 
 
