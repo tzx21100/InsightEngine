@@ -419,7 +419,15 @@ namespace IS
             if(random == 1)
             {
                 ResetPosition();
-                current_state = BossStates.Idle;
+                if(current_state != BossStates.Idle)
+                {
+                    current_state = BossStates.Idle;
+                }
+                else
+                {
+                    current_state = BossStates.SpikesSpawn;
+                }
+                
                 return;
             }
             if (random == 2)
@@ -427,8 +435,8 @@ namespace IS
                 if (boss_phase == 0)
                 {
                     ResetPosition();
-                    random_x_location =-1938+ InternalCalls.GetRandomFloat()*2000;
-                    random_y_location = -700+ InternalCalls.GetRandomFloat()* 600;
+                    random_x_location =-1938+ InternalCalls.GetRandomFloat()*4000;
+                    random_y_location = -700+ InternalCalls.GetRandomFloat()* 1200;
                     index360 = 0;
                     current_state = BossStates.Boss360;
                     return;
