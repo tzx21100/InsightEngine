@@ -25,9 +25,9 @@
 				"SpriteFilename" : "transparent.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 135,
+				"SpriteTexture" : 121,
 				"SpriteTextureHeight" : 32,
-				"SpriteTextureIndex" : 118,
+				"SpriteTextureIndex" : 104,
 				"SpriteTextureWidth" : 32,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 0.0,
@@ -44,9 +44,16 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Name" : "CheatCodeEntity",
+			"Script" : 
+			{
+				"ScriptName" : "CheatCodeEntity"
+			}
 		}
 	],
-	"EntityAmount" : 1,
+	"EntityAmount" : 2,
 	"Layers" : 
 	[
 		{

@@ -33,9 +33,9 @@
 				"SpriteFilename" : "you win.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 71,
+				"SpriteTexture" : 152,
 				"SpriteTextureHeight" : 1080,
-				"SpriteTextureIndex" : 70,
+				"SpriteTextureIndex" : 135,
 				"SpriteTextureWidth" : 1920,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 2932.655029296875,
@@ -54,5 +54,17 @@
 			}
 		}
 	],
-	"EntityAmount" : 1
+	"EntityAmount" : 1,
+	"Layers" : 
+	[
+		{
+			"Active" : true,
+			"Name" : "Layer 1"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
+		}
+	],
+	"LayersAmount" : 2
 }

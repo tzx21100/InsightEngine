@@ -33,9 +33,9 @@
 				"SpriteFilename" : "main_menu_bg.jpeg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 76,
+				"SpriteTexture" : 77,
 				"SpriteTextureHeight" : 720,
-				"SpriteTextureIndex" : 59,
+				"SpriteTextureIndex" : 60,
 				"SpriteTextureWidth" : 1280,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -66,9 +66,16 @@
 			{
 				"ScriptName" : "CursorLight"
 			}
+		},
+		{
+			"Name" : "CheatCodeEntity",
+			"Script" : 
+			{
+				"ScriptName" : "CheatCodeEntity"
+			}
 		}
 	],
-	"EntityAmount" : 3,
+	"EntityAmount" : 4,
 	"Layers" : 
 	[
 		{
