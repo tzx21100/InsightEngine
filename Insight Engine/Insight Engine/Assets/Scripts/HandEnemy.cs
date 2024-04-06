@@ -82,29 +82,29 @@ namespace IS
         SimpleImage enemy_charging;
         public Vector2D view_port_pos = new Vector2D(0f, 0f);
         public Vector2D view_port_area = new Vector2D(1500f, 300f);
-        private float attack_timer_duration = 1f;
-        private float attack_timer = 1f;
-        private float attack_hit_timer = 0.5f;
-        private bool initialAttack = false;
-        private bool initialAttackSound = false;
+        //private float attack_timer_duration = 1f;
+        //private float attack_timer = 1f;
+        //private float attack_hit_timer = 0.5f;
+        //private bool initialAttack = false;
+        //private bool initialAttackSound = false;
         public Vector2D attack_pos = new Vector2D(0f, 0f);
         public Vector2D attack_area = new Vector2D(1600f, 300f);
         public int attack_damage = 1;
-        private bool initialDashAttack = false;
-        private bool nextAttackReady = false;
+        //private bool initialDashAttack = false;
+        //private bool nextAttackReady = false;
 
         // bullets
         private float shooting_bullets_timer_set = 1f;
         private float shooting_bullets_timer = 1f;
-        private float shooting_bullets_timing = 0.5f;
+        //private float shooting_bullets_timing = 0.5f;
         private bool is_shooting = false;
 
         // random stuff
-        private int random_attack;
+        //private int random_attack;
         private int random_being_hit_sound;
-        private int random_spawning_sound;
-        private int random_charging_sound;
-        private int random_attack_sound;
+        //private int random_spawning_sound;
+        //private int random_charging_sound;
+        //private int random_attack_sound;
         private int random_idle_sound;
         private int random_dead_sound;
 
