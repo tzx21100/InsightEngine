@@ -45,10 +45,19 @@ namespace IS
                     CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 5f);
                 }
 
+                if (FlightAffector.player_in_flight_level) // for flight level
+                {
+                    CameraScript.CameraPanToTime(FogBlockade1.current_pos, 1.6f, 10f);
+                }
+
 
                 InternalCalls.AudioPlaySound("Collect.wav", false, 0.07f);
-                PlayerScript.initialPowerUp = true;
+                if (!FlightAffector.player_in_flight_level)
+                {
+                    PlayerScript.initialPowerUp = true;
+                }
                 PlayerScript.collection_count += 1;
+
                 InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
 
 
