@@ -440,6 +440,7 @@ namespace IS
                 if (boss_phase == 1)
                 {
                     ResetPosition();
+                    InternalCalls.AudioPlaySoundSFX("BossSummon.wav",false,0.3f);
                     current_state = BossStates.SummonEnemy;
                     //Console.WriteLine("summoning");
                     return;
@@ -455,7 +456,7 @@ namespace IS
                 }
                 else
                 {
-                    current_state = BossStates.SpikesSpawn;
+                    StateChanger();
                 }
                 
                 return;
@@ -1365,7 +1366,7 @@ namespace IS
                 temp_boss_hp = boss_max_hp; // reset the white bg bar
                 Boss_spawn_pos.x = 0;
                 Boss_spawn_pos.y = -500;
-                current_state = BossStates.Idle;
+                current_state = BossStates.Clap;
                 PlayerScript.Health = PlayerScript.Max_Health;
                 PlayerScript.player_cam_y_offset = 300f;
                 PlayerScript.invulnerable = false;
@@ -1438,6 +1439,7 @@ namespace IS
             if (num <= 0.6f)
             {
                 InternalCalls.AudioPlaySoundSFX("Boss_Hurt_3.wav", false, volume);
+                InternalCalls.AudioPlaySoundSFX("BossGrunt.wav", false, volume);
                 return;
             }
             if (num <= 0.8f)
