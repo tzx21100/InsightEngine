@@ -352,20 +352,7 @@ namespace IS
                 if (!hitsound)
                 {
                     hitsound = true;
-                    Random rnd = new Random();
-                    int random_hit_sound = rnd.Next(0, 2);
-                    switch (random_hit_sound)
-                    {
-/*                        case 0:
-                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
-                            break;
-                        case 1:
-                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.1.wav", false, 0.5f);
-                            break;*/
-                        default:
-                            InternalCalls.AudioPlaySoundSFX("HitSoft CTE01_80.2.wav", false, 0.5f);
-                            break;
-                    }
+                    BossHurtSound();
 
                     RenderTakeDamageParticles();
 
@@ -1432,6 +1419,40 @@ namespace IS
 
             }
         }
+
+
+        static void BossHurtSound()
+        {
+            float num = InternalCalls.GetRandomFloat();
+            float volume = 0.4f;
+            if (num <= 0.2f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Boss_Hurt_1.wav", false, volume);
+                return;
+            }
+            if (num <= 0.4f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Boss_Hurt_2.wav", false, volume);
+                return;
+            }
+            if (num <= 0.6f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Boss_Hurt_3.wav", false, volume);
+                return;
+            }
+            if (num <= 0.8f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Boss_Hurt_4.wav", false, volume);
+                return;
+            }            
+            if (num <= 1f)
+            {
+                InternalCalls.AudioPlaySoundSFX("Boss_Hurt_5.wav", false, volume);
+                return;
+            }
+        }
+
+
 
     } // class end here
 }
