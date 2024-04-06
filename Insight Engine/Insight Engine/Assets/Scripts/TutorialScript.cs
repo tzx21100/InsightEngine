@@ -4,6 +4,8 @@ namespace IS
 {
     class TutorialScript
     {
+        private const float GAME_TITLE_SCALE = 2f;
+        private const float GAME_TITLE_AR = 92f / 512f;
 
         static private int tutorial_state = 0;
 /*      static private float first_tutorial_x;
@@ -14,12 +16,12 @@ namespace IS
         static private bool tutorial_over = false;*/
         static private SimpleImage teamlogo = InternalCalls.GetSpriteImage("team_logo.png");
         //static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("fragments_game_logo.png");
-        static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("GameTitleStatic.png");
+        static private SimpleImage fragmentslogo = InternalCalls.GetSpriteImage("GameTitle Animated 11R4C.png");
 
         static private float fragment_logo_timer = 3.12f;
         static private float fragment_fade_in = 1.2f;
 
-        static private bool play_audio=false;
+        static private bool play_audio = false;
 
         static public void Init()
         {
@@ -156,9 +158,13 @@ namespace IS
                 float alpha = fragment_logo_timer;
                 if (fragment_logo_timer > 1) { alpha = 1; }
                 if (fragment_fade_in > 0) { alpha = 1 - fragment_fade_in; };
-                InternalCalls.DrawImageAt(pos, 0, new SimpleVector2D(InternalCalls.GetWindowWidth() * 2f,  (InternalCalls.GetWindowWidth() * 2f)/2f), fragmentslogo, alpha, InternalCalls.GetTopLayer());
-                fragment_logo_timer -= InternalCalls.GetDeltaTime();
-                fragment_fade_in -= InternalCalls.GetDeltaTime();
+
+                float delta_time = InternalCalls.GetDeltaTime();
+                float game_title_width = InternalCalls.GetWindowWidth()  * GAME_TITLE_SCALE;
+                float game_title_height = game_title_width * GAME_TITLE_AR;
+                InternalCalls.DrawNonEnityAnimationSet(delta_time, pos, 0, new SimpleVector2D(game_title_width, game_title_height), fragmentslogo, alpha, InternalCalls.GetTopLayer(), 11, 4, 2f);
+                fragment_logo_timer -= delta_time;
+                fragment_fade_in -= delta_time;
                 if(fragment_logo_timer <= 0) {
 
 
