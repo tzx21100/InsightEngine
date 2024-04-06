@@ -550,8 +550,11 @@ namespace IS
                 HandEnemyBullets.bullets[bullet_id].direction = dir;
                 HandEnemyBullets.bullets[bullet_id].pos = pos;
                 HandEnemyBullets.bullets[bullet_id].scaling.x *= dir.x;
+                //Console.WriteLine(HandEnemyBullets.bullets[bullet_id].scaling.x);
                 InternalCalls.RigidBodySetVelocityEntity(dir.x * bullet_speed, 0f, bullet_id);
                 InternalCalls.TransformSetPositionEntity(pos.x, pos.y, bullet_id);
+                InternalCalls.TransformSetRotationEntity((dir.x == -1 ? 180 : 0), 0f, bullet_id);
+                //InternalCalls.TransformSetScaleEntity(HandEnemyBullets.bullets[bullet_id].scaling.x, HandEnemyBullets.bullets[bullet_id].scaling.y, bullet_id);
                 InternalCalls.SetEntityGravityScale(0f, bullet_id);
                 bullet_list.Add(bullet_id);
 

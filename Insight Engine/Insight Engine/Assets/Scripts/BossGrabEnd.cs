@@ -5,15 +5,36 @@ namespace IS
     {
         static float grow_timer = 2f;
         static float timer = 1f;
+        static bool black_screen = false;
 
         static public void Init(){
             grow_timer = 2f;
+            black_screen = false;
             timer = 0.65f;
             InternalCalls.ResetSpriteAnimationFrameEntity(InternalCalls.GetCurrentEntityID());
             InternalCalls.SetSpriteAlpha(0f);
         }
 
         static public void Update(){
+            TextBox2.Update();
+
+            if (black_screen)
+            {
+                InternalCalls.AttachCamera(0, 0);
+                InternalCalls.DrawSquare(0, 0, 20000, 20000, 0, 0, 0, 1, 10);
+                CameraScript.CameraPanTo(new Vector2D(0, 0), 20f);
+                InternalCalls.SetLightsToggle(false);
+                if (TextBox2.isVisible == false)
+                {
+                    InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
+                    InternalCalls.SetLightsToggle(true);
+                    return;
+                }
+
+                return;
+            }
+
+
 
             InternalCalls.TransformSetPosition(PlayerScript.player_pos.x, PlayerScript.player_pos.y);
 
@@ -28,7 +49,9 @@ namespace IS
 
             if(timer < 0f)
             {
-                InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
+                black_screen = true;
+                TextBox2.CreateTextBox("Welcome PM, initializing new world...");
+               // InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
             }
         }
         

@@ -74,6 +74,8 @@ namespace IS
 
         static public void Update()
         {
+            int pause_button = InternalCalls.GetCurrentEntityID();
+            InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), pause_button);
             ToggleFullscreenMode();
 
             //set the image
@@ -96,7 +98,7 @@ namespace IS
             // Size
             const float PAUSE_BUTTON_SCALE = 0.08f;
             float width = PAUSE_BUTTON_SCALE * win_dimension.x;
-            InternalCalls.SetButtonSize(InternalCalls.GetCurrentEntityID(), new SimpleVector2D(width, width));
+            InternalCalls.SetButtonSize(pause_button, new SimpleVector2D(width, width));
             InternalCalls.TransformSetScaleEntity(1.25f * win_dimension.x, 1.15f * win_dimension.y, pause_menu_entity);
             InternalCalls.SetButtonSize(resume_button_entity, new SimpleVector2D(0.21f * win_dimension.x, 0.12f * win_dimension.y));
             InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(0.15f * win_dimension.x, 0.09f * win_dimension.y));
