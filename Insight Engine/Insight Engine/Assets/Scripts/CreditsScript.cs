@@ -347,7 +347,7 @@ namespace IS
                 InternalCalls.RenderTextFont("Ian Chua Rong Bin", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 18f, (1f, 1f, 1f, 1f));
                 specialThanksLineBreak += 1.5f;
                 InternalCalls.RenderTextFont("www.digipen.edu", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (specialThanksLineBreak + .5f), 9f, (1f, 1f, 1f, 1f));
-                InternalCalls.RenderTextFont("All content 2024 DigiPen Institute of Technology Singapore. All Rights Reserved.", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (specialThanksLineBreak + 1.25f), 9f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("All content (C) 2024 DigiPen Institute of Technology Singapore. All Rights Reserved.", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (specialThanksLineBreak + 1.25f), 9f, (1f, 1f, 1f, 1f));
                 
                 endingGroupStartTime = nextSectionStartTime + duration + postDisplayWaitTime;
                 //float fadeEffectDuration = 5f; // Total duration of the fade effect
@@ -368,7 +368,7 @@ namespace IS
                     InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), back_button_entity);
                     InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
                     back_button_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
-                    InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.502f, 0.501f, 7.5f, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.502f, 0.501f, BackFromWinScript.font_size, (1f, 1f, 1f, 1f));
                     InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
                 }

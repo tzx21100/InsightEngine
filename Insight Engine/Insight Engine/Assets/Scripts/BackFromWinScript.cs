@@ -18,6 +18,7 @@ namespace IS
     class BackFromWinScript
     {
         static public bool first_hover = false;
+        static public float font_size = MainMenuScript.NORMAL_FONT_SIZE;
 
         static public void Init()
         {
@@ -36,11 +37,13 @@ namespace IS
                     //InternalCalls.AudioPlaySound("Footsteps_Dirt-Gravel-Far-Small_1.wav", false, 0.15f);
                     SettingsScript.PlayHoverSound();
                     first_hover = true;
+                    font_size = MainMenuScript.HOVER_FONT_SIZE;
                 }
             }
             else
             {
                 first_hover = false;
+                font_size = MainMenuScript.NORMAL_FONT_SIZE;
             }
             if (!InternalCalls.IsWindowFocused())
             {
