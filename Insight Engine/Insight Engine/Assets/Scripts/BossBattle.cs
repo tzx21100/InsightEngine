@@ -598,7 +598,7 @@ namespace IS
                     InternalCalls.AudioPlaySoundSFX("DieSound.wav", false, 0.2f);
                     CameraScript.camera_shake_intensity = 3f;
                     CameraScript.camera_shake_duration = 0.2f;
-                    InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
+                    InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.54f);
                     return;
                 }
 
@@ -667,7 +667,7 @@ namespace IS
                 {
                     DrawParticles(entity);
                 }
-                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
+                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.54f);
                 return;
             }
             else
@@ -683,7 +683,7 @@ namespace IS
                     DrawParticles(entity);
                 }
 
-                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.6f);
+                InternalCalls.AudioPlaySoundSFX("EXPLOSION-LARGE_GEN-HDF-10849.wav", false, 0.54f);
 
             }
 
