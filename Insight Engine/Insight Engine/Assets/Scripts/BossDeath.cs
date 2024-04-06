@@ -50,6 +50,9 @@ namespace IS
 
         static public void Init()
         {
+            InternalCalls.AudioPlaySoundBGM("BossDeath.wav", false, 0.5f);
+            light_count = 0;
+            InternalCalls.AudioStopAllSounds();
             Boss_ID = InternalCalls.GetCurrentEntityID();
             pause_shake_timer = 2f;
             death_animation_timer = death_animation_timer_set;
@@ -203,6 +206,7 @@ namespace IS
                         break_block_timer = rand.NextFloat();
                     }
 
+                    LightAudio();
                     InternalCalls.DestroyEntity(block_list[index]);
                     block_list.Remove(block_list[index]);
                     block_size--;
@@ -420,7 +424,10 @@ namespace IS
 
                     if (fade_out_timer < 0f)
                     {
+                        InternalCalls.FadeOutAudio(0.2f);
+                        InternalCalls.AudioStopAllSounds();
                         InternalCalls.DestroyEntity(InternalCalls.GetCurrentEntityID());
+                       
                         //CameraScript.CameraPanToTime(PlayerScript.player_pos, 15f, 1.5f);
                     }
                 }
@@ -438,5 +445,46 @@ namespace IS
                 }
             }
         }
+
+
+        static private int light_count = 0;
+        static private void LightAudio()
+        {
+
+            float volume = 0.8f;
+            switch (light_count)
+            {
+
+                                      case 0:
+
+                    InternalCalls.AudioPlaySoundSFX("LightShoot1.wav", false, volume);
+                break;                case 1:
+                    InternalCalls.AudioPlaySoundSFX("LightShoot2.wav", false, volume);
+                break;                case 2:
+                    InternalCalls.AudioPlaySoundSFX("LightShoot3.wav", false, volume);
+                break;                case 3:
+                    InternalCalls.AudioPlaySoundSFX("LightShoot4.wav", false, volume);
+                break;                case 4:
+                    InternalCalls.AudioPlaySoundSFX("LightShoot5.wav", false, volume);
+                break;                case 5:
+                    InternalCalls.AudioPlaySoundSFX("LightShoot6.wav", false, volume);
+                break;
+
+                case 6:
+                    InternalCalls.AudioPlaySoundSFX("LightShootFinal.wav", false, volume);
+                    break;
+
+
+
+
+            }
+
+            light_count++;
+
+
+
+        }
+
+
     }
 }
