@@ -37,7 +37,7 @@ namespace IS
             bool controller_connected = InternalCalls.ControllerConnected();
 
             if (PlayerScript.isGrounded == true && tutorial_state==0 ) { tutorial_state = 1; }
-            if (tutorial_state == 1)
+            if (tutorial_state == 1 && !PauseButtonScript.paused)
             {
                 //SimpleVector2D textboxposition= new SimpleVector2D(CameraScript.camera_pos.x,CameraScript.camera_pos.y-InternalCalls.GetWindowHeight()/3f);
                 //SimpleVector2D textboxscale = new SimpleVector2D(InternalCalls.GetWindowWidth() * 0.8f, InternalCalls.GetWindowHeight() * 0.2f);
@@ -58,7 +58,7 @@ namespace IS
                 }
             }
 
-            if (tutorial_state == 2)
+            if (tutorial_state == 2 && !PauseButtonScript.paused)
             {
 
                 if (controller_connected)
@@ -76,7 +76,7 @@ namespace IS
                 }
 
             }
-            if (tutorial_state == 3)
+            if (tutorial_state == 3 && !PauseButtonScript.paused)
             {
 
                 if (controller_connected)
@@ -97,7 +97,7 @@ namespace IS
 
             }
 
-            if (tutorial_state == 4)
+            if (tutorial_state == 4 && !PauseButtonScript.paused)
             {
 
                 InternalCalls.RenderTextFont("Prepare for combat..", "Semplicita_Light", 0.5f, 0.2f, 24f, (1f, 1f, 1f, 1f));
@@ -107,7 +107,7 @@ namespace IS
                 }
             }
 
-            if (tutorial_state == 5)
+            if (tutorial_state == 5 && !PauseButtonScript.paused)
             {
 
                 if (controller_connected)
@@ -126,7 +126,7 @@ namespace IS
                 }
             }
 
-            if (tutorial_state == 6)
+            if (tutorial_state == 6 && !PauseButtonScript.paused)
             {
 
 
@@ -152,7 +152,7 @@ namespace IS
 
             }
 
-            if (tutorial_state == 7)
+            if (tutorial_state == 7 && !PauseButtonScript.paused)
             {
                 SimpleVector2D pos = new SimpleVector2D(PlayerScript.player_pos.x, PlayerScript.player_pos.y +InternalCalls.GetWindowHeight()/1.8f);
                 float alpha = fragment_logo_timer;

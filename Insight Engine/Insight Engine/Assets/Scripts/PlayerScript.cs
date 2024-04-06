@@ -503,7 +503,7 @@ namespace IS
                     InternalCalls.SetLightsToggle(false);
                     CameraScript.CameraPanTo(new Vector2D(0, 0), 12f);
                     TextBox.CreateTextBox("By sacrificing the NPC, an imbalance in the game data was caused.");
-                    TextBox.AddTextLines("Leading to a reset that doomed you to live as an NPC indefinitely...");
+                    TextBox.AddTextLines("Leading to a reset that doomed you to live as an NPC \nindefinitely...");
                     TextBox.AddTextLines("At least until another player, following in your footsteps, decides to sacrifice you as well...");
                     NPC_timer = -1f;
                 }

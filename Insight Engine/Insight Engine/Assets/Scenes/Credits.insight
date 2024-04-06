@@ -33,9 +33,9 @@
 				"SpriteFilename" : "credits_bg.jpg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 155,
+				"SpriteTexture" : 156,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 138,
+				"SpriteTextureIndex" : 139,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -52,9 +52,16 @@
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}
+		},
+		{
+			"Name" : "CheatCodeEntity",
+			"Script" : 
+			{
+				"ScriptName" : "CheatCodeEntity"
+			}
 		}
 	],
-	"EntityAmount" : 1,
+	"EntityAmount" : 2,
 	"Layers" : 
 	[
 		{

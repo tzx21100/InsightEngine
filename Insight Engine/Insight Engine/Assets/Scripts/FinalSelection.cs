@@ -17,14 +17,15 @@ namespace IS
         static private float fade_in_timer = 2f;
 
         // text
-        static string text0 = "The Boss has gone, you have left with two choices, which will you choose? ";
-        static string text1 = "The red fragment to restore the world and your loved ones. Or";
-        static string text2 = "The blue fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire";
+        static string text0 = "Cipher, congratulations on triumphing over the otherworldly force.";
+        static string text1 = "Now, standing at this precipice, the weight of your decision looms with formidable power.";
+        static string text2 = "The Red Fragment to restore the world and your loved ones.";
+        static string text3 = "The Blue Fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire.";
 
         static bool textshow = false;
 
         // timer
-        static private float zoom_out_timer = 1.5f;
+        static private float zoom_out_timer = 2f;
 
         static public void Init()
         {
@@ -60,6 +61,7 @@ namespace IS
                 TextBox.CreateTextBox(text0);
                 TextBox.AddTextLines(text1);
                 TextBox.AddTextLines(text2);
+                TextBox.AddTextLines(text3);
             }
 
             if (textshow)
@@ -76,13 +78,13 @@ namespace IS
         static private void CameraPanToFragment()
         {
             //Console.WriteLine(TextBox.PAGE_NUMBER);
-            if (TextBox.PAGE_NUMBER == 1)
+            if (TextBox.PAGE_NUMBER == 2)
             {
                 CameraScript.CameraTargetZoom(0.6f, 0.3f);
                 Vector2D red_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(RED_ID));
                 CameraScript.CameraPanTo(red_pos, 1.6f);
             }
-            else if (TextBox.PAGE_NUMBER == 2)
+            else if (TextBox.PAGE_NUMBER == 3)
             {
                 CameraScript.CameraTargetZoom(0.6f, 0.3f);
                 Vector2D blue_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BLUE_ID));
@@ -91,8 +93,14 @@ namespace IS
 
             if (TextBox.isVisible == false)
             {
-                CameraScript.CameraPanTo(PlayerScript.player_pos, 1.5f);
-                CameraScript.CameraTargetZoom(0.4f, 2f);
+                CameraScript.CameraPanTo(PlayerScript.player_pos, 3f);
+                CameraScript.CameraTargetZoom(0.4f, 3f);
+
+                Vector2D dis = new Vector2D(CameraScript.camera_pos.x - PlayerScript.player_pos.x, CameraScript.camera_pos.y - PlayerScript.player_pos.y);
+                if (MathF.Abs(dis.x) < 5f && MathF.Abs(dis.y) < 5f)
+                {
+                    CameraScript.SetCameraPosition(PlayerScript.player_pos);
+                }
 
                 if (zoom_out_timer > 0f)
                 {
