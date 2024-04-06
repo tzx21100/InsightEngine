@@ -606,7 +606,7 @@ namespace IS
             {
                 invulnerable = true;
                 SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
-                SimpleVector2D scaling = new SimpleVector2D(WindowWidth / CameraScript.camera_zoom * 1.03f, WindowHeight / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
+                SimpleVector2D scaling = new SimpleVector2D(InternalCalls.GetWindowWidth() / CameraScript.camera_zoom * 1.03f, InternalCalls.GetWindowHeight() / CameraScript.camera_zoom * 1.03f); // 1.03 to account for screen shake
                 InternalCalls.DrawImageAt(pos, 0, scaling, damage_screen_flash, screen_flash_timer / 1.5f, InternalCalls.GetTopLayer() - 1);
                 screen_flash_timer -= InternalCalls.GetDeltaTime();
                 if (screen_flash_timer <= 0.0f)
