@@ -105,7 +105,7 @@ namespace IS
 
         static public BossStates current_state = BossStates.Boss360;
 
-
+        //static public bool is_dead = false;
 
 
         static public void Init(){
@@ -176,7 +176,7 @@ namespace IS
                 return; //do nothing when pause
             }
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.Slash))
+            if (InternalCalls.KeyPressed((int)KeyCodes.J))
             {
                 boss_hp = 0;
             }
@@ -1313,10 +1313,10 @@ namespace IS
             if (sweep_timer <= 0f)
             {
 
-                for (int i = 0; i< 5; i++)
+                for (int i = -2; i< 3; i++)
                 {
                     int entity = InternalCalls.CreateEntityPrefab("Floor");
-                    InternalCalls.TransformSetPositionEntity(-2000 + i * 900, -1000,entity);
+                    InternalCalls.TransformSetPositionEntity(0 + i * 900, -1000,entity);
                 }
                 
 
