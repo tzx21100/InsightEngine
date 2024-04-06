@@ -17,21 +17,30 @@ namespace IS
         static private float fade_in_timer = 2f;
 
         // text
-        static string text0 = "Which will you choose? The red fragment to restore the world and your loved ones. Or";
-        static string text1 = "The blue fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire";
+        static string text0 = "The Boss has gone, you have left with two choices, which will you choose? ";
+        static string text1 = "The red fragment to restore the world and your loved ones. Or";
+        static string text2 = "The blue fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire";
 
+        static bool textshow = false;
 
+        // timer
+        static private float zoom_out_timer = 1.5f;
 
         static public void Init()
         {
             CameraScript.CameraTargetZoom(0.4f, 1f);
             fade_in_timer = 2f;
 
-            int BLUE_ID = InternalCalls.CreateEntityPrefab("FinalBlueFragment");
-            int RED_ID = InternalCalls.CreateEntityPrefab("FinalRedFragment");
+            BLUE_ID = InternalCalls.CreateEntityPrefab("FinalBlueFragment");
+            RED_ID = InternalCalls.CreateEntityPrefab("FinalRedFragment");
 
             InternalCalls.TransformSetPositionEntity(-1800, -700, RED_ID);
             InternalCalls.TransformSetPositionEntity(1800, -700, BLUE_ID);
+
+            // text
+            textshow = false;
+
+            zoom_out_timer = 1.5f;
         }
 
         static public void Update()
@@ -45,13 +54,56 @@ namespace IS
                 return;
             }
 
+            if (!textshow) {
 
+                textshow = true;
+                TextBox.CreateTextBox(text0);
+                TextBox.AddTextLines(text1);
+                TextBox.AddTextLines(text2);
+            }
 
+            if (textshow)
+            {
+                CameraPanToFragment();
+            }
         }
 
         static public void CleanUp()
         {
 
+        }
+
+        static private void CameraPanToFragment()
+        {
+            //Console.WriteLine(TextBox.PAGE_NUMBER);
+            if (TextBox.PAGE_NUMBER == 1)
+            {
+                CameraScript.CameraTargetZoom(0.6f, 0.3f);
+                Vector2D red_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(RED_ID));
+                CameraScript.CameraPanTo(red_pos, 1.6f);
+            }
+            else if (TextBox.PAGE_NUMBER == 2)
+            {
+                CameraScript.CameraTargetZoom(0.6f, 0.3f);
+                Vector2D blue_pos = Vector2D.FromSimpleVector2D(InternalCalls.GetTransformPositionEntity(BLUE_ID));
+                CameraScript.CameraPanTo(blue_pos, 1.6f);
+            }
+
+            if (TextBox.isVisible == false)
+            {
+                CameraScript.CameraPanTo(PlayerScript.player_pos, 1.5f);
+                CameraScript.CameraTargetZoom(0.4f, 2f);
+
+                if (zoom_out_timer > 0f)
+                {
+                    zoom_out_timer -= InternalCalls.GetDeltaTime();
+                }
+                else
+                {
+                    CameraScript.StopCameraPan();
+                }
+                
+            }
         }
 
         static private void PanToRed()
