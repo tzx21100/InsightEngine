@@ -2341,12 +2341,12 @@ namespace IS
                 {
                     // damage the player 
                     if (HandEnemyBullets.bullets.ContainsKey(colliding_enemy_id)) {
-                        Health -= HandEnemyBullets.bullets[colliding_enemy_id].attack_damage;
                         HandEnemyBullets.bullets[colliding_enemy_id].is_alive = false;
                         // destory
                         //HandEnemyBullets.bullets.Remove(colliding_enemy_id);
                         //InternalCalls.DestroyEntity(colliding_enemy_id);
                         }
+                    Health -= 1;
                 }
                 else if (colliding_enemy_type == (int)EnemyType.BossHand)
                 {
