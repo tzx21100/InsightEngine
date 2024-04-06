@@ -45,7 +45,11 @@ namespace IS {
     };
 
     // In case "WindowProperties.json" is not found, window will use default properties
+#ifdef USING_IMGUI
     static const WindowProperties DEFAULT_PROPERTIES{ "Insight Engine", 1600, 900, 60, false, false, false };
+#else
+    static const WindowProperties DEFAULT_PROPERTIES{ "Fragments", 1600, 900, 60, false, false, true };
+#endif
 
     /*!
      * \brief The WindowSystem class manages application windows.
