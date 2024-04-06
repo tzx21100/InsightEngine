@@ -17,6 +17,8 @@ namespace IS
 {
     class MainMenuScript
     {
+        private const float GAME_TITLE_SCALE = .5f;
+        private const float GAME_TITLE_AR = 92f / 512f;
         public const float HOVER_FONT_SIZE = 8.5f;
         public const float NORMAL_FONT_SIZE = 7.5f;
 
@@ -49,7 +51,7 @@ namespace IS
         static public void Init()
         {
             //game_title_image = InternalCalls.GetSpriteImage("fragments_game_logo.png");
-            game_title_image = InternalCalls.GetSpriteImage("GameTitleStatic.png");
+            game_title_image = InternalCalls.GetSpriteImage("GameTitle Animated 11R4C.png");
             button_frame = InternalCalls.GetSpriteImage("button_frame.png");
             team_logo_image = InternalCalls.GetSpriteImage("team_logo.png");
 
@@ -60,10 +62,10 @@ namespace IS
             exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", button_frame, "ExitButtonScript"); 
             team_logo_entity = InternalCalls.CreateEntityButtonNoText("Team Logod", team_logo_image, "TeamLogoScript");
 
-
             win_dimension.x = (float)InternalCalls.GetWindowWidth();
             win_dimension.y = (float)InternalCalls.GetWindowHeight();
             InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
+            InternalCalls.CreateAnimationFromSpriteEntity(11, 4, 2f, game_title_entity);
         }
 
         static public void Update()
@@ -87,8 +89,10 @@ namespace IS
             Vector2D button = new Vector2D(0.16f * win_dimension.x, 0.09f * win_dimension.y);
 
             // set sizes
-            //InternalCalls.TransformSetScaleEntity(0.57f * win_dimension.x, 0.14f * win_dimension.y, game_title_entity);
-            InternalCalls.TransformSetScaleEntity(0.58f * win_dimension.x, 0.29f * win_dimension.x, game_title_entity);
+            float game_title_width = win_dimension.x * GAME_TITLE_SCALE;
+            float game_title_height = game_title_width * GAME_TITLE_AR;
+
+            InternalCalls.TransformSetScaleEntity(game_title_width, game_title_height, game_title_entity);
             InternalCalls.SetButtonSize(start_button_entity, new SimpleVector2D(button.x,button.y));
             InternalCalls.SetButtonSize(settings_button_entity, new SimpleVector2D(button.x, button.y));
             InternalCalls.SetButtonSize(how_to_play_button_entity, new SimpleVector2D(button.x, button.y));
