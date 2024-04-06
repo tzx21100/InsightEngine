@@ -58,7 +58,12 @@ namespace IS
             settings_button_entity = InternalCalls.CreateEntityButtonNoText("Settings Button", button_frame, "SettingsScript"); 
             how_to_play_button_entity = InternalCalls.CreateEntityButtonNoText("How To Play Button", button_frame, "HowToPlayScript"); 
             exit_button_entity = InternalCalls.CreateEntityButtonNoText("Exit Button", button_frame, "ExitButtonScript"); 
-            team_logo_entity = InternalCalls.CreateEntityButtonNoText("Team Logod", team_logo_image, "TeamLogoScript"); 
+            team_logo_entity = InternalCalls.CreateEntityButtonNoText("Team Logod", team_logo_image, "TeamLogoScript");
+
+
+            win_dimension.x = (float)InternalCalls.GetWindowWidth();
+            win_dimension.y = (float)InternalCalls.GetWindowHeight();
+            InternalCalls.TransformSetScale(win_dimension.x, win_dimension.y);
         }
 
         static public void Update()
