@@ -501,9 +501,17 @@ namespace IS
             InternalCalls.SetSpriteImage(enemy_charging);
             InternalCalls.SetSpriteAnimationIndex(3);
 
+
+
             // spawn bullets
             if (shooting_bullets_timer > 0f)
             {
+
+                if (shooting_bullets_timer == shooting_bullets_timer_set)
+                {
+                    InternalCalls.AudioPlaySoundSFX("HandBulletShoot.wav", false, volume*4f);
+            }
+
                 shooting_bullets_timer -= InternalCalls.GetDeltaTime();
                 // enemy will charge for 1s then shoot out the bullet
 
