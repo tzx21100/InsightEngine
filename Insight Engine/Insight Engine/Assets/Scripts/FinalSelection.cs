@@ -17,7 +17,7 @@ namespace IS
         static private float fade_in_timer = 2f;
 
         // text
-        static string text0 = "Cypher, congratulations on triumphing over the otherworldly force.";
+        static string text0 = "Cipher, congratulations on triumphing over the otherworldly force.";
         static string text1 = "Now, standing at this precipice, the weight of your decision looms with formidable power.";
         static string text2 = "The Red Fragment to restore the world and your loved ones.";
         static string text3 = "The Blue Fragment, which gives you infinite power, infinite possibilities to recreate the world as you desire.";
