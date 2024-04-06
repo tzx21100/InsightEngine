@@ -32,6 +32,10 @@ namespace IS
         static private List<float> x_list = new List<float>();
         static private List<float> y_list = new List<float>();
 
+        // particles
+        static private float shouting_particles_timer_set = 0.5f;
+        static private float shouting_particles_timer = 0.5f;
+
 
         static public void Init(){
 
@@ -65,6 +69,9 @@ namespace IS
             y_list.Add(2000);
             y_list.Add(2000);
             y_list.Add(-2000);
+
+            // paritcles
+            shouting_particles_timer = shouting_particles_timer_set;
 
         }
 
@@ -135,6 +142,10 @@ namespace IS
                 SimpleVector2D scale = InternalCalls.GetTransformScaling();
                 InternalCalls.SetSpriteAlpha((2 - grow_timer) * 0.5f);
                 InternalCalls.TransformSetScale(scale.x * 1.01f, scale.y * 1.01f);
+
+                CameraScript.CameraShake(2f);
+                CameraScript.camera_shake_intensity = 1f;
+                CameraScript.camera_shake_duration = 5f;
                 return;
             }
 
@@ -166,7 +177,18 @@ namespace IS
                 CameraScript.camera_shake_intensity = (2f - shouting_timer) * 3f;
                 CameraScript.camera_shake_duration = 2f;
 
-                RenderShoutingParticles();
+                if (shouting_particles_timer > 0f)
+                {
+                    shouting_particles_timer -= InternalCalls.GetDeltaTime();
+                }
+                else { 
+                    shouting_particles_timer = shouting_particles_timer_set;
+                }
+
+                if (shouting_particles_timer > 0.45f)
+                {
+                    RenderShoutingParticles();
+                }
 
                 return;
             }
@@ -192,13 +214,13 @@ namespace IS
                 float dir = 360 * rand;
 
                 rand = my_rand.NextFloat();
-                float size = 3000 + 30f * rand; // initial size
+                float size = 2500 + 30f * rand; // initial size
 
                 rand = my_rand.NextFloat();
                 float size_scale = 5000f + 30 * rand; // pariticles going nigger
 
                 rand = my_rand.NextFloat();
-                float alpha = 0.3f + 0.3f * rand; // 0 to 1
+                float alpha = 0.5f + 0.3f * rand; // 0 to 1
 
                 rand = my_rand.NextFloat();
                 float lifetime = 1.5f + 0.5f * rand; // 0.5s to 0.8s
