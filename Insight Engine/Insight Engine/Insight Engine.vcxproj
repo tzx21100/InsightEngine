@@ -391,8 +391,7 @@ copy "$(ProjectDir)libraries\ffmpeg\lib\avcodec-60.dll" "$(TargetDir)avcodec-60.
 copy "$(ProjectDir)libraries\ffmpeg\lib\avformat-60.dll" "$(TargetDir)avformat-60.dll" /Y
 copy "$(ProjectDir)libraries\ffmpeg\lib\swscale-7.dll" "$(TargetDir)swscale-7.dll" /Y
 copy "$(ProjectDir)libraries\ffmpeg\lib\avutil-58.dll" "$(TargetDir)avutil-58.dll" /Y
-copy "$(ProjectDir)libraries\ffmpeg\lib\swresample-4.dll" "$(TargetDir)swresample-4.dll" /Y
-copy "$(ProjectDir)InstallerSetup\INSTALLERFILES\SetupIcon.ico" "$(TargetDir)Icon.ico" /Y</Command>
+copy "$(ProjectDir)libraries\ffmpeg\lib\swresample-4.dll" "$(TargetDir)swresample-4.dll" /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy "$(ProjectDir)InstallerSetup\*" "$(SolutionDir)bin\GameRelease-x64\" /E /Y</Command>
