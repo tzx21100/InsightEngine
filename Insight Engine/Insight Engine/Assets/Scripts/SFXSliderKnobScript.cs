@@ -163,7 +163,7 @@ namespace IS
             float xpos = InternalCalls.GetTransformPosition().x;
             float sfx_volume = (xpos - lower_limit) / (upper_limit - lower_limit);
             InternalCalls.AudioSetSFX(sfx_volume);
-            Console.WriteLine("SFX: " + (int)(sfx_volume * 100) + "%");
+            //Console.WriteLine("SFX: " + (int)(sfx_volume * 100) + "%");
         }
     }
 }

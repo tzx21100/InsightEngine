@@ -172,7 +172,7 @@ namespace IS
             float xpos = InternalCalls.GetTransformPosition().x;
             float bgm_volume = (xpos - lower_limit) / (upper_limit - lower_limit);
             InternalCalls.AudioSetBGM(bgm_volume);
-            Console.WriteLine("BGM: " + (int)(bgm_volume * 100) + "%");
+            //Console.WriteLine("BGM: " + (int)(bgm_volume * 100) + "%");
         }
     }
 }
