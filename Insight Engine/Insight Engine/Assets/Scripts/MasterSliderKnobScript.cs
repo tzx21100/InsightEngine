@@ -164,7 +164,7 @@ namespace IS
             float xpos = InternalCalls.GetTransformPosition().x;
             float master_volume = (xpos - lower_limit_master_knob) / (upper_limit_master_knob - lower_limit_master_knob);
             InternalCalls.AudioSetMaster(master_volume);
-            Console.WriteLine("Master: " + (int)(master_volume * 100) + "%");
+            //Console.WriteLine("Master: " + (int)(master_volume * 100) + "%");
         }
     }
 }
