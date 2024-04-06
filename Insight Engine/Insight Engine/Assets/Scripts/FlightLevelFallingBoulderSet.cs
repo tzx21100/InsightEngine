@@ -227,7 +227,7 @@ namespace IS
                             if (!mPlayGroundedAudio)
                             {
                                 mPlayGroundedAudio = true;
-                                InternalCalls.AudioPlaySound("ROCK-DROP_GEN-HDF-20027.wav", false, .15f);
+                                InternalCalls.AudioPlaySound("SCI-FI-EXPLOSION_GEN-HDF-20662.wav", false, .55f);
                             }
 
                             // render particles

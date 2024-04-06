@@ -1194,6 +1194,7 @@ namespace IS
                 play360audio = false;
                 sweep_timer = sweep_timer_set/1.4f; //this is for the return to be shorter
                 sweeped = false;
+                InternalCalls.AudioPlaySoundSFX("SCI-FI-WHOOSH_GEN-HDF-20863.wav", false, 0.2f); // play again for return
                 current_state = BossStates.ReturnBoss360;
             }
 

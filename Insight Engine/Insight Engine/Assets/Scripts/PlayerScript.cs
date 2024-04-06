@@ -2210,7 +2210,7 @@ namespace IS
             SimpleVector2D scale = InternalCalls.GetTransformScalingEntity(hitting_enemy_id);
             SimpleVector2D pos_entity = InternalCalls.GetTransformPositionEntity(hitting_enemy_id);
             int flip = (int)CustomMath.Normalize(pos_entity.x - player_pos.x);
-            SimpleVector2D flipped_image = new SimpleVector2D(scale.x * flip, scale.y); //get the flipped scale
+            SimpleVector2D flipped_image = new SimpleVector2D(CustomMath.Abs(scale.x) * flip, scale.y); //get the flipped scale
 
             InternalCalls.DrawImageAt(InternalCalls.GetTransformPositionEntity(hitting_enemy_id), 0, flipped_image,
                 player_attack_vfx_using, render_vfx_timer * 5f, InternalCalls.GetTopLayer());
