@@ -68,6 +68,11 @@ namespace IS
 
         static public void Update()
         {
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            diff_x = (upper_limit - lower_limit) * InternalCalls.AudioGetBGM();
+
             //InternalCalls.TransformSetPosition(origin.x + (0.5f * win_dimension.x), origin.y + (0.433f * win_dimension.y));
             // Camera
             camera_zoom = InternalCalls.CameraGetZoom();

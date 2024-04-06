@@ -64,6 +64,11 @@ namespace IS
 
         static public void Update()
         {
+            float lower_limit = MasterSliderKnobScript.lower_limit_master_knob;
+            float upper_limit = MasterSliderKnobScript.upper_limit_master_knob;
+
+            diff_x = (upper_limit - lower_limit) * InternalCalls.AudioGetSFX();
+
             camera_zoom = InternalCalls.CameraGetZoom();
 
             //set camera pos
@@ -125,8 +130,8 @@ namespace IS
             {
                 if (!first_open_settings)
                 {
-                    adjustment = MasterSliderKnobScript.lower_limit_master_knob + diff_x;
                     first_open_settings = true;
+                    adjustment = MasterSliderKnobScript.lower_limit_master_knob + diff_x;
                 }
                 InternalCalls.TransformSetPosition(adjustment, y_pos);
             }
