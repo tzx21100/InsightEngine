@@ -117,7 +117,7 @@ namespace IS
             back_to_menu_button_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y - 0.155f * win_dimension.y);
             exit_button_pos.Set(camera_pos.x - 0.005f * win_dimension.x, camera_pos.y - 0.235f * win_dimension.y);
 
-            if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
+            if (InternalCalls.KeyPressed((int)KeyCodes.Escape) || InternalCalls.ControllerKeyPressed((int)KeyCodes.Button_START))
             {
                 paused = !paused;
                 SettingsScript.show_settings = false;
