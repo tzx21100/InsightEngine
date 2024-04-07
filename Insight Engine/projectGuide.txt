@@ -15,6 +15,7 @@ Tan Zheng Xun	      Technical Lead        Engine Champion
 Wu Zekai              Programmer	    Physics Champion
 Ee Tze Rong Cheryl    Design Lead	    Design Champion
 Lim Wan Jin	      Art Lead	            Art Champion
+Ang Qin Tian Rachel   Artist		    Art Champion
 
 -------------------------------------------------------------------
  Configurations                                                     
