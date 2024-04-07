@@ -1,9 +1,9 @@
-===== Milestone 4 - Insight Engine Project Guide =====
+===== Milestone 6 - Insight Engine Project Guide =====
 
 ===== Overview =====
 Project Name: Insight Engine
 Game Name: Fragments
-Version : 4
+Version : 6
 
 ======================== Team Members =============================
 
@@ -50,4 +50,4 @@ Total Number of Projects: 5
                                 compiled last as .exe.
 
 Author: Tan Zheng Xun (t.zhengxun@digipen.edu)
-TimeStamp: 10:23 pm 08/02/2024 
+TimeStamp: 3:59 pm 07/04/2024 

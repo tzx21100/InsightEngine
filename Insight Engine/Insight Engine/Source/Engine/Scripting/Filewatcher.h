@@ -44,7 +44,9 @@ namespace IS {
         // Function to call when a change is detected
         void OnChange() {
             // Hot reload here
+#ifdef USING_IMGUI
             ScriptEngine::Reload();
+#endif
         }
 
         // Start monitoring files (single-threaded)
@@ -116,6 +118,9 @@ namespace IS {
                 }
 
             }
+
+
+
         }
 
         void Stop() {

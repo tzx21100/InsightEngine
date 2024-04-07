@@ -180,9 +180,11 @@ namespace IS {
 
 
 			Update();
+#ifdef USING_IMGUI  // dont hot reload without engine
 			std::string directory_to_watch = "Assets/Scripts";
 			std::string shader_to_watch = "Assets/Shaders";
 			fw.Start(directory_to_watch,shader_to_watch); //we watch for changes
+#endif
 			ProcessEntityDeletion(); // destroy deleted entities
 			SceneManager::Instance().UpdateActiveScene(); // update active scene
 
