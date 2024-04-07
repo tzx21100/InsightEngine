@@ -52,6 +52,7 @@ namespace IS
                 //click
                 SettingsScript.PlayClickSound();
                 PlayerScript.CleanUp();
+
                 InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
                 InternalCalls.AudioStopAllSounds();
             }

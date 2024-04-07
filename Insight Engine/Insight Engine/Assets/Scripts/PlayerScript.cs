@@ -1345,6 +1345,15 @@ namespace IS
             hasDoubleJump = false;
             hasWallClimb = false;
 
+            //reset the lighting etc
+            InternalCalls.CameraSetZoom(1f);
+            InternalCalls.AttachCamera(0, 0);
+            InternalCalls.AudioStopAllSounds();
+            PlayerScript.PLAYER_LIGHT = 0;
+            InternalCalls.ChangeLightType(0);
+            InternalCalls.ChangeShaderIntensity(0f);
+
+
         }
 
 
@@ -2445,7 +2454,10 @@ namespace IS
         {
             if (hideHealth == true ||SettingsScript.show_settings) return;
 
-            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - (WindowWidth / CameraScript.camera_zoom / 2.4f), CameraScript.camera_pos.y + WindowHeight / CameraScript.camera_zoom / 2.4f);
+            WindowWidth = InternalCalls.GetWindowWidth();
+            WindowHeight = InternalCalls.GetWindowHeight();
+
+            SimpleVector2D pos = new SimpleVector2D(CameraScript.camera_pos.x - ((WindowWidth / CameraScript.camera_zoom) / 2.4f), CameraScript.camera_pos.y + (WindowHeight / CameraScript.camera_zoom) / 2.4f);
             SimpleVector2D scaling = new SimpleVector2D(health_scaling.x / CameraScript.camera_zoom, health_scaling.y / CameraScript.camera_zoom);
             float interval = scaling.x / 1.6f;
             // draw health bar

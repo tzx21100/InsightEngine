@@ -39,6 +39,7 @@ namespace IS
             //camera_zoom = 1f;
             //camera zoom
             //InternalCalls.CameraSetZoom(camera_zoom);
+            StopCameraPan(); //dont pan when created
             InternalCalls.AttachCamera(camera_pos.x,camera_pos.y);
         }
 
