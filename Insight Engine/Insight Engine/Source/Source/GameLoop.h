@@ -183,7 +183,7 @@ namespace IS {
             //body_ai.mRestitution = 0.1f;
 
             auto& scene_manager = SceneManager::Instance();
-            scene_manager.LoadScene("Assets\\Scenes\\SplashScreen.insight");
+            scene_manager.LoadScene("Assets\\Scenes\\Fmod.insight");
             //scene_manager.LoadScene("Assets\\Scenes\\SplashScreen.insight");
 
         }

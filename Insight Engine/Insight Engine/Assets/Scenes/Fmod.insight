@@ -1,0 +1,56 @@
+{
+	"Entities" : 
+	[
+		{
+			"Name" : "FMOD Logo White - Black Background",
+			"Script" : 
+			{
+				"ScriptName" : "fmodlogo"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "FMOD Logo White - Black Background.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 82,
+				"SpriteTextureHeight" : 192,
+				"SpriteTextureIndex" : 65,
+				"SpriteTextureWidth" : 728,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 728.0,
+				"SpriteTransformScalingY" : 192.0,
+				"SpriteTransformWorldPositionX" : 0.0,
+				"SpriteTransformWorldPositionY" : 0.0,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 728.0,
+				"TransformScalingY" : 192.0,
+				"TransformWorldPositionX" : 0.0,
+				"TransformWorldPositionY" : 0.0
+			}
+		}
+	],
+	"EntityAmount" : 1,
+	"Layers" : 
+	[
+		{
+			"Active" : true,
+			"Name" : "Layer 1"
+		},
+		{
+			"Active" : true,
+			"Name" : "Layer 2"
+		}
+	],
+	"LayersAmount" : 2
+}

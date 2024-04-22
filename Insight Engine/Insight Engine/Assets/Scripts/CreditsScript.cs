@@ -176,6 +176,11 @@ namespace IS
                 leaves_timer = leaves_timer_set;
             }
 
+            if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
+            {
+                InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
+            }
+
 
             //spawn leaves
 

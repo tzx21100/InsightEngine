@@ -69,8 +69,9 @@ namespace IS
                 InternalCalls.SetLightHueEntity(entity_id, rand_hue.x, rand_hue.y, rand_hue.z);
                 is_lighted = !is_lighted;
                 InternalCalls.SetLightToggleEntity(entity_id, is_lighted);
+                InternalCalls.LoadScene("Assets/Scenes/Credits.insight");
             }
-        }
+        }   
 
 
         static public void CleanUp()
