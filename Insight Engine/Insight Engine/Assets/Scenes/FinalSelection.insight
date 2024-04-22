@@ -94,9 +94,9 @@
 				"SpriteFilename" : "idle_strip.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 94,
+				"SpriteTexture" : 95,
 				"SpriteTextureHeight" : 219,
-				"SpriteTextureIndex" : 77,
+				"SpriteTextureIndex" : 78,
 				"SpriteTextureWidth" : 4096,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 400.0,
@@ -123,8 +123,8 @@
 						"frame_dimension_x" : 0.5,
 						"frame_dimension_y" : 0.1666666716337204,
 						"frame_index_x" : 0.0,
-						"frame_index_y" : 0.0,
-						"frame_timer" : 0.039159271866083145,
+						"frame_index_y" : 4.0,
+						"frame_timer" : 0.0058259367942810059,
 						"time_per_frame" : 0.083333335816860199,
 						"x_frames" : 2,
 						"y_frames" : 6
@@ -236,9 +236,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 111,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 78,
+				"SpriteTextureIndex" : 94,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1112.7314453125,
@@ -336,9 +336,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 111,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 78,
+				"SpriteTextureIndex" : 94,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1112.7314453125,
@@ -436,9 +436,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 111,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 78,
+				"SpriteTextureIndex" : 94,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1112.7314453125,
@@ -536,9 +536,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 111,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 78,
+				"SpriteTextureIndex" : 94,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1112.7314453125,
@@ -636,9 +636,9 @@
 				"SpriteFilename" : "PlatformBossLevel1.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 95,
+				"SpriteTexture" : 111,
 				"SpriteTextureHeight" : 418,
-				"SpriteTextureIndex" : 78,
+				"SpriteTextureIndex" : 94,
 				"SpriteTextureWidth" : 1024,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1112.7314453125,
@@ -676,9 +676,109 @@
 			{
 				"ScriptName" : "TextBox"
 			}
+		},
+		{
+			"Collider" : 
+			{
+				"BoxCollider" : 
+				{
+					"BoxColliderCenter" : 
+					{
+						"X" : 168.18743896484375,
+						"Y" : -2116.28369140625
+					},
+					"BoxColliderOffset" : 
+					{
+						"X" : 0.0,
+						"Y" : 0.0
+					},
+					"BoxColliderSizeScale" : 
+					{
+						"X" : 1.0,
+						"Y" : 1.0
+					},
+					"BoxColliderVertices" : 
+					[
+						{
+							"x" : -54447.421875,
+							"y" : 166.77613830566406
+						},
+						{
+							"x" : 54447.421875,
+							"y" : 166.77613830566406
+						},
+						{
+							"x" : 54447.421875,
+							"y" : -166.77613830566406
+						},
+						{
+							"x" : -54447.421875,
+							"y" : -166.77613830566406
+						}
+					]
+				},
+				"BoxColliderEnabled" : true,
+				"CircleColliderEnabled" : false,
+				"ResponseEnabled" : true
+			},
+			"Name" : "Spikes",
+			"RigidBody" : 
+			{
+				"RigidBodyAccelerationX" : 0.0,
+				"RigidBodyAccelerationY" : 0.0,
+				"RigidBodyAngularVelocity" : 0.0,
+				"RigidBodyArea" : 62829.58203125,
+				"RigidBodyBodyType" : 5,
+				"RigidBodyDensity" : 0.0,
+				"RigidBodyForceX" : 0.0,
+				"RigidBodyForceY" : 0.0,
+				"RigidBodyInvMass" : 0.0,
+				"RigidBodyMass" : 0.0,
+				"RigidBodyRestitution" : 0.5,
+				"RigidBodyVelocityX" : 0.0,
+				"RigidBodyVelocityY" : 0.0,
+				"RigidbodyGravityScale" : 0.0,
+				"mDynamicFriction" : 0.40000000596046448,
+				"mStaticFriction" : 0.60000002384185791
+			},
+			"Script" : 
+			{
+				"ScriptName" : "SpikeScript"
+			},
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 0.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 0.0,
+				"SpriteColorZ" : 0.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 0,
+				"SpriteTextureHeight" : 0,
+				"SpriteTextureIndex" : 0,
+				"SpriteTextureWidth" : 0,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 108894.84375,
+				"SpriteTransformScalingY" : 333.55227661132812,
+				"SpriteTransformWorldPositionX" : 168.18743896484375,
+				"SpriteTransformWorldPositionY" : -2116.28369140625,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 108894.84375,
+				"TransformScalingY" : 333.55227661132812,
+				"TransformWorldPositionX" : 168.18743896484375,
+				"TransformWorldPositionY" : -2116.28369140625
+			}
 		}
 	],
-	"EntityAmount" : 9,
+	"EntityAmount" : 10,
 	"Layers" : 
 	[
 		{

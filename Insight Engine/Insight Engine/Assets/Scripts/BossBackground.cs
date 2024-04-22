@@ -100,7 +100,7 @@ namespace IS
             // Update the camera position
             InternalCalls.TransformSetPosition(CameraScript.camera_pos.x, CameraScript.camera_pos.y);
 
-            InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, InternalCalls.GetWindowWidth()*2, InternalCalls.GetWindowHeight()*2, 0, 0, 0, 0.2f, 0);
+            InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, InternalCalls.GetWindowWidth()*10, InternalCalls.GetWindowHeight()*10, 0, 0, 0, 0.2f, 0);
 
             //InternalCalls.DrawSquare(CameraScript.camera_pos.x, CameraScript.camera_pos.y, 7000, 7000, 0, 0, 0, fade_out_timer, InternalCalls.GetTopLayer());
 
