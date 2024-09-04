@@ -20,12 +20,69 @@ namespace IS
     {
         static public bool first_hover = false;
         static public float font_size = MainMenuScript.NORMAL_FONT_SIZE;
+
+
+        // Confirmation Panel
+        static private int exit_overlay_entity;
+        static private int no_entity;
+        static private int yes_entity;
+
+        static SimpleImage exit_overlay_image;
+        static SimpleImage button_frame;
+
+        static Vector2D exit_overlay_pos = new Vector2D(0, 0);
+        static Vector2D no_pos = new Vector2D(0, 0);
+        static Vector2D yes_pos = new Vector2D(0, 0);
+
+        static public bool exit_confirmation = false;
+
+        static Vector2D camera_pos = new Vector2D(0, 0);
+        static float camera_zoom = 0f;
+
+        // Windows
+        static Vector2D win_dimension = new Vector2D(0, 0);
+        static Vector2D origin = new Vector2D(0, 0);
+
         static public void Init()
         {
+
+            // Confirmation Panel
+            exit_overlay_image = InternalCalls.GetSpriteImage("exit_overlay.png");
+            button_frame = InternalCalls.GetSpriteImage("button_frame.png");
+            exit_overlay_entity = InternalCalls.CreateEntityUI("Confirmation Menu", exit_overlay_image);
+            no_entity = InternalCalls.CreateEntityButtonNoText("No Button", button_frame, "NoButtonScript2");
+            yes_entity = InternalCalls.CreateEntityButtonNoText("Yes Button", button_frame, "YesButtonScript2");
+
+
         }
 
         static public void Update()
         {
+
+            camera_zoom = InternalCalls.CameraGetZoom();
+
+            //set camera pos
+            camera_pos.x = InternalCalls.GetCameraPos().x;
+            camera_pos.y = InternalCalls.GetCameraPos().y;
+
+            // Windows
+            win_dimension.x = (float)InternalCalls.GetWindowWidth() / camera_zoom;
+            win_dimension.y = (float)InternalCalls.GetWindowHeight() / camera_zoom;
+
+            origin.x = camera_pos.x - (win_dimension.x / 2f);
+            origin.y = camera_pos.y - (win_dimension.y / 2f);
+
+            Vector2D overlay = new Vector2D(win_dimension.x, win_dimension.y);
+            Vector2D button = new Vector2D(0.14f * win_dimension.x, 0.08f * win_dimension.y);
+
+            InternalCalls.TransformSetScaleEntity(overlay.x, overlay.y, exit_overlay_entity);
+            InternalCalls.SetButtonSize(no_entity, new SimpleVector2D(button.x, button.y));
+            InternalCalls.SetButtonSize(yes_entity, new SimpleVector2D(button.x, button.y));
+            // Positions
+            exit_overlay_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
+            no_pos.Set(origin.x + (0.6f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
+            yes_pos.Set(origin.x + (0.4f * win_dimension.x), origin.y + (0.46f * win_dimension.y));
+
             //hovered
             if (InternalCalls.GetButtonState() == (int)ButtonStates.Hovered)
             {
@@ -51,11 +108,28 @@ namespace IS
             {
                 //click
                 SettingsScript.PlayClickSound();
-                PlayerScript.CleanUp();
+                SettingsScript.PlayClickSound();
+                exit_confirmation = true;
+                /*                PlayerScript.CleanUp();
 
-                InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
-                InternalCalls.AudioStopAllSounds();
+                                InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
+                                InternalCalls.AudioStopAllSounds();*/
             }
+
+            if (InternalCalls.KeyPressed((int)KeyCodes.Escape))
+            {
+                exit_confirmation = false;
+            }
+
+            if (exit_confirmation)
+            {
+                DrawConfirmationMenu();
+            }
+            else
+            {
+                HideConfirmationMenu();
+            }
+
         }
 
 
@@ -63,5 +137,27 @@ namespace IS
         {
 
         }
+
+        static public void DrawConfirmationMenu()
+        {
+            InternalCalls.TransformSetPositionEntity(exit_overlay_pos.x, exit_overlay_pos.y, exit_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
+            InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
+            InternalCalls.RenderTextFont("CONFIRM EXIT?", "MedusaGothic_D", 0.5f, 0.535f, 13f, (1f, 1f, 1f, 1f));
+
+            InternalCalls.RenderTextFont("YES", "MedusaGothic_D", 0.4f, 0.463f, YesButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("NO", "MedusaGothic_D", 0.602f, 0.463f, NoButtonScript.font_size, (1f, 1f, 1f, 1f));
+
+
+        }
+
+        static public void HideConfirmationMenu()
+        {
+            InternalCalls.TransformSetPositionEntity(999999f, 999999f, exit_overlay_entity);
+            InternalCalls.TransformSetPositionEntity(999999f, 999999f, no_entity);
+            InternalCalls.TransformSetPositionEntity(999999f, 999999f, yes_entity);
+        }
+
+
     }
 }

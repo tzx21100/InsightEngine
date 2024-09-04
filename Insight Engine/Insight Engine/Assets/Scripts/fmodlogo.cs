@@ -18,7 +18,7 @@ namespace IS
                 return;
             }
 
-            InternalCalls.LoadScene("Assets/Scenes/SplashScreen.insight");
+            InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
 
 
         }

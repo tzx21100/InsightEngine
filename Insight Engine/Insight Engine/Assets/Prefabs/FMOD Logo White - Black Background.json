@@ -1,0 +1,35 @@
+{
+	"Name" : "FMOD Logo White - Black Background",
+	"Signature" : "00000000000000000000000000000011",
+	"Sprite" : 
+	{
+		"AnimationIndex" : 0,
+		"Layer" : 1,
+		"SpriteColorA" : 1.0,
+		"SpriteColorX" : 1.0,
+		"SpriteColorY" : 1.0,
+		"SpriteColorZ" : 1.0,
+		"SpriteCurrentTexIndex" : 0,
+		"SpriteFilename" : "FMOD Logo White - Black Background.png",
+		"SpriteName" : "Quad",
+		"SpritePrimitiveType" : 5,
+		"SpriteTexture" : 78,
+		"SpriteTextureHeight" : 192,
+		"SpriteTextureIndex" : 61,
+		"SpriteTextureWidth" : 728,
+		"SpriteTransformRotation" : 0.0,
+		"SpriteTransformScalingX" : 189.27999877929688,
+		"SpriteTransformScalingY" : 49.919998168945312,
+		"SpriteTransformWorldPositionX" : 720.8546142578125,
+		"SpriteTransformWorldPositionY" : -379.806396484375,
+		"animations" : []
+	},
+	"Transform" : 
+	{
+		"TransformRotation" : 0.0,
+		"TransformScalingX" : 189.27999877929688,
+		"TransformScalingY" : 49.919998168945312,
+		"TransformWorldPositionX" : 720.8546142578125,
+		"TransformWorldPositionY" : -379.806396484375
+	}
+}

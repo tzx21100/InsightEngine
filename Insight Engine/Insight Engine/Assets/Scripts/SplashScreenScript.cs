@@ -112,7 +112,7 @@ namespace IS
                 InternalCalls.SetLightsToggle(true);
                 InternalCalls.unloadVideos();
                 InternalCalls.AudioStopAllSounds();
-                InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
+                InternalCalls.LoadScene("Assets/Scenes/Fmod.insight");
             }
 
 
