@@ -108,8 +108,9 @@ namespace IS
             {
                 //click
                 SettingsScript.PlayClickSound();
-                SettingsScript.PlayClickSound();
                 exit_confirmation = true;
+
+
                 /*                PlayerScript.CleanUp();
 
                                 InternalCalls.LoadScene("Assets/Scenes/MainMenu.insight");
@@ -143,7 +144,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(exit_overlay_pos.x, exit_overlay_pos.y, exit_overlay_entity);
             InternalCalls.TransformSetPositionEntity(no_pos.x, no_pos.y, no_entity);
             InternalCalls.TransformSetPositionEntity(yes_pos.x, yes_pos.y, yes_entity);
-            InternalCalls.RenderTextFont("CONFIRM EXIT?", "Cinzel_SemiBold", 0.5f, 0.535f, 16f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("CONFIRM MENU?", "Cinzel_SemiBold", 0.5f, 0.535f, 16f, (1f, 1f, 1f, 1f));
 
             InternalCalls.RenderTextFont("YES", "Cinzel_SemiBold", 0.4f, 0.463f, YesButtonScript.font_size, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("NO", "Cinzel_SemiBold", 0.602f, 0.463f, NoButtonScript.font_size, (1f, 1f, 1f, 1f));

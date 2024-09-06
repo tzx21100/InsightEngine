@@ -186,7 +186,7 @@ namespace IS
                 InternalCalls.SetLightsToggle(false);
 
                 InternalCalls.GamePause(true);
-                if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation)
+                if (SettingsScript.show_settings||HowToPlayScript.show_how_to_play||ExitButtonScript.exit_confirmation || BackToMenuButtonScript.exit_confirmation)
                 {
                     // move away the pause button
                     InternalCalls.TransformSetPosition(9999f, 9999f);
