@@ -87,8 +87,7 @@ namespace IS
             how_to_play_overlay_pos.Set(camera_pos.x, camera_pos.y);
             back_button_pos.Set(origin.x + (0.08f * win_dimension.x), origin.y + (0.9f * win_dimension.y));
 
-            //InternalCalls.RenderTextFont("H", "Times_New_Roman", 0.1f, 0.5f, 20f, (1f, 1f, 1f));
-            //InternalCalls.RenderTextFont("H", "BRUSHSCI", 0.2f, 0.5f, 20f, (1f, 1f, 1f));
+            //InternalCalls.RenderTextFont("H", "EBGaramond", 0.1f, 0.5f, 20f, (1f, 1f, 1f));
             //InternalCalls.RenderTextFont("H", "Poiret_One_Regular", 0.3f, 0.5f, 20f, (1f, 1f, 1f));
 
 
@@ -143,7 +142,7 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
          
 
-            InternalCalls.RenderTextFont("HOW TO PLAY", "MedusaGothic_D", 0.5f, 0.67f, 12.5f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "Cinzel_SemiBold", 0.5f, 0.67f, 16.5f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("A, D to move around", "Semplicita_Light", 0.5f, 0.58f, 10.5f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("Spacebar to jump, hold for long jump!", "Semplicita_Light", 0.5f, 0.54f, 10.5f, (1f, 1f, 1f, 1f));
             InternalCalls.RenderTextFont("Collect Blue Fragments for movement abilities,", "Semplicita_Light", 0.5f, 0.47f, 10.5f, (1f, 1f, 1f, 1f));

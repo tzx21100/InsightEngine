@@ -18,8 +18,8 @@ namespace IS
 {
     class ResumeButtonScript
     {
-        public const float NORMAL_FONT_SIZE = 10f;
-        public const float HOVER_FONT_SIZE = 11f;
+        public const float NORMAL_FONT_SIZE = 11f;
+        public const float HOVER_FONT_SIZE = 13f;
         static public bool first_hovering = false;
         static public float font_size = NORMAL_FONT_SIZE;
 

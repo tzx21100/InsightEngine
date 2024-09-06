@@ -21,13 +21,12 @@ namespace IS
 
     class SettingsScript
     {
-        public const string TITLE_FONT_NAME = "MedusaGothic_D";
         public const string BODY_FONT_NAME = "Semplicita_Light";
         public const string HOVER_SFX_NAME = "Footsteps_Dirt-Gravel-Far-Small_1.wav";
         public const string CLICK_SFX_NAME = "QubieSFX3.wav";
         public const float HOVER_SFX_VOLUME = .15f;
         public const float CLICK_SFX_VOLUME = .4f;
-        public const float TITLE_FONT_SIZE = 12.5f;
+        public const float TITLE_FONT_SIZE = 16.5f;
         public const float BODY_FONT_SIZE = 10f;
         static public (float, float, float, float) FONT_COLOR = (1f, 1f, 1f, 1f); // white color
 
@@ -265,7 +264,7 @@ namespace IS
             if (show_settings)
             {
                 DrawSettings();
-                InternalCalls.RenderTextFont("SETTINGS", TITLE_FONT_NAME, settings_text_pos.x, settings_text_pos.y, TITLE_FONT_SIZE, FONT_COLOR);
+                InternalCalls.RenderTextFont("SETTINGS", "Cinzel_SemiBold", settings_text_pos.x, settings_text_pos.y, TITLE_FONT_SIZE, FONT_COLOR);
 
                 float upper_limit_normalized = ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.615f * win_dimension.y)).y;
                 float lower_limit_normalized = ConvertAbsoluteToNormalizedPosition(0f, origin.y + (0.315f * win_dimension.y)).y; //may need to recalc

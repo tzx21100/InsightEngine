@@ -228,12 +228,12 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(back_to_menu_button_pos.x, back_to_menu_button_pos.y, back_to_menu_button_entity);
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
 
-            //InternalCalls.RenderTextFont("PAUSED", "MedusaGothic_D", 0.497f, 0.72f, 12f, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("RESUME GAME", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.625f, ResumeButtonScript.font_size, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("SETTINGS", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.52f, SettingsScript.font_size, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("HOW TO PLAY", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.433f, HowToPlayScript.font_size, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("MAIN MENU", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.35f, BackToMenuButtonScript.font_size, (1f, 1f, 1f, 1f));
-            InternalCalls.RenderTextFont("EXIT", SettingsScript.TITLE_FONT_NAME, 0.497f, 0.267f, ExitButtonScript.font_size, (1f, 1f, 1f, 1f));
+            //InternalCalls.RenderTextFont("PAUSED", "Cinzel_SemiBold", 0.497f, 0.72f, 12f, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("RESUME GAME", "Cinzel_SemiBold", 0.497f, 0.618f, ResumeButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("SETTINGS", "Cinzel_SemiBold", 0.497f, 0.513f, SettingsScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("HOW TO PLAY", "Cinzel_SemiBold", 0.497f, 0.426f, HowToPlayScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("MAIN MENU", "Cinzel_SemiBold", 0.497f, 0.343f, BackToMenuButtonScript.font_size, (1f, 1f, 1f, 1f));
+            InternalCalls.RenderTextFont("EXIT", "Cinzel_SemiBold", 0.497f, 0.26f, ExitButtonScript.font_size, (1f, 1f, 1f, 1f));
 
         }
 

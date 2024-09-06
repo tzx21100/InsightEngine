@@ -396,7 +396,7 @@ namespace IS {
         if (mDisplayFPS) {
             
 
-            mTexts["Times_New_Roman"].addTextRenderCall(render_text.str(), 0.10f, 0.98f, 8.f, color);
+            mTexts["EBGaramond"].addTextRenderCall(render_text.str(), 0.04f, 0.98f, 8.f, color);
         }
         //North_Forest_font.renderText(render_text.str(), pos_x, pos_y, scale, color);
         
@@ -585,21 +585,18 @@ namespace IS {
     void ISGraphics::InitFonts()
     {
         Text temp;
-        mTexts.insert({ "Times_New_Roman", temp });
-        mTexts.insert({ "BRUSHSCI", temp });
+        mTexts.insert({ "EBGaramond", temp });
         mTexts.insert({ "Poiret_One_Regular", temp });
-        mTexts.insert({ "MedusaGothic_D", temp });
+        mTexts.insert({ "Cinzel_SemiBold", temp });
         mTexts.insert({ "Semplicita_Light", temp });
 
-        mTexts["Times_New_Roman"].initText("Assets/Fonts/Times-New-Roman.ttf");
-        mTexts["BRUSHSCI"].initText("Assets/Fonts/BRUSHSCI.ttf");
+        mTexts["EBGaramond"].initText("Assets/Fonts/EBGaramond-VariableFont_wght.ttf");
         mTexts["Poiret_One_Regular"].initText("Assets/Fonts/PoiretOne-Regular.ttf");
-        mTexts["MedusaGothic_D"].initText("Assets/Fonts/MedusaGothic-D.otf");
+        mTexts["Cinzel_SemiBold"].initText("Assets/Fonts/Cinzel-SemiBold.ttf");
         mTexts["Semplicita_Light"].initText("Assets/Fonts/Semplicita-Light.otf");
 
         // init text objects
-        //Times_New_Roman_font.initText("Assets/Fonts/Times-New-Roman.ttf");
-        //Brush_Script_font.initText("Assets/Fonts/BRUSHSCI.ttf");
+        //Times_New_Roman_font.initText("Assets/Fonts/EBGaramond-VariableFont_wght.ttf");
         ////North_Forest_font.initText("Assets/Fonts/NORTH FOREST.ttf");
         //Poreit_One_Regular_font.initText("Assets/Fonts/PoiretOne-Regular.ttf");
     }

@@ -141,7 +141,7 @@ namespace IS
                     }
                     if (PlayerScript.player_pos.x > 11500)
                     {
-                        InternalCalls.RenderTextFont("Presents", "MedusaGothic_D", 0.8f, 0.5f, 17.5f, (1f, 1f, 1f, 1f));
+                        InternalCalls.RenderTextFont("Presents", "Cinzel_SemiBold", 0.8f, 0.5f, 22.5f, (1f, 1f, 1f, 1f));
                     }
                     if (PlayerScript.player_pos.x > 14500)
                     {

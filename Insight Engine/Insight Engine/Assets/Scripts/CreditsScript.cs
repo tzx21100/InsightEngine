@@ -240,7 +240,7 @@ namespace IS
             if (total_timer > gameByGroupStart && total_timer <= gameByGroupStart + gameByGroupDuration)
             {
                 alpha = CalculateFadeAlpha();
-                InternalCalls.RenderTextFont("FRAGMENTS", "MedusaGothic_D", 0.5f, 0.55f, 15f, (1f, 1f, 1f, alpha));
+                InternalCalls.RenderTextFont("FRAGMENTS", "Cinzel_SemiBold", 0.5f, 0.55f, 19f, (1f, 1f, 1f, alpha));
                 InternalCalls.RenderTextFont("By Insight", "Semplicita_Light", 0.5f, 0.5f, 18f, (1f, 1f, 1f, alpha));
             }
             else if (total_timer > gameByGroupStart + gameByGroupDuration && total_timer <= memberGroupStart)
@@ -271,7 +271,7 @@ namespace IS
                         alpha = 1 - ((timeInCurrentSegment - (memberDisplayDuration / 2)) / (memberDisplayDuration / 2));
                     }
 
-                    InternalCalls.RenderTextFont(member.name, "MedusaGothic_D", 0.5f, 0.55f, 15f, (1f, 1f, 1f, alpha));
+                    InternalCalls.RenderTextFont(member.name, "Cinzel_SemiBold", 0.5f, 0.55f, 19f, (1f, 1f, 1f, alpha));
                     InternalCalls.RenderTextFont(member.role, "Semplicita_Light", 0.5f, 0.55f - lineBreak, 18f, (1f, 1f, 1f, alpha));
                 }
             }
@@ -289,7 +289,7 @@ namespace IS
                 float normalizedYPos = Lerp(topY, bottomY, t);
 
 
-                InternalCalls.RenderTextFont("Tech Instructors", "MedusaGothic_D", 0.5f, normalizedYPos, 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Tech Instructors", "Cinzel_SemiBold", 0.5f, normalizedYPos, 19f, (1f, 1f, 1f, 1f));
                 float techInstructorLineBreak = 1.5f;
                 foreach (string instructor in tech_instructors)
                 {
@@ -297,7 +297,7 @@ namespace IS
                     techInstructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Design Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (techInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Design Instructors", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (techInstructorLineBreak + 1.5f), 19f, (1f, 1f, 1f, 1f));
                 float designInstructorLineBreak = techInstructorLineBreak + 3f;
                 foreach (string instructor in design_instructors)
                 {
@@ -305,7 +305,7 @@ namespace IS
                     designInstructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Audio Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (designInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Audio Instructors", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (designInstructorLineBreak + 1.5f), 19f, (1f, 1f, 1f, 1f));
                 float audioInstructorLineBreak = designInstructorLineBreak + 3f;
                 foreach (string instructor in audio_instructors)
                 {
@@ -313,7 +313,7 @@ namespace IS
                     audioInstructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Art Instructors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (audioInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Art Instructors", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (audioInstructorLineBreak + 1.5f), 19f, (1f, 1f, 1f, 1f));
                 float artInstructorLineBreak = audioInstructorLineBreak + 3f;
                 foreach (string instructor in art_instructors)
                 {
@@ -321,14 +321,14 @@ namespace IS
                     artInstructorLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Created  At", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Created  At", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 1.5f), 19f, (1f, 1f, 1f, 1f));
                 InternalCalls.RenderTextFont("Digipen Insitute of Technology Singapore", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 3f), 18f, (1f, 1f, 1f, 1f));
 
-                InternalCalls.RenderTextFont("President", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 6f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("President", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 6f), 19f, (1f, 1f, 1f, 1f));
                 InternalCalls.RenderTextFont("Claude Comair", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 7.5f), 18f, (1f, 1f, 1f, 1f));
 
 
-                InternalCalls.RenderTextFont("Board  of  Directors", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 10.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Board  of  Directors", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (artInstructorLineBreak + 10.5f), 19f, (1f, 1f, 1f, 1f));
                 float bodLineBreak = artInstructorLineBreak + 12f;
                 foreach (string bod in boardOfDirectors)
                 {
@@ -336,7 +336,7 @@ namespace IS
                     bodLineBreak += 1.5f;
                 }
 
-                InternalCalls.RenderTextFont("Executives", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * (bodLineBreak + 1.5f), 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Executives", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * (bodLineBreak + 1.5f), 19f, (1f, 1f, 1f, 1f));
 
                 float execLineBreak = bodLineBreak + 3f;
                 foreach (string exec in executives)
@@ -347,7 +347,7 @@ namespace IS
 
                 float specialThanksLineBreak = execLineBreak + 1.5f;
 
-                InternalCalls.RenderTextFont("Special  Thanks", "MedusaGothic_D", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 15f, (1f, 1f, 1f, 1f));
+                InternalCalls.RenderTextFont("Special  Thanks", "Cinzel_SemiBold", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 19f, (1f, 1f, 1f, 1f));
                 specialThanksLineBreak += 1.5f;
                 InternalCalls.RenderTextFont("Ian Chua Rong Bin", "Semplicita_Light", 0.5f, normalizedYPos - lineBreak * specialThanksLineBreak, 18f, (1f, 1f, 1f, 1f));
                 specialThanksLineBreak += 1.5f;
@@ -366,14 +366,14 @@ namespace IS
                         alpha = currentTimeInFadeEffect / (fadeDuration / 2 );
                     }
                  
-                    InternalCalls.RenderTextFont("Thank you for playing", "MedusaGothic_D", 0.5f, 0.5f, 15f, (1f, 1f, 1f, alpha));
+                    InternalCalls.RenderTextFont("Thank you for playing", "Cinzel_SemiBold", 0.5f, 0.5f, 19f, (1f, 1f, 1f, alpha));
                 }
                 else if (currentTimeInFadeEffect > fadeDuration + 3f)
                 {
                     InternalCalls.SetEntityLayer(InternalCalls.GetTopLayer(), back_button_entity);
                     InternalCalls.SetButtonSize(back_button_entity, new SimpleVector2D(button.x, button.y));
                     back_button_pos.Set(origin.x + (0.5f * win_dimension.x), origin.y + (0.5f * win_dimension.y));
-                    InternalCalls.RenderTextFont("MAIN MENU", "MedusaGothic_D", 0.502f, 0.501f, BackFromWinScript.font_size, (1f, 1f, 1f, 1f));
+                    InternalCalls.RenderTextFont("MAIN MENU", "Cinzel_SemiBold", 0.502f, 0.501f, BackFromWinScript.font_size, (1f, 1f, 1f, 1f));
                     InternalCalls.TransformSetPositionEntity(back_button_pos.x, back_button_pos.y, back_button_entity);
 
                 }

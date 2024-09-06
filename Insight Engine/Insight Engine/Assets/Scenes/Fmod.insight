@@ -19,13 +19,13 @@
 				"SpriteFilename" : "FMOD Logo White - Black Background.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 82,
+				"SpriteTexture" : 79,
 				"SpriteTextureHeight" : 192,
-				"SpriteTextureIndex" : 65,
+				"SpriteTextureIndex" : 62,
 				"SpriteTextureWidth" : 728,
 				"SpriteTransformRotation" : 0.0,
-				"SpriteTransformScalingX" : 728.0,
-				"SpriteTransformScalingY" : 192.0,
+				"SpriteTransformScalingX" : 1920.0,
+				"SpriteTransformScalingY" : 1080.0,
 				"SpriteTransformWorldPositionX" : 0.0,
 				"SpriteTransformWorldPositionY" : 0.0,
 				"animations" : []
@@ -33,8 +33,8 @@
 			"Transform" : 
 			{
 				"TransformRotation" : 0.0,
-				"TransformScalingX" : 728.0,
-				"TransformScalingY" : 192.0,
+				"TransformScalingX" : 1920.0,
+				"TransformScalingY" : 1080.0,
 				"TransformWorldPositionX" : 0.0,
 				"TransformWorldPositionY" : 0.0
 			}

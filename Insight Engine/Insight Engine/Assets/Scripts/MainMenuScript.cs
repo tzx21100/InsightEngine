@@ -19,8 +19,11 @@ namespace IS
     {
         private const float GAME_TITLE_SCALE = .5f;
         private const float GAME_TITLE_AR = 92f / 512f;
-        public const float HOVER_FONT_SIZE = 8.5f;
-        public const float NORMAL_FONT_SIZE = 7.5f;
+        //public const float HOVER_FONT_SIZE = 8.5f;
+        //public const float NORMAL_FONT_SIZE = 7.5f;
+
+        public const float HOVER_FONT_SIZE = 11.5f;
+        public const float NORMAL_FONT_SIZE = 10f;
 
         // Windows
         static Vector2D win_dimension = new Vector2D(0, 0);
@@ -132,10 +135,10 @@ namespace IS
             InternalCalls.TransformSetPositionEntity(exit_button_pos.x, exit_button_pos.y, exit_button_entity);
             InternalCalls.TransformSetPositionEntity(team_logo_pos.x, team_logo_pos.y, team_logo_entity);
 
-            InternalCalls.RenderTextFont("START", SettingsScript.TITLE_FONT_NAME, 0.3118f, 0.583f, StartButtonScript.font_size, SettingsScript.FONT_COLOR);
-            InternalCalls.RenderTextFont("SETTINGS", SettingsScript.TITLE_FONT_NAME, 0.3118f, 0.463f, SettingsScript.font_size, SettingsScript.FONT_COLOR);
-            InternalCalls.RenderTextFont("HOW TO PLAY", SettingsScript.TITLE_FONT_NAME, 0.3118f, 0.343f, HowToPlayScript.font_size, SettingsScript.FONT_COLOR);
-            InternalCalls.RenderTextFont("EXIT", SettingsScript.TITLE_FONT_NAME, 0.3118f, 0.223f, ExitButtonScript.font_size, SettingsScript.FONT_COLOR);
+            InternalCalls.RenderTextFont("START", "Cinzel_SemiBold", 0.3118f, 0.576f, StartButtonScript.font_size, SettingsScript.FONT_COLOR);
+            InternalCalls.RenderTextFont("SETTINGS", "Cinzel_SemiBold", 0.3118f, 0.456f, SettingsScript.font_size, SettingsScript.FONT_COLOR);
+            InternalCalls.RenderTextFont("HOW TO PLAY", "Cinzel_SemiBold", 0.3118f, 0.336f, HowToPlayScript.font_size, SettingsScript.FONT_COLOR);
+            InternalCalls.RenderTextFont("EXIT", "Cinzel_SemiBold", 0.3118f, 0.216f, ExitButtonScript.font_size, SettingsScript.FONT_COLOR);
         }
 
         static public void HideMenuButtons()
