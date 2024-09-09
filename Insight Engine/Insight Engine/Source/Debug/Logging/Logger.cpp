@@ -82,6 +82,7 @@ namespace IS {
 
     void Logger::EnableFileOutput()
     {
+#ifdef USING_IMGUI
         // Thread safety
         std::scoped_lock lock(mLogMutex);
         
@@ -101,6 +102,7 @@ namespace IS {
         mLogFile.open(filepath.str(), std::ios_base::app);
         if (!mLogFile.is_open())
             std::cerr << "Error: Failed to open log file at " << filepath.str() << std::endl;
+#endif
     }
     
     void Logger::SetTimestampFormat(std::string const& new_timestamp_format) { mTimestampFormat = new_timestamp_format; }
