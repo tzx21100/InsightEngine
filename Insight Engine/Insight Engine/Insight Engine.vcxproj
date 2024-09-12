@@ -386,6 +386,7 @@ copy "$(ProjectDir)libraries\mono\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.
 copy "$(ProjectDir)libraries\mono\MonoPosixHelper.dll"$(TargetDir)MonoPosixHelper.dll" /Y
 xcopy "$(ProjectDir)Properties\*" "$(TargetDir)Properties\" /E /Y
 xcopy "$(ProjectDir)Assets\*" "$(TargetDir)Assets\" /E /Y
+xcopy "$(ProjectDir)licenses\*" "$(TargetDir)licenses\" /E /Y
 xcopy "$(ProjectDir)libraries\mono\lib\4.5\*" "$(TargetDir)libraries\mono\lib\4.5\" /E /Y
 copy "$(ProjectDir)libraries\ffmpeg\lib\avcodec-60.dll" "$(TargetDir)avcodec-60.dll" /Y
 copy "$(ProjectDir)libraries\ffmpeg\lib\avformat-60.dll" "$(TargetDir)avformat-60.dll" /Y
