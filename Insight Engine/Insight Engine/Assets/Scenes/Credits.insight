@@ -33,9 +33,9 @@
 				"SpriteFilename" : "credits_bg.jpg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 126,
+				"SpriteTexture" : 109,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 109,
+				"SpriteTextureIndex" : 92,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -59,9 +59,43 @@
 			{
 				"ScriptName" : "CheatCodeEntity"
 			}
+		},
+		{
+			"Name" : "FMOD Logo White - Black Background",
+			"Sprite" : 
+			{
+				"AnimationIndex" : 0,
+				"Layer" : 1,
+				"SpriteColorA" : 1.0,
+				"SpriteColorX" : 1.0,
+				"SpriteColorY" : 1.0,
+				"SpriteColorZ" : 1.0,
+				"SpriteCurrentTexIndex" : 0,
+				"SpriteFilename" : "FMOD LOGO.png",
+				"SpriteName" : "Quad",
+				"SpritePrimitiveType" : 5,
+				"SpriteTexture" : 75,
+				"SpriteTextureHeight" : 192,
+				"SpriteTextureIndex" : 58,
+				"SpriteTextureWidth" : 728,
+				"SpriteTransformRotation" : 0.0,
+				"SpriteTransformScalingX" : 189.27999877929688,
+				"SpriteTransformScalingY" : 49.919998168945312,
+				"SpriteTransformWorldPositionX" : 681.1400146484375,
+				"SpriteTransformWorldPositionY" : -379.80999755859375,
+				"animations" : []
+			},
+			"Transform" : 
+			{
+				"TransformRotation" : 0.0,
+				"TransformScalingX" : 189.27999877929688,
+				"TransformScalingY" : 49.919998168945312,
+				"TransformWorldPositionX" : 681.1400146484375,
+				"TransformWorldPositionY" : -379.80999755859375
+			}
 		}
 	],
-	"EntityAmount" : 2,
+	"EntityAmount" : 3,
 	"Layers" : 
 	[
 		{
