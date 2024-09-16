@@ -33,9 +33,9 @@
 				"SpriteFilename" : "credits_bg.jpg",
 				"SpriteName" : "Box",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 109,
+				"SpriteTexture" : 113,
 				"SpriteTextureHeight" : 2160,
-				"SpriteTextureIndex" : 92,
+				"SpriteTextureIndex" : 96,
 				"SpriteTextureWidth" : 3840,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 1902.0,
@@ -74,15 +74,15 @@
 				"SpriteFilename" : "FMOD LOGO.png",
 				"SpriteName" : "Quad",
 				"SpritePrimitiveType" : 5,
-				"SpriteTexture" : 75,
+				"SpriteTexture" : 70,
 				"SpriteTextureHeight" : 192,
-				"SpriteTextureIndex" : 58,
+				"SpriteTextureIndex" : 53,
 				"SpriteTextureWidth" : 728,
 				"SpriteTransformRotation" : 0.0,
 				"SpriteTransformScalingX" : 189.27999877929688,
 				"SpriteTransformScalingY" : 49.919998168945312,
-				"SpriteTransformWorldPositionX" : 681.1400146484375,
-				"SpriteTransformWorldPositionY" : -379.80999755859375,
+				"SpriteTransformWorldPositionX" : 800.0,
+				"SpriteTransformWorldPositionY" : -450.0,
 				"animations" : []
 			},
 			"Transform" : 
@@ -90,8 +90,8 @@
 				"TransformRotation" : 0.0,
 				"TransformScalingX" : 189.27999877929688,
 				"TransformScalingY" : 49.919998168945312,
-				"TransformWorldPositionX" : 681.1400146484375,
-				"TransformWorldPositionY" : -379.80999755859375
+				"TransformWorldPositionX" : 800.0,
+				"TransformWorldPositionY" : -450.0
 			}
 		}
 	],
